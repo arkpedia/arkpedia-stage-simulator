@@ -1,3 +1,5 @@
+> **Arkpedia fork:** work toward a separately embedded regular-stage simulator is described in [ARKPEDIA.md](ARKPEDIA.md). The application below still uses Stronghold rules; the Arkpedia overhaul is not playable yet. Original licensing and contributor credits remain intact.
+
 # 卫戍协议：盟约 · Stronghold Protocol: Alliance
 
 《明日方舟》季节性自走棋塔防玩法「卫戍协议：盟约」的**非官方同人复刻**：浏览器即开即玩，单人或 1–4 人联机合作。
