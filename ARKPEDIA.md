@@ -44,7 +44,7 @@ Combat runs at a fixed 30Hz with seeded randomness. Rendering cannot change the 
 
 ## Data and coverage
 
-`data/arkpedia-mvp.json` records full source commits for public `arkpedia-data`, Global game tables, image assets and SD models. `tools/arkpedia/build-mvp.mjs --refresh` updates that compact snapshot; it requires the sibling `arkpedia-sd-assets` checkout and `gh` access. Import/publish complete SD models first, then regenerate. The generator rejects conditional stages, fixed squads, unfamiliar geometry/route shapes and missing models. The runtime validates all loadouts and never accepts caller-provided stats.
+`data/arkpedia-mvp.json` records full source commits for public `arkpedia-data`, Global game tables, icon and operator-art assets, and SD models. `tools/arkpedia/build-mvp.mjs --refresh` updates that compact snapshot; it requires the sibling `arkpedia-sd-assets` checkout and `gh` access. Import/publish complete SD models first, then regenerate. The generator rejects conditional stages, fixed squads, unfamiliar geometry/route shapes and missing models. The runtime validates all loadouts and never accepts caller-provided stats.
 
 Routes come from the existing Arkpedia stage browser's `buildPlaybackPaths` output: public points, cumulative distances, waits and movement scale, not private app source. The simulator generator retains that export only while its geometry hash matches. After a geometry refresh it requires a new export, rather than silently using different routes:
 
@@ -60,6 +60,8 @@ Dropping a portrait onto a tile opens the direction picker without deploying or 
 Enemy sprites face their horizontal movement, retain that facing through waits and vertical route segments, and turn toward a blocker when attacking. Their initial facing comes from the route rather than the engine's fixed deployment direction.
 
 Deployed operators show a green SP gauge below HP. Ready manual skills show a yellow lightning diamond above the bars; select that operator, then activate the skill. Automatic skills trigger through the combat engine and do not show a manual-ready marker. The gauge turns orange and drains during a timed skill (or tracks remaining ammo); passive skills have no SP gauge. All indicators follow the paused simulation clock and disappear on retreat or death.
+
+Selecting an operator opens a left-side inspector with pinned base artwork, build level, live ATK/DEF/RES/block, HP, SP, skill description and activation/retreat controls. It overlays the battlefield without changing its dimensions and disappears while dragging or choosing deployment direction. Portrait phones use a compact panel above the deployment shelf; short landscape views keep art and details side by side. Close or Escape dismisses the inspector without retreating the operator. Automatic skills have no manual activation button.
 
 This is a playable prototype, **not full game compatibility**. Timings, movement scale, projectile flight and animation wind-up need recorded in-game comparison. Modules, summons, enemy abilities, devices, other stages and operators, special modes, replay persistence and a worker are not implemented. A model existing does not mean its mechanics are supported. The old Arkpedia range-preview/playback tool is retained.
 

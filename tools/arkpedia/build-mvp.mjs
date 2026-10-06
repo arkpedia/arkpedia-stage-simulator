@@ -30,6 +30,7 @@ if (process.argv.includes("--refresh")) {
   for (const repo of new Set([
     ...Object.values(paths).map(([r]) => r),
     "arkpedia/arkpedia-image-assets",
+    "arkpedia/arkpedia-skin-assets",
   ]))
     pins[repo] = JSON.parse(
       execFileSync("gh", ["api", `repos/${repo}/commits/main`], {

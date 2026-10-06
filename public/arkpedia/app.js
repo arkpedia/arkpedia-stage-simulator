@@ -42,6 +42,17 @@ const catalogue = catalogueFor(data);
 const ops = Object.values(data.operators);
 const icon = (op) =>
   `https://raw.githubusercontent.com/arkpedia/arkpedia-image-assets/${data.sources["arkpedia/arkpedia-image-assets"]}/three-star-icons/${encodeURIComponent(op.name + " - Base.webp")}`;
+const artwork = (op) =>
+  `https://raw.githubusercontent.com/arkpedia/arkpedia-skin-assets/${data.sources["arkpedia/arkpedia-skin-assets"]}/three-star-skins/${encodeURIComponent(op.name + " - Base.webp")}`;
+function skillDescription(level) {
+  const values = Object.fromEntries(level.blackboard.map((entry) => [entry.key, entry.value]));
+  return escape(level.description.replace(/<[^>]*>/g, "").replace(
+    /\{([^}:]+)(?::([^}]+))?\}/g,
+    (_, key, format) => format?.includes("%")
+      ? Math.round(values[key] * 100) + "%"
+      : String(values[key]),
+  ));
+}
 const builds = Object.fromEntries(ops.map((o) => [o.id, defaultBuild(o)]));
 const chosen = new Set(ops.slice(0, 5).map((o) => o.id));
 let editing = ops[0].id,
@@ -152,7 +163,7 @@ async function start() {
     workspace = document.createElement("section");
     workspace.className = "workspace";
     workspace.setAttribute("aria-label", "Battle workspace");
-    workspace.innerHTML = `<header class="battle-header"><div class="stage-title"><span class="stage-code">0-1</span><h2>Collapse</h2></div><div class="hud" id="hud"></div><div class="battle-controls"><button id="routes" aria-pressed="false">Paths</button><button id="pause">Pause</button><button id="speed">1×</button><button id="restart">Restart</button><button id="exit">Exit</button></div></header><div class="board battle-board" id="battle-board"><span class="pause-label" id="paused-label" hidden>Paused</span></div><div class="command" id="command"></div><div class="deployment-wrap"><button id="shelf-left" aria-label="Scroll operators left">‹</button><div class="deployment" id="deployment"></div><button id="shelf-right" aria-label="Scroll operators right">›</button></div><p class="status-note" id="battle-message" role="status" aria-live="polite"></p>`;
+    workspace.innerHTML = `<header class="battle-header"><div class="stage-title"><span class="stage-code">0-1</span><h2>Collapse</h2></div><div class="hud" id="hud"></div><div class="battle-controls"><button id="routes" aria-pressed="false">Paths</button><button id="pause">Pause</button><button id="speed">1×</button><button id="restart">Restart</button><button id="exit">Exit</button></div></header><div class="board battle-board" id="battle-board"><span class="pause-label" id="paused-label" hidden>Paused</span><aside class="command" id="command" aria-label="Selected operator" hidden></aside></div><div class="deployment-wrap"><button id="shelf-left" aria-label="Scroll operators left">‹</button><div class="deployment" id="deployment"></div><button id="shelf-right" aria-label="Scroll operators right">›</button></div><p class="status-note" id="battle-message" role="status" aria-live="polite"></p>`;
     document.body.append(workspace);
     const board = workspace.querySelector("#battle-board");
     // Move canvases to a full-viewport battle container; preview has no deployment handler.
@@ -346,6 +357,34 @@ function pick(row, col) {
   }
   drawHud();
 }
+function operatorDetails(build, unit) {
+  const record = recordFor(build, data);
+  const stats = unit?.s;
+  const hp = unit?.hp ?? record.stats.maxHp;
+  const maxHp = stats?.maxHp ?? record.stats.maxHp;
+  const hud = unit ? skillHud(unit.skill) : null;
+  const level = data.operators[build.id].skills[0].levels[build.skillRank - 1];
+  const recovery = {
+    INCREASE_WITH_TIME: "Auto recovery",
+    INCREASE_WHEN_ATTACK: "Offensive recovery",
+    INCREASE_WHEN_TAKEN_DAMAGE: "Defensive recovery",
+  }[level.spData.spType] || "Passive";
+  const numbers = [
+    ["ATK", stats?.atk ?? record.stats.atk],
+    ["DEF", stats?.def ?? record.stats.def],
+    ["RES", stats?.res ?? record.stats.magicResistance],
+    ["Block", stats?.blockCnt ?? record.stats.blockCnt],
+  ];
+  return `<p class="operator-build">E${build.elite} · Lv ${build.level}${selection.support?.id === build.id ? " · Support" : ""}</p>
+    <dl class="operator-stats">${numbers.map(([label, value]) => `<div><dt>${label}</dt><dd>${Math.round(value)}</dd></div>`).join("")}</dl>
+    <div class="hp-readout"><span>HP</span><strong>${Math.ceil(hp)} / ${Math.round(maxHp)}</strong></div>
+    <div class="meter hp"><span style="width:${Math.max(0, hp / maxHp) * 100}%"></span></div>
+    <section class="operator-skill"><h3>${escape(level.name)} <small>Rank ${build.skillRank}</small></h3>
+    <div class="skill-tags"><span class="${level.spData.spType === "INCREASE_WITH_TIME" ? "auto" : "manual"}">${recovery}</span><span class="${level.skillType === "AUTO" ? "auto" : "manual"}">${level.skillType === "AUTO" ? "Auto activation" : level.skillType === "MANUAL" ? "Manual activation" : "Passive"}</span>${level.duration > 0 ? `<span>${level.duration}s</span>` : ""}</div>
+    <p class="sp-readout">${hud?.text.replace(/ · (?:Auto|Manual) activation/g, "") || `${level.spData.initSp} / ${level.spData.spCost} SP on deployment`}</p>
+    ${hud ? `<div class="meter ${hud.state}"><span style="width:${hud.fraction * 100}%"></span></div>` : ""}
+    <p class="skill-description">${skillDescription(level)}</p></section>`;
+}
 function drawHud() {
   if (!workspace || !battle) return;
   workspace.querySelector("#hud").innerHTML =
@@ -451,55 +490,55 @@ function drawHud() {
   // Preserve keyboard focus when refreshing the counters; command markup changes only on selection/state transitions.
   const b = battle.bench[selected],
     unit = b?.unit?.alive ? b.unit : null;
-  let html =
-    '<div class="command-copy"><h3>Deploy an operator</h3>Drag an operator onto the map, then choose its facing. Click an operator and tile to place without dragging.</div>';
   let highlights = [];
   let canActivate = false;
-  if (unit) {
-    highlights = [...unit.rangeKeys];
-    const sk = unit.skill,
-      hud = skillHud(sk);
-    canActivate = !!(hud?.ready && unit.canAct && !unit.s.flags.silence);
-    html = `<div class="command-copy"><h3>${unit.name}</h3>HP ${Math.ceil(unit.hp)} / ${Math.round(unit.s.maxHp)} · ${escape(sk.name)}<br>${hud?.text || "Passive skill"}${hud ? `<div class="meter ${hud.state}"><span style="width:${hud.fraction * 100}%"></span></div>` : ""}</div><div class="command-actions"><button id="skill" class="primary" ${canActivate ? "" : "disabled"}>${hud?.ready ? "Skill ready · Activate" : "Activate skill"}</button><button id="retreat">Retreat</button></div>`;
-  } else if (b) {
+  const command = workspace.querySelector("#command");
+  // The inspector overlays a fixed battlefield; selection never resizes the map.
+  // Hide it while dragging/aiming so every deployment tile remains reachable.
+  command.hidden = !b || !!dragging || !!pending || battle.finished;
+  if (unit) highlights = [...unit.rangeKeys];
+  else if (b) {
     for (let r = 0; r < 6; r++)
       for (let c = 0; c < 9; c++)
         if (!battle.placementError(selected, r, c)) highlights.push(r * 21 + c);
-    html = `<div class="command-copy"><h3>${data.operators[selected].name} · ${battle.cost(selected)} DP</h3>${pending ? "Drag from the centre toward a direction, then release to deploy. Arrow keys + Enter also work." : "Drag onto a " + (data.operators[selected].position === "RANGED" ? "raised" : "ground") + " tile, or click a tile."}<br>${battleError ? `<span class="error">${escape(battleError)}</span>` : ""}</div><div class="command-actions"><button id="cancel">Cancel</button></div>`;
   }
-  const command = workspace.querySelector("#command");
-  // Do not replace focused interactive controls during the battle clock.
-  if (
-    command.dataset.selection !== String(selected) ||
-    command.dataset.pending !== JSON.stringify(pending) ||
-    command.dataset.alive !== String(!!unit) ||
-    command.dataset.ready !== String(canActivate) ||
-    command.dataset.error !== battleError
-  ) {
-    command.innerHTML = html;
-    command.dataset.selection = String(selected);
-    command.dataset.pending = JSON.stringify(pending);
-    command.dataset.alive = String(!!unit);
-    command.dataset.ready = String(canActivate);
-    command.dataset.error = battleError;
-    command.querySelector("#cancel")?.addEventListener("click", () => {
-      cancelPlacement();
-      drawHud();
-    });
-    command.querySelector("#retreat")?.addEventListener("click", () => {
-      battle.retreatOperator(selected);
-      selected = null;
-      drawHud();
-    });
-    command.querySelector("#skill")?.addEventListener("click", () => {
-      battle.activateOperator(selected);
-      command.dataset.ready = "";
-      drawHud();
-    });
-  } else if (unit) {
-    command.querySelector(".command-copy").innerHTML = html.match(
-      /<div class="command-copy">([\s\S]*?)<\/div><div class="command-actions">/,
-    )[1];
+  if (b) {
+    const op = data.operators[selected];
+    const hud = unit ? skillHud(unit.skill) : null;
+    canActivate = !!(hud?.ready && unit.canAct && !unit.s.flags.silence);
+    const copy = operatorDetails(b.build, unit);
+    if (command.dataset.selection !== selected || command.dataset.alive !== String(!!unit)) {
+      command.innerHTML = `<div class="operator-portrait"><img src="${artwork(op)}" alt="${escape(op.name)} base artwork" draggable="false"><h2>${escape(op.name)}</h2></div>
+        <button class="inspector-close" aria-label="Close operator details">×</button>
+        <div class="command-copy">${copy}</div>
+        <div class="command-actions">${unit ? `${unit.skill.manual ? '<button id="skill" class="primary">Activate skill</button>' : ""}<button id="retreat">Retreat</button>` : '<button id="cancel">Cancel selection</button>'}</div>`;
+      command.dataset.selection = selected;
+      command.dataset.alive = String(!!unit);
+      command.querySelector(".inspector-close").onclick = () => {
+        cancelPlacement();
+        drawHud();
+      };
+      command.querySelector("#cancel")?.addEventListener("click", () => {
+        cancelPlacement();
+        drawHud();
+      });
+      command.querySelector("#retreat")?.addEventListener("click", () => {
+        battle.retreatOperator(selected);
+        selected = null;
+        drawHud();
+      });
+      command.querySelector("#skill")?.addEventListener("click", () => {
+        battle.activateOperator(selected);
+        drawHud();
+      });
+    } else {
+      command.querySelector(".command-copy").innerHTML = copy;
+    }
+    const skillButton = command.querySelector("#skill");
+    if (skillButton) {
+      skillButton.disabled = !canActivate;
+      skillButton.textContent = hud?.ready ? "Skill ready · Activate" : "Activate skill";
+    }
   }
   const hover = dragging?.over ? { ...dragging.over, dir: "RIGHT" } : null;
   const preview = pending || hover;
@@ -523,7 +562,9 @@ function drawHud() {
   layoutFacing();
   workspace.querySelector("#battle-message").textContent =
     battleError ||
-    "Drag to deploy · Click an operator to inspect · Space: pause · Escape: cancel";
+    (pending ? "Drag from the direction picker's centre, then release to deploy · Escape: cancel"
+      : selected && !unit ? "Drag onto a valid tile, or click a tile to choose facing · Escape: cancel"
+      : "Drag to deploy · Click an operator to inspect · Space: pause · Escape: cancel");
   if (battle.finished && !workspace.querySelector(".result")) {
     paused = true;
     const result = document.createElement("div");

@@ -322,21 +322,53 @@ a {
   min-height: 80px;
 }
 .command {
-  display: grid;
-  grid-template-columns: 1fr auto;
+  position: absolute;
+  z-index: 4;
+  inset: 0 auto 0 0;
+  width: clamp(260px, 25vw, 350px);
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(110deg, #10171bf5, #10171bd9);
+  border-right: 1px solid #81979a55;
+  padding: 14px;
   gap: 12px;
-  background: var(--panel);
-  padding: 12px;
-  border: 1px solid #34464e;
-  border-radius: 4px;
-  height: 112px;
-  min-height: 112px;
-  flex-shrink: 0;
+}
+.command[hidden] { display: none; }
+.operator-portrait {
+  position: relative;
+  flex: 1;
+  min-height: 80px;
+  overflow: hidden;
+}
+.operator-portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center bottom;
+}
+.operator-portrait h2 {
+  position: absolute;
+  inset: auto 0 0;
+  padding: 20px 8px 3px;
+  font-size: 30px;
+  color: #fff;
+  background: linear-gradient(transparent, #10171bd9);
+}
+.inspector-close {
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  z-index: 1;
+  font-size: 24px;
 }
 .command-copy {
   font-size: 13px;
-  line-height: 1.6;
+  line-height: 1.45;
   min-width: 0;
+  flex-shrink: 0;
 }
 .command-copy h3 {
   color: var(--text);
@@ -344,11 +376,24 @@ a {
 }
 .command-actions {
   display: flex;
-  align-items: center;
   gap: 8px;
-  flex-wrap: wrap;
-  justify-content: end;
+  flex-shrink: 0;
 }
+.command-actions button { flex: 1; }
+.operator-build { color: var(--muted); font-size: 12px; }
+.operator-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 8px 0; }
+.operator-stats dt { color: var(--muted); font-size: 11px; }
+.operator-stats dd { margin: 0; font: 700 21px Rajdhani, sans-serif; color: #fff; }
+.hp-readout { display: flex; justify-content: space-between; font-variant-numeric: tabular-nums; }
+.command .meter { width: 100%; }
+.command .meter.hp span { background: #62b8e5; }
+.operator-skill { margin-top: 12px; padding-top: 10px; border-top: 1px solid #81979a55; }
+.operator-skill h3 { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.skill-tags { display: flex; flex-wrap: wrap; gap: 4px; margin: 6px 0; font-size: 11px; }
+.skill-tags span { padding: 2px 6px; border: 1px solid #609b8355; background: #38654a55; border-radius: 2px; color: #b6e2c1; }
+.skill-tags .manual { background: #7c641c55; border-color: #d5b05066; color: #f1d37b; }
+.sp-readout { color: #9ac7e2; font-size: 12px; }
+.skill-description { margin-top: 8px; }
 .deployment-wrap {
   display: grid;
   grid-template-columns: 32px minmax(0, 1fr) 32px;
@@ -506,18 +551,31 @@ footer {
     min-height: 40px;
   }
   .command {
+    inset: auto 0 0;
+    width: 100%;
     padding: 10px;
-    grid-template-columns: minmax(0, 1fr);
-    gap: 6px;
-    height: 164px;
-    min-height: 164px;
+    gap: 8px;
+    border-right: 0;
+    border-top: 1px solid #81979a55;
+    background: #10171bf2;
   }
-  .command-actions {
-    justify-content: start;
+  .operator-portrait {
+    position: absolute;
+    left: 8px;
+    top: 8px;
+    bottom: 54px;
+    width: 90px;
   }
-  .command-copy {
-    font-size: 12px;
-  }
+  .operator-portrait h2 { font-size: 22px; padding-left: 0; }
+  .command-copy { margin-left: 98px; font-size: 11px; padding-right: 26px; }
+  .operator-stats { gap: 4px; margin: 5px 0; }
+  .operator-stats dd { font-size: 18px; }
+  .operator-skill { margin-top: 8px; padding-top: 8px; }
+  .operator-skill h3 { font-size: 16px; flex-wrap: wrap; }
+  .operator-skill h3 small { font-size: 11px; }
+  .skill-tags { font-size: 10px; }
+  .skill-description { margin-top: 4px; }
+  .inspector-close { width: 32px; height: 32px; min-height: 32px; top: 6px; right: 6px; }
   .deployment button {
     width: 72px;
     height: 88px;
@@ -538,10 +596,23 @@ footer {
 }
 @media (max-height: 550px) and (min-width: 650px) {
   .command {
-    height: 100px;
-    min-height: 100px;
-    padding: 8px;
+    width: min(40vw, 400px);
+    padding: 10px;
+    gap: 6px;
+    display: grid;
+    grid-template-columns: 90px minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr) auto;
+    overflow-y: auto;
   }
+  .command[hidden] { display: none; }
+  .operator-portrait { grid-column: 1; grid-row: 1; min-height: 90px; }
+  .operator-portrait h2 { font-size: 21px; padding-left: 0; }
+  .command-copy { font-size: 11px; padding-right: 24px; }
+  .command-actions { grid-column: 1 / -1; }
+  .operator-skill { margin-top: 6px; padding-top: 6px; }
+  .operator-skill h3 { font-size: 16px; }
+  .operator-stats { margin: 4px 0; }
+  .skill-tags { font-size: 10px; }
   .deployment button {
     height: 74px;
     width: 78px;
@@ -556,12 +627,6 @@ footer {
   }
   .battle-board {
     min-height: 70px;
-  }
-}
-@media (max-width: 350px) {
-  .command {
-    height: 184px;
-    min-height: 184px;
   }
 }
 .tile-controls {
