@@ -1,4 +1,4 @@
-> **Arkpedia fork:** work toward a separately embedded regular-stage simulator is described in [ARKPEDIA.md](ARKPEDIA.md). The application below still uses Stronghold rules; the Arkpedia overhaul is not playable yet. Original licensing and contributor credits remain intact.
+> **Arkpedia fork:** a playable regular-stage prototype for **0-1 Collapse** is available with `npm run start:arkpedia`. It supports six operators, configurable builds, an optional maxed support, animated chibis and manual deployment/combat. See [ARKPEDIA.md](ARKPEDIA.md) for scope and limitations. The original application below still uses Stronghold rules. Original licensing and contributor credits remain intact.
 
 # 卫戍协议：盟约 · Stronghold Protocol: Alliance
 

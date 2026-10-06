@@ -32,7 +32,10 @@
     "postinstall": "node tools/vendor.mjs",
     "setup": "node tools/setup.mjs",
     "doctor": "node tools/doctor.mjs",
-    "launch": "node scripts/launch.mjs"
+    "launch": "node scripts/launch.mjs",
+    "start:arkpedia": "node scripts/start-arkpedia.mjs",
+    "build:arkpedia-data": "node tools/arkpedia/build-mvp.mjs --refresh",
+    "test:arkpedia": "node --test test/arkpedia-*.test.js"
   },
   "engines": {
     "node": ">=22"

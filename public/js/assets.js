@@ -201,7 +201,11 @@ export function hasBackSpine(m, id) {
 }
 
 export function validSpine(sp) {
-  return isObj(sp) && typeof sp.skel === 'string' && /^\/[^\s]*\.skel$/.test(sp.skel) && typeof sp.atlas === 'string' && isObj(sp.anims);
+  const skeleton = sp && sp.skel;
+  const allowed = typeof skeleton === 'string' && !skeleton.split('/').includes('..')
+    && (/^\/(?!\/)[^\s?#]*\.skel$/.test(skeleton)
+      || /^https:\/\/raw\.githubusercontent\.com\/arkpedia\/arkpedia-sd-assets\/[a-f0-9]{40}\/models\/[^\s?#]+\.skel$/.test(skeleton));
+  return isObj(sp) && allowed && typeof sp.atlas === 'string' && isObj(sp.anims);
 }
 
 /** Best 2D picture for a unit asset id (operator avatar, token avatar, enemy icon, item icon). */

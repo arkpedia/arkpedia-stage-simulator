@@ -514,7 +514,7 @@ function moveAttracted(b, e, dt) {
     A.i = 0;
     A.ver = b.grid.version;
   }
-  let dist = e.s.moveSpeed * MOVE_SCALE * dt;
+  let dist = e.s.moveSpeed * (b.flags.moveScale ?? MOVE_SCALE) * dt;
   let moved = false;
   while (dist > 1e-9 && A.i < A.pts.length) {
     const p = A.pts[A.i];
@@ -561,7 +561,7 @@ function advanceRoute(b, e, dt, R, standing = false) {
     // move
     if (standing) { e.moving = false; return; }   // the walking waits for the attack clip
     if (!R.pts || R.version !== b.grid.version) planLeg(b, e, leg);
-    const speed = e.s.moveSpeed * MOVE_SCALE;
+    const speed = e.s.moveSpeed * (b.flags.moveScale ?? MOVE_SCALE);
     if (speed <= 0) { e.moving = false; return; }
     let dist = speed * budget;
     e.moving = true;
