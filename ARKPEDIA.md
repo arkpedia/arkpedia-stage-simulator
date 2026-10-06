@@ -23,6 +23,8 @@ The pinned 0-1 lightmap is ETC2 RGBA with Unity RGBM encoding. The browser linea
 
 The exporter preserves world-space static batches once, reverses Z/triangle winding for the renderer, removes the centered map anchor, and keeps the already-baked lightmap UVs. It does not apply the prefab transforms a second time or reuse an unrelated Stronghold map theme.
 
+Entry and defence markers use the original five standard box meshes and shared atlas from `arts/effects/[pack]map.ab` in that same Global version. The red and blue frames include the original warning/arrow symbols. They sit at source tile heights, are independent of the path overlay, and render above static buildings so entry points remain visible. Actor sprites render in front. Their additive/alpha materials and gentle intensity pulse approximate the game effect; they are not a verified reproduction of Unity's animation curve. The manifest pins and checksums the marker pack separately; a failed load is labelled in the map status.
+
 To reproduce the pack (Python 3.13+, Node 22+):
 
 ```sh
@@ -30,6 +32,9 @@ python3 -m venv .cache/map-env
 .cache/map-env/bin/pip install -r tools/arkpedia/stages/requirements.txt
 node tools/arkpedia/stages/fetch-bundles.mjs --version 26-09-23-17-49-43_b9cc4a
 .cache/map-env/bin/python tools/arkpedia/stages/export-scene.py --bundles .cache/arkpedia/map-source/ab --manifest .cache/arkpedia/map-source/hot_update_list.json --out .cache/arkpedia/stage-pack --version 26-09-23-17-49-43_b9cc4a --base-url https://ark-us-static-online.yo-star.com/assetbundle/official/Android/assets/26-09-23-17-49-43_b9cc4a
+# Standard entry/defence effects are a separate small bundle.
+node tools/arkpedia/stages/fetch-bundles.mjs --version 26-09-23-17-49-43_b9cc4a --gates-only
+.cache/map-env/bin/python tools/arkpedia/stages/export-gates.py --bundles .cache/arkpedia/map-source/ab --manifest .cache/arkpedia/map-source/hot_update_list.json --out .cache/arkpedia/gate-pack --version 26-09-23-17-49-43_b9cc4a
 ```
 
 The fetcher verifies unzipped bundle size/MD5 against the game manifest. Publication to the asset repository and updating its immutable simulator pin remain explicit steps; this does not automatically refresh the full stage catalogue. Game assets retain their original ownership (see `arkpedia-sd-assets/NOTICE.md`). The extractor stays in this GPL repository.
@@ -41,7 +46,7 @@ The fetcher verifies unzipped bundle size/MD5 against the game manifest. Publica
 - Vanilla grants DP when her manual ATK skill starts; Cardigan immediately heals herself by a percentage of talent-adjusted max HP; Orchid deals Arts damage, slows on hit and gains the source ASPD talent/skill bonuses.
 - Up to 12 unique squad members plus one distinct maxed support. The current selectable roster has nine operators; support is limited to that same supported roster.
 - Drag an operator onto a valid tile and choose its facing on the map; click/keyboard placement, Escape cancellation, surface-only deployment feedback and a continuous attack-range outline; blocking, physical/Arts attacks, healing, time/attack SP, manual/automatic skills, manual retreat/refund, increasing deployment costs, redeployment cooldown, clear/defeat.
-- Original 0-1 Chernobog meshes, textures, scenery and baked lighting, rendered with Three.js and animated Spine chibis; optional existing-viewer path overlay; pause, 1×/2×, restart, fullscreen/mobile viewport workspace, pause on native-fullscreen exit or hidden tab.
+- Original 0-1 Chernobog meshes, textures, scenery and baked lighting, original red entry/blue defence boxes, rendered with Three.js and animated Spine chibis; optional existing-viewer path overlay; pause, 1×/2×, restart, fullscreen/mobile viewport workspace, pause on native-fullscreen exit or hidden tab.
 
 The battle HUD follows the current stage planner layout: game enemy/life glyphs in a centered plate over the map, DP and remaining deployment slots at the lower right, and controls above the battlefield. Counter widths are reserved. DP recovery progress follows the actual combat resource and freezes with the battle; spending, refunds and the DP cap update the same readout. The overlay passes pointer input through to the map. This layout is independently implemented here, without importing private application code.
 

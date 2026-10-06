@@ -7,6 +7,7 @@ import { regionEdges } from "/shared/arkpedia/placement.js";
 import { spriteFacing } from "/shared/arkpedia/facing.js";
 import { skillHud } from "/shared/arkpedia/skill-hud.js";
 import { loadStageArt } from "./stage-art.js";
+import { loadGates } from "./gates.js";
 const P = globalThis.PIXI;
 const models = createAssets({
   loadSpine: async (entry) => {
@@ -108,6 +109,21 @@ export class StageRenderer {
     host.append(this.artStatus);
     this.artStatus.textContent = "Loading stage artwork…";
     this.artReady = this.loadArt();
+    this.gatesReady = this.loadGateArt();
+  }
+  async loadGateArt() {
+    await this.artReady;
+    if (this.destroyed) return;
+    try {
+      const gates = await loadGates(this.data.stage, this.heightAt);
+      if (this.destroyed) { gates.dispose(); return; }
+      this.gates = gates;
+      this.scene.add(gates.group);
+      this.render(null, 0, []);
+    } catch (error) {
+      if (!this.destroyed) this.artStatus.textContent += " · Entry/defence artwork unavailable";
+      console.warn("Could not load original entry/defence boxes", error);
+    }
   }
   async loadArt() {
     try {
@@ -245,17 +261,6 @@ export class StageRenderer {
         .drawPolygon(points.flatMap((p) => [p.x, p.y]))
         .endFill();
     };
-    // Flat inset markings avoid the old wireframe diagonals and don't repaint the tile sides.
-    for (const tile of this.tiles)
-      if (tile.type === 3 || tile.type === 4)
-        polygon(
-          tile.row,
-          tile.col,
-          tile.type === 3 ? 0xf38b74 : 0x73d3e8,
-          0.07,
-          2,
-          0.12,
-        );
     if (state.routes) {
       const seen = new Set();
       for (const path of Object.values(this.data.stage.pathing.paths)) {
@@ -537,11 +542,14 @@ export class StageRenderer {
         .drawCircle(a.x + (b.x - a.x) * t, a.y + (b.y - a.y) * t, 3)
         .endFill();
     }
+    this.gates?.update(battle?.time ?? 0);
     this.three.render(this.scene, this.camera);
     this.pixi.renderer.render(this.pixi.stage);
   }
   destroy() {
     this.destroyed = true;
+    this.gates?.group.removeFromParent();
+    this.gates?.dispose();
     this.art?.dispose();
     this.art?.group.removeFromParent();
     this.artStatus.remove();

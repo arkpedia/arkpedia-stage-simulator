@@ -189,6 +189,8 @@ const stageAssets = JSON.parse(execFileSync("git", ["show", `${sdCommit}:stage-m
 }));
 if (!stageAssets.stages[stage.code]) throw Error("Missing original stage artwork");
 output.stage.art = { repository: "arkpedia/arkpedia-sd-assets", commit: sdCommit, scene: stageAssets.stages[stage.code] };
+if (!stageAssets.effects?.standardGates) throw Error("Missing original entry/defence box artwork");
+output.stage.gates = { repository: "arkpedia/arkpedia-sd-assets", commit: sdCommit, pack: stageAssets.effects.standardGates };
 await writeFile(
   new URL("../../data/arkpedia-mvp.json", import.meta.url),
   `${JSON.stringify(output, null, 2)}\n`,

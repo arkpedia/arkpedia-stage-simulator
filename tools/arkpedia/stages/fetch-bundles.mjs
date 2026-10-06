@@ -20,11 +20,12 @@ const download=async url=> {
 const manifest=await download(`${base}/hot_update_list.json`);
 await writeFile(resolve(out,'hot_update_list.json'),manifest);
 const list=JSON.parse(manifest).abInfos;
-for (const bundle of [
+const bundles = args.includes('--gates-only') ? ['arts/effects/[pack]map.ab'] : [
   'scenes/obt/main/level_main_00-01/level_main_00-01.ab',
   'arts/maps/map_chernobog_a/res.ab',
   'scenes/obt/main/level_main_00-01/level_main_00-01/lightingdata.ab',
-]) {
+];
+for (const bundle of bundles) {
   const entry=list.find(e=>e.name===bundle);
   if (!entry) throw Error(`Bundle absent from pinned manifest: ${bundle}`);
   const file=bundle.replaceAll('/','_').replaceAll('#','__').replace(/\.[^.]*$/,'.dat');
