@@ -44,6 +44,8 @@ The fetcher verifies unzipped bundle size/MD5 against the game manifest. Publica
 
 Squad setup stays available in portrait. Battles on phones and touch tablets require landscape: a rotation prompt blocks battle controls in portrait. Rotating back pauses combat and cancels unfinished deployment without spending DP; the squad and battle progress remain intact. Returning to landscape requires an explicit Start/Resume. Tall desktop windows with mouse controls remain supported.
 
+Attack animations play once for each combat attack, then return to idle. Skills that reuse the normal attack animation (such as Melantha’s ATK buff) do not start attack loops without a combat event. Melantha’s normal attacks and active skill damage one enemy per attack, even when enemies overlap.
+
 Combat runs at a fixed 30Hz with seeded randomness. Rendering cannot change the number of combat ticks. A hidden page pauses instead of trying to catch up. Deployment entrance/death clips can finish cosmetically while paused; combat, skill durations and attack animations remain paused.
 
 ## Data and coverage

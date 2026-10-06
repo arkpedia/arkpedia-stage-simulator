@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import * as THREE from "/vendor/three.module.js";
 import { fitCamera, syncThreeCamera, pickTile } from "/js/render/projection.js";
-import { SpineActor } from "/js/render/spine.js";
+import { BattleActor } from "./battle-actor.js";
 import { createAssets } from "/js/assets.js";
 import { regionEdges } from "/shared/arkpedia/placement.js";
 import { spriteFacing } from "/shared/arkpedia/facing.js";
@@ -344,7 +344,7 @@ export class StageRenderer {
       this.preview?.actor.destroy();
       const loaded = this.preloaded.get(key);
       if (!loaded) return;
-      const actor = new SpineActor(loaded.skeleton, loaded.entry);
+      const actor = new BattleActor(loaded.skeleton, loaded.entry);
       this.pixi.stage.addChild(actor.spine);
       actor.update(0.001);
       this.preview = { key, actor };
@@ -390,8 +390,7 @@ export class StageRenderer {
         if (!view) {
           const loaded = this.preloaded.get(key);
           if (!loaded) continue;
-          const actor = new SpineActor(loaded.skeleton, loaded.entry);
-          actor.clipPerAttack = u.side === "enemy";
+          const actor = new BattleActor(loaded.skeleton, loaded.entry);
           const hp = new P.Graphics();
           this.pixi.stage.addChild(actor.spine, hp);
           actor.deploy();
@@ -501,7 +500,7 @@ export class StageRenderer {
         const v = this.views.get(ev[1]);
         const u = battle.units.find((u) => u.id === ev[1]),
           target = battle.units.find((u) => u.id === ev[2]);
-        v?.actor.attack(u?.s.interval || 1, u?.side === "enemy");
+        v?.actor.attack(u?.s.interval || 1);
         if (u && target && u.def.position === "RANGED")
           this.effects.push({
             source: u,
