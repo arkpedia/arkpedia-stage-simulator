@@ -3,6 +3,7 @@ import * as THREE from "/vendor/three.module.js";
 import { fitCamera, syncThreeCamera, pickTile } from "/js/render/projection.js";
 import { SpineActor } from "/js/render/spine.js";
 import { createAssets } from "/js/assets.js";
+import { regionEdges } from "/shared/arkpedia/placement.js";
 const P = globalThis.PIXI;
 const models = createAssets({
   loadSpine: async (entry) => {
@@ -68,17 +69,6 @@ export class StageRenderer {
         mesh.position.set(col, row, (height - 0.18) / 2);
         this.scene.add(mesh);
         this.tiles.push({ mesh, row, col, type, color });
-        if (type === 3 || type === 4) {
-          const ring = new THREE.Mesh(
-            new THREE.BoxGeometry(0.72, 0.72, 0.025),
-            new THREE.MeshBasicMaterial({
-              color: type === 3 ? 0xf37862 : 0x63cde3,
-              wireframe: true,
-            }),
-          );
-          ring.position.set(col, row, 0.035);
-          this.scene.add(ring);
-        }
         if (type === 1 || type === 2) {
           const button = document.createElement("button");
           button.className = "tile-hit";
@@ -88,25 +78,21 @@ export class StageRenderer {
             `${type === 1 ? "Raised" : "Ground"} tile, row ${row + 1}, column ${col + 1}`,
           );
           button.onclick = () => this.onPick(row, col);
+          button.onfocus = () => {
+            this.focusTile = { row, col };
+          };
+          button.onblur = () => {
+            this.focusTile = null;
+          };
           this.controls.append(button);
           this.tiles.at(-1).button = button;
         }
       }
     this.onPick = onPick;
-    host.addEventListener("pointerup", (e) => {
-      if (e.target.closest("button")) return;
-      const rect = host.getBoundingClientRect();
-      const tile = pickTile(
-        this.projection,
-        e.clientX - rect.left,
-        e.clientY - rect.top,
-        this.heightAt,
-        [0.38, 0],
-        g.rows,
-        g.cols,
-      );
-      if (tile) onPick(tile.row, tile.col);
-    });
+    this.surface = new P.Graphics();
+    this.surface.zIndex = 0;
+    this.pixi.stage.addChild(this.surface);
+    this.overlay = {};
     this.observer = new ResizeObserver(() => this.resize());
     this.observer.observe(host);
     this.resize();
@@ -171,33 +157,169 @@ export class StageRenderer {
     syncThreeCamera(this.projection, this.camera, width, height);
     for (const tile of this.tiles)
       if (tile.button) {
-        const p = this.projection.project(
-          tile.col,
-          tile.row,
-          this.heightAt(tile.row, tile.col),
-        );
+        const points = this.corners(tile.row, tile.col);
+        const x = Math.min(...points.map((p) => p.x)),
+          y = Math.min(...points.map((p) => p.y));
+        const width = Math.max(...points.map((p) => p.x)) - x,
+          height = Math.max(...points.map((p) => p.y)) - y;
         Object.assign(tile.button.style, {
-          left: `${p.x - p.s * 0.36}px`,
-          top: `${p.y - p.s * 0.25}px`,
-          width: `${p.s * 0.72}px`,
-          height: `${p.s * 0.5}px`,
+          left: `${x}px`,
+          top: `${y}px`,
+          width: `${width}px`,
+          height: `${height}px`,
+          clipPath: `polygon(${points.map((p) => `${((p.x - x) / width) * 100}% ${((p.y - y) / height) * 100}%`).join(",")})`,
         });
       }
     this.render(null, 0, []);
   }
-  highlight(keys = [], chosen = null) {
-    const set = new Set(keys);
-    for (const t of this.tiles) {
-      t.mesh.material.color.set(
-        chosen?.row === t.row && chosen?.col === t.col
-          ? "#bba574"
-          : set.has(t.row * 21 + t.col)
-            ? "#528681"
-            : t.color,
-      );
+  pickAt(clientX, clientY) {
+    const rect = this.host.getBoundingClientRect(),
+      g = this.data.stage.geometry;
+    return pickTile(
+      this.projection,
+      clientX - rect.left,
+      clientY - rect.top,
+      this.heightAt,
+      [0.38, 0],
+      g.rows,
+      g.cols,
+    );
+  }
+  worldAt(clientX, clientY, tile) {
+    const rect = this.host.getBoundingClientRect();
+    return this.projection.unproject(
+      clientX - rect.left,
+      clientY - rect.top,
+      this.heightAt(tile.row, tile.col),
+    );
+  }
+  corners(row, col, inset = 0) {
+    const h = this.heightAt(row, col) + 0.012,
+      d = 0.485 - inset;
+    return [
+      [-d, -d],
+      [d, -d],
+      [d, d],
+      [-d, d],
+    ].map(([x, y]) => this.projection.project(col + x, row + y, h));
+  }
+  highlight(overlay = {}) {
+    this.overlay = overlay;
+  }
+  drawSurface() {
+    const g = this.surface,
+      state = this.overlay,
+      geometry = this.data.stage.geometry;
+    g.clear();
+    const polygon = (row, col, color, alpha, stroke = 0, inset = 0) => {
+      const points = this.corners(row, col, inset);
+      g.lineStyle(stroke, color, 0.85)
+        .beginFill(color, alpha)
+        .drawPolygon(points.flatMap((p) => [p.x, p.y]))
+        .endFill();
+    };
+    // Flat inset markings avoid the old wireframe diagonals and don't repaint the tile sides.
+    for (const tile of this.tiles)
+      if (tile.type === 3 || tile.type === 4)
+        polygon(
+          tile.row,
+          tile.col,
+          tile.type === 3 ? 0xf38b74 : 0x73d3e8,
+          0.07,
+          2,
+          0.12,
+        );
+    if (state.routes) {
+      const seen = new Set();
+      for (const path of Object.values(this.data.stage.pathing.paths)) {
+        if (!path.points.length || seen.has(JSON.stringify(path.points)))
+          continue;
+        seen.add(JSON.stringify(path.points));
+        g.lineStyle(2, 0xecad80, 0.8);
+        path.points.forEach(([col, row], i) => {
+          const p = this.projection.project(
+            col,
+            row,
+            this.heightAt(row, col) + 0.025,
+          );
+          i ? g.lineTo(p.x, p.y) : g.moveTo(p.x, p.y);
+        });
+        for (const node of path.nodes) {
+          const [col, row] = node,
+            p = this.projection.project(
+              col,
+              row,
+              this.heightAt(row, col) + 0.025,
+            );
+          g.lineStyle(1, 0xecad80, 0.9)
+            .beginFill(0x10191d, 0.9)
+            .drawCircle(p.x, p.y, 3)
+            .endFill();
+        }
+      }
+      for (const path of Object.values(this.data.stage.pathing.paths))
+        for (const hold of path.holds) {
+          const [col, row] = hold.point,
+            p = this.projection.project(
+              col,
+              row,
+              this.heightAt(row, col) + 0.025,
+            );
+          g.lineStyle(2, 0xedb857, 1).drawCircle(p.x, p.y, 7);
+        }
     }
+    for (const key of state.available || [])
+      polygon(Math.floor(key / 21), key % 21, 0xb5ded3, 0.1, 1, 0.055);
+    const range = state.range || [];
+    for (const key of range) {
+      const row = Math.floor(key / 21),
+        col = key % 21;
+      if (row < geometry.rows && col < geometry.cols)
+        polygon(row, col, 0xf0bf63, 0.16);
+    }
+    g.lineStyle(2, 0xf0bf63, 0.95);
+    for (const edge of regionEdges(range, geometry.rows, geometry.cols)) {
+      const h = this.heightAt(edge.row, edge.col) + 0.015;
+      const a = this.projection.project(...edge.a, h),
+        b = this.projection.project(...edge.b, h);
+      g.moveTo(a.x, a.y).lineTo(b.x, b.y);
+    }
+    for (const tile of [state.chosen, this.focusTile])
+      if (tile) polygon(tile.row, tile.col, 0xe3f2ee, 0.12, 2, 0.02);
+  }
+  drawPreview() {
+    const chosen = this.overlay.chosen,
+      id = this.overlay.operator;
+    if (!chosen || !id) {
+      this.preview?.actor.destroy();
+      this.preview = null;
+      return;
+    }
+    const key = `operator/${id}/default/${chosen.dir === "UP" ? "back" : "front"}`;
+    if (this.preview?.key !== key) {
+      this.preview?.actor.destroy();
+      const loaded = this.preloaded.get(key);
+      if (!loaded) return;
+      const actor = new SpineActor(loaded.skeleton, loaded.entry);
+      this.pixi.stage.addChild(actor.spine);
+      actor.update(0.001);
+      this.preview = { key, actor };
+    }
+    const p = this.projection.project(
+      chosen.col,
+      chosen.row,
+      this.heightAt(chosen.row, chosen.col),
+    );
+    const spine = this.preview.actor.spine;
+    spine.scale.set(((chosen.dir === "LEFT" ? -1 : 1) * p.s) / 400, p.s / 400);
+    spine.position.set(p.x, p.y);
+    spine.alpha = 0.7;
+    spine.zIndex = 2000;
   }
   clear() {
+    this.highlight();
+    this.preview?.actor.destroy();
+    this.preview = null;
     for (const v of this.views.values()) {
       v.actor.destroy();
       v.hp.destroy();
@@ -206,6 +328,9 @@ export class StageRenderer {
     this.effects = [];
   }
   render(battle, dt, events, realDt = 0) {
+    this.drawSurface();
+    this.drawPreview();
+    this.onLayout?.();
     if (battle) {
       const live = new Set();
       for (const u of battle.units) {

@@ -132,3 +132,58 @@ test("escaping enemies consume life and zero life ends in defeat", () => {
   assert.equal(b.life, 0);
   assert.equal(b.leakedCount, 1);
 });
+test("every spawn names a route index, never an explicit numeric route", () => {
+  const a = stageAdapter(data.stage);
+  for (const spawn of a.spawns) {
+    assert.equal(typeof spawn.routeIndex, "number");
+    assert.equal(spawn.route, undefined);
+    assert.deepEqual(a.routes[spawn.routeIndex].start, [2, 8]);
+  }
+});
+test("missing viewer routes fail rather than switching to a different path", () => {
+  assert.throws(
+    () => stageAdapter({ ...data.stage, pathing: { paths: {} } }),
+    /Missing stage viewer path/,
+  );
+});
+test("unblocked enemies follow the existing viewer path and hold timing, including the diagonal", () => {
+  for (const index of [1, 2]) {
+    const isolated = structuredClone(data);
+    isolated.stage.geometry.waves[0].spawns = [
+      { enemy_id: "enemy_1002_nsabr", count: 1, time: 0, route: index },
+    ];
+    const b = new StandardBattle(isolated, selection);
+    const path = data.stage.pathing.paths[index];
+    const expectedAt = (time, speed) => {
+      for (let i = 0; i < path.points.length; i++) {
+        for (const hold of path.holds.filter(
+          (h) => h.at === path.distances[i],
+        )) {
+          if (time <= hold.seconds) return path.points[i];
+          time -= hold.seconds;
+        }
+        if (i === path.points.length - 1) return path.points[i];
+        const duration = (path.distances[i + 1] - path.distances[i]) / speed;
+        if (time <= duration)
+          return path.points[i].map(
+            (v, k) => v + ((path.points[i + 1][k] - v) * time) / duration,
+          );
+        time -= duration;
+      }
+    };
+    for (let i = 0; i < Math.round(15 / b.dt); i++) {
+      b.step();
+      const enemy = b.units.find((u) => u.side === "enemy" && u.alive);
+      if (!enemy) break;
+      const [x, y] = expectedAt(
+        b.time,
+        enemy.s.moveSpeed * data.stage.pathing.moveScale,
+      );
+      assert.ok(
+        Math.hypot(enemy.x - x, enemy.y - y) < 1e-5,
+        `route ${index} at ${b.time}: (${enemy.x},${enemy.y}) expected (${x},${y})`,
+      );
+    }
+    assert.equal(b.errors.length, 0);
+  }
+});

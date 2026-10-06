@@ -349,15 +349,6 @@ a {
   flex-wrap: wrap;
   justify-content: end;
 }
-.direction {
-  display: grid;
-  grid-template-columns: repeat(4, 42px);
-  gap: 5px;
-}
-.direction button {
-  font-size: 21px;
-  padding: 3px;
-}
 .deployment-wrap {
   display: grid;
   grid-template-columns: 32px minmax(0, 1fr) 32px;
@@ -584,15 +575,6 @@ footer {
   background: transparent;
   border-radius: 2px;
 }
-.tile-hit:hover {
-  background: #9cddda18;
-  border: 0;
-}
-.tile-hit:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 0;
-  background: #9cddda30;
-}
 .workspace .tile-controls {
   z-index: 1;
 }
@@ -603,4 +585,113 @@ footer {
   .prep > section.panel {
     grid-row: 1;
   }
+}
+/* The map's top-face projection owns the feedback; hit targets never draw screen-aligned squares. */
+.tile-hit:hover,
+.tile-hit:focus-visible {
+  background: transparent;
+  border: 0;
+  outline: none;
+}
+.battle-board,
+.deployment button {
+  touch-action: none;
+}
+.facing-picker {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  pointer-events: none;
+}
+.facing-picker svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.facing-picker path {
+  fill: #152027c9;
+  stroke: #c4d8dd;
+  stroke-width: 1;
+}
+.facing-picker .facing-frame {
+  fill: #10191d77;
+  stroke: #d9e7e9;
+  stroke-width: 1.5;
+}
+.facing-picker path.active {
+  fill: #e4b04ab0;
+  stroke: #ffe0a0;
+}
+.facing-picker button {
+  position: absolute;
+  width: 44px;
+  height: 44px;
+  min-height: 44px;
+  padding: 0;
+  background: #192931e8;
+  border: 1px solid #b2c5ca;
+  color: #f0f5f6;
+  font-size: 25px;
+  pointer-events: auto;
+  transform: translate(-50%, -50%);
+}
+.facing-picker button.active,
+.facing-picker button:hover {
+  background: #675332;
+  color: #ffe2a4;
+  border-color: #ffe2a4;
+}
+.facing-picker [data-facing="UP"] {
+  left: 50%;
+  top: 20%;
+}
+.facing-picker [data-facing="RIGHT"] {
+  left: 80%;
+  top: 50%;
+}
+.facing-picker [data-facing="DOWN"] {
+  left: 50%;
+  top: 80%;
+}
+.facing-picker [data-facing="LEFT"] {
+  left: 20%;
+  top: 50%;
+}
+.facing-picker .facing-cancel {
+  left: 50%;
+  top: 50%;
+  width: 36px;
+  height: 36px;
+  min-height: 36px;
+  background: #1a252b;
+  border-color: #889ca5;
+  font-size: 22px;
+}
+.drag-ghost {
+  position: fixed;
+  z-index: 30;
+  pointer-events: none;
+  transform: translate(-50%, -110%);
+  display: grid;
+  justify-items: center;
+  gap: 4px;
+  font-size: 12px;
+  text-shadow: 0 1px 3px #000;
+}
+.drag-ghost img {
+  width: 52px;
+  height: 52px;
+  object-fit: contain;
+  border: 2px solid #83969d;
+  background: #152027cc;
+  border-radius: 3px;
+}
+.drag-ghost.valid img {
+  border-color: var(--accent);
+}
+
+.deployment button,
+.facing-picker {
+  user-select: none;
+  -webkit-user-select: none;
 }

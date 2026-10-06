@@ -2,6 +2,7 @@
 // Compact, pinned public data for the first regular-stage slice. No private app source is used.
 import { readFile, writeFile, mkdir } from "node:fs/promises";
 import { execFileSync } from "node:child_process";
+import { createHash } from "node:crypto";
 const cache = new URL("../../.cache/arkpedia/", import.meta.url);
 await mkdir(cache, { recursive: true });
 const paths = {
@@ -162,6 +163,29 @@ const output = {
   operators,
   enemies: enemyRecords,
 };
+// Consume the existing stage browser's public route output without publishing its private application source.
+const routeArg = process.argv.indexOf("--routes");
+const prior = JSON.parse(
+  await readFile(
+    new URL("../../data/arkpedia-mvp.json", import.meta.url),
+    "utf8",
+  ),
+);
+const pathing =
+  routeArg >= 0
+    ? JSON.parse(await readFile(process.argv[routeArg + 1], "utf8"))
+    : prior.stage.pathing;
+if (
+  !pathing ||
+  pathing.stage !== stage.code ||
+  pathing.schemaVersion !== 1 ||
+  pathing.geometryHash !==
+    createHash("sha256").update(JSON.stringify(geometry)).digest("hex")
+)
+  throw new Error(
+    "Export matching routes from Arkpedia's stage browser and pass --routes <routes.json>",
+  );
+output.stage.pathing = pathing;
 await writeFile(
   new URL("../../data/arkpedia-mvp.json", import.meta.url),
   `${JSON.stringify(output, null, 2)}\n`,

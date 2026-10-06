@@ -32,35 +32,39 @@ export function stageAdapter(source) {
     ]),
   );
   const pair = (p) => [p.row, p.col];
-  const routes = g.routes.map((route) => {
+  const routes = g.routes.map((route, index) => {
     if (route.placeholder)
       return { start: [0, 0], end: [0, 0], checkpoints: [] };
-    const checkpoints = [];
-    route.checkpoints.forEach((cp, i) => {
-      if (cp.type !== "move") throw new Error("Unsupported route checkpoint");
-      checkpoints.push({ type: "MOVE", pos: pair(cp.position) });
-      for (const wait of route.waits.filter((w) => w.after_checkpoint === i)) {
-        if (wait.type !== "wait_for_seconds")
-          throw new Error("Unsupported route wait");
-        checkpoints.push({
-          type: "WAIT",
-          pos: pair(cp.position),
-          time: wait.seconds,
-        });
-      }
-    });
-    return {
-      motion: route.motion,
-      start: pair(route.start),
-      end: pair(route.end),
-      checkpoints,
-    };
+    const path = source.pathing?.paths?.[index];
+    if (path) {
+      if (path.breaks.length || path.holds.some((h) => h.tunnel))
+        throw new Error("Unsupported route tunnel");
+      const checkpoints = [];
+      path.points.forEach(([col, row], at) => {
+        if (at > 0) checkpoints.push({ type: "MOVE", pos: [row, col] });
+        for (const hold of path.holds.filter(
+          (h) => h.at === path.distances[at],
+        ))
+          checkpoints.push({
+            type: "WAIT",
+            pos: [row, col],
+            time: hold.seconds,
+          });
+      });
+      return {
+        motion: route.motion,
+        start: pair(route.start),
+        end: pair(route.end),
+        checkpoints,
+      };
+    }
+    throw new Error("Missing stage viewer path for route " + index);
   });
   const spawns = g.waves[0].spawns.flatMap((s) =>
     Array.from({ length: s.count }, (_, i) => ({
       enemyKey: s.enemy_id,
       time: s.time + i * (s.interval ?? 0),
-      route: s.route,
+      routeIndex: s.route,
       ownerPlayerId: "arkpedia",
     })),
   );
@@ -99,7 +103,7 @@ export class StandardBattle extends Battle {
         dpMax: config.max_dp,
         dpPerSec: config.dp_per_second,
         startOpCooldown: 0,
-        moveScale: 1,
+        moveScale: data.stage.pathing?.moveScale ?? 0.65,
       },
       players: [
         { playerId: "arkpedia", side: "L", coords: "field", units: [] },

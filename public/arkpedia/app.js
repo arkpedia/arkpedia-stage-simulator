@@ -6,6 +6,8 @@ import {
   recordFor,
 } from "/shared/arkpedia/loadout.js";
 import { StageRenderer } from "./renderer.js";
+import { absoluteRangeKeys } from "/sim/targeting.js";
+import { facingAt } from "/shared/arkpedia/placement.js";
 const escape = (s) =>
   String(s).replace(
     /[&<>"']/g,
@@ -28,7 +30,10 @@ let renderer,
 let loading = false,
   viewport = "preview",
   battleError = "",
-  selection;
+  selection,
+  dragging = null,
+  aimPointer = null,
+  showRoutes = false;
 const response = await fetch("/data/arkpedia-mvp.json");
 if (!response.ok) throw Error("Stage data unavailable");
 const data = await response.json();
@@ -49,7 +54,7 @@ if (requested && requested !== "0-1") {
 function prep() {
   app.innerHTML = `<div class="frame"><header class="topline"><div><p class="eyebrow">Arkpedia · prototype</p><h1>Stage simulator</h1></div><span class="muted">0-1 Collapse</span></header>
  <div class="prep"><section class="preview"><div class="stage-title"><span class="stage-code">0-1</span><h2>Collapse</h2></div><p class="help">${escape(data.stage.description)}</p><div class="board" id="board"></div><div class="legend"><span class="spawn">Enemy entry</span><span class="goal">Defence objective</span><span>Raised tiles: ranged operators</span></div>
- <div class="panel help"><h3>How to play</h3><p>Choose your squad, then open the battle workspace. Select an operator, choose a highlighted tile and confirm a facing direction. Select a deployed operator to activate a ready skill or retreat.</p></div>
+ <div class="panel help"><h3>How to play</h3><p>Choose your squad, then open the battle workspace. Drag an operator onto a tile, then choose its facing on the map. You can also select the operator and click a tile. Select a deployed operator to activate a ready skill or retreat.</p></div>
  <p class="notice">This first slice supports 0-1 and the six operators shown. Squad capacity is 12 + one distinct maxed support; the MVP roster is limited to these six. Modules, other stages and the rest of the roster are still being built.</p></section>
  <section class="panel"><h2>Prepare your squad</h2><p class="help">Select an operator to adjust their build.</p><div class="roster" id="roster"></div><div id="build"></div><label class="support">Support · optional, fully maxed<select id="support"><option value="">No support</option></select></label><div class="prepare-actions"><button class="primary" id="start">Open battle workspace</button></div><p class="error" id="prep-error" role="status" aria-live="polite"></p></section></div>
  <footer>Built on Stronghold Protocol · GPL-3.0-or-later. Unofficial fan simulator; timings are not yet verified frame-for-frame against the game.<div class="links"><a href="https://github.com/arkpedia/arkpedia-stage-simulator" target="_blank" rel="noreferrer">Simulator source</a><a href="https://github.com/arkpedia/arkpedia-sd-assets" target="_blank" rel="noreferrer">Chibi assets & credits</a></div></footer></div>`;
@@ -145,7 +150,7 @@ async function start() {
     workspace = document.createElement("section");
     workspace.className = "workspace";
     workspace.setAttribute("aria-label", "Battle workspace");
-    workspace.innerHTML = `<header class="battle-header"><div class="stage-title"><span class="stage-code">0-1</span><h2>Collapse</h2></div><div class="hud" id="hud"></div><div class="battle-controls"><button id="pause">Pause</button><button id="speed">1×</button><button id="restart">Restart</button><button id="exit">Exit</button></div></header><div class="board battle-board" id="battle-board"><span class="pause-label" id="paused-label" hidden>Paused</span></div><div class="command" id="command"></div><div class="deployment-wrap"><button id="shelf-left" aria-label="Scroll operators left">‹</button><div class="deployment" id="deployment"></div><button id="shelf-right" aria-label="Scroll operators right">›</button></div><p class="status-note" id="battle-message" role="status" aria-live="polite"></p>`;
+    workspace.innerHTML = `<header class="battle-header"><div class="stage-title"><span class="stage-code">0-1</span><h2>Collapse</h2></div><div class="hud" id="hud"></div><div class="battle-controls"><button id="routes" aria-pressed="false">Paths</button><button id="pause">Pause</button><button id="speed">1×</button><button id="restart">Restart</button><button id="exit">Exit</button></div></header><div class="board battle-board" id="battle-board"><span class="pause-label" id="paused-label" hidden>Paused</span></div><div class="command" id="command"></div><div class="deployment-wrap"><button id="shelf-left" aria-label="Scroll operators left">‹</button><div class="deployment" id="deployment"></div><button id="shelf-right" aria-label="Scroll operators right">›</button></div><p class="status-note" id="battle-message" role="status" aria-live="polite"></p>`;
     document.body.append(workspace);
     const board = workspace.querySelector("#battle-board");
     // Move canvases to a full-viewport battle container; preview has no deployment handler.
@@ -159,21 +164,93 @@ async function start() {
     renderer.observer.observe(board);
     renderer.onPick = pick;
     renderer.controls.inert = false;
+    const picker = document.createElement("div");
+    picker.className = "facing-picker";
+    picker.hidden = true;
+    picker.innerHTML = `<svg aria-hidden="true" viewBox="-100 -100 200 200"><path class="facing-frame" d="M0 -92L92 0L0 92L-92 0Z"/>${[
+      ["UP", "M0 -88L42 -42L0 -22L-42 -42Z"],
+      ["RIGHT", "M88 0L42 42L22 0L42 -42Z"],
+      ["DOWN", "M0 88L-42 42L0 22L42 42Z"],
+      ["LEFT", "M-88 0L-42 -42L-22 0L-42 42Z"],
+    ]
+      .map(([dir, path]) => `<path data-cone="${dir}" d="${path}"/>`)
+      .join("")}</svg>
+    ${[
+      ["UP", "↑"],
+      ["RIGHT", "→"],
+      ["DOWN", "↓"],
+      ["LEFT", "←"],
+    ]
+      .map(
+        ([dir, glyph]) =>
+          `<button data-facing="${dir}" aria-label="Deploy facing ${dir.toLowerCase()}">${glyph}</button>`,
+      )
+      .join("")}
+    <button class="facing-cancel" aria-label="Cancel placement">×</button>`;
+    board.append(picker);
+    for (const button of picker.querySelectorAll("[data-facing]")) {
+      button.onpointerenter = button.onfocus = () => {
+        if (pending) {
+          pending.dir = button.dataset.facing;
+          drawHud();
+        }
+      };
+      button.onclick = () => confirmFacing(button.dataset.facing);
+    }
+    picker.querySelector(".facing-cancel").onclick = () => {
+      pending = null;
+      drawHud();
+    };
+    // Pointer capture lets touch users drag out of the centre to aim. A cancelled gesture never deploys.
+    board.onpointerdown = (e) => {
+      if (!pending || e.target.closest("button:not(.facing-cancel)")) return;
+      e.preventDefault();
+      aimPointer = { id: e.pointerId, x: e.clientX, y: e.clientY };
+      board.setPointerCapture(e.pointerId);
+    };
+    board.onpointermove = (e) => {
+      if (!pending || e.target.closest("[data-facing]")) return;
+      const dir = facingAt(
+        renderer.worldAt(e.clientX, e.clientY, pending),
+        pending,
+      );
+      if (pending.dir !== dir) {
+        pending.dir = dir;
+        drawHud();
+      }
+    };
     board.onpointerup = (e) => {
-      if (e.target.closest("button")) return;
-      const rect = board.getBoundingClientRect();
-      import("/js/render/projection.js").then(({ pickTile }) => {
-        const tile = pickTile(
-          renderer.projection,
-          e.clientX - rect.left,
-          e.clientY - rect.top,
-          renderer.heightAt,
-          [0.38, 0],
-          6,
-          9,
+      if (aimPointer?.id === e.pointerId) {
+        const moved =
+          Math.hypot(e.clientX - aimPointer.x, e.clientY - aimPointer.y) > 6;
+        aimPointer = null;
+        if (!pending) return;
+        const dir = facingAt(
+          renderer.worldAt(e.clientX, e.clientY, pending),
+          pending,
         );
-        if (tile) pick(tile.row, tile.col);
-      });
+        if (dir) confirmFacing(dir);
+        else if (!moved) {
+          pending = null;
+          drawHud();
+        }
+        return;
+      }
+      if (pending || e.target.closest("button")) return;
+      const tile = renderer.pickAt(e.clientX, e.clientY);
+      if (tile) pick(tile.row, tile.col);
+    };
+    board.onpointercancel = () => {
+      aimPointer = null;
+      pending = null;
+      drawHud();
+    };
+    renderer.onLayout = layoutFacing;
+    workspace.querySelector("#routes").onclick = (e) => {
+      showRoutes = !showRoutes;
+      e.currentTarget.setAttribute("aria-pressed", String(showRoutes));
+      e.currentTarget.classList.toggle("active", showRoutes);
+      drawHud();
     };
     workspace.querySelector("#pause").onclick = () => {
       paused = !paused;
@@ -198,6 +275,7 @@ async function start() {
     paused = true;
     accumulator = 0;
     app.inert = true;
+    app.hidden = true;
     // Native fullscreen is optional; the viewport workspace remains the supported fallback (e.g. iOS).
     try {
       if (
@@ -211,6 +289,7 @@ async function start() {
     battle.setViewport(viewport);
     renderer.resize();
     drawHud();
+    workspace.querySelector("#pause").focus();
   } catch (error) {
     status.textContent = "Could not start: " + error.message;
     console.error(error);
@@ -223,10 +302,9 @@ function restart() {
   workspace.querySelector("#deployment").innerHTML = "";
   battle = new StandardBattle(data, selection, { seed: Date.now() });
   battle.setViewport(viewport);
-  paused = false;
+  paused = true;
   accumulator = 0;
-  selected = null;
-  pending = null;
+  cancelPlacement();
   battleError = "";
   renderer.clear();
   workspace.querySelector(".result")?.remove();
@@ -238,14 +316,17 @@ async function exit() {
   viewport = "preview";
   if (document.fullscreenElement)
     await document.exitFullscreen().catch(() => {});
+  cancelPlacement();
   renderer.destroy();
   workspace.remove();
   app.inert = false;
+  app.hidden = false;
   workspace = null;
   battle = null;
   selected = null;
   pending = null;
   prep();
+  document.querySelector("#start").focus();
 }
 function pick(row, col) {
   if (!battle || battle.finished) return;
@@ -253,7 +334,7 @@ function pick(row, col) {
   if (selected && !battle.bench[selected].unit?.alive) {
     const error = battle.placementError(selected, row, col);
     if (error) battleError = error;
-    else pending = { row, col, dir: "RIGHT" };
+    else pending = { row, col, dir: null };
   } else {
     const unit = battle.allyUnits.find(
       (u) => u.alive && u.tileR === row && u.tileC === col,
@@ -278,18 +359,76 @@ function drawHud() {
     shelf.innerHTML = Object.keys(battle.bench)
       .map(
         (id) =>
-          `<button data-id="${id}" aria-pressed="false"><img src="${icon(data.operators[id])}" alt=""><span>${data.operators[id].name}</span><span class="cost"></span></button>`,
+          `<button data-id="${id}" aria-pressed="false"><img src="${icon(data.operators[id])}" alt="" draggable="false"><span>${data.operators[id].name}</span><span class="cost"></span></button>`,
       )
       .join("");
-    shelf.querySelectorAll("button").forEach(
-      (button) =>
-        (button.onclick = () => {
-          selected = button.dataset.id;
-          pending = null;
-          battleError = "";
+    shelf.querySelectorAll("button").forEach((button) => {
+      button.onclick = () => {
+        if (button.suppressClick) {
+          button.suppressClick = false;
+          return;
+        }
+        selected = button.dataset.id;
+        pending = null;
+        battleError = "";
+        drawHud();
+      };
+      button.onpointerdown = (e) => {
+        if (
+          e.button !== 0 ||
+          battle.finished ||
+          battle.bench[button.dataset.id].unit?.alive
+        )
+          return;
+        e.preventDefault();
+        selected = button.dataset.id;
+        pending = null;
+        battleError = "";
+        dragging = {
+          button,
+          id: e.pointerId,
+          x: e.clientX,
+          y: e.clientY,
+          moved: false,
+          over: null,
+        };
+        button.setPointerCapture(e.pointerId);
+        drawHud();
+      };
+      button.onpointermove = (e) => {
+        if (dragging?.id !== e.pointerId) return;
+        dragging.moved ||=
+          Math.hypot(e.clientX - dragging.x, e.clientY - dragging.y) > 6;
+        if (!dragging.moved) return;
+        const tile = renderer.pickAt(e.clientX, e.clientY);
+        dragging.over =
+          tile && !battle.placementError(selected, tile.row, tile.col)
+            ? tile
+            : null;
+        showDragGhost(e.clientX, e.clientY);
+        drawHud();
+      };
+      button.onpointerup = (e) => {
+        if (dragging?.id !== e.pointerId) return;
+        const moved = dragging.moved,
+          tile = renderer.pickAt(e.clientX, e.clientY);
+        dragging = null;
+        workspace.querySelector(".drag-ghost")?.remove();
+        button.suppressClick = moved;
+        if (moved && tile) pick(tile.row, tile.col);
+        else drawHud();
+      };
+      button.onlostpointercapture = (e) => {
+        if (dragging?.id === e.pointerId) {
+          cancelPlacement();
           drawHud();
-        }),
-    );
+        }
+      };
+      button.onpointercancel = () => {
+        cancelPlacement();
+        drawHud();
+      };
+    });
   }
   for (const button of shelf.querySelectorAll("button")) {
     const id = button.dataset.id,
@@ -311,7 +450,7 @@ function drawHud() {
   const b = battle.bench[selected],
     unit = b?.unit?.alive ? b.unit : null;
   let html =
-    '<div class="command-copy"><h3>Deploy an operator</h3>Select an operator below, then a highlighted tile and a direction.</div>';
+    '<div class="command-copy"><h3>Deploy an operator</h3>Drag an operator onto the map, then choose its facing. Click an operator and tile to place without dragging.</div>';
   let highlights = [];
   if (unit) {
     highlights = [...unit.rangeKeys];
@@ -322,21 +461,7 @@ function drawHud() {
     for (let r = 0; r < 6; r++)
       for (let c = 0; c < 9; c++)
         if (!battle.placementError(selected, r, c)) highlights.push(r * 21 + c);
-    html = `<div class="command-copy"><h3>${data.operators[selected].name} · ${battle.cost(selected)} DP</h3>${pending ? "Choose the attack direction, then deploy." : "Choose a highlighted " + (data.operators[selected].position === "RANGED" ? "raised" : "ground") + " tile."}<br>${battleError ? `<span class="error">${escape(battleError)}</span>` : ""}</div><div class="command-actions">${
-      pending
-        ? `<div class="direction">${[
-            ["LEFT", "←"],
-            ["UP", "↑"],
-            ["DOWN", "↓"],
-            ["RIGHT", "→"],
-          ]
-            .map(
-              ([d, g]) =>
-                `<button data-dir="${d}" class="${pending.dir === d ? "active" : ""}" aria-label="Face ${d.toLowerCase()}" aria-pressed="${pending.dir === d}">${g}</button>`,
-            )
-            .join("")}</div><button id="deploy" class="primary">Deploy</button>`
-        : ""
-    }<button id="cancel">Cancel</button></div>`;
+    html = `<div class="command-copy"><h3>${data.operators[selected].name} · ${battle.cost(selected)} DP</h3>${pending ? "Choose a direction on the map. Arrow keys preview; Enter deploys." : "Drag onto a " + (data.operators[selected].position === "RANGED" ? "raised" : "ground") + " tile, or click a tile."}<br>${battleError ? `<span class="error">${escape(battleError)}</span>` : ""}</div><div class="command-actions"><button id="cancel">Cancel</button></div>`;
   }
   const command = workspace.querySelector("#command");
   // Do not replace focused interactive controls during the battle clock.
@@ -353,25 +478,8 @@ function drawHud() {
     command.dataset.alive = String(!!unit);
     command.dataset.ready = String(unit?.skill.ready);
     command.dataset.error = battleError;
-    command.querySelectorAll("[data-dir]").forEach(
-      (el) =>
-        (el.onclick = () => {
-          pending.dir = el.dataset.dir;
-          drawHud();
-        }),
-    );
-    command.querySelector("#deploy")?.addEventListener("click", () => {
-      try {
-        battle.deployOperator(selected, pending.row, pending.col, pending.dir);
-        pending = null;
-      } catch (e) {
-        battleError = e.message;
-      }
-      drawHud();
-    });
     command.querySelector("#cancel")?.addEventListener("click", () => {
-      selected = null;
-      pending = null;
+      cancelPlacement();
       drawHud();
     });
     command.querySelector("#retreat")?.addEventListener("click", () => {
@@ -389,10 +497,29 @@ function drawHud() {
       /<div class="command-copy">([\s\S]*?)<\/div><div class="command-actions">/,
     )[1];
   }
-  renderer.highlight(highlights, pending);
+  const hover = dragging?.over ? { ...dragging.over, dir: "RIGHT" } : null;
+  const preview = pending || hover;
+  const range = unit
+    ? highlights
+    : preview?.dir
+      ? absoluteRangeKeys(
+          recordFor(b.build, data).rangeGrid,
+          preview.row,
+          preview.col,
+          preview.dir,
+        )
+      : [];
+  renderer.highlight({
+    available: b && !unit && !pending ? highlights : [],
+    range,
+    chosen: preview,
+    operator: preview ? selected : null,
+    routes: showRoutes,
+  });
+  layoutFacing();
   workspace.querySelector("#battle-message").textContent =
     battleError ||
-    "Select an operator to inspect its range. Space: pause / resume. Escape: leave fullscreen or cancel placement.";
+    "Drag to deploy · Click an operator to inspect · Space: pause · Escape: cancel";
   if (battle.finished && !workspace.querySelector(".result")) {
     paused = true;
     const result = document.createElement("div");
@@ -401,6 +528,70 @@ function drawHud() {
     workspace.querySelector("#battle-board").append(result);
     result.querySelector("#again").onclick = restart;
     result.querySelector("#back").onclick = exit;
+  }
+}
+function cancelPlacement() {
+  const gesture = dragging;
+  dragging = null;
+  if (gesture?.button) {
+    gesture.button.suppressClick = true;
+    if (gesture.button.hasPointerCapture(gesture.id))
+      gesture.button.releasePointerCapture(gesture.id);
+  }
+  battleError = "";
+  aimPointer = null;
+  selected = null;
+  pending = null;
+  workspace?.querySelector(".drag-ghost")?.remove();
+}
+function showDragGhost(x, y) {
+  let ghost = workspace.querySelector(".drag-ghost");
+  if (!ghost) {
+    ghost = document.createElement("div");
+    ghost.className = "drag-ghost";
+    ghost.innerHTML = `<img src="${icon(data.operators[selected])}" alt=""><span>${data.operators[selected].name}</span>`;
+    workspace.append(ghost);
+  }
+  ghost.classList.toggle("valid", !!dragging.over);
+  ghost.style.left = `${x}px`;
+  ghost.style.top = `${y}px`;
+}
+function confirmFacing(dir) {
+  if (!pending) return;
+  try {
+    battle.deployOperator(selected, pending.row, pending.col, dir);
+    pending = null;
+    battleError = "";
+  } catch (e) {
+    battleError = e.message;
+  }
+  drawHud();
+}
+function layoutFacing() {
+  const picker = workspace?.querySelector(".facing-picker");
+  if (!picker) return;
+  picker.hidden = !pending || battle.finished;
+  if (!pending) return;
+  const p = renderer.projection.project(
+    pending.col,
+    pending.row,
+    renderer.heightAt(pending.row, pending.col),
+  );
+  const radius = Math.max(70, Math.min(100, p.s * 1.05));
+  // Keep all four hit targets within the map even at its edge.
+  const x = Math.max(radius, Math.min(renderer.host.clientWidth - radius, p.x));
+  const y = Math.max(
+    radius,
+    Math.min(renderer.host.clientHeight - radius, p.y),
+  );
+  picker.style.left = `${x}px`;
+  picker.style.top = `${y}px`;
+  picker.style.width = picker.style.height = `${radius * 2}px`;
+  for (const el of picker.querySelectorAll("[data-facing], [data-cone]")) {
+    const active = (el.dataset.facing || el.dataset.cone) === pending.dir;
+    el.classList.toggle("active", active);
+    if (el.tagName === "BUTTON")
+      el.setAttribute("aria-pressed", String(active));
   }
 }
 document.addEventListener("fullscreenchange", () => {
@@ -412,7 +603,7 @@ document.addEventListener("fullscreenchange", () => {
     viewport = "fullscreen-workspace";
     battle.setViewport(viewport);
     paused = true;
-    pending = null;
+    cancelPlacement();
     drawHud();
     renderer.resize();
   }
@@ -421,6 +612,7 @@ document.addEventListener("visibilitychange", () => {
   if (document.hidden && battle) {
     paused = true;
     accumulator = 0;
+    cancelPlacement();
     drawHud();
   }
 });
@@ -432,9 +624,26 @@ document.addEventListener("keydown", (e) => {
     paused = !paused;
     drawHud();
   }
-  if (e.key === "Escape" && !document.fullscreenElement) {
-    selected = null;
-    pending = null;
+  if (
+    pending &&
+    ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "Enter"].includes(e.key)
+  ) {
+    e.preventDefault();
+    if (e.key === "Enter") {
+      if (pending.dir) confirmFacing(pending.dir);
+    } else {
+      pending.dir = {
+        ArrowUp: "UP",
+        ArrowDown: "DOWN",
+        ArrowLeft: "LEFT",
+        ArrowRight: "RIGHT",
+      }[e.key];
+      drawHud();
+    }
+    return;
+  }
+  if (e.key === "Escape") {
+    cancelPlacement();
     drawHud();
   }
 });
