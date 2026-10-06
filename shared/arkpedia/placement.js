@@ -14,6 +14,16 @@ export function facingAt(point, tile, deadZone = 0.55) {
         ? "UP"
         : "DOWN";
 }
+// Screen-space swipe from the actual handle, including a clamped picker at map edges.
+// Releasing back inside the dead zone leaves placement pending and spends no DP.
+export function swipeFacing(point, origin, deadZone = 24) {
+  if (!point || !origin) return null;
+  return facingAt(
+    { x: point.x - origin.x, y: origin.y - point.y },
+    { row: 0, col: 0 },
+    deadZone,
+  );
+}
 // Only the perimeter is stroked; adjacent range cells never get a dividing border.
 export function regionEdges(keys, rows, cols, stride = 21) {
   const cells = new Set(

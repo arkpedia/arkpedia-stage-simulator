@@ -4,6 +4,7 @@ import { fitCamera, syncThreeCamera, pickTile } from "/js/render/projection.js";
 import { SpineActor } from "/js/render/spine.js";
 import { createAssets } from "/js/assets.js";
 import { regionEdges } from "/shared/arkpedia/placement.js";
+import { spriteFacing } from "/shared/arkpedia/facing.js";
 import { skillHud } from "/shared/arkpedia/skill-hud.js";
 import { loadStageArt } from "./stage-art.js";
 const P = globalThis.PIXI;
@@ -402,7 +403,8 @@ export class StageRenderer {
         const bound = view.actor.entry.bounds;
         // Common skeleton scale preserves the slug's smaller size relative to an operator.
         const scale = point.s / 400;
-        view.actor.spine.scale.set((u.dir === "LEFT" ? -1 : 1) * scale, scale);
+        view.facing = spriteFacing(u, view);
+        view.actor.spine.scale.set(view.facing * scale, scale);
         view.actor.spine.position.set(point.x, point.y);
         view.actor.spine.zIndex = 1000 - point.y * -1;
         if (dt > 0)

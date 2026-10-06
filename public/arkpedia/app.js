@@ -7,7 +7,7 @@ import {
 } from "/shared/arkpedia/loadout.js";
 import { StageRenderer } from "./renderer.js";
 import { absoluteRangeKeys } from "/sim/targeting.js";
-import { facingAt } from "/shared/arkpedia/placement.js";
+import { swipeFacing } from "/shared/arkpedia/placement.js";
 import { skillHud } from "/shared/arkpedia/skill-hud.js";
 const escape = (s) =>
   String(s).replace(
@@ -189,10 +189,10 @@ async function start() {
           `<button data-facing="${dir}" aria-label="Deploy facing ${dir.toLowerCase()}">${glyph}</button>`,
       )
       .join("")}
-    <button class="facing-cancel" aria-label="Cancel placement">×</button>`;
+    <button class="facing-handle" aria-label="Drag from here to choose deployment direction">◇</button>`;
     board.append(picker);
     for (const button of picker.querySelectorAll("[data-facing]")) {
-      button.onpointerenter = button.onfocus = () => {
+      button.onfocus = () => {
         if (pending) {
           pending.dir = button.dataset.facing;
           drawHud();
@@ -200,53 +200,52 @@ async function start() {
       };
       button.onclick = () => confirmFacing(button.dataset.facing);
     }
-    picker.querySelector(".facing-cancel").onclick = () => {
-      pending = null;
+    const handle = picker.querySelector(".facing-handle");
+    // The portrait drop only opens this picker. A NEW gesture from its centre
+    // previews facing, and only its release can confirm deployment.
+    handle.onpointerdown = (e) => {
+      if (!pending || e.button !== 0) return;
+      e.preventDefault();
+      e.stopPropagation();
+      aimPointer = { id: e.pointerId, x: e.clientX, y: e.clientY };
+      pending.dir = null;
+      handle.setPointerCapture(e.pointerId);
       drawHud();
     };
-    // Pointer capture lets touch users drag out of the centre to aim. A cancelled gesture never deploys.
-    board.onpointerdown = (e) => {
-      if (!pending || e.target.closest("button:not(.facing-cancel)")) return;
-      e.preventDefault();
-      aimPointer = { id: e.pointerId, x: e.clientX, y: e.clientY };
-      board.setPointerCapture(e.pointerId);
-    };
-    board.onpointermove = (e) => {
-      if (!pending || e.target.closest("[data-facing]")) return;
-      const dir = facingAt(
-        renderer.worldAt(e.clientX, e.clientY, pending),
-        pending,
-      );
+    handle.onpointermove = (e) => {
+      if (!pending || aimPointer?.id !== e.pointerId) return;
+      const dir = swipeFacing({ x: e.clientX, y: e.clientY }, aimPointer);
       if (pending.dir !== dir) {
         pending.dir = dir;
         drawHud();
       }
     };
-    board.onpointerup = (e) => {
-      if (aimPointer?.id === e.pointerId) {
-        const moved =
-          Math.hypot(e.clientX - aimPointer.x, e.clientY - aimPointer.y) > 6;
-        aimPointer = null;
-        if (!pending) return;
-        const dir = facingAt(
-          renderer.worldAt(e.clientX, e.clientY, pending),
-          pending,
-        );
-        if (dir) confirmFacing(dir);
-        else if (!moved) {
-          pending = null;
-          drawHud();
-        }
-        return;
+    handle.onpointerup = (e) => {
+      if (aimPointer?.id !== e.pointerId) return;
+      e.preventDefault();
+      e.stopPropagation();
+      const dir = swipeFacing({ x: e.clientX, y: e.clientY }, aimPointer);
+      aimPointer = null;
+      if (handle.hasPointerCapture(e.pointerId))
+        handle.releasePointerCapture(e.pointerId);
+      if (dir) confirmFacing(dir);
+      else {
+        if (pending) pending.dir = null;
+        drawHud();
       }
+    };
+    const cancelAim = () => {
+      if (!aimPointer) return;
+      aimPointer = null;
+      if (pending) pending.dir = null;
+      drawHud();
+    };
+    handle.onpointercancel = handle.onlostpointercapture = cancelAim;
+    // Click placement remains available outside the picker; it never confirms facing.
+    board.onpointerup = (e) => {
       if (pending || e.target.closest("button")) return;
       const tile = renderer.pickAt(e.clientX, e.clientY);
       if (tile) pick(tile.row, tile.col);
-    };
-    board.onpointercancel = () => {
-      aimPointer = null;
-      pending = null;
-      drawHud();
     };
     renderer.onLayout = layoutFacing;
     workspace.querySelector("#routes").onclick = (e) => {
@@ -466,7 +465,7 @@ function drawHud() {
     for (let r = 0; r < 6; r++)
       for (let c = 0; c < 9; c++)
         if (!battle.placementError(selected, r, c)) highlights.push(r * 21 + c);
-    html = `<div class="command-copy"><h3>${data.operators[selected].name} · ${battle.cost(selected)} DP</h3>${pending ? "Choose a direction on the map. Arrow keys preview; Enter deploys." : "Drag onto a " + (data.operators[selected].position === "RANGED" ? "raised" : "ground") + " tile, or click a tile."}<br>${battleError ? `<span class="error">${escape(battleError)}</span>` : ""}</div><div class="command-actions"><button id="cancel">Cancel</button></div>`;
+    html = `<div class="command-copy"><h3>${data.operators[selected].name} · ${battle.cost(selected)} DP</h3>${pending ? "Drag from the centre toward a direction, then release to deploy. Arrow keys + Enter also work." : "Drag onto a " + (data.operators[selected].position === "RANGED" ? "raised" : "ground") + " tile, or click a tile."}<br>${battleError ? `<span class="error">${escape(battleError)}</span>` : ""}</div><div class="command-actions"><button id="cancel">Cancel</button></div>`;
   }
   const command = workspace.querySelector("#command");
   // Do not replace focused interactive controls during the battle clock.
@@ -544,7 +543,11 @@ function cancelPlacement() {
       gesture.button.releasePointerCapture(gesture.id);
   }
   battleError = "";
+  const aim = aimPointer;
   aimPointer = null;
+  const handle = workspace?.querySelector(".facing-handle");
+  if (aim && handle?.hasPointerCapture(aim.id))
+    handle.releasePointerCapture(aim.id);
   selected = null;
   pending = null;
   workspace?.querySelector(".drag-ghost")?.remove();

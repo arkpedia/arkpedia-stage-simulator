@@ -55,7 +55,9 @@ npx tsx scripts/build/export-stage-simulator-routes.ts ../arkpedia-stage-simulat
 node tools/arkpedia/build-mvp.mjs --routes /tmp/arkpedia-stage-routes.json
 ```
 
-Arrow keys preview facing and Enter confirms. Clicking a facing arrow confirms immediately; dragging from the picker centre also aims and confirms. Escape, pointer cancellation and the centre cancel button never spend DP. Terrain, occupancy, DP and cooldown are checked again at confirmation. Paths can be toggled independently of operator range; the wait point is marked with a ring.
+Dropping a portrait onto a tile opens the direction picker without deploying or spending DP. Start a separate drag from the picker centre, swipe toward the intended direction, and release to deploy. Releasing within the centre's dead zone keeps placement pending; Escape, Cancel and pointer cancellation never spend DP. Arrow keys preview facing and Enter confirms; clicking a facing arrow also confirms. Terrain, occupancy, DP and cooldown are checked again at confirmation. Paths can be toggled independently of operator range; the wait point is marked with a ring.
+
+Enemy sprites face their horizontal movement, retain that facing through waits and vertical route segments, and turn toward a blocker when attacking. Their initial facing comes from the route rather than the engine's fixed deployment direction.
 
 Deployed operators show a green SP gauge below HP. Ready manual skills show a yellow lightning diamond above the bars; select that operator, then activate the skill. Automatic skills trigger through the combat engine and do not show a manual-ready marker. The gauge turns orange and drains during a timed skill (or tracks remaining ammo); passive skills have no SP gauge. All indicators follow the paused simulation clock and disappear on retreat or death.
 

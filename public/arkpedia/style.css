@@ -660,12 +660,14 @@ footer {
   left: 20%;
   top: 50%;
 }
-.facing-picker .facing-cancel {
+.facing-picker .facing-handle {
   left: 50%;
   top: 50%;
-  width: 36px;
-  height: 36px;
-  min-height: 36px;
+  width: 44px;
+  height: 44px;
+  min-height: 44px;
+  touch-action: none;
+  cursor: grab;
   background: #1a252b;
   border-color: #889ca5;
   font-size: 22px;
@@ -701,3 +703,5 @@ footer {
 
 .stage-art-status { position:absolute; left:12px; bottom:10px; color:#d0dce0; background:#10191de6; font-size:12px; pointer-events:none; }
 .stage-art-status:empty { display:none; }
+
+.facing-picker .facing-handle:active { cursor: grabbing; background: #48666a; }
