@@ -9,6 +9,7 @@ import { StageRenderer } from "./renderer.js";
 import { absoluteRangeKeys } from "/sim/targeting.js";
 import { swipeFacing } from "/shared/arkpedia/placement.js";
 import { skillHud } from "/shared/arkpedia/skill-hud.js";
+import { battleHud } from "/shared/arkpedia/battle-hud.js";
 import { requiresLandscape } from "/shared/arkpedia/viewport.js";
 const escape = (s) =>
   String(s).replace(
@@ -46,6 +47,24 @@ const icon = (op) =>
   `https://raw.githubusercontent.com/arkpedia/arkpedia-image-assets/${data.sources["arkpedia/arkpedia-image-assets"]}/three-star-icons/${encodeURIComponent(op.name + " - Base.webp")}`;
 const artwork = (op) =>
   `https://raw.githubusercontent.com/arkpedia/arkpedia-skin-assets/${data.sources["arkpedia/arkpedia-skin-assets"]}/three-star-skins/${encodeURIComponent(op.name + " - Base.webp")}`;
+const statIcon = (name) =>
+  `https://raw.githubusercontent.com/arkpedia/arkpedia-image-assets/${data.sources["arkpedia/arkpedia-image-assets"]}/stat-icons/${name}.webp`;
+function battleReadouts() {
+  const digits = String(battle.total).length * 2 + 1;
+  return `<div class="battle-hud" aria-label="Battle status">
+    <div class="battle-status-plate">
+      <span class="battle-reading" id="enemy-reading" title="Enemies resolved"><img src="${statIcon("enemies")}" alt=""><span class="sr-only">Enemies resolved </span><strong id="enemy-count" style="min-width:${digits}ch"></strong></span>
+      <span class="battle-reading life-reading" title="Life points"><img src="${statIcon("life")}" alt=""><span class="sr-only">Life points </span><strong id="life-count" style="min-width:${String(battle.life).length}ch"></strong></span>
+    </div>
+    <div class="battle-resources">
+      <div class="dp-panel"><div class="dp-reading"><img src="${statIcon("cost")}" alt=""><span class="sr-only">DP </span><strong id="dp-count" style="min-width:${String(battle.flags.dpMax).length}ch"></strong></div>
+        <div class="dp-recovery" id="dp-recovery" role="meter" aria-label="DP recovery toward next point" aria-valuemin="0" aria-valuemax="100"><span></span></div>
+        <span class="dp-rate" id="dp-rate"></span>
+      </div>
+      <span class="deployment-limit" id="deployment-limit"></span>
+    </div>
+  </div>`;
+}
 function skillDescription(level) {
   const values = Object.fromEntries(level.blackboard.map((entry) => [entry.key, entry.value]));
   return escape(level.description.replace(/<[^>]*>/g, "").replace(
@@ -162,10 +181,12 @@ async function start() {
       },
     );
     battle = new StandardBattle(data, selection, { seed: Date.now() });
+    speed = 1;
+    showRoutes = false;
     workspace = document.createElement("section");
     workspace.className = "workspace";
     workspace.setAttribute("aria-label", "Battle workspace");
-    workspace.innerHTML = `<div class="battle-content"><header class="battle-header"><div class="stage-title"><span class="stage-code">0-1</span><h2>Collapse</h2></div><div class="hud" id="hud"></div><div class="battle-controls"><button id="routes" aria-pressed="false">Paths</button><button id="pause">Pause</button><button id="speed">1×</button><button id="restart">Restart</button><button id="exit">Exit</button></div></header><div class="board battle-board" id="battle-board"><span class="pause-label" id="paused-label" hidden>Paused</span><aside class="command" id="command" aria-label="Selected operator" hidden></aside></div><div class="deployment-wrap"><button id="shelf-left" aria-label="Scroll operators left">‹</button><div class="deployment" id="deployment"></div><button id="shelf-right" aria-label="Scroll operators right">›</button></div><p class="status-note" id="battle-message" role="status" aria-live="polite"></p></div><div class="orientation-gate" id="orientation-gate" role="dialog" aria-modal="true" aria-labelledby="orientation-title" aria-describedby="orientation-description" hidden><svg class="rotate-device" aria-hidden="true" viewBox="0 0 100 100"><rect x="33" y="22" width="34" height="56" rx="5"/><path d="M18 55A34 34 0 0 1 60 17M60 17l-13-3M60 17l-7 12M82 45A34 34 0 0 1 40 83M40 83l13 3M40 83l7-12"/></svg><h2 id="orientation-title">Rotate to landscape</h2><p id="orientation-description">Turn your device sideways to deploy and play.<br>Your battle is paused and your squad is saved.</p><button id="portrait-exit">Back to squad</button></div>`;
+    workspace.innerHTML = `<div class="battle-content"><header class="battle-header"><div class="stage-title"><span class="stage-code">0-1</span><h2>Collapse</h2><span class="battle-time" id="battle-time" aria-label="Battle time"></span></div><div class="battle-controls"><button id="routes" aria-pressed="false">Paths</button><button id="pause">Pause</button><button id="speed">1×</button><button id="restart">Restart</button><button id="exit">Exit</button></div></header><div class="board battle-board" id="battle-board">${battleReadouts()}<span class="pause-label" id="paused-label" hidden>Paused</span><aside class="command" id="command" aria-label="Selected operator" hidden></aside></div><div class="deployment-wrap"><button id="shelf-left" aria-label="Scroll operators left">‹</button><div class="deployment" id="deployment"></div><button id="shelf-right" aria-label="Scroll operators right">›</button></div><p class="status-note" id="battle-message" role="status" aria-live="polite"></p></div><div class="orientation-gate" id="orientation-gate" role="dialog" aria-modal="true" aria-labelledby="orientation-title" aria-describedby="orientation-description" hidden><svg class="rotate-device" aria-hidden="true" viewBox="0 0 100 100"><rect x="33" y="22" width="34" height="56" rx="5"/><path d="M18 55A34 34 0 0 1 60 17M60 17l-13-3M60 17l-7 12M82 45A34 34 0 0 1 40 83M40 83l13 3M40 83l7-12"/></svg><h2 id="orientation-title">Rotate to landscape</h2><p id="orientation-description">Turn your device sideways to deploy and play.<br>Your battle is paused and your squad is saved.</p><button id="portrait-exit">Back to squad</button></div>`;
     document.body.append(workspace);
     const board = workspace.querySelector("#battle-board");
     // Move canvases to a full-viewport battle container; preview has no deployment handler.
@@ -395,8 +416,21 @@ function operatorDetails(build, unit) {
 }
 function drawHud() {
   if (!workspace || !battle) return;
-  workspace.querySelector("#hud").innerHTML =
-    `<span>DP<strong>${Math.floor(battle.dp)}</strong></span><span>Life<strong>${battle.life}</strong></span><span>Enemies<strong>${battle.killed + battle.leakedCount}/${battle.total}</strong></span><span class="muted">${Math.floor(battle.time / 60)}:${String(Math.floor(battle.time % 60)).padStart(2, "0")}</span>`;
+  const reading = battleHud(battle, paused);
+  for (const [id, value] of Object.entries({
+    "enemy-count": reading.enemies,
+    "life-count": reading.life,
+    "dp-count": reading.dp,
+    "dp-rate": reading.recoveryText,
+    "battle-time": reading.time,
+    "deployment-limit": `Unit Limit: ${reading.slots}`,
+  })) workspace.querySelector("#" + id).textContent = value;
+  workspace.querySelector("#enemy-reading").title = `Enemies resolved: ${reading.enemies} · ${battle.killed} defeated, ${battle.leakedCount} escaped`;
+  workspace.querySelector("#deployment-limit").setAttribute("aria-label", `${reading.slots} deployment slots available of ${battle.unitLimit}; ${reading.deployed} deployed`);
+  const recovery = workspace.querySelector("#dp-recovery");
+  recovery.setAttribute("aria-valuenow", Math.round(reading.recoveryFraction * 100));
+  recovery.setAttribute("aria-valuetext", reading.recoveryText);
+  recovery.querySelector("span").style.transform = `scaleX(${reading.recoveryFraction})`;
   workspace.querySelector("#pause").textContent = paused
     ? battle.time === 0
       ? "Start"
