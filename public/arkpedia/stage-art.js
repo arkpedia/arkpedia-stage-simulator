@@ -1,7 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import * as THREE from '/vendor/three.module.js';
 import { artBase, fetchArtFile, validateStageArt } from '/shared/arkpedia/stage-art.js';
+import { rgbmLightmapChunk } from '/shared/arkpedia/lighting.js';
 export async function loadStageArt(stage) {
+  // Fail to the labelled fallback if a future Three upgrade changes the shader contract.
+  const lightmapChunk = rgbmLightmapChunk(THREE.ShaderChunk.lights_fragment_maps);
   const art=stage.art, base=artBase(art);
   const scene=JSON.parse(new TextDecoder().decode(await fetchArtFile(base,art.scene)));
   validateStageArt(scene,stage);
@@ -28,8 +31,15 @@ export async function loadStageArt(stage) {
     }
     for (const [key,m] of Object.entries(scene.materials)) {
       const mat=new THREE.MeshStandardMaterial({map:textures.get(m.map),
-        roughness:1, metalness:0, lightMap:textures.get(scene.lightmap),lightMapIntensity:2,
+        roughness:1, metalness:0, lightMap:textures.get(scene.lightmap),lightMapIntensity:Math.PI,
         emissive:m.emissiveMap ? 0x707580 : 0x000000, emissiveMap:textures.get(m.emissiveMap) || null});
+      // 0-1's Android ETC2 RGBA lightmap is Unity RGBM, not ordinary RGB.
+      // RGB is sampled in linear space, while alpha carries the HDR multiplier.
+      // PI compensates Three's Lambert 1/PI; Unity's decoded map is diffuse lighting.
+      mat.onBeforeCompile = (shader) => {
+        shader.fragmentShader = shader.fragmentShader.replace('#include <lights_fragment_maps>', lightmapChunk);
+      };
+      mat.customProgramCacheKey = () => 'arkpedia-rgbm-lightmap-v1';
       materials.set(key,mat);
     }
     for (const mesh of scene.meshes) {

@@ -50,7 +50,10 @@ export class StageRenderer {
     this.controls.className = "tile-controls";
     this.controls.inert = true;
     host.append(this.controls);
-    this.scene.add(new THREE.HemisphereLight(0xcce2e4, 0x33454a, 2.2));
+    const sky = new THREE.HemisphereLight(0xcce2e4, 0x33454a, 2.2);
+    // The gameplay plane is X/Y and height is Z, unlike Three's default Y-up.
+    sky.position.set(0, 0, 1);
+    this.scene.add(sky);
     const sun = new THREE.DirectionalLight(0xffebcc, 2);
     sun.position.set(-5, -3, 12);
     this.scene.add(sun);

@@ -19,6 +19,8 @@ To embed it in Arkpedia's overhaul branch, run the private application with `NEX
 
 0-1 uses the actual scene from the official Global Android resource version `26-09-23-17-49-43_b9cc4a`, published in `arkpedia-sd-assets`. Its 177 static submeshes, original colour/emission textures, baked lightmap and source tile heights are about 1.7 MB combined. The scene's gameplay-geometry hash and every file's SHA-256 must match before it replaces the simplified map. Missing or mismatched art leaves an explicitly labelled fallback. Rendering approximates the Unity shader; lighting is not yet a frame-for-frame match.
 
+The pinned 0-1 lightmap is ETC2 RGBA with Unity RGBM encoding. The browser linearizes its RGB through sRGB texture sampling, then decodes the alpha multiplier using the [Unity RGBM range and exponent](https://docs.unity3d.com/2021.3/Documentation/Manual/Lightmaps-TechnicalInformation.html). Three's Lambert normalization is compensated for baked diffuse lighting. Ambient fill points along the stage's Z-up axis. This preserves the source light/shadow gradients instead of treating the encoded bake as an ordinary colour image; no asset brightness filter is applied.
+
 The exporter preserves world-space static batches once, reverses Z/triangle winding for the renderer, removes the centered map anchor, and keeps the already-baked lightmap UVs. It does not apply the prefab transforms a second time or reuse an unrelated Stronghold map theme.
 
 To reproduce the pack (Python 3.13+, Node 22+):
