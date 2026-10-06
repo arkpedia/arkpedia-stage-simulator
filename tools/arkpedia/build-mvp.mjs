@@ -3,6 +3,8 @@
 import { readFile, writeFile, mkdir } from "node:fs/promises";
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
+import { REGULAR_OPERATORS, assertRegularOperator } from "../../shared/arkpedia/operators.js";
+import { assertRegularEnemies } from "../../shared/arkpedia/enemies.js";
 const cache = new URL("../../.cache/arkpedia/", import.meta.url);
 await mkdir(cache, { recursive: true });
 const paths = {
@@ -51,14 +53,7 @@ const read = async (name) =>
   JSON.parse(await readFile(new URL(`${name}.json`, cache), "utf8"));
 const [characters, skills, ranges, enemies, stage, geometry, pins] =
   await Promise.all(Object.keys(paths).concat("pins").map(read));
-const ids = [
-  "char_123_fang",
-  "char_208_melan",
-  "char_122_beagle",
-  "char_124_kroos",
-  "char_120_hibisc",
-  "char_210_stward",
-];
+const ids = Object.keys(REGULAR_OPERATORS);
 const operators = Object.fromEntries(
   ids.map((id) => {
     const c = characters[id];
@@ -90,6 +85,7 @@ const operators = Object.fromEntries(
     ];
   }),
 );
+for (const op of Object.values(operators)) assertRegularOperator(op);
 const enemyRecords = Object.fromEntries(
   geometry.enemyConfigurations.map((config) => {
     const rows = enemies.enemies.find((e) => e.Key === config.enemy_id)?.Value;
@@ -164,6 +160,7 @@ const output = {
   operators,
   enemies: enemyRecords,
 };
+assertRegularEnemies(output);
 // Consume the existing stage browser's public route output without publishing its private application source.
 const routeArg = process.argv.indexOf("--routes");
 const prior = JSON.parse(

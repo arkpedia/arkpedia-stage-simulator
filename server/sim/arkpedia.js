@@ -4,6 +4,8 @@ import { Battle } from "./Battle.js";
 import { DataSource } from "./simdata.js";
 import { genericKit } from "./content/generic.js";
 import { catalogueFor, recordFor } from "../../shared/arkpedia/loadout.js";
+import { REGULAR_OPERATORS } from "../../shared/arkpedia/operators.js";
+import { assertRegularEnemies } from "../../shared/arkpedia/enemies.js";
 import {
   prepareSquad,
   canDeployInViewport,
@@ -82,6 +84,7 @@ export function stageAdapter(source) {
 
 export class StandardBattle extends Battle {
   constructor(data, selection, { seed = 1 } = {}) {
+    assertRegularEnemies(data);
     const squad = prepareSquad(selection, catalogueFor(data));
     const builds = [
       ...squad.operators,
@@ -176,9 +179,18 @@ export class StandardBattle extends Battle {
       ps = this.getPlayer("arkpedia");
     const unit = this._makeAlly(ps, def, "op", row, col, { dir });
     const kit = genericKit(def.skill.bb, def.raw, def);
-    if (/charge_cost/.test(def.skill.id))
+    const mechanic = REGULAR_OPERATORS[id].mechanic;
+    if (mechanic === "dp")
       kit.skill.onStart = ({ battle, unit }) =>
         battle.addDp(unit.ownerId, def.skill.bb.cost);
+    if (mechanic === "self-heal")
+      kit.skill = {
+        id: def.skill.id,
+        name: def.skill.name,
+        kind: "instant",
+        onStart: ({ battle, unit }) =>
+          battle.heal(unit, unit, unit.s.maxHp * def.skill.bb.heal_scale, { self: true }),
+      };
     this._setupUnit(unit, kit);
     if (def.raw.arkpedia.highDef) unit.profile.priority = "highDef";
     if (def.raw.arkpedia.critical) {

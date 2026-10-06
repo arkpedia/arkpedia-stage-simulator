@@ -37,8 +37,9 @@ The fetcher verifies unzipped bundle size/MD5 against the game manifest. Publica
 ## Supported slice
 
 - 0-1 **Collapse**: source terrain, spawn times, both routes (including the soldier's wait), stage-specific soldier DEF, DP regeneration/cap, deployment limit and life points.
-- Fang, Melantha, Beagle, Kroos, Hibiscus and Steward: selectable E0/E1, level, potential, trust and skill rank; their actual ranges, stats, basic traits, promotion talents and S1s.
-- Up to 12 unique squad members plus one distinct maxed support. The current selectable roster has only six operators; support is limited to that same supported roster.
+- Fang, Melantha, Beagle, Kroos, Hibiscus, Steward, Vanilla, Cardigan and Orchid: selectable E0/E1, level, potential, trust and skill rank; their actual ranges, stats, basic traits, promotion talents and S1s.
+- Vanilla grants DP when her manual ATK skill starts; Cardigan immediately heals herself by a percentage of talent-adjusted max HP; Orchid deals Arts damage, slows on hit and gains the source ASPD talent/skill bonuses.
+- Up to 12 unique squad members plus one distinct maxed support. The current selectable roster has nine operators; support is limited to that same supported roster.
 - Drag an operator onto a valid tile and choose its facing on the map; click/keyboard placement, Escape cancellation, surface-only deployment feedback and a continuous attack-range outline; blocking, physical/Arts attacks, healing, time/attack SP, manual/automatic skills, manual retreat/refund, increasing deployment costs, redeployment cooldown, clear/defeat.
 - Original 0-1 Chernobog meshes, textures, scenery and baked lighting, rendered with Three.js and animated Spine chibis; optional existing-viewer path overlay; pause, 1×/2×, restart, fullscreen/mobile viewport workspace, pause on native-fullscreen exit or hidden tab.
 
@@ -53,6 +54,24 @@ Combat runs at a fixed 30Hz with seeded randomness. Rendering cannot change the 
 ## Data and coverage
 
 `data/arkpedia-mvp.json` records full source commits for public `arkpedia-data`, Global game tables, icon and operator-art assets, and SD models. `tools/arkpedia/build-mvp.mjs --refresh` updates that compact snapshot; it requires the sibling `arkpedia-sd-assets` checkout and `gh` access. Import/publish complete SD models first, then regenerate. The generator rejects conditional stages, fixed squads, unfamiliar geometry/route shapes and missing models. The runtime validates all loadouts and never accepts caller-provided stats.
+
+The regular-stage roster is opt-in through `shared/arkpedia/operators.js` and `enemies.js`. The build tool and runtime reject unknown operators, skill IDs, talent blackboard keys and enemies; spawns must have supported enemy records. Inherited kits remain disabled: Stronghold's `chess_` units have mode-specific builds, automatic-operation rules and modifiers. A hand-authored kit there is a migration candidate, not proof of ordinary-stage compatibility.
+
+`data/arkpedia-coverage.json` audits the pinned Global catalogue: 374 obtainable operators, 817 skills and 1,552 enemy database IDs. Nine operators and two basic enemies are currently playable. It identifies 265 skills and 210 enemy IDs with inherited implementation candidates, including stats-only entries whose notes may describe missing mechanics. It separately records imported animation pairs, placeholder effects and unverified game fidelity. It is an offline report; the battle does not load the full catalogue.
+
+To import another reviewed batch and reproduce coverage:
+
+```sh
+# Register and implement/test regular-stage mechanics before enabling an operator.
+# Front/Back models retain their original pinned files; this parses attachment,
+# clip and hit metadata with the same Spine runtime as the browser.
+node tools/arkpedia/import-operators.mjs --ids char_240_wyvern,char_209_ardign,char_278_orchid --commit d0b5af0b004b044d322397ce5ae79632b6d9fcdd --pma false
+# Validate and publish the sibling asset repo, then pin its committed manifest.
+node tools/arkpedia/build-mvp.mjs
+npm run coverage:arkpedia
+```
+
+Blending is an explicit import setting, followed by browser QA. The importer does not claim that parsed clips have been compared frame-for-frame with the game. Coverage regeneration uses the existing pinned source cache and rejects a source-pin mismatch; a fresh checkout first needs `build:arkpedia-data` to fetch its source tables.
 
 Routes come from the existing Arkpedia stage browser's `buildPlaybackPaths` output: public points, cumulative distances, waits and movement scale, not private app source. The simulator generator retains that export only while its geometry hash matches. After a geometry refresh it requires a new export, rather than silently using different routes:
 
@@ -75,4 +94,4 @@ This is a playable prototype, **not full game compatibility**. Timings, movement
 
 Tests compare every unblocked movement tick with the exported viewer paths/waits, and cover projected facing/range perimeter geometry, source routing, stats/caps, support, fullscreen/terrain/DP checks, retreat/redeployment, Fang's clear, healing, manual skills and life loss. Upstream tests continue to verify the inherited combat primitives separately.
 
-Next work: frame-level calibration, more stages/roster with explicit mechanic coverage, worker/replay support, versioned embedding messages if account/squad transfer is later needed, and a reviewed hosting/content-release path.
+Next mechanic batches: the remaining three-star archetypes (DP-on-kill/refund, splash, healing mode and ranged-guard attacks), then multi-skill/E2 builds, mastery and modules. Enemy adapters need ordinary-stage ability data and stage overrides before mode kits can be enabled. Summons, bosses and unusual targeting require dedicated adapters and regression scenarios. Original projectiles/skill effects and frame-level calibration remain separate work. Further stages, worker/replay support, embedding messages and hosting/content releases follow that coverage.

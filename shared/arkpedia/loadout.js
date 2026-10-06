@@ -1,28 +1,32 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import { validateLoadout } from "./squad.js";
+import { assertRegularOperator } from "./operators.js";
 const bb = (rows) =>
   Object.fromEntries((rows ?? []).map((r) => [r.key, r.value]));
 const phaseNumber = (phase) => Number(String(phase).replace("PHASE_", ""));
 export function catalogueFor(data) {
   return Object.fromEntries(
-    Object.values(data.operators).map((op) => [
-      op.id,
-      {
-        id: op.id,
-        promotions: op.phases.map((p, elite) => ({
-          elite,
-          maxLevel: p.maxLevel,
-        })),
-        maxPotential: op.potentialRanks.length + 1,
-        maxTrust: 200,
-        skills: op.skills.map((s) => ({
-          id: s.id,
-          maxRankByElite: { 0: 4, 1: 7 },
-        })),
-        modules: [],
-        skins: [],
-      },
-    ]),
+    Object.values(data.operators).map((op) => {
+      assertRegularOperator(op);
+      return [
+        op.id,
+        {
+          id: op.id,
+          promotions: op.phases.map((p, elite) => ({
+            elite,
+            maxLevel: p.maxLevel,
+          })),
+          maxPotential: op.potentialRanks.length + 1,
+          maxTrust: 200,
+          skills: op.skills.map((s) => ({
+            id: s.id,
+            maxRankByElite: { 0: 4, 1: 7 },
+          })),
+          modules: [],
+          skins: [],
+        },
+      ];
+    }),
   );
 }
 export function defaultBuild(op) {
@@ -93,8 +97,8 @@ export function recordFor(build, data) {
     .map((t) => ({ ...t, bb: bb(t.blackboard) }));
   const modifiers = {};
   for (const talent of talents)
-    for (const k of ["atk", "def"])
-      if (talent.bb[k]) modifiers[`${k}Pct`] = talent.bb[k];
+    for (const [key, modifier] of Object.entries({ atk: "atkPct", def: "defPct", max_hp: "hpPct", attack_speed: "aspd" }))
+      if (talent.bb[key]) modifiers[modifier] = (modifiers[modifier] ?? 0) + talent.bb[key];
   for (const talent of talents) stats.cost += talent.bb.cost ?? 0;
   const level = op.skills[0].levels[build.skillRank - 1];
   const skill = {
@@ -128,7 +132,7 @@ export function recordFor(build, data) {
     dmgType:
       op.profession === "MEDIC"
         ? "heal"
-        : op.profession === "CASTER"
+        : ["CASTER", "SUPPORT"].includes(op.profession)
           ? "arts"
           : "phys",
     skill,
