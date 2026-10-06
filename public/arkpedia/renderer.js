@@ -4,6 +4,7 @@ import { fitCamera, syncThreeCamera, pickTile } from "/js/render/projection.js";
 import { SpineActor } from "/js/render/spine.js";
 import { createAssets } from "/js/assets.js";
 import { regionEdges } from "/shared/arkpedia/placement.js";
+import { skillHud } from "/shared/arkpedia/skill-hud.js";
 const P = globalThis.PIXI;
 const models = createAssets({
   loadSpine: async (entry) => {
@@ -348,6 +349,7 @@ export class StageRenderer {
     this.drawSurface();
     this.drawPreview();
     this.onLayout?.();
+    const operatorLabels = new Map();
     if (battle) {
       const live = new Set();
       for (const u of battle.units) {
@@ -395,17 +397,62 @@ export class StageRenderer {
         view.x = u.x;
         view.y = u.y;
         view.hp.clear();
-        const w = point.s * 0.5,
-          y = point.y - (bound?.height || 380) * scale;
+        const w = Math.max(24, Math.min(96, point.s * 0.5)),
+          y = point.y - (bound?.height || 380) * scale,
+          x = point.x - w / 2;
         view.hp
           .beginFill(0x10191d, 0.9)
-          .drawRect(point.x - w / 2, y, w, 4)
+          .drawRect(x - 1, y - 1, w + 2, 6)
           .endFill();
         view.hp
           .beginFill(u.side === "ally" ? 0x64d5ae : 0xe27c66)
-          .drawRect(point.x - w / 2, y, w * Math.max(0, u.hp / u.s.maxHp), 4)
+          .drawRect(x, y, w * Math.max(0, Math.min(1, u.hp / u.s.maxHp)), 4)
           .endFill();
+        const skill = u.side === "ally" ? skillHud(u.skill) : null;
+        if (skill) {
+          // The green SP gauge sits immediately below HP; orange counts down an active skill.
+          view.hp
+            .beginFill(0x10191d, 0.95)
+            .drawRect(x - 1, y + 6, w + 2, 5)
+            .endFill();
+          view.hp
+            .beginFill(skill.state === "active" ? 0xffa235 : 0x9bd538)
+            .drawRect(x, y + 7, w * skill.fraction, 3)
+            .endFill();
+          if (skill.ready) {
+            // Compact game-style ready diamond and lightning bolt. No pulsing while paused.
+            const cy = y - 15,
+              radius = Math.max(9, Math.min(13, point.s * 0.12));
+            view.hp
+              .lineStyle(1.5, 0x242820)
+              .beginFill(0xffd953)
+              .drawPolygon([
+                point.x, cy - radius,
+                point.x + radius, cy,
+                point.x, cy + radius,
+                point.x - radius, cy,
+              ])
+              .endFill()
+              .lineStyle(0);
+            view.hp
+              .beginFill(0x242820)
+              .drawPolygon([
+                point.x + radius * 0.15, cy - radius * 0.65,
+                point.x - radius * 0.4, cy + radius * 0.05,
+                point.x - radius * 0.02, cy + radius * 0.05,
+                point.x - radius * 0.15, cy + radius * 0.65,
+                point.x + radius * 0.4, cy - radius * 0.12,
+                point.x + radius * 0.04, cy - radius * 0.12,
+              ])
+              .endFill();
+          }
+        }
         view.hp.zIndex = 3000;
+        if (u.side === "ally")
+          operatorLabels.set(
+            `${u.tileR},${u.tileC}`,
+            `${u.name}, row ${u.tileR + 1}, column ${u.tileC + 1}. ${skill?.text || "Passive skill"}`,
+          );
       }
       for (const [id, v] of this.views)
         if (!live.has(id)) {
@@ -436,6 +483,13 @@ export class StageRenderer {
             heal: u.def.dmgType === "heal",
           });
       }
+    }
+    for (const t of this.tiles) {
+      if (!t.button) continue;
+      const label = operatorLabels.get(`${t.row},${t.col}`) ||
+        `${t.type === 1 ? "Raised" : "Ground"} tile, row ${t.row + 1}, column ${t.col + 1}`;
+      if (t.button.getAttribute("aria-label") !== label)
+        t.button.setAttribute("aria-label", label);
     }
     if (!this.fx) {
       this.fx = new P.Graphics();

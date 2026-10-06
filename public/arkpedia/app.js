@@ -8,6 +8,7 @@ import {
 import { StageRenderer } from "./renderer.js";
 import { absoluteRangeKeys } from "/sim/targeting.js";
 import { facingAt } from "/shared/arkpedia/placement.js";
+import { skillHud } from "/shared/arkpedia/skill-hud.js";
 const escape = (s) =>
   String(s).replace(
     /[&<>"']/g,
@@ -452,11 +453,13 @@ function drawHud() {
   let html =
     '<div class="command-copy"><h3>Deploy an operator</h3>Drag an operator onto the map, then choose its facing. Click an operator and tile to place without dragging.</div>';
   let highlights = [];
+  let canActivate = false;
   if (unit) {
     highlights = [...unit.rangeKeys];
     const sk = unit.skill,
-      ready = sk.ready;
-    html = `<div class="command-copy"><h3>${unit.name}</h3>HP ${Math.ceil(unit.hp)} / ${Math.round(unit.s.maxHp)} · ${escape(sk.name)}<br>${sk.active ? "Skill active · " + Math.ceil(sk.timeLeft) + "s" : `${Math.floor(sk.sp)} / ${sk.spCost} SP · ${sk.manual ? "Manual" : "Auto"} activation`}<div class="meter"><span style="width:${Math.min(100, (sk.sp / sk.spCost) * 100)}%"></span></div></div><div class="command-actions"><button id="skill" class="primary" ${!sk.manual || !ready || sk.active ? "disabled" : ""}>Activate skill</button><button id="retreat">Retreat</button></div>`;
+      hud = skillHud(sk);
+    canActivate = !!(hud?.ready && unit.canAct && !unit.s.flags.silence);
+    html = `<div class="command-copy"><h3>${unit.name}</h3>HP ${Math.ceil(unit.hp)} / ${Math.round(unit.s.maxHp)} · ${escape(sk.name)}<br>${hud?.text || "Passive skill"}${hud ? `<div class="meter ${hud.state}"><span style="width:${hud.fraction * 100}%"></span></div>` : ""}</div><div class="command-actions"><button id="skill" class="primary" ${canActivate ? "" : "disabled"}>${hud?.ready ? "Skill ready · Activate" : "Activate skill"}</button><button id="retreat">Retreat</button></div>`;
   } else if (b) {
     for (let r = 0; r < 6; r++)
       for (let c = 0; c < 9; c++)
@@ -469,14 +472,14 @@ function drawHud() {
     command.dataset.selection !== String(selected) ||
     command.dataset.pending !== JSON.stringify(pending) ||
     command.dataset.alive !== String(!!unit) ||
-    command.dataset.ready !== String(unit?.skill.ready) ||
+    command.dataset.ready !== String(canActivate) ||
     command.dataset.error !== battleError
   ) {
     command.innerHTML = html;
     command.dataset.selection = String(selected);
     command.dataset.pending = JSON.stringify(pending);
     command.dataset.alive = String(!!unit);
-    command.dataset.ready = String(unit?.skill.ready);
+    command.dataset.ready = String(canActivate);
     command.dataset.error = battleError;
     command.querySelector("#cancel")?.addEventListener("click", () => {
       cancelPlacement();

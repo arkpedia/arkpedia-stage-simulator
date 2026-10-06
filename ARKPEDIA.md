@@ -40,6 +40,8 @@ node tools/arkpedia/build-mvp.mjs --routes /tmp/arkpedia-stage-routes.json
 
 Arrow keys preview facing and Enter confirms. Clicking a facing arrow confirms immediately; dragging from the picker centre also aims and confirms. Escape, pointer cancellation and the centre cancel button never spend DP. Terrain, occupancy, DP and cooldown are checked again at confirmation. Paths can be toggled independently of operator range; the wait point is marked with a ring.
 
+Deployed operators show a green SP gauge below HP. Ready manual skills show a yellow lightning diamond above the bars; select that operator, then activate the skill. Automatic skills trigger through the combat engine and do not show a manual-ready marker. The gauge turns orange and drains during a timed skill (or tracks remaining ammo); passive skills have no SP gauge. All indicators follow the paused simulation clock and disappear on retreat or death.
+
 This is a playable prototype, **not full game compatibility**. Timings, movement scale, projectile flight and animation wind-up need recorded in-game comparison. Modules, summons, enemy abilities, devices, other stages and operators, special modes, replay persistence and a worker are not implemented. A model existing does not mean its mechanics are supported. The old Arkpedia range-preview/playback tool is retained.
 
 Tests compare every unblocked movement tick with the exported viewer paths/waits, and cover projected facing/range perimeter geometry, source routing, stats/caps, support, fullscreen/terrain/DP checks, retreat/redeployment, Fang's clear, healing, manual skills and life loss. Upstream tests continue to verify the inherited combat primitives separately.
