@@ -42,6 +42,8 @@ The fetcher verifies unzipped bundle size/MD5 against the game manifest. Publica
 - Drag an operator onto a valid tile and choose its facing on the map; click/keyboard placement, Escape cancellation, surface-only deployment feedback and a continuous attack-range outline; blocking, physical/Arts attacks, healing, time/attack SP, manual/automatic skills, manual retreat/refund, increasing deployment costs, redeployment cooldown, clear/defeat.
 - Original 0-1 Chernobog meshes, textures, scenery and baked lighting, rendered with Three.js and animated Spine chibis; optional existing-viewer path overlay; pause, 1×/2×, restart, fullscreen/mobile viewport workspace, pause on native-fullscreen exit or hidden tab.
 
+Squad setup stays available in portrait. Battles on phones and touch tablets require landscape: a rotation prompt blocks battle controls in portrait. Rotating back pauses combat and cancels unfinished deployment without spending DP; the squad and battle progress remain intact. Returning to landscape requires an explicit Start/Resume. Tall desktop windows with mouse controls remain supported.
+
 Combat runs at a fixed 30Hz with seeded randomness. Rendering cannot change the number of combat ticks. A hidden page pauses instead of trying to catch up. Deployment entrance/death clips can finish cosmetically while paused; combat, skill durations and attack animations remain paused.
 
 ## Data and coverage

@@ -9,6 +9,7 @@ import { StageRenderer } from "./renderer.js";
 import { absoluteRangeKeys } from "/sim/targeting.js";
 import { swipeFacing } from "/shared/arkpedia/placement.js";
 import { skillHud } from "/shared/arkpedia/skill-hud.js";
+import { requiresLandscape } from "/shared/arkpedia/viewport.js";
 const escape = (s) =>
   String(s).replace(
     /[&<>"']/g,
@@ -34,7 +35,8 @@ let loading = false,
   selection,
   dragging = null,
   aimPointer = null,
-  showRoutes = false;
+  showRoutes = false,
+  landscapeRequired = false;
 const response = await fetch("/data/arkpedia-mvp.json");
 if (!response.ok) throw Error("Stage data unavailable");
 const data = await response.json();
@@ -66,7 +68,7 @@ if (requested && requested !== "0-1") {
 function prep() {
   app.innerHTML = `<div class="frame"><header class="topline"><div><p class="eyebrow">Arkpedia · prototype</p><h1>Stage simulator</h1></div><span class="muted">0-1 Collapse</span></header>
  <div class="prep"><section class="preview"><div class="stage-title"><span class="stage-code">0-1</span><h2>Collapse</h2></div><p class="help">${escape(data.stage.description)}</p><div class="board" id="board"></div><div class="legend"><span class="spawn">Enemy entry</span><span class="goal">Defence objective</span><span>Raised tiles: ranged operators</span></div>
- <div class="panel help"><h3>How to play</h3><p>Choose your squad, then open the battle workspace. Drag an operator onto a tile, then choose its facing on the map. You can also select the operator and click a tile. Select a deployed operator to activate a ready skill or retreat.</p></div>
+ <div class="panel help"><h3>How to play</h3><p>Choose your squad, then open the battle workspace. On mobile, rotate to landscape for battle. Drag an operator onto a tile, then choose its facing on the map. You can also select the operator and click a tile. Select a deployed operator to activate a ready skill or retreat.</p></div>
  <p class="notice">This first slice supports 0-1 and the six operators shown. Squad capacity is 12 + one distinct maxed support; the MVP roster is limited to these six. Modules, other stages and the rest of the roster are still being built.</p></section>
  <section class="panel"><h2>Prepare your squad</h2><p class="help">Select an operator to adjust their build.</p><div class="roster" id="roster"></div><div id="build"></div><label class="support">Support · optional, fully maxed<select id="support"><option value="">No support</option></select></label><div class="prepare-actions"><button class="primary" id="start">Open battle workspace</button></div><p class="error" id="prep-error" role="status" aria-live="polite"></p></section></div>
  <footer>Built on Stronghold Protocol · GPL-3.0-or-later. Unofficial fan simulator; timings are not yet verified frame-for-frame against the game.<div class="links"><a href="https://github.com/arkpedia/arkpedia-stage-simulator" target="_blank" rel="noreferrer">Simulator source</a><a href="https://github.com/arkpedia/arkpedia-sd-assets" target="_blank" rel="noreferrer">Chibi assets & credits</a></div></footer></div>`;
@@ -163,7 +165,7 @@ async function start() {
     workspace = document.createElement("section");
     workspace.className = "workspace";
     workspace.setAttribute("aria-label", "Battle workspace");
-    workspace.innerHTML = `<header class="battle-header"><div class="stage-title"><span class="stage-code">0-1</span><h2>Collapse</h2></div><div class="hud" id="hud"></div><div class="battle-controls"><button id="routes" aria-pressed="false">Paths</button><button id="pause">Pause</button><button id="speed">1×</button><button id="restart">Restart</button><button id="exit">Exit</button></div></header><div class="board battle-board" id="battle-board"><span class="pause-label" id="paused-label" hidden>Paused</span><aside class="command" id="command" aria-label="Selected operator" hidden></aside></div><div class="deployment-wrap"><button id="shelf-left" aria-label="Scroll operators left">‹</button><div class="deployment" id="deployment"></div><button id="shelf-right" aria-label="Scroll operators right">›</button></div><p class="status-note" id="battle-message" role="status" aria-live="polite"></p>`;
+    workspace.innerHTML = `<div class="battle-content"><header class="battle-header"><div class="stage-title"><span class="stage-code">0-1</span><h2>Collapse</h2></div><div class="hud" id="hud"></div><div class="battle-controls"><button id="routes" aria-pressed="false">Paths</button><button id="pause">Pause</button><button id="speed">1×</button><button id="restart">Restart</button><button id="exit">Exit</button></div></header><div class="board battle-board" id="battle-board"><span class="pause-label" id="paused-label" hidden>Paused</span><aside class="command" id="command" aria-label="Selected operator" hidden></aside></div><div class="deployment-wrap"><button id="shelf-left" aria-label="Scroll operators left">‹</button><div class="deployment" id="deployment"></div><button id="shelf-right" aria-label="Scroll operators right">›</button></div><p class="status-note" id="battle-message" role="status" aria-live="polite"></p></div><div class="orientation-gate" id="orientation-gate" role="dialog" aria-modal="true" aria-labelledby="orientation-title" aria-describedby="orientation-description" hidden><svg class="rotate-device" aria-hidden="true" viewBox="0 0 100 100"><rect x="33" y="22" width="34" height="56" rx="5"/><path d="M18 55A34 34 0 0 1 60 17M60 17l-13-3M60 17l-7 12M82 45A34 34 0 0 1 40 83M40 83l13 3M40 83l7-12"/></svg><h2 id="orientation-title">Rotate to landscape</h2><p id="orientation-description">Turn your device sideways to deploy and play.<br>Your battle is paused and your squad is saved.</p><button id="portrait-exit">Back to squad</button></div>`;
     document.body.append(workspace);
     const board = workspace.querySelector("#battle-board");
     // Move canvases to a full-viewport battle container; preview has no deployment handler.
@@ -266,6 +268,7 @@ async function start() {
       drawHud();
     };
     workspace.querySelector("#pause").onclick = () => {
+      if (landscapeRequired) return;
       paused = !paused;
       drawHud();
     };
@@ -275,6 +278,7 @@ async function start() {
     };
     workspace.querySelector("#restart").onclick = restart;
     workspace.querySelector("#exit").onclick = exit;
+    workspace.querySelector("#portrait-exit").onclick = exit;
     workspace.querySelector("#shelf-left").onclick = () =>
       workspace
         .querySelector("#deployment")
@@ -284,7 +288,7 @@ async function start() {
         .querySelector("#deployment")
         .scrollBy({ left: 180, behavior: "smooth" });
     viewport = "fullscreen-workspace";
-    battle.setViewport(viewport);
+    battle.setViewport(landscapeRequired ? "preview" : viewport);
     paused = true;
     accumulator = 0;
     app.inert = true;
@@ -299,10 +303,13 @@ async function start() {
       if (document.fullscreenElement === workspace)
         viewport = "native-fullscreen";
     } catch {}
-    battle.setViewport(viewport);
+    battle.setViewport(landscapeRequired ? "preview" : viewport);
+    syncOrientation();
     renderer.resize();
     drawHud();
-    workspace.querySelector("#pause").focus();
+    workspace
+      .querySelector(landscapeRequired ? "#portrait-exit" : "#pause")
+      .focus();
   } catch (error) {
     status.textContent = "Could not start: " + error.message;
     console.error(error);
@@ -314,7 +321,7 @@ async function start() {
 function restart() {
   workspace.querySelector("#deployment").innerHTML = "";
   battle = new StandardBattle(data, selection, { seed: Date.now() });
-  battle.setViewport(viewport);
+  battle.setViewport(landscapeRequired ? "preview" : viewport);
   paused = true;
   accumulator = 0;
   cancelPlacement();
@@ -335,6 +342,7 @@ async function exit() {
   app.inert = false;
   app.hidden = false;
   workspace = null;
+  landscapeRequired = false;
   battle = null;
   selected = null;
   pending = null;
@@ -342,7 +350,7 @@ async function exit() {
   document.querySelector("#start").focus();
 }
 function pick(row, col) {
-  if (!battle || battle.finished) return;
+  if (!battle || battle.finished || landscapeRequired) return;
   battleError = "";
   if (selected && !battle.bench[selected].unit?.alive) {
     const error = battle.placementError(selected, row, col);
@@ -606,7 +614,7 @@ function showDragGhost(x, y) {
   ghost.style.top = `${y}px`;
 }
 function confirmFacing(dir) {
-  if (!pending) return;
+  if (!pending || landscapeRequired) return;
   try {
     battle.deployOperator(selected, pending.row, pending.col, dir);
     pending = null;
@@ -643,6 +651,31 @@ function layoutFacing() {
       el.setAttribute("aria-pressed", String(active));
   }
 }
+function syncOrientation() {
+  if (!workspace || !battle) return;
+  const required = requiresLandscape({
+    width: window.innerWidth,
+    height: window.innerHeight,
+    coarsePointer: window.matchMedia("(any-pointer: coarse)").matches,
+  });
+  if (required === landscapeRequired) return;
+  landscapeRequired = required;
+  // Rotation never spends DP or catches up combat time. Resume is always explicit.
+  paused = true;
+  accumulator = 0;
+  cancelPlacement();
+  workspace.querySelector(".battle-content").inert = required;
+  workspace.querySelector("#orientation-gate").hidden = !required;
+  renderer.controls.inert = required;
+  battle.setViewport(required ? "preview" : viewport);
+  renderer.resize();
+  drawHud();
+  workspace.querySelector(required ? "#portrait-exit" : "#pause").focus();
+}
+window.addEventListener("resize", syncOrientation);
+window
+  .matchMedia("(any-pointer: coarse)")
+  .addEventListener("change", syncOrientation);
 document.addEventListener("fullscreenchange", () => {
   if (
     workspace &&
@@ -650,7 +683,7 @@ document.addEventListener("fullscreenchange", () => {
     document.fullscreenElement !== workspace
   ) {
     viewport = "fullscreen-workspace";
-    battle.setViewport(viewport);
+    battle.setViewport(landscapeRequired ? "preview" : viewport);
     paused = true;
     cancelPlacement();
     drawHud();
@@ -666,7 +699,11 @@ document.addEventListener("visibilitychange", () => {
   }
 });
 document.addEventListener("keydown", (e) => {
-  if (!workspace || ["INPUT", "SELECT", "TEXTAREA"].includes(e.target.tagName))
+  if (
+    !workspace ||
+    landscapeRequired ||
+    ["INPUT", "SELECT", "TEXTAREA"].includes(e.target.tagName)
+  )
     return;
   if (e.code === "Space") {
     e.preventDefault();
@@ -701,7 +738,7 @@ function tick(now) {
   last = now;
   let dt = 0,
     events = [];
-  if (battle && !paused && !battle.finished) {
+  if (battle && !paused && !landscapeRequired && !battle.finished) {
     accumulator += real * speed;
     while (accumulator >= battle.dt && !battle.finished) {
       battle.step();

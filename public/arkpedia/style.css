@@ -288,6 +288,50 @@ a {
 .workspace:fullscreen {
   padding: 12px;
 }
+.battle-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
+  gap: inherit;
+}
+.orientation-gate {
+  position: absolute;
+  inset: 0;
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+  background: var(--bg);
+  text-align: center;
+}
+.orientation-gate[hidden] {
+  display: none;
+}
+.rotate-device {
+  width: 100px;
+  height: 100px;
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  margin-bottom: 12px;
+}
+.orientation-gate h2 {
+  margin: 0;
+}
+.orientation-gate p {
+  line-height: 1.6;
+  margin: 12px 0 24px;
+  max-width: 30ch;
+}
+.orientation-gate button {
+  min-height: 44px;
+}
 .battle-header {
   display: flex;
   justify-content: space-between;
