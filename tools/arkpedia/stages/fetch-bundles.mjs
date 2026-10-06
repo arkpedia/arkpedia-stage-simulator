@@ -20,7 +20,13 @@ const download=async url=> {
 const manifest=await download(`${base}/hot_update_list.json`);
 await writeFile(resolve(out,'hot_update_list.json'),manifest);
 const list=JSON.parse(manifest).abInfos;
-const bundles = args.includes('--gates-only') ? ['arts/effects/[pack]map.ab'] : [
+if (args.includes('--gates-only') && args.includes('--skills-only'))
+  throw Error('Choose one bundle group');
+const bundles = args.includes('--skills-only') ? [
+  'config/buff_template_holder.ab', 'battle/prefabs/[uc]skills.ab',
+  'battle/prefabs/[uc]projectiles.ab', 'battle/prefabs/effects/buff.ab',
+  'battle/prefabs/effects/common.ab',
+] : args.includes('--gates-only') ? ['arts/effects/[pack]map.ab'] : [
   'scenes/obt/main/level_main_00-01/level_main_00-01.ab',
   'arts/maps/map_chernobog_a/res.ab',
   'scenes/obt/main/level_main_00-01/level_main_00-01/lightingdata.ab',

@@ -6,6 +6,32 @@
     "arkpedia/arkpedia-image-assets": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
     "arkpedia/arkpedia-skin-assets": "6fb723692d89c4a08d9a7aa4015e19c0753dd270"
   },
+  "behaviors": {
+    "source": {
+      "repository": "Kengxxiao/ArknightsGameData_YoStar",
+      "commit": "57010cb5b2afea112cae57daa756b58676ba6850",
+      "path": "en_US/gamedata/battle/buff_template_data.json",
+      "sha256": "79dce42d1ffa76196984b80678422e0323e406f6a044f1a25b1de75e0c5b9d27"
+    },
+    "templates": {
+      "charge_cost": {
+        "templateKey": "charge_cost",
+        "effectKey": "",
+        "onEventPriority": "DEFAULT",
+        "eventToActions": {
+          "ON_BUFF_START": [
+            {
+              "$type": "Torappu.Battle.Action.Nodes+ModifyCost, Assembly-CSharp",
+              "_sourceType": "SOURCE",
+              "_forceToDisplayNumber": false,
+              "_forceToDisplayNegativeNumber": false,
+              "_blackboardKey": "cost"
+            }
+          ]
+        }
+      }
+    }
+  },
   "sd": {
     "repository": "arkpedia/arkpedia-sd-assets",
     "commit": "84c19aaec4e3ec45a7ba8caa90bce7f05a2ab75c",

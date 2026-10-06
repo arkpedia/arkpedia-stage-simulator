@@ -78,6 +78,31 @@ npm run coverage:arkpedia
 
 Blending is an explicit import setting, followed by browser QA. The importer does not claim that parsed clips have been compared frame-for-frame with the game. Coverage regeneration uses the existing pinned source cache and rejects a source-pin mismatch; a fresh checkout first needs `build:arkpedia-data` to fetch its source tables.
 
+### Source behaviour templates and effects
+
+The pinned Global `gamedata/battle/buff_template_data.json` contains 5,468 templates and 916 action types. `shared/arkpedia/behavior.js` independently implements the reviewed `ModifyCost` and self-cast `HealViaMaxHpRatio` variants for `ON_BUFF_START`. It compiles the entire template before execution, rejects unknown actions/events/fields and resolves all operands before changing combat. Cross-unit source/owner rules, nested conditions, other events, priorities, buff lifetime/stacking and particle effects are not supported by this interpreter.
+
+Fang and Vanilla now execute the original `charge_cost` template once at skill activation. Their prefab-to-template bindings are verified against the official Global skill bundle, rather than inferred from their skill names. Cardigan uses a native HP-ratio heal ability in the client and retains its explicit adapter; the unrelated `instant_heal[hp_ratio]` buff is tested in isolation, not assigned to Cardigan. No additional operators are enabled by this change.
+
+`data/arkpedia-behavior-audit.json` records action/event counts, first rejection reasons, accepted isolated templates and the two live operator bindings. Fifteen templates compile in the restricted self-cast context, including ten empty/no-action records; only five contain actions. Acceptance of a buff alone is not support for its containing skill or operator.
+
+```sh
+# Fetch only the snapshot's immutable template table, verify SHA-256 and audit.
+# This does not refresh the playable snapshot or source commits.
+npm run audit:arkpedia-behaviors -- --fetch
+# With the pinned cache present, this command is offline:
+npm run audit:arkpedia-behaviors
+```
+
+`data/arkpedia-skill-prefabs.json` records checksum-verified original prefab bindings and an inventory of the skill/projectile/common/buff bundles. The `common_charge_cost_start_01`, `common_ignite_attack` and `common_heal_hit_01` roots exist in `battle/prefabs/effects/common.ab`. Their assets include Unity particles, materials, animation clips and trails; the inventory is not a browser particle renderer. Current visible effects/projectiles remain placeholders.
+
+```sh
+node tools/arkpedia/stages/fetch-bundles.mjs --version 26-09-23-17-49-43_b9cc4a --skills-only
+.cache/map-env/bin/python tools/arkpedia/stages/export-skill-bindings.py --bundles .cache/arkpedia/map-source/ab --manifest .cache/arkpedia/map-source/hot_update_list.json --templates .cache/arkpedia/buff_template_data.json --out data/arkpedia-skill-prefabs.json --version 26-09-23-17-49-43_b9cc4a
+```
+
+The extractor compares both reviewed template action lists with the original Unity template holder and records exact source bundle hashes. Rebuilding requires the template-table hash to match that evidence. A source refresh which changes it fails until the bindings are re-extracted and reviewed. No code from the newly researched battle engine, DPS calculator or Myrtle is included; their unresolved reuse terms do not affect this independent implementation.
+
 Routes come from the existing Arkpedia stage browser's `buildPlaybackPaths` output: public points, cumulative distances, waits and movement scale, not private app source. The simulator generator retains that export only while its geometry hash matches. After a geometry refresh it requires a new export, rather than silently using different routes:
 
 ```sh

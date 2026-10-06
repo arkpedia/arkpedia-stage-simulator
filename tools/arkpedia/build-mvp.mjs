@@ -5,6 +5,7 @@ import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { REGULAR_OPERATORS, assertRegularOperator } from "../../shared/arkpedia/operators.js";
 import { assertRegularEnemies } from "../../shared/arkpedia/enemies.js";
+import { compileBuffTemplate } from "../../shared/arkpedia/behavior.js";
 const cache = new URL("../../.cache/arkpedia/", import.meta.url);
 await mkdir(cache, { recursive: true });
 const paths = {
@@ -26,6 +27,7 @@ const paths = {
   ],
   stage: ["arkpedia/arkpedia-data", "source/data/stages/0-1.json"],
   geometry: ["arkpedia/arkpedia-data", "source/data/stage-geometry/0-1.json"],
+  buff_template_data: ["Kengxxiao/ArknightsGameData_YoStar", "en_US/gamedata/battle/buff_template_data.json"],
 };
 if (process.argv.includes("--refresh")) {
   const pins = {};
@@ -51,7 +53,7 @@ if (process.argv.includes("--refresh")) {
 }
 const read = async (name) =>
   JSON.parse(await readFile(new URL(`${name}.json`, cache), "utf8"));
-const [characters, skills, ranges, enemies, stage, geometry, pins] =
+const [characters, skills, ranges, enemies, stage, geometry, buffTemplates, pins] =
   await Promise.all(Object.keys(paths).concat("pins").map(read));
 const ids = Object.keys(REGULAR_OPERATORS);
 const operators = Object.fromEntries(
@@ -86,6 +88,22 @@ const operators = Object.fromEntries(
   }),
 );
 for (const op of Object.values(operators)) assertRegularOperator(op);
+const bindingEvidence = JSON.parse(await readFile(new URL("../../data/arkpedia-skill-prefabs.json", import.meta.url), "utf8"));
+const tableHash = createHash("sha256").update(await readFile(new URL("buff_template_data.json", cache))).digest("hex");
+if (bindingEvidence.templateTableSha256 !== tableHash)
+  throw Error("Skill-prefab evidence does not match source templates; re-extract and review before rebuilding");
+const templates = {};
+for (const [id, support] of Object.entries(REGULAR_OPERATORS)) {
+  if (!support.templateKey) continue;
+  if (JSON.stringify(bindingEvidence.prefabs[support.prefabId]?.buffTemplates) !== JSON.stringify([support.templateKey]))
+    throw Error(`Missing verified skill binding: ${id}`);
+  const program = compileBuffTemplate(buffTemplates[support.templateKey]);
+  for (const level of operators[id].skills[0].levels) {
+    if (level.prefabId !== support.prefabId) throw Error(`Unexpected skill prefab: ${id}`);
+    program.validateBlackboard(Object.fromEntries(level.blackboard.map(({ key, value }) => [key, value])));
+  }
+  templates[support.templateKey] = buffTemplates[support.templateKey];
+}
 const enemyRecords = Object.fromEntries(
   geometry.enemyConfigurations.map((config) => {
     const rows = enemies.enemies.find((e) => e.Key === config.enemy_id)?.Value;
@@ -149,6 +167,11 @@ const models = Object.fromEntries(
 const output = {
   schemaVersion: 1,
   sources: pins,
+  behaviors: {
+    source: { repository: paths.buff_template_data[0], commit: pins[paths.buff_template_data[0]],
+      path: paths.buff_template_data[1], sha256: tableHash },
+    templates,
+  },
   sd: { repository: "arkpedia/arkpedia-sd-assets", commit: sdCommit, models },
   stage: {
     code: stage.code,

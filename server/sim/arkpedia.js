@@ -6,6 +6,7 @@ import { genericKit } from "./content/generic.js";
 import { catalogueFor, recordFor } from "../../shared/arkpedia/loadout.js";
 import { REGULAR_OPERATORS } from "../../shared/arkpedia/operators.js";
 import { assertRegularEnemies } from "../../shared/arkpedia/enemies.js";
+import { compileBuffTemplate } from "../../shared/arkpedia/behavior.js";
 import {
   prepareSquad,
   canDeployInViewport,
@@ -93,6 +94,19 @@ export class StandardBattle extends Battle {
     const chess = Object.fromEntries(
       builds.map((b) => [b.id, recordFor(b, data)]),
     );
+    // Compile and validate before the battle starts or any DP/SP is spent.
+    const behaviors = new Map();
+    for (const build of builds) {
+      const support = REGULAR_OPERATORS[build.id];
+      if (!support.templateKey) continue;
+      const level = data.operators[build.id].skills[0].levels[build.skillRank - 1];
+      if (level.prefabId !== support.prefabId)
+        throw Error(`Unsupported regular-stage skill prefab: ${level.prefabId}`);
+      const program = compileBuffTemplate(data.behaviors?.templates?.[support.templateKey]);
+      if (program.key !== support.templateKey) throw Error('Behaviour template key mismatch');
+      program.validateBlackboard(chess[build.id].skill.bb);
+      behaviors.set(build.id, program);
+    }
     const config = data.stage.battle;
     super({
       ...stageAdapter(data.stage),
@@ -113,6 +127,7 @@ export class StandardBattle extends Battle {
       ],
     });
     this.life = config.max_life;
+    this.behaviors = behaviors;
     this.unitLimit = config.unit_limit;
     this.viewport = "preview";
     this.bench = Object.fromEntries(
@@ -182,7 +197,7 @@ export class StandardBattle extends Battle {
     const mechanic = REGULAR_OPERATORS[id].mechanic;
     if (mechanic === "dp")
       kit.skill.onStart = ({ battle, unit }) =>
-        battle.addDp(unit.ownerId, def.skill.bb.cost);
+        this.behaviors.get(id).run("ON_BUFF_START", { battle, unit, blackboard: def.skill.bb });
     if (mechanic === "self-heal")
       kit.skill = {
         id: def.skill.id,

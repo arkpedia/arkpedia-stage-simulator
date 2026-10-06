@@ -1,0 +1,6001 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "repository": "Kengxxiao/ArknightsGameData_YoStar",
+    "commit": "57010cb5b2afea112cae57daa756b58676ba6850",
+    "path": "en_US/gamedata/battle/buff_template_data.json",
+    "sha256": "79dce42d1ffa76196984b80678422e0323e406f6a044f1a25b1de75e0c5b9d27"
+  },
+  "scope": "Isolated action support only. No automatic skill/operator enablement; rejected templates never partially execute.",
+  "summary": {
+    "templateRecords": 5468,
+    "actionTypes": 916,
+    "acceptedTemplates": 15,
+    "rejectedTemplates": 5453,
+    "acceptedTemplatesWithActions": 5,
+    "boundPlayableOperators": 2,
+    "boundPlayableTemplates": 1
+  },
+  "bindings": [
+    {
+      "operator": "char_123_fang",
+      "skillId": "skcom_charge_cost[1]",
+      "prefabId": "skcom_charge_cost",
+      "templateKey": "charge_cost"
+    },
+    {
+      "operator": "char_240_wyvern",
+      "skillId": "skchr_wyvern_1",
+      "prefabId": "skchr_wyvern_1",
+      "templateKey": "charge_cost"
+    }
+  ],
+  "acceptedTemplates": [
+    {
+      "key": "----------------------",
+      "requiredBlackboard": [],
+      "events": [],
+      "actionCount": 0
+    },
+    {
+      "key": "[g]see_though",
+      "requiredBlackboard": [],
+      "events": [],
+      "actionCount": 0
+    },
+    {
+      "key": "angel_s_1[event]",
+      "requiredBlackboard": [],
+      "events": [],
+      "actionCount": 0
+    },
+    {
+      "key": "bldsk_s_1",
+      "requiredBlackboard": [
+        "heal_scale"
+      ],
+      "events": [
+        "ON_BUFF_START"
+      ],
+      "actionCount": 1
+    },
+    {
+      "key": "cdsoul_trap_passive",
+      "requiredBlackboard": [],
+      "events": [],
+      "actionCount": 0
+    },
+    {
+      "key": "charge_cost",
+      "requiredBlackboard": [
+        "cost"
+      ],
+      "events": [
+        "ON_BUFF_START"
+      ],
+      "actionCount": 1
+    },
+    {
+      "key": "chyue_e_002_trait[passive]",
+      "requiredBlackboard": [],
+      "events": [],
+      "actionCount": 0
+    },
+    {
+      "key": "empty",
+      "requiredBlackboard": [],
+      "events": [],
+      "actionCount": 0
+    },
+    {
+      "key": "enemy_nhnrs_t[healtrap]",
+      "requiredBlackboard": [
+        "heal_scale"
+      ],
+      "events": [
+        "ON_BUFF_START"
+      ],
+      "actionCount": 1
+    },
+    {
+      "key": "haak_t_heal",
+      "requiredBlackboard": [
+        "heal_scale"
+      ],
+      "events": [
+        "ON_BUFF_START"
+      ],
+      "actionCount": 1
+    },
+    {
+      "key": "instant_heal[hp_ratio]",
+      "requiredBlackboard": [
+        "heal_scale"
+      ],
+      "events": [
+        "ON_BUFF_START"
+      ],
+      "actionCount": 1
+    },
+    {
+      "key": "multi_fortress_s[done]",
+      "requiredBlackboard": [],
+      "events": [
+        "ON_BUFF_START"
+      ],
+      "actionCount": 0
+    },
+    {
+      "key": "supspt_",
+      "requiredBlackboard": [],
+      "events": [],
+      "actionCount": 0
+    },
+    {
+      "key": "yy_start",
+      "requiredBlackboard": [],
+      "events": [],
+      "actionCount": 0
+    },
+    {
+      "key": "zyq_start",
+      "requiredBlackboard": [],
+      "events": [],
+      "actionCount": 0
+    }
+  ],
+  "actionTypes": [
+    {
+      "name": "Act20SideModeOnlyIncreaseScore",
+      "count": 1
+    },
+    {
+      "name": "Act27sideAddTilesToEnemySideBlackList",
+      "count": 1
+    },
+    {
+      "name": "Act27sideModifyAllAllyTileCachedSideType",
+      "count": 1
+    },
+    {
+      "name": "Act27sideModifyTileCachedSideType",
+      "count": 13
+    },
+    {
+      "name": "Act29SideCheckCurrentAudioType",
+      "count": 28
+    },
+    {
+      "name": "Act29SideSwitchCurretnAudioType",
+      "count": 4
+    },
+    {
+      "name": "Act31SideAddAreaPollute",
+      "count": 3
+    },
+    {
+      "name": "Act31SideAssignAreaPolluteValueToBB",
+      "count": 5
+    },
+    {
+      "name": "Act31SideCheckInPolluteArea",
+      "count": 7
+    },
+    {
+      "name": "Act31SideCheckRootTilePolluteValue",
+      "count": 6
+    },
+    {
+      "name": "Act31SideCheckTileInWaterArea",
+      "count": 3
+    },
+    {
+      "name": "Act31SideDeathPolluteTile",
+      "count": 3
+    },
+    {
+      "name": "Act31SidePumpFlowIntoOtherArea",
+      "count": 1
+    },
+    {
+      "name": "Act31SidePurifyAreaPollute",
+      "count": 2
+    },
+    {
+      "name": "Act31SideTriggerRebuildAreas",
+      "count": 2
+    },
+    {
+      "name": "Act33SideBurnCharactersWithRope",
+      "count": 2
+    },
+    {
+      "name": "Act33SideCollectCharactersWithRope",
+      "count": 1
+    },
+    {
+      "name": "Act33SideCutRopeBySource",
+      "count": 1
+    },
+    {
+      "name": "Act33SideDamageGreaterThanRecordedMax",
+      "count": 1
+    },
+    {
+      "name": "Act33SideEmitManagedProjectile",
+      "count": 1
+    },
+    {
+      "name": "Act33SideFilterByTargetRopeCnt",
+      "count": 4
+    },
+    {
+      "name": "Act33SideFinishManagedProjectiles",
+      "count": 1
+    },
+    {
+      "name": "Act35SideAssignGemsCountToBlackboard",
+      "count": 4
+    },
+    {
+      "name": "Act35SideCheckIfOnGemsTile",
+      "count": 8
+    },
+    {
+      "name": "Act35SideCheckNotOnExcludedTile",
+      "count": 1
+    },
+    {
+      "name": "Act35SideEliminateGems",
+      "count": 1
+    },
+    {
+      "name": "Act35SideSummonGems",
+      "count": 3
+    },
+    {
+      "name": "Act35SideSummonGemsInFourDirections",
+      "count": 1
+    },
+    {
+      "name": "Act35SideSummonGemsInRange",
+      "count": 3
+    },
+    {
+      "name": "Act35SideSummonLinkGem",
+      "count": 1
+    },
+    {
+      "name": "Act38SideCheckFunLevelLost",
+      "count": 1
+    },
+    {
+      "name": "Act38SideFilterFireworkCondition",
+      "count": 4
+    },
+    {
+      "name": "Act38SideLogKilled",
+      "count": 3
+    },
+    {
+      "name": "Act38SideTryGetRouteAndCacheOrigin",
+      "count": 2
+    },
+    {
+      "name": "Act42SideShownMapHiddenArea",
+      "count": 1
+    },
+    {
+      "name": "Act43SideCheckIsCharacterShooting",
+      "count": 2
+    },
+    {
+      "name": "Act43SideFaceToLOrRViaShootingArea",
+      "count": 2
+    },
+    {
+      "name": "Act43SideIsInShootingArea",
+      "count": 1
+    },
+    {
+      "name": "Act43SideOnBlockChanged",
+      "count": 2
+    },
+    {
+      "name": "Act43SideOnEnemyInteractWithShootingArea",
+      "count": 2
+    },
+    {
+      "name": "Act43SideUpdateShootingArea",
+      "count": 2
+    },
+    {
+      "name": "Act6FunCollectCoin",
+      "count": 1
+    },
+    {
+      "name": "ActivePredifinedInst",
+      "count": 1
+    },
+    {
+      "name": "AddAbilityBlackboard",
+      "count": 17
+    },
+    {
+      "name": "AddAttractToTargetRootTile",
+      "count": 1
+    },
+    {
+      "name": "AddBuffBlackboard",
+      "count": 91
+    },
+    {
+      "name": "AddBuffToRandomCharacterWithSpecificBuff",
+      "count": 2
+    },
+    {
+      "name": "AddCharacterSharedBlackboard",
+      "count": 28
+    },
+    {
+      "name": "AddCostTimerModifier",
+      "count": 1
+    },
+    {
+      "name": "AddEnemyBlockVolume",
+      "count": 10
+    },
+    {
+      "name": "AddEnemyIdToCharacterSharedBlackboard",
+      "count": 2
+    },
+    {
+      "name": "AddExcludeCharacterToDynamicBuffTile",
+      "count": 3
+    },
+    {
+      "name": "AddFearTargetTiles",
+      "count": 1
+    },
+    {
+      "name": "AddFunnelAbilityActiveCnt",
+      "count": 2
+    },
+    {
+      "name": "AddGameFinishBlockerByKey",
+      "count": 1
+    },
+    {
+      "name": "AddGlobalBlackboard",
+      "count": 14
+    },
+    {
+      "name": "AddHeightOffsetToSpine",
+      "count": 24
+    },
+    {
+      "name": "AddOrRemoveRuntimeUIPlugin",
+      "count": 4
+    },
+    {
+      "name": "AddTempLifePoint",
+      "count": 1
+    },
+    {
+      "name": "AddTileBlackboard",
+      "count": 4
+    },
+    {
+      "name": "AdjustEnemyHeightToRootTile",
+      "count": 4
+    },
+    {
+      "name": "AdvancedApplyDamage",
+      "count": 175
+    },
+    {
+      "name": "AdvancedApplyHeal",
+      "count": 21
+    },
+    {
+      "name": "AdvancedHealViaDamage",
+      "count": 1
+    },
+    {
+      "name": "AlwaysNext",
+      "count": 666
+    },
+    {
+      "name": "AmmoSkillCountModifier",
+      "count": 21
+    },
+    {
+      "name": "AOEDamage",
+      "count": 61
+    },
+    {
+      "name": "AOEElementDamage",
+      "count": 3
+    },
+    {
+      "name": "AOEHeal",
+      "count": 5
+    },
+    {
+      "name": "ApplyCacheAtkDamageByBuffBlackBoardCnt",
+      "count": 1
+    },
+    {
+      "name": "ApplyCacheAtkDamageFromBuff",
+      "count": 6
+    },
+    {
+      "name": "ApplyElementDamage",
+      "count": 75
+    },
+    {
+      "name": "ApplyElementDamageBasedOnDamageValue",
+      "count": 10
+    },
+    {
+      "name": "ApplyElementHeal",
+      "count": 6
+    },
+    {
+      "name": "ApplyFixedElementDamage",
+      "count": 2
+    },
+    {
+      "name": "ApplyForceOnRogue4DLC2BounceEnemy",
+      "count": 1
+    },
+    {
+      "name": "ApplyHeal",
+      "count": 1
+    },
+    {
+      "name": "ArcgachaGainTrap",
+      "count": 1
+    },
+    {
+      "name": "AssignAbilityBlackboardFromOthers",
+      "count": 3
+    },
+    {
+      "name": "AssignAmmoSkillRemainingCountToBB",
+      "count": 5
+    },
+    {
+      "name": "AssignAttributeAsDynamicVarToBB",
+      "count": 12
+    },
+    {
+      "name": "AssignAttributeDefaultValueToBlackboard",
+      "count": 2
+    },
+    {
+      "name": "AssignAttributeRawDataIntoBlackboard",
+      "count": 9
+    },
+    {
+      "name": "AssignAttributeToBB",
+      "count": 67
+    },
+    {
+      "name": "AssignBuffBlackboard",
+      "count": 199
+    },
+    {
+      "name": "AssignBuffBlackboardFromAbility",
+      "count": 3
+    },
+    {
+      "name": "AssignBuffBlackboardFromOthers",
+      "count": 124
+    },
+    {
+      "name": "AssignBuffCountIntoBlackboard",
+      "count": 32
+    },
+    {
+      "name": "AssignBuffExistingTimeIntoBlackboard",
+      "count": 2
+    },
+    {
+      "name": "AssignCardUIDToBlackBoard",
+      "count": 5
+    },
+    {
+      "name": "AssignCertainSideContainsBuffUnitsCntToBlackboard",
+      "count": 1
+    },
+    {
+      "name": "AssignCharacterCostIntoBlackboard",
+      "count": 1
+    },
+    {
+      "name": "AssignCharacterMaxEsIntoBlackBoard",
+      "count": 1
+    },
+    {
+      "name": "AssignCharacterSharedBBToBlackboard",
+      "count": 4
+    },
+    {
+      "name": "AssignCharacterSkillBlackboardToBB",
+      "count": 6
+    },
+    {
+      "name": "AssignCurrentBlockNumToBB",
+      "count": 2
+    },
+    {
+      "name": "AssignCurrentBlockVolumnToBB",
+      "count": 2
+    },
+    {
+      "name": "AssignCurSpToBB",
+      "count": 7
+    },
+    {
+      "name": "AssignDamageValueToBlackboard",
+      "count": 16
+    },
+    {
+      "name": "AssignDirectionToBB",
+      "count": 6
+    },
+    {
+      "name": "AssignEnemyLastMoveDirectionToBB",
+      "count": 1
+    },
+    {
+      "name": "AssignEnemyLifePointReduceToBB",
+      "count": 1
+    },
+    {
+      "name": "AssignEnemyRouteDistToBB",
+      "count": 2
+    },
+    {
+      "name": "AssignEntityCreateTimeToBB",
+      "count": 1
+    },
+    {
+      "name": "AssignEntityEsIntoBlackboard",
+      "count": 3
+    },
+    {
+      "name": "AssignFinishedBossWaveIntoBlackBoard",
+      "count": 3
+    },
+    {
+      "name": "AssignGlobalBlackboardToBlackboard",
+      "count": 3
+    },
+    {
+      "name": "AssignGridPositionToBlackboard",
+      "count": 2
+    },
+    {
+      "name": "AssignHostAttributeToBB",
+      "count": 7
+    },
+    {
+      "name": "AssignHostBlackboardToBuffBlackboard",
+      "count": 2
+    },
+    {
+      "name": "AssignHpRatioToBB",
+      "count": 10
+    },
+    {
+      "name": "AssignModifierRealDeltaToBB",
+      "count": 4
+    },
+    {
+      "name": "AssignModifierValueIntoBlackboard",
+      "count": 5
+    },
+    {
+      "name": "AssignNodeCountToBb",
+      "count": 1
+    },
+    {
+      "name": "AssignPlayerSideCostIntoBlackboard",
+      "count": 1
+    },
+    {
+      "name": "AssignProfessionCntToBlackboard",
+      "count": 5
+    },
+    {
+      "name": "AssignRelativeDirectionToBB",
+      "count": 1
+    },
+    {
+      "name": "AssignRootTileToBB",
+      "count": 7
+    },
+    {
+      "name": "AssignSubSpineConfigIndexToBB",
+      "count": 2
+    },
+    {
+      "name": "AssignTokenCntToBB",
+      "count": 10
+    },
+    {
+      "name": "AssignUidToBuffBlackBoard",
+      "count": 1
+    },
+    {
+      "name": "AssignValueToBB",
+      "count": 240
+    },
+    {
+      "name": "AssignValueToBBWithWeight",
+      "count": 1
+    },
+    {
+      "name": "AssignValueToTraitBB",
+      "count": 7
+    },
+    {
+      "name": "AtkAdditionUpBeforeCalcDamage",
+      "count": 1
+    },
+    {
+      "name": "AtkScaleUp",
+      "count": 149
+    },
+    {
+      "name": "AtkToHpRecovery",
+      "count": 4
+    },
+    {
+      "name": "AttachAsDerivedBuff",
+      "count": 6
+    },
+    {
+      "name": "AttachAsDerivedBuffById",
+      "count": 20
+    },
+    {
+      "name": "AttachAsDerivedBuffToMainBuff",
+      "count": 2
+    },
+    {
+      "name": "AttributeModifierWithBB",
+      "count": 51
+    },
+    {
+      "name": "AttributeModifierWithCertainBuffCount",
+      "count": 15
+    },
+    {
+      "name": "AttributeModifierWithLevelProgress",
+      "count": 3
+    },
+    {
+      "name": "AutochessAddBuffToCharactersWithSameId",
+      "count": 1
+    },
+    {
+      "name": "AutoChessAssignBattleLayersToBlackboard",
+      "count": 4
+    },
+    {
+      "name": "AutochessAssignCharacterCntByGroupTagToBlackboard",
+      "count": 3
+    },
+    {
+      "name": "AutochessAssignEquipCntToBlackboard",
+      "count": 5
+    },
+    {
+      "name": "AutoChessAssignUseMagicCntInThisRound",
+      "count": 1
+    },
+    {
+      "name": "AutoChessAttrViaForceEffectCnt",
+      "count": 3
+    },
+    {
+      "name": "AutoChessCheckCharacterByDefaultFaction",
+      "count": 1
+    },
+    {
+      "name": "AutoChessCheckTargetInTheSameRowAsEquipHolder",
+      "count": 1
+    },
+    {
+      "name": "AutoChessCreateBuffMulti",
+      "count": 4
+    },
+    {
+      "name": "AutochessCreateBuffToCharacterFilterByAttribute",
+      "count": 1
+    },
+    {
+      "name": "AutochessCreateBuffToCharacterFilterByCardUid",
+      "count": 1
+    },
+    {
+      "name": "AutochessCreateBuffToRandomCharacter",
+      "count": 1
+    },
+    {
+      "name": "AutoChessFilterByCardUid",
+      "count": 10
+    },
+    {
+      "name": "AutochessFilterByChessLevel",
+      "count": 5
+    },
+    {
+      "name": "AutochessFilterByCurrentCoin",
+      "count": 1
+    },
+    {
+      "name": "AutoChessFilterCharacterCntByDefaultFaction",
+      "count": 1
+    },
+    {
+      "name": "AutoChessFilterCharacterCntByProfession",
+      "count": 6
+    },
+    {
+      "name": "AutoChessFilterDifferentChessLevelCnt",
+      "count": 2
+    },
+    {
+      "name": "AutoChessFilterDifficultyMode",
+      "count": 2
+    },
+    {
+      "name": "AutoChessFilterProfessionById",
+      "count": 1
+    },
+    {
+      "name": "AutoChessFilterPurchasedCharacterGroupTag",
+      "count": 2
+    },
+    {
+      "name": "AutoChessFreezeStore",
+      "count": 1
+    },
+    {
+      "name": "AutoChessLogExtraBattleInfo",
+      "count": 7
+    },
+    {
+      "name": "AutoChessRebuildCharacterOnTile",
+      "count": 3
+    },
+    {
+      "name": "AutoChessRefreshStore",
+      "count": 1
+    },
+    {
+      "name": "AutoChessUpgradeStore",
+      "count": 1
+    },
+    {
+      "name": "AverageHealViaHpUseAbilitySelector",
+      "count": 2
+    },
+    {
+      "name": "BlackboardAdd",
+      "count": 85
+    },
+    {
+      "name": "BleedingDamageIncreasingReset",
+      "count": 6
+    },
+    {
+      "name": "BleedingDamagePerSec",
+      "count": 8
+    },
+    {
+      "name": "BlinkNode",
+      "count": 8
+    },
+    {
+      "name": "BlockDamage",
+      "count": 94
+    },
+    {
+      "name": "BlockElementDamage",
+      "count": 2
+    },
+    {
+      "name": "BossRushMoveCamera",
+      "count": 1
+    },
+    {
+      "name": "CalculateBlackboardValueViaParams",
+      "count": 390
+    },
+    {
+      "name": "CalculateTraitAbilityBlackboard",
+      "count": 23
+    },
+    {
+      "name": "CancelModifier",
+      "count": 73
+    },
+    {
+      "name": "ChangeAnimatorMeshBySandboxKilledBoss",
+      "count": 1
+    },
+    {
+      "name": "ChangeAnimatorMeshRenderer",
+      "count": 86
+    },
+    {
+      "name": "ChangeCharBlockMode",
+      "count": 4
+    },
+    {
+      "name": "ChangeEnemyLevitateHeightImmediately",
+      "count": 2
+    },
+    {
+      "name": "ChangeEnemyRouteMotionMode",
+      "count": 11
+    },
+    {
+      "name": "ChangeMotionMode",
+      "count": 61
+    },
+    {
+      "name": "CharacterHasValidToken",
+      "count": 3
+    },
+    {
+      "name": "CharSearchBlockeeImmediate",
+      "count": 3
+    },
+    {
+      "name": "CharSkillNotCountTimes",
+      "count": 2
+    },
+    {
+      "name": "CheckAbilityDamageDeadly",
+      "count": 2
+    },
+    {
+      "name": "CheckAbnormalCombo",
+      "count": 10
+    },
+    {
+      "name": "CheckAbnormalComboImmune",
+      "count": 1
+    },
+    {
+      "name": "CheckAbnormalFlag",
+      "count": 151
+    },
+    {
+      "name": "CheckAbnormalFlags",
+      "count": 32
+    },
+    {
+      "name": "CheckAbnormalImmune",
+      "count": 25
+    },
+    {
+      "name": "CheckAndBlockBuffByAbnormalFlags",
+      "count": 1
+    },
+    {
+      "name": "CheckBlocked",
+      "count": 181
+    },
+    {
+      "name": "CheckBlockedPlayersideInCooperate",
+      "count": 1
+    },
+    {
+      "name": "CheckBlockerContainsBuff",
+      "count": 1
+    },
+    {
+      "name": "CheckBlockerGroupTag",
+      "count": 1
+    },
+    {
+      "name": "CheckBlockMode",
+      "count": 1
+    },
+    {
+      "name": "CheckBuffAttributeModifierChanged",
+      "count": 3
+    },
+    {
+      "name": "CheckBuffRemainingTime",
+      "count": 2
+    },
+    {
+      "name": "CheckBuildableType",
+      "count": 9
+    },
+    {
+      "name": "CheckBuildableTypeOfCharacterRootTile",
+      "count": 3
+    },
+    {
+      "name": "CheckBuildCnt",
+      "count": 10
+    },
+    {
+      "name": "CheckCanUseAtkOrCbt",
+      "count": 5
+    },
+    {
+      "name": "CheckCharacterData",
+      "count": 1
+    },
+    {
+      "name": "CheckCharacterDefaultDirection",
+      "count": 58
+    },
+    {
+      "name": "CheckCharacterGroupTag",
+      "count": 47
+    },
+    {
+      "name": "CheckCharacterInBornState",
+      "count": 3
+    },
+    {
+      "name": "CheckCharacterInMagicCircuit",
+      "count": 10
+    },
+    {
+      "name": "CheckCharacterIsMannuallySpawned",
+      "count": 1
+    },
+    {
+      "name": "CheckCharacterNextAttackOrCombatSkill",
+      "count": 2
+    },
+    {
+      "name": "CheckCharacterOnTile",
+      "count": 3
+    },
+    {
+      "name": "CheckCharacterSkillType",
+      "count": 7
+    },
+    {
+      "name": "CheckCharSkillAffecting",
+      "count": 22
+    },
+    {
+      "name": "CheckCharSkillAvailable",
+      "count": 5
+    },
+    {
+      "name": "CheckCharSkillUsedUp",
+      "count": 1
+    },
+    {
+      "name": "CheckConatinsMapTags",
+      "count": 4
+    },
+    {
+      "name": "CheckContainsBuff",
+      "count": 1445
+    },
+    {
+      "name": "CheckContainsCardBuff",
+      "count": 13
+    },
+    {
+      "name": "CheckContainsDeckBuff",
+      "count": 2
+    },
+    {
+      "name": "CheckContainsDerviedBuff",
+      "count": 247
+    },
+    {
+      "name": "CheckContainsEnvSystem",
+      "count": 7
+    },
+    {
+      "name": "CheckContainsResistableAbnormalFlagsBuff",
+      "count": 1
+    },
+    {
+      "name": "CheckContainsStatusResistableBuff",
+      "count": 2
+    },
+    {
+      "name": "CheckCost",
+      "count": 10
+    },
+    {
+      "name": "CheckCurrentLevelProgressRatio",
+      "count": 2
+    },
+    {
+      "name": "CheckCurrentTileKey",
+      "count": 18
+    },
+    {
+      "name": "CheckDeathCnt",
+      "count": 1
+    },
+    {
+      "name": "CheckDirection",
+      "count": 19
+    },
+    {
+      "name": "CheckDistance",
+      "count": 6
+    },
+    {
+      "name": "CheckDistanceToProjectileCenter",
+      "count": 1
+    },
+    {
+      "name": "CheckDistanceToTileCenter",
+      "count": 2
+    },
+    {
+      "name": "CheckDynamicBuffTileModeInEnum",
+      "count": 6
+    },
+    {
+      "name": "CheckDynamicBuffTileModeOneLine",
+      "count": 2
+    },
+    {
+      "name": "CheckEnemyAbilityName",
+      "count": 4
+    },
+    {
+      "name": "CheckEnemyCountWhenAttackDoCast",
+      "count": 2
+    },
+    {
+      "name": "CheckEnemyCurrentCheckpoint",
+      "count": 2
+    },
+    {
+      "name": "CheckEnemyCursorTargetPos",
+      "count": 2
+    },
+    {
+      "name": "CheckEnemyDirection",
+      "count": 10
+    },
+    {
+      "name": "CheckEnemyFaceAndMoveDir",
+      "count": 5
+    },
+    {
+      "name": "CheckEnemyId",
+      "count": 36
+    },
+    {
+      "name": "CheckEnemyInMagicCircuit",
+      "count": 1
+    },
+    {
+      "name": "CheckEnemyLevelMask",
+      "count": 8
+    },
+    {
+      "name": "CheckEnemyLevelType",
+      "count": 19
+    },
+    {
+      "name": "CheckEnemyMultiChargeAbilityIsCharge",
+      "count": 1
+    },
+    {
+      "name": "CheckEnemyRealReachableToTile",
+      "count": 1
+    },
+    {
+      "name": "CheckEnemyRouteCheckpoint",
+      "count": 1
+    },
+    {
+      "name": "CheckEnemySkillAffecting",
+      "count": 4
+    },
+    {
+      "name": "CheckEnemySummoned",
+      "count": 1
+    },
+    {
+      "name": "CheckEnemyTalentContainsKey",
+      "count": 7
+    },
+    {
+      "name": "CheckEnemyUnbalanced",
+      "count": 36
+    },
+    {
+      "name": "CheckEnemyWhetherReachedSomeCheckPoint",
+      "count": 7
+    },
+    {
+      "name": "CheckEntityDisappeared",
+      "count": 25
+    },
+    {
+      "name": "CheckEntityEquals",
+      "count": 9
+    },
+    {
+      "name": "CheckEntitySuicide",
+      "count": 2
+    },
+    {
+      "name": "CheckFaceDirection",
+      "count": 10
+    },
+    {
+      "name": "CheckFaceLOrR",
+      "count": 3
+    },
+    {
+      "name": "CheckFilterTag",
+      "count": 104
+    },
+    {
+      "name": "CheckFirstRallyPointMode",
+      "count": 4
+    },
+    {
+      "name": "CheckGamePlayedTime",
+      "count": 3
+    },
+    {
+      "name": "CheckGlobalBuffExistByKey",
+      "count": 1
+    },
+    {
+      "name": "CheckHasCharacterInRange",
+      "count": 7
+    },
+    {
+      "name": "CheckHasEnemyIdInCharacterSharedBlackboard",
+      "count": 1
+    },
+    {
+      "name": "CheckHasEnemyInRange",
+      "count": 30
+    },
+    {
+      "name": "CheckHasSp",
+      "count": 20
+    },
+    {
+      "name": "CheckHasStands",
+      "count": 1
+    },
+    {
+      "name": "CheckHaveDangerousEventAfterCollectInfoFunLiveModeOnly",
+      "count": 1
+    },
+    {
+      "name": "CheckHeightTypeInRange",
+      "count": 1
+    },
+    {
+      "name": "CheckHeightTypeOfCharacterRootTile",
+      "count": 21
+    },
+    {
+      "name": "CheckHeightTypeOfRootTile",
+      "count": 5
+    },
+    {
+      "name": "CheckHostContainsBuff",
+      "count": 8
+    },
+    {
+      "name": "CheckIdInBlackboardFunLiveModeOnly",
+      "count": 3
+    },
+    {
+      "name": "CheckIfDamageHasSharedFlags",
+      "count": 8
+    },
+    {
+      "name": "CheckIfSourceGridPosFaceTargetGridPos",
+      "count": 17
+    },
+    {
+      "name": "CheckIsFootballEnemy",
+      "count": 3
+    },
+    {
+      "name": "CheckIsTrackTargetEnemy",
+      "count": 3
+    },
+    {
+      "name": "CheckMainBuffId",
+      "count": 3
+    },
+    {
+      "name": "CheckManhattanDistance",
+      "count": 4
+    },
+    {
+      "name": "CheckManhattanDistanceBetweenSourceAndTarget",
+      "count": 1
+    },
+    {
+      "name": "CheckModifierContainsKey",
+      "count": 9
+    },
+    {
+      "name": "CheckModifierDirectionOffset",
+      "count": 3
+    },
+    {
+      "name": "CheckModifierFace",
+      "count": 1
+    },
+    {
+      "name": "CheckMotionMode",
+      "count": 15
+    },
+    {
+      "name": "CheckOtherCharacterInRange",
+      "count": 2
+    },
+    {
+      "name": "CheckRemainTime",
+      "count": 1
+    },
+    {
+      "name": "CheckRootTileAdvBuildableMask",
+      "count": 3
+    },
+    {
+      "name": "CheckRouteMotionMode",
+      "count": 6
+    },
+    {
+      "name": "CheckSanity",
+      "count": 1
+    },
+    {
+      "name": "CheckSkillIndex",
+      "count": 19
+    },
+    {
+      "name": "CheckSkillRemainingProgress",
+      "count": 1
+    },
+    {
+      "name": "CheckSourceInHitRange",
+      "count": 1
+    },
+    {
+      "name": "CheckSpecificEnemyCount",
+      "count": 4
+    },
+    {
+      "name": "CheckTargetEnemyId",
+      "count": 1
+    },
+    {
+      "name": "CheckTargetEpIsFull",
+      "count": 1
+    },
+    {
+      "name": "CheckTargetGridPositionRowOrColWithBB",
+      "count": 16
+    },
+    {
+      "name": "CheckTargetInRange",
+      "count": 10
+    },
+    {
+      "name": "CheckTargetProfession",
+      "count": 23
+    },
+    {
+      "name": "CheckTargetRootTile",
+      "count": 21
+    },
+    {
+      "name": "CheckTargetRootTileInfoMask",
+      "count": 4
+    },
+    {
+      "name": "CheckTargetSkillDurationType",
+      "count": 6
+    },
+    {
+      "name": "CheckTargetTokenOrHost",
+      "count": 2
+    },
+    {
+      "name": "CheckTheLeftSameDeployedToken",
+      "count": 1
+    },
+    {
+      "name": "CheckTileCntInAttackRange",
+      "count": 2
+    },
+    {
+      "name": "CheckTileOptions",
+      "count": 2
+    },
+    {
+      "name": "CheckTilePassable",
+      "count": 1
+    },
+    {
+      "name": "CheckTileTypeCntInAttackRange",
+      "count": 1
+    },
+    {
+      "name": "CheckTokenHostGroupTag",
+      "count": 4
+    },
+    {
+      "name": "CheckTraitAbilityBlackboard",
+      "count": 11
+    },
+    {
+      "name": "CheckTriggerable",
+      "count": 8
+    },
+    {
+      "name": "CheckTriggerableBuffsByKeys",
+      "count": 2
+    },
+    {
+      "name": "CheckUnitAlive",
+      "count": 55
+    },
+    {
+      "name": "CheckUnitCurrentMode",
+      "count": 183
+    },
+    {
+      "name": "CheckUnitInAttackState",
+      "count": 10
+    },
+    {
+      "name": "CheckUnitInCombatState",
+      "count": 1
+    },
+    {
+      "name": "CheckUnitInDisappearState",
+      "count": 8
+    },
+    {
+      "name": "CheckUnitInMoveState",
+      "count": 4
+    },
+    {
+      "name": "CheckUnitInRebornState",
+      "count": 12
+    },
+    {
+      "name": "CheckUnitRootTileInTargetAttackRange",
+      "count": 1
+    },
+    {
+      "name": "ClearAllBuffs",
+      "count": 20
+    },
+    {
+      "name": "ClearCharacterOnTileIfExists",
+      "count": 3
+    },
+    {
+      "name": "ClearCharacterSp",
+      "count": 34
+    },
+    {
+      "name": "ClearCheckpointInRuntimeRoute",
+      "count": 5
+    },
+    {
+      "name": "ClearEnemySp",
+      "count": 4
+    },
+    {
+      "name": "ClearFirstBuffBlackboardByKey",
+      "count": 2
+    },
+    {
+      "name": "ClearOverlappedCharacterIfExist",
+      "count": 2
+    },
+    {
+      "name": "ClearTrap",
+      "count": 1
+    },
+    {
+      "name": "CollectTargetInfoFunLiveModeOnly",
+      "count": 11
+    },
+    {
+      "name": "CompareCharSkillAvailableCnt",
+      "count": 26
+    },
+    {
+      "name": "CompareModifierValueWithTargetType",
+      "count": 17
+    },
+    {
+      "name": "CompareRogueDiceNumber",
+      "count": 6
+    },
+    {
+      "name": "ConsumeTimeline",
+      "count": 1
+    },
+    {
+      "name": "ConsumeTrySetHpZeroModifier",
+      "count": 20
+    },
+    {
+      "name": "CoopAddEnemyKeyToSideSharedEnemy",
+      "count": 1
+    },
+    {
+      "name": "CoopCheckInLastWave",
+      "count": 1
+    },
+    {
+      "name": "CoopCheckInResting",
+      "count": 2
+    },
+    {
+      "name": "CoopRecordDefenceBossStatus",
+      "count": 2
+    },
+    {
+      "name": "CoopReplaceActionKey",
+      "count": 1
+    },
+    {
+      "name": "CopyCharacterSharedBlackboard",
+      "count": 2
+    },
+    {
+      "name": "CopyHealth",
+      "count": 1
+    },
+    {
+      "name": "CreateBuff",
+      "count": 2821
+    },
+    {
+      "name": "CreateBuffById",
+      "count": 122
+    },
+    {
+      "name": "CreateBuffInCircleRange",
+      "count": 23
+    },
+    {
+      "name": "CreateBuffInRange",
+      "count": 94
+    },
+    {
+      "name": "CreateBuffOnTileInRange",
+      "count": 1
+    },
+    {
+      "name": "CreateBuffs",
+      "count": 14
+    },
+    {
+      "name": "CreateBuffStacked",
+      "count": 48
+    },
+    {
+      "name": "CreateBuffToBindingTiles",
+      "count": 2
+    },
+    {
+      "name": "CreateBuffToBlockee",
+      "count": 24
+    },
+    {
+      "name": "CreateBuffToCastedTargets",
+      "count": 1
+    },
+    {
+      "name": "CreateBuffToCertainGroupId",
+      "count": 1
+    },
+    {
+      "name": "CreateBuffToCertainProfession",
+      "count": 5
+    },
+    {
+      "name": "CreateBuffToCertainSideUnits",
+      "count": 47
+    },
+    {
+      "name": "CreateBuffToCharacterInSpecifiedArea",
+      "count": 3
+    },
+    {
+      "name": "CreateBuffToCharacterOnTargetRootTile",
+      "count": 1
+    },
+    {
+      "name": "CreateBuffToCurTarget",
+      "count": 1
+    },
+    {
+      "name": "CreateBuffToFootball",
+      "count": 1
+    },
+    {
+      "name": "CreateBuffToHost",
+      "count": 20
+    },
+    {
+      "name": "CreateBuffToToken",
+      "count": 38
+    },
+    {
+      "name": "CreateBuffToUnitInCurrentMapLayer",
+      "count": 15
+    },
+    {
+      "name": "CreateBuffUseAbilitySelector",
+      "count": 160
+    },
+    {
+      "name": "CreateBuffUseHostAsSource",
+      "count": 3
+    },
+    {
+      "name": "CreateBuffUseTargetAsSource",
+      "count": 30
+    },
+    {
+      "name": "CreateBuffWithOverrideEffect",
+      "count": 8
+    },
+    {
+      "name": "CreateCardBuff",
+      "count": 45
+    },
+    {
+      "name": "CreateCardBuffBySourceCard",
+      "count": 3
+    },
+    {
+      "name": "CreateCardBuffFilterByBuildableType",
+      "count": 1
+    },
+    {
+      "name": "CreateCardBuffFilterByCardState",
+      "count": 1
+    },
+    {
+      "name": "CreateCardBuffFilterByDeckBuff",
+      "count": 1
+    },
+    {
+      "name": "CreateCardBuffFilterByRarityAndProfession",
+      "count": 1
+    },
+    {
+      "name": "CreateCardBuffFilterByTag",
+      "count": 2
+    },
+    {
+      "name": "CreateCardBuffMarkInAbilityBlackboard",
+      "count": 1
+    },
+    {
+      "name": "CreateCardBuffToAllCard",
+      "count": 9
+    },
+    {
+      "name": "CreateCardBuffToBlackboardExclude",
+      "count": 1
+    },
+    {
+      "name": "CreateCardBuffToMyHost",
+      "count": 1
+    },
+    {
+      "name": "CreateCardBuffToMyToken",
+      "count": 6
+    },
+    {
+      "name": "CreateCardFilterByProfession",
+      "count": 5
+    },
+    {
+      "name": "CreateDeckBuff",
+      "count": 9
+    },
+    {
+      "name": "CreateEffect",
+      "count": 740
+    },
+    {
+      "name": "CreateEffectAtScreenPos",
+      "count": 3
+    },
+    {
+      "name": "CreateEffectForUnitsFunLiveModeOnly",
+      "count": 2
+    },
+    {
+      "name": "CreateEffectHookProjectileEffect",
+      "count": 4
+    },
+    {
+      "name": "CreateEffectToSurroundingTiles",
+      "count": 1
+    },
+    {
+      "name": "CreateLineEffect",
+      "count": 11
+    },
+    {
+      "name": "CreatePreviewCursor",
+      "count": 1
+    },
+    {
+      "name": "CreateRandomEffect",
+      "count": 1
+    },
+    {
+      "name": "CreateTileBindingGlobalBuff",
+      "count": 2
+    },
+    {
+      "name": "CreateTileEffect",
+      "count": 5
+    },
+    {
+      "name": "CreateTileEffectInRange",
+      "count": 1
+    },
+    {
+      "name": "DamageByDistance",
+      "count": 18
+    },
+    {
+      "name": "DamageFixedValueResistance",
+      "count": 1
+    },
+    {
+      "name": "DamageScale",
+      "count": 216
+    },
+    {
+      "name": "DamageScaleAccordingToHpRatio",
+      "count": 1
+    },
+    {
+      "name": "DamageScaleBaseOnDistance",
+      "count": 6
+    },
+    {
+      "name": "DamageSplit",
+      "count": 1
+    },
+    {
+      "name": "DamageSplitToBuffKeySources",
+      "count": 1
+    },
+    {
+      "name": "DamageValueModify",
+      "count": 1
+    },
+    {
+      "name": "DamageViaAttr",
+      "count": 37
+    },
+    {
+      "name": "DamageViaCurHpRatio",
+      "count": 10
+    },
+    {
+      "name": "DamageViaEs",
+      "count": 5
+    },
+    {
+      "name": "DamageViaMaxHpRatio",
+      "count": 57
+    },
+    {
+      "name": "Dice",
+      "count": 102
+    },
+    {
+      "name": "DiceSlapShot",
+      "count": 2
+    },
+    {
+      "name": "DisableEnemyHud",
+      "count": 5
+    },
+    {
+      "name": "DisableEnemySwitchFaceByMove",
+      "count": 8
+    },
+    {
+      "name": "DisableTrait",
+      "count": 3
+    },
+    {
+      "name": "DoClearance",
+      "count": 2
+    },
+    {
+      "name": "DoDribble",
+      "count": 1
+    },
+    {
+      "name": "DoPassTheBall",
+      "count": 2
+    },
+    {
+      "name": "DoSlapShot",
+      "count": 3
+    },
+    {
+      "name": "DragTowardSource",
+      "count": 4
+    },
+    {
+      "name": "DuelCheckChosenEnemiesEqualZero",
+      "count": 1
+    },
+    {
+      "name": "DuelCheckConvertToBattleStage",
+      "count": 2
+    },
+    {
+      "name": "DuelInitDuelMode",
+      "count": 1
+    },
+    {
+      "name": "DuelModifyPlaceAreaData",
+      "count": 2
+    },
+    {
+      "name": "DuelMoveCamera",
+      "count": 1
+    },
+    {
+      "name": "DuelSyncChosenInfoToGameMode",
+      "count": 2
+    },
+    {
+      "name": "DurBusAbilityCheckPassengers",
+      "count": 3
+    },
+    {
+      "name": "DurBusAbilityReleasePassenger",
+      "count": 3
+    },
+    {
+      "name": "DynamicChangeUnitShadow",
+      "count": 3
+    },
+    {
+      "name": "EmitProjectile",
+      "count": 42
+    },
+    {
+      "name": "EmitProjectileFromManagedProjectiles",
+      "count": 2
+    },
+    {
+      "name": "EmitProjectileOnSourceRootTile",
+      "count": 8
+    },
+    {
+      "name": "EmitProjectileUseAbilitySelector",
+      "count": 8
+    },
+    {
+      "name": "EnableEffectTransform",
+      "count": 4
+    },
+    {
+      "name": "EnableShadowController",
+      "count": 10
+    },
+    {
+      "name": "EnableTrait",
+      "count": 3
+    },
+    {
+      "name": "EnemyChangeRouteToEndTile",
+      "count": 1
+    },
+    {
+      "name": "EnemyChangeRouteToTarget",
+      "count": 1
+    },
+    {
+      "name": "EnemyDurcarChangeDirection",
+      "count": 5
+    },
+    {
+      "name": "EnemyDurcarCheckOverlapWithHighland",
+      "count": 4
+    },
+    {
+      "name": "EnemyFallDown",
+      "count": 1
+    },
+    {
+      "name": "EnemyForceTracePosition",
+      "count": 3
+    },
+    {
+      "name": "EnemyHasValidToken",
+      "count": 1
+    },
+    {
+      "name": "EnemyKillToken",
+      "count": 5
+    },
+    {
+      "name": "EnemyLrtsiaCheckDamageBlocked",
+      "count": 3
+    },
+    {
+      "name": "EnemyLrtsiaSummonEnemyOnSurroundTiles",
+      "count": 1
+    },
+    {
+      "name": "EnemySkipWaitCheckPoint",
+      "count": 5
+    },
+    {
+      "name": "EnsureDmgOrHeal",
+      "count": 4
+    },
+    {
+      "name": "EpDamageScale",
+      "count": 11
+    },
+    {
+      "name": "EqualizeTargetHpRatio",
+      "count": 8
+    },
+    {
+      "name": "Evade",
+      "count": 18
+    },
+    {
+      "name": "FaceToDirectionViaMoreTargets",
+      "count": 1
+    },
+    {
+      "name": "FaceToLOrRViaMoreTargets",
+      "count": 4
+    },
+    {
+      "name": "FaceToTarget",
+      "count": 2
+    },
+    {
+      "name": "FetchEnemyHpToHost",
+      "count": 1
+    },
+    {
+      "name": "FetchHpToBlackboard",
+      "count": 5
+    },
+    {
+      "name": "FilterAbilityApplyWay",
+      "count": 1
+    },
+    {
+      "name": "FilterAbilityFamily",
+      "count": 58
+    },
+    {
+      "name": "FilterAbilityName",
+      "count": 22
+    },
+    {
+      "name": "FilterAbilitySpellCnt",
+      "count": 1
+    },
+    {
+      "name": "FilterAbilityValidCastTargetCnt",
+      "count": 1
+    },
+    {
+      "name": "FilterBuffKeyInSnapshot",
+      "count": 2
+    },
+    {
+      "name": "FilterByAbilityFinishReason",
+      "count": 3
+    },
+    {
+      "name": "FilterByAbilityIgnorePalsyInterrupt",
+      "count": 2
+    },
+    {
+      "name": "FilterByBlackboardValue",
+      "count": 381
+    },
+    {
+      "name": "FilterByBuffStackCount",
+      "count": 187
+    },
+    {
+      "name": "FilterByCharacterSharedBlackboard",
+      "count": 10
+    },
+    {
+      "name": "FilterByExecuteBlackboardValue",
+      "count": 26
+    },
+    {
+      "name": "FilterByGlobalBlackboard",
+      "count": 11
+    },
+    {
+      "name": "FilterByGridManhattanDistance",
+      "count": 1
+    },
+    {
+      "name": "FilterByOccupiedRemainingCharacterCnt",
+      "count": 1
+    },
+    {
+      "name": "FilterByTargetAttribute",
+      "count": 20
+    },
+    {
+      "name": "FilterByTargetDataLevel",
+      "count": 9
+    },
+    {
+      "name": "FilterByTargetEpRatio",
+      "count": 2
+    },
+    {
+      "name": "FilterByTargetHp",
+      "count": 16
+    },
+    {
+      "name": "FilterByTargetHpRatio",
+      "count": 132
+    },
+    {
+      "name": "FilterByTargetMassLevel",
+      "count": 6
+    },
+    {
+      "name": "FilterByTargetSpRatio",
+      "count": 50
+    },
+    {
+      "name": "FilterByTargetSPType",
+      "count": 9
+    },
+    {
+      "name": "FilterCardState",
+      "count": 2
+    },
+    {
+      "name": "FilterCharacterKey",
+      "count": 1
+    },
+    {
+      "name": "FilterCharacterLastDeathReason",
+      "count": 10
+    },
+    {
+      "name": "FilterChargeTimes",
+      "count": 4
+    },
+    {
+      "name": "FilterDamageModifer",
+      "count": 82
+    },
+    {
+      "name": "FilterDeathReason",
+      "count": 64
+    },
+    {
+      "name": "FilterDistanceToRootTile",
+      "count": 1
+    },
+    {
+      "name": "FilterElementDamageModifer",
+      "count": 2
+    },
+    {
+      "name": "FilterEnemyKey",
+      "count": 1
+    },
+    {
+      "name": "FilterEPBreakRecoveryType",
+      "count": 29
+    },
+    {
+      "name": "FilterGameMode",
+      "count": 3
+    },
+    {
+      "name": "FilterId",
+      "count": 11
+    },
+    {
+      "name": "FilterLevelId",
+      "count": 1
+    },
+    {
+      "name": "FilterModifierByRealDelta",
+      "count": 9
+    },
+    {
+      "name": "FilterModifierCancelReason",
+      "count": 1
+    },
+    {
+      "name": "FilterModifierTargetType",
+      "count": 4
+    },
+    {
+      "name": "FilterRootTileOffset",
+      "count": 1
+    },
+    {
+      "name": "FilterSkillTriggerdCnt",
+      "count": 2
+    },
+    {
+      "name": "FilterSubProfessionAttackType",
+      "count": 3
+    },
+    {
+      "name": "FilterTargetWithPlayerSide",
+      "count": 4
+    },
+    {
+      "name": "FilterTileBlackboard",
+      "count": 6
+    },
+    {
+      "name": "FinishAllBuffsWithCertainAbnormalFlag",
+      "count": 1
+    },
+    {
+      "name": "FinishAllStatusResistableBuffs",
+      "count": 5
+    },
+    {
+      "name": "FinishBuff",
+      "count": 670
+    },
+    {
+      "name": "FinishBuffsById",
+      "count": 1212
+    },
+    {
+      "name": "FinishBuffsByIdByBuffSource",
+      "count": 4
+    },
+    {
+      "name": "FinishBuffsByIdFromBlockee",
+      "count": 3
+    },
+    {
+      "name": "FinishBuffsOfEveryCharacterById",
+      "count": 3
+    },
+    {
+      "name": "FinishBuffsOfEveryEnemyById",
+      "count": 4
+    },
+    {
+      "name": "FinishCardBuff",
+      "count": 16
+    },
+    {
+      "name": "FinishCardBuffByCard",
+      "count": 3
+    },
+    {
+      "name": "FinishCardBuffByKeyInAbilityBlackboard",
+      "count": 1
+    },
+    {
+      "name": "FinishCardBuffsByKey",
+      "count": 16
+    },
+    {
+      "name": "FinishCurrentWave",
+      "count": 22
+    },
+    {
+      "name": "FinishDeckBuffByCardUIDAndKey",
+      "count": 2
+    },
+    {
+      "name": "FinishDeckBuffByKey",
+      "count": 13
+    },
+    {
+      "name": "FinishDerivedBuff",
+      "count": 319
+    },
+    {
+      "name": "FinishDerivedBuffById",
+      "count": 95
+    },
+    {
+      "name": "FinishGame",
+      "count": 5
+    },
+    {
+      "name": "FinishHostBuffsById",
+      "count": 1
+    },
+    {
+      "name": "FinishManagedProjectiles",
+      "count": 13
+    },
+    {
+      "name": "FinishOneBuffById",
+      "count": 3
+    },
+    {
+      "name": "FinishSeveralBuffsById",
+      "count": 5
+    },
+    {
+      "name": "FinishTargetRootTileHoldingEffect",
+      "count": 2
+    },
+    {
+      "name": "FinishTokenBuffsById",
+      "count": 10
+    },
+    {
+      "name": "FixedValueDamage",
+      "count": 128
+    },
+    {
+      "name": "FixedValueElementHeal",
+      "count": 5
+    },
+    {
+      "name": "FixedValueHeal",
+      "count": 31
+    },
+    {
+      "name": "FootballAssignScoreToBB",
+      "count": 1
+    },
+    {
+      "name": "FootballPlayerForceSearchTarget",
+      "count": 2
+    },
+    {
+      "name": "ForceCharacterAnimatorFaceFront",
+      "count": 7
+    },
+    {
+      "name": "ForceCharacterFaceDefaultDirection",
+      "count": 6
+    },
+    {
+      "name": "ForceSetBattleSpeedLevel",
+      "count": 2
+    },
+    {
+      "name": "ForceSetToTilePosition",
+      "count": 4
+    },
+    {
+      "name": "FortressAddTileBlackboard",
+      "count": 4
+    },
+    {
+      "name": "GainToken",
+      "count": 16
+    },
+    {
+      "name": "GameCityCheckEnemyInExit",
+      "count": 2
+    },
+    {
+      "name": "GameCityIsResting",
+      "count": 1
+    },
+    {
+      "name": "GameCityTriggerEnvSystem",
+      "count": 2
+    },
+    {
+      "name": "GameCityUpdateScore",
+      "count": 8
+    },
+    {
+      "name": "GetTargetEnemyId",
+      "count": 1
+    },
+    {
+      "name": "HasCertainCharacterInFrontOfMe",
+      "count": 4
+    },
+    {
+      "name": "HasCharacterInCertainDirection",
+      "count": 2
+    },
+    {
+      "name": "HasTileAlongDirection",
+      "count": 5
+    },
+    {
+      "name": "HaveShieldRoguelike",
+      "count": 1
+    },
+    {
+      "name": "HealCurrentGiantBossViaMaxHpRatio",
+      "count": 1
+    },
+    {
+      "name": "HealToken",
+      "count": 1
+    },
+    {
+      "name": "HealViaDamage",
+      "count": 6
+    },
+    {
+      "name": "HealViaMaxHpRatio",
+      "count": 104
+    },
+    {
+      "name": "HideCharacterOrTokenNotInAbilityBlackboard",
+      "count": 1
+    },
+    {
+      "name": "HideEntityGraphicOrNot",
+      "count": 4
+    },
+    {
+      "name": "HideEntityInFogAndManageBuff",
+      "count": 2
+    },
+    {
+      "name": "HoldFootball",
+      "count": 1
+    },
+    {
+      "name": "HostKillSummonedApopsisEnemy",
+      "count": 5
+    },
+    {
+      "name": "HpNoLessThanCertainPercentModifier",
+      "count": 6
+    },
+    {
+      "name": "HpRatioToAttributeAdd",
+      "count": 8
+    },
+    {
+      "name": "HpRatioToAttributeMul",
+      "count": 5
+    },
+    {
+      "name": "HpRatioTrigger",
+      "count": 27
+    },
+    {
+      "name": "IfBossRushBattleArea",
+      "count": 2
+    },
+    {
+      "name": "IfConditions",
+      "count": 56
+    },
+    {
+      "name": "IfDamageTargetSide",
+      "count": 10
+    },
+    {
+      "name": "IfElse",
+      "count": 2276
+    },
+    {
+      "name": "IfEnemyIsMoving",
+      "count": 1
+    },
+    {
+      "name": "IfEnemyIsMovingBySelf",
+      "count": 28
+    },
+    {
+      "name": "IfModifierTarget",
+      "count": 1
+    },
+    {
+      "name": "IfNot",
+      "count": 1115
+    },
+    {
+      "name": "IfSourceFromEnemyDirection",
+      "count": 2
+    },
+    {
+      "name": "IfTarget",
+      "count": 81
+    },
+    {
+      "name": "IfTargetEqual",
+      "count": 14
+    },
+    {
+      "name": "IfTargetFromDirection",
+      "count": 5
+    },
+    {
+      "name": "IfTargetSide",
+      "count": 71
+    },
+    {
+      "name": "IgnoreAllButMoveCp",
+      "count": 6
+    },
+    {
+      "name": "InitBossRushController",
+      "count": 1
+    },
+    {
+      "name": "InitBossRushRecodr",
+      "count": 1
+    },
+    {
+      "name": "InitFootball",
+      "count": 1
+    },
+    {
+      "name": "InitForces",
+      "count": 4
+    },
+    {
+      "name": "InsertCheckPointInRuntimeRoute",
+      "count": 8
+    },
+    {
+      "name": "InstantKill",
+      "count": 297
+    },
+    {
+      "name": "InterruptAbility",
+      "count": 37
+    },
+    {
+      "name": "InterruptCharacterAbility",
+      "count": 4
+    },
+    {
+      "name": "InterruptCharacterAttack",
+      "count": 7
+    },
+    {
+      "name": "InterruptCharacterSkill",
+      "count": 29
+    },
+    {
+      "name": "InterruptEnemyAbility",
+      "count": 19
+    },
+    {
+      "name": "InterruptEnemyCombat",
+      "count": 7
+    },
+    {
+      "name": "InterruptTokenSkill",
+      "count": 1
+    },
+    {
+      "name": "InverseDamage",
+      "count": 19
+    },
+    {
+      "name": "IsAtkScaleZero",
+      "count": 2
+    },
+    {
+      "name": "IsBlackboardEqualWithFloat",
+      "count": 9
+    },
+    {
+      "name": "IsBlackboardEqualWithString",
+      "count": 20
+    },
+    {
+      "name": "IsBlackboardZero",
+      "count": 119
+    },
+    {
+      "name": "IsCharacter",
+      "count": 31
+    },
+    {
+      "name": "IsCharacterOrTokenOrTrap",
+      "count": 28
+    },
+    {
+      "name": "IsCloseToFootball",
+      "count": 12
+    },
+    {
+      "name": "IsConsumerOfTrySetHpZeroModifier",
+      "count": 12
+    },
+    {
+      "name": "IsDamage",
+      "count": 77
+    },
+    {
+      "name": "IsElementDamage",
+      "count": 21
+    },
+    {
+      "name": "IsElementHeal",
+      "count": 4
+    },
+    {
+      "name": "IsHeal",
+      "count": 49
+    },
+    {
+      "name": "IsHostML12",
+      "count": 4
+    },
+    {
+      "name": "IsIgnoreForSp",
+      "count": 4
+    },
+    {
+      "name": "IsMimicEnemy",
+      "count": 1
+    },
+    {
+      "name": "IsPropLikeEnemy",
+      "count": 1
+    },
+    {
+      "name": "IsRallyPoint",
+      "count": 6
+    },
+    {
+      "name": "IsRogueLikeBoss",
+      "count": 2
+    },
+    {
+      "name": "IsSourceBlackboardEqualWithUnitUid",
+      "count": 1
+    },
+    {
+      "name": "IsSummonerAlive",
+      "count": 3
+    },
+    {
+      "name": "IsTargetInDialog",
+      "count": 6
+    },
+    {
+      "name": "IsTargetInEPBreakRecovery",
+      "count": 10
+    },
+    {
+      "name": "IsUnharmfulEnemy",
+      "count": 4
+    },
+    {
+      "name": "KillCharacterOnTileIfExists",
+      "count": 1
+    },
+    {
+      "name": "KillTokens",
+      "count": 13
+    },
+    {
+      "name": "Knockback",
+      "count": 8
+    },
+    {
+      "name": "KnockBackWithCharacterDirection",
+      "count": 1
+    },
+    {
+      "name": "KnockBackWithDirection",
+      "count": 9
+    },
+    {
+      "name": "LandFootball",
+      "count": 1
+    },
+    {
+      "name": "LegionModeOnlyAddLastProfessionLevel",
+      "count": 1
+    },
+    {
+      "name": "LegionModeOnlyAddProfessionLevel",
+      "count": 4
+    },
+    {
+      "name": "LegionModeOnlyAddProfessionLevelFromLastSelectCards",
+      "count": 3
+    },
+    {
+      "name": "LegionModeOnlyAssignCardCntToBB",
+      "count": 1
+    },
+    {
+      "name": "LegionModeOnlyAssignCardPriceToBB",
+      "count": 1
+    },
+    {
+      "name": "LegionModeOnlyAssignDangerLevelToBB",
+      "count": 5
+    },
+    {
+      "name": "LegionModeOnlyAssignSpecifiedProfessionStackCntToBB",
+      "count": 4
+    },
+    {
+      "name": "LegionModeOnlyAssignStatusProfessionCntToBB",
+      "count": 3
+    },
+    {
+      "name": "LegionModeOnlyAssignStatusStackCntToBB",
+      "count": 1
+    },
+    {
+      "name": "LegionModeOnlyCharacterOnDying",
+      "count": 1
+    },
+    {
+      "name": "LegionModeOnlyCharacterOnRebornlike",
+      "count": 1
+    },
+    {
+      "name": "LegionModeOnlyCheckCardInHand",
+      "count": 7
+    },
+    {
+      "name": "LegionModeOnlyCheckCardLastDrawTag",
+      "count": 3
+    },
+    {
+      "name": "LegionModeOnlyCheckHandCardNotFull",
+      "count": 6
+    },
+    {
+      "name": "LegionModeOnlyCheckLastCardDrawProfession",
+      "count": 2
+    },
+    {
+      "name": "LegionModeOnlyCheckLastSelectCardsContainsProfession",
+      "count": 2
+    },
+    {
+      "name": "LegionModeOnlyClearProfessionLevel",
+      "count": 1
+    },
+    {
+      "name": "LegionModeOnlyCreateBuffToDyingInRange",
+      "count": 2
+    },
+    {
+      "name": "LegionModeOnlyCreateCardBuffToOneCardByCost",
+      "count": 3
+    },
+    {
+      "name": "LegionModeOnlyDrawCardViaID",
+      "count": 2
+    },
+    {
+      "name": "LegionModeOnlyDrawCardViaProfession",
+      "count": 2
+    },
+    {
+      "name": "LegionModeOnlyDrawCardViaTag",
+      "count": 1
+    },
+    {
+      "name": "LegionModeOnlyDrawNextCard",
+      "count": 8
+    },
+    {
+      "name": "LegionModeOnlyEnemyDeathDrop",
+      "count": 1
+    },
+    {
+      "name": "LegionModeOnlyFilterByProfessionBuffMaxCnt",
+      "count": 2
+    },
+    {
+      "name": "LegionModeOnlyFinishTemporaryProfessionStatus",
+      "count": 1
+    },
+    {
+      "name": "LegionModeOnlyForceRecycleUsingCard",
+      "count": 3
+    },
+    {
+      "name": "LegionModeOnlyGainGold",
+      "count": 11
+    },
+    {
+      "name": "LegionModeOnlyGainGoldViaCardNum",
+      "count": 1
+    },
+    {
+      "name": "LegionModeOnlyGainTrap",
+      "count": 10
+    },
+    {
+      "name": "LegionModeOnlyGetGoldViaProfessionBuffCount",
+      "count": 1
+    },
+    {
+      "name": "LegionModeOnlyGlobalDamageFromCard",
+      "count": 2
+    },
+    {
+      "name": "LegionModeOnlyHasProfessionBuff",
+      "count": 2
+    },
+    {
+      "name": "LegionModeOnlyMarkCardReturnToHand",
+      "count": 10
+    },
+    {
+      "name": "LegionModeOnlyMarkCardUseOnce",
+      "count": 1
+    },
+    {
+      "name": "LegionModeOnlyModifyCharacterOverlapState",
+      "count": 3
+    },
+    {
+      "name": "LegionModeOnlyModifyCharLevelDefaultAddCnt",
+      "count": 1
+    },
+    {
+      "name": "LegionModeOnlyModifyMaxProfessionBuffCnt",
+      "count": 6
+    },
+    {
+      "name": "LegionModeOnlySelectCard",
+      "count": 8
+    },
+    {
+      "name": "LegionModeOnlyShowStatusMessage",
+      "count": 2
+    },
+    {
+      "name": "LegionModeOnlyTakeCardBackToHand",
+      "count": 2
+    },
+    {
+      "name": "LegionModeOnlyTemporaryAddEachProfessionStatus",
+      "count": 1
+    },
+    {
+      "name": "LogEventFunLiveModeOnly",
+      "count": 1
+    },
+    {
+      "name": "LogExtraBattleInfo",
+      "count": 186
+    },
+    {
+      "name": "LogExtraBattleInfoForBossRush",
+      "count": 13
+    },
+    {
+      "name": "LogExtraBattleInfoForBuff",
+      "count": 1
+    },
+    {
+      "name": "LogExtraBattleInfoForCurrentPlayTime",
+      "count": 1
+    },
+    {
+      "name": "LogExtraBattleInfoForModifierRealDelta",
+      "count": 5
+    },
+    {
+      "name": "LogExtraBattleInfoInstId",
+      "count": 1
+    },
+    {
+      "name": "LogExtraBattleInfoUseFrameCntAsKey",
+      "count": 1
+    },
+    {
+      "name": "Loop",
+      "count": 11
+    },
+    {
+      "name": "Main15FilterPrtsLastSubAction",
+      "count": 6
+    },
+    {
+      "name": "Main15ForceSetBattleSpeedLevel",
+      "count": 2
+    },
+    {
+      "name": "Main15InsertPrtsAction",
+      "count": 6
+    },
+    {
+      "name": "Main15SkipPrtsAction",
+      "count": 1
+    },
+    {
+      "name": "Main15TryNextPrtsAction",
+      "count": 3
+    },
+    {
+      "name": "Mainline14InformLrdeadDeath",
+      "count": 1
+    },
+    {
+      "name": "Mainline14TriggerSkill",
+      "count": 2
+    },
+    {
+      "name": "MakeTargetDyingInCooperate",
+      "count": 1
+    },
+    {
+      "name": "MakeTargetRebornInCooperate",
+      "count": 1
+    },
+    {
+      "name": "ManageTileEffectAssociateWithTargetRoute",
+      "count": 4
+    },
+    {
+      "name": "MarkCurrentHpRatio",
+      "count": 9
+    },
+    {
+      "name": "MarkDangerAreaFinished",
+      "count": 1
+    },
+    {
+      "name": "MarkFogTickTime",
+      "count": 3
+    },
+    {
+      "name": "MarkFogView",
+      "count": 18
+    },
+    {
+      "name": "ModifierScaleUp",
+      "count": 38
+    },
+    {
+      "name": "ModifyAbilityAttackTime",
+      "count": 7
+    },
+    {
+      "name": "ModifyAbilityBlackboard",
+      "count": 66
+    },
+    {
+      "name": "ModifyAbilityBlackboardAndCast",
+      "count": 1
+    },
+    {
+      "name": "ModifyAnimatorHookerReplacePair",
+      "count": 47
+    },
+    {
+      "name": "ModifyAttackBlackboard",
+      "count": 1
+    },
+    {
+      "name": "ModifyAttackMaxTarget",
+      "count": 2
+    },
+    {
+      "name": "ModifyAttackMaxTileNum",
+      "count": 1
+    },
+    {
+      "name": "ModifyAttributeDataRangeOverride",
+      "count": 2
+    },
+    {
+      "name": "ModifyAttributeRawDataByEntity",
+      "count": 5
+    },
+    {
+      "name": "ModifyBlackboard",
+      "count": 66
+    },
+    {
+      "name": "ModifyBlackboardFromTrait",
+      "count": 7
+    },
+    {
+      "name": "ModifyBlackboardMainline12",
+      "count": 3
+    },
+    {
+      "name": "ModifyBlackboardStr",
+      "count": 3
+    },
+    {
+      "name": "ModifyBoomberangMaxCnt",
+      "count": 8
+    },
+    {
+      "name": "ModifyBossRushBattleAreaData",
+      "count": 1
+    },
+    {
+      "name": "ModifyCharacterAbilityRange",
+      "count": 2
+    },
+    {
+      "name": "ModifyCharacterAttackTriggerRangeId",
+      "count": 6
+    },
+    {
+      "name": "ModifyCharacterLimit",
+      "count": 8
+    },
+    {
+      "name": "ModifyCharacterSkillAbilityBlackboard",
+      "count": 2
+    },
+    {
+      "name": "ModifyCharacterSpineColor",
+      "count": 1
+    },
+    {
+      "name": "ModifyCost",
+      "count": 58
+    },
+    {
+      "name": "ModifyCostIncreaseTime",
+      "count": 4
+    },
+    {
+      "name": "ModifyDynamicVar",
+      "count": 2
+    },
+    {
+      "name": "ModifyEnemyGraphicScale",
+      "count": 4
+    },
+    {
+      "name": "ModifyEnemySkillMaxTarget",
+      "count": 1
+    },
+    {
+      "name": "ModifyEnemySpUIFlag",
+      "count": 1
+    },
+    {
+      "name": "ModifyFootballKickValue",
+      "count": 2
+    },
+    {
+      "name": "ModifyFunnelMaxAtkScaleMultiplier",
+      "count": 3
+    },
+    {
+      "name": "ModifyGlobalBuffBlackboard",
+      "count": 1
+    },
+    {
+      "name": "ModifyGraphicHolderHeight",
+      "count": 7
+    },
+    {
+      "name": "ModifyLifePoint",
+      "count": 39
+    },
+    {
+      "name": "ModifyMaxCost",
+      "count": 4
+    },
+    {
+      "name": "ModifyOverlapSourceId",
+      "count": 37
+    },
+    {
+      "name": "ModifyOverlapSourceIdWithAllCardId",
+      "count": 3
+    },
+    {
+      "name": "ModifyRuntimeRouteUseBranchRoute",
+      "count": 1
+    },
+    {
+      "name": "ModifySp",
+      "count": 225
+    },
+    {
+      "name": "ModifySpData",
+      "count": 3
+    },
+    {
+      "name": "ModifyTileBlackboard",
+      "count": 5
+    },
+    {
+      "name": "MoveNextLevelBranch",
+      "count": 31
+    },
+    {
+      "name": "NecromancerAssignTargetTileToSelector",
+      "count": 2
+    },
+    {
+      "name": "NoSourceDamage",
+      "count": 47
+    },
+    {
+      "name": "NoSourceDamageNew",
+      "count": 3
+    },
+    {
+      "name": "NoSourceGlobalDamageScaleByBuffCnt",
+      "count": 1
+    },
+    {
+      "name": "OnRallyPointLikeReborn",
+      "count": 16
+    },
+    {
+      "name": "PickRandomBranchPhase",
+      "count": 8
+    },
+    {
+      "name": "PlayAudio",
+      "count": 197
+    },
+    {
+      "name": "PlayBGM",
+      "count": 3
+    },
+    {
+      "name": "ProcessAllInfoFunLiveModeOnly",
+      "count": 1
+    },
+    {
+      "name": "RacingCameraZoomIn",
+      "count": 1
+    },
+    {
+      "name": "RacingEnemyAddAttribute",
+      "count": 4
+    },
+    {
+      "name": "RacingEnemyBleeding",
+      "count": 1
+    },
+    {
+      "name": "RacingEnemyFilterByMode",
+      "count": 4
+    },
+    {
+      "name": "RacingEnemyFilterByMoveSpeed",
+      "count": 1
+    },
+    {
+      "name": "RacingEnemyFilterByRanking",
+      "count": 2
+    },
+    {
+      "name": "RacingEnemyIsMine",
+      "count": 3
+    },
+    {
+      "name": "RacingEnemyLockMagnet",
+      "count": 2
+    },
+    {
+      "name": "RacingEnemyRecover",
+      "count": 2
+    },
+    {
+      "name": "RaiseDialogue",
+      "count": 3
+    },
+    {
+      "name": "RallyPointReborn",
+      "count": 7
+    },
+    {
+      "name": "RandomAction",
+      "count": 3
+    },
+    {
+      "name": "RandomCreateBuff",
+      "count": 8
+    },
+    {
+      "name": "RandomSetter",
+      "count": 3
+    },
+    {
+      "name": "RebuildCharacterOnRandomTile",
+      "count": 4
+    },
+    {
+      "name": "RecalculateDamage",
+      "count": 1
+    },
+    {
+      "name": "RechargeToken",
+      "count": 23
+    },
+    {
+      "name": "RecordAbilityRemainingTime",
+      "count": 2
+    },
+    {
+      "name": "RecordCurrentHpRatio",
+      "count": 5
+    },
+    {
+      "name": "RecordDamageModifier",
+      "count": 4
+    },
+    {
+      "name": "RefreshAttachListenerToTileAbility",
+      "count": 3
+    },
+    {
+      "name": "RefreshextraTileGraphic",
+      "count": 3
+    },
+    {
+      "name": "RefreshMagicCircuitRoute",
+      "count": 2
+    },
+    {
+      "name": "RegisterAsStand",
+      "count": 1
+    },
+    {
+      "name": "RegisterMagicCircuitRoute",
+      "count": 1
+    },
+    {
+      "name": "RegisterMagicCircuitSpAffect",
+      "count": 3
+    },
+    {
+      "name": "RegistProgressBuff",
+      "count": 7
+    },
+    {
+      "name": "RegistTaskUI",
+      "count": 1
+    },
+    {
+      "name": "ReInitEnemySkillCoolDown",
+      "count": 5
+    },
+    {
+      "name": "ReleaseEnemyFromCurrentWave",
+      "count": 2
+    },
+    {
+      "name": "ReleaseFromBlocker",
+      "count": 24
+    },
+    {
+      "name": "RemainingRatioToAttributeModifier",
+      "count": 12
+    },
+    {
+      "name": "RemoveCostTimerModifier",
+      "count": 1
+    },
+    {
+      "name": "RemoveFearTargetTiles",
+      "count": 1
+    },
+    {
+      "name": "RemoveGameFinishBlockerByKey",
+      "count": 1
+    },
+    {
+      "name": "RemoveTileBindingGlobalBuff",
+      "count": 1
+    },
+    {
+      "name": "ReplaceAbilityDamageType",
+      "count": 5
+    },
+    {
+      "name": "ResetAbilityAtkScale",
+      "count": 7
+    },
+    {
+      "name": "ResetAllBuffsTriggerTimer",
+      "count": 1
+    },
+    {
+      "name": "ResetBuffAbilityAtkScaleWithBuffCnt",
+      "count": 2
+    },
+    {
+      "name": "ResetCardRespawnTime",
+      "count": 1
+    },
+    {
+      "name": "ResetDataFunLiveModeOnly",
+      "count": 1
+    },
+    {
+      "name": "RespawnCharacter",
+      "count": 1
+    },
+    {
+      "name": "RestartCastSkill",
+      "count": 2
+    },
+    {
+      "name": "ReturnDeployCost",
+      "count": 3
+    },
+    {
+      "name": "RewriteDynamicBuffTileOptionsInRangeWhenSpecialMode",
+      "count": 1
+    },
+    {
+      "name": "RewriteDynamicBuffTileOptionsOneLine",
+      "count": 6
+    },
+    {
+      "name": "RewriteTileOptions",
+      "count": 19
+    },
+    {
+      "name": "RewriteTileOptionsInRange",
+      "count": 8
+    },
+    {
+      "name": "RistarInVerticalMovement",
+      "count": 2
+    },
+    {
+      "name": "RistarMove",
+      "count": 5
+    },
+    {
+      "name": "RistarRecordDirection",
+      "count": 3
+    },
+    {
+      "name": "RO4DLC2EndBossSealTileSkill",
+      "count": 1
+    },
+    {
+      "name": "RO4DLC2TriggerBossSealTileSkill",
+      "count": 1
+    },
+    {
+      "name": "RoguelikeFilterFragmentCarryChar",
+      "count": 1
+    },
+    {
+      "name": "RoguelikeInheritEnemyHp",
+      "count": 1
+    },
+    {
+      "name": "RoguelikeLogExp",
+      "count": 8
+    },
+    {
+      "name": "RoguelikeLogExpUseSerializedTrapID",
+      "count": 6
+    },
+    {
+      "name": "RoguelikeShowToastRL04",
+      "count": 3
+    },
+    {
+      "name": "RollRogueDice",
+      "count": 3
+    },
+    {
+      "name": "RoundBuffBlackboard",
+      "count": 1
+    },
+    {
+      "name": "RunActionsToWdslmAbilityTarget",
+      "count": 29
+    },
+    {
+      "name": "SandboxAssignCharacterCountWithFoodToBlackboard",
+      "count": 1
+    },
+    {
+      "name": "SandboxAssignDayCountToBb",
+      "count": 1
+    },
+    {
+      "name": "SandboxCatchInsect",
+      "count": 1
+    },
+    {
+      "name": "SandboxCheckCurrentMode",
+      "count": 12
+    },
+    {
+      "name": "SandboxCheckEnemyCanTraceTarget",
+      "count": 3
+    },
+    {
+      "name": "SandboxCheckHasFoodBuff",
+      "count": 1
+    },
+    {
+      "name": "SandboxCheckHasResource",
+      "count": 8
+    },
+    {
+      "name": "SandboxCheckSpecialUniEnemy",
+      "count": 1
+    },
+    {
+      "name": "SandboxCollectPackedRes",
+      "count": 9
+    },
+    {
+      "name": "SandboxDisableClickCharacterInfo",
+      "count": 4
+    },
+    {
+      "name": "SandboxEnableTraceTarget",
+      "count": 10
+    },
+    {
+      "name": "SandboxEntityDropItem",
+      "count": 5
+    },
+    {
+      "name": "SandboxHunterDropItem",
+      "count": 1
+    },
+    {
+      "name": "SandboxHunterKillEnemy",
+      "count": 1
+    },
+    {
+      "name": "SandboxIsConstructItem",
+      "count": 1
+    },
+    {
+      "name": "SandboxIsFactoryTrap",
+      "count": 1
+    },
+    {
+      "name": "SandboxIsPlacedItem",
+      "count": 3
+    },
+    {
+      "name": "SandboxIsRushEnemy",
+      "count": 1
+    },
+    {
+      "name": "SandboxIsRushEnemyMode",
+      "count": 6
+    },
+    {
+      "name": "SandboxLogEnemyEvent",
+      "count": 1
+    },
+    {
+      "name": "SandboxMarkEntityNotReward",
+      "count": 23
+    },
+    {
+      "name": "SandboxMarkRushEnemyDead",
+      "count": 2
+    },
+    {
+      "name": "SandboxMarkRushEnemyReachExit",
+      "count": 2
+    },
+    {
+      "name": "SandboxMarkTraceReached",
+      "count": 1
+    },
+    {
+      "name": "SandboxProcessSpecialEnemy",
+      "count": 1
+    },
+    {
+      "name": "SandboxRecordBossState",
+      "count": 2
+    },
+    {
+      "name": "SandboxRecordPlacedItemState",
+      "count": 2
+    },
+    {
+      "name": "SandboxRecordUniEnemyStatus",
+      "count": 4
+    },
+    {
+      "name": "SandboxRecordUnitState",
+      "count": 4
+    },
+    {
+      "name": "SandboxRecordUsingConstructItem",
+      "count": 1
+    },
+    {
+      "name": "SandboxRefreshBossState",
+      "count": 1
+    },
+    {
+      "name": "SandboxRefreshPlacedItemState",
+      "count": 1
+    },
+    {
+      "name": "SandboxRefreshUnitState",
+      "count": 2
+    },
+    {
+      "name": "SandboxSetEnemyTraceTarget",
+      "count": 1
+    },
+    {
+      "name": "SandboxSetUniEnemyStatus",
+      "count": 1
+    },
+    {
+      "name": "SandboxShowToast",
+      "count": 12
+    },
+    {
+      "name": "SandboxTransferRes",
+      "count": 1
+    },
+    {
+      "name": "SandboxUniEnemyCheckTraceTargetInAttackRange",
+      "count": 1
+    },
+    {
+      "name": "SaveHpToDynamicVar",
+      "count": 10
+    },
+    {
+      "name": "ScoreAGoal",
+      "count": 4
+    },
+    {
+      "name": "SetAtkScaleZero",
+      "count": 2
+    },
+    {
+      "name": "SetBodyDirection",
+      "count": 22
+    },
+    {
+      "name": "SetBuildCntToBlackboard",
+      "count": 2
+    },
+    {
+      "name": "SetCameraMoveDirectlyDisableState",
+      "count": 1
+    },
+    {
+      "name": "SetCastSkillCost",
+      "count": 4
+    },
+    {
+      "name": "SetCharacterDontOccupyDeployCntFlag",
+      "count": 6
+    },
+    {
+      "name": "SetCharacterInfoToAbilityBlackboardAsKey",
+      "count": 3
+    },
+    {
+      "name": "SetCharacterMaxEs",
+      "count": 5
+    },
+    {
+      "name": "SetCostIncreaseTime",
+      "count": 1
+    },
+    {
+      "name": "SetDisableClickCharacterInfo",
+      "count": 2
+    },
+    {
+      "name": "SetDisappear",
+      "count": 3
+    },
+    {
+      "name": "SetEnemySpecialBlockCondition",
+      "count": 3
+    },
+    {
+      "name": "SetExternWithdrawGainCostFlag",
+      "count": 3
+    },
+    {
+      "name": "SetIgnoreCancelReasonMask",
+      "count": 2
+    },
+    {
+      "name": "SetIgnoreMissFlag",
+      "count": 5
+    },
+    {
+      "name": "SetMagicCircuitLikeObstacleInRange",
+      "count": 4
+    },
+    {
+      "name": "SetMultiAppearSkillPendingToCast",
+      "count": 2
+    },
+    {
+      "name": "SetSharedFlag",
+      "count": 11
+    },
+    {
+      "name": "SetSpineSkin",
+      "count": 12
+    },
+    {
+      "name": "SetStackCountViaBlockNum",
+      "count": 6
+    },
+    {
+      "name": "SetTilesEnableOverlap",
+      "count": 8
+    },
+    {
+      "name": "SetWithdrawCostRecoverRatio",
+      "count": 12
+    },
+    {
+      "name": "ShakeCamera",
+      "count": 7
+    },
+    {
+      "name": "ShowGameCityUiPluginText",
+      "count": 7
+    },
+    {
+      "name": "ShowRoutePreviewCursor",
+      "count": 2
+    },
+    {
+      "name": "SkipCursorCheckPoint",
+      "count": 1
+    },
+    {
+      "name": "SkipStage",
+      "count": 7
+    },
+    {
+      "name": "SpawnTokenInCharacterRangeById",
+      "count": 2
+    },
+    {
+      "name": "SpawnTokenOnRangeTile",
+      "count": 2
+    },
+    {
+      "name": "SpawnTokenOnTargetTile",
+      "count": 11
+    },
+    {
+      "name": "SpawnTokenOnTargetTileWithCondition",
+      "count": 2
+    },
+    {
+      "name": "SplashDamage",
+      "count": 1
+    },
+    {
+      "name": "SpShowBuff",
+      "count": 25
+    },
+    {
+      "name": "StartTimeline",
+      "count": 1
+    },
+    {
+      "name": "StopBall",
+      "count": 3
+    },
+    {
+      "name": "StopUnitAnimator",
+      "count": 1
+    },
+    {
+      "name": "SummonEnemiesAverageOnTilesToTarget",
+      "count": 2
+    },
+    {
+      "name": "SummonEnemiesFollowBranchRoute",
+      "count": 13
+    },
+    {
+      "name": "SummonEnemiesFollowMyRoute",
+      "count": 55
+    },
+    {
+      "name": "SummonEnemiesFollowMyRouteWithBuff",
+      "count": 5
+    },
+    {
+      "name": "SummonEnemiesOnAttackRange",
+      "count": 1
+    },
+    {
+      "name": "SummonEnemiesOnTargetTile",
+      "count": 1
+    },
+    {
+      "name": "SummonEnemiesWithRuntimeNearestEndPointRoute",
+      "count": 6
+    },
+    {
+      "name": "SummonEnemyWithRuntimeRoute",
+      "count": 20
+    },
+    {
+      "name": "SummonRandomEnemyWithRuntimeRoute",
+      "count": 2
+    },
+    {
+      "name": "SwitchDirection",
+      "count": 8
+    },
+    {
+      "name": "SwitchDynamicBuffTileMode",
+      "count": 15
+    },
+    {
+      "name": "SwitchDynamicBuffTileModeInRange",
+      "count": 4
+    },
+    {
+      "name": "SwitchDynamicBuffTileModeOneLine",
+      "count": 11
+    },
+    {
+      "name": "SwitchDynamicBuffTileModeUseAbilitySelector",
+      "count": 3
+    },
+    {
+      "name": "SwitchMode",
+      "count": 765
+    },
+    {
+      "name": "SwitchRacingMode",
+      "count": 2
+    },
+    {
+      "name": "SwitchRallyPointCategory",
+      "count": 16
+    },
+    {
+      "name": "SwitchSide",
+      "count": 8
+    },
+    {
+      "name": "SwitchSkillCharWordToPassiveType",
+      "count": 1
+    },
+    {
+      "name": "SwitchSkillRangeIdModeIndex",
+      "count": 1
+    },
+    {
+      "name": "SwitchSourceDirection",
+      "count": 2
+    },
+    {
+      "name": "SwitchSubSpineConfig",
+      "count": 3
+    },
+    {
+      "name": "SwitchToRebornState",
+      "count": 3
+    },
+    {
+      "name": "TargetHpRatioToAtkScale",
+      "count": 1
+    },
+    {
+      "name": "TrackEnemyInLaterWave",
+      "count": 1
+    },
+    {
+      "name": "TransferRemainingCharacterCntVolume",
+      "count": 2
+    },
+    {
+      "name": "TrapRockflSummonLtrock",
+      "count": 1
+    },
+    {
+      "name": "TriggerAbility",
+      "count": 365
+    },
+    {
+      "name": "TriggerAbilityMergeBB",
+      "count": 11
+    },
+    {
+      "name": "TriggerAbilityUseSelector",
+      "count": 27
+    },
+    {
+      "name": "TriggerAbilityUseSelectorMergeBB",
+      "count": 9
+    },
+    {
+      "name": "TriggerAttachListenerToTileAbility",
+      "count": 2
+    },
+    {
+      "name": "TriggerAutoSkill",
+      "count": 1
+    },
+    {
+      "name": "TriggerBuff",
+      "count": 46
+    },
+    {
+      "name": "TriggerBuffsByKeys",
+      "count": 108
+    },
+    {
+      "name": "TriggerEnemySkill",
+      "count": 159
+    },
+    {
+      "name": "TriggerEnvSystem",
+      "count": 20
+    },
+    {
+      "name": "TriggerHostsBuffsByKeys",
+      "count": 4
+    },
+    {
+      "name": "TriggerPalsy",
+      "count": 1
+    },
+    {
+      "name": "TriggerSkill",
+      "count": 21
+    },
+    {
+      "name": "TriggerSpecifiedAbility",
+      "count": 10
+    },
+    {
+      "name": "TriggerTileInRange",
+      "count": 3
+    },
+    {
+      "name": "TriggerTokensAbility",
+      "count": 1
+    },
+    {
+      "name": "TriggerTokenSkill",
+      "count": 1
+    },
+    {
+      "name": "TriggerTokenSkillWithinManhattanDistance",
+      "count": 1
+    },
+    {
+      "name": "TryResetCharacterFaceIdleDirection",
+      "count": 2
+    },
+    {
+      "name": "UnitSummonApopsisEnemy",
+      "count": 3
+    },
+    {
+      "name": "UnlockHiddenArea",
+      "count": 3
+    },
+    {
+      "name": "UnregisterMagicCircuitRoute",
+      "count": 1
+    },
+    {
+      "name": "UnregisterMagicCircuitSpAffect",
+      "count": 3
+    },
+    {
+      "name": "UpdateAbilityCoolDown",
+      "count": 17
+    },
+    {
+      "name": "UpdateAttackElementDamageScale",
+      "count": 1
+    },
+    {
+      "name": "UpdateAttributeRawData",
+      "count": 5
+    },
+    {
+      "name": "UpdateBuffAttributeModifier",
+      "count": 6
+    },
+    {
+      "name": "UpdateEnemyCurrentTile",
+      "count": 13
+    },
+    {
+      "name": "UpdateFrictionFactor",
+      "count": 4
+    },
+    {
+      "name": "UpdateNormalAndRareEventCntFunLiveModeOnly",
+      "count": 1
+    },
+    {
+      "name": "UpdateObjectScaleViaRemainingRatio",
+      "count": 1
+    },
+    {
+      "name": "UpdateScoreManually",
+      "count": 14
+    },
+    {
+      "name": "VerifyTargetWithCertainSource",
+      "count": 3
+    },
+    {
+      "name": "VertifyTarget",
+      "count": 24
+    },
+    {
+      "name": "Whitw2Skill3EmitFunnelProjectile",
+      "count": 1
+    },
+    {
+      "name": "WinGame",
+      "count": 1
+    },
+    {
+      "name": "Withdraw",
+      "count": 56
+    },
+    {
+      "name": "WithdrawAlltheSameExcludeSource",
+      "count": 1
+    },
+    {
+      "name": "WithdrawTokens",
+      "count": 9
+    },
+    {
+      "name": "WriteBossrushWaveCntToBlackboard",
+      "count": 2
+    }
+  ],
+  "events": [
+    {
+      "name": "COOPERATE_PLAYER_DYING",
+      "count": 1
+    },
+    {
+      "name": "COOPERATE_PLAYER_REVIVE",
+      "count": 1
+    },
+    {
+      "name": "ON_ABILITY_CAST_ON_TARGET",
+      "count": 20
+    },
+    {
+      "name": "ON_ABILITY_FINISH",
+      "count": 15
+    },
+    {
+      "name": "ON_ABILITY_INTERRUPTED",
+      "count": 5
+    },
+    {
+      "name": "ON_ABILITY_SPELL_ON",
+      "count": 29
+    },
+    {
+      "name": "ON_ABILITY_START",
+      "count": 12
+    },
+    {
+      "name": "ON_ABNORMAL_FLAG_DIRTY",
+      "count": 23
+    },
+    {
+      "name": "ON_AFTER_ATTACK",
+      "count": 20
+    },
+    {
+      "name": "ON_AFTER_CALCULATE_DAMAGE",
+      "count": 3
+    },
+    {
+      "name": "ON_AFTER_OUTPUT_DAMAGE",
+      "count": 66
+    },
+    {
+      "name": "ON_AFTER_OUTPUT_ELEMENT_DAMAGE",
+      "count": 1
+    },
+    {
+      "name": "ON_APPLIED_MODIFIER",
+      "count": 90
+    },
+    {
+      "name": "ON_APPLYING_MODIFIER",
+      "count": 37
+    },
+    {
+      "name": "ON_APPLYING_SKIPPED_MODIFIER",
+      "count": 15
+    },
+    {
+      "name": "ON_BEFORE_ABILITY_SPELL_ON",
+      "count": 1
+    },
+    {
+      "name": "ON_BEFORE_APPEAR",
+      "count": 5
+    },
+    {
+      "name": "ON_BEFORE_APPLYING_MODIFIER",
+      "count": 13
+    },
+    {
+      "name": "ON_BEFORE_ATTACK",
+      "count": 13
+    },
+    {
+      "name": "ON_BEFORE_DIRECTION_CHANGE",
+      "count": 2
+    },
+    {
+      "name": "ON_BEFORE_DISAPPEAR",
+      "count": 7
+    },
+    {
+      "name": "ON_BEFORE_EP_BREAK_FINISH",
+      "count": 2
+    },
+    {
+      "name": "ON_BEFORE_EP_BREAK_START",
+      "count": 7
+    },
+    {
+      "name": "ON_BEFORE_EXIT_LEVITATE_STATE",
+      "count": 4
+    },
+    {
+      "name": "ON_BEFORE_EXIT_UNBALANCED_STATE",
+      "count": 5
+    },
+    {
+      "name": "ON_BEFORE_FALLDOWN",
+      "count": 4
+    },
+    {
+      "name": "ON_BEFORE_TARGET_APPLY_MODIFIER",
+      "count": 16
+    },
+    {
+      "name": "ON_BEFORE_TRY_SET_EP_ZERO",
+      "count": 1
+    },
+    {
+      "name": "ON_BEFORE_TRY_SET_HP_ZERO",
+      "count": 67
+    },
+    {
+      "name": "ON_BEING_CALCULATE_DAMAGE",
+      "count": 1
+    },
+    {
+      "name": "ON_BLOCK_DAMAGE",
+      "count": 1
+    },
+    {
+      "name": "ON_BOSS_WAVE_WILL_START",
+      "count": 10
+    },
+    {
+      "name": "ON_BUFF_DISABLE",
+      "count": 48
+    },
+    {
+      "name": "ON_BUFF_ENABLE",
+      "count": 25
+    },
+    {
+      "name": "ON_BUFF_FINISH",
+      "count": 887
+    },
+    {
+      "name": "ON_BUFF_LATE_ENABLE",
+      "count": 38
+    },
+    {
+      "name": "ON_BUFF_START",
+      "count": 2751
+    },
+    {
+      "name": "ON_BUFF_TRIGGER",
+      "count": 1291
+    },
+    {
+      "name": "ON_CALCULATE_CACHED_PROJECTILE_DAMAGE",
+      "count": 7
+    },
+    {
+      "name": "ON_CALCULATE_DAMAGE",
+      "count": 168
+    },
+    {
+      "name": "ON_COLLIDE_WITH_HIGHLAND",
+      "count": 4
+    },
+    {
+      "name": "ON_DIRECTION_CHANGED",
+      "count": 7
+    },
+    {
+      "name": "ON_END_PULLING",
+      "count": 5
+    },
+    {
+      "name": "ON_ENTER_LEVITATE_STATE",
+      "count": 5
+    },
+    {
+      "name": "ON_ENTER_MAGICCIRCUIT",
+      "count": 7
+    },
+    {
+      "name": "ON_ENTER_UNBALANCED_STATE",
+      "count": 5
+    },
+    {
+      "name": "ON_ENTITY_WILL_OVERLAP",
+      "count": 4
+    },
+    {
+      "name": "ON_EP_BREAK_FINISH",
+      "count": 4
+    },
+    {
+      "name": "ON_EP_BREAK_START",
+      "count": 9
+    },
+    {
+      "name": "ON_ES_OVER_ZERO",
+      "count": 4
+    },
+    {
+      "name": "ON_EVADE_DAMAGE",
+      "count": 9
+    },
+    {
+      "name": "ON_GAME_OVER",
+      "count": 11
+    },
+    {
+      "name": "ON_LEAVE_MAGICCIRCUIT",
+      "count": 7
+    },
+    {
+      "name": "ON_LEGION_MODE_DRAW_CARD",
+      "count": 4
+    },
+    {
+      "name": "ON_MAKE_ENEMY_UNBALANCED",
+      "count": 5
+    },
+    {
+      "name": "ON_MOTION_MODE_CHANGED",
+      "count": 3
+    },
+    {
+      "name": "ON_OTHER_BUFF_START",
+      "count": 7
+    },
+    {
+      "name": "ON_OTHER_RESISTABLE_BUFF_START",
+      "count": 3
+    },
+    {
+      "name": "ON_OUTPUT_ATK_OR_HEAL",
+      "count": 11
+    },
+    {
+      "name": "ON_OUTPUT_DAMAGE",
+      "count": 159
+    },
+    {
+      "name": "ON_OUTPUT_MODIFIER",
+      "count": 61
+    },
+    {
+      "name": "ON_OWNER_BEFORE_DEAD",
+      "count": 7
+    },
+    {
+      "name": "ON_OWNER_BLOCKEE_CHANGED",
+      "count": 42
+    },
+    {
+      "name": "ON_OWNER_BORN",
+      "count": 25
+    },
+    {
+      "name": "ON_OWNER_DYING",
+      "count": 3
+    },
+    {
+      "name": "ON_OWNER_FINISH",
+      "count": 162
+    },
+    {
+      "name": "ON_OWNER_KILLED",
+      "count": 151
+    },
+    {
+      "name": "ON_OWNER_KILLED_BY_MAIN_TARGET",
+      "count": 9
+    },
+    {
+      "name": "ON_OWNER_LOCATE",
+      "count": 28
+    },
+    {
+      "name": "ON_OWNER_OVERLAPPED",
+      "count": 16
+    },
+    {
+      "name": "ON_OWNER_POST_BORN",
+      "count": 15
+    },
+    {
+      "name": "ON_OWNER_REACH_EXIT",
+      "count": 21
+    },
+    {
+      "name": "ON_OWNER_ROOT_TILE_CHANGED",
+      "count": 24
+    },
+    {
+      "name": "ON_POST_TRY_SET_HP_ZERO",
+      "count": 12
+    },
+    {
+      "name": "ON_SANDBOX_OWNER_RES_CHANGED",
+      "count": 4
+    },
+    {
+      "name": "ON_SKILL_CAST_SUCCEED",
+      "count": 3
+    },
+    {
+      "name": "ON_SKILL_FINISH",
+      "count": 59
+    },
+    {
+      "name": "ON_SKILL_START",
+      "count": 67
+    },
+    {
+      "name": "ON_STAGE_END",
+      "count": 11
+    },
+    {
+      "name": "ON_TAKE_DAMAGE",
+      "count": 391
+    },
+    {
+      "name": "ON_TAKE_EP_DAMAGE",
+      "count": 3
+    },
+    {
+      "name": "ON_TARGET_KILLED",
+      "count": 66
+    },
+    {
+      "name": "ON_TOGGLE_SKILL_START",
+      "count": 1
+    },
+    {
+      "name": "ON_UNIT_SWITCH_MODE",
+      "count": 4
+    }
+  ],
+  "firstRejections": [
+    {
+      "name": "Unsupported behaviour action: Act27sideAddTilesToEnemySideBlackList",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: Act27sideModifyAllAllyTileCachedSideType",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: Act27sideModifyTileCachedSideType",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: Act31SideAddAreaPollute",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: Act31SideAssignAreaPolluteValueToBB",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: Act31SideCheckInPolluteArea",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: Act31SideDeathPolluteTile",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: Act31SidePurifyAreaPollute",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: Act33SideEmitManagedProjectile",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: Act35SideAssignGemsCountToBlackboard",
+      "count": 3
+    },
+    {
+      "name": "Unsupported behaviour action: Act35SideEliminateGems",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: Act35SideSummonGems",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: Act35SideSummonGemsInFourDirections",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: Act35SideSummonGemsInRange",
+      "count": 2
+    },
+    {
+      "name": "Unsupported behaviour action: Act35SideSummonLinkGem",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: Act43SideOnBlockChanged",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: ActivePredifinedInst",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: AddAbilityBlackboard",
+      "count": 2
+    },
+    {
+      "name": "Unsupported behaviour action: AddBuffBlackboard",
+      "count": 15
+    },
+    {
+      "name": "Unsupported behaviour action: AddCharacterSharedBlackboard",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: AddEnemyBlockVolume",
+      "count": 4
+    },
+    {
+      "name": "Unsupported behaviour action: AddExcludeCharacterToDynamicBuffTile",
+      "count": 2
+    },
+    {
+      "name": "Unsupported behaviour action: AddFearTargetTiles",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: AddFunnelAbilityActiveCnt",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: AddGameFinishBlockerByKey",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: AddGlobalBlackboard",
+      "count": 2
+    },
+    {
+      "name": "Unsupported behaviour action: AddHeightOffsetToSpine",
+      "count": 2
+    },
+    {
+      "name": "Unsupported behaviour action: AddOrRemoveRuntimeUIPlugin",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: AdjustEnemyHeightToRootTile",
+      "count": 3
+    },
+    {
+      "name": "Unsupported behaviour action: AdvancedApplyDamage",
+      "count": 47
+    },
+    {
+      "name": "Unsupported behaviour action: AdvancedApplyHeal",
+      "count": 6
+    },
+    {
+      "name": "Unsupported behaviour action: AlwaysNext",
+      "count": 2
+    },
+    {
+      "name": "Unsupported behaviour action: AmmoSkillCountModifier",
+      "count": 4
+    },
+    {
+      "name": "Unsupported behaviour action: AOEDamage",
+      "count": 12
+    },
+    {
+      "name": "Unsupported behaviour action: AOEHeal",
+      "count": 2
+    },
+    {
+      "name": "Unsupported behaviour action: ApplyElementDamage",
+      "count": 5
+    },
+    {
+      "name": "Unsupported behaviour action: ApplyElementHeal",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: ApplyForceOnRogue4DLC2BounceEnemy",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: ApplyHeal",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: ArcgachaGainTrap",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: AssignAbilityBlackboardFromOthers",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: AssignAmmoSkillRemainingCountToBB",
+      "count": 3
+    },
+    {
+      "name": "Unsupported behaviour action: AssignAttributeAsDynamicVarToBB",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: AssignAttributeDefaultValueToBlackboard",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: AssignAttributeRawDataIntoBlackboard",
+      "count": 3
+    },
+    {
+      "name": "Unsupported behaviour action: AssignAttributeToBB",
+      "count": 10
+    },
+    {
+      "name": "Unsupported behaviour action: AssignBuffBlackboard",
+      "count": 12
+    },
+    {
+      "name": "Unsupported behaviour action: AssignBuffBlackboardFromOthers",
+      "count": 19
+    },
+    {
+      "name": "Unsupported behaviour action: AssignBuffCountIntoBlackboard",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: AssignCharacterSharedBBToBlackboard",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: AssignCurSpToBB",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: AssignDirectionToBB",
+      "count": 3
+    },
+    {
+      "name": "Unsupported behaviour action: AssignEnemyRouteDistToBB",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: AssignEntityCreateTimeToBB",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: AssignFinishedBossWaveIntoBlackBoard",
+      "count": 2
+    },
+    {
+      "name": "Unsupported behaviour action: AssignGlobalBlackboardToBlackboard",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: AssignHostBlackboardToBuffBlackboard",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: AssignNodeCountToBb",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: AssignRootTileToBB",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: AssignTokenCntToBB",
+      "count": 2
+    },
+    {
+      "name": "Unsupported behaviour action: AssignValueToBB",
+      "count": 18
+    },
+    {
+      "name": "Unsupported behaviour action: AssignValueToTraitBB",
+      "count": 4
+    },
+    {
+      "name": "Unsupported behaviour action: AttachAsDerivedBuffById",
+      "count": 7
+    },
+    {
+      "name": "Unsupported behaviour action: AttributeModifierWithBB",
+      "count": 2
+    },
+    {
+      "name": "Unsupported behaviour action: AttributeModifierWithLevelProgress",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: AutochessAddBuffToCharactersWithSameId",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: AutoChessAssignBattleLayersToBlackboard",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: AutochessAssignEquipCntToBlackboard",
+      "count": 4
+    },
+    {
+      "name": "Unsupported behaviour action: AutoChessAssignUseMagicCntInThisRound",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: AutoChessAttrViaForceEffectCnt",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: AutochessFilterByChessLevel",
+      "count": 2
+    },
+    {
+      "name": "Unsupported behaviour action: AutochessFilterByCurrentCoin",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: AutoChessFilterDifferentChessLevelCnt",
+      "count": 2
+    },
+    {
+      "name": "Unsupported behaviour action: AutoChessFilterDifficultyMode",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: AutoChessFreezeStore",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: AutoChessRefreshStore",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: AutoChessUpgradeStore",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: BlackboardAdd",
+      "count": 2
+    },
+    {
+      "name": "Unsupported behaviour action: BleedingDamageIncreasingReset",
+      "count": 5
+    },
+    {
+      "name": "Unsupported behaviour action: BlinkNode",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: BossRushMoveCamera",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: CalculateBlackboardValueViaParams",
+      "count": 5
+    },
+    {
+      "name": "Unsupported behaviour action: CalculateTraitAbilityBlackboard",
+      "count": 6
+    },
+    {
+      "name": "Unsupported behaviour action: ChangeAnimatorMeshBySandboxKilledBoss",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: ChangeAnimatorMeshRenderer",
+      "count": 4
+    },
+    {
+      "name": "Unsupported behaviour action: ChangeCharBlockMode",
+      "count": 2
+    },
+    {
+      "name": "Unsupported behaviour action: ChangeEnemyRouteMotionMode",
+      "count": 3
+    },
+    {
+      "name": "Unsupported behaviour action: ChangeMotionMode",
+      "count": 12
+    },
+    {
+      "name": "Unsupported behaviour action: CheckAbnormalFlag",
+      "count": 10
+    },
+    {
+      "name": "Unsupported behaviour action: CheckAbnormalFlags",
+      "count": 2
+    },
+    {
+      "name": "Unsupported behaviour action: CheckAbnormalImmune",
+      "count": 2
+    },
+    {
+      "name": "Unsupported behaviour action: CheckBlocked",
+      "count": 7
+    },
+    {
+      "name": "Unsupported behaviour action: CheckBuildCnt",
+      "count": 4
+    },
+    {
+      "name": "Unsupported behaviour action: CheckCharacterData",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: CheckCharacterDefaultDirection",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: CheckCharacterGroupTag",
+      "count": 10
+    },
+    {
+      "name": "Unsupported behaviour action: CheckCharacterInBornState",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: CheckCharacterInMagicCircuit",
+      "count": 2
+    },
+    {
+      "name": "Unsupported behaviour action: CheckCharacterOnTile",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: CheckCharSkillAffecting",
+      "count": 4
+    },
+    {
+      "name": "Unsupported behaviour action: CheckConatinsMapTags",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: CheckContainsBuff",
+      "count": 133
+    },
+    {
+      "name": "Unsupported behaviour action: CheckContainsCardBuff",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: CheckContainsDeckBuff",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: CheckContainsDerviedBuff",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: CheckContainsEnvSystem",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: CheckCurrentTileKey",
+      "count": 2
+    },
+    {
+      "name": "Unsupported behaviour action: CheckDirection",
+      "count": 6
+    },
+    {
+      "name": "Unsupported behaviour action: CheckEnemyId",
+      "count": 7
+    },
+    {
+      "name": "Unsupported behaviour action: CheckEnemyLevelMask",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: CheckEnemyLevelType",
+      "count": 2
+    },
+    {
+      "name": "Unsupported behaviour action: CheckEntityDisappeared",
+      "count": 3
+    },
+    {
+      "name": "Unsupported behaviour action: CheckEntityEquals",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: CheckFilterTag",
+      "count": 13
+    },
+    {
+      "name": "Unsupported behaviour action: CheckHasCharacterInRange",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: CheckHasEnemyInRange",
+      "count": 2
+    },
+    {
+      "name": "Unsupported behaviour action: CheckHasSp",
+      "count": 2
+    },
+    {
+      "name": "Unsupported behaviour action: CheckHasStands",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: CheckHeightTypeOfCharacterRootTile",
+      "count": 5
+    },
+    {
+      "name": "Unsupported behaviour action: CheckIdInBlackboardFunLiveModeOnly",
+      "count": 3
+    },
+    {
+      "name": "Unsupported behaviour action: CheckMotionMode",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: CheckOtherCharacterInRange",
+      "count": 2
+    },
+    {
+      "name": "Unsupported behaviour action: CheckRouteMotionMode",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: CheckSkillIndex",
+      "count": 3
+    },
+    {
+      "name": "Unsupported behaviour action: CheckTargetEnemyId",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: CheckTargetProfession",
+      "count": 4
+    },
+    {
+      "name": "Unsupported behaviour action: CheckTargetRootTile",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: CheckTargetSkillDurationType",
+      "count": 2
+    },
+    {
+      "name": "Unsupported behaviour action: CheckTargetTokenOrHost",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: CheckTraitAbilityBlackboard",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: CheckUnitAlive",
+      "count": 14
+    },
+    {
+      "name": "Unsupported behaviour action: CheckUnitCurrentMode",
+      "count": 10
+    },
+    {
+      "name": "Unsupported behaviour action: CheckUnitInRebornState",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: CheckUnitRootTileInTargetAttackRange",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: ClearAllBuffs",
+      "count": 12
+    },
+    {
+      "name": "Unsupported behaviour action: ClearCharacterSp",
+      "count": 3
+    },
+    {
+      "name": "Unsupported behaviour action: ClearEnemySp",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: CoopAddEnemyKeyToSideSharedEnemy",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: CoopReplaceActionKey",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: CopyHealth",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: CreateBuff",
+      "count": 161
+    },
+    {
+      "name": "Unsupported behaviour action: CreateBuffById",
+      "count": 15
+    },
+    {
+      "name": "Unsupported behaviour action: CreateBuffInCircleRange",
+      "count": 3
+    },
+    {
+      "name": "Unsupported behaviour action: CreateBuffInRange",
+      "count": 26
+    },
+    {
+      "name": "Unsupported behaviour action: CreateBuffOnTileInRange",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: CreateBuffs",
+      "count": 7
+    },
+    {
+      "name": "Unsupported behaviour action: CreateBuffStacked",
+      "count": 5
+    },
+    {
+      "name": "Unsupported behaviour action: CreateBuffToBlockee",
+      "count": 4
+    },
+    {
+      "name": "Unsupported behaviour action: CreateBuffToCertainProfession",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: CreateBuffToCertainSideUnits",
+      "count": 9
+    },
+    {
+      "name": "Unsupported behaviour action: CreateBuffToCurTarget",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: CreateBuffToHost",
+      "count": 6
+    },
+    {
+      "name": "Unsupported behaviour action: CreateBuffToToken",
+      "count": 10
+    },
+    {
+      "name": "Unsupported behaviour action: CreateBuffToUnitInCurrentMapLayer",
+      "count": 4
+    },
+    {
+      "name": "Unsupported behaviour action: CreateBuffUseAbilitySelector",
+      "count": 42
+    },
+    {
+      "name": "Unsupported behaviour action: CreateBuffUseHostAsSource",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: CreateBuffUseTargetAsSource",
+      "count": 7
+    },
+    {
+      "name": "Unsupported behaviour action: CreateBuffWithOverrideEffect",
+      "count": 2
+    },
+    {
+      "name": "Unsupported behaviour action: CreateCardBuff",
+      "count": 9
+    },
+    {
+      "name": "Unsupported behaviour action: CreateCardBuffFilterByDeckBuff",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: CreateCardBuffFilterByTag",
+      "count": 2
+    },
+    {
+      "name": "Unsupported behaviour action: CreateCardBuffToAllCard",
+      "count": 3
+    },
+    {
+      "name": "Unsupported behaviour action: CreateCardBuffToBlackboardExclude",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: CreateCardBuffToMyToken",
+      "count": 3
+    },
+    {
+      "name": "Unsupported behaviour action: CreateCardFilterByProfession",
+      "count": 3
+    },
+    {
+      "name": "Unsupported behaviour action: CreateDeckBuff",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: CreateEffect",
+      "count": 47
+    },
+    {
+      "name": "Unsupported behaviour action: CreateLineEffect",
+      "count": 6
+    },
+    {
+      "name": "Unsupported behaviour action: CreateTileBindingGlobalBuff",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: CreateTileEffect",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: CreateTileEffectInRange",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: DamageByDistance",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: DamageViaAttr",
+      "count": 4
+    },
+    {
+      "name": "Unsupported behaviour action: DamageViaCurHpRatio",
+      "count": 5
+    },
+    {
+      "name": "Unsupported behaviour action: DamageViaEs",
+      "count": 4
+    },
+    {
+      "name": "Unsupported behaviour action: DamageViaMaxHpRatio",
+      "count": 13
+    },
+    {
+      "name": "Unsupported behaviour action: Dice",
+      "count": 14
+    },
+    {
+      "name": "Unsupported behaviour action: DisableEnemyHud",
+      "count": 2
+    },
+    {
+      "name": "Unsupported behaviour action: DisableEnemySwitchFaceByMove",
+      "count": 2
+    },
+    {
+      "name": "Unsupported behaviour action: DisableTrait",
+      "count": 2
+    },
+    {
+      "name": "Unsupported behaviour action: DragTowardSource",
+      "count": 2
+    },
+    {
+      "name": "Unsupported behaviour action: DuelSyncChosenInfoToGameMode",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: DurBusAbilityCheckPassengers",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: EmitProjectile",
+      "count": 4
+    },
+    {
+      "name": "Unsupported behaviour action: EmitProjectileOnSourceRootTile",
+      "count": 3
+    },
+    {
+      "name": "Unsupported behaviour action: EnableEffectTransform",
+      "count": 2
+    },
+    {
+      "name": "Unsupported behaviour action: EnableShadowController",
+      "count": 2
+    },
+    {
+      "name": "Unsupported behaviour action: EnableTrait",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: EnemyDurcarChangeDirection",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: EnemyForceTracePosition",
+      "count": 2
+    },
+    {
+      "name": "Unsupported behaviour action: EnemyKillToken",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: EnemyLrtsiaSummonEnemyOnSurroundTiles",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: EnemySkipWaitCheckPoint",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: EqualizeTargetHpRatio",
+      "count": 3
+    },
+    {
+      "name": "Unsupported behaviour action: FetchEnemyHpToHost",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: FilterAbilitySpellCnt",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: FilterByBlackboardValue",
+      "count": 19
+    },
+    {
+      "name": "Unsupported behaviour action: FilterByBuffStackCount",
+      "count": 6
+    },
+    {
+      "name": "Unsupported behaviour action: FilterByExecuteBlackboardValue",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: FilterByTargetAttribute",
+      "count": 2
+    },
+    {
+      "name": "Unsupported behaviour action: FilterByTargetHpRatio",
+      "count": 6
+    },
+    {
+      "name": "Unsupported behaviour action: FilterByTargetMassLevel",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: FilterByTargetSPType",
+      "count": 5
+    },
+    {
+      "name": "Unsupported behaviour action: FilterCharacterKey",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: FilterCharacterLastDeathReason",
+      "count": 2
+    },
+    {
+      "name": "Unsupported behaviour action: FilterEnemyKey",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: FilterEPBreakRecoveryType",
+      "count": 3
+    },
+    {
+      "name": "Unsupported behaviour action: FilterId",
+      "count": 3
+    },
+    {
+      "name": "Unsupported behaviour action: FilterSkillTriggerdCnt",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: FilterTargetWithPlayerSide",
+      "count": 2
+    },
+    {
+      "name": "Unsupported behaviour action: FilterTileBlackboard",
+      "count": 2
+    },
+    {
+      "name": "Unsupported behaviour action: FinishAllStatusResistableBuffs",
+      "count": 3
+    },
+    {
+      "name": "Unsupported behaviour action: FinishBuffsById",
+      "count": 151
+    },
+    {
+      "name": "Unsupported behaviour action: FinishBuffsByIdByBuffSource",
+      "count": 2
+    },
+    {
+      "name": "Unsupported behaviour action: FinishBuffsOfEveryCharacterById",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: FinishBuffsOfEveryEnemyById",
+      "count": 3
+    },
+    {
+      "name": "Unsupported behaviour action: FinishCardBuffsByKey",
+      "count": 3
+    },
+    {
+      "name": "Unsupported behaviour action: FinishCurrentWave",
+      "count": 9
+    },
+    {
+      "name": "Unsupported behaviour action: FinishDerivedBuff",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: FinishManagedProjectiles",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: FinishOneBuffById",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: FinishSeveralBuffsById",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: FixedValueDamage",
+      "count": 23
+    },
+    {
+      "name": "Unsupported behaviour action: FixedValueElementHeal",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: FixedValueHeal",
+      "count": 8
+    },
+    {
+      "name": "Unsupported behaviour action: FootballPlayerForceSearchTarget",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: ForceCharacterAnimatorFaceFront",
+      "count": 2
+    },
+    {
+      "name": "Unsupported behaviour action: ForceCharacterFaceDefaultDirection",
+      "count": 3
+    },
+    {
+      "name": "Unsupported behaviour action: ForceSetToTilePosition",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: HaveShieldRoguelike",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: HideEntityGraphicOrNot",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: IfBossRushBattleArea",
+      "count": 2
+    },
+    {
+      "name": "Unsupported behaviour action: IfConditions",
+      "count": 2
+    },
+    {
+      "name": "Unsupported behaviour action: IfElse",
+      "count": 336
+    },
+    {
+      "name": "Unsupported behaviour action: IfEnemyIsMovingBySelf",
+      "count": 3
+    },
+    {
+      "name": "Unsupported behaviour action: IfTarget",
+      "count": 2
+    },
+    {
+      "name": "Unsupported behaviour action: IfTargetSide",
+      "count": 9
+    },
+    {
+      "name": "Unsupported behaviour action: IgnoreAllButMoveCp",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: InitBossRushRecodr",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: InsertCheckPointInRuntimeRoute",
+      "count": 5
+    },
+    {
+      "name": "Unsupported behaviour action: InstantKill",
+      "count": 27
+    },
+    {
+      "name": "Unsupported behaviour action: InterruptAbility",
+      "count": 6
+    },
+    {
+      "name": "Unsupported behaviour action: InterruptCharacterAttack",
+      "count": 2
+    },
+    {
+      "name": "Unsupported behaviour action: InterruptEnemyAbility",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: IsBlackboardEqualWithString",
+      "count": 2
+    },
+    {
+      "name": "Unsupported behaviour action: IsBlackboardZero",
+      "count": 6
+    },
+    {
+      "name": "Unsupported behaviour action: IsCharacter",
+      "count": 9
+    },
+    {
+      "name": "Unsupported behaviour action: IsCharacterOrTokenOrTrap",
+      "count": 7
+    },
+    {
+      "name": "Unsupported behaviour action: IsCloseToFootball",
+      "count": 8
+    },
+    {
+      "name": "Unsupported behaviour action: IsMimicEnemy",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: IsSummonerAlive",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: KillTokens",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: Knockback",
+      "count": 5
+    },
+    {
+      "name": "Unsupported behaviour action: KnockBackWithCharacterDirection",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: KnockBackWithDirection",
+      "count": 4
+    },
+    {
+      "name": "Unsupported behaviour action: LandFootball",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: LegionModeOnlyAddLastProfessionLevel",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: LegionModeOnlyAddProfessionLevel",
+      "count": 2
+    },
+    {
+      "name": "Unsupported behaviour action: LegionModeOnlyCharacterOnDying",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: LegionModeOnlyCheckCardInHand",
+      "count": 5
+    },
+    {
+      "name": "Unsupported behaviour action: LegionModeOnlyCheckHandCardNotFull",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: LegionModeOnlyCreateBuffToDyingInRange",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: LegionModeOnlyDrawCardViaProfession",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: LegionModeOnlyDrawNextCard",
+      "count": 5
+    },
+    {
+      "name": "Unsupported behaviour action: LegionModeOnlyGainGold",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: LegionModeOnlyGainGoldViaCardNum",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: LegionModeOnlyMarkCardReturnToHand",
+      "count": 5
+    },
+    {
+      "name": "Unsupported behaviour action: LegionModeOnlyMarkCardUseOnce",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: LegionModeOnlyModifyMaxProfessionBuffCnt",
+      "count": 2
+    },
+    {
+      "name": "Unsupported behaviour action: LegionModeOnlySelectCard",
+      "count": 5
+    },
+    {
+      "name": "Unsupported behaviour action: LegionModeOnlyTemporaryAddEachProfessionStatus",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: LogExtraBattleInfo",
+      "count": 20
+    },
+    {
+      "name": "Unsupported behaviour action: LogExtraBattleInfoForCurrentPlayTime",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: Loop",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: Main15FilterPrtsLastSubAction",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: Main15InsertPrtsAction",
+      "count": 2
+    },
+    {
+      "name": "Unsupported behaviour action: Mainline14TriggerSkill",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: MakeTargetDyingInCooperate",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: ManageTileEffectAssociateWithTargetRoute",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: MarkCurrentHpRatio",
+      "count": 4
+    },
+    {
+      "name": "Unsupported behaviour action: MarkDangerAreaFinished",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: MarkFogTickTime",
+      "count": 3
+    },
+    {
+      "name": "Unsupported behaviour action: MarkFogView",
+      "count": 3
+    },
+    {
+      "name": "Unsupported behaviour action: ModifyAbilityAttackTime",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: ModifyAbilityBlackboard",
+      "count": 7
+    },
+    {
+      "name": "Unsupported behaviour action: ModifyAnimatorHookerReplacePair",
+      "count": 11
+    },
+    {
+      "name": "Unsupported behaviour action: ModifyAttackMaxTarget",
+      "count": 2
+    },
+    {
+      "name": "Unsupported behaviour action: ModifyAttackMaxTileNum",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: ModifyAttributeRawDataByEntity",
+      "count": 2
+    },
+    {
+      "name": "Unsupported behaviour action: ModifyBlackboard",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: ModifyBlackboardMainline12",
+      "count": 2
+    },
+    {
+      "name": "Unsupported behaviour action: ModifyBoomberangMaxCnt",
+      "count": 4
+    },
+    {
+      "name": "Unsupported behaviour action: ModifyBossRushBattleAreaData",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: ModifyCharacterLimit",
+      "count": 3
+    },
+    {
+      "name": "Unsupported behaviour action: ModifyCharacterSpineColor",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: ModifyCostIncreaseTime",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: ModifyEnemySkillMaxTarget",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: ModifyGraphicHolderHeight",
+      "count": 2
+    },
+    {
+      "name": "Unsupported behaviour action: ModifyLifePoint",
+      "count": 7
+    },
+    {
+      "name": "Unsupported behaviour action: ModifyMaxCost",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: ModifyOverlapSourceId",
+      "count": 3
+    },
+    {
+      "name": "Unsupported behaviour action: ModifySp",
+      "count": 36
+    },
+    {
+      "name": "Unsupported behaviour action: MoveNextLevelBranch",
+      "count": 10
+    },
+    {
+      "name": "Unsupported behaviour action: NoSourceDamage",
+      "count": 8
+    },
+    {
+      "name": "Unsupported behaviour action: NoSourceDamageNew",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: PickRandomBranchPhase",
+      "count": 3
+    },
+    {
+      "name": "Unsupported behaviour action: PlayAudio",
+      "count": 5
+    },
+    {
+      "name": "Unsupported behaviour action: RacingEnemyIsMine",
+      "count": 2
+    },
+    {
+      "name": "Unsupported behaviour action: RacingEnemyLockMagnet",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: RandomAction",
+      "count": 2
+    },
+    {
+      "name": "Unsupported behaviour action: RandomSetter",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: RechargeToken",
+      "count": 5
+    },
+    {
+      "name": "Unsupported behaviour action: RecordAbilityRemainingTime",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: RecordCurrentHpRatio",
+      "count": 2
+    },
+    {
+      "name": "Unsupported behaviour action: RegisterAsStand",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: RegisterMagicCircuitRoute",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: RegisterMagicCircuitSpAffect",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: ReInitEnemySkillCoolDown",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: ReleaseFromBlocker",
+      "count": 8
+    },
+    {
+      "name": "Unsupported behaviour action: RemainingRatioToAttributeModifier",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: ResetAbilityAtkScale",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: ResetAllBuffsTriggerTimer",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: ResetBuffAbilityAtkScaleWithBuffCnt",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: ResetDataFunLiveModeOnly",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: ReturnDeployCost",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: RewriteTileOptions",
+      "count": 3
+    },
+    {
+      "name": "Unsupported behaviour action: RewriteTileOptionsInRange",
+      "count": 4
+    },
+    {
+      "name": "Unsupported behaviour action: RO4DLC2TriggerBossSealTileSkill",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: RoguelikeFilterFragmentCarryChar",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: RoguelikeInheritEnemyHp",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: RollRogueDice",
+      "count": 3
+    },
+    {
+      "name": "Unsupported behaviour action: RunActionsToWdslmAbilityTarget",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: SandboxAssignDayCountToBb",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: SandboxCheckHasFoodBuff",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: SandboxCheckHasResource",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: SandboxCollectPackedRes",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: SandboxDisableClickCharacterInfo",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: SandboxEntityDropItem",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: SandboxIsRushEnemy",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: SandboxIsRushEnemyMode",
+      "count": 4
+    },
+    {
+      "name": "Unsupported behaviour action: SandboxRefreshBossState",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: SaveHpToDynamicVar",
+      "count": 3
+    },
+    {
+      "name": "Unsupported behaviour action: SetBodyDirection",
+      "count": 4
+    },
+    {
+      "name": "Unsupported behaviour action: SetBuildCntToBlackboard",
+      "count": 2
+    },
+    {
+      "name": "Unsupported behaviour action: SetCastSkillCost",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: SetCharacterDontOccupyDeployCntFlag",
+      "count": 2
+    },
+    {
+      "name": "Unsupported behaviour action: SetCostIncreaseTime",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: SetEnemySpecialBlockCondition",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: SetExternWithdrawGainCostFlag",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: SetMagicCircuitLikeObstacleInRange",
+      "count": 2
+    },
+    {
+      "name": "Unsupported behaviour action: SetMultiAppearSkillPendingToCast",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: SetSpineSkin",
+      "count": 4
+    },
+    {
+      "name": "Unsupported behaviour action: SetStackCountViaBlockNum",
+      "count": 5
+    },
+    {
+      "name": "Unsupported behaviour action: SetTilesEnableOverlap",
+      "count": 2
+    },
+    {
+      "name": "Unsupported behaviour action: SetWithdrawCostRecoverRatio",
+      "count": 12
+    },
+    {
+      "name": "Unsupported behaviour action: ShakeCamera",
+      "count": 3
+    },
+    {
+      "name": "Unsupported behaviour action: SpawnTokenInCharacterRangeById",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: SpShowBuff",
+      "count": 16
+    },
+    {
+      "name": "Unsupported behaviour action: SummonEnemiesFollowBranchRoute",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: SummonEnemiesFollowMyRoute",
+      "count": 13
+    },
+    {
+      "name": "Unsupported behaviour action: SummonEnemiesFollowMyRouteWithBuff",
+      "count": 3
+    },
+    {
+      "name": "Unsupported behaviour action: SummonEnemiesOnAttackRange",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: SummonEnemiesOnTargetTile",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: SummonEnemiesWithRuntimeNearestEndPointRoute",
+      "count": 3
+    },
+    {
+      "name": "Unsupported behaviour action: SummonEnemyWithRuntimeRoute",
+      "count": 5
+    },
+    {
+      "name": "Unsupported behaviour action: SwitchDirection",
+      "count": 2
+    },
+    {
+      "name": "Unsupported behaviour action: SwitchDynamicBuffTileMode",
+      "count": 2
+    },
+    {
+      "name": "Unsupported behaviour action: SwitchDynamicBuffTileModeInRange",
+      "count": 2
+    },
+    {
+      "name": "Unsupported behaviour action: SwitchDynamicBuffTileModeOneLine",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: SwitchDynamicBuffTileModeUseAbilitySelector",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: SwitchMode",
+      "count": 103
+    },
+    {
+      "name": "Unsupported behaviour action: SwitchRallyPointCategory",
+      "count": 7
+    },
+    {
+      "name": "Unsupported behaviour action: SwitchSide",
+      "count": 3
+    },
+    {
+      "name": "Unsupported behaviour action: TransferRemainingCharacterCntVolume",
+      "count": 2
+    },
+    {
+      "name": "Unsupported behaviour action: TrapRockflSummonLtrock",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: TriggerAbility",
+      "count": 64
+    },
+    {
+      "name": "Unsupported behaviour action: TriggerAbilityUseSelector",
+      "count": 5
+    },
+    {
+      "name": "Unsupported behaviour action: TriggerAbilityUseSelectorMergeBB",
+      "count": 3
+    },
+    {
+      "name": "Unsupported behaviour action: TriggerBuffsByKeys",
+      "count": 12
+    },
+    {
+      "name": "Unsupported behaviour action: TriggerEnemySkill",
+      "count": 15
+    },
+    {
+      "name": "Unsupported behaviour action: TriggerSkill",
+      "count": 4
+    },
+    {
+      "name": "Unsupported behaviour action: TriggerTokensAbility",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: TriggerTokenSkill",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: TriggerTokenSkillWithinManhattanDistance",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: UnitSummonApopsisEnemy",
+      "count": 2
+    },
+    {
+      "name": "Unsupported behaviour action: UpdateAbilityCoolDown",
+      "count": 2
+    },
+    {
+      "name": "Unsupported behaviour action: UpdateFrictionFactor",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour action: VertifyTarget",
+      "count": 3
+    },
+    {
+      "name": "Unsupported behaviour action: Withdraw",
+      "count": 5
+    },
+    {
+      "name": "Unsupported behaviour action: WithdrawTokens",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour event: COOPERATE_PLAYER_DYING",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour event: ON_ABILITY_CAST_ON_TARGET",
+      "count": 17
+    },
+    {
+      "name": "Unsupported behaviour event: ON_ABILITY_FINISH",
+      "count": 3
+    },
+    {
+      "name": "Unsupported behaviour event: ON_ABILITY_INTERRUPTED",
+      "count": 4
+    },
+    {
+      "name": "Unsupported behaviour event: ON_ABILITY_SPELL_ON",
+      "count": 25
+    },
+    {
+      "name": "Unsupported behaviour event: ON_ABILITY_START",
+      "count": 7
+    },
+    {
+      "name": "Unsupported behaviour event: ON_ABNORMAL_FLAG_DIRTY",
+      "count": 12
+    },
+    {
+      "name": "Unsupported behaviour event: ON_AFTER_ATTACK",
+      "count": 11
+    },
+    {
+      "name": "Unsupported behaviour event: ON_AFTER_CALCULATE_DAMAGE",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour event: ON_AFTER_OUTPUT_DAMAGE",
+      "count": 51
+    },
+    {
+      "name": "Unsupported behaviour event: ON_AFTER_OUTPUT_ELEMENT_DAMAGE",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour event: ON_APPLIED_MODIFIER",
+      "count": 58
+    },
+    {
+      "name": "Unsupported behaviour event: ON_APPLYING_MODIFIER",
+      "count": 30
+    },
+    {
+      "name": "Unsupported behaviour event: ON_APPLYING_SKIPPED_MODIFIER",
+      "count": 6
+    },
+    {
+      "name": "Unsupported behaviour event: ON_BEFORE_ABILITY_SPELL_ON",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour event: ON_BEFORE_APPEAR",
+      "count": 2
+    },
+    {
+      "name": "Unsupported behaviour event: ON_BEFORE_APPLYING_MODIFIER",
+      "count": 9
+    },
+    {
+      "name": "Unsupported behaviour event: ON_BEFORE_ATTACK",
+      "count": 11
+    },
+    {
+      "name": "Unsupported behaviour event: ON_BEFORE_DISAPPEAR",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour event: ON_BEFORE_EP_BREAK_START",
+      "count": 7
+    },
+    {
+      "name": "Unsupported behaviour event: ON_BEFORE_EXIT_UNBALANCED_STATE",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour event: ON_BEFORE_FALLDOWN",
+      "count": 4
+    },
+    {
+      "name": "Unsupported behaviour event: ON_BEFORE_TARGET_APPLY_MODIFIER",
+      "count": 16
+    },
+    {
+      "name": "Unsupported behaviour event: ON_BEFORE_TRY_SET_EP_ZERO",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour event: ON_BEFORE_TRY_SET_HP_ZERO",
+      "count": 46
+    },
+    {
+      "name": "Unsupported behaviour event: ON_BEING_CALCULATE_DAMAGE",
+      "count": 1
+    },
+    {
+      "name": "Unsupported behaviour event: ON_BOSS_WAVE_WILL_START",
+      "count": 6
+    },
+    {
+      "name": "Unsupported behaviour event: ON_BUFF_DISABLE",
+      "count": 15
+    },
+    {
+      "name": "Unsupported behaviour event: ON_BUFF_ENABLE",
+      "count": 16
+    },
+    {
+      "name": "Unsupported behaviour event: ON_BUFF_FINISH",
+      "count": 412
+    },
+    {
+      "name": "Unsupported behaviour event: ON_BUFF_LATE_ENABLE",
+      "count": 24
+    },
+    {
+      "name": "Unsupported behaviour event: ON_BUFF_TRIGGER",
+      "count": 1048
+    },
+    {
+      "name": "Unsupported behaviour event: ON_CALCULATE_DAMAGE",
+      "count": 148
+    },
+    {
+      "name": "Unsupported behaviour event: ON_COLLIDE_WITH_HIGHLAND",
+      "count": 2
+    },
+    {
+      "name": "Unsupported behaviour event: ON_ENTER_LEVITATE_STATE",
+      "count": 4
+    },
+    {
+      "name": "Unsupported behaviour event: ON_ENTER_UNBALANCED_STATE",
+      "count": 4
+    },
+    {
+      "name": "Unsupported behaviour event: ON_ENTITY_WILL_OVERLAP",
+      "count": 3
+    },
+    {
+      "name": "Unsupported behaviour event: ON_EP_BREAK_START",
+      "count": 5
+    },
+    {
+      "name": "Unsupported behaviour event: ON_ES_OVER_ZERO",
+      "count": 2
+    },
+    {
+      "name": "Unsupported behaviour event: ON_EVADE_DAMAGE",
+      "count": 9
+    },
+    {
+      "name": "Unsupported behaviour event: ON_GAME_OVER",
+      "count": 2
+    },
+    {
+      "name": "Unsupported behaviour event: ON_LEAVE_MAGICCIRCUIT",
+      "count": 3
+    },
+    {
+      "name": "Unsupported behaviour event: ON_LEGION_MODE_DRAW_CARD",
+      "count": 4
+    },
+    {
+      "name": "Unsupported behaviour event: ON_MAKE_ENEMY_UNBALANCED",
+      "count": 5
+    },
+    {
+      "name": "Unsupported behaviour event: ON_OTHER_BUFF_START",
+      "count": 4
+    },
+    {
+      "name": "Unsupported behaviour event: ON_OTHER_RESISTABLE_BUFF_START",
+      "count": 2
+    },
+    {
+      "name": "Unsupported behaviour event: ON_OUTPUT_ATK_OR_HEAL",
+      "count": 8
+    },
+    {
+      "name": "Unsupported behaviour event: ON_OUTPUT_DAMAGE",
+      "count": 136
+    },
+    {
+      "name": "Unsupported behaviour event: ON_OUTPUT_MODIFIER",
+      "count": 55
+    },
+    {
+      "name": "Unsupported behaviour event: ON_OWNER_BEFORE_DEAD",
+      "count": 4
+    },
+    {
+      "name": "Unsupported behaviour event: ON_OWNER_BLOCKEE_CHANGED",
+      "count": 22
+    },
+    {
+      "name": "Unsupported behaviour event: ON_OWNER_BORN",
+      "count": 18
+    },
+    {
+      "name": "Unsupported behaviour event: ON_OWNER_DYING",
+      "count": 2
+    },
+    {
+      "name": "Unsupported behaviour event: ON_OWNER_FINISH",
+      "count": 105
+    },
+    {
+      "name": "Unsupported behaviour event: ON_OWNER_KILLED",
+      "count": 132
+    },
+    {
+      "name": "Unsupported behaviour event: ON_OWNER_KILLED_BY_MAIN_TARGET",
+      "count": 7
+    },
+    {
+      "name": "Unsupported behaviour event: ON_OWNER_LOCATE",
+      "count": 24
+    },
+    {
+      "name": "Unsupported behaviour event: ON_OWNER_OVERLAPPED",
+      "count": 12
+    },
+    {
+      "name": "Unsupported behaviour event: ON_OWNER_POST_BORN",
+      "count": 12
+    },
+    {
+      "name": "Unsupported behaviour event: ON_OWNER_REACH_EXIT",
+      "count": 14
+    },
+    {
+      "name": "Unsupported behaviour event: ON_OWNER_ROOT_TILE_CHANGED",
+      "count": 13
+    },
+    {
+      "name": "Unsupported behaviour event: ON_SANDBOX_OWNER_RES_CHANGED",
+      "count": 4
+    },
+    {
+      "name": "Unsupported behaviour event: ON_SKILL_CAST_SUCCEED",
+      "count": 2
+    },
+    {
+      "name": "Unsupported behaviour event: ON_SKILL_FINISH",
+      "count": 21
+    },
+    {
+      "name": "Unsupported behaviour event: ON_SKILL_START",
+      "count": 39
+    },
+    {
+      "name": "Unsupported behaviour event: ON_STAGE_END",
+      "count": 3
+    },
+    {
+      "name": "Unsupported behaviour event: ON_TAKE_DAMAGE",
+      "count": 315
+    },
+    {
+      "name": "Unsupported behaviour event: ON_TAKE_EP_DAMAGE",
+      "count": 2
+    },
+    {
+      "name": "Unsupported behaviour event: ON_TARGET_KILLED",
+      "count": 51
+    },
+    {
+      "name": "Unsupported behaviour HealViaMaxHpRatio fields",
+      "count": 23
+    },
+    {
+      "name": "Unsupported behaviour ModifyCost fields",
+      "count": 4
+    },
+    {
+      "name": "Unsupported behaviour template metadata",
+      "count": 43
+    }
+  ]
+}
