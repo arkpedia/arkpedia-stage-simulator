@@ -123,10 +123,10 @@ const sdCommit = execFileSync("git", ["rev-parse", "HEAD"], {
   encoding: "utf8",
 }).trim();
 const sd = JSON.parse(
-  await readFile(
-    new URL("../../../arkpedia-sd-assets/manifest.json", import.meta.url),
-    "utf8",
-  ),
+  execFileSync("git", ["show", `${sdCommit}:manifest.json`], {
+    cwd: new URL("../../../arkpedia-sd-assets/", import.meta.url),
+    encoding: "utf8",
+  }),
 );
 const modelKeys = [
   ...ids.flatMap((id) =>
@@ -137,6 +137,14 @@ const modelKeys = [
 const models = Object.fromEntries(
   modelKeys.map((k) => {
     if (!sd.models[k]) throw new Error(`Missing SD model: ${k}`);
+    const model = sd.models[k];
+    if (
+      !/^3\.8\./.test(model.spineVersion) ||
+      !model.animationRoles?.idle ||
+      !model.animations ||
+      typeof model.premultipliedAlpha !== "boolean"
+    )
+      throw new Error(`Unverified SD runtime metadata: ${k}`);
     return [k, sd.models[k]];
   }),
 );
