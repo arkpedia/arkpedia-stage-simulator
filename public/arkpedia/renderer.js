@@ -278,12 +278,29 @@ export class StageRenderer {
         polygon(row, col, 0xf0bf63, 0.16);
     }
     g.lineStyle(2, 0xf0bf63, 0.95);
+    const corners = new Map();
     for (const edge of regionEdges(range, geometry.rows, geometry.cols)) {
       const h = this.heightAt(edge.row, edge.col) + 0.015;
       const a = this.projection.project(...edge.a, h),
         b = this.projection.project(...edge.b, h);
       g.moveTo(a.x, a.y).lineTo(b.x, b.y);
+      for (const [world, screen] of [
+        [edge.a, a],
+        [edge.b, b],
+      ]) {
+        const key = world.join(",");
+        if (!corners.has(key)) corners.set(key, []);
+        corners.get(key).push(screen);
+      }
     }
+    // At a raised/ground boundary the same world corner projects to two heights.
+    // Join the outside contour over the vertical step, without adding internal tile borders.
+    for (const points of corners.values())
+      if (points.length === 2) {
+        const [a, b] = points;
+        if (Math.hypot(a.x - b.x, a.y - b.y) > 0.1)
+          g.moveTo(a.x, a.y).lineTo(b.x, b.y);
+      }
     for (const tile of [state.chosen, this.focusTile])
       if (tile) polygon(tile.row, tile.col, 0xe3f2ee, 0.12, 2, 0.02);
   }
