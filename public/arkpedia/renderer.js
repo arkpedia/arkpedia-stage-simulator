@@ -5,6 +5,7 @@ import { SpineActor } from "/js/render/spine.js";
 import { createAssets } from "/js/assets.js";
 import { regionEdges } from "/shared/arkpedia/placement.js";
 import { skillHud } from "/shared/arkpedia/skill-hud.js";
+import { loadStageArt } from "./stage-art.js";
 const P = globalThis.PIXI;
 const models = createAssets({
   loadSpine: async (entry) => {
@@ -97,6 +98,27 @@ export class StageRenderer {
     this.observer = new ResizeObserver(() => this.resize());
     this.observer.observe(host);
     this.resize();
+    this.artStatus = document.createElement("span");
+    this.artStatus.className = "stage-art-status";
+    this.artStatus.setAttribute("role", "status");
+    host.append(this.artStatus);
+    this.artStatus.textContent = "Loading stage artwork…";
+    this.artReady = this.loadArt();
+  }
+  async loadArt() {
+    try {
+      const art = await loadStageArt(this.data.stage);
+      if (this.destroyed) { art.dispose(); return; }
+      this.art = art;
+      this.scene.add(art.group);
+      this.heightAt = (r, c) => art.heights[r]?.[c] ?? 0;
+      for (const tile of this.tiles) tile.mesh.visible = false;
+      this.resize();
+      this.artStatus.textContent = "";
+    } catch (error) {
+      if (!this.destroyed) this.artStatus.textContent = "Stage artwork unavailable · simplified map";
+      console.warn("Could not load original stage artwork", error);
+    }
   }
   entry(key) {
     const m = this.data.sd.models[key];
@@ -181,7 +203,7 @@ export class StageRenderer {
       clientX - rect.left,
       clientY - rect.top,
       this.heightAt,
-      [0.38, 0],
+      [...new Set(this.tiles.map(t => this.heightAt(t.row, t.col)))].sort((a, b) => b - a),
       g.rows,
       g.cols,
     );
@@ -515,6 +537,10 @@ export class StageRenderer {
     this.pixi.renderer.render(this.pixi.stage);
   }
   destroy() {
+    this.destroyed = true;
+    this.art?.dispose();
+    this.art?.group.removeFromParent();
+    this.artStatus.remove();
     this.observer.disconnect();
     this.clear();
     for (const v of this.preloaded.values()) models.spine.release(v.entry);

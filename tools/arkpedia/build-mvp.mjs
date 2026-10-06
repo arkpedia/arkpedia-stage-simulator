@@ -186,6 +186,11 @@ if (
     "Export matching routes from Arkpedia's stage browser and pass --routes <routes.json>",
   );
 output.stage.pathing = pathing;
+const stageAssets = JSON.parse(execFileSync("git", ["show", `${sdCommit}:stage-manifest.json`], {
+  cwd: new URL("../../../arkpedia-sd-assets/", import.meta.url), encoding: "utf8",
+}));
+if (!stageAssets.stages[stage.code]) throw Error("Missing original stage artwork");
+output.stage.art = { repository: "arkpedia/arkpedia-sd-assets", commit: sdCommit, scene: stageAssets.stages[stage.code] };
 await writeFile(
   new URL("../../data/arkpedia-mvp.json", import.meta.url),
   `${JSON.stringify(output, null, 2)}\n`,

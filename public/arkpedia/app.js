@@ -135,6 +135,7 @@ async function start() {
   const status = document.querySelector("#prep-error");
   status.textContent = "Loading selected chibi animations…";
   try {
+    await renderer.artReady;
     selection = {
       operators: [...chosen].map((id) => builds[id]),
       support: supportId
@@ -161,6 +162,7 @@ async function start() {
       renderer.three.domElement,
       renderer.pixi.view,
       renderer.controls,
+      renderer.artStatus,
     );
     renderer.observer.observe(board);
     renderer.onPick = pick;

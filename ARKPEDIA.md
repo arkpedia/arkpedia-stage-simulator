@@ -11,9 +11,26 @@ npm run start:arkpedia
 npm run test:arkpedia
 ```
 
-This entry needs no upstream release archive or full game-art download. `npm ci` copies the bundled Three.js, Pixi and Spine browser dependencies. The browser downloads only the chosen squad's Front/Back models and this stage's enemies from a pinned `arkpedia-sd-assets` commit. The inherited `npm start` still opens the original Stronghold application.
+This entry needs no upstream release archive or full game-art download. `npm ci` copies the bundled Three.js, Pixi and Spine browser dependencies. The browser downloads 0-1's original stage art, the chosen squad's Front/Back models and this stage's enemies from a pinned `arkpedia-sd-assets` commit. The inherited `npm start` still opens the original Stronghold application.
 
 To embed it in Arkpedia's overhaul branch, run the private application with `NEXT_PUBLIC_STAGE_SIMULATOR_URL=http://localhost:3182/arkpedia/`, then visit `/stages/simulator`. The iframe is loaded only after opening its fullscreen workspace. Its prototype link appears only on 0-1 when that URL is configured. No production simulator host has been configured.
+
+## Original stage assets
+
+0-1 uses the actual scene from the official Global Android resource version `26-09-23-17-49-43_b9cc4a`, published in `arkpedia-sd-assets`. Its 177 static submeshes, original colour/emission textures, baked lightmap and source tile heights are about 1.7 MB combined. The scene's gameplay-geometry hash and every file's SHA-256 must match before it replaces the simplified map. Missing or mismatched art leaves an explicitly labelled fallback. Rendering approximates the Unity shader; lighting is not yet a frame-for-frame match.
+
+The exporter preserves world-space static batches once, reverses Z/triangle winding for the renderer, removes the centered map anchor, and keeps the already-baked lightmap UVs. It does not apply the prefab transforms a second time or reuse an unrelated Stronghold map theme.
+
+To reproduce the pack (Python 3.13+, Node 22+):
+
+```sh
+python3 -m venv .cache/map-env
+.cache/map-env/bin/pip install -r tools/arkpedia/stages/requirements.txt
+node tools/arkpedia/stages/fetch-bundles.mjs --version 26-09-23-17-49-43_b9cc4a
+.cache/map-env/bin/python tools/arkpedia/stages/export-scene.py --bundles .cache/arkpedia/map-source/ab --manifest .cache/arkpedia/map-source/hot_update_list.json --out .cache/arkpedia/stage-pack --version 26-09-23-17-49-43_b9cc4a --base-url https://ark-us-static-online.yo-star.com/assetbundle/official/Android/assets/26-09-23-17-49-43_b9cc4a
+```
+
+The fetcher verifies unzipped bundle size/MD5 against the game manifest. Publication to the asset repository and updating its immutable simulator pin remain explicit steps; this does not automatically refresh the full stage catalogue. Game assets retain their original ownership (see `arkpedia-sd-assets/NOTICE.md`). The extractor stays in this GPL repository.
 
 ## Supported slice
 
@@ -21,7 +38,7 @@ To embed it in Arkpedia's overhaul branch, run the private application with `NEX
 - Fang, Melantha, Beagle, Kroos, Hibiscus and Steward: selectable E0/E1, level, potential, trust and skill rank; their actual ranges, stats, basic traits, promotion talents and S1s.
 - Up to 12 unique squad members plus one distinct maxed support. The current selectable roster has only six operators; support is limited to that same supported roster.
 - Drag an operator onto a valid tile and choose its facing on the map; click/keyboard placement, Escape cancellation, surface-only deployment feedback and a continuous attack-range outline; blocking, physical/Arts attacks, healing, time/attack SP, manual/automatic skills, manual retreat/refund, increasing deployment costs, redeployment cooldown, clear/defeat.
-- Three.js tiles with animated Spine chibis; optional existing-viewer path overlay; pause, 1×/2×, restart, fullscreen/mobile viewport workspace, pause on native-fullscreen exit or hidden tab.
+- Original 0-1 Chernobog meshes, textures, scenery and baked lighting, rendered with Three.js and animated Spine chibis; optional existing-viewer path overlay; pause, 1×/2×, restart, fullscreen/mobile viewport workspace, pause on native-fullscreen exit or hidden tab.
 
 Combat runs at a fixed 30Hz with seeded randomness. Rendering cannot change the number of combat ticks. A hidden page pauses instead of trying to catch up. Deployment entrance/death clips can finish cosmetically while paused; combat, skill durations and attack animations remain paused.
 
