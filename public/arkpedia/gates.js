@@ -43,6 +43,9 @@ export async function loadGates(stage, heightAt) {
     for (const tile of gateTiles(stage.geometry, heightAt)) {
       for (const { part, geometry, material } of parts.filter(p => p.part.kind === tile.kind)) {
         const mesh = new THREE.Mesh(geometry, material);
+        // The source effect faces north after a half-turn in the board frame;
+        // otherwise the warning glyph is upside down from the battle camera.
+        mesh.rotation.z = Math.PI;
         mesh.position.set(tile.col, tile.row, tile.height + 0.003);
         mesh.renderOrder = part.blend === "alpha" ? 4 : 5;
         group.add(mesh);
