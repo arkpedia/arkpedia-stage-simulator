@@ -49,6 +49,9 @@ import { customizeDefenderFourthKit, installDefenderFourth } from './content/ark
 import { customizeFiveStarMedicFourthKit, installFiveStarMedicFourth } from './content/arkpedia-five-star-medic-fourth.js';
 import { customizeCasterSecondKit, installCasterSecond } from './content/arkpedia-caster-second.js';
 import { customizeFiveStarVanguardThirdKit, installFiveStarVanguardThird } from './content/arkpedia-five-star-vanguard-third.js';
+import { customizeGuardSixStarKit, installGuardSixStar, installGuardSixStarSquad } from './content/arkpedia-guard-six-star.js';
+import { customizeFiveStarSniperFourthKit, installFiveStarSniperFourth } from './content/arkpedia-five-star-sniper-fourth.js';
+import { customizeFiveStarSupportFourthKit, installFiveStarSupportFourth } from './content/arkpedia-five-star-support-fourth.js';
 import { customizeFiveStarSpecialistExpansionKit, installFiveStarSpecialistExpansion } from './content/arkpedia-five-star-specialist-expansion.js';
 import { catalogueFor, recordFor } from "../../shared/arkpedia/loadout.js";
 import { REGULAR_OPERATORS } from "../../shared/arkpedia/operators.js";
@@ -179,6 +182,7 @@ export class StandardBattle extends Battle {
     this.regularSkillUses = new Map();
     this.addDp('arkpedia', startingVanguardDp);
     installMedicSquad({ battle: this, records: chess });
+    installGuardSixStarSquad({ battle: this, records: chess });
     this.behaviors = behaviors;
     this.unitLimit = config.unit_limit;
     this.mapTags = Object.freeze([...(data.stage.mapTags ?? [])]);
@@ -302,6 +306,9 @@ export class StandardBattle extends Battle {
     customizeFiveStarMedicFourthKit({ battle: this, id, def, unit, kit });
     customizeCasterSecondKit({ battle: this, id, def, unit, kit });
     customizeFiveStarVanguardThirdKit({ battle: this, id, def, unit, kit });
+    customizeGuardSixStarKit({ battle: this, id, def, unit, kit });
+    customizeFiveStarSniperFourthKit({ battle: this, id, def, unit, kit });
+    customizeFiveStarSupportFourthKit({ battle: this, id, def, unit, kit });
     customizeFiveStarSpecialistExpansionKit({ battle: this, id, def, unit, kit });
     customizeFiveStarCasterOverloadKit({ battle: this, id, def, unit, kit });
     customizeFiveStarSupportThirdKit({ battle: this, id, def, unit, kit });
@@ -372,6 +379,9 @@ export class StandardBattle extends Battle {
     installFiveStarMedicFourth({ battle: this, unit, def });
     installCasterSecond({ battle: this, unit, def });
     installFiveStarVanguardThird({ battle: this, unit, def });
+    installGuardSixStar({ battle: this, unit, def });
+    installFiveStarSniperFourth({ battle: this, unit, def });
+    installFiveStarSupportFourth({ battle: this, unit, def });
     installFiveStarSpecialistExpansion({ battle: this, unit, def });
     installFiveStarCasterOverload({ battle: this, unit, def });
     installFiveStarSupportThird({ battle: this, unit, def });
