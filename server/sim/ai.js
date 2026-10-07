@@ -105,6 +105,23 @@ export function enforceBlockCapacity(b, u) {
 
 /** Collect targets for an ally with profile `prof`. */
 export function acquireTargets(b, u, prof) {
+  // Source-reviewed mixed heal/attack selectors can opt in without replacing
+  // the ordinary attack loop. Null/invalid results retain default selection.
+  if (typeof prof.acquireTargets === 'function') {
+    const targets = prof.acquireTargets(b, u, prof);
+    if (Array.isArray(targets)) {
+      const seen = new Set();
+      return targets.filter(t => {
+        if (!t || seen.has(t) || !t.alive || !t.deployed || t.hidden) return false;
+        seen.add(t);
+        if (t.side === 'enemy') return canTargetEnemy(u, t, prof);
+        if (t.side !== 'ally' || t.kind === 'device') return false;
+        const flags = t.s.flags;
+        return !flags.untargetable && !flags.healFree
+          && (t === u || !(flags.noHeal || t.profile?.noHeal || flags.isolated));
+      });
+    }
+  }
   // a heal attack (医师 / 群愈师 / 疗养师 / 链愈师 / 行医, a skill attack turned into a heal) selects injured allies only,
   // never the enemies its unit blocks — a blocking healer keeps healing: PRTS 卫戍协议/帮助 "对于医疗干员（咒愈师分支除外），
   // 攻击目标为需要治疗的单位" (the blocked-first rule below is for attackers of enemies; community feedback after 0.1.0, E2)

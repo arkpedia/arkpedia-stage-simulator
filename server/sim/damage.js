@@ -84,6 +84,9 @@ export function makeDamageInfo(d = {}) {
     isAttack: !!d.isAttack,
     applyWay: ['melee', 'ranged'].includes(d.applyWay) ? d.applyWay : 'none',
     isProjectile: !!d.isProjectile,
+    // Source environment selectors use an explicit damage flag; sourceless or
+    // periodic damage alone does not establish that classification.
+    isEnvironment: !!d.isEnvironment,
     tags: d.tags ?? [],
     cancel: false,
     noSp: !!d.noSp,

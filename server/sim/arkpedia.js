@@ -27,6 +27,10 @@ import { customizeFiveStarGuardExpansionKit, installFiveStarGuardExpansion } fro
 import { customizeFiveStarCasterExpansionKit, installFiveStarCasterExpansion } from './content/arkpedia-five-star-caster-expansion.js';
 import { customizeFiveStarSupportExpansionKit, installFiveStarSupportExpansion } from './content/arkpedia-five-star-support-expansion.js';
 import { customizeFiveStarGuardThirdKit, installFiveStarGuardThird } from './content/arkpedia-five-star-guard-third.js';
+import { customizeFiveStarCasterUtilityKit, installFiveStarCasterUtility } from './content/arkpedia-five-star-caster-utility.js';
+import { customizeFiveStarGuardFifthKit, installFiveStarGuardFifth } from './content/arkpedia-five-star-guard-fifth.js';
+import { customizeFiveStarMedicKit, installFiveStarMedic } from './content/arkpedia-five-star-medic.js';
+import { customizeFiveStarSniperSecondKit, installFiveStarSniperSecond } from './content/arkpedia-five-star-sniper-second.js';
 import { customizeFiveStarSniperKit, installFiveStarSniper, prepareFiveStarSniperSquad } from './content/arkpedia-five-star-snipers.js';
 import { customizeFiveStarCasterOverloadKit, installFiveStarCasterOverload } from './content/arkpedia-five-star-caster-overload.js';
 import { customizeFiveStarSupportThirdKit, installFiveStarSupportThird } from './content/arkpedia-five-star-support-third.js';
@@ -265,6 +269,10 @@ export class StandardBattle extends Battle {
     customizeFiveStarSupportExpansionKit({ battle: this, id, def, unit, kit });
     customizeFiveStarGuardThirdKit({ battle: this, id, def, unit, kit });
     customizeFiveStarSniperKit({ battle: this, id, def, unit, kit });
+    customizeFiveStarCasterUtilityKit({ battle: this, id, def, unit, kit });
+    customizeFiveStarGuardFifthKit({ battle: this, id, def, unit, kit });
+    customizeFiveStarMedicKit({ battle: this, id, def, unit, kit });
+    customizeFiveStarSniperSecondKit({ battle: this, id, def, unit, kit });
     customizeFiveStarCasterOverloadKit({ battle: this, id, def, unit, kit });
     customizeFiveStarSupportThirdKit({ battle: this, id, def, unit, kit });
     customizeFiveStarGuardFourthKit({ battle: this, id, def, unit, kit });
@@ -316,6 +324,10 @@ export class StandardBattle extends Battle {
     installFiveStarSupportExpansion({ battle: this, unit, def });
     installFiveStarGuardThird({ battle: this, unit, def });
     installFiveStarSniper({ battle: this, unit, def });
+    installFiveStarCasterUtility({ battle: this, unit, def });
+    installFiveStarGuardFifth({ battle: this, unit, def });
+    installFiveStarMedic({ battle: this, unit, def });
+    installFiveStarSniperSecond({ battle: this, unit, def });
     installFiveStarCasterOverload({ battle: this, unit, def });
     installFiveStarSupportThird({ battle: this, unit, def });
     installFiveStarGuardFourth({ battle: this, unit, def });
@@ -392,7 +404,7 @@ export class StandardBattle extends Battle {
   activateOperator(id) {
     if (!canDeployInViewport(this.viewport) || this.finished) return false;
     const unit = this.bench[id]?.unit;
-    if (unit?.alive && unit.skill.manual && unit.skill.active && unit.skill.spec.manualCancel) {
+    if (unit?.alive && unit.skill.active && unit.skill.spec.manualCancel) {
       if (!unit.canAct || unit.s.flags.silence) return false;
       unit.skill.end('manual');
       return true;

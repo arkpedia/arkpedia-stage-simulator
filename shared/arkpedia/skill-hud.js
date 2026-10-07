@@ -33,7 +33,7 @@ export function skillHud(skill) {
     // Automatic skills trigger themselves; the diamond invites a manual action only.
     ready: !!(ready && skill.manual),
     canActivate: !!(ready && skill.manual && skill.castEligible !== false),
-    canCancel: !!(skill.active && skill.manual && skill.spec?.manualCancel),
+    canCancel: !!(skill.active && skill.spec?.manualCancel),
     text,
   };
 }
