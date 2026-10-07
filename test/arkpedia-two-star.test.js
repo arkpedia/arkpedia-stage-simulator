@@ -67,3 +67,18 @@ test('Yato unlocks her shorter redeployment at level 30 and combines it with pot
     assert.equal(next.skill.noSkill,true);assert.equal(b.cost(id),cost*2);
   }
 });
+
+test('Noir Corne gains HP/DEF only at level 30, including trust/potential stats, and attacks one enemy while blocking three',()=>{
+  const id='char_500_noirc';
+  for(const level of [29,30]) for(const potential of [1,6]) {
+    const {b}=make(id,{level,potential,trust:200,enemies:3});
+    const u=b.deployOperator(id,2,7,'RIGHT');u.atkCd=100;b.step();
+    near(u.s.maxHp,u.base.maxHp*(level===30?1.12:1));near(u.hp,u.s.maxHp);
+    near(u.s.def,u.base.def*(level===30?1.12:1));assert.equal(u.s.blockCnt,3);
+    for(const e of b.enemies){e.x=7;e.y=2;e.blockedBy=u;}
+    u.blocking=[...b.enemies];
+    const targets=acquireTargets(b,u,effectiveProfile(u));assert.equal(targets.length,1);
+    const before=b.enemies.map(e=>e.hp);b.forceAttack(u,targets);
+    assert.equal(b.enemies.filter((e,i)=>e.hp<before[i]).length,1);
+  }
+});

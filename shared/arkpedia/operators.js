@@ -20,6 +20,7 @@ export const REGULAR_OPERATORS = Object.freeze({
   char_212_ansel: { skillId: "skcom_range_extend", talentKeys: ["attack@prob"], mechanic: "extra-heal" },
   char_284_spot: { skillId: "skchr_spot_1", talentKeys: ["prob", "duration"], mechanic: "healing-stance" },
   char_502_nblade: { skillId: null, talentKeys: ["respawn_time"], mechanic: "fast-redeploy" },
+  char_500_noirc: { skillId: null, talentKeys: ["max_hp", "def"], mechanic: "buff" },
 });
 
 export function assertRegularOperator(op) {
