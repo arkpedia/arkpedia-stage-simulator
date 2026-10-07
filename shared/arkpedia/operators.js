@@ -42,6 +42,10 @@ import { FIVE_STAR_VANGUARD_SECOND_OPERATORS } from './five-star-vanguard-second
 import { CASTERS_NEXT_OPERATORS } from './caster-next-operators.js';
 import { DEFENDER_THIRD_OPERATORS } from './defender-third-operators.js';
 import { SIX_STAR_MEDIC_OPERATORS } from './six-star-medic-operators.js';
+import { DEFENDER_FOURTH_OPERATORS } from './defender-fourth-operators.js';
+import { FIVE_STAR_MEDIC_FOURTH_OPERATORS } from './five-star-medic-fourth-operators.js';
+import { CASTER_SECOND_OPERATORS } from './caster-second-operators.js';
+import { FIVE_STAR_VANGUARD_THIRD_OPERATORS } from './five-star-vanguard-third-operators.js';
 import { FIVE_STAR_SPECIALIST_EXPANSION_OPERATORS } from './five-star-specialist-expansion-operators.js';
 export const REGULAR_OPERATORS = Object.freeze({
   char_123_fang: { skillId: "skcom_charge_cost[1]", talentKeys: ["cost"], mechanic: "dp", prefabId: "skcom_charge_cost", templateKey: "charge_cost" },
@@ -106,6 +110,10 @@ export const REGULAR_OPERATORS = Object.freeze({
   ...CASTERS_NEXT_OPERATORS,
   ...DEFENDER_THIRD_OPERATORS,
   ...SIX_STAR_MEDIC_OPERATORS,
+  ...DEFENDER_FOURTH_OPERATORS,
+  ...FIVE_STAR_MEDIC_FOURTH_OPERATORS,
+  ...CASTER_SECOND_OPERATORS,
+  ...FIVE_STAR_VANGUARD_THIRD_OPERATORS,
   ...FIVE_STAR_SPECIALIST_EXPANSION_OPERATORS,
   ...Object.fromEntries(Object.entries(SUPPORT_EXPANSION_OPERATORS)
     .filter(([id]) => ['char_272_strong', 'char_4107_vrdant', 'char_4165_ctrail', 'char_110_deepcl', 'char_484_robrta', 'char_452_bstalk'].includes(id))),

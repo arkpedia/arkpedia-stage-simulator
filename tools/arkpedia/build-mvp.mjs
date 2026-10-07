@@ -37,11 +37,9 @@ if (process.argv.includes("--refresh")) {
     "arkpedia/arkpedia-image-assets",
     "arkpedia/arkpedia-skin-assets",
   ]))
-    pins[repo] = JSON.parse(
-      execFileSync("gh", ["api", `repos/${repo}/commits/main`], {
+    pins[repo] = execFileSync("gh", ["api", `repos/${repo}/commits/main`, "--jq", ".sha"], {
         encoding: "utf8",
-      }),
-    ).sha;
+      }).trim();
   for (const [key, [repo, path]] of Object.entries(paths)) {
     const response = await fetch(
       `https://raw.githubusercontent.com/${repo}/${pins[repo]}/${path}`,
@@ -111,7 +109,7 @@ const operators = Object.fromEntries(
   }),
 );
 for (const op of Object.values(operators)) assertRegularOperator(op);
-const tokenIds = ['token_10001_deepcl_tentac', 'token_10018_robrta_mach', 'token_10014_bstalk_crab', 'token_10011_beewax_oblisk', 'token_10006_vodfox_doll', 'token_10003_cgbird_bird'];
+const tokenIds = ['token_10001_deepcl_tentac', 'token_10018_robrta_mach', 'token_10014_bstalk_crab', 'token_10011_beewax_oblisk', 'token_10006_vodfox_doll', 'token_10003_cgbird_bird', 'token_10000_silent_healrb'];
 const tokens = Object.fromEntries(tokenIds.map(id => {
   const c = characters[id];
   if (!c) throw Error(`Missing original token: ${id}`);

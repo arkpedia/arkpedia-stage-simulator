@@ -5,10 +5,12 @@ import { canDeployInViewport } from '../../../shared/arkpedia/squad.js';
 import { createMetalCrab, customizeBeanstalk, installBeanstalk } from './arkpedia-tacticians.js';
 import { installShamareDoll } from './arkpedia-five-star-support-third.js';
 import { installNightingaleCage } from './arkpedia-six-star-medic.js';
+import { installSilenceDrone } from './arkpedia-five-star-medic-fourth.js';
 
 const live = unit => unit?.alive && unit.deployed;
 const ownTokens = (battle, owner) => battle.allyUnits.filter(token =>
-  token.kind === 'token' && token.ownerUnit === owner && live(token));
+  (token.kind === 'token' || token.kind === 'device' && token.mem.regularSummonCard)
+  && token.ownerUnit === owner && live(token));
 const cardState = (battle, key) => battle.regularSummons?.get(key);
 
 export function regularSummonCards(battle) {
@@ -73,6 +75,7 @@ export function deployRegularSummon(battle, key, row, col, dir = 'RIGHT') {
       token.dir = ctx.targets[0].x < token.x ? 'LEFT' : 'RIGHT';
   }, { owner: token });
   if (state.ownerId === 'char_179_cgbird') installNightingaleCage(battle, token, state);
+  if (state.ownerId === 'char_108_silent') installSilenceDrone(battle, token, state);
   if (state.ownerId === 'char_484_robrta') installModeler(battle, token, state);
   if (state.ownerId === 'char_254_vodfox') {
     installShamareDoll(battle, token, state);
@@ -147,13 +150,15 @@ export function installSummoner({ battle, unit, def }) {
   };
   battle.regularSummons.set(key, state);
   if (def.id === 'char_254_vodfox') unit.mem.shamareState = state;
+  if (def.id === 'char_108_silent') unit.mem.silentState = state;
   if (def.id === 'char_452_bstalk') installBeanstalk({ battle, unit, def, state });
   battle.on('deploy', ({ unit: deployed }) => {
     if (deployed === unit) {
-      const bornCount = def.talents[config.talentIndex ?? 0].bb.cnt;
+      const bornCount = config.stockLimit ? 0 : def.talents[config.talentIndex ?? 0].bb.cnt;
       state.stock = config.stockLimit ? 0 : config.additiveBornStock ? state.stock + bornCount : bornCount;
       state.readyAt = battle.time;
       if (config.stockLimit) battle.removeBuff(unit, 'shamare:stock-full');
+      if (def.id === 'char_108_silent') battle.removeBuff(unit, 'silence:stock-full');
     }
     if (live(unit) && unit.skill.active) state.syncSkill();
   }, { owner: unit });

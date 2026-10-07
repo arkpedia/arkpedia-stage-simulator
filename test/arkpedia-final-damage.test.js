@@ -10,6 +10,16 @@ function fixture() {
  h.step();const b=h.b,u=h.unit('guard'),e=h.enemies()[0];u.atkCd=e.atkCd=1000;return{h,b,u,e};
 }
 const near=(a,e)=>assert.ok(Math.abs(a-e)<1e-7,`${a} != ${e}`);
+test('damaged retains requested amount and exposes actual HP loss after floors and shields',()=>{
+ const{b,u,e}=fixture();const receipts=[];b.on('damaged',ctx=>{if(ctx.target===u)receipts.push(ctx);});
+ b.addBuff(u,{key:'test:floor',flags:{undeadable:true}});u.hp=1;
+ near(b.dealDamage(e,u,{amount:500,type:'true'}),0);near(receipts.at(-1).amount,500);near(receipts.at(-1).hpLoss,0);
+ u.hp=20;b.loseHp(u,50,{source:e});near(receipts.at(-1).amount,50);near(receipts.at(-1).hpLoss,19);
+ b.removeBuff(u,'test:floor');u.hp=500;b.addBuff(u,{key:'test:shield',shield:100});
+ b.dealDamage(e,u,{amount:200,type:'true'});near(receipts.at(-1).hpLoss,100);near(receipts.at(-1).amount,100);
+ b.dealDamage(e,u,{amount:10,type:'element',element:'neural'});assert.equal(receipts.at(-1).type,'element');assert.equal(receipts.at(-1).hpLoss,undefined);
+ assert.deepEqual(b.errors,[]);
+});
 test('opt-in final damage observes DEF/RES, multipliers and flat cuts before HP shields',()=>{
  for(const type of['phys','arts']){
   const{b,u,e}=fixture();b.addBuff(u,{key:'test:mitigation',mods:{dmgTakenMul:.8,flatDamageResistance:10}});
