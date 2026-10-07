@@ -208,6 +208,8 @@ export class StandardBattle extends Battle {
       };
     this._setupUnit(unit, kit);
     if (def.raw.arkpedia.highDef) unit.profile.priority = "highDef";
+    if (mechanic === "ranged-priority" && def.talents.length)
+      unit.profile.priority = "ranged";
     if (def.raw.arkpedia.critical) {
       const { prob, atk_scale } = def.raw.arkpedia.critical;
       this.on(

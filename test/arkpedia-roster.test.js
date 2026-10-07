@@ -6,11 +6,11 @@ import { defaultBuild, recordFor } from '../shared/arkpedia/loadout.js';
 import { acquireTargets, effectiveProfile } from '../server/sim/ai.js';
 
 const near=(a,b)=>assert.ok(Math.abs(a-b)<1e-6,`${a} != ${b}`);
-function make(id, { rank=7, potential=1, elite=1, enemies=0 }={}) {
+function make(id, { rank=7, potential=1, elite=1, level=elite?55:40, enemies=0 }={}) {
   const source=structuredClone(data);
   source.stage.geometry.waves[0].spawns=enemies ? [{enemy_id:'enemy_1007_slime',count:enemies,time:0,interval:0,route:1}] : [];
   Object.assign(source.enemies.enemy_1007_slime.stats,{maxHp:100000,atk:0,moveSpeed:0});
-  const build={...defaultBuild(source.operators[id]),skillRank:rank,potential,elite,level:elite?55:40};
+  const build={...defaultBuild(source.operators[id]),skillRank:rank,potential,elite,level};
   const b=new StandardBattle(source,{operators:[build]});
   b.autoFinish=false;b.setViewport('fullscreen-workspace');b.addDp('arkpedia',99);
   return {b,build,source};
@@ -99,5 +99,32 @@ test('Popukar uses source HP/ATK talents and her ATK buff at every rank, without
     u.skill.gainSp(u.skill.spCost,'test');assert.equal(b.activateOperator(id),true);
     near(u.s.atk-base,u.base.atk*level.blackboard.find(e=>e.key==='atk').value);
     advance(b,level.duration+.1);near(u.s.atk,base);
+  }
+});
+
+test('Adnachiel gains ranged-enemy priority at E1; E0 retains his aerial priority',()=>{
+  const id='char_211_adnach';
+  for(const elite of [0,1]) {
+    const {b}=make(id,{elite,level:elite?1:40,rank:4,enemies:2});
+    const u=b.deployOperator(id,1,7,'UP');u.atkCd=100;b.step();
+    const [first,ranged]=b.enemies;
+    ranged.base.rangeRadius=2;ranged.def={...ranged.def,applyWay:'RANGED'};
+    assert.equal(u.profile.canHitFly,true);
+    assert.equal(acquireTargets(b,u,effectiveProfile(u))[0],elite?ranged:first);
+    near(u.s.aspd,elite?104:100);
+    assert.equal(u.profile.priority,elite?'ranged':'fly');
+  }
+  const {b}=make(id);const u=b.deployOperator(id,1,7,'DOWN');near(u.s.aspd,108);
+});
+
+test('Adnachiel uses source ATK skill values and expiry at every rank',()=>{
+  const id='char_211_adnach';
+  for(let rank=1;rank<=7;rank++) {
+    const {b,source}=make(id,{rank});const u=b.deployOperator(id,1,7,'DOWN'),base=u.s.atk;
+    const level=source.operators[id].skills[0].levels[rank-1];
+    u.skill.gainSp(u.skill.spCost,'test');assert.equal(b.activateOperator(id),true);
+    near(u.s.atk-base,u.base.atk*level.blackboard.find(e=>e.key==='atk').value);
+    advance(b,level.duration+.1);near(u.s.atk,base);
+    assert.equal(u.profile.splashRadius,0);
   }
 });
