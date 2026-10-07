@@ -39,10 +39,12 @@ function form(b, u, begin, loop, end) {
 function cast(b, u, delay, duration, clip, release) {
   const seq = u.deploySeq, activation = u.skill.activations;
   let interrupted = false;
+  let control;
   const valid = () => !interrupted && live(u) && u.deploySeq === seq
-    && u.skill.activations === activation && u.canAct;
+    && u.skill.activations === activation && u.canAct && u.attackControlEpoch === control;
   u.mem.regularFormVisual = clip ? { clip, loop: false } : null;
   b.addBuff(u, { key: 'defender:cast', duration, flags: { disarm: true, noSp: true } });
+  control = u.attackControlEpoch;
   const watch = b.every(b.dt, () => {
     if (valid()) return;
     interrupted = true; watch.cancel();
@@ -115,9 +117,10 @@ function asbestosShell(b, u, target, info) {
     } });
 }
 function shalemVolley(b, u, p, info, s) {
-  const seq = u.deploySeq, activation = u.skill.activations;
+  const seq = u.deploySeq, activation = u.skill.activations, control = u.attackControlEpoch;
   let interrupted = false;
   const valid = () => !interrupted && live(u) && u.canAct && !u.s.flags.disarm
+    && u.attackControlEpoch === control
     && u.deploySeq === seq && u.skill.active && u.skill.activations === activation;
   const fire = () => {
     if (!valid()) return;

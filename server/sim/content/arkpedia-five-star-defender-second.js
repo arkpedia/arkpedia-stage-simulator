@@ -26,10 +26,12 @@ function cast(b, u, delay, duration, clip, release, { front = false, requireActi
   const seq = u.deploySeq, activation = u.skill.activations;
   const token = {}; u.mem.defenderSecondCast = token;
   let interrupted = false;
-  const valid = () => !interrupted && u.mem.defenderSecondCast === token && live(u)
+  let control;
+  const valid = () => !interrupted && u.mem.defenderSecondCast === token && live(u) && u.attackControlEpoch === control
     && u.deploySeq === seq && u.skill.activations === activation && u.canAct && (!requireActive || u.skill.active);
   u.mem.regularFormVisual = { clip, loop: false, forceFront: front };
   b.addBuff(u, { key: buffKey(u), source: u, duration, flags: { disarm: true, noSp: true } });
+  control = u.attackControlEpoch;
   const stop = () => {
     interrupted = true;
     if (u.mem.defenderSecondCast !== token || u.deploySeq !== seq) return;

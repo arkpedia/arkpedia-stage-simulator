@@ -243,6 +243,20 @@ test('Tachanka second round cancels on brief control and skill switch, no stale 
  b.applyStatus(u,'stun',{duration:.05,source:e});advance(b,.3);near(e.hp,hp);
  b.forceAttack(u,[e]);advance(b,.4);const next=e.hp;cast(u);advance(b,.3);near(e.hp,next);
 });
+test('Tachanka sub-frame control cancels the unborn second round but retains the emitted first projectile',()=>{
+ const b=make(TACH),u=deploy(b,TACH),e=enemy(b);let first=false;
+ b.on('attack',({attacker})=>{if(attacker===u&&!first){first=true;b.applyStatus(u,'stun',{duration:.03});}});
+ b.forceAttack(u,[e]);advance(b,.7);assert.equal(first,true);assert.equal(Boolean(u.s.flags.stun),false);near(100000-e.hp,u.s.atk);
+});
+test('Doc S1 sub-frame control cancels pending healing, while native uninterruptible S2 still emits',()=>{
+ for(const skill of ['skchr_rdoc_1','skchr_rdoc_2']){
+  const b=make(DOC,{skillId:skill},['char_281_popka']),u=deploy(b,DOC,2,5),a=deploy(b,'char_281_popka',2,6);u.hp-=300;a.hp-=300;const hp=u.hp,allyHp=a.hp;
+  cast(u);b.applyStatus(u,'stun',{duration:.03});advance(b,1.5);
+  if(skill.endsWith('_1')){near(u.hp,hp);near(a.hp,allyHp);assert.equal(u.skill.active,false);}
+  else near(a.hp,a.s.maxHp);
+  assert.equal(u.mem.sixthCast,null);assert.equal(Boolean(u.s.flags.noSp),false);
+ }
+});
 
 test('Tachanka S2 percentage BAT, exact skill range and random acquisition ignore blocked-first priority',()=>{
  const b=make(TACH,{skillId:'skchr_tachak_2'}),u=deploy(b,TACH,2,5),front=enemy(b,6,2),far=enemy(b,8,2);front.blockedBy=u;u.blocking=[front];

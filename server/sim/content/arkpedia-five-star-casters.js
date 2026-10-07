@@ -31,9 +31,10 @@ function minimalLaunch(b, u, prof, target, info) {
   if (!second) return;
   // Original Skill_2 attack events are .333 and .533 seconds. Action feeds
   // are not restricted to the first release; see the evidence's dispatch caveat.
-  const seq = u.deploySeq;
+  const seq = u.deploySeq, controlEpoch = u.attackControlEpoch;
   let cancelled = false;
-  const valid = () => u.canAct && !u.s.flags.disarm && u.deploySeq === seq;
+  const valid = () => u.canAct && !u.s.flags.disarm && u.deploySeq === seq
+    && u.attackControlEpoch === controlEpoch;
   const monitor = b.every(b.dt, () => { if (!valid()) cancelled = true; }, { owner: u });
   b.after(.2 * 100 / u.s.aspd, () => {
     monitor.cancel();
@@ -47,9 +48,10 @@ function amiyaLaunch(b, u, prof, target, info) {
       prof.dmgType === 'true' ? {} : { flightTime: .15 });
     return;
   }
-  const p = single(prof), seq = u.deploySeq, activation = u.skill.activations;
+  const p = single(prof), seq = u.deploySeq, activation = u.skill.activations,
+    controlEpoch = u.attackControlEpoch;
   const valid = () => u.canAct && !u.s.flags.disarm && u.deploySeq === seq
-    && u.skill.active && u.skill.activations === activation;
+    && u.skill.active && u.skill.activations === activation && u.attackControlEpoch === controlEpoch;
   let cancelled = false, left = u.skill.bb['attack@times'];
   const shoot = () => {
     if (cancelled || !valid()) return;

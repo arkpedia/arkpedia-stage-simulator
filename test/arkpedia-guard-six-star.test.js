@@ -166,6 +166,10 @@ test('Hellagur S1 second event retains original target and cancels on brief cont
  for(const mode of ['control','death','retreat']){const{b,deploy}=make(HELL),u=deploy(),e=enemy(b);block(b,u,e);cast(u);shot(b,u,e);advance(b,.6);const damage=100000-e.hp;if(mode==='control')b.applyStatus(u,'stun',{duration:.03,source:e});else if(mode==='death')b.kill(e);else b.retreat(u);advance(b,.2);if(mode!=='death')near(100000-e.hp,damage);}
  const{b,deploy}=make(HELL),u=deploy(),e=enemy(b),z=enemy(b,{c:5.3});block(b,u,e);cast(u);shot(b,u,e);advance(b,.6);move(b,e,0,0);advance(b,.2);near(z.hp,100000);
 });
+test('Hellagur second strike retains a sub-frame control interruption after instant skill end',()=>{
+ const{b,deploy}=make(HELL),u=deploy(),e=enemy(b);block(b,u,e);cast(u);shot(b,u,e);advance(b,.6);const hp=e.hp;
+ b.applyStatus(u,'stun',{duration:.01});advance(b,.2);assert.equal(Boolean(u.s.flags.stun),false);near(e.hp,hp);
+});
 test('Hellagur S2 selected ATK and physical dodge do not dodge Arts, with independent double-hit mitigation',()=>{
  for(const rank of [1,7,10]){const{b,deploy}=make(HELL,{skill:1,rank}),u=deploy(),e=enemy(b,{def:100});block(b,u,e);cast(u);near(u.s.atk,u.base.atk*(1+bb(HELL,1,rank).atk));const atk=u.s.atk;shot(b,u,e);advance(b,.8);near(100000-e.hp,2*(atk-100));
  const rng=()=>0;rng.int=()=>0;b.rng=rng;wounded(u);const hp=u.hp;b.dealDamage(e,u,{amount:u.s.def+100,type:'phys',isAttack:true});near(u.hp,hp);b.dealDamage(e,u,{amount:100,type:'arts',isAttack:true});near(u.hp,hp-100);u.skill.end('test');near(u.s.atk,u.base.atk);near(u.s.dodgePhys,0);}

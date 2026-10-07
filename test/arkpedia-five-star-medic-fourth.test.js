@@ -120,6 +120,18 @@ test('Vendela S2 predelay remembers brief stun and cancels mark/process despite 
  const{b,deploy}=make(VEN,{skill:1,others:[FAN]}),u=deploy(),a=deploy(FAN,2,3);wound(a);cast(b,u);advance(b,.05);b.applyStatus(u,'stun',{duration:.05});advance(b,.6);assert.equal(u.skill.active,false);assert.equal(a.findBuff('vendla_s_2'),null);near(u.s.atk,u.base.atk);assert.equal(u.mem.regularFormVisual,null);
 });
 
+test('Vendela sub-tick startup control clears pending state without deleting an already released mark',()=>{
+ for(const status of['stun','freeze','sleep','levitate']){
+  const{b,deploy}=make(VEN,{skill:1,others:[FAN]}),u=deploy(),a=deploy(FAN,2,3);wound(a);cast(b,u);
+  advance(b,.05);b.applyStatus(u,status,{duration:.001});advance(b,.6);
+  assert.equal(u.canAct,true);assert.equal(u.skill.active,false);assert.equal(u.findBuff('vendela:cast'),null);
+  assert.equal(a.findBuff('vendla_s_2'),null);near(u.s.atk,u.base.atk);assert.equal(u.mem.regularFormVisual,null);
+  cast(b,u);advance(b,.25);const marker=a.findBuff('vendla_s_2');assert.ok(marker);
+  b.applyStatus(u,status,{duration:.001});advance(b,.4);assert.equal(a.findBuff('vendla_s_2'),marker);
+  assert.equal(u.skill.active,true);near(u.s.atk,u.base.atk*(1+bb(VEN,1).atk));
+ }
+});
+
 test('Vendela S2 source enemy damage causes Arts counter and trait heal exclusively to marked in-range recipient',()=>{
  const{b,deploy}=make(VEN,{skill:1,others:[FAN,BEA]}),u=deploy(),a=deploy(FAN,2,3),z=deploy(BEA,2,5),e=enemy(b,5,2);wound(a,1000);wound(z,100,90000);cast(b,u);advance(b,.55);const atk=u.s.atk,hp=a.hp,zh=z.hp;let counter=null;b.on('damaged',ctx=>{if(ctx.dmg?.tags.includes('vendela:s2-counter'))counter=ctx;});b.dealDamage(e,a,{amount:100,type:'arts',isAttack:true});near(100000-e.hp,atk*.5);near(a.hp,hp-100+atk*.25*1.15);near(z.hp,zh);assert.equal(counter.dmg.applyWay,'ranged');b.dealDamage(e,a,{amount:100,type:'arts',isAttack:false});near(100000-e.hp,atk);a.x=10;const moved=a.hp;b.dealDamage(e,a,{amount:100,type:'arts'});near(a.hp,moved-100);near(100000-e.hp,atk*1.5);
 });

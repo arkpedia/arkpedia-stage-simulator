@@ -100,7 +100,8 @@ function greyyCast(b, u, bb) {
   let cancelled = false;
   u.mem.regularFormVisual = { clip: 'Skill', loop: false };
   b.addBuff(u, { key, duration: length, flags: { disarm: true, noSp: true } });
-  const valid = () => live(u) && u.deploySeq === seq && u.skill.activations === activation && u.canAct;
+  const control = u.attackControlEpoch;
+  const valid = () => live(u) && u.deploySeq === seq && u.skill.activations === activation && u.canAct && u.attackControlEpoch === control;
   const monitor = b.every(b.dt, () => { if (!valid()) cancelled = true; }, { owner: u });
   b.after(release, () => { if (!cancelled && valid()) greyyBall(b, u, bb, target); }, { owner: u });
   b.after(length, () => { monitor.cancel(); if (live(u) && u.deploySeq === seq) u.mem.regularFormVisual = null; }, { owner: u });

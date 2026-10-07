@@ -61,12 +61,18 @@ function nowellCast(b, u) {
   const key = 'nowell:cast'; let interrupted = false;
   u.mem.regularFormVisual = { clip: 'Skill_2', loop: false };
   b.addBuff(u, { key, duration, flags: { disarm: true, noSp: true } });
-  const valid = () => !interrupted && live(u) && u.deploySeq === seq && u.skill.activations === act && u.canAct;
-  const watch = b.every(b.dt, () => { if (!valid()) {
-    interrupted = true; watch.cancel(); b.removeBuff(u, key); u.mem.regularFormVisual = null;
-  } }, { owner: u });
+  const controlEpoch = u.attackControlEpoch;
+  const valid = () => !interrupted && live(u) && u.deploySeq === seq && u.skill.activations === act
+    && u.attackControlEpoch === controlEpoch && u.canAct;
+  const stop = () => {
+    interrupted = true;
+    if (u.deploySeq === seq && u.skill.activations === act) {
+      b.removeBuff(u, key); u.mem.regularFormVisual = null;
+    }
+  };
+  const watch = b.every(b.dt, () => { if (!valid()) { stop(); watch.cancel(); } }, { owner: u });
   b.after(model(u).hits.Skill_2[0] / rate(u), () => {
-    watch.cancel(); if (!valid()) return;
+    watch.cancel(); if (!valid()) { stop(); return; }
     const atk = u.s.atk;
     for (const a of targets) if (healable(b, a, u)) {
       b.applyStatus(a, 'resist', { key: `nowell:resist:${u.id}`, source: u,
@@ -116,10 +122,14 @@ function hibiscusLink(b, u) {
   const seq = u.deploySeq, act = u.skill.activations, keys = targets.map(t => `hbisc2:link:${u.id}:${t.id}`);
   let cancelled = false, endForm = form(b, u, 'Skill_1_Begin', 'Skill_1_Loop', 'Skill_1_End');
   u.mem.hibiscusLink = { targets, keys, endForm };
+  const controlEpoch = u.attackControlEpoch; // skill disarm has already been attached
   const valid = () => !cancelled && live(u) && u.deploySeq === seq && u.skill.active && u.skill.activations === act;
-  const watch = b.every(b.dt, () => { if (!valid() || !u.canAct) { cancelled = true; watch.cancel(); if (u.skill.active) u.skill.end('interrupt'); } }, { owner: u });
+  const pendingValid = () => valid() && u.canAct && u.attackControlEpoch === controlEpoch;
+  const stop = () => { cancelled = true;
+    if (u.deploySeq === seq && u.skill.activations === act && u.skill.active) u.skill.end('interrupt'); };
+  const watch = b.every(b.dt, () => { if (!pendingValid()) { stop(); watch.cancel(); } }, { owner: u });
   b.after(.167, () => {
-    watch.cancel(); if (!valid() || !u.canAct) return;
+    watch.cancel(); if (!pendingValid()) { stop(); return; }
     const hit = () => {
       if (!valid()) return;
       for (const [i, e] of targets.entries()) if (live(e)) {

@@ -174,6 +174,7 @@ export function performAttack(b, u, prof, targets, opts = null) {
   u.lastAttackAt = b.time;
   u.stats.attacks++;
   const attackId = ++b._attackSeq; // every damage instance of this attack (all targets, splash, chain) carries it
+  const inputTargets = targets.slice();
   const isHeal = !!(prof.heal && prof.dmgType === 'heal');
   // 首次接敌 (official voice type ENCOUNTER_ENEMY, ≥ 3 s between two such lines): one event the first time a unit
   // attacks an enemy, whatever the attack is — the client answers with that operator's 行动开始 line (audio.js voice).
@@ -229,7 +230,7 @@ export function performAttack(b, u, prof, targets, opts = null) {
     }
     if (b._hooks.attack) b.emit('attack', { attacker: u, targets, isSkill });
     if (u.skill) u.skill.onAttackPerformed(targets, isSkill, !!(opts && opts.noAmmo));
-    if (prof.afterAttack) b._safe(() => prof.afterAttack(b, u, targets), 'profile.afterAttack', u);
+    if (prof.afterAttack) b._safe(() => prof.afterAttack(b, u, targets, { inputTargets, attackId }), 'profile.afterAttack', u);
   };
   if (!timed) { release(); return; }
   // Only explicit source kits opt in. Existing profiles retain immediate release.
@@ -237,7 +238,9 @@ export function performAttack(b, u, prof, targets, opts = null) {
   const deployment = u.deploySeq;
   const activation = u.skill?.activations, activeSkill = u.skill?.active;
   const attackEpoch = typeof prof.attackEpoch === 'function' ? prof.attackEpoch(b, u) : null;
+  const controlEpoch = u.attackControlEpoch;
   const valid = () => u.alive && u.deployed && u.deploySeq === deployment && u.canAct && !u.s.flags.disarm
+    && u.attackControlEpoch === controlEpoch
     && (typeof prof.attackEpoch !== 'function' || prof.attackEpoch(b, u) === attackEpoch)
     && (!prof.interruptOnSkillChange || u.skill?.activations === activation && u.skill?.active === activeSkill);
   u.atkCd = Math.max(u.atkCd, windup);

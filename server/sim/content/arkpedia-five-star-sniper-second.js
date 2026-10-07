@@ -34,9 +34,11 @@ function burst(b, u, p, target, info) {
   const name = clip(u), events = model(u.def.charId, u).hits[name];
   const rate = animationRate(u, cap(u)), seq = u.deploySeq, activation = u.skill.activations;
   const epoch = u.mem.kroosWarmed;
+  const control = u.attackControlEpoch;
   const speed = u.def.charId === KROOS ? 18 : 15;
   fly(b, u, target, p, info, speed);
   const valid = () => live(u) && u.deploySeq === seq && u.canAct && !u.s.flags.disarm
+    && u.attackControlEpoch === control
     && u.skill.activations === activation && u.mem.kroosWarmed === epoch
     && (!p.isSkill || !u.skill.isTimed || u.skill.active);
   let cancelled = false;

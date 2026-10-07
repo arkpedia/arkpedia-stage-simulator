@@ -56,6 +56,11 @@ test('unfired GreyThroat burst cancels after brief control or withdrawal while t
   if(retreat)b.retreatOperator(G);else b.applyStatus(u,'stun',{duration:.05});advance(b,.3);near(100000-e.hp,u.s.atk*1.4);
  }
 });
+test('GreyThroat second round cannot resume when control expires within a single tick',()=>{
+ const b=make([G]),u=deploy(b,G),e=enemy(b);b.rng.chance=()=>false;cast(u);
+ b.forceAttack(u,[e]);advance(b,.1);b.applyStatus(u,'stun',{duration:.001});
+ advance(b,.3);assert.equal(u.canAct,true);near(100000-e.hp,u.s.atk*1.4);
+});
 test('April source E2 redeployment/cost talent is applied once and S1 single-shot scale survives impact delay',()=>{
  const b=make([A]),u=deploy(b,A),e=enemy(b);near(u.base.respawnTime,50);near(u.base.cost,data.operators[A].phases[2].attributesKeyFrames.at(-1).data.cost-1);
  cast(u);near(attack(b,u,e,.9),u.s.atk*2.3);assert.equal(u.skill.active,false);

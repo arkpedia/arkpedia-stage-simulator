@@ -95,6 +95,17 @@ test('Tuye emergency exact selected HP threshold is eligible, brief stun cancels
  advance(b,1);assert.ok(a.hp>20000);assert.equal(u.mem.tuyeEmergencyLeft,2);
 });
 
+test('Tuye manual and emergency predelays remember controls shorter than the simulation tick',()=>{
+ for(const skill of[0,1])for(const status of['stun','freeze','sleep','levitate']){
+  const{b,deploy}=make(TUY,{skill,others:[FAN]}),u=deploy(),a=deploy(FAN,2,3);wound(a,100000);
+  cast(b,u);advance(b,.15);assert.equal(u.mem.tuyeCasting,true);
+  b.applyStatus(u,status,{duration:.001});advance(b,.6);near(a.hp,100);
+  assert.equal(u.canAct,true);assert.equal(u.mem.tuyeCasting,false);assert.equal(u.findBuff('tuye:cast'),null);
+  assert.equal(a.findBuff('tuye:barrier'),null);assert.equal(b.projectiles.list.length,0);
+  if(skill===1)assert.equal(u.mem.tuyeEmergencyLeft,3);
+ }
+});
+
 test('Ceylon normal far penalty uses exact inner range, selected S1 disables it and consumes one stored charge',()=>{
  for(const rank of[1,7,10]){
   const{b,deploy}=make(CEY,{rank,others:[FAN]}),u=deploy(),a=deploy(FAN,3,5);wound(a,100000);shot(b,u,[a],.8);near(a.hp-100,u.s.atk*.8);

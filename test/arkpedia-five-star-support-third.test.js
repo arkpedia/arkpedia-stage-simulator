@@ -207,3 +207,13 @@ test('manual shift casts refuse targetless activation and control/withdrawal can
     const e=enemy(b);assert.equal(b.activateOperator(id),true);b.applyStatus(u,'stun',{duration:3});advance(b,2);near(e.hp,100000);
   }
 });
+
+test('manual shift casts remember sub-tick control and promptly clear unborn cast locks',()=>{
+  for(const id of[ENF,FEA])for(const status of['stun','freeze','sleep','levitate']){
+    const{b,deploy}=make(id,{skill:1}),u=deploy(),e=enemy(b),x=e.x,y=e.y;cast(b,u);
+    advance(b,.1);b.applyStatus(u,status,{duration:.001});advance(b,1.8);
+    assert.equal(u.canAct,true);near(e.hp,100000);near(e.x,x);near(e.y,y);
+    assert.equal(Boolean(e.s.flags.stun),false);assert.equal(e.findBuff('panda_s_2'),null);
+    assert.equal(u.findBuff('support-third:cast'),null);assert.equal(u.mem.regularFormVisual,null);
+  }
+});

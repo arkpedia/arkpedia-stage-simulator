@@ -11,10 +11,10 @@ import { COLD_ASPD, COLD_FREEZE_DURATION, FREEZE_RES_DOWN, RESIST_DEFAULT } from
 
 /** Additive mod keys (summed; × stacks). */
 export const ADD_KEYS = Object.freeze([
-  'atkFlat', 'atkFinalFlat', 'atkPct', 'defFlat', 'defPct', 'hpFlat', 'hpPct', 'resFlat', 'resPct', 'aspd', 'batFlat', 'batPct', 'blockCnt',
+  'atkFlat', 'atkFinalFlat', 'atkPct', 'defFlat', 'defFinalFlat', 'defPct', 'hpFlat', 'hpFinalFlat', 'hpPct', 'resFlat', 'resPct', 'aspd', 'batFlat', 'batPct', 'blockCnt',
   'rangeExtend', 'defIgnoreFlat', 'defIgnorePct', 'resIgnoreFlat', 'resIgnorePct', 'dodgePhys', 'dodgeArts',
   'spRecoveryFlat', 'maxTargets', 'taunt', 'hpRegen', 'hpRegenRatio', 'spCostFlat', 'moveFlat', 'massFlat',
-  'flatDamageResistance',
+  'flatDamageResistance', 'damageHpFloorRatio',
 ]);
 /** Multiplicative mod keys (product; ^ stacks). */
 export const MUL_KEYS = Object.freeze([
@@ -67,6 +67,12 @@ export const STATUS = Object.freeze({
   // Owned instances choose the strongest value; true damage and HP loss bypass.
   sanctuary: { mods: (v) => ({ physTakenMul: 1 - clamp01(v ?? 0.2),
     artsTakenMul: 1 - clamp01(v ?? 0.2) }), valued: 0.2 },
+  // Source peak_performance / ba.strong: owned Vigor ATK percentages take
+  // the strongest active value and fall back when that source expires.
+  vigor: { mods: (v) => ({ atkPct: v ?? 0 }), valued: 0 },
+  // Source ba.weightless: named Weightless instances do not stack; unrelated
+  // mass modifiers remain additive for displacement/Levitate calculations.
+  weightless: { mods: (v) => ({ massFlat: -Math.max(0, v ?? 1) }), valued: 1 },
   // 元素脆弱 (ba.elementfragile "受到的元素伤害提升相应比例（同名效果取最高）"): 元素伤害 (the 'elemental' HP damage) only —
   // never the element gauge (元素损伤 has its own multiplier, `elemTakenMul`; damage.js)
   elemFragile: { mods: (v) => ({ elementalTakenMul: 1 + (v ?? 0.2) }), valued: 0.2 },
@@ -182,6 +188,10 @@ export function aggregateMods(buffs) {
   // Source-owned valued statuses can be removed independently. Only the
   // strongest instance of a named status contributes its modifiers.
   const strongest = new Map();
+  // Source Inspire channels choose the highest final addition independently
+  // for ATK, DEF and MAX_HP. Keep owned weaker instances for expiry fallback;
+  // unrelated final additions still sum normally.
+  const inspire = Object.create(null);
   for (const b of buffs) {
     const tpl = STATUS[b.status];
     if (tpl?.valued == null) continue;
@@ -200,7 +210,10 @@ export function aggregateMods(buffs) {
         if (k === 'shield') continue;
         // Sluggish is one named status: overlapping zone/attack sources do
         // not compound -80% movement into -96% or erase each other's timers.
-        if (k === 'moveMul' && b.status === 'sluggish') sluggishMoveMul = Math.min(sluggishMoveMul, v);
+        if (b.tags?.includes('inspire') && ['atkFinalFlat', 'defFinalFlat', 'hpFinalFlat'].includes(k))
+          inspire[k] = Math.max(inspire[k] ?? 0, v * st);
+        else if (k === 'damageHpFloorRatio') add[k] = Math.max(add[k] ?? 0, v);
+        else if (k === 'moveMul' && b.status === 'sluggish') sluggishMoveMul = Math.min(sluggishMoveMul, v);
         else if (k.endsWith('Mul')) mul[k] = (mul[k] ?? 1) * (st === 1 ? v : Math.pow(v, st));
         else if ((k === 'dodgePhys' || k === 'dodgeArts') && v > 0) {
           const p = Math.min(1, v);
@@ -216,6 +229,7 @@ export function aggregateMods(buffs) {
     if (b.flags) for (const k in b.flags) if (b.flags[k]) flags[k] = true;
     if (b.shield > 0) shield += b.shield;
   }
+  for (const k of Object.keys(inspire)) add[k] = (add[k] ?? 0) + inspire[k];
   for (const k of ['dodgePhys', 'dodgeArts']) {
     const d = dodge[k];
     if (d) add[k] = (add[k] ?? 0) + (d.n === 1 ? d.p : 1 - d.miss);

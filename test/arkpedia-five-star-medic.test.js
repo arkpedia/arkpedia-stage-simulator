@@ -252,3 +252,14 @@ test('Warfarin brief control irreversibly cancels the unfired plasma cast before
  // A new authorized activation remains possible after the interrupted cast.
  cast(b,u);advance(b,.55);assert.ok(a.findBuff('warfarin:plasma'));assert.ok(u.findBuff('warfarin:plasma'));
 });
+
+test('Warfarin sub-tick control cancels pending plasma but leaves already released recipient buffs alive',()=>{
+ for(const status of['stun','freeze','sleep','levitate']){
+  const{b,deploy}=make(WAR,{skill:1,others:[FAN]}),u=deploy(),a=deploy(FAN,2,3);
+  cast(b,u);advance(b,.1);b.applyStatus(u,status,{duration:.001});advance(b,.6);
+  assert.equal(u.canAct,true);assert.equal(u.findBuff('warfarin:cast'),null);assert.equal(u.mem.regularFormVisual,null);
+  assert.equal(a.findBuff('warfarin:plasma'),null);assert.equal(u.findBuff('warfarin:plasma'),null);
+  cast(b,u);advance(b,.55);const plasma=a.findBuff('warfarin:plasma');assert.ok(plasma);
+  b.applyStatus(u,status,{duration:.001});advance(b,1);assert.equal(a.findBuff('warfarin:plasma'),plasma);
+ }
+});

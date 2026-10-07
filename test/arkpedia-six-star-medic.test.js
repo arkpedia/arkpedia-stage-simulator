@@ -84,6 +84,16 @@ test('Lumen second skill interruption remembers brief stun before its original r
  const{b,deploy}=make(LUM,{skill:1,others:[FAN]}),u=deploy(),a=deploy(FAN,2,3);wound(a);cast(b,u);advance(b,.1);b.applyStatus(u,'stun',{duration:.05});advance(b,1.5);near(a.hp,100);assert.equal(u.findBuff('lumen:cast'),null);
 });
 
+test('Lumen sub-tick control consumes the interrupted charge without releasing heal and allows a fresh cast',()=>{
+ for(const status of['stun','freeze','sleep','levitate']){
+  const{b,deploy}=make(LUM,{skill:1,others:[FAN]}),u=deploy(),a=deploy(FAN,2,3);wound(a);cast(b,u);
+  advance(b,.1);b.applyStatus(u,status,{duration:.001});advance(b,1.5);
+  near(a.hp,100);assert.equal(u.canAct,true);assert.equal(u.findBuff('lumen:cast'),null);
+  assert.equal(u.mem.regularFormVisual,null);assert.equal(u.skill.charges,0);
+  cast(b,u);advance(b,.9);assert.ok(a.hp>100);
+ }
+});
+
 test('Lumen third skill Common healing consumes no ammo, Special purifies at impact and ends at exact selected ammo',()=>{
  for(let rank=1;rank<=10;rank++){const{b,deploy}=make(LUM,{skill:2,rank,others:[FAN]}),u=deploy(),a=deploy(FAN,2,3);wound(a);cast(b,u);const amount=u.s.atk,ammo=bb(LUM,2,rank)['attack@trigger_time'];assert.equal(u.skill.ammoLeft,ammo);shot(b,u,[a],.8);near(a.hp-100,amount);assert.equal(u.skill.ammoLeft,ammo);for(let i=0;i<ammo;i++){b.applyStatus(a,'cold',{duration:3});const hp=a.hp;b.forceAttack(u,[a]);advance(b,.3);assert.equal(a.s.flags.cold,true);advance(b,.5);near(a.hp-hp,amount*bb(LUM,2,rank).heal_scale);assert.equal(Boolean(a.s.flags.cold),false);assert.equal(u.skill.ammoLeft,i===ammo-1?0:ammo-i-1);}assert.equal(u.skill.active,false);near(u.s.atk,u.base.atk);advance(b,.5);assert.equal(u.mem.regularFormVisual,null);}
 });

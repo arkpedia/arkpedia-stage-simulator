@@ -142,7 +142,7 @@ export function customizeGuardExpansionKit({ id, def, kit }) {
         const high = 'humus_s_2[peak_2].peak_performance.', low = 'humus_s_2[peak_1].peak_performance.';
         const bonus = unit.hpRatio > bb[high + 'hp_ratio'] ? bb[high + 'atk']
           : unit.hpRatio > bb[low + 'hp_ratio'] ? bb[low + 'atk'] : 0;
-        battle.addBuff(unit, { key: 'humus:vigor', mods: { atkPct: bonus } });
+        battle.addBuff(unit, { key: 'humus:vigor', status: 'vigor', data: { value: bonus }, mods: { atkPct: bonus } });
       };
       kit.skill = { id: skill.id, name: skill.name, kind: 'duration', duration: skill.duration,
         mods: { blockCnt: bb.block_cnt }, onStart: update, onTick: update,

@@ -103,11 +103,13 @@ function castLumen(b,u,s){
  const total=model(u).durations.Skill_2/rate(u),release=model(u).hits.Skill_2[0]/rate(u);let cancelled=false;
  u.mem.regularFormVisual={clip:'Skill_2',loop:false};
  b.addBuff(u,{key:'lumen:cast',source:u,duration:total,flags:{disarm:true,noSp:true}});
- const valid=()=>!cancelled&&live(u)&&u.deploySeq===seq&&u.skill.activations===act&&u.canAct;
- const stop=()=>{cancelled=true;if(u.deploySeq===seq){b.removeBuff(u,'lumen:cast');u.mem.regularFormVisual=null;}};
+ const controlEpoch=u.attackControlEpoch;
+ const valid=()=>!cancelled&&live(u)&&u.deploySeq===seq&&u.skill.activations===act&&u.canAct
+  &&u.attackControlEpoch===controlEpoch;
+ const stop=()=>{cancelled=true;if(u.deploySeq===seq&&u.skill.activations===act){b.removeBuff(u,'lumen:cast');u.mem.regularFormVisual=null;}};
  const watch=b.every(b.dt,()=>{if(!valid()){stop();watch.cancel();}},{owner:u});
  b.after(release,()=>{
-  watch.cancel();if(!valid())return;
+  watch.cancel();if(!valid()){stop();return;}
   for(const a of targets)if(healable(b,a,u)){lumenHeal(b,u,a,u.s.atk*s.bb.heal_scale);if(enhanced)purify(b,a);}
  },{owner:u});
  b.after(total,()=>{if(u.deploySeq===seq&&u.skill.activations===act){u.mem.regularFormVisual=null;b.removeBuff(u,'lumen:cast');}},{owner:u});

@@ -71,10 +71,11 @@ function revealSilver(b, u) {
 function doubleHell(b, u, p, target, info) {
   resolveHit(b, u, one(p), target, info, target.x, target.y);
   const seq = u.deploySeq, activation = u.skill.activations, clip = p.attackVisual;
+  const controlEpoch = u.attackControlEpoch;
   const delta = (model(u).hits[clip][1] - model(u).hits[clip][0]) / rate(u);
   let interrupted = false;
   const valid = () => live(u) && u.deploySeq === seq && u.skill.activations === activation
-    && u.canAct && !u.s.flags.disarm;
+    && u.attackControlEpoch === controlEpoch && u.canAct && !u.s.flags.disarm;
   const watch = b.every(b.dt, () => { if (!valid()) interrupted = true; }, { owner: u });
   b.after(delta, () => {
     watch.cancel();

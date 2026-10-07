@@ -65,8 +65,10 @@ function tuyeCast(b, u, def, { emergency = false } = {}) {
   u.mem.tuyeCasting = true;
   if (!emergency) u.mem.regularFormVisual = { clip: 'Skill_1', loop: false };
   b.addBuff(u, { key, duration, flags: { disarm: true, noSp: true } });
+  const controlEpoch = u.attackControlEpoch; // capture after the ability's own lock
   let cancelled = false;
   const valid = () => !cancelled && live(u) && u.deploySeq === seq && u.canAct
+    && u.attackControlEpoch === controlEpoch
     && u.skill.activations === activation && (!emergency || u.skill.active);
   const finish = () => {
     if (u.deploySeq !== seq || u.skill.activations !== activation) return;

@@ -132,9 +132,10 @@ function plasmaCast(b, u, bb) {
   const total = model(u.defId, u).durations.Attack / Math.min(1, u.s.aspd / 100);
   u.mem.regularFormVisual = { clip: 'Attack', loop: false };
   b.addBuff(u, { key: 'warfarin:cast', duration: total, flags: { disarm: true, noSp: true } });
+  const controlEpoch = u.attackControlEpoch;
   let cancelled = false;
   const valid = () => !cancelled && live(u) && u.deploySeq === seq
-    && u.skill.activations === activation && u.canAct;
+    && u.skill.activations === activation && u.canAct && u.attackControlEpoch === controlEpoch;
   // Native interruptible predelay remembers control even when it ends before
   // OnAttack. Checking only at release would incorrectly resume an old cast.
   const watch = b.every(b.dt, () => {
@@ -147,7 +148,10 @@ function plasmaCast(b, u, bb) {
   b.after(release, () => {
     watch.cancel();
     if (!valid()) {
-      u.mem.regularFormVisual = null; return;
+      if (u.deploySeq === seq && u.skill.activations === activation) {
+        u.mem.regularFormVisual = null; b.removeBuff(u, 'warfarin:cast');
+      }
+      return;
     }
     for (const ally of recipients) if (live(ally)) b.addBuff(ally, { key: 'warfarin:plasma', source: u,
       duration: bb.duration, interval: bb.interval, mods: { atkPct: bb.atk },

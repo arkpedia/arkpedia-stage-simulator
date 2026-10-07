@@ -58,8 +58,9 @@ function lordLaunch(b, u, p, target, info) {
 function bibeakLaunch(b, u, p, target, info) {
   const isS1 = info.isSkill && u.skill.id === 'skchr_bibeak_1';
   const deployment = u.deploySeq, activation = u.skill.activations, speed = u.mem.bibeakScale;
+  const controlEpoch = u.attackControlEpoch;
   const valid = () => live(u) && u.deploySeq === deployment && u.canAct && !u.s.flags.disarm
-    && u.skill.activations === activation;
+    && u.skill.activations === activation && u.attackControlEpoch === controlEpoch;
   if (isS1) {
     // The temporary listener finishes after its first ability cast on a target.
     // Its selector is ground-only and explicitly excludes that primary target.
@@ -87,10 +88,11 @@ function bibeakCast(b, u, s) {
   u.mem.bibeakCast = token;
   u.atkCd = Math.max(u.atkCd, .767);
   const buff = b.addBuff(u, { key: 'bibeak:cast-lock', source: u, flags: { noSp: true } });
+  const controlEpoch = u.attackControlEpoch;
   const finish = () => { if (u.mem.bibeakCast === token) { u.mem.bibeakCast = null; b.removeBuff(u, buff); } };
   let interrupted = false;
   const watch = b.every(b.dt, () => {
-    if (!live(u) || !u.canAct || u.deploySeq !== deployment || u.mem.bibeakCast !== token) {
+    if (!live(u) || !u.canAct || u.attackControlEpoch !== controlEpoch || u.deploySeq !== deployment || u.mem.bibeakCast !== token) {
       interrupted = true; watch.cancel(); finish();
     }
   }, { owner: u });
@@ -98,7 +100,7 @@ function bibeakCast(b, u, s) {
   // waitForAttackEvent=1: use the original Front Skill OnAttack event. The
   // separate source preDelay=.533 dispatch remains a documented inference.
   b.after(.333, () => {
-    if (interrupted || u.mem.bibeakCast !== token || !u.canAct) return;
+    if (interrupted || u.mem.bibeakCast !== token || !u.canAct || u.attackControlEpoch !== controlEpoch) return;
     for (const e of targets) if (canTargetEnemy(u, e, { canHitFly: true })) {
       b.dealDamage(u, e, { amount: u.s.atk * s.bb.atk_scale, type: 'arts', applyWay: 'melee',
         isSkill: true, isAttack: true, tags: ['bibeak:cast'] });

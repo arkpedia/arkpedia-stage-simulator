@@ -33,10 +33,11 @@ function endForm(b, u, clip, seconds, reason) {
 }
 
 function laterHit(b, u, p, target, info, delay, requireActive = false) {
-  const seq = u.deploySeq, activation = u.skill.activations;
+  const seq = u.deploySeq, activation = u.skill.activations, controlEpoch = u.attackControlEpoch;
   let interrupted = false;
   const valid = () => live(u) && u.deploySeq === seq && u.canAct && !u.s.flags.disarm
-    && u.skill.activations === activation && (!requireActive || u.skill.active);
+    && u.skill.activations === activation && u.attackControlEpoch === controlEpoch
+    && (!requireActive || u.skill.active);
   const watch = b.every(b.dt, () => { if (!valid()) interrupted = true; }, { owner: u });
   b.after(delay, () => {
     watch.cancel();
@@ -149,7 +150,9 @@ function graceCast(b, u, s) {
   };
   u.mem.graceCast = token; u.mem.regularFormVisual = { clip: 'Skill_2', loop: false };
   b.addBuff(u, { key: 'graceb:cast', source: u, flags: { noSp: true, disarm: true } });
-  const valid = () => live(u) && u.deploySeq === seq && u.canAct && u.mem.graceCast === token;
+  const controlEpoch = u.attackControlEpoch;
+  const valid = () => live(u) && u.deploySeq === seq && u.canAct && u.mem.graceCast === token
+    && u.attackControlEpoch === controlEpoch;
   let interrupted = false;
   const watch = b.every(b.dt, () => { if (!valid()) { interrupted = true; watch.cancel(); finish(); } }, { owner: u });
   b._ev(['atk', u.id, targets[0]?.id ?? u.id, 'none', { animation: 'Skill_2', windup: .167 / speed }]);

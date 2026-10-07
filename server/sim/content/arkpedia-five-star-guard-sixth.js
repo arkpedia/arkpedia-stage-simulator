@@ -11,11 +11,11 @@ const speed = (u, cap = Infinity) => Math.min(cap, u.s.aspd / 100);
 // timeMode0 attack animation follows the current interval, including BAT
 // modifiers. Keep the native 2x animation cap separate from the actual BAT.
 const tachRate = u => Math.min(2, u.base.bat / u.s.interval);
-function mods(b, u, key, values) {
+function mods(b, u, key, values, extra = {}) {
   const old = u.findBuff(key);
   if (!values) { if (old) b.removeBuff(u, old); }
   else if (!old || JSON.stringify(old.mods) !== JSON.stringify(values))
-    b.addBuff(u, { key, source: u, mods: values, allowDead: true });
+    b.addBuff(u, { key, source: u, mods: values, allowDead: true, ...extra });
 }
 function visual(b, u, clip, seconds, loop = false) {
   const seq = u.deploySeq, token = {};
@@ -29,7 +29,9 @@ function castWindow(b, u, clip, duration, releases, { interruptible = true, fini
   const seq = u.deploySeq, token = {}, key = `guard-sixth:cast:${u.id}`;
   u.mem.sixthCast = token; visual(b, u, clip, 0);
   b.addBuff(u, { key, source: u, flags: { disarm: true, noSp: true } });
-  const valid = () => live(u) && u.deploySeq === seq && u.mem.sixthCast === token;
+  const controlEpoch = u.attackControlEpoch;
+  const valid = () => live(u) && u.deploySeq === seq && u.mem.sixthCast === token
+    && (!interruptible || u.attackControlEpoch === controlEpoch);
   const clear = reason => {
     if (u.mem.sixthCast !== token) { watch.cancel(); return; }
     u.mem.sixthCast = null; u.mem.regularFormVisual = null; b.removeBuff(u, key); watch.cancel();
@@ -192,8 +194,9 @@ function tachLaunch(b, u, p, target, info) {
   const launch = () => b.addProjectile({ from: u, target, speed: 30, visual: 'arrow', source: u,
     onHit: ({ target: t }) => { if (t && canTargetEnemy(u, t, profile)) resolveHit(b, u, profile, t, info, t.x, t.y); } });
   launch();
-  const seq = u.deploySeq, act = u.skill.activations; let interrupted = false;
-  const valid = () => live(u) && u.deploySeq === seq && u.skill.activations === act && u.canAct && !u.s.flags.disarm;
+  const seq = u.deploySeq, act = u.skill.activations, controlEpoch = u.attackControlEpoch; let interrupted = false;
+  const valid = () => live(u) && u.deploySeq === seq && u.skill.activations === act && u.canAct && !u.s.flags.disarm
+    && u.attackControlEpoch === controlEpoch;
   const watch = b.every(b.dt, () => { if (!valid()) interrupted = true; }, { owner: u });
   b.after(.16 / u.mem.tachRate, () => { watch.cancel(); if (!interrupted && valid() && canTargetEnemy(u, target, profile)) launch(); }, { owner: u });
 }
@@ -315,7 +318,8 @@ export function installFiveStarGuardSixth({ battle:b,unit:u,def }) {
     if(t){b.on('kill',({killer,victim})=>{if(killer===u&&victim.side==='enemy')learned.add(victim.def.id);},{owner:u});
       b.on('hit',({source,target,dmg})=>{if(source===u&&target?.side==='enemy'&&learned.has(target.def.id))dmg.defIgnorePct+=t.bb.def_penetrate;},{owner:u});}
     if(u.skill.id==='skchr_laios_1'){
-      const sync=()=>{if(!live(u))return;mods(b,u,'laios:vigor',u.hpRatio>def.skill.bb['peak_performance.hp_ratio']?{atkPct:def.skill.bb['peak_performance.atk']}:null);
+      const sync=()=>{if(!live(u))return;mods(b,u,'laios:vigor',u.hpRatio>def.skill.bb['peak_performance.hp_ratio']?{atkPct:def.skill.bb['peak_performance.atk']}:null,
+        {status:'vigor',data:{value:def.skill.bb['peak_performance.atk']}});
         b.laiosBossSeen??=new Set();const key=`${u.ownerId}:${id}`;
         if(!b.laiosBossSeen.has(key)&&b.enemies.some(e=>e.alive&&e.deployed&&!e.hidden&&e.def.rank==='BOSS')){
           b.laiosBossSeen.add(key);b.addBuff(u,{key:'laios:boss-fear',source:u,duration:def.skill.duration,flags:{disarm:true}});

@@ -49,6 +49,10 @@ import { FIVE_STAR_VANGUARD_THIRD_OPERATORS } from './five-star-vanguard-third-o
 import { GUARD_SIX_STAR_OPERATORS } from './guard-six-star-operators.js';
 import { FIVE_STAR_SNIPER_FOURTH_OPERATORS } from './five-star-sniper-fourth-operators.js';
 import { FIVE_STAR_SUPPORT_FOURTH_OPERATORS } from './five-star-support-fourth-operators.js';
+import { SNIPER_SIX_STAR_OPERATORS } from './sniper-six-star-operators.js';
+import { SUPPORT_AURA_OPERATORS } from './support-aura-operators.js';
+import { GUARD_SIX_STAR_SECOND_OPERATORS } from './guard-six-star-second-operators.js';
+import { ELEMENTAL_CASTER_OPERATORS } from './elemental-caster-operators.js';
 import { FIVE_STAR_SPECIALIST_EXPANSION_OPERATORS } from './five-star-specialist-expansion-operators.js';
 export const REGULAR_OPERATORS = Object.freeze({
   char_123_fang: { skillId: "skcom_charge_cost[1]", talentKeys: ["cost"], mechanic: "dp", prefabId: "skcom_charge_cost", templateKey: "charge_cost" },
@@ -120,6 +124,10 @@ export const REGULAR_OPERATORS = Object.freeze({
   ...GUARD_SIX_STAR_OPERATORS,
   ...FIVE_STAR_SNIPER_FOURTH_OPERATORS,
   ...FIVE_STAR_SUPPORT_FOURTH_OPERATORS,
+  ...SNIPER_SIX_STAR_OPERATORS,
+  ...SUPPORT_AURA_OPERATORS,
+  ...GUARD_SIX_STAR_SECOND_OPERATORS,
+  ...ELEMENTAL_CASTER_OPERATORS,
   ...FIVE_STAR_SPECIALIST_EXPANSION_OPERATORS,
   ...Object.fromEntries(Object.entries(SUPPORT_EXPANSION_OPERATORS)
     .filter(([id]) => ['char_272_strong', 'char_4107_vrdant', 'char_4165_ctrail', 'char_110_deepcl', 'char_484_robrta', 'char_452_bstalk'].includes(id))),

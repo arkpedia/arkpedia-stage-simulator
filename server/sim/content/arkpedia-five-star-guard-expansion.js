@@ -7,10 +7,10 @@ import { applyHpLoss, makeDamageInfo } from '../damage.js';
 const windup = (seconds, cap = Infinity) => (_b, u) => seconds / Math.min(cap, u.s.aspd / 100);
 function akafuyuDouble(b, u, p, target, info) {
   resolveHit(b, u, p, target, info, target.x, target.y);
-  const seq = u.deploySeq, activation = u.skill.activations;
+  const seq = u.deploySeq, activation = u.skill.activations, controlEpoch = u.attackControlEpoch;
   let interrupted = false;
   const valid = () => u.alive && u.deployed && u.deploySeq === seq && u.canAct && !u.s.flags.disarm
-    && u.skill.active && u.skill.activations === activation;
+    && u.skill.active && u.skill.activations === activation && u.attackControlEpoch === controlEpoch;
   const watch = b.every(b.dt, () => { if (!valid()) interrupted = true; }, { owner: u });
   // Original MultimagicAttack does not wait for a second event; triggerDelta=.03.
   b.after(.03, () => {

@@ -292,6 +292,12 @@ export function dealDamage(battle, source, target, dmgIn) {
   // ran before it (the attack, its SP, `hit` hook effects, separate element 损伤) stays; nothing after it happens
   if (final > 0 && leaderHitCancelled(battle, target, final)) return 0;
   final = absorbShields(battle, target, final, type);
+  // Native damage-only HP floor (Blaze): limit the actual post-shield loss.
+  // This never raises already-low HP. Scripted kill and loseHp call their own
+  // paths and therefore bypass this modifier, unlike ordinary undeadable.
+  const floor = target.s.maxHp * (target.s.damageHpFloorRatio ?? 0);
+  if (floor > 0 && !target.bossPool)
+    final = Math.min(final, Math.max(0, target.hp - floor));
   return applyHpLoss(battle, source, target, final, dmg);
 }
 

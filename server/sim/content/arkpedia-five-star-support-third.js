@@ -22,8 +22,19 @@ function areaCast(b, u, { clip, release, total, perform }) {
   u.mem.supportCastGeneration = generation;
   form(u, clip);
   b.addBuff(u, { key: 'support-third:cast', duration: total, flags: { disarm: true, noSp: true } });
+  const controlEpoch = u.attackControlEpoch;
+  let cancelled = false;
   const valid = () => live(u) && u.deploySeq === seq && u.mem.supportCastGeneration === generation;
-  b.after(release, () => { if (valid() && u.canAct) perform(); }, { owner: u });
+  const pendingValid = () => !cancelled && valid() && u.canAct && u.attackControlEpoch === controlEpoch;
+  const stop = () => {
+    cancelled = true;
+    if (valid()) { b.removeBuff(u, 'support-third:cast'); u.mem.regularFormVisual = null; }
+  };
+  const watch = b.every(b.dt, () => { if (!pendingValid()) { stop(); watch.cancel(); } }, { owner: u });
+  b.after(release, () => {
+    watch.cancel(); if (!pendingValid()) { stop(); return; }
+    perform();
+  }, { owner: u });
   b.after(total, () => { if (valid()) u.mem.regularFormVisual = null; }, { owner: u });
 }
 

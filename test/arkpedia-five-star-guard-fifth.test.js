@@ -319,3 +319,18 @@ test('Gracebearer S2 targetless/control/withdrawal cancel safely without phantom
     advance(b, 1.5); near(e.hp, 100000); assert.equal(u.mem.graceCast, null); assert.equal(u.findBuff('graceb:cast'), null);
   }
 });
+test('La Pluma and Gracebearer delayed hits latch sub-frame control; completed receipts still heal', () => {
+  for (const [id, firstAt] of [[CROW, .53], [GRACE, .75]]) {
+    const b = make(id), u = deploy(b, id), e = enemy(b); u.hp -= 500; cast(u);
+    if (id === GRACE) advance(b, .21); // Complete the source skill begin before issuing its attack.
+    b.forceAttack(u, [e]); advance(b, firstAt);
+    const hp = e.hp; assert.ok(hp < 100000); b.applyStatus(u, 'stun', { duration: .03 }); advance(b, .6);
+    near(e.hp, hp); assert.equal(Boolean(u.s.flags.stun), false);
+    if (id === CROW) assert.ok(u.hp > u.s.maxHp - 500);
+  }
+});
+test('Gracebearer manual S2 sub-frame control cancels unfired output and removes cast/SP locks', () => {
+  const b = make(GRACE, { skillId: 'skchr_graceb_2' }), u = deploy(b, GRACE), e = enemy(b); cast(u);
+  b.applyStatus(u, 'stun', { duration: .03 }); advance(b, 1.5); near(e.hp, 100000);
+  assert.equal(u.mem.graceCast, null); assert.equal(u.findBuff('graceb:cast'), null); assert.equal(Boolean(u.s.flags.noSp), false);
+});

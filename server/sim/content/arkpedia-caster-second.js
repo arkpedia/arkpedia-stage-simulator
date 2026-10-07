@@ -126,9 +126,12 @@ function castPassengerStorm(b, u) {
   const key = 'passenger:cast'; let interrupted = false;
   u.mem.regularFormVisual = { clip: 'Skill3', loop: false };
   b.addBuff(u, { key, duration, flags: { disarm: true, noSp: true } });
-  const watcher = b.on('tick', () => { if (!live(u) || u.deploySeq !== seq || !u.canAct) interrupted = true; }, { owner: u });
+  const controlEpoch = u.attackControlEpoch;
+  const valid = () => live(u) && u.deploySeq === seq && u.canAct
+    && u.attackControlEpoch === controlEpoch;
+  const watcher = b.on('tick', () => { if (!valid()) interrupted = true; }, { owner: u });
   b.after(event, () => {
-    b.off(watcher); if (interrupted || !live(u) || u.deploySeq !== seq || !u.canAct) return;
+    b.off(watcher); if (interrupted || !valid()) return;
     // Original destination3/reuse-input allows the recorded point even after
     // the selected enemy dies or disappears during the cast.
     const destination = canTargetEnemy(u, target, { canHitFly: true }) ? { x: target.x, y: target.y } : point;

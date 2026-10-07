@@ -1231,6 +1231,14 @@ export class Battle {
     if (unit?.mem?.noInspire && (b?.status === 'inspire' || b?.tags?.includes('inspire'))) return null;
     if (!unit || (!unit.alive && !b.allowDead)) return null;
     const buff = makeBuff(b);
+    const accepted = applied => {
+      const f = applied.flags;
+      // Record interruption at application, rather than relying on a later
+      // sampled flag. A short control can expire before the next combat tick.
+      if (f && (f.stun || f.freeze || f.sleep || f.levitate || f.disarm))
+        unit.attackControlEpoch = (unit.attackControlEpoch ?? 0) + 1;
+      return applied;
+    };
     const list = unit.buffs;
     let idx = -1;
     for (let i = 0; i < list.length; i++) if (list[i].key === buff.key) { idx = i; break; }
@@ -1248,7 +1256,7 @@ export class Battle {
           if (buff.flags) old.flags = buff.flags;
           if (buff.shield > 0 || buff.shieldHits > 0) old.shieldTypes = buff.shieldTypes;
           unit.markDirty();
-          return old;
+          return accepted(old);
         case 'extend':
           old.timeLeft = Math.max(old.timeLeft, buff.duration);
           old.duration = Math.max(old.duration, buff.duration);
@@ -1258,11 +1266,11 @@ export class Battle {
           if (buff.shield > old.shield) old.shield = buff.shield;
           if (buff.shieldHits > old.shieldHits) old.shieldHits = buff.shieldHits;
           unit.markDirty();
-          return old;
+          return accepted(old);
         default:
           list[idx] = buff;
           unit.markDirty();
-          return buff;
+          return accepted(buff);
       }
     }
     if (buff.refresh === 'independent') {
@@ -1278,7 +1286,7 @@ export class Battle {
       const key = buff.status ?? buff.key;
       if (list.filter((x) => (x.status ?? x.key) === key).length === 1) this._ev(['status', unit.id, key, 1]);
     }
-    return buff;
+    return accepted(buff);
   }
 
   removeBuff(unit, keyOrBuff) {

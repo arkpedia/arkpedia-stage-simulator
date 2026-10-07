@@ -111,15 +111,20 @@ function vendelaCast(b, u, def) {
   let interrupted = false;
   u.mem.regularFormVisual = { clip: 'Skill', loop: false };
   b.addBuff(u, { key: 'vendela:cast', duration: total, flags: { disarm: true, noSp: true } });
+  const controlEpoch = u.attackControlEpoch;
   const valid = () => !interrupted && live(u) && u.deploySeq === seq
     && u.skill.activations === activation && u.skill.active;
-  const watch = b.every(b.dt, () => {
-    if (valid() && u.canAct) return;
-    interrupted = true; watch.cancel();
+  const pendingValid = () => valid() && u.canAct && u.attackControlEpoch === controlEpoch;
+  const stop = () => {
+    interrupted = true;
     if (u.deploySeq === seq && u.skill.activations === activation && u.skill.active) u.skill.end('cast-interrupted');
+  };
+  const watch = b.every(b.dt, () => {
+    if (pendingValid()) return;
+    stop(); watch.cancel();
   }, { owner: u });
   b.after(release, () => {
-    watch.cancel(); if (!valid() || !u.canAct) return;
+    watch.cancel(); if (!pendingValid()) { stop(); return; }
     const target = maxHpOperator(b, u);
     if (!target) { u.skill.end('no-target'); return; }
     u.mem.vendelaMarked = target;

@@ -120,6 +120,13 @@ test('Bibeak S2 allows an empty cast and cancels the pending area strike when co
   const e = enemy(b, 9); cast(u); advance(b, .1); b.applyStatus(u, 'stun', { duration: 1 }); advance(b, .4);
   near(e.hp, 100000); assert.equal(u.mem.bibeakCast, null); assert.equal(u.s.flags.noSp, undefined);
 });
+test('Bibeak short control cancels queued melee and manual cast, while an emitted Arts projectile remains', () => {
+  const b = make(BIB), u = deploy(b, BIB), main = enemy(b), extra = enemy(b); cast(u);
+  b.forceAttack(u, [main]); advance(b, .35); const first = main.hp; b.applyStatus(u, 'stun', { duration: .03 }); advance(b, .3);
+  assert.equal(Boolean(u.s.flags.stun), false); near(main.hp, first); near(100000 - extra.hp, u.s.atk * 1.8);
+  const c = make(BIB, { skillId: 'skchr_bibeak_2' }), a = deploy(c, BIB), e = enemy(c, 9); cast(a);
+  c.applyStatus(a, 'stun', { duration: .03 }); advance(c, .85); near(e.hp, 100000); assert.equal(a.mem.bibeakCast, null); assert.equal(Boolean(a.s.flags.noSp), false);
+});
 
 test('Bibeak own-kill ASPD stacks cap at promotion/potential source count, exclude allies and reset on redeployment', () => {
   for (const [potential, cap] of [[1, 5], [6, 6]]) {

@@ -261,6 +261,15 @@ test('Wind Chimes control and retreat interrupt an unfired finisher without stal
     assert.equal(u.findBuff('chimes:sanctuary'), null); assert.equal(u.mem.chimesEnding, null);
   }
 });
+test('Wind Chimes charge and pending finisher remember sub-frame control and clear their locks', () => {
+  for (const ending of [false, true]) {
+    const b = make(WIND, { skillId: 'skchr_chimes_2' }), u = deploy(b, WIND), e = enemy(b); cast(u);
+    if (ending) u.skill.end('manual'); b.applyStatus(u, 'stun', { duration: .03 }); advance(b, 2);
+    assert.equal(Boolean(u.s.flags.stun), false); near(e.hp, 100000); assert.equal(u.skill.active, false);
+    for (const key of ['chimes:charge', 'chimes:ending', 'chimes:sanctuary']) assert.equal(u.findBuff(key), null);
+    assert.equal(u.mem.chimesEnding, null);
+  }
+});
 
 test('Wind Chimes original S2_End range3-2 reaches all three frontal tiles and excludes side/air targets', () => {
   const b = make(WIND, { skillId: 'skchr_chimes_2' }), u = deploy(b, WIND, 2, 5);

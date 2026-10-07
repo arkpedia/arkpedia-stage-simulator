@@ -38,7 +38,8 @@ function instantCast(b, u, clip, cap, release) {
   const state = { interrupted: false }; u.mem.defenderFourthCast = state;
   u.mem.regularFormVisual = { clip, loop: false };
   b.addBuff(u, { key: 'defender-fourth:cast', source: u, duration, flags: { disarm: true, noSp: true } });
-  const same = () => live(u) && u.deploySeq === seq && u.skill.activations === activation;
+  const control = u.attackControlEpoch;
+  const same = () => live(u) && u.deploySeq === seq && u.skill.activations === activation && u.attackControlEpoch === control;
   const watch = b.on('tick', () => { if (!u.canAct || !same()) state.interrupted = true; }, { owner: u });
   b.after(deadline, () => { b.off(watch); if (same() && u.canAct && !state.interrupted) release(); }, { owner: u });
   b.after(duration, () => {

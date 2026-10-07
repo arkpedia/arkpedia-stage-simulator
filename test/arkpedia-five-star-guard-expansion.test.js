@@ -201,6 +201,11 @@ test('Akafuyu second skill strike is interrupted while the first hit and its hea
   const hp = u.hp; b.forceAttack(u, [e]); advance(b, .3 + b.dt); b.applyStatus(u, 'stun', { duration: 1 }); advance(b, .1);
   near(100000 - e.hp, u.base.atk * 1.8); near(u.hp - hp, 70);
 });
+test('Akafuyu queued second hit remembers control shorter than one frame', () => {
+  const b = make(AKAFUYU), u = deploy(b, AKAFUYU), e = enemy(b); u.hp = u.s.maxHp / 2; advance(b, .3); cast(u);
+  const hp = u.hp; b.forceAttack(u, [e]); advance(b, .3 + b.dt); b.applyStatus(u, 'stun', { duration: .03 }); advance(b, .1);
+  assert.equal(Boolean(u.s.flags.stun), false); near(100000 - e.hp, u.base.atk * 1.8); near(u.hp - hp, 70);
+});
 
 test('Akafuyu S2 halves currentHP before its one-hit shield, bypasses other modifiers and removes only its barrier at expiry', () => {
   const b = make(AKAFUYU, { skillId: 'skchr_akafyu_2' }), u = deploy(b, AKAFUYU), e = enemy(b);

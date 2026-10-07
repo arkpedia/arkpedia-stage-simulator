@@ -77,6 +77,14 @@ test('first aid refunds selected dead target and never resumes after brief contr
   advance(b,1.3);if(mode==='death')assert.equal(u.skill.charges,charges+1);else near(a.hp,100);
  }
 });
+test('first aid cast remains cancelled when accepted control expires before its first sampled tick',()=>{
+ for(const id of[NEARL,HUNG,BASS]){
+  const{b,deploy}=make(id,{others:[FANG]}),u=deploy(),a=injured(b,deploy(FANG,3,5));cast(b,u);
+  b.applyStatus(u,'stun',{duration:.001});advance(b,1.3);
+  assert.equal(u.canAct,true);near(a.hp,100);assert.equal(u.findBuff(buffKeyForTest(u)),null);
+ }
+});
+const buffKeyForTest=u=>`defender-second:cast:${u.id}`;
 test('Nearl outgoing healing talent follows source self E1 and global E2, with potential and isolation cleanup',()=>{
  for(const [elite,potential,scale]of [[0,1,1],[1,1,1.1],[1,5,1.12],[2,1,1.1],[2,5,1.12]]){
   const{b,deploy}=make(NEARL,{elite,potential,rank:elite===0?4:7,others:[FANG,BEAGLE]}),u=deploy(),a=deploy(FANG,3,5),t=injured(b,deploy(BEAGLE,3,6));

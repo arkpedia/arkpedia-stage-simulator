@@ -37,10 +37,10 @@ function fly(b, u, target, p, info, speed, extra = null) {
 function absintheLaunch(b, u, p, target, info) {
   const hit = { ...plain(p), canTarget: null };
   if (!p.isSkill || u.skill.id.endsWith('_1')) { fly(b, u, target, hit, info, 15); return; }
-  const seq = u.deploySeq, activation = u.skill.activations;
+  const seq = u.deploySeq, activation = u.skill.activations, controlEpoch = u.attackControlEpoch;
   const count = u.skill.bb['attack@times'];
   const valid = () => live(u) && u.deploySeq === seq && u.canAct && !u.s.flags.disarm
-    && u.skill.active && u.skill.activations === activation;
+    && u.skill.active && u.skill.activations === activation && u.attackControlEpoch === controlEpoch;
   let cancelled = false;
   const watch = b.every(b.dt, () => { if (!valid()) cancelled = true; }, { owner: u });
   for (let n = 0; n < count; n++) {
@@ -91,9 +91,13 @@ function nightmareCast(b, u, s) {
   const total = model(u).durations.Attack / Math.min(1, u.s.aspd / 100);
   u.mem.utilityCastUntil = b.time + total;
   b.addBuff(u, { key: 'nightmare:cast', duration: total, flags: { disarm: true, noSp: true } });
+  // The cast's own disarm is intentional; later accepted controls cancel it
+  // even when their duration is shorter than a simulation step.
+  const controlEpoch = u.attackControlEpoch;
   form(u, 'Attack');
   const targets = acquireTargets(b, u, { ...u.profile, maxTargets: s.bb.max_target });
-  const valid = () => live(u) && u.deploySeq === seq && u.canAct;
+  const valid = () => live(u) && u.deploySeq === seq && u.canAct
+    && u.attackControlEpoch === controlEpoch;
   let cancelled = false;
   const watch = b.every(b.dt, () => { if (!valid()) cancelled = true; }, { owner: u });
   b.after(delay, () => {

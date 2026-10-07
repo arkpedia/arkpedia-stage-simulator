@@ -206,6 +206,17 @@ test('Nowell unfired cast is permanently cancelled by brief control, with no lat
  }
 });
 
+test('Nowell sub-tick control cancels only unborn recovery, preserving attached recipient timers',()=>{
+ for(const status of['stun','freeze','sleep','levitate']){
+  const{b,deploy}=make(NOW,{skill:1,others:[FAN]}),u=deploy(),a=deploy(FAN,2,3);wound(a);cast(b,u);
+  advance(b,.1);b.applyStatus(u,status,{duration:.001});advance(b,.8);
+  near(a.hp,100);assert.equal(u.canAct,true);assert.equal(u.findBuff('nowell:cast'),null);
+  assert.equal(u.mem.regularFormVisual,null);assert.equal(a.findBuff(`nowell:recovery:${u.id}`),null);
+  cast(b,u);advance(b,.6);const hp=a.hp,recovery=a.findBuff(`nowell:recovery:${u.id}`);assert.ok(recovery);
+  b.applyStatus(u,status,{duration:.001});advance(b,1);assert.ok(a.hp>hp);assert.equal(a.findBuff(`nowell:recovery:${u.id}`),recovery);
+ }
+});
+
 test('Papyrus normal chain has three real flights/falloff and full source ATK barrier on every operator',()=>{
  for(const[elite,potential,scale]of[[0,1,.05],[0,5,.07],[1,1,.1],[1,5,.12],[2,1,.2],[2,5,.22]]){
   const{b,deploy}=make(PAP,{elite,potential,rank:[4,7,10][elite],others:[FAN,BEA,KRO]}),u=deploy(),a=deploy(FAN,2,3),z=deploy(BEA,2,2),k=deploy(KRO,1,3);for(const x of[a,z,k])wound(x);
@@ -296,4 +307,15 @@ test('Hibiscus startup interruption prevents late links, all victim deaths recov
  const a=make(HIB,{skill:1}),u=a.deploy(),e=enemy(a.b);cast(a.b,u);advance(a.b,.05);a.b.applyStatus(u,'stun',{duration:.05});advance(a.b,.5);near(e.hp,100000);assert.equal(u.skill.active,false);
  const{b,deploy}=make(HIB,{skill:1}),v=deploy(),z=enemy(b);b.addBuff(z,{key:'foreign:slow',mods:{moveMul:.8}});cast(b,v);advance(b,.3);b.kill(z,null);advance(b,1);
  assert.equal(v.skill.active,false);assert.ok(z.findBuff('foreign:slow'));assert.equal(z.findBuff(`hbisc2:link:${v.id}:${z.id}`),null);
+});
+
+test('Hibiscus remembers sub-tick control before link emission while already emitted links continue',()=>{
+ for(const status of['stun','freeze','sleep','levitate']){
+  const first=make(HIB,{skill:1}),u=first.deploy(),e=enemy(first.b);cast(first.b,u);advance(first.b,.05);
+  first.b.applyStatus(u,status,{duration:.001});advance(first.b,.6);
+  near(e.hp,100000);assert.equal(u.canAct,true);assert.equal(u.skill.active,false);assert.equal(u.mem.hibiscusLink,null);
+  const{b,deploy}=make(HIB,{skill:1}),v=deploy(),z=enemy(b);cast(b,v);advance(b,.3);const hp=z.hp;
+  b.applyStatus(v,status,{duration:.001});advance(b,1);assert.ok(z.hp<hp);assert.equal(v.skill.active,true);
+  assert.ok(z.findBuff(`hbisc2:link:${v.id}:${z.id}`));
+ }
 });

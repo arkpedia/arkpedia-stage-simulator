@@ -103,7 +103,9 @@ function chimesEnd(b, u, s, reason) {
   u.mem.chimesEnding = token;
   u.mem.regularFormVisual = { clip: 'Skill_End', loop: false };
   b.addBuff(u, { key: 'chimes:ending', source: u, flags: { disarm: true, noSp: true } });
-  const valid = () => live(u) && u.canAct && u.deploySeq === seq && u.mem.chimesEnding === token;
+  const controlEpoch = u.attackControlEpoch;
+  const valid = () => live(u) && u.canAct && u.deploySeq === seq && u.mem.chimesEnding === token
+    && u.attackControlEpoch === controlEpoch;
   const watch = b.every(b.dt, () => { if (!valid()) { watch.cancel(); clear(); } }, { owner: u });
   b._ev(['atk', u.id, u.id, 'none', { animation: 'Skill_End', windup: .5 }]);
   b.after(.5, () => {
@@ -159,8 +161,12 @@ export function customizeFiveStarGuardFourthKit({ id, def, unit, kit }) {
   } else {
     Object.assign(kit.trait, { maxTargetsByBlock: true, windup: windup(.567), interruptOnSkillChange: true });
     kit.skill = s.id === 'skchr_chimes_2' ? { ...timed({}), flags: { disarm: true }, manualCancel: true,
-      onStart: ({ battle, unit }) => chimesStart(battle, unit, s),
-      onTick: ({ unit, skill }) => { if (!unit.canAct) skill.end('control'); },
+      onStart: ({ battle, unit }) => {
+        chimesStart(battle, unit, s); unit.mem.chimesChargeControlEpoch = unit.attackControlEpoch;
+      },
+      onTick: ({ unit, skill }) => {
+        if (!unit.canAct || unit.attackControlEpoch !== unit.mem.chimesChargeControlEpoch) skill.end('control');
+      },
       onEnd: ({ battle, unit, reason }) => chimesEnd(battle, unit, s, reason) }
       : timed({ atkPct: bb.atk });
   }
@@ -227,8 +233,11 @@ export function installFiveStarGuardFourth({ battle: b, unit: u, def }) {
     };
     for (const event of ['deploy', 'skillStart', 'skillEnd', 'death', 'tick']) b.on(event, sync, { owner: u });
   } else if (id === 'char_4083_chimes' && t) {
-    const sync = () => setMods(b, u, 'chimes:vigor', u,
-      live(u) && u.hpRatio > .5 ? { atkPct: t.bb.atk } : null);
+    const sync = () => {
+      if (!live(u) || u.hpRatio <= .5) b.removeBuff(u, 'chimes:vigor');
+      else if (!u.findBuff('chimes:vigor')) b.addBuff(u, { key: 'chimes:vigor', source: u,
+        status: 'vigor', data: { value: t.bb.atk }, mods: { atkPct: t.bb.atk } });
+    };
     b.on('deploy', sync, { owner: u }); b.on('tick', sync, { owner: u });
     b.on('damaged', ({ target }) => { if (target === u) sync(); }, { owner: u });
   }

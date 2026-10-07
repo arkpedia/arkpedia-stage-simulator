@@ -31,8 +31,8 @@ function blueLaunch(b,u,p,target,info){
   const single={...p,hits:1,hitsFn:null,splashRadius:0};
   missile(b,u,target,single,info,10);
   if(!p.isSkill||u.skill.id!=='skchr_bluep_2'||info.index!==0)return;
-  const seq=u.deploySeq,act=u.skill.activations;
-  const valid=()=>u.canAct&&!u.s.flags.disarm&&u.deploySeq===seq&&u.skill.active&&u.skill.activations===act;
+  const seq=u.deploySeq,act=u.skill.activations,control=u.attackControlEpoch;
+  const valid=()=>u.canAct&&!u.s.flags.disarm&&u.deploySeq===seq&&u.skill.active&&u.skill.activations===act&&u.attackControlEpoch===control;
   let cancelled=false;
   const monitor=b.every(b.dt,()=>{if(!valid())cancelled=true;},{owner:u});
   const component=evidence.characters[BLUE].flatMap(r=>r.components).find(c=>c._limitToOneTargetAfterFirstRound===1);
