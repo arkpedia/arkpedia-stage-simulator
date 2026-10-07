@@ -151,3 +151,34 @@ test('Lava keeps her normal splash targeting and gains source ASPD only while he
     advance(b,level.duration+.1);near(u.s.aspd,aspd);
   }
 });
+
+test('Catapult expands only her blast area during the skill, using every source rank and restoring it on expiry',()=>{
+  const id='char_282_catap';
+  for(let rank=1;rank<=7;rank++) {
+    const {b,source}=make(id,{rank});const u=b.deployOperator(id,1,7,'UP');
+    const level=source.operators[id].skills[0].levels[rank-1],radius=u.profile.splashRadius,keys=[...u.rangeKeys];
+    assert.equal(u.profile.dmgType,'phys');assert.equal(u.profile.canHitFly,true);
+    assert.equal(recordFor(defaultBuild(source.operators[id]),source).stats.cost,u.base.cost);
+    u.skill.gainSp(u.skill.spCost,'test');assert.equal(b.activateOperator(id),true);
+    near(effectiveProfile(u).splashRadius,radius*level.blackboard.find(e=>e.key==='attack@range_scale').value);
+    assert.deepEqual([...u.rangeKeys],keys);
+    advance(b,level.duration+.1);near(effectiveProfile(u).splashRadius,radius);
+  }
+  const e0=recordFor({...defaultBuild(data.operators[id]),elite:0,level:40,skillRank:4},data);
+  const e1=recordFor({...defaultBuild(data.operators[id]),elite:1,level:1,skillRank:4},data);
+  assert.equal(e1.stats.cost,data.operators[id].phases[1].attributesKeyFrames[0].data.cost-1);
+});
+
+test('Catapult blast expansion actually damages a second enemy beyond the normal blast, without striking a farther enemy',()=>{
+  const id='char_282_catap',{b}=make(id,{enemies:3});
+  const u=b.deployOperator(id,1,7,'UP');u.atkCd=100;b.step();
+  const [primary,expandedOnly,farther]=b.enemies;
+  for(const e of b.enemies)b.addBuff(e,{key:'test:pin',persist:true,flags:{noMove:true}});
+  primary.x=5;expandedOnly.x=6.5;farther.x=8;b.step();
+  let before=b.enemies.map(e=>e.hp);
+  b.forceAttack(u,[primary]);advance(b,2);
+  assert.ok(primary.hp<before[0]);near(expandedOnly.hp,before[1]);near(farther.hp,before[2]);
+  u.skill.gainSp(u.skill.spCost,'test');assert.equal(b.activateOperator(id),true);
+  before=b.enemies.map(e=>e.hp);b.forceAttack(u,[primary]);advance(b,2);
+  assert.ok(primary.hp<before[0]);assert.ok(expandedOnly.hp<before[1]);near(farther.hp,before[2]);
+});

@@ -42,13 +42,14 @@ The fetcher verifies unzipped bundle size/MD5 against the game manifest. Publica
 ## Supported slice
 
 - 0-1 **Collapse**: source terrain, spawn times, both routes (including the soldier's wait), stage-specific soldier DEF, DP regeneration/cap, deployment limit and life points.
-- Fang, Melantha, Beagle, Kroos, Hibiscus, Steward, Vanilla, Cardigan, Orchid, Plume, Popukar, Adnachiel and Lava: selectable E0/E1, level, potential, trust and skill rank; their actual ranges, stats, basic traits, promotion talents and S1s.
+- Fang, Melantha, Beagle, Kroos, Hibiscus, Steward, Vanilla, Cardigan, Orchid, Plume, Popukar, Adnachiel, Lava and Catapult: selectable E0/E1, level, potential, trust and skill rank; their actual ranges, stats, basic traits, promotion talents and S1s.
 - Vanilla grants DP when her manual ATK skill starts; Cardigan immediately heals herself by a percentage of talent-adjusted max HP; Orchid deals Arts damage, slows on hit and gains the source ASPD talent/skill bonuses.
 - Plume gains one DP for each enemy she defeats, refunds her original potential-adjusted DP cost on manual retreat (including later deployments), and uses her source ATK/ASPD S1 buff. Death grants no refund.
 - Popukar attacks up to her block count of enemies in range, prioritizing those she blocks, and has her source HP/ATK talents and S1 ATK buff. This does not enable splash attacks for single-target guards.
 - Adnachiel retains aerial priority at E0 and gains source ASPD/ranged-enemy priority at E1, with his source S1 ATK buff.
 - Lava receives her promotion/potential-dependent starting SP on each deployment; her S1 speeds up her normal Arts splash attacks.
-- Up to 12 unique squad members plus one distinct maxed support. The current selectable roster has thirteen operators; support is limited to that same supported roster.
+- Catapult uses physical splash attacks, her E1 DP discount and source S1 blast-area multiplier; the skill leaves targeting range unchanged. The base splash radius still uses the inherited profession profile pending client-prefab verification.
+- Up to 12 unique squad members plus one distinct maxed support. The current selectable roster has fourteen operators; support is limited to that same supported roster.
 - Drag an operator onto a valid tile and choose its facing on the map; click/keyboard placement, Escape cancellation, surface-only deployment feedback and a continuous attack-range outline; blocking, physical/Arts attacks, healing, time/attack SP, manual/automatic skills, manual retreat/refund, increasing deployment costs, redeployment cooldown, clear/defeat.
 - Original 0-1 Chernobog meshes, textures, scenery and baked lighting, original red entry/blue defence boxes, rendered with Three.js and animated Spine chibis; optional existing-viewer path overlay; pause, 1×/2×, restart, fullscreen/mobile viewport workspace, pause on native-fullscreen exit or hidden tab.
 
@@ -66,7 +67,7 @@ Combat runs at a fixed 30Hz with seeded randomness. Rendering cannot change the 
 
 The regular-stage roster is opt-in through `shared/arkpedia/operators.js` and `enemies.js`. The build tool and runtime reject unknown operators, skill IDs, talent blackboard keys and enemies; spawns must have supported enemy records. Inherited kits remain disabled: Stronghold's `chess_` units have mode-specific builds, automatic-operation rules and modifiers. A hand-authored kit there is a migration candidate, not proof of ordinary-stage compatibility.
 
-`data/arkpedia-coverage.json` audits the pinned Global catalogue: 374 obtainable operators, 817 skills and 1,552 enemy database IDs. Thirteen operators and two basic enemies are currently playable. It identifies 265 skills and 210 enemy IDs with inherited implementation candidates, including stats-only entries whose notes may describe missing mechanics. It separately records imported animation pairs, placeholder effects and unverified game fidelity. It is an offline report; the battle does not load the full catalogue.
+`data/arkpedia-coverage.json` audits the pinned Global catalogue: 374 obtainable operators, 817 skills and 1,552 enemy database IDs. Fourteen operators and two basic enemies are currently playable. It identifies 265 skills and 210 enemy IDs with inherited implementation candidates, including stats-only entries whose notes may describe missing mechanics. It separately records imported animation pairs, placeholder effects and unverified game fidelity. It is an offline report; the battle does not load the full catalogue.
 
 To import another reviewed batch and reproduce coverage:
 

@@ -207,6 +207,8 @@ export class StandardBattle extends Battle {
           battle.heal(unit, unit, unit.s.maxHp * def.skill.bb.heal_scale, { self: true }),
       };
     this._setupUnit(unit, kit);
+    if (mechanic === "blast-area")
+      unit.skill.spec.attack = { splashRadius: unit.profile.splashRadius * def.skill.bb["attack@range_scale"] };
     if (def.raw.arkpedia.highDef) unit.profile.priority = "highDef";
     if (mechanic === "ranged-priority" && def.talents.length)
       unit.profile.priority = "ranged";
