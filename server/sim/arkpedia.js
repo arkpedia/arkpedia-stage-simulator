@@ -225,6 +225,14 @@ export class StandardBattle extends Battle {
       persist: true,
       allowDead: true,
     });
+    if (mechanic === "centurion") {
+      // Centurions select up to their block count, including unblocked enemies
+      // in range. Keep ordinary-stage rules separate from mode profiles.
+      unit.profile.hitAllBlocked = false;
+      Object.defineProperty(unit.profile, "maxTargets", {
+        enumerable: true, get: () => Math.max(1, unit.s.blockCnt),
+      });
+    }
     entry.lastCost = this.cost(id);
     ps.dp -= entry.lastCost;
     this._deploy(unit, { tile: [row, col] });

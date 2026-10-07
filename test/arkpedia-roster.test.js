@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import data from '../data/arkpedia-mvp.json' with { type: 'json' };
 import { StandardBattle } from '../server/sim/arkpedia.js';
 import { defaultBuild, recordFor } from '../shared/arkpedia/loadout.js';
+import { acquireTargets, effectiveProfile } from '../server/sim/ai.js';
 
 const near=(a,b)=>assert.ok(Math.abs(a-b)<1e-6,`${a} != ${b}`);
 function make(id, { rank=7, potential=1, elite=1, enemies=0 }={}) {
@@ -65,4 +66,38 @@ test('Plume has one block and source ATK/ASPD skill bonuses at all seven ranks',
   }
   const e0=recordFor({...defaultBuild(data.operators[id]),elite:0,level:40,skillRank:4},data);
   assert.deepEqual(e0.arkpedia.modifiers,{});
+});
+
+test('Popukar hits two of three overlapping enemies per swing, both blocked and unblocked, before and during her skill',()=>{
+  const id='char_281_popka',{b}=make(id,{enemies:3});
+  const u=b.deployOperator(id,2,7,'RIGHT');u.atkCd=100;b.step();
+  const victims=[];
+  b.on('damaged',ctx=>{if(ctx.source===u)victims.push(ctx.target.id);});
+  for(const blocked of [false,true]) for(const active of [false,true]) {
+    for(const e of b.enemies) {e.x=8;e.y=2;e.blockedBy=null;}
+    u.blocking=blocked?b.enemies.slice(0,2):[];
+    for(const e of u.blocking)e.blockedBy=u;
+    if(active && !u.skill.active){u.skill.gainSp(u.skill.spCost,'test');assert.equal(b.activateOperator(id),true);}
+    const profile=effectiveProfile(u),targets=acquireTargets(b,u,profile);
+    assert.equal(targets.length,2);victims.length=0;b.forceAttack(u,targets);
+    assert.equal(victims.length,2);assert.equal(new Set(victims).size,2);
+    if(active)advance(b,20.1);
+  }
+  near(u.hp,u.s.maxHp);near(u.s.maxHp,u.base.maxHp*1.06);
+  const e0=recordFor({...defaultBuild(data.operators[id]),elite:0,level:40,skillRank:4},data);
+  assert.deepEqual(e0.arkpedia.modifiers,{});
+});
+
+test('Popukar uses source HP/ATK talents and her ATK buff at every rank, without creating splash damage',()=>{
+  const id='char_281_popka';
+  for(let rank=1;rank<=7;rank++) {
+    const {b,source}=make(id,{rank,potential:6});
+    const u=b.deployOperator(id,2,7,'RIGHT'),base=u.s.atk;
+    near(u.s.maxHp,u.base.maxHp*1.08);near(u.hp,u.s.maxHp);
+    assert.equal(u.profile.splashRadius,0);assert.equal(u.profile.canHitFly,false);
+    const level=source.operators[id].skills[0].levels[rank-1];
+    u.skill.gainSp(u.skill.spCost,'test');assert.equal(b.activateOperator(id),true);
+    near(u.s.atk-base,u.base.atk*level.blackboard.find(e=>e.key==='atk').value);
+    advance(b,level.duration+.1);near(u.s.atk,base);
+  }
 });
