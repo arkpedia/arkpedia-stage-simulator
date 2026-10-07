@@ -82,3 +82,21 @@ test('Noir Corne gains HP/DEF only at level 30, including trust/potential stats,
     assert.equal(b.enemies.filter((e,i)=>e.hp<before[i]).length,1);
   }
 });
+
+test('Rangers prioritizes aerial targets and applies his level-30 bonus before DEF only against them',()=>{
+  const id='char_503_rang';
+  for(const level of [29,30]) for(const flying of [false,true]) {
+    const {b}=make(id,{level,potential:6,enemies:2});
+    const u=b.deployOperator(id,1,7,'UP');u.atkCd=100;b.step();
+    const [ground,target]=b.enemies;
+    for(const e of b.enemies){e.x=7;e.y=2;b.addBuff(e,{key:'test:pin',persist:true,flags:{noMove:true}});}
+    target.motion=flying?'FLY':'WALK';target.base.def=50;b.step();
+    assert.equal(target.isFlying,flying);assert.equal(u.profile.priority,'fly');
+    if(flying)assert.equal(acquireTargets(b,u,effectiveProfile(u))[0],target);
+    const before=target.hp,otherHp=ground.hp;
+    b.forceAttack(u,[target]);advance(b,2);
+    near(before-target.hp,u.s.atk*(level===30&&flying?1.5:1)-50);
+    near(ground.hp,otherHp);near(u.s.aspd,112);
+    assert.equal(recordFor(defaultBuild(data.operators[id]),data).arkpedia.critical,undefined);
+  }
+});

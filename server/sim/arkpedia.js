@@ -232,6 +232,13 @@ export class StandardBattle extends Battle {
         if (extra) ctx.targets.push(extra);
       }, { owner: unit });
     }
+    if (mechanic === "anti-air" && def.talents.length) {
+      const normalMultiplier = unit.profile.dmgMul;
+      const scale = def.talents[0].bb.atk_scale;
+      unit.profile.dmgMul = (battle, attacker, target) =>
+        (typeof normalMultiplier === "function" ? normalMultiplier(battle, attacker, target) : normalMultiplier ?? 1)
+        * (target.isFlying ? scale : 1);
+    }
     if (def.raw.arkpedia.critical) {
       const { prob, atk_scale } = def.raw.arkpedia.critical;
       this.on(
