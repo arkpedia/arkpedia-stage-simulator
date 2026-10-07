@@ -16,6 +16,7 @@ export const REGULAR_OPERATORS = Object.freeze({
   char_211_adnach: { skillId: "skcom_atk_up[1]", talentKeys: ["attack_speed"], mechanic: "ranged-priority" },
   char_121_lava: { skillId: "skcom_magic_rage[1]", talentKeys: ["sp"], mechanic: "starting-sp" },
   char_282_catap: { skillId: "skchr_catap_1", talentKeys: ["cost"], mechanic: "blast-area" },
+  char_283_midn: { skillId: "skchr_midn_1", talentKeys: ["prob", "atk_scale"], mechanic: "arts-lord" },
 });
 
 export function assertRegularOperator(op) {

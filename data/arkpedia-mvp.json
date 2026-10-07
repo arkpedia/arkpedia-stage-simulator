@@ -34,7 +34,7 @@
   },
   "sd": {
     "repository": "arkpedia/arkpedia-sd-assets",
-    "commit": "3cda604be788512792c43e1cf706865268d5f73a",
+    "commit": "7cc7468b5e2217656b1036323552c243adf5453d",
     "models": {
       "operator/char_123_fang/default/front": {
         "kind": "operator",
@@ -1986,6 +1986,170 @@
         },
         "bounds": null
       },
+      "operator/char_283_midn/default/front": {
+        "kind": "operator",
+        "id": "char_283_midn",
+        "variant": "default",
+        "facing": "front",
+        "spineVersion": "3.8.99",
+        "source": {
+          "key": "operators",
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "spine/char_283_midn/char_283_midn/Front"
+        },
+        "skeleton": {
+          "path": "models/operator/char_283_midn/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_283_midn.skel",
+          "bytes": 182328,
+          "sha256": "52baf3184e05cba859f5046d4d7ffb17ec6734f8fe694ab508b4929e19f0a1ef"
+        },
+        "atlas": {
+          "path": "models/operator/char_283_midn/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_283_midn.atlas",
+          "bytes": 5923,
+          "sha256": "6ca88162efbb58237445dc244ff4890a02a96340c727e03257d5d2fa98097757"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_283_midn/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_283_midn.png",
+            "bytes": 76612,
+            "sha256": "135cec4bbb42983870021bc8656e7ad31a0e31f19ca9f9dfb9d5026f1b9c6baa"
+          }
+        ],
+        "premultipliedAlpha": false,
+        "animations": {
+          "Attack_End": 0.533,
+          "Attack_Loop": 1.167,
+          "Attack_Start": 0.533,
+          "Combat": 1.167,
+          "Combat_Down": 1.167,
+          "Default": 0,
+          "Die": 1,
+          "Idle": 2,
+          "Start": 1
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": "Attack_Start",
+            "loop": "Attack_Loop",
+            "end": "Attack_End"
+          },
+          "attackDown": {
+            "begin": null,
+            "loop": "Combat_Down",
+            "end": null,
+            "via": "combat"
+          },
+          "skill": {
+            "begin": "Attack_Start",
+            "loop": "Attack_Loop",
+            "end": "Attack_End",
+            "via": "attack",
+            "index": 0,
+            "idle": null
+          },
+          "die": "Die",
+          "move": null,
+          "stun": null
+        },
+        "hits": {
+          "Attack_Loop": [
+            0.5
+          ],
+          "Combat": [
+            0.467
+          ],
+          "Combat_Down": [
+            0.467
+          ]
+        },
+        "bounds": {
+          "x": -248.705,
+          "y": -2.674,
+          "width": 357.509,
+          "height": 382.361
+        }
+      },
+      "operator/char_283_midn/default/back": {
+        "kind": "operator",
+        "id": "char_283_midn",
+        "variant": "default",
+        "facing": "back",
+        "spineVersion": "3.8.99",
+        "source": {
+          "key": "operators",
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "spine/char_283_midn/char_283_midn/Back"
+        },
+        "skeleton": {
+          "path": "models/operator/char_283_midn/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_283_midn.skel",
+          "bytes": 78378,
+          "sha256": "9697b7f87b408ed8552e53e300afe250cdb25df59ecc5c25203227388957be71"
+        },
+        "atlas": {
+          "path": "models/operator/char_283_midn/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_283_midn.atlas",
+          "bytes": 3339,
+          "sha256": "f119aae1b2ec7c2c92fb4e131c8fc15a43a41e5f354735816ff5a3015e14f25b"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_283_midn/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_283_midn.png",
+            "bytes": 52380,
+            "sha256": "5838c4a1c9cf3bab2606a63e22dcb97cdef596886a66ba2358738af2b923d30f"
+          }
+        ],
+        "premultipliedAlpha": false,
+        "animations": {
+          "Attack_End": 0.533,
+          "Attack_Loop": 1.167,
+          "Attack_Start": 0.533,
+          "Combat": 1.167,
+          "Combat_Up": 1.167,
+          "Default": 0,
+          "Idle": 2,
+          "Start": 1
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": "Attack_Start",
+            "loop": "Attack_Loop",
+            "end": "Attack_End"
+          },
+          "attackDown": null,
+          "skill": {
+            "begin": "Attack_Start",
+            "loop": "Attack_Loop",
+            "end": "Attack_End",
+            "via": "attack",
+            "index": 0,
+            "idle": null
+          },
+          "die": null,
+          "move": null,
+          "stun": null
+        },
+        "hits": {
+          "Attack_Loop": [
+            0.5
+          ],
+          "Combat": [
+            0.467
+          ],
+          "Combat_Up": [
+            0.467
+          ]
+        },
+        "bounds": {
+          "x": -244.69,
+          "y": -2.315,
+          "width": 353.98,
+          "height": 381.5
+        }
+      },
       "enemy/enemy_1002_nsabr/default/default": {
         "kind": "enemy",
         "id": "enemy_1002_nsabr",
@@ -2704,7 +2868,7 @@
     },
     "art": {
       "repository": "arkpedia/arkpedia-sd-assets",
-      "commit": "3cda604be788512792c43e1cf706865268d5f73a",
+      "commit": "7cc7468b5e2217656b1036323552c243adf5453d",
       "scene": {
         "path": "stages/0-1/26-09-23-17-49-43_b9cc4a/scene.json",
         "bytes": 4479,
@@ -2713,7 +2877,7 @@
     },
     "gates": {
       "repository": "arkpedia/arkpedia-sd-assets",
-      "commit": "3cda604be788512792c43e1cf706865268d5f73a",
+      "commit": "7cc7468b5e2217656b1036323552c243adf5453d",
       "pack": {
         "path": "effects/standard-gates/26-09-23-17-49-43_b9cc4a/gates.json",
         "bytes": 3507,
@@ -10359,6 +10523,597 @@
           ]
         }
       ]
+    },
+    "char_283_midn": {
+      "id": "char_283_midn",
+      "name": "Midnight",
+      "profession": "WARRIOR",
+      "subProfessionId": "lord",
+      "position": "MELEE",
+      "phases": [
+        {
+          "maxLevel": 40,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 879,
+                "atk": 252,
+                "def": 162,
+                "magicResistance": 5,
+                "cost": 14,
+                "blockCnt": 2,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.3,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 40,
+              "data": {
+                "maxHp": 1256,
+                "atk": 372,
+                "def": 222,
+                "magicResistance": 5,
+                "cost": 14,
+                "blockCnt": 2,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.3,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              -1,
+              0
+            ],
+            [
+              -1,
+              1
+            ]
+          ]
+        },
+        {
+          "maxLevel": 55,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 1256,
+                "atk": 372,
+                "def": 222,
+                "magicResistance": 10,
+                "cost": 16,
+                "blockCnt": 2,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.3,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 55,
+              "data": {
+                "maxHp": 1653,
+                "atk": 497,
+                "def": 282,
+                "magicResistance": 10,
+                "cost": 16,
+                "blockCnt": 2,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.3,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              0,
+              3
+            ],
+            [
+              -1,
+              0
+            ],
+            [
+              -1,
+              1
+            ]
+          ]
+        }
+      ],
+      "favorKeyFrames": [
+        {
+          "level": 0,
+          "data": {
+            "maxHp": 0,
+            "atk": 0,
+            "def": 0,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false
+          }
+        },
+        {
+          "level": 50,
+          "data": {
+            "maxHp": 0,
+            "atk": 50,
+            "def": 0,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false
+          }
+        }
+      ],
+      "potentialRanks": [
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "RESPAWN_TIME",
+            "formulaItem": "ADDITION",
+            "value": -4,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "ATK",
+            "formulaItem": "ADDITION",
+            "value": 22,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [],
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ]
+      ],
+      "talents": [
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Targeting - Primary",
+              "description": "When attacking, has a 10% chance to increase the current damage of that attack to 150%",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "prob",
+                  "value": 0.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk_scale",
+                  "value": 1.5,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 1
+              },
+              "requiredPotentialRank": 4,
+              "prefabKey": "1",
+              "name": "Targeting - Primary",
+              "description": "When attacking, has a 10% chance to increase the current damage of that attack to 160% <@ba.talpu>(+10%)</>",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "prob",
+                  "value": 0.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk_scale",
+                  "value": 1.6,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 55
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Targeting - Primary",
+              "description": "When attacking, has a 20% chance to increase the current damage of that attack to 150%",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "prob",
+                  "value": 0.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk_scale",
+                  "value": 1.5,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 55
+              },
+              "requiredPotentialRank": 4,
+              "prefabKey": "1",
+              "name": "Targeting - Primary",
+              "description": "When attacking, has a 20% chance to increase the current damage of that attack to 160% <@ba.talpu>(+10%)</>",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "prob",
+                  "value": 0.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk_scale",
+                  "value": 1.6,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            }
+          ]
+        }
+      ],
+      "skills": [
+        {
+          "id": "skchr_midn_1",
+          "levels": [
+            {
+              "name": "Enchant Weapon α",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>; Damage dealt by Normal Attacks turn into <@ba.vup>Arts damage",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 80,
+                "initSp": 20,
+                "increment": 1
+              },
+              "prefabId": "skchr_midn_1",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.05,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Enchant Weapon α",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>; Damage dealt by Normal Attacks turn into <@ba.vup>Arts damage",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 79,
+                "initSp": 20,
+                "increment": 1
+              },
+              "prefabId": "skchr_midn_1",
+              "duration": 31,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Enchant Weapon α",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>; Damage dealt by Normal Attacks turn into <@ba.vup>Arts damage",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 78,
+                "initSp": 20,
+                "increment": 1
+              },
+              "prefabId": "skchr_midn_1",
+              "duration": 32,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.15,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Enchant Weapon α",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>; Damage dealt by Normal Attacks turn into <@ba.vup>Arts damage",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 75,
+                "initSp": 25,
+                "increment": 1
+              },
+              "prefabId": "skchr_midn_1",
+              "duration": 35,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.2,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Enchant Weapon α",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>; Damage dealt by Normal Attacks turn into <@ba.vup>Arts damage",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 74,
+                "initSp": 25,
+                "increment": 1
+              },
+              "prefabId": "skchr_midn_1",
+              "duration": 36,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.25,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Enchant Weapon α",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>; Damage dealt by Normal Attacks turn into <@ba.vup>Arts damage",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 73,
+                "initSp": 25,
+                "increment": 1
+              },
+              "prefabId": "skchr_midn_1",
+              "duration": 37,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.3,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Enchant Weapon α",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>; Damage dealt by Normal Attacks turn into <@ba.vup>Arts damage",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 70,
+                "initSp": 30,
+                "increment": 1
+              },
+              "prefabId": "skchr_midn_1",
+              "duration": 40,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.35,
+                  "valueStr": null
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   },
   "enemies": {
@@ -10403,7 +11158,7 @@
   },
   "skillEffects": {
     "repository": "arkpedia/arkpedia-sd-assets",
-    "commit": "3cda604be788512792c43e1cf706865268d5f73a",
+    "commit": "7cc7468b5e2217656b1036323552c243adf5453d",
     "pack": {
       "path": "effects/charge-cost/26-09-23-17-49-43_b9cc4a/effect.json",
       "bytes": 15311,

@@ -209,6 +209,7 @@ export class StandardBattle extends Battle {
     this._setupUnit(unit, kit);
     if (mechanic === "blast-area")
       unit.skill.spec.attack = { splashRadius: unit.profile.splashRadius * def.skill.bb["attack@range_scale"] };
+    if (mechanic === "arts-lord") unit.skill.spec.attack = { dmgType: "arts" };
     if (def.raw.arkpedia.highDef) unit.profile.priority = "highDef";
     if (mechanic === "ranged-priority" && def.talents.length)
       unit.profile.priority = "ranged";
@@ -221,7 +222,10 @@ export class StandardBattle extends Battle {
         },
         { owner: unit },
       );
-      unit.profile.dmgMul = () => (unit.mem.critical ? atk_scale : 1);
+      const normalMultiplier = unit.profile.dmgMul;
+      unit.profile.dmgMul = (battle, attacker, target) =>
+        (typeof normalMultiplier === "function" ? normalMultiplier(battle, attacker, target) : normalMultiplier ?? 1)
+        * (unit.mem.critical ? atk_scale : 1);
     }
     this.addBuff(unit, {
       key: "arkpedia:talent",

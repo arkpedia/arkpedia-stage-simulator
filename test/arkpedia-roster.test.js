@@ -182,3 +182,34 @@ test('Catapult blast expansion actually damages a second enemy beyond the normal
   before=b.enemies.map(e=>e.hp);b.forceAttack(u,[primary]);advance(b,2);
   assert.ok(primary.hp<before[0]);assert.ok(expandedOnly.hp<before[1]);near(farther.hp,before[2]);
 });
+
+test('Midnight combines his ranged penalty with the critical talent, converts attacks to Arts only during S1, and remains single-target',()=>{
+  const id='char_283_midn';
+  for(const critical of [false,true]) for(const melee of [false,true]) {
+    const {b}=make(id,{potential:5,enemies:2});const u=b.deployOperator(id,2,7,'RIGHT');u.atkCd=100;b.step();
+    const [target,other]=b.enemies;target.x=melee?8:5;target.base.def=0;target.base.res=0;
+    let rolled;b.rng.chance=p=>{rolled=p;return critical;};
+    let before=target.hp;b.forceAttack(u,[target]);
+    near(before-target.hp,u.s.atk*(melee?1:.8)*(critical?1.6:1));near(rolled,.2);near(other.hp,other.s.maxHp);
+    target.base.def=100000;target.base.res=0;
+    u.skill.gainSp(u.skill.spCost,'test');assert.equal(b.activateOperator(id),true);
+    assert.equal(effectiveProfile(u).dmgType,'arts');before=target.hp;b.forceAttack(u,[target]);
+    near(before-target.hp,u.s.atk*(melee?1:.8)*(critical?1.6:1));
+    assert.equal(effectiveProfile(u).maxTargets,1);
+    advance(b,40.1);assert.equal(effectiveProfile(u).dmgType,'phys');
+  }
+  const e0=recordFor({...defaultBuild(data.operators[id]),elite:0,level:40,skillRank:4},data);
+  assert.equal(e0.arkpedia.critical,undefined);
+});
+
+test('Midnight uses source ATK buffs at all skill ranks and preserves the lord targeting trait',()=>{
+  const id='char_283_midn';
+  for(let rank=1;rank<=7;rank++) {
+    const {b,source}=make(id,{rank});const u=b.deployOperator(id,2,7,'RIGHT'),base=u.s.atk;
+    const level=source.operators[id].skills[0].levels[rank-1];
+    assert.equal(u.profile.canHitFly,true);assert.equal(u.s.blockCnt,2);
+    u.skill.gainSp(u.skill.spCost,'test');b.activateOperator(id);
+    near(u.s.atk-base,u.base.atk*level.blackboard.find(e=>e.key==='atk').value);
+    advance(b,level.duration+.1);near(u.s.atk,base);
+  }
+});
