@@ -42,6 +42,10 @@ import { customizeFiveStarSniperKit, installFiveStarSniper, prepareFiveStarSnipe
 import { customizeFiveStarCasterOverloadKit, installFiveStarCasterOverload } from './content/arkpedia-five-star-caster-overload.js';
 import { customizeFiveStarSupportThirdKit, installFiveStarSupportThird } from './content/arkpedia-five-star-support-third.js';
 import { customizeFiveStarGuardFourthKit, installFiveStarGuardFourth } from './content/arkpedia-five-star-guard-fourth.js';
+import { customizeCastersNextKit, installCastersNext } from './content/arkpedia-caster-next.js';
+import { customizeDefenderThirdKit, installDefenderThird } from './content/arkpedia-defender-third.js';
+import { customizeSixStarMedicKit, installSixStarMedic } from './content/arkpedia-six-star-medic.js';
+import { customizeFiveStarSpecialistExpansionKit, installFiveStarSpecialistExpansion } from './content/arkpedia-five-star-specialist-expansion.js';
 import { catalogueFor, recordFor } from "../../shared/arkpedia/loadout.js";
 import { REGULAR_OPERATORS } from "../../shared/arkpedia/operators.js";
 import { assertRegularEnemies } from "../../shared/arkpedia/enemies.js";
@@ -287,6 +291,10 @@ export class StandardBattle extends Battle {
     customizeFiveStarGuardSixthKit({ battle: this, id, def, unit, kit });
     customizeFiveStarSniperSecondKit({ battle: this, id, def, unit, kit });
     customizeFiveStarSniperThirdKit({ battle: this, id, def, unit, kit });
+    customizeCastersNextKit({ battle: this, id, def, unit, kit });
+    customizeDefenderThirdKit({ battle: this, id, def, unit, kit });
+    customizeSixStarMedicKit({ battle: this, id, def, unit, kit });
+    customizeFiveStarSpecialistExpansionKit({ battle: this, id, def, unit, kit });
     customizeFiveStarCasterOverloadKit({ battle: this, id, def, unit, kit });
     customizeFiveStarSupportThirdKit({ battle: this, id, def, unit, kit });
     customizeFiveStarGuardFourthKit({ battle: this, id, def, unit, kit });
@@ -349,6 +357,10 @@ export class StandardBattle extends Battle {
     installFiveStarGuardSixth({ battle: this, unit, def });
     installFiveStarSniperSecond({ battle: this, unit, def });
     installFiveStarSniperThird({ battle: this, unit, def });
+    installCastersNext({ battle: this, unit, def });
+    installDefenderThird({ battle: this, unit, def });
+    installSixStarMedic({ battle: this, unit, def });
+    installFiveStarSpecialistExpansion({ battle: this, unit, def });
     installFiveStarCasterOverload({ battle: this, unit, def });
     installFiveStarSupportThird({ battle: this, unit, def });
     installFiveStarGuardFourth({ battle: this, unit, def });

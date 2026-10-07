@@ -111,7 +111,7 @@ const operators = Object.fromEntries(
   }),
 );
 for (const op of Object.values(operators)) assertRegularOperator(op);
-const tokenIds = ['token_10001_deepcl_tentac', 'token_10018_robrta_mach', 'token_10014_bstalk_crab', 'token_10011_beewax_oblisk', 'token_10006_vodfox_doll'];
+const tokenIds = ['token_10001_deepcl_tentac', 'token_10018_robrta_mach', 'token_10014_bstalk_crab', 'token_10011_beewax_oblisk', 'token_10006_vodfox_doll', 'token_10003_cgbird_bird'];
 const tokens = Object.fromEntries(tokenIds.map(id => {
   const c = characters[id];
   if (!c) throw Error(`Missing original token: ${id}`);
@@ -124,7 +124,7 @@ const tokens = Object.fromEntries(tokenIds.map(id => {
       rangeGrid: ranges[p.rangeId].grids.map(p => [p.row, p.col]),
     })),
     trait: c.trait ? { ...c.trait, candidates: c.trait.candidates.map(candidate) } : null,
-    talents: (c.talents ?? []).map(t => ({ ...t, candidates: t.candidates.map(candidate) })),
+    talents: (c.talents ?? []).map(t => ({ ...t, candidates: (t.candidates ?? []).map(candidate) })),
     skills: (c.skills ?? []).map(s => ({ id: s.skillId, unlockCondition: s.unlockCond,
       levels: (s.skillId === null ? [] : skills[s.skillId].levels).map(level => level.rangeId
         ? { ...level, rangeGrid: ranges[level.rangeId].grids.map(p => [p.row, p.col]) } : level) })),

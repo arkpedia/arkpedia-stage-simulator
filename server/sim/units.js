@@ -2,7 +2,7 @@
 //
 // Aggregation (recomputed lazily whenever buffs change — `unit.markDirty()`):
 //   ATK/DEF/maxHp = (base + Σflat) × (1 + Σpct) × Πmul
-//   res           = clamp((base + Σflat) × Πmul, 0, 100)
+//   res           = clamp((base + Σflat) × (1 + Σpct) × Πmul, 0, 100)
 //   aspd          = clamp(base + Σaspd, 20, 600)          (base is 100 for almost everyone; floor 20 = PRTS 数值范围)
 //   interval      = (bat + ΣbatFlat) × (1 + ΣbatPct) × ΠbatMul × 100 / aspd      (ΣbatPct floored at −0.9)
 //   moveSpeed     = (base + ΣmoveFlat) × ΠmoveMul          (tiles/s = moveSpeed × MOVE_SCALE)
@@ -120,7 +120,7 @@ export class Unit {
     const maxHp = Math.max(1, fin((bHp + a('hpFlat')) * Math.max(0, 1 + a('hpPct')) * m('hpMul'), bHp));
     const atk = Math.max(0, fin((b.atk + a('atkFlat')) * Math.max(0, 1 + a('atkPct')) * m('atkMul') + a('atkFinalFlat'), fin(b.atk, 0)));
     const def = Math.max(0, fin((b.def + a('defFlat')) * Math.max(0, 1 + a('defPct')) * m('defMul'), fin(b.def, 0)));
-    const res = clamp(fin((b.res + a('resFlat')) * m('resMul'), fin(b.res, 0)), 0, 100);
+    const res = clamp(fin((b.res + a('resFlat')) * Math.max(0, 1 + a('resPct')) * m('resMul'), fin(b.res, 0)), 0, 100);
     const aspd = clamp(fin(b.aspd + a('aspd'), 100), ASPD_MIN, ASPD_MAX);
     const bBat = fin(b.bat, 1) > 0 ? fin(b.bat, 1) : 1;
     // Source FINAL_SCALER attack-time modifiers apply after additive/percentage

@@ -4,6 +4,7 @@ import { REGULAR_SUMMONS, summonCardId, summonUnitId, summonRecordFor } from '..
 import { canDeployInViewport } from '../../../shared/arkpedia/squad.js';
 import { createMetalCrab, customizeBeanstalk, installBeanstalk } from './arkpedia-tacticians.js';
 import { installShamareDoll } from './arkpedia-five-star-support-third.js';
+import { installNightingaleCage } from './arkpedia-six-star-medic.js';
 
 const live = unit => unit?.alive && unit.deployed;
 const ownTokens = (battle, owner) => battle.allyUnits.filter(token =>
@@ -71,6 +72,7 @@ export function deployRegularSummon(battle, key, row, col, dir = 'RIGHT') {
     if (ctx.attacker === token && ctx.targets[0])
       token.dir = ctx.targets[0].x < token.x ? 'LEFT' : 'RIGHT';
   }, { owner: token });
+  if (state.ownerId === 'char_179_cgbird') installNightingaleCage(battle, token, state);
   if (state.ownerId === 'char_484_robrta') installModeler(battle, token, state);
   if (state.ownerId === 'char_254_vodfox') {
     installShamareDoll(battle, token, state);
@@ -134,11 +136,13 @@ export function customizeSummonerKit({ id, def, unit, kit }) {
  * all owned Tentacles. Stock is charged afresh on a new owner deployment. */
 export function installSummoner({ battle, unit, def }) {
   const config = REGULAR_SUMMONS[def.id];
-  if (!config || config.skillId && def.skill?.id !== config.skillId) return;
+  if (!config || config.skillId && def.skill?.id !== config.skillId
+    || config.minimumElite != null && def.raw.arkpedia.elite < config.minimumElite) return;
   const key = summonCardId(def.id), record = summonRecordFor(def.id, def.raw.arkpedia, battle.data.raw.tokens);
   if (!battle.regularSummons) battle.regularSummons = new Map();
+  const previous = battle.regularSummons.get(key);
   const state = { key, ownerId: def.id, owner: unit, tokenId: record.id, config,
-    record, stock: 0, readyAt: battle.time, unit: null,
+    record, stock: config.additiveBornStock ? previous?.stock ?? 0 : 0, readyAt: battle.time, unit: null,
     syncSkill: () => unit.mem.summonSkillSync?.(battle),
   };
   battle.regularSummons.set(key, state);
@@ -146,7 +150,8 @@ export function installSummoner({ battle, unit, def }) {
   if (def.id === 'char_452_bstalk') installBeanstalk({ battle, unit, def, state });
   battle.on('deploy', ({ unit: deployed }) => {
     if (deployed === unit) {
-      state.stock = config.stockLimit ? 0 : def.talents[0].bb.cnt;
+      const bornCount = def.talents[config.talentIndex ?? 0].bb.cnt;
+      state.stock = config.stockLimit ? 0 : config.additiveBornStock ? state.stock + bornCount : bornCount;
       state.readyAt = battle.time;
       if (config.stockLimit) battle.removeBuff(unit, 'shamare:stock-full');
     }
