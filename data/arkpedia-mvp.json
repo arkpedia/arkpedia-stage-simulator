@@ -34,7 +34,7 @@
   },
   "sd": {
     "repository": "arkpedia/arkpedia-sd-assets",
-    "commit": "036e9f12443e52b40daa4f37878ce496e8ee23db",
+    "commit": "0f8bc6ef63d9b07844684f9a92d8422924a3ddf1",
     "models": {
       "operator/char_123_fang/default/front": {
         "kind": "operator",
@@ -2846,6 +2846,145 @@
           "height": 363.704
         }
       },
+      "operator/char_501_durin/default/front": {
+        "kind": "operator",
+        "id": "char_501_durin",
+        "variant": "default",
+        "facing": "front",
+        "spineVersion": "3.8.99",
+        "source": {
+          "key": "operators",
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "spine/char_501_durin/char_501_durin/Front"
+        },
+        "skeleton": {
+          "path": "models/operator/char_501_durin/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_501_durin.skel",
+          "bytes": 54611,
+          "sha256": "6b3835c14ac36aa7e811f229d15228f927f1fc5a9d397e350d373ab5f67cd670"
+        },
+        "atlas": {
+          "path": "models/operator/char_501_durin/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_501_durin.atlas",
+          "bytes": 5932,
+          "sha256": "6cad0fd649688fa85879e0b63caacbdd1c640e085ce9137563db58cc9ceac0d1"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_501_durin/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_501_durin.png",
+            "bytes": 49426,
+            "sha256": "c05c041dd07351e1fbee0778585b5392d4a8249df61dc1b29c26e5ae4466979a"
+          }
+        ],
+        "premultipliedAlpha": false,
+        "animations": {
+          "Attack": 1.5,
+          "Default": 0,
+          "Die": 1,
+          "Idle": 2,
+          "Start": 1
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null
+          },
+          "attackDown": null,
+          "skill": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null,
+            "via": "attack",
+            "index": 0,
+            "idle": null
+          },
+          "die": "Die",
+          "move": null,
+          "stun": null
+        },
+        "hits": {
+          "Attack": [
+            0.767
+          ]
+        },
+        "bounds": {
+          "x": -125.61,
+          "y": -2.15,
+          "width": 275.496,
+          "height": 330
+        }
+      },
+      "operator/char_501_durin/default/back": {
+        "kind": "operator",
+        "id": "char_501_durin",
+        "variant": "default",
+        "facing": "back",
+        "spineVersion": "3.8.99",
+        "source": {
+          "key": "operators",
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "spine/char_501_durin/char_501_durin/Back"
+        },
+        "skeleton": {
+          "path": "models/operator/char_501_durin/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_501_durin.skel",
+          "bytes": 32660,
+          "sha256": "6f577583a9139459dcbed6173e4de6745aeaf1a4159fd8dbb4b7a70a7b9c20f7"
+        },
+        "atlas": {
+          "path": "models/operator/char_501_durin/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_501_durin.atlas",
+          "bytes": 1971,
+          "sha256": "7d91fa9a6bf8a361c3069395f6f124f2a97b980cc1007805cb934e54b1ebc4f3"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_501_durin/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_501_durin.png",
+            "bytes": 33674,
+            "sha256": "de4a0a340c9f22b154aec729a2c4283619d5097e3275fba0fe423f93d49a8ac3"
+          }
+        ],
+        "premultipliedAlpha": false,
+        "animations": {
+          "Attack": 1.5,
+          "Default": 0,
+          "Idle": 2,
+          "Start": 1
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null
+          },
+          "attackDown": null,
+          "skill": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null,
+            "via": "attack",
+            "index": 0,
+            "idle": null
+          },
+          "die": null,
+          "move": null,
+          "stun": null
+        },
+        "hits": {
+          "Attack": [
+            0.767
+          ]
+        },
+        "bounds": {
+          "x": -125.367,
+          "y": -1.65,
+          "width": 275,
+          "height": 330
+        }
+      },
       "enemy/enemy_1002_nsabr/default/default": {
         "kind": "enemy",
         "id": "enemy_1002_nsabr",
@@ -3564,7 +3703,7 @@
     },
     "art": {
       "repository": "arkpedia/arkpedia-sd-assets",
-      "commit": "036e9f12443e52b40daa4f37878ce496e8ee23db",
+      "commit": "0f8bc6ef63d9b07844684f9a92d8422924a3ddf1",
       "scene": {
         "path": "stages/0-1/26-09-23-17-49-43_b9cc4a/scene.json",
         "bytes": 4479,
@@ -3573,7 +3712,7 @@
     },
     "gates": {
       "repository": "arkpedia/arkpedia-sd-assets",
-      "commit": "036e9f12443e52b40daa4f37878ce496e8ee23db",
+      "commit": "0f8bc6ef63d9b07844684f9a92d8422924a3ddf1",
       "pack": {
         "path": "effects/standard-gates/26-09-23-17-49-43_b9cc4a/gates.json",
         "bytes": 3507,
@@ -14009,6 +14148,259 @@
         }
       ],
       "skills": []
+    },
+    "char_501_durin": {
+      "id": "char_501_durin",
+      "name": "Durin",
+      "rarity": 2,
+      "profession": "CASTER",
+      "subProfessionId": "corecaster",
+      "position": "RANGED",
+      "phases": [
+        {
+          "maxLevel": 30,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 571,
+                "atk": 238,
+                "def": 36,
+                "magicResistance": 10,
+                "cost": 12,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.6,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 30,
+              "data": {
+                "maxHp": 952,
+                "atk": 340,
+                "def": 62,
+                "magicResistance": 10,
+                "cost": 12,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.6,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              -1,
+              0
+            ],
+            [
+              -1,
+              1
+            ],
+            [
+              -1,
+              2
+            ]
+          ]
+        }
+      ],
+      "favorKeyFrames": [
+        {
+          "level": 0,
+          "data": {
+            "maxHp": 0,
+            "atk": 0,
+            "def": 0,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false
+          }
+        },
+        {
+          "level": 50,
+          "data": {
+            "maxHp": 0,
+            "atk": 30,
+            "def": 0,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false
+          }
+        }
+      ],
+      "potentialRanks": [
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "MAX_HP",
+            "formulaItem": "ADDITION",
+            "value": 50,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "RESPAWN_TIME",
+            "formulaItem": "ADDITION",
+            "value": -5,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "MAX_HP",
+            "formulaItem": "ADDITION",
+            "value": 50,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ]
+      ],
+      "talents": [
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_0",
+                "level": 30
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Lucky Lass",
+              "description": "50% Arts Dodge",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "prob",
+                  "value": 0.5,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            }
+          ]
+        }
+      ],
+      "skills": []
     }
   },
   "enemies": {
@@ -14053,7 +14445,7 @@
   },
   "skillEffects": {
     "repository": "arkpedia/arkpedia-sd-assets",
-    "commit": "036e9f12443e52b40daa4f37878ce496e8ee23db",
+    "commit": "0f8bc6ef63d9b07844684f9a92d8422924a3ddf1",
     "pack": {
       "path": "effects/charge-cost/26-09-23-17-49-43_b9cc4a/effect.json",
       "bytes": 15311,

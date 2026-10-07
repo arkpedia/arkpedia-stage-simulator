@@ -100,3 +100,25 @@ test('Rangers prioritizes aerial targets and applies his level-30 bonus before D
     assert.equal(recordFor(defaultBuild(data.operators[id]),data).arkpedia.critical,undefined);
   }
 });
+
+function checkDodge(id,eligibleType) {
+  for(const level of [29,30]) for(const proc of [false,true]) {
+    const {b,build,source}=make(id,{level,potential:6,trust:200});
+    const u=b.deployOperator(id,1,7,'UP');
+    near(u.s.dodgeArts,level===30&&eligibleType==='arts'?.5:0);
+    near(u.s.dodgePhys,level===30&&eligibleType==='phys'?.5:0);
+    assert.equal(recordFor(build,source).arkpedia.critical,undefined);
+    for(const type of ['phys','arts','true']) {
+      u.hp=u.s.maxHp;let rolls=0;
+      b.rng=()=>{rolls++;return proc ? 0.499999 : 0.5;};
+      const before=u.hp,dealt=b.dealDamage(null,u,{amount:500,type});
+      assert.equal(dealt===0,level===30&&type===eligibleType&&proc);
+      assert.equal(rolls,level===30&&type===eligibleType?1:0);
+      near(before-u.hp,dealt);assert.deepEqual(b.errors,[]);
+    }
+  }
+}
+
+test('Durin unlocks 50% Arts-only dodge at level 30, without dodging physical/true damage or gaining a critical talent',()=>{
+  checkDodge('char_501_durin','arts');
+});

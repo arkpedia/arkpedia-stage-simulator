@@ -96,10 +96,13 @@ export function recordFor(build, data) {
     )
     .filter(Boolean)
     .map((t) => ({ ...t, bb: bb(t.blackboard) }));
+  const support = assertRegularOperator(op);
   const modifiers = {};
   for (const talent of talents)
     for (const [key, modifier] of Object.entries({ atk: "atkPct", def: "defPct", max_hp: "hpPct", attack_speed: "aspd" }))
       if (talent.bb[key]) modifiers[modifier] = (modifiers[modifier] ?? 0) + talent.bb[key];
+  if (support.mechanic === "dodge-arts")
+    modifiers.dodgeArts = talents[0]?.bb.prob ?? 0;
   for (const talent of talents) {
     stats.cost += talent.bb.cost ?? 0;
     stats.respawnTime += talent.bb.respawn_time ?? 0;
