@@ -21,6 +21,24 @@ function make() {
   return { b, unit, enemy };
 }
 
+test('movement percentages share an additive bucket before multiplicative Slow and flat speed changes', () => {
+  const { b, enemy } = make(); enemy.base.moveSpeed = 2; enemy.markDirty();
+  b.addBuff(enemy, { key: 'test:flat', mods: { moveFlat: .5 } });
+  b.addBuff(enemy, { key: 'test:percentage-a', mods: { movePct: -.6 } });
+  b.addBuff(enemy, { key: 'test:percentage-b', mods: { movePct: .2 } });
+  assert.ok(Math.abs(enemy.s.moveSpeed - 1.5) < 1e-8);
+  b.applyStatus(enemy, 'sluggish', { key: 'test:sluggish' });
+  assert.ok(Math.abs(enemy.s.moveSpeed - .3) < 1e-8);
+  b.removeBuff(enemy, 'test:percentage-a');
+  assert.ok(Math.abs(enemy.s.moveSpeed - .6) < 1e-8);
+  b.addBuff(enemy, { key: 'test:percentage-floor', mods: { movePct: -2 } });
+  assert.equal(enemy.s.moveSpeed, 0);
+  b.removeBuff(enemy, 'test:percentage-floor'); b.removeBuff(enemy, 'test:percentage-b');
+  b.removeBuff(enemy, 'test:sluggish'); b.removeBuff(enemy, 'test:flat');
+  assert.equal(enemy.s.moveSpeed, 2);
+  assert.deepEqual(b.errors, []);
+});
+
 test('final block scaling overrides additional block buffs, releases blocked enemies, and restores capacity on expiry', () => {
   const { b, unit, enemy } = make();
   b.addBuff(unit, { key: 'test:extra-block', mods: { blockCnt: 5 } });
@@ -180,4 +198,58 @@ test('owned Weightless instances do not compound and preserve an unrelated mass 
   b.removeBuff(unit, 'angelina:a:weightless'); assert.equal(unit.s.massLevel, 3);
   b.removeBuff(unit, 'angelina:b:weightless'); assert.equal(unit.s.massLevel, 4);
   b.removeBuff(unit, 'ordinary:mass'); assert.equal(unit.s.massLevel, 5);
+});
+
+test('enemy melee-only hit shields keep their charge for ranged, friendly and sourceless damage', () => {
+  for (const type of ['phys', 'arts', 'true', 'elemental']) {
+    const { b, unit, enemy } = make();
+    b.addBuff(unit, { key: 'source-melee-shield', shieldHits: 1,
+      shieldApplyWays: ['melee'], shieldSourceSides: ['enemy'] });
+    for (const [source, application] of [[enemy, { applyWay: 'ranged' }],
+      [unit, { applyWay: 'melee' }], [enemy, { applyWay: 'melee', sourceless: true }]]) {
+      const hp = unit.hp;
+      b.dealDamage(source, unit, { amount: 100, type, ...application });
+      assert.ok(unit.hp < hp); assert.equal(unit.findBuff('source-melee-shield').shieldHits, 1);
+    }
+    const hp = unit.hp;
+    assert.equal(b.dealDamage(enemy, unit, { amount: 100, type, applyWay: 'melee' }), 0);
+    assert.equal(unit.hp, hp); assert.equal(unit.findBuff('source-melee-shield'), null);
+    assert.ok(b.dealDamage(enemy, unit, { amount: 100, type, applyWay: 'melee' }) > 0);
+  }
+});
+
+test('shield application filters intersect damage kinds, while ordinary shields remain unrestricted', () => {
+  const { b, unit, enemy } = make();
+  b.addBuff(unit, { key: 'filtered-hp-shield', shield: 50, shieldTypes: ['arts'],
+    shieldApplyWays: ['melee'], shieldSourceSides: ['enemy'] });
+  b.dealDamage(enemy, unit, { amount: 20, type: 'arts', applyWay: 'ranged' });
+  assert.equal(unit.findBuff('filtered-hp-shield').shield, 50);
+  b.dealDamage(enemy, unit, { amount: 20, type: 'true', applyWay: 'melee' });
+  assert.equal(unit.findBuff('filtered-hp-shield').shield, 50);
+  b.dealDamage(enemy, unit, { amount: 60, type: 'arts', applyWay: 'melee' });
+  assert.equal(unit.findBuff('filtered-hp-shield'), null);
+  b.addBuff(unit, { key: 'ordinary-hit', shieldHits: 1 });
+  assert.equal(b.dealDamage(null, unit, { amount: 100, type: 'true' }), 0);
+  b.addBuff(unit, { key: 'reject-unknown', shieldHits: 1, shieldApplyWays: ['unknown'] });
+  assert.ok(b.dealDamage(enemy, unit, { amount: 20, type: 'true', applyWay: 'melee' }) > 0);
+  assert.equal(unit.findBuff('reject-unknown').shieldHits, 1);
+});
+
+test('stack and extend refreshes replace shield filters consistently with ordinary damage-type filters', () => {
+  for (const refresh of ['stack', 'extend']) {
+    const { b, unit, enemy } = make();
+    b.addBuff(unit, { key: 'filter-refresh', shieldHits: 1, maxStacks: 2,
+      shieldApplyWays: ['ranged'], shieldSourceSides: ['ally'] });
+    b.addBuff(unit, { key: 'filter-refresh', shieldHits: 1, maxStacks: 2, refresh,
+      shieldApplyWays: ['melee'], shieldSourceSides: ['enemy'] });
+    assert.deepEqual(unit.findBuff('filter-refresh').shieldApplyWays, ['melee']);
+    assert.deepEqual(unit.findBuff('filter-refresh').shieldSourceSides, ['enemy']);
+    assert.ok(b.dealDamage(enemy, unit, { amount: 20, type: 'true', applyWay: 'ranged' }) > 0);
+    assert.equal(b.dealDamage(enemy, unit, { amount: 20, type: 'true', applyWay: 'melee' }), 0);
+    b.addBuff(unit, { key: 'filter-refresh', shieldHits: 1, shieldApplyWays: ['melee'] });
+    b.addBuff(unit, { key: 'filter-refresh', shieldHits: 1, refresh });
+    assert.equal(unit.findBuff('filter-refresh').shieldApplyWays, null);
+    assert.equal(unit.findBuff('filter-refresh').shieldSourceSides, null);
+    assert.equal(b.dealDamage(null, unit, { amount: 20, type: 'true' }), 0);
+  }
 });

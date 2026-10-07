@@ -1254,7 +1254,11 @@ export class Battle {
           old.duration = buff.duration;
           if (buff.mods) old.mods = buff.mods;
           if (buff.flags) old.flags = buff.flags;
-          if (buff.shield > 0 || buff.shieldHits > 0) old.shieldTypes = buff.shieldTypes;
+          if (buff.shield > 0 || buff.shieldHits > 0) {
+            old.shieldTypes = buff.shieldTypes;
+            old.shieldApplyWays = buff.shieldApplyWays;
+            old.shieldSourceSides = buff.shieldSourceSides;
+          }
           unit.markDirty();
           return accepted(old);
         case 'extend':
@@ -1262,7 +1266,11 @@ export class Battle {
           old.duration = Math.max(old.duration, buff.duration);
           if (buff.mods) old.mods = buff.mods;
           if (buff.flags) old.flags = buff.flags;
-          if (buff.shield > 0 || buff.shieldHits > 0) old.shieldTypes = buff.shieldTypes;
+          if (buff.shield > 0 || buff.shieldHits > 0) {
+            old.shieldTypes = buff.shieldTypes;
+            old.shieldApplyWays = buff.shieldApplyWays;
+            old.shieldSourceSides = buff.shieldSourceSides;
+          }
           if (buff.shield > old.shield) old.shield = buff.shield;
           if (buff.shieldHits > old.shieldHits) old.shieldHits = buff.shieldHits;
           unit.markDirty();
@@ -1936,6 +1944,8 @@ export class Battle {
   setObstacle(r, c, on, kind = 'block') { this.grid.setObstacle(r, c, on, kind); }
 
   addProjectile(p) { return this.projectiles.add(p); }
+  registerProjectileSpeedAura(spec) { return this.projectiles.registerSpeedAura(spec); }
+  removeProjectiles(predicate) { return this.projectiles.remove(predicate); }
 
   /** Move an ally to another tile (keeps state); never onto a living unit or a knocked-out operator (downOn). */
   relocate(unit, r, c) {

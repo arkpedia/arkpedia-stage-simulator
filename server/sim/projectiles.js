@@ -14,6 +14,42 @@ export class ProjectileSystem {
     this.battle = battle;
     /** @type {object[]} */
     this.list = [];
+    this.speedAuras = new Set();
+    this.arriving = [];
+  }
+
+  /** Opt-in spatial slowdown of speed-driven projectiles. Fixed-time native
+   * movers keep their separate clock until that controller is recovered. */
+  registerSpeedAura({ owner, contains, scale }) {
+    if (!owner || typeof contains !== 'function' || !Number.isFinite(scale) || scale <= 0 || scale > 1)
+      throw new TypeError('Invalid projectile speed aura');
+    const aura = { owner, deploySeq: owner.deploySeq, contains, scale };
+    this.speedAuras.add(aura);
+    return { cancel: () => this.speedAuras.delete(aura) };
+  }
+
+  speedScale(projectile) {
+    let scale = 1;
+    for (const aura of this.speedAuras) {
+      const u = aura.owner;
+      if (!u.alive || !u.deployed || u.hidden || u.deploySeq !== aura.deploySeq) {
+        this.speedAuras.delete(aura); continue;
+      }
+      if (this.battle._safe(() => aura.contains(projectile), 'projectile.speedAura', u))
+        scale = Math.min(scale, aura.scale);
+    }
+    return scale;
+  }
+
+  /** Remove eligible existing projectiles without running their hit callback. */
+  remove(predicate) {
+    if (typeof predicate !== 'function') throw new TypeError('Projectile removal needs a predicate');
+    let removed = 0;
+    for (const p of [...this.list, ...this.arriving]) {
+      if (!p.removed && predicate(p)) { p.removed = true; removed++; }
+    }
+    this.list = this.list.filter(p => !p.removed);
+    return removed;
   }
 
   add(p) {
@@ -59,7 +95,7 @@ export class ProjectileSystem {
       }
       const dx = p.tx - p.x, dy = p.ty - p.y;
       const d = Math.hypot(dx, dy);
-      const step = p.speed * dt;
+      const step = p.speed * this.speedScale(p) * dt;
       // Some original Arts projectiles use a fixed travel duration instead of
       // speed. Follow the live destination from the saved origin, even when the
       // target crosses the projectile; only the duration boundary can impact.
@@ -81,12 +117,14 @@ export class ProjectileSystem {
       }
     }
     this.list = keep;
+    this.arriving = arrived;
     for (const p of arrived) {
-      if (!p.onHit) continue;
+      if (p.removed || !p.onHit) continue;
       const t = p.target && p.target.alive && p.target.deploySeq === p.tseq ? p.target : null;
       this.battle._safe(() => p.onHit({ battle: this.battle, projectile: p, target: t, x: p.x, y: p.y }), 'projectile.onHit', p.source);
     }
+    this.arriving = [];
   }
 
-  clear() { this.list = []; }
+  clear() { this.list = []; this.arriving = []; this.speedAuras.clear(); }
 }

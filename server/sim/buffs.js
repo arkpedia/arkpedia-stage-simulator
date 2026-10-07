@@ -13,7 +13,7 @@ import { COLD_ASPD, COLD_FREEZE_DURATION, FREEZE_RES_DOWN, RESIST_DEFAULT } from
 export const ADD_KEYS = Object.freeze([
   'atkFlat', 'atkFinalFlat', 'atkPct', 'defFlat', 'defFinalFlat', 'defPct', 'hpFlat', 'hpFinalFlat', 'hpPct', 'resFlat', 'resPct', 'aspd', 'batFlat', 'batPct', 'blockCnt',
   'rangeExtend', 'defIgnoreFlat', 'defIgnorePct', 'resIgnoreFlat', 'resIgnorePct', 'dodgePhys', 'dodgeArts',
-  'spRecoveryFlat', 'maxTargets', 'taunt', 'hpRegen', 'hpRegenRatio', 'spCostFlat', 'moveFlat', 'massFlat',
+  'spRecoveryFlat', 'maxTargets', 'taunt', 'hpRegen', 'hpRegenRatio', 'spCostFlat', 'moveFlat', 'movePct', 'massFlat',
   'flatDamageResistance', 'damageHpFloorRatio',
 ]);
 /** Multiplicative mod keys (product; ^ stacks). */
@@ -163,6 +163,12 @@ export function makeBuff(b) {
     // or unknown type sets absorb nothing; absence preserves ordinary shields.
     shieldTypes: b.shieldTypes == null ? null : [...new Set(b.shieldTypes.filter(type =>
       ['phys', 'arts', 'true', 'elemental'].includes(type)))],
+    // Source barriers may distinguish melee/ranged applications and attacker
+    // side. These are independent filters; an omitted filter accepts all.
+    shieldApplyWays: b.shieldApplyWays == null ? null : [...new Set(b.shieldApplyWays.filter(way =>
+      ['melee', 'ranged', 'none'].includes(way)))],
+    shieldSourceSides: b.shieldSourceSides == null ? null : [...new Set(b.shieldSourceSides.filter(side =>
+      ['ally', 'enemy'].includes(side)))],
     persist: !!b.persist,
     status: b.status ?? null,
     visible: b.visible ?? false,

@@ -5,7 +5,7 @@
 //   res           = clamp((base + Σflat) × (1 + Σpct) × Πmul, 0, 100)
 //   aspd          = clamp(base + Σaspd, 20, 600)          (base is 100 for almost everyone; floor 20 = PRTS 数值范围)
 //   interval      = (bat + ΣbatFlat) × (1 + ΣbatPct) × ΠbatMul × 100 / aspd      (ΣbatPct floored at −0.9)
-//   moveSpeed     = (base + ΣmoveFlat) × ΠmoveMul          (tiles/s = moveSpeed × MOVE_SCALE)
+//   moveSpeed     = (base + ΣmoveFlat) × max(0, 1 + ΣmovePct) × ΠmoveMul (tiles/s = moveSpeed × MOVE_SCALE)
 //   massLevel     = max(0, base + ΣmassFlat)                (重量: displacement, 浮空 halving; 失重 = massFlat −1)
 // Changing maxHp keeps the HP ratio. The sim keeps floats; rounding happens only in snapshots.
 
@@ -131,7 +131,7 @@ export class Unit {
       maxHp, atk, def, res, aspd, bat,
       interval: (bat * 100) / aspd,
       blockCnt: Math.max(0, fin(Math.round((b.blockCnt + a('blockCnt')) * m('blockCntMul')), 0)),
-      moveSpeed: Math.max(0, fin((b.moveSpeed + a('moveFlat')) * m('moveMul'), fin(b.moveSpeed, 0))),
+      moveSpeed: Math.max(0, fin((b.moveSpeed + a('moveFlat')) * Math.max(0, 1 + a('movePct')) * m('moveMul'), fin(b.moveSpeed, 0))),
       rangeExtend: Math.max(0, Math.round(a('rangeExtend'))),
       baseRangeExtend: Math.max(0, fin(Math.round(permRangeExtend), 0)),   // permanent part (initial range)
       massLevel: Math.max(0, fin(fin(b.massLevel, 0) + a('massFlat'), 0)),

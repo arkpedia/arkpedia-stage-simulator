@@ -55,6 +55,12 @@ import { customizeSniperSixStarKit, installSniperSixStar } from './content/arkpe
 import { customizeSupportAuraKit, installSupportAura } from './content/arkpedia-support-auras.js';
 import { customizeGuardSixStarSecondKit, installGuardSixStarSecond } from './content/arkpedia-guard-six-star-second.js';
 import { customizeElementalCasterKit, installElementalCaster } from './content/arkpedia-elemental-casters.js';
+import { customizeBlessingExpansionKit, installBlessingExpansion } from './content/arkpedia-blessing-expansion.js';
+import { customizeGuardSixStarThirdKit, installGuardSixStarThird } from './content/arkpedia-guard-six-star-third.js';
+import { customizeCasterThirdKit, installCasterThird } from './content/arkpedia-caster-third.js';
+import { customizeRitualistKit } from './content/arkpedia-ritualists.js';
+import { customizeSupportControlKit, installSupportControl } from './content/arkpedia-support-control.js';
+import { customizeLucillaKit, installLucilla } from './content/arkpedia-lucilla.js';
 import { customizeFiveStarSupportFourthKit, installFiveStarSupportFourth } from './content/arkpedia-five-star-support-fourth.js';
 import { customizeFiveStarSpecialistExpansionKit, installFiveStarSpecialistExpansion } from './content/arkpedia-five-star-specialist-expansion.js';
 import { catalogueFor, recordFor } from "../../shared/arkpedia/loadout.js";
@@ -316,6 +322,12 @@ export class StandardBattle extends Battle {
     customizeSupportAuraKit({ battle: this, id, def, unit, kit });
     customizeGuardSixStarSecondKit({ battle: this, id, def, unit, kit });
     customizeElementalCasterKit({ battle: this, id, def, unit, kit });
+    customizeBlessingExpansionKit({ battle: this, id, def, unit, kit });
+    customizeGuardSixStarThirdKit({ battle: this, id, def, unit, kit });
+    customizeCasterThirdKit({ battle: this, id, def, unit, kit });
+    customizeRitualistKit({ battle: this, id, def, unit, kit });
+    customizeSupportControlKit({ battle: this, id, def, unit, kit });
+    customizeLucillaKit({ battle: this, id, def, unit, kit });
     customizeFiveStarSupportFourthKit({ battle: this, id, def, unit, kit });
     customizeFiveStarSpecialistExpansionKit({ battle: this, id, def, unit, kit });
     customizeFiveStarCasterOverloadKit({ battle: this, id, def, unit, kit });
@@ -393,6 +405,11 @@ export class StandardBattle extends Battle {
     installSupportAura({ battle: this, unit, def });
     installGuardSixStarSecond({ battle: this, unit, def });
     installElementalCaster({ battle: this, unit, def });
+    installBlessingExpansion({ battle: this, unit, def });
+    installGuardSixStarThird({ battle: this, unit, def });
+    installCasterThird({ battle: this, unit, def });
+    installSupportControl({ battle: this, unit, def });
+    installLucilla({ battle: this, unit, def });
     installFiveStarSupportFourth({ battle: this, unit, def });
     installFiveStarSpecialistExpansion({ battle: this, unit, def });
     installFiveStarCasterOverload({ battle: this, unit, def });
