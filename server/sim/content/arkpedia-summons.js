@@ -6,6 +6,7 @@ import { createMetalCrab, customizeBeanstalk, installBeanstalk } from './arkpedi
 import { installShamareDoll } from './arkpedia-five-star-support-third.js';
 import { installNightingaleCage } from './arkpedia-six-star-medic.js';
 import { installSilenceDrone } from './arkpedia-five-star-medic-fourth.js';
+import { createPhantomClone } from './arkpedia-phantom.js';
 
 const live = unit => unit?.alive && unit.deployed;
 const ownTokens = (battle, owner) => battle.allyUnits.filter(token =>
@@ -51,7 +52,8 @@ export function deployRegularSummon(battle, key, row, col, dir = 'RIGHT') {
   if (error) throw Error(error);
   if (!['UP', 'DOWN', 'LEFT', 'RIGHT'].includes(dir)) throw Error('Choose a facing direction.');
   const state = cardState(battle, key), source = evidence.tokens[state.record.id];
-  const token = state.config.tacticalPoint ? createMetalCrab(battle, state, row, col)
+  const token = state.ownerId === 'char_250_phatom' ? createPhantomClone(battle, state, row, col, dir)
+    : state.config.tacticalPoint ? createMetalCrab(battle, state, row, col)
     : battle.spawnToken(state.owner, state.record.id, row, col, {
     dir, def: state.record, kit: { skill: null, trait: { attack: 'melee',
       dmgType: 'phys', projectile: 'none', canHitFly: false,
@@ -67,7 +69,10 @@ export function deployRegularSummon(battle, key, row, col, dir = 'RIGHT') {
   token.deploymentSlotCost = state.config.deploymentSlotCost;
   token.mem.regularSummonCard = key;
   battle.getPlayer(state.owner.ownerId).dp -= state.record.stats.cost;
-  state.stock--; state.readyAt = battle.time + state.record.stats.respawnTime;
+  state.stock--;
+  // Phantom's original ON_FINISH token recharge starts the independent clock
+  // when the clone is removed. Existing consumable-token clocks stay unchanged.
+  if (state.ownerId !== 'char_250_phatom') state.readyAt = battle.time + state.record.stats.respawnTime;
   // The original Tentacle has no facing picker: its attack ability turns toward
   // the selected target; the one-tile source range is independent of direction.
   if (!state.config.chooseFacing) battle.on('beforeAttack', ctx => {
@@ -141,11 +146,13 @@ export function installSummoner({ battle, unit, def }) {
   const config = REGULAR_SUMMONS[def.id];
   if (!config || config.skillId && def.skill?.id !== config.skillId
     || config.minimumElite != null && def.raw.arkpedia.elite < config.minimumElite) return;
-  const key = summonCardId(def.id), record = summonRecordFor(def.id, def.raw.arkpedia, battle.data.raw.tokens);
+  const build = def.id === 'char_250_phatom' ? { ...def.raw.arkpedia, skillId: def.skill.id } : def.raw.arkpedia;
+  const key = summonCardId(def.id), record = summonRecordFor(def.id, build, battle.data.raw.tokens);
   if (!battle.regularSummons) battle.regularSummons = new Map();
   const previous = battle.regularSummons.get(key);
   const state = { key, ownerId: def.id, owner: unit, tokenId: record.id, config,
-    record, stock: config.additiveBornStock ? previous?.stock ?? 0 : 0, readyAt: battle.time, unit: null,
+    record, stock: config.additiveBornStock ? previous?.stock ?? 0 : 0,
+    readyAt: def.id === 'char_250_phatom' ? previous?.readyAt ?? battle.time : battle.time, unit: null,
     syncSkill: () => unit.mem.summonSkillSync?.(battle),
   };
   battle.regularSummons.set(key, state);
@@ -156,7 +163,8 @@ export function installSummoner({ battle, unit, def }) {
     if (deployed === unit) {
       const bornCount = config.stockLimit ? 0 : def.talents[config.talentIndex ?? 0].bb.cnt;
       state.stock = config.stockLimit ? 0 : config.additiveBornStock ? state.stock + bornCount : bornCount;
-      state.readyAt = battle.time;
+      if (def.id === 'char_250_phatom') state.stock = Math.min(1, state.stock);
+      else state.readyAt = battle.time;
       if (config.stockLimit) battle.removeBuff(unit, 'shamare:stock-full');
       if (def.id === 'char_108_silent') battle.removeBuff(unit, 'silence:stock-full');
     }

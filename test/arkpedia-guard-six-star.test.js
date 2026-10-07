@@ -45,7 +45,7 @@ test('three complete source kits retain nine original skills, all facings, indep
  const p=nodes(evidence.projectiles.projectile_svrash_s1);assert.ok(p.some(c=>c._lifeTime>.21&&c._lifeTime<.23));
  assert.equal(nodes(evidence.skills.skchr_svrash_1).find(c=>c._recoverSpIfTargetDead!=null)._recoverSpIfTargetDead,1);
  assert.equal(evidence.buffTemplates.helage_trait.eventToActions.ON_OUTPUT_DAMAGE[0]._ignoreHealFree,true);
- assert.match(evidence.deferredOperators.char_293_thorns.reason,/Whole kit deferred/);assert.match(evidence.deferredOperators.char_350_surtr.reason,/Whole kit deferred/);
+ assert.equal(evidence.deferredOperators.char_293_thorns,undefined);assert.equal(evidence.resolvedDeferrals.char_293_thorns.reviewedSuccessor,'data/arkpedia-thorns-prefabs.json');assert.match(evidence.deferredOperators.char_350_surtr.reason,/Whole kit deferred/);
  assert.ok(evidence.verificationLimits.some(v=>v.includes('refund')));
 });
 test('all nine skills and all ten source ranks load, while unlocks remain source gated',()=>{

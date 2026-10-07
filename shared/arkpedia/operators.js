@@ -50,6 +50,7 @@ import { GUARD_SIX_STAR_OPERATORS } from './guard-six-star-operators.js';
 import { FIVE_STAR_SNIPER_FOURTH_OPERATORS } from './five-star-sniper-fourth-operators.js';
 import { FIVE_STAR_SUPPORT_FOURTH_OPERATORS } from './five-star-support-fourth-operators.js';
 import { SNIPER_SIX_STAR_OPERATORS } from './sniper-six-star-operators.js';
+import { SNIPER_SIX_STAR_SECOND_OPERATORS } from './sniper-six-star-second-operators.js';
 import { SUPPORT_AURA_OPERATORS } from './support-aura-operators.js';
 import { GUARD_SIX_STAR_SECOND_OPERATORS } from './guard-six-star-second-operators.js';
 import { ELEMENTAL_CASTER_OPERATORS } from './elemental-caster-operators.js';
@@ -59,6 +60,9 @@ import { CASTER_THIRD_OPERATORS } from './caster-third-operators.js';
 import { RITUALIST_OPERATORS } from './ritualist-operators.js';
 import { SUPPORT_CONTROL_OPERATORS } from './support-control-operators.js';
 import { LUCILLA_OPERATORS } from './lucilla-operators.js';
+import { HOOK_EXPANSION_OPERATORS } from './hook-expansion-operators.js';
+import { PHANTOM_OPERATORS } from './phantom-operators.js';
+import { THORNS_OPERATORS } from './thorns-operators.js';
 import { FIVE_STAR_SPECIALIST_EXPANSION_OPERATORS } from './five-star-specialist-expansion-operators.js';
 export const REGULAR_OPERATORS = Object.freeze({
   char_123_fang: { skillId: "skcom_charge_cost[1]", talentKeys: ["cost"], mechanic: "dp", prefabId: "skcom_charge_cost", templateKey: "charge_cost" },
@@ -131,6 +135,7 @@ export const REGULAR_OPERATORS = Object.freeze({
   ...FIVE_STAR_SNIPER_FOURTH_OPERATORS,
   ...FIVE_STAR_SUPPORT_FOURTH_OPERATORS,
   ...SNIPER_SIX_STAR_OPERATORS,
+  ...SNIPER_SIX_STAR_SECOND_OPERATORS,
   ...SUPPORT_AURA_OPERATORS,
   ...GUARD_SIX_STAR_SECOND_OPERATORS,
   ...ELEMENTAL_CASTER_OPERATORS,
@@ -140,6 +145,9 @@ export const REGULAR_OPERATORS = Object.freeze({
   ...RITUALIST_OPERATORS,
   ...SUPPORT_CONTROL_OPERATORS,
   ...LUCILLA_OPERATORS,
+  ...THORNS_OPERATORS,
+  ...PHANTOM_OPERATORS,
+  ...HOOK_EXPANSION_OPERATORS,
   ...FIVE_STAR_SPECIALIST_EXPANSION_OPERATORS,
   ...Object.fromEntries(Object.entries(SUPPORT_EXPANSION_OPERATORS)
     .filter(([id]) => ['char_272_strong', 'char_4107_vrdant', 'char_4165_ctrail', 'char_110_deepcl', 'char_484_robrta', 'char_452_bstalk'].includes(id))),

@@ -45,7 +45,7 @@ function crit(b) { const r = () => 0; r.int = () => 0; r.chance = p => r() < p; 
 const talent = u => u.def.talents.find(v => v.bb.prob != null).bb;
 const nodes = rows => rows.flatMap(v => v.components);
 
-test('complete Schwarz kit retains original source fields, exact facings and held Exusiai blocker', () => {
+test('complete Schwarz kit retains original source fields, exact facings and reviewed Exusiai successor', () => {
   assert.deepEqual(Object.keys(configs), [ID]); assert.equal(configs[ID].criticalTalent, false);
   const char = nodes(evidence.characters[ID]);
   assert.equal(char.find(v => v._professionMask != null)._professionMask, 2);
@@ -59,7 +59,8 @@ test('complete Schwarz kit retains original source fields, exact facings and hel
   assert.equal(aliases.find(v => v.animKey === 'Skill').animName, 'Skill_Loop');
   const actions = evidence.buffTemplates.shwaz_t_1.eventToActions.ON_CALCULATE_DAMAGE;
   assert.match(actions[0].$type, /Dice/); assert.match(actions[1].$type, /AtkScaleUp/); assert.match(actions[2].$type, /CreateBuff/);
-  assert.match(evidence.deferredOperators.char_103_angel.reason, /two separate BASE_ATTACK_TIME/);
+  assert.equal(evidence.deferredOperators.char_103_angel, undefined);
+  assert.equal(evidence.resolvedDeferrals.char_103_angel.reviewedSuccessor, 'data/arkpedia-sniper-six-star-second-prefabs.json');
 });
 
 test('all three source skills and ten ranks load without inheriting mode-critical talent', () => {

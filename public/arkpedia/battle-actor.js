@@ -40,9 +40,12 @@ export class BattleActor extends SpineActor {
   }
 
   setRegularVisual(visual) {
-    const key = visual ? `${visual.clip}|${!!visual.loop}|${visual.attack || ''}|${visual.die || ''}` : null;
+    const speed = Number.isFinite(visual?.speed) && visual.speed > 0 ? visual.speed : 1;
+    const key = visual ? `${visual.clip}|${!!visual.loop}|${visual.attack || ''}|${visual.die || ''}|${speed}` : null;
     if (key === this.regularVisualKey) return;
     this.regularVisualKey = key;
+    this.regularVisualClip = visual?.clip ?? null;
+    this.regularVisualSpeed = speed;
     if (!visual) { this.setForm(null); return; }
     // Literal clip names come only from reviewed original-prefab presentation.
     // Missing clips never borrow another operator's form or manufacture a pose.
@@ -53,6 +56,15 @@ export class BattleActor extends SpineActor {
       skill: null,
     } : { skill: null };
     this.setForm(roles, !visual.loop && this.has(visual.clip) ? visual.clip : null);
+    if (!visual.loop && this.mode === 'change' && this.current === visual.clip)
+      this.changeUntil = this.clock + this.dur(visual.clip) / speed;
+  }
+
+  _play(name, loop, options = {}) {
+    // Apply only the literal reviewed form clip's alias speed. Explicit
+    // attack windup timing, other clips and other actors retain their rates.
+    return super._play(name, loop, { ...options, timeScale: options.timeScale
+      ?? (name === this.regularVisualClip ? this.regularVisualSpeed ?? 1 : 1) });
   }
 
   setSkill(on) {

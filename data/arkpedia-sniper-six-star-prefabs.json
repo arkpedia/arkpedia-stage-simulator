@@ -9059,11 +9059,15 @@
     "Source probability retained on born projectile across skill expiry/owner withdrawal; damage ATK uses existing pipeline current source stats, not recovered native cache ordering.",
     "Shared strongest DEF debuff channel uses lower multiplier; override priority and equal-priority refresh/native rounding require game comparison."
   ],
-  "deferredOperators": {
+  "deferredOperators": {},
+  "resolvedDeferrals": {
     "char_103_angel": {
-      "reason": "Whole kit deferred: S3 serializes two separate BASE_ATTACK_TIME formula0/loadFromBlackboard1 modifiers, including an unnamed fallback value -.1. Native per-buff blackboard binding/order is not recovered; do not drop or blindly double the modifier. Random-ally aura birth/replacement dispatch also needs verification before all three skills/second talent are enabled.",
-      "skill": "skchr_angel_3",
-      "randomAuraPathId": "-442373514342659821"
+      "previousEvidence": {
+        "reason": "Whole kit deferred: S3 serializes two separate BASE_ATTACK_TIME formula0/loadFromBlackboard1 modifiers, including an unnamed fallback value -.1. Native per-buff blackboard binding/order is not recovered; do not drop or blindly double the modifier. Random-ally aura birth/replacement dispatch also needs verification before all three skills/second talent are enabled.",
+        "skill": "skchr_angel_3",
+        "randomAuraPathId": "-442373514342659821"
+      },
+      "reviewedSuccessor": "data/arkpedia-sniper-six-star-second-prefabs.json"
     }
   }
 }

@@ -7,6 +7,46 @@ import { installFakePixi } from './render/fakepixi.js';
 let fake, BattleActor;
 before(async()=>{fake=installFakePixi();({BattleActor}=await import('../public/arkpedia/battle-actor.js'));});
 after(()=>fake.restore());
+
+test('literal form alias speed scales the transition and its clock without restarting across frames',()=>{
+  const entry={anims:{idle:'Idle',attack:{loop:'Attack'}},
+    animations:{Idle:1,Attack:1,Skill_End:.8},hits:{Attack:[.3]}};
+  const skeleton={animations:Object.keys(entry.animations).map(name=>({name}))};
+  const a=new BattleActor(skeleton,entry);
+  a.setRegularVisual({clip:'Skill_End',loop:false,speed:2});
+  assert.equal(a.current,'Skill_End');assert.equal(a.spine.state.tracks[0].timeScale,2);
+  assert.equal(a.changeUntil,.4);const track=a.spine.state.tracks[0];
+  a.update(.2);a.setRegularVisual({clip:'Skill_End',loop:false,speed:2});
+  assert.equal(a.spine.state.tracks[0],track);
+  a.update(.21);assert.equal(a.current,'Idle');
+  assert.equal(a.spine.state.tracks[0].timeScale,1);a.destroy();
+});
+
+test('literal loop speed remains local to the selected clip and actor and resets with the form',()=>{
+  const entry={anims:{idle:'Idle',attack:{loop:'Attack'}},
+    animations:{Idle:1,Attack:1,Skill_Loop:.6},hits:{Attack:[.3]}};
+  const skeleton={animations:Object.keys(entry.animations).map(name=>({name}))};
+  const a=new BattleActor(skeleton,entry),other=new BattleActor(skeleton,entry);
+  a.setRegularVisual({clip:'Skill_Loop',loop:true,speed:2});
+  assert.equal(a.current,'Skill_Loop');assert.equal(a.spine.state.tracks[0].timeScale,2);
+  assert.equal(other.spine.state.tracks[0].timeScale,1);
+  a.attack(1,false,{animation:'Attack',windup:.3});
+  assert.equal(a.current,'Attack');assert.ok(Math.abs(a.windUntil-a.clock-.3)<1e-9);
+  a.update(1.1);assert.equal(a.current,'Skill_Loop');assert.equal(a.spine.state.tracks[0].timeScale,2);
+  a.setRegularVisual(null);assert.equal(a.current,'Idle');assert.equal(a.spine.state.tracks[0].timeScale,1);
+  a.destroy();other.destroy();
+});
+
+test('invalid alias speeds fall back to original1 and absent clips never inherit another form speed',()=>{
+  const entry={anims:{idle:'Idle',attack:{loop:'Attack'}},animations:{Idle:1,Attack:1,End:.8}};
+  const skeleton={animations:Object.keys(entry.animations).map(name=>({name}))};
+  for(const speed of[NaN,Infinity,0,-2]) {
+    const a=new BattleActor(skeleton,entry);a.setRegularVisual({clip:'End',loop:false,speed});
+    assert.equal(a.spine.state.tracks[0].timeScale,1);assert.equal(a.changeUntil,.8);a.destroy();
+  }
+  const a=new BattleActor(skeleton,entry);a.setRegularVisual({clip:'Missing',loop:true,speed:2});
+  assert.equal(a.current,'Idle');assert.equal(a.spine.state.tracks[0].timeScale,1);a.destroy();
+});
 function actor(id,facing='Front',skill=1) {
   const source=evidence.operators[id].models[facing];
   const roles={idle:'Idle',deploy:'Start',attack:{loop:'Attack'},die:'Die',skills:{

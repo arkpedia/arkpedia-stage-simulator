@@ -15132,18 +15132,23 @@
     "Deck selectors are applied to regular operator cards, including bench/support, using original faction tags; token category membership and native card-list object dispatcher remain scoped outside these regular kits.",
     "Hellagur per-output self-heal, .25 HP-ratio sampling, no-block regeneration and independently mitigated double-hit semantics have combat tests; native buff trigger/FSM first-frame dispatch is retained as source interpretation.",
     "Original Unity particles, trails, materials and source skin-specific presentation are not recreated by these mechanics adapters. Attack/begin clip names and timings are preserved; shared projectile presentation remains approximate.",
-    "Thorns and Surtr remain wholly deferred: no guessed eventless counter clock or BleedingDamagePerSec increasing-to-cap HP-drain law is enabled.",
+    "Thorns is reviewed separately in arkpedia-thorns-prefabs.json. Surtr remains wholly deferred: the BleedingDamagePerSec increasing-to-cap HP-drain law is not guessed.",
     "Hellagur pending second release keeps the captured attack profile/identity across ordinary instant end or timed S2 expiry while requiring the same deployment/activation and remembering control. Source interruptAbilityOnDetach0 is retained, but exact native mode-expiry handoff and current-stat versus captured-stat output between the two animation events are not executable-recovered.",
     "Hellagur queued second strikes latch accepted action-stopping control applications even if control expires between simulation frames. The first damage and self-heal remain completed; instant-skill end does not by itself cancel the emitted second-strike sequence. Native C# dispatcher timing remains bounded."
   ],
   "deferredOperators": {
-    "char_293_thorns": {
-      "reason": "Whole kit deferred: S2 counter RangedAttack has empty animKey and waitForAttackEvent1, source Skill1_2 loop lacks OnAttack. Native TriggerAbility Thorn release/clock is not recovered; normal and S3 alone would not be a complete kit.",
-      "attackPathId": "6192807669408333701"
-    },
     "char_350_surtr": {
       "reason": "Whole kit deferred: native BleedingDamagePerSec increasing-to-cap law, including initial HP-ratio and per-tick ramp, is not executable-recovered. Selected interval .2/hp_ratio .2/duration60 do not uniquely determine the ramp. Fatal->undeadable source is retained but enabling only it/S1/S2 would omit the S3 mechanic.",
       "template": "surtr_s_3[bleeding]"
+    }
+  },
+  "resolvedDeferrals": {
+    "char_293_thorns": {
+      "previousEvidence": {
+        "reason": "Whole kit deferred: S2 counter RangedAttack has empty animKey and waitForAttackEvent1, source Skill1_2 loop lacks OnAttack. Native TriggerAbility Thorn release/clock is not recovered; normal and S3 alone would not be a complete kit.",
+        "attackPathId": "6192807669408333701"
+      },
+      "reviewedSuccessor": "data/arkpedia-thorns-prefabs.json"
     }
   }
 }

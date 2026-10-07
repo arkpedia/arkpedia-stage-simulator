@@ -52,6 +52,7 @@ import { customizeFiveStarVanguardThirdKit, installFiveStarVanguardThird } from 
 import { customizeGuardSixStarKit, installGuardSixStar, installGuardSixStarSquad } from './content/arkpedia-guard-six-star.js';
 import { customizeFiveStarSniperFourthKit, installFiveStarSniperFourth } from './content/arkpedia-five-star-sniper-fourth.js';
 import { customizeSniperSixStarKit, installSniperSixStar } from './content/arkpedia-sniper-six-star.js';
+import { customizeSniperSixStarSecondKit, installSniperSixStarSecond } from './content/arkpedia-sniper-six-star-second.js';
 import { customizeSupportAuraKit, installSupportAura } from './content/arkpedia-support-auras.js';
 import { customizeGuardSixStarSecondKit, installGuardSixStarSecond } from './content/arkpedia-guard-six-star-second.js';
 import { customizeElementalCasterKit, installElementalCaster } from './content/arkpedia-elemental-casters.js';
@@ -61,6 +62,9 @@ import { customizeCasterThirdKit, installCasterThird } from './content/arkpedia-
 import { customizeRitualistKit } from './content/arkpedia-ritualists.js';
 import { customizeSupportControlKit, installSupportControl } from './content/arkpedia-support-control.js';
 import { customizeLucillaKit, installLucilla } from './content/arkpedia-lucilla.js';
+import { customizeHookExpansionKit, installHookExpansion } from './content/arkpedia-hook-expansion.js';
+import { customizePhantomKit } from './content/arkpedia-phantom.js';
+import { customizeThornsKit, installThorns } from './content/arkpedia-thorns.js';
 import { customizeFiveStarSupportFourthKit, installFiveStarSupportFourth } from './content/arkpedia-five-star-support-fourth.js';
 import { customizeFiveStarSpecialistExpansionKit, installFiveStarSpecialistExpansion } from './content/arkpedia-five-star-specialist-expansion.js';
 import { catalogueFor, recordFor } from "../../shared/arkpedia/loadout.js";
@@ -319,6 +323,7 @@ export class StandardBattle extends Battle {
     customizeGuardSixStarKit({ battle: this, id, def, unit, kit });
     customizeFiveStarSniperFourthKit({ battle: this, id, def, unit, kit });
     customizeSniperSixStarKit({ battle: this, id, def, unit, kit });
+    customizeSniperSixStarSecondKit({ battle: this, id, def, unit, kit });
     customizeSupportAuraKit({ battle: this, id, def, unit, kit });
     customizeGuardSixStarSecondKit({ battle: this, id, def, unit, kit });
     customizeElementalCasterKit({ battle: this, id, def, unit, kit });
@@ -328,6 +333,9 @@ export class StandardBattle extends Battle {
     customizeRitualistKit({ battle: this, id, def, unit, kit });
     customizeSupportControlKit({ battle: this, id, def, unit, kit });
     customizeLucillaKit({ battle: this, id, def, unit, kit });
+    customizeThornsKit({ battle: this, id, def, unit, kit });
+    customizePhantomKit({ battle: this, id, def, unit, kit });
+    customizeHookExpansionKit({ battle: this, id, def, unit, kit });
     customizeFiveStarSupportFourthKit({ battle: this, id, def, unit, kit });
     customizeFiveStarSpecialistExpansionKit({ battle: this, id, def, unit, kit });
     customizeFiveStarCasterOverloadKit({ battle: this, id, def, unit, kit });
@@ -402,6 +410,7 @@ export class StandardBattle extends Battle {
     installGuardSixStar({ battle: this, unit, def });
     installFiveStarSniperFourth({ battle: this, unit, def });
     installSniperSixStar({ battle: this, unit, def });
+    installSniperSixStarSecond({ battle: this, unit, def });
     installSupportAura({ battle: this, unit, def });
     installGuardSixStarSecond({ battle: this, unit, def });
     installElementalCaster({ battle: this, unit, def });
@@ -410,6 +419,8 @@ export class StandardBattle extends Battle {
     installCasterThird({ battle: this, unit, def });
     installSupportControl({ battle: this, unit, def });
     installLucilla({ battle: this, unit, def });
+    installThorns({ battle: this, unit, def });
+    installHookExpansion({ battle: this, unit, def });
     installFiveStarSupportFourth({ battle: this, unit, def });
     installFiveStarSpecialistExpansion({ battle: this, unit, def });
     installFiveStarCasterOverload({ battle: this, unit, def });

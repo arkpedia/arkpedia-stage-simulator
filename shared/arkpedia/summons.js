@@ -1,6 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Only explicitly reviewed regular-stage tokens may enter the deployment deck.
 export const REGULAR_SUMMONS = Object.freeze({
+  char_250_phatom: Object.freeze({ tokenId: 'token_10007_phatom_twin',
+    deploymentSlotCost: 1, chooseFacing: true, healFree: true,
+    refundRatio: .5, minimumElite: 1, attackClip: 'Attack' }),
   char_108_silent: Object.freeze({ tokenId: 'token_10000_silent_healrb',
     deploymentSlotCost: 0, chooseFacing: false, healFree: false,
     refundRatio: .5, noAttack: true, skillId: 'skchr_silent_2', stockLimit: 1 }),
@@ -52,13 +55,42 @@ export function summonRecordFor(ownerId, build, tokens) {
   const talents = (source.talents ?? []).map(talent => sourceCandidate(talent.candidates, build))
     .filter(Boolean).map(talent => ({ ...talent, bb: blackboard(talent.blackboard) }));
   for (const talent of talents) stats.maxDeployCount += talent.bb.max_deploy_count ?? 0;
+  let skill = null;
+  if (ownerId === 'char_250_phatom') {
+    for (const talent of talents) stats.respawnTime += talent.bb.respawn_time ?? 0;
+    const index = ['skchr_phatom_1', 'skchr_phatom_2', 'skchr_phatom_3'].indexOf(build.skillId);
+    const id = ['sktok_phatom_1', 'sktok_phatom_2', 'sktok_phatom_3'][index];
+    const entry = source.skills?.find(row => row.id === id);
+    const unlock = entry?.unlockCondition;
+    const elite = phaseNumber(unlock?.phase);
+    if (!entry || !Number.isInteger(elite) || build.elite < elite
+      || build.elite === elite && build.level < unlock.level
+      || !Number.isSafeInteger(build.skillRank) || build.skillRank < 1
+      || build.skillRank > Math.min([4, 7, 10][build.elite], entry.levels.length))
+      throw Error('Unsupported Phantom clone skill or rank');
+    const level = entry.levels[build.skillRank - 1];
+    if (level.skillType !== 'PASSIVE' || level.prefabId !== id || level.spData.spCost !== 0)
+      throw Error('Unreviewed Phantom clone skill source');
+    const bb = blackboard(level.blackboard);
+    const keys = index === 0 ? ['prob', 'hp_ratio', 'duration'] : index === 1 ? ['times', 'atk']
+      : ['atk_scale', 'force', 'sluggish', 'root', 'stun'];
+    if (Object.keys(bb).length !== keys.length || keys.some(key => !Number.isFinite(bb[key]))
+      || index === 1 && (!Number.isSafeInteger(bb.times) || bb.times < 1)
+      || index === 2 && !level.rangeGrid?.length)
+      throw Error('Unreviewed Phantom clone blackboard or range');
+    skill = { skillId: id, name: level.name, skillType: level.skillType,
+      durationType: level.durationType, duration: level.duration,
+      rangeGrid: level.rangeGrid, ...level.spData, bb,
+      trigger: { rule: 'NEVER' } };
+  }
   if (config.tacticalPoint) stats.respawnTime = talents[0].bb.interval;
   if (!Number.isSafeInteger(stats.maxDeployCount) || stats.maxDeployCount < 1 || !phase.rangeGrid?.length)
     throw Error('Unsupported summon source limits or range');
   return { id: source.id, name: source.name, profession: source.profession,
     subProfessionId: source.subProfessionId, position: source.position, stats,
     rangeGrid: phase.rangeGrid, dmgType: 'phys', attackKind: 'melee', canHitFly: false,
-    abnormal: config.healFree ? ['healFree'] : [], talents, skill: null,
-    arkpedia: { elite: build.elite, level: build.level, potential: build.potential },
+    abnormal: config.healFree ? ['healFree'] : [], talents, skill,
+    arkpedia: { elite: build.elite, level: build.level, potential: build.potential,
+      ...(ownerId === 'char_250_phatom' ? { skillRank: build.skillRank } : {}) },
   };
 }
