@@ -125,6 +125,24 @@ test("coverage never enables an operator merely because Stronghold has a kit for
   assert.equal(op.gameFidelityVerified, false);
 });
 
+test('published artwork availability is reported independently from combat support and lazy battle assets', () => {
+  const operator = { name: 'Art-only', rarity: 'TIER_6', profession: 'WARRIOR', skills: [{ skillId: 'unreviewed' }] };
+  const model = { animationRoles: { idle: 'Idle', attack: { loop: 'Attack' } }, premultipliedAlpha: true };
+  const input = { characters: { char_art_only: operator }, enemies: { enemies: [] }, chess: {},
+    inherited: { chess: [] }, data };
+  const missing = coverageFor(input);
+  assert.equal(missing.operators[0].animations, 'not-imported');
+  const report = coverageFor({ ...input, assetModels: {
+    'operator/char_art_only/default/front': model, 'operator/char_art_only/default/back': model,
+  } });
+  assert.equal(report.summary.operatorsWithImportedAnimations, 1);
+  assert.equal(report.operators[0].animations, 'imported');
+  assert.equal(report.operators[0].playable, false);
+  assert.equal(report.operators[0].skills[0].regularAdapter, false);
+  assert.equal(report.summary.regularSkills, 0);
+  assert.equal(report.operators[0].gameFidelityVerified, false);
+});
+
 test("ordinary stages reject unsupported enemies and absent enemy records instead of using fallback combat", () => {
   const altered = structuredClone(data);
   const selection = { operators: [defaultBuild(data.operators.char_123_fang)] };

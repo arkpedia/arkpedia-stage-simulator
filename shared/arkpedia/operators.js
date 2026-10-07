@@ -32,6 +32,13 @@ import { FIVE_STAR_CASTER_UTILITY_OPERATORS } from './five-star-caster-utility-o
 import { FIVE_STAR_GUARD_FIFTH_OPERATORS } from './five-star-guard-fifth-operators.js';
 import { FIVE_STAR_MEDIC_OPERATORS } from './five-star-medic-operators.js';
 import { FIVE_STAR_SNIPER_SECOND_OPERATORS } from './five-star-sniper-second-operators.js';
+import { FIVE_STAR_SNIPER_THIRD_OPERATORS } from './five-star-sniper-third-operators.js';
+import { FIVE_STAR_MEDIC_SECOND_OPERATORS } from './five-star-medic-second-operators.js';
+import { FIVE_STAR_MEDIC_THIRD_OPERATORS } from './five-star-medic-third-operators.js';
+import { FIVE_STAR_DEFENDER_OPERATORS } from './five-star-defender-operators.js';
+import { FIVE_STAR_DEFENDER_SECOND_OPERATORS } from './five-star-defender-second-operators.js';
+import { FIVE_STAR_GUARD_SIXTH_OPERATORS } from './five-star-guard-sixth-operators.js';
+import { FIVE_STAR_VANGUARD_SECOND_OPERATORS } from './five-star-vanguard-second-operators.js';
 export const REGULAR_OPERATORS = Object.freeze({
   char_123_fang: { skillId: "skcom_charge_cost[1]", talentKeys: ["cost"], mechanic: "dp", prefabId: "skcom_charge_cost", templateKey: "charge_cost" },
   char_208_melan: { skillId: "skcom_atk_up[1]", talentKeys: ["atk"], mechanic: "buff" },
@@ -85,6 +92,13 @@ export const REGULAR_OPERATORS = Object.freeze({
   ...FIVE_STAR_GUARD_FIFTH_OPERATORS,
   ...FIVE_STAR_MEDIC_OPERATORS,
   ...FIVE_STAR_SNIPER_SECOND_OPERATORS,
+  ...FIVE_STAR_SNIPER_THIRD_OPERATORS,
+  ...FIVE_STAR_MEDIC_SECOND_OPERATORS,
+  ...FIVE_STAR_MEDIC_THIRD_OPERATORS,
+  ...FIVE_STAR_DEFENDER_OPERATORS,
+  ...FIVE_STAR_DEFENDER_SECOND_OPERATORS,
+  ...FIVE_STAR_GUARD_SIXTH_OPERATORS,
+  ...FIVE_STAR_VANGUARD_SECOND_OPERATORS,
   ...Object.fromEntries(Object.entries(SUPPORT_EXPANSION_OPERATORS)
     .filter(([id]) => ['char_272_strong', 'char_4107_vrdant', 'char_4165_ctrail', 'char_110_deepcl', 'char_484_robrta', 'char_452_bstalk'].includes(id))),
 });

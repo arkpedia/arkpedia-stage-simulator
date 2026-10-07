@@ -406,7 +406,10 @@ export class StageRenderer {
       for (const u of battle.units) {
         if (!u.alive) continue;
         live.add(u.id);
-        const back = u.side === "ally" && u.dir === "UP";
+        // Reviewed original abilities can explicitly face the Front skeleton
+        // while healing, even when the operator is deployed facing up.
+        const back = u.side === "ally" && u.dir === "UP"
+          && u.mem?.regularAttackFacing !== "Front" && !u.mem?.regularFormVisual?.forceFront;
         let key =
           u.side === "ally"
             ? `operator/${u.defId}/default/${back ? "back" : "front"}`
@@ -441,7 +444,6 @@ export class StageRenderer {
           u.y,
           this.heightAt(Math.round(u.y), Math.round(u.x)) + regularVisualHeight(formVisual, battle.time),
         );
-        const bound = view.actor.entry.bounds;
         // Common skeleton scale preserves the slug's smaller size relative to an operator.
         const scale = point.s / 400;
         view.facing = spriteFacing(u, view);
@@ -457,6 +459,7 @@ export class StageRenderer {
         view.actor.setSkill(
           !!u.skill?.active || battle.time < u.skillAnimUntil,
         );
+        view.actor.setRegularSkin(u.mem?.regularSpineSkin);
         view.actor.setRegularVisual(formVisual);
         // A deployment's entrance may finish while the combat clock is paused. Attacks and skills never advance then.
         view.actor.update(dt || (view.actor.mode === "deploy" ? realDt : 0));
@@ -464,7 +467,7 @@ export class StageRenderer {
         view.y = u.y;
         view.hp.clear();
         const w = Math.max(24, Math.min(96, point.s * 0.5)),
-          y = point.y - (bound?.height || 380) * scale,
+          y = point.y - view.actor.gaugeHeight * scale,
           x = point.x - w / 2;
         view.hp
           .beginFill(0x10191d, 0.9)

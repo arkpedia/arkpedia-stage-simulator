@@ -4,13 +4,44 @@
 // with the renderer's Spine parser. Publication and visual QA remain separate.
 import { readFile, writeFile, rename } from "node:fs/promises";
 import { resolve, join } from "node:path";
-import { pathToFileURL } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 import { parseArgs } from "node:util";
 import { parseSkel } from "../assets/skel.mjs";
 import { atlasInfo } from "../assets/atlas.mjs";
 import { resolveRoles } from "../assets/anim-roles.mjs";
 import { REGULAR_OPERATORS } from "../../shared/arkpedia/operators.js";
 
+/** Explicit exceptions must keep the same pinned catalogue identity and
+ * default model directory. Never map a missing original to a skin/other unit. */
+export function validateSourceOverrides({ ids, singleModels, fixedFrontModels, directoryMap, catalogue }) {
+  for (const set of [singleModels, fixedFrontModels])
+    if ([...set].some(id => !ids.includes(id))) throw Error('Facing override IDs must be explicitly imported');
+  if ([...singleModels].some(id => fixedFrontModels.has(id))) throw Error('Conflicting single/front facing overrides');
+  if (!directoryMap || typeof directoryMap !== 'object' || Array.isArray(directoryMap))
+    throw Error('Source directory map must be a JSON object');
+  for (const [id, directory] of Object.entries(directoryMap)) {
+    const char = catalogue[id];
+    if (!ids.includes(id) || !char || char.isNotObtainable || ['TOKEN', 'TRAP'].includes(char.profession))
+      throw Error('Mapped source IDs must be explicitly imported catalogue operators');
+    const match = /^spine\/(char_(\d+)_[a-z0-9]+)\/(char_(\d+)_[a-z0-9]+)$/.exec(directory);
+    if (!match || match[1] !== id || match[2] !== match[4])
+      throw Error('Mapped source directory must be the same operator default, without traversal or variants');
+  }
+}
+
+export function verifyFacingOverrides(source, { ids, singleModels, fixedFrontModels, directoryMap }) {
+  for (const id of ids) {
+    if (!singleModels.has(id) && !fixedFrontModels.has(id)) continue;
+    const directory = directoryMap[id] ?? `spine/${id}/${id}`;
+    const present = facing => source.listing(`${directory}/${facing}`).length > 0;
+    if (singleModels.has(id) && (!present('Spine') || present('Front') || present('Back')))
+      throw Error(`${id}: single-model override does not match the pinned original tree`);
+    if (fixedFrontModels.has(id) && (!present('Front') || present('Back') || present('Spine')))
+      throw Error(`${id}: fixed-front override does not match the pinned original tree`);
+  }
+}
+
+async function main() {
 const { values } = parseArgs({ options: {
   "asset-root": { type: "string", default: "../arkpedia-sd-assets" },
   "source-root": { type: "string" },
@@ -18,22 +49,33 @@ const { values } = parseArgs({ options: {
   "inspect-existing": { type: "boolean", default: false },
   "review-catalogue": { type: "boolean", default: false },
   "single-model-ids": { type: "string" },
+  "fixed-front-ids": { type: "string" },
+  "source-directory-map": { type: "string" },
 } });
 if (!/^[a-f0-9]{40}$/.test(values.commit ?? "") || !["true", "false"].includes(values.pma))
   throw Error("Required: --commit <full source SHA> --pma true|false (explicit blending setting)");
 const ids = values.ids?.split(",") ?? Object.keys(REGULAR_OPERATORS);
 const singleModels = new Set(values['single-model-ids']?.split(',') ?? []);
-if ([...singleModels].some(id => !ids.includes(id))) throw Error('Single-model IDs must be explicitly imported');
+const fixedFrontModels = new Set(values['fixed-front-ids']?.split(',') ?? []);
+const directoryMap = values['source-directory-map']
+  ? JSON.parse(await readFile(resolve(values['source-directory-map']), 'utf8')) : {};
 // Importing source animation files for review does not register combat support.
 // Review mode requires explicit IDs from the same pinned source catalogue.
-const catalogue = values['review-catalogue']
+const catalogue = values['review-catalogue'] || values['source-directory-map']
   ? JSON.parse(await readFile(new URL('../../.cache/arkpedia/character_table.json', import.meta.url), 'utf8')) : {};
 if (values['review-catalogue'] && !values.ids) throw Error('Review imports require explicit operator IDs');
 if (!ids.length || ids.some(id => !REGULAR_OPERATORS[id] &&
   !(values['review-catalogue'] && id.startsWith('char_') && catalogue[id] &&
     !catalogue[id].isNotObtainable && !['TOKEN', 'TRAP'].includes(catalogue[id].profession))))
   throw Error("Unknown regular-stage operator or source review ID");
+validateSourceOverrides({ ids, singleModels, fixedFrontModels, directoryMap, catalogue });
 const root = resolve(values["asset-root"]);
+if (singleModels.size || fixedFrontModels.size) {
+  if (!values['source-root']) throw Error('Explicit facing exceptions require a pinned local source checkout');
+  const { gitSource } = await import(pathToFileURL(join(root, 'scripts/source-git.mjs')));
+  verifyFacingOverrides(gitSource(values['source-root'], 'fexli/ArknightsResource', values.commit),
+    { ids, singleModels, fixedFrontModels, directoryMap });
+}
 const { importModel } = await import(pathToFileURL(join(root, "scripts/import-model.mjs")));
 const { validateManifest } = await import(pathToFileURL(join(root, "scripts/manifest.mjs")));
 const manifestPath = join(root, "manifest.json");
@@ -44,7 +86,7 @@ for (const id of ids) {
     const key = values['inspect-existing'] ? `operator/${id}/default/${facing}`
       : await importModel({ source: "operators", id, facing, commit: values.commit,
         sourceRoot: values['source-root'],
-        directory: `spine/${id}/${id}/${singleModels.has(id) ? 'Spine' : facing === "front" || support.fixedFrontModel || support.fixedFacing ? "Front" : "Back"}` });
+        directory: `${directoryMap[id] ?? `spine/${id}/${id}`}/${singleModels.has(id) ? 'Spine' : facing === "front" || fixedFrontModels.has(id) || support.fixedFrontModel || support.fixedFacing ? "Front" : "Back"}` });
     const manifest = JSON.parse(await readFile(manifestPath, "utf8"));
     const model = manifest.models[key];
     if (!model || model.source.commit !== values.commit) throw Error(`${key}: missing pinned original model`);
@@ -64,7 +106,7 @@ for (const id of ids) {
       throw Error(`${key}: missing idle/attack clips`);
     Object.assign(model, { premultipliedAlpha: values.pma === "true", animations: info.durations,
       animationRoles: roles, hits: info.hits, bounds: info.bounds });
-    if (support.fixedFrontModel || support.fixedFacing) model.source.facingAlias = 'fixed-original-front';
+    if (fixedFrontModels.has(id) || support.fixedFrontModel || support.fixedFacing) model.source.facingAlias = 'fixed-original-front';
     if (singleModels.has(id)) model.source.facingAlias = 'single-original-model';
     await validateManifest(manifest, root);
     const temporary = join(root, ".cache/runtime-manifest.json");
@@ -73,3 +115,6 @@ for (const id of ids) {
     console.log(`Inspected ${key}: ${info.animations.length} clips`);
   }
 }
+}
+
+if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) await main();

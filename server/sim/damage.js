@@ -4,6 +4,7 @@
 //   targeting.js evadesGround; not `ignoreSelect` damage: no selection, e.g. a debuff's tick) → 'hit' hook (mutable DamageInfo, may set cancel)
 //   → dodge (phys/arts, canDodge) → mitigation (phys: DEF, arts: RES, true: none)
 //   → × source dmgDealtMul (× phys/artsDealtMul) × target dmgTakenMul (not for 元素伤害) × type-taken mul × dmg.mul
+//   → optional 'damageFinal' hook (mutable final amount after mitigation and flat resistance)
 //   → 限伤 (leaders in boss / hidden battles: a hit of ceil(final) ≥ BOSS_HIT_LIMIT is cancelled, see leaderHitCancelled)
 //   → shields (hit-negating barriers first, then HP shields) → HP loss (boss pool routing) → 'damaged' hook
 //   → SP-on-hurt / TAKE_DAMAGE trigger → fatal/kill.
@@ -186,12 +187,13 @@ export function leaderHitCancelled(battle, target, amount) {
 }
 
 /** Absorb damage with shields on `target`. Returns the remaining amount. */
-export function absorbShields(battle, target, amount) {
+export function absorbShields(battle, target, amount, damageType = null) {
   if (amount <= 0) return 0;
   let changed = false;
   let rest = amount;
   for (let i = 0; i < target.buffs.length && rest > 0; i++) {
     const b = target.buffs[i];
+    if (b.shieldTypes && !b.shieldTypes.includes(damageType)) continue;
     if (b.shieldHits > 0) {
       b.shieldHits--;
       rest = 0;
@@ -202,6 +204,7 @@ export function absorbShields(battle, target, amount) {
   }
   for (let i = 0; i < target.buffs.length && rest > 0; i++) {
     const b = target.buffs[i];
+    if (b.shieldTypes && !b.shieldTypes.includes(damageType)) continue;
     if (b.shield > 0) {
       const take = Math.min(b.shield, rest);
       b.shield -= take;
@@ -252,7 +255,7 @@ export function dealDamage(battle, source, target, dmgIn) {
   // recognise their own (tagged) damage — never re-create such a loss with a fresh loseHp.
   if (ts.flags.hitCount || ts.flags.hitCountArts) {
     const counts = !(ts.flags.hitCountArts && !ts.flags.hitCount && type === 'phys');
-    return applyHpLoss(battle, source, target, absorbShields(battle, target, counts ? 1 : 0), dmg);
+    return applyHpLoss(battle, source, target, absorbShields(battle, target, counts ? 1 : 0, type), dmg);
   }
   // 无来源 damage (element bursts) takes nothing from its source's stats; the source still gets the credit below
   const ss = source && source.s && !dmg.sourceless ? source.s : null;
@@ -276,10 +279,19 @@ export function dealDamage(battle, source, target, dmgIn) {
   // opt-in (Friston-3); element gauge accumulation and HP loss bypass it.
   final = Math.max(0, final - (ts.flatDamageResistance ?? 0));
   if (!(final > 0) || !Number.isFinite(final)) final = 0;
+  // Opt-in source modifiers such as Rose Salt defer a share of the fully
+  // mitigated Physical/Arts amount. HP loss and element gauges bypass this
+  // path; dodge and cancellation have already resolved, shields have not.
+  if (battle._hooks.damageFinal) {
+    const ctx = { source: hs, target, dmg, credit: source, amount: final };
+    battle.emit('damageFinal', ctx);
+    if (dmg.cancel || !target.alive || !target.deployed) return 0;
+    final = Number.isFinite(ctx.amount) ? Math.max(0, ctx.amount) : 0;
+  }
   // 限伤: a leader's hit of ≥ BOSS_HIT_LIMIT in a boss / hidden battle is cancelled before it reaches shields / HP — what
   // ran before it (the attack, its SP, `hit` hook effects, separate element 损伤) stays; nothing after it happens
   if (final > 0 && leaderHitCancelled(battle, target, final)) return 0;
-  final = absorbShields(battle, target, final);
+  final = absorbShields(battle, target, final, type);
   return applyHpLoss(battle, source, target, final, dmg);
 }
 

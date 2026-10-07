@@ -150,7 +150,8 @@ const enemyRecords = Object.fromEntries(
   geometry.enemyConfigurations.map((config) => {
     const rows = enemies.enemies.find((e) => e.Key === config.enemy_id)?.Value;
     if (!rows) throw new Error(`Missing enemy: ${config.enemy_id}`);
-    const values = {},
+    // Undeclared overrides inherit the serialized base enum (normally NORMAL).
+    const values = { levelType: rows[0]?.enemyData.levelType?.m_value },
       stats = {};
     for (const row of rows.filter((r) => r.level <= config.database_level)) {
       for (const [k, v] of Object.entries(row.enemyData))
@@ -158,10 +159,13 @@ const enemyRecords = Object.fromEntries(
       for (const [k, v] of Object.entries(row.enemyData.attributes))
         if (v.m_defined) stats[k] = v.m_value;
     }
+    if (!['NORMAL', 'ELITE', 'BOSS'].includes(values.levelType))
+      throw new Error(`Unsupported source enemy rank: ${config.enemy_id}:${values.levelType}`);
     return [
       config.enemy_id,
       {
         name: values.name,
+        rank: values.levelType,
         motion: values.motion,
         applyWay: values.applyWay,
         lifePointReduce: values.lifePointReduce,
@@ -185,6 +189,7 @@ const sd = JSON.parse(
   execFileSync("git", ["show", `${sdCommit}:manifest.json`], {
     cwd: new URL("../../../arkpedia-sd-assets/", import.meta.url),
     encoding: "utf8",
+    maxBuffer: 16 * 1024 * 1024,
   }),
 );
 const modelKeys = [

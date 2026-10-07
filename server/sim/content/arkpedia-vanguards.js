@@ -54,7 +54,7 @@ export function customizeVanguardKit({ id, def, unit, kit }) {
     kit.skill.mods = { atkPct: bb.atk };
     if (skill.id === 'skchr_vigna_2') {
       // BASE_ATTACK_TIME ADDITION, not a percentage of an externally modified BAT.
-      kit.skill.mods.batPct = bb.base_attack_time / unit.base.bat;
+      kit.skill.mods.batFlat = bb.base_attack_time;
     }
   } else if (id === 'char_151_myrtle') {
     // Character-table override binds S1 to skchr_myrtle_1. Both channel modes

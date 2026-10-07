@@ -15,6 +15,28 @@ export class BattleActor extends SpineActor {
     this.attackDrivenSkill = attackDrivenSkill;
     this.attackVisualRole = null;
     this.regularVisualKey = null;
+    // Some source headers include distant effect attachments (Noir Corne's
+    // height exceeds 2,000 units). Measure the original resting pose once for
+    // a stable gauge anchor rather than following attacks or that header box.
+    this.spine.update(0);
+    const resting = this.spine.getLocalBounds?.();
+    this.gaugeHeight = resting?.height > 0 && Number.isFinite(resting.y) && resting.y < 0
+      ? -resting.y : entry.bounds?.height || 380;
+  }
+
+  setRegularSkin(name) {
+    // Reviewed prefab skin holders resolve to literal names in this skeleton.
+    // Change instance attachments only; preserve shared data and animation time.
+    if (name == null && this.regularSkinName === undefined) return false;
+    const skeleton = this.spine.skeleton;
+    if (!this.regularBaseSkin) this.regularBaseSkin = skeleton.skin ?? skeleton.data?.defaultSkin;
+    const desired = name == null ? this.regularBaseSkin : skeleton.data?.findSkin?.(name);
+    if (!desired || this.regularSkinName === desired.name) return false;
+    skeleton.setSkin(desired);
+    skeleton.setSlotsToSetupPose();
+    this.spine.state.apply(skeleton);
+    this.regularSkinName = desired.name;
+    return true;
   }
 
   setRegularVisual(visual) {

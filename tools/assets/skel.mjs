@@ -65,7 +65,10 @@ export function parseSkel(bytes, atlasRegions) {
   const r = loadRuntime();
   const missing = new Set();
   const bin = new r.SkeletonBinary(makeLoader(r, atlasRegions, missing));
-  const data = bin.readSkeletonData(bytes instanceof Uint8Array ? bytes : new Uint8Array(bytes));
+  // BinaryInput reads its ArrayBuffer from offset zero, ignoring byteOffset.
+  // Node file Buffers can share a pool; copy only this exact slice so another
+  // pooled file cannot be mistaken for the original skeleton header.
+  const data = bin.readSkeletonData(new Uint8Array(bytes));
   const animations = data.animations.map((a) => a.name);
   const durations = {};
   const hits = {};

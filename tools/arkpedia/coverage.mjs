@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import { readFile, writeFile } from "node:fs/promises";
 import { pathToFileURL } from "node:url";
+import { execFileSync } from 'node:child_process';
 import { kitCoverage } from "../kit-coverage.mjs";
 import { KITS, STATS_ONLY } from "../../server/sim/content/enemies.js";
 import { BOSS_KITS } from "../../server/sim/content/bosses.js";
@@ -9,7 +10,7 @@ import { REGULAR_OPERATORS, assertRegularOperator } from "../../shared/arkpedia/
 import { REGULAR_ENEMIES } from "../../shared/arkpedia/enemies.js";
 
 /** Source coverage, not a claim of game fidelity. Mode kits remain candidates. */
-export function coverageFor({ characters, enemies, chess, inherited, data }) {
+export function coverageFor({ characters, enemies, chess, inherited, data, assetModels = data.sd.models }) {
   const operators = Object.entries(characters)
     .filter(([id, op]) => id.startsWith("char_") && !op.isNotObtainable && !["TOKEN", "TRAP"].includes(op.profession))
     .sort(([a], [b]) => a.localeCompare(b))
@@ -17,7 +18,7 @@ export function coverageFor({ characters, enemies, chess, inherited, data }) {
       const imported = data.operators[id];
       if (imported) assertRegularOperator(imported);
       const candidates = inherited.chess.filter(row => chess[row.chessId]?.charId === id);
-      const models = ["front", "back"].map(f => data.sd.models[`operator/${id}/default/${f}`]);
+      const models = ["front", "back"].map(f => assetModels[`operator/${id}/default/${f}`]);
       return {
         id, name: op.name, rarity: Number(op.rarity.replace("TIER_", "")), archetype: op.subProfessionId,
         playable: !!imported,
@@ -50,6 +51,7 @@ export function coverageFor({ characters, enemies, chess, inherited, data }) {
     assets: { repository: data.sd.repository, commit: data.sd.commit },
     summary: {
       operators: operators.length, skills: operators.reduce((n, o) => n + o.skills.length, 0),
+      operatorsWithImportedAnimations: operators.filter(o => o.animations === 'imported').length,
       playableOperators: operators.filter(o => o.playable).length,
       regularSkills: operators.reduce((n, o) => n + o.skills.filter(s => s.regularAdapter).length, 0),
       skillsWithStrongholdCandidates: operators.reduce((n, o) => n + o.skills.filter(s => s.strongholdCandidates.length).length, 0),
@@ -68,7 +70,13 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
   ].map(read));
   if (Object.entries(pins).some(([repo, sha]) => data.sources[repo] !== sha))
     throw Error("Source cache pins differ from the playable snapshot; rebuild first");
-  const report = coverageFor({ characters, enemies, chess, inherited: kitCoverage(), data });
+  if (!/^[a-f0-9]{40}$/.test(data.sd.commit)) throw Error('Missing immutable SD asset revision');
+  // The battle snapshot lazy-loads only reviewed kits. Asset coverage includes
+  // the entire published catalogue at the same pin, without enabling combat.
+  const assetModels = JSON.parse(execFileSync('git', ['show', `${data.sd.commit}:manifest.json`], {
+    cwd: new URL('../../../arkpedia-sd-assets/', import.meta.url), encoding: 'utf8', maxBuffer: 16 * 1024 * 1024,
+  })).models;
+  const report = coverageFor({ characters, enemies, chess, inherited: kitCoverage(), data, assetModels });
   await writeFile(new URL("../../data/arkpedia-coverage.json", import.meta.url), `${JSON.stringify(report, null, 2)}\n`);
   console.log(JSON.stringify(report.summary));
 }

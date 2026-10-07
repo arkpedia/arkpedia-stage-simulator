@@ -1246,6 +1246,7 @@ export class Battle {
           old.duration = buff.duration;
           if (buff.mods) old.mods = buff.mods;
           if (buff.flags) old.flags = buff.flags;
+          if (buff.shield > 0 || buff.shieldHits > 0) old.shieldTypes = buff.shieldTypes;
           unit.markDirty();
           return old;
         case 'extend':
@@ -1253,6 +1254,7 @@ export class Battle {
           old.duration = Math.max(old.duration, buff.duration);
           if (buff.mods) old.mods = buff.mods;
           if (buff.flags) old.flags = buff.flags;
+          if (buff.shield > 0 || buff.shieldHits > 0) old.shieldTypes = buff.shieldTypes;
           if (buff.shield > old.shield) old.shield = buff.shield;
           if (buff.shieldHits > old.shieldHits) old.shieldHits = buff.shieldHits;
           unit.markDirty();

@@ -95,3 +95,26 @@ test('a control interruption cancels an uncompleted per-attack begin sequence',(
   a.attack(1.5,false,{animation:{begin:'Attack_Begin',loop:'Attack_Loop'},windup:1.367});
   a.die();a.update(2);assert.equal(a.attackBeginPending,null);assert.notEqual(a.current,'Attack_Loop');a.destroy();
 });
+
+test('reviewed original skin switches only instance attachments without restarting shared animations',()=>{
+ const{a,entry}=actor('char_4107_vrdant');const shared=structuredClone(entry);
+ const names=['default','White','Yellow','Red'],skins=names.map(name=>({name}));let updates=0,applies=0;
+ a.spine.skeleton.data={skins,defaultSkin:skins[0],findSkin:name=>skins.find(s=>s.name===name)};
+ a.spine.skeleton.skin=skins[0];a.spine.skeleton.setSkin=skin=>{a.spine.skeleton.skin=skin;updates++;};
+ a.spine.state.apply=()=>applies++;
+ a.attack(1.5,false,{animation:'Attack',windup:.433});a.update(.2);
+ const track=a.spine.state.tracks[0],time=track.trackTime,clock=a.clock,deadline=a.windUntil;
+ for(const name of names){assert.equal(a.setRegularSkin(name),true);assert.equal(a.spine.skeleton.skin.name,name);assert.equal(a.setRegularSkin(name),false);}
+ assert.equal(updates,4);assert.equal(applies,4);assert.equal(a.spine.state.tracks[0],track);assert.equal(track.trackTime,time);assert.equal(a.clock,clock);assert.equal(a.windUntil,deadline);
+ assert.equal(a.setRegularSkin('RedBlade'),false);assert.equal(a.spine.skeleton.skin.name,'Red');
+ assert.equal(a.setRegularSkin(null),true);assert.equal(a.spine.skeleton.skin.name,'default');assert.deepEqual(entry,shared);assert.deepEqual(skins.map(s=>s.name),names);a.destroy();
+});
+
+test('gauge anchor uses the original resting pose once despite distant source effect bounds',()=>{
+ const original=fake.P.spine.Spine.prototype.getLocalBounds;let calls=0;
+ fake.P.spine.Spine.prototype.getLocalBounds=function(){calls++;return{y:-355,height:380,x:-180,width:360};};
+ try{const entry={anims:{idle:'Idle',attack:{loop:'Attack'}},animations:{Idle:1,Attack:1},bounds:{height:2142.65}};
+ const a=new BattleActor({animations:[{name:'Idle'},{name:'Attack'}]},entry);
+ assert.equal(a.gaugeHeight,355);assert.equal(calls,1);a.deploy();a.update(1);a.attack(1);a.update(.5);assert.equal(a.gaugeHeight,355);assert.equal(calls,1);a.destroy();
+ }finally{if(original)fake.P.spine.Spine.prototype.getLocalBounds=original;else delete fake.P.spine.Spine.prototype.getLocalBounds;}
+});

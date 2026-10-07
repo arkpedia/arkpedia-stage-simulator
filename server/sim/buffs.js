@@ -153,6 +153,10 @@ export function makeBuff(b) {
     tags: b.tags ?? [],
     shield: b.shield ?? (b.mods && b.mods.shield) ?? 0,
     shieldHits: b.shieldHits ?? 0,
+    // Explicit source barriers can accept only certain HP-damage kinds. Empty
+    // or unknown type sets absorb nothing; absence preserves ordinary shields.
+    shieldTypes: b.shieldTypes == null ? null : [...new Set(b.shieldTypes.filter(type =>
+      ['phys', 'arts', 'true', 'elemental'].includes(type)))],
     persist: !!b.persist,
     status: b.status ?? null,
     visible: b.visible ?? false,

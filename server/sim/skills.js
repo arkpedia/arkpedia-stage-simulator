@@ -406,6 +406,12 @@ export class SkillRuntime {
   _defaultCondition() {
     const b = this.battle;
     const u = this.unit;
+    // Explicit source selectors may include targets that need no HP healing
+    // (for example, elemental injury). Other kits retain the legacy condition.
+    if (typeof this.spec.defaultCondition === 'function') {
+      const result = this.spec.defaultCondition(b, u);
+      if (typeof result === 'boolean') return result;
+    }
     if (b.rangeChanged(u)) b._refreshRange(u);
     const keys = u.baseRangeKeys || u.rangeKeys;
     if (keys) {

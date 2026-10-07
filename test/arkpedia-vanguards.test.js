@@ -215,3 +215,21 @@ test('Myrtle talent regenerates only deployed Vanguards including self and later
   const { b } = make([myrtle, courier]); const ally = deploy(b, courier, 2, 6), u = deploy(b, myrtle);
   near(ally.s.hpRegen, 25); b.kill(u); near(ally.s.hpRegen, 0);
 });
+
+test('Vigna S2 native flat BAT addition composes before external BAT percentage/final scale and changes actual attack cadence', () => {
+  const { b, source } = make([vigna], { [vigna]: { skillId: 'skchr_vigna_2', skillRank: 10 } }, { enemies: 1 });
+  const u = deploy(b, vigna); b.step(); const e = b.enemies[0]; pin(b, e, 7, 3);
+  const bb = bbOf(source.operators[vigna].skills[1].levels[9]);
+  b.addBuff(u, { key: 'test:BAT-composition', mods: { batFlat: .2, batPct: .3, batMul: .8, aspd: 20 } });
+  activate(b, u);
+  const interval = (u.base.bat + .2 + bb.base_attack_time) * 1.3 * .8 * 100 / u.s.aspd;
+  near(u.s.interval, interval); assert.equal(u.skill.spec.mods.batPct, undefined); near(u.skill.spec.mods.batFlat, bb.base_attack_time);
+  const releases = []; b.on('attack', ({ attacker }) => { if (attacker === u) releases.push(b.time); });
+  u.atkCd = 0; advance(b, interval * 3.1);
+  assert.ok(releases.length >= 3); for (let n = 1; n < releases.length; n++) {
+    assert.ok(releases[n] - releases[n - 1] >= interval - 1e-9);
+    assert.ok(releases[n] - releases[n - 1] < interval + b.dt + 1e-9);
+  }
+  u.atkCd = 1000; advance(b, 31);
+  near(u.s.interval, (u.base.bat + .2) * 1.3 * .8 * 100 / u.s.aspd);
+});
