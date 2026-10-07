@@ -43,10 +43,11 @@ if (!response.ok) throw Error("Stage data unavailable");
 const data = await response.json();
 const catalogue = catalogueFor(data);
 const ops = Object.values(data.operators);
+const rarityFolder = (op) => ["one", "two", "three", "four", "five", "six"][op.rarity - 1];
 const icon = (op) =>
-  `https://raw.githubusercontent.com/arkpedia/arkpedia-image-assets/${data.sources["arkpedia/arkpedia-image-assets"]}/three-star-icons/${encodeURIComponent(op.name + " - Base.webp")}`;
+  `https://raw.githubusercontent.com/arkpedia/arkpedia-image-assets/${data.sources["arkpedia/arkpedia-image-assets"]}/${rarityFolder(op)}-star-icons/${encodeURIComponent(op.name + " - Base.webp")}`;
 const artwork = (op) =>
-  `https://raw.githubusercontent.com/arkpedia/arkpedia-skin-assets/${data.sources["arkpedia/arkpedia-skin-assets"]}/three-star-skins/${encodeURIComponent(op.name + " - Base.webp")}`;
+  `https://raw.githubusercontent.com/arkpedia/arkpedia-skin-assets/${data.sources["arkpedia/arkpedia-skin-assets"]}/${rarityFolder(op)}-star-skins/${encodeURIComponent(op.name + " - Base.webp")}`;
 const statIcon = (name) =>
   `https://raw.githubusercontent.com/arkpedia/arkpedia-image-assets/${data.sources["arkpedia/arkpedia-image-assets"]}/stat-icons/${name}.webp`;
 function battleReadouts() {
@@ -104,7 +105,8 @@ function prep() {
 }
 function renderPrep() {
   const op = data.operators[editing],
-    b = builds[editing];
+    b = builds[editing],
+    skill = op.skills[0]?.levels[b.skillRank - 1];
   document.querySelector("#roster").innerHTML = ops
     .map(
       (o) =>
@@ -120,11 +122,11 @@ function renderPrep() {
   );
   document.querySelector("#build").innerHTML =
     `<div class="build-heading"><h3>${op.name}</h3><button id="toggle">${chosen.has(editing) ? "Remove from squad" : "Add to squad"}</button></div><div class="build-form">
- <label>Elite<select id="elite"><option value="0" ${b.elite === 0 ? "selected" : ""}>E0</option><option value="1" ${b.elite === 1 ? "selected" : ""}>E1</option></select></label>
+ <label>Elite<select id="elite" ${op.phases.length === 1 ? "disabled" : ""}>${op.phases.map((p, elite) => `<option value="${elite}" ${b.elite === elite ? "selected" : ""}>E${elite}</option>`).join("")}</select></label>
  <label>Level<input id="level" type="number" min="1" max="${op.phases[b.elite].maxLevel}" value="${b.level}"></label>
- <label>Skill rank<input id="skillRank" type="number" min="1" max="${b.elite ? 7 : 4}" value="${b.skillRank}"></label>
+ <label>Skill rank<input id="skillRank" type="number" min="1" max="${b.elite ? 7 : 4}" value="${b.skillRank ?? ""}" ${skill ? "" : 'disabled placeholder="No skill"'}></label>
  <label>Potential<input id="potential" type="number" min="1" max="6" value="${b.potential}"></label>
- <label>Trust %<input id="trust" type="number" min="0" max="200" value="${b.trust}"></label></div><p class="help" style="margin-top:12px">${escape(op.skills[0].levels[b.skillRank - 1].name)} · ${op.skills[0].levels[b.skillRank - 1].skillType === "MANUAL" ? "Manual activation" : "Auto activation"}</p>`;
+ <label>Trust %<input id="trust" type="number" min="0" max="200" value="${b.trust}"></label></div><p class="help" style="margin-top:12px">${skill ? `${escape(skill.name)} · ${skill.skillType === "MANUAL" ? "Manual activation" : "Auto activation"}` : "This operator has no skills."}</p>`;
   document.querySelector("#toggle").onclick = () => {
     chosen.has(editing) ? chosen.delete(editing) : chosen.add(editing);
     if (chosen.has(supportId)) supportId = "";
@@ -137,7 +139,7 @@ function renderPrep() {
       b[field] = value;
       if (field === "elite") {
         b.level = Math.min(b.level, op.phases[value]?.maxLevel ?? 1);
-        b.skillRank = Math.min(b.skillRank, value ? 7 : 4);
+        if (op.skills.length) b.skillRank = Math.min(b.skillRank, value ? 7 : 4);
       }
       try {
         recordFor(b, data);
@@ -155,7 +157,7 @@ function renderPrep() {
       .filter((o) => !chosen.has(o.id))
       .map(
         (o) =>
-          `<option value="${o.id}" ${supportId === o.id ? "selected" : ""}>${o.name} · E1 Lv55 / S1 rank 7 / Pot6 / trust 200%</option>`,
+          `<option value="${o.id}" ${supportId === o.id ? "selected" : ""}>${o.name} · E${o.phases.length - 1} Lv${o.phases.at(-1).maxLevel} / ${o.skills.length ? "S1 rank 7" : "No skill"} / Pot${catalogue[o.id].maxPotential} / trust 200%</option>`,
       )
       .join("");
   document.querySelector("#start").disabled = chosen.size === 0 || loading;
@@ -392,12 +394,12 @@ function operatorDetails(build, unit) {
   const hp = unit?.hp ?? record.stats.maxHp;
   const maxHp = stats?.maxHp ?? record.stats.maxHp;
   const hud = unit ? skillHud(unit.skill) : null;
-  const level = data.operators[build.id].skills[0].levels[build.skillRank - 1];
+  const level = data.operators[build.id].skills[0]?.levels[build.skillRank - 1];
   const recovery = {
     INCREASE_WITH_TIME: "Auto recovery",
     INCREASE_WHEN_ATTACK: "Offensive recovery",
     INCREASE_WHEN_TAKEN_DAMAGE: "Defensive recovery",
-  }[level.spData.spType] || "Passive";
+  }[level?.spData.spType] || "Passive";
   const numbers = [
     ["ATK", stats?.atk ?? record.stats.atk],
     ["DEF", stats?.def ?? record.stats.def],
@@ -408,11 +410,11 @@ function operatorDetails(build, unit) {
     <dl class="operator-stats">${numbers.map(([label, value]) => `<div><dt>${label}</dt><dd>${Math.round(value)}</dd></div>`).join("")}</dl>
     <div class="hp-readout"><span>HP</span><strong>${Math.ceil(hp)} / ${Math.round(maxHp)}</strong></div>
     <div class="meter hp"><span style="width:${Math.max(0, hp / maxHp) * 100}%"></span></div>
-    <section class="operator-skill"><h3>${escape(level.name)} <small>Rank ${build.skillRank}</small></h3>
+    ${level ? `<section class="operator-skill"><h3>${escape(level.name)} <small>Rank ${build.skillRank}</small></h3>
     <div class="skill-tags"><span class="${level.spData.spType === "INCREASE_WITH_TIME" ? "auto" : "manual"}">${recovery}</span><span class="${level.skillType === "AUTO" ? "auto" : "manual"}">${level.skillType === "AUTO" ? "Auto activation" : level.skillType === "MANUAL" ? "Manual activation" : "Passive"}</span>${level.duration > 0 ? `<span>${level.duration}s</span>` : ""}</div>
     <p class="sp-readout">${hud?.text.replace(/ · (?:Auto|Manual) activation/g, "") || `${level.spData.initSp} / ${level.spData.spCost} SP on deployment`}</p>
     ${hud ? `<div class="meter ${hud.state}"><span style="width:${hud.fraction * 100}%"></span></div>` : ""}
-    <p class="skill-description">${skillDescription(level)}</p></section>`;
+    <p class="skill-description">${skillDescription(level)}</p></section>` : ""}`;
 }
 function drawHud() {
   if (!workspace || !battle) return;
@@ -553,7 +555,7 @@ function drawHud() {
       command.innerHTML = `<div class="operator-portrait"><img src="${artwork(op)}" alt="${escape(op.name)} base artwork" draggable="false"><h2>${escape(op.name)}</h2></div>
         <button class="inspector-close" aria-label="Close operator details">×</button>
         <div class="command-copy">${copy}</div>
-        <div class="command-actions">${unit ? `${unit.skill.manual ? '<button id="skill" class="primary">Activate skill</button>' : ""}<button id="retreat">Retreat</button>` : '<button id="cancel">Cancel selection</button>'}</div>`;
+        <div class="command-actions">${unit ? `${!unit.skill.noSkill && unit.skill.manual ? '<button id="skill" class="primary">Activate skill</button>' : ""}<button id="retreat">Retreat</button>` : '<button id="cancel">Cancel selection</button>'}</div>`;
       command.dataset.selection = selected;
       command.dataset.alive = String(!!unit);
       command.querySelector(".inspector-close").onclick = () => {

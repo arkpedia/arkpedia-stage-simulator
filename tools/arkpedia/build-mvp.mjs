@@ -59,13 +59,15 @@ const ids = Object.keys(REGULAR_OPERATORS);
 const operators = Object.fromEntries(
   ids.map((id) => {
     const c = characters[id];
-    if (!c || c.phases.length !== 2 || c.skills.length !== 1)
+    if (!c || !(c.rarity === "TIER_3" && c.phases.length === 2 && c.skills.length === 1
+      || c.rarity === "TIER_2" && c.phases.length === 1 && c.skills.length === 0))
       throw new Error(`Unsupported operator shape: ${id}`);
     return [
       id,
       {
         id,
         name: c.name,
+        rarity: Number(c.rarity.replace("TIER_", "")),
         profession: c.profession,
         subProfessionId: c.subProfessionId,
         position: c.position,

@@ -32,12 +32,12 @@ export function catalogueFor(data) {
 export function defaultBuild(op) {
   return {
     id: op.id,
-    elite: 1,
-    level: 55,
+    elite: op.phases.length - 1,
+    level: op.phases.at(-1).maxLevel,
     potential: 1,
     trust: 0,
-    skillId: op.skills[0].id,
-    skillRank: 7,
+    skillId: op.skills[0]?.id ?? null,
+    skillRank: op.skills.length ? (op.phases.length > 1 ? 7 : 4) : null,
   };
 }
 function interpolate(frames, level) {
@@ -100,9 +100,12 @@ export function recordFor(build, data) {
   for (const talent of talents)
     for (const [key, modifier] of Object.entries({ atk: "atkPct", def: "defPct", max_hp: "hpPct", attack_speed: "aspd" }))
       if (talent.bb[key]) modifiers[modifier] = (modifiers[modifier] ?? 0) + talent.bb[key];
-  for (const talent of talents) stats.cost += talent.bb.cost ?? 0;
-  const level = op.skills[0].levels[build.skillRank - 1];
-  const skill = {
+  for (const talent of talents) {
+    stats.cost += talent.bb.cost ?? 0;
+    stats.respawnTime += talent.bb.respawn_time ?? 0;
+  }
+  const level = op.skills[0]?.levels[build.skillRank - 1];
+  const skill = level ? {
     skillId: build.skillId,
     name: level.name,
     skillType: level.skillType,
@@ -119,13 +122,13 @@ export function recordFor(build, data) {
             ? "SP_FULL"
             : "DEFAULT",
     },
-  };
+  } : null;
   return {
     chessId: op.id,
     baseId: op.id,
     charId: op.id,
     name: op.name,
-    rarity: 3,
+    rarity: op.rarity,
     profession: op.profession,
     subProfessionId: op.subProfessionId,
     position: op.position,

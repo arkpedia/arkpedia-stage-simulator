@@ -193,7 +193,7 @@ export class StandardBattle extends Battle {
       def = this.data.getChess(id),
       ps = this.getPlayer("arkpedia");
     const unit = this._makeAlly(ps, def, "op", row, col, { dir });
-    const kit = genericKit(def.skill.bb, def.raw, def);
+    const kit = genericKit(def.skill?.bb ?? {}, def.raw, def);
     const mechanic = REGULAR_OPERATORS[id].mechanic;
     if (mechanic === "dp")
       kit.skill.onStart = ({ battle, unit }) =>
@@ -284,6 +284,7 @@ export class StandardBattle extends Battle {
     const unit = this.bench[id]?.unit;
     return !!(
       unit?.alive &&
+      !unit.skill.noSkill &&
       unit.skill.manual &&
       unit.skill.activate("manual")
     );

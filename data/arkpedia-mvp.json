@@ -34,7 +34,7 @@
   },
   "sd": {
     "repository": "arkpedia/arkpedia-sd-assets",
-    "commit": "0a5485535a51c4c06cf213666bec99f455bd011b",
+    "commit": "34f2f4051ec8295ab81e6a57ee1310685cbe8750",
     "models": {
       "operator/char_123_fang/default/front": {
         "kind": "operator",
@@ -2429,6 +2429,145 @@
           "height": 376.001
         }
       },
+      "operator/char_502_nblade/default/front": {
+        "kind": "operator",
+        "id": "char_502_nblade",
+        "variant": "default",
+        "facing": "front",
+        "spineVersion": "3.8.99",
+        "source": {
+          "key": "operators",
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "spine/char_502_nblade/char_502_nblade/Front"
+        },
+        "skeleton": {
+          "path": "models/operator/char_502_nblade/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_502_nblade.skel",
+          "bytes": 57439,
+          "sha256": "9a3d170d408e87431980b42717fe694203ad2c104b48129001b468c5b250a7aa"
+        },
+        "atlas": {
+          "path": "models/operator/char_502_nblade/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_502_nblade.atlas",
+          "bytes": 4039,
+          "sha256": "71f946a0d4d9433c284a8ef7b683b879ac861f1463e56d0d66025764824cb562"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_502_nblade/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_502_nblade.png",
+            "bytes": 57453,
+            "sha256": "e09db74ba7505241bd4a45e9d23630002cefd29e59b7211e2d18b4cbbcdeb1ac"
+          }
+        ],
+        "premultipliedAlpha": false,
+        "animations": {
+          "Attack": 1,
+          "Default": 0,
+          "Die": 0.933,
+          "Idle": 1,
+          "Start": 1
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null
+          },
+          "attackDown": null,
+          "skill": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null,
+            "via": "attack",
+            "index": 0,
+            "idle": null
+          },
+          "die": "Die",
+          "move": null,
+          "stun": null
+        },
+        "hits": {
+          "Attack": [
+            0.267
+          ]
+        },
+        "bounds": {
+          "x": -121.457,
+          "y": -2.297,
+          "width": 301.017,
+          "height": 404
+        }
+      },
+      "operator/char_502_nblade/default/back": {
+        "kind": "operator",
+        "id": "char_502_nblade",
+        "variant": "default",
+        "facing": "back",
+        "spineVersion": "3.8.99",
+        "source": {
+          "key": "operators",
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "spine/char_502_nblade/char_502_nblade/Back"
+        },
+        "skeleton": {
+          "path": "models/operator/char_502_nblade/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_502_nblade.skel",
+          "bytes": 44371,
+          "sha256": "4ac9bc039ad86cb2dabcf04dff5fa2176503985a7e28080e186cca82209cfff3"
+        },
+        "atlas": {
+          "path": "models/operator/char_502_nblade/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_502_nblade.atlas",
+          "bytes": 3081,
+          "sha256": "c4b8682fb1e0eb861cc7f48594dfee1201f9532bac77e51cdd9285516271d7bc"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_502_nblade/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_502_nblade.png",
+            "bytes": 46546,
+            "sha256": "3aeccb433d0990b81647f52c240606b4dbe7e04ae541d1d184f02640016124e5"
+          }
+        ],
+        "premultipliedAlpha": false,
+        "animations": {
+          "Attack": 1,
+          "Default": 0,
+          "Idle": 1,
+          "Start": 1
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null
+          },
+          "attackDown": null,
+          "skill": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null,
+            "via": "attack",
+            "index": 0,
+            "idle": null
+          },
+          "die": null,
+          "move": null,
+          "stun": null
+        },
+        "hits": {
+          "Attack": [
+            0.267
+          ]
+        },
+        "bounds": {
+          "x": -121.813,
+          "y": -1.797,
+          "width": 301.223,
+          "height": 404.5
+        }
+      },
       "enemy/enemy_1002_nsabr/default/default": {
         "kind": "enemy",
         "id": "enemy_1002_nsabr",
@@ -3147,7 +3286,7 @@
     },
     "art": {
       "repository": "arkpedia/arkpedia-sd-assets",
-      "commit": "0a5485535a51c4c06cf213666bec99f455bd011b",
+      "commit": "34f2f4051ec8295ab81e6a57ee1310685cbe8750",
       "scene": {
         "path": "stages/0-1/26-09-23-17-49-43_b9cc4a/scene.json",
         "bytes": 4479,
@@ -3156,7 +3295,7 @@
     },
     "gates": {
       "repository": "arkpedia/arkpedia-sd-assets",
-      "commit": "0a5485535a51c4c06cf213666bec99f455bd011b",
+      "commit": "34f2f4051ec8295ab81e6a57ee1310685cbe8750",
       "pack": {
         "path": "effects/standard-gates/26-09-23-17-49-43_b9cc4a/gates.json",
         "bytes": 3507,
@@ -3168,6 +3307,7 @@
     "char_123_fang": {
       "id": "char_123_fang",
       "name": "Fang",
+      "rarity": 3,
       "profession": "PIONEER",
       "subProfessionId": "pioneer",
       "position": "MELEE",
@@ -3643,6 +3783,7 @@
     "char_208_melan": {
       "id": "char_208_melan",
       "name": "Melantha",
+      "rarity": 3,
       "profession": "WARRIOR",
       "subProfessionId": "fearless",
       "position": "MELEE",
@@ -4138,6 +4279,7 @@
     "char_122_beagle": {
       "id": "char_122_beagle",
       "name": "Beagle",
+      "rarity": 3,
       "profession": "TANK",
       "subProfessionId": "protector",
       "position": "MELEE",
@@ -4625,6 +4767,7 @@
     "char_124_kroos": {
       "id": "char_124_kroos",
       "name": "Kroos",
+      "rarity": 3,
       "profession": "SNIPER",
       "subProfessionId": "fastshot",
       "position": "RANGED",
@@ -5279,6 +5422,7 @@
     "char_120_hibisc": {
       "id": "char_120_hibisc",
       "name": "Hibiscus",
+      "rarity": 3,
       "profession": "MEDIC",
       "subProfessionId": "physician",
       "position": "RANGED",
@@ -5846,6 +5990,7 @@
     "char_210_stward": {
       "id": "char_210_stward",
       "name": "Steward",
+      "rarity": 3,
       "profession": "CASTER",
       "subProfessionId": "corecaster",
       "position": "RANGED",
@@ -6401,6 +6546,7 @@
     "char_240_wyvern": {
       "id": "char_240_wyvern",
       "name": "Vanilla",
+      "rarity": 3,
       "profession": "PIONEER",
       "subProfessionId": "pioneer",
       "position": "MELEE",
@@ -6931,6 +7077,7 @@
     "char_209_ardign": {
       "id": "char_209_ardign",
       "name": "Cardigan",
+      "rarity": 3,
       "profession": "TANK",
       "subProfessionId": "protector",
       "position": "MELEE",
@@ -7418,6 +7565,7 @@
     "char_278_orchid": {
       "id": "char_278_orchid",
       "name": "Orchid",
+      "rarity": 3,
       "profession": "SUPPORT",
       "subProfessionId": "slower",
       "position": "RANGED",
@@ -8028,6 +8176,7 @@
     "char_192_falco": {
       "id": "char_192_falco",
       "name": "Plume",
+      "rarity": 3,
       "profession": "PIONEER",
       "subProfessionId": "charger",
       "position": "MELEE",
@@ -8558,6 +8707,7 @@
     "char_281_popka": {
       "id": "char_281_popka",
       "name": "Popukar",
+      "rarity": 3,
       "profession": "WARRIOR",
       "subProfessionId": "centurion",
       "position": "MELEE",
@@ -9105,6 +9255,7 @@
     "char_211_adnach": {
       "id": "char_211_adnach",
       "name": "Adnachiel",
+      "rarity": 3,
       "profession": "SNIPER",
       "subProfessionId": "fastshot",
       "position": "RANGED",
@@ -9672,6 +9823,7 @@
     "char_121_lava": {
       "id": "char_121_lava",
       "name": "Lava",
+      "rarity": 3,
       "profession": "CASTER",
       "subProfessionId": "splashcaster",
       "position": "RANGED",
@@ -10247,6 +10399,7 @@
     "char_282_catap": {
       "id": "char_282_catap",
       "name": "Catapult",
+      "rarity": 3,
       "profession": "SNIPER",
       "subProfessionId": "aoesniper",
       "position": "RANGED",
@@ -10806,6 +10959,7 @@
     "char_283_midn": {
       "id": "char_283_midn",
       "name": "Midnight",
+      "rarity": 3,
       "profession": "WARRIOR",
       "subProfessionId": "lord",
       "position": "MELEE",
@@ -11397,6 +11551,7 @@
     "char_212_ansel": {
       "id": "char_212_ansel",
       "name": "Ansel",
+      "rarity": 3,
       "profession": "MEDIC",
       "subProfessionId": "physician",
       "position": "RANGED",
@@ -12031,6 +12186,7 @@
     "char_284_spot": {
       "id": "char_284_spot",
       "name": "Spot",
+      "rarity": 3,
       "profession": "TANK",
       "subProfessionId": "guardian",
       "position": "MELEE",
@@ -12867,6 +13023,231 @@
           ]
         }
       ]
+    },
+    "char_502_nblade": {
+      "id": "char_502_nblade",
+      "name": "Yato",
+      "rarity": 2,
+      "profession": "PIONEER",
+      "subProfessionId": "pioneer",
+      "position": "MELEE",
+      "phases": [
+        {
+          "maxLevel": 30,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 721,
+                "atk": 150,
+                "def": 134,
+                "magicResistance": 0,
+                "cost": 7,
+                "blockCnt": 2,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.05,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 30,
+              "data": {
+                "maxHp": 1030,
+                "atk": 232,
+                "def": 192,
+                "magicResistance": 0,
+                "cost": 7,
+                "blockCnt": 2,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.05,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ]
+        }
+      ],
+      "favorKeyFrames": [
+        {
+          "level": 0,
+          "data": {
+            "maxHp": 0,
+            "atk": 0,
+            "def": 0,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false
+          }
+        },
+        {
+          "level": 50,
+          "data": {
+            "maxHp": 0,
+            "atk": 30,
+            "def": 0,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false
+          }
+        }
+      ],
+      "potentialRanks": [
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "RESPAWN_TIME",
+            "formulaItem": "ADDITION",
+            "value": -5,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "ATK",
+            "formulaItem": "ADDITION",
+            "value": 9,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "ATK",
+            "formulaItem": "ADDITION",
+            "value": 9,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ]
+      ],
+      "talents": [
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_0",
+                "level": 30
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Fast Redeployment",
+              "description": "Redeployment Time -30 seconds",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "respawn_time",
+                  "value": -30,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            }
+          ]
+        }
+      ],
+      "skills": []
     }
   },
   "enemies": {
@@ -12911,7 +13292,7 @@
   },
   "skillEffects": {
     "repository": "arkpedia/arkpedia-sd-assets",
-    "commit": "0a5485535a51c4c06cf213666bec99f455bd011b",
+    "commit": "34f2f4051ec8295ab81e6a57ee1310685cbe8750",
     "pack": {
       "path": "effects/charge-cost/26-09-23-17-49-43_b9cc4a/effect.json",
       "bytes": 15311,

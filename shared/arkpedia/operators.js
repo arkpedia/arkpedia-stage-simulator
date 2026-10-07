@@ -19,11 +19,14 @@ export const REGULAR_OPERATORS = Object.freeze({
   char_283_midn: { skillId: "skchr_midn_1", talentKeys: ["prob", "atk_scale"], mechanic: "arts-lord" },
   char_212_ansel: { skillId: "skcom_range_extend", talentKeys: ["attack@prob"], mechanic: "extra-heal" },
   char_284_spot: { skillId: "skchr_spot_1", talentKeys: ["prob", "duration"], mechanic: "healing-stance" },
+  char_502_nblade: { skillId: null, talentKeys: ["respawn_time"], mechanic: "fast-redeploy" },
 });
 
 export function assertRegularOperator(op) {
   const support = REGULAR_OPERATORS[op?.id];
-  if (!support || op.skills?.length !== 1 || op.skills[0].id !== support.skillId)
+  if (!support || !Array.isArray(op.skills) || (support.skillId === null
+    ? op.skills.length !== 0
+    : op.skills.length !== 1 || op.skills[0].id !== support.skillId))
     throw new Error(`Unsupported regular-stage operator or skill: ${op?.id}`);
   for (const talent of op.talents ?? [])
     for (const candidate of talent.candidates)
