@@ -246,3 +246,47 @@ test('Ansel expands healing range by the source number of forward tiles and appl
     advance(b,level.duration+.1);near(u.s.atk,base);assert.deepEqual([...u.rangeKeys],normal);
   }
 });
+
+test('Spot switches from physical attacks to source-range healing without releasing blocked enemies, then restores his normal mode',()=>{
+  const id='char_284_spot';
+  for(let rank=1;rank<=7;rank++) {
+    const source=structuredClone(data);source.stage.geometry.waves[0].spawns=[{enemy_id:'enemy_1007_slime',count:1,time:0,interval:0,route:1}];
+    Object.assign(source.enemies.enemy_1007_slime.stats,{maxHp:100000,atk:0,moveSpeed:0});
+    const builds=[id,'char_281_popka'].map(id=>({...defaultBuild(source.operators[id]),potential:5,skillRank:rank}));
+    const b=new StandardBattle(source,{operators:builds});b.autoFinish=false;b.setViewport('fullscreen-workspace');b.addDp('arkpedia',99);
+    const u=b.deployOperator(id,2,7,'RIGHT'),ally=b.deployOperator('char_281_popka',2,6,'RIGHT');u.atkCd=100;ally.atkCd=100;b.step();
+    const enemy=b.enemies[0];u.blocking=[enemy];enemy.blockedBy=u;
+    const normal=[...u.rangeKeys],atk=u.s.atk,interval=u.s.interval;
+    const level=source.operators[id].skills[0].levels[rank-1],bb=Object.fromEntries(level.blackboard.map(e=>[e.key,e.value]));
+    ally.hp=1;assert.equal(effectiveProfile(u).dmgType,'phys');
+    u.skill.gainSp(u.skill.spCost,'test');assert.equal(b.activateOperator(id),true);
+    near(u.s.interval,(u.base.bat+bb.base_attack_time)*100/u.s.aspd);near(u.s.atk-atk,u.base.atk*bb.atk);
+    assert.equal(effectiveProfile(u).dmgType,'heal');assert.equal(u.s.blockCnt,3);assert.equal(enemy.blockedBy,u);
+    assert.equal(u.rangeKeys.length,9);assert.deepEqual(acquireTargets(b,u,effectiveProfile(u)),[ally]);
+    const hp=enemy.hp;b.forceAttack(u,acquireTargets(b,u,effectiveProfile(u)));assert.ok(ally.hp>1);near(enemy.hp,hp);
+    near(ally.s.dodgePhys,.25);near(ally.s.dodgeArts,0);assert.equal(recordFor(builds[0],source).arkpedia.critical,undefined);
+    advance(b,3.1);near(ally.s.dodgePhys,0);
+    advance(b,level.duration);assert.equal(effectiveProfile(u).dmgType,'phys');near(u.s.interval,interval);near(u.s.atk,atk);assert.deepEqual([...u.rangeKeys],normal);
+  }
+});
+
+test('Spot provides promotion/potential-dependent physical dodge, refreshes its duration without stacking, and has none at E0',()=>{
+  const id='char_284_spot';
+  for(const [elite,level,potential,dodge] of [[0,40,1,0],[1,1,1,.1],[1,1,5,.15],[1,55,1,.2],[1,55,5,.25]]) {
+    const {b}=make(id,{elite,level,potential,rank:4});const u=b.deployOperator(id,2,7,'RIGHT');u.atkCd=100;
+    u.skill.gainSp(u.skill.spCost,'test');b.activateOperator(id);u.hp=1;b.forceAttack(u,[u]);near(u.s.dodgePhys,dodge);
+    advance(b,2);u.hp=1;b.forceAttack(u,[u]);near(u.s.dodgePhys,dodge);
+    advance(b,2);near(u.s.dodgePhys,dodge);advance(b,1.1);near(u.s.dodgePhys,0);
+    near(u.s.dodgeArts,0);assert.deepEqual(b.errors,[]);
+  }
+});
+
+test('the larger catalogue still accepts exactly twelve squad members plus one distinct maxed support',()=>{
+  const ids=Object.keys(data.operators),source=structuredClone(data);source.stage.geometry.waves[0].spawns=[];
+  const operators=ids.slice(0,12).map(id=>defaultBuild(source.operators[id]));
+  const support={id:'char_284_spot',skillId:source.operators.char_284_spot.skills[0].id};
+  const b=new StandardBattle(source,{operators,support});
+  assert.equal(Object.keys(b.bench).length,13);
+  assert.equal(b.cost(support.id),15);
+  assert.throws(()=>new StandardBattle(source,{operators:ids.slice(0,13).map(id=>defaultBuild(source.operators[id]))}),/12/);
+});

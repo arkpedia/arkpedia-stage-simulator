@@ -81,7 +81,8 @@ const operators = Object.fromEntries(
         talents: c.talents,
         skills: c.skills.map((s) => ({
           id: s.skillId,
-          levels: skills[s.skillId].levels.slice(0, 7),
+          levels: skills[s.skillId].levels.slice(0, 7).map(level => level.rangeId
+            ? { ...level, rangeGrid: ranges[level.rangeId].grids.map(p => [p.row, p.col]) } : level),
         })),
       },
     ];

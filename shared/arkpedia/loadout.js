@@ -108,6 +108,7 @@ export function recordFor(build, data) {
     skillType: level.skillType,
     durationType: level.durationType,
     duration: level.duration,
+    rangeGrid: level.rangeGrid,
     ...level.spData,
     bb: bb(level.blackboard),
     trigger: {
@@ -140,7 +141,7 @@ export function recordFor(build, data) {
     talents,
     arkpedia: {
       modifiers,
-      critical: talents.find((t) => t.bb.prob)?.bb,
+      critical: talents.find((t) => t.bb.prob && t.bb.atk_scale)?.bb,
       highDef: op.id === "char_210_stward" && build.elite >= 1,
     },
   };

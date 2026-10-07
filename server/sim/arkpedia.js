@@ -206,6 +206,16 @@ export class StandardBattle extends Battle {
         onStart: ({ battle, unit }) =>
           battle.heal(unit, unit, unit.s.maxHp * def.skill.bb.heal_scale, { self: true }),
       };
+    if (mechanic === "healing-stance") {
+      // Client prefab: BASE_ATTACK_TIME uses ADDITION, not a percentage.
+      kit.skill.mods.batPct = def.skill.bb.base_attack_time / unit.base.bat;
+      kit.skill.attack = { dmgType: "heal", heal: { mode: "single", count: 1 } };
+      const talent = def.talents[0]?.bb;
+      if (talent) kit.skill.onHit = ({ battle, unit, target, heal }) => {
+        if (heal > 0) battle.addBuff(target, { key: `spot:dodge:${unit.id}`, source: unit,
+          duration: talent.duration, mods: { dodgePhys: talent.prob } });
+      };
+    }
     this._setupUnit(unit, kit);
     if (mechanic === "blast-area")
       unit.skill.spec.attack = { splashRadius: unit.profile.splashRadius * def.skill.bb["attack@range_scale"] };

@@ -34,7 +34,7 @@
   },
   "sd": {
     "repository": "arkpedia/arkpedia-sd-assets",
-    "commit": "45b0b2b0e2a8c93858bb6b784b7483919466d85d",
+    "commit": "0a5485535a51c4c06cf213666bec99f455bd011b",
     "models": {
       "operator/char_123_fang/default/front": {
         "kind": "operator",
@@ -2284,6 +2284,151 @@
         },
         "bounds": null
       },
+      "operator/char_284_spot/default/front": {
+        "kind": "operator",
+        "id": "char_284_spot",
+        "variant": "default",
+        "facing": "front",
+        "spineVersion": "3.8.99",
+        "source": {
+          "key": "operators",
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "spine/char_284_spot/char_284_spot/Front"
+        },
+        "skeleton": {
+          "path": "models/operator/char_284_spot/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_284_spot.skel",
+          "bytes": 74103,
+          "sha256": "3350a6d49027617b7893afd8482d8f642c198110dbd805fbc964e537a28b75e3"
+        },
+        "atlas": {
+          "path": "models/operator/char_284_spot/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_284_spot.atlas",
+          "bytes": 7489,
+          "sha256": "3defd46fd65e45e31bb4995c0023b6b668a4240c69838ac201442118312302ae"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_284_spot/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_284_spot.png",
+            "bytes": 96131,
+            "sha256": "9bf61f28e1a563ba003f9a199e502712a871cc9d1d8bdb4409c992c6a92ce0a4"
+          }
+        ],
+        "premultipliedAlpha": false,
+        "animations": {
+          "Attack": 1,
+          "Default": 0,
+          "Die": 1,
+          "Idle": 1,
+          "Skill": 1,
+          "Start": 1
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null
+          },
+          "attackDown": null,
+          "skill": {
+            "begin": null,
+            "loop": "Skill",
+            "end": null,
+            "index": 0,
+            "idle": null
+          },
+          "die": "Die",
+          "move": null,
+          "stun": null
+        },
+        "hits": {
+          "Attack": [
+            0.5
+          ],
+          "Skill": [
+            0.567
+          ]
+        },
+        "bounds": {
+          "x": -268.755,
+          "y": -1.448,
+          "width": 419.95,
+          "height": 455.603
+        }
+      },
+      "operator/char_284_spot/default/back": {
+        "kind": "operator",
+        "id": "char_284_spot",
+        "variant": "default",
+        "facing": "back",
+        "spineVersion": "3.8.99",
+        "source": {
+          "key": "operators",
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "spine/char_284_spot/char_284_spot/Back"
+        },
+        "skeleton": {
+          "path": "models/operator/char_284_spot/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_284_spot.skel",
+          "bytes": 60468,
+          "sha256": "c5bd6f6251920c526ea4b8e0fb942ec730f6289a40ccae3baa9cde7d931f8328"
+        },
+        "atlas": {
+          "path": "models/operator/char_284_spot/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_284_spot.atlas",
+          "bytes": 4424,
+          "sha256": "91c387f073b8cf543063c0321187d6a8cc92c2acfe8eba453a0450be85b2ac28"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_284_spot/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_284_spot.png",
+            "bytes": 73143,
+            "sha256": "50d4dc4ce9cc64c8e2b4faaf2970d6c6e5c8afd6dd485b715ba4c75e216be62e"
+          }
+        ],
+        "premultipliedAlpha": false,
+        "animations": {
+          "Attack": 1,
+          "Default": 0,
+          "Idle": 1,
+          "Skill": 1,
+          "Start": 1
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null
+          },
+          "attackDown": null,
+          "skill": {
+            "begin": null,
+            "loop": "Skill",
+            "end": null,
+            "index": 0,
+            "idle": null
+          },
+          "die": null,
+          "move": null,
+          "stun": null
+        },
+        "hits": {
+          "Attack": [
+            0.5
+          ],
+          "Skill": [
+            0.567
+          ]
+        },
+        "bounds": {
+          "x": -223.42,
+          "y": -0.943,
+          "width": 374.217,
+          "height": 376.001
+        }
+      },
       "enemy/enemy_1002_nsabr/default/default": {
         "kind": "enemy",
         "id": "enemy_1002_nsabr",
@@ -3002,7 +3147,7 @@
     },
     "art": {
       "repository": "arkpedia/arkpedia-sd-assets",
-      "commit": "45b0b2b0e2a8c93858bb6b784b7483919466d85d",
+      "commit": "0a5485535a51c4c06cf213666bec99f455bd011b",
       "scene": {
         "path": "stages/0-1/26-09-23-17-49-43_b9cc4a/scene.json",
         "bytes": 4479,
@@ -3011,7 +3156,7 @@
     },
     "gates": {
       "repository": "arkpedia/arkpedia-sd-assets",
-      "commit": "45b0b2b0e2a8c93858bb6b784b7483919466d85d",
+      "commit": "0a5485535a51c4c06cf213666bec99f455bd011b",
       "pack": {
         "path": "effects/standard-gates/26-09-23-17-49-43_b9cc4a/gates.json",
         "bytes": 3507,
@@ -11882,6 +12027,846 @@
           ]
         }
       ]
+    },
+    "char_284_spot": {
+      "id": "char_284_spot",
+      "name": "Spot",
+      "profession": "TANK",
+      "subProfessionId": "guardian",
+      "position": "MELEE",
+      "phases": [
+        {
+          "maxLevel": 40,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 1057,
+                "atk": 165,
+                "def": 225,
+                "magicResistance": 10,
+                "cost": 15,
+                "blockCnt": 2,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.2,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 40,
+              "data": {
+                "maxHp": 1429,
+                "atk": 236,
+                "def": 331,
+                "magicResistance": 10,
+                "cost": 15,
+                "blockCnt": 2,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.2,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ]
+          ]
+        },
+        {
+          "maxLevel": 55,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 1429,
+                "atk": 236,
+                "def": 331,
+                "magicResistance": 10,
+                "cost": 17,
+                "blockCnt": 3,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.2,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 55,
+              "data": {
+                "maxHp": 1833,
+                "atk": 320,
+                "def": 442,
+                "magicResistance": 10,
+                "cost": 17,
+                "blockCnt": 3,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.2,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ]
+          ]
+        }
+      ],
+      "favorKeyFrames": [
+        {
+          "level": 0,
+          "data": {
+            "maxHp": 0,
+            "atk": 0,
+            "def": 0,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false
+          }
+        },
+        {
+          "level": 50,
+          "data": {
+            "maxHp": 0,
+            "atk": 30,
+            "def": 30,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false
+          }
+        }
+      ],
+      "potentialRanks": [
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "RESPAWN_TIME",
+            "formulaItem": "ADDITION",
+            "value": -4,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "DEF",
+            "formulaItem": "ADDITION",
+            "value": 24,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [],
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ]
+      ],
+      "talents": [
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Smoke Installation",
+              "description": "Heals an ally and then provides 10% Physical Dodge for 3 seconds",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "prob",
+                  "value": 0.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "duration",
+                  "value": 3,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 1
+              },
+              "requiredPotentialRank": 4,
+              "prefabKey": "1",
+              "name": "Smoke Installation",
+              "description": "Heals an ally and then provides 15% <@ba.talpu>(+5%)</> Physical Dodge for 3 seconds",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "prob",
+                  "value": 0.15,
+                  "valueStr": null
+                },
+                {
+                  "key": "duration",
+                  "value": 3,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 55
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Smoke Installation",
+              "description": "Heals an ally and then provides 20% Physical Dodge for 3 seconds",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "prob",
+                  "value": 0.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "duration",
+                  "value": 3,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 55
+              },
+              "requiredPotentialRank": 4,
+              "prefabKey": "1",
+              "name": "Smoke Installation",
+              "description": "Heals an ally and then provides 25% <@ba.talpu>(+5%)</> Physical Dodge for 3 seconds",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "prob",
+                  "value": 0.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "duration",
+                  "value": 3,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            }
+          ]
+        }
+      ],
+      "skills": [
+        {
+          "id": "skchr_spot_1",
+          "levels": [
+            {
+              "name": "Secondary Healing Mode",
+              "rangeId": "x-4",
+              "description": "ATK <@ba.vup>+{atk:0%}</>; Stops attacking and focuses on healing surrounding allies",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 40,
+                "initSp": 15,
+                "increment": 1
+              },
+              "prefabId": "skchr_spot_1",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.15,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": 1.3,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Secondary Healing Mode",
+              "rangeId": "x-4",
+              "description": "ATK <@ba.vup>+{atk:0%}</>; Stops attacking and focuses on healing surrounding allies",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 40,
+                "initSp": 15,
+                "increment": 1
+              },
+              "prefabId": "skchr_spot_1",
+              "duration": 16,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": 1.3,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Secondary Healing Mode",
+              "rangeId": "x-4",
+              "description": "ATK <@ba.vup>+{atk:0%}</>; Stops attacking and focuses on healing surrounding allies",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 40,
+                "initSp": 15,
+                "increment": 1
+              },
+              "prefabId": "skchr_spot_1",
+              "duration": 17,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": 1.3,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Secondary Healing Mode",
+              "rangeId": "x-4",
+              "description": "ATK <@ba.vup>+{atk:0%}</>; Stops attacking and focuses on healing surrounding allies",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 40,
+                "initSp": 20,
+                "increment": 1
+              },
+              "prefabId": "skchr_spot_1",
+              "duration": 20,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": 1.3,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Secondary Healing Mode",
+              "rangeId": "x-4",
+              "description": "ATK <@ba.vup>+{atk:0%}</>; Stops attacking and focuses on healing surrounding allies",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 40,
+                "initSp": 20,
+                "increment": 1
+              },
+              "prefabId": "skchr_spot_1",
+              "duration": 21,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.35,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": 1.3,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Secondary Healing Mode",
+              "rangeId": "x-4",
+              "description": "ATK <@ba.vup>+{atk:0%}</>; Stops attacking and focuses on healing surrounding allies",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 40,
+                "initSp": 20,
+                "increment": 1
+              },
+              "prefabId": "skchr_spot_1",
+              "duration": 22,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": 1.3,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Secondary Healing Mode",
+              "rangeId": "x-4",
+              "description": "ATK <@ba.vup>+{atk:0%}</>; Stops attacking and focuses on healing surrounding allies",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 40,
+                "initSp": 25,
+                "increment": 1
+              },
+              "prefabId": "skchr_spot_1",
+              "duration": 25,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.45,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": 1.3,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            }
+          ]
+        }
+      ]
     }
   },
   "enemies": {
@@ -11926,7 +12911,7 @@
   },
   "skillEffects": {
     "repository": "arkpedia/arkpedia-sd-assets",
-    "commit": "45b0b2b0e2a8c93858bb6b784b7483919466d85d",
+    "commit": "0a5485535a51c4c06cf213666bec99f455bd011b",
     "pack": {
       "path": "effects/charge-cost/26-09-23-17-49-43_b9cc4a/effect.json",
       "bytes": 15311,
