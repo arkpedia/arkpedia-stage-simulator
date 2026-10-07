@@ -498,7 +498,7 @@ export class StageRenderer {
         if (u.side === "ally")
           operatorLabels.set(
             `${u.tileR},${u.tileC}`,
-            `${u.name}, row ${u.tileR + 1}, column ${u.tileC + 1}. ${skill?.text || "Passive skill"}`,
+            `${u.name}, row ${u.tileR + 1}, column ${u.tileC + 1}. ${skill?.text || (u.skill?.noSkill ? "No skills" : "Passive skill")}`,
           );
       }
       for (const [id, v] of this.views)

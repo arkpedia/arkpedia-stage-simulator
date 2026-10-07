@@ -122,3 +122,19 @@ function checkDodge(id,eligibleType) {
 test('Durin unlocks 50% Arts-only dodge at level 30, without dodging physical/true damage or gaining a critical talent',()=>{
   checkDodge('char_501_durin','arts');
 });
+
+test('12F unlocks 50% physical-only dodge at level 30, without dodging Arts or true damage',()=>{
+  checkDodge('char_009_12fce','phys');
+});
+
+test('12F deals Arts splash to nearby enemies, leaves distant enemies untouched, and keeps his source attack interval',()=>{
+  const id='char_009_12fce',{b}=make(id,{potential:6,enemies:3});
+  const u=b.deployOperator(id,1,7,'UP');u.atkCd=100;b.step();
+  const [primary,nearby,outside]=b.enemies;
+  for(const e of b.enemies){e.y=2;e.base.def=100000;e.base.res=0;b.addBuff(e,{key:'test:pin',persist:true,flags:{noMove:true}});}
+  primary.x=5;nearby.x=5.5;outside.x=7;b.step();
+  const before=b.enemies.map(e=>e.hp);b.forceAttack(u,[primary]);advance(b,2);
+  near(before[0]-primary.hp,u.s.atk);near(before[1]-nearby.hp,u.s.atk);near(outside.hp,before[2]);
+  assert.equal(u.profile.dmgType,'arts');near(u.s.interval,2.9);
+  near(u.s.atk,u.base.atk);assert.equal(u.profile.maxTargets,1);
+});

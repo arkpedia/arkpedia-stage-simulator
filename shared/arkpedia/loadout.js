@@ -101,6 +101,8 @@ export function recordFor(build, data) {
   for (const talent of talents)
     for (const [key, modifier] of Object.entries({ atk: "atkPct", def: "defPct", max_hp: "hpPct", attack_speed: "aspd" }))
       if (talent.bb[key]) modifiers[modifier] = (modifiers[modifier] ?? 0) + talent.bb[key];
+  if (support.mechanic === "dodge-phys")
+    modifiers.dodgePhys = talents[0]?.bb.prob ?? 0;
   if (support.mechanic === "dodge-arts")
     modifiers.dodgeArts = talents[0]?.bb.prob ?? 0;
   for (const talent of talents) {
