@@ -2,10 +2,13 @@
 import * as THREE from "/vendor/three.module.js";
 import { fitCamera, syncThreeCamera, pickTile } from "/js/render/projection.js";
 import { BattleActor } from "./battle-actor.js";
+import { regularVisualHeight } from "./regular-form-visual.js";
 import { createAssets } from "/js/assets.js";
 import { regionEdges } from "/shared/arkpedia/placement.js";
 import { spriteFacing } from "/shared/arkpedia/facing.js";
 import { skillHud } from "/shared/arkpedia/skill-hud.js";
+import { REGULAR_SUMMONS } from "/shared/arkpedia/summons.js";
+import { artBase } from "/shared/arkpedia/stage-art.js";
 import { loadStageArt } from "./stage-art.js";
 import { loadGates } from "./gates.js";
 import { loadSkillParticles, SkillParticleLayer } from "./particles.js";
@@ -157,7 +160,7 @@ export class StageRenderer {
   entry(key) {
     const m = this.data.sd.models[key];
     if (!m) throw Error("Missing animation model " + key);
-    const base = `https://raw.githubusercontent.com/${this.data.sd.repository}/${this.data.sd.commit}/`;
+    const base = artBase(this.data.sd);
     return {
       skel: base + m.skeleton.path,
       atlas: base + m.atlas.path,
@@ -170,8 +173,9 @@ export class StageRenderer {
     };
   }
   async preload(ids, onProgress) {
+    const tokenIds = ids.flatMap(id => REGULAR_SUMMONS[id] ? [REGULAR_SUMMONS[id].tokenId] : []);
     const keys = [
-      ...ids.flatMap((id) =>
+      ...[...ids, ...tokenIds].flatMap((id) =>
         ["front", "back"].map((f) => `operator/${id}/default/${f}`),
       ),
       ...Object.keys(this.data.enemies).map(
@@ -403,11 +407,22 @@ export class StageRenderer {
         if (!u.alive) continue;
         live.add(u.id);
         const back = u.side === "ally" && u.dir === "UP";
-        const key =
+        let key =
           u.side === "ally"
             ? `operator/${u.defId}/default/${back ? "back" : "front"}`
             : `enemy/${u.defId}/default/default`;
+        const formVisual = u.mem?.regularFormVisual;
+        // Some original back skeletons omit the outgoing substitute clips. The
+        // source front skeleton contains them; use it only for that transition.
+        if (back && formVisual?.clip && !this.preloaded.get(key)?.entry.animations?.[formVisual.clip]) {
+          const front = `operator/${u.defId}/default/front`;
+          if (this.preloaded.get(front)?.entry.animations?.[formVisual.clip]) key = front;
+        }
         let view = this.views.get(u.id);
+        const replacing = !!view && view.key !== key;
+        if (replacing) {
+          view.actor.destroy(); view.hp.destroy(); this.views.delete(u.id); view = null;
+        }
         if (!view) {
           const loaded = this.preloaded.get(key);
           if (!loaded) continue;
@@ -417,14 +432,14 @@ export class StageRenderer {
             { attackDrivenSkill: u.profile?.attackDrivenSkill === true });
           const hp = new P.Graphics();
           this.pixi.stage.addChild(actor.spine, hp);
-          actor.deploy();
+          if (!replacing) actor.deploy();
           view = { actor, hp, key };
           this.views.set(u.id, view);
         }
         const point = this.projection.project(
           u.x,
           u.y,
-          this.heightAt(Math.round(u.y), Math.round(u.x)),
+          this.heightAt(Math.round(u.y), Math.round(u.x)) + regularVisualHeight(formVisual, battle.time),
         );
         const bound = view.actor.entry.bounds;
         // Common skeleton scale preserves the slug's smaller size relative to an operator.
@@ -442,6 +457,7 @@ export class StageRenderer {
         view.actor.setSkill(
           !!u.skill?.active || battle.time < u.skillAnimUntil,
         );
+        view.actor.setRegularVisual(formVisual);
         // A deployment's entrance may finish while the combat clock is paused. Attacks and skills never advance then.
         view.actor.update(dt || (view.actor.mode === "deploy" ? realDt : 0));
         view.x = u.x;

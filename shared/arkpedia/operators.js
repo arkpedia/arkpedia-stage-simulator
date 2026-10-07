@@ -10,6 +10,24 @@ import { DEFENDER_OPERATORS } from './defender-operators.js';
 import { ADVANCED_SNIPER_OPERATORS } from './advanced-sniper-operators.js';
 import { SUPPORT_OPERATORS } from './support-operators.js';
 import { SPECIALIST_OPERATORS } from './specialist-operators.js';
+import { UTILITY_OPERATORS } from './utility-operators.js';
+import { ROBOT_EXPANSION_OPERATORS } from './robot-expansion-operators.js';
+import { GUARD_EXPANSION_OPERATORS } from './guard-expansion-operators.js';
+import { CASTER_EXPANSION_OPERATORS } from './caster-expansion-operators.js';
+import { SNIPER_EXPANSION_OPERATORS } from './sniper-expansion-operators.js';
+import { SUPPORT_EXPANSION_OPERATORS } from './support-expansion-operators.js';
+import { FIVE_STAR_GUARD_OPERATORS } from './five-star-guard-operators.js';
+import { FIVE_STAR_CASTER_OPERATORS } from './five-star-caster-operators.js';
+import { FIVE_STAR_VANGUARD_OPERATORS } from './five-star-vanguard-operators.js';
+import { FIVE_STAR_SUPPORT_OPERATORS } from './five-star-support-operators.js';
+import { FIVE_STAR_GUARD_EXPANSION_OPERATORS } from './five-star-guard-expansion-operators.js';
+import { FIVE_STAR_CASTER_EXPANSION_OPERATORS } from './five-star-caster-expansion-operators.js';
+import { FIVE_STAR_SUPPORT_EXPANSION_OPERATORS } from './five-star-support-expansion-operators.js';
+import { FIVE_STAR_GUARD_THIRD_OPERATORS } from './five-star-guard-third-operators.js';
+import { FIVE_STAR_SNIPER_OPERATORS } from './five-star-sniper-operators.js';
+import { FIVE_STAR_CASTER_OVERLOAD_OPERATORS } from './five-star-caster-overload-operators.js';
+import { FIVE_STAR_SUPPORT_THIRD_OPERATORS } from './five-star-support-third-operators.js';
+import { FIVE_STAR_GUARD_FOURTH_OPERATORS } from './five-star-guard-fourth-operators.js';
 export const REGULAR_OPERATORS = Object.freeze({
   char_123_fang: { skillId: "skcom_charge_cost[1]", talentKeys: ["cost"], mechanic: "dp", prefabId: "skcom_charge_cost", templateKey: "charge_cost" },
   char_208_melan: { skillId: "skcom_atk_up[1]", talentKeys: ["atk"], mechanic: "buff" },
@@ -42,6 +60,25 @@ export const REGULAR_OPERATORS = Object.freeze({
   ...ADVANCED_SNIPER_OPERATORS,
   ...SUPPORT_OPERATORS,
   ...SPECIALIST_OPERATORS,
+  ...UTILITY_OPERATORS,
+  ...ROBOT_EXPANSION_OPERATORS,
+  ...GUARD_EXPANSION_OPERATORS,
+  ...CASTER_EXPANSION_OPERATORS,
+  ...SNIPER_EXPANSION_OPERATORS,
+  ...FIVE_STAR_GUARD_OPERATORS,
+  ...FIVE_STAR_CASTER_OPERATORS,
+  ...FIVE_STAR_VANGUARD_OPERATORS,
+  ...FIVE_STAR_SUPPORT_OPERATORS,
+  ...FIVE_STAR_GUARD_EXPANSION_OPERATORS,
+  ...FIVE_STAR_CASTER_EXPANSION_OPERATORS,
+  ...FIVE_STAR_SUPPORT_EXPANSION_OPERATORS,
+  ...FIVE_STAR_GUARD_THIRD_OPERATORS,
+  ...FIVE_STAR_SNIPER_OPERATORS,
+  ...FIVE_STAR_CASTER_OVERLOAD_OPERATORS,
+  ...FIVE_STAR_SUPPORT_THIRD_OPERATORS,
+  ...FIVE_STAR_GUARD_FOURTH_OPERATORS,
+  ...Object.fromEntries(Object.entries(SUPPORT_EXPANSION_OPERATORS)
+    .filter(([id]) => ['char_272_strong', 'char_4107_vrdant', 'char_4165_ctrail', 'char_110_deepcl', 'char_484_robrta', 'char_452_bstalk'].includes(id))),
 });
 
 export function assertRegularOperator(op) {

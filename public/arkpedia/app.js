@@ -14,6 +14,9 @@ import { swipeFacing } from "/shared/arkpedia/placement.js";
 import { skillHud } from "/shared/arkpedia/skill-hud.js";
 import { battleHud } from "/shared/arkpedia/battle-hud.js";
 import { requiresLandscape } from "/shared/arkpedia/viewport.js";
+import { summonUnitId } from "/shared/arkpedia/summons.js";
+import { regularSummonCards, selectedRegularSummon, summonPlacementError,
+  deployRegularSummon, retreatRegularSummon } from "/sim/content/arkpedia-summons.js";
 const escape = (s) =>
   String(s).replace(
     /[&<>"']/g,
@@ -51,6 +54,26 @@ const icon = (op) =>
   `https://raw.githubusercontent.com/arkpedia/arkpedia-image-assets/${data.sources["arkpedia/arkpedia-image-assets"]}/${rarityFolder(op)}-star-icons/${encodeURIComponent(op.name + " - Base.webp")}`;
 const artwork = (op) =>
   `https://raw.githubusercontent.com/arkpedia/arkpedia-skin-assets/${data.sources["arkpedia/arkpedia-skin-assets"]}/${rarityFolder(op)}-star-skins/${encodeURIComponent(op.name + " - Base.webp")}`;
+const summonIcon = id => {
+  const avatar = data.tokens?.[id]?.avatar;
+  if (typeof avatar === 'string' && (avatar.startsWith('https://') ||
+    data.sd.localBase && avatar.startsWith(data.sd.localBase))) return avatar;
+  if (avatar?.path) return `https://raw.githubusercontent.com/${data.sd.repository}/${data.sd.commit}/${avatar.path}`;
+  throw Error('Missing original summon avatar: ' + id);
+};
+function selectedEntry(id = selected) {
+  const entry = battle?.bench[id];
+  if (entry) return { ...entry, kind: 'operator', id, record: battle.data.rawChess(id),
+    name: data.operators[id].name, icon: icon(data.operators[id]),
+    art: artwork(data.operators[id]), unit: entry.unit?.alive ? entry.unit : null };
+  const state = battle && selectedRegularSummon(battle, id);
+  return state ? { ...state, kind: state.unit ? 'token' : 'summon', id,
+    name: state.record.name, icon: summonIcon(state.tokenId), art: summonIcon(state.tokenId) } : null;
+}
+function placementError(id, row, col) {
+  return id?.startsWith('summon:') ? summonPlacementError(battle, id, row, col)
+    : battle.placementError(id, row, col);
+}
 const statIcon = (name) =>
   `https://raw.githubusercontent.com/arkpedia/arkpedia-image-assets/${data.sources["arkpedia/arkpedia-image-assets"]}/stat-icons/${name}.webp`;
 function battleReadouts() {
@@ -426,18 +449,46 @@ async function exit() {
 function pick(row, col) {
   if (!battle || battle.finished || landscapeRequired) return;
   battleError = "";
-  if (selected && !battle.bench[selected].unit?.alive) {
-    const error = battle.placementError(selected, row, col);
+  const occupied = battle.allyUnits.find(
+    (u) => u.alive && u.deployed && u.tileR === row && u.tileC === col,
+  );
+  if (occupied) {
+    selected = occupied.kind === 'token' ? summonUnitId(occupied) : occupied.defId;
+    pending = null;
+    drawHud();
+    return;
+  }
+  const entry = selectedEntry();
+  if (entry && !entry.unit) {
+    const error = placementError(selected, row, col);
     if (error) battleError = error;
-    else pending = { row, col, dir: null };
+    else if (entry.kind === 'summon' && !entry.config.chooseFacing) {
+      try { selected = summonUnitId(deployRegularSummon(battle, selected, row, col)); }
+      catch (e) { battleError = e.message; }
+      pending = null;
+    } else pending = { row, col, dir: null };
   } else {
     const unit = battle.allyUnits.find(
       (u) => u.alive && u.tileR === row && u.tileC === col,
     );
-    selected = unit?.defId ?? null;
+    selected = unit?.kind === 'token' ? summonUnitId(unit) : unit?.defId ?? null;
     pending = null;
   }
   drawHud();
+}
+function summonDetails(entry) {
+  const unit = entry.unit, raw = entry.record.stats, stats = unit?.s;
+  const hp = unit?.hp ?? raw.maxHp, maxHp = stats?.maxHp ?? raw.maxHp;
+  const numbers = [['ATK', stats?.atk ?? raw.atk], ['DEF', stats?.def ?? raw.def],
+    ['RES', stats?.res ?? raw.magicResistance], ['Block', stats?.blockCnt ?? raw.blockCnt]];
+  const recovery = unit?.mem.crabMode && unit.mem.crabMode !== 'active'
+    ? `<p class="sp-readout">Reinforcement recovering · ${Math.max(0,Math.ceil(unit.mem.crabReadyAt-battle.time))}s</p>` : '';
+  return `<p class="operator-build">${escape(data.operators[entry.ownerId].name)} · E${entry.record.arkpedia.elite} · Lv ${entry.record.arkpedia.level}</p>
+    <dl class="operator-stats">${numbers.map(([label, value]) => `<div><dt>${label}</dt><dd>${Math.round(value)}</dd></div>`).join('')}</dl>
+    <div class="hp-readout"><span>HP</span><strong>${Math.ceil(hp)} / ${Math.round(maxHp)}</strong></div>
+    <div class="meter hp"><span style="width:${Math.max(0, hp / maxHp) * 100}%"></span></div>
+    <p class="sp-readout">${entry.stock} remaining · ${raw.cost} DP · ${entry.config.deploymentSlotCost} deployment slot${entry.config.deploymentSlotCost === 1 ? '' : 's'}</p>
+    ${recovery}<p class="skill-description">${entry.config.healFree ? 'Cannot receive ordinary healing. ' : ''}${entry.config.tacticalPoint ? 'Its tactical point stays in place while the reinforcement recovers. ' : ''}Leaves the field when its summoner is removed.</p>`;
 }
 function operatorDetails(build, unit) {
   const record = recordFor(build, data);
@@ -491,14 +542,14 @@ function drawHud() {
     : "Pause";
   workspace.querySelector("#paused-label").hidden = !paused || battle.finished;
   const shelf = workspace.querySelector("#deployment");
-  if (!shelf.children.length) {
-    shelf.innerHTML = Object.keys(battle.bench)
-      .map(
-        (id) =>
-          `<button data-id="${id}" aria-pressed="false">${id === supportId ? '<span class="support-marker" aria-hidden="true">SUP</span>' : ''}<img src="${icon(data.operators[id])}" alt="" draggable="false"><span class="bench-name">${data.operators[id].name}</span><span class="cost"></span></button>`,
-      )
-      .join("");
-    shelf.querySelectorAll("button").forEach((button) => {
+  const cardIds = [...Object.keys(battle.bench), ...regularSummonCards(battle).map(card => card.key)];
+  // Append new summon cards without rebuilding existing buttons or losing focus.
+  for (const id of cardIds) {
+    if ([...shelf.children].some(button => button.dataset.id === id)) continue;
+    const entry = selectedEntry(id), button = document.createElement('button');
+    button.dataset.id = id; button.setAttribute('aria-pressed', 'false');
+    button.innerHTML = `${id === supportId ? '<span class="support-marker" aria-hidden="true">SUP</span>' : ''}<img src="${entry.icon}" alt="" draggable="false"><span class="bench-name">${escape(entry.name)}</span><span class="cost"></span>`;
+    shelf.append(button);
       button.onclick = () => {
         if (button.suppressClick) {
           button.suppressClick = false;
@@ -513,7 +564,7 @@ function drawHud() {
         if (
           e.button !== 0 ||
           battle.finished ||
-          battle.bench[button.dataset.id].unit?.alive
+          selectedEntry(button.dataset.id)?.unit?.alive
         )
           return;
         e.preventDefault();
@@ -538,7 +589,7 @@ function drawHud() {
         if (!dragging.moved) return;
         const tile = renderer.pickAt(e.clientX, e.clientY);
         dragging.over =
-          tile && !battle.placementError(selected, tile.row, tile.col)
+          tile && !placementError(selected, tile.row, tile.col)
             ? tile
             : null;
         showDragGhost(e.clientX, e.clientY);
@@ -564,27 +615,29 @@ function drawHud() {
         cancelPlacement();
         drawHud();
       };
-    });
   }
   for (const button of shelf.querySelectorAll("button")) {
     const id = button.dataset.id,
-      b = battle.bench[id],
+      b = selectedEntry(id),
       alive = b.unit?.alive,
       cool = Math.max(0, Math.ceil(b.readyAt - battle.time));
-    const cost = alive
+    const cost = b.kind === 'summon'
+      ? !b.owner.alive || !b.owner.deployed ? 'Summoner absent'
+        : b.stock <= 0 ? b.config.tacticalPoint ? 'Tactical point set' : 'None remaining'
+        : cool ? `${cool}s · ${b.stock} left` : `${b.record.stats.cost} DP · ${b.stock} left`
+      : alive
       ? "Deployed"
       : cool
         ? cool + "s"
         : battle.cost(id) + " DP";
     button.classList.toggle("active", selected === id);
     button.setAttribute("aria-pressed", String(selected === id));
-    button.setAttribute("aria-label", `${data.operators[id].name}, ${cost}${id === supportId ? ', Support' : ''}`);
-    button.title = `${data.operators[id].name}${id === supportId ? ' · Support' : ''}`;
+    button.setAttribute("aria-label", `${b.name}, ${cost}${id === supportId ? ', Support' : ''}`);
+    button.title = `${b.name}${id === supportId ? ' · Support' : ''}`;
     button.querySelector(".cost").textContent = cost;
   }
   // Preserve keyboard focus when refreshing the counters; command markup changes only on selection/state transitions.
-  const b = battle.bench[selected],
-    unit = b?.unit?.alive ? b.unit : null;
+  const b = selectedEntry(), unit = b?.unit;
   let highlights = [];
   let canActivate = false;
   const command = workspace.querySelector("#command");
@@ -595,15 +648,14 @@ function drawHud() {
   else if (b) {
     for (let r = 0; r < 6; r++)
       for (let c = 0; c < 9; c++)
-        if (!battle.placementError(selected, r, c)) highlights.push(r * 21 + c);
+        if (!placementError(selected, r, c)) highlights.push(r * 21 + c);
   }
   if (b) {
-    const op = data.operators[selected];
     const hud = unit ? skillHud(unit.skill) : null;
-    canActivate = !!(hud?.canActivate && unit.canAct && !unit.s.flags.silence);
-    const copy = operatorDetails(b.build, unit);
+    canActivate = !!((hud?.canActivate || hud?.canCancel) && unit.canAct && !unit.s.flags.silence);
+    const copy = b.kind === 'operator' ? operatorDetails(b.build, unit) : summonDetails(b);
     if (command.dataset.selection !== selected || command.dataset.alive !== String(!!unit)) {
-      command.innerHTML = `<div class="operator-portrait"><img src="${artwork(op)}" alt="${escape(op.name)} base artwork" draggable="false"><h2>${escape(op.name)}</h2></div>
+      command.innerHTML = `<div class="operator-portrait"><img src="${b.art}" alt="${escape(b.name)} ${b.kind === 'operator' ? 'base artwork' : 'original avatar'}" draggable="false"><h2>${escape(b.name)}</h2></div>
         <button class="inspector-close" aria-label="Close operator details">×</button>
         <div class="command-copy">${copy}</div>
         <div class="command-actions">${unit ? `${!unit.skill.noSkill && unit.skill.manual ? '<button id="skill" class="primary">Activate skill</button>' : ""}<button id="retreat">Retreat</button>` : '<button id="cancel">Cancel selection</button>'}</div>`;
@@ -618,7 +670,8 @@ function drawHud() {
         drawHud();
       });
       command.querySelector("#retreat")?.addEventListener("click", () => {
-        battle.retreatOperator(selected);
+        if (b.kind === 'token') retreatRegularSummon(battle, selected);
+        else battle.retreatOperator(selected);
         selected = null;
         drawHud();
       });
@@ -632,7 +685,7 @@ function drawHud() {
     const skillButton = command.querySelector("#skill");
     if (skillButton) {
       skillButton.disabled = !canActivate;
-      skillButton.textContent = hud?.ready ? hud.canActivate ? "Skill ready · Activate" : "Skill ready" : "Activate skill";
+      skillButton.textContent = hud?.canCancel ? "Stop skill" : hud?.ready ? hud.canActivate ? "Skill ready · Activate" : "Skill ready" : "Activate skill";
     }
   }
   const hover = dragging?.over ? { ...dragging.over, dir: "RIGHT" } : null;
@@ -641,7 +694,7 @@ function drawHud() {
     ? highlights
     : preview?.dir
       ? absoluteRangeKeys(
-          recordFor(b.build, data).rangeGrid,
+          b.record.rangeGrid,
           preview.row,
           preview.col,
           preview.dir,
@@ -651,14 +704,16 @@ function drawHud() {
     available: b && !unit && !pending ? highlights : [],
     range,
     chosen: preview,
-    operator: preview ? selected : null,
+    operator: preview ? b.record.id ?? selected : null,
     routes: showRoutes,
   });
   layoutFacing();
   workspace.querySelector("#battle-message").textContent =
     battleError ||
     (pending ? "Drag from the direction picker's centre, then release to deploy · Escape: cancel"
-      : selected && !unit ? "Drag onto a valid tile, or click a tile to choose facing · Escape: cancel"
+      : selected && !unit ? b?.kind === 'summon' && !b.config.chooseFacing
+        ? 'Drag the summon onto a valid tile, then release to deploy · Escape: cancel'
+        : "Drag onto a valid tile, or click a tile to choose facing · Escape: cancel"
       : "Drag to deploy · Click an operator to inspect · Space: pause · Escape: cancel");
   if (battle.finished && !workspace.querySelector(".result")) {
     paused = true;
@@ -693,7 +748,8 @@ function showDragGhost(x, y) {
   if (!ghost) {
     ghost = document.createElement("div");
     ghost.className = "drag-ghost";
-    ghost.innerHTML = `<img src="${icon(data.operators[selected])}" alt=""><span>${data.operators[selected].name}</span>`;
+    const entry = selectedEntry();
+    ghost.innerHTML = `<img src="${entry.icon}" alt=""><span>${escape(entry.name)}</span>`;
     workspace.append(ghost);
   }
   ghost.classList.toggle("valid", !!dragging.over);
@@ -703,7 +759,8 @@ function showDragGhost(x, y) {
 function confirmFacing(dir) {
   if (!pending || landscapeRequired) return;
   try {
-    battle.deployOperator(selected, pending.row, pending.col, dir);
+    if (selectedEntry()?.kind === 'summon') selected = summonUnitId(deployRegularSummon(battle, selected, pending.row, pending.col, dir));
+    else battle.deployOperator(selected, pending.row, pending.col, dir);
     pending = null;
     battleError = "";
   } catch (e) {

@@ -69,6 +69,7 @@ export function makeDamageInfo(d = {}) {
   return {
     _norm: true,
     amount: Number.isFinite(+d.amount) ? +d.amount : 0,
+    minimumAmount: Number.isFinite(d.minimumAmount) ? Math.max(0, d.minimumAmount) : 0,
     type,
     element: d.element ?? null,
     atkScale: d.atkScale ?? 1,
@@ -81,6 +82,7 @@ export function makeDamageInfo(d = {}) {
     isSkill: !!d.isSkill,
     isSplash: !!d.isSplash,
     isAttack: !!d.isAttack,
+    applyWay: ['melee', 'ranged'].includes(d.applyWay) ? d.applyWay : 'none',
     isProjectile: !!d.isProjectile,
     tags: d.tags ?? [],
     cancel: false,
@@ -258,11 +260,18 @@ export function dealDamage(battle, source, target, dmgIn) {
     resIgnoreFlat: dmg.resIgnoreFlat + (ss ? ss.resIgnoreFlat : 0),
     elementalRes: type === 'elemental' ? (target.def?.epDamageResistance ?? 0) : 0,
   });
+  // An explicit EnsureDmgOrHeal floor (Aciddrop) follows DEF/RES mitigation,
+  // before outgoing/incoming multipliers. Ordinary attacks keep their usual floor.
+  if (Number.isFinite(dmg.minimumAmount) && dmg.minimumAmount > 0)
+    final = Math.max(final, dmg.minimumAmount);
   // 脆弱 / "受到的伤害±" (dmgTakenMul) scale 物理、法术、真实 only; 元素伤害 takes 元素脆弱 alone (header)
   let mul = dmg.mul * (type === 'elemental' ? 1 : ts.dmgTakenMul);
   if (ss) mul *= ss.dmgDealtMul * (type === 'phys' ? ss.physDealtMul : type === 'arts' ? ss.artsDealtMul : 1);
   mul *= type === 'phys' ? ts.physTakenMul : type === 'arts' ? ts.artsTakenMul : type === 'elemental' ? ts.elementalTakenMul : ts.trueTakenMul;
   final *= mul;
+  // Fixed damage resistance is a final HP-damage cut, before shields. It is
+  // opt-in (Friston-3); element gauge accumulation and HP loss bypass it.
+  final = Math.max(0, final - (ts.flatDamageResistance ?? 0));
   if (!(final > 0) || !Number.isFinite(final)) final = 0;
   // 限伤: a leader's hit of ≥ BOSS_HIT_LIMIT in a boss / hidden battle is cancelled before it reaches shields / HP — what
   // ran before it (the attack, its SP, `hit` hook effects, separate element 损伤) stays; nothing after it happens
@@ -292,6 +301,10 @@ export function applyHpLoss(battle, source, target, amount, dmg) {
   } else {
     const before = target.hp;
     target.hp -= amount;
+    // Original UNDEADABLE affects fractional and fatal HP loss alike; it is
+    // neither damage immunity nor protection against scripted removal.
+    if (target.s.flags.undeadable)
+      target.hp = Math.max(Math.min(1, target.s.maxHp), target.hp);
     if (target.hp <= 0) {
       target.hp = 0;
       if (battle._hooks.fatal) {

@@ -80,6 +80,7 @@ export function canTargetEnemy(attacker, e, profile) {
   const f = e.s.flags;
   if (f.untargetable || (f.sleep && !(profile && profile.hitSleep))) return false;
   if (f.stealth && enemyStealthed(e) && !profile?.ignoreStealth) return false;
+  if (typeof profile?.canTarget === 'function' && !profile.canTarget(attacker, e)) return false;
   if (e.isFlying && !(profile && profile.canHitFly)) return false;
   if (profile && profile.groundOnly && e.isFlying) return false;
   return true;
@@ -168,6 +169,7 @@ export function evadesGround(src, a) {
 
 const PRIORITY_FNS = {
   fly: (e) => (e.isFlying ? 0 : 1),
+  drone: (e) => (e.tags?.has('drone') ? 0 : 1),
   lowDef: (e) => e.s.def,
   highDef: (e) => -e.s.def,
   ranged: (e) => (e.base.rangeRadius > 0 && e.def?.applyWay !== 'MELEE' ? 0 : 1),

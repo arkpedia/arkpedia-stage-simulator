@@ -12,6 +12,25 @@ import { customizeDefenderKit, installDefender } from './content/arkpedia-defend
 import { customizeAdvancedSniperKit, installAdvancedSniper } from './content/arkpedia-advanced-snipers.js';
 import { customizeSupportKit, installSupport } from './content/arkpedia-supporters.js';
 import { customizeSpecialistKit, installSpecialist } from './content/arkpedia-specialists.js';
+import { customizeUtilityKit, installUtility } from './content/arkpedia-utility.js';
+import { customizeGuardExpansionKit, installGuardExpansion } from './content/arkpedia-guard-expansion.js';
+import { customizeSupportExpansionKit, installSupportExpansion } from './content/arkpedia-support-expansion.js';
+import { customizeCasterExpansionKit, installCasterExpansion } from './content/arkpedia-caster-expansion.js';
+import { customizeSniperExpansionKit, installSniperExpansion } from './content/arkpedia-sniper-expansion.js';
+import { customizeSummonerKit, installSummoner } from './content/arkpedia-summons.js';
+import { customizeRobotExpansionKit, installRobotExpansion } from './content/arkpedia-robot-expansion.js';
+import { customizeFiveStarGuardKit, installFiveStarGuard } from './content/arkpedia-five-star-guards.js';
+import { customizeFiveStarCasterKit, installFiveStarCaster } from './content/arkpedia-five-star-casters.js';
+import { customizeFiveStarVanguardKit, installFiveStarVanguard, prepareFiveStarVanguardSquad } from './content/arkpedia-five-star-vanguards.js';
+import { customizeFiveStarSupportKit, installFiveStarSupport } from './content/arkpedia-five-star-support.js';
+import { customizeFiveStarGuardExpansionKit, installFiveStarGuardExpansion } from './content/arkpedia-five-star-guard-expansion.js';
+import { customizeFiveStarCasterExpansionKit, installFiveStarCasterExpansion } from './content/arkpedia-five-star-caster-expansion.js';
+import { customizeFiveStarSupportExpansionKit, installFiveStarSupportExpansion } from './content/arkpedia-five-star-support-expansion.js';
+import { customizeFiveStarGuardThirdKit, installFiveStarGuardThird } from './content/arkpedia-five-star-guard-third.js';
+import { customizeFiveStarSniperKit, installFiveStarSniper, prepareFiveStarSniperSquad } from './content/arkpedia-five-star-snipers.js';
+import { customizeFiveStarCasterOverloadKit, installFiveStarCasterOverload } from './content/arkpedia-five-star-caster-overload.js';
+import { customizeFiveStarSupportThirdKit, installFiveStarSupportThird } from './content/arkpedia-five-star-support-third.js';
+import { customizeFiveStarGuardFourthKit, installFiveStarGuardFourth } from './content/arkpedia-five-star-guard-fourth.js';
 import { catalogueFor, recordFor } from "../../shared/arkpedia/loadout.js";
 import { REGULAR_OPERATORS } from "../../shared/arkpedia/operators.js";
 import { assertRegularEnemies } from "../../shared/arkpedia/enemies.js";
@@ -116,11 +135,13 @@ export class StandardBattle extends Battle {
       program.validateBlackboard(chess[build.id].skill.bb);
       behaviors.set(build.id, program);
     }
+    const startingVanguardDp = prepareFiveStarVanguardSquad(chess);
+    prepareFiveStarSniperSquad(chess);
     const config = data.stage.battle;
     super({
       ...stageAdapter(data.stage),
       seed,
-      data: new DataSource({ chess, enemies: data.enemies }),
+      data: new DataSource({ chess, enemies: data.enemies, tokens: data.tokens }),
       content: "none",
       timeLimit: 300,
       flags: {
@@ -137,9 +158,11 @@ export class StandardBattle extends Battle {
     });
     this.life = config.max_life;
     this.regularSkillUses = new Map();
+    this.addDp('arkpedia', startingVanguardDp);
     installMedicSquad({ battle: this, records: chess });
     this.behaviors = behaviors;
     this.unitLimit = config.unit_limit;
+    this.mapTags = Object.freeze([...(data.stage.mapTags ?? [])]);
     this.viewport = "preview";
     this.bench = Object.fromEntries(
       builds.map((b) => [
@@ -154,6 +177,16 @@ export class StandardBattle extends Battle {
   }
   get dp() {
     return this.getPlayer("arkpedia").dp;
+  }
+  deployedSlots() {
+    return this.allyUnits.filter(unit => unit.alive && unit.deployed)
+      .reduce((slots, unit) => slots + (unit.deploymentSlotCost ?? 1), 0);
+  }
+  deploymentSlotCost(id) {
+    const config = REGULAR_OPERATORS[id];
+    return (this.bench[id]?.build.elite ?? 0) >= (config?.deploymentSlotExemptMinElite ?? 0)
+      && config?.deploymentSlotExemptTags?.some(tag => this.mapTags.includes(tag))
+      ? 0 : config?.deploymentSlotCost ?? 1;
   }
   cost(id) {
     const entry = this.bench[id];
@@ -171,7 +204,7 @@ export class StandardBattle extends Battle {
     if (this.finished) return "Battle has ended.";
     if (!entry || entry.unit?.alive) return "Operator is unavailable.";
     if (entry.readyAt > this.time) return "Operator is still redeploying.";
-    if (this.allyUnits.filter((u) => u.alive).length >= this.unitLimit)
+    if (this.deployedSlots() + this.deploymentSlotCost(id) > this.unitLimit)
       return "Deployment limit reached.";
     if (
       !Number.isInteger(row) ||
@@ -205,6 +238,7 @@ export class StandardBattle extends Battle {
       def = this.data.getChess(id),
       ps = this.getPlayer("arkpedia");
     const unit = this._makeAlly(ps, def, "op", row, col, { dir });
+    unit.deploymentSlotCost = this.deploymentSlotCost(id);
     const kit = genericKit(def.skill?.bb ?? {}, def.raw, def);
     customizeMedicKit({ battle: this, id, def, unit, kit });
     customizeCasterKit({ id, def, unit, kit });
@@ -215,6 +249,25 @@ export class StandardBattle extends Battle {
     customizeAdvancedSniperKit({ id, def, unit, kit });
     customizeSupportKit({ id, def, unit, kit });
     customizeSpecialistKit({ id, def, unit, kit });
+    customizeUtilityKit({ battle: this, id, def, unit, kit });
+    customizeGuardExpansionKit({ battle: this, id, def, unit, kit });
+    customizeSupportExpansionKit({ battle: this, id, def, unit, kit });
+    customizeCasterExpansionKit({ battle: this, id, def, unit, kit });
+    customizeSniperExpansionKit({ battle: this, id, def, unit, kit });
+    customizeSummonerKit({ battle: this, id, def, unit, kit });
+    customizeRobotExpansionKit({ battle: this, id, def, unit, kit });
+    customizeFiveStarGuardKit({ battle: this, id, def, unit, kit });
+    customizeFiveStarCasterKit({ battle: this, id, def, unit, kit });
+    customizeFiveStarVanguardKit({ battle: this, id, def, unit, kit });
+    customizeFiveStarSupportKit({ battle: this, id, def, unit, kit });
+    customizeFiveStarGuardExpansionKit({ battle: this, id, def, unit, kit });
+    customizeFiveStarCasterExpansionKit({ battle: this, id, def, unit, kit });
+    customizeFiveStarSupportExpansionKit({ battle: this, id, def, unit, kit });
+    customizeFiveStarGuardThirdKit({ battle: this, id, def, unit, kit });
+    customizeFiveStarSniperKit({ battle: this, id, def, unit, kit });
+    customizeFiveStarCasterOverloadKit({ battle: this, id, def, unit, kit });
+    customizeFiveStarSupportThirdKit({ battle: this, id, def, unit, kit });
+    customizeFiveStarGuardFourthKit({ battle: this, id, def, unit, kit });
     const mechanic = REGULAR_OPERATORS[id].mechanic;
     if (mechanic === "dp")
       kit.skill.onStart = ({ battle, unit }) =>
@@ -247,6 +300,25 @@ export class StandardBattle extends Battle {
     installAdvancedSniper({ battle: this, unit, def });
     installSupport({ battle: this, unit, def });
     installSpecialist({ battle: this, unit, def });
+    installUtility({ battle: this, unit, def });
+    installGuardExpansion({ battle: this, unit, def });
+    installSupportExpansion({ battle: this, unit, def });
+    installCasterExpansion({ battle: this, unit, def });
+    installSniperExpansion({ battle: this, unit, def });
+    installSummoner({ battle: this, unit, def });
+    installRobotExpansion({ battle: this, unit, def });
+    installFiveStarGuard({ battle: this, unit, def });
+    installFiveStarCaster({ battle: this, unit, def });
+    installFiveStarVanguard({ battle: this, unit, def });
+    installFiveStarSupport({ battle: this, unit, def });
+    installFiveStarGuardExpansion({ battle: this, unit, def });
+    installFiveStarCasterExpansion({ battle: this, unit, def });
+    installFiveStarSupportExpansion({ battle: this, unit, def });
+    installFiveStarGuardThird({ battle: this, unit, def });
+    installFiveStarSniper({ battle: this, unit, def });
+    installFiveStarCasterOverload({ battle: this, unit, def });
+    installFiveStarSupportThird({ battle: this, unit, def });
+    installFiveStarGuardFourth({ battle: this, unit, def });
     if (mechanic === "blast-area")
       unit.skill.spec.attack = { splashRadius: unit.profile.splashRadius * def.skill.bb["attack@range_scale"] };
     if (mechanic === "arts-lord") unit.skill.spec.attack = { dmgType: "arts" };
@@ -311,7 +383,8 @@ export class StandardBattle extends Battle {
       throw new Error("Battle workspace is inactive.");
     const entry = this.bench[id];
     if (!entry?.unit?.alive) throw new Error("Operator is not deployed.");
-    const refund = REGULAR_OPERATORS[id].mechanic === "charger"
+    const support = REGULAR_OPERATORS[id];
+    const refund = support.noRetreatRefund ? 0 : support.mechanic === "charger"
       ? entry.unit.base.cost : Math.floor(entry.lastCost / 2);
     this.addDp("arkpedia", refund);
     this.retreat(entry.unit, { permanent: true });
@@ -319,8 +392,14 @@ export class StandardBattle extends Battle {
   activateOperator(id) {
     if (!canDeployInViewport(this.viewport) || this.finished) return false;
     const unit = this.bench[id]?.unit;
+    if (unit?.alive && unit.skill.manual && unit.skill.active && unit.skill.spec.manualCancel) {
+      if (!unit.canAct || unit.s.flags.silence) return false;
+      unit.skill.end('manual');
+      return true;
+    }
     return !!(
       unit?.alive &&
+      unit.canAct && !unit.s.flags.silence &&
       !unit.skill.noSkill &&
       unit.skill.manual &&
       unit.skill.activate("manual")
@@ -329,7 +408,7 @@ export class StandardBattle extends Battle {
   _remove(unit, reason, killer, permanent) {
     if (unit.side === "ally" && unit.kind === "op") {
       const entry = this.bench[unit.defId];
-      if (entry) entry.readyAt = this.time + unit.base.respawnTime;
+      if (entry) entry.readyAt = this.time + unit.base.respawnTime * unit.s.redeployMul;
       permanent = true;
     }
     super._remove(unit, reason, killer, permanent);

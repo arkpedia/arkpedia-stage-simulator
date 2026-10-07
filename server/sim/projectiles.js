@@ -25,19 +25,22 @@ export class ProjectileSystem {
       id: ++seq,
       x: fx,
       y: fy,
+      fromX: fx,
+      fromY: fy,
       target,
       // the target "life" it was fired at: an op that dies and is redeployed mid-flight is a new target (fizzle)
       tseq: target ? target.deploySeq : 0,
       tx: fin(p.to ? p.to.x : (target ? target.x : fx), fx),
       ty: fin(p.to ? p.to.y : (target ? target.y : fy), fy),
       speed: p.speed > 0 ? p.speed : PROJECTILE_SPEED,
+      flightTime: Number.isFinite(p.flightTime) && p.flightTime > 0 ? p.flightTime : null,
       onHit: p.onHit ?? null,
       visual: p.visual ?? 'arrow',
       source: p.source ?? (p.from && p.from.id != null ? p.from : null),
       hitDead: !!p.hitDead,
       data: p.data ?? null,
       age: 0,
-      maxAge: p.maxAge > 0 ? p.maxAge : 10,
+      maxAge: p.maxAge > 0 ? p.maxAge : Math.max(10, fin(p.flightTime, 0)),
     };
     this.list.push(proj);
     return proj;
@@ -57,6 +60,17 @@ export class ProjectileSystem {
       const dx = p.tx - p.x, dy = p.ty - p.y;
       const d = Math.hypot(dx, dy);
       const step = p.speed * dt;
+      // Some original Arts projectiles use a fixed travel duration instead of
+      // speed. Follow the live destination from the saved origin, even when the
+      // target crosses the projectile; only the duration boundary can impact.
+      if (p.flightTime !== null) {
+        const progress = Math.min(1, p.age / p.flightTime);
+        p.x = p.fromX + (p.tx - p.fromX) * progress;
+        p.y = p.fromY + (p.ty - p.fromY) * progress;
+        if (progress === 1 || p.age >= p.maxAge) arrived.push(p);
+        else keep.push(p);
+        continue;
+      }
       if (d <= step || p.age >= p.maxAge) {
         p.x = p.tx; p.y = p.ty;
         arrived.push(p);

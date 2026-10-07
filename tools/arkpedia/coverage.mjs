@@ -21,7 +21,9 @@ export function coverageFor({ characters, enemies, chess, inherited, data }) {
       return {
         id, name: op.name, rarity: Number(op.rarity.replace("TIER_", "")), archetype: op.subProfessionId,
         playable: !!imported,
-        animations: models.every(m => m?.animationRoles?.idle && m?.animationRoles?.attack && typeof m.premultipliedAlpha === "boolean") ? "imported" : "not-imported",
+        animations: models.every(m => m?.animationRoles?.idle &&
+          (REGULAR_OPERATORS[id]?.noBasicAttack || m?.animationRoles?.attack) &&
+          typeof m.premultipliedAlpha === "boolean") ? "imported" : "not-imported",
         skills: op.skills.map(s => ({ id: s.skillId,
           regularAdapter: !!imported && (REGULAR_OPERATORS[id].skillIds ?? [REGULAR_OPERATORS[id].skillId]).includes(s.skillId),
           strongholdCandidates: candidates.flatMap(c => c.skills.filter(k => k.skillId === s.skillId && k.covered).map(() => c.chessId)),

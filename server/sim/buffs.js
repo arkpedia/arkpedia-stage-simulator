@@ -7,26 +7,20 @@
 // their own timers, at most maxStacks alive — the oldest is dropped), 'keep' (ignore when already present).
 // Additive mod keys scale with stacks (value × stacks); *Mul keys multiply (value ^ stacks).
 
-import { COLD_ASPD, COLD_FREEZE_DURATION, FREEZE_RES_DOWN, RESIST_DEFAULT, RESIST_PALSY_DECAY } from './constants.js';
-
-/** 抵抗: "麻痹等状态每5秒流失1层" — tick of the resist buff. */
-function resistPalsyDecay({ battle, unit }) {
-  const p = unit.findBuff('palsy');
-  if (!p) return;
-  if (--p.stacks <= 0) battle.removeBuff(unit, p); else unit.markDirty();
-}
+import { COLD_ASPD, COLD_FREEZE_DURATION, FREEZE_RES_DOWN, RESIST_DEFAULT } from './constants.js';
 
 /** Additive mod keys (summed; × stacks). */
 export const ADD_KEYS = Object.freeze([
-  'atkFlat', 'atkPct', 'defFlat', 'defPct', 'hpFlat', 'hpPct', 'resFlat', 'aspd', 'batPct', 'blockCnt',
+  'atkFlat', 'atkFinalFlat', 'atkPct', 'defFlat', 'defPct', 'hpFlat', 'hpPct', 'resFlat', 'aspd', 'batPct', 'blockCnt',
   'rangeExtend', 'defIgnoreFlat', 'defIgnorePct', 'resIgnoreFlat', 'resIgnorePct', 'dodgePhys', 'dodgeArts',
   'spRecoveryFlat', 'maxTargets', 'taunt', 'hpRegen', 'hpRegenRatio', 'spCostFlat', 'moveFlat', 'massFlat',
+  'flatDamageResistance',
 ]);
 /** Multiplicative mod keys (product; ^ stacks). */
 export const MUL_KEYS = Object.freeze([
   'atkMul', 'defMul', 'hpMul', 'resMul', 'moveMul', 'dmgDealtMul', 'dmgTakenMul', 'physTakenMul', 'artsTakenMul',
   'trueTakenMul', 'elemTakenMul', 'elementalTakenMul', 'healingDealtMul', 'healingTakenMul', 'spRecoveryMul', 'redeployMul',
-  'atkScaleMul', 'physDealtMul', 'artsDealtMul', 'blockCntMul',
+  'atkScaleMul', 'physDealtMul', 'artsDealtMul', 'blockCntMul', 'batMul', 'hpRegenMul',
 ]);
 /**
  * Boolean flag keys (OR). `taunt` is also accepted as a numeric mod. `liftoff` = 起飞 of an ally (蒂比's skills): blocks
@@ -41,7 +35,7 @@ export const FLAG_KEYS = Object.freeze([
   'noBlock', 'tremble', 'hitCount', 'hitCountArts', 'attract', 'float', 'noDisplace', 'isolated', 'camou', 'liftoff',
   // 自缚 (the unit's own immobility: 守墓石像's 转换模式, the 自缚 leaders) beside its `noMove` — 束缚 sets noMove too, and
   // only 自缚 makes a unit "不视为可达目标" for 余 S2's teleport (PRTS 余 S2 备注)
-  'selfBound', 'healFree', 'stealthOff',
+  'selfBound', 'healFree', 'stealthOff', 'undeadable',
 ]);
 
 /**
@@ -69,6 +63,10 @@ export const STATUS = Object.freeze({
   fragile: { mods: (v) => ({ dmgTakenMul: 1 + (v ?? 0.3) }), valued: 0.3 },
   artsFragile: { mods: (v) => ({ artsTakenMul: 1 + (v ?? 0.3) }), valued: 0.3 },
   physFragile: { mods: (v) => ({ physTakenMul: 1 + (v ?? 0.3) }), valued: 0.3 },
+  // Source damage_resistance: PHYSICAL_AND_MAGICAL, isOneMinus and nonstacking.
+  // Owned instances choose the strongest value; true damage and HP loss bypass.
+  sanctuary: { mods: (v) => ({ physTakenMul: 1 - clamp01(v ?? 0.2),
+    artsTakenMul: 1 - clamp01(v ?? 0.2) }), valued: 0.2 },
   // 元素脆弱 (ba.elementfragile "受到的元素伤害提升相应比例（同名效果取最高）"): 元素伤害 (the 'elemental' HP damage) only —
   // never the element gauge (元素损伤 has its own multiplier, `elemTakenMul`; damage.js)
   elemFragile: { mods: (v) => ({ elementalTakenMul: 1 + (v ?? 0.2) }), valued: 0.2 },
@@ -110,7 +108,7 @@ export const STATUS = Object.freeze({
   // 抵抗 (ba.buffres): the RESIST_STATUSES applied to the unit last (1 − value) as long, value default 0.5 (减半);
   // 同名效果不叠加 — several sources never compound (strongest value wins, a weaker one resumes if it outlasts it);
   // a resisting unit also loses one 麻痹 stack every RESIST_PALSY_DECAY s (Battle.applyStatus)
-  resist: { resist: true, mods: () => null, valued: RESIST_DEFAULT, buff: Object.freeze({ interval: RESIST_PALSY_DECAY, onTick: resistPalsyDecay }) },
+  resist: { resist: true, mods: () => null, valued: RESIST_DEFAULT },
   // element burst states (engine-managed; listed for immunity/visibility)
   burnBurst: { flags: { burstLock: true } },
   neuralBurst: { flags: { burstLock: true } },
@@ -177,11 +175,21 @@ export function aggregateMods(buffs) {
   let sluggishMoveMul = 1;
   // dodge sources are independent rolls: total = 1 − Π(1 − p)^stacks (one single source keeps its exact value)
   const dodge = { dodgePhys: null, dodgeArts: null };
+  // Source-owned valued statuses can be removed independently. Only the
+  // strongest instance of a named status contributes its modifiers.
+  const strongest = new Map();
+  for (const b of buffs) {
+    const tpl = STATUS[b.status];
+    if (tpl?.valued == null) continue;
+    const value = Math.abs(b.data?.value ?? tpl.valued);
+    const old = strongest.get(b.status);
+    if (!old || value > Math.abs(old.data?.value ?? tpl.valued)) strongest.set(b.status, b);
+  }
   for (let i = 0; i < buffs.length; i++) {
     const b = buffs[i];
     const st = b.stacks;
     const m = b.mods;
-    if (m) {
+    if (m && (!strongest.has(b.status) || strongest.get(b.status) === b)) {
       for (const k in m) {
         const v = m[k];
         if (typeof v !== 'number' || !Number.isFinite(v)) continue;

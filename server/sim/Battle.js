@@ -295,6 +295,7 @@ export class Battle {
     const u = new Unit({
       id: ++this._idSeq, side: 'ally', kind, def, defId: def.id, name: def.name, ownerId: ps ? ps.playerId : null,
       uid: extra.uid ?? null, ownerUnit: extra.ownerUnit ?? null, x: c, y: r, tileR: r, tileC: c,
+      tags: def.tags ?? [],
       dir: extra.dir != null ? normDir(extra.dir) : extra.facing != null ? normDir(extra.facing) : ps ? ps.dir : 'RIGHT',
       base: {
         maxHp: st.maxHp, atk: st.atk, def: st.def, res: st.res, aspd: st.aspd, bat: st.bat, blockCnt: st.blockCnt,
@@ -1225,6 +1226,9 @@ export class Battle {
   // buffs & statuses
 
   addBuff(unit, b) {
+    // Source opt-in immunity for bards whose trait rejects Inspire. Producers
+    // describe the effect semantically; arbitrary display keys stay unrelated.
+    if (unit?.mem?.noInspire && (b?.status === 'inspire' || b?.tags?.includes('inspire'))) return null;
     if (!unit || (!unit.alive && !b.allowDead)) return null;
     const buff = makeBuff(b);
     const list = unit.buffs;
@@ -1289,6 +1293,7 @@ export class Battle {
     const b = unit.buffs[i];
     if (!b) return;
     unit.buffs.splice(i, 1);
+    if (b.status === 'resist' && !unit.buffs.some((x) => x.status === 'resist')) unit._resistPalsyAcc = 0;
     unit.markDirty();
     if ((b.visible || b.status)) {
       const key = b.status ?? b.key;
@@ -1302,6 +1307,17 @@ export class Battle {
     for (let i = 0, n = units.length; i < n; i++) { // units created by onTick handlers start ticking next tick
       const u = units[i];
       if (!u.alive || u.removed) continue;
+      // 抵抗 is one named effect even when several sources own its instances.
+      // Preserve one decay cadence through overlap and source handoff.
+      if (u.buffs.some((b) => b.status === 'resist')) {
+        u._resistPalsyAcc = (u._resistPalsyAcc ?? 0) + dt;
+        while (u._resistPalsyAcc >= RESIST_PALSY_DECAY - 1e-9) {
+          u._resistPalsyAcc -= RESIST_PALSY_DECAY;
+          const p = u.findBuff('palsy');
+          if (p && --p.stacks <= 0) this.removeBuff(u, p);
+          else if (p) u.markDirty();
+        }
+      } else u._resistPalsyAcc = 0;
       if (u.buffs.length) {
         const arr = u.buffs.slice();
         for (const b of arr) {
@@ -1413,7 +1429,7 @@ export class Battle {
     if (tpl.palsy) {
       this.addBuff(target, { ...palsyBuff(value ?? 1), duration, source });
     } else if (tpl.valued != null && typeof tpl.mods === 'function' && opts.refresh == null) {
-      this._applyValuedStatus(target, key, tpl, duration, value ?? tpl.valued, source);
+      this._applyValuedStatus(target, opts.key ?? key, { ...tpl, statusKey: key }, duration, value ?? tpl.valued, source);
     } else {
       const mods = tpl.enemyOnlyMods && target.side !== 'enemy' ? null : typeof tpl.mods === 'function' ? tpl.mods(value) : (tpl.mods || null);
       // Owned non-valued status instances let a zone remove its own effects
@@ -1478,8 +1494,8 @@ export class Battle {
   _applyValuedStatus(target, key, tpl, duration, value, source) {
     const strength = (v) => Math.abs(Number.isFinite(v) ? v : tpl.valued);
     const make = (v, dur, tail) => ({
-      ...(tpl.buff || null),   // extra buff fields of the status (抵抗: the 麻痹 decay tick)
-      key, duration: dur, refresh: 'replace', mods: tpl.mods(v), flags: tpl.flags || null, status: tpl.plain ? null : key,
+      ...(tpl.buff || null),   // extra buff fields of the status
+      key, duration: dur, refresh: 'replace', mods: tpl.mods(v), flags: tpl.flags || null, status: tpl.plain ? null : tpl.statusKey ?? key,
       visible: !tpl.plain, source,
       data: { value: v, tail },
       onExpire: ({ battle, unit, buff }) => {
@@ -1487,7 +1503,7 @@ export class Battle {
         if (t && t.until - battle.time > 1e-6 && unit.alive) battle.addBuff(unit, make(t.value, t.until - battle.time, null));
       },
     });
-    const old = target.buffs.find((b) => b.key === key && (tpl.plain || b.status === key));
+    const old = target.buffs.find((b) => b.key === key && (tpl.plain || b.status === (tpl.statusKey ?? key)));
     if (!old) { this.addBuff(target, make(value, duration, null)); return; }
     const oldV = old.data && Number.isFinite(old.data.value) ? old.data.value : tpl.valued;
     const oldEnd = this.time + old.timeLeft, newEnd = this.time + duration;

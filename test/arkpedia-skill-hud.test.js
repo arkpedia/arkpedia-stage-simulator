@@ -48,6 +48,38 @@ test("an automatic attack skill can hold a full gauge without a manual-ready dia
   assert.equal(skillHud(sk).state, "active");
   assert.equal(skillHud(sk).ready, false);
 });
+test("manual cancellation is opt-in and ends the active effect without spending another charge", () => {
+  const { b, unit } = deployed("char_208_melan"), sk = unit.skill;
+  sk.gainSp(sk.spCost, "test");
+  const ordinaryAtk = unit.s.atk;
+  assert.equal(b.activateOperator(unit.defId), true);
+  assert.ok(unit.s.atk > ordinaryAtk);
+  assert.equal(skillHud(sk).canCancel, false);
+  assert.equal(b.activateOperator(unit.defId), false);
+  sk.spec.manualCancel = true;
+  assert.equal(skillHud(sk).canCancel, true);
+  assert.equal(b.activateOperator(unit.defId), true);
+  assert.equal(sk.active, false);
+  assert.equal(sk.activations, 1);
+  assert.equal(sk.spTotal, 0);
+  assert.equal(unit.s.atk, ordinaryAtk);
+  assert.equal(skillHud(sk).canCancel, false);
+  advance(b, 1);
+  assert.ok(sk.spTotal > 0, "manual ending restores SP recovery");
+});
+test("regular manual commands cannot spend SP while stunned or silenced", () => {
+  const { b, unit } = deployed("char_208_melan"), sk = unit.skill;
+  sk.gainSp(sk.spCost, "test");
+  const sp = sk.spTotal;
+  for (const status of ['stun', 'silence']) {
+    b.applyStatus(unit, status, { duration: 1 });
+    assert.equal(b.activateOperator(unit.defId), false);
+    assert.equal(sk.spTotal, sp);
+    assert.equal(sk.activations, 0);
+    advance(b, 1.1);
+  }
+  assert.equal(b.activateOperator(unit.defId), true);
+});
 test("a missing cast target preserves full SP and its ready diamond without claiming the skill is exhausted", () => {
   const { b, unit } = deployed("char_208_melan"), sk = unit.skill;
   let eligible = false;

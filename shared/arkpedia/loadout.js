@@ -185,6 +185,8 @@ export function recordFor(build, data) {
     profession: op.profession,
     subProfessionId: op.subProfessionId,
     position: op.position,
+    // Source faction identifiers, distinct from descriptive gameplay tags.
+    tags: [op.nationId, op.groupId, op.teamId].filter(value => typeof value === 'string' && value),
     stats,
     rangeGrid: phase.rangeGrid,
     dmgType:

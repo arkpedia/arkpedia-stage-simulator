@@ -28,6 +28,7 @@ const paths = {
   stage: ["arkpedia/arkpedia-data", "source/data/stages/0-1.json"],
   geometry: ["arkpedia/arkpedia-data", "source/data/stage-geometry/0-1.json"],
   buff_template_data: ["Kengxxiao/ArknightsGameData_YoStar", "en_US/gamedata/battle/buff_template_data.json"],
+  original_level: ["Kengxxiao/ArknightsGameData_YoStar", "en_US/gamedata/levels/obt/main/level_main_00-01.json"],
 };
 if (process.argv.includes("--refresh")) {
   const pins = {};
@@ -53,8 +54,10 @@ if (process.argv.includes("--refresh")) {
 }
 const read = async (name) =>
   JSON.parse(await readFile(new URL(`${name}.json`, cache), "utf8"));
-const [characters, skills, ranges, enemies, stage, geometry, buffTemplates, pins] =
+const [characters, skills, ranges, enemies, stage, geometry, buffTemplates, originalLevel, pins] =
   await Promise.all(Object.keys(paths).concat("pins").map(read));
+if (originalLevel.mapData.tags != null && (!Array.isArray(originalLevel.mapData.tags)
+  || originalLevel.mapData.tags.some(tag => typeof tag !== 'string'))) throw Error('Unsupported source map tags');
 const ids = Object.keys(REGULAR_OPERATORS);
 const operators = Object.fromEntries(
   ids.map((id) => {
@@ -73,6 +76,9 @@ const operators = Object.fromEntries(
         profession: c.profession,
         subProfessionId: c.subProfessionId,
         position: c.position,
+        nationId: c.nationId,
+        groupId: c.groupId,
+        teamId: c.teamId,
         phases: c.phases.map((p) => ({
           maxLevel: p.maxLevel,
           attributesKeyFrames: p.attributesKeyFrames,
@@ -105,6 +111,25 @@ const operators = Object.fromEntries(
   }),
 );
 for (const op of Object.values(operators)) assertRegularOperator(op);
+const tokenIds = ['token_10001_deepcl_tentac', 'token_10018_robrta_mach', 'token_10014_bstalk_crab', 'token_10011_beewax_oblisk', 'token_10006_vodfox_doll'];
+const tokens = Object.fromEntries(tokenIds.map(id => {
+  const c = characters[id];
+  if (!c) throw Error(`Missing original token: ${id}`);
+  const candidate = v => v.rangeId
+    ? { ...v, rangeGrid: ranges[v.rangeId].grids.map(p => [p.row, p.col]) } : v;
+  return [id, { id, name: c.name, profession: c.profession,
+    subProfessionId: c.subProfessionId, position: c.position,
+    phases: c.phases.map(p => ({ maxLevel: p.maxLevel,
+      attributesKeyFrames: p.attributesKeyFrames,
+      rangeGrid: ranges[p.rangeId].grids.map(p => [p.row, p.col]),
+    })),
+    trait: c.trait ? { ...c.trait, candidates: c.trait.candidates.map(candidate) } : null,
+    talents: (c.talents ?? []).map(t => ({ ...t, candidates: t.candidates.map(candidate) })),
+    skills: (c.skills ?? []).map(s => ({ id: s.skillId, unlockCondition: s.unlockCond,
+      levels: (s.skillId === null ? [] : skills[s.skillId].levels).map(level => level.rangeId
+        ? { ...level, rangeGrid: ranges[level.rangeId].grids.map(p => [p.row, p.col]) } : level) })),
+  }];
+}));
 const bindingEvidence = JSON.parse(await readFile(new URL("../../data/arkpedia-skill-prefabs.json", import.meta.url), "utf8"));
 const tableHash = createHash("sha256").update(await readFile(new URL("buff_template_data.json", cache))).digest("hex");
 if (bindingEvidence.templateTableSha256 !== tableHash)
@@ -140,6 +165,7 @@ const enemyRecords = Object.fromEntries(
         motion: values.motion,
         applyWay: values.applyWay,
         lifePointReduce: values.lifePointReduce,
+        tags: values.enemyTags ?? [],
         stats: { ...stats, ...config.overrides },
       },
     ];
@@ -165,6 +191,7 @@ const modelKeys = [
   ...ids.flatMap((id) =>
     ["front", "back"].map((f) => `operator/${id}/default/${f}`),
   ),
+  ...tokenIds.flatMap(id => ['front', 'back'].map(f => `operator/${id}/default/${f}`)),
   ...Object.keys(enemyRecords).map((id) => `enemy/${id}/default/default`),
 ];
 const models = Object.fromEntries(
@@ -184,6 +211,11 @@ const models = Object.fromEntries(
     return [k, sd.models[k]];
   }),
 );
+for (const token of Object.values(tokens)) {
+  const model = models[`operator/${token.id}/default/front`];
+  if (!model?.avatar?.path) throw Error(`Missing original token portrait: ${token.id}`);
+  token.avatar = `https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/${sdCommit}/${model.avatar.path}`;
+}
 const output = {
   schemaVersion: 1,
   sources: pins,
@@ -198,9 +230,13 @@ const output = {
     name: stage.name,
     description: stage.description,
     battle: stage.battle,
+    mapTags: originalLevel.mapData.tags ?? [],
+    mapTagSource: { repository: paths.original_level[0], commit: pins[paths.original_level[0]],
+      path: paths.original_level[1], sha256: createHash('sha256').update(await readFile(new URL('original_level.json', cache))).digest('hex') },
     geometry,
   },
   operators,
+  tokens,
   enemies: enemyRecords,
 };
 assertRegularEnemies(output);

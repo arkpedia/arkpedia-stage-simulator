@@ -22,6 +22,11 @@ export function validateStageArt(scene, stage) {
 export function artBase(art) {
   if (!/^[a-zA-Z0-9_.-]+\/[a-zA-Z0-9_.-]+$/.test(art.repository) || !/^[a-f0-9]{40}$/.test(art.commit))
     throw Error('Stage artwork must use an immutable repository revision');
+  if (art.localBase != null) {
+    if (art.repository !== 'arkpedia/arkpedia-sd-assets' || art.localBase !== `/arkpedia-assets/${art.commit}/`)
+      throw Error('Invalid pinned local asset base');
+    return art.localBase;
+  }
   return `https://raw.githubusercontent.com/${art.repository}/${art.commit}/`;
 }
 export async function fetchArtFile(base, entry, fetcher=fetch) {

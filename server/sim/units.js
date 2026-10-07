@@ -118,12 +118,14 @@ export class Unit {
     const b = this.base;
     const bHp = fin(b.maxHp, 1) > 0 ? fin(b.maxHp, 1) : 1;
     const maxHp = Math.max(1, fin((bHp + a('hpFlat')) * Math.max(0, 1 + a('hpPct')) * m('hpMul'), bHp));
-    const atk = Math.max(0, fin((b.atk + a('atkFlat')) * Math.max(0, 1 + a('atkPct')) * m('atkMul'), fin(b.atk, 0)));
+    const atk = Math.max(0, fin((b.atk + a('atkFlat')) * Math.max(0, 1 + a('atkPct')) * m('atkMul') + a('atkFinalFlat'), fin(b.atk, 0)));
     const def = Math.max(0, fin((b.def + a('defFlat')) * Math.max(0, 1 + a('defPct')) * m('defMul'), fin(b.def, 0)));
     const res = clamp(fin((b.res + a('resFlat')) * m('resMul'), fin(b.res, 0)), 0, 100);
     const aspd = clamp(fin(b.aspd + a('aspd'), 100), ASPD_MIN, ASPD_MAX);
     const bBat = fin(b.bat, 1) > 0 ? fin(b.bat, 1) : 1;
-    const bat = fin(bBat * Math.max(0.1, 1 + a('batPct')), bBat);
+    // Source FINAL_SCALER attack-time modifiers apply after additive/percentage
+    // attack-time changes (Jackie S2 and Purestream S2), before ASPD.
+    const bat = fin(bBat * Math.max(0.1, 1 + a('batPct')) * m('batMul'), bBat);
     const s = {
       maxHp, atk, def, res, aspd, bat,
       interval: (bat * 100) / aspd,
@@ -145,6 +147,7 @@ export class Unit {
       physDealtMul: m('physDealtMul'),
       artsDealtMul: m('artsDealtMul'),
       dmgTakenMul: m('dmgTakenMul'),
+      flatDamageResistance: Math.max(0, a('flatDamageResistance')),
       physTakenMul: m('physTakenMul'),
       artsTakenMul: m('artsTakenMul'),
       trueTakenMul: m('trueTakenMul'),
@@ -156,7 +159,7 @@ export class Unit {
       spRecovery: Math.max(0, fin((b.spRecovery + a('spRecoveryFlat')) * m('spRecoveryMul'), 0)),
       spCostFlat: a('spCostFlat'),
       redeployMul: m('redeployMul'),
-      hpRegen: fin(b.hpRecoveryPerSec + a('hpRegen') + a('hpRegenRatio') * maxHp, 0),
+      hpRegen: fin((b.hpRecoveryPerSec + a('hpRegen') + a('hpRegenRatio') * maxHp) * m('hpRegenMul'), 0),
       shield,
       flags: flags || EMPTY,
     };
