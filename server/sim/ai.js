@@ -163,25 +163,63 @@ export function performAttack(b, u, prof, targets, opts = null) {
   }
   const ranged = !prof._fortressMelee && prof.attack === 'ranged' && prof.projectile && prof.projectile !== 'none' && prof.projectile !== 'beam';
   const vis = prof._fortressMelee ? 'none' : (prof.projectile || 'none');
-  for (let i = 0; i < targets.length; i++) {
-    const t = targets[i];
-    b._ev(['atk', u.id, t.id, vis]);
-    if (isHeal) { doHeal(b, u, prof, t); continue; }
-    const info = { isSkill, index: i, attackId };
-    if (ranged && t.side === 'enemy' && prof.projectile === 'boomerang') {
-      throwBoomerang(b, u, prof, t, info);
-    } else if (ranged && t.side === 'enemy') {
-      const speed = PROJECTILE_SPEEDS[prof.projectile] ?? PROJECTILE_SPEED;
-      // projectiles land even if the shooter died meanwhile (damage is credited to it)
-      b.addProjectile({ from: u, target: t, speed, visual: prof.projectile, source: u, hitDead: prof.splashRadius > 0,
-        onHit: (c) => resolveHit(b, u, prof, c.target, info, c.x, c.y) });
-    } else {
-      resolveHit(b, u, prof, t, info, t.x, t.y);
+  const windup = typeof prof.windup === 'function' ? prof.windup(b, u, targets) : prof.windup;
+  const timed = windup > 0 && Number.isFinite(windup);
+  // The original four fields stay compatible with existing event consumers.
+  // Source-timed attacks may describe their windup and per-shot animation; their
+  // projectile presentation follows simulation coordinates instead of a fake flight.
+  const visual = timed || prof.attackVisual ? {
+    ...(timed ? { windup } : {}),
+    ...(prof.attackVisual ? { animation: prof.attackVisual } : {}),
+    projectile: prof.launchAttack || ranged ? 'tracked' : 'none',
+  } : null;
+  for (const t of targets) b._ev(visual ? ['atk', u.id, t.id, vis, visual] : ['atk', u.id, t.id, vis]);
+  const release = () => {
+    // A source ability whose selectTargetTiming is CAST selects at the strike,
+    // so enemies entering or leaving its range during windup are handled then.
+    if (prof.retargetOnRelease) targets = acquireTargets(b, u, prof);
+    for (let i = 0; i < targets.length; i++) {
+      const t = targets[i];
+      if (isHeal) { if (t.alive) doHeal(b, u, prof, t); continue; }
+      const info = { isSkill, index: i, attackId };
+      // A source projectile can implement its own flight/collision/dwell behaviour
+      // while keeping attack hooks, IDs and SP consumption on the ordinary path.
+      if (prof.launchAttack) {
+        b._safe(() => prof.launchAttack(b, u, prof, t, info), 'profile.launchAttack', u);
+      } else if (ranged && t.side === 'enemy' && prof.projectile === 'boomerang') {
+        throwBoomerang(b, u, prof, t, info);
+      } else if (ranged && t.side === 'enemy') {
+        const speed = prof.projectileSpeed ?? PROJECTILE_SPEEDS[prof.projectile] ?? PROJECTILE_SPEED;
+        // projectiles land even if the shooter died meanwhile (damage is credited to it)
+        b.addProjectile({ from: u, target: t, speed, visual: prof.projectile, source: u, hitDead: prof.splashRadius > 0,
+          data: visual ? { arkpediaTrackedVisual: true } : null,
+          onHit: (c) => resolveHit(b, u, prof, c.target, info, c.x, c.y) });
+      } else if (t.alive) {
+        resolveHit(b, u, prof, t, info, t.x, t.y);
+      }
     }
-  }
-  if (b._hooks.attack) b.emit('attack', { attacker: u, targets, isSkill });
-  if (u.skill) u.skill.onAttackPerformed(targets, isSkill, !!(opts && opts.noAmmo));
-  if (prof.afterAttack) b._safe(() => prof.afterAttack(b, u, targets), 'profile.afterAttack', u);
+    if (b._hooks.attack) b.emit('attack', { attacker: u, targets, isSkill });
+    if (u.skill) u.skill.onAttackPerformed(targets, isSkill, !!(opts && opts.noAmmo));
+    if (prof.afterAttack) b._safe(() => prof.afterAttack(b, u, targets), 'profile.afterAttack', u);
+  };
+  if (!timed) { release(); return; }
+  // Only explicit source kits opt in. Existing profiles retain immediate release.
+  // Control effects interrupt an unfired attack; a fired projectile keeps flying.
+  const deployment = u.deploySeq;
+  const activation = u.skill?.activations, activeSkill = u.skill?.active;
+  const valid = () => u.alive && u.deployed && u.deploySeq === deployment && u.canAct && !u.s.flags.disarm
+    && (!prof.interruptOnSkillChange || u.skill?.activations === activation && u.skill?.active === activeSkill);
+  u.atkCd = Math.max(u.atkCd, windup);
+  let pending = true;
+  const monitor = b.every(b.dt, () => {
+    if (pending && !valid()) { pending = false; delayed.cancel(); monitor.cancel(); }
+  }, { owner: u });
+  const delayed = b.after(windup, () => {
+    monitor.cancel();
+    if (!pending || !valid()) return;
+    pending = false;
+    release();
+  }, { owner: u });
 }
 
 /**
@@ -229,9 +267,16 @@ export function resolveHit(b, u, prof, target, info, x, y) {
     let mulT = skillMul;
     if (prof.dmgMul) { const m = typeof prof.dmgMul === 'function' ? prof.dmgMul(b, u, target) : prof.dmgMul; if (Number.isFinite(m)) mulT *= m; }
     const hits = prof.hitsFn ? prof.hitsFn(b, u) : Math.max(1, prof.hits || 1);
+    // A split attack mitigates the original full ATK for each damage event,
+    // then divides the resulting damage (including its 5% minimum). Ordinary
+    // multihit attacks retain a full-strength event for every hit.
+    const hitDamageScale = Number.isFinite(prof.hitDamageScale) && prof.hitDamageScale >= 0
+      ? prof.hitDamageScale : 1;
     let dealtMain = 0;
     for (let h = 0; h < hits && target.alive; h++) {
-      dealtMain += b.dealDamage(u, target, { amount: atk * scale * mulT, type: baseType, isAttack: true, isSkill: info.isSkill, tags: prof.tags || [], attackId });
+      dealtMain += b.dealDamage(u, target, { amount: atk * scale * mulT, type: baseType,
+        mul: hitDamageScale, noSp: !!prof.onlyFirstHitGainsSp && h > 0,
+        isAttack: true, isSkill: info.isSkill, tags: prof.tags || [], attackId });
     }
     dealtTotal += dealtMain;
     if (prof.onHitStatus && target.alive) b.applyStatus(target, prof.onHitStatus.key, { duration: prof.onHitStatus.duration, source: u, value: prof.onHitStatus.value });

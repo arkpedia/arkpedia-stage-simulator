@@ -48,6 +48,29 @@ test("an automatic attack skill can hold a full gauge without a manual-ready dia
   assert.equal(skillHud(sk).state, "active");
   assert.equal(skillHud(sk).ready, false);
 });
+test("a missing cast target preserves full SP and its ready diamond without claiming the skill is exhausted", () => {
+  const { b, unit } = deployed("char_208_melan"), sk = unit.skill;
+  let eligible = false;
+  sk.spec.canActivate = () => eligible;
+  sk.gainSp(sk.spCost, "test");
+  const sp = sk.spTotal;
+  assert.equal(sk.ready, true);
+  assert.equal(sk.exhausted, false);
+  assert.equal(sk.castEligible, false);
+  assert.equal(skillHud(sk).ready, true);
+  assert.equal(skillHud(sk).canActivate, false);
+  assert.equal(skillHud(sk).fraction, 1);
+  assert.doesNotMatch(skillHud(sk).text, /No skill uses/);
+  assert.equal(b.activateOperator(unit.defId), false);
+  assert.equal(sk.activate("test", { free: true }), false);
+  assert.equal(sk.spTotal, sp);
+  assert.equal(sk.activations, 0);
+  eligible = true;
+  assert.equal(skillHud(sk).canActivate, true);
+  assert.equal(b.activateOperator(unit.defId), true);
+  assert.equal(sk.activations, 1);
+  assert.equal(sk.spTotal, 0);
+});
 test("skills without an SP gauge stay hidden; ammo and infinite skills never produce invalid bar widths", () => {
   assert.equal(skillHud(null), null);
   assert.equal(skillHud({ kind: "passive" }), null);

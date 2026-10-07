@@ -15,7 +15,7 @@ function operatorFor(catalogue, id) {
 /**
  * Catalogue adapter supplies real caps from a pinned release:
  * { id, promotions:[{elite,maxLevel}], maxPotential, maxTrust,
- *   skills:[{id,maxRankByElite:{0:4,1:7,2:10}}],
+ *   skills:[{id,unlockElite,minLevel,maxRankByElite:{0:4,1:7,2:10}}],
  *   modules:[{id,maxStage,unlockElite,minLevel}], skins:[skinId] }
  */
 export function validateLoadout(build, catalogue) {
@@ -30,7 +30,11 @@ export function validateLoadout(build, catalogue) {
   } else {
     const skill = operator.skills.find((entry) => entry.id === build.skillId);
     const maxRank = skill?.maxRankByElite[build.elite];
-    if (!Number.isSafeInteger(maxRank) || maxRank < 1) throw new Error(`Unavailable skill: ${build.skillId}`);
+    const unlockElite = skill?.unlockElite ?? 0;
+    const minLevel = skill?.minLevel ?? 1;
+    if (!Number.isSafeInteger(maxRank) || maxRank < 1 || build.elite < unlockElite ||
+        (build.elite === unlockElite && build.level < minLevel))
+      throw new Error(`Unavailable skill: ${build.skillId}`);
     integer(build.skillRank, 1, maxRank, 'skill rank');
   }
   if (build.module) {

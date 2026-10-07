@@ -19,6 +19,9 @@ export function skillHud(skill) {
       : Number.isFinite(skill.timeLeft)
         ? `Skill active · ${Math.ceil(skill.timeLeft)}s`
         : "Skill active";
+  } else if (skill.exhausted) {
+    fraction = 0;
+    text = 'No skill uses remaining';
   } else {
     const cost = skill.spCost * skill.maxCharges;
     fraction = cost > 0 ? clamp(skill.spTotal / cost) : ready ? 1 : 0;
@@ -29,6 +32,7 @@ export function skillHud(skill) {
     state: skill.active || skill.pending || (ready && !skill.manual) ? "active" : "charging",
     // Automatic skills trigger themselves; the diamond invites a manual action only.
     ready: !!(ready && skill.manual),
+    canActivate: !!(ready && skill.manual && skill.castEligible !== false),
     text,
   };
 }

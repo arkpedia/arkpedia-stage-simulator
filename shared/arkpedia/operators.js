@@ -1,6 +1,15 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Regular-stage adapters are opt-in. Stronghold's mode kits are migration candidates,
 // not evidence that a character is supported in ordinary Arknights stages.
+import { MEDIC_OPERATORS } from './medic-operators.js';
+import { CASTER_OPERATORS } from './caster-operators.js';
+import { GUARD_OPERATORS } from './guard-operators.js';
+import { SNIPER_OPERATORS } from './sniper-operators.js';
+import { VANGUARD_OPERATORS } from './vanguard-operators.js';
+import { DEFENDER_OPERATORS } from './defender-operators.js';
+import { ADVANCED_SNIPER_OPERATORS } from './advanced-sniper-operators.js';
+import { SUPPORT_OPERATORS } from './support-operators.js';
+import { SPECIALIST_OPERATORS } from './specialist-operators.js';
 export const REGULAR_OPERATORS = Object.freeze({
   char_123_fang: { skillId: "skcom_charge_cost[1]", talentKeys: ["cost"], mechanic: "dp", prefabId: "skcom_charge_cost", templateKey: "charge_cost" },
   char_208_melan: { skillId: "skcom_atk_up[1]", talentKeys: ["atk"], mechanic: "buff" },
@@ -24,13 +33,22 @@ export const REGULAR_OPERATORS = Object.freeze({
   char_503_rang: { skillId: null, talentKeys: ["atk_scale"], mechanic: "anti-air" },
   char_501_durin: { skillId: null, talentKeys: ["prob"], mechanic: "dodge-arts" },
   char_009_12fce: { skillId: null, talentKeys: ["prob"], mechanic: "dodge-phys" },
+  ...MEDIC_OPERATORS,
+  ...CASTER_OPERATORS,
+  ...GUARD_OPERATORS,
+  ...SNIPER_OPERATORS,
+  ...VANGUARD_OPERATORS,
+  ...DEFENDER_OPERATORS,
+  ...ADVANCED_SNIPER_OPERATORS,
+  ...SUPPORT_OPERATORS,
+  ...SPECIALIST_OPERATORS,
 });
 
 export function assertRegularOperator(op) {
   const support = REGULAR_OPERATORS[op?.id];
-  if (!support || !Array.isArray(op.skills) || (support.skillId === null
-    ? op.skills.length !== 0
-    : op.skills.length !== 1 || op.skills[0].id !== support.skillId))
+  const skillIds = support?.skillIds ?? (support?.skillId == null ? [] : [support.skillId]);
+  if (!support || !Array.isArray(op.skills) || op.skills.length !== skillIds.length
+    || op.skills.some((skill, index) => skill.id !== skillIds[index]))
     throw new Error(`Unsupported regular-stage operator or skill: ${op?.id}`);
   for (const talent of op.talents ?? [])
     for (const candidate of talent.candidates)

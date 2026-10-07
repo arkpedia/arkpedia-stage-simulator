@@ -411,7 +411,10 @@ export class StageRenderer {
         if (!view) {
           const loaded = this.preloaded.get(key);
           if (!loaded) continue;
-          const actor = new BattleActor(loaded.skeleton, loaded.entry);
+          const skillIndex = this.data.operators[u.defId]?.skills.findIndex(skill => skill.id === u.skill?.id);
+          const actor = new BattleActor(loaded.skeleton, loaded.entry,
+            skillIndex >= 0 ? skillIndex : null,
+            { attackDrivenSkill: u.profile?.attackDrivenSkill === true });
           const hp = new P.Graphics();
           this.pixi.stage.addChild(actor.spine, hp);
           actor.deploy();
@@ -525,8 +528,8 @@ export class StageRenderer {
         const v = this.views.get(ev[1]);
         const u = battle.units.find((u) => u.id === ev[1]),
           target = battle.units.find((u) => u.id === ev[2]);
-        v?.actor.attack(u?.s.interval || 1);
-        if (u && target && u.def.position === "RANGED")
+        v?.actor.attack(u?.s.interval || 1, false, ev[4]);
+        if (u && target && u.def.position === "RANGED" && !ev[4]?.projectile)
           this.effects.push({
             source: u,
             target,
@@ -561,6 +564,16 @@ export class StageRenderer {
         .beginFill(e.heal ? 0x80e4b2 : 0xfbd29a, 0.85)
         .drawCircle(a.x + (b.x - a.x) * t, a.y + (b.y - a.y) * t, 3)
         .endFill();
+    }
+    // Source-timed projectile markers use the authoritative combat position and
+    // remain visible through the actual dwell window, including after retreat.
+    for (const projectile of [
+      ...(battle?.projectiles.list ?? []).filter(p => p.data?.arkpediaTrackedVisual),
+      ...(battle?.regularVisualProjectiles ?? []),
+    ]) {
+      const point = this.projection.project(projectile.x, projectile.y,
+        this.heightAt(Math.round(projectile.y), Math.round(projectile.x)) + 0.5);
+      this.fx.beginFill(0xfbd29a, 0.85).drawCircle(point.x, point.y, 3).endFill();
     }
     this.gates?.update(battle?.time ?? 0);
     this.skillParticles?.render(battle?.time ?? 0, this.projection, this.heightAt);

@@ -36,7 +36,8 @@
 //   mods, flags, targeting {maxTargets, rangeGrid, priority, allInRange, rangeExtend, noRangeExtend (the range ignores
 //   the unit's 攻击距离), showOwnRange (rangeGrid only selects targets: the detail card keeps the unit's own range)},
 //   attack {dmgType, atkScale, splashRadius, splashScale, hits, projectile, maxTargets, dmgMul, onHit, heal…},
-//   heal (bool: heal-type skill for the trigger rule), onStart(ctx), onEnd(ctx), onHit(ctx), onAttack(ctx), onTick(ctx).
+//   heal (bool: heal-type skill for the trigger rule), canActivate() (temporary cast eligibility),
+//   isExhausted() (no uses remain), onStart(ctx), onEnd(ctx), onHit(ctx), onAttack(ctx), onTick(ctx).
 // ctx passed to spec callbacks: { battle, unit, skill, bb, target?, dealt?, targets?, dt?, reason? }; onAttack's ctx
 //   also carries `noAmmo` (set it to true: this attack spends no ammo). onEnd runs while the skill's mods / range are
 //   still applied (`active` is already false); they are removed right after it (unless onEnd re-activated the skill).
@@ -157,7 +158,12 @@ export class SkillRuntime {
     if (this.unit) this._normalize();
   }
 
-  get ready() { return !this.noSkill && this.kind !== 'passive' && this.charges >= 1; }
+  get remainingUses() { return typeof this.spec.remainingUses === 'function' ? this.spec.remainingUses() : null; }
+  get exhausted() { return typeof this.spec.isExhausted === 'function' && !!this.spec.isExhausted(); }
+  // A target condition can prevent a cast without consuming SP or hiding the
+  // full-SP ready indicator. Battle-wide use limits are distinct exhaustion.
+  get castEligible() { return !this.exhausted && (typeof this.spec.canActivate !== 'function' || !!this.spec.canActivate()); }
+  get ready() { return !this.noSkill && !this.exhausted && this.kind !== 'passive' && this.charges >= 1; }
 
   get isTimed() { return this.kind === 'duration' || this.kind === 'ammo' || this.kind === 'toggle'; }
 
@@ -434,7 +440,7 @@ export class SkillRuntime {
 
   /** Activate now (consumes one charge). Returns true on success. */
   activate(reason = 'manual', { free = false } = {}) {
-    if (this.noSkill || this.kind === 'passive') return false;
+    if (this.noSkill || !this.castEligible || this.kind === 'passive') return false;
     if (!free && !this.ready) return false;
     if (this.active && this.isTimed) return false;
     const u = this.unit;

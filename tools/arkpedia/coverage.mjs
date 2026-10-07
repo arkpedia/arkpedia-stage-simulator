@@ -23,7 +23,7 @@ export function coverageFor({ characters, enemies, chess, inherited, data }) {
         playable: !!imported,
         animations: models.every(m => m?.animationRoles?.idle && m?.animationRoles?.attack && typeof m.premultipliedAlpha === "boolean") ? "imported" : "not-imported",
         skills: op.skills.map(s => ({ id: s.skillId,
-          regularAdapter: !!imported && REGULAR_OPERATORS[id].skillId === s.skillId,
+          regularAdapter: !!imported && (REGULAR_OPERATORS[id].skillIds ?? [REGULAR_OPERATORS[id].skillId]).includes(s.skillId),
           strongholdCandidates: candidates.flatMap(c => c.skills.filter(k => k.skillId === s.skillId && k.covered).map(() => c.chessId)),
         })),
         effects: imported ? "placeholder-projectiles" : "not-integrated",
@@ -49,6 +49,7 @@ export function coverageFor({ characters, enemies, chess, inherited, data }) {
     summary: {
       operators: operators.length, skills: operators.reduce((n, o) => n + o.skills.length, 0),
       playableOperators: operators.filter(o => o.playable).length,
+      regularSkills: operators.reduce((n, o) => n + o.skills.filter(s => s.regularAdapter).length, 0),
       skillsWithStrongholdCandidates: operators.reduce((n, o) => n + o.skills.filter(s => s.strongholdCandidates.length).length, 0),
       enemies: enemyRows.length, regularEnemies: enemyRows.filter(e => e.regularAdapter !== "not-integrated").length,
       enemiesWithStrongholdCandidates: enemyRows.filter(e => e.strongholdCandidate).length,

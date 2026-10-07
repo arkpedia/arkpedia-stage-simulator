@@ -1,0 +1,1926 @@
+{
+  "sourceVersion": "26-09-23-17-49-43_b9cc4a",
+  "tableCommit": "57010cb5b2afea112cae57daa756b58676ba6850",
+  "sourceBundles": [
+    {
+      "path": "charpack/char_150_snakek.ab",
+      "md5": "189cf92c1e54422e68e08c381dafe0b3",
+      "size": 20705,
+      "sha256": "49c814f094b3dfa193de9ff580d61d8f168a8a4ac122cc0ce01aa166adcd70c4"
+    },
+    {
+      "path": "charpack/char_381_bubble.ab",
+      "md5": "477801945b767c737d5fc12a6f38a9fd",
+      "size": 20609,
+      "sha256": "9fea0d0cf91425755fa0da562b4ee749ca3740f2f60eb656f25857647e6225cb"
+    },
+    {
+      "path": "charpack/char_260_durnar.ab",
+      "md5": "28d19a07f25e2311dafd6319e6d0e7db",
+      "size": 21578,
+      "sha256": "121a42c8f58fc1bcba9edc9590c4d3e90ded7699a9c7169dcf69eb068896628b"
+    },
+    {
+      "path": "charpack/char_196_sunbr.ab",
+      "md5": "77b2c9b48b9650e8619643c2a232fb6b",
+      "size": 20865,
+      "sha256": "0d2f3de6831c8bc7059925e01045a4c0f55f8e099264b468eced779455ddd895"
+    },
+    {
+      "path": "battle/prefabs/[uc]skills.ab",
+      "md5": "ff06dc9bb5516d069c8c0017207653ca",
+      "size": 1163240,
+      "sha256": "1c026938f054218f7e6bda9000162b2a6f30c9bd93e1ae9763d9d6df2270499c"
+    }
+  ],
+  "reviewedMechanics": {
+    "cuora": "S2 snakek_skill_2 flags 11 Disarmed, DEF PERCENTAGE, BLOCK_CNT ADDITION and HP_RECOVERY_PER_SEC_BY_MAX_HP_RATIO ADDITION. S1 shared DEF Up. Talent DEF PERCENTAGE at E1/E2.",
+    "bubble": "Talent bubble_t_1 ON_TAKE_DAMAGE weakens enemy modifier source with ATK FINAL_SCALER; one shared nonstacking buff. S2 Disarmed + DEF PERCENTAGE + TAUNT_LEVEL ADDITION; bubble_s_2 checks sourced enemy damage without an attack-only filter and counters PHYSICAL via current DEF times atk_scale.",
+    "dur-nar": "Normal mode physical; S1 mode 1 single-target Arts; S2 mode 2 Arts selector _limitedMaxTargetNumToBlockedCnt=1 and _limitTargetNum=0. ATK/DEF talent percentage applies at E1/E2.",
+    "gummy": "S1 skill-range healing selector includes self, lowest HP ratio, one target; ct/maxChargeTime bound charges. S2 sequence waits for DEF/disarm buff duration disarm=10, then ATK/heal mode buff runs full duration=30. Healing BASE_ATTACK_TIME uses PERCENTAGE. Talent critical_stun rolls ON_CALCULATE_DAMAGE; healing does not invoke it."
+  },
+  "characters": {
+    "char_150_snakek": [
+      {
+        "object": "Attack",
+        "pathId": "-7391993434198734585",
+        "components": [
+          {
+            "pathId": "-8410836152296175353",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_timeMode": 0,
+            "_preDelay": 0.0,
+            "_atkScaleKey": "atk_scale",
+            "_damageType": 1
+          }
+        ]
+      },
+      {
+        "object": "Trigger",
+        "pathId": "-7224706703738042105",
+        "components": [
+          {
+            "pathId": "6241181206326053127",
+            "_keepTarget": 0,
+            "_minTargetNum": 1
+          },
+          {
+            "pathId": "-23761905817319161",
+            "_targetSide": 2,
+            "_targetMotion": 1,
+            "_targetCategory": 1,
+            "_postFilter": 4,
+            "_limitTargetNum": 1,
+            "_excludeOwner": 0,
+            "_limitedMaxTargetNumToBlockedCnt": 0
+          }
+        ]
+      },
+      {
+        "object": "1",
+        "pathId": "-5172724387926013689",
+        "components": [
+          {
+            "pathId": "2566354202705168647",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_buffs": [
+              {
+                "attributes": {
+                  "abnormalFlags": [],
+                  "abnormalImmunes": [],
+                  "abnormalAntis": [],
+                  "abnormalCombos": [],
+                  "abnormalComboImmunes": [],
+                  "attributeModifiers": [
+                    {
+                      "attributeType": 2,
+                      "formulaItem": 1,
+                      "value": 0.0,
+                      "loadFromBlackboard": 1,
+                      "fetchBaseValueFromSourceEntity": 0
+                    }
+                  ]
+                },
+                "buffKey": "snakek_t_1",
+                "loadFromDB": 0,
+                "isDurableBuff": 0,
+                "isDamageMissable": 0,
+                "isSilenceable": 0,
+                "isStunnable": 0,
+                "isFreezable": 0,
+                "isLevitatable": 0,
+                "statusResistable": 2,
+                "templateKey": "empty",
+                "disableOverride": 1,
+                "overrideKey": "",
+                "overrideType": 0,
+                "maxStackCnt": 1,
+                "refreshRemainingTimeWhenStackMax": 0,
+                "clearAllStackCntWhenTimeUp": 0,
+                "maxValidStackCnt": -1,
+                "independentCharacterSource": 0,
+                "overrideEffectKey": "",
+                "overrideOnEventPriority": 0,
+                "onEventPriority": 0,
+                "audioSignal": "",
+                "lifeTimeType": 2,
+                "takeSnapshotWhenExtend": 0,
+                "durationKey": "",
+                "lifeTime": 0.0,
+                "triggerLifeType": 0,
+                "triggerCnt": 0,
+                "triggerInterval": -1.0,
+                "waitFirstTriggerInterval": 1,
+                "firstTriggerInterval": -1.0,
+                "priority": -1,
+                "priorityBBKeys": [],
+                "stripBlackboardParamsWithBuffKey": 0,
+                "blackboard": [],
+                "enableInitDirectionFromSource": 0
+              }
+            ]
+          },
+          {
+            "pathId": "-5552825960278554361",
+            "_attackBlackboardModeIndex": -1
+          }
+        ]
+      },
+      {
+        "object": "char_150_snakek",
+        "pathId": "-4592155201847981817",
+        "components": [
+          {
+            "pathId": "5093570177699449095",
+            "_modes": [
+              {
+                "m_FileID": 0,
+                "m_PathID": "-6272209440712783609"
+              },
+              {
+                "m_FileID": 0,
+                "m_PathID": "7378872375675095303"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "object": "S2",
+        "pathId": "-1199673145797670649",
+        "components": [
+          {
+            "pathId": "7378872375675095303",
+            "_attack": {
+              "m_FileID": 0,
+              "m_PathID": "-6901191364964087545"
+            },
+            "_attackTrigger": {
+              "m_FileID": 0,
+              "m_PathID": "6241181206326053127"
+            }
+          }
+        ]
+      },
+      {
+        "object": "Default",
+        "pathId": "4302251606822586631",
+        "components": [
+          {
+            "pathId": "-6272209440712783609",
+            "_attack": {
+              "m_FileID": 0,
+              "m_PathID": "-8410836152296175353"
+            },
+            "_attackTrigger": {
+              "m_FileID": 0,
+              "m_PathID": "-3276998769233655545"
+            }
+          }
+        ]
+      },
+      {
+        "object": "Trigger",
+        "pathId": "4636927555511027975",
+        "components": [
+          {
+            "pathId": "-3276998769233655545",
+            "_keepTarget": 0,
+            "_minTargetNum": 1
+          },
+          {
+            "pathId": "-8951330580624340729",
+            "_targetSide": 2,
+            "_targetMotion": 1,
+            "_targetCategory": 1,
+            "_postFilter": 4,
+            "_limitTargetNum": 1,
+            "_excludeOwner": 0,
+            "_limitedMaxTargetNumToBlockedCnt": 0
+          }
+        ]
+      },
+      {
+        "object": "Attack",
+        "pathId": "4655956414389848327",
+        "components": [
+          {
+            "pathId": "-6901191364964087545",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_timeMode": 0,
+            "_preDelay": 0.0,
+            "_atkScaleKey": "atk_scale",
+            "_damageType": 1
+          }
+        ]
+      }
+    ],
+    "char_381_bubble": [
+      {
+        "object": "Default",
+        "pathId": "-7307624947176067148",
+        "components": [
+          {
+            "pathId": "-1360112409587699788",
+            "_attack": {
+              "m_FileID": 0,
+              "m_PathID": "-1153885249887817804"
+            },
+            "_attackTrigger": {
+              "m_FileID": 0,
+              "m_PathID": "1921728034392813492"
+            }
+          }
+        ]
+      },
+      {
+        "object": "char_381_bubble",
+        "pathId": "-5830135097784815692",
+        "components": [
+          {
+            "pathId": "-2592679074336952396",
+            "_modes": [
+              {
+                "m_FileID": 0,
+                "m_PathID": "-1360112409587699788"
+              },
+              {
+                "m_FileID": 0,
+                "m_PathID": "7065320227928780724"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "object": "Trigger",
+        "pathId": "-4600961599269195852",
+        "components": [
+          {
+            "pathId": "1921728034392813492",
+            "_keepTarget": 0,
+            "_minTargetNum": 1
+          },
+          {
+            "pathId": "-3630175975819989068",
+            "_targetSide": 2,
+            "_targetMotion": 1,
+            "_targetCategory": 1,
+            "_postFilter": 4,
+            "_limitTargetNum": 1,
+            "_excludeOwner": 0,
+            "_limitedMaxTargetNumToBlockedCnt": 0
+          }
+        ]
+      },
+      {
+        "object": "S2",
+        "pathId": "-2847435686776229964",
+        "components": [
+          {
+            "pathId": "7065320227928780724",
+            "_attack": {
+              "m_FileID": 0,
+              "m_PathID": "6397926576391761844"
+            },
+            "_attackTrigger": {
+              "m_FileID": 0,
+              "m_PathID": "2261877542362001332"
+            }
+          }
+        ]
+      },
+      {
+        "object": "Trigger",
+        "pathId": "-695508821762854988",
+        "components": [
+          {
+            "pathId": "2261877542362001332",
+            "_keepTarget": 0,
+            "_minTargetNum": 1
+          },
+          {
+            "pathId": "-3526480453021814860",
+            "_targetSide": 2,
+            "_targetMotion": 1,
+            "_targetCategory": 1,
+            "_postFilter": 4,
+            "_limitTargetNum": 1,
+            "_excludeOwner": 0,
+            "_limitedMaxTargetNumToBlockedCnt": 0
+          }
+        ]
+      },
+      {
+        "object": "1",
+        "pathId": "50808086089936820",
+        "components": [
+          {
+            "pathId": "-4960850428510883916",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_buffs": [
+              {
+                "attributes": {
+                  "abnormalFlags": [],
+                  "abnormalImmunes": [],
+                  "abnormalAntis": [],
+                  "abnormalCombos": [],
+                  "abnormalComboImmunes": [],
+                  "attributeModifiers": []
+                },
+                "buffKey": "bubble_t_1",
+                "loadFromDB": 0,
+                "isDurableBuff": 0,
+                "isDamageMissable": 0,
+                "isSilenceable": 0,
+                "isStunnable": 0,
+                "isFreezable": 0,
+                "isLevitatable": 0,
+                "statusResistable": 2,
+                "templateKey": "bubble_t_1",
+                "disableOverride": 1,
+                "overrideKey": "",
+                "overrideType": 0,
+                "maxStackCnt": 1,
+                "refreshRemainingTimeWhenStackMax": 0,
+                "clearAllStackCntWhenTimeUp": 0,
+                "maxValidStackCnt": -1,
+                "independentCharacterSource": 0,
+                "overrideEffectKey": "",
+                "overrideOnEventPriority": 0,
+                "onEventPriority": 0,
+                "audioSignal": "",
+                "lifeTimeType": 2,
+                "takeSnapshotWhenExtend": 0,
+                "durationKey": "",
+                "lifeTime": 0.0,
+                "triggerLifeType": 0,
+                "triggerCnt": 0,
+                "triggerInterval": -1.0,
+                "waitFirstTriggerInterval": 1,
+                "firstTriggerInterval": -1.0,
+                "priority": -1,
+                "priorityBBKeys": [],
+                "stripBlackboardParamsWithBuffKey": 0,
+                "blackboard": [],
+                "enableInitDirectionFromSource": 0
+              }
+            ]
+          },
+          {
+            "pathId": "1097558594172923828",
+            "_attackBlackboardModeIndex": -1
+          }
+        ]
+      },
+      {
+        "object": "Attack",
+        "pathId": "2872330952061005748",
+        "components": [
+          {
+            "pathId": "6397926576391761844",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_timeMode": 0,
+            "_preDelay": 0.0,
+            "_atkScaleKey": "atk_scale",
+            "_damageType": 1
+          }
+        ]
+      },
+      {
+        "object": "Attack",
+        "pathId": "8071842664435330996",
+        "components": [
+          {
+            "pathId": "-1153885249887817804",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_timeMode": 0,
+            "_preDelay": 0.0,
+            "_atkScaleKey": "atk_scale",
+            "_damageType": 1
+          }
+        ]
+      }
+    ],
+    "char_260_durnar": [
+      {
+        "object": "Trigger",
+        "pathId": "-9220465903321502323",
+        "components": [
+          {
+            "pathId": "2715148509766593933",
+            "_keepTarget": 0,
+            "_minTargetNum": 1
+          },
+          {
+            "pathId": "7001977572574932365",
+            "_targetSide": 2,
+            "_targetMotion": 1,
+            "_targetCategory": 1,
+            "_postFilter": 4,
+            "_limitTargetNum": 1,
+            "_excludeOwner": 0,
+            "_limitedMaxTargetNumToBlockedCnt": 0
+          }
+        ]
+      },
+      {
+        "object": "Trigger",
+        "pathId": "-6316470268704674419",
+        "components": [
+          {
+            "pathId": "3283803145423531405",
+            "_keepTarget": 0,
+            "_minTargetNum": 1
+          },
+          {
+            "pathId": "3175631365655735693",
+            "_targetSide": 2,
+            "_targetMotion": 1,
+            "_targetCategory": 1,
+            "_postFilter": 4,
+            "_limitTargetNum": 0,
+            "_excludeOwner": 0,
+            "_limitedMaxTargetNumToBlockedCnt": 1
+          }
+        ]
+      },
+      {
+        "object": "Trigger",
+        "pathId": "-5999522015105077875",
+        "components": [
+          {
+            "pathId": "-497573621122486899",
+            "_keepTarget": 0,
+            "_minTargetNum": 1
+          },
+          {
+            "pathId": "-8647948654545556083",
+            "_targetSide": 2,
+            "_targetMotion": 1,
+            "_targetCategory": 1,
+            "_postFilter": 4,
+            "_limitTargetNum": 1,
+            "_excludeOwner": 0,
+            "_limitedMaxTargetNumToBlockedCnt": 0
+          }
+        ]
+      },
+      {
+        "object": "Attack",
+        "pathId": "-4420571917513806451",
+        "components": [
+          {
+            "pathId": "-3106889945491001971",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_timeMode": 0,
+            "_preDelay": 0.0,
+            "_atkScaleKey": "atk_scale",
+            "_damageType": 1
+          }
+        ]
+      },
+      {
+        "object": "1",
+        "pathId": "847891299440635277",
+        "components": [
+          {
+            "pathId": "-8858475028514034291",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_buffs": [
+              {
+                "attributes": {
+                  "abnormalFlags": [],
+                  "abnormalImmunes": [],
+                  "abnormalAntis": [],
+                  "abnormalCombos": [],
+                  "abnormalComboImmunes": [],
+                  "attributeModifiers": [
+                    {
+                      "attributeType": 2,
+                      "formulaItem": 1,
+                      "value": 0.0,
+                      "loadFromBlackboard": 1,
+                      "fetchBaseValueFromSourceEntity": 0
+                    },
+                    {
+                      "attributeType": 1,
+                      "formulaItem": 1,
+                      "value": 0.0,
+                      "loadFromBlackboard": 1,
+                      "fetchBaseValueFromSourceEntity": 0
+                    }
+                  ]
+                },
+                "buffKey": "durnar_t_1",
+                "loadFromDB": 0,
+                "isDurableBuff": 0,
+                "isDamageMissable": 0,
+                "isSilenceable": 0,
+                "isStunnable": 0,
+                "isFreezable": 0,
+                "isLevitatable": 0,
+                "statusResistable": 2,
+                "templateKey": "empty",
+                "disableOverride": 1,
+                "overrideKey": "",
+                "overrideType": 0,
+                "maxStackCnt": 1,
+                "refreshRemainingTimeWhenStackMax": 0,
+                "clearAllStackCntWhenTimeUp": 0,
+                "maxValidStackCnt": -1,
+                "independentCharacterSource": 0,
+                "overrideEffectKey": "",
+                "overrideOnEventPriority": 0,
+                "onEventPriority": 0,
+                "audioSignal": "",
+                "lifeTimeType": 2,
+                "takeSnapshotWhenExtend": 0,
+                "durationKey": "",
+                "lifeTime": 0.0,
+                "triggerLifeType": 0,
+                "triggerCnt": 0,
+                "triggerInterval": -1.0,
+                "waitFirstTriggerInterval": 1,
+                "firstTriggerInterval": -1.0,
+                "priority": -1,
+                "priorityBBKeys": [],
+                "stripBlackboardParamsWithBuffKey": 0,
+                "blackboard": [],
+                "enableInitDirectionFromSource": 0
+              }
+            ]
+          },
+          {
+            "pathId": "8673862230646762893",
+            "_attackBlackboardModeIndex": -1
+          }
+        ]
+      },
+      {
+        "object": "S2",
+        "pathId": "1325410622488751501",
+        "components": [
+          {
+            "pathId": "7220826515455454605",
+            "_attack": {
+              "m_FileID": 0,
+              "m_PathID": "5920110463605190029"
+            },
+            "_attackTrigger": {
+              "m_FileID": 0,
+              "m_PathID": "3283803145423531405"
+            }
+          }
+        ]
+      },
+      {
+        "object": "Default",
+        "pathId": "2194327571359182221",
+        "components": [
+          {
+            "pathId": "-3880776852247761523",
+            "_attack": {
+              "m_FileID": 0,
+              "m_PathID": "-3106889945491001971"
+            },
+            "_attackTrigger": {
+              "m_FileID": 0,
+              "m_PathID": "2715148509766593933"
+            }
+          }
+        ]
+      },
+      {
+        "object": "S1",
+        "pathId": "2808861296006573453",
+        "components": [
+          {
+            "pathId": "-2529432806688117363",
+            "_attack": {
+              "m_FileID": 0,
+              "m_PathID": "-1448557770090041971"
+            },
+            "_attackTrigger": {
+              "m_FileID": 0,
+              "m_PathID": "-497573621122486899"
+            }
+          }
+        ]
+      },
+      {
+        "object": "Attack",
+        "pathId": "4589232003154292109",
+        "components": [
+          {
+            "pathId": "5920110463605190029",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "3175631365655735693"
+            },
+            "_timeMode": 0,
+            "_preDelay": 0.0,
+            "_atkScaleKey": "atk_scale",
+            "_damageType": 2
+          }
+        ]
+      },
+      {
+        "object": "Attack",
+        "pathId": "6036935594890145165",
+        "components": [
+          {
+            "pathId": "-1448557770090041971",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_timeMode": 0,
+            "_preDelay": 0.0,
+            "_atkScaleKey": "atk_scale",
+            "_damageType": 2
+          }
+        ]
+      },
+      {
+        "object": "char_260_durnar",
+        "pathId": "6246040803898928525",
+        "components": [
+          {
+            "pathId": "3847007478648384909",
+            "_modes": [
+              {
+                "m_FileID": 0,
+                "m_PathID": "-3880776852247761523"
+              },
+              {
+                "m_FileID": 0,
+                "m_PathID": "-2529432806688117363"
+              },
+              {
+                "m_FileID": 0,
+                "m_PathID": "7220826515455454605"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "char_196_sunbr": [
+      {
+        "object": "Trigger",
+        "pathId": "-8452845243817205999",
+        "components": [
+          {
+            "pathId": "-3287589671201677551",
+            "_keepTarget": 0,
+            "_minTargetNum": 1
+          },
+          {
+            "pathId": "-7954547987211493615",
+            "_targetSide": 2,
+            "_targetMotion": 1,
+            "_targetCategory": 1,
+            "_postFilter": 4,
+            "_limitTargetNum": 1,
+            "_excludeOwner": 0,
+            "_limitedMaxTargetNumToBlockedCnt": 0
+          }
+        ]
+      },
+      {
+        "object": "char_196_sunbr",
+        "pathId": "-8101391650710823151",
+        "components": [
+          {
+            "pathId": "-4026560225998151919",
+            "_modes": [
+              {
+                "m_FileID": 0,
+                "m_PathID": "3217091745338482449"
+              },
+              {
+                "m_FileID": 0,
+                "m_PathID": "366772632988671761"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "object": "1",
+        "pathId": "-7747983612109660399",
+        "components": [
+          {
+            "pathId": "4718070313189695249",
+            "_attackBlackboardModeIndex": -1
+          },
+          {
+            "pathId": "2591495689078497041",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_buffs": [
+              {
+                "attributes": {
+                  "abnormalFlags": [],
+                  "abnormalImmunes": [],
+                  "abnormalAntis": [],
+                  "abnormalCombos": [],
+                  "abnormalComboImmunes": [],
+                  "attributeModifiers": []
+                },
+                "buffKey": "sunbr_t_1",
+                "loadFromDB": 0,
+                "isDurableBuff": 0,
+                "isDamageMissable": 0,
+                "isSilenceable": 0,
+                "isStunnable": 0,
+                "isFreezable": 0,
+                "isLevitatable": 0,
+                "statusResistable": 2,
+                "templateKey": "critical_stun",
+                "disableOverride": 1,
+                "overrideKey": "",
+                "overrideType": 0,
+                "maxStackCnt": 1,
+                "refreshRemainingTimeWhenStackMax": 0,
+                "clearAllStackCntWhenTimeUp": 0,
+                "maxValidStackCnt": -1,
+                "independentCharacterSource": 0,
+                "overrideEffectKey": "",
+                "overrideOnEventPriority": 0,
+                "onEventPriority": 0,
+                "audioSignal": "",
+                "lifeTimeType": 2,
+                "takeSnapshotWhenExtend": 0,
+                "durationKey": "",
+                "lifeTime": 0.0,
+                "triggerLifeType": 0,
+                "triggerCnt": 0,
+                "triggerInterval": -1.0,
+                "waitFirstTriggerInterval": 1,
+                "firstTriggerInterval": -1.0,
+                "priority": -1,
+                "priorityBBKeys": [],
+                "stripBlackboardParamsWithBuffKey": 0,
+                "blackboard": [],
+                "enableInitDirectionFromSource": 0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "object": "Trigger",
+        "pathId": "-6016403742868381935",
+        "components": [
+          {
+            "pathId": "-7990388463312904431",
+            "_keepTarget": 0,
+            "_minTargetNum": 1
+          },
+          {
+            "pathId": "-8414180753328906479",
+            "_targetSide": 1,
+            "_targetMotion": 3,
+            "_targetCategory": 1,
+            "_postFilter": 3,
+            "_limitTargetNum": 1,
+            "_excludeOwner": 0
+          }
+        ]
+      },
+      {
+        "object": "Default",
+        "pathId": "-2456906791965303023",
+        "components": [
+          {
+            "pathId": "3217091745338482449",
+            "_attack": {
+              "m_FileID": 0,
+              "m_PathID": "-9141495887010603247"
+            },
+            "_attackTrigger": {
+              "m_FileID": 0,
+              "m_PathID": "-3287589671201677551"
+            }
+          }
+        ]
+      },
+      {
+        "object": "Attack",
+        "pathId": "-1732719995402199279",
+        "components": [
+          {
+            "pathId": "-9141495887010603247",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_timeMode": 0,
+            "_preDelay": 0.0,
+            "_atkScaleKey": "atk_scale",
+            "_damageType": 1
+          }
+        ]
+      },
+      {
+        "object": "S2",
+        "pathId": "6025799979459469073",
+        "components": [
+          {
+            "pathId": "366772632988671761",
+            "_attack": {
+              "m_FileID": 0,
+              "m_PathID": "4284030287843942161"
+            },
+            "_attackTrigger": {
+              "m_FileID": 0,
+              "m_PathID": "-7990388463312904431"
+            }
+          }
+        ]
+      },
+      {
+        "object": "Attack",
+        "pathId": "6297314378099842833",
+        "components": [
+          {
+            "pathId": "4284030287843942161",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_timeMode": 0,
+            "_preDelay": 0.5329999923706055
+          }
+        ]
+      }
+    ]
+  },
+  "skills": {
+    "skchr_sunbr_2": [
+      {
+        "object": "skchr_sunbr_2",
+        "pathId": "-7364421868451702763",
+        "components": [
+          {
+            "pathId": "3480140096953276437",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_abilities": [
+              {
+                "m_FileID": 0,
+                "m_PathID": "-1633263084332689387"
+              },
+              {
+                "m_FileID": 0,
+                "m_PathID": "1520972884057610261"
+              }
+            ],
+            "_alwaysNext": 0,
+            "_timeMode": 1
+          },
+          {
+            "pathId": "4001799439596279829",
+            "_attackBlackboardModeIndex": 1,
+            "_rangeIdModeIndex": 1,
+            "_rangeIdUsageType": 7,
+            "_trigger": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            }
+          }
+        ]
+      }
+    ],
+    "skcom_def_up": [
+      {
+        "object": "skcom_def_up",
+        "pathId": "-1843200597619493528",
+        "components": [
+          {
+            "pathId": "-8162559461588191896",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_buffs": [
+              {
+                "attributes": {
+                  "abnormalFlags": [],
+                  "abnormalImmunes": [],
+                  "abnormalAntis": [],
+                  "abnormalCombos": [],
+                  "abnormalComboImmunes": [],
+                  "attributeModifiers": [
+                    {
+                      "attributeType": 2,
+                      "formulaItem": 1,
+                      "value": 0.0,
+                      "loadFromBlackboard": 1,
+                      "fetchBaseValueFromSourceEntity": 0
+                    }
+                  ]
+                },
+                "buffKey": "multi_def",
+                "loadFromDB": 0,
+                "isDurableBuff": 0,
+                "isDamageMissable": 0,
+                "isSilenceable": 0,
+                "isStunnable": 0,
+                "isFreezable": 0,
+                "isLevitatable": 0,
+                "statusResistable": 2,
+                "templateKey": "empty",
+                "disableOverride": 0,
+                "overrideKey": "",
+                "overrideType": 0,
+                "maxStackCnt": 1,
+                "refreshRemainingTimeWhenStackMax": 0,
+                "clearAllStackCntWhenTimeUp": 0,
+                "maxValidStackCnt": -1,
+                "independentCharacterSource": 0,
+                "overrideEffectKey": "common_ignite_defense",
+                "overrideOnEventPriority": 0,
+                "onEventPriority": 0,
+                "audioSignal": "",
+                "lifeTimeType": 1,
+                "takeSnapshotWhenExtend": 0,
+                "durationKey": "",
+                "lifeTime": 0.0,
+                "triggerLifeType": 0,
+                "triggerCnt": 0,
+                "triggerInterval": -1.0,
+                "waitFirstTriggerInterval": 1,
+                "firstTriggerInterval": -1.0,
+                "priority": -1,
+                "priorityBBKeys": [],
+                "stripBlackboardParamsWithBuffKey": 0,
+                "blackboard": [],
+                "enableInitDirectionFromSource": 0
+              }
+            ],
+            "_preDelay": 0.0,
+            "_checkBuffEarlyFinish": 0
+          },
+          {
+            "pathId": "1261697522948126056",
+            "_attackBlackboardModeIndex": -1,
+            "_rangeIdModeIndex": -1,
+            "_rangeIdUsageType": 7,
+            "_trigger": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            }
+          }
+        ]
+      }
+    ],
+    "skchr_snakek_2": [
+      {
+        "object": "skchr_snakek_2",
+        "pathId": "3020877308773663718",
+        "components": [
+          {
+            "pathId": "-3928793263254862874",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_buffs": [
+              {
+                "attributes": {
+                  "abnormalFlags": [
+                    11
+                  ],
+                  "abnormalImmunes": [],
+                  "abnormalAntis": [],
+                  "abnormalCombos": [],
+                  "abnormalComboImmunes": [],
+                  "attributeModifiers": [
+                    {
+                      "attributeType": 2,
+                      "formulaItem": 1,
+                      "value": 0.0,
+                      "loadFromBlackboard": 1,
+                      "fetchBaseValueFromSourceEntity": 0
+                    },
+                    {
+                      "attributeType": 5,
+                      "formulaItem": 0,
+                      "value": 1.0,
+                      "loadFromBlackboard": 1,
+                      "fetchBaseValueFromSourceEntity": 0
+                    },
+                    {
+                      "attributeType": 19,
+                      "formulaItem": 0,
+                      "value": 0.0,
+                      "loadFromBlackboard": 1,
+                      "fetchBaseValueFromSourceEntity": 0
+                    }
+                  ]
+                },
+                "buffKey": "snakek_skill_2",
+                "loadFromDB": 0,
+                "isDurableBuff": 0,
+                "isDamageMissable": 0,
+                "isSilenceable": 0,
+                "isStunnable": 0,
+                "isFreezable": 0,
+                "isLevitatable": 0,
+                "statusResistable": 2,
+                "templateKey": "switch_mode_restart_fsm",
+                "disableOverride": 0,
+                "overrideKey": "",
+                "overrideType": 0,
+                "maxStackCnt": 1,
+                "refreshRemainingTimeWhenStackMax": 0,
+                "clearAllStackCntWhenTimeUp": 0,
+                "maxValidStackCnt": -1,
+                "independentCharacterSource": 0,
+                "overrideEffectKey": "snakek_skill_02_buff_01",
+                "overrideOnEventPriority": 0,
+                "onEventPriority": 0,
+                "audioSignal": "",
+                "lifeTimeType": 1,
+                "takeSnapshotWhenExtend": 0,
+                "durationKey": "",
+                "lifeTime": 0.0,
+                "triggerLifeType": 0,
+                "triggerCnt": 0,
+                "triggerInterval": -1.0,
+                "waitFirstTriggerInterval": 1,
+                "firstTriggerInterval": -1.0,
+                "priority": -1,
+                "priorityBBKeys": [],
+                "stripBlackboardParamsWithBuffKey": 0,
+                "blackboard": [
+                  {
+                    "key": "mode",
+                    "value": 1.0,
+                    "valueStr": ""
+                  }
+                ],
+                "enableInitDirectionFromSource": 0
+              }
+            ],
+            "_preDelay": 0.0,
+            "_checkBuffEarlyFinish": 0
+          },
+          {
+            "pathId": "-3749427329861286938",
+            "_attackBlackboardModeIndex": 1,
+            "_rangeIdModeIndex": -1,
+            "_rangeIdUsageType": 7,
+            "_trigger": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            }
+          }
+        ]
+      }
+    ],
+    "skcom_atk_up": [
+      {
+        "object": "skcom_atk_up",
+        "pathId": "3415672303571633134",
+        "components": [
+          {
+            "pathId": "-8149467065939786770",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_buffs": [
+              {
+                "attributes": {
+                  "abnormalFlags": [],
+                  "abnormalImmunes": [],
+                  "abnormalAntis": [],
+                  "abnormalCombos": [],
+                  "abnormalComboImmunes": [],
+                  "attributeModifiers": [
+                    {
+                      "attributeType": 1,
+                      "formulaItem": 1,
+                      "value": 0.0,
+                      "loadFromBlackboard": 1,
+                      "fetchBaseValueFromSourceEntity": 0
+                    }
+                  ]
+                },
+                "buffKey": "multi_atk",
+                "loadFromDB": 0,
+                "isDurableBuff": 0,
+                "isDamageMissable": 0,
+                "isSilenceable": 0,
+                "isStunnable": 0,
+                "isFreezable": 0,
+                "isLevitatable": 0,
+                "statusResistable": 2,
+                "templateKey": "empty",
+                "disableOverride": 0,
+                "overrideKey": "",
+                "overrideType": 0,
+                "maxStackCnt": 1,
+                "refreshRemainingTimeWhenStackMax": 0,
+                "clearAllStackCntWhenTimeUp": 0,
+                "maxValidStackCnt": -1,
+                "independentCharacterSource": 0,
+                "overrideEffectKey": "common_ignite_attack",
+                "overrideOnEventPriority": 0,
+                "onEventPriority": 0,
+                "audioSignal": "",
+                "lifeTimeType": 1,
+                "takeSnapshotWhenExtend": 0,
+                "durationKey": "",
+                "lifeTime": 0.0,
+                "triggerLifeType": 0,
+                "triggerCnt": 0,
+                "triggerInterval": -1.0,
+                "waitFirstTriggerInterval": 1,
+                "firstTriggerInterval": -1.0,
+                "priority": -1,
+                "priorityBBKeys": [],
+                "stripBlackboardParamsWithBuffKey": 0,
+                "blackboard": [],
+                "enableInitDirectionFromSource": 0
+              }
+            ],
+            "_preDelay": 0.0,
+            "_checkBuffEarlyFinish": 0
+          },
+          {
+            "pathId": "-2253778771189300242",
+            "_attackBlackboardModeIndex": -1,
+            "_rangeIdModeIndex": -1,
+            "_rangeIdUsageType": 7,
+            "_trigger": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            }
+          }
+        ]
+      }
+    ],
+    "skchr_bubble_2": [
+      {
+        "object": "skchr_bubble_2",
+        "pathId": "4391756907044081865",
+        "components": [
+          {
+            "pathId": "5335959457062916297",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_buffs": [
+              {
+                "attributes": {
+                  "abnormalFlags": [
+                    11
+                  ],
+                  "abnormalImmunes": [],
+                  "abnormalAntis": [],
+                  "abnormalCombos": [],
+                  "abnormalComboImmunes": [],
+                  "attributeModifiers": [
+                    {
+                      "attributeType": 2,
+                      "formulaItem": 1,
+                      "value": 0.0,
+                      "loadFromBlackboard": 1,
+                      "fetchBaseValueFromSourceEntity": 0
+                    },
+                    {
+                      "attributeType": 20,
+                      "formulaItem": 0,
+                      "value": 0.0,
+                      "loadFromBlackboard": 1,
+                      "fetchBaseValueFromSourceEntity": 0
+                    }
+                  ]
+                },
+                "buffKey": "bubble_s_2[switch]",
+                "loadFromDB": 0,
+                "isDurableBuff": 0,
+                "isDamageMissable": 0,
+                "isSilenceable": 0,
+                "isStunnable": 0,
+                "isFreezable": 0,
+                "isLevitatable": 0,
+                "statusResistable": 2,
+                "templateKey": "switch_mode_restart_fsm",
+                "disableOverride": 0,
+                "overrideKey": "",
+                "overrideType": 0,
+                "maxStackCnt": 1,
+                "refreshRemainingTimeWhenStackMax": 0,
+                "clearAllStackCntWhenTimeUp": 0,
+                "maxValidStackCnt": -1,
+                "independentCharacterSource": 0,
+                "overrideEffectKey": "bubble_skill_02_buff",
+                "overrideOnEventPriority": 0,
+                "onEventPriority": 0,
+                "audioSignal": "",
+                "lifeTimeType": 1,
+                "takeSnapshotWhenExtend": 0,
+                "durationKey": "",
+                "lifeTime": 0.0,
+                "triggerLifeType": 0,
+                "triggerCnt": 0,
+                "triggerInterval": -1.0,
+                "waitFirstTriggerInterval": 1,
+                "firstTriggerInterval": -1.0,
+                "priority": -1,
+                "priorityBBKeys": [],
+                "stripBlackboardParamsWithBuffKey": 0,
+                "blackboard": [
+                  {
+                    "key": "mode",
+                    "value": 1.0,
+                    "valueStr": ""
+                  }
+                ],
+                "enableInitDirectionFromSource": 0
+              },
+              {
+                "attributes": {
+                  "abnormalFlags": [],
+                  "abnormalImmunes": [],
+                  "abnormalAntis": [],
+                  "abnormalCombos": [],
+                  "abnormalComboImmunes": [],
+                  "attributeModifiers": []
+                },
+                "buffKey": "bubble_s_2[inverse]",
+                "loadFromDB": 0,
+                "isDurableBuff": 0,
+                "isDamageMissable": 0,
+                "isSilenceable": 0,
+                "isStunnable": 0,
+                "isFreezable": 0,
+                "isLevitatable": 0,
+                "statusResistable": 2,
+                "templateKey": "bubble_s_2",
+                "disableOverride": 0,
+                "overrideKey": "",
+                "overrideType": 0,
+                "maxStackCnt": 1,
+                "refreshRemainingTimeWhenStackMax": 0,
+                "clearAllStackCntWhenTimeUp": 0,
+                "maxValidStackCnt": -1,
+                "independentCharacterSource": 0,
+                "overrideEffectKey": "bubble_skill_02_buff_02",
+                "overrideOnEventPriority": 0,
+                "onEventPriority": 0,
+                "audioSignal": "",
+                "lifeTimeType": 1,
+                "takeSnapshotWhenExtend": 0,
+                "durationKey": "",
+                "lifeTime": 0.0,
+                "triggerLifeType": 0,
+                "triggerCnt": 0,
+                "triggerInterval": -1.0,
+                "waitFirstTriggerInterval": 1,
+                "firstTriggerInterval": -1.0,
+                "priority": -1,
+                "priorityBBKeys": [],
+                "stripBlackboardParamsWithBuffKey": 0,
+                "blackboard": [
+                  {
+                    "key": "effect",
+                    "value": 0.0,
+                    "valueStr": "bubble_skill_02_hit"
+                  }
+                ],
+                "enableInitDirectionFromSource": 0
+              }
+            ],
+            "_preDelay": 0.0,
+            "_checkBuffEarlyFinish": 0
+          },
+          {
+            "pathId": "3921257726050767049",
+            "_attackBlackboardModeIndex": 1,
+            "_rangeIdModeIndex": -1,
+            "_rangeIdUsageType": 7,
+            "_trigger": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            }
+          }
+        ]
+      }
+    ],
+    "skchr_durnar_2": [
+      {
+        "object": "skchr_durnar_2",
+        "pathId": "5307442471976289219",
+        "components": [
+          {
+            "pathId": "6825649989259215811",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_buffs": [
+              {
+                "attributes": {
+                  "abnormalFlags": [],
+                  "abnormalImmunes": [],
+                  "abnormalAntis": [],
+                  "abnormalCombos": [],
+                  "abnormalComboImmunes": [],
+                  "attributeModifiers": [
+                    {
+                      "attributeType": 1,
+                      "formulaItem": 1,
+                      "value": 0.0,
+                      "loadFromBlackboard": 1,
+                      "fetchBaseValueFromSourceEntity": 0
+                    }
+                  ]
+                },
+                "buffKey": "durnar_s_2",
+                "loadFromDB": 0,
+                "isDurableBuff": 0,
+                "isDamageMissable": 0,
+                "isSilenceable": 0,
+                "isStunnable": 0,
+                "isFreezable": 0,
+                "isLevitatable": 0,
+                "statusResistable": 2,
+                "templateKey": "switch_mode",
+                "disableOverride": 0,
+                "overrideKey": "",
+                "overrideType": 0,
+                "maxStackCnt": 1,
+                "refreshRemainingTimeWhenStackMax": 0,
+                "clearAllStackCntWhenTimeUp": 0,
+                "maxValidStackCnt": -1,
+                "independentCharacterSource": 0,
+                "overrideEffectKey": "common_ignite_attack",
+                "overrideOnEventPriority": 0,
+                "onEventPriority": 0,
+                "audioSignal": "",
+                "lifeTimeType": 1,
+                "takeSnapshotWhenExtend": 0,
+                "durationKey": "",
+                "lifeTime": 0.0,
+                "triggerLifeType": 0,
+                "triggerCnt": 0,
+                "triggerInterval": -1.0,
+                "waitFirstTriggerInterval": 1,
+                "firstTriggerInterval": -1.0,
+                "priority": -1,
+                "priorityBBKeys": [],
+                "stripBlackboardParamsWithBuffKey": 0,
+                "blackboard": [
+                  {
+                    "key": "mode",
+                    "value": 2.0,
+                    "valueStr": ""
+                  }
+                ],
+                "enableInitDirectionFromSource": 0
+              },
+              {
+                "attributes": {
+                  "abnormalFlags": [],
+                  "abnormalImmunes": [],
+                  "abnormalAntis": [],
+                  "abnormalCombos": [],
+                  "abnormalComboImmunes": [],
+                  "attributeModifiers": []
+                },
+                "buffKey": "durnar_s_2[effect]",
+                "loadFromDB": 0,
+                "isDurableBuff": 0,
+                "isDamageMissable": 0,
+                "isSilenceable": 0,
+                "isStunnable": 0,
+                "isFreezable": 0,
+                "isLevitatable": 0,
+                "statusResistable": 2,
+                "templateKey": "empty",
+                "disableOverride": 0,
+                "overrideKey": "",
+                "overrideType": 0,
+                "maxStackCnt": 1,
+                "refreshRemainingTimeWhenStackMax": 0,
+                "clearAllStackCntWhenTimeUp": 0,
+                "maxValidStackCnt": -1,
+                "independentCharacterSource": 0,
+                "overrideEffectKey": "durnar_skill_02_buff",
+                "overrideOnEventPriority": 0,
+                "onEventPriority": 0,
+                "audioSignal": "",
+                "lifeTimeType": 1,
+                "takeSnapshotWhenExtend": 0,
+                "durationKey": "",
+                "lifeTime": 0.0,
+                "triggerLifeType": 0,
+                "triggerCnt": 0,
+                "triggerInterval": -1.0,
+                "waitFirstTriggerInterval": 1,
+                "firstTriggerInterval": -1.0,
+                "priority": -1,
+                "priorityBBKeys": [],
+                "stripBlackboardParamsWithBuffKey": 0,
+                "blackboard": [],
+                "enableInitDirectionFromSource": 0
+              }
+            ],
+            "_preDelay": 0.0,
+            "_checkBuffEarlyFinish": 0
+          },
+          {
+            "pathId": "-744871806842584125",
+            "_attackBlackboardModeIndex": -1,
+            "_rangeIdModeIndex": -1,
+            "_rangeIdUsageType": 7,
+            "_trigger": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            }
+          }
+        ]
+      }
+    ],
+    "skchr_sunbr_1": [
+      {
+        "object": "skchr_sunbr_1",
+        "pathId": "6038834884558371057",
+        "components": [
+          {
+            "pathId": "1641597945913784561",
+            "_attackBlackboardModeIndex": -1,
+            "_rangeIdModeIndex": -1,
+            "_rangeIdUsageType": 7,
+            "_trigger": {
+              "m_FileID": 0,
+              "m_PathID": "8030075559495645425"
+            }
+          },
+          {
+            "pathId": "-8779802201910953743",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_timeMode": 0,
+            "_preDelay": 0.5329999923706055
+          }
+        ]
+      }
+    ],
+    "gummy_sequence_children": [
+      {
+        "pathId": "-1633263084332689387",
+        "_selector": {
+          "m_FileID": 0,
+          "m_PathID": "0"
+        },
+        "_metadata": {
+          "namedAsAlias": "",
+          "blackboardPrefix": ""
+        },
+        "_interruptAbilityOnDetach": 0,
+        "_attachPassiveBuffsOnDummy": 1,
+        "_ignoreIfOwnerDead": 0,
+        "_forceAsDmgOrHealAbility": 0,
+        "_waitForAttackEvent": 0,
+        "_interuptIfTargetDead": 0,
+        "_resetCdStrategy": 1,
+        "_buffs": [
+          {
+            "attributes": {
+              "abnormalFlags": [
+                11
+              ],
+              "abnormalImmunes": [],
+              "abnormalAntis": [],
+              "abnormalCombos": [],
+              "abnormalComboImmunes": [],
+              "attributeModifiers": [
+                {
+                  "attributeType": 2,
+                  "formulaItem": 1,
+                  "value": 0.0,
+                  "loadFromBlackboard": 1,
+                  "fetchBaseValueFromSourceEntity": 0
+                }
+              ]
+            },
+            "buffKey": "sunbr_s_2[disarm]",
+            "loadFromDB": 0,
+            "isDurableBuff": 0,
+            "isDamageMissable": 0,
+            "isSilenceable": 0,
+            "isStunnable": 0,
+            "isFreezable": 0,
+            "isLevitatable": 0,
+            "statusResistable": 2,
+            "templateKey": "empty",
+            "disableOverride": 0,
+            "overrideKey": "",
+            "overrideType": 0,
+            "maxStackCnt": 1,
+            "refreshRemainingTimeWhenStackMax": 0,
+            "clearAllStackCntWhenTimeUp": 0,
+            "maxValidStackCnt": -1,
+            "independentCharacterSource": 0,
+            "overrideEffectKey": "",
+            "overrideOnEventPriority": 0,
+            "onEventPriority": 0,
+            "audioSignal": "",
+            "lifeTimeType": 1,
+            "takeSnapshotWhenExtend": 0,
+            "durationKey": "disarm",
+            "lifeTime": 0.0,
+            "triggerLifeType": 0,
+            "triggerCnt": 0,
+            "triggerInterval": -1.0,
+            "waitFirstTriggerInterval": 1,
+            "firstTriggerInterval": -1.0,
+            "priority": -1,
+            "priorityBBKeys": [],
+            "stripBlackboardParamsWithBuffKey": 0,
+            "blackboard": [],
+            "enableInitDirectionFromSource": 0
+          }
+        ],
+        "_waitForCasting": 1,
+        "_updateLifetimeWhenSpellStart": 0,
+        "_preDelay": 0.0,
+        "_escapeTime": 0.0,
+        "_checkBuffEarlyFinish": 1,
+        "_passiveBuffs": [],
+        "_ignoreInfiniteBuffCooldown": 0,
+        "_enableUpdateCooldown": 0
+      },
+      {
+        "pathId": "1520972884057610261",
+        "_selector": {
+          "m_FileID": 0,
+          "m_PathID": "0"
+        },
+        "_metadata": {
+          "namedAsAlias": "",
+          "blackboardPrefix": ""
+        },
+        "_interruptAbilityOnDetach": 0,
+        "_attachPassiveBuffsOnDummy": 1,
+        "_ignoreIfOwnerDead": 0,
+        "_forceAsDmgOrHealAbility": 0,
+        "_waitForAttackEvent": 0,
+        "_interuptIfTargetDead": 0,
+        "_resetCdStrategy": 1,
+        "_buffs": [
+          {
+            "attributes": {
+              "abnormalFlags": [],
+              "abnormalImmunes": [],
+              "abnormalAntis": [],
+              "abnormalCombos": [],
+              "abnormalComboImmunes": [],
+              "attributeModifiers": [
+                {
+                  "attributeType": 1,
+                  "formulaItem": 1,
+                  "value": 0.0,
+                  "loadFromBlackboard": 1,
+                  "fetchBaseValueFromSourceEntity": 0
+                },
+                {
+                  "attributeType": 8,
+                  "formulaItem": 1,
+                  "value": 0.0,
+                  "loadFromBlackboard": 1,
+                  "fetchBaseValueFromSourceEntity": 0
+                }
+              ]
+            },
+            "buffKey": "sunbr_s_2",
+            "loadFromDB": 0,
+            "isDurableBuff": 0,
+            "isDamageMissable": 0,
+            "isSilenceable": 0,
+            "isStunnable": 0,
+            "isFreezable": 0,
+            "isLevitatable": 0,
+            "statusResistable": 2,
+            "templateKey": "switch_mode",
+            "disableOverride": 0,
+            "overrideKey": "",
+            "overrideType": 0,
+            "maxStackCnt": 1,
+            "refreshRemainingTimeWhenStackMax": 0,
+            "clearAllStackCntWhenTimeUp": 0,
+            "maxValidStackCnt": -1,
+            "independentCharacterSource": 0,
+            "overrideEffectKey": "common_ignite_support",
+            "overrideOnEventPriority": 0,
+            "onEventPriority": 0,
+            "audioSignal": "",
+            "lifeTimeType": 1,
+            "takeSnapshotWhenExtend": 0,
+            "durationKey": "",
+            "lifeTime": 0.0,
+            "triggerLifeType": 0,
+            "triggerCnt": 0,
+            "triggerInterval": -1.0,
+            "waitFirstTriggerInterval": 1,
+            "firstTriggerInterval": -1.0,
+            "priority": -1,
+            "priorityBBKeys": [],
+            "stripBlackboardParamsWithBuffKey": 0,
+            "blackboard": [
+              {
+                "key": "mode",
+                "value": 1.0,
+                "valueStr": ""
+              }
+            ],
+            "enableInitDirectionFromSource": 0
+          }
+        ],
+        "_waitForCasting": 0,
+        "_updateLifetimeWhenSpellStart": 0,
+        "_preDelay": 0.0,
+        "_escapeTime": 0.0,
+        "_checkBuffEarlyFinish": 0,
+        "_passiveBuffs": [],
+        "_ignoreInfiniteBuffCooldown": 0,
+        "_enableUpdateCooldown": 0
+      },
+      {
+        "pathId": "8030075559495645425",
+        "_keepTarget": 0,
+        "_minTargetNum": 1,
+        "_overrideSearchTargetTick": -1
+      }
+    ]
+  },
+  "templates": {
+    "bubble_t_1": {
+      "templateKey": "bubble_t_1",
+      "effectKey": "",
+      "onEventPriority": "DEFAULT",
+      "eventToActions": {
+        "ON_TAKE_DAMAGE": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+VertifyTarget, Assembly-CSharp",
+            "_source": "MODIFIER_TARGET",
+            "_target": "MODIFIER_SOURCE",
+            "_targetOptions": {
+              "targetSide": "ENEMY",
+              "targetMotion": "ALL",
+              "targetCategory": "DEFAULT",
+              "enableAdvancedOptions": true,
+              "ignoreTargetFree": false,
+              "ignoreAllyTargetFree": false,
+              "ignoreHealFree": false,
+              "ignoreTargetSide": false,
+              "excludeSomeAbnormalFlags": false,
+              "excludeAbnormalFlag": "STUNNED",
+              "purposeMask": "NONE",
+              "professionMask": "NONE",
+              "onlyIgnoreSomeOfTargetFreeCase": false,
+              "abnormalFlag": "STUNNED",
+              "abnormalCombo": "SLEEPING"
+            }
+          },
+          {
+            "$type": "Torappu.Battle.Action.Nodes+CreateBuff, Assembly-CSharp",
+            "_buff": {
+              "attributes": {
+                "abnormalFlags": [],
+                "abnormalImmunes": [],
+                "abnormalAntis": null,
+                "abnormalCombos": [],
+                "abnormalComboImmunes": [],
+                "attributeModifiers": [
+                  {
+                    "attributeType": "ATK",
+                    "formulaItem": "FINAL_SCALER",
+                    "value": 0.0,
+                    "loadFromBlackboard": true,
+                    "fetchBaseValueFromSourceEntity": false
+                  }
+                ]
+              },
+              "buffKey": "bubble_t_1[atk_down]",
+              "loadFromDB": false,
+              "isDurableBuff": false,
+              "isDamageMissable": false,
+              "isSilenceable": false,
+              "isStunnable": false,
+              "isFreezable": false,
+              "isLevitatable": false,
+              "statusResistable": "AUTOMATIC",
+              "templateKey": "empty",
+              "disableOverride": false,
+              "overrideKey": null,
+              "overrideType": "DEFAULT",
+              "maxStackCnt": 1,
+              "refreshRemainingTimeWhenStackMax": false,
+              "clearAllStackCntWhenTimeUp": false,
+              "maxValidStackCnt": -1,
+              "independentCharacterSource": false,
+              "overrideEffectKey": "bubble_talent_buff",
+              "overrideOnEventPriority": false,
+              "onEventPriority": "DEFAULT",
+              "audioSignal": null,
+              "lifeTimeType": "LIMITED",
+              "takeSnapshotWhenExtend": false,
+              "durationKey": null,
+              "lifeTime": 0.0,
+              "triggerLifeType": "INFINITY",
+              "triggerCnt": 1,
+              "triggerInterval": 0.029999999329447746,
+              "waitFirstTriggerInterval": true,
+              "firstTriggerInterval": -1.0,
+              "priority": -1,
+              "priorityBBKeys": [],
+              "stripBlackboardParamsWithBuffKey": false,
+              "blackboard": []
+            },
+            "_buffOwner": "MODIFIER_SOURCE",
+            "_isDerivedBuff": false,
+            "_finishDerivedBuffIfParentFinish": false
+          }
+        ]
+      }
+    },
+    "bubble_s_2": {
+      "templateKey": "bubble_s_2",
+      "effectKey": "",
+      "onEventPriority": "DEFAULT",
+      "eventToActions": {
+        "ON_TAKE_DAMAGE": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+IsDamage, Assembly-CSharp"
+          },
+          {
+            "$type": "Torappu.Battle.Action.Nodes+IfDamageTargetSide, Assembly-CSharp",
+            "_sideMask": "ENEMY",
+            "_sourceType": "MODIFIER_SOURCE",
+            "_targetType": "MODIFIER_TARGET"
+          },
+          {
+            "$type": "Torappu.Battle.Action.Nodes+DamageViaAttr, Assembly-CSharp",
+            "_targetType": "MODIFIER_SOURCE",
+            "_sourceType": "MODIFIER_TARGET",
+            "_attributeType": "DEF",
+            "_getAttrFromTarget": true,
+            "_damageType": "PHYSICAL",
+            "_applyWay": "NONE",
+            "_ignoreForSp": false,
+            "_isUndeadable": false,
+            "_attackType": "NORMAL",
+            "_blackboardKey": "atk_scale",
+            "_multiplierByKey": false,
+            "_multiplierKey": "value"
+          },
+          {
+            "$type": "Torappu.Battle.Action.Nodes+CreateEffect, Assembly-CSharp",
+            "_targetType": "MODIFIER_SOURCE",
+            "_sourceType": "MODIFIER_TARGET",
+            "_effectKey": "",
+            "_useSourceFaceVactor": false,
+            "_useSourceToTargetDirection": false,
+            "_useAttackPlaybackSpeed": false
+          }
+        ]
+      }
+    },
+    "critical_stun": {
+      "templateKey": "critical_stun",
+      "effectKey": "",
+      "onEventPriority": "DEFAULT",
+      "eventToActions": {
+        "ON_CALCULATE_DAMAGE": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+Dice, Assembly-CSharp",
+            "_probKey": "prob"
+          },
+          {
+            "$type": "Torappu.Battle.Action.Nodes+AtkScaleUp, Assembly-CSharp",
+            "_filterApplyWay": false,
+            "_filterProjectileKey": "",
+            "_applyWay": "ALL",
+            "_defaultValue": 1.0,
+            "_filterNoneApplyWay": false,
+            "_cancelIfAtkScaleZero": false,
+            "_atkScaleKey": "atk_scale"
+          },
+          {
+            "$type": "Torappu.Battle.Action.Nodes+CreateBuff, Assembly-CSharp",
+            "_buff": {
+              "attributes": {
+                "abnormalFlags": [
+                  "STUNNED"
+                ],
+                "abnormalImmunes": [],
+                "abnormalAntis": [],
+                "abnormalCombos": [],
+                "abnormalComboImmunes": [],
+                "attributeModifiers": []
+              },
+              "buffKey": "stun",
+              "loadFromDB": false,
+              "isDurableBuff": false,
+              "isDamageMissable": false,
+              "isSilenceable": false,
+              "isStunnable": false,
+              "isFreezable": false,
+              "isLevitatable": false,
+              "statusResistable": "AUTOMATIC",
+              "templateKey": "empty",
+              "disableOverride": false,
+              "overrideKey": null,
+              "overrideType": "DEFAULT",
+              "maxStackCnt": 1,
+              "refreshRemainingTimeWhenStackMax": false,
+              "clearAllStackCntWhenTimeUp": false,
+              "maxValidStackCnt": -1,
+              "independentCharacterSource": false,
+              "overrideEffectKey": "buff_stun",
+              "overrideOnEventPriority": false,
+              "onEventPriority": "DEFAULT",
+              "audioSignal": null,
+              "lifeTimeType": "LIMITED",
+              "takeSnapshotWhenExtend": false,
+              "durationKey": "stun",
+              "lifeTime": 0.0,
+              "triggerLifeType": "IMMEDIATELY",
+              "triggerCnt": 0,
+              "triggerInterval": -1.0,
+              "waitFirstTriggerInterval": true,
+              "firstTriggerInterval": -1.0,
+              "priority": -1,
+              "priorityBBKeys": [],
+              "stripBlackboardParamsWithBuffKey": false,
+              "blackboard": []
+            },
+            "_buffOwner": "TARGET",
+            "_isDerivedBuff": false,
+            "_finishDerivedBuffIfParentFinish": false
+          }
+        ]
+      }
+    }
+  }
+}

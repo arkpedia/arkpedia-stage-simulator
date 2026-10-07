@@ -26,7 +26,7 @@ export const ADD_KEYS = Object.freeze([
 export const MUL_KEYS = Object.freeze([
   'atkMul', 'defMul', 'hpMul', 'resMul', 'moveMul', 'dmgDealtMul', 'dmgTakenMul', 'physTakenMul', 'artsTakenMul',
   'trueTakenMul', 'elemTakenMul', 'elementalTakenMul', 'healingDealtMul', 'healingTakenMul', 'spRecoveryMul', 'redeployMul',
-  'atkScaleMul', 'physDealtMul', 'artsDealtMul',
+  'atkScaleMul', 'physDealtMul', 'artsDealtMul', 'blockCntMul',
 ]);
 /**
  * Boolean flag keys (OR). `taunt` is also accepted as a numeric mod. `liftoff` = 起飞 of an ally (蒂比's skills): blocks
@@ -174,6 +174,7 @@ export function aggregateMods(buffs) {
   const flags = Object.create(null);
   let shield = 0;
   let permRangeExtend = 0;
+  let sluggishMoveMul = 1;
   // dodge sources are independent rolls: total = 1 − Π(1 − p)^stacks (one single source keeps its exact value)
   const dodge = { dodgePhys: null, dodgeArts: null };
   for (let i = 0; i < buffs.length; i++) {
@@ -185,7 +186,10 @@ export function aggregateMods(buffs) {
         const v = m[k];
         if (typeof v !== 'number' || !Number.isFinite(v)) continue;
         if (k === 'shield') continue;
-        if (k.endsWith('Mul')) mul[k] = (mul[k] ?? 1) * (st === 1 ? v : Math.pow(v, st));
+        // Sluggish is one named status: overlapping zone/attack sources do
+        // not compound -80% movement into -96% or erase each other's timers.
+        if (k === 'moveMul' && b.status === 'sluggish') sluggishMoveMul = Math.min(sluggishMoveMul, v);
+        else if (k.endsWith('Mul')) mul[k] = (mul[k] ?? 1) * (st === 1 ? v : Math.pow(v, st));
         else if ((k === 'dodgePhys' || k === 'dodgeArts') && v > 0) {
           const p = Math.min(1, v);
           const d = dodge[k];
@@ -204,5 +208,6 @@ export function aggregateMods(buffs) {
     const d = dodge[k];
     if (d) add[k] = (add[k] ?? 0) + (d.n === 1 ? d.p : 1 - d.miss);
   }
+  if (sluggishMoveMul !== 1) mul.moveMul = (mul.moveMul ?? 1) * sluggishMoveMul;
   return { add, mul, flags, shield, permRangeExtend };
 }

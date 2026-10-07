@@ -52,11 +52,27 @@ The fetcher verifies unzipped bundle size/MD5 against the game manifest. Publica
 - Midnight keeps the lord ranged damage penalty when his critical talent triggers; S1 applies the source ATK buff and changes attacks to Arts until expiry.
 - Ansel rolls his source extra-heal talent once per heal and selects a distinct injured, healable ally in his current range. His S1 extends healing range and raises ATK.
 - Spot switches to healing in the source 3×3 skill range while retaining block capacity. His client prefab adds the skill blackboard attack-time value to base attack time; the heal grants a promotion/potential-dependent, refreshing three-second physical-dodge buff. See `data/arkpedia-spot-prefab.json` for pinned prefab evidence.
-- Up to 12 unique squad members plus one distinct maxed support. The current selectable roster has seventeen operators; support is limited to that same supported roster.
+- Up to 12 unique squad members plus one distinct maxed support. The current selectable roster has 56 operators; support is limited to that same supported roster. Supported four-stars have both skills, source E0/E1/E2 caps and rank 1–7/M1/M2/M3 with promotion and level unlocks checked. Changing promotion clamps level and skill rank and selects an unlocked skill. A maxed support retains the chosen skill independently of the squad's builds.
 - Drag an operator onto a valid tile and choose its facing on the map; click/keyboard placement, Escape cancellation, surface-only deployment feedback and a continuous attack-range outline; blocking, physical/Arts attacks, healing, time/attack SP, manual/automatic skills, manual retreat/refund, increasing deployment costs, redeployment cooldown, clear/defeat.
 - Original 0-1 Chernobog meshes, textures, scenery and baked lighting, original red entry/blue defence boxes, rendered with Three.js and animated Spine chibis; optional existing-viewer path overlay; pause, 1×/2×, restart, fullscreen/mobile viewport workspace, pause on native-fullscreen exit or hidden tab.
 
 The battle HUD follows the current stage planner layout: game enemy/life glyphs in a centered plate over the map, DP and remaining deployment slots at the lower right, and controls above the battlefield. Counter widths are reserved. DP recovery progress follows the actual combat resource and freezes with the battle; spending, refunds and the DP cap update the same readout. The overlay passes pointer input through to the map. This layout is independently implemented here, without importing private application code.
+
+The additional four-star roster uses explicit regular-stage adapters. Each group records original client prefab evidence in `data/arkpedia-*-prefabs.json` and has combat regressions, including retreat/expiry behavior where relevant:
+
+| Group | Operators | Mechanics covered |
+| --- | --- | --- |
+| Medics | Myrrh, Gavial, Perfumer, Sussurro | Extra-target heals, regeneration, squad/Medic auras and Sussurro's two-use limit across redeployments |
+| Casters | Haze, Gitano, Greyy | RES debuffs, seeded talent selection, splash, slow and Gitano's post-skill stun |
+| Guards | Matoimaru, Estelle, Dobermann, Mousse, Frostleaf | Self-heal, death-triggered recovery, three-star aura, Arts/double attacks, range and bind |
+| Snipers | Jessica, Meteor, Vermeil, May | Dodge, anti-air/DEF debuffs, extra targets, SP recovery, slow and stun |
+| Advanced snipers | Shirayuki, Pinecone, Ambriel, Totter | Shuriken dwell hits, cone/close-range damage, independent charged shots, map-wide range, release timing, heaviest-target priority and stealth targeting |
+| Vanguards | Courier, Scavenger, Vigna, Myrtle | Conditional talents, source DP schedules, kill/retreat refunds, zero-block channeling and healing |
+| Defenders | Cuora, Bubble, Dur-nar, Gummy | Block changes, regeneration, DEF-scaled retaliation, multi-target Arts attacks, charged healing and preparation/healing phases |
+| Supporters | Earthspirit, Podenco | Pulsed slow, healing conversion and persistent silence/slow/Arts clouds with owned statuses |
+| Specialists | Gravel, Ethan, Shaw, Rope | Split attacks, timed deployment buffs/shield, bind/DOT, push/pull and source melee/high-ground placement |
+
+Selected skill animations use that skill's parsed Front/Back role. Missing dedicated clips do not borrow another skill's animation; attack-buff skills keep event-driven normal attacks. Projectile artwork, hook lines, shift travel and exact frame timing still need game comparison; these adapters do not establish full visual fidelity.
 
 Squad setup stays available in portrait. Battles on phones and touch tablets require landscape: a rotation prompt blocks battle controls in portrait. Rotating back pauses combat and cancels unfinished deployment without spending DP; the squad and battle progress remain intact. Returning to landscape requires an explicit Start/Resume. Tall desktop windows with mouse controls remain supported.
 
@@ -70,7 +86,7 @@ Combat runs at a fixed 30Hz with seeded randomness. Rendering cannot change the 
 
 The regular-stage roster is opt-in through `shared/arkpedia/operators.js` and `enemies.js`. The build tool and runtime reject unknown operators, skill IDs, talent blackboard keys and enemies; spawns must have supported enemy records. Inherited kits remain disabled: Stronghold's `chess_` units have mode-specific builds, automatic-operation rules and modifiers. A hand-authored kit there is a migration candidate, not proof of ordinary-stage compatibility.
 
-`data/arkpedia-coverage.json` audits the pinned Global catalogue: 374 obtainable operators, 817 skills and 1,552 enemy database IDs. Twenty-two operators and two basic enemies are currently playable: all seventeen three-stars and all five two-stars. Two-star builds and supports use E0 level 30, with no skill, SP gauge or activation button. Yato's redeployment talent combines with her potential reduction. Noir Corne gains source HP/DEF bonuses and blocks three while attacking one target. Rangers prioritizes aerial targets and gains his anti-air ATK multiplier; synthetic aerial-target tests do not enable additional enemy types. Durin gains Arts-only dodge, and 12F gains physical-only dodge. These talents unlock at level 30. 12F uses the inherited Arts splash profile; its base radius, like Lava's and Catapult's, still needs client-prefab verification. It identifies 265 skills and 210 enemy IDs with inherited implementation candidates, including stats-only entries whose notes may describe missing mechanics. It separately records imported animation pairs, placeholder effects and unverified game fidelity. It is an offline report; the battle does not load the full catalogue.
+`data/arkpedia-coverage.json` audits the pinned Global catalogue: 374 obtainable operators, 817 skills and 1,552 enemy database IDs. 56 operators, 85 skills and two basic enemies are currently playable: all seventeen three-stars, all five two-stars and 34 four-stars. Two-star builds and supports use E0 level 30, with no skill, SP gauge or activation button. Yato's redeployment talent combines with her potential reduction. Noir Corne gains source HP/DEF bonuses and blocks three while attacking one target. Rangers prioritizes aerial targets and gains his anti-air ATK multiplier; synthetic aerial-target tests do not enable additional enemy types. Durin gains Arts-only dodge, and 12F gains physical-only dodge. These talents unlock at level 30. 12F uses the inherited Arts splash profile; its base radius, like Lava's and Catapult's, still needs client-prefab verification. It identifies 265 skills and 210 enemy IDs with inherited implementation candidates, including stats-only entries whose notes may describe missing mechanics. It separately records imported animation pairs, placeholder effects and unverified game fidelity. It is an offline report; the battle does not load the full catalogue.
 
 To import another reviewed batch and reproduce coverage:
 
@@ -79,6 +95,10 @@ To import another reviewed batch and reproduce coverage:
 # Front/Back models retain their original pinned files; this parses attachment,
 # clip and hit metadata with the same Spine runtime as the browser.
 node tools/arkpedia/import-operators.mjs --ids char_240_wyvern,char_209_ardign,char_278_orchid --commit d0b5af0b004b044d322397ce5ae79632b6d9fcdd --pma false
+# Optional pinned Git source avoids directory API rate limits; uncommitted files are ignored.
+# Add --source-root ../arkpedia-sd-assets/.cache/arknights-resource to that command.
+# Reinspect existing pairs for every selected skill without redownloading files:
+node tools/arkpedia/import-operators.mjs --inspect-existing --commit d0b5af0b004b044d322397ce5ae79632b6d9fcdd --pma false
 # Validate and publish the sibling asset repo, then pin its committed manifest.
 node tools/arkpedia/build-mvp.mjs
 npm run coverage:arkpedia
@@ -145,4 +165,4 @@ This is a playable prototype, **not full game compatibility**. Timings, movement
 
 Tests compare every unblocked movement tick with the exported viewer paths/waits, and cover projected facing/range perimeter geometry, source routing, stats/caps, support, fullscreen/terrain/DP checks, retreat/redeployment, Fang's clear, healing, manual skills and life loss. Upstream tests continue to verify the inherited combat primitives separately.
 
-Next mechanic batches: reviewed one-star robots, then multi-skill/E2 builds, mastery and modules. Enemy adapters need ordinary-stage ability data and stage overrides before mode kits can be enabled. Summons, bosses and unusual targeting require dedicated adapters and regression scenarios. Original projectiles/skill effects and frame-level calibration remain separate work. Further stages, worker/replay support, embedding messages and hosting/content releases follow that coverage.
+Remaining roster work includes one-star robots, further four-stars and five-/six-stars, modules and summon/device deployment. Roberta remains unsupported until Modeler devices have inventory and placement controls; robots need their zero-deployment-slot rules before enabling them. Enemy adapters need ordinary-stage ability data and stage overrides before mode kits can be enabled. Summons, bosses and unusual targeting require dedicated adapters and regression scenarios. Original projectiles/skill effects and frame-level calibration remain separate work. Further stages, worker/replay support, embedding messages and hosting/content releases follow that coverage.

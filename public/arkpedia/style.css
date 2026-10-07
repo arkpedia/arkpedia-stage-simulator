@@ -185,7 +185,20 @@ small,
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 8px;
   margin: 12px 0;
+  height: clamp(180px, 30vh, 260px);
+  overflow-y: auto;
+  align-content: start;
+  padding: 3px 6px 3px 3px;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: #6b9297 #1a252b;
 }
+.roster-search { display: grid; gap: 5px; color: var(--muted); font-size: 12px; }
+.roster-empty { grid-column: 1 / -1; color: var(--muted); font-size: 13px; }
+.roster-item[hidden], .roster-empty[hidden] { display: none; }
+.roster::-webkit-scrollbar { width: 8px; }
+.roster::-webkit-scrollbar-track { background: #1a252b; }
+.roster::-webkit-scrollbar-thumb { background: #6b9297; border-radius: 4px; }
 .roster-item {
   min-width: 0;
   padding: 8px;
@@ -511,6 +524,7 @@ a {
   padding: 3px 2px 8px;
 }
 .deployment button {
+  position: relative;
   width: 86px;
   flex: none;
   height: 94px;
@@ -528,10 +542,29 @@ a {
   object-fit: contain;
 }
 .deployment .cost {
+  flex-shrink: 0;
+  max-width: 100%;
+  white-space: nowrap;
   font:
     600 12px Inter,
     sans-serif;
   color: var(--muted);
+}
+.deployment .bench-name {
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.deployment .support-marker {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  color: #ffd67b;
+  background: #18232bea;
+  padding: 1px 2px;
+  font-size: 9px;
+  line-height: 1;
 }
 .status-note {
   font:

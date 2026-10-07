@@ -4,7 +4,10 @@ import {
   catalogueFor,
   defaultBuild,
   recordFor,
+  availableSkills,
+  skillRankCap,
 } from "/shared/arkpedia/loadout.js";
+import { maxedSupport } from "/shared/arkpedia/squad.js";
 import { StageRenderer } from "./renderer.js";
 import { absoluteRangeKeys } from "/sim/targeting.js";
 import { swipeFacing } from "/shared/arkpedia/placement.js";
@@ -70,15 +73,22 @@ function skillDescription(level) {
   const values = Object.fromEntries(level.blackboard.map((entry) => [entry.key.toLowerCase(), entry.value]));
   return escape(level.description.replace(/<[^>]*>/g, "").replace(
     /\{([^}:]+)(?::([^}]+))?\}/g,
-    (_, key, format) => format?.includes("%")
-      ? Math.round(values[key.toLowerCase()] * 100) + "%"
-      : String(values[key.toLowerCase()]),
+    (placeholder, key, format) => {
+      const negative = key.startsWith("-");
+      const source = values[(negative ? key.slice(1) : key).toLowerCase()];
+      if (typeof source !== "number") return placeholder;
+      const value = source * (negative ? -1 : 1);
+      return format?.includes("%") ? Math.round(value * 100) + "%" : String(value);
+    },
   ));
 }
 const builds = Object.fromEntries(ops.map((o) => [o.id, defaultBuild(o)]));
+const supportSkills = Object.fromEntries(ops.map((o) => [o.id, defaultBuild(o).skillId]));
+const rankLabel = (rank) => rank > 7 ? `M${rank - 7}` : `Rank ${rank}`;
 const chosen = new Set(ops.slice(0, 5).map((o) => o.id));
 let editing = ops[0].id,
-  supportId = "";
+  supportId = "",
+  rosterQuery = "";
 const requested = new URLSearchParams(location.search).get("stage");
 if (requested && requested !== "0-1") {
   app.innerHTML =
@@ -90,7 +100,7 @@ function prep() {
  <div class="prep"><section class="preview"><div class="stage-title"><span class="stage-code">0-1</span><h2>Collapse</h2></div><p class="help">${escape(data.stage.description)}</p><div class="board" id="board"></div><div class="legend"><span class="spawn">Enemy entry</span><span class="goal">Defence objective</span><span>Raised tiles: ranged operators</span></div>
  <div class="panel help"><h3>How to play</h3><p>Choose your squad, then open the battle workspace. On mobile, rotate to landscape for battle. Drag an operator onto a tile, then choose its facing on the map. You can also select the operator and click a tile. Select a deployed operator to activate a ready skill or retreat.</p></div>
  <p class="notice">This first slice supports 0-1 and the ${ops.length} operators shown. Squad capacity is 12 + one distinct maxed support. Modules, other stages and the rest of the roster are still being built.</p></section>
- <section class="panel"><h2>Prepare your squad</h2><p class="help">Select an operator to adjust their build.</p><div class="roster" id="roster"></div><div id="build"></div><label class="support">Support · optional, fully maxed<select id="support"><option value="">No support</option></select></label><div class="prepare-actions"><button class="primary" id="start">Open battle workspace</button></div><p class="error" id="prep-error" role="status" aria-live="polite"></p></section></div>
+ <section class="panel"><h2>Prepare your squad</h2><p class="help">Select an operator to adjust their build.</p><label class="roster-search">Find an operator<input id="roster-search" type="search" placeholder="Name or class" value="${escape(rosterQuery)}" autocomplete="off" aria-controls="roster"></label><div class="roster" id="roster" aria-label="Available operators"><p class="roster-empty" hidden>No operators match this search.</p></div><div id="build"></div><label class="support">Support · optional, fully maxed<select id="support"><option value="">No support</option></select></label><div id="support-build"></div><div class="prepare-actions"><button class="primary" id="start">Open battle workspace</button></div><p class="error" id="prep-error" role="status" aria-live="polite"></p></section></div>
  <footer>Built on Stronghold Protocol · GPL-3.0-or-later. Unofficial fan simulator; timings are not yet verified frame-for-frame against the game.<div class="links"><a href="https://github.com/arkpedia/arkpedia-stage-simulator" target="_blank" rel="noreferrer">Simulator source</a><a href="https://github.com/arkpedia/arkpedia-sd-assets" target="_blank" rel="noreferrer">Chibi assets & credits</a></div></footer></div>`;
   renderer = new StageRenderer(
     document.querySelector("#board"),
@@ -99,20 +109,40 @@ function prep() {
   );
   document
     .querySelector("#support")
-    .addEventListener("change", (e) => (supportId = e.target.value));
+    .addEventListener("change", (e) => { supportId = e.target.value; renderPrep(); });
   document.querySelector("#start").addEventListener("click", start);
+  document.querySelector("#roster-search").addEventListener("input", (e) => {
+    rosterQuery = e.target.value;
+    filterRoster();
+  });
   renderPrep();
 }
+function filterRoster() {
+  const query = rosterQuery.trim().toLocaleLowerCase();
+  const classes = { VANGUARD: 'Vanguard', GUARD: 'Guard', DEFENDER: 'Defender',
+    SNIPER: 'Sniper', CASTER: 'Caster', MEDIC: 'Medic', SUPPORT: 'Supporter', SPECIAL: 'Specialist' };
+  let matched = false;
+  for (const item of document.querySelectorAll('#roster .roster-item')) {
+    const op = data.operators[item.dataset.id];
+    item.hidden = !`${op.name} ${classes[op.profession] ?? op.profession}`.toLocaleLowerCase().includes(query);
+    matched ||= !item.hidden;
+  }
+  document.querySelector('#roster .roster-empty').hidden = matched;
+}
 function renderPrep() {
+  const active = document.activeElement;
+  const focusId = active?.id;
+  const focusOperator = active?.classList.contains("roster-item") ? active.dataset.id : null;
   const op = data.operators[editing],
     b = builds[editing],
-    skill = op.skills[0]?.levels[b.skillRank - 1];
+    available = availableSkills(op, b.elite, b.level),
+    skill = op.skills.find((entry) => entry.id === b.skillId)?.levels[b.skillRank - 1];
   document.querySelector("#roster").innerHTML = ops
     .map(
       (o) =>
         `<button class="roster-item ${chosen.has(o.id) ? "chosen" : ""} ${editing === o.id ? "editing" : ""}" data-id="${o.id}" aria-label="Edit ${o.name}, ${chosen.has(o.id) ? "in squad" : "not in squad"}" aria-pressed="${editing === o.id}"><img src="${icon(o)}" alt=""><span>${o.name}<br><small>${chosen.has(o.id) ? "In squad" : "Not selected"}</small></span></button>`,
     )
-    .join("");
+    .join("") + '<p class="roster-empty" hidden>No operators match this search.</p>';
   document.querySelectorAll(".roster-item").forEach(
     (el) =>
       (el.onclick = () => {
@@ -120,32 +150,38 @@ function renderPrep() {
         renderPrep();
       }),
   );
+  filterRoster();
   document.querySelector("#build").innerHTML =
-    `<div class="build-heading"><h3>${op.name}</h3><button id="toggle">${chosen.has(editing) ? "Remove from squad" : "Add to squad"}</button></div><div class="build-form">
+    `<div class="build-heading"><h3>${escape(op.name)}</h3><button id="toggle">${chosen.has(editing) ? "Remove from squad" : "Add to squad"}</button></div><div class="build-form">
  <label>Elite<select id="elite" ${op.phases.length === 1 ? "disabled" : ""}>${op.phases.map((p, elite) => `<option value="${elite}" ${b.elite === elite ? "selected" : ""}>E${elite}</option>`).join("")}</select></label>
  <label>Level<input id="level" type="number" min="1" max="${op.phases[b.elite].maxLevel}" value="${b.level}"></label>
- <label>Skill rank<input id="skillRank" type="number" min="1" max="${b.elite ? 7 : 4}" value="${b.skillRank ?? ""}" ${skill ? "" : 'disabled placeholder="No skill"'}></label>
- <label>Potential<input id="potential" type="number" min="1" max="6" value="${b.potential}"></label>
- <label>Trust %<input id="trust" type="number" min="0" max="200" value="${b.trust}"></label></div><p class="help" style="margin-top:12px">${skill ? `${escape(skill.name)} · ${skill.skillType === "MANUAL" ? "Manual activation" : "Auto activation"}` : "This operator has no skills."}</p>`;
+ <label>Skill<select id="skillId" ${available.length < 2 ? "disabled" : ""}>${available.length ? available.map((entry) => `<option value="${entry.id}" ${entry.id === b.skillId ? "selected" : ""}>S${op.skills.indexOf(entry) + 1} · ${escape(entry.levels[0].name)}</option>`).join("") : '<option value="">No skill</option>'}</select></label>
+ <label>Skill rank<select id="skillRank" ${skill ? "" : "disabled"}>${skill ? Array.from({ length: skillRankCap(op, b.skillId, b.elite) }, (_, i) => `<option value="${i + 1}" ${i + 1 === b.skillRank ? "selected" : ""}>${rankLabel(i + 1)}</option>`).join("") : '<option value="">No skill</option>'}</select></label>
+ <label>Potential<input id="potential" type="number" min="1" max="${catalogue[op.id].maxPotential}" value="${b.potential}"></label>
+ <label>Trust %<input id="trust" type="number" min="0" max="200" value="${b.trust}"></label></div><p class="help" style="margin-top:12px">${skill ? `${escape(skill.name)} · ${skill.skillType === "MANUAL" ? "Manual activation" : skill.skillType === "AUTO" ? "Auto activation" : "Passive"}` : "This operator has no skills."}</p>`;
   document.querySelector("#toggle").onclick = () => {
     chosen.has(editing) ? chosen.delete(editing) : chosen.add(editing);
     if (chosen.has(supportId)) supportId = "";
     renderPrep();
   };
-  for (const field of ["elite", "level", "skillRank", "potential", "trust"])
+  for (const field of ["elite", "level", "skillId", "skillRank", "potential", "trust"])
     document.querySelector("#" + field).onchange = (e) => {
-      const previous = b[field],
-        value = Number(e.target.value);
+      const previous = { ...b },
+        value = field === "skillId" ? e.target.value : Number(e.target.value);
       b[field] = value;
       if (field === "elite") {
         b.level = Math.min(b.level, op.phases[value]?.maxLevel ?? 1);
-        if (op.skills.length) b.skillRank = Math.min(b.skillRank, value ? 7 : 4);
+      }
+      if (["elite", "level", "skillId"].includes(field) && op.skills.length) {
+        const unlocked = availableSkills(op, b.elite, b.level);
+        if (!unlocked.some((entry) => entry.id === b.skillId)) b.skillId = unlocked[0]?.id ?? null;
+        b.skillRank = b.skillId ? Math.min(b.skillRank ?? 1, skillRankCap(op, b.skillId, b.elite)) : null;
       }
       try {
         recordFor(b, data);
         document.querySelector("#prep-error").textContent = "";
       } catch (err) {
-        b[field] = previous;
+        Object.assign(b, previous);
         document.querySelector("#prep-error").textContent = err.message;
       }
       renderPrep();
@@ -156,11 +192,26 @@ function renderPrep() {
     ops
       .filter((o) => !chosen.has(o.id))
       .map(
-        (o) =>
-          `<option value="${o.id}" ${supportId === o.id ? "selected" : ""}>${o.name} · E${o.phases.length - 1} Lv${o.phases.at(-1).maxLevel} / ${o.skills.length ? "S1 rank 7" : "No skill"} / Pot${catalogue[o.id].maxPotential} / trust 200%</option>`,
+        (o) => {
+          const supportBuild = maxedSupport({ id: o.id, skillId: supportSkills[o.id] }, catalogue);
+          const skillIndex = o.skills.findIndex((entry) => entry.id === supportBuild.skillId);
+          return `<option value="${o.id}" ${supportId === o.id ? "selected" : ""}>${escape(o.name)} · E${supportBuild.elite} Lv${supportBuild.level} / ${skillIndex >= 0 ? `S${skillIndex + 1} ${rankLabel(supportBuild.skillRank)}` : "No skill"} / Pot${supportBuild.potential} / trust ${supportBuild.trust}%</option>`;
+        },
       )
       .join("");
+  const supportBuildElement = document.querySelector("#support-build");
+  const supportOp = data.operators[supportId];
+  supportBuildElement.innerHTML = supportOp?.skills.length > 1
+    ? `<label class="support">Support skill<select id="support-skill">${supportOp.skills.map((entry, index) => `<option value="${entry.id}" ${entry.id === supportSkills[supportId] ? "selected" : ""}>S${index + 1} · ${escape(entry.levels[0].name)} · ${rankLabel(skillRankCap(supportOp, entry.id, supportOp.phases.length - 1))}</option>`).join("")}</select></label>` : "";
+  supportBuildElement.querySelector("#support-skill")?.addEventListener("change", (e) => {
+    supportSkills[supportId] = e.target.value;
+    renderPrep();
+  });
   document.querySelector("#start").disabled = chosen.size === 0 || loading;
+  const restoredFocus = focusOperator
+    ? document.querySelector(`.roster-item[data-id="${focusOperator}"]`)
+    : focusId ? document.getElementById(focusId) : null;
+  restoredFocus?.focus({ preventScroll: true });
 }
 async function start() {
   if (loading) return;
@@ -173,7 +224,7 @@ async function start() {
     selection = {
       operators: [...chosen].map((id) => builds[id]),
       support: supportId
-        ? { id: supportId, skillId: builds[supportId].skillId }
+        ? { id: supportId, skillId: supportSkills[supportId] }
         : null,
     };
     await renderer.preload(
@@ -394,7 +445,7 @@ function operatorDetails(build, unit) {
   const hp = unit?.hp ?? record.stats.maxHp;
   const maxHp = stats?.maxHp ?? record.stats.maxHp;
   const hud = unit ? skillHud(unit.skill) : null;
-  const level = data.operators[build.id].skills[0]?.levels[build.skillRank - 1];
+  const level = data.operators[build.id].skills.find((entry) => entry.id === build.skillId)?.levels[build.skillRank - 1];
   const recovery = {
     INCREASE_WITH_TIME: "Auto recovery",
     INCREASE_WHEN_ATTACK: "Offensive recovery",
@@ -410,7 +461,7 @@ function operatorDetails(build, unit) {
     <dl class="operator-stats">${numbers.map(([label, value]) => `<div><dt>${label}</dt><dd>${Math.round(value)}</dd></div>`).join("")}</dl>
     <div class="hp-readout"><span>HP</span><strong>${Math.ceil(hp)} / ${Math.round(maxHp)}</strong></div>
     <div class="meter hp"><span style="width:${Math.max(0, hp / maxHp) * 100}%"></span></div>
-    ${level ? `<section class="operator-skill"><h3>${escape(level.name)} <small>Rank ${build.skillRank}</small></h3>
+    ${level ? `<section class="operator-skill"><h3>${escape(level.name)} <small>${rankLabel(build.skillRank)}</small></h3>
     <div class="skill-tags"><span class="${level.spData.spType === "INCREASE_WITH_TIME" ? "auto" : "manual"}">${recovery}</span><span class="${level.skillType === "AUTO" ? "auto" : "manual"}">${level.skillType === "AUTO" ? "Auto activation" : level.skillType === "MANUAL" ? "Manual activation" : "Passive"}</span>${level.duration > 0 ? `<span>${level.duration}s</span>` : ""}</div>
     <p class="sp-readout">${hud?.text.replace(/ · (?:Auto|Manual) activation/g, "") || `${level.spData.initSp} / ${level.spData.spCost} SP on deployment`}</p>
     ${hud ? `<div class="meter ${hud.state}"><span style="width:${hud.fraction * 100}%"></span></div>` : ""}
@@ -444,7 +495,7 @@ function drawHud() {
     shelf.innerHTML = Object.keys(battle.bench)
       .map(
         (id) =>
-          `<button data-id="${id}" aria-pressed="false"><img src="${icon(data.operators[id])}" alt="" draggable="false"><span>${data.operators[id].name}</span><span class="cost"></span></button>`,
+          `<button data-id="${id}" aria-pressed="false">${id === supportId ? '<span class="support-marker" aria-hidden="true">SUP</span>' : ''}<img src="${icon(data.operators[id])}" alt="" draggable="false"><span class="bench-name">${data.operators[id].name}</span><span class="cost"></span></button>`,
       )
       .join("");
     shelf.querySelectorAll("button").forEach((button) => {
@@ -527,9 +578,9 @@ function drawHud() {
         : battle.cost(id) + " DP";
     button.classList.toggle("active", selected === id);
     button.setAttribute("aria-pressed", String(selected === id));
-    button.setAttribute("aria-label", `${data.operators[id].name}, ${cost}`);
-    button.querySelector(".cost").textContent =
-      cost + (id === supportId ? " · Support" : "");
+    button.setAttribute("aria-label", `${data.operators[id].name}, ${cost}${id === supportId ? ', Support' : ''}`);
+    button.title = `${data.operators[id].name}${id === supportId ? ' · Support' : ''}`;
+    button.querySelector(".cost").textContent = cost;
   }
   // Preserve keyboard focus when refreshing the counters; command markup changes only on selection/state transitions.
   const b = battle.bench[selected],
@@ -549,7 +600,7 @@ function drawHud() {
   if (b) {
     const op = data.operators[selected];
     const hud = unit ? skillHud(unit.skill) : null;
-    canActivate = !!(hud?.ready && unit.canAct && !unit.s.flags.silence);
+    canActivate = !!(hud?.canActivate && unit.canAct && !unit.s.flags.silence);
     const copy = operatorDetails(b.build, unit);
     if (command.dataset.selection !== selected || command.dataset.alive !== String(!!unit)) {
       command.innerHTML = `<div class="operator-portrait"><img src="${artwork(op)}" alt="${escape(op.name)} base artwork" draggable="false"><h2>${escape(op.name)}</h2></div>
@@ -581,7 +632,7 @@ function drawHud() {
     const skillButton = command.querySelector("#skill");
     if (skillButton) {
       skillButton.disabled = !canActivate;
-      skillButton.textContent = hud?.ready ? "Skill ready · Activate" : "Activate skill";
+      skillButton.textContent = hud?.ready ? hud.canActivate ? "Skill ready · Activate" : "Skill ready" : "Activate skill";
     }
   }
   const hover = dragging?.over ? { ...dragging.over, dir: "RIGHT" } : null;

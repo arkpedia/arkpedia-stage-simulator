@@ -59,15 +59,17 @@ const ids = Object.keys(REGULAR_OPERATORS);
 const operators = Object.fromEntries(
   ids.map((id) => {
     const c = characters[id];
-    if (!c || !(c.rarity === "TIER_3" && c.phases.length === 2 && c.skills.length === 1
-      || c.rarity === "TIER_2" && c.phases.length === 1 && c.skills.length === 0))
+    const rarity = Number(c?.rarity?.replace("TIER_", ""));
+    const shape = { 1: [1, [0]], 2: [1, [0]], 3: [2, [1]],
+      4: [3, [2]], 5: [3, [2, 3]], 6: [3, [3]] }[rarity];
+    if (!c || !shape || c.phases.length !== shape[0] || !shape[1].includes(c.skills.length))
       throw new Error(`Unsupported operator shape: ${id}`);
     return [
       id,
       {
         id,
         name: c.name,
-        rarity: Number(c.rarity.replace("TIER_", "")),
+        rarity,
         profession: c.profession,
         subProfessionId: c.subProfessionId,
         position: c.position,
@@ -80,10 +82,22 @@ const operators = Object.fromEntries(
         potentialRanks: c.potentialRanks.map(
           (p) => p.buff?.attributes?.attributeModifiers ?? [],
         ),
-        talents: c.talents,
+        trait: c.trait ? {
+          ...c.trait,
+          candidates: c.trait.candidates.map((candidate) => candidate.rangeId
+            ? { ...candidate, rangeGrid: ranges[candidate.rangeId].grids.map((p) => [p.row, p.col]) }
+            : candidate),
+        } : null,
+        talents: c.talents.map((talent) => ({
+          ...talent,
+          candidates: talent.candidates.map((candidate) => candidate.rangeId
+            ? { ...candidate, rangeGrid: ranges[candidate.rangeId].grids.map((p) => [p.row, p.col]) }
+            : candidate),
+        })),
         skills: c.skills.map((s) => ({
           id: s.skillId,
-          levels: skills[s.skillId].levels.slice(0, 7).map(level => level.rangeId
+          unlockCondition: s.unlockCond,
+          levels: skills[s.skillId].levels.map(level => level.rangeId
             ? { ...level, rangeGrid: ranges[level.rangeId].grids.map(p => [p.row, p.col]) } : level),
         })),
       },
@@ -164,6 +178,9 @@ const models = Object.fromEntries(
       typeof model.premultipliedAlpha !== "boolean"
     )
       throw new Error(`Unverified SD runtime metadata: ${k}`);
+    const op = operators[model.id];
+    if (op?.skills.length > 1 && op.skills.some((_, index) => !model.animationRoles.skills?.[index]))
+      throw new Error(`Missing per-skill SD animation roles: ${k}`);
     return [k, sd.models[k]];
   }),
 );

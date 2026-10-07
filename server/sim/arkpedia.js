@@ -3,6 +3,15 @@
 import { Battle } from "./Battle.js";
 import { DataSource } from "./simdata.js";
 import { genericKit } from "./content/generic.js";
+import { customizeMedicKit, installMedic, installMedicSquad } from './content/arkpedia-medics.js';
+import { customizeCasterKit, installCaster } from './content/arkpedia-casters.js';
+import { customizeGuardKit, installGuard } from './content/arkpedia-guards.js';
+import { customizeSniperKit, installSniper } from './content/arkpedia-snipers.js';
+import { customizeVanguardKit, installVanguard } from './content/arkpedia-vanguards.js';
+import { customizeDefenderKit, installDefender } from './content/arkpedia-defenders.js';
+import { customizeAdvancedSniperKit, installAdvancedSniper } from './content/arkpedia-advanced-snipers.js';
+import { customizeSupportKit, installSupport } from './content/arkpedia-supporters.js';
+import { customizeSpecialistKit, installSpecialist } from './content/arkpedia-specialists.js';
 import { catalogueFor, recordFor } from "../../shared/arkpedia/loadout.js";
 import { REGULAR_OPERATORS } from "../../shared/arkpedia/operators.js";
 import { assertRegularEnemies } from "../../shared/arkpedia/enemies.js";
@@ -99,7 +108,7 @@ export class StandardBattle extends Battle {
     for (const build of builds) {
       const support = REGULAR_OPERATORS[build.id];
       if (!support.templateKey) continue;
-      const level = data.operators[build.id].skills[0].levels[build.skillRank - 1];
+      const level = data.operators[build.id].skills.find(skill => skill.id === build.skillId)?.levels[build.skillRank - 1];
       if (level.prefabId !== support.prefabId)
         throw Error(`Unsupported regular-stage skill prefab: ${level.prefabId}`);
       const program = compileBuffTemplate(data.behaviors?.templates?.[support.templateKey]);
@@ -127,6 +136,8 @@ export class StandardBattle extends Battle {
       ],
     });
     this.life = config.max_life;
+    this.regularSkillUses = new Map();
+    installMedicSquad({ battle: this, records: chess });
     this.behaviors = behaviors;
     this.unitLimit = config.unit_limit;
     this.viewport = "preview";
@@ -173,7 +184,8 @@ export class StandardBattle extends Battle {
       return "Select a tile on the map.";
     const tile = this.grid.tile(row, col),
       position = this.data.getChess(id).position;
-    if (tile.build !== "ALL" && tile.build !== position)
+    const rangedTrait = REGULAR_OPERATORS[id]?.deployOnRanged && tile.build === 'RANGED';
+    if (tile.build !== "ALL" && tile.build !== position && !rangedTrait)
       return position === "RANGED"
         ? "Choose a ranged tile."
         : "Choose a melee tile.";
@@ -194,6 +206,15 @@ export class StandardBattle extends Battle {
       ps = this.getPlayer("arkpedia");
     const unit = this._makeAlly(ps, def, "op", row, col, { dir });
     const kit = genericKit(def.skill?.bb ?? {}, def.raw, def);
+    customizeMedicKit({ battle: this, id, def, unit, kit });
+    customizeCasterKit({ id, def, unit, kit });
+    customizeGuardKit({ id, def, unit, kit });
+    customizeSniperKit({ id, def, unit, kit });
+    customizeVanguardKit({ id, def, unit, kit });
+    customizeDefenderKit({ id, def, unit, kit });
+    customizeAdvancedSniperKit({ id, def, unit, kit });
+    customizeSupportKit({ id, def, unit, kit });
+    customizeSpecialistKit({ id, def, unit, kit });
     const mechanic = REGULAR_OPERATORS[id].mechanic;
     if (mechanic === "dp")
       kit.skill.onStart = ({ battle, unit }) =>
@@ -217,6 +238,15 @@ export class StandardBattle extends Battle {
       };
     }
     this._setupUnit(unit, kit);
+    installMedic({ battle: this, unit, def });
+    installCaster({ battle: this, unit, def });
+    installGuard({ battle: this, unit, def });
+    installSniper({ battle: this, unit, def });
+    installVanguard({ battle: this, unit, def });
+    installDefender({ battle: this, unit, def });
+    installAdvancedSniper({ battle: this, unit, def });
+    installSupport({ battle: this, unit, def });
+    installSpecialist({ battle: this, unit, def });
     if (mechanic === "blast-area")
       unit.skill.spec.attack = { splashRadius: unit.profile.splashRadius * def.skill.bb["attack@range_scale"] };
     if (mechanic === "arts-lord") unit.skill.spec.attack = { dmgType: "arts" };

@@ -127,7 +127,7 @@ export class Unit {
     const s = {
       maxHp, atk, def, res, aspd, bat,
       interval: (bat * 100) / aspd,
-      blockCnt: Math.max(0, fin(Math.round(b.blockCnt + a('blockCnt')), 0)),
+      blockCnt: Math.max(0, fin(Math.round((b.blockCnt + a('blockCnt')) * m('blockCntMul')), 0)),
       moveSpeed: Math.max(0, fin((b.moveSpeed + a('moveFlat')) * m('moveMul'), fin(b.moveSpeed, 0))),
       rangeExtend: Math.max(0, Math.round(a('rangeExtend'))),
       baseRangeExtend: Math.max(0, fin(Math.round(permRangeExtend), 0)),   // permanent part (initial range)

@@ -79,7 +79,7 @@ export function canTargetEnemy(attacker, e, profile) {
   if (!e.alive || e.hidden || !e.deployed) return false;
   const f = e.s.flags;
   if (f.untargetable || (f.sleep && !(profile && profile.hitSleep))) return false;
-  if (f.stealth && enemyStealthed(e)) return false;
+  if (f.stealth && enemyStealthed(e) && !profile?.ignoreStealth) return false;
   if (e.isFlying && !(profile && profile.canHitFly)) return false;
   if (profile && profile.groundOnly && e.isFlying) return false;
   return true;
@@ -175,6 +175,7 @@ const PRIORITY_FNS = {
   highestHp: (e) => -e.hp,
   lowestHpRatio: (e) => e.hpRatio,
   highestAtk: (e) => -e.s.atk,
+  heaviest: (e) => -e.weight,
   boss: (e) => (e.isBoss ? 0 : 1),
   notBurst: (e) => (e.s.flags.burstLock ? 1 : 0),
   ground: (e) => (e.isFlying ? 1 : 0),

@@ -1,0 +1,474 @@
+{
+  "sourceVersion": "26-09-23-17-49-43_b9cc4a",
+  "tableCommit": "57010cb5b2afea112cae57daa756b58676ba6850",
+  "sourceBundles": [
+    {
+      "path": "charpack/char_198_blackd.ab",
+      "size": 22121,
+      "md5": "3299cb5bfb29832de1750437b2d9f3dd",
+      "sha256": "048b86356dcdb1db3e358e339664122bc1e52c148ace4341cfd76f0a3ea19c0a"
+    },
+    {
+      "path": "charpack/char_149_scave.ab",
+      "size": 21821,
+      "md5": "99e0234631b0767dcd75d2d6cabe4eb9",
+      "sha256": "512898ab10be0d4048a0c161e51fdcfb8007b8f7e4d18b620ecbf7e8892ea04a"
+    },
+    {
+      "path": "charpack/char_290_vigna.ab",
+      "size": 20559,
+      "md5": "d46887846a9f29f219aec339d58bbcf1",
+      "sha256": "173ad789d43ac49b43a4736e69a9638394b3124797c897bee1536b9c453dd92e"
+    },
+    {
+      "path": "charpack/char_151_myrtle.ab",
+      "size": 21670,
+      "md5": "b43660a1470fc8a59bbb5e6e8ced399a",
+      "sha256": "fd2c79fe30373aa9f3129fbdb2103f696bcb5c9f8cae911d389c86f9ab18e607"
+    },
+    {
+      "path": "battle/prefabs/[uc]skills.ab",
+      "size": 1163240,
+      "md5": "ff06dc9bb5516d069c8c0017207653ca",
+      "sha256": "1c026938f054218f7e6bda9000162b2a6f30c9bd93e1ae9763d9d6df2270499c"
+    }
+  ],
+  "buffTemplateSha256": "79dce42d1ffa76196984b80678422e0323e406f6a044f1a25b1de75e0c5b9d27",
+  "templates": {
+    "charge_cost": {
+      "templateKey": "charge_cost",
+      "effectKey": "",
+      "onEventPriority": "DEFAULT",
+      "eventToActions": {
+        "ON_BUFF_START": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+ModifyCost, Assembly-CSharp",
+            "_sourceType": "SOURCE",
+            "_forceToDisplayNumber": false,
+            "_forceToDisplayNegativeNumber": false,
+            "_blackboardKey": "cost"
+          }
+        ]
+      }
+    },
+    "periodic_cost": {
+      "templateKey": "periodic_cost",
+      "effectKey": "",
+      "onEventPriority": "DEFAULT",
+      "eventToActions": {
+        "ON_BUFF_TRIGGER": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+ModifyCost, Assembly-CSharp",
+            "_sourceType": "SOURCE",
+            "_forceToDisplayNumber": false,
+            "_forceToDisplayNegativeNumber": false,
+            "_blackboardKey": "cost"
+          }
+        ]
+      }
+    }
+  },
+  "skillBindings": {
+    "char_198_blackd": [
+      {
+        "skillId": "skcom_charge_cost[2]",
+        "overridePrefabKey": null
+      },
+      {
+        "skillId": "skchr_blackd_2",
+        "overridePrefabKey": null
+      }
+    ],
+    "char_149_scave": [
+      {
+        "skillId": "skcom_charge_cost[2]",
+        "overridePrefabKey": null
+      },
+      {
+        "skillId": "skchr_scave_2",
+        "overridePrefabKey": null
+      }
+    ],
+    "char_290_vigna": [
+      {
+        "skillId": "skchr_vigna_1",
+        "overridePrefabKey": null
+      },
+      {
+        "skillId": "skchr_vigna_2",
+        "overridePrefabKey": null
+      }
+    ],
+    "char_151_myrtle": [
+      {
+        "skillId": "skcom_assist_cost[2]",
+        "overridePrefabKey": "skchr_myrtle_1"
+      },
+      {
+        "skillId": "skchr_myrtle_2",
+        "overridePrefabKey": null
+      }
+    ]
+  },
+  "skillBuffs": {
+    "skchr_vigna_1": [
+      {
+        "buffKey": "vigna_s_1",
+        "templateKey": "switch_mode",
+        "attributes": {
+          "abnormalFlags": [],
+          "abnormalImmunes": [],
+          "abnormalAntis": [],
+          "abnormalCombos": [],
+          "abnormalComboImmunes": [],
+          "attributeModifiers": [
+            {
+              "attributeType": 1,
+              "formulaItem": 1,
+              "value": 0.0,
+              "loadFromBlackboard": 1,
+              "fetchBaseValueFromSourceEntity": 0
+            }
+          ]
+        },
+        "triggerLifeType": 0,
+        "triggerCnt": 0,
+        "triggerInterval": -1.0,
+        "waitFirstTriggerInterval": 1,
+        "stripBlackboardParamsWithBuffKey": 0,
+        "blackboard": [
+          {
+            "key": "mode",
+            "value": 1.0,
+            "valueStr": ""
+          }
+        ]
+      }
+    ],
+    "skchr_myrtle_1": [
+      {
+        "buffKey": "myrtle_s_1[a]",
+        "templateKey": "periodic_cost",
+        "attributes": {
+          "abnormalFlags": [
+            11
+          ],
+          "abnormalImmunes": [],
+          "abnormalAntis": [],
+          "abnormalCombos": [],
+          "abnormalComboImmunes": [],
+          "attributeModifiers": [
+            {
+              "attributeType": 5,
+              "formulaItem": 3,
+              "value": 0.0,
+              "loadFromBlackboard": 0,
+              "fetchBaseValueFromSourceEntity": 0
+            }
+          ]
+        },
+        "triggerLifeType": 2,
+        "triggerCnt": 0,
+        "triggerInterval": 1.0,
+        "waitFirstTriggerInterval": 1,
+        "stripBlackboardParamsWithBuffKey": 0,
+        "blackboard": []
+      },
+      {
+        "buffKey": "myrtle_s_1[b]",
+        "templateKey": "switch_mode_restart_fsm",
+        "attributes": {
+          "abnormalFlags": [],
+          "abnormalImmunes": [],
+          "abnormalAntis": [],
+          "abnormalCombos": [],
+          "abnormalComboImmunes": [],
+          "attributeModifiers": []
+        },
+        "triggerLifeType": 0,
+        "triggerCnt": 0,
+        "triggerInterval": -1.0,
+        "waitFirstTriggerInterval": 1,
+        "stripBlackboardParamsWithBuffKey": 0,
+        "blackboard": [
+          {
+            "key": "mode",
+            "value": 1.0,
+            "valueStr": ""
+          }
+        ]
+      }
+    ],
+    "skchr_myrtle_2": [
+      {
+        "buffKey": "astersi_s_2[a]",
+        "templateKey": "switch_mode_restart_fsm",
+        "attributes": {
+          "abnormalFlags": [],
+          "abnormalImmunes": [],
+          "abnormalAntis": [],
+          "abnormalCombos": [],
+          "abnormalComboImmunes": [],
+          "attributeModifiers": [
+            {
+              "attributeType": 5,
+              "formulaItem": 3,
+              "value": 0.0,
+              "loadFromBlackboard": 0,
+              "fetchBaseValueFromSourceEntity": 0
+            }
+          ]
+        },
+        "triggerLifeType": 0,
+        "triggerCnt": 0,
+        "triggerInterval": -1.0,
+        "waitFirstTriggerInterval": 1,
+        "stripBlackboardParamsWithBuffKey": 0,
+        "blackboard": [
+          {
+            "key": "mode",
+            "value": 2.0,
+            "valueStr": ""
+          }
+        ]
+      },
+      {
+        "buffKey": "astersi_s_2[b]",
+        "templateKey": "periodic_cost",
+        "attributes": {
+          "abnormalFlags": [],
+          "abnormalImmunes": [],
+          "abnormalAntis": [],
+          "abnormalCombos": [],
+          "abnormalComboImmunes": [],
+          "attributeModifiers": []
+        },
+        "triggerLifeType": 2,
+        "triggerCnt": 0,
+        "triggerInterval": 1.0,
+        "waitFirstTriggerInterval": 1,
+        "stripBlackboardParamsWithBuffKey": 0,
+        "blackboard": []
+      }
+    ],
+    "skchr_scave_2": [
+      {
+        "buffKey": "scave_s_2",
+        "templateKey": "charge_cost",
+        "attributes": {
+          "abnormalFlags": [],
+          "abnormalImmunes": [],
+          "abnormalAntis": [],
+          "abnormalCombos": [],
+          "abnormalComboImmunes": [],
+          "attributeModifiers": [
+            {
+              "attributeType": 1,
+              "formulaItem": 1,
+              "value": 0.0,
+              "loadFromBlackboard": 1,
+              "fetchBaseValueFromSourceEntity": 0
+            }
+          ]
+        },
+        "triggerLifeType": 0,
+        "triggerCnt": 0,
+        "triggerInterval": -1.0,
+        "waitFirstTriggerInterval": 1,
+        "stripBlackboardParamsWithBuffKey": 0,
+        "blackboard": []
+      }
+    ],
+    "skchr_blackd_2": [
+      {
+        "buffKey": "blackd_s_2[once]",
+        "templateKey": "charge_cost",
+        "attributes": {
+          "abnormalFlags": [],
+          "abnormalImmunes": [],
+          "abnormalAntis": [],
+          "abnormalCombos": [],
+          "abnormalComboImmunes": [],
+          "attributeModifiers": []
+        },
+        "triggerLifeType": 0,
+        "triggerCnt": 0,
+        "triggerInterval": -1.0,
+        "waitFirstTriggerInterval": 1,
+        "stripBlackboardParamsWithBuffKey": 1,
+        "blackboard": []
+      },
+      {
+        "buffKey": "blackd_s_2[period]",
+        "templateKey": "periodic_cost",
+        "attributes": {
+          "abnormalFlags": [],
+          "abnormalImmunes": [],
+          "abnormalAntis": [],
+          "abnormalCombos": [],
+          "abnormalComboImmunes": [],
+          "attributeModifiers": [
+            {
+              "attributeType": 2,
+              "formulaItem": 1,
+              "value": 0.0,
+              "loadFromBlackboard": 1,
+              "fetchBaseValueFromSourceEntity": 0
+            }
+          ]
+        },
+        "triggerLifeType": 2,
+        "triggerCnt": 0,
+        "triggerInterval": -1.0,
+        "waitFirstTriggerInterval": 1,
+        "stripBlackboardParamsWithBuffKey": 1,
+        "blackboard": []
+      }
+    ],
+    "skchr_vigna_2": [
+      {
+        "buffKey": "vigna_s_2",
+        "templateKey": "switch_mode",
+        "attributes": {
+          "abnormalFlags": [],
+          "abnormalImmunes": [],
+          "abnormalAntis": [],
+          "abnormalCombos": [],
+          "abnormalComboImmunes": [],
+          "attributeModifiers": [
+            {
+              "attributeType": 1,
+              "formulaItem": 1,
+              "value": 0.0,
+              "loadFromBlackboard": 1,
+              "fetchBaseValueFromSourceEntity": 0
+            },
+            {
+              "attributeType": 8,
+              "formulaItem": 0,
+              "value": 0.0,
+              "loadFromBlackboard": 1,
+              "fetchBaseValueFromSourceEntity": 0
+            }
+          ]
+        },
+        "triggerLifeType": 0,
+        "triggerCnt": 0,
+        "triggerInterval": -1.0,
+        "waitFirstTriggerInterval": 1,
+        "stripBlackboardParamsWithBuffKey": 0,
+        "blackboard": [
+          {
+            "key": "mode",
+            "value": 1.0,
+            "valueStr": ""
+          }
+        ]
+      }
+    ],
+    "skcom_charge_cost": [
+      {
+        "buffKey": "charge_cost",
+        "templateKey": "charge_cost",
+        "attributes": {
+          "abnormalFlags": [],
+          "abnormalImmunes": [],
+          "abnormalAntis": [],
+          "abnormalCombos": [],
+          "abnormalComboImmunes": [],
+          "attributeModifiers": []
+        },
+        "triggerLifeType": 0,
+        "triggerCnt": 0,
+        "triggerInterval": -1.0,
+        "waitFirstTriggerInterval": 1,
+        "stripBlackboardParamsWithBuffKey": 0,
+        "blackboard": []
+      }
+    ]
+  },
+  "courier": {
+    "talentCheckerPathId": "2522483276011934549",
+    "talentChecker": {
+      "_blockMinCnt": 2,
+      "_blockMaxCnt": -1,
+      "_useBlockAsMin": 1
+    }
+  },
+  "scavenger": {
+    "talentCheckerPathId": "-7109815732602565272",
+    "talentChecker": {
+      "_distanceType": 0,
+      "_minManhattan": 2,
+      "_maxManhattan": -1,
+      "_checkType": 1,
+      "_needProfessionMask": 0,
+      "_needBuildableType": 0
+    }
+  },
+  "vigna": {
+    "talentNormalProbabilityKey": "prob1",
+    "talentSkillProbabilityKey": "prob2",
+    "talentBuffPathId": "-366890824151071187",
+    "talentAttributes": {
+      "abnormalFlags": [],
+      "abnormalImmunes": [],
+      "abnormalAntis": [],
+      "abnormalCombos": [],
+      "abnormalComboImmunes": [],
+      "attributeModifiers": [
+        {
+          "attributeType": 1,
+          "formulaItem": 1,
+          "value": 0.0,
+          "loadFromBlackboard": 1,
+          "fetchBaseValueFromSourceEntity": 0
+        }
+      ]
+    },
+    "withdrawCostRecoverRatio": 1,
+    "maxWithdrawCostRatioOfRawCost": 1,
+    "traitTemplate": "kill_to_add_cost"
+  },
+  "myrtle": {
+    "talentValidatorPathId": "-4728648841813249183",
+    "talentTargetOptions": {
+      "targetSide": 1,
+      "targetMotion": 3,
+      "targetCategory": 1,
+      "enableAdvancedOptions": 1,
+      "ignoreTargetFree": 1,
+      "ignoreAllyTargetFree": 0,
+      "ignoreHealFree": 1,
+      "ignoreTargetSide": 0,
+      "excludeSomeAbnormalFlags": 0,
+      "excludeAbnormalFlag": 0,
+      "purposeMask": 0,
+      "professionMask": 512,
+      "checkUnitType": 0,
+      "unitTypeMask": 0,
+      "onlyIgnoreSomeOfTargetFreeCase": 0,
+      "abnormalFlag": 0,
+      "abnormalCombo": 0
+    },
+    "healingAbilityPathId": "673272970802344801",
+    "healingAbility": {
+      "_isCont": 1,
+      "_isHpRatio": 0,
+      "_timeMode": 2,
+      "_cooldown": 1.0,
+      "_ignoreHealFree": 0,
+      "_ignorePalsyInterrupt": 0,
+      "_preDelay": 0.5329999923706055
+    },
+    "healingSelectorPathId": "-4407543729288334495",
+    "healingSelector": {
+      "_targetSide": 1,
+      "_targetCategory": 1,
+      "_postFilter": 3,
+      "_limitTargetNum": 1,
+      "_maxNum": 1,
+      "_excludeOwner": 0
+    }
+  }
+}

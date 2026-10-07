@@ -13,7 +13,9 @@ import { REGULAR_OPERATORS } from "../../shared/arkpedia/operators.js";
 
 const { values } = parseArgs({ options: {
   "asset-root": { type: "string", default: "../arkpedia-sd-assets" },
+  "source-root": { type: "string" },
   ids: { type: "string" }, commit: { type: "string" }, pma: { type: "string" },
+  "inspect-existing": { type: "boolean", default: false },
 } });
 if (!/^[a-f0-9]{40}$/.test(values.commit ?? "") || !["true", "false"].includes(values.pma))
   throw Error("Required: --commit <full source SHA> --pma true|false (explicit blending setting)");
@@ -23,17 +25,24 @@ const root = resolve(values["asset-root"]);
 const { importModel } = await import(pathToFileURL(join(root, "scripts/import-model.mjs")));
 const { validateManifest } = await import(pathToFileURL(join(root, "scripts/manifest.mjs")));
 const manifestPath = join(root, "manifest.json");
+await validateManifest(JSON.parse(await readFile(manifestPath, "utf8")), root);
 for (const id of ids) {
   for (const facing of ["front", "back"]) {
-    const key = await importModel({ source: "operators", id, facing, commit: values.commit,
-      directory: `spine/${id}/${id}/${facing === "front" ? "Front" : "Back"}` });
+    const key = values['inspect-existing'] ? `operator/${id}/default/${facing}`
+      : await importModel({ source: "operators", id, facing, commit: values.commit,
+        sourceRoot: values['source-root'],
+        directory: `spine/${id}/${id}/${facing === "front" ? "Front" : "Back"}` });
     const manifest = JSON.parse(await readFile(manifestPath, "utf8"));
     const model = manifest.models[key];
+    if (!model || model.source.commit !== values.commit) throw Error(`${key}: missing pinned original model`);
     if (!/^3\.8\./.test(model.spineVersion)) throw Error(`${key}: unsupported Spine runtime`);
     const info = parseSkel(await readFile(join(root, model.skeleton.path)),
       atlasInfo(await readFile(join(root, model.atlas.path), "utf8")).regions);
     if (info.missingRegions.length) throw Error(`${key}: missing regions ${info.missingRegions.join(", ")}`);
-    const roles = resolveRoles(info.animations, { durations: info.durations });
+    const support = REGULAR_OPERATORS[id];
+    const skillCount = support.skillIds?.length ?? (support.skillId ? 1 : 0);
+    const roles = resolveRoles(info.animations, { durations: info.durations,
+      skillIndices: Array.from({ length: skillCount }, (_, index) => index) });
     if (!roles.idle || !roles.attack || roles.attack.via === "idle") throw Error(`${key}: missing idle/attack clips`);
     Object.assign(model, { premultipliedAlpha: values.pma === "true", animations: info.durations,
       animationRoles: roles, hits: info.hits, bounds: info.bounds });
