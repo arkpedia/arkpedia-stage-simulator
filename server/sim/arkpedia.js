@@ -213,6 +213,15 @@ export class StandardBattle extends Battle {
     if (def.raw.arkpedia.highDef) unit.profile.priority = "highDef";
     if (mechanic === "ranged-priority" && def.talents.length)
       unit.profile.priority = "ranged";
+    if (mechanic === "extra-heal" && def.talents.length) {
+      const probability = def.talents[0].bb["attack@prob"];
+      this.on("beforeAttack", (ctx) => {
+        if (ctx.attacker !== unit || !ctx.targets.length || ctx.profile.dmgType !== "heal" || !this.rng.chance(probability)) return;
+        const extra = this.injuredAlliesInKeys(unit.rangeKeys, unit)
+          .find(ally => !ctx.targets.includes(ally));
+        if (extra) ctx.targets.push(extra);
+      }, { owner: unit });
+    }
     if (def.raw.arkpedia.critical) {
       const { prob, atk_scale } = def.raw.arkpedia.critical;
       this.on(

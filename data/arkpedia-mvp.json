@@ -34,7 +34,7 @@
   },
   "sd": {
     "repository": "arkpedia/arkpedia-sd-assets",
-    "commit": "7cc7468b5e2217656b1036323552c243adf5453d",
+    "commit": "45b0b2b0e2a8c93858bb6b784b7483919466d85d",
     "models": {
       "operator/char_123_fang/default/front": {
         "kind": "operator",
@@ -2150,6 +2150,140 @@
           "height": 381.5
         }
       },
+      "operator/char_212_ansel/default/front": {
+        "kind": "operator",
+        "id": "char_212_ansel",
+        "variant": "default",
+        "facing": "front",
+        "spineVersion": "3.8.99",
+        "source": {
+          "key": "operators",
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "spine/char_212_ansel/char_212_ansel/Front"
+        },
+        "skeleton": {
+          "path": "models/operator/char_212_ansel/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_212_ansel.skel",
+          "bytes": 83044,
+          "sha256": "e27ab64f41759817a107866191704660a56b452a6140226338a8cdfb769f6156"
+        },
+        "atlas": {
+          "path": "models/operator/char_212_ansel/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_212_ansel.atlas",
+          "bytes": 6614,
+          "sha256": "c24186346481a50adaba817ee2eea9cbd02fe2cb96520fe9da18d8d1020dcb6b"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_212_ansel/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_212_ansel.png",
+            "bytes": 85670,
+            "sha256": "c5084ab47fa0418d4829e340dc0b6f454e14fe3e1ae0688792076b80b73b2fd7"
+          }
+        ],
+        "premultipliedAlpha": false,
+        "animations": {
+          "Attack": 1,
+          "Default": 0,
+          "Die": 1,
+          "Idle": 1,
+          "Start": 1
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null
+          },
+          "attackDown": null,
+          "skill": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null,
+            "via": "attack",
+            "index": 0,
+            "idle": null
+          },
+          "die": "Die",
+          "move": null,
+          "stun": null
+        },
+        "hits": {
+          "Attack": [
+            0.333
+          ]
+        },
+        "bounds": {
+          "x": -125.768,
+          "y": -1.875,
+          "width": 235.972,
+          "height": 365.694
+        }
+      },
+      "operator/char_212_ansel/default/back": {
+        "kind": "operator",
+        "id": "char_212_ansel",
+        "variant": "default",
+        "facing": "back",
+        "spineVersion": "3.8.99",
+        "source": {
+          "key": "operators",
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "spine/char_212_ansel/char_212_ansel/Back"
+        },
+        "skeleton": {
+          "path": "models/operator/char_212_ansel/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_212_ansel.skel",
+          "bytes": 57603,
+          "sha256": "4b32783a5ea178b3f89ffbcfc1e2f03b2a54286fd1c6e756db96e0381a52d3ff"
+        },
+        "atlas": {
+          "path": "models/operator/char_212_ansel/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_212_ansel.atlas",
+          "bytes": 4074,
+          "sha256": "e39e2eabc29216ff156e318d8639a92086365559affc175c28dbd4b6778c81d7"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_212_ansel/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_212_ansel.png",
+            "bytes": 61133,
+            "sha256": "8321f392be590349e999423515211708110d4dadfa2fbcb9a0826b7bde5e6194"
+          }
+        ],
+        "premultipliedAlpha": false,
+        "animations": {
+          "Attack": 1,
+          "Default": 0,
+          "Idle": 1,
+          "Start": 1
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null
+          },
+          "attackDown": null,
+          "skill": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null,
+            "via": "attack",
+            "index": 0,
+            "idle": null
+          },
+          "die": null,
+          "move": null,
+          "stun": null
+        },
+        "hits": {
+          "Attack": [
+            0.333
+          ]
+        },
+        "bounds": null
+      },
       "enemy/enemy_1002_nsabr/default/default": {
         "kind": "enemy",
         "id": "enemy_1002_nsabr",
@@ -2868,7 +3002,7 @@
     },
     "art": {
       "repository": "arkpedia/arkpedia-sd-assets",
-      "commit": "7cc7468b5e2217656b1036323552c243adf5453d",
+      "commit": "45b0b2b0e2a8c93858bb6b784b7483919466d85d",
       "scene": {
         "path": "stages/0-1/26-09-23-17-49-43_b9cc4a/scene.json",
         "bytes": 4479,
@@ -2877,7 +3011,7 @@
     },
     "gates": {
       "repository": "arkpedia/arkpedia-sd-assets",
-      "commit": "7cc7468b5e2217656b1036323552c243adf5453d",
+      "commit": "45b0b2b0e2a8c93858bb6b784b7483919466d85d",
       "pack": {
         "path": "effects/standard-gates/26-09-23-17-49-43_b9cc4a/gates.json",
         "bytes": 3507,
@@ -11114,6 +11248,640 @@
           ]
         }
       ]
+    },
+    "char_212_ansel": {
+      "id": "char_212_ansel",
+      "name": "Ansel",
+      "profession": "MEDIC",
+      "subProfessionId": "physician",
+      "position": "RANGED",
+      "phases": [
+        {
+          "maxLevel": 40,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 634,
+                "atk": 156,
+                "def": 60,
+                "magicResistance": 0,
+                "cost": 15,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 2.85,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 40,
+              "data": {
+                "maxHp": 907,
+                "atk": 257,
+                "def": 81,
+                "magicResistance": 0,
+                "cost": 15,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 2.85,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              0,
+              3
+            ],
+            [
+              -1,
+              0
+            ],
+            [
+              -1,
+              1
+            ],
+            [
+              -1,
+              2
+            ]
+          ]
+        },
+        {
+          "maxLevel": 55,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 907,
+                "atk": 257,
+                "def": 81,
+                "magicResistance": 0,
+                "cost": 17,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 2.85,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 55,
+              "data": {
+                "maxHp": 1135,
+                "atk": 362,
+                "def": 109,
+                "magicResistance": 0,
+                "cost": 17,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 2.85,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              0,
+              3
+            ],
+            [
+              -1,
+              0
+            ],
+            [
+              -1,
+              1
+            ],
+            [
+              -1,
+              2
+            ],
+            [
+              -1,
+              3
+            ]
+          ]
+        }
+      ],
+      "favorKeyFrames": [
+        {
+          "level": 0,
+          "data": {
+            "maxHp": 0,
+            "atk": 0,
+            "def": 0,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false
+          }
+        },
+        {
+          "level": 50,
+          "data": {
+            "maxHp": 0,
+            "atk": 45,
+            "def": 0,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false
+          }
+        }
+      ],
+      "potentialRanks": [
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "RESPAWN_TIME",
+            "formulaItem": "ADDITION",
+            "value": -4,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "ATK",
+            "formulaItem": "ADDITION",
+            "value": 20,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [],
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ]
+      ],
+      "talents": [
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Additional Healing",
+              "description": "7% chance to heal 1 extra ally",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "attack@prob",
+                  "value": 0.07,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 1
+              },
+              "requiredPotentialRank": 4,
+              "prefabKey": "1",
+              "name": "Additional Healing",
+              "description": "10% <@ba.talpu>(+3%)</> chance to heal 1 extra ally",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "attack@prob",
+                  "value": 0.1,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 55
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Additional Healing",
+              "description": "15% chance to heal 1 extra ally",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "attack@prob",
+                  "value": 0.15,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 55
+              },
+              "requiredPotentialRank": 4,
+              "prefabKey": "1",
+              "name": "Additional Healing",
+              "description": "18% <@ba.talpu>(+3%)</> chance to heal 1 extra ally",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "attack@prob",
+                  "value": 0.18,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            }
+          ]
+        }
+      ],
+      "skills": [
+        {
+          "id": "skcom_range_extend",
+          "levels": [
+            {
+              "name": "Healing Range Up",
+              "rangeId": null,
+              "description": "Range <@ba.vup>+{ABILITY_RANGE_FORWARD_EXTEND} tiles</>; ATK <@ba.vup>+{atk:0%}</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 45,
+                "initSp": 10,
+                "increment": 1
+              },
+              "prefabId": "skcom_range_extend",
+              "duration": 19,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.05,
+                  "valueStr": null
+                },
+                {
+                  "key": "ability_range_forward_extend",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Healing Range Up",
+              "rangeId": null,
+              "description": "Range <@ba.vup>+{ABILITY_RANGE_FORWARD_EXTEND} tiles</>; ATK <@ba.vup>+{atk:0%}</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 44,
+                "initSp": 10,
+                "increment": 1
+              },
+              "prefabId": "skcom_range_extend",
+              "duration": 20,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "ability_range_forward_extend",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Healing Range Up",
+              "rangeId": null,
+              "description": "Range <@ba.vup>+{ABILITY_RANGE_FORWARD_EXTEND} tiles</>; ATK <@ba.vup>+{atk:0%}</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 43,
+                "initSp": 10,
+                "increment": 1
+              },
+              "prefabId": "skcom_range_extend",
+              "duration": 21,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.15,
+                  "valueStr": null
+                },
+                {
+                  "key": "ability_range_forward_extend",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Healing Range Up",
+              "rangeId": null,
+              "description": "Range <@ba.vup>+{ABILITY_RANGE_FORWARD_EXTEND} tiles</>; ATK <@ba.vup>+{atk:0%}</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 40,
+                "initSp": 10,
+                "increment": 1
+              },
+              "prefabId": "skcom_range_extend",
+              "duration": 22,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "ability_range_forward_extend",
+                  "value": 2,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Healing Range Up",
+              "rangeId": null,
+              "description": "Range <@ba.vup>+{ABILITY_RANGE_FORWARD_EXTEND} tiles</>; ATK <@ba.vup>+{atk:0%}</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 39,
+                "initSp": 10,
+                "increment": 1
+              },
+              "prefabId": "skcom_range_extend",
+              "duration": 23,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "ability_range_forward_extend",
+                  "value": 2,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Healing Range Up",
+              "rangeId": null,
+              "description": "Range <@ba.vup>+{ABILITY_RANGE_FORWARD_EXTEND} tiles</>; ATK <@ba.vup>+{atk:0%}</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 38,
+                "initSp": 10,
+                "increment": 1
+              },
+              "prefabId": "skcom_range_extend",
+              "duration": 24,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "ability_range_forward_extend",
+                  "value": 2,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Healing Range Up",
+              "rangeId": null,
+              "description": "Range <@ba.vup>+{ABILITY_RANGE_FORWARD_EXTEND} tiles</>; ATK <@ba.vup>+{atk:0%}</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 35,
+                "initSp": 10,
+                "increment": 1
+              },
+              "prefabId": "skcom_range_extend",
+              "duration": 25,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "ability_range_forward_extend",
+                  "value": 2,
+                  "valueStr": null
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   },
   "enemies": {
@@ -11158,7 +11926,7 @@
   },
   "skillEffects": {
     "repository": "arkpedia/arkpedia-sd-assets",
-    "commit": "7cc7468b5e2217656b1036323552c243adf5453d",
+    "commit": "45b0b2b0e2a8c93858bb6b784b7483919466d85d",
     "pack": {
       "path": "effects/charge-cost/26-09-23-17-49-43_b9cc4a/effect.json",
       "bytes": 15311,

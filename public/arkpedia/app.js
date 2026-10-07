@@ -66,12 +66,12 @@ function battleReadouts() {
   </div>`;
 }
 function skillDescription(level) {
-  const values = Object.fromEntries(level.blackboard.map((entry) => [entry.key, entry.value]));
+  const values = Object.fromEntries(level.blackboard.map((entry) => [entry.key.toLowerCase(), entry.value]));
   return escape(level.description.replace(/<[^>]*>/g, "").replace(
     /\{([^}:]+)(?::([^}]+))?\}/g,
     (_, key, format) => format?.includes("%")
-      ? Math.round(values[key] * 100) + "%"
-      : String(values[key]),
+      ? Math.round(values[key.toLowerCase()] * 100) + "%"
+      : String(values[key.toLowerCase()]),
   ));
 }
 const builds = Object.fromEntries(ops.map((o) => [o.id, defaultBuild(o)]));

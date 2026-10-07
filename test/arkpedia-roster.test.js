@@ -213,3 +213,36 @@ test('Midnight uses source ATK buffs at all skill ranks and preserves the lord t
     advance(b,level.duration+.1);near(u.s.atk,base);
   }
 });
+
+test('Ansel rolls his extra-heal talent once per healing attack and heals a distinct injured, healable ally in range',()=>{
+  const id='char_212_ansel';
+  for(const proc of [false,true]) for(const eligible of [false,true]) {
+    const source=structuredClone(data);source.stage.geometry.waves[0].spawns=[];
+    const builds=[id,'char_281_popka','char_192_falco','char_122_beagle'].map(id=>({...defaultBuild(source.operators[id]),potential:5}));
+    const b=new StandardBattle(source,{operators:builds});b.autoFinish=false;b.setViewport('fullscreen-workspace');b.addDp('arkpedia',99);
+    const u=b.deployOperator(id,1,7,'UP'),first=b.deployOperator('char_281_popka',2,7,'RIGHT'),second=b.deployOperator('char_192_falco',2,6,'RIGHT'),outside=b.deployOperator('char_122_beagle',2,3,'RIGHT');
+    first.hp=first.s.maxHp*.2;second.hp=second.s.maxHp*.3;outside.hp=1;
+    if(!eligible)b.addBuff(second,{key:'test:noHeal',flags:{noHeal:true}});
+    const hp=[first.hp,second.hp,outside.hp];let rolls=0;
+    b.rng.chance=p=>{near(p,.18);rolls++;return proc;};
+    const targets=acquireTargets(b,u,effectiveProfile(u));b.forceAttack(u,targets);
+    assert.equal(rolls,1);assert.ok(first.hp>hp[0]);assert.equal(second.hp>hp[1],proc&&eligible);near(outside.hp,hp[2]);
+    first.hp=first.s.maxHp;second.hp=second.s.maxHp;
+    const empty=acquireTargets(b,u,effectiveProfile(u));assert.equal(empty.length,0);b.forceAttack(u,empty);assert.equal(rolls,1);
+    assert.deepEqual(b.errors,[]);
+  }
+  const e0=recordFor({...defaultBuild(data.operators[id]),elite:0,level:40,skillRank:4},data);
+  assert.equal(e0.talents.length,0);
+});
+
+test('Ansel expands healing range by the source number of forward tiles and applies/restores his ATK buff at all ranks',()=>{
+  const id='char_212_ansel';
+  for(let rank=1;rank<=7;rank++) {
+    const {b,source}=make(id,{rank});const u=b.deployOperator(id,1,7,'UP'),base=u.s.atk,normal=[...u.rangeKeys];
+    const level=source.operators[id].skills[0].levels[rank-1],bb=Object.fromEntries(level.blackboard.map(e=>[e.key,e.value]));
+    u.skill.gainSp(u.skill.spCost,'test');b.activateOperator(id);
+    near(u.s.atk-base,u.base.atk*bb.atk);assert.ok(u.rangeKeys.length>normal.length);
+    assert.equal(u.skill.spec.targeting.rangeExtend,bb.ability_range_forward_extend);
+    advance(b,level.duration+.1);near(u.s.atk,base);assert.deepEqual([...u.rangeKeys],normal);
+  }
+});
