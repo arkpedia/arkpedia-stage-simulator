@@ -34,7 +34,7 @@
   },
   "sd": {
     "repository": "arkpedia/arkpedia-sd-assets",
-    "commit": "b5d2a4fe645e9e434b6696f83f37d2f61ffa25eb",
+    "commit": "9e18241b43fd149ee4d71a7973769a7d8caf20f6",
     "models": {
       "operator/char_123_fang/default/front": {
         "kind": "operator",
@@ -1301,6 +1301,145 @@
           "height": 392.342
         }
       },
+      "operator/char_192_falco/default/front": {
+        "kind": "operator",
+        "id": "char_192_falco",
+        "variant": "default",
+        "facing": "front",
+        "spineVersion": "3.8.99",
+        "source": {
+          "key": "operators",
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "spine/char_192_falco/char_192_falco/Front"
+        },
+        "skeleton": {
+          "path": "models/operator/char_192_falco/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_192_falco.skel",
+          "bytes": 57530,
+          "sha256": "ebdc8b6dc0c688396c8d99190d97a619c57e06d83cc3152bb492f7896de47880"
+        },
+        "atlas": {
+          "path": "models/operator/char_192_falco/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_192_falco.atlas",
+          "bytes": 4904,
+          "sha256": "eedce2fd8de8e4c132152016805e97520e605a566388a601e8fc8da5f59471b9"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_192_falco/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_192_falco.png",
+            "bytes": 76959,
+            "sha256": "d610e890f2da40b54a42cfe0e2960bd5b0b8ee0de3147cb2ab3b858cffff4929"
+          }
+        ],
+        "premultipliedAlpha": false,
+        "animations": {
+          "Attack": 1,
+          "Default": 0,
+          "Die": 1,
+          "Idle": 3,
+          "Start": 1
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null
+          },
+          "attackDown": null,
+          "skill": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null,
+            "via": "attack",
+            "index": 0,
+            "idle": null
+          },
+          "die": "Die",
+          "move": null,
+          "stun": null
+        },
+        "hits": {
+          "Attack": [
+            0.333
+          ]
+        },
+        "bounds": {
+          "x": -162.316,
+          "y": -2.602,
+          "width": 447.373,
+          "height": 395.505
+        }
+      },
+      "operator/char_192_falco/default/back": {
+        "kind": "operator",
+        "id": "char_192_falco",
+        "variant": "default",
+        "facing": "back",
+        "spineVersion": "3.8.99",
+        "source": {
+          "key": "operators",
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "spine/char_192_falco/char_192_falco/Back"
+        },
+        "skeleton": {
+          "path": "models/operator/char_192_falco/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_192_falco.skel",
+          "bytes": 33620,
+          "sha256": "020bf9ab516fbabcb0d7879cd87a4f63fdba4850acaec6b8952c5ad7fc956e60"
+        },
+        "atlas": {
+          "path": "models/operator/char_192_falco/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_192_falco.atlas",
+          "bytes": 2469,
+          "sha256": "0b0427a6bd0e625baa08d41f7e218b0999fd8e3104b3c638eededfbd1000023b"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_192_falco/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_192_falco.png",
+            "bytes": 63379,
+            "sha256": "2d2dd2fb8d075262efb5706e2237a189972201de004e9226aa6a23dfe11d7705"
+          }
+        ],
+        "premultipliedAlpha": false,
+        "animations": {
+          "Attack": 1,
+          "Default": 0,
+          "Idle": 1,
+          "Start": 1
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null
+          },
+          "attackDown": null,
+          "skill": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null,
+            "via": "attack",
+            "index": 0,
+            "idle": null
+          },
+          "die": null,
+          "move": null,
+          "stun": null
+        },
+        "hits": {
+          "Attack": [
+            0.333
+          ]
+        },
+        "bounds": {
+          "x": -161.786,
+          "y": -1.602,
+          "width": 444.822,
+          "height": 395.504
+        }
+      },
       "enemy/enemy_1002_nsabr/default/default": {
         "kind": "enemy",
         "id": "enemy_1002_nsabr",
@@ -2019,7 +2158,7 @@
     },
     "art": {
       "repository": "arkpedia/arkpedia-sd-assets",
-      "commit": "b5d2a4fe645e9e434b6696f83f37d2f61ffa25eb",
+      "commit": "9e18241b43fd149ee4d71a7973769a7d8caf20f6",
       "scene": {
         "path": "stages/0-1/26-09-23-17-49-43_b9cc4a/scene.json",
         "bytes": 4479,
@@ -2028,7 +2167,7 @@
     },
     "gates": {
       "repository": "arkpedia/arkpedia-sd-assets",
-      "commit": "b5d2a4fe645e9e434b6696f83f37d2f61ffa25eb",
+      "commit": "9e18241b43fd149ee4d71a7973769a7d8caf20f6",
       "pack": {
         "path": "effects/standard-gates/26-09-23-17-49-43_b9cc4a/gates.json",
         "bytes": 3507,
@@ -6896,6 +7035,536 @@
           ]
         }
       ]
+    },
+    "char_192_falco": {
+      "id": "char_192_falco",
+      "name": "Plume",
+      "profession": "PIONEER",
+      "subProfessionId": "charger",
+      "position": "MELEE",
+      "phases": [
+        {
+          "maxLevel": 40,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 688,
+                "atk": 229,
+                "def": 148,
+                "magicResistance": 0,
+                "cost": 8,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 40,
+              "data": {
+                "maxHp": 956,
+                "atk": 333,
+                "def": 212,
+                "magicResistance": 0,
+                "cost": 8,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ]
+        },
+        {
+          "maxLevel": 55,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 956,
+                "atk": 333,
+                "def": 212,
+                "magicResistance": 0,
+                "cost": 10,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 55,
+              "data": {
+                "maxHp": 1226,
+                "atk": 445,
+                "def": 279,
+                "magicResistance": 0,
+                "cost": 10,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ]
+        }
+      ],
+      "favorKeyFrames": [
+        {
+          "level": 0,
+          "data": {
+            "maxHp": 0,
+            "atk": 0,
+            "def": 0,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false
+          }
+        },
+        {
+          "level": 50,
+          "data": {
+            "maxHp": 0,
+            "atk": 50,
+            "def": 0,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false
+          }
+        }
+      ],
+      "potentialRanks": [
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "RESPAWN_TIME",
+            "formulaItem": "ADDITION",
+            "value": -4,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "ATK",
+            "formulaItem": "ADDITION",
+            "value": 21,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "RESPAWN_TIME",
+            "formulaItem": "ADDITION",
+            "value": -6,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ]
+      ],
+      "talents": [
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "ATK Up",
+              "description": "ATK +4%",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.04,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 55
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "ATK Up",
+              "description": "ATK +8%",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.08,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            }
+          ]
+        }
+      ],
+      "skills": [
+        {
+          "id": "skcom_quickattack[1]",
+          "levels": [
+            {
+              "name": "Swift Strike α",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>; ASPD <@ba.vup>+{attack_speed}</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 55,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skcom_quickattack",
+              "duration": 25,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.06,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack_speed",
+                  "value": 10,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Swift Strike α",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>; ASPD <@ba.vup>+{attack_speed}</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 54,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skcom_quickattack",
+              "duration": 25,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.09,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack_speed",
+                  "value": 10,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Swift Strike α",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>; ASPD <@ba.vup>+{attack_speed}</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 53,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skcom_quickattack",
+              "duration": 25,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.12,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack_speed",
+                  "value": 10,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Swift Strike α",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>; ASPD <@ba.vup>+{attack_speed}</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 50,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skcom_quickattack",
+              "duration": 25,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.15,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack_speed",
+                  "value": 15,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Swift Strike α",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>; ASPD <@ba.vup>+{attack_speed}</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 49,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skcom_quickattack",
+              "duration": 25,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.19,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack_speed",
+                  "value": 15,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Swift Strike α",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>; ASPD <@ba.vup>+{attack_speed}</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 48,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skcom_quickattack",
+              "duration": 25,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.22,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack_speed",
+                  "value": 15,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Swift Strike α",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>; ASPD <@ba.vup>+{attack_speed}</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 45,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skcom_quickattack",
+              "duration": 25,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack_speed",
+                  "value": 25,
+                  "valueStr": null
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   },
   "enemies": {
@@ -6940,7 +7609,7 @@
   },
   "skillEffects": {
     "repository": "arkpedia/arkpedia-sd-assets",
-    "commit": "b5d2a4fe645e9e434b6696f83f37d2f61ffa25eb",
+    "commit": "9e18241b43fd149ee4d71a7973769a7d8caf20f6",
     "pack": {
       "path": "effects/charge-cost/26-09-23-17-49-43_b9cc4a/effect.json",
       "bytes": 15311,

@@ -237,7 +237,9 @@ export class StandardBattle extends Battle {
       throw new Error("Battle workspace is inactive.");
     const entry = this.bench[id];
     if (!entry?.unit?.alive) throw new Error("Operator is not deployed.");
-    this.addDp("arkpedia", Math.floor(entry.lastCost / 2));
+    const refund = REGULAR_OPERATORS[id].mechanic === "charger"
+      ? entry.unit.base.cost : Math.floor(entry.lastCost / 2);
+    this.addDp("arkpedia", refund);
     this.retreat(entry.unit, { permanent: true });
   }
   activateOperator(id) {

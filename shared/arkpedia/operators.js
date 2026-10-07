@@ -11,6 +11,7 @@ export const REGULAR_OPERATORS = Object.freeze({
   char_240_wyvern: { skillId: "skchr_wyvern_1", talentKeys: ["atk"], mechanic: "dp", prefabId: "skchr_wyvern_1", templateKey: "charge_cost" },
   char_209_ardign: { skillId: "skcom_heal_self[1]", talentKeys: ["max_hp"], mechanic: "self-heal" },
   char_278_orchid: { skillId: "skcom_quickattack[1]", talentKeys: ["attack_speed"], mechanic: "buff" },
+  char_192_falco: { skillId: "skcom_quickattack[1]", talentKeys: ["atk"], mechanic: "charger" },
 });
 
 export function assertRegularOperator(op) {
