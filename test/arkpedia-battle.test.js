@@ -9,7 +9,7 @@ const data = JSON.parse(
   fs.readFileSync(new URL("../data/arkpedia-mvp.json", import.meta.url)),
 );
 const selection = {
-  operators: Object.values(data.operators).map(defaultBuild),
+  operators: Object.values(data.operators).slice(0, 12).map(defaultBuild),
 };
 const make = () => {
   const b = new StandardBattle(data, selection);

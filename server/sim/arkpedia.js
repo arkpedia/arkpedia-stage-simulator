@@ -238,6 +238,8 @@ export class StandardBattle extends Battle {
     entry.lastCost = this.cost(id);
     ps.dp -= entry.lastCost;
     this._deploy(unit, { tile: [row, col] });
+    if (mechanic === "starting-sp")
+      unit.skill.gainSp(def.talents.reduce((sum, talent) => sum + (talent.bb.sp ?? 0), 0), "talent");
     entry.deployments++;
     entry.unit = unit;
     return unit;

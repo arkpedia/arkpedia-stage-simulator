@@ -72,6 +72,7 @@ export function recordFor(build, data) {
     ATK: "atk",
     DEF: "def",
     MAX_HP: "maxHp",
+    ATTACK_SPEED: "attackSpeed",
   };
   for (const modifiers of op.potentialRanks.slice(0, build.potential - 1))
     for (const mod of modifiers) {

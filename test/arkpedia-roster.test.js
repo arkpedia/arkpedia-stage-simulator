@@ -128,3 +128,26 @@ test('Adnachiel uses source ATK skill values and expiry at every rank',()=>{
     assert.equal(u.profile.splashRadius,0);
   }
 });
+
+test('Lava receives her source SP talent once on each deployment, at both E1 talent thresholds and potentials',()=>{
+  const id='char_121_lava';
+  for(const [elite,level,potential,sp] of [[0,40,1,0],[1,1,1,15],[1,1,5,20],[1,55,1,30],[1,55,5,35]]) {
+    const {b}=make(id,{elite,level,potential,rank:4});
+    let u=b.deployOperator(id,1,7,'UP');near(u.skill.sp,sp);near(u.s.aspd,potential>=4?108:100);
+    b.retreatOperator(id);advance(b,72);b.addDp('arkpedia',99);
+    u=b.deployOperator(id,1,7,'UP');near(u.skill.sp,sp);
+    assert.equal(u.profile.dmgType,'arts');assert.ok(u.profile.splashRadius>0);
+  }
+});
+
+test('Lava keeps her normal splash targeting and gains source ASPD only while her skill is active, at all ranks',()=>{
+  const id='char_121_lava';
+  for(let rank=1;rank<=7;rank++) {
+    const {b,source}=make(id,{rank});const u=b.deployOperator(id,1,7,'UP'),aspd=u.s.aspd;
+    const level=source.operators[id].skills[0].levels[rank-1],radius=u.profile.splashRadius;
+    u.skill.gainSp(u.skill.spCost,'test');assert.equal(b.activateOperator(id),true);
+    near(u.s.aspd-aspd,level.blackboard.find(e=>e.key==='attack_speed').value);
+    near(effectiveProfile(u).splashRadius,radius);
+    advance(b,level.duration+.1);near(u.s.aspd,aspd);
+  }
+});
