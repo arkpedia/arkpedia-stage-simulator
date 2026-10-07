@@ -214,6 +214,17 @@ if (!stageAssets.stages[stage.code]) throw Error("Missing original stage artwork
 output.stage.art = { repository: "arkpedia/arkpedia-sd-assets", commit: sdCommit, scene: stageAssets.stages[stage.code] };
 if (!stageAssets.effects?.standardGates) throw Error("Missing original entry/defence box artwork");
 output.stage.gates = { repository: "arkpedia/arkpedia-sd-assets", commit: sdCommit, pack: stageAssets.effects.standardGates };
+if (!stageAssets.effects?.chargeCost) throw Error("Missing original charge-cost activation burst");
+const bindings = {};
+for (const [id,support] of Object.entries(REGULAR_OPERATORS)) {
+  if (support.templateKey !== "charge_cost") continue;
+  const key="common_charge_cost_start_01";
+  if (!bindingEvidence.prefabs[support.prefabId]?.effectKeys.includes(key))
+    throw Error(`Missing verified skill effect binding: ${id}`);
+  bindings[id]={skillId:support.skillId,prefabId:support.prefabId,key};
+}
+output.skillEffects = {repository:"arkpedia/arkpedia-sd-assets",commit:sdCommit,
+  pack:stageAssets.effects.chargeCost,bindings};
 await writeFile(
   new URL("../../data/arkpedia-mvp.json", import.meta.url),
   `${JSON.stringify(output, null, 2)}\n`,

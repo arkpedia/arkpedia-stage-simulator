@@ -94,7 +94,7 @@ npm run audit:arkpedia-behaviors -- --fetch
 npm run audit:arkpedia-behaviors
 ```
 
-`data/arkpedia-skill-prefabs.json` records checksum-verified original prefab bindings and an inventory of the skill/projectile/common/buff bundles. The `common_charge_cost_start_01`, `common_ignite_attack` and `common_heal_hit_01` roots exist in `battle/prefabs/effects/common.ab`. Their assets include Unity particles, materials, animation clips and trails; the inventory is not a browser particle renderer. Current visible effects/projectiles remain placeholders.
+`data/arkpedia-skill-prefabs.json` records checksum-verified original prefab bindings and an inventory of the skill/projectile/common/buff bundles. The `common_charge_cost_start_01`, `common_ignite_attack` and `common_heal_hit_01` roots exist in `battle/prefabs/effects/common.ab`. Their assets include Unity particles, materials, animation clips and trails; an inventory alone does not establish runtime support.
 
 ```sh
 node tools/arkpedia/stages/fetch-bundles.mjs --version 26-09-23-17-49-43_b9cc4a --skills-only
@@ -102,6 +102,19 @@ node tools/arkpedia/stages/fetch-bundles.mjs --version 26-09-23-17-49-43_b9cc4a 
 ```
 
 The extractor compares both reviewed template action lists with the original Unity template holder and records exact source bundle hashes. Rebuilding requires the template-table hash to match that evidence. A source refresh which changes it fails until the bindings are re-extracted and reviewed. No code from the newly researched battle engine, DPS calculator or Myrtle is included; their unresolved reuse terms do not affect this independent implementation.
+
+### Original charge-cost activation particles
+
+Fang and Vanilla's skill-start events now render the five original billboard emitters in `common_charge_cost_start_01`. The immutable asset pack includes two lossless game textures, separate RGB/alpha gradients, unweighted Hermite size curves, burst counts, radial cone/sphere emission, angular velocity and the birth sub-emitter. Texture and pack hashes are verified before use. A failed load is labelled; the renderer does not invent replacement particles. Cosmetic randomness is separate from combat RNG. Effects follow the battle clock, freeze during pause, speed up with combat and are disposed on reset/expiry.
+
+Only the activation burst is implemented. The follow-up `common_charge_cost_01` flight to the DP counter uses custom motion/noise/trail scripts and remains deferred. The current body anchor at 0.6 tile height, 60 Hz velocity-limit damping and Pixi shader rendering are approximations; recorded game comparison is still required. ATK/heal effects and projectiles remain placeholders. No additional operators are enabled.
+
+```sh
+node tools/arkpedia/stages/fetch-bundles.mjs --version 26-09-23-17-49-43_b9cc4a --dp-effect-only
+.cache/map-env/bin/python tools/arkpedia/stages/export-dp-effect.py --bundles .cache/arkpedia/map-source/ab --manifest .cache/arkpedia/map-source/hot_update_list.json --out .cache/arkpedia/dp-pack --version 26-09-23-17-49-43_b9cc4a
+```
+
+The exporter verifies four original bundles and rejects new enabled modules, weighted curves and unknown material variants. Publish the pack in the sibling asset repository before rebuilding the simulator's pin. A source-effect preview at `/arkpedia/effect-preview.html` uses the same renderer and actual Fang/Vanilla skill activation events, with replay and timeline scrubbing for visual review. It is separate from gameplay.
 
 Routes come from the existing Arkpedia stage browser's `buildPlaybackPaths` output: public points, cumulative distances, waits and movement scale, not private app source. The simulator generator retains that export only while its geometry hash matches. After a geometry refresh it requires a new export, rather than silently using different routes:
 

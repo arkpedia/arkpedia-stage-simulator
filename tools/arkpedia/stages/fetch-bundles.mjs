@@ -20,9 +20,12 @@ const download=async url=> {
 const manifest=await download(`${base}/hot_update_list.json`);
 await writeFile(resolve(out,'hot_update_list.json'),manifest);
 const list=JSON.parse(manifest).abInfos;
-if (args.includes('--gates-only') && args.includes('--skills-only'))
+if (['--gates-only','--skills-only','--dp-effect-only'].filter(k=>args.includes(k)).length > 1)
   throw Error('Choose one bundle group');
-const bundles = args.includes('--skills-only') ? [
+const bundles = args.includes('--dp-effect-only') ? [
+  'battle/prefabs/effects/common.ab', 'refs/fx/material.ab',
+  'refs/fx/texture/star.ab', '[uc]shaders.ab',
+] : args.includes('--skills-only') ? [
   'config/buff_template_holder.ab', 'battle/prefabs/[uc]skills.ab',
   'battle/prefabs/[uc]projectiles.ab', 'battle/prefabs/effects/buff.ab',
   'battle/prefabs/effects/common.ab',

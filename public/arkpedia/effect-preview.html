@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>DP activation effect preview · Arkpedia</title>
+  <link rel="stylesheet" href="/arkpedia/style.css">
+  <script src="/vendor/pixi.min.js"></script><script src="/vendor/pixi-spine.js"></script>
+  <style>
+    body{margin:0;display:flex;flex-direction:column;height:100dvh;overflow:hidden}
+    header{padding:12px 20px;background:#172329;display:flex;gap:16px;flex-wrap:wrap;align-items:center}
+    h1{font-size:18px;margin:0}label{display:flex;gap:8px;align-items:center}
+    input[type=range]{width:160px}#scene{flex:1;min-height:0;position:relative;overflow:hidden}
+    #scene canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}p{margin:0;padding:8px 20px;font-size:13px}
+    button,select{padding:8px 12px;background:#263b41;border:1px solid #64d5ae;color:#e3f2ee;border-radius:4px}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Original DP activation burst</h1>
+    <label>Operator <select id="operator"><option value="char_123_fang">Fang</option><option value="char_240_wyvern">Vanilla</option></select></label>
+    <button id="play" disabled>Play again</button>
+    <label>Effect time <input id="time" type="range" min="0" max="0.7" step="0.01" value="0.08" disabled><output id="clock">0.08s</output></label>
+  </header>
+  <div id="scene"></div>
+  <p role="status" id="status">Loading original stage, operator and particle assets…</p>
+  <script type="module" src="./effect-preview.js"></script>
+</body>
+</html>

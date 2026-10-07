@@ -8,6 +8,7 @@ import { spriteFacing } from "/shared/arkpedia/facing.js";
 import { skillHud } from "/shared/arkpedia/skill-hud.js";
 import { loadStageArt } from "./stage-art.js";
 import { loadGates } from "./gates.js";
+import { loadSkillParticles, SkillParticleLayer } from "./particles.js";
 const P = globalThis.PIXI;
 const models = createAssets({
   loadSpine: async (entry) => {
@@ -110,6 +111,19 @@ export class StageRenderer {
     this.artStatus.textContent = "Loading stage artwork…";
     this.artReady = this.loadArt();
     this.gatesReady = this.loadGateArt();
+    this.particlesReady = this.loadParticleArt();
+  }
+  async loadParticleArt() {
+    await this.artReady;
+    if (this.destroyed) return;
+    try {
+      const assets = await loadSkillParticles(this.data.skillEffects);
+      if (this.destroyed) { assets.dispose(); return; }
+      this.skillParticles = new SkillParticleLayer(this.pixi.stage, assets);
+    } catch (error) {
+      if (!this.destroyed) this.artStatus.textContent += " · Skill effect artwork unavailable";
+      console.warn("Could not load original skill particles", error);
+    }
   }
   async loadGateArt() {
     await this.artReady;
@@ -180,6 +194,7 @@ export class StageRenderer {
       },
     );
     await Promise.all(workers);
+    await this.particlesReady;
     // Release unselected squad models. The inherited refcount cache disposes idle CPU/GPU assets.
     for (const [key, value] of this.preloaded)
       if (!keys.includes(key)) {
@@ -375,6 +390,7 @@ export class StageRenderer {
     }
     this.views.clear();
     this.effects = [];
+    this.skillParticles?.clear();
   }
   render(battle, dt, events, realDt = 0) {
     this.drawSurface();
@@ -501,6 +517,10 @@ export class StageRenderer {
           this.views.delete(id);
         }
       for (const ev of events) {
+        if (ev[0] === "skill" && ev[2] === 1) {
+          const unit = battle.units.find(u => u.id === ev[1]);
+          if (unit) this.skillParticles?.trigger(unit);
+        }
         if (ev[0] !== "atk") continue;
         const v = this.views.get(ev[1]);
         const u = battle.units.find((u) => u.id === ev[1]),
@@ -543,6 +563,7 @@ export class StageRenderer {
         .endFill();
     }
     this.gates?.update(battle?.time ?? 0);
+    this.skillParticles?.render(battle?.time ?? 0, this.projection, this.heightAt);
     this.three.render(this.scene, this.camera);
     this.pixi.renderer.render(this.pixi.stage);
   }
@@ -555,6 +576,7 @@ export class StageRenderer {
     this.artStatus.remove();
     this.observer.disconnect();
     this.clear();
+    this.skillParticles?.dispose();
     for (const v of this.preloaded.values()) models.spine.release(v.entry);
     this.preloaded.clear();
     this.scene.traverse((o) => {

@@ -27,6 +27,10 @@ export function coverageFor({ characters, enemies, chess, inherited, data }) {
           strongholdCandidates: candidates.flatMap(c => c.skills.filter(k => k.skillId === s.skillId && k.covered).map(() => c.chessId)),
         })),
         effects: imported ? "placeholder-projectiles" : "not-integrated",
+        ...(imported && data.skillEffects?.bindings[id] ? {
+          originalSkillBursts:[data.skillEffects.bindings[id].key],
+          effectLimitations:["DP-counter flight deferred; shader, damping and anchor approximated"],
+        } : {}),
         gameFidelityVerified: false,
       };
     });
