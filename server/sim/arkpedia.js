@@ -95,6 +95,7 @@ import { customizeFlametailKit, installFlametail } from './content/arkpedia-flam
 import { customizeAlannaKit, installAlanna } from './content/arkpedia-alanna.js';
 import { customizeSaileachKit, installSaileach, adjustSaileachCost, consumeSaileachCard } from './content/arkpedia-saileach.js';
 import { customizeSurtrKit, installSurtr } from './content/arkpedia-surtr.js';
+import { customizeSpuriaKit, installSpuria } from './content/arkpedia-spuria.js';
 import { customizeFiveStarSupportFourthKit, installFiveStarSupportFourth } from './content/arkpedia-five-star-support-fourth.js';
 import { customizeFiveStarSpecialistExpansionKit, installFiveStarSpecialistExpansion } from './content/arkpedia-five-star-specialist-expansion.js';
 import { catalogueFor, recordFor } from "../../shared/arkpedia/loadout.js";
@@ -398,6 +399,7 @@ export class StandardBattle extends Battle {
     customizeAlannaKit({ battle: this, id, def, unit, kit });
     customizeSaileachKit({ battle: this, id, def, unit, kit });
     customizeSurtrKit({ battle: this, id, def, unit, kit });
+    customizeSpuriaKit({ battle: this, id, def, unit, kit });
     customizePhantomKit({ battle: this, id, def, unit, kit });
     customizeHookExpansionKit({ battle: this, id, def, unit, kit });
     customizeFiveStarSupportFourthKit({ battle: this, id, def, unit, kit });
@@ -514,6 +516,7 @@ export class StandardBattle extends Battle {
     installAlanna({ battle: this, unit, def });
     installSaileach({ battle: this, unit, def });
     installSurtr({ battle: this, unit, def });
+    installSpuria({ battle: this, unit, def });
     installHookExpansion({ battle: this, unit, def });
     installFiveStarSupportFourth({ battle: this, unit, def });
     installFiveStarSpecialistExpansion({ battle: this, unit, def });

@@ -1,0 +1,5024 @@
+{
+  "schemaVersion": 1,
+  "combatEnabled": false,
+  "frameParity": false,
+  "source": {
+    "version": "26-09-23-17-49-43_b9cc4a",
+    "tableCommit": "57010cb5b2afea112cae57daa756b58676ba6850",
+    "bundles": [
+      {
+        "path": "charpack/char_451_robin.ab",
+        "size": 20384,
+        "md5": "b6148da14511ff637b4fb752654c4be3",
+        "sha256": "4d651b2c768cd92e1edf4ea03e1fb479c8436dfeb61d5a8a6a29081227109657"
+      },
+      {
+        "path": "battle/prefabs/[uc]skills.ab",
+        "size": 1163240,
+        "md5": "ff06dc9bb5516d069c8c0017207653ca",
+        "sha256": "1c026938f054218f7e6bda9000162b2a6f30c9bd93e1ae9763d9d6df2270499c"
+      },
+      {
+        "path": "battle/prefabs/[uc]projectiles.ab",
+        "size": 1605622,
+        "md5": "0b1d64a8aba25913161f5fd7174cab34",
+        "sha256": "3d68c63bf7a7d658e65035a9c71dfc9a00e4804563b922185499d108dfb7f639"
+      },
+      {
+        "path": "pkgrps/btl_pfb_tokens_0.ab",
+        "size": 5060143,
+        "md5": "5ab8526b9e59e97cc7e94ed6a248013d",
+        "sha256": "eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f"
+      },
+      {
+        "path": "chararts/char_451_robin.ab",
+        "md5": "517655459ebb37efb4241e35a1fc49de",
+        "size": 1296866,
+        "sha256": "44cd12c952f43a1d75f008dbe23a749a68f5d884b5770e0e037977f99e0c9a19"
+      }
+    ]
+  },
+  "characters": {
+    "char_451_robin": [
+      {
+        "object": "1",
+        "pathId": "1977082230007633359",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-8223133421007628849"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "3800760148018415462"
+          },
+          "m_Name": "",
+          "_selector": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_metadata": {
+            "namedAsAlias": "",
+            "blackboardPrefix": ""
+          },
+          "_interruptAbilityOnDetach": 0,
+          "_attachPassiveBuffsOnDummy": 1,
+          "_ignoreIfOwnerDead": 0,
+          "_forceAsDmgOrHealAbility": 0,
+          "_buffs": [
+            {
+              "attributes": {
+                "abnormalFlags": [],
+                "abnormalImmunes": [],
+                "abnormalAntis": [],
+                "abnormalCombos": [],
+                "abnormalComboImmunes": [],
+                "attributeModifiers": []
+              },
+              "buffKey": "robin_t_1",
+              "loadFromDB": 0,
+              "isDurableBuff": 0,
+              "isDamageMissable": 0,
+              "isSilenceable": 0,
+              "isStunnable": 0,
+              "isFreezable": 0,
+              "isLevitatable": 0,
+              "statusResistable": 2,
+              "templateKey": "charge_token[refresh]",
+              "disableOverride": 1,
+              "overrideKey": "",
+              "overrideType": 0,
+              "maxStackCnt": 1,
+              "refreshRemainingTimeWhenStackMax": 0,
+              "clearAllStackCntWhenTimeUp": 0,
+              "maxValidStackCnt": -1,
+              "independentCharacterSource": 0,
+              "overrideEffectKey": "",
+              "overrideOnEventPriority": 0,
+              "onEventPriority": 0,
+              "audioSignal": "",
+              "lifeTimeType": 0,
+              "takeSnapshotWhenExtend": 0,
+              "durationKey": "",
+              "lifeTime": 0.0,
+              "triggerLifeType": 0,
+              "triggerCnt": 0,
+              "triggerInterval": -1.0,
+              "waitFirstTriggerInterval": 1,
+              "firstTriggerInterval": -1.0,
+              "priority": -1,
+              "priorityBBKeys": [],
+              "stripBlackboardParamsWithBuffKey": 0,
+              "blackboard": [],
+              "enableInitDirectionFromSource": 0
+            }
+          ]
+        }
+      },
+      {
+        "object": "1",
+        "pathId": "-6147090651184720433",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-8223133421007628849"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-2726233351382997147"
+          },
+          "m_Name": "",
+          "_overwriteTalentKey": "",
+          "_overwriteParentRangeId": 0,
+          "_checkValidBySkillIndex": [],
+          "_attachInDummy": 0,
+          "_defaultModeIndex": -1,
+          "_attackBlackboardModeIndex": -1,
+          "_extraAttackBlackboardModeIndices": [],
+          "_overrideDefaultRangeId": 0,
+          "_applyTalentScale": 0,
+          "_influenceSkillBlackboard": 0,
+          "_applyTalentRange": 0,
+          "_applyBlackboardBySkill": 0,
+          "_applyStrBlackboardBySkill": 0,
+          "_writeRangeIdToProjectileBlackboard": 0,
+          "_affectWhenNotRootTalent": 0,
+          "_scaleCertainKeyFlag": 0,
+          "_scaleCertainKeyList": [],
+          "_scaleCertainMode": 0,
+          "_scaleModeIndices": []
+        }
+      },
+      {
+        "object": "Trigger",
+        "pathId": "6483398508290807247",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "4066570214873011663"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "8607874384982393801"
+          },
+          "m_Name": "",
+          "_keepTarget": 0,
+          "_minTargetNum": 1,
+          "_overrideSearchTargetTick": -1
+        }
+      },
+      {
+        "object": "Trigger",
+        "pathId": "7205691566644237775",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "4066570214873011663"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-2891200616113119906"
+          },
+          "m_Name": "",
+          "_extendable": 0
+        }
+      },
+      {
+        "object": "Trigger",
+        "pathId": "-1678626933113711153",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "4066570214873011663"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "7080728813803358465"
+          },
+          "m_Name": "",
+          "_targetSide": 2,
+          "_targetMotion": 3,
+          "_targetCategory": 1,
+          "_postFilter": 4,
+          "_ignoreTargetFree": 0,
+          "_onlyIgnoreSomeOfTargetFreeCase": 0,
+          "_abnormalFlag": 20,
+          "_abnormalCombo": 2,
+          "_ignoreAllyTargetFree": 0,
+          "_ignoreHealFree": 0,
+          "_forceIgnoreCamouflage": 0,
+          "_needProfessionMask": 0,
+          "_professionMask": 0,
+          "_limitTargetNum": 1,
+          "_maxTargetKey": "max_target",
+          "_maxNum": 1,
+          "_excludeOwner": 0,
+          "_sortByTauntAtLast": 0,
+          "_ignoreHitRange": 0,
+          "_checkUnitType": 0,
+          "_unitTypeMask": 0,
+          "_abilityInputTargetAsSortSource": 0
+        }
+      },
+      {
+        "object": "Attack",
+        "pathId": "5198407878074013135",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "6473546290490676687"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "4156651312234227407"
+          },
+          "m_Name": "",
+          "_selector": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_metadata": {
+            "namedAsAlias": "",
+            "blackboardPrefix": ""
+          },
+          "_interruptAbilityOnDetach": 0,
+          "_attachPassiveBuffsOnDummy": 1,
+          "_ignoreIfOwnerDead": 0,
+          "_forceAsDmgOrHealAbility": 0,
+          "_waitForAttackEvent": 1,
+          "_interuptIfTargetDead": 0,
+          "_resetCdStrategy": 1,
+          "_selectTargetSource": 2,
+          "_selectTargetTiming": 0,
+          "_timeMode": 0,
+          "_alwaysIncludeTarget": 1,
+          "_allowNoTarget": 0,
+          "_animKey": "Attack",
+          "_endAnimKey": "Idle",
+          "_downAnimKey": "",
+          "_downEndAnimKey": "",
+          "_upAnimKey": "",
+          "_upEndAnimKey": "",
+          "_cooldown": 0.0,
+          "_cooldownKey": "duration",
+          "_preDelay": 0.0,
+          "_escapeTime": 0.0,
+          "_faceToTarget": 1,
+          "_faceToDefault": 0,
+          "_faceToFront": 0,
+          "_faceToFirstCastTarget": 0,
+          "_forceFaceToDirection": 0,
+          "_activeBuffs": [],
+          "_maxAnimScale": 1.0,
+          "_onlyPlayEndAnimWhenIsLastAbility": 0,
+          "_ignorePalsyInterrupt": 0,
+          "_atkScale": 1.0,
+          "_atkScaleKey": "atk_scale",
+          "_attackType": 1,
+          "_elementDamageType": 0,
+          "_epDamageRatio": 0.0,
+          "_useDynamicAttackType": 0,
+          "_deliveryParaWhenReplaceActionNode": 0,
+          "_projectileKey": "projectile_chr_robin",
+          "_mountPointType": 2,
+          "_useMountGroup": 0,
+          "_mountGroup": {
+            "loopType": 0,
+            "mountPoints": []
+          },
+          "_damageType": 1,
+          "_waitForProjectileInvalid": 0,
+          "_notClearProjectileWhenCastEnd": 0,
+          "_fireAttackFinishWhenProjectileInvalid": 0,
+          "_minPostDelayWhenProjectileInvalid": 0.0,
+          "_waitForAnimEndWhenProjectileInvalid": 0,
+          "_projectileDestination": 0,
+          "_extraDamageType": 0,
+          "_emitToInputPosWhenTargetIsInvalid": 0,
+          "_emitToInputRootTileWhenTargetIsInvalid": 0,
+          "_useCachedAtkOnly": 0,
+          "_transferSource": 0,
+          "_extraProjectileKeys": [],
+          "_fireCreateProjectileEvent": 0
+        }
+      },
+      {
+        "object": "Attack",
+        "pathId": "7013580500366890447",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "6473546290490676687"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-550693537895634864"
+          },
+          "m_Name": "",
+          "_hitEffects": [],
+          "_castEffects": [
+            {
+              "_directionType": 0,
+              "_effects": [
+                "robin_attack_01_start",
+                "",
+                "",
+                ""
+              ],
+              "_oneshot": 1,
+              "_startEvent": 2,
+              "_endEvent": 3,
+              "_onlyOnce": 0,
+              "_useFourDirectionalFace": 0,
+              "_delayIfFirstAttack": 0.0,
+              "_hookEffectAfterFirstAttack": ""
+            }
+          ],
+          "_attachEffects": [],
+          "_inputTargetEffects": [],
+          "_castTargetEffects": [],
+          "_convertCastEndToAttachFinish": 0,
+          "_recalculatePlaybackSpeed": 0,
+          "_preDelayFactor": 0.0
+        }
+      },
+      {
+        "object": "Default",
+        "pathId": "6116188327884789199",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "4580510797334549967"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "5390319429299248724"
+          },
+          "m_Name": "",
+          "_bodyTransform": {
+            "m_FileID": 0,
+            "m_PathID": "405727644267681231"
+          },
+          "_animatorHooker": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_overrideStartEffect": "",
+          "_overrideDeadEffect": "",
+          "_combat": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_attack": {
+            "m_FileID": 0,
+            "m_PathID": "5198407878074013135"
+          },
+          "_attackTrigger": {
+            "m_FileID": 0,
+            "m_PathID": "6483398508290807247"
+          },
+          "_hideUIAttackRange": 0,
+          "_updateAttackRangeExtendByAttributeDirty": 0,
+          "_rangeToShow": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_extraRangesToShow": [],
+          "_generalAbilities": [],
+          "_addIndexToSignalId": 0,
+          "_includeIndexZero": 0,
+          "_alwaysHideHp": {
+            "isDefined": 0,
+            "value": 0
+          },
+          "_alwaysHideSp": {
+            "isDefined": 0,
+            "value": 0
+          }
+        }
+      },
+      {
+        "object": "Shadow",
+        "pathId": "-1903823811561286193",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-1735558284301396529"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-2368896203154538901"
+          },
+          "m_Name": "",
+          "_autoAttachToGround": 0,
+          "_attachOffset": 0.10000000149011612,
+          "_simplyUseTileHeight": 0,
+          "_enableAdvanced": 0,
+          "_alwaysUseSpineOffset": 0,
+          "_sprite": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_graphic": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_faceSwitcher": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_boneToFollow": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_specialInit": 0,
+          "_simpleFollow": 0,
+          "_easeType": 1
+        }
+      },
+      {
+        "object": "Passive",
+        "pathId": "-7847451883575601713",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-295327467596573233"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "3800760148018415462"
+          },
+          "m_Name": "",
+          "_selector": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_metadata": {
+            "namedAsAlias": "",
+            "blackboardPrefix": ""
+          },
+          "_interruptAbilityOnDetach": 0,
+          "_attachPassiveBuffsOnDummy": 1,
+          "_ignoreIfOwnerDead": 0,
+          "_forceAsDmgOrHealAbility": 0,
+          "_buffs": [
+            {
+              "attributes": {
+                "abnormalFlags": [],
+                "abnormalImmunes": [],
+                "abnormalAntis": [],
+                "abnormalCombos": [],
+                "abnormalComboImmunes": [],
+                "attributeModifiers": []
+              },
+              "buffKey": "robin_c",
+              "loadFromDB": 0,
+              "isDurableBuff": 0,
+              "isDamageMissable": 0,
+              "isSilenceable": 0,
+              "isStunnable": 0,
+              "isFreezable": 0,
+              "isLevitatable": 0,
+              "statusResistable": 2,
+              "templateKey": "die_to_kill_token",
+              "disableOverride": 0,
+              "overrideKey": "",
+              "overrideType": 0,
+              "maxStackCnt": 1,
+              "refreshRemainingTimeWhenStackMax": 0,
+              "clearAllStackCntWhenTimeUp": 0,
+              "maxValidStackCnt": -1,
+              "independentCharacterSource": 0,
+              "overrideEffectKey": "",
+              "overrideOnEventPriority": 0,
+              "onEventPriority": 0,
+              "audioSignal": "",
+              "lifeTimeType": 2,
+              "takeSnapshotWhenExtend": 0,
+              "durationKey": "",
+              "lifeTime": 0.0,
+              "triggerLifeType": 0,
+              "triggerCnt": 0,
+              "triggerInterval": -1.0,
+              "waitFirstTriggerInterval": 1,
+              "firstTriggerInterval": -1.0,
+              "priority": -1,
+              "priorityBBKeys": [],
+              "stripBlackboardParamsWithBuffKey": 0,
+              "blackboard": [],
+              "enableInitDirectionFromSource": 0
+            }
+          ]
+        }
+      },
+      {
+        "object": "Passive",
+        "pathId": "-7847451883575601713",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-295327467596573233"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "3800760148018415462"
+          },
+          "m_Name": "",
+          "_selector": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_metadata": {
+            "namedAsAlias": "",
+            "blackboardPrefix": ""
+          },
+          "_interruptAbilityOnDetach": 0,
+          "_attachPassiveBuffsOnDummy": 1,
+          "_ignoreIfOwnerDead": 0,
+          "_forceAsDmgOrHealAbility": 0,
+          "_buffs": [
+            {
+              "attributes": {
+                "abnormalFlags": [],
+                "abnormalImmunes": [],
+                "abnormalAntis": [],
+                "abnormalCombos": [],
+                "abnormalComboImmunes": [],
+                "attributeModifiers": []
+              },
+              "buffKey": "robin_c",
+              "loadFromDB": 0,
+              "isDurableBuff": 0,
+              "isDamageMissable": 0,
+              "isSilenceable": 0,
+              "isStunnable": 0,
+              "isFreezable": 0,
+              "isLevitatable": 0,
+              "statusResistable": 2,
+              "templateKey": "die_to_kill_token",
+              "disableOverride": 0,
+              "overrideKey": "",
+              "overrideType": 0,
+              "maxStackCnt": 1,
+              "refreshRemainingTimeWhenStackMax": 0,
+              "clearAllStackCntWhenTimeUp": 0,
+              "maxValidStackCnt": -1,
+              "independentCharacterSource": 0,
+              "overrideEffectKey": "",
+              "overrideOnEventPriority": 0,
+              "onEventPriority": 0,
+              "audioSignal": "",
+              "lifeTimeType": 2,
+              "takeSnapshotWhenExtend": 0,
+              "durationKey": "",
+              "lifeTime": 0.0,
+              "triggerLifeType": 0,
+              "triggerCnt": 0,
+              "triggerInterval": -1.0,
+              "waitFirstTriggerInterval": 1,
+              "firstTriggerInterval": -1.0,
+              "priority": -1,
+              "priorityBBKeys": [],
+              "stripBlackboardParamsWithBuffKey": 0,
+              "blackboard": [],
+              "enableInitDirectionFromSource": 0
+            }
+          ]
+        }
+      },
+      {
+        "object": "Shadow",
+        "pathId": "-1903823811561286193",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-1735558284301396529"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-2368896203154538901"
+          },
+          "m_Name": "",
+          "_autoAttachToGround": 0,
+          "_attachOffset": 0.10000000149011612,
+          "_simplyUseTileHeight": 0,
+          "_enableAdvanced": 0,
+          "_alwaysUseSpineOffset": 0,
+          "_sprite": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_graphic": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_faceSwitcher": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_boneToFollow": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_specialInit": 0,
+          "_simpleFollow": 0,
+          "_easeType": 1
+        }
+      },
+      {
+        "object": "Passive",
+        "pathId": "-7847451883575601713",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-295327467596573233"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "3800760148018415462"
+          },
+          "m_Name": "",
+          "_selector": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_metadata": {
+            "namedAsAlias": "",
+            "blackboardPrefix": ""
+          },
+          "_interruptAbilityOnDetach": 0,
+          "_attachPassiveBuffsOnDummy": 1,
+          "_ignoreIfOwnerDead": 0,
+          "_forceAsDmgOrHealAbility": 0,
+          "_buffs": [
+            {
+              "attributes": {
+                "abnormalFlags": [],
+                "abnormalImmunes": [],
+                "abnormalAntis": [],
+                "abnormalCombos": [],
+                "abnormalComboImmunes": [],
+                "attributeModifiers": []
+              },
+              "buffKey": "robin_c",
+              "loadFromDB": 0,
+              "isDurableBuff": 0,
+              "isDamageMissable": 0,
+              "isSilenceable": 0,
+              "isStunnable": 0,
+              "isFreezable": 0,
+              "isLevitatable": 0,
+              "statusResistable": 2,
+              "templateKey": "die_to_kill_token",
+              "disableOverride": 0,
+              "overrideKey": "",
+              "overrideType": 0,
+              "maxStackCnt": 1,
+              "refreshRemainingTimeWhenStackMax": 0,
+              "clearAllStackCntWhenTimeUp": 0,
+              "maxValidStackCnt": -1,
+              "independentCharacterSource": 0,
+              "overrideEffectKey": "",
+              "overrideOnEventPriority": 0,
+              "onEventPriority": 0,
+              "audioSignal": "",
+              "lifeTimeType": 2,
+              "takeSnapshotWhenExtend": 0,
+              "durationKey": "",
+              "lifeTime": 0.0,
+              "triggerLifeType": 0,
+              "triggerCnt": 0,
+              "triggerInterval": -1.0,
+              "waitFirstTriggerInterval": 1,
+              "firstTriggerInterval": -1.0,
+              "priority": -1,
+              "priorityBBKeys": [],
+              "stripBlackboardParamsWithBuffKey": 0,
+              "blackboard": [],
+              "enableInitDirectionFromSource": 0
+            }
+          ]
+        }
+      },
+      {
+        "object": "Trigger",
+        "pathId": "6483398508290807247",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "4066570214873011663"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "8607874384982393801"
+          },
+          "m_Name": "",
+          "_keepTarget": 0,
+          "_minTargetNum": 1,
+          "_overrideSearchTargetTick": -1
+        }
+      },
+      {
+        "object": "Trigger",
+        "pathId": "7205691566644237775",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "4066570214873011663"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-2891200616113119906"
+          },
+          "m_Name": "",
+          "_extendable": 0
+        }
+      },
+      {
+        "object": "Trigger",
+        "pathId": "-1678626933113711153",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "4066570214873011663"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "7080728813803358465"
+          },
+          "m_Name": "",
+          "_targetSide": 2,
+          "_targetMotion": 3,
+          "_targetCategory": 1,
+          "_postFilter": 4,
+          "_ignoreTargetFree": 0,
+          "_onlyIgnoreSomeOfTargetFreeCase": 0,
+          "_abnormalFlag": 20,
+          "_abnormalCombo": 2,
+          "_ignoreAllyTargetFree": 0,
+          "_ignoreHealFree": 0,
+          "_forceIgnoreCamouflage": 0,
+          "_needProfessionMask": 0,
+          "_professionMask": 0,
+          "_limitTargetNum": 1,
+          "_maxTargetKey": "max_target",
+          "_maxNum": 1,
+          "_excludeOwner": 0,
+          "_sortByTauntAtLast": 0,
+          "_ignoreHitRange": 0,
+          "_checkUnitType": 0,
+          "_unitTypeMask": 0,
+          "_abilityInputTargetAsSortSource": 0
+        }
+      },
+      {
+        "object": "Attack",
+        "pathId": "5198407878074013135",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "6473546290490676687"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "4156651312234227407"
+          },
+          "m_Name": "",
+          "_selector": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_metadata": {
+            "namedAsAlias": "",
+            "blackboardPrefix": ""
+          },
+          "_interruptAbilityOnDetach": 0,
+          "_attachPassiveBuffsOnDummy": 1,
+          "_ignoreIfOwnerDead": 0,
+          "_forceAsDmgOrHealAbility": 0,
+          "_waitForAttackEvent": 1,
+          "_interuptIfTargetDead": 0,
+          "_resetCdStrategy": 1,
+          "_selectTargetSource": 2,
+          "_selectTargetTiming": 0,
+          "_timeMode": 0,
+          "_alwaysIncludeTarget": 1,
+          "_allowNoTarget": 0,
+          "_animKey": "Attack",
+          "_endAnimKey": "Idle",
+          "_downAnimKey": "",
+          "_downEndAnimKey": "",
+          "_upAnimKey": "",
+          "_upEndAnimKey": "",
+          "_cooldown": 0.0,
+          "_cooldownKey": "duration",
+          "_preDelay": 0.0,
+          "_escapeTime": 0.0,
+          "_faceToTarget": 1,
+          "_faceToDefault": 0,
+          "_faceToFront": 0,
+          "_faceToFirstCastTarget": 0,
+          "_forceFaceToDirection": 0,
+          "_activeBuffs": [],
+          "_maxAnimScale": 1.0,
+          "_onlyPlayEndAnimWhenIsLastAbility": 0,
+          "_ignorePalsyInterrupt": 0,
+          "_atkScale": 1.0,
+          "_atkScaleKey": "atk_scale",
+          "_attackType": 1,
+          "_elementDamageType": 0,
+          "_epDamageRatio": 0.0,
+          "_useDynamicAttackType": 0,
+          "_deliveryParaWhenReplaceActionNode": 0,
+          "_projectileKey": "projectile_chr_robin",
+          "_mountPointType": 2,
+          "_useMountGroup": 0,
+          "_mountGroup": {
+            "loopType": 0,
+            "mountPoints": []
+          },
+          "_damageType": 1,
+          "_waitForProjectileInvalid": 0,
+          "_notClearProjectileWhenCastEnd": 0,
+          "_fireAttackFinishWhenProjectileInvalid": 0,
+          "_minPostDelayWhenProjectileInvalid": 0.0,
+          "_waitForAnimEndWhenProjectileInvalid": 0,
+          "_projectileDestination": 0,
+          "_extraDamageType": 0,
+          "_emitToInputPosWhenTargetIsInvalid": 0,
+          "_emitToInputRootTileWhenTargetIsInvalid": 0,
+          "_useCachedAtkOnly": 0,
+          "_transferSource": 0,
+          "_extraProjectileKeys": [],
+          "_fireCreateProjectileEvent": 0
+        }
+      },
+      {
+        "object": "Attack",
+        "pathId": "7013580500366890447",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "6473546290490676687"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-550693537895634864"
+          },
+          "m_Name": "",
+          "_hitEffects": [],
+          "_castEffects": [
+            {
+              "_directionType": 0,
+              "_effects": [
+                "robin_attack_01_start",
+                "",
+                "",
+                ""
+              ],
+              "_oneshot": 1,
+              "_startEvent": 2,
+              "_endEvent": 3,
+              "_onlyOnce": 0,
+              "_useFourDirectionalFace": 0,
+              "_delayIfFirstAttack": 0.0,
+              "_hookEffectAfterFirstAttack": ""
+            }
+          ],
+          "_attachEffects": [],
+          "_inputTargetEffects": [],
+          "_castTargetEffects": [],
+          "_convertCastEndToAttachFinish": 0,
+          "_recalculatePlaybackSpeed": 0,
+          "_preDelayFactor": 0.0
+        }
+      },
+      {
+        "object": "Default",
+        "pathId": "6116188327884789199",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "4580510797334549967"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "5390319429299248724"
+          },
+          "m_Name": "",
+          "_bodyTransform": {
+            "m_FileID": 0,
+            "m_PathID": "405727644267681231"
+          },
+          "_animatorHooker": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_overrideStartEffect": "",
+          "_overrideDeadEffect": "",
+          "_combat": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_attack": {
+            "m_FileID": 0,
+            "m_PathID": "5198407878074013135"
+          },
+          "_attackTrigger": {
+            "m_FileID": 0,
+            "m_PathID": "6483398508290807247"
+          },
+          "_hideUIAttackRange": 0,
+          "_updateAttackRangeExtendByAttributeDirty": 0,
+          "_rangeToShow": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_extraRangesToShow": [],
+          "_generalAbilities": [],
+          "_addIndexToSignalId": 0,
+          "_includeIndexZero": 0,
+          "_alwaysHideHp": {
+            "isDefined": 0,
+            "value": 0
+          },
+          "_alwaysHideSp": {
+            "isDefined": 0,
+            "value": 0
+          }
+        }
+      },
+      {
+        "object": "1",
+        "pathId": "1977082230007633359",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-8223133421007628849"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "3800760148018415462"
+          },
+          "m_Name": "",
+          "_selector": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_metadata": {
+            "namedAsAlias": "",
+            "blackboardPrefix": ""
+          },
+          "_interruptAbilityOnDetach": 0,
+          "_attachPassiveBuffsOnDummy": 1,
+          "_ignoreIfOwnerDead": 0,
+          "_forceAsDmgOrHealAbility": 0,
+          "_buffs": [
+            {
+              "attributes": {
+                "abnormalFlags": [],
+                "abnormalImmunes": [],
+                "abnormalAntis": [],
+                "abnormalCombos": [],
+                "abnormalComboImmunes": [],
+                "attributeModifiers": []
+              },
+              "buffKey": "robin_t_1",
+              "loadFromDB": 0,
+              "isDurableBuff": 0,
+              "isDamageMissable": 0,
+              "isSilenceable": 0,
+              "isStunnable": 0,
+              "isFreezable": 0,
+              "isLevitatable": 0,
+              "statusResistable": 2,
+              "templateKey": "charge_token[refresh]",
+              "disableOverride": 1,
+              "overrideKey": "",
+              "overrideType": 0,
+              "maxStackCnt": 1,
+              "refreshRemainingTimeWhenStackMax": 0,
+              "clearAllStackCntWhenTimeUp": 0,
+              "maxValidStackCnt": -1,
+              "independentCharacterSource": 0,
+              "overrideEffectKey": "",
+              "overrideOnEventPriority": 0,
+              "onEventPriority": 0,
+              "audioSignal": "",
+              "lifeTimeType": 0,
+              "takeSnapshotWhenExtend": 0,
+              "durationKey": "",
+              "lifeTime": 0.0,
+              "triggerLifeType": 0,
+              "triggerCnt": 0,
+              "triggerInterval": -1.0,
+              "waitFirstTriggerInterval": 1,
+              "firstTriggerInterval": -1.0,
+              "priority": -1,
+              "priorityBBKeys": [],
+              "stripBlackboardParamsWithBuffKey": 0,
+              "blackboard": [],
+              "enableInitDirectionFromSource": 0
+            }
+          ]
+        }
+      },
+      {
+        "object": "1",
+        "pathId": "-6147090651184720433",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-8223133421007628849"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-2726233351382997147"
+          },
+          "m_Name": "",
+          "_overwriteTalentKey": "",
+          "_overwriteParentRangeId": 0,
+          "_checkValidBySkillIndex": [],
+          "_attachInDummy": 0,
+          "_defaultModeIndex": -1,
+          "_attackBlackboardModeIndex": -1,
+          "_extraAttackBlackboardModeIndices": [],
+          "_overrideDefaultRangeId": 0,
+          "_applyTalentScale": 0,
+          "_influenceSkillBlackboard": 0,
+          "_applyTalentRange": 0,
+          "_applyBlackboardBySkill": 0,
+          "_applyStrBlackboardBySkill": 0,
+          "_writeRangeIdToProjectileBlackboard": 0,
+          "_affectWhenNotRootTalent": 0,
+          "_scaleCertainKeyFlag": 0,
+          "_scaleCertainKeyList": [],
+          "_scaleCertainMode": 0,
+          "_scaleModeIndices": []
+        }
+      },
+      {
+        "object": "Shadow",
+        "pathId": "-1903823811561286193",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-1735558284301396529"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-2368896203154538901"
+          },
+          "m_Name": "",
+          "_autoAttachToGround": 0,
+          "_attachOffset": 0.10000000149011612,
+          "_simplyUseTileHeight": 0,
+          "_enableAdvanced": 0,
+          "_alwaysUseSpineOffset": 0,
+          "_sprite": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_graphic": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_faceSwitcher": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_boneToFollow": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_specialInit": 0,
+          "_simpleFollow": 0,
+          "_easeType": 1
+        }
+      },
+      {
+        "object": "Passive",
+        "pathId": "-7847451883575601713",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-295327467596573233"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "3800760148018415462"
+          },
+          "m_Name": "",
+          "_selector": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_metadata": {
+            "namedAsAlias": "",
+            "blackboardPrefix": ""
+          },
+          "_interruptAbilityOnDetach": 0,
+          "_attachPassiveBuffsOnDummy": 1,
+          "_ignoreIfOwnerDead": 0,
+          "_forceAsDmgOrHealAbility": 0,
+          "_buffs": [
+            {
+              "attributes": {
+                "abnormalFlags": [],
+                "abnormalImmunes": [],
+                "abnormalAntis": [],
+                "abnormalCombos": [],
+                "abnormalComboImmunes": [],
+                "attributeModifiers": []
+              },
+              "buffKey": "robin_c",
+              "loadFromDB": 0,
+              "isDurableBuff": 0,
+              "isDamageMissable": 0,
+              "isSilenceable": 0,
+              "isStunnable": 0,
+              "isFreezable": 0,
+              "isLevitatable": 0,
+              "statusResistable": 2,
+              "templateKey": "die_to_kill_token",
+              "disableOverride": 0,
+              "overrideKey": "",
+              "overrideType": 0,
+              "maxStackCnt": 1,
+              "refreshRemainingTimeWhenStackMax": 0,
+              "clearAllStackCntWhenTimeUp": 0,
+              "maxValidStackCnt": -1,
+              "independentCharacterSource": 0,
+              "overrideEffectKey": "",
+              "overrideOnEventPriority": 0,
+              "onEventPriority": 0,
+              "audioSignal": "",
+              "lifeTimeType": 2,
+              "takeSnapshotWhenExtend": 0,
+              "durationKey": "",
+              "lifeTime": 0.0,
+              "triggerLifeType": 0,
+              "triggerCnt": 0,
+              "triggerInterval": -1.0,
+              "waitFirstTriggerInterval": 1,
+              "firstTriggerInterval": -1.0,
+              "priority": -1,
+              "priorityBBKeys": [],
+              "stripBlackboardParamsWithBuffKey": 0,
+              "blackboard": [],
+              "enableInitDirectionFromSource": 0
+            }
+          ]
+        }
+      },
+      {
+        "object": "char_451_robin",
+        "pathId": "-4749504582672935473",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "69947543551514063"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-1297314214590689040"
+          },
+          "m_Name": "",
+          "_animator": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_modes": [
+            {
+              "m_FileID": 0,
+              "m_PathID": "6116188327884789199"
+            }
+          ],
+          "_commonAbilities": [
+            {
+              "m_FileID": 0,
+              "m_PathID": "-7847451883575601713"
+            }
+          ],
+          "_uiMountPoint": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_effectTransform": {
+            "m_FileID": 0,
+            "m_PathID": "-7668459482613443121"
+          },
+          "_shadow": {
+            "m_FileID": 0,
+            "m_PathID": "-1903823811561286193"
+          },
+          "_defaultBodyColor": {
+            "r": 1.0,
+            "g": 1.0,
+            "b": 1.0,
+            "a": 1.0
+          },
+          "_hideShadowOnRecycle": 0,
+          "_overrideGraphicBound": -1.0,
+          "_hudPluginReplacePairs": [],
+          "_showDebugName": 0,
+          "_skinHolder": {
+            "m_FileID": 0,
+            "m_PathID": "5490718769159771599"
+          },
+          "_motionMode": 0,
+          "_blockMode": 0,
+          "_ignoreBlockMode": 0,
+          "_isFixedRotation": 0,
+          "_occupiedRemainingCharacterCnt": 1,
+          "_useRealBornTimeFromAnim": 0,
+          "_buildCondition": {
+            "buildableType": 2,
+            "isTryingOverlapCharacater": 0,
+            "needSpecifyDirection": 1,
+            "limitByHostAttackRange": 0,
+            "limitByHostAbilityRange": 0,
+            "abilityName": "",
+            "tileKey": "",
+            "extraBuildConditionArray": {
+              "SerializedState": "null",
+              "SerializedObjectReferences": []
+            },
+            "advancedBuildableMask": 1,
+            "overlapOptions": {
+              "_verifySourceId": 0,
+              "_verifySourceIds": [],
+              "_verifySourceProfession": 0,
+              "_verifySourceProfessions": 0,
+              "_isAllConditionOR": 1,
+              "_overlapPriority": 0,
+              "_changeTargetGraphicColor": 0
+            },
+            "excludeNoTargetTile": 0,
+            "extraLocateRange": "",
+            "checkManuallyBuildableType": 0,
+            "manuallyBuildableType": 0,
+            "_excludeOccupiedByWalkEnemy": 0,
+            "allowWalkEnemyInHostRange": 0,
+            "_checkUpdateBuildable": 0
+          },
+          "_traitAbility": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_withdrawCostRecoverRatio": 0.5,
+          "_maxWithdrawCostRatioOfRawCost": 1.0,
+          "_directionTransform": {
+            "m_FileID": 0,
+            "m_PathID": "-7531375797407279665"
+          },
+          "_directionIndicator": {
+            "m_FileID": 0,
+            "m_PathID": "3537568228775925199"
+          },
+          "_startEffect": "",
+          "_deadEffect": "",
+          "_playStartVocal": 1,
+          "_showDeadTweenColor": 1,
+          "_useSpecificDeadAnim": 0,
+          "_onlyPlayStartEffectOnce": 0,
+          "_dontMoveCameraWhenFocus": 0,
+          "_disableCharInfoPanel": 0,
+          "_disableRotateWhenDead": 0,
+          "_disableSetDirectionWhenDummy": 0,
+          "_clearProjectileWhenDead": 0,
+          "_useIdForAudioSignalMask": 0,
+          "_preprocessData": 0,
+          "_disableClickCharacterInfo": 0,
+          "_skillUiFollowHeadPint": 0,
+          "m_overrideBornTime": -1.0
+        }
+      },
+      {
+        "object": "char_451_robin",
+        "pathId": "-5299901016767097393",
+        "type": "CircleCollider2D",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "69947543551514063"
+          },
+          "m_Enabled": 1,
+          "m_Density": 1.0,
+          "m_Material": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "m_IsTrigger": true,
+          "m_UsedByEffector": false,
+          "m_UsedByComposite": false,
+          "m_Offset": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "m_Radius": 0.25
+        }
+      },
+      {
+        "object": "Trigger",
+        "pathId": "6483398508290807247",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "4066570214873011663"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "8607874384982393801"
+          },
+          "m_Name": "",
+          "_keepTarget": 0,
+          "_minTargetNum": 1,
+          "_overrideSearchTargetTick": -1
+        }
+      },
+      {
+        "object": "Trigger",
+        "pathId": "7205691566644237775",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "4066570214873011663"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-2891200616113119906"
+          },
+          "m_Name": "",
+          "_extendable": 0
+        }
+      },
+      {
+        "object": "Trigger",
+        "pathId": "-1678626933113711153",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "4066570214873011663"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "7080728813803358465"
+          },
+          "m_Name": "",
+          "_targetSide": 2,
+          "_targetMotion": 3,
+          "_targetCategory": 1,
+          "_postFilter": 4,
+          "_ignoreTargetFree": 0,
+          "_onlyIgnoreSomeOfTargetFreeCase": 0,
+          "_abnormalFlag": 20,
+          "_abnormalCombo": 2,
+          "_ignoreAllyTargetFree": 0,
+          "_ignoreHealFree": 0,
+          "_forceIgnoreCamouflage": 0,
+          "_needProfessionMask": 0,
+          "_professionMask": 0,
+          "_limitTargetNum": 1,
+          "_maxTargetKey": "max_target",
+          "_maxNum": 1,
+          "_excludeOwner": 0,
+          "_sortByTauntAtLast": 0,
+          "_ignoreHitRange": 0,
+          "_checkUnitType": 0,
+          "_unitTypeMask": 0,
+          "_abilityInputTargetAsSortSource": 0
+        }
+      },
+      {
+        "object": "Attack",
+        "pathId": "5198407878074013135",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "6473546290490676687"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "4156651312234227407"
+          },
+          "m_Name": "",
+          "_selector": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_metadata": {
+            "namedAsAlias": "",
+            "blackboardPrefix": ""
+          },
+          "_interruptAbilityOnDetach": 0,
+          "_attachPassiveBuffsOnDummy": 1,
+          "_ignoreIfOwnerDead": 0,
+          "_forceAsDmgOrHealAbility": 0,
+          "_waitForAttackEvent": 1,
+          "_interuptIfTargetDead": 0,
+          "_resetCdStrategy": 1,
+          "_selectTargetSource": 2,
+          "_selectTargetTiming": 0,
+          "_timeMode": 0,
+          "_alwaysIncludeTarget": 1,
+          "_allowNoTarget": 0,
+          "_animKey": "Attack",
+          "_endAnimKey": "Idle",
+          "_downAnimKey": "",
+          "_downEndAnimKey": "",
+          "_upAnimKey": "",
+          "_upEndAnimKey": "",
+          "_cooldown": 0.0,
+          "_cooldownKey": "duration",
+          "_preDelay": 0.0,
+          "_escapeTime": 0.0,
+          "_faceToTarget": 1,
+          "_faceToDefault": 0,
+          "_faceToFront": 0,
+          "_faceToFirstCastTarget": 0,
+          "_forceFaceToDirection": 0,
+          "_activeBuffs": [],
+          "_maxAnimScale": 1.0,
+          "_onlyPlayEndAnimWhenIsLastAbility": 0,
+          "_ignorePalsyInterrupt": 0,
+          "_atkScale": 1.0,
+          "_atkScaleKey": "atk_scale",
+          "_attackType": 1,
+          "_elementDamageType": 0,
+          "_epDamageRatio": 0.0,
+          "_useDynamicAttackType": 0,
+          "_deliveryParaWhenReplaceActionNode": 0,
+          "_projectileKey": "projectile_chr_robin",
+          "_mountPointType": 2,
+          "_useMountGroup": 0,
+          "_mountGroup": {
+            "loopType": 0,
+            "mountPoints": []
+          },
+          "_damageType": 1,
+          "_waitForProjectileInvalid": 0,
+          "_notClearProjectileWhenCastEnd": 0,
+          "_fireAttackFinishWhenProjectileInvalid": 0,
+          "_minPostDelayWhenProjectileInvalid": 0.0,
+          "_waitForAnimEndWhenProjectileInvalid": 0,
+          "_projectileDestination": 0,
+          "_extraDamageType": 0,
+          "_emitToInputPosWhenTargetIsInvalid": 0,
+          "_emitToInputRootTileWhenTargetIsInvalid": 0,
+          "_useCachedAtkOnly": 0,
+          "_transferSource": 0,
+          "_extraProjectileKeys": [],
+          "_fireCreateProjectileEvent": 0
+        }
+      },
+      {
+        "object": "Attack",
+        "pathId": "7013580500366890447",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "6473546290490676687"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-550693537895634864"
+          },
+          "m_Name": "",
+          "_hitEffects": [],
+          "_castEffects": [
+            {
+              "_directionType": 0,
+              "_effects": [
+                "robin_attack_01_start",
+                "",
+                "",
+                ""
+              ],
+              "_oneshot": 1,
+              "_startEvent": 2,
+              "_endEvent": 3,
+              "_onlyOnce": 0,
+              "_useFourDirectionalFace": 0,
+              "_delayIfFirstAttack": 0.0,
+              "_hookEffectAfterFirstAttack": ""
+            }
+          ],
+          "_attachEffects": [],
+          "_inputTargetEffects": [],
+          "_castTargetEffects": [],
+          "_convertCastEndToAttachFinish": 0,
+          "_recalculatePlaybackSpeed": 0,
+          "_preDelayFactor": 0.0
+        }
+      },
+      {
+        "object": "Trigger",
+        "pathId": "6483398508290807247",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "4066570214873011663"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "8607874384982393801"
+          },
+          "m_Name": "",
+          "_keepTarget": 0,
+          "_minTargetNum": 1,
+          "_overrideSearchTargetTick": -1
+        }
+      },
+      {
+        "object": "Trigger",
+        "pathId": "7205691566644237775",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "4066570214873011663"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-2891200616113119906"
+          },
+          "m_Name": "",
+          "_extendable": 0
+        }
+      },
+      {
+        "object": "Trigger",
+        "pathId": "-1678626933113711153",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "4066570214873011663"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "7080728813803358465"
+          },
+          "m_Name": "",
+          "_targetSide": 2,
+          "_targetMotion": 3,
+          "_targetCategory": 1,
+          "_postFilter": 4,
+          "_ignoreTargetFree": 0,
+          "_onlyIgnoreSomeOfTargetFreeCase": 0,
+          "_abnormalFlag": 20,
+          "_abnormalCombo": 2,
+          "_ignoreAllyTargetFree": 0,
+          "_ignoreHealFree": 0,
+          "_forceIgnoreCamouflage": 0,
+          "_needProfessionMask": 0,
+          "_professionMask": 0,
+          "_limitTargetNum": 1,
+          "_maxTargetKey": "max_target",
+          "_maxNum": 1,
+          "_excludeOwner": 0,
+          "_sortByTauntAtLast": 0,
+          "_ignoreHitRange": 0,
+          "_checkUnitType": 0,
+          "_unitTypeMask": 0,
+          "_abilityInputTargetAsSortSource": 0
+        }
+      },
+      {
+        "object": "Trigger",
+        "pathId": "6483398508290807247",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "4066570214873011663"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "8607874384982393801"
+          },
+          "m_Name": "",
+          "_keepTarget": 0,
+          "_minTargetNum": 1,
+          "_overrideSearchTargetTick": -1
+        }
+      },
+      {
+        "object": "Trigger",
+        "pathId": "7205691566644237775",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "4066570214873011663"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-2891200616113119906"
+          },
+          "m_Name": "",
+          "_extendable": 0
+        }
+      },
+      {
+        "object": "Trigger",
+        "pathId": "-1678626933113711153",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "4066570214873011663"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "7080728813803358465"
+          },
+          "m_Name": "",
+          "_targetSide": 2,
+          "_targetMotion": 3,
+          "_targetCategory": 1,
+          "_postFilter": 4,
+          "_ignoreTargetFree": 0,
+          "_onlyIgnoreSomeOfTargetFreeCase": 0,
+          "_abnormalFlag": 20,
+          "_abnormalCombo": 2,
+          "_ignoreAllyTargetFree": 0,
+          "_ignoreHealFree": 0,
+          "_forceIgnoreCamouflage": 0,
+          "_needProfessionMask": 0,
+          "_professionMask": 0,
+          "_limitTargetNum": 1,
+          "_maxTargetKey": "max_target",
+          "_maxNum": 1,
+          "_excludeOwner": 0,
+          "_sortByTauntAtLast": 0,
+          "_ignoreHitRange": 0,
+          "_checkUnitType": 0,
+          "_unitTypeMask": 0,
+          "_abilityInputTargetAsSortSource": 0
+        }
+      },
+      {
+        "object": "Attack",
+        "pathId": "5198407878074013135",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "6473546290490676687"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "4156651312234227407"
+          },
+          "m_Name": "",
+          "_selector": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_metadata": {
+            "namedAsAlias": "",
+            "blackboardPrefix": ""
+          },
+          "_interruptAbilityOnDetach": 0,
+          "_attachPassiveBuffsOnDummy": 1,
+          "_ignoreIfOwnerDead": 0,
+          "_forceAsDmgOrHealAbility": 0,
+          "_waitForAttackEvent": 1,
+          "_interuptIfTargetDead": 0,
+          "_resetCdStrategy": 1,
+          "_selectTargetSource": 2,
+          "_selectTargetTiming": 0,
+          "_timeMode": 0,
+          "_alwaysIncludeTarget": 1,
+          "_allowNoTarget": 0,
+          "_animKey": "Attack",
+          "_endAnimKey": "Idle",
+          "_downAnimKey": "",
+          "_downEndAnimKey": "",
+          "_upAnimKey": "",
+          "_upEndAnimKey": "",
+          "_cooldown": 0.0,
+          "_cooldownKey": "duration",
+          "_preDelay": 0.0,
+          "_escapeTime": 0.0,
+          "_faceToTarget": 1,
+          "_faceToDefault": 0,
+          "_faceToFront": 0,
+          "_faceToFirstCastTarget": 0,
+          "_forceFaceToDirection": 0,
+          "_activeBuffs": [],
+          "_maxAnimScale": 1.0,
+          "_onlyPlayEndAnimWhenIsLastAbility": 0,
+          "_ignorePalsyInterrupt": 0,
+          "_atkScale": 1.0,
+          "_atkScaleKey": "atk_scale",
+          "_attackType": 1,
+          "_elementDamageType": 0,
+          "_epDamageRatio": 0.0,
+          "_useDynamicAttackType": 0,
+          "_deliveryParaWhenReplaceActionNode": 0,
+          "_projectileKey": "projectile_chr_robin",
+          "_mountPointType": 2,
+          "_useMountGroup": 0,
+          "_mountGroup": {
+            "loopType": 0,
+            "mountPoints": []
+          },
+          "_damageType": 1,
+          "_waitForProjectileInvalid": 0,
+          "_notClearProjectileWhenCastEnd": 0,
+          "_fireAttackFinishWhenProjectileInvalid": 0,
+          "_minPostDelayWhenProjectileInvalid": 0.0,
+          "_waitForAnimEndWhenProjectileInvalid": 0,
+          "_projectileDestination": 0,
+          "_extraDamageType": 0,
+          "_emitToInputPosWhenTargetIsInvalid": 0,
+          "_emitToInputRootTileWhenTargetIsInvalid": 0,
+          "_useCachedAtkOnly": 0,
+          "_transferSource": 0,
+          "_extraProjectileKeys": [],
+          "_fireCreateProjectileEvent": 0
+        }
+      },
+      {
+        "object": "Attack",
+        "pathId": "7013580500366890447",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "6473546290490676687"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-550693537895634864"
+          },
+          "m_Name": "",
+          "_hitEffects": [],
+          "_castEffects": [
+            {
+              "_directionType": 0,
+              "_effects": [
+                "robin_attack_01_start",
+                "",
+                "",
+                ""
+              ],
+              "_oneshot": 1,
+              "_startEvent": 2,
+              "_endEvent": 3,
+              "_onlyOnce": 0,
+              "_useFourDirectionalFace": 0,
+              "_delayIfFirstAttack": 0.0,
+              "_hookEffectAfterFirstAttack": ""
+            }
+          ],
+          "_attachEffects": [],
+          "_inputTargetEffects": [],
+          "_castTargetEffects": [],
+          "_convertCastEndToAttachFinish": 0,
+          "_recalculatePlaybackSpeed": 0,
+          "_preDelayFactor": 0.0
+        }
+      },
+      {
+        "object": "Default",
+        "pathId": "6116188327884789199",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "4580510797334549967"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "5390319429299248724"
+          },
+          "m_Name": "",
+          "_bodyTransform": {
+            "m_FileID": 0,
+            "m_PathID": "405727644267681231"
+          },
+          "_animatorHooker": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_overrideStartEffect": "",
+          "_overrideDeadEffect": "",
+          "_combat": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_attack": {
+            "m_FileID": 0,
+            "m_PathID": "5198407878074013135"
+          },
+          "_attackTrigger": {
+            "m_FileID": 0,
+            "m_PathID": "6483398508290807247"
+          },
+          "_hideUIAttackRange": 0,
+          "_updateAttackRangeExtendByAttributeDirty": 0,
+          "_rangeToShow": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_extraRangesToShow": [],
+          "_generalAbilities": [],
+          "_addIndexToSignalId": 0,
+          "_includeIndexZero": 0,
+          "_alwaysHideHp": {
+            "isDefined": 0,
+            "value": 0
+          },
+          "_alwaysHideSp": {
+            "isDefined": 0,
+            "value": 0
+          }
+        }
+      },
+      {
+        "object": "1",
+        "pathId": "1977082230007633359",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-8223133421007628849"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "3800760148018415462"
+          },
+          "m_Name": "",
+          "_selector": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_metadata": {
+            "namedAsAlias": "",
+            "blackboardPrefix": ""
+          },
+          "_interruptAbilityOnDetach": 0,
+          "_attachPassiveBuffsOnDummy": 1,
+          "_ignoreIfOwnerDead": 0,
+          "_forceAsDmgOrHealAbility": 0,
+          "_buffs": [
+            {
+              "attributes": {
+                "abnormalFlags": [],
+                "abnormalImmunes": [],
+                "abnormalAntis": [],
+                "abnormalCombos": [],
+                "abnormalComboImmunes": [],
+                "attributeModifiers": []
+              },
+              "buffKey": "robin_t_1",
+              "loadFromDB": 0,
+              "isDurableBuff": 0,
+              "isDamageMissable": 0,
+              "isSilenceable": 0,
+              "isStunnable": 0,
+              "isFreezable": 0,
+              "isLevitatable": 0,
+              "statusResistable": 2,
+              "templateKey": "charge_token[refresh]",
+              "disableOverride": 1,
+              "overrideKey": "",
+              "overrideType": 0,
+              "maxStackCnt": 1,
+              "refreshRemainingTimeWhenStackMax": 0,
+              "clearAllStackCntWhenTimeUp": 0,
+              "maxValidStackCnt": -1,
+              "independentCharacterSource": 0,
+              "overrideEffectKey": "",
+              "overrideOnEventPriority": 0,
+              "onEventPriority": 0,
+              "audioSignal": "",
+              "lifeTimeType": 0,
+              "takeSnapshotWhenExtend": 0,
+              "durationKey": "",
+              "lifeTime": 0.0,
+              "triggerLifeType": 0,
+              "triggerCnt": 0,
+              "triggerInterval": -1.0,
+              "waitFirstTriggerInterval": 1,
+              "firstTriggerInterval": -1.0,
+              "priority": -1,
+              "priorityBBKeys": [],
+              "stripBlackboardParamsWithBuffKey": 0,
+              "blackboard": [],
+              "enableInitDirectionFromSource": 0
+            }
+          ]
+        }
+      },
+      {
+        "object": "1",
+        "pathId": "-6147090651184720433",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-8223133421007628849"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-2726233351382997147"
+          },
+          "m_Name": "",
+          "_overwriteTalentKey": "",
+          "_overwriteParentRangeId": 0,
+          "_checkValidBySkillIndex": [],
+          "_attachInDummy": 0,
+          "_defaultModeIndex": -1,
+          "_attackBlackboardModeIndex": -1,
+          "_extraAttackBlackboardModeIndices": [],
+          "_overrideDefaultRangeId": 0,
+          "_applyTalentScale": 0,
+          "_influenceSkillBlackboard": 0,
+          "_applyTalentRange": 0,
+          "_applyBlackboardBySkill": 0,
+          "_applyStrBlackboardBySkill": 0,
+          "_writeRangeIdToProjectileBlackboard": 0,
+          "_affectWhenNotRootTalent": 0,
+          "_scaleCertainKeyFlag": 0,
+          "_scaleCertainKeyList": [],
+          "_scaleCertainMode": 0,
+          "_scaleModeIndices": []
+        }
+      },
+      {
+        "object": "Trigger",
+        "pathId": "6483398508290807247",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "4066570214873011663"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "8607874384982393801"
+          },
+          "m_Name": "",
+          "_keepTarget": 0,
+          "_minTargetNum": 1,
+          "_overrideSearchTargetTick": -1
+        }
+      },
+      {
+        "object": "Trigger",
+        "pathId": "7205691566644237775",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "4066570214873011663"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-2891200616113119906"
+          },
+          "m_Name": "",
+          "_extendable": 0
+        }
+      },
+      {
+        "object": "Trigger",
+        "pathId": "-1678626933113711153",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "4066570214873011663"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "7080728813803358465"
+          },
+          "m_Name": "",
+          "_targetSide": 2,
+          "_targetMotion": 3,
+          "_targetCategory": 1,
+          "_postFilter": 4,
+          "_ignoreTargetFree": 0,
+          "_onlyIgnoreSomeOfTargetFreeCase": 0,
+          "_abnormalFlag": 20,
+          "_abnormalCombo": 2,
+          "_ignoreAllyTargetFree": 0,
+          "_ignoreHealFree": 0,
+          "_forceIgnoreCamouflage": 0,
+          "_needProfessionMask": 0,
+          "_professionMask": 0,
+          "_limitTargetNum": 1,
+          "_maxTargetKey": "max_target",
+          "_maxNum": 1,
+          "_excludeOwner": 0,
+          "_sortByTauntAtLast": 0,
+          "_ignoreHitRange": 0,
+          "_checkUnitType": 0,
+          "_unitTypeMask": 0,
+          "_abilityInputTargetAsSortSource": 0
+        }
+      },
+      {
+        "object": "Attack",
+        "pathId": "5198407878074013135",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "6473546290490676687"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "4156651312234227407"
+          },
+          "m_Name": "",
+          "_selector": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_metadata": {
+            "namedAsAlias": "",
+            "blackboardPrefix": ""
+          },
+          "_interruptAbilityOnDetach": 0,
+          "_attachPassiveBuffsOnDummy": 1,
+          "_ignoreIfOwnerDead": 0,
+          "_forceAsDmgOrHealAbility": 0,
+          "_waitForAttackEvent": 1,
+          "_interuptIfTargetDead": 0,
+          "_resetCdStrategy": 1,
+          "_selectTargetSource": 2,
+          "_selectTargetTiming": 0,
+          "_timeMode": 0,
+          "_alwaysIncludeTarget": 1,
+          "_allowNoTarget": 0,
+          "_animKey": "Attack",
+          "_endAnimKey": "Idle",
+          "_downAnimKey": "",
+          "_downEndAnimKey": "",
+          "_upAnimKey": "",
+          "_upEndAnimKey": "",
+          "_cooldown": 0.0,
+          "_cooldownKey": "duration",
+          "_preDelay": 0.0,
+          "_escapeTime": 0.0,
+          "_faceToTarget": 1,
+          "_faceToDefault": 0,
+          "_faceToFront": 0,
+          "_faceToFirstCastTarget": 0,
+          "_forceFaceToDirection": 0,
+          "_activeBuffs": [],
+          "_maxAnimScale": 1.0,
+          "_onlyPlayEndAnimWhenIsLastAbility": 0,
+          "_ignorePalsyInterrupt": 0,
+          "_atkScale": 1.0,
+          "_atkScaleKey": "atk_scale",
+          "_attackType": 1,
+          "_elementDamageType": 0,
+          "_epDamageRatio": 0.0,
+          "_useDynamicAttackType": 0,
+          "_deliveryParaWhenReplaceActionNode": 0,
+          "_projectileKey": "projectile_chr_robin",
+          "_mountPointType": 2,
+          "_useMountGroup": 0,
+          "_mountGroup": {
+            "loopType": 0,
+            "mountPoints": []
+          },
+          "_damageType": 1,
+          "_waitForProjectileInvalid": 0,
+          "_notClearProjectileWhenCastEnd": 0,
+          "_fireAttackFinishWhenProjectileInvalid": 0,
+          "_minPostDelayWhenProjectileInvalid": 0.0,
+          "_waitForAnimEndWhenProjectileInvalid": 0,
+          "_projectileDestination": 0,
+          "_extraDamageType": 0,
+          "_emitToInputPosWhenTargetIsInvalid": 0,
+          "_emitToInputRootTileWhenTargetIsInvalid": 0,
+          "_useCachedAtkOnly": 0,
+          "_transferSource": 0,
+          "_extraProjectileKeys": [],
+          "_fireCreateProjectileEvent": 0
+        }
+      },
+      {
+        "object": "Attack",
+        "pathId": "7013580500366890447",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "6473546290490676687"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-550693537895634864"
+          },
+          "m_Name": "",
+          "_hitEffects": [],
+          "_castEffects": [
+            {
+              "_directionType": 0,
+              "_effects": [
+                "robin_attack_01_start",
+                "",
+                "",
+                ""
+              ],
+              "_oneshot": 1,
+              "_startEvent": 2,
+              "_endEvent": 3,
+              "_onlyOnce": 0,
+              "_useFourDirectionalFace": 0,
+              "_delayIfFirstAttack": 0.0,
+              "_hookEffectAfterFirstAttack": ""
+            }
+          ],
+          "_attachEffects": [],
+          "_inputTargetEffects": [],
+          "_castTargetEffects": [],
+          "_convertCastEndToAttachFinish": 0,
+          "_recalculatePlaybackSpeed": 0,
+          "_preDelayFactor": 0.0
+        }
+      }
+    ]
+  },
+  "skills": {
+    "skchr_robin_1": [
+      {
+        "object": "skchr_robin_1",
+        "pathId": "5943170541509541488",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-6305796134207357328"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "2974756431724597990"
+          },
+          "m_Name": "",
+          "_maxTriggerTime": -1,
+          "_allowSpRecoveryWhenAffecting": 0,
+          "_limitGlobalTriggerTime": 0,
+          "_hidden": 0,
+          "_showSpBarEvenHidden": 0,
+          "_showSpAsBulletMode": 0,
+          "_showSpRatioAsProgress": 0,
+          "_playCharWordVoice": 1,
+          "_playCharWordWithPassiveType": 0,
+          "_canCastWithNoSp": 0,
+          "_canSilenced": 0,
+          "_canUseInAbnormalState": 0,
+          "_defaultModeIndex": -1,
+          "_attackBlackboardModeIndex": -1,
+          "_extraAttackBlackboardModeIndices": [],
+          "_rangeIdModeIndex": -1,
+          "_extraRangeIdModeIndices": [],
+          "_rangeIdUsageType": 7,
+          "_writeDurationToAttackBlackboard": 0,
+          "_attachSignalIds": 0,
+          "_extraAbilities": [],
+          "_useEscapeTime": 0,
+          "_earlySkillFinishAtAttackFinished": 0,
+          "_showProgressToNext": 0,
+          "_hideSkillStackCount": 0,
+          "_hideHudSkillStackCount": 0,
+          "_playSkillBeginAnim": 0,
+          "_beginAnim": "",
+          "_beginAnimDown": "",
+          "_beginEffect": [],
+          "_useFaceVector": 0,
+          "_beginAnimValidator": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_availableValidator": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_trigger": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_switchToState": 0,
+          "_uninterruptibleOnAbilityPredelay": 0,
+          "_canSwitchDuringBorn": 1,
+          "_canCastDuringBorn": 1,
+          "_checkHasTargetBeforeDoCast": 0,
+          "_useTriggerInManualMode": 0,
+          "_allowNoTarget": 1,
+          "_shouldCastLikeAttack": 0,
+          "_isRemoteControlled": 0,
+          "_hideRangeToShow": 0,
+          "_forceUseBaseShowRange": 0,
+          "_rangeToShow": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_recoverSpIfNoTarget": 0,
+          "_resetAbilityCooldownWhenCastEnd": 0,
+          "_onlyAvailableWhenTokenValid": 0,
+          "_hasUniStackColor": 0,
+          "_stopSpWhenTokenIsFull": 1
+        }
+      },
+      {
+        "object": "skchr_robin_1",
+        "pathId": "4247526006166912624",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-6305796134207357328"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-4234909118878081699"
+          },
+          "m_Name": "",
+          "_selector": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_metadata": {
+            "namedAsAlias": "",
+            "blackboardPrefix": ""
+          },
+          "_interruptAbilityOnDetach": 0,
+          "_attachPassiveBuffsOnDummy": 1,
+          "_ignoreIfOwnerDead": 0,
+          "_forceAsDmgOrHealAbility": 0,
+          "_waitForAttackEvent": 1,
+          "_interuptIfTargetDead": 0,
+          "_resetCdStrategy": 1,
+          "_buffs": [
+            {
+              "attributes": {
+                "abnormalFlags": [],
+                "abnormalImmunes": [],
+                "abnormalAntis": [],
+                "abnormalCombos": [],
+                "abnormalComboImmunes": [],
+                "attributeModifiers": []
+              },
+              "buffKey": "robin_s_1",
+              "loadFromDB": 0,
+              "isDurableBuff": 0,
+              "isDamageMissable": 0,
+              "isSilenceable": 0,
+              "isStunnable": 0,
+              "isFreezable": 0,
+              "isLevitatable": 0,
+              "statusResistable": 2,
+              "templateKey": "trigger_charge_token",
+              "disableOverride": 0,
+              "overrideKey": "",
+              "overrideType": 0,
+              "maxStackCnt": 1,
+              "refreshRemainingTimeWhenStackMax": 0,
+              "clearAllStackCntWhenTimeUp": 0,
+              "maxValidStackCnt": -1,
+              "independentCharacterSource": 0,
+              "overrideEffectKey": "",
+              "overrideOnEventPriority": 0,
+              "onEventPriority": 0,
+              "audioSignal": "",
+              "lifeTimeType": 0,
+              "takeSnapshotWhenExtend": 0,
+              "durationKey": "",
+              "lifeTime": 0.0,
+              "triggerLifeType": 0,
+              "triggerCnt": 0,
+              "triggerInterval": -1.0,
+              "waitFirstTriggerInterval": 1,
+              "firstTriggerInterval": -1.0,
+              "priority": -1,
+              "priorityBBKeys": [],
+              "stripBlackboardParamsWithBuffKey": 0,
+              "blackboard": [],
+              "enableInitDirectionFromSource": 0
+            }
+          ],
+          "_waitForCasting": 0,
+          "_updateLifetimeWhenSpellStart": 0,
+          "_preDelay": 0.0,
+          "_escapeTime": 0.0,
+          "_checkBuffEarlyFinish": 0,
+          "_passiveBuffs": [],
+          "_ignoreInfiniteBuffCooldown": 0,
+          "_enableUpdateCooldown": 0
+        }
+      }
+    ],
+    "sktok_robin_2": [
+      {
+        "object": "Selector",
+        "pathId": "7945843608137751561",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "82075445405473801"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "8607874384982393801"
+          },
+          "m_Name": "",
+          "_keepTarget": 0,
+          "_minTargetNum": 1,
+          "_overrideSearchTargetTick": -1
+        }
+      },
+      {
+        "object": "Selector",
+        "pathId": "-6910388610658739191",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "82075445405473801"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-2891200616113119906"
+          },
+          "m_Name": "",
+          "_extendable": 0
+        }
+      },
+      {
+        "object": "Selector",
+        "pathId": "-5612560786267775991",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "82075445405473801"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-2163873404010439523"
+          },
+          "m_Name": "",
+          "_targetSide": 2,
+          "_targetMotion": 1,
+          "_targetCategory": 1,
+          "_postFilter": 4,
+          "_ignoreTargetFree": 0,
+          "_onlyIgnoreSomeOfTargetFreeCase": 0,
+          "_abnormalFlag": 20,
+          "_abnormalCombo": 2,
+          "_ignoreAllyTargetFree": 0,
+          "_ignoreHealFree": 0,
+          "_forceIgnoreCamouflage": 0,
+          "_needProfessionMask": 0,
+          "_professionMask": 0,
+          "_limitTargetNum": 1,
+          "_maxTargetKey": "max_target",
+          "_maxNum": 1,
+          "_excludeOwner": 0,
+          "_sortByTauntAtLast": 0,
+          "_ignoreHitRange": 0,
+          "_checkUnitType": 0,
+          "_unitTypeMask": 0,
+          "_abilityInputTargetAsSortSource": 0,
+          "_filterEnemyMassLevel": 0,
+          "_massLevelCondType": 3,
+          "_massLevelToCompare": 0
+        }
+      },
+      {
+        "object": "sktok_robin_2",
+        "pathId": "4833388861437893641",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-2785277346045043703"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "4381884627089348317"
+          },
+          "m_Name": "",
+          "_selector": {
+            "m_FileID": 0,
+            "m_PathID": "-5612560786267775991"
+          },
+          "_metadata": {
+            "namedAsAlias": "",
+            "blackboardPrefix": ""
+          },
+          "_interruptAbilityOnDetach": 0,
+          "_attachPassiveBuffsOnDummy": 1,
+          "_ignoreIfOwnerDead": 0,
+          "_forceAsDmgOrHealAbility": 0,
+          "_waitForAttackEvent": 1,
+          "_interuptIfTargetDead": 0,
+          "_resetCdStrategy": 1,
+          "_selectTargetSource": 2,
+          "_selectTargetTiming": 0,
+          "_timeMode": 0,
+          "_alwaysIncludeTarget": 1,
+          "_allowNoTarget": 0,
+          "_animKey": "Attack",
+          "_endAnimKey": "Attack_End",
+          "_downAnimKey": "",
+          "_downEndAnimKey": "",
+          "_upAnimKey": "",
+          "_upEndAnimKey": "",
+          "_cooldown": 1.0,
+          "_cooldownKey": "duration",
+          "_preDelay": 0.0,
+          "_escapeTime": 0.0,
+          "_faceToTarget": 0,
+          "_faceToDefault": 1,
+          "_faceToFront": 0,
+          "_faceToFirstCastTarget": 0,
+          "_forceFaceToDirection": 0,
+          "_activeBuffs": [
+            {
+              "attributes": {
+                "abnormalFlags": [],
+                "abnormalImmunes": [],
+                "abnormalAntis": [],
+                "abnormalCombos": [],
+                "abnormalComboImmunes": [],
+                "attributeModifiers": []
+              },
+              "buffKey": "robin_token_s_2[knockback]",
+              "loadFromDB": 0,
+              "isDurableBuff": 0,
+              "isDamageMissable": 0,
+              "isSilenceable": 0,
+              "isStunnable": 0,
+              "isFreezable": 0,
+              "isLevitatable": 0,
+              "statusResistable": 2,
+              "templateKey": "knockback[relative]",
+              "disableOverride": 0,
+              "overrideKey": "",
+              "overrideType": 0,
+              "maxStackCnt": 1,
+              "refreshRemainingTimeWhenStackMax": 0,
+              "clearAllStackCntWhenTimeUp": 0,
+              "maxValidStackCnt": -1,
+              "independentCharacterSource": 0,
+              "overrideEffectKey": "",
+              "overrideOnEventPriority": 0,
+              "onEventPriority": 0,
+              "audioSignal": "",
+              "lifeTimeType": 0,
+              "takeSnapshotWhenExtend": 0,
+              "durationKey": "",
+              "lifeTime": 0.0,
+              "triggerLifeType": 0,
+              "triggerCnt": 0,
+              "triggerInterval": -1.0,
+              "waitFirstTriggerInterval": 1,
+              "firstTriggerInterval": -1.0,
+              "priority": -1,
+              "priorityBBKeys": [],
+              "stripBlackboardParamsWithBuffKey": 0,
+              "blackboard": [],
+              "enableInitDirectionFromSource": 0
+            }
+          ],
+          "_maxAnimScale": 1.0,
+          "_onlyPlayEndAnimWhenIsLastAbility": 0,
+          "_ignorePalsyInterrupt": 0,
+          "_atkScale": 1.0,
+          "_atkScaleKey": "atk_scale",
+          "_attackType": 1,
+          "_elementDamageType": 0,
+          "_epDamageRatio": 0.0,
+          "_useDynamicAttackType": 0,
+          "_deliveryParaWhenReplaceActionNode": 0,
+          "_damageType": 1,
+          "_extraDamageType": 0,
+          "_alwaysPutIncludeTargetFirst": 0
+        }
+      },
+      {
+        "object": "sktok_robin_2",
+        "pathId": "8300026207621733385",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-2785277346045043703"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "7085803614365642631"
+          },
+          "m_Name": "",
+          "_buffs": [
+            {
+              "attributes": {
+                "abnormalFlags": [],
+                "abnormalImmunes": [],
+                "abnormalAntis": [],
+                "abnormalCombos": [],
+                "abnormalComboImmunes": [],
+                "attributeModifiers": []
+              },
+              "buffKey": "robin_token_s_2[token_withdraw_after_affecting]",
+              "loadFromDB": 0,
+              "isDurableBuff": 0,
+              "isDamageMissable": 0,
+              "isSilenceable": 0,
+              "isStunnable": 0,
+              "isFreezable": 0,
+              "isLevitatable": 0,
+              "statusResistable": 2,
+              "templateKey": "robin_token[withdraw]",
+              "disableOverride": 1,
+              "overrideKey": "",
+              "overrideType": 0,
+              "maxStackCnt": 1,
+              "refreshRemainingTimeWhenStackMax": 0,
+              "clearAllStackCntWhenTimeUp": 0,
+              "maxValidStackCnt": -1,
+              "independentCharacterSource": 0,
+              "overrideEffectKey": "",
+              "overrideOnEventPriority": 0,
+              "onEventPriority": 0,
+              "audioSignal": "",
+              "lifeTimeType": 0,
+              "takeSnapshotWhenExtend": 0,
+              "durationKey": "",
+              "lifeTime": 0.0,
+              "triggerLifeType": 0,
+              "triggerCnt": 0,
+              "triggerInterval": -1.0,
+              "waitFirstTriggerInterval": 1,
+              "firstTriggerInterval": -1.0,
+              "priority": -1,
+              "priorityBBKeys": [],
+              "stripBlackboardParamsWithBuffKey": 0,
+              "blackboard": [],
+              "enableInitDirectionFromSource": 0
+            }
+          ],
+          "_onlyCheckOnStopAffect": 0
+        }
+      },
+      {
+        "object": "sktok_robin_2",
+        "pathId": "-540889145170076663",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-2785277346045043703"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "6851783972288338031"
+          },
+          "m_Name": "",
+          "_maxTriggerTime": -1,
+          "_allowSpRecoveryWhenAffecting": 0,
+          "_limitGlobalTriggerTime": 0,
+          "_hidden": 1,
+          "_showSpBarEvenHidden": 0,
+          "_showSpAsBulletMode": 0,
+          "_showSpRatioAsProgress": 0,
+          "_playCharWordVoice": 1,
+          "_playCharWordWithPassiveType": 0,
+          "_canCastWithNoSp": 1,
+          "_canSilenced": 0,
+          "_canUseInAbnormalState": 0,
+          "_defaultModeIndex": 1,
+          "_attackBlackboardModeIndex": -1,
+          "_extraAttackBlackboardModeIndices": [],
+          "_rangeIdModeIndex": -1,
+          "_extraRangeIdModeIndices": [],
+          "_rangeIdUsageType": 7,
+          "_writeDurationToAttackBlackboard": 0,
+          "_attachSignalIds": 0,
+          "_extraAbilities": [],
+          "_useEscapeTime": 0,
+          "_earlySkillFinishAtAttackFinished": 0,
+          "_showProgressToNext": 0,
+          "_hideSkillStackCount": 0,
+          "_hideHudSkillStackCount": 0,
+          "_playSkillBeginAnim": 0,
+          "_beginAnim": "",
+          "_beginAnimDown": "",
+          "_beginEffect": [],
+          "_useFaceVector": 0,
+          "_beginAnimValidator": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_availableValidator": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_trigger": {
+            "m_FileID": 0,
+            "m_PathID": "7945843608137751561"
+          },
+          "_switchToState": 1,
+          "_uninterruptibleOnAbilityPredelay": 0,
+          "_canSwitchDuringBorn": 0,
+          "_canCastDuringBorn": 1,
+          "_checkHasTargetBeforeDoCast": 0,
+          "_useTriggerInManualMode": 0,
+          "_allowNoTarget": 0,
+          "_shouldCastLikeAttack": 0,
+          "_isRemoteControlled": 0,
+          "_hideRangeToShow": 0,
+          "_forceUseBaseShowRange": 0,
+          "_rangeToShow": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_recoverSpIfNoTarget": 0,
+          "_resetAbilityCooldownWhenCastEnd": 0,
+          "_onlyAvailableWhenTokenValid": 0,
+          "_hasUniStackColor": 0
+        }
+      },
+      {
+        "object": "sktok_robin_2",
+        "pathId": "-8531700530335261687",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-2785277346045043703"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-8889599326590946271"
+          },
+          "m_Name": ""
+        }
+      },
+      {
+        "object": "sktok_robin_2",
+        "pathId": "-848621849518154743",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-2785277346045043703"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-550693537895634864"
+          },
+          "m_Name": "",
+          "_hitEffects": [
+            {
+              "_directionType": 0,
+              "_effects": [
+                "token_robin_skill_02_hit_02",
+                "",
+                "",
+                "",
+                "",
+                ""
+              ],
+              "_oneshot": 1,
+              "_endEvent": 3,
+              "_onlyOnce": 0,
+              "_useFourDirectionalFace": 0,
+              "_useOwnerToTargetDirection": 1,
+              "_playIfNotInputTarget": 0,
+              "_playOnlyIfInputTarget": 0
+            }
+          ],
+          "_castEffects": [
+            {
+              "_directionType": 0,
+              "_effects": [
+                "token_robin_skill_01_start",
+                "",
+                "",
+                ""
+              ],
+              "_oneshot": 1,
+              "_startEvent": 2,
+              "_endEvent": 3,
+              "_onlyOnce": 0,
+              "_useFourDirectionalFace": 0,
+              "_delayIfFirstAttack": 0.0,
+              "_hookEffectAfterFirstAttack": ""
+            },
+            {
+              "_directionType": 0,
+              "_effects": [
+                "token_robin_skill_02_hit",
+                "token_robin_skill_02_hit",
+                "token_robin_skill_02_hit",
+                "token_robin_skill_02_hit",
+                "",
+                ""
+              ],
+              "_oneshot": 1,
+              "_startEvent": 4,
+              "_endEvent": 3,
+              "_onlyOnce": 0,
+              "_useFourDirectionalFace": 0,
+              "_delayIfFirstAttack": 0.0,
+              "_hookEffectAfterFirstAttack": ""
+            }
+          ],
+          "_attachEffects": [],
+          "_inputTargetEffects": [],
+          "_castTargetEffects": [],
+          "_convertCastEndToAttachFinish": 0,
+          "_recalculatePlaybackSpeed": 0,
+          "_preDelayFactor": 0.0
+        }
+      }
+    ],
+    "sktok_robin_1": [
+      {
+        "object": "Selector",
+        "pathId": "-1340467306455256782",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-4743747814911463118"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "8607874384982393801"
+          },
+          "m_Name": "",
+          "_keepTarget": 0,
+          "_minTargetNum": 1,
+          "_overrideSearchTargetTick": -1
+        }
+      },
+      {
+        "object": "Selector",
+        "pathId": "-8017627730210737870",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-4743747814911463118"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-2891200616113119906"
+          },
+          "m_Name": "",
+          "_extendable": 0
+        }
+      },
+      {
+        "object": "Selector",
+        "pathId": "-5688004389293543118",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-4743747814911463118"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-2163873404010439523"
+          },
+          "m_Name": "",
+          "_targetSide": 2,
+          "_targetMotion": 1,
+          "_targetCategory": 1,
+          "_postFilter": 4,
+          "_ignoreTargetFree": 0,
+          "_onlyIgnoreSomeOfTargetFreeCase": 0,
+          "_abnormalFlag": 20,
+          "_abnormalCombo": 2,
+          "_ignoreAllyTargetFree": 0,
+          "_ignoreHealFree": 0,
+          "_forceIgnoreCamouflage": 0,
+          "_needProfessionMask": 0,
+          "_professionMask": 0,
+          "_limitTargetNum": 1,
+          "_maxTargetKey": "max_target",
+          "_maxNum": 1,
+          "_excludeOwner": 0,
+          "_sortByTauntAtLast": 0,
+          "_ignoreHitRange": 0,
+          "_checkUnitType": 0,
+          "_unitTypeMask": 0,
+          "_abilityInputTargetAsSortSource": 0,
+          "_filterEnemyMassLevel": 0,
+          "_massLevelCondType": 3,
+          "_massLevelToCompare": 0
+        }
+      },
+      {
+        "object": "sktok_robin_1",
+        "pathId": "-1250686308500131534",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-2150813992917290702"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "4381884627089348317"
+          },
+          "m_Name": "",
+          "_selector": {
+            "m_FileID": 0,
+            "m_PathID": "-5688004389293543118"
+          },
+          "_metadata": {
+            "namedAsAlias": "",
+            "blackboardPrefix": ""
+          },
+          "_interruptAbilityOnDetach": 0,
+          "_attachPassiveBuffsOnDummy": 1,
+          "_ignoreIfOwnerDead": 0,
+          "_forceAsDmgOrHealAbility": 0,
+          "_waitForAttackEvent": 1,
+          "_interuptIfTargetDead": 0,
+          "_resetCdStrategy": 1,
+          "_selectTargetSource": 2,
+          "_selectTargetTiming": 0,
+          "_timeMode": 0,
+          "_alwaysIncludeTarget": 1,
+          "_allowNoTarget": 0,
+          "_animKey": "Attack",
+          "_endAnimKey": "Attack_End",
+          "_downAnimKey": "",
+          "_downEndAnimKey": "",
+          "_upAnimKey": "",
+          "_upEndAnimKey": "",
+          "_cooldown": 1.0,
+          "_cooldownKey": "duration",
+          "_preDelay": 0.0,
+          "_escapeTime": 0.0,
+          "_faceToTarget": 0,
+          "_faceToDefault": 1,
+          "_faceToFront": 0,
+          "_faceToFirstCastTarget": 0,
+          "_forceFaceToDirection": 0,
+          "_activeBuffs": [
+            {
+              "attributes": {
+                "abnormalFlags": [
+                  13
+                ],
+                "abnormalImmunes": [],
+                "abnormalAntis": [],
+                "abnormalCombos": [],
+                "abnormalComboImmunes": [],
+                "attributeModifiers": []
+              },
+              "buffKey": "robin_s_1",
+              "loadFromDB": 0,
+              "isDurableBuff": 0,
+              "isDamageMissable": 0,
+              "isSilenceable": 0,
+              "isStunnable": 0,
+              "isFreezable": 0,
+              "isLevitatable": 0,
+              "statusResistable": 2,
+              "templateKey": "empty",
+              "disableOverride": 0,
+              "overrideKey": "",
+              "overrideType": 0,
+              "maxStackCnt": 1,
+              "refreshRemainingTimeWhenStackMax": 0,
+              "clearAllStackCntWhenTimeUp": 0,
+              "maxValidStackCnt": -1,
+              "independentCharacterSource": 0,
+              "overrideEffectKey": "token_robin_skill_01_buff",
+              "overrideOnEventPriority": 0,
+              "onEventPriority": 0,
+              "audioSignal": "",
+              "lifeTimeType": 1,
+              "takeSnapshotWhenExtend": 0,
+              "durationKey": "constraint",
+              "lifeTime": 0.0,
+              "triggerLifeType": 0,
+              "triggerCnt": 0,
+              "triggerInterval": -1.0,
+              "waitFirstTriggerInterval": 1,
+              "firstTriggerInterval": -1.0,
+              "priority": -1,
+              "priorityBBKeys": [],
+              "stripBlackboardParamsWithBuffKey": 0,
+              "blackboard": [],
+              "enableInitDirectionFromSource": 0
+            }
+          ],
+          "_maxAnimScale": 1.0,
+          "_onlyPlayEndAnimWhenIsLastAbility": 0,
+          "_ignorePalsyInterrupt": 0,
+          "_atkScale": 1.0,
+          "_atkScaleKey": "atk_scale",
+          "_attackType": 1,
+          "_elementDamageType": 0,
+          "_epDamageRatio": 0.0,
+          "_useDynamicAttackType": 0,
+          "_deliveryParaWhenReplaceActionNode": 0,
+          "_damageType": 1,
+          "_extraDamageType": 0,
+          "_alwaysPutIncludeTargetFirst": 0
+        }
+      },
+      {
+        "object": "sktok_robin_1",
+        "pathId": "7221925951214891314",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-2150813992917290702"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "7085803614365642631"
+          },
+          "m_Name": "",
+          "_buffs": [
+            {
+              "attributes": {
+                "abnormalFlags": [],
+                "abnormalImmunes": [],
+                "abnormalAntis": [],
+                "abnormalCombos": [],
+                "abnormalComboImmunes": [],
+                "attributeModifiers": []
+              },
+              "buffKey": "robin_s_1[token_withdraw_after_affecting]",
+              "loadFromDB": 0,
+              "isDurableBuff": 0,
+              "isDamageMissable": 0,
+              "isSilenceable": 0,
+              "isStunnable": 0,
+              "isFreezable": 0,
+              "isLevitatable": 0,
+              "statusResistable": 2,
+              "templateKey": "robin_token[withdraw]",
+              "disableOverride": 1,
+              "overrideKey": "",
+              "overrideType": 0,
+              "maxStackCnt": 1,
+              "refreshRemainingTimeWhenStackMax": 0,
+              "clearAllStackCntWhenTimeUp": 0,
+              "maxValidStackCnt": -1,
+              "independentCharacterSource": 0,
+              "overrideEffectKey": "",
+              "overrideOnEventPriority": 0,
+              "onEventPriority": 0,
+              "audioSignal": "",
+              "lifeTimeType": 0,
+              "takeSnapshotWhenExtend": 0,
+              "durationKey": "",
+              "lifeTime": 0.0,
+              "triggerLifeType": 0,
+              "triggerCnt": 0,
+              "triggerInterval": -1.0,
+              "waitFirstTriggerInterval": 1,
+              "firstTriggerInterval": -1.0,
+              "priority": -1,
+              "priorityBBKeys": [],
+              "stripBlackboardParamsWithBuffKey": 0,
+              "blackboard": [],
+              "enableInitDirectionFromSource": 0
+            }
+          ],
+          "_onlyCheckOnStopAffect": 0
+        }
+      },
+      {
+        "object": "sktok_robin_1",
+        "pathId": "-8996827587607613134",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-2150813992917290702"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "6851783972288338031"
+          },
+          "m_Name": "",
+          "_maxTriggerTime": -1,
+          "_allowSpRecoveryWhenAffecting": 0,
+          "_limitGlobalTriggerTime": 0,
+          "_hidden": 1,
+          "_showSpBarEvenHidden": 0,
+          "_showSpAsBulletMode": 0,
+          "_showSpRatioAsProgress": 0,
+          "_playCharWordVoice": 1,
+          "_playCharWordWithPassiveType": 0,
+          "_canCastWithNoSp": 1,
+          "_canSilenced": 0,
+          "_canUseInAbnormalState": 0,
+          "_defaultModeIndex": -1,
+          "_attackBlackboardModeIndex": -1,
+          "_extraAttackBlackboardModeIndices": [],
+          "_rangeIdModeIndex": -1,
+          "_extraRangeIdModeIndices": [],
+          "_rangeIdUsageType": 7,
+          "_writeDurationToAttackBlackboard": 0,
+          "_attachSignalIds": 0,
+          "_extraAbilities": [],
+          "_useEscapeTime": 0,
+          "_earlySkillFinishAtAttackFinished": 0,
+          "_showProgressToNext": 0,
+          "_hideSkillStackCount": 0,
+          "_hideHudSkillStackCount": 0,
+          "_playSkillBeginAnim": 0,
+          "_beginAnim": "",
+          "_beginAnimDown": "",
+          "_beginEffect": [],
+          "_useFaceVector": 0,
+          "_beginAnimValidator": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_availableValidator": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_trigger": {
+            "m_FileID": 0,
+            "m_PathID": "-1340467306455256782"
+          },
+          "_switchToState": 1,
+          "_uninterruptibleOnAbilityPredelay": 0,
+          "_canSwitchDuringBorn": 0,
+          "_canCastDuringBorn": 1,
+          "_checkHasTargetBeforeDoCast": 0,
+          "_useTriggerInManualMode": 0,
+          "_allowNoTarget": 0,
+          "_shouldCastLikeAttack": 0,
+          "_isRemoteControlled": 0,
+          "_hideRangeToShow": 0,
+          "_forceUseBaseShowRange": 0,
+          "_rangeToShow": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_recoverSpIfNoTarget": 0,
+          "_resetAbilityCooldownWhenCastEnd": 0,
+          "_onlyAvailableWhenTokenValid": 0,
+          "_hasUniStackColor": 0
+        }
+      },
+      {
+        "object": "sktok_robin_1",
+        "pathId": "6208413990639546674",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-2150813992917290702"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-8889599326590946271"
+          },
+          "m_Name": ""
+        }
+      },
+      {
+        "object": "sktok_robin_1",
+        "pathId": "-5537063590384717518",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-2150813992917290702"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-550693537895634864"
+          },
+          "m_Name": "",
+          "_hitEffects": [],
+          "_castEffects": [
+            {
+              "_directionType": 0,
+              "_effects": [
+                "token_robin_skill_01_start",
+                "",
+                "",
+                ""
+              ],
+              "_oneshot": 1,
+              "_startEvent": 2,
+              "_endEvent": 3,
+              "_onlyOnce": 0,
+              "_useFourDirectionalFace": 0,
+              "_delayIfFirstAttack": 0.0,
+              "_hookEffectAfterFirstAttack": ""
+            },
+            {
+              "_directionType": 0,
+              "_effects": [
+                "token_robin_skill_01_hit",
+                "",
+                "",
+                ""
+              ],
+              "_oneshot": 1,
+              "_startEvent": 3,
+              "_endEvent": 3,
+              "_onlyOnce": 0,
+              "_useFourDirectionalFace": 0,
+              "_delayIfFirstAttack": 0.0,
+              "_hookEffectAfterFirstAttack": ""
+            }
+          ],
+          "_attachEffects": [],
+          "_inputTargetEffects": [],
+          "_castTargetEffects": [],
+          "_convertCastEndToAttachFinish": 0,
+          "_recalculatePlaybackSpeed": 0,
+          "_preDelayFactor": 0.0
+        }
+      }
+    ],
+    "skchr_robin_2": [
+      {
+        "object": "skchr_robin_2",
+        "pathId": "-714983779783034082",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "6987548644148558622"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "2974756431724597990"
+          },
+          "m_Name": "",
+          "_maxTriggerTime": -1,
+          "_allowSpRecoveryWhenAffecting": 0,
+          "_limitGlobalTriggerTime": 0,
+          "_hidden": 0,
+          "_showSpBarEvenHidden": 0,
+          "_showSpAsBulletMode": 0,
+          "_showSpRatioAsProgress": 0,
+          "_playCharWordVoice": 1,
+          "_playCharWordWithPassiveType": 0,
+          "_canCastWithNoSp": 0,
+          "_canSilenced": 0,
+          "_canUseInAbnormalState": 0,
+          "_defaultModeIndex": -1,
+          "_attackBlackboardModeIndex": -1,
+          "_extraAttackBlackboardModeIndices": [],
+          "_rangeIdModeIndex": -1,
+          "_extraRangeIdModeIndices": [],
+          "_rangeIdUsageType": 7,
+          "_writeDurationToAttackBlackboard": 0,
+          "_attachSignalIds": 0,
+          "_extraAbilities": [],
+          "_useEscapeTime": 0,
+          "_earlySkillFinishAtAttackFinished": 0,
+          "_showProgressToNext": 0,
+          "_hideSkillStackCount": 0,
+          "_hideHudSkillStackCount": 0,
+          "_playSkillBeginAnim": 0,
+          "_beginAnim": "",
+          "_beginAnimDown": "",
+          "_beginEffect": [],
+          "_useFaceVector": 0,
+          "_beginAnimValidator": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_availableValidator": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_trigger": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_switchToState": 0,
+          "_uninterruptibleOnAbilityPredelay": 0,
+          "_canSwitchDuringBorn": 1,
+          "_canCastDuringBorn": 1,
+          "_checkHasTargetBeforeDoCast": 0,
+          "_useTriggerInManualMode": 0,
+          "_allowNoTarget": 1,
+          "_shouldCastLikeAttack": 0,
+          "_isRemoteControlled": 0,
+          "_hideRangeToShow": 0,
+          "_forceUseBaseShowRange": 0,
+          "_rangeToShow": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_recoverSpIfNoTarget": 0,
+          "_resetAbilityCooldownWhenCastEnd": 0,
+          "_onlyAvailableWhenTokenValid": 0,
+          "_hasUniStackColor": 0,
+          "_stopSpWhenTokenIsFull": 1
+        }
+      },
+      {
+        "object": "skchr_robin_2",
+        "pathId": "-6830561180409349346",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "6987548644148558622"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-4234909118878081699"
+          },
+          "m_Name": "",
+          "_selector": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_metadata": {
+            "namedAsAlias": "",
+            "blackboardPrefix": ""
+          },
+          "_interruptAbilityOnDetach": 0,
+          "_attachPassiveBuffsOnDummy": 1,
+          "_ignoreIfOwnerDead": 0,
+          "_forceAsDmgOrHealAbility": 0,
+          "_waitForAttackEvent": 1,
+          "_interuptIfTargetDead": 0,
+          "_resetCdStrategy": 1,
+          "_buffs": [
+            {
+              "attributes": {
+                "abnormalFlags": [],
+                "abnormalImmunes": [],
+                "abnormalAntis": [],
+                "abnormalCombos": [],
+                "abnormalComboImmunes": [],
+                "attributeModifiers": []
+              },
+              "buffKey": "robin_s_2",
+              "loadFromDB": 0,
+              "isDurableBuff": 0,
+              "isDamageMissable": 0,
+              "isSilenceable": 0,
+              "isStunnable": 0,
+              "isFreezable": 0,
+              "isLevitatable": 0,
+              "statusResistable": 2,
+              "templateKey": "trigger_charge_token",
+              "disableOverride": 0,
+              "overrideKey": "",
+              "overrideType": 0,
+              "maxStackCnt": 1,
+              "refreshRemainingTimeWhenStackMax": 0,
+              "clearAllStackCntWhenTimeUp": 0,
+              "maxValidStackCnt": -1,
+              "independentCharacterSource": 0,
+              "overrideEffectKey": "",
+              "overrideOnEventPriority": 0,
+              "onEventPriority": 0,
+              "audioSignal": "",
+              "lifeTimeType": 0,
+              "takeSnapshotWhenExtend": 0,
+              "durationKey": "",
+              "lifeTime": 0.0,
+              "triggerLifeType": 0,
+              "triggerCnt": 0,
+              "triggerInterval": -1.0,
+              "waitFirstTriggerInterval": 1,
+              "firstTriggerInterval": -1.0,
+              "priority": -1,
+              "priorityBBKeys": [],
+              "stripBlackboardParamsWithBuffKey": 0,
+              "blackboard": [],
+              "enableInitDirectionFromSource": 0
+            }
+          ],
+          "_waitForCasting": 0,
+          "_updateLifetimeWhenSpellStart": 0,
+          "_preDelay": 0.0,
+          "_escapeTime": 0.0,
+          "_checkBuffEarlyFinish": 0,
+          "_passiveBuffs": [],
+          "_ignoreInfiniteBuffCooldown": 0,
+          "_enableUpdateCooldown": 0
+        }
+      }
+    ]
+  },
+  "projectiles": {
+    "projectile_chr_robin_logic": [
+      {
+        "object": "projectile_chr_robin_logic",
+        "pathId": "1524327001481994595",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-7848653916274302621"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-8797129986015012478"
+          },
+          "m_Name": "",
+          "_randomDelayToBorn": 0.0,
+          "_bodyTransform": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_keepAlreadyHitTime": -1.0,
+          "_mainEffect": "",
+          "_clearMainEffectWhenReached": 1,
+          "_actionController": {
+            "_detachBuffsWhenTargetLeave": 0,
+            "_detachAllBuffsWhenStopped": 0,
+            "_onlyAddBuffsToTraceTarget": 0,
+            "_onlyAddBuffsToTargetOnce": 0,
+            "_dontAddBuffs": 0,
+            "_excludeAttachments": 0,
+            "_useSelfBlackboard": 0,
+            "_extraBuffsInTheEnd": [],
+            "_useExtraBuffsWhenStopHit": 0,
+            "_addExtraBuffsWhenReached": 0,
+            "_detachAllExtraBuffsWhenStopped": 0
+          },
+          "_fixDealHitTargetLeft": 0,
+          "_stopGraphicProjectileWhenClearMainEffect": 0,
+          "_overrideAudioSignal": "",
+          "_fireProjectileReachedEvent": 0,
+          "_eliminatableStatus": 0,
+          "_movementAdjustableStatus": 0,
+          "_managedBySource": 0,
+          "_projectileType": 0,
+          "_containsChildrenBehaviours": 0,
+          "_canHitSameTargetMultipleTimes": 0,
+          "_lifeTimeType": 1,
+          "_lifeTime": 10.0,
+          "_getLifeTimeFromBB": 0,
+          "_hitNumType": 1,
+          "_maxHitNum": 1,
+          "_getMaxHitNumFromBB": 0,
+          "_maxHitNumBBKey": "",
+          "_stopAfterMaxHit": 0,
+          "_stopAfterFirstHit": 0,
+          "_stopWhenSourceInvalid": 0,
+          "_alwaysHitTraceTargetInTheEnd": 1,
+          "_alwaysHitTraceTargetWhenReached": 0,
+          "_alwaysReachInTheEnd": 0,
+          "_limitedMaxHitNumToSourceBlockedCnt": 0,
+          "_allowZeroBlockCntLimit": 0
+        }
+      },
+      {
+        "object": "projectile_chr_robin_logic",
+        "pathId": "8541665239996424547",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-7848653916274302621"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-1429203677512073985"
+          },
+          "m_Name": "",
+          "_rotateToTarget": 1,
+          "_forceReachedWhenTimeup": 1,
+          "_useSourceDirection": 0,
+          "_useTargetDirection": 0,
+          "_useStartToTarget": 0,
+          "_awayFromSourceAsDirection": 0,
+          "_flyToTargetLocationOnly": 0,
+          "_useSourceDirectionRandomArcAngleStart": 0,
+          "_useSourceToTargetRandomArcAngleStart": 0,
+          "_useSourceDirectionArcAngleWithRatio": 0,
+          "_useSourceToTargetArcAngleWithRatio": 0,
+          "_sourceDirectionArcAngleRatio": 0.0,
+          "_flyToPredefinedLocation": 0,
+          "_predefinedLocation": 0,
+          "_freezeRotationZ": 0,
+          "_freezeRotationXY": 0,
+          "_exactMatchCameraForward": 0,
+          "_resetToTargetPosWhenReached": 0,
+          "_resetToTracetargetMapPosV3": 0,
+          "_handleWithIBuildableTarget": 0,
+          "_forceResetToTargetPosWhenReached": 0,
+          "_fixOnProjectileReached": 0,
+          "_onlyReachedInTime": 0.0,
+          "_moveType": 1,
+          "_moveTypeData": {
+            "data": []
+          },
+          "_speed": 10.0,
+          "_distance": 0.0,
+          "_comeBack": 0,
+          "_comeBackSpeedScale": 0.25,
+          "_delayToStart": 0.0,
+          "_delayAfterReached": 0.0,
+          "_delayToReachAfterHit": 0.0,
+          "_clearTraceTargetWhenReached": 1,
+          "_updateDelayTimeOnlyOnce": 0,
+          "_skipSmoothLerpDirection": 0,
+          "_addInertia": 0,
+          "_turnSpeed": 0.0,
+          "_useDynamicSpeed": 0,
+          "_deltaSpeedPerSec": 0.0,
+          "_finalSpeed": 0.0,
+          "_randomOffset": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "_forceUseTargetMountPoint": 0
+        }
+      },
+      {
+        "object": "projectile_chr_robin_logic",
+        "pathId": "-5597739799785250461",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-7848653916274302621"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "6834194400804168919"
+          },
+          "m_Name": "",
+          "_effectsWhenStart": [],
+          "_effectsWhenReached": [],
+          "_effectsWhenHit": [
+            "robin_attack_01_hit"
+          ],
+          "_effectsToTargetWhenStart": [],
+          "_effectsToTileWhenStart": [],
+          "_effectsWhenStop": [],
+          "_effectOnTrigger": [],
+          "_onlyPlayHitEffectOnTraceTarget": 0,
+          "_onlyPlayHitEffectOnNotTraceTarget": 0,
+          "_onlyPlayHitEffectOnce": 0,
+          "_clearHitEffectOnStop": 0,
+          "_clearPlayEffectOnStop": 0,
+          "_clearEffectsOnTileOnStop": 0,
+          "_clearReachedEffectWhenStop": 0,
+          "_alwaysPlayStartEffects": 0,
+          "_playStartEffectOnlyOnProjectile": 0,
+          "_useSourceFaceVector": 0,
+          "_useSourceFaceVectorOnHit": 0,
+          "_forceReachTargetGround": 0,
+          "_followTargetGround": 0,
+          "_replaceMainEffectWhenReach": 0,
+          "_mainEffectToReplace": "",
+          "_useTraceTargetWhenReach": 0,
+          "_setReachEffectOnProjectile": 0,
+          "_syncEffectScaleViaProjectile": 0
+        }
+      }
+    ],
+    "projectile_chr_robin_graphic": [
+      {
+        "object": "projectile_chr_robin_graphic",
+        "pathId": "-3069572295285803117",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-1175811760328738925"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-8797129986015012478"
+          },
+          "m_Name": "",
+          "_randomDelayToBorn": 0.0,
+          "_bodyTransform": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_keepAlreadyHitTime": -1.0,
+          "_mainEffect": "robin_attack_01_trail",
+          "_clearMainEffectWhenReached": 1,
+          "_actionController": {
+            "_detachBuffsWhenTargetLeave": 0,
+            "_detachAllBuffsWhenStopped": 0,
+            "_onlyAddBuffsToTraceTarget": 0,
+            "_onlyAddBuffsToTargetOnce": 0,
+            "_dontAddBuffs": 0,
+            "_excludeAttachments": 0,
+            "_useSelfBlackboard": 0,
+            "_extraBuffsInTheEnd": [],
+            "_useExtraBuffsWhenStopHit": 0,
+            "_addExtraBuffsWhenReached": 0,
+            "_detachAllExtraBuffsWhenStopped": 0
+          },
+          "_fixDealHitTargetLeft": 0,
+          "_stopGraphicProjectileWhenClearMainEffect": 0,
+          "_overrideAudioSignal": "",
+          "_fireProjectileReachedEvent": 0,
+          "_eliminatableStatus": 0,
+          "_movementAdjustableStatus": 0,
+          "_managedBySource": 0,
+          "_projectileType": 0,
+          "_containsChildrenBehaviours": 0,
+          "_canHitSameTargetMultipleTimes": 0,
+          "_lifeTimeType": 1,
+          "_lifeTime": 10.0,
+          "_getLifeTimeFromBB": 0,
+          "_hitNumType": 1,
+          "_maxHitNum": 1,
+          "_getMaxHitNumFromBB": 0,
+          "_maxHitNumBBKey": "",
+          "_stopAfterMaxHit": 0,
+          "_stopAfterFirstHit": 0,
+          "_stopWhenSourceInvalid": 0,
+          "_alwaysHitTraceTargetInTheEnd": 1,
+          "_alwaysHitTraceTargetWhenReached": 0,
+          "_alwaysReachInTheEnd": 0,
+          "_limitedMaxHitNumToSourceBlockedCnt": 0,
+          "_allowZeroBlockCntLimit": 0
+        }
+      },
+      {
+        "object": "projectile_chr_robin_graphic",
+        "pathId": "4776348558204663699",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-1175811760328738925"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-1429203677512073985"
+          },
+          "m_Name": "",
+          "_rotateToTarget": 1,
+          "_forceReachedWhenTimeup": 1,
+          "_useSourceDirection": 0,
+          "_useTargetDirection": 0,
+          "_useStartToTarget": 0,
+          "_awayFromSourceAsDirection": 0,
+          "_flyToTargetLocationOnly": 0,
+          "_useSourceDirectionRandomArcAngleStart": 0,
+          "_useSourceToTargetRandomArcAngleStart": 0,
+          "_useSourceDirectionArcAngleWithRatio": 0,
+          "_useSourceToTargetArcAngleWithRatio": 0,
+          "_sourceDirectionArcAngleRatio": 0.0,
+          "_flyToPredefinedLocation": 0,
+          "_predefinedLocation": 0,
+          "_freezeRotationZ": 0,
+          "_freezeRotationXY": 0,
+          "_exactMatchCameraForward": 0,
+          "_resetToTargetPosWhenReached": 0,
+          "_resetToTracetargetMapPosV3": 0,
+          "_handleWithIBuildableTarget": 0,
+          "_forceResetToTargetPosWhenReached": 0,
+          "_fixOnProjectileReached": 0,
+          "_onlyReachedInTime": 0.0,
+          "_moveType": 1,
+          "_moveTypeData": {
+            "data": []
+          },
+          "_speed": 10.0,
+          "_distance": 0.0,
+          "_comeBack": 0,
+          "_comeBackSpeedScale": 0.25,
+          "_delayToStart": 0.0,
+          "_delayAfterReached": 0.0,
+          "_delayToReachAfterHit": 0.0,
+          "_clearTraceTargetWhenReached": 1,
+          "_updateDelayTimeOnlyOnce": 0,
+          "_skipSmoothLerpDirection": 0,
+          "_addInertia": 0,
+          "_turnSpeed": 0.0,
+          "_useDynamicSpeed": 0,
+          "_deltaSpeedPerSec": 0.0,
+          "_finalSpeed": 0.0,
+          "_randomOffset": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "_forceUseTargetMountPoint": 0
+        }
+      }
+    ],
+    "projectile_chr_robin": [
+      {
+        "object": "projectile_chr_robin",
+        "pathId": "-1061753469233993100",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "9051858382504651380"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-8797129986015012478"
+          },
+          "m_Name": "",
+          "_randomDelayToBorn": 0.0,
+          "_bodyTransform": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_keepAlreadyHitTime": -1.0,
+          "_mainEffect": "robin_attack_01_trail",
+          "_clearMainEffectWhenReached": 1,
+          "_actionController": {
+            "_detachBuffsWhenTargetLeave": 0,
+            "_detachAllBuffsWhenStopped": 0,
+            "_onlyAddBuffsToTraceTarget": 0,
+            "_onlyAddBuffsToTargetOnce": 0,
+            "_dontAddBuffs": 0,
+            "_excludeAttachments": 0,
+            "_useSelfBlackboard": 0,
+            "_extraBuffsInTheEnd": [],
+            "_useExtraBuffsWhenStopHit": 0,
+            "_addExtraBuffsWhenReached": 0,
+            "_detachAllExtraBuffsWhenStopped": 0
+          },
+          "_fixDealHitTargetLeft": 0,
+          "_stopGraphicProjectileWhenClearMainEffect": 0,
+          "_overrideAudioSignal": "",
+          "_fireProjectileReachedEvent": 0,
+          "_eliminatableStatus": 0,
+          "_movementAdjustableStatus": 0,
+          "_managedBySource": 0,
+          "_projectileType": 0,
+          "_containsChildrenBehaviours": 0,
+          "_canHitSameTargetMultipleTimes": 0,
+          "_lifeTimeType": 1,
+          "_lifeTime": 10.0,
+          "_getLifeTimeFromBB": 0,
+          "_hitNumType": 1,
+          "_maxHitNum": 1,
+          "_getMaxHitNumFromBB": 0,
+          "_maxHitNumBBKey": "",
+          "_stopAfterMaxHit": 0,
+          "_stopAfterFirstHit": 0,
+          "_stopWhenSourceInvalid": 0,
+          "_alwaysHitTraceTargetInTheEnd": 1,
+          "_alwaysHitTraceTargetWhenReached": 0,
+          "_alwaysReachInTheEnd": 0,
+          "_limitedMaxHitNumToSourceBlockedCnt": 0,
+          "_allowZeroBlockCntLimit": 0
+        }
+      },
+      {
+        "object": "projectile_chr_robin",
+        "pathId": "-4519573246738240908",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "9051858382504651380"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-1429203677512073985"
+          },
+          "m_Name": "",
+          "_rotateToTarget": 1,
+          "_forceReachedWhenTimeup": 1,
+          "_useSourceDirection": 0,
+          "_useTargetDirection": 0,
+          "_useStartToTarget": 0,
+          "_awayFromSourceAsDirection": 0,
+          "_flyToTargetLocationOnly": 0,
+          "_useSourceDirectionRandomArcAngleStart": 0,
+          "_useSourceToTargetRandomArcAngleStart": 0,
+          "_useSourceDirectionArcAngleWithRatio": 0,
+          "_useSourceToTargetArcAngleWithRatio": 0,
+          "_sourceDirectionArcAngleRatio": 0.0,
+          "_flyToPredefinedLocation": 0,
+          "_predefinedLocation": 0,
+          "_freezeRotationZ": 0,
+          "_freezeRotationXY": 0,
+          "_exactMatchCameraForward": 0,
+          "_resetToTargetPosWhenReached": 0,
+          "_resetToTracetargetMapPosV3": 0,
+          "_handleWithIBuildableTarget": 0,
+          "_forceResetToTargetPosWhenReached": 0,
+          "_fixOnProjectileReached": 0,
+          "_onlyReachedInTime": 0.0,
+          "_moveType": 1,
+          "_moveTypeData": {
+            "data": []
+          },
+          "_speed": 10.0,
+          "_distance": 0.0,
+          "_comeBack": 0,
+          "_comeBackSpeedScale": 0.25,
+          "_delayToStart": 0.0,
+          "_delayAfterReached": 0.0,
+          "_delayToReachAfterHit": 0.0,
+          "_clearTraceTargetWhenReached": 1,
+          "_updateDelayTimeOnlyOnce": 0,
+          "_skipSmoothLerpDirection": 0,
+          "_addInertia": 0,
+          "_turnSpeed": 0.0,
+          "_useDynamicSpeed": 0,
+          "_deltaSpeedPerSec": 0.0,
+          "_finalSpeed": 0.0,
+          "_randomOffset": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "_forceUseTargetMountPoint": 0
+        }
+      },
+      {
+        "object": "projectile_chr_robin",
+        "pathId": "-8293690209482708364",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "9051858382504651380"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "6834194400804168919"
+          },
+          "m_Name": "",
+          "_effectsWhenStart": [],
+          "_effectsWhenReached": [],
+          "_effectsWhenHit": [
+            "robin_attack_01_hit"
+          ],
+          "_effectsToTargetWhenStart": [],
+          "_effectsToTileWhenStart": [],
+          "_effectsWhenStop": [],
+          "_effectOnTrigger": [],
+          "_onlyPlayHitEffectOnTraceTarget": 0,
+          "_onlyPlayHitEffectOnNotTraceTarget": 0,
+          "_onlyPlayHitEffectOnce": 0,
+          "_clearHitEffectOnStop": 0,
+          "_clearPlayEffectOnStop": 0,
+          "_clearEffectsOnTileOnStop": 0,
+          "_clearReachedEffectWhenStop": 0,
+          "_alwaysPlayStartEffects": 0,
+          "_playStartEffectOnlyOnProjectile": 0,
+          "_useSourceFaceVector": 0,
+          "_useSourceFaceVectorOnHit": 0,
+          "_forceReachTargetGround": 0,
+          "_followTargetGround": 0,
+          "_replaceMainEffectWhenReach": 0,
+          "_mainEffectToReplace": "",
+          "_useTraceTargetWhenReach": 0,
+          "_setReachEffectOnProjectile": 0,
+          "_syncEffectScaleViaProjectile": 0
+        }
+      }
+    ]
+  },
+  "tokens": {
+    "token_10013_robin_mine": [
+      {
+        "object": "Spine",
+        "pathId": "7708267402476417352",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-7446119263478386360"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "175525945580115722"
+          },
+          "m_Name": "",
+          "skeletonDataAsset": {
+            "m_FileID": 0,
+            "m_PathID": "-6950206602062777737"
+          },
+          "initialSkinName": "default",
+          "initialFlipX": 0,
+          "initialFlipY": 0,
+          "updateWhenInvisible": 3,
+          "separatorSlotNames": [],
+          "zSpacing": 0.0,
+          "useClipping": 1,
+          "immutableTriangles": 0,
+          "pmaVertexColors": 1,
+          "clearStateOnDisable": 0,
+          "tintBlack": 0,
+          "singleSubmesh": 0,
+          "fixDrawOrder": 0,
+          "addNormals": 0,
+          "calculateTangents": 0,
+          "maskInteraction": 0,
+          "maskMaterials": {
+            "materialsMaskDisabled": [],
+            "materialsInsideMask": [],
+            "materialsOutsideMask": []
+          },
+          "disableRenderingOnOverride": 1,
+          "_animationName": "Default_01",
+          "loop": 0,
+          "timeScale": 1.0
+        }
+      },
+      {
+        "object": "Graphic",
+        "pathId": "4543999395410833736",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-7266381736301399736"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "6360585277869116281"
+          },
+          "m_Name": "",
+          "_animations": [
+            {
+              "animKey": "Born",
+              "animName": "Start_01",
+              "loop": 0,
+              "speed": 1.0,
+              "ignoreMissing": 0
+            },
+            {
+              "animKey": "Born_02",
+              "animName": "Start_02",
+              "loop": 0,
+              "speed": 1.0,
+              "ignoreMissing": 0
+            },
+            {
+              "animKey": "Idle",
+              "animName": "Idle_01",
+              "loop": 1,
+              "speed": 1.0,
+              "ignoreMissing": 0
+            },
+            {
+              "animKey": "Idle_02",
+              "animName": "Idle_02",
+              "loop": 1,
+              "speed": 1.0,
+              "ignoreMissing": 0
+            },
+            {
+              "animKey": "Die",
+              "animName": "Retreat_01",
+              "loop": 0,
+              "speed": 1.0,
+              "ignoreMissing": 0
+            },
+            {
+              "animKey": "Die_02",
+              "animName": "Retreat_02",
+              "loop": 0,
+              "speed": 1.0,
+              "ignoreMissing": 0
+            },
+            {
+              "animKey": "Default",
+              "animName": "Default_01",
+              "loop": 0,
+              "speed": 1.0,
+              "ignoreMissing": 0
+            },
+            {
+              "animKey": "Default_02",
+              "animName": "Default_02",
+              "loop": 0,
+              "speed": 1.0,
+              "ignoreMissing": 0
+            },
+            {
+              "animKey": "Attack",
+              "animName": "Skill_01",
+              "loop": 0,
+              "speed": 1.0,
+              "ignoreMissing": 0
+            },
+            {
+              "animKey": "Attack_02",
+              "animName": "Skill_02",
+              "loop": 0,
+              "speed": 1.0,
+              "ignoreMissing": 0
+            },
+            {
+              "animKey": "Attack_End",
+              "animName": "Die_01",
+              "loop": 0,
+              "speed": 1.0,
+              "ignoreMissing": 0
+            },
+            {
+              "animKey": "Attack_End_02",
+              "animName": "Die_02",
+              "loop": 0,
+              "speed": 1.0,
+              "ignoreMissing": 0
+            }
+          ],
+          "_spineSkins": [],
+          "_mixSettings": [],
+          "_spineScale": 1.0,
+          "_enableShowDamageFlash": 1,
+          "_cacheBoundsCenter": 1,
+          "_resetSkinToInitial": 0,
+          "_skeleton": {
+            "m_FileID": 0,
+            "m_PathID": "7708267402476417352"
+          },
+          "_faceSwitcher": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_muzzleTransform": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_hitTransform": {
+            "m_FileID": 0,
+            "m_PathID": "-2062503177871331000"
+          },
+          "_headTransform": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_specialPoint0": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_specialPoint1": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_specialPoint2": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_specialPoint3": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_specialPoint4": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_specialPoint5": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_specialPoint6": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_specialPoint7": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_specialPoint8": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_specialPoint9": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_specialPoint10": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_specialPoint11": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_specialPoint12": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_specialPoint13": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_specialPoint14": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_specialPoint15": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          }
+        }
+      },
+      {
+        "object": "Trigger",
+        "pathId": "1936428640257536328",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-1957194018951892664"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-2891200616113119906"
+          },
+          "m_Name": "",
+          "_extendable": 0
+        }
+      },
+      {
+        "object": "Trigger",
+        "pathId": "-3160691835902791352",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-1957194018951892664"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "7080728813803358465"
+          },
+          "m_Name": "",
+          "_targetSide": 2,
+          "_targetMotion": 1,
+          "_targetCategory": 1,
+          "_postFilter": 0,
+          "_ignoreTargetFree": 0,
+          "_onlyIgnoreSomeOfTargetFreeCase": 0,
+          "_abnormalFlag": 20,
+          "_abnormalCombo": 2,
+          "_ignoreAllyTargetFree": 0,
+          "_ignoreHealFree": 0,
+          "_forceIgnoreCamouflage": 0,
+          "_needProfessionMask": 0,
+          "_professionMask": 0,
+          "_limitTargetNum": 0,
+          "_maxTargetKey": "max_target",
+          "_maxNum": 1,
+          "_excludeOwner": 0,
+          "_sortByTauntAtLast": 0,
+          "_ignoreHitRange": 0,
+          "_checkUnitType": 0,
+          "_unitTypeMask": 0,
+          "_abilityInputTargetAsSortSource": 0
+        }
+      },
+      {
+        "object": "Trigger",
+        "pathId": "5859977805933867336",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-1957194018951892664"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "248012603862317511"
+          },
+          "m_Name": ""
+        }
+      },
+      {
+        "object": "Attack",
+        "pathId": "-5109841017058922168",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "3917817337079034184"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "4381884627089348317"
+          },
+          "m_Name": "",
+          "_selector": {
+            "m_FileID": 0,
+            "m_PathID": "-3160691835902791352"
+          },
+          "_metadata": {
+            "namedAsAlias": "",
+            "blackboardPrefix": ""
+          },
+          "_interruptAbilityOnDetach": 0,
+          "_attachPassiveBuffsOnDummy": 1,
+          "_ignoreIfOwnerDead": 0,
+          "_forceAsDmgOrHealAbility": 0,
+          "_waitForAttackEvent": 1,
+          "_interuptIfTargetDead": 0,
+          "_resetCdStrategy": 1,
+          "_selectTargetSource": 1,
+          "_selectTargetTiming": 0,
+          "_timeMode": 0,
+          "_alwaysIncludeTarget": 1,
+          "_allowNoTarget": 0,
+          "_animKey": "",
+          "_endAnimKey": "",
+          "_downAnimKey": "",
+          "_downEndAnimKey": "",
+          "_upAnimKey": "",
+          "_upEndAnimKey": "",
+          "_cooldown": 0.0,
+          "_cooldownKey": "duration",
+          "_preDelay": 0.0,
+          "_escapeTime": 0.0,
+          "_faceToTarget": 1,
+          "_faceToDefault": 0,
+          "_faceToFront": 0,
+          "_faceToFirstCastTarget": 0,
+          "_forceFaceToDirection": 0,
+          "_activeBuffs": [],
+          "_maxAnimScale": -1.0,
+          "_onlyPlayEndAnimWhenIsLastAbility": 0,
+          "_ignorePalsyInterrupt": 0,
+          "_atkScale": 1.0,
+          "_atkScaleKey": "atk_scale",
+          "_attackType": 1,
+          "_elementDamageType": 0,
+          "_epDamageRatio": 0.0,
+          "_useDynamicAttackType": 0,
+          "_deliveryParaWhenReplaceActionNode": 0,
+          "_damageType": 1,
+          "_extraDamageType": 0,
+          "_alwaysPutIncludeTargetFirst": 0
+        }
+      },
+      {
+        "object": "Default",
+        "pathId": "-6244229871529791160",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "7485737015992217928"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "5390319429299248724"
+          },
+          "m_Name": "",
+          "_bodyTransform": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_animatorHooker": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_overrideStartEffect": "",
+          "_overrideDeadEffect": "",
+          "_combat": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_attack": {
+            "m_FileID": 0,
+            "m_PathID": "-5109841017058922168"
+          },
+          "_attackTrigger": {
+            "m_FileID": 0,
+            "m_PathID": "5859977805933867336"
+          },
+          "_hideUIAttackRange": 0,
+          "_updateAttackRangeExtendByAttributeDirty": 0,
+          "_rangeToShow": {
+            "m_FileID": 0,
+            "m_PathID": "-3160691835902791352"
+          },
+          "_extraRangesToShow": [],
+          "_generalAbilities": [],
+          "_addIndexToSignalId": 1,
+          "_includeIndexZero": 0,
+          "_alwaysHideHp": {
+            "isDefined": 0,
+            "value": 0
+          },
+          "_alwaysHideSp": {
+            "isDefined": 0,
+            "value": 0
+          }
+        }
+      },
+      {
+        "object": "Trigger",
+        "pathId": "-4854951032222224056",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "2387107409550143816"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-2891200616113119906"
+          },
+          "m_Name": "",
+          "_extendable": 0
+        }
+      },
+      {
+        "object": "Trigger",
+        "pathId": "-8787816140193369784",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "2387107409550143816"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "7080728813803358465"
+          },
+          "m_Name": "",
+          "_targetSide": 2,
+          "_targetMotion": 1,
+          "_targetCategory": 1,
+          "_postFilter": 0,
+          "_ignoreTargetFree": 0,
+          "_onlyIgnoreSomeOfTargetFreeCase": 0,
+          "_abnormalFlag": 20,
+          "_abnormalCombo": 2,
+          "_ignoreAllyTargetFree": 0,
+          "_ignoreHealFree": 0,
+          "_forceIgnoreCamouflage": 0,
+          "_needProfessionMask": 0,
+          "_professionMask": 0,
+          "_limitTargetNum": 0,
+          "_maxTargetKey": "max_target",
+          "_maxNum": 1,
+          "_excludeOwner": 0,
+          "_sortByTauntAtLast": 0,
+          "_ignoreHitRange": 0,
+          "_checkUnitType": 0,
+          "_unitTypeMask": 0,
+          "_abilityInputTargetAsSortSource": 0
+        }
+      },
+      {
+        "object": "Trigger",
+        "pathId": "-7582342563538112184",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "2387107409550143816"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "248012603862317511"
+          },
+          "m_Name": ""
+        }
+      },
+      {
+        "object": "Attack",
+        "pathId": "6709357523010089288",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-435750993893297848"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "4381884627089348317"
+          },
+          "m_Name": "",
+          "_selector": {
+            "m_FileID": 0,
+            "m_PathID": "-8787816140193369784"
+          },
+          "_metadata": {
+            "namedAsAlias": "",
+            "blackboardPrefix": ""
+          },
+          "_interruptAbilityOnDetach": 0,
+          "_attachPassiveBuffsOnDummy": 1,
+          "_ignoreIfOwnerDead": 0,
+          "_forceAsDmgOrHealAbility": 0,
+          "_waitForAttackEvent": 1,
+          "_interuptIfTargetDead": 0,
+          "_resetCdStrategy": 1,
+          "_selectTargetSource": 1,
+          "_selectTargetTiming": 0,
+          "_timeMode": 0,
+          "_alwaysIncludeTarget": 1,
+          "_allowNoTarget": 0,
+          "_animKey": "",
+          "_endAnimKey": "",
+          "_downAnimKey": "",
+          "_downEndAnimKey": "",
+          "_upAnimKey": "",
+          "_upEndAnimKey": "",
+          "_cooldown": 0.0,
+          "_cooldownKey": "duration",
+          "_preDelay": 0.0,
+          "_escapeTime": 0.0,
+          "_faceToTarget": 1,
+          "_faceToDefault": 0,
+          "_faceToFront": 0,
+          "_faceToFirstCastTarget": 0,
+          "_forceFaceToDirection": 0,
+          "_activeBuffs": [],
+          "_maxAnimScale": -1.0,
+          "_onlyPlayEndAnimWhenIsLastAbility": 0,
+          "_ignorePalsyInterrupt": 0,
+          "_atkScale": 1.0,
+          "_atkScaleKey": "atk_scale",
+          "_attackType": 1,
+          "_elementDamageType": 0,
+          "_epDamageRatio": 0.0,
+          "_useDynamicAttackType": 0,
+          "_deliveryParaWhenReplaceActionNode": 0,
+          "_damageType": 1,
+          "_extraDamageType": 0,
+          "_alwaysPutIncludeTargetFirst": 0
+        }
+      },
+      {
+        "object": "S2",
+        "pathId": "5710425786518696264",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "4299239121477529928"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "5390319429299248724"
+          },
+          "m_Name": "",
+          "_bodyTransform": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_animatorHooker": {
+            "m_FileID": 0,
+            "m_PathID": "-1215318782378610360"
+          },
+          "_overrideStartEffect": "",
+          "_overrideDeadEffect": "",
+          "_combat": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_attack": {
+            "m_FileID": 0,
+            "m_PathID": "6709357523010089288"
+          },
+          "_attackTrigger": {
+            "m_FileID": 0,
+            "m_PathID": "-7582342563538112184"
+          },
+          "_hideUIAttackRange": 0,
+          "_updateAttackRangeExtendByAttributeDirty": 0,
+          "_rangeToShow": {
+            "m_FileID": 0,
+            "m_PathID": "-8787816140193369784"
+          },
+          "_extraRangesToShow": [],
+          "_generalAbilities": [],
+          "_addIndexToSignalId": 1,
+          "_includeIndexZero": 0,
+          "_alwaysHideHp": {
+            "isDefined": 0,
+            "value": 0
+          },
+          "_alwaysHideSp": {
+            "isDefined": 0,
+            "value": 0
+          }
+        }
+      },
+      {
+        "object": "S2",
+        "pathId": "-1215318782378610360",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "4299239121477529928"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-2632969505105631840"
+          },
+          "m_Name": "",
+          "_excludeAnimKeys": [],
+          "_replaceAnimPairs": [
+            {
+              "fromAnimKey": "Born",
+              "toAnimKey": "Born_02"
+            },
+            {
+              "fromAnimKey": "Idle",
+              "toAnimKey": "Idle_02"
+            },
+            {
+              "fromAnimKey": "Die",
+              "toAnimKey": "Die_02"
+            },
+            {
+              "fromAnimKey": "Default",
+              "toAnimKey": "Default_02"
+            },
+            {
+              "fromAnimKey": "Attack",
+              "toAnimKey": "Attack_02"
+            },
+            {
+              "fromAnimKey": "Attack_End",
+              "toAnimKey": "Attack_End_02"
+            }
+          ],
+          "_disableSwitchSettings": []
+        }
+      },
+      {
+        "object": "IdleEffect",
+        "pathId": "8048527275838239048",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "8306536301682848072"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "3800760148018415462"
+          },
+          "m_Name": "",
+          "_selector": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_metadata": {
+            "namedAsAlias": "",
+            "blackboardPrefix": ""
+          },
+          "_interruptAbilityOnDetach": 0,
+          "_attachPassiveBuffsOnDummy": 1,
+          "_ignoreIfOwnerDead": 0,
+          "_forceAsDmgOrHealAbility": 0,
+          "_buffs": [
+            {
+              "attributes": {
+                "abnormalFlags": [],
+                "abnormalImmunes": [],
+                "abnormalAntis": [],
+                "abnormalCombos": [],
+                "abnormalComboImmunes": [],
+                "attributeModifiers": []
+              },
+              "buffKey": "token_robin_common[effect]",
+              "loadFromDB": 0,
+              "isDurableBuff": 0,
+              "isDamageMissable": 0,
+              "isSilenceable": 0,
+              "isStunnable": 0,
+              "isFreezable": 0,
+              "isLevitatable": 0,
+              "statusResistable": 2,
+              "templateKey": "empty",
+              "disableOverride": 0,
+              "overrideKey": "",
+              "overrideType": 0,
+              "maxStackCnt": 1,
+              "refreshRemainingTimeWhenStackMax": 0,
+              "clearAllStackCntWhenTimeUp": 0,
+              "maxValidStackCnt": -1,
+              "independentCharacterSource": 0,
+              "overrideEffectKey": "token_robin_skill_01_idle",
+              "overrideOnEventPriority": 0,
+              "onEventPriority": 0,
+              "audioSignal": "",
+              "lifeTimeType": 2,
+              "takeSnapshotWhenExtend": 0,
+              "durationKey": "",
+              "lifeTime": 0.0,
+              "triggerLifeType": 0,
+              "triggerCnt": 0,
+              "triggerInterval": -1.0,
+              "waitFirstTriggerInterval": 1,
+              "firstTriggerInterval": -1.0,
+              "priority": -1,
+              "priorityBBKeys": [],
+              "stripBlackboardParamsWithBuffKey": 0,
+              "blackboard": [],
+              "enableInitDirectionFromSource": 0
+            }
+          ]
+        }
+      },
+      {
+        "object": "Shadow",
+        "pathId": "-9052721457559277240",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-187450199671672504"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-2368896203154538901"
+          },
+          "m_Name": "",
+          "_autoAttachToGround": 0,
+          "_attachOffset": 0.10000000149011612,
+          "_simplyUseTileHeight": 0,
+          "_enableAdvanced": 0,
+          "_alwaysUseSpineOffset": 0,
+          "_sprite": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_graphic": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_faceSwitcher": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_boneToFollow": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_specialInit": 0,
+          "_simpleFollow": 0,
+          "_easeType": 1
+        }
+      },
+      {
+        "object": "token_10013_robin_mine",
+        "pathId": "143497114899214664",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-2816213406073786040"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-795855429403065218"
+          },
+          "m_Name": "",
+          "_animator": {
+            "m_FileID": 0,
+            "m_PathID": "4543999395410833736"
+          },
+          "_modes": [
+            {
+              "m_FileID": 0,
+              "m_PathID": "-6244229871529791160"
+            },
+            {
+              "m_FileID": 0,
+              "m_PathID": "5710425786518696264"
+            }
+          ],
+          "_commonAbilities": [
+            {
+              "m_FileID": 0,
+              "m_PathID": "8048527275838239048"
+            }
+          ],
+          "_uiMountPoint": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_effectTransform": {
+            "m_FileID": 0,
+            "m_PathID": "5461198370786603336"
+          },
+          "_shadow": {
+            "m_FileID": 0,
+            "m_PathID": "-9052721457559277240"
+          },
+          "_defaultBodyColor": {
+            "r": 1.0,
+            "g": 1.0,
+            "b": 1.0,
+            "a": 1.0
+          },
+          "_hideShadowOnRecycle": 0,
+          "_overrideGraphicBound": -1.0,
+          "_hudPluginReplacePairs": [],
+          "_showDebugName": 0,
+          "_skinHolder": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_motionMode": 0,
+          "_blockMode": 0,
+          "_ignoreBlockMode": 0,
+          "_isFixedRotation": 1,
+          "_occupiedRemainingCharacterCnt": 0,
+          "_useRealBornTimeFromAnim": 1,
+          "_buildCondition": {
+            "buildableType": 1,
+            "isTryingOverlapCharacater": 0,
+            "needSpecifyDirection": 0,
+            "limitByHostAttackRange": 0,
+            "limitByHostAbilityRange": 0,
+            "abilityName": "",
+            "tileKey": "",
+            "extraBuildConditionArray": {
+              "SerializedState": "null",
+              "SerializedObjectReferences": []
+            },
+            "advancedBuildableMask": 1,
+            "overlapOptions": {
+              "_verifySourceId": 0,
+              "_verifySourceIds": [],
+              "_verifySourceProfession": 0,
+              "_verifySourceProfessions": 0,
+              "_isAllConditionOR": 1,
+              "_overlapPriority": 0,
+              "_changeTargetGraphicColor": 0
+            },
+            "excludeNoTargetTile": 0,
+            "extraLocateRange": "",
+            "checkManuallyBuildableType": 0,
+            "manuallyBuildableType": 0,
+            "_excludeOccupiedByWalkEnemy": 1,
+            "allowWalkEnemyInHostRange": 0,
+            "_checkUpdateBuildable": 0
+          },
+          "_traitAbility": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_withdrawCostRecoverRatio": 0.0,
+          "_maxWithdrawCostRatioOfRawCost": 1.0,
+          "_directionTransform": {
+            "m_FileID": 0,
+            "m_PathID": "400702125005631816"
+          },
+          "_directionIndicator": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_startEffect": "token_robin_skill_01_birth",
+          "_deadEffect": "",
+          "_playStartVocal": 1,
+          "_showDeadTweenColor": 0,
+          "_useSpecificDeadAnim": 1,
+          "_onlyPlayStartEffectOnce": 0,
+          "_dontMoveCameraWhenFocus": 0,
+          "_disableCharInfoPanel": 0,
+          "_disableRotateWhenDead": 0,
+          "_disableSetDirectionWhenDummy": 0,
+          "_clearProjectileWhenDead": 0,
+          "_useIdForAudioSignalMask": 3,
+          "_preprocessData": 0,
+          "_disableClickCharacterInfo": 0,
+          "_skillUiFollowHeadPint": 0,
+          "m_overrideBornTime": -1.0,
+          "_sideType": 1,
+          "_category": 2,
+          "_cardPolicy": 0,
+          "_alwaysShowHp": 0,
+          "_alwaysHideHp": 0,
+          "_alwaysHideSp": 0,
+          "_forceUseAllyHud": 0,
+          "_rewriteTileOptions": 0,
+          "_rewriteTileHeightTypeOnMode": 0,
+          "_rewriteTileHeightTypeOnModeBySelf": 0,
+          "_ignoreBlockAnyRoutes": 0,
+          "_setTileGraphicDirtyWhenSwitchMode": 0,
+          "_hideTileOptions": 0,
+          "_isInfinity": 0,
+          "_ignoreExcludeFromBattle": 0,
+          "_notShowInDeck": 0,
+          "_asRewardCardInLegionMode": 0,
+          "_rechargeOnlyOnce": 0,
+          "_willBuildOverlapBuffSource": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_tokenCanBeOverlapDontAddTileBuff": 0
+        }
+      },
+      {
+        "object": "token_10013_robin_mine",
+        "pathId": "5727274456370868552",
+        "type": "CircleCollider2D",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-2816213406073786040"
+          },
+          "m_Enabled": 1,
+          "m_Density": 1.0,
+          "m_Material": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "m_IsTrigger": true,
+          "m_UsedByEffector": false,
+          "m_UsedByComposite": false,
+          "m_Offset": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "m_Radius": 0.25
+        }
+      }
+    ]
+  },
+  "models": {
+    "char_451_robin": {
+      "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+      "Front": {
+        "path": "spine/char_451_robin/char_451_robin/Front/char_451_robin.skel",
+        "sha256": "67237ae6cad552206b0b2785294f46dbc8e5835b1a11f26e157300d103709475",
+        "bytes": 167095,
+        "durations": {
+          "Attack": 0.933,
+          "Default": 0,
+          "Die": 1,
+          "Idle": 4.5,
+          "Start": 1
+        },
+        "hits": {
+          "Attack": [
+            0.267
+          ]
+        }
+      },
+      "Back": {
+        "path": "spine/char_451_robin/char_451_robin/Back/char_451_robin.skel",
+        "sha256": "33310050a1fac10244ce5c6c7449b56d8165638ca92c19dee87eeebfeb215ca3",
+        "bytes": 84744,
+        "durations": {
+          "Attack": 0.933,
+          "Default": 0,
+          "Die": 1,
+          "Idle": 4.5,
+          "Start": 1
+        },
+        "hits": {
+          "Attack": [
+            0.267
+          ]
+        }
+      }
+    }
+  },
+  "originalFacingBindings": {
+    "char_451_robin": {
+      "Front": {
+        "animatorPathId": "5784004364083829522",
+        "skeletonAnimationPathId": "-5979578357618468078",
+        "skeletonDataAssetPathId": "8477768322981131155",
+        "textAssetPathId": "3985571236047117943",
+        "sha256": "67237ae6cad552206b0b2785294f46dbc8e5835b1a11f26e157300d103709475",
+        "byteLength": 167095
+      },
+      "Back": {
+        "animatorPathId": "5784004364083829522",
+        "skeletonAnimationPathId": "-3083476328049239278",
+        "skeletonDataAssetPathId": "-3135246498677642749",
+        "textAssetPathId": "-233931161711399291",
+        "sha256": "33310050a1fac10244ce5c6c7449b56d8165638ca92c19dee87eeebfeb215ca3",
+        "byteLength": 84744
+      }
+    }
+  },
+  "tokenArtwork": {
+    "sourceBundle": {
+      "path": "pkgrps/btl_pfb_tokens_0.ab",
+      "bytes": 5060143,
+      "md5": "5ab8526b9e59e97cc7e94ed6a248013d",
+      "sha256": "eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f",
+      "resourceVersion": "26-09-23-17-49-43_b9cc4a",
+      "url": "https://ark-us-static-online.yo-star.com/assetbundle/official/Android/assets/26-09-23-17-49-43_b9cc4a/pkgrps_btl_pfb_tokens_0.dat",
+      "transforms": [
+        "RGB plus separated Alpha texture merge",
+        "atlas texture dimensions normalized and pma: true recorded"
+      ]
+    },
+    "avatarSource": {
+      "repository": "fexli/ArknightsResource",
+      "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+      "directory": "avatar/ASSISTANT"
+    },
+    "models": {
+      "token_10013_robin_mine": {
+        "directory": ".cache/arkpedia/robin-source/token-model/token_10013_robin_mine",
+        "files": {
+          "token_10013_robin_mine.skel": {
+            "bytes": 23521,
+            "sha256": "22960a56be58d246c6c6b06a3e50864aa5bdfcbd86884ae316f4e65ec53e07de"
+          },
+          "token_10013_robin_mine.atlas": {
+            "bytes": 1319,
+            "sha256": "119d75c9120e8b589b3e3b7cfa8958f9ea4caa306563502cea0883ad1de18059"
+          },
+          "token_10013_robin_mine.png": {
+            "bytes": 8537,
+            "sha256": "e627ae0788a167b10d4c31d854b8e6527f4b478a37ecfbaf0d14dfd53392dc3b"
+          },
+          "avatar.png": {
+            "bytes": 16159,
+            "sha256": "bc5a2616c6aef2202ee8421c98a13c4a2ef3ccadb4c934c169adb537ee7b49d7"
+          }
+        },
+        "textureDimensions": [
+          128,
+          128
+        ],
+        "spineVersion": "3.8.99",
+        "durations": {
+          "Default_01": 0,
+          "Default_02": 0,
+          "Die_01": 0.167,
+          "Die_02": 0.167,
+          "Idle_01": 1,
+          "Idle_02": 1,
+          "Retreat_01": 0.167,
+          "Retreat_02": 0.167,
+          "Skill_01": 0.167,
+          "Skill_02": 0.167,
+          "Start_01": 0.5,
+          "Start_02": 0.5
+        },
+        "hits": {
+          "Skill_01": [
+            0.167
+          ],
+          "Skill_02": [
+            0.167
+          ]
+        },
+        "bounds": {
+          "x": -75.008,
+          "y": -59.761,
+          "width": 145.008,
+          "height": 161.48
+        },
+        "animationRoles": {
+          "idle": "Idle_01",
+          "deploy": "Start_01",
+          "die": "Retreat_01"
+        }
+      }
+    }
+  },
+  "blockers": [
+    "Owner initial stock is 4/6/8 plus a potential bonus. Native token maxDeployCount is 6/8/10 and maxDeckStackCnt is 5/7/9. Generic card-stack semantics must be recovered before deriving the stored capacity.",
+    "Token base ATK remains 100 in source tables, while skill damage depends on Robin ATK. The native inheritance transfer and its snapshot phase have not been recovered.",
+    "Ground-only placement and activation selectors, entrance completion and bind/push dispatch need combat adaptation and tests. Imported artwork does not enable this operator."
+  ]
+}

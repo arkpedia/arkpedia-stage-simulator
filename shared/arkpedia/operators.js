@@ -93,6 +93,7 @@ import { FLAMETAIL_OPERATORS } from './flametail-operators.js';
 import { ALANNA_OPERATORS } from './alanna-operators.js';
 import { SAILEACH_OPERATORS } from './saileach-operators.js';
 import { SURTR_OPERATORS } from './surtr-operators.js';
+import { SPURIA_OPERATORS } from './spuria-operators.js';
 import { FIVE_STAR_SPECIALIST_EXPANSION_OPERATORS } from './five-star-specialist-expansion-operators.js';
 export const REGULAR_OPERATORS = Object.freeze({
   char_123_fang: { skillId: "skcom_charge_cost[1]", talentKeys: ["cost"], mechanic: "dp", prefabId: "skcom_charge_cost", templateKey: "charge_cost" },
@@ -206,6 +207,7 @@ export const REGULAR_OPERATORS = Object.freeze({
   ...ALANNA_OPERATORS,
   ...SAILEACH_OPERATORS,
   ...SURTR_OPERATORS,
+  ...SPURIA_OPERATORS,
   ...PHANTOM_OPERATORS,
   ...HOOK_EXPANSION_OPERATORS,
   ...FIVE_STAR_SPECIALIST_EXPANSION_OPERATORS,
