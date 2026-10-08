@@ -49042,6 +49042,474 @@
           "height": 244.701
         }
       },
+      "operator/char_1032_excu2/default/front": {
+        "kind": "operator",
+        "id": "char_1032_excu2",
+        "variant": "default",
+        "facing": "front",
+        "spineVersion": "3.8.99",
+        "source": {
+          "key": "operators",
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "spine/char_1032_excu2/char_1032_excu2/Front"
+        },
+        "skeleton": {
+          "path": "models/operator/char_1032_excu2/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_1032_excu2.skel",
+          "bytes": 1263246,
+          "sha256": "d43d5eb37a4fa7159771adc90706c88e31a7c820deac2964478586aa2cc134ac"
+        },
+        "atlas": {
+          "path": "models/operator/char_1032_excu2/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_1032_excu2.atlas",
+          "bytes": 13961,
+          "sha256": "aa8f15e1a14c9188cf5a5083318e70ff2bc473a9b7b791be6f2b75c2cb266793"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_1032_excu2/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_1032_excu2.png",
+            "bytes": 172417,
+            "sha256": "825239bc262ab1918486de32ed2dec7711b502332d39a8df142178bdfb0babe8"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Attack_A": 1.3,
+          "Attack_B": 1.3,
+          "Attack_Down_A": 1.3,
+          "Attack_Down_B": 1.3,
+          "Default": 0,
+          "Die": 1,
+          "Idle": 3.333,
+          "Skill_2_Attack_A": 1.3,
+          "Skill_2_Attack_B": 1.3,
+          "Skill_2_Begin": 0.333,
+          "Skill_2_End": 0.333,
+          "Skill_2_Idle": 3.333,
+          "Skill_3_Attack_A": 1.633,
+          "Skill_3_Attack_B": 1.633,
+          "Skill_3_Begin": 0.333,
+          "Skill_3_End": 1,
+          "Skill_3_Idle": 3.333,
+          "Skill_Down_2_Attack_A": 1.3,
+          "Skill_Down_2_Attack_B": 1.3,
+          "Skill_Down_3_Attack_A": 1.633,
+          "Skill_Down_3_Attack_B": 1.633,
+          "Start": 1
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": null,
+            "loop": "Attack_A",
+            "end": null,
+            "via": "attackAny"
+          },
+          "attackDown": {
+            "begin": null,
+            "loop": "Attack_Down_A",
+            "end": null,
+            "via": "attackAny"
+          },
+          "skill": {
+            "begin": null,
+            "loop": "Attack_A",
+            "end": null,
+            "via": "attack",
+            "index": 0,
+            "idle": null
+          },
+          "die": "Die",
+          "move": null,
+          "stun": null,
+          "skills": {
+            "0": {
+              "begin": null,
+              "loop": "Attack_A",
+              "end": null,
+              "via": "attack",
+              "index": 0,
+              "idle": null
+            },
+            "1": {
+              "begin": "Skill_2_Begin",
+              "loop": "Skill_2_Attack_A",
+              "end": "Skill_2_End",
+              "index": 1,
+              "idle": "Skill_2_Idle"
+            },
+            "2": {
+              "begin": "Skill_3_Begin",
+              "loop": "Skill_3_Attack_A",
+              "end": "Skill_3_End",
+              "index": 2,
+              "idle": "Skill_3_Idle"
+            }
+          }
+        },
+        "hits": {
+          "Attack_A": [
+            0.3
+          ],
+          "Attack_B": [
+            0.3,
+            0.367
+          ],
+          "Attack_Down_A": [
+            0.3
+          ],
+          "Attack_Down_B": [
+            0.3,
+            0.367
+          ],
+          "Skill_2_Attack_A": [
+            0.467
+          ],
+          "Skill_2_Attack_B": [
+            0.4,
+            0.533
+          ],
+          "Skill_3_Attack_A": [
+            0.267
+          ],
+          "Skill_3_Attack_B": [
+            0.267,
+            0.367
+          ],
+          "Skill_3_End": [
+            0.4
+          ],
+          "Skill_Down_2_Attack_A": [
+            0.467
+          ],
+          "Skill_Down_2_Attack_B": [
+            0.4,
+            0.533
+          ],
+          "Skill_Down_3_Attack_A": [
+            0.267
+          ],
+          "Skill_Down_3_Attack_B": [
+            0.267,
+            0.367
+          ]
+        },
+        "bounds": {
+          "x": -1448.833,
+          "y": -694.267,
+          "width": 2733.792,
+          "height": 1357.737
+        }
+      },
+      "operator/char_1032_excu2/default/back": {
+        "kind": "operator",
+        "id": "char_1032_excu2",
+        "variant": "default",
+        "facing": "back",
+        "spineVersion": "3.8.99",
+        "source": {
+          "key": "operators",
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "spine/char_1032_excu2/char_1032_excu2/Back"
+        },
+        "skeleton": {
+          "path": "models/operator/char_1032_excu2/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_1032_excu2.skel",
+          "bytes": 690870,
+          "sha256": "93e0a965ee5f28c58fd405267f5dea450dab5924184e43201c08ba80eb17ed8f"
+        },
+        "atlas": {
+          "path": "models/operator/char_1032_excu2/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_1032_excu2.atlas",
+          "bytes": 9232,
+          "sha256": "30951450971481f76d40abbe56978c53ac57df132458dd99571602c497a518ed"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_1032_excu2/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_1032_excu2.png",
+            "bytes": 141219,
+            "sha256": "69b14a1a2411b4b968862830454d62ecff0a732323b583fcca4d019515d53baf"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Attack_A": 1.3,
+          "Attack_B": 1.3,
+          "Default": 0,
+          "Idle": 3.333,
+          "Skill_2_Attack_A": 1.3,
+          "Skill_2_Attack_B": 1.3,
+          "Skill_2_Begin": 0.333,
+          "Skill_2_End": 0.333,
+          "Skill_2_Idle": 3.333,
+          "Skill_3_Attack_A": 1.633,
+          "Skill_3_Attack_B": 1.633,
+          "Skill_3_Begin": 0.333,
+          "Skill_3_End": 1,
+          "Skill_3_Idle": 3.333,
+          "Start": 1
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": null,
+            "loop": "Attack_A",
+            "end": null,
+            "via": "attackAny"
+          },
+          "attackDown": null,
+          "skill": {
+            "begin": null,
+            "loop": "Attack_A",
+            "end": null,
+            "via": "attack",
+            "index": 0,
+            "idle": null
+          },
+          "die": null,
+          "move": null,
+          "stun": null,
+          "skills": {
+            "0": {
+              "begin": null,
+              "loop": "Attack_A",
+              "end": null,
+              "via": "attack",
+              "index": 0,
+              "idle": null
+            },
+            "1": {
+              "begin": "Skill_2_Begin",
+              "loop": "Skill_2_Attack_A",
+              "end": "Skill_2_End",
+              "index": 1,
+              "idle": "Skill_2_Idle"
+            },
+            "2": {
+              "begin": "Skill_3_Begin",
+              "loop": "Skill_3_Attack_A",
+              "end": "Skill_3_End",
+              "index": 2,
+              "idle": "Skill_3_Idle"
+            }
+          }
+        },
+        "hits": {
+          "Attack_A": [
+            0.3
+          ],
+          "Attack_B": [
+            0.3,
+            0.367
+          ],
+          "Skill_2_Attack_A": [
+            0.467
+          ],
+          "Skill_2_Attack_B": [
+            0.4,
+            0.533
+          ],
+          "Skill_3_Attack_A": [
+            0.267
+          ],
+          "Skill_3_Attack_B": [
+            0.267,
+            0.367
+          ],
+          "Skill_3_End": [
+            0.4
+          ]
+        },
+        "bounds": {
+          "x": -1448.833,
+          "y": -694.267,
+          "width": 2733.792,
+          "height": 1357.737
+        }
+      },
+      "operator/char_4148_philae/default/front": {
+        "kind": "operator",
+        "id": "char_4148_philae",
+        "variant": "default",
+        "facing": "front",
+        "spineVersion": "3.8.99",
+        "source": {
+          "key": "operators",
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "spine/char_4148_philae/char_4148_philae/Front"
+        },
+        "skeleton": {
+          "path": "models/operator/char_4148_philae/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4148_philae.skel",
+          "bytes": 265965,
+          "sha256": "20506f29744a7e9d112248655477867694b0cd49682de1129247e5f419433280"
+        },
+        "atlas": {
+          "path": "models/operator/char_4148_philae/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4148_philae.atlas",
+          "bytes": 10079,
+          "sha256": "6c251068dd623bf8b0544a4b06ee15ecf05d5734560ae52f7137afa96199a228"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_4148_philae/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4148_philae.png",
+            "bytes": 228786,
+            "sha256": "c1c00460ecc60add09de5acde711e1de6a1bb0ecc6c243852081c1959217f7e9"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Attack": 1.6,
+          "Default": 0,
+          "Die": 1,
+          "Idle": 2,
+          "Skill_1": 1.667,
+          "Skill_2_Begin": 0.333,
+          "Skill_2_End": 0.9,
+          "Skill_2_Loop": 2,
+          "Start": 1
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null
+          },
+          "attackDown": null,
+          "skill": {
+            "begin": null,
+            "loop": "Skill_1",
+            "end": null,
+            "index": 0,
+            "idle": null
+          },
+          "die": "Die",
+          "move": null,
+          "stun": null,
+          "skills": {
+            "0": {
+              "begin": null,
+              "loop": "Skill_1",
+              "end": null,
+              "index": 0,
+              "idle": null
+            },
+            "1": {
+              "begin": "Skill_2_Begin",
+              "loop": "Skill_2_Loop",
+              "end": "Skill_2_End",
+              "index": 1,
+              "idle": null
+            }
+          }
+        },
+        "hits": {
+          "Attack": [
+            0.767
+          ],
+          "Skill_1": [
+            0.433
+          ]
+        },
+        "bounds": {
+          "x": -476.27,
+          "y": -16,
+          "width": 832,
+          "height": 430.103
+        }
+      },
+      "operator/char_4148_philae/default/back": {
+        "kind": "operator",
+        "id": "char_4148_philae",
+        "variant": "default",
+        "facing": "back",
+        "spineVersion": "3.8.99",
+        "source": {
+          "key": "operators",
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "spine/char_4148_philae/char_4148_philae/Back"
+        },
+        "skeleton": {
+          "path": "models/operator/char_4148_philae/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4148_philae.skel",
+          "bytes": 177071,
+          "sha256": "a805f5562dbcb07a6d5602061142d3a7d0e246d617cab22c08517ee3559a9874"
+        },
+        "atlas": {
+          "path": "models/operator/char_4148_philae/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4148_philae.atlas",
+          "bytes": 6834,
+          "sha256": "3a51718b14eceeeb765c4addd4ed3e38434a794bee7fa7f8b02628904d066b00"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_4148_philae/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4148_philae.png",
+            "bytes": 207577,
+            "sha256": "a662de344c1c952a190ebf4e966f644ca378bafb5b1ac09d529cc95300b35491"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Attack": 1.6,
+          "Default": 0,
+          "Idle": 2,
+          "Skill_1": 1.667,
+          "Skill_2_End": 0.9,
+          "Skill_2_Loop": 2,
+          "Skill_2_Start": 0.333,
+          "Start": 1
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null
+          },
+          "attackDown": null,
+          "skill": {
+            "begin": null,
+            "loop": "Skill_1",
+            "end": null,
+            "index": 0,
+            "idle": null
+          },
+          "die": null,
+          "move": null,
+          "stun": null,
+          "skills": {
+            "0": {
+              "begin": null,
+              "loop": "Skill_1",
+              "end": null,
+              "index": 0,
+              "idle": null
+            },
+            "1": {
+              "begin": "Skill_2_Start",
+              "loop": "Skill_2_Loop",
+              "end": "Skill_2_End",
+              "index": 1,
+              "idle": null
+            }
+          }
+        },
+        "hits": {
+          "Attack": [
+            0.767
+          ],
+          "Skill_1": [
+            0.433
+          ]
+        },
+        "bounds": {
+          "x": -476.27,
+          "y": -16,
+          "width": 832,
+          "height": 430.103
+        }
+      },
       "operator/char_250_phatom/default/front": {
         "kind": "operator",
         "id": "char_250_phatom",
@@ -403969,6 +404437,3724 @@
                 {
                   "key": "atk_scale",
                   "value": 1.15,
+                  "valueStr": null
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "char_1032_excu2": {
+      "id": "char_1032_excu2",
+      "name": "Executor the Ex Foedere",
+      "rarity": 6,
+      "profession": "WARRIOR",
+      "subProfessionId": "reaper",
+      "position": "MELEE",
+      "nationId": "laterano",
+      "groupId": null,
+      "teamId": null,
+      "phases": [
+        {
+          "maxLevel": 50,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 1076,
+                "atk": 298,
+                "def": 224,
+                "magicResistance": 0,
+                "cost": 20,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.3,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 50,
+              "data": {
+                "maxHp": 1475,
+                "atk": 439,
+                "def": 308,
+                "magicResistance": 0,
+                "cost": 20,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.3,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              1,
+              1
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              -1,
+              1
+            ]
+          ]
+        },
+        {
+          "maxLevel": 80,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 1475,
+                "atk": 439,
+                "def": 308,
+                "magicResistance": 0,
+                "cost": 21,
+                "blockCnt": 2,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.3,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 80,
+              "data": {
+                "maxHp": 1967,
+                "atk": 586,
+                "def": 396,
+                "magicResistance": 0,
+                "cost": 21,
+                "blockCnt": 2,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.3,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              1,
+              1
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              -1,
+              1
+            ]
+          ]
+        },
+        {
+          "maxLevel": 90,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 1967,
+                "atk": 586,
+                "def": 396,
+                "magicResistance": 0,
+                "cost": 23,
+                "blockCnt": 2,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.3,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 90,
+              "data": {
+                "maxHp": 2491,
+                "atk": 707,
+                "def": 461,
+                "magicResistance": 0,
+                "cost": 23,
+                "blockCnt": 2,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.3,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              1,
+              1
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              -1,
+              1
+            ]
+          ]
+        }
+      ],
+      "favorKeyFrames": [
+        {
+          "level": 0,
+          "data": {
+            "maxHp": 0,
+            "atk": 0,
+            "def": 0,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false
+          }
+        },
+        {
+          "level": 50,
+          "data": {
+            "maxHp": 0,
+            "atk": 70,
+            "def": 30,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false
+          }
+        }
+      ],
+      "potentialRanks": [
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "DEF",
+            "formulaItem": "ADDITION",
+            "value": 22,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "ATK",
+            "formulaItem": "ADDITION",
+            "value": 26,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [],
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ]
+      ],
+      "trait": {
+        "candidates": [
+          {
+            "unlockCondition": {
+              "phase": "PHASE_0",
+              "level": 1
+            },
+            "requiredPotentialRank": 0,
+            "blackboard": [
+              {
+                "key": "value",
+                "value": 50,
+                "valueStr": null
+              }
+            ],
+            "overrideDescripton": "Cannot be healed by allies; Attacks deal <@ba.kw>AoE damage</>; Recovers <@ba.kw>{value}</> HP for every enemy hit during attacks, up to Block count",
+            "prefabKey": null,
+            "rangeId": null
+          }
+        ]
+      },
+      "talents": [
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "The Chosen One",
+              "description": "Attacks have a 10% chance to hit twice; this chance increases by 3% for each ammo consumed while a skill is active, resetting when the skill ends",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "prob",
+                  "value": 0.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob_add",
+                  "value": 0.03,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 1
+              },
+              "requiredPotentialRank": 4,
+              "prefabKey": "1",
+              "name": "The Chosen One",
+              "description": "Attacks have a 13% <@ba.talpu>(+3%)</> chance to hit twice; this chance increases by 3% for each ammo consumed while a skill is active, resetting when the skill ends",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "prob",
+                  "value": 0.13,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob_add",
+                  "value": 0.03,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "The Chosen One",
+              "description": "Attacks have a 20% chance to hit twice; this chance increases by 5% for each ammo consumed while a skill is active, resetting when the skill ends",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "prob",
+                  "value": 0.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob_add",
+                  "value": 0.05,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 4,
+              "prefabKey": "1",
+              "name": "The Chosen One",
+              "description": "Attacks have a 23% <@ba.talpu>(+3%)</> chance to hit twice; this chance increases by 5% for each ammo consumed while a skill is active, resetting when the skill ends",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "prob",
+                  "value": 0.23,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob_add",
+                  "value": 0.05,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            }
+          ]
+        },
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "2",
+              "name": "Empathy by Shotgun",
+              "description": "For every Laterano Operator deployed, increases the ammo capacity of this unit's ammo-based skills by +1 (stacks up to 4 times)",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "add_count",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "add_count_max_stack",
+                  "value": 4,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            }
+          ]
+        }
+      ],
+      "skills": [
+        {
+          "id": "skchr_excu2_1",
+          "unlockCondition": {
+            "phase": "PHASE_0",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "Testament Exacted",
+              "rangeId": "2-5",
+              "description": "Attack Range <@ba.vup>expands</>, ATK <@ba.vup>+{atk:0%}</>, attacks ignore <@ba.vup>{def_penetrate_fixed}</> of the target's DEF\n<@ba.rem>Skill activation grants {attack@trigger_time} ammo and the skill ends when all ammo is used (Can manually deactivate skill)",
+              "skillType": "AUTO",
+              "durationType": "AMMO",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 10,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_excu2_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "def_penetrate_fixed",
+                  "value": 100,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@trigger_time",
+                  "value": 8,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ]
+              ]
+            },
+            {
+              "name": "Testament Exacted",
+              "rangeId": "2-5",
+              "description": "Attack Range <@ba.vup>expands</>, ATK <@ba.vup>+{atk:0%}</>, attacks ignore <@ba.vup>{def_penetrate_fixed}</> of the target's DEF\n<@ba.rem>Skill activation grants {attack@trigger_time} ammo and the skill ends when all ammo is used (Can manually deactivate skill)",
+              "skillType": "AUTO",
+              "durationType": "AMMO",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 10,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_excu2_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "def_penetrate_fixed",
+                  "value": 130,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@trigger_time",
+                  "value": 8,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ]
+              ]
+            },
+            {
+              "name": "Testament Exacted",
+              "rangeId": "2-5",
+              "description": "Attack Range <@ba.vup>expands</>, ATK <@ba.vup>+{atk:0%}</>, attacks ignore <@ba.vup>{def_penetrate_fixed}</> of the target's DEF\n<@ba.rem>Skill activation grants {attack@trigger_time} ammo and the skill ends when all ammo is used (Can manually deactivate skill)",
+              "skillType": "AUTO",
+              "durationType": "AMMO",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 10,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_excu2_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "def_penetrate_fixed",
+                  "value": 160,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@trigger_time",
+                  "value": 8,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ]
+              ]
+            },
+            {
+              "name": "Testament Exacted",
+              "rangeId": "2-5",
+              "description": "Attack Range <@ba.vup>expands</>, ATK <@ba.vup>+{atk:0%}</>, attacks ignore <@ba.vup>{def_penetrate_fixed}</> of the target's DEF\n<@ba.rem>Skill activation grants {attack@trigger_time} ammo and the skill ends when all ammo is used (Can manually deactivate skill)",
+              "skillType": "AUTO",
+              "durationType": "AMMO",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 9,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_excu2_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "def_penetrate_fixed",
+                  "value": 190,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@trigger_time",
+                  "value": 8,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ]
+              ]
+            },
+            {
+              "name": "Testament Exacted",
+              "rangeId": "2-5",
+              "description": "Attack Range <@ba.vup>expands</>, ATK <@ba.vup>+{atk:0%}</>, attacks ignore <@ba.vup>{def_penetrate_fixed}</> of the target's DEF\n<@ba.rem>Skill activation grants {attack@trigger_time} ammo and the skill ends when all ammo is used (Can manually deactivate skill)",
+              "skillType": "AUTO",
+              "durationType": "AMMO",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 9,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_excu2_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "def_penetrate_fixed",
+                  "value": 220,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@trigger_time",
+                  "value": 8,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ]
+              ]
+            },
+            {
+              "name": "Testament Exacted",
+              "rangeId": "2-5",
+              "description": "Attack Range <@ba.vup>expands</>, ATK <@ba.vup>+{atk:0%}</>, attacks ignore <@ba.vup>{def_penetrate_fixed}</> of the target's DEF\n<@ba.rem>Skill activation grants {attack@trigger_time} ammo and the skill ends when all ammo is used (Can manually deactivate skill)",
+              "skillType": "AUTO",
+              "durationType": "AMMO",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 9,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_excu2_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "def_penetrate_fixed",
+                  "value": 250,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@trigger_time",
+                  "value": 8,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ]
+              ]
+            },
+            {
+              "name": "Testament Exacted",
+              "rangeId": "2-5",
+              "description": "Attack Range <@ba.vup>expands</>, ATK <@ba.vup>+{atk:0%}</>, attacks ignore <@ba.vup>{def_penetrate_fixed}</> of the target's DEF\n<@ba.rem>Skill activation grants {attack@trigger_time} ammo and the skill ends when all ammo is used (Can manually deactivate skill)",
+              "skillType": "AUTO",
+              "durationType": "AMMO",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 8,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_excu2_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "def_penetrate_fixed",
+                  "value": 280,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@trigger_time",
+                  "value": 8,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ]
+              ]
+            },
+            {
+              "name": "Testament Exacted",
+              "rangeId": "2-5",
+              "description": "Attack Range <@ba.vup>expands</>, ATK <@ba.vup>+{atk:0%}</>, attacks ignore <@ba.vup>{def_penetrate_fixed}</> of the target's DEF\n<@ba.rem>Skill activation grants {attack@trigger_time} ammo and the skill ends when all ammo is used (Can manually deactivate skill)",
+              "skillType": "AUTO",
+              "durationType": "AMMO",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 8,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_excu2_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "def_penetrate_fixed",
+                  "value": 320,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@trigger_time",
+                  "value": 8,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ]
+              ]
+            },
+            {
+              "name": "Testament Exacted",
+              "rangeId": "2-5",
+              "description": "Attack Range <@ba.vup>expands</>, ATK <@ba.vup>+{atk:0%}</>, attacks ignore <@ba.vup>{def_penetrate_fixed}</> of the target's DEF\n<@ba.rem>Skill activation grants {attack@trigger_time} ammo and the skill ends when all ammo is used (Can manually deactivate skill)",
+              "skillType": "AUTO",
+              "durationType": "AMMO",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 8,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_excu2_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.45,
+                  "valueStr": null
+                },
+                {
+                  "key": "def_penetrate_fixed",
+                  "value": 360,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@trigger_time",
+                  "value": 8,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ]
+              ]
+            },
+            {
+              "name": "Testament Exacted",
+              "rangeId": "2-5",
+              "description": "Attack Range <@ba.vup>expands</>, ATK <@ba.vup>+{atk:0%}</>, attacks ignore <@ba.vup>{def_penetrate_fixed}</> of the target's DEF\n<@ba.rem>Skill activation grants {attack@trigger_time} ammo and the skill ends when all ammo is used (Can manually deactivate skill)",
+              "skillType": "AUTO",
+              "durationType": "AMMO",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 8,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_excu2_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "def_penetrate_fixed",
+                  "value": 400,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@trigger_time",
+                  "value": 8,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "id": "skchr_excu2_2",
+          "unlockCondition": {
+            "phase": "PHASE_1",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "Close Combat",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>, DEF <@ba.vup>+{def:0%}</>, Block <@ba.vup>+{block_cnt}</>; upon receiving a melee attack from an enemy, there is a <@ba.vup>{prob:0%}</> chance to dodge and reload <@ba.vup>{recover_cnt}</> ammo\n<@ba.rem>Skill activation grants {attack@trigger_time} ammo and the skill ends when all ammo is used (Can manually deactivate skill)</>",
+              "skillType": "MANUAL",
+              "durationType": "AMMO",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 15,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_excu2_2",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "def",
+                  "value": 0.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "block_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob",
+                  "value": 0.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "recover_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@trigger_time",
+                  "value": 12,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Close Combat",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>, DEF <@ba.vup>+{def:0%}</>, Block <@ba.vup>+{block_cnt}</>; upon receiving a melee attack from an enemy, there is a <@ba.vup>{prob:0%}</> chance to dodge and reload <@ba.vup>{recover_cnt}</> ammo\n<@ba.rem>Skill activation grants {attack@trigger_time} ammo and the skill ends when all ammo is used (Can manually deactivate skill)</>",
+              "skillType": "MANUAL",
+              "durationType": "AMMO",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 15,
+                "initSp": 1,
+                "increment": 1
+              },
+              "prefabId": "skchr_excu2_2",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.35,
+                  "valueStr": null
+                },
+                {
+                  "key": "def",
+                  "value": 0.35,
+                  "valueStr": null
+                },
+                {
+                  "key": "block_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob",
+                  "value": 0.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "recover_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@trigger_time",
+                  "value": 12,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Close Combat",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>, DEF <@ba.vup>+{def:0%}</>, Block <@ba.vup>+{block_cnt}</>; upon receiving a melee attack from an enemy, there is a <@ba.vup>{prob:0%}</> chance to dodge and reload <@ba.vup>{recover_cnt}</> ammo\n<@ba.rem>Skill activation grants {attack@trigger_time} ammo and the skill ends when all ammo is used (Can manually deactivate skill)</>",
+              "skillType": "MANUAL",
+              "durationType": "AMMO",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 15,
+                "initSp": 2,
+                "increment": 1
+              },
+              "prefabId": "skchr_excu2_2",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "def",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "block_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob",
+                  "value": 0.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "recover_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@trigger_time",
+                  "value": 12,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Close Combat",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>, DEF <@ba.vup>+{def:0%}</>, Block <@ba.vup>+{block_cnt}</>; upon receiving a melee attack from an enemy, there is a <@ba.vup>{prob:0%}</> chance to dodge and reload <@ba.vup>{recover_cnt}</> ammo\n<@ba.rem>Skill activation grants {attack@trigger_time} ammo and the skill ends when all ammo is used (Can manually deactivate skill)</>",
+              "skillType": "MANUAL",
+              "durationType": "AMMO",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 15,
+                "initSp": 3,
+                "increment": 1
+              },
+              "prefabId": "skchr_excu2_2",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.45,
+                  "valueStr": null
+                },
+                {
+                  "key": "def",
+                  "value": 0.45,
+                  "valueStr": null
+                },
+                {
+                  "key": "block_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob",
+                  "value": 0.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "recover_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@trigger_time",
+                  "value": 12,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Close Combat",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>, DEF <@ba.vup>+{def:0%}</>, Block <@ba.vup>+{block_cnt}</>; upon receiving a melee attack from an enemy, there is a <@ba.vup>{prob:0%}</> chance to dodge and reload <@ba.vup>{recover_cnt}</> ammo\n<@ba.rem>Skill activation grants {attack@trigger_time} ammo and the skill ends when all ammo is used (Can manually deactivate skill)</>",
+              "skillType": "MANUAL",
+              "durationType": "AMMO",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 15,
+                "initSp": 4,
+                "increment": 1
+              },
+              "prefabId": "skchr_excu2_2",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "def",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "block_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob",
+                  "value": 0.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "recover_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@trigger_time",
+                  "value": 12,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Close Combat",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>, DEF <@ba.vup>+{def:0%}</>, Block <@ba.vup>+{block_cnt}</>; upon receiving a melee attack from an enemy, there is a <@ba.vup>{prob:0%}</> chance to dodge and reload <@ba.vup>{recover_cnt}</> ammo\n<@ba.rem>Skill activation grants {attack@trigger_time} ammo and the skill ends when all ammo is used (Can manually deactivate skill)</>",
+              "skillType": "MANUAL",
+              "durationType": "AMMO",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 15,
+                "initSp": 5,
+                "increment": 1
+              },
+              "prefabId": "skchr_excu2_2",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.55,
+                  "valueStr": null
+                },
+                {
+                  "key": "def",
+                  "value": 0.55,
+                  "valueStr": null
+                },
+                {
+                  "key": "block_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob",
+                  "value": 0.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "recover_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@trigger_time",
+                  "value": 12,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Close Combat",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>, DEF <@ba.vup>+{def:0%}</>, Block <@ba.vup>+{block_cnt}</>; upon receiving a melee attack from an enemy, there is a <@ba.vup>{prob:0%}</> chance to dodge and reload <@ba.vup>{recover_cnt}</> ammo\n<@ba.rem>Skill activation grants {attack@trigger_time} ammo and the skill ends when all ammo is used (Can manually deactivate skill)</>",
+              "skillType": "MANUAL",
+              "durationType": "AMMO",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 15,
+                "initSp": 6,
+                "increment": 1
+              },
+              "prefabId": "skchr_excu2_2",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "def",
+                  "value": 0.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "block_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob",
+                  "value": 0.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "recover_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@trigger_time",
+                  "value": 12,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Close Combat",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>, DEF <@ba.vup>+{def:0%}</>, Block <@ba.vup>+{block_cnt}</>; upon receiving a melee attack from an enemy, there is a <@ba.vup>{prob:0%}</> chance to dodge and reload <@ba.vup>{recover_cnt}</> ammo\n<@ba.rem>Skill activation grants {attack@trigger_time} ammo and the skill ends when all ammo is used (Can manually deactivate skill)</>",
+              "skillType": "MANUAL",
+              "durationType": "AMMO",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 14,
+                "initSp": 6,
+                "increment": 1
+              },
+              "prefabId": "skchr_excu2_2",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.7,
+                  "valueStr": null
+                },
+                {
+                  "key": "def",
+                  "value": 0.7,
+                  "valueStr": null
+                },
+                {
+                  "key": "block_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob",
+                  "value": 0.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "recover_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@trigger_time",
+                  "value": 12,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Close Combat",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>, DEF <@ba.vup>+{def:0%}</>, Block <@ba.vup>+{block_cnt}</>; upon receiving a melee attack from an enemy, there is a <@ba.vup>{prob:0%}</> chance to dodge and reload <@ba.vup>{recover_cnt}</> ammo\n<@ba.rem>Skill activation grants {attack@trigger_time} ammo and the skill ends when all ammo is used (Can manually deactivate skill)</>",
+              "skillType": "MANUAL",
+              "durationType": "AMMO",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 13,
+                "initSp": 6,
+                "increment": 1
+              },
+              "prefabId": "skchr_excu2_2",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.75,
+                  "valueStr": null
+                },
+                {
+                  "key": "def",
+                  "value": 0.75,
+                  "valueStr": null
+                },
+                {
+                  "key": "block_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob",
+                  "value": 0.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "recover_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@trigger_time",
+                  "value": 12,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Close Combat",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>, DEF <@ba.vup>+{def:0%}</>, Block <@ba.vup>+{block_cnt}</>; upon receiving a melee attack from an enemy, there is a <@ba.vup>{prob:0%}</> chance to dodge and reload <@ba.vup>{recover_cnt}</> ammo\n<@ba.rem>Skill activation grants {attack@trigger_time} ammo and the skill ends when all ammo is used (Can manually deactivate skill)</>",
+              "skillType": "MANUAL",
+              "durationType": "AMMO",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 12,
+                "initSp": 6,
+                "increment": 1
+              },
+              "prefabId": "skchr_excu2_2",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.8,
+                  "valueStr": null
+                },
+                {
+                  "key": "def",
+                  "value": 0.8,
+                  "valueStr": null
+                },
+                {
+                  "key": "block_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "recover_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@trigger_time",
+                  "value": 12,
+                  "valueStr": null
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "skchr_excu2_3",
+          "unlockCondition": {
+            "phase": "PHASE_2",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "Damnatus Ex Foedere",
+              "rangeId": "2-5",
+              "description": "Attack Interval <@ba.vdown>lengthens slightly</>, Attack Range <@ba.vup>expands</>, ATK <@ba.vup>+{atk:0%}</>; each time 1 ammo is consumed, ATK increases by an additional <@ba.vup>{attack@atk:0%}</> (up to a maximum of {attack@max_stack_cnt} stacks); increases the Trait HP recovery effectiveness to <@ba.vup>{trait_ratio}</> times; when the skill ends, deals <@ba.vup>{attack@final_atk_scale:0%}</> of ATK as Physical damage to all enemies attacked while the skill is active\n<@ba.rem>Skill activation grants {attack@trigger_time} ammo and the skill ends when all ammo is used (Can manually deactivate skill)</>",
+              "skillType": "MANUAL",
+              "durationType": "AMMO",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 36,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_excu2_3",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.9,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@atk",
+                  "value": 0.03,
+                  "valueStr": null
+                },
+                {
+                  "key": "trait_ratio",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@final_atk_scale",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@trigger_time",
+                  "value": 16,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_stack_cnt",
+                  "value": 30,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ]
+              ]
+            },
+            {
+              "name": "Damnatus Ex Foedere",
+              "rangeId": "2-5",
+              "description": "Attack Interval <@ba.vdown>lengthens slightly</>, Attack Range <@ba.vup>expands</>, ATK <@ba.vup>+{atk:0%}</>; each time 1 ammo is consumed, ATK increases by an additional <@ba.vup>{attack@atk:0%}</> (up to a maximum of {attack@max_stack_cnt} stacks); increases the Trait HP recovery effectiveness to <@ba.vup>{trait_ratio}</> times; when the skill ends, deals <@ba.vup>{attack@final_atk_scale:0%}</> of ATK as Physical damage to all enemies attacked while the skill is active\n<@ba.rem>Skill activation grants {attack@trigger_time} ammo and the skill ends when all ammo is used (Can manually deactivate skill)</>",
+              "skillType": "MANUAL",
+              "durationType": "AMMO",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 35,
+                "initSp": 2,
+                "increment": 1
+              },
+              "prefabId": "skchr_excu2_3",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@atk",
+                  "value": 0.03,
+                  "valueStr": null
+                },
+                {
+                  "key": "trait_ratio",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@final_atk_scale",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@trigger_time",
+                  "value": 16,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_stack_cnt",
+                  "value": 30,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ]
+              ]
+            },
+            {
+              "name": "Damnatus Ex Foedere",
+              "rangeId": "2-5",
+              "description": "Attack Interval <@ba.vdown>lengthens slightly</>, Attack Range <@ba.vup>expands</>, ATK <@ba.vup>+{atk:0%}</>; each time 1 ammo is consumed, ATK increases by an additional <@ba.vup>{attack@atk:0%}</> (up to a maximum of {attack@max_stack_cnt} stacks); increases the Trait HP recovery effectiveness to <@ba.vup>{trait_ratio}</> times; when the skill ends, deals <@ba.vup>{attack@final_atk_scale:0%}</> of ATK as Physical damage to all enemies attacked while the skill is active\n<@ba.rem>Skill activation grants {attack@trigger_time} ammo and the skill ends when all ammo is used (Can manually deactivate skill)</>",
+              "skillType": "MANUAL",
+              "durationType": "AMMO",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 34,
+                "initSp": 4,
+                "increment": 1
+              },
+              "prefabId": "skchr_excu2_3",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 1.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@atk",
+                  "value": 0.03,
+                  "valueStr": null
+                },
+                {
+                  "key": "trait_ratio",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@final_atk_scale",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@trigger_time",
+                  "value": 16,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_stack_cnt",
+                  "value": 30,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ]
+              ]
+            },
+            {
+              "name": "Damnatus Ex Foedere",
+              "rangeId": "2-5",
+              "description": "Attack Interval <@ba.vdown>lengthens slightly</>, Attack Range <@ba.vup>expands</>, ATK <@ba.vup>+{atk:0%}</>; each time 1 ammo is consumed, ATK increases by an additional <@ba.vup>{attack@atk:0%}</> (up to a maximum of {attack@max_stack_cnt} stacks); increases the Trait HP recovery effectiveness to <@ba.vup>{trait_ratio}</> times; when the skill ends, deals <@ba.vup>{attack@final_atk_scale:0%}</> of ATK as Physical damage to all enemies attacked while the skill is active\n<@ba.rem>Skill activation grants {attack@trigger_time} ammo and the skill ends when all ammo is used (Can manually deactivate skill)</>",
+              "skillType": "MANUAL",
+              "durationType": "AMMO",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 33,
+                "initSp": 6,
+                "increment": 1
+              },
+              "prefabId": "skchr_excu2_3",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 1.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@atk",
+                  "value": 0.04,
+                  "valueStr": null
+                },
+                {
+                  "key": "trait_ratio",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@final_atk_scale",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@trigger_time",
+                  "value": 16,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_stack_cnt",
+                  "value": 30,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ]
+              ]
+            },
+            {
+              "name": "Damnatus Ex Foedere",
+              "rangeId": "2-5",
+              "description": "Attack Interval <@ba.vdown>lengthens slightly</>, Attack Range <@ba.vup>expands</>, ATK <@ba.vup>+{atk:0%}</>; each time 1 ammo is consumed, ATK increases by an additional <@ba.vup>{attack@atk:0%}</> (up to a maximum of {attack@max_stack_cnt} stacks); increases the Trait HP recovery effectiveness to <@ba.vup>{trait_ratio}</> times; when the skill ends, deals <@ba.vup>{attack@final_atk_scale:0%}</> of ATK as Physical damage to all enemies attacked while the skill is active\n<@ba.rem>Skill activation grants {attack@trigger_time} ammo and the skill ends when all ammo is used (Can manually deactivate skill)</>",
+              "skillType": "MANUAL",
+              "durationType": "AMMO",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 32,
+                "initSp": 8,
+                "increment": 1
+              },
+              "prefabId": "skchr_excu2_3",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 1.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@atk",
+                  "value": 0.04,
+                  "valueStr": null
+                },
+                {
+                  "key": "trait_ratio",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@final_atk_scale",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@trigger_time",
+                  "value": 16,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_stack_cnt",
+                  "value": 30,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ]
+              ]
+            },
+            {
+              "name": "Damnatus Ex Foedere",
+              "rangeId": "2-5",
+              "description": "Attack Interval <@ba.vdown>lengthens slightly</>, Attack Range <@ba.vup>expands</>, ATK <@ba.vup>+{atk:0%}</>; each time 1 ammo is consumed, ATK increases by an additional <@ba.vup>{attack@atk:0%}</> (up to a maximum of {attack@max_stack_cnt} stacks); increases the Trait HP recovery effectiveness to <@ba.vup>{trait_ratio}</> times; when the skill ends, deals <@ba.vup>{attack@final_atk_scale:0%}</> of ATK as Physical damage to all enemies attacked while the skill is active\n<@ba.rem>Skill activation grants {attack@trigger_time} ammo and the skill ends when all ammo is used (Can manually deactivate skill)</>",
+              "skillType": "MANUAL",
+              "durationType": "AMMO",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 31,
+                "initSp": 10,
+                "increment": 1
+              },
+              "prefabId": "skchr_excu2_3",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 1.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@atk",
+                  "value": 0.04,
+                  "valueStr": null
+                },
+                {
+                  "key": "trait_ratio",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@final_atk_scale",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@trigger_time",
+                  "value": 16,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_stack_cnt",
+                  "value": 30,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ]
+              ]
+            },
+            {
+              "name": "Damnatus Ex Foedere",
+              "rangeId": "2-5",
+              "description": "Attack Interval <@ba.vdown>lengthens slightly</>, Attack Range <@ba.vup>expands</>, ATK <@ba.vup>+{atk:0%}</>; each time 1 ammo is consumed, ATK increases by an additional <@ba.vup>{attack@atk:0%}</> (up to a maximum of {attack@max_stack_cnt} stacks); increases the Trait HP recovery effectiveness to <@ba.vup>{trait_ratio}</> times; when the skill ends, deals <@ba.vup>{attack@final_atk_scale:0%}</> of ATK as Physical damage to all enemies attacked while the skill is active\n<@ba.rem>Skill activation grants {attack@trigger_time} ammo and the skill ends when all ammo is used (Can manually deactivate skill)</>",
+              "skillType": "MANUAL",
+              "durationType": "AMMO",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 30,
+                "initSp": 12,
+                "increment": 1
+              },
+              "prefabId": "skchr_excu2_3",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 1.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@atk",
+                  "value": 0.05,
+                  "valueStr": null
+                },
+                {
+                  "key": "trait_ratio",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@final_atk_scale",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@trigger_time",
+                  "value": 16,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_stack_cnt",
+                  "value": 30,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ]
+              ]
+            },
+            {
+              "name": "Damnatus Ex Foedere",
+              "rangeId": "2-5",
+              "description": "Attack Interval <@ba.vdown>lengthens slightly</>, Attack Range <@ba.vup>expands</>, ATK <@ba.vup>+{atk:0%}</>; each time 1 ammo is consumed, ATK increases by an additional <@ba.vup>{attack@atk:0%}</> (up to a maximum of {attack@max_stack_cnt} stacks); increases the Trait HP recovery effectiveness to <@ba.vup>{trait_ratio}</> times; when the skill ends, deals <@ba.vup>{attack@final_atk_scale:0%}</> of ATK as Physical damage to all enemies attacked while the skill is active\n<@ba.rem>Skill activation grants {attack@trigger_time} ammo and the skill ends when all ammo is used (Can manually deactivate skill)</>",
+              "skillType": "MANUAL",
+              "durationType": "AMMO",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 28,
+                "initSp": 12,
+                "increment": 1
+              },
+              "prefabId": "skchr_excu2_3",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 1.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@atk",
+                  "value": 0.05,
+                  "valueStr": null
+                },
+                {
+                  "key": "trait_ratio",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@final_atk_scale",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@trigger_time",
+                  "value": 16,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_stack_cnt",
+                  "value": 30,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ]
+              ]
+            },
+            {
+              "name": "Damnatus Ex Foedere",
+              "rangeId": "2-5",
+              "description": "Attack Interval <@ba.vdown>lengthens slightly</>, Attack Range <@ba.vup>expands</>, ATK <@ba.vup>+{atk:0%}</>; each time 1 ammo is consumed, ATK increases by an additional <@ba.vup>{attack@atk:0%}</> (up to a maximum of {attack@max_stack_cnt} stacks); increases the Trait HP recovery effectiveness to <@ba.vup>{trait_ratio}</> times; when the skill ends, deals <@ba.vup>{attack@final_atk_scale:0%}</> of ATK as Physical damage to all enemies attacked while the skill is active\n<@ba.rem>Skill activation grants {attack@trigger_time} ammo and the skill ends when all ammo is used (Can manually deactivate skill)</>",
+              "skillType": "MANUAL",
+              "durationType": "AMMO",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 26,
+                "initSp": 12,
+                "increment": 1
+              },
+              "prefabId": "skchr_excu2_3",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 1.7,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@atk",
+                  "value": 0.05,
+                  "valueStr": null
+                },
+                {
+                  "key": "trait_ratio",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@final_atk_scale",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@trigger_time",
+                  "value": 16,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_stack_cnt",
+                  "value": 30,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ]
+              ]
+            },
+            {
+              "name": "Damnatus Ex Foedere",
+              "rangeId": "2-5",
+              "description": "Attack Interval <@ba.vdown>lengthens slightly</>, Attack Range <@ba.vup>expands</>, ATK <@ba.vup>+{atk:0%}</>; each time 1 ammo is consumed, ATK increases by an additional <@ba.vup>{attack@atk:0%}</> (up to a maximum of {attack@max_stack_cnt} stacks); increases the Trait HP recovery effectiveness to <@ba.vup>{trait_ratio}</> times; when the skill ends, deals <@ba.vup>{attack@final_atk_scale:0%}</> of ATK as Physical damage to all enemies attacked while the skill is active\n<@ba.rem>Skill activation grants {attack@trigger_time} ammo and the skill ends when all ammo is used (Can manually deactivate skill)</>",
+              "skillType": "MANUAL",
+              "durationType": "AMMO",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 24,
+                "initSp": 12,
+                "increment": 1
+              },
+              "prefabId": "skchr_excu2_3",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 1.8,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@atk",
+                  "value": 0.06,
+                  "valueStr": null
+                },
+                {
+                  "key": "trait_ratio",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@final_atk_scale",
+                  "value": 2.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@trigger_time",
+                  "value": 16,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_stack_cnt",
+                  "value": 30,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ]
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "char_4148_philae": {
+      "id": "char_4148_philae",
+      "name": "Philae",
+      "rarity": 5,
+      "profession": "TANK",
+      "subProfessionId": "primprotector",
+      "position": "MELEE",
+      "nationId": "sargon",
+      "groupId": null,
+      "teamId": null,
+      "phases": [
+        {
+          "maxLevel": 50,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 1289,
+                "atk": 252,
+                "def": 218,
+                "magicResistance": 10,
+                "cost": 21,
+                "blockCnt": 3,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.6,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 50,
+              "data": {
+                "maxHp": 1742,
+                "atk": 361,
+                "def": 321,
+                "magicResistance": 10,
+                "cost": 21,
+                "blockCnt": 3,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.6,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ]
+          ]
+        },
+        {
+          "maxLevel": 70,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 1742,
+                "atk": 361,
+                "def": 321,
+                "magicResistance": 10,
+                "cost": 23,
+                "blockCnt": 3,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.6,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 70,
+              "data": {
+                "maxHp": 2323,
+                "atk": 482,
+                "def": 435,
+                "magicResistance": 10,
+                "cost": 23,
+                "blockCnt": 3,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.6,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ]
+          ]
+        },
+        {
+          "maxLevel": 80,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 2323,
+                "atk": 482,
+                "def": 435,
+                "magicResistance": 10,
+                "cost": 25,
+                "blockCnt": 3,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.6,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 80,
+              "data": {
+                "maxHp": 3227,
+                "atk": 603,
+                "def": 544,
+                "magicResistance": 10,
+                "cost": 25,
+                "blockCnt": 3,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.6,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ]
+          ]
+        }
+      ],
+      "favorKeyFrames": [
+        {
+          "level": 0,
+          "data": {
+            "maxHp": 0,
+            "atk": 0,
+            "def": 0,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false
+          }
+        },
+        {
+          "level": 50,
+          "data": {
+            "maxHp": 0,
+            "atk": 40,
+            "def": 40,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false
+          }
+        }
+      ],
+      "potentialRanks": [
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "RESPAWN_TIME",
+            "formulaItem": "ADDITION",
+            "value": -4,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "ATK",
+            "formulaItem": "ADDITION",
+            "value": 25,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [],
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ]
+      ],
+      "trait": null,
+      "talents": [
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Herald of the Divine River",
+              "description": "Receives -5% Elemental Injury, and recovers 1 SP when receiving Necrosis damage",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "damage_resistance",
+                  "value": 0.05,
+                  "valueStr": null
+                },
+                {
+                  "key": "sp",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 1
+              },
+              "requiredPotentialRank": 4,
+              "prefabKey": "1",
+              "name": "Herald of the Divine River",
+              "description": "Receives -7% <@ba.talpu>(+2%)</> Elemental Injury, and recovers 1 SP when receiving Necrosis damage",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "damage_resistance",
+                  "value": 0.07,
+                  "valueStr": null
+                },
+                {
+                  "key": "sp",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Herald of the Divine River",
+              "description": "Receives -10% Elemental Injury, and recovers 2 SP when receiving Necrosis damage",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "damage_resistance",
+                  "value": 0.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "sp",
+                  "value": 2,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 4,
+              "prefabKey": "1",
+              "name": "Herald of the Divine River",
+              "description": "Receives -12% <@ba.talpu>(+2%)</> Elemental Injury, and recovers 2 SP when receiving Necrosis damage",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "damage_resistance",
+                  "value": 0.12,
+                  "valueStr": null
+                },
+                {
+                  "key": "sp",
+                  "value": 2,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            }
+          ]
+        }
+      ],
+      "skills": [
+        {
+          "id": "skchr_philae_1",
+          "unlockCondition": {
+            "phase": "PHASE_0",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "Blessing of the River of Life",
+              "rangeId": null,
+              "description": "Max HP <@ba.vup>+{max_hp:0%}</>, clears all <$ba.dt.element>Elemental Injury</> on self and gains a <$ba.epbarrier>Protective Barrier</> that absorbs up to <@ba.vup>{shield_value}</> Elemental Injury",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 28,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_philae_1",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "max_hp",
+                  "value": 0.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "shield_value",
+                  "value": 600,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Blessing of the River of Life",
+              "rangeId": null,
+              "description": "Max HP <@ba.vup>+{max_hp:0%}</>, clears all <$ba.dt.element>Elemental Injury</> on self and gains a <$ba.epbarrier>Protective Barrier</> that absorbs up to <@ba.vup>{shield_value}</> Elemental Injury",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 27,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_philae_1",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "max_hp",
+                  "value": 0.35,
+                  "valueStr": null
+                },
+                {
+                  "key": "shield_value",
+                  "value": 700,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Blessing of the River of Life",
+              "rangeId": null,
+              "description": "Max HP <@ba.vup>+{max_hp:0%}</>, clears all <$ba.dt.element>Elemental Injury</> on self and gains a <$ba.epbarrier>Protective Barrier</> that absorbs up to <@ba.vup>{shield_value}</> Elemental Injury",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 26,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_philae_1",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "max_hp",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "shield_value",
+                  "value": 800,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Blessing of the River of Life",
+              "rangeId": null,
+              "description": "Max HP <@ba.vup>+{max_hp:0%}</>, clears all <$ba.dt.element>Elemental Injury</> on self and gains a <$ba.epbarrier>Protective Barrier</> that absorbs up to <@ba.vup>{shield_value}</> Elemental Injury",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 25,
+                "initSp": 5,
+                "increment": 1
+              },
+              "prefabId": "skchr_philae_1",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "max_hp",
+                  "value": 0.45,
+                  "valueStr": null
+                },
+                {
+                  "key": "shield_value",
+                  "value": 900,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Blessing of the River of Life",
+              "rangeId": null,
+              "description": "Max HP <@ba.vup>+{max_hp:0%}</>, clears all <$ba.dt.element>Elemental Injury</> on self and gains a <$ba.epbarrier>Protective Barrier</> that absorbs up to <@ba.vup>{shield_value}</> Elemental Injury",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 24,
+                "initSp": 5,
+                "increment": 1
+              },
+              "prefabId": "skchr_philae_1",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "max_hp",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "shield_value",
+                  "value": 1000,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Blessing of the River of Life",
+              "rangeId": null,
+              "description": "Max HP <@ba.vup>+{max_hp:0%}</>, clears all <$ba.dt.element>Elemental Injury</> on self and gains a <$ba.epbarrier>Protective Barrier</> that absorbs up to <@ba.vup>{shield_value}</> Elemental Injury",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 23,
+                "initSp": 5,
+                "increment": 1
+              },
+              "prefabId": "skchr_philae_1",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "max_hp",
+                  "value": 0.55,
+                  "valueStr": null
+                },
+                {
+                  "key": "shield_value",
+                  "value": 1100,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Blessing of the River of Life",
+              "rangeId": null,
+              "description": "Max HP <@ba.vup>+{max_hp:0%}</>, clears all <$ba.dt.element>Elemental Injury</> on self and gains a <$ba.epbarrier>Protective Barrier</> that absorbs up to <@ba.vup>{shield_value}</> Elemental Injury",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 22,
+                "initSp": 5,
+                "increment": 1
+              },
+              "prefabId": "skchr_philae_1",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "max_hp",
+                  "value": 0.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "shield_value",
+                  "value": 1200,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Blessing of the River of Life",
+              "rangeId": null,
+              "description": "Max HP <@ba.vup>+{max_hp:0%}</>, clears all <$ba.dt.element>Elemental Injury</> on self and gains a <$ba.epbarrier>Protective Barrier</> that absorbs up to <@ba.vup>{shield_value}</> Elemental Injury",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 21,
+                "initSp": 10,
+                "increment": 1
+              },
+              "prefabId": "skchr_philae_1",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "max_hp",
+                  "value": 0.7,
+                  "valueStr": null
+                },
+                {
+                  "key": "shield_value",
+                  "value": 1400,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Blessing of the River of Life",
+              "rangeId": null,
+              "description": "Max HP <@ba.vup>+{max_hp:0%}</>, clears all <$ba.dt.element>Elemental Injury</> on self and gains a <$ba.epbarrier>Protective Barrier</> that absorbs up to <@ba.vup>{shield_value}</> Elemental Injury",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 20,
+                "initSp": 10,
+                "increment": 1
+              },
+              "prefabId": "skchr_philae_1",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "max_hp",
+                  "value": 0.8,
+                  "valueStr": null
+                },
+                {
+                  "key": "shield_value",
+                  "value": 1600,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Blessing of the River of Life",
+              "rangeId": null,
+              "description": "Max HP <@ba.vup>+{max_hp:0%}</>, clears all <$ba.dt.element>Elemental Injury</> on self and gains a <$ba.epbarrier>Protective Barrier</> that absorbs up to <@ba.vup>{shield_value}</> Elemental Injury",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 18,
+                "initSp": 10,
+                "increment": 1
+              },
+              "prefabId": "skchr_philae_1",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "max_hp",
+                  "value": 0.9,
+                  "valueStr": null
+                },
+                {
+                  "key": "shield_value",
+                  "value": 1800,
+                  "valueStr": null
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "skchr_philae_2",
+          "unlockCondition": {
+            "phase": "PHASE_1",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "Curse of the River of Death",
+              "rangeId": null,
+              "description": "Stops attacking, Max HP <@ba.vup>+{max_hp:0%}</>; when attacked, deals <@ba.vup>{atk_scale:0%}</> ATK as Arts damage to surrounding ground enemies and an additional <@ba.vup>{ep_damage_ratio:0%}</> ATK as <$ba.dt.apoptosis2>Necrosis Damage</> (can only trigger once every <@ba.vup>{aoe_cd}</>s); if Elemental Injury is received while skill is active, ATK <@ba.vup>+{atk:0%}</> until this skill ends",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 60,
+                "initSp": 10,
+                "increment": 1
+              },
+              "prefabId": "skchr_philae_2",
+              "duration": 40,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 0.8,
+                  "valueStr": null
+                },
+                {
+                  "key": "ep_damage_ratio",
+                  "value": 0.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "aoe_cd",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_hp",
+                  "value": 0.3,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Curse of the River of Death",
+              "rangeId": null,
+              "description": "Stops attacking, Max HP <@ba.vup>+{max_hp:0%}</>; when attacked, deals <@ba.vup>{atk_scale:0%}</> ATK as Arts damage to surrounding ground enemies and an additional <@ba.vup>{ep_damage_ratio:0%}</> ATK as <$ba.dt.apoptosis2>Necrosis Damage</> (can only trigger once every <@ba.vup>{aoe_cd}</>s); if Elemental Injury is received while skill is active, ATK <@ba.vup>+{atk:0%}</> until this skill ends",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 58,
+                "initSp": 11,
+                "increment": 1
+              },
+              "prefabId": "skchr_philae_2",
+              "duration": 40,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 0.9,
+                  "valueStr": null
+                },
+                {
+                  "key": "ep_damage_ratio",
+                  "value": 0.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "aoe_cd",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_hp",
+                  "value": 0.33,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Curse of the River of Death",
+              "rangeId": null,
+              "description": "Stops attacking, Max HP <@ba.vup>+{max_hp:0%}</>; when attacked, deals <@ba.vup>{atk_scale:0%}</> ATK as Arts damage to surrounding ground enemies and an additional <@ba.vup>{ep_damage_ratio:0%}</> ATK as <$ba.dt.apoptosis2>Necrosis Damage</> (can only trigger once every <@ba.vup>{aoe_cd}</>s); if Elemental Injury is received while skill is active, ATK <@ba.vup>+{atk:0%}</> until this skill ends",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 57,
+                "initSp": 12,
+                "increment": 1
+              },
+              "prefabId": "skchr_philae_2",
+              "duration": 40,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "ep_damage_ratio",
+                  "value": 0.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "aoe_cd",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_hp",
+                  "value": 0.36,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Curse of the River of Death",
+              "rangeId": null,
+              "description": "Stops attacking, Max HP <@ba.vup>+{max_hp:0%}</>; when attacked, deals <@ba.vup>{atk_scale:0%}</> ATK as Arts damage to surrounding ground enemies and an additional <@ba.vup>{ep_damage_ratio:0%}</> ATK as <$ba.dt.apoptosis2>Necrosis Damage</> (can only trigger once every <@ba.vup>{aoe_cd}</>s); if Elemental Injury is received while skill is active, ATK <@ba.vup>+{atk:0%}</> until this skill ends",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 55,
+                "initSp": 13,
+                "increment": 1
+              },
+              "prefabId": "skchr_philae_2",
+              "duration": 40,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 1.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "ep_damage_ratio",
+                  "value": 0.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.7,
+                  "valueStr": null
+                },
+                {
+                  "key": "aoe_cd",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_hp",
+                  "value": 0.4,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Curse of the River of Death",
+              "rangeId": null,
+              "description": "Stops attacking, Max HP <@ba.vup>+{max_hp:0%}</>; when attacked, deals <@ba.vup>{atk_scale:0%}</> ATK as Arts damage to surrounding ground enemies and an additional <@ba.vup>{ep_damage_ratio:0%}</> ATK as <$ba.dt.apoptosis2>Necrosis Damage</> (can only trigger once every <@ba.vup>{aoe_cd}</>s); if Elemental Injury is received while skill is active, ATK <@ba.vup>+{atk:0%}</> until this skill ends",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 53,
+                "initSp": 14,
+                "increment": 1
+              },
+              "prefabId": "skchr_philae_2",
+              "duration": 40,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 1.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "ep_damage_ratio",
+                  "value": 0.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.7,
+                  "valueStr": null
+                },
+                {
+                  "key": "aoe_cd",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_hp",
+                  "value": 0.43,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Curse of the River of Death",
+              "rangeId": null,
+              "description": "Stops attacking, Max HP <@ba.vup>+{max_hp:0%}</>; when attacked, deals <@ba.vup>{atk_scale:0%}</> ATK as Arts damage to surrounding ground enemies and an additional <@ba.vup>{ep_damage_ratio:0%}</> ATK as <$ba.dt.apoptosis2>Necrosis Damage</> (can only trigger once every <@ba.vup>{aoe_cd}</>s); if Elemental Injury is received while skill is active, ATK <@ba.vup>+{atk:0%}</> until this skill ends",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 52,
+                "initSp": 15,
+                "increment": 1
+              },
+              "prefabId": "skchr_philae_2",
+              "duration": 40,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 1.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "ep_damage_ratio",
+                  "value": 0.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.7,
+                  "valueStr": null
+                },
+                {
+                  "key": "aoe_cd",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_hp",
+                  "value": 0.46,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Curse of the River of Death",
+              "rangeId": null,
+              "description": "Stops attacking, Max HP <@ba.vup>+{max_hp:0%}</>; when attacked, deals <@ba.vup>{atk_scale:0%}</> ATK as Arts damage to surrounding ground enemies and an additional <@ba.vup>{ep_damage_ratio:0%}</> ATK as <$ba.dt.apoptosis2>Necrosis Damage</> (can only trigger once every <@ba.vup>{aoe_cd}</>s); if Elemental Injury is received while skill is active, ATK <@ba.vup>+{atk:0%}</> until this skill ends",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 50,
+                "initSp": 17,
+                "increment": 1
+              },
+              "prefabId": "skchr_philae_2",
+              "duration": 40,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 1.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "ep_damage_ratio",
+                  "value": 0.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.8,
+                  "valueStr": null
+                },
+                {
+                  "key": "aoe_cd",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_hp",
+                  "value": 0.5,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Curse of the River of Death",
+              "rangeId": null,
+              "description": "Stops attacking, Max HP <@ba.vup>+{max_hp:0%}</>; when attacked, deals <@ba.vup>{atk_scale:0%}</> ATK as Arts damage to surrounding ground enemies and an additional <@ba.vup>{ep_damage_ratio:0%}</> ATK as <$ba.dt.apoptosis2>Necrosis Damage</> (can only trigger once every <@ba.vup>{aoe_cd}</>s); if Elemental Injury is received while skill is active, ATK <@ba.vup>+{atk:0%}</> until this skill ends",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 49,
+                "initSp": 18,
+                "increment": 1
+              },
+              "prefabId": "skchr_philae_2",
+              "duration": 40,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 1.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "ep_damage_ratio",
+                  "value": 0.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.85,
+                  "valueStr": null
+                },
+                {
+                  "key": "aoe_cd",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_hp",
+                  "value": 0.5,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Curse of the River of Death",
+              "rangeId": null,
+              "description": "Stops attacking, Max HP <@ba.vup>+{max_hp:0%}</>; when attacked, deals <@ba.vup>{atk_scale:0%}</> ATK as Arts damage to surrounding ground enemies and an additional <@ba.vup>{ep_damage_ratio:0%}</> ATK as <$ba.dt.apoptosis2>Necrosis Damage</> (can only trigger once every <@ba.vup>{aoe_cd}</>s); if Elemental Injury is received while skill is active, ATK <@ba.vup>+{atk:0%}</> until this skill ends",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 47,
+                "initSp": 19,
+                "increment": 1
+              },
+              "prefabId": "skchr_philae_2",
+              "duration": 40,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 1.8,
+                  "valueStr": null
+                },
+                {
+                  "key": "ep_damage_ratio",
+                  "value": 0.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.9,
+                  "valueStr": null
+                },
+                {
+                  "key": "aoe_cd",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_hp",
+                  "value": 0.5,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Curse of the River of Death",
+              "rangeId": null,
+              "description": "Stops attacking, Max HP <@ba.vup>+{max_hp:0%}</>; when attacked, deals <@ba.vup>{atk_scale:0%}</> ATK as Arts damage to surrounding ground enemies and an additional <@ba.vup>{ep_damage_ratio:0%}</> ATK as <$ba.dt.apoptosis2>Necrosis Damage</> (can only trigger once every <@ba.vup>{aoe_cd}</>s); if Elemental Injury is received while skill is active, ATK <@ba.vup>+{atk:0%}</> until this skill ends",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 45,
+                "initSp": 20,
+                "increment": 1
+              },
+              "prefabId": "skchr_philae_2",
+              "duration": 40,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "ep_damage_ratio",
+                  "value": 0.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "aoe_cd",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_hp",
+                  "value": 0.5,
                   "valueStr": null
                 }
               ]
