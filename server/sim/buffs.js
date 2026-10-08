@@ -64,7 +64,9 @@ export const STATUS = Object.freeze({
   artsFragile: { mods: (v) => ({ artsTakenMul: 1 + (v ?? 0.3) }), valued: 0.3 },
   physFragile: { mods: (v) => ({ physTakenMul: 1 + (v ?? 0.3) }), valued: 0.3 },
   // Source damage_resistance: PHYSICAL_AND_MAGICAL, isOneMinus and nonstacking.
-  // Owned instances choose the strongest value; true damage and HP loss bypass.
+  // Owned instances choose the strongest value per damage type. True damage
+  // bypasses ordinary Sanctuary; includePure explicitly opts into that channel.
+  // Direct HP loss always bypasses it.
   sanctuary: { mods: (v) => ({ physTakenMul: 1 - clamp01(v ?? 0.2),
     artsTakenMul: 1 - clamp01(v ?? 0.2) }), valued: 0.2 },
   // Source peak_performance / ba.strong: owned Vigor ATK percentages take
@@ -194,6 +196,7 @@ export function aggregateMods(buffs) {
   // Source-owned valued statuses can be removed independently. Only the
   // strongest instance of a named status contributes its modifiers.
   const strongest = new Map();
+  const sanctuary = Object.create(null);
   // Source Inspire channels choose the highest final addition independently
   // for ATK, DEF and MAX_HP. Keep owned weaker instances for expiry fallback;
   // unrelated final additions still sum normally.
@@ -201,6 +204,7 @@ export function aggregateMods(buffs) {
   for (const b of buffs) {
     const tpl = STATUS[b.status];
     if (tpl?.valued == null) continue;
+    if (b.status === 'sanctuary') continue;
     const value = Math.abs(b.data?.value ?? tpl.valued);
     const old = strongest.get(b.status);
     if (!old || value > Math.abs(old.data?.value ?? tpl.valued)) strongest.set(b.status, b);
@@ -216,7 +220,9 @@ export function aggregateMods(buffs) {
         if (k === 'shield') continue;
         // Sluggish is one named status: overlapping zone/attack sources do
         // not compound -80% movement into -96% or erase each other's timers.
-        if (b.tags?.includes('inspire') && ['atkFinalFlat', 'defFinalFlat', 'hpFinalFlat'].includes(k))
+        if (b.status === 'sanctuary' && ['physTakenMul', 'artsTakenMul', 'trueTakenMul'].includes(k))
+          sanctuary[k] = Math.min(sanctuary[k] ?? 1, v);
+        else if (b.tags?.includes('inspire') && ['atkFinalFlat', 'defFinalFlat', 'hpFinalFlat'].includes(k))
           inspire[k] = Math.max(inspire[k] ?? 0, v * st);
         else if (k === 'damageHpFloorRatio') add[k] = Math.max(add[k] ?? 0, v);
         else if (k === 'moveMul' && b.status === 'sluggish') sluggishMoveMul = Math.min(sluggishMoveMul, v);
@@ -235,6 +241,9 @@ export function aggregateMods(buffs) {
     if (b.flags) for (const k in b.flags) if (b.flags[k]) flags[k] = true;
     if (b.shield > 0) shield += b.shield;
   }
+  // Apply after unrelated multipliers so Fragile composes independently of
+  // source insertion order. Weaker owned channels resume after removal/expiry.
+  for (const k of Object.keys(sanctuary)) mul[k] = (mul[k] ?? 1) * sanctuary[k];
   for (const k of Object.keys(inspire)) add[k] = (add[k] ?? 0) + inspire[k];
   for (const k of ['dodgePhys', 'dodgeArts']) {
     const d = dodge[k];

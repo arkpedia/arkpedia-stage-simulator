@@ -453,7 +453,8 @@ function pick(row, col) {
     (u) => u.alive && u.deployed && u.tileR === row && u.tileC === col,
   );
   if (occupied) {
-    selected = occupied.kind === 'token' ? summonUnitId(occupied) : occupied.defId;
+    selected = occupied.kind === 'token' || occupied.kind === 'device' && occupied.mem.regularSummonCard
+      ? summonUnitId(occupied) : occupied.defId;
     pending = null;
     drawHud();
     return;
@@ -471,7 +472,8 @@ function pick(row, col) {
     const unit = battle.allyUnits.find(
       (u) => u.alive && u.tileR === row && u.tileC === col,
     );
-    selected = unit?.kind === 'token' ? summonUnitId(unit) : unit?.defId ?? null;
+    selected = unit?.kind === 'token' || unit?.kind === 'device' && unit.mem.regularSummonCard
+      ? summonUnitId(unit) : unit?.defId ?? null;
     pending = null;
   }
   drawHud();

@@ -1,6 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Only explicitly reviewed regular-stage tokens may enter the deployment deck.
 export const REGULAR_SUMMONS = Object.freeze({
+  char_1031_slent2: Object.freeze({ tokenId: 'token_10029_slent2_protrb',
+    deploymentSlotCost: 0, chooseFacing: false, healFree: false,
+    refundRatio: .5, noAttack: true, skillId: 'skchr_slent2_2', stockLimit: 1,
+    requiresActiveSkill: true, rechargeOnFinish: true }),
   char_250_phatom: Object.freeze({ tokenId: 'token_10007_phatom_twin',
     deploymentSlotCost: 1, chooseFacing: true, healFree: true,
     refundRatio: .5, minimumElite: 1, attackClip: 'Attack' }),
@@ -24,6 +28,21 @@ export const REGULAR_SUMMONS = Object.freeze({
     deploymentSlotCost: 0, chooseFacing: false, healFree: false,
     refundRatio: .5, noAttack: true, skillId: 'skchr_vodfox_2', stockLimit: 1 }),
 });
+
+// Automatic source spawns have no deployment-deck card, but their original
+// models must load with the owner before battle can draw the spawned unit.
+export const REGULAR_AUTOMATIC_TOKENS = Object.freeze({
+  char_344_beewax: Object.freeze(['token_10011_beewax_oblisk']),
+  char_2015_dusk: Object.freeze(['token_10015_dusk_drgn']),
+  char_113_cqbw: Object.freeze(['token_10008_cqbw_box']),
+});
+
+export function regularTokenIdsFor(ownerIds) {
+  return [...new Set(ownerIds.flatMap(id => [
+    ...(REGULAR_SUMMONS[id] ? [REGULAR_SUMMONS[id].tokenId] : []),
+    ...(REGULAR_AUTOMATIC_TOKENS[id] ?? []),
+  ]))];
+}
 
 export const summonCardId = ownerId => `summon:${ownerId}`;
 export const summonUnitId = unit => `token:${unit.id}`;

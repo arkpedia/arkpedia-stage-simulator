@@ -12,6 +12,40 @@ before(async () => {
 after(() => fake.restore());
 
 for (const facing of ['front', 'back']) {
+  test(`Silence the Paradigmatic ${facing} uses native S1 Attack, S2 Skill and S3 Skill_2 forms`, () => {
+    const model = data.sd.models[`operator/char_1031_slent2/default/${facing}`];
+    const entry = { anims: model.animationRoles, animations: model.animations, hits: model.hits };
+    const skeleton = { animations: Object.keys(model.animations).map(name => ({ name })) };
+    const original = structuredClone(entry.anims);
+    for (const [index, clip, windup] of [[0, 'Attack', .667], [1, 'Skill', .633]]) {
+      const actor = new BattleActor(skeleton, entry, index, { attackDrivenSkill: true });
+      actor.setSkill(true);
+      assert.equal(actor.current, 'Idle', 'a healing mode waits for its combat event');
+      actor.attack(1.6, true, { animation: clip, windup });
+      assert.equal(actor.current, clip);
+      actor.update(2);
+      actor.setSkill(false);
+      assert.equal(actor.current, 'Idle', 'S1/S2 must not borrow the S3 ending');
+      actor.destroy();
+    }
+    const third = new BattleActor(skeleton, entry, 2, { attackDrivenSkill: true });
+    const queued = [];
+    const addAnimation = third.spine.state.addAnimation;
+    third.spine.state.addAnimation = (...args) => { queued.push(args); return addAnimation(...args); };
+    third.setSkill(true);
+    assert.equal(third.current, 'Skill_2_Begin');
+    assert.deepEqual(queued, [[0, 'Skill_2_Idle', true, 0]], 'the native stance follows the short begin clip');
+    assert.equal(third.skillBeginUntil, .167);
+    third.update(.2);
+    assert.equal(third.mode, 'base', 'the attack gate opens after the source begin duration');
+    third.attack(1.6, true, { animation: 'Skill_2_Loop', windup: .633 });
+    assert.equal(third.current, 'Skill_2_Loop');
+    third.setSkill(false);
+    assert.equal(third.current, 'Skill_2_End');
+    assert.deepEqual(entry.anims, original);
+    third.destroy();
+  });
+
   test(`Rosa ${facing} keeps S1/S2 attack buffs separate from her S3 harpoon sequence`, () => {
     const model = data.sd.models[`operator/char_197_poca/default/${facing}`];
     const entry = { anims: model.animationRoles, animations: model.animations, hits: model.hits };

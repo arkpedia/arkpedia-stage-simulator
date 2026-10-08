@@ -110,6 +110,15 @@ for (const id of ids) {
       };
       roles.skill = roles.skills['0'];
     }
+    // Native Silence the Paradigmatic form bindings: S1 keeps Attack, S2
+    // replaces it with Skill, and S3 owns Skill_2_Begin/Idle/Loop/End.
+    if (id === 'char_1031_slent2') {
+      const third = roles.skills['1'];
+      roles.skills['0'] = { ...roles.attack, index: 0, idle: null, via: 'attack' };
+      roles.skills['1'] = { begin: null, loop: 'Skill', end: null, index: 1, idle: null };
+      roles.skills['2'] = { ...third, index: 2 };
+      roles.skill = roles.skills['0'];
+    }
     if (!roles.idle || !support.noBasicAttack && catalogue[id]?.subProfessionId !== 'bard' && (!roles.attack || roles.attack.via === "idle"))
       throw Error(`${key}: missing idle/attack clips`);
     Object.assign(model, { premultipliedAlpha: values.pma === "true", animations: info.durations,

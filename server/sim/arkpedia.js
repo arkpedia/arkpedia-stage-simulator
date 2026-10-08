@@ -73,6 +73,9 @@ import { customizeBagpipeKit, installBagpipe, installBagpipeSquad } from './cont
 import { customizeRosaKit, installRosa, prepareRosaSquad } from './content/arkpedia-rosa.js';
 import { customizePuzzleKit, installPuzzle } from './content/arkpedia-puzzle.js';
 import { customizeHoedererKit, installHoederer } from './content/arkpedia-hoederer.js';
+import { customizeWKit, installW } from './content/arkpedia-w.js';
+import { customizeMlynarKit, installMlynar } from './content/arkpedia-mlynar.js';
+import { customizeSilenceParadigmaticKit, installSilenceParadigmatic } from './content/arkpedia-silence-paradigmatic.js';
 import { customizeFiveStarSupportFourthKit, installFiveStarSupportFourth } from './content/arkpedia-five-star-support-fourth.js';
 import { customizeFiveStarSpecialistExpansionKit, installFiveStarSpecialistExpansion } from './content/arkpedia-five-star-specialist-expansion.js';
 import { catalogueFor, recordFor } from "../../shared/arkpedia/loadout.js";
@@ -352,6 +355,9 @@ export class StandardBattle extends Battle {
     customizeRosaKit({ battle: this, id, def, unit, kit });
     customizePuzzleKit({ battle: this, id, def, unit, kit });
     customizeHoedererKit({ battle: this, id, def, unit, kit });
+    customizeWKit({ battle: this, id, def, unit, kit });
+    customizeMlynarKit({ battle: this, id, def, unit, kit });
+    customizeSilenceParadigmaticKit({ battle: this, id, def, unit, kit });
     customizePhantomKit({ battle: this, id, def, unit, kit });
     customizeHookExpansionKit({ battle: this, id, def, unit, kit });
     customizeFiveStarSupportFourthKit({ battle: this, id, def, unit, kit });
@@ -446,6 +452,9 @@ export class StandardBattle extends Battle {
     installRosa({ battle: this, unit, def });
     installPuzzle({ battle: this, unit, def });
     installHoederer({ battle: this, unit, def });
+    installW({ battle: this, unit, def });
+    installMlynar({ battle: this, unit, def });
+    installSilenceParadigmatic({ battle: this, unit, def });
     installHookExpansion({ battle: this, unit, def });
     installFiveStarSupportFourth({ battle: this, unit, def });
     installFiveStarSpecialistExpansion({ battle: this, unit, def });

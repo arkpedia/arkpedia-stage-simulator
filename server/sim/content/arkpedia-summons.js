@@ -7,6 +7,7 @@ import { installShamareDoll } from './arkpedia-five-star-support-third.js';
 import { installNightingaleCage } from './arkpedia-six-star-medic.js';
 import { installSilenceDrone } from './arkpedia-five-star-medic-fourth.js';
 import { createPhantomClone } from './arkpedia-phantom.js';
+import { installSilenceParadigmaticDrone } from './arkpedia-silence-paradigmatic.js';
 
 const live = unit => unit?.alive && unit.deployed;
 const ownTokens = (battle, owner) => battle.allyUnits.filter(token =>
@@ -16,7 +17,8 @@ const cardState = (battle, key) => battle.regularSummons?.get(key);
 
 export function regularSummonCards(battle) {
   return [...(battle.regularSummons?.values() ?? [])].map(state => ({
-    ...state, available: live(state.owner) && state.stock > 0,
+    ...state, available: live(state.owner) && state.stock > 0
+      && (!state.config.requiresActiveSkill || state.owner.skill.active),
     deployed: ownTokens(battle, state.owner).length,
     cost: state.record.stats.cost,
   }));
@@ -27,6 +29,7 @@ export function summonPlacementError(battle, key, row, col) {
   if (!canDeployInViewport(battle.viewport)) return 'Open the fullscreen workspace to deploy.';
   if (battle.finished) return 'Battle has ended.';
   if (!state || !live(state.owner)) return 'Deploy the summoner first.';
+  if (state.config.requiresActiveSkill && !state.owner.skill.active) return 'Activate the summoner skill first.';
   if (state.stock <= 0) return 'No summons remaining.';
   if (state.readyAt > battle.time + 1e-9) return 'Summon is still redeploying.';
   if (ownTokens(battle, state.owner).length >= state.record.stats.maxDeployCount)
@@ -72,7 +75,8 @@ export function deployRegularSummon(battle, key, row, col, dir = 'RIGHT') {
   state.stock--;
   // Phantom's original ON_FINISH token recharge starts the independent clock
   // when the clone is removed. Existing consumable-token clocks stay unchanged.
-  if (state.ownerId !== 'char_250_phatom') state.readyAt = battle.time + state.record.stats.respawnTime;
+  if (state.ownerId !== 'char_250_phatom' && !state.config.rechargeOnFinish)
+    state.readyAt = battle.time + state.record.stats.respawnTime;
   // The original Tentacle has no facing picker: its attack ability turns toward
   // the selected target; the one-tile source range is independent of direction.
   if (!state.config.chooseFacing) battle.on('beforeAttack', ctx => {
@@ -81,6 +85,7 @@ export function deployRegularSummon(battle, key, row, col, dir = 'RIGHT') {
   }, { owner: token });
   if (state.ownerId === 'char_179_cgbird') installNightingaleCage(battle, token, state);
   if (state.ownerId === 'char_108_silent') installSilenceDrone(battle, token, state);
+  if (state.ownerId === 'char_1031_slent2') installSilenceParadigmaticDrone(battle, token, state);
   if (state.ownerId === 'char_484_robrta') installModeler(battle, token, state);
   if (state.ownerId === 'char_254_vodfox') {
     installShamareDoll(battle, token, state);
@@ -158,6 +163,7 @@ export function installSummoner({ battle, unit, def }) {
   battle.regularSummons.set(key, state);
   if (def.id === 'char_254_vodfox') unit.mem.shamareState = state;
   if (def.id === 'char_108_silent') unit.mem.silentState = state;
+  if (def.id === 'char_1031_slent2') unit.mem.slent2State = state;
   if (def.id === 'char_452_bstalk') installBeanstalk({ battle, unit, def, state });
   battle.on('deploy', ({ unit: deployed }) => {
     if (deployed === unit) {

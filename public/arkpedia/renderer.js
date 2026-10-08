@@ -7,7 +7,7 @@ import { createAssets } from "/js/assets.js";
 import { regionEdges } from "/shared/arkpedia/placement.js";
 import { spriteFacing } from "/shared/arkpedia/facing.js";
 import { skillHud } from "/shared/arkpedia/skill-hud.js";
-import { REGULAR_SUMMONS } from "/shared/arkpedia/summons.js";
+import { regularTokenIdsFor } from "/shared/arkpedia/summons.js";
 import { artBase } from "/shared/arkpedia/stage-art.js";
 import { loadStageArt } from "./stage-art.js";
 import { loadGates } from "./gates.js";
@@ -173,7 +173,7 @@ export class StageRenderer {
     };
   }
   async preload(ids, onProgress) {
-    const tokenIds = ids.flatMap(id => REGULAR_SUMMONS[id] ? [REGULAR_SUMMONS[id].tokenId] : []);
+    const tokenIds = regularTokenIdsFor(ids);
     const keys = [
       ...[...ids, ...tokenIds].flatMap((id) =>
         ["front", "back"].map((f) => `operator/${id}/default/${f}`),
@@ -469,14 +469,16 @@ export class StageRenderer {
         const w = Math.max(24, Math.min(96, point.s * 0.5)),
           y = point.y - view.actor.gaugeHeight * scale,
           x = point.x - w / 2;
-        view.hp
-          .beginFill(0x10191d, 0.9)
-          .drawRect(x - 1, y - 1, w + 2, 6)
-          .endFill();
-        view.hp
-          .beginFill(u.side === "ally" ? 0x64d5ae : 0xe27c66)
-          .drawRect(x, y, w * Math.max(0, Math.min(1, u.hp / u.s.maxHp)), 4)
-          .endFill();
+        if (!u.mem?.regularHideHp) {
+          view.hp
+            .beginFill(0x10191d, 0.9)
+            .drawRect(x - 1, y - 1, w + 2, 6)
+            .endFill();
+          view.hp
+            .beginFill(u.side === "ally" ? 0x64d5ae : 0xe27c66)
+            .drawRect(x, y, w * Math.max(0, Math.min(1, u.hp / u.s.maxHp)), 4)
+            .endFill();
+        }
         const skill = u.side === "ally" ? skillHud(u.skill) : null;
         if (skill) {
           // The green SP gauge sits immediately below HP; orange counts down an active skill.

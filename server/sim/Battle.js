@@ -1444,15 +1444,24 @@ export class Battle {
     const source = opts.source ?? null;
     let entered = true;
     for (const b of target.buffs) if ((b.status ?? b.key) === key) { entered = false; break; }
+    // Native damage_resistance[IncludePure] retains Sanctuary identity, but
+    // also reduces True damage. Ordinary Sanctuary never gains that channel.
+    const modsForValue = key === 'sanctuary' && opts.includePure === true
+      ? v => { const m = tpl.mods(v); return { ...m, trueTakenMul: m.physTakenMul }; }
+      : tpl.mods;
+    // Default keys separate the two native type masks. An explicit owned key
+    // identifies one producer and must retain the same type mask on refresh.
+    const ownedKey = opts.key ?? (key === 'sanctuary' && opts.includePure === true
+      ? 'sanctuary:include-pure' : key);
     if (tpl.palsy) {
       this.addBuff(target, { ...palsyBuff(value ?? 1), duration, source });
     } else if (tpl.valued != null && typeof tpl.mods === 'function' && opts.refresh == null) {
-      this._applyValuedStatus(target, opts.key ?? key, { ...tpl, statusKey: key }, duration, value ?? tpl.valued, source);
+      this._applyValuedStatus(target, ownedKey, { ...tpl, mods: modsForValue, statusKey: key }, duration, value ?? tpl.valued, source);
     } else {
-      const mods = tpl.enemyOnlyMods && target.side !== 'enemy' ? null : typeof tpl.mods === 'function' ? tpl.mods(value) : (tpl.mods || null);
+      const mods = tpl.enemyOnlyMods && target.side !== 'enemy' ? null : typeof modsForValue === 'function' ? modsForValue(value) : (modsForValue || null);
       // Owned non-valued status instances let a zone remove its own effects
       // without erasing another source's status. Status identity stays `key`.
-      const b = this.addBuff(target, { key: opts.key ?? key, duration, refresh: opts.refresh ?? 'extend', mods, flags: tpl.flags || null, status: key, visible: true, source });
+      const b = this.addBuff(target, { key: ownedKey, duration, refresh: opts.refresh ?? 'extend', mods, flags: tpl.flags || null, status: key, visible: true, source });
       if (tpl.attract && b) this._setAttractPoint(target, b, opts.point ?? value, source);
       // 恐惧: the hit position and the source's position of every application (fear.js — the fan of reachable tiles)
       if (key === 'fear' && b && target.side === 'enemy') stampFear(this, target, b, source);
