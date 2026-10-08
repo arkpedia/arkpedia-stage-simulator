@@ -65,6 +65,8 @@ import { customizeLucillaKit, installLucilla } from './content/arkpedia-lucilla.
 import { customizeHookExpansionKit, installHookExpansion } from './content/arkpedia-hook-expansion.js';
 import { customizePhantomKit } from './content/arkpedia-phantom.js';
 import { customizeThornsKit, installThorns } from './content/arkpedia-thorns.js';
+import { customizeArchettoKit, installArchetto } from './content/arkpedia-archetto.js';
+import { customizeGuardSixStarFourthKit, installGuardSixStarFourth } from './content/arkpedia-guard-six-star-fourth.js';
 import { customizeFiveStarSupportFourthKit, installFiveStarSupportFourth } from './content/arkpedia-five-star-support-fourth.js';
 import { customizeFiveStarSpecialistExpansionKit, installFiveStarSpecialistExpansion } from './content/arkpedia-five-star-specialist-expansion.js';
 import { catalogueFor, recordFor } from "../../shared/arkpedia/loadout.js";
@@ -334,6 +336,8 @@ export class StandardBattle extends Battle {
     customizeSupportControlKit({ battle: this, id, def, unit, kit });
     customizeLucillaKit({ battle: this, id, def, unit, kit });
     customizeThornsKit({ battle: this, id, def, unit, kit });
+    customizeArchettoKit({ battle: this, id, def, unit, kit });
+    customizeGuardSixStarFourthKit({ battle: this, id, def, unit, kit });
     customizePhantomKit({ battle: this, id, def, unit, kit });
     customizeHookExpansionKit({ battle: this, id, def, unit, kit });
     customizeFiveStarSupportFourthKit({ battle: this, id, def, unit, kit });
@@ -420,6 +424,8 @@ export class StandardBattle extends Battle {
     installSupportControl({ battle: this, unit, def });
     installLucilla({ battle: this, unit, def });
     installThorns({ battle: this, unit, def });
+    installArchetto({ battle: this, unit, def });
+    installGuardSixStarFourth({ battle: this, unit, def });
     installHookExpansion({ battle: this, unit, def });
     installFiveStarSupportFourth({ battle: this, unit, def });
     installFiveStarSpecialistExpansion({ battle: this, unit, def });

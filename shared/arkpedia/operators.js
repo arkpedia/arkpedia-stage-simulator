@@ -63,6 +63,8 @@ import { LUCILLA_OPERATORS } from './lucilla-operators.js';
 import { HOOK_EXPANSION_OPERATORS } from './hook-expansion-operators.js';
 import { PHANTOM_OPERATORS } from './phantom-operators.js';
 import { THORNS_OPERATORS } from './thorns-operators.js';
+import { ARCHETTO_OPERATORS } from './archetto-operators.js';
+import { GUARD_SIX_STAR_FOURTH_OPERATORS } from './guard-six-star-fourth-operators.js';
 import { FIVE_STAR_SPECIALIST_EXPANSION_OPERATORS } from './five-star-specialist-expansion-operators.js';
 export const REGULAR_OPERATORS = Object.freeze({
   char_123_fang: { skillId: "skcom_charge_cost[1]", talentKeys: ["cost"], mechanic: "dp", prefabId: "skcom_charge_cost", templateKey: "charge_cost" },
@@ -146,6 +148,8 @@ export const REGULAR_OPERATORS = Object.freeze({
   ...SUPPORT_CONTROL_OPERATORS,
   ...LUCILLA_OPERATORS,
   ...THORNS_OPERATORS,
+  ...ARCHETTO_OPERATORS,
+  ...GUARD_SIX_STAR_FOURTH_OPERATORS,
   ...PHANTOM_OPERATORS,
   ...HOOK_EXPANSION_OPERATORS,
   ...FIVE_STAR_SPECIALIST_EXPANSION_OPERATORS,
