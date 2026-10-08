@@ -92,6 +92,9 @@ export function makeDamageInfo(d = {}) {
     tags: d.tags ?? [],
     cancel: false,
     noSp: !!d.noSp,
+    // A source-owned undeadable modifier for this receipt only (Saga).
+    // Applied after shields; it never protects unrelated damage or HP loss.
+    hpFloor: Number.isFinite(d.hpFloor) ? Math.max(0, d.hpFloor) : 0,
     ignoreSleep: !!d.ignoreSleep,
     // no selection 无法选择 effects stop (an ability that "无视无法选择" such as PRTS 【污染秽蚀】, a direct pick, a flying
     // unit's blast credited to a ground leader, the tick of a debuff already on the unit): reaches an airborne 起飞 ally
@@ -301,7 +304,8 @@ export function dealDamage(battle, source, target, dmgIn) {
   // Native damage-only HP floor (Blaze): limit the actual post-shield loss.
   // This never raises already-low HP. Scripted kill and loseHp call their own
   // paths and therefore bypass this modifier, unlike ordinary undeadable.
-  const floor = target.s.maxHp * (target.s.damageHpFloorRatio ?? 0);
+  const floor = Math.max(target.s.maxHp * (target.s.damageHpFloorRatio ?? 0),
+    Number.isFinite(dmg.hpFloor) ? Math.max(0, dmg.hpFloor) : 0);
   if (floor > 0 && !target.bossPool)
     final = Math.min(final, Math.max(0, target.hp - floor));
   return applyHpLoss(battle, source, target, final, dmg);

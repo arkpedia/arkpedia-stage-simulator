@@ -103,6 +103,7 @@ import { MELANITE_OPERATORS } from './melanite-operators.js';
 import { ASH_OPERATORS } from './ash-operators.js';
 import { CHEN_OPERATORS } from './chen-operators.js';
 import { VULPIS_OPERATORS } from './vulpis-operators.js';
+import { SAGA_OPERATORS } from './saga-operators.js';
 import { FROST_OPERATORS } from './frost-operators.js';
 import { ROBIN_OPERATORS } from './robin-operators.js';
 import { FIVE_STAR_SPECIALIST_EXPANSION_OPERATORS } from './five-star-specialist-expansion-operators.js';
@@ -230,6 +231,7 @@ export const REGULAR_OPERATORS = Object.freeze({
   ...ASH_OPERATORS,
   ...CHEN_OPERATORS,
   ...VULPIS_OPERATORS,
+  ...SAGA_OPERATORS,
   ...PHANTOM_OPERATORS,
   ...HOOK_EXPANSION_OPERATORS,
   ...FIVE_STAR_SPECIALIST_EXPANSION_OPERATORS,
