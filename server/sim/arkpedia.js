@@ -67,6 +67,9 @@ import { customizePhantomKit } from './content/arkpedia-phantom.js';
 import { customizeThornsKit, installThorns } from './content/arkpedia-thorns.js';
 import { customizeArchettoKit, installArchetto } from './content/arkpedia-archetto.js';
 import { customizeGuardSixStarFourthKit, installGuardSixStarFourth } from './content/arkpedia-guard-six-star-fourth.js';
+import { customizeFartoothKit, installFartooth } from './content/arkpedia-fartooth.js';
+import { customizeSariaKit, installSaria } from './content/arkpedia-saria.js';
+import { customizeBagpipeKit, installBagpipe, installBagpipeSquad } from './content/arkpedia-bagpipe.js';
 import { customizeFiveStarSupportFourthKit, installFiveStarSupportFourth } from './content/arkpedia-five-star-support-fourth.js';
 import { customizeFiveStarSpecialistExpansionKit, installFiveStarSpecialistExpansion } from './content/arkpedia-five-star-specialist-expansion.js';
 import { catalogueFor, recordFor } from "../../shared/arkpedia/loadout.js";
@@ -199,6 +202,7 @@ export class StandardBattle extends Battle {
     this.addDp('arkpedia', startingVanguardDp);
     installMedicSquad({ battle: this, records: chess });
     installGuardSixStarSquad({ battle: this, records: chess });
+    installBagpipeSquad({ battle: this, records: chess });
     this.behaviors = behaviors;
     this.unitLimit = config.unit_limit;
     this.mapTags = Object.freeze([...(data.stage.mapTags ?? [])]);
@@ -338,6 +342,9 @@ export class StandardBattle extends Battle {
     customizeThornsKit({ battle: this, id, def, unit, kit });
     customizeArchettoKit({ battle: this, id, def, unit, kit });
     customizeGuardSixStarFourthKit({ battle: this, id, def, unit, kit });
+    customizeFartoothKit({ battle: this, id, def, unit, kit });
+    customizeSariaKit({ battle: this, id, def, unit, kit });
+    customizeBagpipeKit({ battle: this, id, def, unit, kit });
     customizePhantomKit({ battle: this, id, def, unit, kit });
     customizeHookExpansionKit({ battle: this, id, def, unit, kit });
     customizeFiveStarSupportFourthKit({ battle: this, id, def, unit, kit });
@@ -426,6 +433,9 @@ export class StandardBattle extends Battle {
     installThorns({ battle: this, unit, def });
     installArchetto({ battle: this, unit, def });
     installGuardSixStarFourth({ battle: this, unit, def });
+    installFartooth({ battle: this, unit, def });
+    installSaria({ battle: this, unit, def });
+    installBagpipe({ battle: this, unit, def });
     installHookExpansion({ battle: this, unit, def });
     installFiveStarSupportFourth({ battle: this, unit, def });
     installFiveStarSpecialistExpansion({ battle: this, unit, def });
