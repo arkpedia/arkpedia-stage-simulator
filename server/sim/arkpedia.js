@@ -85,6 +85,8 @@ import { customizeZuoleKit, installZuole } from './content/arkpedia-zuole.js';
 import { customizeBobbingKit, installBobbing } from './content/arkpedia-bobbing.js';
 import { customizeSceneKit, installScene } from './content/arkpedia-scene.js';
 import { customizeChilchuckKit, installChilchuck } from './content/arkpedia-chilchuck.js';
+import { customizeBlacknightKit, installBlacknight } from './content/arkpedia-blacknight.js';
+import { customizeChristineKit, installChristine } from './content/arkpedia-christine.js';
 import { customizeFiveStarSupportFourthKit, installFiveStarSupportFourth } from './content/arkpedia-five-star-support-fourth.js';
 import { customizeFiveStarSpecialistExpansionKit, installFiveStarSpecialistExpansion } from './content/arkpedia-five-star-specialist-expansion.js';
 import { catalogueFor, recordFor } from "../../shared/arkpedia/loadout.js";
@@ -379,6 +381,8 @@ export class StandardBattle extends Battle {
     customizeBobbingKit({ battle: this, id, def, unit, kit });
     customizeSceneKit({ battle: this, id, def, unit, kit });
     customizeChilchuckKit({ battle: this, id, def, unit, kit });
+    customizeBlacknightKit({ battle: this, id, def, unit, kit });
+    customizeChristineKit({ battle: this, id, def, unit, kit });
     customizePhantomKit({ battle: this, id, def, unit, kit });
     customizeHookExpansionKit({ battle: this, id, def, unit, kit });
     customizeFiveStarSupportFourthKit({ battle: this, id, def, unit, kit });
@@ -485,6 +489,8 @@ export class StandardBattle extends Battle {
     installBobbing({ battle: this, unit, def });
     installScene({ battle: this, unit, def });
     installChilchuck({ battle: this, unit, def });
+    installBlacknight({ battle: this, unit, def });
+    installChristine({ battle: this, unit, def });
     installHookExpansion({ battle: this, unit, def });
     installFiveStarSupportFourth({ battle: this, unit, def });
     installFiveStarSpecialistExpansion({ battle: this, unit, def });

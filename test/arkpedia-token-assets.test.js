@@ -5,6 +5,7 @@ import data from '../data/arkpedia-mvp.json' with { type: 'json' };
 import nian from '../data/arkpedia-nian-prefabs.json' with { type: 'json' };
 import kaltsit from '../data/arkpedia-kaltsit-prefabs.json' with { type: 'json' };
 import scene from '../data/arkpedia-scene-prefabs.json' with { type: 'json' };
+import blacknight from '../data/arkpedia-blacknight-prefabs.json' with { type: 'json' };
 import { REGULAR_SUMMONS, REGULAR_AUTOMATIC_TOKENS,
   regularTokenIdsFor } from '../shared/arkpedia/summons.js';
 
@@ -90,5 +91,24 @@ test('Scene owner requests its native one-shot S1 beginning and ordinary attacks
     assert.equal(model.animationRoles.skills[1].via, 'attack');
     assert.equal(model.animationRoles.skills[1].loop, 'Attack');
     assert.equal(model.animationRoles.skills[1].begin, null);
+  }
+});
+
+test('Slumberfoot uses exact original single-model bytes and native inactive, active and sleep clips', () => {
+  const id = 'token_10021_blkngt_hypnos', native = blacknight.models[id];
+  assert.deepEqual(regularTokenIdsFor(['char_476_blkngt']), [id]);
+  for (const facing of ['front', 'back']) {
+    const model = data.sd.models[`operator/${id}/default/${facing}`];
+    assert.equal(model.source.facingAlias, 'single-original-model');
+    assert.equal(model.skeleton.sha256, native.files[`${id}.skel`].sha256);
+    assert.equal(model.atlas.sha256, native.files[`${id}.atlas`].sha256);
+    assert.equal(model.textures[0].sha256, native.files[`${id}.png`].sha256);
+    assert.equal(model.avatar.sha256, native.files['avatar.png'].sha256);
+    assert.equal(model.animationRoles.idle, 'Idle_2');
+    assert.equal(model.animationRoles.die, 'Die_2');
+    assert.equal(model.animationRoles.deploy, 'Start');
+    assert.deepEqual(model.hits, { Attack: [.5], Skill_2: [.5] });
+    for (const clip of ['Idle_1', 'Die_1', 'Skill_Begin', 'Skill_Loop', 'Skill_End'])
+      assert.equal(model.animations[clip], native.durations[clip]);
   }
 });

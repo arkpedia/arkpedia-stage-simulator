@@ -760,11 +760,15 @@ function enemyAttack(b, e) {
   // 麻痹 (ba.palsy): each stack interrupts one normal attack
   const palsy = e.buffs.length ? e.findBuff('palsy') : null;
   if (palsy) {
+    const triggerSource = palsy.source ?? null;
     if (--palsy.stacks <= 0) b.removeBuff(e, palsy); else e.markDirty();
     e.atkCd = e.s.interval;
     // the interrupted attack ends its clip: the old short stand after it (PRTS 异常效果 麻痹: 0.5 s 麻痹震颤 — not modelled)
     if (!e.blockedBy && radius > 0 && !(e.profile?.attackMoves ?? def.attackMoves)) e.atkStandUntil = b.time + ATTACK_PAUSE;
     b.fx('palsy', { x: e.x, y: e.y, id: e.id });
+    // A consumed stack interrupts an eligible attack. Granting/decaying stacks
+    // does not model the native PALSYING edge and must not trigger this bridge.
+    if (b._hooks.palsyTriggered) b.emit('palsyTriggered', { unit: e, source: triggerSource });
     return false;
   }
   const n = Math.max(1, Math.floor(e.profile?.maxTargets ?? 1) + Math.floor(e.s.maxTargets));

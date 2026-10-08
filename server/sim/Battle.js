@@ -1300,9 +1300,15 @@ export class Battle {
   removeBuff(unit, keyOrBuff) {
     if (!unit) return 0;
     let n = 0;
-    for (let i = unit.buffs.length - 1; i >= 0; i--) {
-      const b = unit.buffs[i];
-      if (b === keyOrBuff || b.key === keyOrBuff) { this._removeBuffAt(unit, i, true); n++; }
+    // Removal callbacks can remove an earlier buff or install a replacement.
+    // Revalidate original identities, preserving reverse callback order without
+    // consuming replacements or indexing a list changed by a nested removal.
+    for (const buff of unit.buffs.slice().reverse()) {
+      if (buff !== keyOrBuff && buff.key !== keyOrBuff) continue;
+      const i = unit.buffs.indexOf(buff);
+      if (i < 0) continue;
+      this._removeBuffAt(unit, i, true);
+      n++;
     }
     return n;
   }
