@@ -26,8 +26,8 @@ const nodes=(rows)=>rows.flatMap(r=>r.components);
 const bb=(id,skill,rank=10)=>Object.fromEntries(data.operators[id].skills[skill].levels[rank-1].blackboard.map(x=>[x.key,x.value]));
 function redeployReady(b,id){b.retreatOperator(id);b.bench[id].readyAt=b.time;}
 
-test('four complete vanguard kits retain original hashes, card lifetimes, buff formulas and explicit Fang deferral',()=>{
- assert.equal(Object.keys(FIVE_STAR_VANGUARD_SECOND_OPERATORS).length,4);assert.equal(REGULAR_OPERATORS.char_1036_fang2,undefined);
+test('four complete vanguard kits retain original hashes, card lifetimes, buff formulas and historical Fang investigation',()=>{
+ assert.equal(Object.keys(FIVE_STAR_VANGUARD_SECOND_OPERATORS).length,4);assert.equal(REGULAR_OPERATORS.char_1036_fang2.mechanic,'fang-fire-sharpened');
  assert.match(evidence.deferredOperators.char_1036_fang2.reason,/runtime_cost/);
  for(const id of [...Object.keys(FIVE_STAR_VANGUARD_SECOND_OPERATORS),'char_1036_fang2']){
   assert.match(evidence.source.bundles.find(x=>x.path===`charpack/${id}.ab`).sha256,/^[a-f0-9]{64}$/);

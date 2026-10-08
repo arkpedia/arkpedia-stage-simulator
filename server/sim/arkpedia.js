@@ -97,6 +97,8 @@ import { customizeSaileachKit, installSaileach, adjustSaileachCost, consumeSaile
 import { customizeSurtrKit, installSurtr } from './content/arkpedia-surtr.js';
 import { customizeSpuriaKit, installSpuria } from './content/arkpedia-spuria.js';
 import { customizeMayerKit, installMayer } from './content/arkpedia-mayer.js';
+import { customizeFangFireSharpenedKit, installFangFireSharpened, adjustFangFireSharpenedCost,
+  consumeFangFireSharpenedCard, fangFireSharpenedRefund } from './content/arkpedia-fang-fire-sharpened.js';
 import { customizeFrostKit, installFrost } from './content/arkpedia-frost.js';
 import { customizeRobinKit, installRobin } from './content/arkpedia-robin.js';
 import { customizeFiveStarSupportFourthKit, installFiveStarSupportFourth } from './content/arkpedia-five-star-support-fourth.js';
@@ -270,7 +272,7 @@ export class StandardBattle extends Battle {
     const ordinary = Math.floor(this.data.getChess(id).stats.cost
       * Math.min(2, 1 + entry.deployments * 0.5));
     const vanguard = adjustFiveStarVanguardSecondCost(this, id, ordinary);
-    return adjustSaileachCost(this, id, adjustJieyunCost(this, id, vanguard));
+    return adjustFangFireSharpenedCost(this, id, adjustSaileachCost(this, id, adjustJieyunCost(this, id, vanguard)));
   }
   placementError(id, row, col) {
     const entry = this.bench[id];
@@ -406,6 +408,7 @@ export class StandardBattle extends Battle {
     customizeRobinKit({ battle: this, id, def, unit, kit });
     customizeFrostKit({ battle: this, id, def, unit, kit });
     customizeMayerKit({ battle: this, id, def, unit, kit });
+    customizeFangFireSharpenedKit({ battle: this, id, def, unit, kit });
     customizePhantomKit({ battle: this, id, def, unit, kit });
     customizeHookExpansionKit({ battle: this, id, def, unit, kit });
     customizeFiveStarSupportFourthKit({ battle: this, id, def, unit, kit });
@@ -526,6 +529,7 @@ export class StandardBattle extends Battle {
     installRobin({ battle: this, unit, def });
     installFrost({ battle: this, unit, def });
     installMayer({ battle: this, unit, def });
+    installFangFireSharpened({ battle: this, unit, def });
     installHookExpansion({ battle: this, unit, def });
     installFiveStarSupportFourth({ battle: this, unit, def });
     installFiveStarSpecialistExpansion({ battle: this, unit, def });
@@ -591,6 +595,7 @@ export class StandardBattle extends Battle {
     entry.unit = unit;
     consumeFiveStarVanguardSecondCard(this, id);
     consumeSaileachCard(this, id);
+    consumeFangFireSharpenedCard(this, id);
     return unit;
   }
   retreatOperator(id) {
@@ -599,7 +604,8 @@ export class StandardBattle extends Battle {
     const entry = this.bench[id];
     if (!entry?.unit?.alive) throw new Error("Operator is not deployed.");
     const support = REGULAR_OPERATORS[id];
-    const refund = support.noRetreatRefund ? 0 : support.mechanic === "charger"
+    const refund = support.noRetreatRefund ? 0 : support.mechanic === "fang-fire-sharpened"
+      ? fangFireSharpenedRefund(entry) : support.mechanic === "charger"
       ? entry.unit.base.cost : Math.floor(entry.lastCost / 2);
     this.addDp("arkpedia", refund);
     this.retreat(entry.unit, { permanent: true });

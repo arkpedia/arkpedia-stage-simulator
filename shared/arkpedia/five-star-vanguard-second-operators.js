@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Fang the Fire-Sharpened remains deferred: original evidence records the
-// unresolved generic runtime_cost card field rather than enabling half a kit.
+// The original Fang investigation is retained as historical source evidence.
+// Her complete reviewed adapter is in fang-fire-sharpened-operators.js.
 export const FIVE_STAR_VANGUARD_SECOND_OPERATORS = Object.freeze({
   char_220_grani: { skillIds: ['skcom_def_up[3]', 'skchr_grani_2'],
     talentKeys: ['prob'], passiveTalentKeys: [], mechanic: 'charger' },
