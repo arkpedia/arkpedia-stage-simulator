@@ -10,7 +10,7 @@ import { REGULAR_OPERATORS, assertRegularOperator } from "../../shared/arkpedia/
 import { REGULAR_ENEMIES } from "../../shared/arkpedia/enemies.js";
 
 /** Source coverage, not a claim of game fidelity. Mode kits remain candidates. */
-export function coverageFor({ characters, enemies, chess, inherited, data, assetModels = data.sd.models }) {
+export function coverageFor({ characters, enemies, chess, inherited, data, assetModels = data.sd.models, rosterTarget = null }) {
   const operators = Object.entries(characters)
     .filter(([id, op]) => id.startsWith("char_") && !op.isNotObtainable && !["TOKEN", "TRAP"].includes(op.profession))
     .sort(([a], [b]) => a.localeCompare(b))
@@ -58,6 +58,12 @@ export function coverageFor({ characters, enemies, chess, inherited, data, asset
       enemies: enemyRows.length, regularEnemies: enemyRows.filter(e => e.regularAdapter !== "not-integrated").length,
       enemiesWithStrongholdCandidates: enemyRows.filter(e => e.strongholdCandidate).length,
     },
+    ...(rosterTarget ? { fullRosterTarget: { ...rosterTarget.summary, source: rosterTarget.source,
+      playableOperatorForms: operators.filter(o => o.playable).length,
+      remainingOperatorForms: rosterTarget.operators.filter(o => !data.operators[o.id]).length,
+      remainingOutsideGlobalSnapshot: rosterTarget.operators.filter(o => !characters[o.id]).length,
+      missingForms: rosterTarget.operators.filter(o => !data.operators[o.id]).map(o => o.id),
+    } } : {}),
     operators, enemies: enemyRows,
   };
 }
@@ -76,7 +82,8 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
   const assetModels = JSON.parse(execFileSync('git', ['show', `${data.sd.commit}:manifest.json`], {
     cwd: new URL('../../../arkpedia-sd-assets/', import.meta.url), encoding: 'utf8', maxBuffer: 16 * 1024 * 1024,
   })).models;
-  const report = coverageFor({ characters, enemies, chess, inherited: kitCoverage(), data, assetModels });
+  const rosterTarget = await read("../../data/arkpedia-roster-target.json");
+  const report = coverageFor({ characters, enemies, chess, inherited: kitCoverage(), data, assetModels, rosterTarget });
   await writeFile(new URL("../../data/arkpedia-coverage.json", import.meta.url), `${JSON.stringify(report, null, 2)}\n`);
   console.log(JSON.stringify(report.summary));
 }

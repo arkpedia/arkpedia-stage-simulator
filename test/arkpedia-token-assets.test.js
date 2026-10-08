@@ -4,6 +4,7 @@ import assert from 'node:assert/strict';
 import data from '../data/arkpedia-mvp.json' with { type: 'json' };
 import nian from '../data/arkpedia-nian-prefabs.json' with { type: 'json' };
 import kaltsit from '../data/arkpedia-kaltsit-prefabs.json' with { type: 'json' };
+import mayer from '../data/arkpedia-mayer-prefabs.json' with { type: 'json' };
 import scene from '../data/arkpedia-scene-prefabs.json' with { type: 'json' };
 import blacknight from '../data/arkpedia-blacknight-prefabs.json' with { type: 'json' };
 import { REGULAR_SUMMONS, REGULAR_AUTOMATIC_TOKENS,
@@ -28,9 +29,9 @@ test('every reviewed automatic or manual token dependency has complete original 
         assert.ok(model?.skeleton?.sha256 && model?.atlas?.sha256);
         assert.ok(model?.textures?.length && model.textures.every(texture => texture.sha256));
         assert.ok(model?.animationRoles?.idle);
-        if (id === 'token_10010_folivo_car') {
+        if (['token_10010_folivo_car', 'token_10004_otter_motter'].includes(id)) {
           assert.equal(model.animationRoles.deploy, null);
-          assert.equal(model.animations.Start, undefined, 'the original camera has no entrance clip');
+          assert.equal(model.animations.Start, undefined, 'the original summon has no entrance clip');
         } else assert.ok(model.animationRoles.deploy);
       }
     }
@@ -110,5 +111,18 @@ test('Slumberfoot uses exact original single-model bytes and native inactive, ac
     assert.deepEqual(model.hits, { Attack: [.5], Skill_2: [.5] });
     for (const clip of ['Idle_1', 'Die_1', 'Skill_Begin', 'Skill_Loop', 'Skill_End'])
       assert.equal(model.animations[clip], native.durations[clip]);
+  }
+});
+
+test('Mayer Robotter retains original single-skeleton aliases and literal Blast events without inventing Start', () => {
+  const native = mayer.models.token_10004_otter_motter.Original;
+  for (const f of ['front', 'back']) {
+    const m = data.sd.models[`operator/token_10004_otter_motter/default/${f}`];
+    assert.equal(m.source.facingAlias, 'single-original-model');
+    assert.equal(m.skeleton.sha256, native.files['token_10004_otter_motter.skel'].sha256);
+    assert.equal(m.atlas.sha256, native.files['token_10004_otter_motter.atlas'].sha256);
+    assert.equal(m.textures[0].sha256, native.files['token_10004_otter_motter.png'].sha256);
+    assert.deepEqual(m.hits, native.hits); assert.equal(m.animations.Blast, 1.333);
+    assert.equal(m.animationRoles.deploy, null); assert.equal(m.animations.Start, undefined);
   }
 });

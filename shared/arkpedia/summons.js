@@ -1,6 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Only explicitly reviewed regular-stage tokens may enter the deployment deck.
 export const REGULAR_SUMMONS = Object.freeze({
+  char_242_otter: Object.freeze({ tokenId: 'token_10004_otter_motter',
+    deploymentSlotCost: 1, chooseFacing: false, healFree: true, refundRatio: .5,
+    attackClip: 'Attack', additiveBornStock: true, bornStockBudget: true }),
   char_458_rfrost: Object.freeze({ tokenId: 'token_10016_rfrost_mine',
     deploymentSlotCost: 0, chooseFacing: false, fixedRotation: true, healFree: true,
     refundRatio: 0, noAttack: true, sourceStockLimit: true,
@@ -121,6 +124,24 @@ export function summonRecordFor(ownerId, build, tokens) {
       || Object.keys(bb).length !== keys.length || keys.some(key => !Number.isFinite(bb[key])))
       throw Error(`Unreviewed ${name === 'robin' ? 'Robin' : 'Frost'} trap source`);
     skill = { skillId: id, name: level.name, bb, trigger: { rule: 'NEVER' } };
+  }
+  if (ownerId === 'char_242_otter') {
+    const index = ['skchr_otter_1', 'skchr_otter_2'].indexOf(build.skillId);
+    const id = ['sktok_motter_1', 'sktok_motter_2'][index];
+    const entry = source.skills?.find(row => row.id === id);
+    const elite = phaseNumber(entry?.unlockCondition?.phase);
+    if (!entry || !Number.isInteger(elite) || build.elite < elite
+      || !Number.isSafeInteger(build.skillRank) || build.skillRank < 1
+      || build.skillRank > Math.min([4, 7, 10][build.elite], entry.levels.length))
+      throw Error('Unsupported Mayer Robotter skill or rank');
+    const level = entry.levels[build.skillRank - 1], bb = blackboard(level.blackboard);
+    const keys = index ? ['atk_scale', 'stun'] : ['prob'];
+    if (level.prefabId !== id || level.skillType !== (index ? 'MANUAL' : 'PASSIVE')
+      || level.spData.spCost !== 0 || !level.rangeGrid?.length
+      || Object.keys(bb).length !== keys.length || keys.some(key => !Number.isFinite(bb[key])))
+      throw Error('Unreviewed Mayer Robotter skill source');
+    skill = { skillId: id, name: level.name, bb, rangeGrid: level.rangeGrid,
+      trigger: { rule: 'NEVER' } };
   }
   if (ownerId === 'char_250_phatom') {
     for (const talent of talents) stats.respawnTime += talent.bb.respawn_time ?? 0;

@@ -12,6 +12,7 @@ import { createSceneBuggyCam } from './arkpedia-scene.js';
 import { createSlumberfoot } from './arkpedia-blacknight.js';
 import { createWindflitBattery } from './arkpedia-windflit.js';
 import { createAlannaDevice } from './arkpedia-alanna.js';
+import { createMayerRobotter } from './arkpedia-mayer.js';
 import { createFrostMat } from './arkpedia-frost.js';
 import { createRobinClip } from './arkpedia-robin.js';
 import { installSilenceParadigmaticDrone } from './arkpedia-silence-paradigmatic.js';
@@ -71,6 +72,7 @@ export function deployRegularSummon(battle, key, row, col, dir = 'RIGHT') {
     : state.ownerId === 'char_476_blkngt' ? createSlumberfoot(battle, state, row, col)
     : state.ownerId === 'char_433_windft' ? createWindflitBattery(battle, state, row, col, dir)
     : state.ownerId === 'char_4178_alanna' ? createAlannaDevice(battle, state, row, col, dir)
+    : state.ownerId === 'char_242_otter' ? createMayerRobotter(battle, state, row, col)
     : state.ownerId === 'char_458_rfrost' ? createFrostMat(battle, state, row, col)
     : state.ownerId === 'char_451_robin' ? createRobinClip(battle, state, row, col)
     : state.config.tacticalPoint ? createMetalCrab(battle, state, row, col)
@@ -168,7 +170,7 @@ export function installSummoner({ battle, unit, def }) {
   const config = REGULAR_SUMMONS[def.id];
   if (!config || config.skillId && def.skill?.id !== config.skillId
     || config.minimumElite != null && def.raw.arkpedia.elite < config.minimumElite) return;
-  const build = ['char_250_phatom', 'char_451_robin', 'char_458_rfrost'].includes(def.id)
+  const build = ['char_250_phatom', 'char_451_robin', 'char_458_rfrost', 'char_242_otter'].includes(def.id)
     ? { ...def.raw.arkpedia, skillId: def.skill.id } : def.raw.arkpedia;
   const key = summonCardId(def.id), record = summonRecordFor(def.id, build, battle.data.raw.tokens);
   if (!battle.regularSummons) battle.regularSummons = new Map();
@@ -187,6 +189,9 @@ export function installSummoner({ battle, unit, def }) {
     if (deployed === unit) {
       const bornCount = config.stockLimit ? 0 : def.talents[config.talentIndex ?? 0].bb.cnt;
       state.stock = config.stockLimit ? 0 : config.additiveBornStock ? state.stock + bornCount : bornCount;
+      // Mayer's bounded total supply follows the source born count; raw token
+      // maxDeckStackCnt/maxDeployCount remain untouched in the record.
+      if (config.bornStockBudget) { state.stockBudget = bornCount; state.stock = Math.min(bornCount, state.stock); }
       if (def.id === 'char_250_phatom') state.stock = Math.min(1, state.stock);
       else state.readyAt = battle.time;
       if (config.stockLimit) battle.removeBuff(unit, 'shamare:stock-full');
