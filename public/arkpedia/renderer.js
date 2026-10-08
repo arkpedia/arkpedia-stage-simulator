@@ -5,6 +5,7 @@ import { BattleActor } from "./battle-actor.js";
 import { regularVisualHeight } from "./regular-form-visual.js";
 import { createAssets } from "/js/assets.js";
 import { regionEdges } from "/shared/arkpedia/placement.js";
+import { rangeStripes } from "/shared/arkpedia/battle-ui.js";
 import { spriteFacing } from "/shared/arkpedia/facing.js";
 import { skillHud, skillSourceFor } from "/shared/arkpedia/skill-hud.js";
 import { regularTokenIdsFor } from "/shared/arkpedia/summons.js";
@@ -13,6 +14,7 @@ import { loadStageArt } from "./stage-art.js";
 import { loadGates } from "./gates.js";
 import { loadSkillParticles, SkillParticleLayer } from "./particles.js";
 const P = globalThis.PIXI;
+const tileRangeStripes = rangeStripes();
 const models = createAssets({
   loadSpine: async (entry) => {
     const asset = await P.Assets.load({
@@ -213,7 +215,8 @@ export class StageRenderer {
     this.pixi.renderer.resize(width, height);
     this.projection = fitCamera(
       this.rect,
-      { width, height, padding: { top: 12, bottom: 12, left: 8, right: 8 } },
+      { width, height, padding: { top: this.host.classList.contains('battle-board') ? 60 : 12,
+        bottom: this.host.classList.contains('battle-board') ? Math.min(145, height * .23) : 12, left: 8, right: 8 } },
       { tilt: 28, dist: 20, headroom: 1, margin: 0.2 },
     );
     syncThreeCamera(this.projection, this.camera, width, height);
@@ -320,13 +323,18 @@ export class StageRenderer {
         }
     }
     for (const key of state.available || [])
-      polygon(Math.floor(key / 21), key % 21, 0xb5ded3, 0.1, 1, 0.055);
+      polygon(Math.floor(key / 21), key % 21, 0x72bd50, 0.38, 1, 0.025);
     const range = state.range || [];
     for (const key of range) {
       const row = Math.floor(key / 21),
         col = key % 21;
-      if (row < geometry.rows && col < geometry.cols)
-        polygon(row, col, 0xf0bf63, 0.16);
+      if (row >= 0 && col >= 0 && row < geometry.rows && col < geometry.cols) {
+        polygon(row, col, 0xffaf26, 0.12);
+        for (const stripe of tileRangeStripes) {
+          const points = stripe.map(([x, y]) => this.projection.project(col + x, row + y, this.heightAt(row, col) + .014));
+          g.lineStyle(0).beginFill(0xffa51e, .55).drawPolygon(points.flatMap(p => [p.x, p.y])).endFill();
+        }
+      }
     }
     g.lineStyle(2, 0xf0bf63, 0.95);
     const corners = new Map();

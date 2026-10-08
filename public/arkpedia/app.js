@@ -10,6 +10,7 @@ import {
 import { maxedSupport } from "/shared/arkpedia/squad.js";
 import { StageRenderer } from "./renderer.js";
 import { absoluteRangeKeys } from "/sim/targeting.js";
+import { classNames, skillIconFile } from "/shared/arkpedia/battle-ui.js";
 import { swipeFacing } from "/shared/arkpedia/placement.js";
 import { skillHud, skillSourceFor } from "/shared/arkpedia/skill-hud.js";
 import { battleHud } from "/shared/arkpedia/battle-hud.js";
@@ -44,6 +45,7 @@ let loading = false,
   aimPointer = null,
   showRoutes = false,
   landscapeRequired = false;
+let operatorTab = "skill";
 const response = await fetch("/data/arkpedia-mvp.json");
 if (!response.ok) throw Error("Stage data unavailable");
 const data = await response.json();
@@ -76,6 +78,15 @@ function placementError(id, row, col) {
 }
 const statIcon = (name) =>
   `https://raw.githubusercontent.com/arkpedia/arkpedia-image-assets/${data.sources["arkpedia/arkpedia-image-assets"]}/stat-icons/${name}.webp`;
+const imageAsset = path => `https://raw.githubusercontent.com/arkpedia/arkpedia-image-assets/${data.sources["arkpedia/arkpedia-image-assets"]}/${path}`;
+const classIcon = record => classNames[record.profession] ? imageAsset(`class-icons/${classNames[record.profession]}.webp`) : null;
+const classImage = (record, css = '') => classIcon(record) ? `<img class="${css}" src="${classIcon(record)}" alt="">` : '';
+function skillIcon(build) {
+  const op = data.operators[build.id];
+  const level = op.skills.find(s => s.id === build.skillId)?.levels[build.skillRank - 1];
+  const file = skillIconFile(op.name, level?.name);
+  return file ? imageAsset(`skill-icons/${encodeURIComponent(file)}`) : null;
+}
 function battleReadouts() {
   const digits = String(battle.total).length * 2 + 1;
   return `<div class="battle-hud" aria-label="Battle status">
@@ -93,8 +104,8 @@ function battleReadouts() {
   </div>`;
 }
 function skillDescription(level) {
-  const values = Object.fromEntries(level.blackboard.map((entry) => [entry.key.toLowerCase(), entry.value]));
-  return escape(level.description.replace(/<[^>]*>/g, "").replace(
+  const values = Object.fromEntries((level.blackboard ?? []).map((entry) => [entry.key.toLowerCase(), entry.value]));
+  return escape((level.description ?? "").replace(/<[^>]*>/g, "").replace(
     /\{([^}:]+)(?::([^}]+))?\}/g,
     (placeholder, key, format) => {
       const negative = key.startsWith("-");
@@ -262,7 +273,20 @@ async function start() {
     workspace = document.createElement("section");
     workspace.className = "workspace";
     workspace.setAttribute("aria-label", "Battle workspace");
-    workspace.innerHTML = `<div class="battle-content"><header class="battle-header"><div class="stage-title"><span class="stage-code">0-1</span><h2>Collapse</h2><span class="battle-time" id="battle-time" aria-label="Battle time"></span></div><div class="battle-controls"><button id="routes" aria-pressed="false">Paths</button><button id="pause">Pause</button><button id="speed">1×</button><button id="restart">Restart</button><button id="exit">Exit</button></div></header><div class="board battle-board" id="battle-board">${battleReadouts()}<span class="pause-label" id="paused-label" hidden>Paused</span><aside class="command" id="command" aria-label="Selected operator" hidden></aside></div><div class="deployment-wrap"><button id="shelf-left" aria-label="Scroll operators left">‹</button><div class="deployment" id="deployment"></div><button id="shelf-right" aria-label="Scroll operators right">›</button></div><p class="status-note" id="battle-message" role="status" aria-live="polite"></p></div><div class="orientation-gate" id="orientation-gate" role="dialog" aria-modal="true" aria-labelledby="orientation-title" aria-describedby="orientation-description" hidden><svg class="rotate-device" aria-hidden="true" viewBox="0 0 100 100"><rect x="33" y="22" width="34" height="56" rx="5"/><path d="M18 55A34 34 0 0 1 60 17M60 17l-13-3M60 17l-7 12M82 45A34 34 0 0 1 40 83M40 83l13 3M40 83l7-12"/></svg><h2 id="orientation-title">Rotate to landscape</h2><p id="orientation-description">Turn your device sideways to deploy and play.<br>Your battle is paused and your squad is saved.</p><button id="portrait-exit">Back to squad</button></div>`;
+    workspace.innerHTML = `<div class="battle-content"><div class="board battle-board" id="battle-board">
+      <header class="battle-header">
+        <button id="settings" aria-label="Battle settings" aria-expanded="false" aria-controls="battle-settings">⚙</button>
+        <div class="battle-settings" id="battle-settings" hidden><p>0-1 · Collapse <span id="battle-time" aria-label="Battle time"></span></p><button id="routes" aria-pressed="false">Paths</button><button id="restart">Restart</button><button id="exit">Back to squad</button></div>
+        <div class="battle-controls"><button id="speed" aria-label="Battle speed">1×</button><button id="pause" aria-label="Start"><span aria-hidden="true">▶</span></button></div>
+      </header>
+      ${battleReadouts()}<span class="simulation-label">Simulation · 0-1</span><span class="pause-label" id="paused-label" hidden>Paused</span>
+      <aside class="command" id="command" aria-label="Selected operator" hidden></aside>
+      <div class="field-command" id="field-command" aria-label="Operator actions" hidden></div>
+      <button class="facing-cancel" id="facing-cancel" hidden><span aria-hidden="true">×</span>Cancel</button>
+      <span class="aim-hint" id="aim-hint" hidden>Drag back to centre to cancel</span>
+      <div class="deployment-wrap"><button id="shelf-left" aria-label="Scroll operators left">‹</button><div class="deployment" id="deployment"></div><button id="shelf-right" aria-label="Scroll operators right">›</button><div class="shelf-track" aria-hidden="true"><span></span></div></div>
+      <p class="status-note" id="battle-message" role="status" aria-live="polite"></p>
+      </div></div><div class="orientation-gate" id="orientation-gate" role="dialog" aria-modal="true" aria-labelledby="orientation-title" aria-describedby="orientation-description" hidden><svg class="rotate-device" aria-hidden="true" viewBox="0 0 100 100"><rect x="33" y="22" width="34" height="56" rx="5"/><path d="M18 55A34 34 0 0 1 60 17M60 17l-13-3M60 17l-7 12M82 45A34 34 0 0 1 40 83M40 83l13 3M40 83l7-12"/></svg><h2 id="orientation-title">Rotate to landscape</h2><p id="orientation-description">Turn your device sideways to deploy and play.<br>Your battle is paused and your squad is saved.</p><button id="portrait-exit">Back to squad</button></div>`;
     document.body.append(workspace);
     const board = workspace.querySelector("#battle-board");
     // Move canvases to a full-viewport battle container; preview has no deployment handler.
@@ -299,7 +323,7 @@ async function start() {
           `<button data-facing="${dir}" aria-label="Deploy facing ${dir.toLowerCase()}">${glyph}</button>`,
       )
       .join("")}
-    <button class="facing-handle" aria-label="Drag from here to choose deployment direction">◇</button>`;
+    <button class="facing-handle" aria-label="Drag from here to choose deployment direction"><span aria-hidden="true">◇</span></button>`;
     board.append(picker);
     for (const button of picker.querySelectorAll("[data-facing]")) {
       button.onfocus = () => {
@@ -353,11 +377,18 @@ async function start() {
     handle.onpointercancel = handle.onlostpointercapture = cancelAim;
     // Click placement remains available outside the picker; it never confirms facing.
     board.onpointerup = (e) => {
-      if (pending || e.target.closest("button")) return;
+      if (pending || e.target.closest("button, .command, .battle-settings, .deployment-wrap")) return;
       const tile = renderer.pickAt(e.clientX, e.clientY);
       if (tile) pick(tile.row, tile.col);
     };
     renderer.onLayout = layoutFacing;
+    workspace.querySelector("#settings").onclick = e => {
+      const menu = workspace.querySelector("#battle-settings");
+      menu.hidden = !menu.hidden;
+      e.currentTarget.setAttribute("aria-expanded", String(!menu.hidden));
+    };
+    workspace.querySelector("#facing-cancel").onclick = () => { cancelPlacement(); drawHud(); };
+    workspace.querySelector("#deployment").addEventListener("scroll", updateShelfTrack);
     workspace.querySelector("#routes").onclick = (e) => {
       showRoutes = !showRoutes;
       e.currentTarget.setAttribute("aria-pressed", String(showRoutes));
@@ -509,7 +540,7 @@ function operatorDetails(build, unit) {
     <dl class="operator-stats">${numbers.map(([label, value]) => `<div><dt>${label}</dt><dd>${Math.round(value)}</dd></div>`).join("")}</dl>
     <div class="hp-readout"><span>HP</span><strong>${Math.min(Math.ceil(hp), Math.round(maxHp))} / ${Math.round(maxHp)}</strong></div>
     <div class="meter hp"><span style="width:${Math.min(1, Math.max(0, hp / maxHp)) * 100}%"></span></div>
-    ${operatorSkillDetails(build, unit)}`;
+    ${rangeDiagram(record.rangeGrid)}`;
 }
 function operatorSkillDetails(build, unit) {
   const hud = unit ? skillHud(unit.skill) : null;
@@ -519,11 +550,39 @@ function operatorSkillDetails(build, unit) {
     INCREASE_WHEN_ATTACK: "Offensive recovery",
     INCREASE_WHEN_TAKEN_DAMAGE: "Defensive recovery",
   }[level?.spData.spType] || "Passive";
-  return `${level ? `<section class="operator-skill"><h3>${escape(level.name)} <small>${rankLabel(build.skillRank)}</small></h3>
+  return `${level ? `<section class="operator-skill"><img class="skill-icon" src="${skillIcon(build)}" alt=""><div class="skill-copy"><h3>${escape(level.name)} <small>${rankLabel(build.skillRank)}</small></h3>
     <div class="skill-tags"><span class="${level.spData.spType === "INCREASE_WITH_TIME" ? "auto" : "manual"}">${recovery}</span><span class="${level.skillType === "AUTO" ? "auto" : "manual"}">${level.skillType === "AUTO" ? "Auto activation" : level.skillType === "MANUAL" ? "Manual activation" : "Passive"}</span>${level.duration > 0 ? `<span>${level.duration}s</span>` : ""}</div>
     <p class="sp-readout">${hud?.text.replace(/ · (?:Auto|Manual) activation/g, "") || `${level.spData.initSp} / ${level.spData.spCost} SP on deployment`}</p>
     ${hud ? `<div class="meter ${hud.state}"><span style="width:${hud.fraction * 100}%"></span></div>` : ""}
-    <p class="skill-description">${skillDescription(level)}</p></section>` : ""}`;
+    <p class="skill-description">${skillDescription(level)}</p></div></section>` : ""}`;
+}
+function rangeDiagram(cells) {
+  const positions = [[0, 0], ...cells];
+  const rows = positions.map(p => p[0]), cols = positions.map(p => p[1]);
+  const minR = Math.min(...rows), maxR = Math.max(...rows), minC = Math.min(...cols), maxC = Math.max(...cols);
+  const keys = new Set(cells.map(p => p.join(',')));
+  let html = '';
+  for (let r = maxR; r >= minR; r--) for (let c = minC; c <= maxC; c++)
+    html += `<i class="${r === 0 && c === 0 ? 'origin' : keys.has(`${r},${c}`) ? 'in-range' : ''}"></i>`;
+  return `<div class="range-preview"><span class="range-grid" style="grid-template-columns:repeat(${maxC-minC+1},8px)" aria-hidden="true">${html}</span><small>Attack range</small></div>`;
+}
+function operatorTabContent(entry, unit) {
+  if (entry.kind !== 'operator') return summonDetails(entry);
+  const record = recordFor(entry.build, data);
+  if (operatorTab === 'skill') return operatorSkillDetails(entry.build, unit) || '<p>No active skill.</p>';
+  if (operatorTab === 'trait') return `<h3>${escape(classNames[record.profession] ?? record.profession)}</h3><p class="skill-description">${skillDescription({ ...record.trait, description: record.trait?.overrideDescripton || record.trait?.description || data.operators[entry.id].description })}</p>`;
+  return record.talents.filter(t => !t.isHideTalent).map(t => `<h3>${escape(t.name)}</h3><p class="skill-description">${skillDescription(t)}</p>`).join('') || '<p>No talent unlocked at this build.</p>';
+}
+function updateShelfTrack() {
+  const shelf = workspace?.querySelector('#deployment');
+  if (!shelf) return;
+  const track = workspace.querySelector('.shelf-track');
+  track.hidden = shelf.scrollWidth <= shelf.clientWidth;
+  const thumb = track.querySelector('span');
+  thumb.style.width = `${100 * shelf.clientWidth / shelf.scrollWidth}%`;
+  thumb.style.left = `${100 * shelf.scrollLeft / shelf.scrollWidth}%`;
+  workspace.querySelector('#shelf-left').disabled = shelf.scrollLeft <= 1;
+  workspace.querySelector('#shelf-right').disabled = shelf.scrollLeft + shelf.clientWidth >= shelf.scrollWidth - 1;
 }
 function drawHud() {
   if (!workspace || !battle) return;
@@ -542,11 +601,11 @@ function drawHud() {
   recovery.setAttribute("aria-valuenow", Math.round(reading.recoveryFraction * 100));
   recovery.setAttribute("aria-valuetext", reading.recoveryText);
   recovery.querySelector("span").style.transform = `scaleX(${reading.recoveryFraction})`;
-  workspace.querySelector("#pause").textContent = paused
-    ? battle.time === 0
-      ? "Start"
-      : "Resume"
-    : "Pause";
+  const pause = workspace.querySelector('#pause');
+  const pauseLabel = paused ? battle.time === 0 ? 'Start' : 'Resume' : 'Pause';
+  pause.setAttribute('aria-label', pauseLabel);
+  pause.title = pauseLabel;
+  pause.querySelector('span').textContent = paused ? '▶' : 'Ⅱ';
   workspace.querySelector("#paused-label").hidden = !paused || battle.finished;
   const shelf = workspace.querySelector("#deployment");
   const cardIds = [...Object.keys(battle.bench), ...regularSummonCards(battle).map(card => card.key)];
@@ -555,7 +614,7 @@ function drawHud() {
     if ([...shelf.children].some(button => button.dataset.id === id)) continue;
     const entry = selectedEntry(id), button = document.createElement('button');
     button.dataset.id = id; button.setAttribute('aria-pressed', 'false');
-    button.innerHTML = `${id === supportId ? '<span class="support-marker" aria-hidden="true">SUP</span>' : ''}<img src="${entry.icon}" alt="" draggable="false"><span class="bench-name">${escape(entry.name)}</span><span class="cost"></span>`;
+    button.innerHTML = `${id === supportId ? '<span class="support-marker" aria-hidden="true">SUP</span>' : ''}<img class="bench-portrait" src="${entry.icon}" alt="" draggable="false">${classImage(entry.record, 'bench-class')}<span class="bench-name sr-only">${escape(entry.name)}</span><span class="cost"></span>`;
     shelf.append(button);
       button.onclick = () => {
         if (button.suppressClick) {
@@ -641,59 +700,83 @@ function drawHud() {
     button.setAttribute("aria-pressed", String(selected === id));
     button.setAttribute("aria-label", `${b.name}, ${cost}${id === supportId ? ', Support' : ''}`);
     button.title = `${b.name}${id === supportId ? ' · Support' : ''}`;
-    button.querySelector(".cost").textContent = cost;
+    button.querySelector(".cost").textContent = alive ? 'IN' : cool ? cool + 's' : b.kind === 'summon' ? b.record.stats.cost : battle.cost(id);
+    const rarity = b.kind === 'operator' ? data.operators[id].rarity : 1;
+    button.dataset.rarity = rarity;
+    button.classList.toggle('unavailable', !!alive || cool > 0 || (b.kind === 'summon' ? b.record.stats.cost : battle.cost(id)) > battle.dp || b.kind === 'summon' && (!b.owner.alive || b.stock <= 0));
+    button.classList.toggle('deployed', !!alive);
   }
-  // Preserve keyboard focus when refreshing the counters; command markup changes only on selection/state transitions.
+  updateShelfTrack();
   const b = selectedEntry(), unit = b?.unit;
   let highlights = [];
-  let canActivate = false;
-  const command = workspace.querySelector("#command");
-  // The inspector overlays a fixed battlefield; selection never resizes the map.
-  // Hide it while dragging/aiming so every deployment tile remains reachable.
-  command.hidden = !b || !!dragging || !!pending || battle.finished;
+  const command = workspace.querySelector('#command'), field = workspace.querySelector('#field-command');
+  command.hidden = !b || battle.finished;
+  command.classList.toggle('placing', !!dragging || !!pending);
+  command.inert = !!dragging || !!pending;
+  workspace.querySelector('#battle-board').classList.toggle('aiming', !!pending);
   if (unit) highlights = [...unit.rangeKeys];
-  else if (b) {
-    for (let r = 0; r < 6; r++)
-      for (let c = 0; c < 9; c++)
-        if (!placementError(selected, r, c)) highlights.push(r * 21 + c);
-  }
+  else if (b) for (let r = 0; r < data.stage.geometry.rows; r++)
+    for (let c = 0; c < data.stage.geometry.cols; c++)
+      if (!placementError(selected, r, c)) highlights.push(r * 21 + c);
+  field.hidden = !unit || battle.finished;
   if (b) {
     const skillUnit = skillSourceFor(unit);
     const hud = skillUnit ? skillHud(skillUnit.skill) : null;
-    canActivate = !!((hud?.canActivate || hud?.canCancel) && skillUnit.canAct && !skillUnit.s.flags.silence);
-    const copy = b.kind === 'operator' ? operatorDetails(b.build, unit) : summonDetails(b);
+    const canActivate = !!((hud?.canActivate || hud?.canCancel) && skillUnit.canAct && !skillUnit.s.flags.silence);
     if (command.dataset.selection !== selected || command.dataset.alive !== String(!!unit)) {
-      command.innerHTML = `<div class="operator-portrait"><img src="${b.art}" alt="${escape(b.name)} ${b.kind === 'operator' ? 'base artwork' : 'original avatar'}" draggable="false"><h2>${escape(b.name)}</h2></div>
+      operatorTab = 'skill';
+      command.innerHTML = `<div class="operator-portrait"><img src="${b.art}" alt="${escape(b.name)} ${b.kind === 'operator' ? 'base artwork' : 'original avatar'}" draggable="false"></div>
         <button class="inspector-close" aria-label="Close operator details">×</button>
-        <div class="command-copy">${copy}</div>
-        <div class="command-actions">${unit ? `${!skillUnit.skill.noSkill && skillUnit.skill.manual ? '<button id="skill" class="primary">Activate skill</button>' : ""}<button id="retreat">Retreat</button>` : '<button id="cancel">Cancel selection</button>'}</div>`;
+        <div class="operator-heading">${classImage(b.record)}<h2>${escape(b.name)}</h2></div>
+        <div class="command-stats"></div>
+        <div class="operator-tabs" role="tablist" aria-label="Operator information">${['skill','trait','talent'].map(tab => `<button role="tab" id="operator-tab-${tab}" aria-controls="operator-tabpanel" data-tab="${tab}" aria-selected="${tab === operatorTab}" tabindex="${tab === operatorTab ? 0 : -1}">${tab[0].toUpperCase()+tab.slice(1)}</button>`).join('')}</div>
+        <div class="command-copy" id="operator-tabpanel" role="tabpanel" aria-labelledby="operator-tab-skill" tabindex="0"></div>`;
       command.dataset.selection = selected;
       command.dataset.alive = String(!!unit);
-      command.querySelector(".inspector-close").onclick = () => {
-        cancelPlacement();
+      command.querySelector('.inspector-close').onclick = () => { cancelPlacement(); drawHud(); };
+      command.querySelector('.operator-tabs').hidden = b.kind !== 'operator';
+      const selectTab = tab => {
+        operatorTab = tab.dataset.tab;
+        for (const button of command.querySelectorAll('[role="tab"]')) {
+          button.setAttribute('aria-selected', String(button === tab)); button.tabIndex = button === tab ? 0 : -1;
+        }
+        command.querySelector('.command-copy').setAttribute('aria-labelledby', tab.id);
+        command.querySelector('.command-copy').scrollTop = 0;
         drawHud();
       };
-      command.querySelector("#cancel")?.addEventListener("click", () => {
-        cancelPlacement();
-        drawHud();
+      for (const tab of command.querySelectorAll('[role="tab"]')) {
+        tab.onclick = () => selectTab(tab);
+        tab.onkeydown = e => {
+          const tabs = [...command.querySelectorAll('[role="tab"]')];
+          const step = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+          if (!step && e.key !== 'Home' && e.key !== 'End') return;
+          e.preventDefault(); e.stopPropagation();
+          const next = e.key === 'Home' ? tabs[0] : e.key === 'End' ? tabs.at(-1) : tabs[(tabs.indexOf(tab)+step+tabs.length)%tabs.length];
+          selectTab(next); next.focus();
+        };
+      }
+      field.innerHTML = unit ? `<svg class="field-frame" aria-hidden="true" viewBox="-100 -100 200 200"><path d="M0 -95L95 0L0 95L-95 0Z"/></svg><button id="retreat" aria-label="Retreat ${escape(b.name)}" title="Retreat"><svg aria-hidden="true" viewBox="0 0 32 32"><circle cx="19" cy="5" r="3"/><path d="M7 12l6-3 5 3 5 3h6M18 12l-5 7 7 3 3 7M13 19l-5 9M4 5h7M4 5l3-3M4 5l3 3"/></svg></button>${!skillUnit.skill.noSkill ? `<button id="skill" aria-label="Activate skill"><img src="${skillIcon(b.kind === 'operator' ? b.build : battle.bench[b.ownerId].build)}" alt=""><span class="field-sp"></span></button>` : ''}` : '';
+      field.querySelector('#retreat')?.addEventListener('click', () => {
+        if (b.kind === 'token') retreatRegularSummon(battle, selected); else battle.retreatOperator(selected);
+        selected = null; drawHud();
       });
-      command.querySelector("#retreat")?.addEventListener("click", () => {
-        if (b.kind === 'token') retreatRegularSummon(battle, selected);
-        else battle.retreatOperator(selected);
-        selected = null;
-        drawHud();
-      });
-      command.querySelector("#skill")?.addEventListener("click", () => {
-        battle.activateOperator(skillUnit.defId);
-        drawHud();
-      });
-    } else {
-      command.querySelector(".command-copy").innerHTML = copy;
+      field.querySelector('#skill')?.addEventListener('click', () => { battle.activateOperator(skillUnit.defId); drawHud(); });
     }
-    const skillButton = command.querySelector("#skill");
+    command.querySelector('.command-stats').innerHTML = b.kind === 'operator' ? operatorDetails(b.build, unit) : '';
+    const copy = operatorTabContent(b, skillUnit);
+    const panel = command.querySelector('.command-copy');
+    if (panel.innerHTML !== copy) {
+      const scroll = panel.scrollTop;
+      panel.innerHTML = copy;
+      panel.scrollTop = scroll;
+    }
+    const skillButton = field.querySelector('#skill');
     if (skillButton) {
       skillButton.disabled = !canActivate;
-      skillButton.textContent = hud?.canCancel ? "Stop skill" : hud?.ready ? hud.canActivate ? "Skill ready · Activate" : "Skill ready" : "Activate skill";
+      skillButton.classList.toggle('ready', !!hud?.canActivate);
+      const label = hud?.canCancel ? 'Stop skill' : hud?.canActivate ? 'Skill ready · Activate' : hud?.text ?? 'Skill unavailable';
+      skillButton.setAttribute('aria-label', label); skillButton.title = label;
+      skillButton.querySelector('.field-sp').textContent = hud?.canActivate ? 'READY' : hud?.text.match(/^\d+ \/ \d+ SP/)?.[0] ?? (hud?.state === 'active' ? 'ACTIVE' : 'PASSIVE');
     }
   }
   const hover = dragging?.over ? { ...dragging.over, dir: "RIGHT" } : null;
@@ -777,30 +860,48 @@ function confirmFacing(dir) {
   drawHud();
 }
 function layoutFacing() {
-  const picker = workspace?.querySelector(".facing-picker");
-  if (!picker) return;
+  if (!workspace || !battle) return;
+  updateShelfTrack();
+  const picker = workspace.querySelector('.facing-picker');
   picker.hidden = !pending || battle.finished;
+  const cancel = workspace.querySelector('#facing-cancel'), hint = workspace.querySelector('#aim-hint');
+  cancel.hidden = !pending || battle.finished;
+  hint.hidden = !aimPointer;
+  const entry = selectedEntry(), unit = entry?.unit, board = renderer.host;
+  const locate = (row, col) => renderer.projection.project(col, row, renderer.heightAt(row, col));
+  const field = workspace.querySelector('#field-command');
+  if (unit && !field.hidden) {
+    const p = locate(unit.tileR, unit.tileC), size = Math.min(150, Math.max(85, p.s * 1.35));
+    field.style.left = `${p.x}px`; field.style.top = `${p.y}px`;
+    field.style.width = field.style.height = `${size*2}px`;
+    // Anchor actions to the unit, but keep their hit targets above the shelf and inside the board.
+    for (const [id, dx, dy] of [['retreat', -size*.55, -size*.55], ['skill', size*.5, size*.5]]) {
+      const button = field.querySelector('#'+id);
+      if (!button) continue;
+      const shelfTop = workspace.querySelector('.deployment-wrap').offsetTop;
+      button.style.left = `${Math.max(30, Math.min(board.clientWidth-40, p.x+dx))-p.x+size}px`;
+      button.style.top = `${Math.max(75, Math.min(shelfTop-42, p.y+dy))-p.y+size}px`;
+    }
+  }
   if (!pending) return;
-  const p = renderer.projection.project(
-    pending.col,
-    pending.row,
-    renderer.heightAt(pending.row, pending.col),
-  );
-  const radius = Math.max(70, Math.min(100, p.s * 1.05));
-  // Keep all four hit targets within the map even at its edge.
-  const x = Math.max(radius, Math.min(renderer.host.clientWidth - radius, p.x));
-  const y = Math.max(
-    radius,
-    Math.min(renderer.host.clientHeight - radius, p.y),
-  );
-  picker.style.left = `${x}px`;
-  picker.style.top = `${y}px`;
-  picker.style.width = picker.style.height = `${radius * 2}px`;
-  for (const el of picker.querySelectorAll("[data-facing], [data-cone]")) {
+  const p = locate(pending.row, pending.col);
+  const radius = Math.max(85, Math.min(210, board.clientHeight*.32, p.s*2.15));
+  picker.style.left = `${p.x}px`; picker.style.top = `${p.y}px`;
+  picker.style.width = picker.style.height = `${radius*2}px`;
+  const shelfTop = workspace.querySelector('.deployment-wrap').offsetTop;
+  for (const [dir, dx, dy] of [['UP', 0, -.68], ['RIGHT', .68, 0], ['DOWN', 0, .68], ['LEFT', -.68, 0]]) {
+    const button = picker.querySelector(`[data-facing="${dir}"]`);
+    button.style.left = `${Math.max(24,Math.min(board.clientWidth-24,p.x+radius*dx))-p.x+radius}px`;
+    button.style.top = `${Math.max(76,Math.min(shelfTop-26,p.y+radius*dy))-p.y+radius}px`;
+  }
+  cancel.style.left = `${Math.max(8, Math.min(board.clientWidth-72,p.x-radius*.8-60))}px`;
+  cancel.style.top = `${Math.max(80, Math.min(workspace.querySelector('.deployment-wrap').offsetTop-64,p.y-radius*.65-30))}px`;
+  hint.style.left = `${Math.max(8,Math.min(board.clientWidth-230,p.x-radius))}px`;
+  hint.style.top = `${Math.max(80,p.y-radius*.72)}px`;
+  for (const el of picker.querySelectorAll('[data-facing], [data-cone]')) {
     const active = (el.dataset.facing || el.dataset.cone) === pending.dir;
-    el.classList.toggle("active", active);
-    if (el.tagName === "BUTTON")
-      el.setAttribute("aria-pressed", String(active));
+    el.classList.toggle('active', active);
+    if (el.tagName === 'BUTTON') el.setAttribute('aria-pressed', String(active));
   }
 }
 function syncOrientation() {

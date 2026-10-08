@@ -70,6 +70,7 @@ const operators = Object.fromEntries(
       {
         id,
         name: c.name,
+        description: c.description,
         rarity,
         profession: c.profession,
         subProfessionId: c.subProfessionId,
