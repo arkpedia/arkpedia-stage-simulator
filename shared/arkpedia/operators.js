@@ -96,6 +96,7 @@ import { SURTR_OPERATORS } from './surtr-operators.js';
 import { SPURIA_OPERATORS } from './spuria-operators.js';
 import { MAYER_OPERATORS } from './mayer-operators.js';
 import { FANG_FIRE_SHARPENED_OPERATORS } from './fang-fire-sharpened-operators.js';
+import { SIEGE_OPERATORS } from './siege-operators.js';
 import { FROST_OPERATORS } from './frost-operators.js';
 import { ROBIN_OPERATORS } from './robin-operators.js';
 import { FIVE_STAR_SPECIALIST_EXPANSION_OPERATORS } from './five-star-specialist-expansion-operators.js';
@@ -216,6 +217,7 @@ export const REGULAR_OPERATORS = Object.freeze({
   ...FROST_OPERATORS,
   ...MAYER_OPERATORS,
   ...FANG_FIRE_SHARPENED_OPERATORS,
+  ...SIEGE_OPERATORS,
   ...PHANTOM_OPERATORS,
   ...HOOK_EXPANSION_OPERATORS,
   ...FIVE_STAR_SPECIALIST_EXPANSION_OPERATORS,

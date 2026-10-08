@@ -99,6 +99,7 @@ import { customizeSpuriaKit, installSpuria } from './content/arkpedia-spuria.js'
 import { customizeMayerKit, installMayer } from './content/arkpedia-mayer.js';
 import { customizeFangFireSharpenedKit, installFangFireSharpened, adjustFangFireSharpenedCost,
   consumeFangFireSharpenedCard, fangFireSharpenedRefund } from './content/arkpedia-fang-fire-sharpened.js';
+import { customizeSiegeKit, installSiege } from './content/arkpedia-siege.js';
 import { customizeFrostKit, installFrost } from './content/arkpedia-frost.js';
 import { customizeRobinKit, installRobin } from './content/arkpedia-robin.js';
 import { customizeFiveStarSupportFourthKit, installFiveStarSupportFourth } from './content/arkpedia-five-star-support-fourth.js';
@@ -409,6 +410,7 @@ export class StandardBattle extends Battle {
     customizeFrostKit({ battle: this, id, def, unit, kit });
     customizeMayerKit({ battle: this, id, def, unit, kit });
     customizeFangFireSharpenedKit({ battle: this, id, def, unit, kit });
+    customizeSiegeKit({ battle: this, id, def, unit, kit });
     customizePhantomKit({ battle: this, id, def, unit, kit });
     customizeHookExpansionKit({ battle: this, id, def, unit, kit });
     customizeFiveStarSupportFourthKit({ battle: this, id, def, unit, kit });
@@ -530,6 +532,7 @@ export class StandardBattle extends Battle {
     installFrost({ battle: this, unit, def });
     installMayer({ battle: this, unit, def });
     installFangFireSharpened({ battle: this, unit, def });
+    installSiege({ battle: this, unit, def });
     installHookExpansion({ battle: this, unit, def });
     installFiveStarSupportFourth({ battle: this, unit, def });
     installFiveStarSpecialistExpansion({ battle: this, unit, def });

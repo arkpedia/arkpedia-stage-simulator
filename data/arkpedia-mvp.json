@@ -51670,6 +51670,205 @@
           "height": 570.351
         }
       },
+      "operator/char_112_siege/default/front": {
+        "kind": "operator",
+        "id": "char_112_siege",
+        "variant": "default",
+        "facing": "front",
+        "spineVersion": "3.8.99",
+        "source": {
+          "key": "operators",
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "spine/char_112_siege/char_112_siege/Front"
+        },
+        "skeleton": {
+          "path": "models/operator/char_112_siege/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_112_siege.skel",
+          "bytes": 108277,
+          "sha256": "2a60b64bfcf6d3ec24ba9d624f999079646a05eb21b5afc2ec12b3d817ff62d5"
+        },
+        "atlas": {
+          "path": "models/operator/char_112_siege/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_112_siege.atlas",
+          "bytes": 4135,
+          "sha256": "6e57662aedb1fab69f9d1228ed3f5ba3d4e13b35a807a6c3f110280a2103aeb1"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_112_siege/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_112_siege.png",
+            "bytes": 74488,
+            "sha256": "db00679374bb7bc7332f58c647b88a74212a675581c1a17726413386ddffad99"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Attack": 1.5,
+          "Attack_2": 1.833,
+          "Default": 0,
+          "Die": 1,
+          "Idle": 2,
+          "Skill": 1.667,
+          "Start": 0.833
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null
+          },
+          "attackDown": null,
+          "skill": {
+            "begin": null,
+            "loop": "Skill",
+            "end": null,
+            "index": 0,
+            "idle": null
+          },
+          "die": "Die",
+          "move": null,
+          "stun": null,
+          "skills": {
+            "0": {
+              "begin": null,
+              "loop": "Skill",
+              "end": null,
+              "index": 0,
+              "idle": null
+            },
+            "1": {
+              "begin": null,
+              "loop": "Skill",
+              "end": null,
+              "index": 1,
+              "idle": null
+            },
+            "2": {
+              "begin": null,
+              "loop": "Skill",
+              "end": null,
+              "index": 2,
+              "idle": null
+            }
+          }
+        },
+        "hits": {
+          "Attack": [
+            0.733
+          ],
+          "Attack_2": [
+            1.067
+          ],
+          "Skill": [
+            1.133
+          ]
+        },
+        "bounds": {
+          "x": -154.004,
+          "y": -33.573,
+          "width": 266.809,
+          "height": 443.217
+        }
+      },
+      "operator/char_112_siege/default/back": {
+        "kind": "operator",
+        "id": "char_112_siege",
+        "variant": "default",
+        "facing": "back",
+        "spineVersion": "3.8.99",
+        "source": {
+          "key": "operators",
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "spine/char_112_siege/char_112_siege/Back"
+        },
+        "skeleton": {
+          "path": "models/operator/char_112_siege/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_112_siege.skel",
+          "bytes": 46975,
+          "sha256": "e6789447869749c5076662a98499e364aa1de1f2bff294bad877f3641694a15c"
+        },
+        "atlas": {
+          "path": "models/operator/char_112_siege/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_112_siege.atlas",
+          "bytes": 2765,
+          "sha256": "df43e57a0710f8f3f8c23063583ffeb8c9dc6f2175715afa3b8ae7bb727f8884"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_112_siege/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_112_siege.png",
+            "bytes": 64031,
+            "sha256": "72f93765301d9d6a6426707618bd3938422937061d0c77701ed11149e74dea6f"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Attack": 1.5,
+          "Attack_2": 1.833,
+          "Default": 0,
+          "Idle": 2,
+          "Start": 0.833
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null
+          },
+          "attackDown": null,
+          "skill": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null,
+            "via": "attack",
+            "index": 0,
+            "idle": null
+          },
+          "die": null,
+          "move": null,
+          "stun": null,
+          "skills": {
+            "0": {
+              "begin": null,
+              "loop": "Attack",
+              "end": null,
+              "via": "attack",
+              "index": 0,
+              "idle": null
+            },
+            "1": {
+              "begin": null,
+              "loop": "Attack",
+              "end": null,
+              "via": "attack",
+              "index": 1,
+              "idle": null
+            },
+            "2": {
+              "begin": null,
+              "loop": "Attack",
+              "end": null,
+              "via": "attack",
+              "index": 2,
+              "idle": null
+            }
+          }
+        },
+        "hits": {
+          "Attack": [
+            0.733
+          ],
+          "Attack_2": [
+            1.067
+          ]
+        },
+        "bounds": {
+          "x": -138.428,
+          "y": -9.748,
+          "width": 419.508,
+          "height": 417.408
+        }
+      },
       "operator/char_250_phatom/default/front": {
         "kind": "operator",
         "id": "char_250_phatom",
@@ -430446,6 +430645,1726 @@
                 },
                 {
                   "key": "block_cnt",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "char_112_siege": {
+      "id": "char_112_siege",
+      "name": "Siege",
+      "description": "Blocks 2 enemies",
+      "rarity": 6,
+      "profession": "PIONEER",
+      "subProfessionId": "pioneer",
+      "position": "MELEE",
+      "nationId": "victoria",
+      "groupId": "glasgow",
+      "teamId": null,
+      "phases": [
+        {
+          "maxLevel": 50,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 911,
+                "atk": 212,
+                "def": 154,
+                "magicResistance": 0,
+                "cost": 12,
+                "blockCnt": 2,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.05,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 50,
+              "data": {
+                "maxHp": 1199,
+                "atk": 308,
+                "def": 227,
+                "magicResistance": 0,
+                "cost": 12,
+                "blockCnt": 2,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.05,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ]
+        },
+        {
+          "maxLevel": 80,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 1199,
+                "atk": 308,
+                "def": 227,
+                "magicResistance": 0,
+                "cost": 14,
+                "blockCnt": 2,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.05,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 80,
+              "data": {
+                "maxHp": 1643,
+                "atk": 422,
+                "def": 307,
+                "magicResistance": 0,
+                "cost": 14,
+                "blockCnt": 2,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.05,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ]
+        },
+        {
+          "maxLevel": 90,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 1643,
+                "atk": 422,
+                "def": 307,
+                "magicResistance": 0,
+                "cost": 14,
+                "blockCnt": 2,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.05,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 90,
+              "data": {
+                "maxHp": 2251,
+                "atk": 515,
+                "def": 384,
+                "magicResistance": 0,
+                "cost": 14,
+                "blockCnt": 2,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.05,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ]
+        }
+      ],
+      "favorKeyFrames": [
+        {
+          "level": 0,
+          "data": {
+            "maxHp": 0,
+            "atk": 0,
+            "def": 0,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false
+          }
+        },
+        {
+          "level": 50,
+          "data": {
+            "maxHp": 0,
+            "atk": 60,
+            "def": 25,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false
+          }
+        }
+      ],
+      "potentialRanks": [
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "RESPAWN_TIME",
+            "formulaItem": "ADDITION",
+            "value": -4,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "ATK",
+            "formulaItem": "ADDITION",
+            "value": 25,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [],
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ]
+      ],
+      "trait": null,
+      "talents": [
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "King of Beasts",
+              "description": "All Vanguard Operators' ATK and DEF +4%",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.04,
+                  "valueStr": null
+                },
+                {
+                  "key": "def",
+                  "value": 0.04,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 1
+              },
+              "requiredPotentialRank": 4,
+              "prefabKey": "1",
+              "name": "King of Beasts",
+              "description": "All Vanguard Operators' ATK and DEF +6% <@ba.talpu>(+2%)</>",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.06,
+                  "valueStr": null
+                },
+                {
+                  "key": "def",
+                  "value": 0.06,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "King of Beasts",
+              "description": "All Vanguard Operators' ATK and DEF +8%",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.08,
+                  "valueStr": null
+                },
+                {
+                  "key": "def",
+                  "value": 0.08,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 4,
+              "prefabKey": "1",
+              "name": "King of Beasts",
+              "description": "All Vanguard Operators' ATK and DEF +10% <@ba.talpu>(+2%)</>",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "def",
+                  "value": 0.1,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            }
+          ]
+        },
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "2",
+              "name": "Crushing",
+              "description": "Obtains 1 Skill Point when an enemy in the four surrounding tiles is killed",
+              "rangeId": "x-5",
+              "blackboard": [
+                {
+                  "key": "sp",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false,
+              "rangeGrid": [
+                [
+                  1,
+                  0
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  0
+                ]
+              ]
+            }
+          ]
+        }
+      ],
+      "skills": [
+        {
+          "id": "skcom_charge_cost[3]",
+          "unlockCondition": {
+            "phase": "PHASE_0",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "Charge γ",
+              "rangeId": null,
+              "description": "Instantly gains <@ba.vup>{cost}</> Deployment Points.",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 44,
+                "initSp": 10,
+                "increment": 1
+              },
+              "prefabId": "skcom_charge_cost",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 12,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Charge γ",
+              "rangeId": null,
+              "description": "Instantly gains <@ba.vup>{cost}</> Deployment Points.",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 43,
+                "initSp": 10,
+                "increment": 1
+              },
+              "prefabId": "skcom_charge_cost",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 12,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Charge γ",
+              "rangeId": null,
+              "description": "Instantly gains <@ba.vup>{cost}</> Deployment Points.",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 42,
+                "initSp": 10,
+                "increment": 1
+              },
+              "prefabId": "skcom_charge_cost",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 12,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Charge γ",
+              "rangeId": null,
+              "description": "Instantly gains <@ba.vup>{cost}</> Deployment Points.",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 41,
+                "initSp": 12,
+                "increment": 1
+              },
+              "prefabId": "skcom_charge_cost",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 12,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Charge γ",
+              "rangeId": null,
+              "description": "Instantly gains <@ba.vup>{cost}</> Deployment Points.",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 40,
+                "initSp": 12,
+                "increment": 1
+              },
+              "prefabId": "skcom_charge_cost",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 12,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Charge γ",
+              "rangeId": null,
+              "description": "Instantly gains <@ba.vup>{cost}</> Deployment Points.",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 39,
+                "initSp": 12,
+                "increment": 1
+              },
+              "prefabId": "skcom_charge_cost",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 12,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Charge γ",
+              "rangeId": null,
+              "description": "Instantly gains <@ba.vup>{cost}</> Deployment Points.",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 38,
+                "initSp": 14,
+                "increment": 1
+              },
+              "prefabId": "skcom_charge_cost",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 12,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Charge γ",
+              "rangeId": null,
+              "description": "Instantly gains <@ba.vup>{cost}</> Deployment Points.",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 37,
+                "initSp": 16,
+                "increment": 1
+              },
+              "prefabId": "skcom_charge_cost",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 12,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Charge γ",
+              "rangeId": null,
+              "description": "Instantly gains <@ba.vup>{cost}</> Deployment Points.",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 36,
+                "initSp": 18,
+                "increment": 1
+              },
+              "prefabId": "skcom_charge_cost",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 12,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Charge γ",
+              "rangeId": null,
+              "description": "Instantly gains <@ba.vup>{cost}</> Deployment Points.",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 35,
+                "initSp": 20,
+                "increment": 1
+              },
+              "prefabId": "skcom_charge_cost",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 12,
+                  "valueStr": null
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "skchr_siege_2",
+          "unlockCondition": {
+            "phase": "PHASE_1",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "Aerial Hammer",
+              "rangeId": "x-5",
+              "description": "Deals <@ba.vup>{atk_scale:0%}</> of ATK Physical damage to all nearby enemies in the next attack; Gains <@ba.vup>{cost}</> DP\n<@ba.rem>Can store {ct} charge(s)</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 12,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_siege_2",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 2.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "ct",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  0
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  0
+                ]
+              ]
+            },
+            {
+              "name": "Aerial Hammer",
+              "rangeId": "x-5",
+              "description": "Deals <@ba.vup>{atk_scale:0%}</> of ATK Physical damage to all nearby enemies in the next attack; Gains <@ba.vup>{cost}</> DP\n<@ba.rem>Can store {ct} charge(s)</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 12,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_siege_2",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 2.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "ct",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  0
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  0
+                ]
+              ]
+            },
+            {
+              "name": "Aerial Hammer",
+              "rangeId": "x-5",
+              "description": "Deals <@ba.vup>{atk_scale:0%}</> of ATK Physical damage to all nearby enemies in the next attack; Gains <@ba.vup>{cost}</> DP\n<@ba.rem>Can store {ct} charge(s)</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 12,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_siege_2",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 2.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "ct",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  0
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  0
+                ]
+              ]
+            },
+            {
+              "name": "Aerial Hammer",
+              "rangeId": "x-5",
+              "description": "Deals <@ba.vup>{atk_scale:0%}</> of ATK Physical damage to all nearby enemies in the next attack; Gains <@ba.vup>{cost}</> DP\n<@ba.rem>Can store {ct} charge(s)</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 2,
+                "spCost": 11,
+                "initSp": 3,
+                "increment": 1
+              },
+              "prefabId": "skchr_siege_2",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 2.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "ct",
+                  "value": 2,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  0
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  0
+                ]
+              ]
+            },
+            {
+              "name": "Aerial Hammer",
+              "rangeId": "x-5",
+              "description": "Deals <@ba.vup>{atk_scale:0%}</> of ATK Physical damage to all nearby enemies in the next attack; Gains <@ba.vup>{cost}</> DP\n<@ba.rem>Can store {ct} charge(s)</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 2,
+                "spCost": 11,
+                "initSp": 3,
+                "increment": 1
+              },
+              "prefabId": "skchr_siege_2",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 2.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "ct",
+                  "value": 2,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  0
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  0
+                ]
+              ]
+            },
+            {
+              "name": "Aerial Hammer",
+              "rangeId": "x-5",
+              "description": "Deals <@ba.vup>{atk_scale:0%}</> of ATK Physical damage to all nearby enemies in the next attack; Gains <@ba.vup>{cost}</> DP\n<@ba.rem>Can store {ct} charge(s)</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 2,
+                "spCost": 11,
+                "initSp": 3,
+                "increment": 1
+              },
+              "prefabId": "skchr_siege_2",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 2.7,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "ct",
+                  "value": 2,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  0
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  0
+                ]
+              ]
+            },
+            {
+              "name": "Aerial Hammer",
+              "rangeId": "x-5",
+              "description": "Deals <@ba.vup>{atk_scale:0%}</> of ATK Physical damage to all nearby enemies in the next attack; Gains <@ba.vup>{cost}</> DP\n<@ba.rem>Can store {ct} charge(s)</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 3,
+                "spCost": 11,
+                "initSp": 6,
+                "increment": 1
+              },
+              "prefabId": "skchr_siege_2",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 2.8,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "ct",
+                  "value": 3,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  0
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  0
+                ]
+              ]
+            },
+            {
+              "name": "Aerial Hammer",
+              "rangeId": "x-5",
+              "description": "Deals <@ba.vup>{atk_scale:0%}</> of ATK Physical damage to all nearby enemies in the next attack; Gains <@ba.vup>{cost}</> DP\n<@ba.rem>Can store {ct} charge(s)</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 3,
+                "spCost": 10,
+                "initSp": 7,
+                "increment": 1
+              },
+              "prefabId": "skchr_siege_2",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "ct",
+                  "value": 3,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  0
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  0
+                ]
+              ]
+            },
+            {
+              "name": "Aerial Hammer",
+              "rangeId": "x-5",
+              "description": "Deals <@ba.vup>{atk_scale:0%}</> of ATK Physical damage to all nearby enemies in the next attack; Gains <@ba.vup>{cost}</> DP\n<@ba.rem>Can store {ct} charge(s)</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 3,
+                "spCost": 10,
+                "initSp": 8,
+                "increment": 1
+              },
+              "prefabId": "skchr_siege_2",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 3.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "ct",
+                  "value": 3,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  0
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  0
+                ]
+              ]
+            },
+            {
+              "name": "Aerial Hammer",
+              "rangeId": "x-5",
+              "description": "Deals <@ba.vup>{atk_scale:0%}</> of ATK Physical damage to all nearby enemies in the next attack; Gains <@ba.vup>{cost}</> DP\n<@ba.rem>Can store {ct} charge(s)</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 3,
+                "spCost": 10,
+                "initSp": 10,
+                "increment": 1
+              },
+              "prefabId": "skchr_siege_2",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 3.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "ct",
+                  "value": 3,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  0
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  0
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "id": "skchr_siege_3",
+          "unlockCondition": {
+            "phase": "PHASE_2",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "Skull Breaker",
+              "rangeId": null,
+              "description": "Attack Interval <@ba.vdown>increases</>. Increases ATK to <@ba.vup>{attack@atk_scale:0%}</> when attacking and has <@ba.vup>{attack@buff_prob:0%}</> chance to <$ba.stun>Stun</> the target for <@ba.vup>{attack@stun:0.0}</> seconds",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 30,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_siege_3",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "attack@atk_scale",
+                  "value": 2.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@buff_prob",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@stun",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Skull Breaker",
+              "rangeId": null,
+              "description": "Attack Interval <@ba.vdown>increases</>. Increases ATK to <@ba.vup>{attack@atk_scale:0%}</> when attacking and has <@ba.vup>{attack@buff_prob:0%}</> chance to <$ba.stun>Stun</> the target for <@ba.vup>{attack@stun:0.0}</> seconds",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 30,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_siege_3",
+              "duration": 16,
+              "blackboard": [
+                {
+                  "key": "attack@atk_scale",
+                  "value": 2.7,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@buff_prob",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@stun",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Skull Breaker",
+              "rangeId": null,
+              "description": "Attack Interval <@ba.vdown>increases</>. Increases ATK to <@ba.vup>{attack@atk_scale:0%}</> when attacking and has <@ba.vup>{attack@buff_prob:0%}</> chance to <$ba.stun>Stun</> the target for <@ba.vup>{attack@stun:0.0}</> seconds",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 30,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_siege_3",
+              "duration": 17,
+              "blackboard": [
+                {
+                  "key": "attack@atk_scale",
+                  "value": 2.8,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@buff_prob",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@stun",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Skull Breaker",
+              "rangeId": null,
+              "description": "Attack Interval <@ba.vdown>increases</>. Increases ATK to <@ba.vup>{attack@atk_scale:0%}</> when attacking and has <@ba.vup>{attack@buff_prob:0%}</> chance to <$ba.stun>Stun</> the target for <@ba.vup>{attack@stun:0.0}</> seconds",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 30,
+                "initSp": 5,
+                "increment": 1
+              },
+              "prefabId": "skchr_siege_3",
+              "duration": 18,
+              "blackboard": [
+                {
+                  "key": "attack@atk_scale",
+                  "value": 2.9,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@buff_prob",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@stun",
+                  "value": 0.8,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Skull Breaker",
+              "rangeId": null,
+              "description": "Attack Interval <@ba.vdown>increases</>. Increases ATK to <@ba.vup>{attack@atk_scale:0%}</> when attacking and has <@ba.vup>{attack@buff_prob:0%}</> chance to <$ba.stun>Stun</> the target for <@ba.vup>{attack@stun:0.0}</> seconds",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 30,
+                "initSp": 5,
+                "increment": 1
+              },
+              "prefabId": "skchr_siege_3",
+              "duration": 19,
+              "blackboard": [
+                {
+                  "key": "attack@atk_scale",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@buff_prob",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@stun",
+                  "value": 0.8,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Skull Breaker",
+              "rangeId": null,
+              "description": "Attack Interval <@ba.vdown>increases</>. Increases ATK to <@ba.vup>{attack@atk_scale:0%}</> when attacking and has <@ba.vup>{attack@buff_prob:0%}</> chance to <$ba.stun>Stun</> the target for <@ba.vup>{attack@stun:0.0}</> seconds",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 30,
+                "initSp": 5,
+                "increment": 1
+              },
+              "prefabId": "skchr_siege_3",
+              "duration": 20,
+              "blackboard": [
+                {
+                  "key": "attack@atk_scale",
+                  "value": 3.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@buff_prob",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@stun",
+                  "value": 0.8,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Skull Breaker",
+              "rangeId": null,
+              "description": "Attack Interval <@ba.vdown>increases</>. Increases ATK to <@ba.vup>{attack@atk_scale:0%}</> when attacking and has <@ba.vup>{attack@buff_prob:0%}</> chance to <$ba.stun>Stun</> the target for <@ba.vup>{attack@stun:0.0}</> seconds",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 30,
+                "initSp": 10,
+                "increment": 1
+              },
+              "prefabId": "skchr_siege_3",
+              "duration": 21,
+              "blackboard": [
+                {
+                  "key": "attack@atk_scale",
+                  "value": 3.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@buff_prob",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@stun",
+                  "value": 1.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Skull Breaker",
+              "rangeId": null,
+              "description": "Attack Interval <@ba.vdown>increases</>. Increases ATK to <@ba.vup>{attack@atk_scale:0%}</> when attacking and has <@ba.vup>{attack@buff_prob:0%}</> chance to <$ba.stun>Stun</> the target for <@ba.vup>{attack@stun:0.0}</> seconds",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 30,
+                "initSp": 15,
+                "increment": 1
+              },
+              "prefabId": "skchr_siege_3",
+              "duration": 22,
+              "blackboard": [
+                {
+                  "key": "attack@atk_scale",
+                  "value": 3.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@buff_prob",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@stun",
+                  "value": 1.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Skull Breaker",
+              "rangeId": null,
+              "description": "Attack Interval <@ba.vdown>increases</>. Increases ATK to <@ba.vup>{attack@atk_scale:0%}</> when attacking and has <@ba.vup>{attack@buff_prob:0%}</> chance to <$ba.stun>Stun</> the target for <@ba.vup>{attack@stun:0.0}</> seconds",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 30,
+                "initSp": 20,
+                "increment": 1
+              },
+              "prefabId": "skchr_siege_3",
+              "duration": 23,
+              "blackboard": [
+                {
+                  "key": "attack@atk_scale",
+                  "value": 3.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@buff_prob",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@stun",
+                  "value": 1.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Skull Breaker",
+              "rangeId": null,
+              "description": "Attack Interval <@ba.vdown>increases</>. Increases ATK to <@ba.vup>{attack@atk_scale:0%}</> when attacking and has <@ba.vup>{attack@buff_prob:0%}</> chance to <$ba.stun>Stun</> the target for <@ba.vup>{attack@stun:0.0}</> seconds",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 30,
+                "initSp": 25,
+                "increment": 1
+              },
+              "prefabId": "skchr_siege_3",
+              "duration": 25,
+              "blackboard": [
+                {
+                  "key": "attack@atk_scale",
+                  "value": 3.8,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@buff_prob",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@stun",
+                  "value": 1.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
                   "value": 1,
                   "valueStr": null
                 }
