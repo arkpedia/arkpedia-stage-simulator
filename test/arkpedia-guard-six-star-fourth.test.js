@@ -23,7 +23,7 @@ const talent=(u,k)=>u.def.talents.find(t=>t.bb[k]!=null)?.bb;
 const openingEvents=b=>b._evq.filter(v=>v[0]==='dmg'&&v[3]==='arts');
 function zeroRng(b){const old=b.rng;const zero=()=>0;zero.pick=old.pick;zero.int=old.int;b.rng=zero;}
 
-test('original contracts retain complete Qiubai and explicitly deferred Ch’en, official facing identity and exact timers',()=>{
+test('original contracts retain complete Qiubai and historical Ch’en deferral, official facing identity and exact timers',()=>{
  assert.deepEqual(Object.keys(configs),[ID]);assert.ok(evidence.deferredOperators.char_010_chen);assert.equal(evidence.frameParity,false);
  for(const id of [ID,'char_010_chen'])for(const face of ['Front','Back'])assert.equal(evidence.originalModels[id][face].sha256,evidence.officialSkeletonBindings[id][face].sha256);
  const s1=nodes(evidence.skills.skchr_qiubai_1).find(v=>v.pathId==='-4577295031601808680');assert.equal(s1._selectTargetTiming,0);assert.equal(s1._useCachedAtkOnly,0);assert.equal(s1._atkScale,1);assert.equal(s1._projectileKey,'projectile_chr_qiubai_s1');

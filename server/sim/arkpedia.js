@@ -104,6 +104,7 @@ import { customizeFirewatchKit, installFirewatch } from './content/arkpedia-fire
 import { customizeSurferKit, installSurfer } from './content/arkpedia-surfer.js';
 import { customizeMelaniteKit, installMelanite } from './content/arkpedia-melanite.js';
 import { customizeAshKit, installAsh, adjustAshCost } from './content/arkpedia-ash.js';
+import { customizeChenKit, installChen } from './content/arkpedia-chen.js';
 import { customizeFrostKit, installFrost } from './content/arkpedia-frost.js';
 import { customizeRobinKit, installRobin } from './content/arkpedia-robin.js';
 import { customizeFiveStarSupportFourthKit, installFiveStarSupportFourth } from './content/arkpedia-five-star-support-fourth.js';
@@ -419,6 +420,7 @@ export class StandardBattle extends Battle {
     customizeSurferKit({ battle: this, id, def, unit, kit });
     customizeMelaniteKit({ battle: this, id, def, unit, kit });
     customizeAshKit({ battle: this, id, def, unit, kit });
+    customizeChenKit({ battle: this, id, def, unit, kit });
     customizePhantomKit({ battle: this, id, def, unit, kit });
     customizeHookExpansionKit({ battle: this, id, def, unit, kit });
     customizeFiveStarSupportFourthKit({ battle: this, id, def, unit, kit });
@@ -545,6 +547,7 @@ export class StandardBattle extends Battle {
     installSurfer({ battle: this, unit, def });
     installMelanite({ battle: this, unit, def });
     installAsh({ battle: this, unit, def });
+    installChen({ battle: this, unit, def });
     installHookExpansion({ battle: this, unit, def });
     installFiveStarSupportFourth({ battle: this, unit, def });
     installFiveStarSpecialistExpansion({ battle: this, unit, def });

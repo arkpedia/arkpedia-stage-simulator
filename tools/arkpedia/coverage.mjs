@@ -85,5 +85,8 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
   const rosterTarget = await read("../../data/arkpedia-roster-target.json");
   const report = coverageFor({ characters, enemies, chess, inherited: kitCoverage(), data, assetModels, rosterTarget });
   await writeFile(new URL("../../data/arkpedia-coverage.json", import.meta.url), `${JSON.stringify(report, null, 2)}\n`);
-  console.log(JSON.stringify(report.summary));
+  const { missingForms, source, ...fullRosterTarget } = report.fullRosterTarget;
+  console.log(JSON.stringify({ globalSnapshot: report.summary, fullRosterTarget: {
+    ...fullRosterTarget, sourceCommit: source.commit,
+  } }));
 }
