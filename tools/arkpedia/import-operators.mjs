@@ -102,6 +102,14 @@ for (const id of ids) {
       roles.skills['0'] = { ...roles.attack, index: 0, idle: null, via: 'attack' };
       roles.skill = roles.skills['0'];
     }
+    // Rosa's S1/S2 buff her ordinary Attack. The native Skill_Begin/Loop/End
+    // controller belongs only to her retained-harpoon S3.
+    if (id === 'char_197_poca') {
+      for (const index of [0, 1]) roles.skills[String(index)] = {
+        ...roles.attack, index, idle: null, via: 'attack',
+      };
+      roles.skill = roles.skills['0'];
+    }
     if (!roles.idle || !support.noBasicAttack && catalogue[id]?.subProfessionId !== 'bard' && (!roles.attack || roles.attack.via === "idle"))
       throw Error(`${key}: missing idle/attack clips`);
     Object.assign(model, { premultipliedAlpha: values.pma === "true", animations: info.durations,

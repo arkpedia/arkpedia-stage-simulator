@@ -70,6 +70,9 @@ import { customizeGuardSixStarFourthKit, installGuardSixStarFourth } from './con
 import { customizeFartoothKit, installFartooth } from './content/arkpedia-fartooth.js';
 import { customizeSariaKit, installSaria } from './content/arkpedia-saria.js';
 import { customizeBagpipeKit, installBagpipe, installBagpipeSquad } from './content/arkpedia-bagpipe.js';
+import { customizeRosaKit, installRosa, prepareRosaSquad } from './content/arkpedia-rosa.js';
+import { customizePuzzleKit, installPuzzle } from './content/arkpedia-puzzle.js';
+import { customizeHoedererKit, installHoederer } from './content/arkpedia-hoederer.js';
 import { customizeFiveStarSupportFourthKit, installFiveStarSupportFourth } from './content/arkpedia-five-star-support-fourth.js';
 import { customizeFiveStarSpecialistExpansionKit, installFiveStarSpecialistExpansion } from './content/arkpedia-five-star-specialist-expansion.js';
 import { catalogueFor, recordFor } from "../../shared/arkpedia/loadout.js";
@@ -178,6 +181,7 @@ export class StandardBattle extends Battle {
     }
     const startingVanguardDp = prepareFiveStarVanguardSquad(chess);
     prepareFiveStarSniperSquad(chess);
+    prepareRosaSquad(chess);
     const config = data.stage.battle;
     super({
       ...stageAdapter(data.stage),
@@ -345,6 +349,9 @@ export class StandardBattle extends Battle {
     customizeFartoothKit({ battle: this, id, def, unit, kit });
     customizeSariaKit({ battle: this, id, def, unit, kit });
     customizeBagpipeKit({ battle: this, id, def, unit, kit });
+    customizeRosaKit({ battle: this, id, def, unit, kit });
+    customizePuzzleKit({ battle: this, id, def, unit, kit });
+    customizeHoedererKit({ battle: this, id, def, unit, kit });
     customizePhantomKit({ battle: this, id, def, unit, kit });
     customizeHookExpansionKit({ battle: this, id, def, unit, kit });
     customizeFiveStarSupportFourthKit({ battle: this, id, def, unit, kit });
@@ -436,6 +443,9 @@ export class StandardBattle extends Battle {
     installFartooth({ battle: this, unit, def });
     installSaria({ battle: this, unit, def });
     installBagpipe({ battle: this, unit, def });
+    installRosa({ battle: this, unit, def });
+    installPuzzle({ battle: this, unit, def });
+    installHoederer({ battle: this, unit, def });
     installHookExpansion({ battle: this, unit, def });
     installFiveStarSupportFourth({ battle: this, unit, def });
     installFiveStarSpecialistExpansion({ battle: this, unit, def });

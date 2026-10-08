@@ -34,7 +34,7 @@
   },
   "sd": {
     "repository": "arkpedia/arkpedia-sd-assets",
-    "commit": "f10bc2600441798bd20ab8c15f08cfc4a808ef8a",
+    "commit": "67b2c8738d96b25bdcfeed93044f5dec642ca0a6",
     "models": {
       "operator/char_123_fang/default/front": {
         "kind": "operator",
@@ -45530,6 +45530,641 @@
           "height": 915.161
         }
       },
+      "operator/char_197_poca/default/front": {
+        "kind": "operator",
+        "id": "char_197_poca",
+        "variant": "default",
+        "facing": "front",
+        "spineVersion": "3.8.99",
+        "source": {
+          "key": "operators",
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "spine/char_197_poca/char_197_poca/Front"
+        },
+        "skeleton": {
+          "path": "models/operator/char_197_poca/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_197_poca.skel",
+          "bytes": 145012,
+          "sha256": "de7c35eeb2761afd816147e4dd218159bca2c16b9095109ac2795acaa7725c7d"
+        },
+        "atlas": {
+          "path": "models/operator/char_197_poca/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_197_poca.atlas",
+          "bytes": 9496,
+          "sha256": "63be9b737e9b86444a07a3bc05a871965b600e777bf9da5879b4298b6f455ff9"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_197_poca/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_197_poca.png",
+            "bytes": 134707,
+            "sha256": "c39e2eeb43b715a68a9049866d80ecd71dec11afa4351f1ffacb44cd4e3c2984"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Attack": 2.667,
+          "Default": 0,
+          "Die": 1,
+          "Idle": 3,
+          "Skill_Begin": 0.767,
+          "Skill_End": 0.933,
+          "Skill_Loop": 0.667,
+          "Start": 1
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null
+          },
+          "attackDown": null,
+          "skill": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null,
+            "index": 0,
+            "idle": null,
+            "via": "attack"
+          },
+          "die": "Die",
+          "move": null,
+          "stun": null,
+          "skills": {
+            "0": {
+              "begin": null,
+              "loop": "Attack",
+              "end": null,
+              "index": 0,
+              "idle": null,
+              "via": "attack"
+            },
+            "1": {
+              "begin": null,
+              "loop": "Attack",
+              "end": null,
+              "index": 1,
+              "idle": null,
+              "via": "attack"
+            },
+            "2": {
+              "begin": "Skill_Begin",
+              "loop": "Skill_Loop",
+              "end": "Skill_End",
+              "index": 2,
+              "idle": null
+            }
+          }
+        },
+        "hits": {
+          "Attack": [
+            0.533
+          ],
+          "Skill_Begin": [
+            0.567
+          ]
+        },
+        "bounds": {
+          "x": -178.228,
+          "y": -1.748,
+          "width": 377.782,
+          "height": 390.986
+        }
+      },
+      "operator/char_197_poca/default/back": {
+        "kind": "operator",
+        "id": "char_197_poca",
+        "variant": "default",
+        "facing": "back",
+        "spineVersion": "3.8.99",
+        "source": {
+          "key": "operators",
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "spine/char_197_poca/char_197_poca/Back"
+        },
+        "skeleton": {
+          "path": "models/operator/char_197_poca/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_197_poca.skel",
+          "bytes": 74931,
+          "sha256": "c4a365470f1078cab7807dc4229fa1e53315165b4678a703d30d84a9675078f1"
+        },
+        "atlas": {
+          "path": "models/operator/char_197_poca/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_197_poca.atlas",
+          "bytes": 4784,
+          "sha256": "be21eb4852ecec5159a60c53996675b13e1d8eeabfd6866a58a2b677b084c96b"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_197_poca/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_197_poca.png",
+            "bytes": 91367,
+            "sha256": "44a3644e449f7c691e578a2104961f21a1d4a177fcb9f15224de1f4ce6af12ac"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Attack": 2.667,
+          "Default": 0,
+          "Idle": 3,
+          "Skill_Begin": 0.767,
+          "Skill_End": 0.933,
+          "Skill_Loop": 0.667,
+          "Start": 1
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null
+          },
+          "attackDown": null,
+          "skill": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null,
+            "index": 0,
+            "idle": null,
+            "via": "attack"
+          },
+          "die": null,
+          "move": null,
+          "stun": null,
+          "skills": {
+            "0": {
+              "begin": null,
+              "loop": "Attack",
+              "end": null,
+              "index": 0,
+              "idle": null,
+              "via": "attack"
+            },
+            "1": {
+              "begin": null,
+              "loop": "Attack",
+              "end": null,
+              "index": 1,
+              "idle": null,
+              "via": "attack"
+            },
+            "2": {
+              "begin": "Skill_Begin",
+              "loop": "Skill_Loop",
+              "end": "Skill_End",
+              "index": 2,
+              "idle": null
+            }
+          }
+        },
+        "hits": {
+          "Attack": [
+            0.533
+          ],
+          "Skill_Begin": [
+            0.567
+          ]
+        },
+        "bounds": {
+          "x": 468.392,
+          "y": -0.772,
+          "width": 332.02,
+          "height": 390.509
+        }
+      },
+      "operator/char_4017_puzzle/default/front": {
+        "kind": "operator",
+        "id": "char_4017_puzzle",
+        "variant": "default",
+        "facing": "front",
+        "spineVersion": "3.8.99",
+        "source": {
+          "key": "operators",
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "spine/char_4017_puzzle/char_4017_puzzle/Front"
+        },
+        "skeleton": {
+          "path": "models/operator/char_4017_puzzle/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4017_puzzle.skel",
+          "bytes": 221891,
+          "sha256": "61d86beb1fd58b1418acbacd1f035f4c4fa48f431e81e2737a3567c8ecfb6c0c"
+        },
+        "atlas": {
+          "path": "models/operator/char_4017_puzzle/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4017_puzzle.atlas",
+          "bytes": 8553,
+          "sha256": "0f2280b3651b129540d6182521995e4f92777c5f8e419f50c8b592bf42648e4f"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_4017_puzzle/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4017_puzzle.png",
+            "bytes": 102443,
+            "sha256": "032dccfaec915bf2800bc7972ac240374dc93f8fefb99b1f8c27c09a9eaaf023"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Attack": 1,
+          "Combat": 1,
+          "Default": 0,
+          "Die": 1,
+          "Idle": 2.667,
+          "Skill_2_Attack": 1,
+          "Skill_2_Begin": 0.2,
+          "Skill_2_Combat": 1,
+          "Skill_2_End": 0.2,
+          "Skill_2_Idle": 2.667,
+          "Start": 1
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null
+          },
+          "attackDown": null,
+          "skill": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null,
+            "via": "attack",
+            "index": 0,
+            "idle": null
+          },
+          "die": "Die",
+          "move": null,
+          "stun": null,
+          "skills": {
+            "0": {
+              "begin": null,
+              "loop": "Attack",
+              "end": null,
+              "via": "attack",
+              "index": 0,
+              "idle": null
+            },
+            "1": {
+              "begin": "Skill_2_Begin",
+              "loop": "Skill_2_Attack",
+              "end": "Skill_2_End",
+              "index": 1,
+              "idle": "Skill_2_Idle"
+            }
+          }
+        },
+        "hits": {
+          "Attack": [
+            0.4
+          ],
+          "Combat": [
+            0.4
+          ],
+          "Skill_2_Attack": [
+            0.333
+          ],
+          "Skill_2_Combat": [
+            0.333
+          ]
+        },
+        "bounds": {
+          "x": -267.726,
+          "y": -0.51,
+          "width": 808.528,
+          "height": 395.149
+        }
+      },
+      "operator/char_4017_puzzle/default/back": {
+        "kind": "operator",
+        "id": "char_4017_puzzle",
+        "variant": "default",
+        "facing": "back",
+        "spineVersion": "3.8.99",
+        "source": {
+          "key": "operators",
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "spine/char_4017_puzzle/char_4017_puzzle/Back"
+        },
+        "skeleton": {
+          "path": "models/operator/char_4017_puzzle/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4017_puzzle.skel",
+          "bytes": 135853,
+          "sha256": "a720de2172d823271f80ec89671bfc31f8afc9facc2499401d53428c69c48881"
+        },
+        "atlas": {
+          "path": "models/operator/char_4017_puzzle/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4017_puzzle.atlas",
+          "bytes": 5781,
+          "sha256": "f41653ba52adf3fc5f3ac05b0f28e212779a61fa2d0c79a0f0cf3c1d795bbee3"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_4017_puzzle/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4017_puzzle.png",
+            "bytes": 90111,
+            "sha256": "08d034f95c7fa7be779355cada5b9c88e375e0ea1e4fa8c8ed810ecb99576a24"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Attack": 1,
+          "Combat": 1,
+          "Default": 0,
+          "Idle": 2.667,
+          "Skill_2_Attack": 1,
+          "Skill_2_Begin": 0.2,
+          "Skill_2_Combat": 1,
+          "Skill_2_End": 0.2,
+          "Skill_2_Idle": 2.667,
+          "Start": 1
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null
+          },
+          "attackDown": null,
+          "skill": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null,
+            "via": "attack",
+            "index": 0,
+            "idle": null
+          },
+          "die": null,
+          "move": null,
+          "stun": null,
+          "skills": {
+            "0": {
+              "begin": null,
+              "loop": "Attack",
+              "end": null,
+              "via": "attack",
+              "index": 0,
+              "idle": null
+            },
+            "1": {
+              "begin": "Skill_2_Begin",
+              "loop": "Skill_2_Attack",
+              "end": "Skill_2_End",
+              "index": 1,
+              "idle": "Skill_2_Idle"
+            }
+          }
+        },
+        "hits": {
+          "Attack": [
+            0.4
+          ],
+          "Combat": [
+            0.4
+          ],
+          "Skill_2_Attack": [
+            0.333
+          ],
+          "Skill_2_Combat": [
+            0.333
+          ]
+        },
+        "bounds": {
+          "x": -267.726,
+          "y": -0.51,
+          "width": 808.528,
+          "height": 395.149
+        }
+      },
+      "operator/char_4088_hodrer/default/front": {
+        "kind": "operator",
+        "id": "char_4088_hodrer",
+        "variant": "default",
+        "facing": "front",
+        "spineVersion": "3.8.99",
+        "source": {
+          "key": "operators",
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "spine/char_4088_hodrer/char_4088_hodrer/Front"
+        },
+        "skeleton": {
+          "path": "models/operator/char_4088_hodrer/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4088_hodrer.skel",
+          "bytes": 620243,
+          "sha256": "ca95e2005fb63318c55ec9fb7da883becc2d451e719ad4a4712482b1f06814a0"
+        },
+        "atlas": {
+          "path": "models/operator/char_4088_hodrer/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4088_hodrer.atlas",
+          "bytes": 6809,
+          "sha256": "ec446dcfc6bc18f5b56113dc42231c6d7c5d92e079fd93986980cbe95e63af8a"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_4088_hodrer/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4088_hodrer.png",
+            "bytes": 91540,
+            "sha256": "a81904b92a630e2c0f74904d3723b7fe80a5f1a6a836744006504ad752dce637"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Attack": 2.5,
+          "Default": 0,
+          "Die": 1,
+          "Idle": 1,
+          "Skill_1": 2.5,
+          "Skill_2_Begin": 0.2,
+          "Skill_2_End": 0.2,
+          "Skill_2_Idle": 1,
+          "Skill_2_Loop_A": 2.5,
+          "Skill_2_Loop_B": 2.5,
+          "Skill_3_Begin": 1.5,
+          "Skill_3_End": 0.2,
+          "Skill_3_Idle": 1,
+          "Skill_3_Loop": 2.5,
+          "Skill_Down_3_Loop": 2.5,
+          "Start": 1
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null
+          },
+          "attackDown": null,
+          "skill": {
+            "begin": null,
+            "loop": "Skill_1",
+            "end": null,
+            "index": 0,
+            "idle": null
+          },
+          "die": "Die",
+          "move": null,
+          "stun": null,
+          "skills": {
+            "0": {
+              "begin": null,
+              "loop": "Skill_1",
+              "end": null,
+              "index": 0,
+              "idle": null
+            },
+            "1": {
+              "begin": "Skill_2_Begin",
+              "loop": "Skill_2_Loop_A",
+              "end": "Skill_2_End",
+              "index": 1,
+              "idle": "Skill_2_Idle"
+            },
+            "2": {
+              "begin": "Skill_3_Begin",
+              "loop": "Skill_3_Loop",
+              "end": "Skill_3_End",
+              "index": 2,
+              "idle": "Skill_3_Idle"
+            }
+          }
+        },
+        "hits": {
+          "Attack": [
+            0.7
+          ],
+          "Skill_1": [
+            0.7
+          ],
+          "Skill_2_Loop_A": [
+            0.767
+          ],
+          "Skill_2_Loop_B": [
+            0.767
+          ],
+          "Skill_3_Loop": [
+            0.7
+          ],
+          "Skill_Down_3_Loop": [
+            0.7
+          ]
+        },
+        "bounds": {
+          "x": -184.407,
+          "y": -1.438,
+          "width": 529.743,
+          "height": 439.14
+        }
+      },
+      "operator/char_4088_hodrer/default/back": {
+        "kind": "operator",
+        "id": "char_4088_hodrer",
+        "variant": "default",
+        "facing": "back",
+        "spineVersion": "3.8.99",
+        "source": {
+          "key": "operators",
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "spine/char_4088_hodrer/char_4088_hodrer/Back"
+        },
+        "skeleton": {
+          "path": "models/operator/char_4088_hodrer/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4088_hodrer.skel",
+          "bytes": 381479,
+          "sha256": "fb673f357743827c0904b30ce6e7ef3f7de8b73dd246f6a98231dee9b0110c09"
+        },
+        "atlas": {
+          "path": "models/operator/char_4088_hodrer/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4088_hodrer.atlas",
+          "bytes": 2899,
+          "sha256": "c5e7eeabc730011d9aa767260ce668c1aebab91c233409d85bc012304d0d33d7"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_4088_hodrer/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4088_hodrer.png",
+            "bytes": 77775,
+            "sha256": "dabfdb6b92f7b442cb57ed694e1587893b40c172bd782b161edf24341077c771"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Attack": 2.5,
+          "Default": 0,
+          "Idle": 1,
+          "Skill_1": 2.5,
+          "Skill_2_Begin": 0.2,
+          "Skill_2_End": 0.2,
+          "Skill_2_Idle": 1,
+          "Skill_2_Loop_A": 2.5,
+          "Skill_2_Loop_B": 2.5,
+          "Skill_3_Begin": 1.5,
+          "Skill_3_End": 0.2,
+          "Skill_3_Idle": 1,
+          "Skill_3_Loop": 2.5,
+          "Start": 1
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null
+          },
+          "attackDown": null,
+          "skill": {
+            "begin": null,
+            "loop": "Skill_1",
+            "end": null,
+            "index": 0,
+            "idle": null
+          },
+          "die": null,
+          "move": null,
+          "stun": null,
+          "skills": {
+            "0": {
+              "begin": null,
+              "loop": "Skill_1",
+              "end": null,
+              "index": 0,
+              "idle": null
+            },
+            "1": {
+              "begin": "Skill_2_Begin",
+              "loop": "Skill_2_Loop_A",
+              "end": "Skill_2_End",
+              "index": 1,
+              "idle": "Skill_2_Idle"
+            },
+            "2": {
+              "begin": "Skill_3_Begin",
+              "loop": "Skill_3_Loop",
+              "end": "Skill_3_End",
+              "index": 2,
+              "idle": "Skill_3_Idle"
+            }
+          }
+        },
+        "hits": {
+          "Attack": [
+            0.7
+          ],
+          "Skill_1": [
+            0.7
+          ],
+          "Skill_2_Loop_A": [
+            0.767
+          ],
+          "Skill_2_Loop_B": [
+            0.767
+          ],
+          "Skill_3_Loop": [
+            0.7
+          ]
+        },
+        "bounds": {
+          "x": -184.407,
+          "y": -1.438,
+          "width": 529.743,
+          "height": 439.14
+        }
+      },
       "operator/char_250_phatom/default/front": {
         "kind": "operator",
         "id": "char_250_phatom",
@@ -50024,7 +50659,7 @@
     },
     "art": {
       "repository": "arkpedia/arkpedia-sd-assets",
-      "commit": "f10bc2600441798bd20ab8c15f08cfc4a808ef8a",
+      "commit": "67b2c8738d96b25bdcfeed93044f5dec642ca0a6",
       "scene": {
         "path": "stages/0-1/26-09-23-17-49-43_b9cc4a/scene.json",
         "bytes": 4479,
@@ -50033,7 +50668,7 @@
     },
     "gates": {
       "repository": "arkpedia/arkpedia-sd-assets",
-      "commit": "f10bc2600441798bd20ab8c15f08cfc4a808ef8a",
+      "commit": "67b2c8738d96b25bdcfeed93044f5dec642ca0a6",
       "pack": {
         "path": "effects/standard-gates/26-09-23-17-49-43_b9cc4a/gates.json",
         "bytes": 3507,
@@ -371055,6 +371690,4572 @@
         }
       ]
     },
+    "char_197_poca": {
+      "id": "char_197_poca",
+      "name": "Rosa",
+      "rarity": 6,
+      "profession": "SNIPER",
+      "subProfessionId": "siegesniper",
+      "position": "RANGED",
+      "nationId": "ursus",
+      "groupId": null,
+      "teamId": "student",
+      "phases": [
+        {
+          "maxLevel": 50,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 800,
+                "atk": 492,
+                "def": 60,
+                "magicResistance": 0,
+                "cost": 22,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 2.4,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 50,
+              "data": {
+                "maxHp": 1067,
+                "atk": 684,
+                "def": 80,
+                "magicResistance": 0,
+                "cost": 22,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 2.4,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              1,
+              4
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              0,
+              3
+            ],
+            [
+              0,
+              4
+            ],
+            [
+              -1,
+              2
+            ],
+            [
+              -1,
+              3
+            ],
+            [
+              -1,
+              4
+            ]
+          ]
+        },
+        {
+          "maxLevel": 80,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 1067,
+                "atk": 684,
+                "def": 80,
+                "magicResistance": 0,
+                "cost": 24,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 2.4,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 80,
+              "data": {
+                "maxHp": 1351,
+                "atk": 856,
+                "def": 100,
+                "magicResistance": 0,
+                "cost": 24,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 2.4,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              2,
+              2
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              1,
+              4
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              0,
+              3
+            ],
+            [
+              0,
+              4
+            ],
+            [
+              -1,
+              2
+            ],
+            [
+              -1,
+              3
+            ],
+            [
+              -1,
+              4
+            ],
+            [
+              -2,
+              2
+            ],
+            [
+              -2,
+              3
+            ]
+          ]
+        },
+        {
+          "maxLevel": 90,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 1351,
+                "atk": 856,
+                "def": 100,
+                "magicResistance": 0,
+                "cost": 24,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 2.4,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 90,
+              "data": {
+                "maxHp": 1755,
+                "atk": 1032,
+                "def": 122,
+                "magicResistance": 0,
+                "cost": 24,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 2.4,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              2,
+              2
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              1,
+              4
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              0,
+              3
+            ],
+            [
+              0,
+              4
+            ],
+            [
+              -1,
+              2
+            ],
+            [
+              -1,
+              3
+            ],
+            [
+              -1,
+              4
+            ],
+            [
+              -2,
+              2
+            ],
+            [
+              -2,
+              3
+            ]
+          ]
+        }
+      ],
+      "favorKeyFrames": [
+        {
+          "level": 0,
+          "data": {
+            "maxHp": 0,
+            "atk": 0,
+            "def": 0,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false
+          }
+        },
+        {
+          "level": 50,
+          "data": {
+            "maxHp": 0,
+            "atk": 110,
+            "def": 0,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false
+          }
+        }
+      ],
+      "potentialRanks": [
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "RESPAWN_TIME",
+            "formulaItem": "ADDITION",
+            "value": -4,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "ATK",
+            "formulaItem": "ADDITION",
+            "value": 34,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [],
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ]
+      ],
+      "trait": null,
+      "talents": [
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Bone Piercer",
+              "description": "When attacking a heavy enemy, ignores 40% of its DEF (enemies with 3 weight or higher count for this effect)",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "value",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "def_penetrate",
+                  "value": 0.4,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Bone Piercer",
+              "description": "When attacking a heavy enemy, ignores 60% of its DEF (enemies with 3 weight or higher count for this effect)",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "value",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "def_penetrate",
+                  "value": 0.6,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            }
+          ]
+        },
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "2",
+              "name": "Ideal Student",
+              "description": "When this unit is in the squad, all [Ursus Student Self-Governing Group] Operators gain +8% ATK",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.08,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 4,
+              "prefabKey": "2",
+              "name": "Ideal Student",
+              "description": "When this unit is in the squad, all [Ursus Student Self-Governing Group] Operators gain +10% ATK <@ba.talpu>(+2%)</>",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.1,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            }
+          ]
+        }
+      ],
+      "skills": [
+        {
+          "id": "skcom_atk_up[3]",
+          "unlockCondition": {
+            "phase": "PHASE_0",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "ATK Up γ",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 40,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skcom_atk_up",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.3,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "ATK Up γ",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 40,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skcom_atk_up",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.35,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "ATK Up γ",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 40,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skcom_atk_up",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.4,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "ATK Up γ",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 37,
+                "initSp": 5,
+                "increment": 1
+              },
+              "prefabId": "skcom_atk_up",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.45,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "ATK Up γ",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 37,
+                "initSp": 5,
+                "increment": 1
+              },
+              "prefabId": "skcom_atk_up",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.5,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "ATK Up γ",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 37,
+                "initSp": 5,
+                "increment": 1
+              },
+              "prefabId": "skcom_atk_up",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.55,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "ATK Up γ",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 35,
+                "initSp": 10,
+                "increment": 1
+              },
+              "prefabId": "skcom_atk_up",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.6,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "ATK Up γ",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 34,
+                "initSp": 10,
+                "increment": 1
+              },
+              "prefabId": "skcom_atk_up",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.75,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "ATK Up γ",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 33,
+                "initSp": 10,
+                "increment": 1
+              },
+              "prefabId": "skcom_atk_up",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.9,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "ATK Up γ",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 30,
+                "initSp": 15,
+                "increment": 1
+              },
+              "prefabId": "skcom_atk_up",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "skchr_poca_2",
+          "unlockCondition": {
+            "phase": "PHASE_1",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "Split Shot",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>, and attacks hit <@ba.vup>one</> additional enemy",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 80,
+                "initSp": 39,
+                "increment": 1
+              },
+              "prefabId": "skchr_poca_2",
+              "duration": 60,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_target",
+                  "value": 2,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Split Shot",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>, and attacks hit <@ba.vup>one</> additional enemy",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 80,
+                "initSp": 40,
+                "increment": 1
+              },
+              "prefabId": "skchr_poca_2",
+              "duration": 60,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.35,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_target",
+                  "value": 2,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Split Shot",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>, and attacks hit <@ba.vup>one</> additional enemy",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 80,
+                "initSp": 41,
+                "increment": 1
+              },
+              "prefabId": "skchr_poca_2",
+              "duration": 60,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_target",
+                  "value": 2,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Split Shot",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>, and attacks hit <@ba.vup>one</> additional enemy",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 80,
+                "initSp": 42,
+                "increment": 1
+              },
+              "prefabId": "skchr_poca_2",
+              "duration": 60,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.45,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_target",
+                  "value": 2,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Split Shot",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>, and attacks hit <@ba.vup>one</> additional enemy",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 80,
+                "initSp": 43,
+                "increment": 1
+              },
+              "prefabId": "skchr_poca_2",
+              "duration": 60,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_target",
+                  "value": 2,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Split Shot",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>, and attacks hit <@ba.vup>one</> additional enemy",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 80,
+                "initSp": 44,
+                "increment": 1
+              },
+              "prefabId": "skchr_poca_2",
+              "duration": 60,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.55,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_target",
+                  "value": 2,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Split Shot",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>, and attacks hit <@ba.vup>one</> additional enemy",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 80,
+                "initSp": 45,
+                "increment": 1
+              },
+              "prefabId": "skchr_poca_2",
+              "duration": 60,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_target",
+                  "value": 2,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Split Shot",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>, and attacks hit <@ba.vup>one</> additional enemy",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 75,
+                "initSp": 45,
+                "increment": 1
+              },
+              "prefabId": "skchr_poca_2",
+              "duration": 60,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.7,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_target",
+                  "value": 2,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Split Shot",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>, and attacks hit <@ba.vup>one</> additional enemy",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 70,
+                "initSp": 45,
+                "increment": 1
+              },
+              "prefabId": "skchr_poca_2",
+              "duration": 60,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.8,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_target",
+                  "value": 2,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Split Shot",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>, and attacks hit <@ba.vup>one</> additional enemy",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 65,
+                "initSp": 45,
+                "increment": 1
+              },
+              "prefabId": "skchr_poca_2",
+              "duration": 60,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.9,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_target",
+                  "value": 2,
+                  "valueStr": null
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "skchr_poca_3",
+          "unlockCondition": {
+            "phase": "PHASE_2",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "Avalanche Breaker",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>. Immediately fires harpoons at the <@ba.vup>{max_target}</> heaviest enemies within range, <$ba.root><@ba.vup>Binding</></> them and attacking them once every second for the duration of this skill",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 40,
+                "initSp": 10,
+                "increment": 1
+              },
+              "prefabId": "skchr_poca_3",
+              "duration": 6,
+              "blackboard": [
+                {
+                  "key": "max_target",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "hit_interval",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "hit_duration",
+                  "value": 6,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Avalanche Breaker",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>. Immediately fires harpoons at the <@ba.vup>{max_target}</> heaviest enemies within range, <$ba.root><@ba.vup>Binding</></> them and attacking them once every second for the duration of this skill",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 39,
+                "initSp": 10,
+                "increment": 1
+              },
+              "prefabId": "skchr_poca_3",
+              "duration": 6,
+              "blackboard": [
+                {
+                  "key": "max_target",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "hit_interval",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "hit_duration",
+                  "value": 6,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Avalanche Breaker",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>. Immediately fires harpoons at the <@ba.vup>{max_target}</> heaviest enemies within range, <$ba.root><@ba.vup>Binding</></> them and attacking them once every second for the duration of this skill",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 38,
+                "initSp": 10,
+                "increment": 1
+              },
+              "prefabId": "skchr_poca_3",
+              "duration": 6,
+              "blackboard": [
+                {
+                  "key": "max_target",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "hit_interval",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "hit_duration",
+                  "value": 6,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Avalanche Breaker",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>. Immediately fires harpoons at the <@ba.vup>{max_target}</> heaviest enemies within range, <$ba.root><@ba.vup>Binding</></> them and attacking them once every second for the duration of this skill",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 37,
+                "initSp": 11,
+                "increment": 1
+              },
+              "prefabId": "skchr_poca_3",
+              "duration": 6,
+              "blackboard": [
+                {
+                  "key": "max_target",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "hit_interval",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "hit_duration",
+                  "value": 6,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Avalanche Breaker",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>. Immediately fires harpoons at the <@ba.vup>{max_target}</> heaviest enemies within range, <$ba.root><@ba.vup>Binding</></> them and attacking them once every second for the duration of this skill",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 36,
+                "initSp": 11,
+                "increment": 1
+              },
+              "prefabId": "skchr_poca_3",
+              "duration": 6,
+              "blackboard": [
+                {
+                  "key": "max_target",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "hit_interval",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "hit_duration",
+                  "value": 6,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Avalanche Breaker",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>. Immediately fires harpoons at the <@ba.vup>{max_target}</> heaviest enemies within range, <$ba.root><@ba.vup>Binding</></> them and attacking them once every second for the duration of this skill",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 35,
+                "initSp": 11,
+                "increment": 1
+              },
+              "prefabId": "skchr_poca_3",
+              "duration": 6,
+              "blackboard": [
+                {
+                  "key": "max_target",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "hit_interval",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "hit_duration",
+                  "value": 6,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Avalanche Breaker",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>. Immediately fires harpoons at the <@ba.vup>{max_target}</> heaviest enemies within range, <$ba.root><@ba.vup>Binding</></> them and attacking them once every second for the duration of this skill",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 34,
+                "initSp": 12,
+                "increment": 1
+              },
+              "prefabId": "skchr_poca_3",
+              "duration": 7,
+              "blackboard": [
+                {
+                  "key": "max_target",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "hit_interval",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "hit_duration",
+                  "value": 7,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Avalanche Breaker",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>. Immediately fires harpoons at the <@ba.vup>{max_target}</> heaviest enemies within range, <$ba.root><@ba.vup>Binding</></> them and attacking them once every second for the duration of this skill",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 33,
+                "initSp": 13,
+                "increment": 1
+              },
+              "prefabId": "skchr_poca_3",
+              "duration": 7,
+              "blackboard": [
+                {
+                  "key": "max_target",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "hit_interval",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.15,
+                  "valueStr": null
+                },
+                {
+                  "key": "hit_duration",
+                  "value": 7,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Avalanche Breaker",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>. Immediately fires harpoons at the <@ba.vup>{max_target}</> heaviest enemies within range, <$ba.root><@ba.vup>Binding</></> them and attacking them once every second for the duration of this skill",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 32,
+                "initSp": 14,
+                "increment": 1
+              },
+              "prefabId": "skchr_poca_3",
+              "duration": 7,
+              "blackboard": [
+                {
+                  "key": "max_target",
+                  "value": 4,
+                  "valueStr": null
+                },
+                {
+                  "key": "hit_interval",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "hit_duration",
+                  "value": 7,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Avalanche Breaker",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>. Immediately fires harpoons at the <@ba.vup>{max_target}</> heaviest enemies within range, <$ba.root><@ba.vup>Binding</></> them and attacking them once every second for the duration of this skill",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 30,
+                "initSp": 15,
+                "increment": 1
+              },
+              "prefabId": "skchr_poca_3",
+              "duration": 8,
+              "blackboard": [
+                {
+                  "key": "max_target",
+                  "value": 4,
+                  "valueStr": null
+                },
+                {
+                  "key": "hit_interval",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "hit_duration",
+                  "value": 8,
+                  "valueStr": null
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "char_4017_puzzle": {
+      "id": "char_4017_puzzle",
+      "name": "Puzzle",
+      "rarity": 5,
+      "profession": "PIONEER",
+      "subProfessionId": "agent",
+      "position": "MELEE",
+      "nationId": "victoria",
+      "groupId": null,
+      "teamId": null,
+      "phases": [
+        {
+          "maxLevel": 50,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 832,
+                "atk": 239,
+                "def": 85,
+                "magicResistance": 0,
+                "cost": 10,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 35,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 50,
+              "data": {
+                "maxHp": 1189,
+                "atk": 352,
+                "def": 143,
+                "magicResistance": 0,
+                "cost": 10,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 35,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ]
+          ]
+        },
+        {
+          "maxLevel": 70,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 1189,
+                "atk": 352,
+                "def": 143,
+                "magicResistance": 0,
+                "cost": 12,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 35,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 70,
+              "data": {
+                "maxHp": 1525,
+                "atk": 464,
+                "def": 205,
+                "magicResistance": 0,
+                "cost": 12,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 35,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ]
+          ]
+        },
+        {
+          "maxLevel": 80,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 1525,
+                "atk": 464,
+                "def": 205,
+                "magicResistance": 0,
+                "cost": 12,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 35,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 80,
+              "data": {
+                "maxHp": 1860,
+                "atk": 566,
+                "def": 244,
+                "magicResistance": 0,
+                "cost": 12,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 35,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ]
+          ]
+        }
+      ],
+      "favorKeyFrames": [
+        {
+          "level": 0,
+          "data": {
+            "maxHp": 0,
+            "atk": 0,
+            "def": 0,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false
+          }
+        },
+        {
+          "level": 50,
+          "data": {
+            "maxHp": 0,
+            "atk": 40,
+            "def": 20,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false
+          }
+        }
+      ],
+      "potentialRanks": [
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "ATTACK_SPEED",
+            "formulaItem": "ADDITION",
+            "value": 5,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [],
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ]
+      ],
+      "trait": null,
+      "talents": [
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Sequence",
+              "description": "ATK increased to 110% and recover 1 additional SP when hitting an enemy with full HP",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "hp_ratio",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk_scale",
+                  "value": 1.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "sp",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 1
+              },
+              "requiredPotentialRank": 4,
+              "prefabKey": "1",
+              "name": "Sequence",
+              "description": "ATK increased to 115% <@ba.talpu>(+5%)</> and recover 1 additional SP when hitting an enemy with full HP",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "hp_ratio",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk_scale",
+                  "value": 1.15,
+                  "valueStr": null
+                },
+                {
+                  "key": "sp",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Sequence",
+              "description": "ATK increased to 120% and recover 2 additional SP when hitting an enemy with full HP",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "hp_ratio",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk_scale",
+                  "value": 1.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "sp",
+                  "value": 2,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 4,
+              "prefabKey": "1",
+              "name": "Sequence",
+              "description": "ATK increased to 125% <@ba.talpu>(+5%)</> and recover 2 additional SP when hitting an enemy with full HP",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "hp_ratio",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk_scale",
+                  "value": 1.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "sp",
+                  "value": 2,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            }
+          ]
+        }
+      ],
+      "skills": [
+        {
+          "id": "skchr_puzzle_1",
+          "unlockCondition": {
+            "phase": "PHASE_0",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "Key Clue",
+              "rangeId": null,
+              "description": "The next attack deals <@ba.vup>{atk_scale:0%}</> ATK as Physical damage, and gains <@ba.vup>{cost}</> DP.",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 7,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_puzzle_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 1.7,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 3,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Key Clue",
+              "rangeId": null,
+              "description": "The next attack deals <@ba.vup>{atk_scale:0%}</> ATK as Physical damage, and gains <@ba.vup>{cost}</> DP.",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 7,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_puzzle_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 1.8,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 3,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Key Clue",
+              "rangeId": null,
+              "description": "The next attack deals <@ba.vup>{atk_scale:0%}</> ATK as Physical damage, and gains <@ba.vup>{cost}</> DP.",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 7,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_puzzle_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 1.9,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 3,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Key Clue",
+              "rangeId": null,
+              "description": "The next attack deals <@ba.vup>{atk_scale:0%}</> ATK as Physical damage, and gains <@ba.vup>{cost}</> DP.",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 6,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_puzzle_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 3,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Key Clue",
+              "rangeId": null,
+              "description": "The next attack deals <@ba.vup>{atk_scale:0%}</> ATK as Physical damage, and gains <@ba.vup>{cost}</> DP.",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 6,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_puzzle_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 2.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 3,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Key Clue",
+              "rangeId": null,
+              "description": "The next attack deals <@ba.vup>{atk_scale:0%}</> ATK as Physical damage, and gains <@ba.vup>{cost}</> DP.",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 6,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_puzzle_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 2.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 3,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Key Clue",
+              "rangeId": null,
+              "description": "The next attack deals <@ba.vup>{atk_scale:0%}</> ATK as Physical damage, and gains <@ba.vup>{cost}</> DP.",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 5,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_puzzle_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 2.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 3,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Key Clue",
+              "rangeId": null,
+              "description": "The next attack deals <@ba.vup>{atk_scale:0%}</> ATK as Physical damage, and gains <@ba.vup>{cost}</> DP.",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 5,
+                "initSp": 2,
+                "increment": 1
+              },
+              "prefabId": "skchr_puzzle_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 2.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 3,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Key Clue",
+              "rangeId": null,
+              "description": "The next attack deals <@ba.vup>{atk_scale:0%}</> ATK as Physical damage, and gains <@ba.vup>{cost}</> DP.",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 5,
+                "initSp": 2,
+                "increment": 1
+              },
+              "prefabId": "skchr_puzzle_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 2.7,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 3,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Key Clue",
+              "rangeId": null,
+              "description": "The next attack deals <@ba.vup>{atk_scale:0%}</> ATK as Physical damage, and gains <@ba.vup>{cost}</> DP.",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 5,
+                "initSp": 2,
+                "increment": 1
+              },
+              "prefabId": "skchr_puzzle_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 3,
+                  "valueStr": null
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "skchr_puzzle_2",
+          "unlockCondition": {
+            "phase": "PHASE_1",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "Follow a Lead",
+              "rangeId": null,
+              "description": "ASPD <@ba.vup>+{attack_speed}</>, attacks deal <@ba.vup>{attack@atk_scale_2:0%}</> of Puzzle's ATK as Arts damage per second for 16 seconds, stacking up to <@ba.vup>10</> times; gains <@ba.vup>{cost}</> DP per attack.",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 34,
+                "initSp": 8,
+                "increment": 1
+              },
+              "prefabId": "skchr_puzzle_2",
+              "duration": 8,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 45,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@atk_scale_2",
+                  "value": 0.06,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@addtion_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_cnt",
+                  "value": 10,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@duration_2",
+                  "value": 16,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Follow a Lead",
+              "rangeId": null,
+              "description": "ASPD <@ba.vup>+{attack_speed}</>, attacks deal <@ba.vup>{attack@atk_scale_2:0%}</> of Puzzle's ATK as Arts damage per second for 16 seconds, stacking up to <@ba.vup>10</> times; gains <@ba.vup>{cost}</> DP per attack.",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 33,
+                "initSp": 8,
+                "increment": 1
+              },
+              "prefabId": "skchr_puzzle_2",
+              "duration": 8,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 47,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@atk_scale_2",
+                  "value": 0.07,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@addtion_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_cnt",
+                  "value": 10,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@duration_2",
+                  "value": 16,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Follow a Lead",
+              "rangeId": null,
+              "description": "ASPD <@ba.vup>+{attack_speed}</>, attacks deal <@ba.vup>{attack@atk_scale_2:0%}</> of Puzzle's ATK as Arts damage per second for 16 seconds, stacking up to <@ba.vup>10</> times; gains <@ba.vup>{cost}</> DP per attack.",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 32,
+                "initSp": 8,
+                "increment": 1
+              },
+              "prefabId": "skchr_puzzle_2",
+              "duration": 8,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 49,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@atk_scale_2",
+                  "value": 0.08,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@addtion_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_cnt",
+                  "value": 10,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@duration_2",
+                  "value": 16,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Follow a Lead",
+              "rangeId": null,
+              "description": "ASPD <@ba.vup>+{attack_speed}</>, attacks deal <@ba.vup>{attack@atk_scale_2:0%}</> of Puzzle's ATK as Arts damage per second for 16 seconds, stacking up to <@ba.vup>10</> times; gains <@ba.vup>{cost}</> DP per attack.",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 31,
+                "initSp": 10,
+                "increment": 1
+              },
+              "prefabId": "skchr_puzzle_2",
+              "duration": 8,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 52,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@atk_scale_2",
+                  "value": 0.09,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@addtion_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_cnt",
+                  "value": 10,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@duration_2",
+                  "value": 16,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Follow a Lead",
+              "rangeId": null,
+              "description": "ASPD <@ba.vup>+{attack_speed}</>, attacks deal <@ba.vup>{attack@atk_scale_2:0%}</> of Puzzle's ATK as Arts damage per second for 16 seconds, stacking up to <@ba.vup>10</> times; gains <@ba.vup>{cost}</> DP per attack.",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 30,
+                "initSp": 10,
+                "increment": 1
+              },
+              "prefabId": "skchr_puzzle_2",
+              "duration": 8,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 54,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@atk_scale_2",
+                  "value": 0.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@addtion_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_cnt",
+                  "value": 10,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@duration_2",
+                  "value": 16,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Follow a Lead",
+              "rangeId": null,
+              "description": "ASPD <@ba.vup>+{attack_speed}</>, attacks deal <@ba.vup>{attack@atk_scale_2:0%}</> of Puzzle's ATK as Arts damage per second for 16 seconds, stacking up to <@ba.vup>10</> times; gains <@ba.vup>{cost}</> DP per attack.",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 29,
+                "initSp": 10,
+                "increment": 1
+              },
+              "prefabId": "skchr_puzzle_2",
+              "duration": 8,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 56,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@atk_scale_2",
+                  "value": 0.11,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@addtion_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_cnt",
+                  "value": 10,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@duration_2",
+                  "value": 16,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Follow a Lead",
+              "rangeId": null,
+              "description": "ASPD <@ba.vup>+{attack_speed}</>, attacks deal <@ba.vup>{attack@atk_scale_2:0%}</> of Puzzle's ATK as Arts damage per second for 16 seconds, stacking up to <@ba.vup>10</> times; gains <@ba.vup>{cost}</> DP per attack.",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 28,
+                "initSp": 12,
+                "increment": 1
+              },
+              "prefabId": "skchr_puzzle_2",
+              "duration": 8,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 60,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@atk_scale_2",
+                  "value": 0.12,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@addtion_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_cnt",
+                  "value": 10,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@duration_2",
+                  "value": 16,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Follow a Lead",
+              "rangeId": null,
+              "description": "ASPD <@ba.vup>+{attack_speed}</>, attacks deal <@ba.vup>{attack@atk_scale_2:0%}</> of Puzzle's ATK as Arts damage per second for 16 seconds, stacking up to <@ba.vup>10</> times; gains <@ba.vup>{cost}</> DP per attack.",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 27,
+                "initSp": 12,
+                "increment": 1
+              },
+              "prefabId": "skchr_puzzle_2",
+              "duration": 8,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 63,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@atk_scale_2",
+                  "value": 0.13,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@addtion_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_cnt",
+                  "value": 10,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@duration_2",
+                  "value": 16,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Follow a Lead",
+              "rangeId": null,
+              "description": "ASPD <@ba.vup>+{attack_speed}</>, attacks deal <@ba.vup>{attack@atk_scale_2:0%}</> of Puzzle's ATK as Arts damage per second for 16 seconds, stacking up to <@ba.vup>10</> times; gains <@ba.vup>{cost}</> DP per attack.",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 27,
+                "initSp": 13,
+                "increment": 1
+              },
+              "prefabId": "skchr_puzzle_2",
+              "duration": 8,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 66,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@atk_scale_2",
+                  "value": 0.14,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@addtion_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_cnt",
+                  "value": 10,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@duration_2",
+                  "value": 16,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Follow a Lead",
+              "rangeId": null,
+              "description": "ASPD <@ba.vup>+{attack_speed}</>, attacks deal <@ba.vup>{attack@atk_scale_2:0%}</> of Puzzle's ATK as Arts damage per second for 16 seconds, stacking up to <@ba.vup>10</> times; gains <@ba.vup>{cost}</> DP per attack.",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 26,
+                "initSp": 14,
+                "increment": 1
+              },
+              "prefabId": "skchr_puzzle_2",
+              "duration": 8,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 70,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@atk_scale_2",
+                  "value": 0.15,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@addtion_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_cnt",
+                  "value": 10,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@duration_2",
+                  "value": 16,
+                  "valueStr": null
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "char_4088_hodrer": {
+      "id": "char_4088_hodrer",
+      "name": "Hoederer",
+      "rarity": 6,
+      "profession": "WARRIOR",
+      "subProfessionId": "crusher",
+      "position": "MELEE",
+      "nationId": null,
+      "groupId": "babel",
+      "teamId": null,
+      "phases": [
+        {
+          "maxLevel": 50,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 2626,
+                "atk": 742,
+                "def": 0,
+                "magicResistance": 0,
+                "cost": 20,
+                "blockCnt": 2,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 2.5,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 50,
+              "data": {
+                "maxHp": 3549,
+                "atk": 1031,
+                "def": 0,
+                "magicResistance": 0,
+                "cost": 20,
+                "blockCnt": 2,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 2.5,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ]
+        },
+        {
+          "maxLevel": 80,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 3549,
+                "atk": 1031,
+                "def": 0,
+                "magicResistance": 0,
+                "cost": 22,
+                "blockCnt": 2,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 2.5,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 80,
+              "data": {
+                "maxHp": 4670,
+                "atk": 1323,
+                "def": 0,
+                "magicResistance": 0,
+                "cost": 22,
+                "blockCnt": 2,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 2.5,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ]
+        },
+        {
+          "maxLevel": 90,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 4670,
+                "atk": 1323,
+                "def": 0,
+                "magicResistance": 0,
+                "cost": 24,
+                "blockCnt": 2,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 2.5,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 90,
+              "data": {
+                "maxHp": 5988,
+                "atk": 1576,
+                "def": 0,
+                "magicResistance": 0,
+                "cost": 24,
+                "blockCnt": 2,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 2.5,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ]
+        }
+      ],
+      "favorKeyFrames": [
+        {
+          "level": 0,
+          "data": {
+            "maxHp": 0,
+            "atk": 0,
+            "def": 0,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false
+          }
+        },
+        {
+          "level": 50,
+          "data": {
+            "maxHp": 500,
+            "atk": 80,
+            "def": 0,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false
+          }
+        }
+      ],
+      "potentialRanks": [
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "MAX_HP",
+            "formulaItem": "ADDITION",
+            "value": 250,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "ATK",
+            "formulaItem": "ADDITION",
+            "value": 45,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [],
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ]
+      ],
+      "trait": null,
+      "talents": [
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Do or Die",
+              "description": "ATK increases to 105% when attacking an enemy; if the target is <$ba.stun>stunned</> or <$ba.root>bound</>, ATK further increases to 125%",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 1.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk_scale_2",
+                  "value": 1.05,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Do or Die",
+              "description": "ATK increases to 110% when attacking an enemy; if the target is <$ba.stun>stunned</> or <$ba.root>bound</>, ATK further increases to 140%",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 1.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk_scale_2",
+                  "value": 1.1,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            }
+          ]
+        },
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "2",
+              "name": "Cloak of Lingering Flame",
+              "description": "Provides an 18% <$ba.protect>Sanctuary</> effect to self and the allied unit directly behind this unit",
+              "rangeId": "b-1",
+              "blackboard": [
+                {
+                  "key": "damage_resistance",
+                  "value": 0.18,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false,
+              "rangeGrid": [
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 4,
+              "prefabKey": "2",
+              "name": "Cloak of Lingering Flame",
+              "description": "Provides a 21% <@ba.talpu>(+3%)</> <$ba.protect>Sanctuary</> effect to self and the allied unit directly behind this unit",
+              "rangeId": "b-1",
+              "blackboard": [
+                {
+                  "key": "damage_resistance",
+                  "value": 0.21,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false,
+              "rangeGrid": [
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            }
+          ]
+        }
+      ],
+      "skills": [
+        {
+          "id": "skchr_hodrer_1",
+          "unlockCondition": {
+            "phase": "PHASE_0",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "Unquenchable Front",
+              "rangeId": null,
+              "description": "The next attack deals <@ba.vup>{atk_scale:0%}</> ATK as Physical damage, and restores <@ba.vup>{hp_ratio:0%}</> HP",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 4,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_hodrer_1",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 1.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "hp_ratio",
+                  "value": 0.1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Unquenchable Front",
+              "rangeId": null,
+              "description": "The next attack deals <@ba.vup>{atk_scale:0%}</> ATK as Physical damage, and restores <@ba.vup>{hp_ratio:0%}</> HP",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 4,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_hodrer_1",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 1.65,
+                  "valueStr": null
+                },
+                {
+                  "key": "hp_ratio",
+                  "value": 0.1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Unquenchable Front",
+              "rangeId": null,
+              "description": "The next attack deals <@ba.vup>{atk_scale:0%}</> ATK as Physical damage, and restores <@ba.vup>{hp_ratio:0%}</> HP",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 4,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_hodrer_1",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 1.7,
+                  "valueStr": null
+                },
+                {
+                  "key": "hp_ratio",
+                  "value": 0.1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Unquenchable Front",
+              "rangeId": null,
+              "description": "The next attack deals <@ba.vup>{atk_scale:0%}</> ATK as Physical damage, and restores <@ba.vup>{hp_ratio:0%}</> HP",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 3,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_hodrer_1",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 1.8,
+                  "valueStr": null
+                },
+                {
+                  "key": "hp_ratio",
+                  "value": 0.15,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Unquenchable Front",
+              "rangeId": null,
+              "description": "The next attack deals <@ba.vup>{atk_scale:0%}</> ATK as Physical damage, and restores <@ba.vup>{hp_ratio:0%}</> HP",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 3,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_hodrer_1",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 1.85,
+                  "valueStr": null
+                },
+                {
+                  "key": "hp_ratio",
+                  "value": 0.15,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Unquenchable Front",
+              "rangeId": null,
+              "description": "The next attack deals <@ba.vup>{atk_scale:0%}</> ATK as Physical damage, and restores <@ba.vup>{hp_ratio:0%}</> HP",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 3,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_hodrer_1",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 1.9,
+                  "valueStr": null
+                },
+                {
+                  "key": "hp_ratio",
+                  "value": 0.15,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Unquenchable Front",
+              "rangeId": null,
+              "description": "The next attack deals <@ba.vup>{atk_scale:0%}</> ATK as Physical damage, and restores <@ba.vup>{hp_ratio:0%}</> HP",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 3,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_hodrer_1",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "hp_ratio",
+                  "value": 0.2,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Unquenchable Front",
+              "rangeId": null,
+              "description": "The next attack deals <@ba.vup>{atk_scale:0%}</> ATK as Physical damage, and restores <@ba.vup>{hp_ratio:0%}</> HP",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 3,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_hodrer_1",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 2.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "hp_ratio",
+                  "value": 0.2,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Unquenchable Front",
+              "rangeId": null,
+              "description": "The next attack deals <@ba.vup>{atk_scale:0%}</> ATK as Physical damage, and restores <@ba.vup>{hp_ratio:0%}</> HP",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 3,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_hodrer_1",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 2.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "hp_ratio",
+                  "value": 0.2,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Unquenchable Front",
+              "rangeId": null,
+              "description": "The next attack deals <@ba.vup>{atk_scale:0%}</> ATK as Physical damage, and restores <@ba.vup>{hp_ratio:0%}</> HP",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 2,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_hodrer_1",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 2.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "hp_ratio",
+                  "value": 0.25,
+                  "valueStr": null
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "skchr_hodrer_2",
+          "unlockCondition": {
+            "phase": "PHASE_1",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "Burden of Cinder and Ash",
+              "rangeId": null,
+              "description": "Passive Effect: ATK <@ba.vup>+{atk:0%}</>\n<@ba.rem>Active Effect: Can switch between the default state and the following state: </>\nAttack Interval <@ba.vdown>increases slightly</>, Block <@ba.vup>+{block_cnt}</>, attacks <$ba.stun>Stun</> targets for <@ba.vup>{attack@stun}</>s",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 10,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_hodrer_2",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.04,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "block_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@stun",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Burden of Cinder and Ash",
+              "rangeId": null,
+              "description": "Passive Effect: ATK <@ba.vup>+{atk:0%}</>\n<@ba.rem>Active Effect: Can switch between the default state and the following state: </>\nAttack Interval <@ba.vdown>increases slightly</>, Block <@ba.vup>+{block_cnt}</>, attacks <$ba.stun>Stun</> targets for <@ba.vup>{attack@stun}</>s",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 10,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_hodrer_2",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.08,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "block_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@stun",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Burden of Cinder and Ash",
+              "rangeId": null,
+              "description": "Passive Effect: ATK <@ba.vup>+{atk:0%}</>\n<@ba.rem>Active Effect: Can switch between the default state and the following state: </>\nAttack Interval <@ba.vdown>increases slightly</>, Block <@ba.vup>+{block_cnt}</>, attacks <$ba.stun>Stun</> targets for <@ba.vup>{attack@stun}</>s",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 10,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_hodrer_2",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.12,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "block_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@stun",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Burden of Cinder and Ash",
+              "rangeId": null,
+              "description": "Passive Effect: ATK <@ba.vup>+{atk:0%}</>\n<@ba.rem>Active Effect: Can switch between the default state and the following state: </>\nAttack Interval <@ba.vdown>increases slightly</>, Block <@ba.vup>+{block_cnt}</>, attacks <$ba.stun>Stun</> targets for <@ba.vup>{attack@stun}</>s",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 9,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_hodrer_2",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.16,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "block_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@stun",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Burden of Cinder and Ash",
+              "rangeId": null,
+              "description": "Passive Effect: ATK <@ba.vup>+{atk:0%}</>\n<@ba.rem>Active Effect: Can switch between the default state and the following state: </>\nAttack Interval <@ba.vdown>increases slightly</>, Block <@ba.vup>+{block_cnt}</>, attacks <$ba.stun>Stun</> targets for <@ba.vup>{attack@stun}</>s",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 9,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_hodrer_2",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "block_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@stun",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Burden of Cinder and Ash",
+              "rangeId": null,
+              "description": "Passive Effect: ATK <@ba.vup>+{atk:0%}</>\n<@ba.rem>Active Effect: Can switch between the default state and the following state: </>\nAttack Interval <@ba.vdown>increases slightly</>, Block <@ba.vup>+{block_cnt}</>, attacks <$ba.stun>Stun</> targets for <@ba.vup>{attack@stun}</>s",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 9,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_hodrer_2",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.24,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "block_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@stun",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Burden of Cinder and Ash",
+              "rangeId": null,
+              "description": "Passive Effect: ATK <@ba.vup>+{atk:0%}</>\n<@ba.rem>Active Effect: Can switch between the default state and the following state: </>\nAttack Interval <@ba.vdown>increases slightly</>, Block <@ba.vup>+{block_cnt}</>, attacks <$ba.stun>Stun</> targets for <@ba.vup>{attack@stun}</>s",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 8,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_hodrer_2",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.28,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "block_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@stun",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Burden of Cinder and Ash",
+              "rangeId": null,
+              "description": "Passive Effect: ATK <@ba.vup>+{atk:0%}</>\n<@ba.rem>Active Effect: Can switch between the default state and the following state: </>\nAttack Interval <@ba.vdown>increases slightly</>, Block <@ba.vup>+{block_cnt}</>, attacks <$ba.stun>Stun</> targets for <@ba.vup>{attack@stun}</>s",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 7,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_hodrer_2",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.32,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "block_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@stun",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Burden of Cinder and Ash",
+              "rangeId": null,
+              "description": "Passive Effect: ATK <@ba.vup>+{atk:0%}</>\n<@ba.rem>Active Effect: Can switch between the default state and the following state: </>\nAttack Interval <@ba.vdown>increases slightly</>, Block <@ba.vup>+{block_cnt}</>, attacks <$ba.stun>Stun</> targets for <@ba.vup>{attack@stun}</>s",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 6,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_hodrer_2",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.36,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "block_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@stun",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Burden of Cinder and Ash",
+              "rangeId": null,
+              "description": "Passive Effect: ATK <@ba.vup>+{atk:0%}</>\n<@ba.rem>Active Effect: Can switch between the default state and the following state: </>\nAttack Interval <@ba.vdown>increases slightly</>, Block <@ba.vup>+{block_cnt}</>, attacks <$ba.stun>Stun</> targets for <@ba.vup>{attack@stun}</>s",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 5,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_hodrer_2",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "block_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@stun",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "skchr_hodrer_3",
+          "unlockCondition": {
+            "phase": "PHASE_2",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "Fog of War Upon Death's Door",
+              "rangeId": null,
+              "description": "Consumes <@ba.vdown>{attack@value}</> HP per second and deals <@ba.vup>{attack@damage}</> True damage per second to enemies that have either attacked or been attacked by this unit. Attack Range <@ba.vup>+{ability_range_forward_extend}</>, Max HP <@ba.vup>+{max_hp:0%}</>, ATK <@ba.vup>+{atk:0%}</>, and each attack restores <@ba.vup>{attack@hp_ratio:0%}</> HP and has a <@ba.vup>{attack@buff_prob:0%}</> chance to <$ba.stun>stun</> targets for <@ba.vup>{attack@stun}</> seconds",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 80,
+                "initSp": 40,
+                "increment": 1
+              },
+              "prefabId": "skchr_hodrer_3",
+              "duration": 70,
+              "blackboard": [
+                {
+                  "key": "max_hp",
+                  "value": 0.15,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@hp_ratio",
+                  "value": 0.05,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@buff_prob",
+                  "value": 0.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@stun",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "ability_range_forward_extend",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@value",
+                  "value": 100,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@damage",
+                  "value": 200,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Fog of War Upon Death's Door",
+              "rangeId": null,
+              "description": "Consumes <@ba.vdown>{attack@value}</> HP per second and deals <@ba.vup>{attack@damage}</> True damage per second to enemies that have either attacked or been attacked by this unit. Attack Range <@ba.vup>+{ability_range_forward_extend}</>, Max HP <@ba.vup>+{max_hp:0%}</>, ATK <@ba.vup>+{atk:0%}</>, and each attack restores <@ba.vup>{attack@hp_ratio:0%}</> HP and has a <@ba.vup>{attack@buff_prob:0%}</> chance to <$ba.stun>stun</> targets for <@ba.vup>{attack@stun}</> seconds",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 77,
+                "initSp": 40,
+                "increment": 1
+              },
+              "prefabId": "skchr_hodrer_3",
+              "duration": 70,
+              "blackboard": [
+                {
+                  "key": "max_hp",
+                  "value": 0.15,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@hp_ratio",
+                  "value": 0.05,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@buff_prob",
+                  "value": 0.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@stun",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "ability_range_forward_extend",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@value",
+                  "value": 100,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@damage",
+                  "value": 200,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Fog of War Upon Death's Door",
+              "rangeId": null,
+              "description": "Consumes <@ba.vdown>{attack@value}</> HP per second and deals <@ba.vup>{attack@damage}</> True damage per second to enemies that have either attacked or been attacked by this unit. Attack Range <@ba.vup>+{ability_range_forward_extend}</>, Max HP <@ba.vup>+{max_hp:0%}</>, ATK <@ba.vup>+{atk:0%}</>, and each attack restores <@ba.vup>{attack@hp_ratio:0%}</> HP and has a <@ba.vup>{attack@buff_prob:0%}</> chance to <$ba.stun>stun</> targets for <@ba.vup>{attack@stun}</> seconds",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 74,
+                "initSp": 40,
+                "increment": 1
+              },
+              "prefabId": "skchr_hodrer_3",
+              "duration": 70,
+              "blackboard": [
+                {
+                  "key": "max_hp",
+                  "value": 0.15,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@hp_ratio",
+                  "value": 0.05,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@buff_prob",
+                  "value": 0.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@stun",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "ability_range_forward_extend",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@value",
+                  "value": 100,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@damage",
+                  "value": 200,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Fog of War Upon Death's Door",
+              "rangeId": null,
+              "description": "Consumes <@ba.vdown>{attack@value}</> HP per second and deals <@ba.vup>{attack@damage}</> True damage per second to enemies that have either attacked or been attacked by this unit. Attack Range <@ba.vup>+{ability_range_forward_extend}</>, Max HP <@ba.vup>+{max_hp:0%}</>, ATK <@ba.vup>+{atk:0%}</>, and each attack restores <@ba.vup>{attack@hp_ratio:0%}</> HP and has a <@ba.vup>{attack@buff_prob:0%}</> chance to <$ba.stun>stun</> targets for <@ba.vup>{attack@stun}</> seconds",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 70,
+                "initSp": 40,
+                "increment": 1
+              },
+              "prefabId": "skchr_hodrer_3",
+              "duration": 70,
+              "blackboard": [
+                {
+                  "key": "max_hp",
+                  "value": 0.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@hp_ratio",
+                  "value": 0.05,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@buff_prob",
+                  "value": 0.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@stun",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "ability_range_forward_extend",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@value",
+                  "value": 100,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@damage",
+                  "value": 200,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Fog of War Upon Death's Door",
+              "rangeId": null,
+              "description": "Consumes <@ba.vdown>{attack@value}</> HP per second and deals <@ba.vup>{attack@damage}</> True damage per second to enemies that have either attacked or been attacked by this unit. Attack Range <@ba.vup>+{ability_range_forward_extend}</>, Max HP <@ba.vup>+{max_hp:0%}</>, ATK <@ba.vup>+{atk:0%}</>, and each attack restores <@ba.vup>{attack@hp_ratio:0%}</> HP and has a <@ba.vup>{attack@buff_prob:0%}</> chance to <$ba.stun>stun</> targets for <@ba.vup>{attack@stun}</> seconds",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 67,
+                "initSp": 40,
+                "increment": 1
+              },
+              "prefabId": "skchr_hodrer_3",
+              "duration": 70,
+              "blackboard": [
+                {
+                  "key": "max_hp",
+                  "value": 0.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.7,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@hp_ratio",
+                  "value": 0.05,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@buff_prob",
+                  "value": 0.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@stun",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "ability_range_forward_extend",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@value",
+                  "value": 100,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@damage",
+                  "value": 200,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Fog of War Upon Death's Door",
+              "rangeId": null,
+              "description": "Consumes <@ba.vdown>{attack@value}</> HP per second and deals <@ba.vup>{attack@damage}</> True damage per second to enemies that have either attacked or been attacked by this unit. Attack Range <@ba.vup>+{ability_range_forward_extend}</>, Max HP <@ba.vup>+{max_hp:0%}</>, ATK <@ba.vup>+{atk:0%}</>, and each attack restores <@ba.vup>{attack@hp_ratio:0%}</> HP and has a <@ba.vup>{attack@buff_prob:0%}</> chance to <$ba.stun>stun</> targets for <@ba.vup>{attack@stun}</> seconds",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 64,
+                "initSp": 40,
+                "increment": 1
+              },
+              "prefabId": "skchr_hodrer_3",
+              "duration": 70,
+              "blackboard": [
+                {
+                  "key": "max_hp",
+                  "value": 0.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.8,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@hp_ratio",
+                  "value": 0.05,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@buff_prob",
+                  "value": 0.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@stun",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "ability_range_forward_extend",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@value",
+                  "value": 100,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@damage",
+                  "value": 200,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Fog of War Upon Death's Door",
+              "rangeId": null,
+              "description": "Consumes <@ba.vdown>{attack@value}</> HP per second and deals <@ba.vup>{attack@damage}</> True damage per second to enemies that have either attacked or been attacked by this unit. Attack Range <@ba.vup>+{ability_range_forward_extend}</>, Max HP <@ba.vup>+{max_hp:0%}</>, ATK <@ba.vup>+{atk:0%}</>, and each attack restores <@ba.vup>{attack@hp_ratio:0%}</> HP and has a <@ba.vup>{attack@buff_prob:0%}</> chance to <$ba.stun>stun</> targets for <@ba.vup>{attack@stun}</> seconds",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 60,
+                "initSp": 40,
+                "increment": 1
+              },
+              "prefabId": "skchr_hodrer_3",
+              "duration": 70,
+              "blackboard": [
+                {
+                  "key": "max_hp",
+                  "value": 0.45,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.9,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@hp_ratio",
+                  "value": 0.05,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@buff_prob",
+                  "value": 0.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@stun",
+                  "value": 4,
+                  "valueStr": null
+                },
+                {
+                  "key": "ability_range_forward_extend",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@value",
+                  "value": 100,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@damage",
+                  "value": 200,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Fog of War Upon Death's Door",
+              "rangeId": null,
+              "description": "Consumes <@ba.vdown>{attack@value}</> HP per second and deals <@ba.vup>{attack@damage}</> True damage per second to enemies that have either attacked or been attacked by this unit. Attack Range <@ba.vup>+{ability_range_forward_extend}</>, Max HP <@ba.vup>+{max_hp:0%}</>, ATK <@ba.vup>+{atk:0%}</>, and each attack restores <@ba.vup>{attack@hp_ratio:0%}</> HP and has a <@ba.vup>{attack@buff_prob:0%}</> chance to <$ba.stun>stun</> targets for <@ba.vup>{attack@stun}</> seconds",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 57,
+                "initSp": 40,
+                "increment": 1
+              },
+              "prefabId": "skchr_hodrer_3",
+              "duration": 70,
+              "blackboard": [
+                {
+                  "key": "max_hp",
+                  "value": 0.45,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@hp_ratio",
+                  "value": 0.05,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@buff_prob",
+                  "value": 0.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@stun",
+                  "value": 4,
+                  "valueStr": null
+                },
+                {
+                  "key": "ability_range_forward_extend",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@value",
+                  "value": 100,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@damage",
+                  "value": 200,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Fog of War Upon Death's Door",
+              "rangeId": null,
+              "description": "Consumes <@ba.vdown>{attack@value}</> HP per second and deals <@ba.vup>{attack@damage}</> True damage per second to enemies that have either attacked or been attacked by this unit. Attack Range <@ba.vup>+{ability_range_forward_extend}</>, Max HP <@ba.vup>+{max_hp:0%}</>, ATK <@ba.vup>+{atk:0%}</>, and each attack restores <@ba.vup>{attack@hp_ratio:0%}</> HP and has a <@ba.vup>{attack@buff_prob:0%}</> chance to <$ba.stun>stun</> targets for <@ba.vup>{attack@stun}</> seconds",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 54,
+                "initSp": 40,
+                "increment": 1
+              },
+              "prefabId": "skchr_hodrer_3",
+              "duration": 70,
+              "blackboard": [
+                {
+                  "key": "max_hp",
+                  "value": 0.45,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 1.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@hp_ratio",
+                  "value": 0.05,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@buff_prob",
+                  "value": 0.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@stun",
+                  "value": 4,
+                  "valueStr": null
+                },
+                {
+                  "key": "ability_range_forward_extend",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@value",
+                  "value": 100,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@damage",
+                  "value": 200,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Fog of War Upon Death's Door",
+              "rangeId": null,
+              "description": "Consumes <@ba.vdown>{attack@value}</> HP per second and deals <@ba.vup>{attack@damage}</> True damage per second to enemies that have either attacked or been attacked by this unit. Attack Range <@ba.vup>+{ability_range_forward_extend}</>, Max HP <@ba.vup>+{max_hp:0%}</>, ATK <@ba.vup>+{atk:0%}</>, and each attack restores <@ba.vup>{attack@hp_ratio:0%}</> HP and has a <@ba.vup>{attack@buff_prob:0%}</> chance to <$ba.stun>stun</> targets for <@ba.vup>{attack@stun}</> seconds",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 50,
+                "initSp": 40,
+                "increment": 1
+              },
+              "prefabId": "skchr_hodrer_3",
+              "duration": 70,
+              "blackboard": [
+                {
+                  "key": "max_hp",
+                  "value": 0.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 1.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@hp_ratio",
+                  "value": 0.05,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@buff_prob",
+                  "value": 0.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@stun",
+                  "value": 5,
+                  "valueStr": null
+                },
+                {
+                  "key": "ability_range_forward_extend",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@value",
+                  "value": 100,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@damage",
+                  "value": 200,
+                  "valueStr": null
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "char_250_phatom": {
       "id": "char_250_phatom",
       "name": "Phantom",
@@ -386385,7 +391586,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/f10bc2600441798bd20ab8c15f08cfc4a808ef8a/models/operator/token_10001_deepcl_tentac/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/67b2c8738d96b25bdcfeed93044f5dec642ca0a6/models/operator/token_10001_deepcl_tentac/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10018_robrta_mach": {
       "id": "token_10018_robrta_mach",
@@ -386875,7 +392076,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/f10bc2600441798bd20ab8c15f08cfc4a808ef8a/models/operator/token_10018_robrta_mach/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/67b2c8738d96b25bdcfeed93044f5dec642ca0a6/models/operator/token_10018_robrta_mach/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10014_bstalk_crab": {
       "id": "token_10014_bstalk_crab",
@@ -387204,7 +392405,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/f10bc2600441798bd20ab8c15f08cfc4a808ef8a/models/operator/token_10014_bstalk_crab/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/67b2c8738d96b25bdcfeed93044f5dec642ca0a6/models/operator/token_10014_bstalk_crab/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10011_beewax_oblisk": {
       "id": "token_10011_beewax_oblisk",
@@ -388149,7 +393350,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/f10bc2600441798bd20ab8c15f08cfc4a808ef8a/models/operator/token_10011_beewax_oblisk/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/67b2c8738d96b25bdcfeed93044f5dec642ca0a6/models/operator/token_10011_beewax_oblisk/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10006_vodfox_doll": {
       "id": "token_10006_vodfox_doll",
@@ -388785,7 +393986,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/f10bc2600441798bd20ab8c15f08cfc4a808ef8a/models/operator/token_10006_vodfox_doll/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/67b2c8738d96b25bdcfeed93044f5dec642ca0a6/models/operator/token_10006_vodfox_doll/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10003_cgbird_bird": {
       "id": "token_10003_cgbird_bird",
@@ -389080,7 +394281,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/f10bc2600441798bd20ab8c15f08cfc4a808ef8a/models/operator/token_10003_cgbird_bird/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/67b2c8738d96b25bdcfeed93044f5dec642ca0a6/models/operator/token_10003_cgbird_bird/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10000_silent_healrb": {
       "id": "token_10000_silent_healrb",
@@ -389463,7 +394664,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/f10bc2600441798bd20ab8c15f08cfc4a808ef8a/models/operator/token_10000_silent_healrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/67b2c8738d96b25bdcfeed93044f5dec642ca0a6/models/operator/token_10000_silent_healrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10015_dusk_drgn": {
       "id": "token_10015_dusk_drgn",
@@ -389877,7 +395078,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/f10bc2600441798bd20ab8c15f08cfc4a808ef8a/models/operator/token_10015_dusk_drgn/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/67b2c8738d96b25bdcfeed93044f5dec642ca0a6/models/operator/token_10015_dusk_drgn/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10007_phatom_twin": {
       "id": "token_10007_phatom_twin",
@@ -391656,7 +396857,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/f10bc2600441798bd20ab8c15f08cfc4a808ef8a/models/operator/token_10007_phatom_twin/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/67b2c8738d96b25bdcfeed93044f5dec642ca0a6/models/operator/token_10007_phatom_twin/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     }
   },
   "enemies": {
@@ -391707,7 +396908,7 @@
   },
   "skillEffects": {
     "repository": "arkpedia/arkpedia-sd-assets",
-    "commit": "f10bc2600441798bd20ab8c15f08cfc4a808ef8a",
+    "commit": "67b2c8738d96b25bdcfeed93044f5dec642ca0a6",
     "pack": {
       "path": "effects/charge-cost/26-09-23-17-49-43_b9cc4a/effect.json",
       "bytes": 15311,

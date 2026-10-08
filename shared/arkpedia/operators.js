@@ -68,6 +68,9 @@ import { GUARD_SIX_STAR_FOURTH_OPERATORS } from './guard-six-star-fourth-operato
 import { FARTOOTH_OPERATORS } from './fartooth-operators.js';
 import { SARIA_OPERATORS } from './saria-operators.js';
 import { BAGPIPE_OPERATORS } from './bagpipe-operators.js';
+import { ROSA_OPERATORS } from './rosa-operators.js';
+import { PUZZLE_OPERATORS } from './puzzle-operators.js';
+import { HOEDERER_OPERATORS } from './hoederer-operators.js';
 import { FIVE_STAR_SPECIALIST_EXPANSION_OPERATORS } from './five-star-specialist-expansion-operators.js';
 export const REGULAR_OPERATORS = Object.freeze({
   char_123_fang: { skillId: "skcom_charge_cost[1]", talentKeys: ["cost"], mechanic: "dp", prefabId: "skcom_charge_cost", templateKey: "charge_cost" },
@@ -156,6 +159,9 @@ export const REGULAR_OPERATORS = Object.freeze({
   ...FARTOOTH_OPERATORS,
   ...SARIA_OPERATORS,
   ...BAGPIPE_OPERATORS,
+  ...ROSA_OPERATORS,
+  ...PUZZLE_OPERATORS,
+  ...HOEDERER_OPERATORS,
   ...PHANTOM_OPERATORS,
   ...HOOK_EXPANSION_OPERATORS,
   ...FIVE_STAR_SPECIALIST_EXPANSION_OPERATORS,

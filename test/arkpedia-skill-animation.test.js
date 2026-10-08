@@ -12,6 +12,31 @@ before(async () => {
 after(() => fake.restore());
 
 for (const facing of ['front', 'back']) {
+  test(`Rosa ${facing} keeps S1/S2 attack buffs separate from her S3 harpoon sequence`, () => {
+    const model = data.sd.models[`operator/char_197_poca/default/${facing}`];
+    const entry = { anims: model.animationRoles, animations: model.animations, hits: model.hits };
+    const skeleton = { animations: Object.keys(model.animations).map(name => ({ name })) };
+    const original = structuredClone(entry.anims);
+    for (const index of [0, 1]) {
+      const actor = new BattleActor(skeleton, entry, index, { attackDrivenSkill: true });
+      actor.setSkill(true);
+      assert.equal(actor.current, 'Idle', 'a stat buff must not start a harpoon cast');
+      actor.attack(2.667, true, { animation: 'Attack', windup: .533 });
+      assert.equal(actor.current, 'Attack', 'only an attack event plays the normal shot');
+      actor.update(3);
+      actor.setSkill(false);
+      assert.equal(actor.current, 'Idle', 'ending the buff must not borrow S3 Skill_End');
+      actor.destroy();
+    }
+    const third = new BattleActor(skeleton, entry, 2, { attackDrivenSkill: true });
+    third.setSkill(true);
+    assert.equal(third.current, 'Skill_Begin');
+    third.setSkill(false);
+    assert.equal(third.current, 'Skill_End');
+    assert.deepEqual(entry.anims, original, 'selected skills never change shared model metadata');
+    third.destroy();
+  });
+
   test(`Ambriel ${facing} uses the source normal shot nearby and skill shot far away during S2`, () => {
     const model = data.sd.models[`operator/char_302_glaze/default/${facing}`];
     const entry = { anims: model.animationRoles, animations: model.animations, hits: model.hits };
