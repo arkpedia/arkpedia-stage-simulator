@@ -71,6 +71,10 @@ export class ProjectileSystem {
       speed: p.speed > 0 ? p.speed : PROJECTILE_SPEED,
       flightTime: Number.isFinite(p.flightTime) && p.flightTime > 0 ? p.flightTime : null,
       onHit: p.onHit ?? null,
+      // Opt-in moving colliders (piercing shots). Existing point impacts keep
+      // their original arrival behavior; finite colliders expire where they are.
+      onMove: p.onMove ?? null,
+      expireInPlace: !!p.expireInPlace,
       visual: p.visual ?? 'arrow',
       source: p.source ?? (p.from && p.from.id != null ? p.from : null),
       hitDead: !!p.hitDead,
@@ -87,6 +91,7 @@ export class ProjectileSystem {
     const keep = [];
     const arrived = [];
     for (const p of this.list) {
+      const previous = { x: p.x, y: p.y, age: p.age };
       p.age += dt;
       if (p.target) {
         if (p.target.alive && !p.target.hidden && p.target.deploySeq === p.tseq) { p.tx = fin(p.target.x, p.tx); p.ty = fin(p.target.y, p.ty); }
@@ -95,7 +100,8 @@ export class ProjectileSystem {
       }
       const dx = p.tx - p.x, dy = p.ty - p.y;
       const d = Math.hypot(dx, dy);
-      const step = p.speed * this.speedScale(p) * dt;
+      const motionDt = p.expireInPlace ? Math.min(dt, Math.max(0, p.maxAge - previous.age)) : dt;
+      const step = p.speed * this.speedScale(p) * motionDt;
       // Some original Arts projectiles use a fixed travel duration instead of
       // speed. Follow the live destination from the saved origin, even when the
       // target crosses the projectile; only the duration boundary can impact.
@@ -107,14 +113,17 @@ export class ProjectileSystem {
         else keep.push(p);
         continue;
       }
-      if (d <= step || p.age >= p.maxAge) {
+      if (d <= step || (!p.expireInPlace && p.age >= p.maxAge)) {
         p.x = p.tx; p.y = p.ty;
         arrived.push(p);
       } else {
         p.x += (dx / d) * step;
         p.y += (dy / d) * step;
-        keep.push(p);
+        if (p.expireInPlace && p.age >= p.maxAge - 1e-9) arrived.push(p);
+        else keep.push(p);
       }
+      if (p.onMove) this.battle._safe(() => p.onMove({ battle: this.battle,
+        projectile: p, previous, x: p.x, y: p.y }), 'projectile.onMove', p.source);
     }
     this.list = keep;
     this.arriving = arrived;
