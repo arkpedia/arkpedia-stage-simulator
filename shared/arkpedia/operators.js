@@ -89,6 +89,7 @@ import { EXECUTOR_REAPER_OPERATORS } from './executor-reaper-operators.js';
 import { PHILAE_OPERATORS } from './philae-operators.js';
 import { WINDFLIT_OPERATORS } from './windflit-operators.js';
 import { BLEMISHINE_OPERATORS } from './blemishine-operators.js';
+import { FLAMETAIL_OPERATORS } from './flametail-operators.js';
 import { FIVE_STAR_SPECIALIST_EXPANSION_OPERATORS } from './five-star-specialist-expansion-operators.js';
 export const REGULAR_OPERATORS = Object.freeze({
   char_123_fang: { skillId: "skcom_charge_cost[1]", talentKeys: ["cost"], mechanic: "dp", prefabId: "skcom_charge_cost", templateKey: "charge_cost" },
@@ -198,6 +199,7 @@ export const REGULAR_OPERATORS = Object.freeze({
   ...PHILAE_OPERATORS,
   ...WINDFLIT_OPERATORS,
   ...BLEMISHINE_OPERATORS,
+  ...FLAMETAIL_OPERATORS,
   ...PHANTOM_OPERATORS,
   ...HOOK_EXPANSION_OPERATORS,
   ...FIVE_STAR_SPECIALIST_EXPANSION_OPERATORS,
