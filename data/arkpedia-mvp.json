@@ -52042,6 +52042,209 @@
           "height": 438.965
         }
       },
+      "operator/char_4052_surfer/default/front": {
+        "kind": "operator",
+        "id": "char_4052_surfer",
+        "variant": "default",
+        "facing": "front",
+        "spineVersion": "3.8.99",
+        "source": {
+          "key": "operators",
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "spine/char_4052_surfer/char_4052_surfer/Front"
+        },
+        "skeleton": {
+          "path": "models/operator/char_4052_surfer/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4052_surfer.skel",
+          "bytes": 285692,
+          "sha256": "7d3a2e2fe9c84ef84acefc495f8473de970f56d62e3c0caff51c0926bcba810d"
+        },
+        "atlas": {
+          "path": "models/operator/char_4052_surfer/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4052_surfer.atlas",
+          "bytes": 9175,
+          "sha256": "dfd74a955fe66bdfdc9ee4e10acec2b6d67447b71a7eaaf014baa089da0d85eb"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_4052_surfer/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4052_surfer.png",
+            "bytes": 132244,
+            "sha256": "97cd3fd8b7588256752da1912a4478fa57d8f628c6a927c1198ef42b422d734f"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Attack": 1,
+          "Combat": 1,
+          "Default": 0,
+          "Die": 1,
+          "Idle": 2,
+          "Skill_2_Attack": 1,
+          "Skill_2_Begin": 0.167,
+          "Skill_2_Combat": 1,
+          "Skill_2_End": 0.167,
+          "Skill_2_Idle": 4,
+          "Start": 1
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null
+          },
+          "attackDown": null,
+          "skill": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null,
+            "via": "attack",
+            "index": 0,
+            "idle": null
+          },
+          "die": "Die",
+          "move": null,
+          "stun": null,
+          "skills": {
+            "0": {
+              "begin": null,
+              "loop": "Attack",
+              "end": null,
+              "via": "attack",
+              "index": 0,
+              "idle": null
+            },
+            "1": {
+              "begin": "Skill_2_Begin",
+              "loop": "Skill_2_Attack",
+              "end": "Skill_2_End",
+              "index": 1,
+              "idle": "Skill_2_Idle"
+            }
+          }
+        },
+        "hits": {
+          "Attack": [
+            0.4
+          ],
+          "Combat": [
+            0.4
+          ],
+          "Skill_2_Attack": [
+            0.333
+          ],
+          "Skill_2_Combat": [
+            0.333
+          ]
+        },
+        "bounds": {
+          "x": -437.29,
+          "y": -1.781,
+          "width": 845.902,
+          "height": 621.631
+        }
+      },
+      "operator/char_4052_surfer/default/back": {
+        "kind": "operator",
+        "id": "char_4052_surfer",
+        "variant": "default",
+        "facing": "back",
+        "spineVersion": "3.8.99",
+        "source": {
+          "key": "operators",
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "spine/char_4052_surfer/char_4052_surfer/Back"
+        },
+        "skeleton": {
+          "path": "models/operator/char_4052_surfer/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4052_surfer.skel",
+          "bytes": 201675,
+          "sha256": "e96d433af58cfbbdad863dbdd0f189d28af0f4b15ce5dce5699b985ee02a4ab7"
+        },
+        "atlas": {
+          "path": "models/operator/char_4052_surfer/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4052_surfer.atlas",
+          "bytes": 5230,
+          "sha256": "1af12a36b250d4b0117398608b2e51704eced0bfb738ecba88095dea30eacf39"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_4052_surfer/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4052_surfer.png",
+            "bytes": 107764,
+            "sha256": "22c533c56f3e9e305ba0933aaa2fec3019fc4ac970a7df41d471c3b9fed3b56b"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Attack": 1,
+          "Combat": 1,
+          "Default": 0,
+          "Idle": 2,
+          "Skill_2_Attack": 1,
+          "Skill_2_Begin": 0.167,
+          "Skill_2_Combat": 1,
+          "Skill_2_End": 0.167,
+          "Skill_2_Idle": 4,
+          "Start": 1
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null
+          },
+          "attackDown": null,
+          "skill": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null,
+            "via": "attack",
+            "index": 0,
+            "idle": null
+          },
+          "die": null,
+          "move": null,
+          "stun": null,
+          "skills": {
+            "0": {
+              "begin": null,
+              "loop": "Attack",
+              "end": null,
+              "via": "attack",
+              "index": 0,
+              "idle": null
+            },
+            "1": {
+              "begin": "Skill_2_Begin",
+              "loop": "Skill_2_Attack",
+              "end": "Skill_2_End",
+              "index": 1,
+              "idle": "Skill_2_Idle"
+            }
+          }
+        },
+        "hits": {
+          "Attack": [
+            0.4
+          ],
+          "Combat": [
+            0.4
+          ],
+          "Skill_2_Attack": [
+            0.333
+          ],
+          "Skill_2_Combat": [
+            0.333
+          ]
+        },
+        "bounds": {
+          "x": -50.36,
+          "y": -1.79,
+          "width": 458.972,
+          "height": 621.64
+        }
+      },
       "operator/char_250_phatom/default/front": {
         "kind": "operator",
         "id": "char_250_phatom",
@@ -433700,6 +433903,1203 @@
                 {
                   "key": "atk_scale",
                   "value": 3,
+                  "valueStr": null
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "char_4052_surfer": {
+      "id": "char_4052_surfer",
+      "name": "Surfer",
+      "description": "Has <@ba.kw>reduced</> Redeployment Time, can use ranged attacks",
+      "rarity": 5,
+      "profession": "PIONEER",
+      "subProfessionId": "agent",
+      "position": "MELEE",
+      "nationId": "columbia",
+      "groupId": "blacksteel",
+      "teamId": null,
+      "phases": [
+        {
+          "maxLevel": 50,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 872,
+                "atk": 236,
+                "def": 92,
+                "magicResistance": 0,
+                "cost": 8,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 35,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 50,
+              "data": {
+                "maxHp": 1247,
+                "atk": 348,
+                "def": 154,
+                "magicResistance": 0,
+                "cost": 8,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 35,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ]
+          ]
+        },
+        {
+          "maxLevel": 70,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 1247,
+                "atk": 348,
+                "def": 154,
+                "magicResistance": 0,
+                "cost": 10,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 35,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 70,
+              "data": {
+                "maxHp": 1599,
+                "atk": 459,
+                "def": 220,
+                "magicResistance": 0,
+                "cost": 10,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 35,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ]
+          ]
+        },
+        {
+          "maxLevel": 80,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 1599,
+                "atk": 459,
+                "def": 220,
+                "magicResistance": 0,
+                "cost": 10,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 35,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 80,
+              "data": {
+                "maxHp": 1950,
+                "atk": 560,
+                "def": 261,
+                "magicResistance": 0,
+                "cost": 10,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 35,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ]
+          ]
+        }
+      ],
+      "favorKeyFrames": [
+        {
+          "level": 0,
+          "data": {
+            "maxHp": 0,
+            "atk": 0,
+            "def": 0,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false
+          }
+        },
+        {
+          "level": 50,
+          "data": {
+            "maxHp": 0,
+            "atk": 40,
+            "def": 20,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false
+          }
+        }
+      ],
+      "potentialRanks": [
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "RESPAWN_TIME",
+            "formulaItem": "ADDITION",
+            "value": -4,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "ATTACK_SPEED",
+            "formulaItem": "ADDITION",
+            "value": 5,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [],
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ]
+      ],
+      "trait": null,
+      "talents": [
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Solo Traveler",
+              "description": "If there are no other Operators in the surrounding 4 tiles when deployed, gain 1 DP",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 1
+              },
+              "requiredPotentialRank": 4,
+              "prefabKey": "1",
+              "name": "Solo Traveler",
+              "description": "If there are no other Operators in the surrounding 4 tiles when deployed, gain 2 <@ba.talpu>(+1)</> DP",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 2,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Solo Traveler",
+              "description": "If there are no other Operators in the surrounding 4 tiles when deployed, gain 2 DP",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 2,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 4,
+              "prefabKey": "1",
+              "name": "Solo Traveler",
+              "description": "If there are no other Operators in the surrounding 4 tiles when deployed, gain 3 <@ba.talpu>(+1)</> DP",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 3,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            }
+          ]
+        }
+      ],
+      "skills": [
+        {
+          "id": "skchr_surfer_1",
+          "unlockCondition": {
+            "phase": "PHASE_0",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "Search and Seek",
+              "rangeId": null,
+              "description": "After deployment, ATK <@ba.vup>+{atk:0%}</>. Generates <@ba.vup>{cost}</> DP after each attack",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_surfer_1",
+              "duration": 13,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.35,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Search and Seek",
+              "rangeId": null,
+              "description": "After deployment, ATK <@ba.vup>+{atk:0%}</>. Generates <@ba.vup>{cost}</> DP after each attack",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_surfer_1",
+              "duration": 13,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Search and Seek",
+              "rangeId": null,
+              "description": "After deployment, ATK <@ba.vup>+{atk:0%}</>. Generates <@ba.vup>{cost}</> DP after each attack",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_surfer_1",
+              "duration": 13,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.45,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Search and Seek",
+              "rangeId": null,
+              "description": "After deployment, ATK <@ba.vup>+{atk:0%}</>. Generates <@ba.vup>{cost}</> DP after each attack",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_surfer_1",
+              "duration": 14,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Search and Seek",
+              "rangeId": null,
+              "description": "After deployment, ATK <@ba.vup>+{atk:0%}</>. Generates <@ba.vup>{cost}</> DP after each attack",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_surfer_1",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.55,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Search and Seek",
+              "rangeId": null,
+              "description": "After deployment, ATK <@ba.vup>+{atk:0%}</>. Generates <@ba.vup>{cost}</> DP after each attack",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_surfer_1",
+              "duration": 16,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Search and Seek",
+              "rangeId": null,
+              "description": "After deployment, ATK <@ba.vup>+{atk:0%}</>. Generates <@ba.vup>{cost}</> DP after each attack",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_surfer_1",
+              "duration": 17,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.7,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Search and Seek",
+              "rangeId": null,
+              "description": "After deployment, ATK <@ba.vup>+{atk:0%}</>. Generates <@ba.vup>{cost}</> DP after each attack",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_surfer_1",
+              "duration": 18,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.8,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Search and Seek",
+              "rangeId": null,
+              "description": "After deployment, ATK <@ba.vup>+{atk:0%}</>. Generates <@ba.vup>{cost}</> DP after each attack",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_surfer_1",
+              "duration": 19,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.9,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Search and Seek",
+              "rangeId": null,
+              "description": "After deployment, ATK <@ba.vup>+{atk:0%}</>. Generates <@ba.vup>{cost}</> DP after each attack",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_surfer_1",
+              "duration": 20,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "skchr_surfer_2",
+          "unlockCondition": {
+            "phase": "PHASE_1",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "Quick Learner",
+              "rangeId": null,
+              "description": "ASPD <@ba.vup>+{attack_speed}</>, each attack grants <@ba.vup>{cost}</> DP, and <$ba.steal>Steals</> <@ba.vup>{def_steal}</> DEF from the target (max <@ba.vup>{def_steal_max}</>, lasts until skill ends or Surfer is retreated)",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 31,
+                "initSp": 10,
+                "increment": 1
+              },
+              "prefabId": "skchr_surfer_2",
+              "duration": 10,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 10,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "def_steal",
+                  "value": 10,
+                  "valueStr": null
+                },
+                {
+                  "key": "def_steal_max",
+                  "value": 100,
+                  "valueStr": null
+                },
+                {
+                  "key": "mode",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Quick Learner",
+              "rangeId": null,
+              "description": "ASPD <@ba.vup>+{attack_speed}</>, each attack grants <@ba.vup>{cost}</> DP, and <$ba.steal>Steals</> <@ba.vup>{def_steal}</> DEF from the target (max <@ba.vup>{def_steal_max}</>, lasts until skill ends or Surfer is retreated)",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 30,
+                "initSp": 10,
+                "increment": 1
+              },
+              "prefabId": "skchr_surfer_2",
+              "duration": 10,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 15,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "def_steal",
+                  "value": 12,
+                  "valueStr": null
+                },
+                {
+                  "key": "def_steal_max",
+                  "value": 120,
+                  "valueStr": null
+                },
+                {
+                  "key": "mode",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Quick Learner",
+              "rangeId": null,
+              "description": "ASPD <@ba.vup>+{attack_speed}</>, each attack grants <@ba.vup>{cost}</> DP, and <$ba.steal>Steals</> <@ba.vup>{def_steal}</> DEF from the target (max <@ba.vup>{def_steal_max}</>, lasts until skill ends or Surfer is retreated)",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 29,
+                "initSp": 10,
+                "increment": 1
+              },
+              "prefabId": "skchr_surfer_2",
+              "duration": 10,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 20,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "def_steal",
+                  "value": 15,
+                  "valueStr": null
+                },
+                {
+                  "key": "def_steal_max",
+                  "value": 120,
+                  "valueStr": null
+                },
+                {
+                  "key": "mode",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Quick Learner",
+              "rangeId": null,
+              "description": "ASPD <@ba.vup>+{attack_speed}</>, each attack grants <@ba.vup>{cost}</> DP, and <$ba.steal>Steals</> <@ba.vup>{def_steal}</> DEF from the target (max <@ba.vup>{def_steal_max}</>, lasts until skill ends or Surfer is retreated)",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 28,
+                "initSp": 11,
+                "increment": 1
+              },
+              "prefabId": "skchr_surfer_2",
+              "duration": 10,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 25,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "def_steal",
+                  "value": 20,
+                  "valueStr": null
+                },
+                {
+                  "key": "def_steal_max",
+                  "value": 140,
+                  "valueStr": null
+                },
+                {
+                  "key": "mode",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Quick Learner",
+              "rangeId": null,
+              "description": "ASPD <@ba.vup>+{attack_speed}</>, each attack grants <@ba.vup>{cost}</> DP, and <$ba.steal>Steals</> <@ba.vup>{def_steal}</> DEF from the target (max <@ba.vup>{def_steal_max}</>, lasts until skill ends or Surfer is retreated)",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 27,
+                "initSp": 11,
+                "increment": 1
+              },
+              "prefabId": "skchr_surfer_2",
+              "duration": 10,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 30,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "def_steal",
+                  "value": 25,
+                  "valueStr": null
+                },
+                {
+                  "key": "def_steal_max",
+                  "value": 150,
+                  "valueStr": null
+                },
+                {
+                  "key": "mode",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Quick Learner",
+              "rangeId": null,
+              "description": "ASPD <@ba.vup>+{attack_speed}</>, each attack grants <@ba.vup>{cost}</> DP, and <$ba.steal>Steals</> <@ba.vup>{def_steal}</> DEF from the target (max <@ba.vup>{def_steal_max}</>, lasts until skill ends or Surfer is retreated)",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 26,
+                "initSp": 11,
+                "increment": 1
+              },
+              "prefabId": "skchr_surfer_2",
+              "duration": 10,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 35,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "def_steal",
+                  "value": 30,
+                  "valueStr": null
+                },
+                {
+                  "key": "def_steal_max",
+                  "value": 180,
+                  "valueStr": null
+                },
+                {
+                  "key": "mode",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Quick Learner",
+              "rangeId": null,
+              "description": "ASPD <@ba.vup>+{attack_speed}</>, each attack grants <@ba.vup>{cost}</> DP, and <$ba.steal>Steals</> <@ba.vup>{def_steal}</> DEF from the target (max <@ba.vup>{def_steal_max}</>, lasts until skill ends or Surfer is retreated)",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 25,
+                "initSp": 12,
+                "increment": 1
+              },
+              "prefabId": "skchr_surfer_2",
+              "duration": 10,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 40,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "def_steal",
+                  "value": 40,
+                  "valueStr": null
+                },
+                {
+                  "key": "def_steal_max",
+                  "value": 200,
+                  "valueStr": null
+                },
+                {
+                  "key": "mode",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Quick Learner",
+              "rangeId": null,
+              "description": "ASPD <@ba.vup>+{attack_speed}</>, each attack grants <@ba.vup>{cost}</> DP, and <$ba.steal>Steals</> <@ba.vup>{def_steal}</> DEF from the target (max <@ba.vup>{def_steal_max}</>, lasts until skill ends or Surfer is retreated)",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 24,
+                "initSp": 13,
+                "increment": 1
+              },
+              "prefabId": "skchr_surfer_2",
+              "duration": 10,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 47,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "def_steal",
+                  "value": 45,
+                  "valueStr": null
+                },
+                {
+                  "key": "def_steal_max",
+                  "value": 225,
+                  "valueStr": null
+                },
+                {
+                  "key": "mode",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Quick Learner",
+              "rangeId": null,
+              "description": "ASPD <@ba.vup>+{attack_speed}</>, each attack grants <@ba.vup>{cost}</> DP, and <$ba.steal>Steals</> <@ba.vup>{def_steal}</> DEF from the target (max <@ba.vup>{def_steal_max}</>, lasts until skill ends or Surfer is retreated)",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 23,
+                "initSp": 14,
+                "increment": 1
+              },
+              "prefabId": "skchr_surfer_2",
+              "duration": 10,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 54,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "def_steal",
+                  "value": 50,
+                  "valueStr": null
+                },
+                {
+                  "key": "def_steal_max",
+                  "value": 250,
+                  "valueStr": null
+                },
+                {
+                  "key": "mode",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Quick Learner",
+              "rangeId": null,
+              "description": "ASPD <@ba.vup>+{attack_speed}</>, each attack grants <@ba.vup>{cost}</> DP, and <$ba.steal>Steals</> <@ba.vup>{def_steal}</> DEF from the target (max <@ba.vup>{def_steal_max}</>, lasts until skill ends or Surfer is retreated)",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 22,
+                "initSp": 15,
+                "increment": 1
+              },
+              "prefabId": "skchr_surfer_2",
+              "duration": 10,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 60,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "def_steal",
+                  "value": 55,
+                  "valueStr": null
+                },
+                {
+                  "key": "def_steal_max",
+                  "value": 275,
+                  "valueStr": null
+                },
+                {
+                  "key": "mode",
+                  "value": 1,
                   "valueStr": null
                 }
               ]
