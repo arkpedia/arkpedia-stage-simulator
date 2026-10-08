@@ -119,6 +119,14 @@ for (const id of ids) {
       roles.skills['2'] = { ...third, index: 2 };
       roles.skill = roles.skills['0'];
     }
+    // Scene S1 requests its one-shot beginning, then keeps ordinary attacks;
+    // her remote S2 never requests the unused Skill_2 clip.
+    if (id === 'char_336_folivo') {
+      roles.skills['0'] = { begin: 'Skill_1', loop: roles.attack.loop,
+        end: null, index: 0, idle: roles.idle };
+      roles.skills['1'] = { ...roles.attack, index: 1, idle: null, via: 'attack' };
+      roles.skill = roles.skills['0'];
+    }
     // Native Nian S1 switches damage mode on her ordinary attack. S2 is
     // disarmed: no graph requests the Front-only Skill_1 family. S3 owns the
     // literal Skill_2 family on both original facings.

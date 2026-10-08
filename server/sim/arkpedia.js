@@ -81,6 +81,9 @@ import { customizeJieyunKit, installJieyun, adjustJieyunCost } from './content/a
 import { customizeRadiantKnightKit, installRadiantKnight, installRadiantKnightSquad } from './content/arkpedia-radiant-knight.js';
 import { customizeNianKit, installNian, prepareNianSquad } from './content/arkpedia-nian.js';
 import { customizeKaltsitKit, installKaltsit } from './content/arkpedia-kaltsit.js';
+import { customizeZuoleKit, installZuole } from './content/arkpedia-zuole.js';
+import { customizeBobbingKit, installBobbing } from './content/arkpedia-bobbing.js';
+import { customizeSceneKit, installScene } from './content/arkpedia-scene.js';
 import { customizeFiveStarSupportFourthKit, installFiveStarSupportFourth } from './content/arkpedia-five-star-support-fourth.js';
 import { customizeFiveStarSpecialistExpansionKit, installFiveStarSpecialistExpansion } from './content/arkpedia-five-star-specialist-expansion.js';
 import { catalogueFor, recordFor } from "../../shared/arkpedia/loadout.js";
@@ -371,6 +374,9 @@ export class StandardBattle extends Battle {
     customizeRadiantKnightKit({ battle: this, id, def, unit, kit });
     customizeNianKit({ battle: this, id, def, unit, kit });
     customizeKaltsitKit({ battle: this, id, def, unit, kit });
+    customizeZuoleKit({ battle: this, id, def, unit, kit });
+    customizeBobbingKit({ battle: this, id, def, unit, kit });
+    customizeSceneKit({ battle: this, id, def, unit, kit });
     customizePhantomKit({ battle: this, id, def, unit, kit });
     customizeHookExpansionKit({ battle: this, id, def, unit, kit });
     customizeFiveStarSupportFourthKit({ battle: this, id, def, unit, kit });
@@ -473,6 +479,9 @@ export class StandardBattle extends Battle {
     installRadiantKnight({ battle: this, unit, def });
     installNian({ battle: this, unit, def });
     installKaltsit({ battle: this, unit, def });
+    installZuole({ battle: this, unit, def });
+    installBobbing({ battle: this, unit, def });
+    installScene({ battle: this, unit, def });
     installHookExpansion({ battle: this, unit, def });
     installFiveStarSupportFourth({ battle: this, unit, def });
     installFiveStarSpecialistExpansion({ battle: this, unit, def });

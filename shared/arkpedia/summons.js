@@ -1,6 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Only explicitly reviewed regular-stage tokens may enter the deployment deck.
 export const REGULAR_SUMMONS = Object.freeze({
+  char_336_folivo: Object.freeze({ tokenId: 'token_10010_folivo_car',
+    deploymentSlotCost: 1, chooseFacing: true, healFree: true,
+    refundRatio: .5, attackClip: 'Attack', sourceStockLimit: true }),
   char_003_kalts: Object.freeze({ tokenId: 'token_10002_kalts_mon3tr',
     deploymentSlotCost: 1, chooseFacing: true, healFree: true,
     refundRatio: .5, attackClip: 'Attack', stockLimit: 1,
@@ -78,7 +81,10 @@ export function summonRecordFor(ownerId, build, tokens) {
   for (const key of ['maxHp', 'atk', 'def']) stats[key] = Math.round(stats[key]);
   const talents = (source.talents ?? []).map(talent => sourceCandidate(talent.candidates, build))
     .filter(Boolean).map(talent => ({ ...talent, bb: blackboard(talent.blackboard) }));
-  for (const talent of talents) stats.maxDeployCount += talent.bb.max_deploy_count ?? 0;
+  for (const talent of talents) {
+    stats.maxDeployCount += talent.bb.max_deploy_count ?? 0;
+    if (config.sourceStockLimit) stats.maxDeckStackCnt += talent.bb.max_deck_stack_cnt ?? 0;
+  }
   let skill = null;
   if (ownerId === 'char_250_phatom') {
     for (const talent of talents) stats.respawnTime += talent.bb.respawn_time ?? 0;
@@ -108,6 +114,8 @@ export function summonRecordFor(ownerId, build, tokens) {
       trigger: { rule: 'NEVER' } };
   }
   if (config.tacticalPoint) stats.respawnTime = talents[0].bb.interval;
+  if (config.sourceStockLimit && (!Number.isSafeInteger(stats.maxDeckStackCnt) || stats.maxDeckStackCnt < 1))
+    throw Error('Unsupported summon source stock limit');
   if (!Number.isSafeInteger(stats.maxDeployCount) || stats.maxDeployCount < 1 || !phase.rangeGrid?.length)
     throw Error('Unsupported summon source limits or range');
   return { id: source.id, name: source.name, profession: source.profession,

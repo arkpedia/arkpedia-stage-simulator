@@ -4,6 +4,7 @@ import assert from 'node:assert/strict';
 import data from '../data/arkpedia-mvp.json' with { type: 'json' };
 import nian from '../data/arkpedia-nian-prefabs.json' with { type: 'json' };
 import kaltsit from '../data/arkpedia-kaltsit-prefabs.json' with { type: 'json' };
+import scene from '../data/arkpedia-scene-prefabs.json' with { type: 'json' };
 import { REGULAR_SUMMONS, REGULAR_AUTOMATIC_TOKENS,
   regularTokenIdsFor } from '../shared/arkpedia/summons.js';
 
@@ -25,7 +26,11 @@ test('every reviewed automatic or manual token dependency has complete original 
         const model = data.sd.models[`operator/${id}/default/${facing}`];
         assert.ok(model?.skeleton?.sha256 && model?.atlas?.sha256);
         assert.ok(model?.textures?.length && model.textures.every(texture => texture.sha256));
-        assert.ok(model?.animationRoles?.idle && model?.animationRoles?.deploy);
+        assert.ok(model?.animationRoles?.idle);
+        if (id === 'token_10010_folivo_car') {
+          assert.equal(model.animationRoles.deploy, null);
+          assert.equal(model.animations.Start, undefined, 'the original camera has no entrance clip');
+        } else assert.ok(model.animationRoles.deploy);
       }
     }
   }
@@ -55,5 +60,35 @@ test('Mon3tr renderer keeps the exact native source bytes and mode attack events
     assert.equal(model.atlas.sha256, native.files['token_10002_kalts_mon3tr.atlas'].sha256);
     assert.deepEqual(model.hits, { Attack: [.233], Skill: [.367], Skill_2: [.667] });
     assert.deepEqual(Object.values(model.animationRoles.skills).map(role => role.loop), ['Attack', 'Skill', 'Skill_2']);
+  }
+});
+
+test('Scene cameras retain actual distinct facing bytes and native attack events without inventing Start', () => {
+  const hashes = [];
+  for (const facing of ['front', 'back']) {
+    const native = scene.models.token_10010_folivo_car[facing === 'front' ? 'Front' : 'Back'];
+    const model = data.sd.models[`operator/token_10010_folivo_car/default/${facing}`];
+    hashes.push(model.skeleton.sha256);
+    assert.equal(model.skeleton.sha256, native.files['token_10010_folivo_car.skel'].sha256);
+    assert.equal(model.atlas.sha256, native.files['token_10010_folivo_car.atlas'].sha256);
+    assert.equal(model.textures[0].sha256, native.files['token_10010_folivo_car.png'].sha256);
+    assert.equal(model.animationRoles.deploy, null);
+    assert.equal(model.animations.Start, undefined);
+    assert.deepEqual(model.hits, { Attack: [.333] });
+    assert.equal(model.animations.Stun, .9);
+  }
+  assert.notEqual(hashes[0], hashes[1]);
+});
+
+test('Scene owner requests its native one-shot S1 beginning and ordinary attacks for S2', () => {
+  for (const facing of ['front', 'back']) {
+    const model = data.sd.models[`operator/char_336_folivo/default/${facing}`];
+    const native = scene.models.char_336_folivo[facing === 'front' ? 'Front' : 'Back'];
+    assert.equal(model.skeleton.sha256, native.sha256);
+    assert.deepEqual(model.animationRoles.skills[0], { begin: 'Skill_1', loop: 'Attack',
+      end: null, index: 0, idle: 'Idle' });
+    assert.equal(model.animationRoles.skills[1].via, 'attack');
+    assert.equal(model.animationRoles.skills[1].loop, 'Attack');
+    assert.equal(model.animationRoles.skills[1].begin, null);
   }
 });

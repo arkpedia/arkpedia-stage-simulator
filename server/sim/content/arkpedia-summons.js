@@ -8,6 +8,7 @@ import { installNightingaleCage } from './arkpedia-six-star-medic.js';
 import { installSilenceDrone } from './arkpedia-five-star-medic-fourth.js';
 import { createPhantomClone } from './arkpedia-phantom.js';
 import { createKaltsitMon3tr } from './arkpedia-kaltsit.js';
+import { createSceneBuggyCam } from './arkpedia-scene.js';
 import { installSilenceParadigmaticDrone } from './arkpedia-silence-paradigmatic.js';
 
 const live = unit => unit?.alive && unit.deployed;
@@ -58,6 +59,7 @@ export function deployRegularSummon(battle, key, row, col, dir = 'RIGHT') {
   const state = cardState(battle, key), source = evidence.tokens[state.record.id];
   const token = state.ownerId === 'char_250_phatom' ? createPhantomClone(battle, state, row, col, dir)
     : state.ownerId === 'char_003_kalts' ? createKaltsitMon3tr(battle, state, row, col, dir)
+    : state.ownerId === 'char_336_folivo' ? createSceneBuggyCam(battle, state, row, col, dir)
     : state.config.tacticalPoint ? createMetalCrab(battle, state, row, col)
     : battle.spawnToken(state.owner, state.record.id, row, col, {
     dir, def: state.record, kit: { skill: null, trait: { attack: 'melee',
