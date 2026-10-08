@@ -89,6 +89,8 @@ import { customizeBlacknightKit, installBlacknight } from './content/arkpedia-bl
 import { customizeChristineKit, installChristine } from './content/arkpedia-christine.js';
 import { customizeExecutorReaperKit, installExecutorReaper } from './content/arkpedia-executor-reaper.js';
 import { customizePhilaeKit, installPhilae } from './content/arkpedia-philae.js';
+import { customizeWindflitKit, installWindflit } from './content/arkpedia-windflit.js';
+import { customizeBlemishineKit, installBlemishine } from './content/arkpedia-blemishine.js';
 import { customizeFiveStarSupportFourthKit, installFiveStarSupportFourth } from './content/arkpedia-five-star-support-fourth.js';
 import { customizeFiveStarSpecialistExpansionKit, installFiveStarSpecialistExpansion } from './content/arkpedia-five-star-specialist-expansion.js';
 import { catalogueFor, recordFor } from "../../shared/arkpedia/loadout.js";
@@ -387,6 +389,8 @@ export class StandardBattle extends Battle {
     customizeChristineKit({ battle: this, id, def, unit, kit });
     customizeExecutorReaperKit({ battle: this, id, def, unit, kit });
     customizePhilaeKit({ battle: this, id, def, unit, kit });
+    customizeWindflitKit({ battle: this, id, def, unit, kit });
+    customizeBlemishineKit({ battle: this, id, def, unit, kit });
     customizePhantomKit({ battle: this, id, def, unit, kit });
     customizeHookExpansionKit({ battle: this, id, def, unit, kit });
     customizeFiveStarSupportFourthKit({ battle: this, id, def, unit, kit });
@@ -497,6 +501,8 @@ export class StandardBattle extends Battle {
     installChristine({ battle: this, unit, def });
     installExecutorReaper({ battle: this, unit, def });
     installPhilae({ battle: this, unit, def });
+    installWindflit({ battle: this, unit, def });
+    installBlemishine({ battle: this, unit, def });
     installHookExpansion({ battle: this, unit, def });
     installFiveStarSupportFourth({ battle: this, unit, def });
     installFiveStarSpecialistExpansion({ battle: this, unit, def });
