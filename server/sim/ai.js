@@ -117,7 +117,13 @@ export function acquireTargets(b, u, prof) {
         if (t.side === 'enemy') return canTargetEnemy(u, t, prof);
         if (t.side !== 'ally' || t.kind === 'device') return false;
         const flags = t.s.flags;
-        return !flags.untargetable && !flags.healFree
+        // A reviewed healing ability may select its own heal-free summon.
+        // This recipient predicate never relaxes isolation or other no-heal
+        // rules, and ordinary selectors keep their existing restrictions.
+        const ignoreHealFree = prof.dmgType === 'heal'
+          && typeof prof.heal?.ignoreHealFree === 'function'
+          && prof.heal.ignoreHealFree(b, u, t) === true;
+        return !flags.untargetable && (!flags.healFree || ignoreHealFree)
           && (t === u || !(flags.noHeal || t.profile?.noHeal || flags.isolated));
       });
     }
@@ -378,7 +384,9 @@ function doHeal(b, u, prof, t) {
   const elementRatio = typeof h.elementHealRatio === 'function'
     ? h.elementHealRatio(b, u, t) : h.elementHealRatio;
   if (elementRatio) reduceElement(t, atk * elementRatio);
-  const restored = b.heal(u, t, amount);
+  const ignoreHealFree = typeof h.ignoreHealFree === 'function'
+    && h.ignoreHealFree(b, u, t) === true;
+  const restored = b.heal(u, t, amount, { ignoreHealFree });
   if (prof.afterHeal) b._safe(() => prof.afterHeal(b, u, t, { amount, restored }), 'profile.afterHeal', u);
   if (h.mode === 'chain') {
     const seen = new Set([t.id]);

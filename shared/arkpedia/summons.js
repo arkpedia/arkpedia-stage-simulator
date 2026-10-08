@@ -1,6 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Only explicitly reviewed regular-stage tokens may enter the deployment deck.
 export const REGULAR_SUMMONS = Object.freeze({
+  char_003_kalts: Object.freeze({ tokenId: 'token_10002_kalts_mon3tr',
+    deploymentSlotCost: 1, chooseFacing: true, healFree: true,
+    refundRatio: .5, attackClip: 'Attack', stockLimit: 1,
+    rechargeOnFinish: true }),
   char_1031_slent2: Object.freeze({ tokenId: 'token_10029_slent2_protrb',
     deploymentSlotCost: 0, chooseFacing: false, healFree: false,
     refundRatio: .5, noAttack: true, skillId: 'skchr_slent2_2', stockLimit: 1,

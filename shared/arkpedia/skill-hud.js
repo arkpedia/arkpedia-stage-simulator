@@ -1,5 +1,13 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // One interpretation of the live skill runtime for both the map and selected operator.
+// Only explicitly bound owned summons expose an owner's skill controls. The
+// token keeps its own combat runtime; this helper changes presentation only.
+export function skillSourceFor(unit) {
+  const owner = unit?.mem?.skillOwner;
+  return owner && owner === unit.ownerUnit && owner.alive && owner.deployed
+    ? owner : unit;
+}
+
 export function skillHud(skill) {
   if (!skill || skill.noSkill || skill.kind === "passive") return null;
   const clamp = (n) => Math.max(0, Math.min(1, Number.isFinite(n) ? n : 0));

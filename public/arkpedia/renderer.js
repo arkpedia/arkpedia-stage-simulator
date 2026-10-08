@@ -6,7 +6,7 @@ import { regularVisualHeight } from "./regular-form-visual.js";
 import { createAssets } from "/js/assets.js";
 import { regionEdges } from "/shared/arkpedia/placement.js";
 import { spriteFacing } from "/shared/arkpedia/facing.js";
-import { skillHud } from "/shared/arkpedia/skill-hud.js";
+import { skillHud, skillSourceFor } from "/shared/arkpedia/skill-hud.js";
 import { regularTokenIdsFor } from "/shared/arkpedia/summons.js";
 import { artBase } from "/shared/arkpedia/stage-art.js";
 import { loadStageArt } from "./stage-art.js";
@@ -479,7 +479,7 @@ export class StageRenderer {
             .drawRect(x, y, w * Math.max(0, Math.min(1, u.hp / u.s.maxHp)), 4)
             .endFill();
         }
-        const skill = u.side === "ally" ? skillHud(u.skill) : null;
+        const skill = u.side === "ally" ? skillHud(skillSourceFor(u)?.skill) : null;
         if (skill) {
           // The green SP gauge sits immediately below HP; orange counts down an active skill.
           view.hp

@@ -11,7 +11,7 @@ import { maxedSupport } from "/shared/arkpedia/squad.js";
 import { StageRenderer } from "./renderer.js";
 import { absoluteRangeKeys } from "/sim/targeting.js";
 import { swipeFacing } from "/shared/arkpedia/placement.js";
-import { skillHud } from "/shared/arkpedia/skill-hud.js";
+import { skillHud, skillSourceFor } from "/shared/arkpedia/skill-hud.js";
 import { battleHud } from "/shared/arkpedia/battle-hud.js";
 import { requiresLandscape } from "/shared/arkpedia/viewport.js";
 import { summonUnitId } from "/shared/arkpedia/summons.js";
@@ -490,20 +490,15 @@ function summonDetails(entry) {
     <div class="hp-readout"><span>HP</span><strong>${Math.min(Math.ceil(hp), Math.round(maxHp))} / ${Math.round(maxHp)}</strong></div>
     <div class="meter hp"><span style="width:${Math.min(1, Math.max(0, hp / maxHp)) * 100}%"></span></div>
     <p class="sp-readout">${entry.stock} remaining · ${raw.cost} DP · ${entry.config.deploymentSlotCost} deployment slot${entry.config.deploymentSlotCost === 1 ? '' : 's'}</p>
-    ${recovery}<p class="skill-description">${entry.config.healFree ? 'Cannot receive ordinary healing. ' : ''}${entry.config.tacticalPoint ? 'Its tactical point stays in place while the reinforcement recovers. ' : ''}Leaves the field when its summoner is removed.</p>`;
+    ${recovery}<p class="skill-description">${entry.ownerId === 'char_003_kalts' ? 'Can be healed only by Kal’tsit. ' : entry.config.healFree ? 'Cannot receive ordinary healing. ' : ''}${entry.config.tacticalPoint ? 'Its tactical point stays in place while the reinforcement recovers. ' : ''}Leaves the field when its summoner is removed.</p>
+    ${unit && skillSourceFor(unit) !== unit
+      ? operatorSkillDetails(battle.bench[entry.ownerId].build, skillSourceFor(unit)) : ''}`;
 }
 function operatorDetails(build, unit) {
   const record = recordFor(build, data);
   const stats = unit?.s;
   const hp = unit?.hp ?? record.stats.maxHp;
   const maxHp = stats?.maxHp ?? record.stats.maxHp;
-  const hud = unit ? skillHud(unit.skill) : null;
-  const level = data.operators[build.id].skills.find((entry) => entry.id === build.skillId)?.levels[build.skillRank - 1];
-  const recovery = {
-    INCREASE_WITH_TIME: "Auto recovery",
-    INCREASE_WHEN_ATTACK: "Offensive recovery",
-    INCREASE_WHEN_TAKEN_DAMAGE: "Defensive recovery",
-  }[level?.spData.spType] || "Passive";
   const numbers = [
     ["ATK", stats?.atk ?? record.stats.atk],
     ["DEF", stats?.def ?? record.stats.def],
@@ -514,7 +509,17 @@ function operatorDetails(build, unit) {
     <dl class="operator-stats">${numbers.map(([label, value]) => `<div><dt>${label}</dt><dd>${Math.round(value)}</dd></div>`).join("")}</dl>
     <div class="hp-readout"><span>HP</span><strong>${Math.min(Math.ceil(hp), Math.round(maxHp))} / ${Math.round(maxHp)}</strong></div>
     <div class="meter hp"><span style="width:${Math.min(1, Math.max(0, hp / maxHp)) * 100}%"></span></div>
-    ${level ? `<section class="operator-skill"><h3>${escape(level.name)} <small>${rankLabel(build.skillRank)}</small></h3>
+    ${operatorSkillDetails(build, unit)}`;
+}
+function operatorSkillDetails(build, unit) {
+  const hud = unit ? skillHud(unit.skill) : null;
+  const level = data.operators[build.id].skills.find((entry) => entry.id === build.skillId)?.levels[build.skillRank - 1];
+  const recovery = {
+    INCREASE_WITH_TIME: "Auto recovery",
+    INCREASE_WHEN_ATTACK: "Offensive recovery",
+    INCREASE_WHEN_TAKEN_DAMAGE: "Defensive recovery",
+  }[level?.spData.spType] || "Passive";
+  return `${level ? `<section class="operator-skill"><h3>${escape(level.name)} <small>${rankLabel(build.skillRank)}</small></h3>
     <div class="skill-tags"><span class="${level.spData.spType === "INCREASE_WITH_TIME" ? "auto" : "manual"}">${recovery}</span><span class="${level.skillType === "AUTO" ? "auto" : "manual"}">${level.skillType === "AUTO" ? "Auto activation" : level.skillType === "MANUAL" ? "Manual activation" : "Passive"}</span>${level.duration > 0 ? `<span>${level.duration}s</span>` : ""}</div>
     <p class="sp-readout">${hud?.text.replace(/ · (?:Auto|Manual) activation/g, "") || `${level.spData.initSp} / ${level.spData.spCost} SP on deployment`}</p>
     ${hud ? `<div class="meter ${hud.state}"><span style="width:${hud.fraction * 100}%"></span></div>` : ""}
@@ -653,14 +658,15 @@ function drawHud() {
         if (!placementError(selected, r, c)) highlights.push(r * 21 + c);
   }
   if (b) {
-    const hud = unit ? skillHud(unit.skill) : null;
-    canActivate = !!((hud?.canActivate || hud?.canCancel) && unit.canAct && !unit.s.flags.silence);
+    const skillUnit = skillSourceFor(unit);
+    const hud = skillUnit ? skillHud(skillUnit.skill) : null;
+    canActivate = !!((hud?.canActivate || hud?.canCancel) && skillUnit.canAct && !skillUnit.s.flags.silence);
     const copy = b.kind === 'operator' ? operatorDetails(b.build, unit) : summonDetails(b);
     if (command.dataset.selection !== selected || command.dataset.alive !== String(!!unit)) {
       command.innerHTML = `<div class="operator-portrait"><img src="${b.art}" alt="${escape(b.name)} ${b.kind === 'operator' ? 'base artwork' : 'original avatar'}" draggable="false"><h2>${escape(b.name)}</h2></div>
         <button class="inspector-close" aria-label="Close operator details">×</button>
         <div class="command-copy">${copy}</div>
-        <div class="command-actions">${unit ? `${!unit.skill.noSkill && unit.skill.manual ? '<button id="skill" class="primary">Activate skill</button>' : ""}<button id="retreat">Retreat</button>` : '<button id="cancel">Cancel selection</button>'}</div>`;
+        <div class="command-actions">${unit ? `${!skillUnit.skill.noSkill && skillUnit.skill.manual ? '<button id="skill" class="primary">Activate skill</button>' : ""}<button id="retreat">Retreat</button>` : '<button id="cancel">Cancel selection</button>'}</div>`;
       command.dataset.selection = selected;
       command.dataset.alive = String(!!unit);
       command.querySelector(".inspector-close").onclick = () => {
@@ -678,7 +684,7 @@ function drawHud() {
         drawHud();
       });
       command.querySelector("#skill")?.addEventListener("click", () => {
-        battle.activateOperator(selected);
+        battle.activateOperator(skillUnit.defId);
         drawHud();
       });
     } else {

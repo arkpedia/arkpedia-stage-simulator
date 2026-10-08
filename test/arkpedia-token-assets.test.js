@@ -2,6 +2,8 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import data from '../data/arkpedia-mvp.json' with { type: 'json' };
+import nian from '../data/arkpedia-nian-prefabs.json' with { type: 'json' };
+import kaltsit from '../data/arkpedia-kaltsit-prefabs.json' with { type: 'json' };
 import { REGULAR_SUMMONS, REGULAR_AUTOMATIC_TOKENS,
   regularTokenIdsFor } from '../shared/arkpedia/summons.js';
 
@@ -26,5 +28,32 @@ test('every reviewed automatic or manual token dependency has complete original 
         assert.ok(model?.animationRoles?.idle && model?.animationRoles?.deploy);
       }
     }
+  }
+});
+
+test('Nian skill roles retain ordinary S1, disarmed S2 idle and literal S3 on each actual native facing', () => {
+  for (const facing of ['front', 'back']) {
+    const model = data.sd.models[`operator/char_2014_nian/default/${facing}`];
+    const native = nian.models.char_2014_nian[facing === 'front' ? 'Front' : 'Back'];
+    assert.equal(model.skeleton.sha256, native.sha256);
+    assert.equal(model.animationRoles.skills[0].loop, 'Attack_Loop');
+    assert.equal(model.animationRoles.skills[1].via, 'idle');
+    assert.equal(model.animationRoles.skills[1].loop, model.animationRoles.idle);
+    assert.equal(model.animationRoles.skills[2].loop, 'Skill_2_Loop');
+    for (const role of Object.values(model.animationRoles.skills))
+      for (const name of [role.begin, role.loop, role.end, role.idle].filter(Boolean))
+        assert.ok(Object.hasOwn(model.animations, name), `${facing}:${name}`);
+  }
+});
+
+test('Mon3tr renderer keeps the exact native source bytes and mode attack events rather than owner healing clips', () => {
+  const native = kaltsit.models.token_10002_kalts_mon3tr;
+  for (const facing of ['front', 'back']) {
+    const model = data.sd.models[`operator/token_10002_kalts_mon3tr/default/${facing}`];
+    assert.equal(model.source.facingAlias, 'single-original-model');
+    assert.equal(model.skeleton.sha256, native.files['token_10002_kalts_mon3tr.skel'].sha256);
+    assert.equal(model.atlas.sha256, native.files['token_10002_kalts_mon3tr.atlas'].sha256);
+    assert.deepEqual(model.hits, { Attack: [.233], Skill: [.367], Skill_2: [.667] });
+    assert.deepEqual(Object.values(model.animationRoles.skills).map(role => role.loop), ['Attack', 'Skill', 'Skill_2']);
   }
 });

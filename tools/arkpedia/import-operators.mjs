@@ -119,6 +119,17 @@ for (const id of ids) {
       roles.skills['2'] = { ...third, index: 2 };
       roles.skill = roles.skills['0'];
     }
+    // Native Nian S1 switches damage mode on her ordinary attack. S2 is
+    // disarmed: no graph requests the Front-only Skill_1 family. S3 owns the
+    // literal Skill_2 family on both original facings.
+    if (id === 'char_2014_nian') {
+      roles.skills['0'] = { ...roles.attack, index: 0, idle: null, via: 'attack' };
+      roles.skills['1'] = { begin: null, loop: roles.idle, end: null,
+        index: 1, idle: roles.idle, via: 'idle' };
+      roles.skills['2'] = { begin: 'Skill_2_Begin', loop: 'Skill_2_Loop',
+        end: 'Skill_2_End', index: 2, idle: 'Skill_2_Idle' };
+      roles.skill = roles.skills['0'];
+    }
     if (!roles.idle || !support.noBasicAttack && catalogue[id]?.subProfessionId !== 'bard' && (!roles.attack || roles.attack.via === "idle"))
       throw Error(`${key}: missing idle/attack clips`);
     Object.assign(model, { premultipliedAlpha: values.pma === "true", animations: info.durations,

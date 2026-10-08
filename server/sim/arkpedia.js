@@ -79,6 +79,8 @@ import { customizeSilenceParadigmaticKit, installSilenceParadigmatic } from './c
 import { customizeEyjaAlterKit, installEyjaAlter } from './content/arkpedia-eyja-alter.js';
 import { customizeJieyunKit, installJieyun, adjustJieyunCost } from './content/arkpedia-jieyun.js';
 import { customizeRadiantKnightKit, installRadiantKnight, installRadiantKnightSquad } from './content/arkpedia-radiant-knight.js';
+import { customizeNianKit, installNian, prepareNianSquad } from './content/arkpedia-nian.js';
+import { customizeKaltsitKit, installKaltsit } from './content/arkpedia-kaltsit.js';
 import { customizeFiveStarSupportFourthKit, installFiveStarSupportFourth } from './content/arkpedia-five-star-support-fourth.js';
 import { customizeFiveStarSpecialistExpansionKit, installFiveStarSpecialistExpansion } from './content/arkpedia-five-star-specialist-expansion.js';
 import { catalogueFor, recordFor } from "../../shared/arkpedia/loadout.js";
@@ -188,6 +190,7 @@ export class StandardBattle extends Battle {
     const startingVanguardDp = prepareFiveStarVanguardSquad(chess);
     prepareFiveStarSniperSquad(chess);
     prepareRosaSquad(chess);
+    prepareNianSquad(chess);
     const config = data.stage.battle;
     super({
       ...stageAdapter(data.stage),
@@ -366,6 +369,8 @@ export class StandardBattle extends Battle {
     customizeEyjaAlterKit({ battle: this, id, def, unit, kit });
     customizeJieyunKit({ battle: this, id, def, unit, kit });
     customizeRadiantKnightKit({ battle: this, id, def, unit, kit });
+    customizeNianKit({ battle: this, id, def, unit, kit });
+    customizeKaltsitKit({ battle: this, id, def, unit, kit });
     customizePhantomKit({ battle: this, id, def, unit, kit });
     customizeHookExpansionKit({ battle: this, id, def, unit, kit });
     customizeFiveStarSupportFourthKit({ battle: this, id, def, unit, kit });
@@ -466,6 +471,8 @@ export class StandardBattle extends Battle {
     installEyjaAlter({ battle: this, unit, def });
     installJieyun({ battle: this, unit, def });
     installRadiantKnight({ battle: this, unit, def });
+    installNian({ battle: this, unit, def });
+    installKaltsit({ battle: this, unit, def });
     installHookExpansion({ battle: this, unit, def });
     installFiveStarSupportFourth({ battle: this, unit, def });
     installFiveStarSpecialistExpansion({ battle: this, unit, def });
