@@ -103,6 +103,7 @@ import { customizeSiegeKit, installSiege } from './content/arkpedia-siege.js';
 import { customizeFirewatchKit, installFirewatch } from './content/arkpedia-firewatch.js';
 import { customizeSurferKit, installSurfer } from './content/arkpedia-surfer.js';
 import { customizeMelaniteKit, installMelanite } from './content/arkpedia-melanite.js';
+import { customizeAshKit, installAsh, adjustAshCost } from './content/arkpedia-ash.js';
 import { customizeFrostKit, installFrost } from './content/arkpedia-frost.js';
 import { customizeRobinKit, installRobin } from './content/arkpedia-robin.js';
 import { customizeFiveStarSupportFourthKit, installFiveStarSupportFourth } from './content/arkpedia-five-star-support-fourth.js';
@@ -276,7 +277,7 @@ export class StandardBattle extends Battle {
     const ordinary = Math.floor(this.data.getChess(id).stats.cost
       * Math.min(2, 1 + entry.deployments * 0.5));
     const vanguard = adjustFiveStarVanguardSecondCost(this, id, ordinary);
-    return adjustFangFireSharpenedCost(this, id, adjustSaileachCost(this, id, adjustJieyunCost(this, id, vanguard)));
+    return adjustAshCost(this, id, adjustFangFireSharpenedCost(this, id, adjustSaileachCost(this, id, adjustJieyunCost(this, id, vanguard))));
   }
   placementError(id, row, col) {
     const entry = this.bench[id];
@@ -417,6 +418,7 @@ export class StandardBattle extends Battle {
     customizeFirewatchKit({ battle: this, id, def, unit, kit });
     customizeSurferKit({ battle: this, id, def, unit, kit });
     customizeMelaniteKit({ battle: this, id, def, unit, kit });
+    customizeAshKit({ battle: this, id, def, unit, kit });
     customizePhantomKit({ battle: this, id, def, unit, kit });
     customizeHookExpansionKit({ battle: this, id, def, unit, kit });
     customizeFiveStarSupportFourthKit({ battle: this, id, def, unit, kit });
@@ -542,6 +544,7 @@ export class StandardBattle extends Battle {
     installFirewatch({ battle: this, unit, def });
     installSurfer({ battle: this, unit, def });
     installMelanite({ battle: this, unit, def });
+    installAsh({ battle: this, unit, def });
     installHookExpansion({ battle: this, unit, def });
     installFiveStarSupportFourth({ battle: this, unit, def });
     installFiveStarSpecialistExpansion({ battle: this, unit, def });
