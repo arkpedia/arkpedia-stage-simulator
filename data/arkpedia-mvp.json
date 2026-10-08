@@ -34,7 +34,7 @@
   },
   "sd": {
     "repository": "arkpedia/arkpedia-sd-assets",
-    "commit": "8640e7bc4c0fe685012a2316f373131a91f804bb",
+    "commit": "a058de9f3401117a16c469d7d4d9a0d4522b0f54",
     "models": {
       "operator/char_123_fang/default/front": {
         "kind": "operator",
@@ -48467,6 +48467,205 @@
           "height": 387.004
         }
       },
+      "operator/char_4144_chilc/default/front": {
+        "kind": "operator",
+        "id": "char_4144_chilc",
+        "variant": "default",
+        "facing": "front",
+        "spineVersion": "3.8.99",
+        "source": {
+          "key": "operators",
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "spine/char_4144_chilc/char_4144_chilc/Front"
+        },
+        "skeleton": {
+          "path": "models/operator/char_4144_chilc/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4144_chilc.skel",
+          "bytes": 207660,
+          "sha256": "6c7d34f37a0904a08a65e8cbcfb8cc743782d812ff08555f504b174b9a4b53a3"
+        },
+        "atlas": {
+          "path": "models/operator/char_4144_chilc/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4144_chilc.atlas",
+          "bytes": 7127,
+          "sha256": "0b720ffd3aba79ce921bd55dc628d5018c54af78cf1ecf251a216ee07297cca6"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_4144_chilc/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4144_chilc.png",
+            "bytes": 94076,
+            "sha256": "e898f9d0dd51ce15f7d691c80d6e6ae97c6f6e5749e734f396d99fc73221877c"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Attack": 1,
+          "Combat": 1,
+          "Default": 0,
+          "Die": 1,
+          "Idle": 4,
+          "Skill_1": 3,
+          "Skill_2_Begin": 0.333,
+          "Skill_2_End": 0.167,
+          "Skill_2_Idle": 3.333,
+          "Skill_2_Loop": 1,
+          "Start": 1
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null
+          },
+          "attackDown": null,
+          "skill": {
+            "begin": null,
+            "loop": "Skill_1",
+            "end": null,
+            "index": 0,
+            "idle": null
+          },
+          "die": "Die",
+          "move": null,
+          "stun": null,
+          "skills": {
+            "0": {
+              "begin": null,
+              "loop": "Skill_1",
+              "end": null,
+              "index": 0,
+              "idle": null
+            },
+            "1": {
+              "begin": "Skill_2_Begin",
+              "loop": "Skill_2_Loop",
+              "end": "Skill_2_End",
+              "index": 1,
+              "idle": "Skill_2_Idle"
+            }
+          }
+        },
+        "hits": {
+          "Attack": [
+            0.433
+          ],
+          "Combat": [
+            0.433
+          ],
+          "Skill_1": [
+            2
+          ],
+          "Skill_2_Loop": [
+            0.1
+          ]
+        },
+        "bounds": {
+          "x": -114.854,
+          "y": -0.332,
+          "width": 883.83,
+          "height": 331.504
+        }
+      },
+      "operator/char_4144_chilc/default/back": {
+        "kind": "operator",
+        "id": "char_4144_chilc",
+        "variant": "default",
+        "facing": "back",
+        "spineVersion": "3.8.99",
+        "source": {
+          "key": "operators",
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "spine/char_4144_chilc/char_4144_chilc/Back"
+        },
+        "skeleton": {
+          "path": "models/operator/char_4144_chilc/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4144_chilc.skel",
+          "bytes": 113626,
+          "sha256": "862014aca02099e18e8bdb48893c2760b40e1f2a8f040f63dda168acfc4b284a"
+        },
+        "atlas": {
+          "path": "models/operator/char_4144_chilc/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4144_chilc.atlas",
+          "bytes": 4798,
+          "sha256": "474b22c01a8d414419c52bd81ce7eb6e909159afb0d69c4196d4785b65e134e7"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_4144_chilc/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4144_chilc.png",
+            "bytes": 88467,
+            "sha256": "9f332440b8e60babfd741d652e54c9f0a510b4d7dc43501baeb47de5e9e9da08"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Attack": 1,
+          "Combat": 1,
+          "Default": 0,
+          "Idle": 2,
+          "Skill_1": 3,
+          "Skill_2_Begin": 0.333,
+          "Skill_2_End": 0.167,
+          "Skill_2_Idle": 1.667,
+          "Skill_2_Loop": 1,
+          "Start": 1
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null
+          },
+          "attackDown": null,
+          "skill": {
+            "begin": null,
+            "loop": "Skill_1",
+            "end": null,
+            "index": 0,
+            "idle": null
+          },
+          "die": null,
+          "move": null,
+          "stun": null,
+          "skills": {
+            "0": {
+              "begin": null,
+              "loop": "Skill_1",
+              "end": null,
+              "index": 0,
+              "idle": null
+            },
+            "1": {
+              "begin": "Skill_2_Begin",
+              "loop": "Skill_2_Loop",
+              "end": "Skill_2_End",
+              "index": 1,
+              "idle": "Skill_2_Idle"
+            }
+          }
+        },
+        "hits": {
+          "Attack": [
+            0.433
+          ],
+          "Combat": [
+            0.433
+          ],
+          "Skill_1": [
+            2
+          ],
+          "Skill_2_Loop": [
+            0.1
+          ]
+        },
+        "bounds": {
+          "x": -114.854,
+          "y": -0.332,
+          "width": 883.83,
+          "height": 331.504
+        }
+      },
       "operator/char_250_phatom/default/front": {
         "kind": "operator",
         "id": "char_250_phatom",
@@ -53931,7 +54130,7 @@
     },
     "art": {
       "repository": "arkpedia/arkpedia-sd-assets",
-      "commit": "8640e7bc4c0fe685012a2316f373131a91f804bb",
+      "commit": "a058de9f3401117a16c469d7d4d9a0d4522b0f54",
       "scene": {
         "path": "stages/0-1/26-09-23-17-49-43_b9cc4a/scene.json",
         "bytes": 4479,
@@ -53940,7 +54139,7 @@
     },
     "gates": {
       "repository": "arkpedia/arkpedia-sd-assets",
-      "commit": "8640e7bc4c0fe685012a2316f373131a91f804bb",
+      "commit": "a058de9f3401117a16c469d7d4d9a0d4522b0f54",
       "pack": {
         "path": "effects/standard-gates/26-09-23-17-49-43_b9cc4a/gates.json",
         "bytes": 3507,
@@ -399086,6 +399285,1408 @@
         }
       ]
     },
+    "char_4144_chilc": {
+      "id": "char_4144_chilc",
+      "name": "Chilchuck",
+      "rarity": 5,
+      "profession": "PIONEER",
+      "subProfessionId": "agent",
+      "position": "MELEE",
+      "nationId": null,
+      "groupId": null,
+      "teamId": "laios",
+      "phases": [
+        {
+          "maxLevel": 50,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 840,
+                "atk": 236,
+                "def": 97,
+                "magicResistance": 0,
+                "cost": 8,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 35,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 50,
+              "data": {
+                "maxHp": 1201,
+                "atk": 348,
+                "def": 163,
+                "magicResistance": 0,
+                "cost": 8,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 35,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ]
+          ]
+        },
+        {
+          "maxLevel": 70,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 1201,
+                "atk": 348,
+                "def": 163,
+                "magicResistance": 0,
+                "cost": 10,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 35,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 70,
+              "data": {
+                "maxHp": 1541,
+                "atk": 459,
+                "def": 233,
+                "magicResistance": 0,
+                "cost": 10,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 35,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ]
+          ]
+        },
+        {
+          "maxLevel": 80,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 1541,
+                "atk": 459,
+                "def": 233,
+                "magicResistance": 0,
+                "cost": 10,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 35,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 80,
+              "data": {
+                "maxHp": 1880,
+                "atk": 560,
+                "def": 277,
+                "magicResistance": 0,
+                "cost": 10,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 35,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ]
+          ]
+        }
+      ],
+      "favorKeyFrames": [
+        {
+          "level": 0,
+          "data": {
+            "maxHp": 0,
+            "atk": 0,
+            "def": 0,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false
+          }
+        },
+        {
+          "level": 50,
+          "data": {
+            "maxHp": 100,
+            "atk": 0,
+            "def": 40,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false
+          }
+        }
+      ],
+      "potentialRanks": [
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "RESPAWN_TIME",
+            "formulaItem": "ADDITION",
+            "value": -4,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "ATTACK_SPEED",
+            "formulaItem": "ADDITION",
+            "value": 5,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [],
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ]
+      ],
+      "trait": null,
+      "talents": [
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Keen Senses",
+              "description": "For 35 seconds after deployment, Chilchuck and allied units within his range will not take damage from environmental effects or <$ba.dt.element>Elemental Injury</>",
+              "rangeId": "2-2",
+              "blackboard": [
+                {
+                  "key": "immune_duration",
+                  "value": 35,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false,
+              "rangeGrid": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ]
+              ]
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 1
+              },
+              "requiredPotentialRank": 4,
+              "prefabKey": "1",
+              "name": "Keen Senses",
+              "description": "For 40 <@ba.talpu>(+5)</> seconds after deployment, Chilchuck and allied units within his range will not take damage from environmental effects or <$ba.dt.element>Elemental Injury</>",
+              "rangeId": "2-2",
+              "blackboard": [
+                {
+                  "key": "immune_duration",
+                  "value": 40,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false,
+              "rangeGrid": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ]
+              ]
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Keen Senses",
+              "description": "For 45 seconds after deployment, Chilchuck and allied units within his range will not take damage from environmental effects or <$ba.dt.element>Elemental Injury</>",
+              "rangeId": "2-2",
+              "blackboard": [
+                {
+                  "key": "immune_duration",
+                  "value": 45,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false,
+              "rangeGrid": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ]
+              ]
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 4,
+              "prefabKey": "1",
+              "name": "Keen Senses",
+              "description": "For 50 <@ba.talpu>(+5)</> seconds after deployment, Chilchuck and allied units within his range will not take damage from environmental effects or <$ba.dt.element>Elemental Injury</>",
+              "rangeId": "2-2",
+              "blackboard": [
+                {
+                  "key": "immune_duration",
+                  "value": 50,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false,
+              "rangeGrid": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ]
+              ]
+            }
+          ]
+        }
+      ],
+      "skills": [
+        {
+          "id": "skchr_chilc_1",
+          "unlockCondition": {
+            "phase": "PHASE_0",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "Lockpicks",
+              "rangeId": null,
+              "description": "Stops attacking; after skill ends, obtain <@ba.vup>{ground}</>-<@ba.vup>{floor}</> DP randomly",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 15,
+                "initSp": 6,
+                "increment": 1
+              },
+              "prefabId": "skchr_chilc_1",
+              "duration": 3,
+              "blackboard": [
+                {
+                  "key": "mid_cost",
+                  "value": 4,
+                  "valueStr": null
+                },
+                {
+                  "key": "step",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob_add",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob_stay",
+                  "value": 0.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob_minus",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "floor",
+                  "value": 7,
+                  "valueStr": null
+                },
+                {
+                  "key": "ground",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Lockpicks",
+              "rangeId": null,
+              "description": "Stops attacking; after skill ends, obtain <@ba.vup>{ground}</>-<@ba.vup>{floor}</> DP randomly",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 15,
+                "initSp": 7,
+                "increment": 1
+              },
+              "prefabId": "skchr_chilc_1",
+              "duration": 3,
+              "blackboard": [
+                {
+                  "key": "mid_cost",
+                  "value": 4,
+                  "valueStr": null
+                },
+                {
+                  "key": "step",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob_add",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob_stay",
+                  "value": 0.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob_minus",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "floor",
+                  "value": 7,
+                  "valueStr": null
+                },
+                {
+                  "key": "ground",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Lockpicks",
+              "rangeId": null,
+              "description": "Stops attacking; after skill ends, obtain <@ba.vup>{ground}</>-<@ba.vup>{floor}</> DP randomly",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 14,
+                "initSp": 7,
+                "increment": 1
+              },
+              "prefabId": "skchr_chilc_1",
+              "duration": 3,
+              "blackboard": [
+                {
+                  "key": "mid_cost",
+                  "value": 5,
+                  "valueStr": null
+                },
+                {
+                  "key": "step",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob_add",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob_stay",
+                  "value": 0.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob_minus",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "floor",
+                  "value": 8,
+                  "valueStr": null
+                },
+                {
+                  "key": "ground",
+                  "value": 2,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Lockpicks",
+              "rangeId": null,
+              "description": "Stops attacking; after skill ends, obtain <@ba.vup>{ground}</>-<@ba.vup>{floor}</> DP randomly",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 14,
+                "initSp": 8,
+                "increment": 1
+              },
+              "prefabId": "skchr_chilc_1",
+              "duration": 3,
+              "blackboard": [
+                {
+                  "key": "mid_cost",
+                  "value": 5,
+                  "valueStr": null
+                },
+                {
+                  "key": "step",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob_add",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob_stay",
+                  "value": 0.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob_minus",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "floor",
+                  "value": 8,
+                  "valueStr": null
+                },
+                {
+                  "key": "ground",
+                  "value": 2,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Lockpicks",
+              "rangeId": null,
+              "description": "Stops attacking; after skill ends, obtain <@ba.vup>{ground}</>-<@ba.vup>{floor}</> DP randomly",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 13,
+                "initSp": 8,
+                "increment": 1
+              },
+              "prefabId": "skchr_chilc_1",
+              "duration": 3,
+              "blackboard": [
+                {
+                  "key": "mid_cost",
+                  "value": 6,
+                  "valueStr": null
+                },
+                {
+                  "key": "step",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob_add",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob_stay",
+                  "value": 0.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob_minus",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "floor",
+                  "value": 9,
+                  "valueStr": null
+                },
+                {
+                  "key": "ground",
+                  "value": 3,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Lockpicks",
+              "rangeId": null,
+              "description": "Stops attacking; after skill ends, obtain <@ba.vup>{ground}</>-<@ba.vup>{floor}</> DP randomly",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 13,
+                "initSp": 9,
+                "increment": 1
+              },
+              "prefabId": "skchr_chilc_1",
+              "duration": 3,
+              "blackboard": [
+                {
+                  "key": "mid_cost",
+                  "value": 6,
+                  "valueStr": null
+                },
+                {
+                  "key": "step",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob_add",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob_stay",
+                  "value": 0.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob_minus",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "floor",
+                  "value": 9,
+                  "valueStr": null
+                },
+                {
+                  "key": "ground",
+                  "value": 3,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Lockpicks",
+              "rangeId": null,
+              "description": "Stops attacking; after skill ends, obtain <@ba.vup>{ground}</>-<@ba.vup>{floor}</> DP randomly",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 12,
+                "initSp": 9,
+                "increment": 1
+              },
+              "prefabId": "skchr_chilc_1",
+              "duration": 3,
+              "blackboard": [
+                {
+                  "key": "mid_cost",
+                  "value": 6,
+                  "valueStr": null
+                },
+                {
+                  "key": "step",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob_add",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob_stay",
+                  "value": 0.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob_minus",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "floor",
+                  "value": 9,
+                  "valueStr": null
+                },
+                {
+                  "key": "ground",
+                  "value": 3,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Lockpicks",
+              "rangeId": null,
+              "description": "Stops attacking; after skill ends, obtain <@ba.vup>{ground}</>-<@ba.vup>{floor}</> DP randomly",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 12,
+                "initSp": 10,
+                "increment": 1
+              },
+              "prefabId": "skchr_chilc_1",
+              "duration": 3,
+              "blackboard": [
+                {
+                  "key": "mid_cost",
+                  "value": 7,
+                  "valueStr": null
+                },
+                {
+                  "key": "step",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob_add",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob_stay",
+                  "value": 0.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob_minus",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "floor",
+                  "value": 10,
+                  "valueStr": null
+                },
+                {
+                  "key": "ground",
+                  "value": 4,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Lockpicks",
+              "rangeId": null,
+              "description": "Stops attacking; after skill ends, obtain <@ba.vup>{ground}</>-<@ba.vup>{floor}</> DP randomly",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 11,
+                "initSp": 10,
+                "increment": 1
+              },
+              "prefabId": "skchr_chilc_1",
+              "duration": 3,
+              "blackboard": [
+                {
+                  "key": "mid_cost",
+                  "value": 7,
+                  "valueStr": null
+                },
+                {
+                  "key": "step",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob_add",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob_stay",
+                  "value": 0.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob_minus",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "floor",
+                  "value": 10,
+                  "valueStr": null
+                },
+                {
+                  "key": "ground",
+                  "value": 4,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Lockpicks",
+              "rangeId": null,
+              "description": "Stops attacking; after skill ends, obtain <@ba.vup>{ground}</>-<@ba.vup>{floor}</> DP randomly",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 10,
+                "initSp": 10,
+                "increment": 1
+              },
+              "prefabId": "skchr_chilc_1",
+              "duration": 3,
+              "blackboard": [
+                {
+                  "key": "mid_cost",
+                  "value": 7,
+                  "valueStr": null
+                },
+                {
+                  "key": "step",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob_add",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob_stay",
+                  "value": 0.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob_minus",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "floor",
+                  "value": 10,
+                  "valueStr": null
+                },
+                {
+                  "key": "ground",
+                  "value": 4,
+                  "valueStr": null
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "skchr_chilc_2",
+          "unlockCondition": {
+            "phase": "PHASE_1",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "Improvisation",
+              "rangeId": null,
+              "description": "Gain <@ba.vup>{prob:0%}</> Physical Dodge, ASPD +<@ba.vup>{attack_speed}</>, and obtain <@ba.vup>{cost}</> DP with every attack",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 31,
+                "initSp": 11,
+                "increment": 1
+              },
+              "prefabId": "skchr_chilc_2",
+              "duration": 10,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 35,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob",
+                  "value": 0.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Improvisation",
+              "rangeId": null,
+              "description": "Gain <@ba.vup>{prob:0%}</> Physical Dodge, ASPD +<@ba.vup>{attack_speed}</>, and obtain <@ba.vup>{cost}</> DP with every attack",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 30,
+                "initSp": 11,
+                "increment": 1
+              },
+              "prefabId": "skchr_chilc_2",
+              "duration": 10,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 37,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob",
+                  "value": 0.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Improvisation",
+              "rangeId": null,
+              "description": "Gain <@ba.vup>{prob:0%}</> Physical Dodge, ASPD +<@ba.vup>{attack_speed}</>, and obtain <@ba.vup>{cost}</> DP with every attack",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 29,
+                "initSp": 11,
+                "increment": 1
+              },
+              "prefabId": "skchr_chilc_2",
+              "duration": 10,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 39,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob",
+                  "value": 0.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Improvisation",
+              "rangeId": null,
+              "description": "Gain <@ba.vup>{prob:0%}</> Physical Dodge, ASPD +<@ba.vup>{attack_speed}</>, and obtain <@ba.vup>{cost}</> DP with every attack",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 28,
+                "initSp": 12,
+                "increment": 1
+              },
+              "prefabId": "skchr_chilc_2",
+              "duration": 10,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 42,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob",
+                  "value": 0.35,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Improvisation",
+              "rangeId": null,
+              "description": "Gain <@ba.vup>{prob:0%}</> Physical Dodge, ASPD +<@ba.vup>{attack_speed}</>, and obtain <@ba.vup>{cost}</> DP with every attack",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 27,
+                "initSp": 12,
+                "increment": 1
+              },
+              "prefabId": "skchr_chilc_2",
+              "duration": 10,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 44,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob",
+                  "value": 0.35,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Improvisation",
+              "rangeId": null,
+              "description": "Gain <@ba.vup>{prob:0%}</> Physical Dodge, ASPD +<@ba.vup>{attack_speed}</>, and obtain <@ba.vup>{cost}</> DP with every attack",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 26,
+                "initSp": 12,
+                "increment": 1
+              },
+              "prefabId": "skchr_chilc_2",
+              "duration": 10,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 46,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob",
+                  "value": 0.35,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Improvisation",
+              "rangeId": null,
+              "description": "Gain <@ba.vup>{prob:0%}</> Physical Dodge, ASPD +<@ba.vup>{attack_speed}</>, and obtain <@ba.vup>{cost}</> DP with every attack",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 25,
+                "initSp": 14,
+                "increment": 1
+              },
+              "prefabId": "skchr_chilc_2",
+              "duration": 10,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 50,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob",
+                  "value": 0.38,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Improvisation",
+              "rangeId": null,
+              "description": "Gain <@ba.vup>{prob:0%}</> Physical Dodge, ASPD +<@ba.vup>{attack_speed}</>, and obtain <@ba.vup>{cost}</> DP with every attack",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 24,
+                "initSp": 15,
+                "increment": 1
+              },
+              "prefabId": "skchr_chilc_2",
+              "duration": 10,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 54,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Improvisation",
+              "rangeId": null,
+              "description": "Gain <@ba.vup>{prob:0%}</> Physical Dodge, ASPD +<@ba.vup>{attack_speed}</>, and obtain <@ba.vup>{cost}</> DP with every attack",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 23,
+                "initSp": 16,
+                "increment": 1
+              },
+              "prefabId": "skchr_chilc_2",
+              "duration": 10,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 57,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob",
+                  "value": 0.42,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Improvisation",
+              "rangeId": null,
+              "description": "Gain <@ba.vup>{prob:0%}</> Physical Dodge, ASPD +<@ba.vup>{attack_speed}</>, and obtain <@ba.vup>{cost}</> DP with every attack",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 22,
+                "initSp": 17,
+                "increment": 1
+              },
+              "prefabId": "skchr_chilc_2",
+              "duration": 10,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 60,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob",
+                  "value": 0.45,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "char_250_phatom": {
       "id": "char_250_phatom",
       "name": "Phantom",
@@ -414416,7 +416017,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/8640e7bc4c0fe685012a2316f373131a91f804bb/models/operator/token_10001_deepcl_tentac/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a058de9f3401117a16c469d7d4d9a0d4522b0f54/models/operator/token_10001_deepcl_tentac/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10018_robrta_mach": {
       "id": "token_10018_robrta_mach",
@@ -414906,7 +416507,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/8640e7bc4c0fe685012a2316f373131a91f804bb/models/operator/token_10018_robrta_mach/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a058de9f3401117a16c469d7d4d9a0d4522b0f54/models/operator/token_10018_robrta_mach/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10014_bstalk_crab": {
       "id": "token_10014_bstalk_crab",
@@ -415235,7 +416836,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/8640e7bc4c0fe685012a2316f373131a91f804bb/models/operator/token_10014_bstalk_crab/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a058de9f3401117a16c469d7d4d9a0d4522b0f54/models/operator/token_10014_bstalk_crab/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10011_beewax_oblisk": {
       "id": "token_10011_beewax_oblisk",
@@ -416180,7 +417781,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/8640e7bc4c0fe685012a2316f373131a91f804bb/models/operator/token_10011_beewax_oblisk/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a058de9f3401117a16c469d7d4d9a0d4522b0f54/models/operator/token_10011_beewax_oblisk/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10006_vodfox_doll": {
       "id": "token_10006_vodfox_doll",
@@ -416816,7 +418417,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/8640e7bc4c0fe685012a2316f373131a91f804bb/models/operator/token_10006_vodfox_doll/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a058de9f3401117a16c469d7d4d9a0d4522b0f54/models/operator/token_10006_vodfox_doll/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10003_cgbird_bird": {
       "id": "token_10003_cgbird_bird",
@@ -417111,7 +418712,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/8640e7bc4c0fe685012a2316f373131a91f804bb/models/operator/token_10003_cgbird_bird/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a058de9f3401117a16c469d7d4d9a0d4522b0f54/models/operator/token_10003_cgbird_bird/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10000_silent_healrb": {
       "id": "token_10000_silent_healrb",
@@ -417494,7 +419095,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/8640e7bc4c0fe685012a2316f373131a91f804bb/models/operator/token_10000_silent_healrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a058de9f3401117a16c469d7d4d9a0d4522b0f54/models/operator/token_10000_silent_healrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10015_dusk_drgn": {
       "id": "token_10015_dusk_drgn",
@@ -417908,7 +419509,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/8640e7bc4c0fe685012a2316f373131a91f804bb/models/operator/token_10015_dusk_drgn/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a058de9f3401117a16c469d7d4d9a0d4522b0f54/models/operator/token_10015_dusk_drgn/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10007_phatom_twin": {
       "id": "token_10007_phatom_twin",
@@ -419687,7 +421288,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/8640e7bc4c0fe685012a2316f373131a91f804bb/models/operator/token_10007_phatom_twin/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a058de9f3401117a16c469d7d4d9a0d4522b0f54/models/operator/token_10007_phatom_twin/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10008_cqbw_box": {
       "id": "token_10008_cqbw_box",
@@ -420260,7 +421861,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/8640e7bc4c0fe685012a2316f373131a91f804bb/models/operator/token_10008_cqbw_box/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a058de9f3401117a16c469d7d4d9a0d4522b0f54/models/operator/token_10008_cqbw_box/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10029_slent2_protrb": {
       "id": "token_10029_slent2_protrb",
@@ -421005,7 +422606,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/8640e7bc4c0fe685012a2316f373131a91f804bb/models/operator/token_10029_slent2_protrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a058de9f3401117a16c469d7d4d9a0d4522b0f54/models/operator/token_10029_slent2_protrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10019_nearl2_sword": {
       "id": "token_10019_nearl2_sword",
@@ -421792,7 +423393,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/8640e7bc4c0fe685012a2316f373131a91f804bb/models/operator/token_10019_nearl2_sword/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a058de9f3401117a16c469d7d4d9a0d4522b0f54/models/operator/token_10019_nearl2_sword/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10002_kalts_mon3tr": {
       "id": "token_10002_kalts_mon3tr",
@@ -422210,7 +423811,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/8640e7bc4c0fe685012a2316f373131a91f804bb/models/operator/token_10002_kalts_mon3tr/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a058de9f3401117a16c469d7d4d9a0d4522b0f54/models/operator/token_10002_kalts_mon3tr/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10010_folivo_car": {
       "id": "token_10010_folivo_car",
@@ -423831,7 +425432,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/8640e7bc4c0fe685012a2316f373131a91f804bb/models/operator/token_10010_folivo_car/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a058de9f3401117a16c469d7d4d9a0d4522b0f54/models/operator/token_10010_folivo_car/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     }
   },
   "enemies": {
@@ -423882,7 +425483,7 @@
   },
   "skillEffects": {
     "repository": "arkpedia/arkpedia-sd-assets",
-    "commit": "8640e7bc4c0fe685012a2316f373131a91f804bb",
+    "commit": "a058de9f3401117a16c469d7d4d9a0d4522b0f54",
     "pack": {
       "path": "effects/charge-cost/26-09-23-17-49-43_b9cc4a/effect.json",
       "bytes": 15311,

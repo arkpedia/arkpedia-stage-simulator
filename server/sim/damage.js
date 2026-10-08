@@ -88,6 +88,7 @@ export function makeDamageInfo(d = {}) {
     // Source environment selectors use an explicit damage flag; sourceless or
     // periodic damage alone does not establish that classification.
     isEnvironment: !!d.isEnvironment,
+    isEnvironmentElement: !!d.isEnvironmentElement,
     tags: d.tags ?? [],
     cancel: false,
     noSp: !!d.noSp,

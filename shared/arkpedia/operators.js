@@ -82,6 +82,7 @@ import { KALTSIT_OPERATORS } from './kaltsit-operators.js';
 import { ZUOLE_OPERATORS } from './zuole-operators.js';
 import { BOBBING_OPERATORS } from './bobbing-operators.js';
 import { SCENE_OPERATORS } from './scene-operators.js';
+import { CHILCHUCK_OPERATORS } from './chilchuck-operators.js';
 import { FIVE_STAR_SPECIALIST_EXPANSION_OPERATORS } from './five-star-specialist-expansion-operators.js';
 export const REGULAR_OPERATORS = Object.freeze({
   char_123_fang: { skillId: "skcom_charge_cost[1]", talentKeys: ["cost"], mechanic: "dp", prefabId: "skcom_charge_cost", templateKey: "charge_cost" },
@@ -184,6 +185,7 @@ export const REGULAR_OPERATORS = Object.freeze({
   ...ZUOLE_OPERATORS,
   ...BOBBING_OPERATORS,
   ...SCENE_OPERATORS,
+  ...CHILCHUCK_OPERATORS,
   ...PHANTOM_OPERATORS,
   ...HOOK_EXPANSION_OPERATORS,
   ...FIVE_STAR_SPECIALIST_EXPANSION_OPERATORS,
