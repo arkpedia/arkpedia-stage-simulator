@@ -76,6 +76,9 @@ import { customizeHoedererKit, installHoederer } from './content/arkpedia-hoeder
 import { customizeWKit, installW } from './content/arkpedia-w.js';
 import { customizeMlynarKit, installMlynar } from './content/arkpedia-mlynar.js';
 import { customizeSilenceParadigmaticKit, installSilenceParadigmatic } from './content/arkpedia-silence-paradigmatic.js';
+import { customizeEyjaAlterKit, installEyjaAlter } from './content/arkpedia-eyja-alter.js';
+import { customizeJieyunKit, installJieyun, adjustJieyunCost } from './content/arkpedia-jieyun.js';
+import { customizeRadiantKnightKit, installRadiantKnight, installRadiantKnightSquad } from './content/arkpedia-radiant-knight.js';
 import { customizeFiveStarSupportFourthKit, installFiveStarSupportFourth } from './content/arkpedia-five-star-support-fourth.js';
 import { customizeFiveStarSpecialistExpansionKit, installFiveStarSpecialistExpansion } from './content/arkpedia-five-star-specialist-expansion.js';
 import { catalogueFor, recordFor } from "../../shared/arkpedia/loadout.js";
@@ -210,6 +213,7 @@ export class StandardBattle extends Battle {
     installMedicSquad({ battle: this, records: chess });
     installGuardSixStarSquad({ battle: this, records: chess });
     installBagpipeSquad({ battle: this, records: chess });
+    installRadiantKnightSquad({ battle: this, records: chess });
     this.behaviors = behaviors;
     this.unitLimit = config.unit_limit;
     this.mapTags = Object.freeze([...(data.stage.mapTags ?? [])]);
@@ -234,6 +238,7 @@ export class StandardBattle extends Battle {
   }
   deploymentSlotCost(id) {
     const config = REGULAR_OPERATORS[id];
+    if (config?.deploymentSlotExemptSkillIds?.includes(this.bench[id]?.build.skillId)) return 0;
     return (this.bench[id]?.build.elite ?? 0) >= (config?.deploymentSlotExemptMinElite ?? 0)
       && config?.deploymentSlotExemptTags?.some(tag => this.mapTags.includes(tag))
       ? 0 : config?.deploymentSlotCost ?? 1;
@@ -241,10 +246,10 @@ export class StandardBattle extends Battle {
   cost(id) {
     const entry = this.bench[id];
     return entry
-      ? adjustFiveStarVanguardSecondCost(this, id, Math.floor(
+      ? adjustJieyunCost(this, id, adjustFiveStarVanguardSecondCost(this, id, Math.floor(
           this.data.getChess(id).stats.cost *
             Math.min(2, 1 + entry.deployments * 0.5),
-        ))
+        )))
       : Infinity;
   }
   placementError(id, row, col) {
@@ -358,6 +363,9 @@ export class StandardBattle extends Battle {
     customizeWKit({ battle: this, id, def, unit, kit });
     customizeMlynarKit({ battle: this, id, def, unit, kit });
     customizeSilenceParadigmaticKit({ battle: this, id, def, unit, kit });
+    customizeEyjaAlterKit({ battle: this, id, def, unit, kit });
+    customizeJieyunKit({ battle: this, id, def, unit, kit });
+    customizeRadiantKnightKit({ battle: this, id, def, unit, kit });
     customizePhantomKit({ battle: this, id, def, unit, kit });
     customizeHookExpansionKit({ battle: this, id, def, unit, kit });
     customizeFiveStarSupportFourthKit({ battle: this, id, def, unit, kit });
@@ -455,6 +463,9 @@ export class StandardBattle extends Battle {
     installW({ battle: this, unit, def });
     installMlynar({ battle: this, unit, def });
     installSilenceParadigmatic({ battle: this, unit, def });
+    installEyjaAlter({ battle: this, unit, def });
+    installJieyun({ battle: this, unit, def });
+    installRadiantKnight({ battle: this, unit, def });
     installHookExpansion({ battle: this, unit, def });
     installFiveStarSupportFourth({ battle: this, unit, def });
     installFiveStarSpecialistExpansion({ battle: this, unit, def });

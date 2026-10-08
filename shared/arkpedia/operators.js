@@ -74,6 +74,9 @@ import { HOEDERER_OPERATORS } from './hoederer-operators.js';
 import { W_OPERATORS } from './w-operators.js';
 import { MLYNAR_OPERATORS } from './mlynar-operators.js';
 import { SILENCE_PARADIGMATIC_OPERATORS } from './silence-paradigmatic-operators.js';
+import { EYJA_ALTER_OPERATORS } from './eyja-alter-operators.js';
+import { JIEYUN_OPERATORS } from './jieyun-operators.js';
+import { RADIANT_KNIGHT_OPERATORS } from './radiant-knight-operators.js';
 import { FIVE_STAR_SPECIALIST_EXPANSION_OPERATORS } from './five-star-specialist-expansion-operators.js';
 export const REGULAR_OPERATORS = Object.freeze({
   char_123_fang: { skillId: "skcom_charge_cost[1]", talentKeys: ["cost"], mechanic: "dp", prefabId: "skcom_charge_cost", templateKey: "charge_cost" },
@@ -168,6 +171,9 @@ export const REGULAR_OPERATORS = Object.freeze({
   ...W_OPERATORS,
   ...MLYNAR_OPERATORS,
   ...SILENCE_PARADIGMATIC_OPERATORS,
+  ...EYJA_ALTER_OPERATORS,
+  ...JIEYUN_OPERATORS,
+  ...RADIANT_KNIGHT_OPERATORS,
   ...PHANTOM_OPERATORS,
   ...HOOK_EXPANSION_OPERATORS,
   ...FIVE_STAR_SPECIALIST_EXPANSION_OPERATORS,

@@ -35,6 +35,7 @@ export const REGULAR_AUTOMATIC_TOKENS = Object.freeze({
   char_344_beewax: Object.freeze(['token_10011_beewax_oblisk']),
   char_2015_dusk: Object.freeze(['token_10015_dusk_drgn']),
   char_113_cqbw: Object.freeze(['token_10008_cqbw_box']),
+  char_1014_nearl2: Object.freeze(['token_10019_nearl2_sword']),
 });
 
 export function regularTokenIdsFor(ownerIds) {

@@ -487,8 +487,8 @@ function summonDetails(entry) {
     ? `<p class="sp-readout">Reinforcement recovering · ${Math.max(0,Math.ceil(unit.mem.crabReadyAt-battle.time))}s</p>` : '';
   return `<p class="operator-build">${escape(data.operators[entry.ownerId].name)} · E${entry.record.arkpedia.elite} · Lv ${entry.record.arkpedia.level}</p>
     <dl class="operator-stats">${numbers.map(([label, value]) => `<div><dt>${label}</dt><dd>${Math.round(value)}</dd></div>`).join('')}</dl>
-    <div class="hp-readout"><span>HP</span><strong>${Math.ceil(hp)} / ${Math.round(maxHp)}</strong></div>
-    <div class="meter hp"><span style="width:${Math.max(0, hp / maxHp) * 100}%"></span></div>
+    <div class="hp-readout"><span>HP</span><strong>${Math.min(Math.ceil(hp), Math.round(maxHp))} / ${Math.round(maxHp)}</strong></div>
+    <div class="meter hp"><span style="width:${Math.min(1, Math.max(0, hp / maxHp)) * 100}%"></span></div>
     <p class="sp-readout">${entry.stock} remaining · ${raw.cost} DP · ${entry.config.deploymentSlotCost} deployment slot${entry.config.deploymentSlotCost === 1 ? '' : 's'}</p>
     ${recovery}<p class="skill-description">${entry.config.healFree ? 'Cannot receive ordinary healing. ' : ''}${entry.config.tacticalPoint ? 'Its tactical point stays in place while the reinforcement recovers. ' : ''}Leaves the field when its summoner is removed.</p>`;
 }
@@ -512,8 +512,8 @@ function operatorDetails(build, unit) {
   ];
   return `<p class="operator-build">E${build.elite} · Lv ${build.level}${selection.support?.id === build.id ? " · Support" : ""}</p>
     <dl class="operator-stats">${numbers.map(([label, value]) => `<div><dt>${label}</dt><dd>${Math.round(value)}</dd></div>`).join("")}</dl>
-    <div class="hp-readout"><span>HP</span><strong>${Math.ceil(hp)} / ${Math.round(maxHp)}</strong></div>
-    <div class="meter hp"><span style="width:${Math.max(0, hp / maxHp) * 100}%"></span></div>
+    <div class="hp-readout"><span>HP</span><strong>${Math.min(Math.ceil(hp), Math.round(maxHp))} / ${Math.round(maxHp)}</strong></div>
+    <div class="meter hp"><span style="width:${Math.min(1, Math.max(0, hp / maxHp)) * 100}%"></span></div>
     ${level ? `<section class="operator-skill"><h3>${escape(level.name)} <small>${rankLabel(build.skillRank)}</small></h3>
     <div class="skill-tags"><span class="${level.spData.spType === "INCREASE_WITH_TIME" ? "auto" : "manual"}">${recovery}</span><span class="${level.skillType === "AUTO" ? "auto" : "manual"}">${level.skillType === "AUTO" ? "Auto activation" : level.skillType === "MANUAL" ? "Manual activation" : "Passive"}</span>${level.duration > 0 ? `<span>${level.duration}s</span>` : ""}</div>
     <p class="sp-readout">${hud?.text.replace(/ · (?:Auto|Manual) activation/g, "") || `${level.spData.initSp} / ${level.spData.spCost} SP on deployment`}</p>
