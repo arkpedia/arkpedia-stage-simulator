@@ -5,6 +5,7 @@ import data from '../data/arkpedia-mvp.json' with { type: 'json' };
 import evidence from '../data/arkpedia-five-star-sniper-third-prefabs.json' with { type: 'json' };
 import { FIVE_STAR_SNIPER_THIRD_OPERATORS } from '../shared/arkpedia/five-star-sniper-third-operators.js';
 import { REGULAR_OPERATORS } from '../shared/arkpedia/operators.js';
+import firewatch from '../data/arkpedia-firewatch-prefabs.json' with { type: 'json' };
 import { defaultBuild } from '../shared/arkpedia/loadout.js';
 import { StandardBattle } from '../server/sim/arkpedia.js';
 import { acquireTargets, effectiveProfile } from '../server/sim/ai.js';
@@ -32,7 +33,13 @@ function attack(b,u,e,s){b.forceAttack(u,[e]);advance(b,s);}
 
 test('third sniper source keeps original formulas, pointer identities, colliders and explicit whole-kit deferrals',()=>{
  assert.equal(evidence.frameParity,false);assert.equal(Object.keys(FIVE_STAR_SNIPER_THIRD_OPERATORS).length,3);
- for(const id of['char_158_milu','char_4006_melnte']){assert.equal(REGULAR_OPERATORS[id],undefined);assert.ok(evidence.deferredOperators[id].reason.length>100);}
+ // Preserve this batch's historical source deferral. Firewatch now has a
+ // separately reviewed complete adapter; Melanite remains deferred.
+ for(const id of['char_158_milu','char_4006_melnte'])assert.ok(evidence.deferredOperators[id].reason.length>100);
+ assert.equal(REGULAR_OPERATORS.char_4006_melnte,undefined);
+ assert.equal(REGULAR_OPERATORS.char_158_milu.mechanic,'firewatch');
+ assert.deepEqual(firewatch.enabledOperators,['char_158_milu']);
+ assert.equal(firewatch.frameParity,false);
  for(const id of[T,L,G]){assert.match(evidence.source.bundles.find(x=>x.path===`charpack/${id}.ab`).sha256,/^[a-f0-9]{64}$/);
   for(const facing of['Front','Back'])assert.match(evidence.models[id][facing].sha256,/^[a-f0-9]{64}$/);}
  const toddi=nodes(evidence.skills.skchr_toddi_2).find(c=>c._buffs);
