@@ -1,6 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Only explicitly reviewed regular-stage tokens may enter the deployment deck.
 export const REGULAR_SUMMONS = Object.freeze({
+  char_458_rfrost: Object.freeze({ tokenId: 'token_10016_rfrost_mine',
+    deploymentSlotCost: 0, chooseFacing: false, fixedRotation: true, healFree: true,
+    refundRatio: 0, noAttack: true, sourceStockLimit: true,
+    includeReadyCardInStock: true, excludeWalkingEnemy: true }),
   char_451_robin: Object.freeze({ tokenId: 'token_10013_robin_mine',
     deploymentSlotCost: 0, chooseFacing: false, fixedRotation: true, healFree: true,
     refundRatio: 0, noAttack: true, sourceStockLimit: true,
@@ -100,20 +104,22 @@ export function summonRecordFor(ownerId, build, tokens) {
     if (config.sourceStockLimit) stats.maxDeckStackCnt += talent.bb.max_deck_stack_cnt ?? 0;
   }
   let skill = null;
-  if (ownerId === 'char_451_robin') {
-    const index = ['skchr_robin_1', 'skchr_robin_2'].indexOf(build.skillId);
-    const id = ['sktok_robin_1', 'sktok_robin_2'][index];
+  if (['char_451_robin', 'char_458_rfrost'].includes(ownerId)) {
+    const name = ownerId === 'char_451_robin' ? 'robin' : 'rfrost';
+    const index = [`skchr_${name}_1`, `skchr_${name}_2`].indexOf(build.skillId);
+    const id = [`sktok_${name}_1`, `sktok_${name}_2`][index];
     const entry = source.skills?.find(row => row.id === id);
     const elite = phaseNumber(entry?.unlockCondition?.phase);
     if (!entry || !Number.isInteger(elite) || build.elite < elite
       || !Number.isSafeInteger(build.skillRank) || build.skillRank < 1
       || build.skillRank > Math.min([4, 7, 10][build.elite], entry.levels.length))
-      throw Error('Unsupported Robin trap skill or rank');
+      throw Error(`Unsupported ${name === 'robin' ? 'Robin' : 'Frost'} trap skill or rank`);
     const level = entry.levels[build.skillRank - 1], bb = blackboard(level.blackboard);
-    const keys = index === 0 ? ['cnt', 'atk_scale', 'constraint'] : ['cnt', 'atk_scale', 'force'];
+    const keys = name === 'rfrost' && index === 0 ? ['cnt', 'atk_scale', 'stun']
+      : index === 0 || name === 'rfrost' ? ['cnt', 'atk_scale', 'constraint'] : ['cnt', 'atk_scale', 'force'];
     if (level.skillType !== 'AUTO' || level.prefabId !== id || level.spData.spCost !== 0
       || Object.keys(bb).length !== keys.length || keys.some(key => !Number.isFinite(bb[key])))
-      throw Error('Unreviewed Robin trap source');
+      throw Error(`Unreviewed ${name === 'robin' ? 'Robin' : 'Frost'} trap source`);
     skill = { skillId: id, name: level.name, bb, trigger: { rule: 'NEVER' } };
   }
   if (ownerId === 'char_250_phatom') {
@@ -144,13 +150,13 @@ export function summonRecordFor(ownerId, build, tokens) {
       trigger: { rule: 'NEVER' } };
   }
   if (config.tacticalPoint) stats.respawnTime = talents[0].bb.interval;
-  // Robin's source talent explicitly says 6/8/10 total stored traps. Her
+  // Robin and Frost's source talents explicitly say 6/8/10 total stored traps. Their
   // native stacked-card field excludes the ready card (5/7/9). This UI holds
   // both in one stock count; other summons retain their reviewed semantics.
   if (config.includeReadyCardInStock) {
     if (stats.maxDeckStackCnt + 1 !== stats.maxDeployCount
       || stats.maxDeployCount !== [6, 8, 10][build.elite])
-      throw Error('Unreviewed Robin total stored capacity');
+      throw Error('Unreviewed trap total stored capacity');
     stats.maxDeckStackCnt++;
   }
   if (config.sourceStockLimit && (!Number.isSafeInteger(stats.maxDeckStackCnt) || stats.maxDeckStackCnt < 1))
