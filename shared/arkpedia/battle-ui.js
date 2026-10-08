@@ -2,12 +2,16 @@
 // Source names mapped to the pinned Arkpedia image-asset naming convention.
 export const classNames = { PIONEER: 'Vanguard', WARRIOR: 'Guard', TANK: 'Defender',
   SNIPER: 'Sniper', CASTER: 'Caster', MEDIC: 'Medic', SUPPORT: 'Supporter', SPECIAL: 'Specialist' };
+export function operatorAssetName(name) {
+  return name.startsWith("'") && name.endsWith("'") ? name.slice(1, -1) : name;
+}
 export function skillIconFile(operator, skill) {
   if (!skill) return null;
-  const safe = skill.replace(/[\\/*?:"<>|]/g, '').replace(/^'|'$/g, '').trim();
+  const safe = operatorAssetName(skill).replace(/[\\/*?:"<>|]/g, '').trim();
   const aliases = { 'Little by Little': 'Little By Little', 'Image over Form': 'Image Over Form',
+    "Binding 'Clip'": 'Binding Clip', "Launching 'Clip'": 'Launching Clip',
     'Night-Scouring Gleam': 'Night-scouring Gleam' };
-  return `${operator} - ${aliases[safe] ?? safe}.webp`;
+  return `${operatorAssetName(operator)} - ${aliases[safe] ?? safe}.webp`;
 }
 
 // Clip diagonal stripes to the top face BEFORE projecting onto raised/ground tiles.

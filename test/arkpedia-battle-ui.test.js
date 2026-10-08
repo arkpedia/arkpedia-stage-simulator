@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { classNames, rangeStripes, skillIconFile } from '../shared/arkpedia/battle-ui.js';
+import { classNames, rangeStripes, skillIconFile, operatorAssetName } from '../shared/arkpedia/battle-ui.js';
 
 test('skill asset names preserve internal apostrophes and Greek text while resolving source aliases', () => {
   assert.equal(skillIconFile('Ceobe', "'Really Hot Knives'"), 'Ceobe - Really Hot Knives.webp');
@@ -33,4 +33,13 @@ test('range stripes are clipped to a tile and alternate with visible gaps', () =
     const nextStart = Math.min(...stripes[i].map(([x,y])=>x+y));
     assert.ok(nextStart-previousEnd > .2, 'stripes do not overlap');
   }
+});
+
+
+test('pinned Robin and Justice Knight filenames remove only the source catalogue quotation marks', () => {
+  assert.equal(skillIconFile('Robin', "Binding 'Clip'"), 'Robin - Binding Clip.webp');
+  assert.equal(skillIconFile('Robin', "Launching 'Clip'"), 'Robin - Launching Clip.webp');
+  assert.equal(operatorAssetName("'Justice Knight'"), 'Justice Knight');
+  assert.equal(operatorAssetName("Kal'tsit"), "Kal'tsit");
+  assert.equal(operatorAssetName("Ch'en the Holungday"), "Ch'en the Holungday");
 });

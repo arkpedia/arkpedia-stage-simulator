@@ -10,7 +10,7 @@ import {
 import { maxedSupport } from "/shared/arkpedia/squad.js";
 import { StageRenderer } from "./renderer.js";
 import { absoluteRangeKeys } from "/sim/targeting.js";
-import { classNames, skillIconFile } from "/shared/arkpedia/battle-ui.js";
+import { classNames, skillIconFile, operatorAssetName } from "/shared/arkpedia/battle-ui.js";
 import { swipeFacing } from "/shared/arkpedia/placement.js";
 import { skillHud, skillSourceFor } from "/shared/arkpedia/skill-hud.js";
 import { battleHud } from "/shared/arkpedia/battle-hud.js";
@@ -53,9 +53,9 @@ const catalogue = catalogueFor(data);
 const ops = Object.values(data.operators);
 const rarityFolder = (op) => ["one", "two", "three", "four", "five", "six"][op.rarity - 1];
 const icon = (op) =>
-  `https://raw.githubusercontent.com/arkpedia/arkpedia-image-assets/${data.sources["arkpedia/arkpedia-image-assets"]}/${rarityFolder(op)}-star-icons/${encodeURIComponent(op.name + " - Base.webp")}`;
+  `https://raw.githubusercontent.com/arkpedia/arkpedia-image-assets/${data.sources["arkpedia/arkpedia-image-assets"]}/${rarityFolder(op)}-star-icons/${encodeURIComponent(operatorAssetName(op.name) + " - Base.webp")}`;
 const artwork = (op) =>
-  `https://raw.githubusercontent.com/arkpedia/arkpedia-skin-assets/${data.sources["arkpedia/arkpedia-skin-assets"]}/${rarityFolder(op)}-star-skins/${encodeURIComponent(op.name + " - Base.webp")}`;
+  `https://raw.githubusercontent.com/arkpedia/arkpedia-skin-assets/${data.sources["arkpedia/arkpedia-skin-assets"]}/${rarityFolder(op)}-star-skins/${encodeURIComponent(operatorAssetName(op.name) + " - Base.webp")}`;
 const summonIcon = id => {
   const avatar = data.tokens?.[id]?.avatar;
   if (typeof avatar === 'string' && (avatar.startsWith('https://') ||
