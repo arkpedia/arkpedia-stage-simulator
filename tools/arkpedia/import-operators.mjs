@@ -138,6 +138,13 @@ for (const id of ids) {
         end: 'Skill_2_End', index: 2, idle: 'Skill_2_Idle' };
       roles.skill = roles.skills['0'];
     }
+    // Alanna's passive S1 selects Skill_1 for each attack. It does not
+    // request a separate command or idle animation on deployment.
+    if (id === 'char_4178_alanna') {
+      roles.skills['0'] = { begin: null, loop: 'Skill_1', end: null,
+        index: 0, idle: null, via: 'attack' };
+      roles.skill = roles.skills['0'];
+    }
     if (!roles.idle || !support.noBasicAttack && catalogue[id]?.subProfessionId !== 'bard' && (!roles.attack || roles.attack.via === "idle"))
       throw Error(`${key}: missing idle/attack clips`);
     Object.assign(model, { premultipliedAlpha: values.pma === "true", animations: info.durations,

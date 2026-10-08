@@ -34,7 +34,7 @@
   },
   "sd": {
     "repository": "arkpedia/arkpedia-sd-assets",
-    "commit": "71df5d18f5691f5133d261d46d211cd0710dc29b",
+    "commit": "01685979baa09629b80838f972353c9a68ad2864",
     "models": {
       "operator/char_123_fang/default/front": {
         "kind": "operator",
@@ -50132,6 +50132,403 @@
           "height": 459.527
         }
       },
+      "operator/char_4178_alanna/default/front": {
+        "kind": "operator",
+        "id": "char_4178_alanna",
+        "variant": "default",
+        "facing": "front",
+        "spineVersion": "3.8.99",
+        "source": {
+          "key": "operators",
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "spine/char_4178_alanna/char_4178_alanna/Front"
+        },
+        "skeleton": {
+          "path": "models/operator/char_4178_alanna/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4178_alanna.skel",
+          "bytes": 225426,
+          "sha256": "b8087718b8934b9d20f4de7409167d62121c1c864f7a0eb2669efb5efc69ae74"
+        },
+        "atlas": {
+          "path": "models/operator/char_4178_alanna/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4178_alanna.atlas",
+          "bytes": 8547,
+          "sha256": "c0b688a42c1747f74b7bef56b25575aae8704c386ec549efba625a6a6251cc19"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_4178_alanna/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4178_alanna.png",
+            "bytes": 126599,
+            "sha256": "551416a4a3f85954490a1093d2c5f607682049a096bd06c3f2796eaae65cd51e"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Attack": 1.5,
+          "Default": 0,
+          "Die": 1,
+          "Idle": 5.333,
+          "Skill_1": 1.5,
+          "Skill_2_Begin": 0.267,
+          "Skill_2_End": 0.267,
+          "Skill_2_Idle": 5.333,
+          "Skill_2_Loop": 1.5,
+          "Start": 1
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null
+          },
+          "attackDown": null,
+          "skill": {
+            "begin": null,
+            "loop": "Skill_1",
+            "end": null,
+            "index": 0,
+            "idle": null,
+            "via": "attack"
+          },
+          "die": "Die",
+          "move": null,
+          "stun": null,
+          "skills": {
+            "0": {
+              "begin": null,
+              "loop": "Skill_1",
+              "end": null,
+              "index": 0,
+              "idle": null,
+              "via": "attack"
+            },
+            "1": {
+              "begin": "Skill_2_Begin",
+              "loop": "Skill_2_Loop",
+              "end": "Skill_2_End",
+              "index": 1,
+              "idle": "Skill_2_Idle"
+            }
+          }
+        },
+        "hits": {
+          "Attack": [
+            0.5
+          ],
+          "Skill_1": [
+            0.5
+          ],
+          "Skill_2_Loop": [
+            0.667
+          ]
+        },
+        "bounds": {
+          "x": -217.554,
+          "y": -1.444,
+          "width": 319.624,
+          "height": 609.201
+        }
+      },
+      "operator/char_4178_alanna/default/back": {
+        "kind": "operator",
+        "id": "char_4178_alanna",
+        "variant": "default",
+        "facing": "back",
+        "spineVersion": "3.8.99",
+        "source": {
+          "key": "operators",
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "spine/char_4178_alanna/char_4178_alanna/Back"
+        },
+        "skeleton": {
+          "path": "models/operator/char_4178_alanna/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4178_alanna.skel",
+          "bytes": 108109,
+          "sha256": "82c6a01fc0734207d149f6f2cd877e593c13a08327d18629263177416fb03add"
+        },
+        "atlas": {
+          "path": "models/operator/char_4178_alanna/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4178_alanna.atlas",
+          "bytes": 4293,
+          "sha256": "8e69c162aaef91fd90ed03017cb35a9f86c62e25a2c5a9b35bf35feb98b68278"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_4178_alanna/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4178_alanna.png",
+            "bytes": 96395,
+            "sha256": "382cc38dafa60a5c38da80f62a94f9782e85705cd4ce4931982b18272ee5c269"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Attack": 1.5,
+          "Default": 0,
+          "Idle": 1.333,
+          "Skill_1": 1.5,
+          "Skill_2_Begin": 0.267,
+          "Skill_2_End": 0.267,
+          "Skill_2_Idle": 1.333,
+          "Skill_2_Loop": 1.467,
+          "Start": 1
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null
+          },
+          "attackDown": null,
+          "skill": {
+            "begin": null,
+            "loop": "Skill_1",
+            "end": null,
+            "index": 0,
+            "idle": null,
+            "via": "attack"
+          },
+          "die": null,
+          "move": null,
+          "stun": null,
+          "skills": {
+            "0": {
+              "begin": null,
+              "loop": "Skill_1",
+              "end": null,
+              "index": 0,
+              "idle": null,
+              "via": "attack"
+            },
+            "1": {
+              "begin": "Skill_2_Begin",
+              "loop": "Skill_2_Loop",
+              "end": "Skill_2_End",
+              "index": 1,
+              "idle": "Skill_2_Idle"
+            }
+          }
+        },
+        "hits": {
+          "Attack": [
+            0.5
+          ],
+          "Skill_1": [
+            0.5
+          ],
+          "Skill_2_Loop": [
+            0.667
+          ]
+        },
+        "bounds": {
+          "x": 185.826,
+          "y": -1.218,
+          "width": 317.049,
+          "height": 609.483
+        }
+      },
+      "operator/char_479_sleach/default/front": {
+        "kind": "operator",
+        "id": "char_479_sleach",
+        "variant": "default",
+        "facing": "front",
+        "spineVersion": "3.8.99",
+        "source": {
+          "key": "operators",
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "spine/char_479_sleach/char_479_sleach/Front"
+        },
+        "skeleton": {
+          "path": "models/operator/char_479_sleach/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_479_sleach.skel",
+          "bytes": 722743,
+          "sha256": "5056d211343508cbe63f7f737c8d51266ae449a34c72fe673b6d85f9f86c64a9"
+        },
+        "atlas": {
+          "path": "models/operator/char_479_sleach/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_479_sleach.atlas",
+          "bytes": 10063,
+          "sha256": "ae1329846b70fc321e5358170aba29d714b7c2b5a6405b0a35a9eda24de4056a"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_479_sleach/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_479_sleach.png",
+            "bytes": 233485,
+            "sha256": "eecabdf4dee95907a3bcb71e7976c34304f2fd1d31ecfbbd5e4dfbea9c10391a"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Attack": 1,
+          "Default": 0,
+          "Die": 1,
+          "Die_Skill": 1,
+          "Idle": 5.333,
+          "Skill_1_Begin": 0.5,
+          "Skill_1_End": 0.233,
+          "Skill_1_Loop": 5.333,
+          "Skill_2_Begin": 0.933,
+          "Skill_2_End": 0.5,
+          "Skill_2_Loop": 5.333,
+          "Skill_3_Begin": 0.833,
+          "Skill_3_End": 0.5,
+          "Skill_3_Loop": 5.333,
+          "Start": 1
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null
+          },
+          "attackDown": null,
+          "skill": {
+            "begin": "Skill_1_Begin",
+            "loop": "Skill_1_Loop",
+            "end": "Skill_1_End",
+            "index": 0,
+            "idle": null
+          },
+          "die": "Die",
+          "move": null,
+          "stun": null,
+          "skills": {
+            "0": {
+              "begin": "Skill_1_Begin",
+              "loop": "Skill_1_Loop",
+              "end": "Skill_1_End",
+              "index": 0,
+              "idle": null
+            },
+            "1": {
+              "begin": "Skill_2_Begin",
+              "loop": "Skill_2_Loop",
+              "end": "Skill_2_End",
+              "index": 1,
+              "idle": null
+            },
+            "2": {
+              "begin": "Skill_3_Begin",
+              "loop": "Skill_3_Loop",
+              "end": "Skill_3_End",
+              "index": 2,
+              "idle": null
+            }
+          }
+        },
+        "hits": {
+          "Attack": [
+            0.367
+          ]
+        },
+        "bounds": {
+          "x": -1499.207,
+          "y": -26.004,
+          "width": 1728.898,
+          "height": 630.392
+        }
+      },
+      "operator/char_479_sleach/default/back": {
+        "kind": "operator",
+        "id": "char_479_sleach",
+        "variant": "default",
+        "facing": "back",
+        "spineVersion": "3.8.99",
+        "source": {
+          "key": "operators",
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "spine/char_479_sleach/char_479_sleach/Back"
+        },
+        "skeleton": {
+          "path": "models/operator/char_479_sleach/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_479_sleach.skel",
+          "bytes": 499931,
+          "sha256": "ece2ff46cda3d78b29ab41de0cb1841a1f2258d72226127c9be250ef3c5fc437"
+        },
+        "atlas": {
+          "path": "models/operator/char_479_sleach/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_479_sleach.atlas",
+          "bytes": 7062,
+          "sha256": "a2fe68ec72c4d1cb4348872b57ac53e247575ad33a5170fc76645fa5fe2e0ffb"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_479_sleach/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_479_sleach.png",
+            "bytes": 213120,
+            "sha256": "9de95233dddb084ac8b41bd57ba779d9916bd461ba5a68ffd8a2958bab782a3d"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Attack": 1,
+          "Default": 0,
+          "Idle": 5.333,
+          "Skill_1_Begin": 0.5,
+          "Skill_1_End": 0.233,
+          "Skill_1_Loop": 5.333,
+          "Skill_2_Begin": 0.933,
+          "Skill_2_End": 0.5,
+          "Skill_2_Loop": 5.333,
+          "Skill_3_Begin": 0.833,
+          "Skill_3_End": 0.5,
+          "Skill_3_Loop": 5.333,
+          "Start": 1
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null
+          },
+          "attackDown": null,
+          "skill": {
+            "begin": "Skill_1_Begin",
+            "loop": "Skill_1_Loop",
+            "end": "Skill_1_End",
+            "index": 0,
+            "idle": null
+          },
+          "die": null,
+          "move": null,
+          "stun": null,
+          "skills": {
+            "0": {
+              "begin": "Skill_1_Begin",
+              "loop": "Skill_1_Loop",
+              "end": "Skill_1_End",
+              "index": 0,
+              "idle": null
+            },
+            "1": {
+              "begin": "Skill_2_Begin",
+              "loop": "Skill_2_Loop",
+              "end": "Skill_2_End",
+              "index": 1,
+              "idle": null
+            },
+            "2": {
+              "begin": "Skill_3_Begin",
+              "loop": "Skill_3_Loop",
+              "end": "Skill_3_End",
+              "index": 2,
+              "idle": null
+            }
+          }
+        },
+        "hits": {
+          "Attack": [
+            0.367
+          ]
+        },
+        "bounds": {
+          "x": -1499.207,
+          "y": -25.568,
+          "width": 1728.898,
+          "height": 629.955
+        }
+      },
       "operator/char_250_phatom/default/front": {
         "kind": "operator",
         "id": "char_250_phatom",
@@ -55225,6 +55622,158 @@
           }
         }
       },
+      "operator/token_10045_alanna_crane/default/front": {
+        "kind": "operator",
+        "id": "token_10045_alanna_crane",
+        "variant": "default",
+        "facing": "front",
+        "source": {
+          "key": "global-client",
+          "kind": "assetbundle",
+          "bundle": {
+            "path": "pkgrps/btl_pfb_tokens_0.ab",
+            "bytes": 5060143,
+            "md5": "5ab8526b9e59e97cc7e94ed6a248013d",
+            "sha256": "eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f",
+            "resourceVersion": "26-09-23-17-49-43_b9cc4a",
+            "url": "https://ark-us-static-online.yo-star.com/assetbundle/official/Android/assets/26-09-23-17-49-43_b9cc4a/pkgrps_btl_pfb_tokens_0.dat",
+            "transforms": [
+              "RGB plus separated Alpha texture merge",
+              "atlas texture dimensions normalized and pma: true recorded"
+            ]
+          },
+          "directory": "pkgrps/btl_pfb_tokens_0.ab",
+          "extractedSkeleton": "token_10045_alanna_crane.skel",
+          "facingAlias": "single-original-model",
+          "transforms": [
+            "RGB plus separated Alpha texture merge",
+            "atlas texture dimensions normalized and pma: true recorded"
+          ]
+        },
+        "spineVersion": "3.8.99",
+        "skeleton": {
+          "path": "models/operator/token_10045_alanna_crane/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/token_10045_alanna_crane.skel",
+          "bytes": 29615,
+          "sha256": "839d80ef905a07da85000e291bb716eff24e0e9a9fc716dbbb00b42f52897249"
+        },
+        "atlas": {
+          "path": "models/operator/token_10045_alanna_crane/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/token_10045_alanna_crane.atlas",
+          "bytes": 3490,
+          "sha256": "14ac9e101eb28157fdd594d8b917195a277b97e177d66f949d4dd12af6e9dfdf"
+        },
+        "textures": [
+          {
+            "path": "models/operator/token_10045_alanna_crane/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/token_10045_alanna_crane.png",
+            "bytes": 27400,
+            "sha256": "61fa508bc0d4cdd3ce395ef17d3041f8e70c5cb6cd565ccf7d84c1195ffc09ab"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Default": 0,
+          "Die": 1,
+          "Idle": 1,
+          "Start": 1
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": null,
+          "attackDown": null,
+          "skill": null,
+          "die": "Die",
+          "move": null,
+          "stun": null
+        },
+        "hits": {},
+        "bounds": null,
+        "avatar": {
+          "path": "models/operator/token_10045_alanna_crane/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png",
+          "bytes": 39298,
+          "sha256": "aff227d4302d7e278d61716f2396e3cf1c3aadbff9d67ba48b576bb327b969ce",
+          "source": {
+            "repository": "fexli/ArknightsResource",
+            "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+            "directory": "avatar/ASSISTANT"
+          }
+        }
+      },
+      "operator/token_10045_alanna_crane/default/back": {
+        "kind": "operator",
+        "id": "token_10045_alanna_crane",
+        "variant": "default",
+        "facing": "back",
+        "source": {
+          "key": "global-client",
+          "kind": "assetbundle",
+          "bundle": {
+            "path": "pkgrps/btl_pfb_tokens_0.ab",
+            "bytes": 5060143,
+            "md5": "5ab8526b9e59e97cc7e94ed6a248013d",
+            "sha256": "eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f",
+            "resourceVersion": "26-09-23-17-49-43_b9cc4a",
+            "url": "https://ark-us-static-online.yo-star.com/assetbundle/official/Android/assets/26-09-23-17-49-43_b9cc4a/pkgrps_btl_pfb_tokens_0.dat",
+            "transforms": [
+              "RGB plus separated Alpha texture merge",
+              "atlas texture dimensions normalized and pma: true recorded"
+            ]
+          },
+          "directory": "pkgrps/btl_pfb_tokens_0.ab",
+          "extractedSkeleton": "token_10045_alanna_crane.skel",
+          "facingAlias": "single-original-model",
+          "transforms": [
+            "RGB plus separated Alpha texture merge",
+            "atlas texture dimensions normalized and pma: true recorded"
+          ]
+        },
+        "spineVersion": "3.8.99",
+        "skeleton": {
+          "path": "models/operator/token_10045_alanna_crane/default/back/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/token_10045_alanna_crane.skel",
+          "bytes": 29615,
+          "sha256": "839d80ef905a07da85000e291bb716eff24e0e9a9fc716dbbb00b42f52897249"
+        },
+        "atlas": {
+          "path": "models/operator/token_10045_alanna_crane/default/back/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/token_10045_alanna_crane.atlas",
+          "bytes": 3490,
+          "sha256": "14ac9e101eb28157fdd594d8b917195a277b97e177d66f949d4dd12af6e9dfdf"
+        },
+        "textures": [
+          {
+            "path": "models/operator/token_10045_alanna_crane/default/back/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/token_10045_alanna_crane.png",
+            "bytes": 27400,
+            "sha256": "61fa508bc0d4cdd3ce395ef17d3041f8e70c5cb6cd565ccf7d84c1195ffc09ab"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Default": 0,
+          "Die": 1,
+          "Idle": 1,
+          "Start": 1
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": null,
+          "attackDown": null,
+          "skill": null,
+          "die": "Die",
+          "move": null,
+          "stun": null
+        },
+        "hits": {},
+        "bounds": null,
+        "avatar": {
+          "path": "models/operator/token_10045_alanna_crane/default/back/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png",
+          "bytes": 39298,
+          "sha256": "aff227d4302d7e278d61716f2396e3cf1c3aadbff9d67ba48b576bb327b969ce",
+          "source": {
+            "repository": "fexli/ArknightsResource",
+            "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+            "directory": "avatar/ASSISTANT"
+          }
+        }
+      },
       "enemy/enemy_1002_nsabr/default/default": {
         "kind": "enemy",
         "id": "enemy_1002_nsabr",
@@ -55950,7 +56499,7 @@
     },
     "art": {
       "repository": "arkpedia/arkpedia-sd-assets",
-      "commit": "71df5d18f5691f5133d261d46d211cd0710dc29b",
+      "commit": "01685979baa09629b80838f972353c9a68ad2864",
       "scene": {
         "path": "stages/0-1/26-09-23-17-49-43_b9cc4a/scene.json",
         "bytes": 4479,
@@ -55959,7 +56508,7 @@
     },
     "gates": {
       "repository": "arkpedia/arkpedia-sd-assets",
-      "commit": "71df5d18f5691f5133d261d46d211cd0710dc29b",
+      "commit": "01685979baa09629b80838f972353c9a68ad2864",
       "pack": {
         "path": "effects/standard-gates/26-09-23-17-49-43_b9cc4a/gates.json",
         "bytes": 3507,
@@ -415801,6 +416350,3857 @@
         }
       ]
     },
+    "char_4178_alanna": {
+      "id": "char_4178_alanna",
+      "name": "Alanna",
+      "rarity": 5,
+      "profession": "SUPPORT",
+      "subProfessionId": "craftsman",
+      "position": "MELEE",
+      "nationId": "rim",
+      "groupId": null,
+      "teamId": null,
+      "phases": [
+        {
+          "maxLevel": 50,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 1164,
+                "atk": 236,
+                "def": 197,
+                "magicResistance": 0,
+                "cost": 14,
+                "blockCnt": 2,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.5,
+                "respawnTime": 80,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 50,
+              "data": {
+                "maxHp": 1595,
+                "atk": 348,
+                "def": 284,
+                "magicResistance": 0,
+                "cost": 14,
+                "blockCnt": 2,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.5,
+                "respawnTime": 80,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ]
+        },
+        {
+          "maxLevel": 70,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 1595,
+                "atk": 348,
+                "def": 284,
+                "magicResistance": 0,
+                "cost": 16,
+                "blockCnt": 2,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.5,
+                "respawnTime": 80,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 70,
+              "data": {
+                "maxHp": 2048,
+                "atk": 464,
+                "def": 367,
+                "magicResistance": 0,
+                "cost": 16,
+                "blockCnt": 2,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.5,
+                "respawnTime": 80,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ]
+        },
+        {
+          "maxLevel": 80,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 2048,
+                "atk": 464,
+                "def": 367,
+                "magicResistance": 0,
+                "cost": 18,
+                "blockCnt": 2,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.5,
+                "respawnTime": 80,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 80,
+              "data": {
+                "maxHp": 2560,
+                "atk": 560,
+                "def": 437,
+                "magicResistance": 0,
+                "cost": 18,
+                "blockCnt": 2,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.5,
+                "respawnTime": 80,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ]
+        }
+      ],
+      "favorKeyFrames": [
+        {
+          "level": 0,
+          "data": {
+            "maxHp": 0,
+            "atk": 0,
+            "def": 0,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false
+          }
+        },
+        {
+          "level": 50,
+          "data": {
+            "maxHp": 0,
+            "atk": 50,
+            "def": 30,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false
+          }
+        }
+      ],
+      "potentialRanks": [
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "RESPAWN_TIME",
+            "formulaItem": "ADDITION",
+            "value": -4,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "ATK",
+            "formulaItem": "ADDITION",
+            "value": 25,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [],
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ]
+      ],
+      "trait": null,
+      "talents": [
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_0",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Makeshift Modification",
+              "description": "Carries 2 Support Devices (max 2 deployed at once) that allow an Operator to ignore 40 DEF when attacking enemies (lasts 30s); effects from Devices do not stack",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "def_penetrate_fixed_bb",
+                  "value": 40,
+                  "valueStr": null
+                },
+                {
+                  "key": "cnt",
+                  "value": 2,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": "token_10045_alanna_crane",
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_0",
+                "level": 1
+              },
+              "requiredPotentialRank": 4,
+              "prefabKey": "1",
+              "name": "Makeshift Modification",
+              "description": "Carries 2 Support Devices (max 2 deployed at once) that allow an Operator to ignore 50 <@ba.talpu>(+10)</> DEF when attacking enemies (lasts 30s); effects from Devices do not stack",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "def_penetrate_fixed_bb",
+                  "value": 50,
+                  "valueStr": null
+                },
+                {
+                  "key": "cnt",
+                  "value": 2,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": "token_10045_alanna_crane",
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Makeshift Modification",
+              "description": "Carries 3 Support Devices (max 2 deployed at once) that allow an Operator to ignore 60 DEF when attacking enemies (lasts 30s); effects from Devices do not stack",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "def_penetrate_fixed_bb",
+                  "value": 60,
+                  "valueStr": null
+                },
+                {
+                  "key": "cnt",
+                  "value": 3,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": "token_10045_alanna_crane",
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 1
+              },
+              "requiredPotentialRank": 4,
+              "prefabKey": "1",
+              "name": "Makeshift Modification",
+              "description": "Carries 3 Support Devices (max 2 deployed at once) that allow an Operator to ignore 70 <@ba.talpu>(+10)</> DEF when attacking enemies (lasts 30s); effects from Devices do not stack",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "def_penetrate_fixed_bb",
+                  "value": 70,
+                  "valueStr": null
+                },
+                {
+                  "key": "cnt",
+                  "value": 3,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": "token_10045_alanna_crane",
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Makeshift Modification",
+              "description": "Carries 3 Support Devices (max 2 deployed at once) that allow an Operator to ignore 80 DEF when attacking enemies (lasts 30s); effects from Devices do not stack",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "def_penetrate_fixed_bb",
+                  "value": 80,
+                  "valueStr": null
+                },
+                {
+                  "key": "cnt",
+                  "value": 3,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": "token_10045_alanna_crane",
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 4,
+              "prefabKey": "1",
+              "name": "Makeshift Modification",
+              "description": "Carries 3 Support Devices (max 2 deployed at once) that allow an Operator to ignore 90 <@ba.talpu>(+10)</> DEF when attacking enemies (lasts 30s); effects from Devices do not stack",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "def_penetrate_fixed_bb",
+                  "value": 90,
+                  "valueStr": null
+                },
+                {
+                  "key": "cnt",
+                  "value": 3,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": "token_10045_alanna_crane",
+              "isHideTalent": false
+            }
+          ]
+        }
+      ],
+      "skills": [
+        {
+          "id": "skchr_alanna_1",
+          "unlockCondition": {
+            "phase": "PHASE_0",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "Pneumatic Power-Up",
+              "rangeId": null,
+              "description": "Operators with a Support Device attached have ASPD <@ba.vup>+{attack_speed}</>, and Support Devices last for <@ba.vup>+{extend_time}</>s",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_alanna_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 10,
+                  "valueStr": null
+                },
+                {
+                  "key": "extend_time",
+                  "value": 12,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Pneumatic Power-Up",
+              "rangeId": null,
+              "description": "Operators with a Support Device attached have ASPD <@ba.vup>+{attack_speed}</>, and Support Devices last for <@ba.vup>+{extend_time}</>s",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_alanna_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 11,
+                  "valueStr": null
+                },
+                {
+                  "key": "extend_time",
+                  "value": 14,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Pneumatic Power-Up",
+              "rangeId": null,
+              "description": "Operators with a Support Device attached have ASPD <@ba.vup>+{attack_speed}</>, and Support Devices last for <@ba.vup>+{extend_time}</>s",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_alanna_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 12,
+                  "valueStr": null
+                },
+                {
+                  "key": "extend_time",
+                  "value": 16,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Pneumatic Power-Up",
+              "rangeId": null,
+              "description": "Operators with a Support Device attached have ASPD <@ba.vup>+{attack_speed}</>, and Support Devices last for <@ba.vup>+{extend_time}</>s",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_alanna_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 13,
+                  "valueStr": null
+                },
+                {
+                  "key": "extend_time",
+                  "value": 18,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Pneumatic Power-Up",
+              "rangeId": null,
+              "description": "Operators with a Support Device attached have ASPD <@ba.vup>+{attack_speed}</>, and Support Devices last for <@ba.vup>+{extend_time}</>s",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_alanna_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 15,
+                  "valueStr": null
+                },
+                {
+                  "key": "extend_time",
+                  "value": 20,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Pneumatic Power-Up",
+              "rangeId": null,
+              "description": "Operators with a Support Device attached have ASPD <@ba.vup>+{attack_speed}</>, and Support Devices last for <@ba.vup>+{extend_time}</>s",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_alanna_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 16,
+                  "valueStr": null
+                },
+                {
+                  "key": "extend_time",
+                  "value": 22,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Pneumatic Power-Up",
+              "rangeId": null,
+              "description": "Operators with a Support Device attached have ASPD <@ba.vup>+{attack_speed}</>, and Support Devices last for <@ba.vup>+{extend_time}</>s",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_alanna_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 17,
+                  "valueStr": null
+                },
+                {
+                  "key": "extend_time",
+                  "value": 24,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Pneumatic Power-Up",
+              "rangeId": null,
+              "description": "Operators with a Support Device attached have ASPD <@ba.vup>+{attack_speed}</>, and Support Devices last for <@ba.vup>+{extend_time}</>s",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_alanna_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 19,
+                  "valueStr": null
+                },
+                {
+                  "key": "extend_time",
+                  "value": 26,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Pneumatic Power-Up",
+              "rangeId": null,
+              "description": "Operators with a Support Device attached have ASPD <@ba.vup>+{attack_speed}</>, and Support Devices last for <@ba.vup>+{extend_time}</>s",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_alanna_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 21,
+                  "valueStr": null
+                },
+                {
+                  "key": "extend_time",
+                  "value": 28,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Pneumatic Power-Up",
+              "rangeId": null,
+              "description": "Operators with a Support Device attached have ASPD <@ba.vup>+{attack_speed}</>, and Support Devices last for <@ba.vup>+{extend_time}</>s",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_alanna_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 23,
+                  "valueStr": null
+                },
+                {
+                  "key": "extend_time",
+                  "value": 30,
+                  "valueStr": null
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "skchr_alanna_2",
+          "unlockCondition": {
+            "phase": "PHASE_1",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "'Million-Pound Jack'",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>, ASPD <@ba.vup>+{attack_speed}</>, and increases Talent effect to <@ba.vup>{multi}</>x; when the skill ends, obtain <@ba.vup>{cnt}</> Support Device",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 30,
+                "initSp": 9,
+                "increment": 1
+              },
+              "prefabId": "skchr_alanna_2",
+              "duration": 11,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack_speed",
+                  "value": 20,
+                  "valueStr": null
+                },
+                {
+                  "key": "multi",
+                  "value": 1.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "cnt",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "'Million-Pound Jack'",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>, ASPD <@ba.vup>+{attack_speed}</>, and increases Talent effect to <@ba.vup>{multi}</>x; when the skill ends, obtain <@ba.vup>{cnt}</> Support Device",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 30,
+                "initSp": 9,
+                "increment": 1
+              },
+              "prefabId": "skchr_alanna_2",
+              "duration": 11,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.22,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack_speed",
+                  "value": 22,
+                  "valueStr": null
+                },
+                {
+                  "key": "multi",
+                  "value": 1.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "cnt",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "'Million-Pound Jack'",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>, ASPD <@ba.vup>+{attack_speed}</>, and increases Talent effect to <@ba.vup>{multi}</>x; when the skill ends, obtain <@ba.vup>{cnt}</> Support Device",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 30,
+                "initSp": 9,
+                "increment": 1
+              },
+              "prefabId": "skchr_alanna_2",
+              "duration": 11,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack_speed",
+                  "value": 25,
+                  "valueStr": null
+                },
+                {
+                  "key": "multi",
+                  "value": 1.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "cnt",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "'Million-Pound Jack'",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>, ASPD <@ba.vup>+{attack_speed}</>, and increases Talent effect to <@ba.vup>{multi}</>x; when the skill ends, obtain <@ba.vup>{cnt}</> Support Device",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 25,
+                "initSp": 11,
+                "increment": 1
+              },
+              "prefabId": "skchr_alanna_2",
+              "duration": 13,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.28,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack_speed",
+                  "value": 28,
+                  "valueStr": null
+                },
+                {
+                  "key": "multi",
+                  "value": 1.8,
+                  "valueStr": null
+                },
+                {
+                  "key": "cnt",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "'Million-Pound Jack'",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>, ASPD <@ba.vup>+{attack_speed}</>, and increases Talent effect to <@ba.vup>{multi}</>x; when the skill ends, obtain <@ba.vup>{cnt}</> Support Device",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 25,
+                "initSp": 11,
+                "increment": 1
+              },
+              "prefabId": "skchr_alanna_2",
+              "duration": 13,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.32,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack_speed",
+                  "value": 32,
+                  "valueStr": null
+                },
+                {
+                  "key": "multi",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "cnt",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "'Million-Pound Jack'",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>, ASPD <@ba.vup>+{attack_speed}</>, and increases Talent effect to <@ba.vup>{multi}</>x; when the skill ends, obtain <@ba.vup>{cnt}</> Support Device",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 22,
+                "initSp": 13,
+                "increment": 1
+              },
+              "prefabId": "skchr_alanna_2",
+              "duration": 13,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.35,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack_speed",
+                  "value": 35,
+                  "valueStr": null
+                },
+                {
+                  "key": "multi",
+                  "value": 2.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "cnt",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "'Million-Pound Jack'",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>, ASPD <@ba.vup>+{attack_speed}</>, and increases Talent effect to <@ba.vup>{multi}</>x; when the skill ends, obtain <@ba.vup>{cnt}</> Support Device",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 22,
+                "initSp": 13,
+                "increment": 1
+              },
+              "prefabId": "skchr_alanna_2",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.38,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack_speed",
+                  "value": 38,
+                  "valueStr": null
+                },
+                {
+                  "key": "multi",
+                  "value": 2.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "cnt",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "'Million-Pound Jack'",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>, ASPD <@ba.vup>+{attack_speed}</>, and increases Talent effect to <@ba.vup>{multi}</>x; when the skill ends, obtain <@ba.vup>{cnt}</> Support Device",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 20,
+                "initSp": 15,
+                "increment": 1
+              },
+              "prefabId": "skchr_alanna_2",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.42,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack_speed",
+                  "value": 42,
+                  "valueStr": null
+                },
+                {
+                  "key": "multi",
+                  "value": 2.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "cnt",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "'Million-Pound Jack'",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>, ASPD <@ba.vup>+{attack_speed}</>, and increases Talent effect to <@ba.vup>{multi}</>x; when the skill ends, obtain <@ba.vup>{cnt}</> Support Device",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 20,
+                "initSp": 15,
+                "increment": 1
+              },
+              "prefabId": "skchr_alanna_2",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.45,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack_speed",
+                  "value": 45,
+                  "valueStr": null
+                },
+                {
+                  "key": "multi",
+                  "value": 2.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "cnt",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "'Million-Pound Jack'",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>, ASPD <@ba.vup>+{attack_speed}</>, and increases Talent effect to <@ba.vup>{multi}</>x; when the skill ends, obtain <@ba.vup>{cnt}</> Support Device",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 20,
+                "initSp": 15,
+                "increment": 1
+              },
+              "prefabId": "skchr_alanna_2",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack_speed",
+                  "value": 50,
+                  "valueStr": null
+                },
+                {
+                  "key": "multi",
+                  "value": 2.7,
+                  "valueStr": null
+                },
+                {
+                  "key": "cnt",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "char_479_sleach": {
+      "id": "char_479_sleach",
+      "name": "Saileach",
+      "rarity": 6,
+      "profession": "PIONEER",
+      "subProfessionId": "bearer",
+      "position": "MELEE",
+      "nationId": "victoria",
+      "groupId": null,
+      "teamId": null,
+      "phases": [
+        {
+          "maxLevel": 50,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 771,
+                "atk": 243,
+                "def": 169,
+                "magicResistance": 0,
+                "cost": 10,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.3,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 50,
+              "data": {
+                "maxHp": 1057,
+                "atk": 348,
+                "def": 236,
+                "magicResistance": 0,
+                "cost": 10,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.3,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ]
+        },
+        {
+          "maxLevel": 80,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 1057,
+                "atk": 348,
+                "def": 236,
+                "magicResistance": 0,
+                "cost": 12,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.3,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 80,
+              "data": {
+                "maxHp": 1339,
+                "atk": 458,
+                "def": 311,
+                "magicResistance": 0,
+                "cost": 12,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.3,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ]
+        },
+        {
+          "maxLevel": 90,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 1339,
+                "atk": 458,
+                "def": 311,
+                "magicResistance": 0,
+                "cost": 12,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.3,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 90,
+              "data": {
+                "maxHp": 1835,
+                "atk": 546,
+                "def": 367,
+                "magicResistance": 0,
+                "cost": 12,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.3,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ]
+        }
+      ],
+      "favorKeyFrames": [
+        {
+          "level": 0,
+          "data": {
+            "maxHp": 0,
+            "atk": 0,
+            "def": 0,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false
+          }
+        },
+        {
+          "level": 50,
+          "data": {
+            "maxHp": 0,
+            "atk": 40,
+            "def": 40,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false
+          }
+        }
+      ],
+      "potentialRanks": [
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "RESPAWN_TIME",
+            "formulaItem": "ADDITION",
+            "value": -4,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "ATK",
+            "formulaItem": "ADDITION",
+            "value": 25,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [],
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ]
+      ],
+      "trait": null,
+      "talents": [
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Unwavering Banner",
+              "description": "Deploys with a banner; Within the surrounding 8 tiles of the banner, allied units have ASPD +5 and enemies have ASPD -5",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "sleach_t_1[ally].attack_speed",
+                  "value": 5,
+                  "valueStr": null
+                },
+                {
+                  "key": "sleach_t_1[enemy].attack_speed",
+                  "value": -5,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 1
+              },
+              "requiredPotentialRank": 4,
+              "prefabKey": "1",
+              "name": "Unwavering Banner",
+              "description": "Deploys with a banner; Within the surrounding 8 tiles of the banner, allied units have ASPD +7 <@ba.talpu>(+2)</> and enemies have ASPD -7 <@ba.talpu>(+2)</>",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "sleach_t_1[ally].attack_speed",
+                  "value": 7,
+                  "valueStr": null
+                },
+                {
+                  "key": "sleach_t_1[enemy].attack_speed",
+                  "value": -7,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Unwavering Banner",
+              "description": "Deploys with a banner; Within the surrounding 8 tiles of the banner, allied units have ASPD +10 and enemies have ASPD -10",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "sleach_t_1[ally].attack_speed",
+                  "value": 10,
+                  "valueStr": null
+                },
+                {
+                  "key": "sleach_t_1[enemy].attack_speed",
+                  "value": -10,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 4,
+              "prefabKey": "1",
+              "name": "Unwavering Banner",
+              "description": "Deploys with a banner; Within the surrounding 8 tiles of the banner, allied units have ASPD +12 <@ba.talpu>(+2)</> and enemies have ASPD -12 <@ba.talpu>(+2)</>",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "sleach_t_1[ally].attack_speed",
+                  "value": 12,
+                  "valueStr": null
+                },
+                {
+                  "key": "sleach_t_1[enemy].attack_speed",
+                  "value": -12,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            }
+          ]
+        },
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "2",
+              "name": "Spiritual Influence",
+              "description": "After deployment, the next Operator has -2 DP Cost",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "value",
+                  "value": -2,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            }
+          ]
+        }
+      ],
+      "skills": [
+        {
+          "id": "skcom_assist_cost[3]",
+          "unlockCondition": {
+            "phase": "PHASE_0",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "Support γ",
+              "rangeId": null,
+              "description": "Stops attacking and recovers <@ba.vup>{value}</> DP over the skill duration",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 35,
+                "initSp": 10,
+                "increment": 1
+              },
+              "prefabId": null,
+              "duration": 8,
+              "blackboard": [
+                {
+                  "key": "value",
+                  "value": 18,
+                  "valueStr": null
+                },
+                {
+                  "key": "interval",
+                  "value": 0.44,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Support γ",
+              "rangeId": null,
+              "description": "Stops attacking and recovers <@ba.vup>{value}</> DP over the skill duration",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 34,
+                "initSp": 10,
+                "increment": 1
+              },
+              "prefabId": null,
+              "duration": 8,
+              "blackboard": [
+                {
+                  "key": "value",
+                  "value": 18,
+                  "valueStr": null
+                },
+                {
+                  "key": "interval",
+                  "value": 0.44,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Support γ",
+              "rangeId": null,
+              "description": "Stops attacking and recovers <@ba.vup>{value}</> DP over the skill duration",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 33,
+                "initSp": 10,
+                "increment": 1
+              },
+              "prefabId": null,
+              "duration": 8,
+              "blackboard": [
+                {
+                  "key": "value",
+                  "value": 18,
+                  "valueStr": null
+                },
+                {
+                  "key": "interval",
+                  "value": 0.44,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Support γ",
+              "rangeId": null,
+              "description": "Stops attacking and recovers <@ba.vup>{value}</> DP over the skill duration",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 32,
+                "initSp": 11,
+                "increment": 1
+              },
+              "prefabId": null,
+              "duration": 8,
+              "blackboard": [
+                {
+                  "key": "value",
+                  "value": 18,
+                  "valueStr": null
+                },
+                {
+                  "key": "interval",
+                  "value": 0.44,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Support γ",
+              "rangeId": null,
+              "description": "Stops attacking and recovers <@ba.vup>{value}</> DP over the skill duration",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 31,
+                "initSp": 11,
+                "increment": 1
+              },
+              "prefabId": null,
+              "duration": 8,
+              "blackboard": [
+                {
+                  "key": "value",
+                  "value": 18,
+                  "valueStr": null
+                },
+                {
+                  "key": "interval",
+                  "value": 0.44,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Support γ",
+              "rangeId": null,
+              "description": "Stops attacking and recovers <@ba.vup>{value}</> DP over the skill duration",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 30,
+                "initSp": 11,
+                "increment": 1
+              },
+              "prefabId": null,
+              "duration": 8,
+              "blackboard": [
+                {
+                  "key": "value",
+                  "value": 18,
+                  "valueStr": null
+                },
+                {
+                  "key": "interval",
+                  "value": 0.44,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Support γ",
+              "rangeId": null,
+              "description": "Stops attacking and recovers <@ba.vup>{value}</> DP over the skill duration",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 29,
+                "initSp": 12,
+                "increment": 1
+              },
+              "prefabId": null,
+              "duration": 8,
+              "blackboard": [
+                {
+                  "key": "value",
+                  "value": 18,
+                  "valueStr": null
+                },
+                {
+                  "key": "interval",
+                  "value": 0.44,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Support γ",
+              "rangeId": null,
+              "description": "Stops attacking and recovers <@ba.vup>{value}</> DP over the skill duration",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 28,
+                "initSp": 13,
+                "increment": 1
+              },
+              "prefabId": null,
+              "duration": 8,
+              "blackboard": [
+                {
+                  "key": "value",
+                  "value": 18,
+                  "valueStr": null
+                },
+                {
+                  "key": "interval",
+                  "value": 0.44,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Support γ",
+              "rangeId": null,
+              "description": "Stops attacking and recovers <@ba.vup>{value}</> DP over the skill duration",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 27,
+                "initSp": 14,
+                "increment": 1
+              },
+              "prefabId": null,
+              "duration": 8,
+              "blackboard": [
+                {
+                  "key": "value",
+                  "value": 18,
+                  "valueStr": null
+                },
+                {
+                  "key": "interval",
+                  "value": 0.44,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Support γ",
+              "rangeId": null,
+              "description": "Stops attacking and recovers <@ba.vup>{value}</> DP over the skill duration",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 26,
+                "initSp": 15,
+                "increment": 1
+              },
+              "prefabId": null,
+              "duration": 8,
+              "blackboard": [
+                {
+                  "key": "value",
+                  "value": 18,
+                  "valueStr": null
+                },
+                {
+                  "key": "interval",
+                  "value": 0.44,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "skchr_sleach_2",
+          "unlockCondition": {
+            "phase": "PHASE_1",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "Inheritance of Faith",
+              "rangeId": "x-1",
+              "description": "Stops attacking and generates a total of <@ba.vup>{value}</> DP over the skill duration. Throws the banner to the location of the allied unit with the lowest HP percentage within range, granting them DEF <@ba.vup>+{def:0%}</> and restoring their HP equal to <@ba.vup>{atk_to_hp_recovery_ratio:0%}</> of Saileach's ATK every second. When the skill ends, retrieve the banner",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 38,
+                "initSp": 5,
+                "increment": 1
+              },
+              "prefabId": "skchr_sleach_2",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "def",
+                  "value": 0.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk_to_hp_recovery_ratio",
+                  "value": 0.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "value",
+                  "value": 20,
+                  "valueStr": null
+                },
+                {
+                  "key": "sleach_s_2[cost].interval",
+                  "value": 0.75,
+                  "valueStr": null
+                },
+                {
+                  "key": "sleach_s_2[cost].cost",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  2,
+                  0
+                ],
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -2
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -2,
+                  0
+                ]
+              ]
+            },
+            {
+              "name": "Inheritance of Faith",
+              "rangeId": "x-1",
+              "description": "Stops attacking and generates a total of <@ba.vup>{value}</> DP over the skill duration. Throws the banner to the location of the allied unit with the lowest HP percentage within range, granting them DEF <@ba.vup>+{def:0%}</> and restoring their HP equal to <@ba.vup>{atk_to_hp_recovery_ratio:0%}</> of Saileach's ATK every second. When the skill ends, retrieve the banner",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 37,
+                "initSp": 5,
+                "increment": 1
+              },
+              "prefabId": "skchr_sleach_2",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "def",
+                  "value": 0.14,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk_to_hp_recovery_ratio",
+                  "value": 0.14,
+                  "valueStr": null
+                },
+                {
+                  "key": "value",
+                  "value": 20,
+                  "valueStr": null
+                },
+                {
+                  "key": "sleach_s_2[cost].interval",
+                  "value": 0.75,
+                  "valueStr": null
+                },
+                {
+                  "key": "sleach_s_2[cost].cost",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  2,
+                  0
+                ],
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -2
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -2,
+                  0
+                ]
+              ]
+            },
+            {
+              "name": "Inheritance of Faith",
+              "rangeId": "x-1",
+              "description": "Stops attacking and generates a total of <@ba.vup>{value}</> DP over the skill duration. Throws the banner to the location of the allied unit with the lowest HP percentage within range, granting them DEF <@ba.vup>+{def:0%}</> and restoring their HP equal to <@ba.vup>{atk_to_hp_recovery_ratio:0%}</> of Saileach's ATK every second. When the skill ends, retrieve the banner",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 36,
+                "initSp": 5,
+                "increment": 1
+              },
+              "prefabId": "skchr_sleach_2",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "def",
+                  "value": 0.18,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk_to_hp_recovery_ratio",
+                  "value": 0.18,
+                  "valueStr": null
+                },
+                {
+                  "key": "value",
+                  "value": 20,
+                  "valueStr": null
+                },
+                {
+                  "key": "sleach_s_2[cost].interval",
+                  "value": 0.75,
+                  "valueStr": null
+                },
+                {
+                  "key": "sleach_s_2[cost].cost",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  2,
+                  0
+                ],
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -2
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -2,
+                  0
+                ]
+              ]
+            },
+            {
+              "name": "Inheritance of Faith",
+              "rangeId": "x-1",
+              "description": "Stops attacking and generates a total of <@ba.vup>{value}</> DP over the skill duration. Throws the banner to the location of the allied unit with the lowest HP percentage within range, granting them DEF <@ba.vup>+{def:0%}</> and restoring their HP equal to <@ba.vup>{atk_to_hp_recovery_ratio:0%}</> of Saileach's ATK every second. When the skill ends, retrieve the banner",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 35,
+                "initSp": 10,
+                "increment": 1
+              },
+              "prefabId": "skchr_sleach_2",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "def",
+                  "value": 0.22,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk_to_hp_recovery_ratio",
+                  "value": 0.22,
+                  "valueStr": null
+                },
+                {
+                  "key": "value",
+                  "value": 20,
+                  "valueStr": null
+                },
+                {
+                  "key": "sleach_s_2[cost].interval",
+                  "value": 0.75,
+                  "valueStr": null
+                },
+                {
+                  "key": "sleach_s_2[cost].cost",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  2,
+                  0
+                ],
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -2
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -2,
+                  0
+                ]
+              ]
+            },
+            {
+              "name": "Inheritance of Faith",
+              "rangeId": "x-1",
+              "description": "Stops attacking and generates a total of <@ba.vup>{value}</> DP over the skill duration. Throws the banner to the location of the allied unit with the lowest HP percentage within range, granting them DEF <@ba.vup>+{def:0%}</> and restoring their HP equal to <@ba.vup>{atk_to_hp_recovery_ratio:0%}</> of Saileach's ATK every second. When the skill ends, retrieve the banner",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 34,
+                "initSp": 10,
+                "increment": 1
+              },
+              "prefabId": "skchr_sleach_2",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "def",
+                  "value": 0.26,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk_to_hp_recovery_ratio",
+                  "value": 0.26,
+                  "valueStr": null
+                },
+                {
+                  "key": "value",
+                  "value": 20,
+                  "valueStr": null
+                },
+                {
+                  "key": "sleach_s_2[cost].interval",
+                  "value": 0.75,
+                  "valueStr": null
+                },
+                {
+                  "key": "sleach_s_2[cost].cost",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  2,
+                  0
+                ],
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -2
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -2,
+                  0
+                ]
+              ]
+            },
+            {
+              "name": "Inheritance of Faith",
+              "rangeId": "x-1",
+              "description": "Stops attacking and generates a total of <@ba.vup>{value}</> DP over the skill duration. Throws the banner to the location of the allied unit with the lowest HP percentage within range, granting them DEF <@ba.vup>+{def:0%}</> and restoring their HP equal to <@ba.vup>{atk_to_hp_recovery_ratio:0%}</> of Saileach's ATK every second. When the skill ends, retrieve the banner",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 33,
+                "initSp": 10,
+                "increment": 1
+              },
+              "prefabId": "skchr_sleach_2",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "def",
+                  "value": 0.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk_to_hp_recovery_ratio",
+                  "value": 0.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "value",
+                  "value": 20,
+                  "valueStr": null
+                },
+                {
+                  "key": "sleach_s_2[cost].interval",
+                  "value": 0.75,
+                  "valueStr": null
+                },
+                {
+                  "key": "sleach_s_2[cost].cost",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  2,
+                  0
+                ],
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -2
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -2,
+                  0
+                ]
+              ]
+            },
+            {
+              "name": "Inheritance of Faith",
+              "rangeId": "x-1",
+              "description": "Stops attacking and generates a total of <@ba.vup>{value}</> DP over the skill duration. Throws the banner to the location of the allied unit with the lowest HP percentage within range, granting them DEF <@ba.vup>+{def:0%}</> and restoring their HP equal to <@ba.vup>{atk_to_hp_recovery_ratio:0%}</> of Saileach's ATK every second. When the skill ends, retrieve the banner",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 32,
+                "initSp": 12,
+                "increment": 1
+              },
+              "prefabId": "skchr_sleach_2",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "def",
+                  "value": 0.35,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk_to_hp_recovery_ratio",
+                  "value": 0.35,
+                  "valueStr": null
+                },
+                {
+                  "key": "value",
+                  "value": 20,
+                  "valueStr": null
+                },
+                {
+                  "key": "sleach_s_2[cost].interval",
+                  "value": 0.75,
+                  "valueStr": null
+                },
+                {
+                  "key": "sleach_s_2[cost].cost",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  2,
+                  0
+                ],
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -2
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -2,
+                  0
+                ]
+              ]
+            },
+            {
+              "name": "Inheritance of Faith",
+              "rangeId": "x-1",
+              "description": "Stops attacking and generates a total of <@ba.vup>{value}</> DP over the skill duration. Throws the banner to the location of the allied unit with the lowest HP percentage within range, granting them DEF <@ba.vup>+{def:0%}</> and restoring their HP equal to <@ba.vup>{atk_to_hp_recovery_ratio:0%}</> of Saileach's ATK every second. When the skill ends, retrieve the banner",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 31,
+                "initSp": 13,
+                "increment": 1
+              },
+              "prefabId": "skchr_sleach_2",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "def",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk_to_hp_recovery_ratio",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "value",
+                  "value": 20,
+                  "valueStr": null
+                },
+                {
+                  "key": "sleach_s_2[cost].interval",
+                  "value": 0.75,
+                  "valueStr": null
+                },
+                {
+                  "key": "sleach_s_2[cost].cost",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  2,
+                  0
+                ],
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -2
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -2,
+                  0
+                ]
+              ]
+            },
+            {
+              "name": "Inheritance of Faith",
+              "rangeId": "x-1",
+              "description": "Stops attacking and generates a total of <@ba.vup>{value}</> DP over the skill duration. Throws the banner to the location of the allied unit with the lowest HP percentage within range, granting them DEF <@ba.vup>+{def:0%}</> and restoring their HP equal to <@ba.vup>{atk_to_hp_recovery_ratio:0%}</> of Saileach's ATK every second. When the skill ends, retrieve the banner",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 30,
+                "initSp": 14,
+                "increment": 1
+              },
+              "prefabId": "skchr_sleach_2",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "def",
+                  "value": 0.45,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk_to_hp_recovery_ratio",
+                  "value": 0.45,
+                  "valueStr": null
+                },
+                {
+                  "key": "value",
+                  "value": 20,
+                  "valueStr": null
+                },
+                {
+                  "key": "sleach_s_2[cost].interval",
+                  "value": 0.75,
+                  "valueStr": null
+                },
+                {
+                  "key": "sleach_s_2[cost].cost",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  2,
+                  0
+                ],
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -2
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -2,
+                  0
+                ]
+              ]
+            },
+            {
+              "name": "Inheritance of Faith",
+              "rangeId": "x-1",
+              "description": "Stops attacking and generates a total of <@ba.vup>{value}</> DP over the skill duration. Throws the banner to the location of the allied unit with the lowest HP percentage within range, granting them DEF <@ba.vup>+{def:0%}</> and restoring their HP equal to <@ba.vup>{atk_to_hp_recovery_ratio:0%}</> of Saileach's ATK every second. When the skill ends, retrieve the banner",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 29,
+                "initSp": 15,
+                "increment": 1
+              },
+              "prefabId": "skchr_sleach_2",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "def",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk_to_hp_recovery_ratio",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "value",
+                  "value": 20,
+                  "valueStr": null
+                },
+                {
+                  "key": "sleach_s_2[cost].interval",
+                  "value": 0.75,
+                  "valueStr": null
+                },
+                {
+                  "key": "sleach_s_2[cost].cost",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  2,
+                  0
+                ],
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -2
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -2,
+                  0
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "id": "skchr_sleach_3",
+          "unlockCondition": {
+            "phase": "PHASE_2",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "Glorious Banner",
+              "rangeId": "2-1",
+              "description": "Stops attacking and immediately gains <@ba.vup>{cost}</> DP. Throws the banner to the location of ground enemies, dealing <@ba.vup>{atk_scale:0%}</> Physical damage and Stunning them for <@ba.vup>{stun}</> seconds. Enemies within the surrounding 8 tiles of the banner are inflicted with <$ba.sluggish>Slow</> and <@ba.vup>{debuff.damage_scale:0%}</> <$ba.fragile>Fragile</> effect. When the skill ends, retrieve the banner",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 30,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_sleach_3",
+              "duration": 10,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 1.7,
+                  "valueStr": null
+                },
+                {
+                  "key": "stun",
+                  "value": 2.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "damage_scale",
+                  "value": 1.15,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 10,
+                  "valueStr": null
+                },
+                {
+                  "key": "debuff.damage_scale",
+                  "value": 0.15,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  2,
+                  0
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -2,
+                  0
+                ]
+              ]
+            },
+            {
+              "name": "Glorious Banner",
+              "rangeId": "2-1",
+              "description": "Stops attacking and immediately gains <@ba.vup>{cost}</> DP. Throws the banner to the location of ground enemies, dealing <@ba.vup>{atk_scale:0%}</> Physical damage and Stunning them for <@ba.vup>{stun}</> seconds. Enemies within the surrounding 8 tiles of the banner are inflicted with <$ba.sluggish>Slow</> and <@ba.vup>{debuff.damage_scale:0%}</> <$ba.fragile>Fragile</> effect. When the skill ends, retrieve the banner",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 29,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_sleach_3",
+              "duration": 10,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 1.8,
+                  "valueStr": null
+                },
+                {
+                  "key": "stun",
+                  "value": 2.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "damage_scale",
+                  "value": 1.15,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 10,
+                  "valueStr": null
+                },
+                {
+                  "key": "debuff.damage_scale",
+                  "value": 0.15,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  2,
+                  0
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -2,
+                  0
+                ]
+              ]
+            },
+            {
+              "name": "Glorious Banner",
+              "rangeId": "2-1",
+              "description": "Stops attacking and immediately gains <@ba.vup>{cost}</> DP. Throws the banner to the location of ground enemies, dealing <@ba.vup>{atk_scale:0%}</> Physical damage and Stunning them for <@ba.vup>{stun}</> seconds. Enemies within the surrounding 8 tiles of the banner are inflicted with <$ba.sluggish>Slow</> and <@ba.vup>{debuff.damage_scale:0%}</> <$ba.fragile>Fragile</> effect. When the skill ends, retrieve the banner",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 28,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_sleach_3",
+              "duration": 10,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 1.9,
+                  "valueStr": null
+                },
+                {
+                  "key": "stun",
+                  "value": 2.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "damage_scale",
+                  "value": 1.15,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 10,
+                  "valueStr": null
+                },
+                {
+                  "key": "debuff.damage_scale",
+                  "value": 0.15,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  2,
+                  0
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -2,
+                  0
+                ]
+              ]
+            },
+            {
+              "name": "Glorious Banner",
+              "rangeId": "2-1",
+              "description": "Stops attacking and immediately gains <@ba.vup>{cost}</> DP. Throws the banner to the location of ground enemies, dealing <@ba.vup>{atk_scale:0%}</> Physical damage and Stunning them for <@ba.vup>{stun}</> seconds. Enemies within the surrounding 8 tiles of the banner are inflicted with <$ba.sluggish>Slow</> and <@ba.vup>{debuff.damage_scale:0%}</> <$ba.fragile>Fragile</> effect. When the skill ends, retrieve the banner",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 27,
+                "initSp": 5,
+                "increment": 1
+              },
+              "prefabId": "skchr_sleach_3",
+              "duration": 10,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "stun",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "damage_scale",
+                  "value": 1.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 10,
+                  "valueStr": null
+                },
+                {
+                  "key": "debuff.damage_scale",
+                  "value": 0.2,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  2,
+                  0
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -2,
+                  0
+                ]
+              ]
+            },
+            {
+              "name": "Glorious Banner",
+              "rangeId": "2-1",
+              "description": "Stops attacking and immediately gains <@ba.vup>{cost}</> DP. Throws the banner to the location of ground enemies, dealing <@ba.vup>{atk_scale:0%}</> Physical damage and Stunning them for <@ba.vup>{stun}</> seconds. Enemies within the surrounding 8 tiles of the banner are inflicted with <$ba.sluggish>Slow</> and <@ba.vup>{debuff.damage_scale:0%}</> <$ba.fragile>Fragile</> effect. When the skill ends, retrieve the banner",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 26,
+                "initSp": 5,
+                "increment": 1
+              },
+              "prefabId": "skchr_sleach_3",
+              "duration": 10,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 2.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "stun",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "damage_scale",
+                  "value": 1.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 10,
+                  "valueStr": null
+                },
+                {
+                  "key": "debuff.damage_scale",
+                  "value": 0.2,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  2,
+                  0
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -2,
+                  0
+                ]
+              ]
+            },
+            {
+              "name": "Glorious Banner",
+              "rangeId": "2-1",
+              "description": "Stops attacking and immediately gains <@ba.vup>{cost}</> DP. Throws the banner to the location of ground enemies, dealing <@ba.vup>{atk_scale:0%}</> Physical damage and Stunning them for <@ba.vup>{stun}</> seconds. Enemies within the surrounding 8 tiles of the banner are inflicted with <$ba.sluggish>Slow</> and <@ba.vup>{debuff.damage_scale:0%}</> <$ba.fragile>Fragile</> effect. When the skill ends, retrieve the banner",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 25,
+                "initSp": 5,
+                "increment": 1
+              },
+              "prefabId": "skchr_sleach_3",
+              "duration": 10,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 2.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "stun",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "damage_scale",
+                  "value": 1.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 10,
+                  "valueStr": null
+                },
+                {
+                  "key": "debuff.damage_scale",
+                  "value": 0.2,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  2,
+                  0
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -2,
+                  0
+                ]
+              ]
+            },
+            {
+              "name": "Glorious Banner",
+              "rangeId": "2-1",
+              "description": "Stops attacking and immediately gains <@ba.vup>{cost}</> DP. Throws the banner to the location of ground enemies, dealing <@ba.vup>{atk_scale:0%}</> Physical damage and Stunning them for <@ba.vup>{stun}</> seconds. Enemies within the surrounding 8 tiles of the banner are inflicted with <$ba.sluggish>Slow</> and <@ba.vup>{debuff.damage_scale:0%}</> <$ba.fragile>Fragile</> effect. When the skill ends, retrieve the banner",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 24,
+                "initSp": 6,
+                "increment": 1
+              },
+              "prefabId": "skchr_sleach_3",
+              "duration": 10,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 2.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "stun",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "damage_scale",
+                  "value": 1.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 10,
+                  "valueStr": null
+                },
+                {
+                  "key": "debuff.damage_scale",
+                  "value": 0.25,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  2,
+                  0
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -2,
+                  0
+                ]
+              ]
+            },
+            {
+              "name": "Glorious Banner",
+              "rangeId": "2-1",
+              "description": "Stops attacking and immediately gains <@ba.vup>{cost}</> DP. Throws the banner to the location of ground enemies, dealing <@ba.vup>{atk_scale:0%}</> Physical damage and Stunning them for <@ba.vup>{stun}</> seconds. Enemies within the surrounding 8 tiles of the banner are inflicted with <$ba.sluggish>Slow</> and <@ba.vup>{debuff.damage_scale:0%}</> <$ba.fragile>Fragile</> effect. When the skill ends, retrieve the banner",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 23,
+                "initSp": 7,
+                "increment": 1
+              },
+              "prefabId": "skchr_sleach_3",
+              "duration": 10,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 2.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "stun",
+                  "value": 3.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "damage_scale",
+                  "value": 1.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 10,
+                  "valueStr": null
+                },
+                {
+                  "key": "debuff.damage_scale",
+                  "value": 0.25,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  2,
+                  0
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -2,
+                  0
+                ]
+              ]
+            },
+            {
+              "name": "Glorious Banner",
+              "rangeId": "2-1",
+              "description": "Stops attacking and immediately gains <@ba.vup>{cost}</> DP. Throws the banner to the location of ground enemies, dealing <@ba.vup>{atk_scale:0%}</> Physical damage and Stunning them for <@ba.vup>{stun}</> seconds. Enemies within the surrounding 8 tiles of the banner are inflicted with <$ba.sluggish>Slow</> and <@ba.vup>{debuff.damage_scale:0%}</> <$ba.fragile>Fragile</> effect. When the skill ends, retrieve the banner",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 22,
+                "initSp": 7,
+                "increment": 1
+              },
+              "prefabId": "skchr_sleach_3",
+              "duration": 10,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 2.8,
+                  "valueStr": null
+                },
+                {
+                  "key": "stun",
+                  "value": 3.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "damage_scale",
+                  "value": 1.27,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 10,
+                  "valueStr": null
+                },
+                {
+                  "key": "debuff.damage_scale",
+                  "value": 0.27,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  2,
+                  0
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -2,
+                  0
+                ]
+              ]
+            },
+            {
+              "name": "Glorious Banner",
+              "rangeId": "2-1",
+              "description": "Stops attacking and immediately gains <@ba.vup>{cost}</> DP. Throws the banner to the location of ground enemies, dealing <@ba.vup>{atk_scale:0%}</> Physical damage and Stunning them for <@ba.vup>{stun}</> seconds. Enemies within the surrounding 8 tiles of the banner are inflicted with <$ba.sluggish>Slow</> and <@ba.vup>{debuff.damage_scale:0%}</> <$ba.fragile>Fragile</> effect. When the skill ends, retrieve the banner",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 20,
+                "initSp": 7,
+                "increment": 1
+              },
+              "prefabId": "skchr_sleach_3",
+              "duration": 10,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "stun",
+                  "value": 3.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "damage_scale",
+                  "value": 1.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost",
+                  "value": 10,
+                  "valueStr": null
+                },
+                {
+                  "key": "debuff.damage_scale",
+                  "value": 0.3,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  2,
+                  0
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -2,
+                  0
+                ]
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "char_250_phatom": {
       "id": "char_250_phatom",
       "name": "Phantom",
@@ -431131,7 +435531,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/71df5d18f5691f5133d261d46d211cd0710dc29b/models/operator/token_10001_deepcl_tentac/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/01685979baa09629b80838f972353c9a68ad2864/models/operator/token_10001_deepcl_tentac/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10018_robrta_mach": {
       "id": "token_10018_robrta_mach",
@@ -431621,7 +436021,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/71df5d18f5691f5133d261d46d211cd0710dc29b/models/operator/token_10018_robrta_mach/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/01685979baa09629b80838f972353c9a68ad2864/models/operator/token_10018_robrta_mach/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10014_bstalk_crab": {
       "id": "token_10014_bstalk_crab",
@@ -431950,7 +436350,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/71df5d18f5691f5133d261d46d211cd0710dc29b/models/operator/token_10014_bstalk_crab/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/01685979baa09629b80838f972353c9a68ad2864/models/operator/token_10014_bstalk_crab/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10011_beewax_oblisk": {
       "id": "token_10011_beewax_oblisk",
@@ -432895,7 +437295,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/71df5d18f5691f5133d261d46d211cd0710dc29b/models/operator/token_10011_beewax_oblisk/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/01685979baa09629b80838f972353c9a68ad2864/models/operator/token_10011_beewax_oblisk/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10006_vodfox_doll": {
       "id": "token_10006_vodfox_doll",
@@ -433531,7 +437931,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/71df5d18f5691f5133d261d46d211cd0710dc29b/models/operator/token_10006_vodfox_doll/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/01685979baa09629b80838f972353c9a68ad2864/models/operator/token_10006_vodfox_doll/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10003_cgbird_bird": {
       "id": "token_10003_cgbird_bird",
@@ -433826,7 +438226,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/71df5d18f5691f5133d261d46d211cd0710dc29b/models/operator/token_10003_cgbird_bird/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/01685979baa09629b80838f972353c9a68ad2864/models/operator/token_10003_cgbird_bird/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10000_silent_healrb": {
       "id": "token_10000_silent_healrb",
@@ -434209,7 +438609,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/71df5d18f5691f5133d261d46d211cd0710dc29b/models/operator/token_10000_silent_healrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/01685979baa09629b80838f972353c9a68ad2864/models/operator/token_10000_silent_healrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10015_dusk_drgn": {
       "id": "token_10015_dusk_drgn",
@@ -434623,7 +439023,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/71df5d18f5691f5133d261d46d211cd0710dc29b/models/operator/token_10015_dusk_drgn/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/01685979baa09629b80838f972353c9a68ad2864/models/operator/token_10015_dusk_drgn/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10007_phatom_twin": {
       "id": "token_10007_phatom_twin",
@@ -436402,7 +440802,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/71df5d18f5691f5133d261d46d211cd0710dc29b/models/operator/token_10007_phatom_twin/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/01685979baa09629b80838f972353c9a68ad2864/models/operator/token_10007_phatom_twin/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10008_cqbw_box": {
       "id": "token_10008_cqbw_box",
@@ -436975,7 +441375,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/71df5d18f5691f5133d261d46d211cd0710dc29b/models/operator/token_10008_cqbw_box/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/01685979baa09629b80838f972353c9a68ad2864/models/operator/token_10008_cqbw_box/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10029_slent2_protrb": {
       "id": "token_10029_slent2_protrb",
@@ -437720,7 +442120,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/71df5d18f5691f5133d261d46d211cd0710dc29b/models/operator/token_10029_slent2_protrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/01685979baa09629b80838f972353c9a68ad2864/models/operator/token_10029_slent2_protrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10019_nearl2_sword": {
       "id": "token_10019_nearl2_sword",
@@ -438507,7 +442907,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/71df5d18f5691f5133d261d46d211cd0710dc29b/models/operator/token_10019_nearl2_sword/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/01685979baa09629b80838f972353c9a68ad2864/models/operator/token_10019_nearl2_sword/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10002_kalts_mon3tr": {
       "id": "token_10002_kalts_mon3tr",
@@ -438925,7 +443325,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/71df5d18f5691f5133d261d46d211cd0710dc29b/models/operator/token_10002_kalts_mon3tr/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/01685979baa09629b80838f972353c9a68ad2864/models/operator/token_10002_kalts_mon3tr/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10010_folivo_car": {
       "id": "token_10010_folivo_car",
@@ -440546,7 +444946,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/71df5d18f5691f5133d261d46d211cd0710dc29b/models/operator/token_10010_folivo_car/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/01685979baa09629b80838f972353c9a68ad2864/models/operator/token_10010_folivo_car/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10021_blkngt_hypnos": {
       "id": "token_10021_blkngt_hypnos",
@@ -440961,7 +445361,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/71df5d18f5691f5133d261d46d211cd0710dc29b/models/operator/token_10021_blkngt_hypnos/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/01685979baa09629b80838f972353c9a68ad2864/models/operator/token_10021_blkngt_hypnos/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10023_windft_wrench": {
       "id": "token_10023_windft_wrench",
@@ -442125,7 +446525,407 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/71df5d18f5691f5133d261d46d211cd0710dc29b/models/operator/token_10023_windft_wrench/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/01685979baa09629b80838f972353c9a68ad2864/models/operator/token_10023_windft_wrench/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+    },
+    "token_10045_alanna_crane": {
+      "id": "token_10045_alanna_crane",
+      "name": "Nutty",
+      "profession": "TOKEN",
+      "subProfessionId": "notchar1",
+      "position": "ALL",
+      "phases": [
+        {
+          "maxLevel": 50,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 100,
+                "atk": 100,
+                "def": 0,
+                "magicResistance": 0,
+                "cost": 5,
+                "blockCnt": 0,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 15,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 2,
+                "maxDeckStackCnt": 3,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 50,
+              "data": {
+                "maxHp": 100,
+                "atk": 100,
+                "def": 0,
+                "magicResistance": 0,
+                "cost": 5,
+                "blockCnt": 0,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 15,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 2,
+                "maxDeckStackCnt": 3,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ]
+        },
+        {
+          "maxLevel": 70,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 100,
+                "atk": 100,
+                "def": 0,
+                "magicResistance": 0,
+                "cost": 5,
+                "blockCnt": 0,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 15,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 2,
+                "maxDeckStackCnt": 3,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 70,
+              "data": {
+                "maxHp": 100,
+                "atk": 100,
+                "def": 0,
+                "magicResistance": 0,
+                "cost": 5,
+                "blockCnt": 0,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 15,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 2,
+                "maxDeckStackCnt": 3,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ]
+        },
+        {
+          "maxLevel": 80,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 100,
+                "atk": 100,
+                "def": 0,
+                "magicResistance": 0,
+                "cost": 5,
+                "blockCnt": 0,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 15,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 2,
+                "maxDeckStackCnt": 3,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 80,
+              "data": {
+                "maxHp": 100,
+                "atk": 100,
+                "def": 0,
+                "magicResistance": 0,
+                "cost": 5,
+                "blockCnt": 0,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 15,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 2,
+                "maxDeckStackCnt": 3,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ]
+        }
+      ],
+      "trait": {
+        "candidates": [
+          {
+            "unlockCondition": {
+              "phase": "PHASE_0",
+              "level": 1
+            },
+            "requiredPotentialRank": 0,
+            "blackboard": [],
+            "overrideDescripton": "Cannot be attacked",
+            "prefabKey": null,
+            "rangeId": null
+          }
+        ]
+      },
+      "talents": [
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_0",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Makeshift Modification",
+              "description": "Allows an Operator within Attack Range to ignore 40 DEF when attacking enemies (lasts 30s); effects from Devices do not stack",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "duration",
+                  "value": 30,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_0",
+                "level": 1
+              },
+              "requiredPotentialRank": 4,
+              "prefabKey": "1",
+              "name": "Makeshift Modification",
+              "description": "Allows an Operator within Attack Range to ignore 50 <@ba.talpu>(+10)</> DEF when attacking enemies (lasts 30s); effects from Devices do not stack",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "duration",
+                  "value": 30,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Makeshift Modification",
+              "description": "Allows an Operator within Attack Range to ignore 60 DEF when attacking enemies (lasts 30s); effects from Devices do not stack",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "duration",
+                  "value": 30,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 1
+              },
+              "requiredPotentialRank": 4,
+              "prefabKey": "1",
+              "name": "Makeshift Modification",
+              "description": "Allows an Operator within Attack Range to ignore 70 <@ba.talpu>(+10)</> DEF when attacking enemies (lasts 30s); effects from Devices do not stack",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "duration",
+                  "value": 30,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Makeshift Modification",
+              "description": "Allows an Operator within Attack Range to ignore 80 DEF when attacking enemies (lasts 30s); effects from Devices do not stack",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "duration",
+                  "value": 30,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 4,
+              "prefabKey": "1",
+              "name": "Makeshift Modification",
+              "description": "Allows an Operator within Attack Range to ignore 90 <@ba.talpu>(+10)</> DEF when attacking enemies (lasts 30s); effects from Devices do not stack",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "duration",
+                  "value": 30,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            }
+          ]
+        }
+      ],
+      "skills": [
+        {
+          "id": null,
+          "unlockCondition": {
+            "phase": "PHASE_0",
+            "level": 1
+          },
+          "levels": []
+        },
+        {
+          "id": null,
+          "unlockCondition": {
+            "phase": "PHASE_1",
+            "level": 1
+          },
+          "levels": []
+        }
+      ],
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/01685979baa09629b80838f972353c9a68ad2864/models/operator/token_10045_alanna_crane/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     }
   },
   "enemies": {
@@ -442176,7 +446976,7 @@
   },
   "skillEffects": {
     "repository": "arkpedia/arkpedia-sd-assets",
-    "commit": "71df5d18f5691f5133d261d46d211cd0710dc29b",
+    "commit": "01685979baa09629b80838f972353c9a68ad2864",
     "pack": {
       "path": "effects/charge-cost/26-09-23-17-49-43_b9cc4a/effect.json",
       "bytes": 15311,

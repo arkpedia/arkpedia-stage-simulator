@@ -92,6 +92,8 @@ import { customizePhilaeKit, installPhilae } from './content/arkpedia-philae.js'
 import { customizeWindflitKit, installWindflit } from './content/arkpedia-windflit.js';
 import { customizeBlemishineKit, installBlemishine } from './content/arkpedia-blemishine.js';
 import { customizeFlametailKit, installFlametail } from './content/arkpedia-flametail.js';
+import { customizeAlannaKit, installAlanna } from './content/arkpedia-alanna.js';
+import { customizeSaileachKit, installSaileach, adjustSaileachCost, consumeSaileachCard } from './content/arkpedia-saileach.js';
 import { customizeFiveStarSupportFourthKit, installFiveStarSupportFourth } from './content/arkpedia-five-star-support-fourth.js';
 import { customizeFiveStarSpecialistExpansionKit, installFiveStarSpecialistExpansion } from './content/arkpedia-five-star-specialist-expansion.js';
 import { catalogueFor, recordFor } from "../../shared/arkpedia/loadout.js";
@@ -259,12 +261,11 @@ export class StandardBattle extends Battle {
   }
   cost(id) {
     const entry = this.bench[id];
-    return entry
-      ? adjustJieyunCost(this, id, adjustFiveStarVanguardSecondCost(this, id, Math.floor(
-          this.data.getChess(id).stats.cost *
-            Math.min(2, 1 + entry.deployments * 0.5),
-        )))
-      : Infinity;
+    if (!entry) return Infinity;
+    const ordinary = Math.floor(this.data.getChess(id).stats.cost
+      * Math.min(2, 1 + entry.deployments * 0.5));
+    const vanguard = adjustFiveStarVanguardSecondCost(this, id, ordinary);
+    return adjustSaileachCost(this, id, adjustJieyunCost(this, id, vanguard));
   }
   placementError(id, row, col) {
     const entry = this.bench[id];
@@ -393,6 +394,8 @@ export class StandardBattle extends Battle {
     customizeWindflitKit({ battle: this, id, def, unit, kit });
     customizeBlemishineKit({ battle: this, id, def, unit, kit });
     customizeFlametailKit({ battle: this, id, def, unit, kit });
+    customizeAlannaKit({ battle: this, id, def, unit, kit });
+    customizeSaileachKit({ battle: this, id, def, unit, kit });
     customizePhantomKit({ battle: this, id, def, unit, kit });
     customizeHookExpansionKit({ battle: this, id, def, unit, kit });
     customizeFiveStarSupportFourthKit({ battle: this, id, def, unit, kit });
@@ -506,6 +509,8 @@ export class StandardBattle extends Battle {
     installWindflit({ battle: this, unit, def });
     installBlemishine({ battle: this, unit, def });
     installFlametail({ battle: this, unit, def });
+    installAlanna({ battle: this, unit, def });
+    installSaileach({ battle: this, unit, def });
     installHookExpansion({ battle: this, unit, def });
     installFiveStarSupportFourth({ battle: this, unit, def });
     installFiveStarSpecialistExpansion({ battle: this, unit, def });
@@ -570,6 +575,7 @@ export class StandardBattle extends Battle {
     entry.deployments++;
     entry.unit = unit;
     consumeFiveStarVanguardSecondCard(this, id);
+    consumeSaileachCard(this, id);
     return unit;
   }
   retreatOperator(id) {
