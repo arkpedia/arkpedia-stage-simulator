@@ -105,6 +105,7 @@ import { customizeSurferKit, installSurfer } from './content/arkpedia-surfer.js'
 import { customizeMelaniteKit, installMelanite } from './content/arkpedia-melanite.js';
 import { customizeAshKit, installAsh, adjustAshCost } from './content/arkpedia-ash.js';
 import { customizeChenKit, installChen } from './content/arkpedia-chen.js';
+import { customizeVulpisKit, installVulpis } from './content/arkpedia-vulpis.js';
 import { customizeFrostKit, installFrost } from './content/arkpedia-frost.js';
 import { customizeRobinKit, installRobin } from './content/arkpedia-robin.js';
 import { customizeFiveStarSupportFourthKit, installFiveStarSupportFourth } from './content/arkpedia-five-star-support-fourth.js';
@@ -260,6 +261,11 @@ export class StandardBattle extends Battle {
   }
   get dp() {
     return this.getPlayer("arkpedia").dp;
+  }
+  dpRecoveryRateFor(ownerId = 'arkpedia') {
+    const scale = this.allyUnits.filter(u => u.ownerId === ownerId && u.alive && u.deployed && !u.hidden)
+      .reduce((n, u) => n * (u.mem.regularDpRegenScale ?? 1), 1);
+    return this.flags.dpPerSec * scale;
   }
   deployedSlots() {
     return this.allyUnits.filter(unit => unit.alive && unit.deployed)
@@ -421,6 +427,7 @@ export class StandardBattle extends Battle {
     customizeMelaniteKit({ battle: this, id, def, unit, kit });
     customizeAshKit({ battle: this, id, def, unit, kit });
     customizeChenKit({ battle: this, id, def, unit, kit });
+    customizeVulpisKit({ battle: this, id, def, unit, kit });
     customizePhantomKit({ battle: this, id, def, unit, kit });
     customizeHookExpansionKit({ battle: this, id, def, unit, kit });
     customizeFiveStarSupportFourthKit({ battle: this, id, def, unit, kit });
@@ -548,6 +555,7 @@ export class StandardBattle extends Battle {
     installMelanite({ battle: this, unit, def });
     installAsh({ battle: this, unit, def });
     installChen({ battle: this, unit, def });
+    installVulpis({ battle: this, unit, def });
     installHookExpansion({ battle: this, unit, def });
     installFiveStarSupportFourth({ battle: this, unit, def });
     installFiveStarSpecialistExpansion({ battle: this, unit, def });

@@ -3,7 +3,7 @@
 export function battleHud(battle, paused) {
   const dp = Math.max(0, Math.min(battle.flags.dpMax, battle.dp));
   const capped = dp >= battle.flags.dpMax;
-  const rate = battle.flags.dpPerSec;
+  const rate = battle.dpRecoveryRateFor?.('arkpedia') ?? battle.flags.dpPerSec;
   const deployed = battle.allyUnits.filter(unit => unit.alive).length;
   const usedSlots = typeof battle.deployedSlots === 'function' ? battle.deployedSlots() : deployed;
   return {

@@ -409,7 +409,10 @@ export class Battle {
       this._phase('scheduled', () => this._runScheduled());
       this._phase('spawns', () => this._processSpawns());
       this._phase('dp', () => {
-        for (const ps of this.players) ps.dp = Math.min(this.flags.dpMax, ps.dp + this.flags.dpPerSec * dt);
+        for (const ps of this.players) {
+          const rate = this.dpRecoveryRateFor?.(ps.id) ?? this.flags.dpPerSec;
+          ps.dp = Math.min(this.flags.dpMax, ps.dp + rate * dt);
+        }
       });
       this._phase('buffs', () => this._tickBuffs(dt));
       this._phase('enemies', () => {
