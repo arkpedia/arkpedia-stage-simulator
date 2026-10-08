@@ -54,7 +54,10 @@ export class BattleActor extends SpineActor {
       ...(this.has(visual.attack) ? { attack: { loop: visual.attack } } : {}),
       ...(this.has(visual.die) ? { die: visual.die } : {}),
       skill: null,
-    } : { skill: null };
+    } : {
+      ...(this.has(visual.die) ? { die: visual.die } : {}),
+      skill: null,
+    };
     this.setForm(roles, !visual.loop && this.has(visual.clip) ? visual.clip : null);
     if (!visual.loop && this.mode === 'change' && this.current === visual.clip)
       this.changeUntil = this.clock + this.dur(visual.clip) / speed;

@@ -158,3 +158,20 @@ test('gauge anchor uses the original resting pose once despite distant source ef
  assert.equal(a.gaugeHeight,355);assert.equal(calls,1);a.deploy();a.update(1);a.attack(1);a.update(.5);assert.equal(a.gaugeHeight,355);assert.equal(calls,1);a.destroy();
  }finally{if(original)fake.P.spine.Spine.prototype.getLocalBounds=original;else delete fake.P.spine.Spine.prototype.getLocalBounds;}
 });
+
+
+test('Robin trap transitions retain their literal variant withdrawal and restore the base form',()=>{
+  const entry={anims:{idle:'Idle_01',die:'Retreat_01'},
+    animations:{Idle_01:1,Idle_02:1,Start_02:.5,Skill_02:.167,Retreat_01:.167,Retreat_02:.167}};
+  const skeleton={animations:Object.keys(entry.animations).map(name=>({name}))};
+  for(const clip of ['Start_02','Skill_02']) {
+    const a=new BattleActor(skeleton,entry);
+    a.setRegularVisual({clip,loop:false,die:'Retreat_02'});
+    assert.equal(a.current,clip);
+    a.die();assert.equal(a.current,'Retreat_02');a.destroy();
+  }
+  const a=new BattleActor(skeleton,entry);
+  a.setRegularVisual({clip:'Start_02',loop:false,die:'Retreat_02'});a.update(.5);
+  a.setRegularVisual(null);assert.equal(a.roles.die,'Retreat_01');
+  a.die();assert.equal(a.current,'Retreat_01');a.destroy();
+});

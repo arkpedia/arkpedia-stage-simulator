@@ -110,7 +110,7 @@ const operators = Object.fromEntries(
   }),
 );
 for (const op of Object.values(operators)) assertRegularOperator(op);
-const tokenIds = ['token_10001_deepcl_tentac', 'token_10018_robrta_mach', 'token_10014_bstalk_crab', 'token_10011_beewax_oblisk', 'token_10006_vodfox_doll', 'token_10003_cgbird_bird', 'token_10000_silent_healrb', 'token_10015_dusk_drgn', 'token_10007_phatom_twin', 'token_10008_cqbw_box', 'token_10029_slent2_protrb', 'token_10019_nearl2_sword', 'token_10002_kalts_mon3tr', 'token_10010_folivo_car', 'token_10021_blkngt_hypnos', 'token_10023_windft_wrench', 'token_10045_alanna_crane'];
+const tokenIds = ['token_10001_deepcl_tentac', 'token_10018_robrta_mach', 'token_10014_bstalk_crab', 'token_10011_beewax_oblisk', 'token_10006_vodfox_doll', 'token_10003_cgbird_bird', 'token_10000_silent_healrb', 'token_10015_dusk_drgn', 'token_10007_phatom_twin', 'token_10008_cqbw_box', 'token_10029_slent2_protrb', 'token_10019_nearl2_sword', 'token_10002_kalts_mon3tr', 'token_10010_folivo_car', 'token_10021_blkngt_hypnos', 'token_10023_windft_wrench', 'token_10045_alanna_crane', 'token_10013_robin_mine'];
 const tokens = Object.fromEntries(tokenIds.map(id => {
   const c = characters[id];
   if (!c) throw Error(`Missing original token: ${id}`);
