@@ -53378,6 +53378,191 @@
           "height": 453.163
         }
       },
+      "operator/char_180_amgoat/default/front": {
+        "kind": "operator",
+        "id": "char_180_amgoat",
+        "variant": "default",
+        "facing": "front",
+        "spineVersion": "3.8.99",
+        "source": {
+          "key": "operators",
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "spine/char_180_amgoat/char_180_amgoat/Front"
+        },
+        "skeleton": {
+          "path": "models/operator/char_180_amgoat/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_180_amgoat.skel",
+          "bytes": 190563,
+          "sha256": "1d073e4dd525f03df49733977521ae7ad6a9298e59d2de96fbef1863de3b048e"
+        },
+        "atlas": {
+          "path": "models/operator/char_180_amgoat/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_180_amgoat.atlas",
+          "bytes": 6910,
+          "sha256": "1a7274e092a978a6bc331c57ed8265dd68b8d67efbb79b34294edce28fea93c7"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_180_amgoat/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_180_amgoat.png",
+            "bytes": 78514,
+            "sha256": "2404584074a24509232f1775b727faef0fa2bace3d69f8893e36961dae604926"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Attack": 1.2,
+          "Default": 0,
+          "Die": 1.2,
+          "Idle": 3,
+          "Skill_End": 2,
+          "Skill_Loop": 1.2,
+          "Skill_Start": 1.6,
+          "Start": 1.2
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null
+          },
+          "attackDown": null,
+          "skill": {
+            "begin": "Skill_Start",
+            "loop": "Skill_Loop",
+            "end": "Skill_End",
+            "index": 0,
+            "idle": null
+          },
+          "die": "Die",
+          "move": null,
+          "stun": null,
+          "skills": {
+            "0": {
+              "begin": "Skill_Start",
+              "loop": "Skill_Loop",
+              "end": "Skill_End",
+              "index": 0,
+              "idle": null
+            },
+            "1": {
+              "begin": "Skill_Start",
+              "loop": "Skill_Loop",
+              "end": "Skill_End",
+              "index": 1,
+              "idle": null
+            },
+            "2": {
+              "begin": "Skill_Start",
+              "loop": "Skill_Loop",
+              "end": "Skill_End",
+              "index": 2,
+              "idle": null
+            }
+          }
+        },
+        "hits": {
+          "Attack": [
+            0.667
+          ]
+        },
+        "bounds": {
+          "x": -162.096,
+          "y": -12.839,
+          "width": 369.189,
+          "height": 419.326
+        }
+      },
+      "operator/char_180_amgoat/default/back": {
+        "kind": "operator",
+        "id": "char_180_amgoat",
+        "variant": "default",
+        "facing": "back",
+        "spineVersion": "3.8.99",
+        "source": {
+          "key": "operators",
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "spine/char_180_amgoat/char_180_amgoat/Back"
+        },
+        "skeleton": {
+          "path": "models/operator/char_180_amgoat/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_180_amgoat.skel",
+          "bytes": 71718,
+          "sha256": "089b5a1cb5667a1fe3ff108f623815e2b4be6a0ff723c0894de21a8830b9995f"
+        },
+        "atlas": {
+          "path": "models/operator/char_180_amgoat/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_180_amgoat.atlas",
+          "bytes": 4202,
+          "sha256": "779e6839d804bd7ef8309e3f098d42dae8e96503afb938923a2bc26c9bc355d3"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_180_amgoat/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_180_amgoat.png",
+            "bytes": 63022,
+            "sha256": "aca65084ab5bc1907aa38c43534d0879416f938be53e90dfae1d6593d6e78278"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Attack": 1.2,
+          "Default": 0,
+          "Idle": 1,
+          "Start": 1.2
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null
+          },
+          "attackDown": null,
+          "skill": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null,
+            "via": "attack",
+            "index": 0,
+            "idle": null
+          },
+          "die": null,
+          "move": null,
+          "stun": null,
+          "skills": {
+            "0": {
+              "begin": null,
+              "loop": "Attack",
+              "end": null,
+              "via": "attack",
+              "index": 0,
+              "idle": null
+            },
+            "1": {
+              "begin": null,
+              "loop": "Attack",
+              "end": null,
+              "via": "attack",
+              "index": 1,
+              "idle": null
+            },
+            "2": {
+              "begin": null,
+              "loop": "Attack",
+              "end": null,
+              "via": "attack",
+              "index": 2,
+              "idle": null
+            }
+          }
+        },
+        "hits": {
+          "Attack": [
+            0.667
+          ]
+        },
+        "bounds": null
+      },
       "operator/char_458_rfrost/default/front": {
         "kind": "operator",
         "id": "char_458_rfrost",
@@ -451483,6 +451668,2798 @@
                   "value": 2,
                   "valueStr": null
                 }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "char_180_amgoat": {
+      "id": "char_180_amgoat",
+      "name": "Eyjafjalla",
+      "description": "Deals <@ba.kw>Arts damage</>",
+      "rarity": 6,
+      "profession": "CASTER",
+      "subProfessionId": "corecaster",
+      "position": "RANGED",
+      "nationId": "leithanien",
+      "groupId": null,
+      "teamId": null,
+      "phases": [
+        {
+          "maxLevel": 50,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 732,
+                "atk": 292,
+                "def": 46,
+                "magicResistance": 10,
+                "cost": 19,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.6,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 50,
+              "data": {
+                "maxHp": 1046,
+                "atk": 406,
+                "def": 79,
+                "magicResistance": 10,
+                "cost": 19,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.6,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              -1,
+              0
+            ],
+            [
+              -1,
+              1
+            ],
+            [
+              -1,
+              2
+            ]
+          ]
+        },
+        {
+          "maxLevel": 80,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 1046,
+                "atk": 406,
+                "def": 79,
+                "magicResistance": 15,
+                "cost": 21,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.6,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 80,
+              "data": {
+                "maxHp": 1359,
+                "atk": 535,
+                "def": 109,
+                "magicResistance": 15,
+                "cost": 21,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.6,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              0,
+              3
+            ],
+            [
+              -1,
+              0
+            ],
+            [
+              -1,
+              1
+            ],
+            [
+              -1,
+              2
+            ]
+          ]
+        },
+        {
+          "maxLevel": 90,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 1359,
+                "atk": 535,
+                "def": 109,
+                "magicResistance": 20,
+                "cost": 21,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.6,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 90,
+              "data": {
+                "maxHp": 1743,
+                "atk": 645,
+                "def": 122,
+                "magicResistance": 20,
+                "cost": 21,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.6,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              0,
+              3
+            ],
+            [
+              -1,
+              0
+            ],
+            [
+              -1,
+              1
+            ],
+            [
+              -1,
+              2
+            ]
+          ]
+        }
+      ],
+      "favorKeyFrames": [
+        {
+          "level": 0,
+          "data": {
+            "maxHp": 0,
+            "atk": 0,
+            "def": 0,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false
+          }
+        },
+        {
+          "level": 50,
+          "data": {
+            "maxHp": 0,
+            "atk": 90,
+            "def": 0,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false
+          }
+        }
+      ],
+      "potentialRanks": [
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [],
+        [
+          {
+            "attributeType": "ATK",
+            "formulaItem": "ADDITION",
+            "value": 27,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        []
+      ],
+      "trait": null,
+      "talents": [
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Pyrobreath",
+              "description": "All [Caster] Operators' ATK +7% when Eyjafjalla is deployed",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.07,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 1
+              },
+              "requiredPotentialRank": 5,
+              "prefabKey": "1",
+              "name": "Pyrobreath",
+              "description": "All [Caster] Operators' ATK +9% <@ba.talpu>(+2%)</> when Eyjafjalla is deployed",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.09,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Pyrobreath",
+              "description": "All [Caster] Operators' ATK +14% when Eyjafjalla is deployed",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.14,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 5,
+              "prefabKey": "1",
+              "name": "Pyrobreath",
+              "description": "All [Caster] Operators' ATK +16% <@ba.talpu>(+2%)</> when Eyjafjalla is deployed",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.16,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            }
+          ]
+        },
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "2",
+              "name": "Wild Fire",
+              "description": "Immediately obtains a small random number of Skill Points after deployment",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "sp_min",
+                  "value": 7,
+                  "valueStr": null
+                },
+                {
+                  "key": "sp_max",
+                  "value": 16,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 2,
+              "prefabKey": "2",
+              "name": "Wild Fire",
+              "description": "Immediately obtains a large random number of Skill Points after deployment",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "sp_min",
+                  "value": 10,
+                  "valueStr": null
+                },
+                {
+                  "key": "sp_max",
+                  "value": 20,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            }
+          ]
+        }
+      ],
+      "skills": [
+        {
+          "id": "skchr_amgoat_1",
+          "unlockCondition": {
+            "phase": "PHASE_0",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "Duetto",
+              "rangeId": null,
+              "description": "ASPD <@ba.vup>+{amgoat_s_1[a].attack_speed}</>\nStarting from the second use of the skill, ATK <@ba.vup>+{amgoat_s_1[b].atk:0%}</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 45,
+                "initSp": 10,
+                "increment": 1
+              },
+              "prefabId": "skchr_amgoat_1",
+              "duration": 25,
+              "blackboard": [
+                {
+                  "key": "amgoat_s_1[a].attack_speed",
+                  "value": 30,
+                  "valueStr": null
+                },
+                {
+                  "key": "amgoat_s_1[b].attack_speed",
+                  "value": 30,
+                  "valueStr": null
+                },
+                {
+                  "key": "amgoat_s_1[b].atk",
+                  "value": 0.3,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Duetto",
+              "rangeId": null,
+              "description": "ASPD <@ba.vup>+{amgoat_s_1[a].attack_speed}</>\nStarting from the second use of the skill, ATK <@ba.vup>+{amgoat_s_1[b].atk:0%}</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 44,
+                "initSp": 10,
+                "increment": 1
+              },
+              "prefabId": "skchr_amgoat_1",
+              "duration": 25,
+              "blackboard": [
+                {
+                  "key": "amgoat_s_1[a].attack_speed",
+                  "value": 32,
+                  "valueStr": null
+                },
+                {
+                  "key": "amgoat_s_1[b].attack_speed",
+                  "value": 32,
+                  "valueStr": null
+                },
+                {
+                  "key": "amgoat_s_1[b].atk",
+                  "value": 0.32,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Duetto",
+              "rangeId": null,
+              "description": "ASPD <@ba.vup>+{amgoat_s_1[a].attack_speed}</>\nStarting from the second use of the skill, ATK <@ba.vup>+{amgoat_s_1[b].atk:0%}</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 43,
+                "initSp": 10,
+                "increment": 1
+              },
+              "prefabId": "skchr_amgoat_1",
+              "duration": 25,
+              "blackboard": [
+                {
+                  "key": "amgoat_s_1[a].attack_speed",
+                  "value": 35,
+                  "valueStr": null
+                },
+                {
+                  "key": "amgoat_s_1[b].attack_speed",
+                  "value": 35,
+                  "valueStr": null
+                },
+                {
+                  "key": "amgoat_s_1[b].atk",
+                  "value": 0.35,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Duetto",
+              "rangeId": null,
+              "description": "ASPD <@ba.vup>+{amgoat_s_1[a].attack_speed}</>\nStarting from the second use of the skill, ATK <@ba.vup>+{amgoat_s_1[b].atk:0%}</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 42,
+                "initSp": 15,
+                "increment": 1
+              },
+              "prefabId": "skchr_amgoat_1",
+              "duration": 25,
+              "blackboard": [
+                {
+                  "key": "amgoat_s_1[a].attack_speed",
+                  "value": 38,
+                  "valueStr": null
+                },
+                {
+                  "key": "amgoat_s_1[b].attack_speed",
+                  "value": 38,
+                  "valueStr": null
+                },
+                {
+                  "key": "amgoat_s_1[b].atk",
+                  "value": 0.38,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Duetto",
+              "rangeId": null,
+              "description": "ASPD <@ba.vup>+{amgoat_s_1[a].attack_speed}</>\nStarting from the second use of the skill, ATK <@ba.vup>+{amgoat_s_1[b].atk:0%}</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 41,
+                "initSp": 15,
+                "increment": 1
+              },
+              "prefabId": "skchr_amgoat_1",
+              "duration": 25,
+              "blackboard": [
+                {
+                  "key": "amgoat_s_1[a].attack_speed",
+                  "value": 40,
+                  "valueStr": null
+                },
+                {
+                  "key": "amgoat_s_1[b].attack_speed",
+                  "value": 40,
+                  "valueStr": null
+                },
+                {
+                  "key": "amgoat_s_1[b].atk",
+                  "value": 0.4,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Duetto",
+              "rangeId": null,
+              "description": "ASPD <@ba.vup>+{amgoat_s_1[a].attack_speed}</>\nStarting from the second use of the skill, ATK <@ba.vup>+{amgoat_s_1[b].atk:0%}</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 40,
+                "initSp": 15,
+                "increment": 1
+              },
+              "prefabId": "skchr_amgoat_1",
+              "duration": 25,
+              "blackboard": [
+                {
+                  "key": "amgoat_s_1[a].attack_speed",
+                  "value": 42,
+                  "valueStr": null
+                },
+                {
+                  "key": "amgoat_s_1[b].attack_speed",
+                  "value": 42,
+                  "valueStr": null
+                },
+                {
+                  "key": "amgoat_s_1[b].atk",
+                  "value": 0.42,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Duetto",
+              "rangeId": null,
+              "description": "ASPD <@ba.vup>+{amgoat_s_1[a].attack_speed}</>\nStarting from the second use of the skill, ATK <@ba.vup>+{amgoat_s_1[b].atk:0%}</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 39,
+                "initSp": 20,
+                "increment": 1
+              },
+              "prefabId": "skchr_amgoat_1",
+              "duration": 25,
+              "blackboard": [
+                {
+                  "key": "amgoat_s_1[a].attack_speed",
+                  "value": 45,
+                  "valueStr": null
+                },
+                {
+                  "key": "amgoat_s_1[b].attack_speed",
+                  "value": 45,
+                  "valueStr": null
+                },
+                {
+                  "key": "amgoat_s_1[b].atk",
+                  "value": 0.45,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Duetto",
+              "rangeId": null,
+              "description": "ASPD <@ba.vup>+{amgoat_s_1[a].attack_speed}</>\nStarting from the second use of the skill, ATK <@ba.vup>+{amgoat_s_1[b].atk:0%}</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 38,
+                "initSp": 20,
+                "increment": 1
+              },
+              "prefabId": "skchr_amgoat_1",
+              "duration": 25,
+              "blackboard": [
+                {
+                  "key": "amgoat_s_1[a].attack_speed",
+                  "value": 50,
+                  "valueStr": null
+                },
+                {
+                  "key": "amgoat_s_1[b].attack_speed",
+                  "value": 50,
+                  "valueStr": null
+                },
+                {
+                  "key": "amgoat_s_1[b].atk",
+                  "value": 0.5,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Duetto",
+              "rangeId": null,
+              "description": "ASPD <@ba.vup>+{amgoat_s_1[a].attack_speed}</>\nStarting from the second use of the skill, ATK <@ba.vup>+{amgoat_s_1[b].atk:0%}</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 37,
+                "initSp": 20,
+                "increment": 1
+              },
+              "prefabId": "skchr_amgoat_1",
+              "duration": 25,
+              "blackboard": [
+                {
+                  "key": "amgoat_s_1[a].attack_speed",
+                  "value": 55,
+                  "valueStr": null
+                },
+                {
+                  "key": "amgoat_s_1[b].attack_speed",
+                  "value": 55,
+                  "valueStr": null
+                },
+                {
+                  "key": "amgoat_s_1[b].atk",
+                  "value": 0.55,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Duetto",
+              "rangeId": null,
+              "description": "ASPD <@ba.vup>+{amgoat_s_1[a].attack_speed}</>\nStarting from the second use of the skill, ATK <@ba.vup>+{amgoat_s_1[b].atk:0%}</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 35,
+                "initSp": 25,
+                "increment": 1
+              },
+              "prefabId": "skchr_amgoat_1",
+              "duration": 25,
+              "blackboard": [
+                {
+                  "key": "amgoat_s_1[a].attack_speed",
+                  "value": 60,
+                  "valueStr": null
+                },
+                {
+                  "key": "amgoat_s_1[b].attack_speed",
+                  "value": 60,
+                  "valueStr": null
+                },
+                {
+                  "key": "amgoat_s_1[b].atk",
+                  "value": 0.6,
+                  "valueStr": null
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "skchr_amgoat_2",
+          "unlockCondition": {
+            "phase": "PHASE_1",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "Ignition",
+              "rangeId": null,
+              "description": "Deals <@ba.vup>{fk:0%}</> of ATK Arts damage in the next attack; Deals half damage to enemies around the target and their RES <@ba.vup>-{-magic_resistance:0%}</> for <@ba.vup>{duration}</> seconds\n<@ba.rem>Can store {ct} charge(s)</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 7,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_amgoat_2",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 1.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk_scale_2",
+                  "value": 1.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "fk",
+                  "value": 2.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "ct",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "duration",
+                  "value": 6,
+                  "valueStr": null
+                },
+                {
+                  "key": "magic_resistance",
+                  "value": -0.1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Ignition",
+              "rangeId": null,
+              "description": "Deals <@ba.vup>{fk:0%}</> of ATK Arts damage in the next attack; Deals half damage to enemies around the target and their RES <@ba.vup>-{-magic_resistance:0%}</> for <@ba.vup>{duration}</> seconds\n<@ba.rem>Can store {ct} charge(s)</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 7,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_amgoat_2",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 1.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk_scale_2",
+                  "value": 1.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "fk",
+                  "value": 2.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "ct",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "duration",
+                  "value": 6,
+                  "valueStr": null
+                },
+                {
+                  "key": "magic_resistance",
+                  "value": -0.1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Ignition",
+              "rangeId": null,
+              "description": "Deals <@ba.vup>{fk:0%}</> of ATK Arts damage in the next attack; Deals half damage to enemies around the target and their RES <@ba.vup>-{-magic_resistance:0%}</> for <@ba.vup>{duration}</> seconds\n<@ba.rem>Can store {ct} charge(s)</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 7,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_amgoat_2",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 1.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk_scale_2",
+                  "value": 1.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "fk",
+                  "value": 2.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "ct",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "duration",
+                  "value": 6,
+                  "valueStr": null
+                },
+                {
+                  "key": "magic_resistance",
+                  "value": -0.1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Ignition",
+              "rangeId": null,
+              "description": "Deals <@ba.vup>{fk:0%}</> of ATK Arts damage in the next attack; Deals half damage to enemies around the target and their RES <@ba.vup>-{-magic_resistance:0%}</> for <@ba.vup>{duration}</> seconds\n<@ba.rem>Can store {ct} charge(s)</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 2,
+                "spCost": 7,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_amgoat_2",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 1.375,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk_scale_2",
+                  "value": 1.375,
+                  "valueStr": null
+                },
+                {
+                  "key": "fk",
+                  "value": 2.75,
+                  "valueStr": null
+                },
+                {
+                  "key": "ct",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "duration",
+                  "value": 6,
+                  "valueStr": null
+                },
+                {
+                  "key": "magic_resistance",
+                  "value": -0.15,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Ignition",
+              "rangeId": null,
+              "description": "Deals <@ba.vup>{fk:0%}</> of ATK Arts damage in the next attack; Deals half damage to enemies around the target and their RES <@ba.vup>-{-magic_resistance:0%}</> for <@ba.vup>{duration}</> seconds\n<@ba.rem>Can store {ct} charge(s)</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 2,
+                "spCost": 7,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_amgoat_2",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 1.425,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk_scale_2",
+                  "value": 1.425,
+                  "valueStr": null
+                },
+                {
+                  "key": "fk",
+                  "value": 2.85,
+                  "valueStr": null
+                },
+                {
+                  "key": "ct",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "duration",
+                  "value": 6,
+                  "valueStr": null
+                },
+                {
+                  "key": "magic_resistance",
+                  "value": -0.15,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Ignition",
+              "rangeId": null,
+              "description": "Deals <@ba.vup>{fk:0%}</> of ATK Arts damage in the next attack; Deals half damage to enemies around the target and their RES <@ba.vup>-{-magic_resistance:0%}</> for <@ba.vup>{duration}</> seconds\n<@ba.rem>Can store {ct} charge(s)</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 2,
+                "spCost": 7,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_amgoat_2",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 1.475,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk_scale_2",
+                  "value": 1.475,
+                  "valueStr": null
+                },
+                {
+                  "key": "fk",
+                  "value": 2.95,
+                  "valueStr": null
+                },
+                {
+                  "key": "ct",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "duration",
+                  "value": 6,
+                  "valueStr": null
+                },
+                {
+                  "key": "magic_resistance",
+                  "value": -0.15,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Ignition",
+              "rangeId": null,
+              "description": "Deals <@ba.vup>{fk:0%}</> of ATK Arts damage in the next attack; Deals half damage to enemies around the target and their RES <@ba.vup>-{-magic_resistance:0%}</> for <@ba.vup>{duration}</> seconds\n<@ba.rem>Can store {ct} charge(s)</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 2,
+                "spCost": 6,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_amgoat_2",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 1.55,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk_scale_2",
+                  "value": 1.55,
+                  "valueStr": null
+                },
+                {
+                  "key": "fk",
+                  "value": 3.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "ct",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "duration",
+                  "value": 6,
+                  "valueStr": null
+                },
+                {
+                  "key": "magic_resistance",
+                  "value": -0.2,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Ignition",
+              "rangeId": null,
+              "description": "Deals <@ba.vup>{fk:0%}</> of ATK Arts damage in the next attack; Deals half damage to enemies around the target and their RES <@ba.vup>-{-magic_resistance:0%}</> for <@ba.vup>{duration}</> seconds\n<@ba.rem>Can store {ct} charge(s)</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 3,
+                "spCost": 6,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_amgoat_2",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 1.65,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk_scale_2",
+                  "value": 1.65,
+                  "valueStr": null
+                },
+                {
+                  "key": "fk",
+                  "value": 3.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "ct",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "duration",
+                  "value": 6,
+                  "valueStr": null
+                },
+                {
+                  "key": "magic_resistance",
+                  "value": -0.2,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Ignition",
+              "rangeId": null,
+              "description": "Deals <@ba.vup>{fk:0%}</> of ATK Arts damage in the next attack; Deals half damage to enemies around the target and their RES <@ba.vup>-{-magic_resistance:0%}</> for <@ba.vup>{duration}</> seconds\n<@ba.rem>Can store {ct} charge(s)</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 3,
+                "spCost": 6,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_amgoat_2",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 1.75,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk_scale_2",
+                  "value": 1.75,
+                  "valueStr": null
+                },
+                {
+                  "key": "fk",
+                  "value": 3.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "ct",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "duration",
+                  "value": 6,
+                  "valueStr": null
+                },
+                {
+                  "key": "magic_resistance",
+                  "value": -0.2,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Ignition",
+              "rangeId": null,
+              "description": "Deals <@ba.vup>{fk:0%}</> of ATK Arts damage in the next attack; Deals half damage to enemies around the target and their RES <@ba.vup>-{-magic_resistance:0%}</> for <@ba.vup>{duration}</> seconds\n<@ba.rem>Can store {ct} charge(s)</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 3,
+                "spCost": 5,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_amgoat_2",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 1.85,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk_scale_2",
+                  "value": 1.85,
+                  "valueStr": null
+                },
+                {
+                  "key": "fk",
+                  "value": 3.7,
+                  "valueStr": null
+                },
+                {
+                  "key": "ct",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "duration",
+                  "value": 6,
+                  "valueStr": null
+                },
+                {
+                  "key": "magic_resistance",
+                  "value": -0.25,
+                  "valueStr": null
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "skchr_amgoat_3",
+          "unlockCondition": {
+            "phase": "PHASE_2",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "Volcano",
+              "rangeId": "x-3",
+              "description": "ATK <@ba.vup>+{atk:0%}</>; Range <@ba.vup>increases</>; Attack Interval <@ba.vup>reduces significantly</>; Attack becomes randomly shooting lava that can hit at most <@ba.vup>{attack@max_target}</> enemies within range",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 80,
+                "initSp": 30,
+                "increment": 1
+              },
+              "prefabId": "skchr_amgoat_3",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.55,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": -1.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_target",
+                  "value": 3,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  3,
+                  0
+                ],
+                [
+                  2,
+                  -1
+                ],
+                [
+                  2,
+                  0
+                ],
+                [
+                  2,
+                  1
+                ],
+                [
+                  1,
+                  -2
+                ],
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  -3
+                ],
+                [
+                  0,
+                  -2
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  0,
+                  3
+                ],
+                [
+                  -1,
+                  -2
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ],
+                [
+                  -2,
+                  -1
+                ],
+                [
+                  -2,
+                  0
+                ],
+                [
+                  -2,
+                  1
+                ],
+                [
+                  -3,
+                  0
+                ]
+              ]
+            },
+            {
+              "name": "Volcano",
+              "rangeId": "x-3",
+              "description": "ATK <@ba.vup>+{atk:0%}</>; Range <@ba.vup>increases</>; Attack Interval <@ba.vup>reduces significantly</>; Attack becomes randomly shooting lava that can hit at most <@ba.vup>{attack@max_target}</> enemies within range",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 80,
+                "initSp": 31,
+                "increment": 1
+              },
+              "prefabId": "skchr_amgoat_3",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": -1.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_target",
+                  "value": 3,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  3,
+                  0
+                ],
+                [
+                  2,
+                  -1
+                ],
+                [
+                  2,
+                  0
+                ],
+                [
+                  2,
+                  1
+                ],
+                [
+                  1,
+                  -2
+                ],
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  -3
+                ],
+                [
+                  0,
+                  -2
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  0,
+                  3
+                ],
+                [
+                  -1,
+                  -2
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ],
+                [
+                  -2,
+                  -1
+                ],
+                [
+                  -2,
+                  0
+                ],
+                [
+                  -2,
+                  1
+                ],
+                [
+                  -3,
+                  0
+                ]
+              ]
+            },
+            {
+              "name": "Volcano",
+              "rangeId": "x-3",
+              "description": "ATK <@ba.vup>+{atk:0%}</>; Range <@ba.vup>increases</>; Attack Interval <@ba.vup>reduces significantly</>; Attack becomes randomly shooting lava that can hit at most <@ba.vup>{attack@max_target}</> enemies within range",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 80,
+                "initSp": 32,
+                "increment": 1
+              },
+              "prefabId": "skchr_amgoat_3",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.65,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": -1.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_target",
+                  "value": 3,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  3,
+                  0
+                ],
+                [
+                  2,
+                  -1
+                ],
+                [
+                  2,
+                  0
+                ],
+                [
+                  2,
+                  1
+                ],
+                [
+                  1,
+                  -2
+                ],
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  -3
+                ],
+                [
+                  0,
+                  -2
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  0,
+                  3
+                ],
+                [
+                  -1,
+                  -2
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ],
+                [
+                  -2,
+                  -1
+                ],
+                [
+                  -2,
+                  0
+                ],
+                [
+                  -2,
+                  1
+                ],
+                [
+                  -3,
+                  0
+                ]
+              ]
+            },
+            {
+              "name": "Volcano",
+              "rangeId": "x-3",
+              "description": "ATK <@ba.vup>+{atk:0%}</>; Range <@ba.vup>increases</>; Attack Interval <@ba.vup>reduces significantly</>; Attack becomes randomly shooting lava that can hit at most <@ba.vup>{attack@max_target}</> enemies within range",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 80,
+                "initSp": 33,
+                "increment": 1
+              },
+              "prefabId": "skchr_amgoat_3",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.7,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": -1.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_target",
+                  "value": 4,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  3,
+                  0
+                ],
+                [
+                  2,
+                  -1
+                ],
+                [
+                  2,
+                  0
+                ],
+                [
+                  2,
+                  1
+                ],
+                [
+                  1,
+                  -2
+                ],
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  -3
+                ],
+                [
+                  0,
+                  -2
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  0,
+                  3
+                ],
+                [
+                  -1,
+                  -2
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ],
+                [
+                  -2,
+                  -1
+                ],
+                [
+                  -2,
+                  0
+                ],
+                [
+                  -2,
+                  1
+                ],
+                [
+                  -3,
+                  0
+                ]
+              ]
+            },
+            {
+              "name": "Volcano",
+              "rangeId": "x-3",
+              "description": "ATK <@ba.vup>+{atk:0%}</>; Range <@ba.vup>increases</>; Attack Interval <@ba.vup>reduces significantly</>; Attack becomes randomly shooting lava that can hit at most <@ba.vup>{attack@max_target}</> enemies within range",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 80,
+                "initSp": 34,
+                "increment": 1
+              },
+              "prefabId": "skchr_amgoat_3",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.75,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": -1.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_target",
+                  "value": 4,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  3,
+                  0
+                ],
+                [
+                  2,
+                  -1
+                ],
+                [
+                  2,
+                  0
+                ],
+                [
+                  2,
+                  1
+                ],
+                [
+                  1,
+                  -2
+                ],
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  -3
+                ],
+                [
+                  0,
+                  -2
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  0,
+                  3
+                ],
+                [
+                  -1,
+                  -2
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ],
+                [
+                  -2,
+                  -1
+                ],
+                [
+                  -2,
+                  0
+                ],
+                [
+                  -2,
+                  1
+                ],
+                [
+                  -3,
+                  0
+                ]
+              ]
+            },
+            {
+              "name": "Volcano",
+              "rangeId": "x-3",
+              "description": "ATK <@ba.vup>+{atk:0%}</>; Range <@ba.vup>increases</>; Attack Interval <@ba.vup>reduces significantly</>; Attack becomes randomly shooting lava that can hit at most <@ba.vup>{attack@max_target}</> enemies within range",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 80,
+                "initSp": 35,
+                "increment": 1
+              },
+              "prefabId": "skchr_amgoat_3",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.8,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": -1.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_target",
+                  "value": 4,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  3,
+                  0
+                ],
+                [
+                  2,
+                  -1
+                ],
+                [
+                  2,
+                  0
+                ],
+                [
+                  2,
+                  1
+                ],
+                [
+                  1,
+                  -2
+                ],
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  -3
+                ],
+                [
+                  0,
+                  -2
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  0,
+                  3
+                ],
+                [
+                  -1,
+                  -2
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ],
+                [
+                  -2,
+                  -1
+                ],
+                [
+                  -2,
+                  0
+                ],
+                [
+                  -2,
+                  1
+                ],
+                [
+                  -3,
+                  0
+                ]
+              ]
+            },
+            {
+              "name": "Volcano",
+              "rangeId": "x-3",
+              "description": "ATK <@ba.vup>+{atk:0%}</>; Range <@ba.vup>increases</>; Attack Interval <@ba.vup>reduces significantly</>; Attack becomes randomly shooting lava that can hit at most <@ba.vup>{attack@max_target}</> enemies within range",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 80,
+                "initSp": 40,
+                "increment": 1
+              },
+              "prefabId": "skchr_amgoat_3",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.85,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": -1.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_target",
+                  "value": 5,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  3,
+                  0
+                ],
+                [
+                  2,
+                  -1
+                ],
+                [
+                  2,
+                  0
+                ],
+                [
+                  2,
+                  1
+                ],
+                [
+                  1,
+                  -2
+                ],
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  -3
+                ],
+                [
+                  0,
+                  -2
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  0,
+                  3
+                ],
+                [
+                  -1,
+                  -2
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ],
+                [
+                  -2,
+                  -1
+                ],
+                [
+                  -2,
+                  0
+                ],
+                [
+                  -2,
+                  1
+                ],
+                [
+                  -3,
+                  0
+                ]
+              ]
+            },
+            {
+              "name": "Volcano",
+              "rangeId": "x-3",
+              "description": "ATK <@ba.vup>+{atk:0%}</>; Range <@ba.vup>increases</>; Attack Interval <@ba.vup>reduces significantly</>; Attack becomes randomly shooting lava that can hit at most <@ba.vup>{attack@max_target}</> enemies within range",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 80,
+                "initSp": 45,
+                "increment": 1
+              },
+              "prefabId": "skchr_amgoat_3",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": -1.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_target",
+                  "value": 5,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  3,
+                  0
+                ],
+                [
+                  2,
+                  -1
+                ],
+                [
+                  2,
+                  0
+                ],
+                [
+                  2,
+                  1
+                ],
+                [
+                  1,
+                  -2
+                ],
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  -3
+                ],
+                [
+                  0,
+                  -2
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  0,
+                  3
+                ],
+                [
+                  -1,
+                  -2
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ],
+                [
+                  -2,
+                  -1
+                ],
+                [
+                  -2,
+                  0
+                ],
+                [
+                  -2,
+                  1
+                ],
+                [
+                  -3,
+                  0
+                ]
+              ]
+            },
+            {
+              "name": "Volcano",
+              "rangeId": "x-3",
+              "description": "ATK <@ba.vup>+{atk:0%}</>; Range <@ba.vup>increases</>; Attack Interval <@ba.vup>reduces significantly</>; Attack becomes randomly shooting lava that can hit at most <@ba.vup>{attack@max_target}</> enemies within range",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 80,
+                "initSp": 50,
+                "increment": 1
+              },
+              "prefabId": "skchr_amgoat_3",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 1.15,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": -1.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_target",
+                  "value": 5,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  3,
+                  0
+                ],
+                [
+                  2,
+                  -1
+                ],
+                [
+                  2,
+                  0
+                ],
+                [
+                  2,
+                  1
+                ],
+                [
+                  1,
+                  -2
+                ],
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  -3
+                ],
+                [
+                  0,
+                  -2
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  0,
+                  3
+                ],
+                [
+                  -1,
+                  -2
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ],
+                [
+                  -2,
+                  -1
+                ],
+                [
+                  -2,
+                  0
+                ],
+                [
+                  -2,
+                  1
+                ],
+                [
+                  -3,
+                  0
+                ]
+              ]
+            },
+            {
+              "name": "Volcano",
+              "rangeId": "x-3",
+              "description": "ATK <@ba.vup>+{atk:0%}</>; Range <@ba.vup>increases</>; Attack Interval <@ba.vup>reduces significantly</>; Attack becomes randomly shooting lava that can hit at most <@ba.vup>{attack@max_target}</> enemies within range",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 80,
+                "initSp": 55,
+                "increment": 1
+              },
+              "prefabId": "skchr_amgoat_3",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 1.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": -1.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_target",
+                  "value": 6,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  3,
+                  0
+                ],
+                [
+                  2,
+                  -1
+                ],
+                [
+                  2,
+                  0
+                ],
+                [
+                  2,
+                  1
+                ],
+                [
+                  1,
+                  -2
+                ],
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  -3
+                ],
+                [
+                  0,
+                  -2
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  0,
+                  3
+                ],
+                [
+                  -1,
+                  -2
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ],
+                [
+                  -2,
+                  -1
+                ],
+                [
+                  -2,
+                  0
+                ],
+                [
+                  -2,
+                  1
+                ],
+                [
+                  -3,
+                  0
+                ]
               ]
             }
           ]
