@@ -133,6 +133,7 @@ import { customizePepeKit, installPepe } from './content/arkpedia-pepe.js';
 import { customizeCrownslayerKit, installCrownslayer } from './content/arkpedia-crownslayer.js';
 import { customizeIanaKit, installIana } from './content/arkpedia-iana.js';
 import { customizeBrigidKit, installBrigid } from './content/arkpedia-brigid.js';
+import { customizeLeeKit, installLee } from './content/arkpedia-lee.js';
 import { customizeYatoAlterKit, installYatoAlter } from './content/arkpedia-yato-alter.js';
 import { customizeSpecterAlterKit, installSpecterAlter, prepareSpecterAlterSquad } from './content/arkpedia-specter-alter.js';
 import { customizeAscalonKit, installAscalon } from './content/arkpedia-ascalon.js';
@@ -480,6 +481,7 @@ export class StandardBattle extends Battle {
     customizeBrigidKit({ battle: this, id, def, unit, kit });
     customizeSpecterAlterKit({ battle: this, id, def, unit, kit });
     customizeYatoAlterKit({ battle: this, id, def, unit, kit });
+    customizeLeeKit({ battle: this, id, def, unit, kit });
     customizeAscalonKit({ battle: this, id, def, unit, kit });
     customizeChenAlterKit({ battle: this, id, def, unit, kit });
     customizeEyjafjallaKit({ battle: this, id, def, unit, kit });
@@ -642,6 +644,7 @@ export class StandardBattle extends Battle {
     installBrigid({ battle: this, unit, def });
     installSpecterAlter({ battle: this, unit, def });
     installYatoAlter({ battle: this, unit, def });
+    installLee({ battle: this, unit, def });
     installAscalon({ battle: this, unit, def });
     installChenAlter({ battle: this, unit, def });
     installEyjafjalla({ battle: this, unit, def });

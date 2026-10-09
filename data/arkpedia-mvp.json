@@ -57405,6 +57405,226 @@
           "height": 646.772
         }
       },
+      "operator/char_322_lmlee/default/front": {
+        "kind": "operator",
+        "id": "char_322_lmlee",
+        "variant": "default",
+        "facing": "front",
+        "spineVersion": "3.8.99",
+        "source": {
+          "key": "operators",
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "spine/char_322_lmlee/char_322_lmlee/Front"
+        },
+        "skeleton": {
+          "path": "models/operator/char_322_lmlee/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_322_lmlee.skel",
+          "bytes": 352466,
+          "sha256": "6b4884fa843fc7320ef3ab744acf4c50a9da5a033a94177bc87854df4de8d943"
+        },
+        "atlas": {
+          "path": "models/operator/char_322_lmlee/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_322_lmlee.atlas",
+          "bytes": 10361,
+          "sha256": "c7e56eeceb9e9d9df2064739b99f5616394748904fa0eeb4f02d937ba29164a3"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_322_lmlee/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_322_lmlee.png",
+            "bytes": 142151,
+            "sha256": "9fba683a3f67b17b6dab1b57f6a1b05e5d5008940ba0f04579d59a489bdfc834"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Attack": 1,
+          "Default": 0,
+          "Die": 1,
+          "Idle": 3.6,
+          "Skill_2_Attack": 1,
+          "Skill_2_Start": 0.333,
+          "Skill_3_End": 0.1,
+          "Skill_3_Idle": 1,
+          "Skill_3_Loop": 1,
+          "Skill_3_Start": 0.333,
+          "Start": 1
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null
+          },
+          "attackDown": null,
+          "skill": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null,
+            "via": "attack",
+            "index": 0,
+            "idle": null
+          },
+          "die": "Die",
+          "move": null,
+          "stun": null,
+          "skills": {
+            "0": {
+              "begin": null,
+              "loop": "Attack",
+              "end": null,
+              "via": "attack",
+              "index": 0,
+              "idle": null
+            },
+            "1": {
+              "begin": "Skill_2_Start",
+              "loop": "Skill_2_Attack",
+              "end": null,
+              "index": 1,
+              "idle": null
+            },
+            "2": {
+              "begin": "Skill_3_Start",
+              "loop": "Skill_3_Loop",
+              "end": "Skill_3_End",
+              "index": 2,
+              "idle": "Skill_3_Idle"
+            }
+          }
+        },
+        "hits": {
+          "Attack": [
+            0.467
+          ],
+          "Skill_2_Attack": [
+            0.367,
+            0.7
+          ],
+          "Skill_2_Start": [
+            0.2
+          ],
+          "Skill_3_Loop": [
+            0.033
+          ]
+        },
+        "bounds": {
+          "x": -269.617,
+          "y": -2.268,
+          "width": 397.86,
+          "height": 460.253
+        }
+      },
+      "operator/char_322_lmlee/default/back": {
+        "kind": "operator",
+        "id": "char_322_lmlee",
+        "variant": "default",
+        "facing": "back",
+        "spineVersion": "3.8.99",
+        "source": {
+          "key": "operators",
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "spine/char_322_lmlee/char_322_lmlee/Back"
+        },
+        "skeleton": {
+          "path": "models/operator/char_322_lmlee/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_322_lmlee.skel",
+          "bytes": 258705,
+          "sha256": "1a218348c83a97ef6501a1125d7ace06a79b3fa40a38e4bb6723b3c0fa4a77db"
+        },
+        "atlas": {
+          "path": "models/operator/char_322_lmlee/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_322_lmlee.atlas",
+          "bytes": 5880,
+          "sha256": "7dc9f653663993e9450d70ce487d9a4bddb056e6522b243350df6385939bf414"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_322_lmlee/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_322_lmlee.png",
+            "bytes": 101449,
+            "sha256": "bb41c22957e8e996b4d2893561d36c5c13fe7b3d7c6986a85de6d93f20a620fb"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Attack": 1,
+          "Default": 0,
+          "Die": 1,
+          "Idle": 3.6,
+          "Skill_2_Attack": 1,
+          "Skill_2_start": 0.333,
+          "Skill_3_End": 0.1,
+          "Skill_3_Idle": 1,
+          "Skill_3_Loop": 1,
+          "Skill_3_Start": 0.333,
+          "Start": 1
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null
+          },
+          "attackDown": null,
+          "skill": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null,
+            "via": "attack",
+            "index": 0,
+            "idle": null
+          },
+          "die": "Die",
+          "move": null,
+          "stun": null,
+          "skills": {
+            "0": {
+              "begin": null,
+              "loop": "Attack",
+              "end": null,
+              "via": "attack",
+              "index": 0,
+              "idle": null
+            },
+            "1": {
+              "begin": "Skill_2_start",
+              "loop": "Skill_2_Attack",
+              "end": null,
+              "index": 1,
+              "idle": null
+            },
+            "2": {
+              "begin": "Skill_3_Start",
+              "loop": "Skill_3_Loop",
+              "end": "Skill_3_End",
+              "index": 2,
+              "idle": "Skill_3_Idle"
+            }
+          }
+        },
+        "hits": {
+          "Attack": [
+            0.467
+          ],
+          "Skill_2_Attack": [
+            0.367,
+            0.7
+          ],
+          "Skill_2_start": [
+            0.2
+          ],
+          "Skill_3_Loop": [
+            0.033
+          ]
+        },
+        "bounds": {
+          "x": -271.52,
+          "y": -1.902,
+          "width": 390.32,
+          "height": 461.007
+        }
+      },
       "operator/char_1013_chen2/default/front": {
         "kind": "operator",
         "id": "char_1013_chen2",
@@ -491354,6 +491574,2214 @@
                   "value": 0.3,
                   "valueStr": null
                 }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "char_322_lmlee": {
+      "id": "char_322_lmlee",
+      "name": "Lee",
+      "description": "Has <@ba.kw>reduced</> Redeployment Time, but <@ba.kw>DP Cost</> is not refunded upon retreating; While deployed, <@ba.kw>3 DP</> are consumed every 3 seconds (automatically retreats without sufficient DP)",
+      "rarity": 6,
+      "profession": "SPECIAL",
+      "subProfessionId": "merchant",
+      "position": "MELEE",
+      "nationId": "lungmen",
+      "groupId": null,
+      "teamId": "lee",
+      "phases": [
+        {
+          "maxLevel": 50,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 1179,
+                "atk": 376,
+                "def": 240,
+                "magicResistance": 0,
+                "cost": 7,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 25,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 50,
+              "data": {
+                "maxHp": 1552,
+                "atk": 516,
+                "def": 308,
+                "magicResistance": 0,
+                "cost": 7,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 25,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ]
+        },
+        {
+          "maxLevel": 80,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 1552,
+                "atk": 516,
+                "def": 308,
+                "magicResistance": 0,
+                "cost": 9,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 25,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 80,
+              "data": {
+                "maxHp": 1917,
+                "atk": 654,
+                "def": 395,
+                "magicResistance": 0,
+                "cost": 9,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 25,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ]
+        },
+        {
+          "maxLevel": 90,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 1917,
+                "atk": 654,
+                "def": 395,
+                "magicResistance": 0,
+                "cost": 9,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 25,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 90,
+              "data": {
+                "maxHp": 2427,
+                "atk": 789,
+                "def": 465,
+                "magicResistance": 0,
+                "cost": 9,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 25,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ]
+        }
+      ],
+      "favorKeyFrames": [
+        {
+          "level": 0,
+          "data": {
+            "maxHp": 0,
+            "atk": 0,
+            "def": 0,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false
+          }
+        },
+        {
+          "level": 50,
+          "data": {
+            "maxHp": 300,
+            "atk": 55,
+            "def": 0,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false
+          }
+        }
+      ],
+      "potentialRanks": [
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "RESPAWN_TIME",
+            "formulaItem": "ADDITION",
+            "value": -4,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "ATK",
+            "formulaItem": "ADDITION",
+            "value": 30,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [],
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ]
+      ],
+      "trait": {
+        "candidates": [
+          {
+            "unlockCondition": {
+              "phase": "PHASE_0",
+              "level": 1
+            },
+            "requiredPotentialRank": 0,
+            "blackboard": [
+              {
+                "key": "interval",
+                "value": 3,
+                "valueStr": null
+              },
+              {
+                "key": "cost",
+                "value": -3,
+                "valueStr": null
+              }
+            ],
+            "overrideDescripton": null,
+            "prefabKey": null,
+            "rangeId": null
+          }
+        ]
+      },
+      "talents": [
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Kindness Begets Prosperity",
+              "description": "When Lee is blocking an enemy, the enemy has ASPD -7 and Lee has ASPD +7; If there is only one enemy within the surrounding 8 tiles, this effect is doubled",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "lmlee_t_1[enemy].attack_speed",
+                  "value": -7,
+                  "valueStr": null
+                },
+                {
+                  "key": "lmlee_t_1[self].attack_speed",
+                  "value": 7,
+                  "valueStr": null
+                },
+                {
+                  "key": "cnt",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 1
+              },
+              "requiredPotentialRank": 4,
+              "prefabKey": "1",
+              "name": "Kindness Begets Prosperity",
+              "description": "When Lee is blocking an enemy, the enemy has ASPD -8 <@ba.talpu>(+1)</> and Lee has ASPD +8 <@ba.talpu>(+1)</>; If there is only one enemy within the surrounding 8 tiles, this effect is doubled",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "lmlee_t_1[enemy].attack_speed",
+                  "value": -8,
+                  "valueStr": null
+                },
+                {
+                  "key": "lmlee_t_1[self].attack_speed",
+                  "value": 8,
+                  "valueStr": null
+                },
+                {
+                  "key": "cnt",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Kindness Begets Prosperity",
+              "description": "When Lee is blocking an enemy, the enemy has ASPD -14 and Lee has ASPD +14; If there is only one enemy within the surrounding 8 tiles, this effect is doubled",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "lmlee_t_1[enemy].attack_speed",
+                  "value": -14,
+                  "valueStr": null
+                },
+                {
+                  "key": "lmlee_t_1[self].attack_speed",
+                  "value": 14,
+                  "valueStr": null
+                },
+                {
+                  "key": "cnt",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 4,
+              "prefabKey": "1",
+              "name": "Kindness Begets Prosperity",
+              "description": "When Lee is blocking an enemy, the enemy has ASPD -15 <@ba.talpu>(+1)</> and Lee has ASPD +15 <@ba.talpu>(+1)</>; If there is only one enemy within the surrounding 8 tiles, this effect is doubled",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "lmlee_t_1[enemy].attack_speed",
+                  "value": -15,
+                  "valueStr": null
+                },
+                {
+                  "key": "lmlee_t_1[self].attack_speed",
+                  "value": 15,
+                  "valueStr": null
+                },
+                {
+                  "key": "cnt",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            }
+          ]
+        },
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "2",
+              "name": "Preparedness Averts Peril",
+              "description": "When DP is consumed by this unit's Trait, if there is sufficient DP, consumes 5 DP instead to block the next <$ba.stun>Stun</>/<$ba.frozen>Freeze</> effect inflicted on this unit, and stuns the attacker for 3 seconds",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "extra_cost",
+                  "value": -5,
+                  "valueStr": null
+                },
+                {
+                  "key": "stun",
+                  "value": 3,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            }
+          ]
+        }
+      ],
+      "skills": [
+        {
+          "id": "skchr_lmlee_1",
+          "unlockCondition": {
+            "phase": "PHASE_0",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "Stern Admonishment",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</> and gain <@ba.vup>{prob:0%}</> Arts Dodge\n<@ba.rem>Unlimited duration</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 11,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_lmlee_1",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob",
+                  "value": 0.15,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Stern Admonishment",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</> and gain <@ba.vup>{prob:0%}</> Arts Dodge\n<@ba.rem>Unlimited duration</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 11,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_lmlee_1",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.15,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob",
+                  "value": 0.15,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Stern Admonishment",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</> and gain <@ba.vup>{prob:0%}</> Arts Dodge\n<@ba.rem>Unlimited duration</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 11,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_lmlee_1",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob",
+                  "value": 0.15,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Stern Admonishment",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</> and gain <@ba.vup>{prob:0%}</> Arts Dodge\n<@ba.rem>Unlimited duration</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 11,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_lmlee_1",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob",
+                  "value": 0.2,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Stern Admonishment",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</> and gain <@ba.vup>{prob:0%}</> Arts Dodge\n<@ba.rem>Unlimited duration</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 11,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_lmlee_1",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob",
+                  "value": 0.2,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Stern Admonishment",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</> and gain <@ba.vup>{prob:0%}</> Arts Dodge\n<@ba.rem>Unlimited duration</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 11,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_lmlee_1",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.35,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob",
+                  "value": 0.2,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Stern Admonishment",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</> and gain <@ba.vup>{prob:0%}</> Arts Dodge\n<@ba.rem>Unlimited duration</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 10,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_lmlee_1",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob",
+                  "value": 0.25,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Stern Admonishment",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</> and gain <@ba.vup>{prob:0%}</> Arts Dodge\n<@ba.rem>Unlimited duration</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 9,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_lmlee_1",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.45,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob",
+                  "value": 0.3,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Stern Admonishment",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</> and gain <@ba.vup>{prob:0%}</> Arts Dodge\n<@ba.rem>Unlimited duration</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 8,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_lmlee_1",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob",
+                  "value": 0.35,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Stern Admonishment",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</> and gain <@ba.vup>{prob:0%}</> Arts Dodge\n<@ba.rem>Unlimited duration</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 7,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_lmlee_1",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob",
+                  "value": 0.4,
+                  "valueStr": null
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "skchr_lmlee_2",
+          "unlockCondition": {
+            "phase": "PHASE_1",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "Exorcise Evil",
+              "rangeId": null,
+              "description": "Passive Effect: ASPD <@ba.vup>+{attack_speed}</>; Active Effect: Marks the target and makes them easier to be targeted by allies. The mark explodes after <@ba.vup>{paper_duration}</> seconds, dealing <@ba.vup>{default_atk_scale:0%}</> Arts damage to nearby enemies. Every hit on the marked target by allies increases the explosion damage by <@ba.vup>{factor_atk_scale:0%}</> of Lee's ATK (increases up to <@ba.vup>{max_stack_cnt}</> times, and prematurely explodes if the limit is reached or the target is defeated)",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 12,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_lmlee_2",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "default_atk_scale",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "factor_atk_scale",
+                  "value": 0.05,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_stack_cnt",
+                  "value": 20,
+                  "valueStr": null
+                },
+                {
+                  "key": "taunt_level",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "paper_duration",
+                  "value": 5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack_speed",
+                  "value": 10,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Exorcise Evil",
+              "rangeId": null,
+              "description": "Passive Effect: ASPD <@ba.vup>+{attack_speed}</>; Active Effect: Marks the target and makes them easier to be targeted by allies. The mark explodes after <@ba.vup>{paper_duration}</> seconds, dealing <@ba.vup>{default_atk_scale:0%}</> Arts damage to nearby enemies. Every hit on the marked target by allies increases the explosion damage by <@ba.vup>{factor_atk_scale:0%}</> of Lee's ATK (increases up to <@ba.vup>{max_stack_cnt}</> times, and prematurely explodes if the limit is reached or the target is defeated)",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 12,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_lmlee_2",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "default_atk_scale",
+                  "value": 2.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "factor_atk_scale",
+                  "value": 0.05,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_stack_cnt",
+                  "value": 20,
+                  "valueStr": null
+                },
+                {
+                  "key": "taunt_level",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "paper_duration",
+                  "value": 5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack_speed",
+                  "value": 10,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Exorcise Evil",
+              "rangeId": null,
+              "description": "Passive Effect: ASPD <@ba.vup>+{attack_speed}</>; Active Effect: Marks the target and makes them easier to be targeted by allies. The mark explodes after <@ba.vup>{paper_duration}</> seconds, dealing <@ba.vup>{default_atk_scale:0%}</> Arts damage to nearby enemies. Every hit on the marked target by allies increases the explosion damage by <@ba.vup>{factor_atk_scale:0%}</> of Lee's ATK (increases up to <@ba.vup>{max_stack_cnt}</> times, and prematurely explodes if the limit is reached or the target is defeated)",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 12,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_lmlee_2",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "default_atk_scale",
+                  "value": 2.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "factor_atk_scale",
+                  "value": 0.05,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_stack_cnt",
+                  "value": 20,
+                  "valueStr": null
+                },
+                {
+                  "key": "taunt_level",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "paper_duration",
+                  "value": 5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack_speed",
+                  "value": 10,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Exorcise Evil",
+              "rangeId": null,
+              "description": "Passive Effect: ASPD <@ba.vup>+{attack_speed}</>; Active Effect: Marks the target and makes them easier to be targeted by allies. The mark explodes after <@ba.vup>{paper_duration}</> seconds, dealing <@ba.vup>{default_atk_scale:0%}</> Arts damage to nearby enemies. Every hit on the marked target by allies increases the explosion damage by <@ba.vup>{factor_atk_scale:0%}</> of Lee's ATK (increases up to <@ba.vup>{max_stack_cnt}</> times, and prematurely explodes if the limit is reached or the target is defeated)",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 11,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_lmlee_2",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "default_atk_scale",
+                  "value": 2.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "factor_atk_scale",
+                  "value": 0.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_stack_cnt",
+                  "value": 20,
+                  "valueStr": null
+                },
+                {
+                  "key": "taunt_level",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "paper_duration",
+                  "value": 5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack_speed",
+                  "value": 15,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Exorcise Evil",
+              "rangeId": null,
+              "description": "Passive Effect: ASPD <@ba.vup>+{attack_speed}</>; Active Effect: Marks the target and makes them easier to be targeted by allies. The mark explodes after <@ba.vup>{paper_duration}</> seconds, dealing <@ba.vup>{default_atk_scale:0%}</> Arts damage to nearby enemies. Every hit on the marked target by allies increases the explosion damage by <@ba.vup>{factor_atk_scale:0%}</> of Lee's ATK (increases up to <@ba.vup>{max_stack_cnt}</> times, and prematurely explodes if the limit is reached or the target is defeated)",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 11,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_lmlee_2",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "default_atk_scale",
+                  "value": 2.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "factor_atk_scale",
+                  "value": 0.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_stack_cnt",
+                  "value": 20,
+                  "valueStr": null
+                },
+                {
+                  "key": "taunt_level",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "paper_duration",
+                  "value": 5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack_speed",
+                  "value": 15,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Exorcise Evil",
+              "rangeId": null,
+              "description": "Passive Effect: ASPD <@ba.vup>+{attack_speed}</>; Active Effect: Marks the target and makes them easier to be targeted by allies. The mark explodes after <@ba.vup>{paper_duration}</> seconds, dealing <@ba.vup>{default_atk_scale:0%}</> Arts damage to nearby enemies. Every hit on the marked target by allies increases the explosion damage by <@ba.vup>{factor_atk_scale:0%}</> of Lee's ATK (increases up to <@ba.vup>{max_stack_cnt}</> times, and prematurely explodes if the limit is reached or the target is defeated)",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 11,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_lmlee_2",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "default_atk_scale",
+                  "value": 2.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "factor_atk_scale",
+                  "value": 0.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_stack_cnt",
+                  "value": 20,
+                  "valueStr": null
+                },
+                {
+                  "key": "taunt_level",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "paper_duration",
+                  "value": 5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack_speed",
+                  "value": 15,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Exorcise Evil",
+              "rangeId": null,
+              "description": "Passive Effect: ASPD <@ba.vup>+{attack_speed}</>; Active Effect: Marks the target and makes them easier to be targeted by allies. The mark explodes after <@ba.vup>{paper_duration}</> seconds, dealing <@ba.vup>{default_atk_scale:0%}</> Arts damage to nearby enemies. Every hit on the marked target by allies increases the explosion damage by <@ba.vup>{factor_atk_scale:0%}</> of Lee's ATK (increases up to <@ba.vup>{max_stack_cnt}</> times, and prematurely explodes if the limit is reached or the target is defeated)",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 10,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_lmlee_2",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "default_atk_scale",
+                  "value": 2.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "factor_atk_scale",
+                  "value": 0.15,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_stack_cnt",
+                  "value": 25,
+                  "valueStr": null
+                },
+                {
+                  "key": "taunt_level",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "paper_duration",
+                  "value": 5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack_speed",
+                  "value": 20,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Exorcise Evil",
+              "rangeId": null,
+              "description": "Passive Effect: ASPD <@ba.vup>+{attack_speed}</>; Active Effect: Marks the target and makes them easier to be targeted by allies. The mark explodes after <@ba.vup>{paper_duration}</> seconds, dealing <@ba.vup>{default_atk_scale:0%}</> Arts damage to nearby enemies. Every hit on the marked target by allies increases the explosion damage by <@ba.vup>{factor_atk_scale:0%}</> of Lee's ATK (increases up to <@ba.vup>{max_stack_cnt}</> times, and prematurely explodes if the limit is reached or the target is defeated)",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 9,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_lmlee_2",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "default_atk_scale",
+                  "value": 2.7,
+                  "valueStr": null
+                },
+                {
+                  "key": "factor_atk_scale",
+                  "value": 0.15,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_stack_cnt",
+                  "value": 25,
+                  "valueStr": null
+                },
+                {
+                  "key": "taunt_level",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "paper_duration",
+                  "value": 5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack_speed",
+                  "value": 20,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Exorcise Evil",
+              "rangeId": null,
+              "description": "Passive Effect: ASPD <@ba.vup>+{attack_speed}</>; Active Effect: Marks the target and makes them easier to be targeted by allies. The mark explodes after <@ba.vup>{paper_duration}</> seconds, dealing <@ba.vup>{default_atk_scale:0%}</> Arts damage to nearby enemies. Every hit on the marked target by allies increases the explosion damage by <@ba.vup>{factor_atk_scale:0%}</> of Lee's ATK (increases up to <@ba.vup>{max_stack_cnt}</> times, and prematurely explodes if the limit is reached or the target is defeated)",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 8,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_lmlee_2",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "default_atk_scale",
+                  "value": 2.8,
+                  "valueStr": null
+                },
+                {
+                  "key": "factor_atk_scale",
+                  "value": 0.15,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_stack_cnt",
+                  "value": 25,
+                  "valueStr": null
+                },
+                {
+                  "key": "taunt_level",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "paper_duration",
+                  "value": 5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack_speed",
+                  "value": 20,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Exorcise Evil",
+              "rangeId": null,
+              "description": "Passive Effect: ASPD <@ba.vup>+{attack_speed}</>; Active Effect: Marks the target and makes them easier to be targeted by allies. The mark explodes after <@ba.vup>{paper_duration}</> seconds, dealing <@ba.vup>{default_atk_scale:0%}</> Arts damage to nearby enemies. Every hit on the marked target by allies increases the explosion damage by <@ba.vup>{factor_atk_scale:0%}</> of Lee's ATK (increases up to <@ba.vup>{max_stack_cnt}</> times, and prematurely explodes if the limit is reached or the target is defeated)",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 7,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_lmlee_2",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "default_atk_scale",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "factor_atk_scale",
+                  "value": 0.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_stack_cnt",
+                  "value": 30,
+                  "valueStr": null
+                },
+                {
+                  "key": "taunt_level",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "paper_duration",
+                  "value": 5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack_speed",
+                  "value": 30,
+                  "valueStr": null
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "skchr_lmlee_3",
+          "unlockCondition": {
+            "phase": "PHASE_2",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "Honored Guest",
+              "rangeId": "x-4",
+              "description": "<@ba.vup>Expands</> Attack Range, ATK and DEF <@ba.vup>+{atk:0%}</>; Besides the current target, all enemies within range are pushed away <@ba.vup>slightly</> every time Lee attacks. Increases the likelihood of being targeted by enemy attacks and gains a <@ba.vup>{prob:0%}</> chance to dodge Physical or Arts attacks coming from outside his Attack Range\n<@ba.rem>Unlimited duration</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 12,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_lmlee_3",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "def",
+                  "value": 0.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "taunt_level",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@prob_knockback",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@force",
+                  "value": 0,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Honored Guest",
+              "rangeId": "x-4",
+              "description": "<@ba.vup>Expands</> Attack Range, ATK and DEF <@ba.vup>+{atk:0%}</>; Besides the current target, all enemies within range are pushed away <@ba.vup>slightly</> every time Lee attacks. Increases the likelihood of being targeted by enemy attacks and gains a <@ba.vup>{prob:0%}</> chance to dodge Physical or Arts attacks coming from outside his Attack Range\n<@ba.rem>Unlimited duration</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 12,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_lmlee_3",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.27,
+                  "valueStr": null
+                },
+                {
+                  "key": "def",
+                  "value": 0.27,
+                  "valueStr": null
+                },
+                {
+                  "key": "taunt_level",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@prob_knockback",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@force",
+                  "value": 0,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Honored Guest",
+              "rangeId": "x-4",
+              "description": "<@ba.vup>Expands</> Attack Range, ATK and DEF <@ba.vup>+{atk:0%}</>; Besides the current target, all enemies within range are pushed away <@ba.vup>slightly</> every time Lee attacks. Increases the likelihood of being targeted by enemy attacks and gains a <@ba.vup>{prob:0%}</> chance to dodge Physical or Arts attacks coming from outside his Attack Range\n<@ba.rem>Unlimited duration</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 12,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_lmlee_3",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.29,
+                  "valueStr": null
+                },
+                {
+                  "key": "def",
+                  "value": 0.29,
+                  "valueStr": null
+                },
+                {
+                  "key": "taunt_level",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@prob_knockback",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@force",
+                  "value": 0,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Honored Guest",
+              "rangeId": "x-4",
+              "description": "<@ba.vup>Expands</> Attack Range, ATK and DEF <@ba.vup>+{atk:0%}</>; Besides the current target, all enemies within range are pushed away <@ba.vup>slightly</> every time Lee attacks. Increases the likelihood of being targeted by enemy attacks and gains a <@ba.vup>{prob:0%}</> chance to dodge Physical or Arts attacks coming from outside his Attack Range\n<@ba.rem>Unlimited duration</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 11,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_lmlee_3",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.31,
+                  "valueStr": null
+                },
+                {
+                  "key": "def",
+                  "value": 0.31,
+                  "valueStr": null
+                },
+                {
+                  "key": "taunt_level",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob",
+                  "value": 0.55,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@prob_knockback",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@force",
+                  "value": 0,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Honored Guest",
+              "rangeId": "x-4",
+              "description": "<@ba.vup>Expands</> Attack Range, ATK and DEF <@ba.vup>+{atk:0%}</>; Besides the current target, all enemies within range are pushed away <@ba.vup>slightly</> every time Lee attacks. Increases the likelihood of being targeted by enemy attacks and gains a <@ba.vup>{prob:0%}</> chance to dodge Physical or Arts attacks coming from outside his Attack Range\n<@ba.rem>Unlimited duration</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 11,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_lmlee_3",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.33,
+                  "valueStr": null
+                },
+                {
+                  "key": "def",
+                  "value": 0.33,
+                  "valueStr": null
+                },
+                {
+                  "key": "taunt_level",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob",
+                  "value": 0.55,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@prob_knockback",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@force",
+                  "value": 0,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Honored Guest",
+              "rangeId": "x-4",
+              "description": "<@ba.vup>Expands</> Attack Range, ATK and DEF <@ba.vup>+{atk:0%}</>; Besides the current target, all enemies within range are pushed away <@ba.vup>slightly</> every time Lee attacks. Increases the likelihood of being targeted by enemy attacks and gains a <@ba.vup>{prob:0%}</> chance to dodge Physical or Arts attacks coming from outside his Attack Range\n<@ba.rem>Unlimited duration</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 11,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_lmlee_3",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.35,
+                  "valueStr": null
+                },
+                {
+                  "key": "def",
+                  "value": 0.35,
+                  "valueStr": null
+                },
+                {
+                  "key": "taunt_level",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob",
+                  "value": 0.55,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@prob_knockback",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@force",
+                  "value": 0,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Honored Guest",
+              "rangeId": "x-4",
+              "description": "<@ba.vup>Expands</> Attack Range, ATK and DEF <@ba.vup>+{atk:0%}</>; Besides the current target, all enemies within range are pushed away <@ba.vup>slightly</> every time Lee attacks. Increases the likelihood of being targeted by enemy attacks and gains a <@ba.vup>{prob:0%}</> chance to dodge Physical or Arts attacks coming from outside his Attack Range\n<@ba.rem>Unlimited duration</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 10,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_lmlee_3",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.37,
+                  "valueStr": null
+                },
+                {
+                  "key": "def",
+                  "value": 0.37,
+                  "valueStr": null
+                },
+                {
+                  "key": "taunt_level",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob",
+                  "value": 0.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@prob_knockback",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@force",
+                  "value": 0,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Honored Guest",
+              "rangeId": "x-4",
+              "description": "<@ba.vup>Expands</> Attack Range, ATK and DEF <@ba.vup>+{atk:0%}</>; Besides the current target, all enemies within range are pushed away <@ba.vup>slightly</> every time Lee attacks. Increases the likelihood of being targeted by enemy attacks and gains a <@ba.vup>{prob:0%}</> chance to dodge Physical or Arts attacks coming from outside his Attack Range\n<@ba.rem>Unlimited duration</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 9,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_lmlee_3",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "def",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "taunt_level",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob",
+                  "value": 0.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@prob_knockback",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@force",
+                  "value": 0,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Honored Guest",
+              "rangeId": "x-4",
+              "description": "<@ba.vup>Expands</> Attack Range, ATK and DEF <@ba.vup>+{atk:0%}</>; Besides the current target, all enemies within range are pushed away <@ba.vup>slightly</> every time Lee attacks. Increases the likelihood of being targeted by enemy attacks and gains a <@ba.vup>{prob:0%}</> chance to dodge Physical or Arts attacks coming from outside his Attack Range\n<@ba.rem>Unlimited duration</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 8,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_lmlee_3",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.45,
+                  "valueStr": null
+                },
+                {
+                  "key": "def",
+                  "value": 0.45,
+                  "valueStr": null
+                },
+                {
+                  "key": "taunt_level",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob",
+                  "value": 0.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@prob_knockback",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@force",
+                  "value": 0,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Honored Guest",
+              "rangeId": "x-4",
+              "description": "<@ba.vup>Expands</> Attack Range, ATK and DEF <@ba.vup>+{atk:0%}</>; Besides the current target, all enemies within range are pushed away <@ba.vup>slightly</> every time Lee attacks. Increases the likelihood of being targeted by enemy attacks and gains a <@ba.vup>{prob:0%}</> chance to dodge Physical or Arts attacks coming from outside his Attack Range\n<@ba.rem>Unlimited duration</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 7,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_lmlee_3",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "def",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "taunt_level",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob",
+                  "value": 0.7,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@prob_knockback",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@force",
+                  "value": 0,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
               ]
             }
           ]
