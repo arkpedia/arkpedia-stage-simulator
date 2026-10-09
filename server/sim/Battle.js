@@ -879,6 +879,8 @@ export class Battle {
       return false;
     }
     const k = R0 * COLS + C0;
+    const reservation = this.tileReservation(R0, C0);
+    if (reservation && reservation.owner !== u) return false;
     const occ = this._occ[k];
     if (occ && occ !== u && occ.alive && occ.deployed) { this.log(`tile ${R0},${C0} occupied; ${u} not deployed`); return false; }
     // "倒地干员所在地块视为可部署，但所有我方单位在此处的部署行为将被阻止" (PRTS 卫戍协议/帮助 §作战阶段 单位部署)
@@ -954,6 +956,7 @@ export class Battle {
     unit.removeReason = reason;
     unit.deployed = false;
     unit.deathAt = this.time;
+    this.releaseTileReservations(unit);
     // while the removal bookkeeping runs, a skill onEnd handler must not redeploy the unit (it would come back
     // alive but without its tile in _occ, its buffs wiped and a respawn timer pending) — redeploy from `death` instead
     unit._removing = true;
@@ -1921,6 +1924,7 @@ export class Battle {
     if (!Number.isInteger(row) || !Number.isInteger(col) || !this.grid.inRect(row, col)) return null;
     const occ = this._occ[row * COLS + col];
     if (occ && occ.alive) return null;
+    if (this.tileReservation(row, col)) return null;
     if (this.downOn(row, col)) return null;
     const hp = fin(opts.hp, 100);
     const bat = fin(opts.bat, 1), aspd = fin(opts.aspd, 100);
@@ -1989,6 +1993,8 @@ export class Battle {
     if (!unit || unit.side !== 'ally' || !unit.alive || !unit.deployed) return false;
     if (!Number.isInteger(r) || !Number.isInteger(c) || !this.grid.inRect(r, c)) return false;
     const k = r * COLS + c;
+    const reservation = this.tileReservation(r, c);
+    if (reservation && reservation.owner !== unit) return false;
     if (this._occ[k] && this._occ[k] !== unit && this._occ[k].alive) return false;
     if (this.downOn(r, c)) return false;
     const ok = unit.tileR * COLS + unit.tileC;
@@ -2001,6 +2007,24 @@ export class Battle {
     if (unit.obstacle) this.grid.setObstacle(r, c, true, unit.obstacleKind);
     this._refreshRange(unit); // current + base range, CUSTOM_RANGE trigger keys
     return true;
+  }
+
+  /** Zero-slot source footprint, separate from units, obstacles and knock-out bodies. */
+  tileReservation(r, c) { return this._tileReservations?.get(r * COLS + c) ?? null; }
+
+  reserveTile(owner, r, c, sourceKey) {
+    if (!owner?.alive || !owner.deployed || !Number.isInteger(r) || !Number.isInteger(c)
+      || !this.grid.inRect(r, c) || typeof sourceKey !== 'string' || !sourceKey) return false;
+    const k = r * COLS + c, occupied = this._occ[k], old = this.tileReservation(r, c);
+    if ((old && old.owner !== owner) || (occupied?.alive && occupied !== owner) || this.downOn(r, c)) return false;
+    (this._tileReservations ??= new Map()).set(k, { owner, row: r, col: c, sourceKey });
+    return true;
+  }
+
+  releaseTileReservations(owner, sourceKey = null) {
+    for (const [k, reservation] of this._tileReservations ?? [])
+      if (reservation.owner === owner && (sourceKey == null || reservation.sourceKey === sourceKey))
+        this._tileReservations.delete(k);
   }
 
   /**

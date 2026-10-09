@@ -356,6 +356,7 @@ export class StandardBattle extends Battle {
       this.allyUnits.some((u) => u.alive && u.tileR === row && u.tileC === col)
     )
       return "Tile is occupied.";
+    if (this.tileReservation(row, col)) return "Tile is reserved for an operator's return.";
     if (this.dp < this.cost(id)) return "Not enough DP.";
     return null;
   }
