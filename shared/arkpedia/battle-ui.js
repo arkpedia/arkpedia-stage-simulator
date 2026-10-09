@@ -10,7 +10,7 @@ export function skillIconFile(operator, skill) {
   const safe = operatorAssetName(skill).replace(/[\\/*?:"<>|]/g, '').trim();
   const aliases = { 'Little by Little': 'Little By Little', 'Image over Form': 'Image Over Form',
     "Binding 'Clip'": 'Binding Clip', "Launching 'Clip'": 'Launching Clip',
-    'Night-Scouring Gleam': 'Night-scouring Gleam' };
+    'Night-Scouring Gleam': 'Night-scouring Gleam', 'Return To Silence': 'Return to Silence' };
   return `${operatorAssetName(operator)} - ${aliases[safe] ?? safe}.webp`;
 }
 

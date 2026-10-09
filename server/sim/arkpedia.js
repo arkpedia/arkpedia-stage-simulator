@@ -127,6 +127,7 @@ import { customizeGavialInvincibleKit, installGavialInvincible } from './content
 import { customizeFiammettaKit, installFiammetta } from './content/arkpedia-fiammetta.js';
 import { customizeHornKit, installHorn } from './content/arkpedia-horn.js';
 import { customizeTyphonKit, installTyphon } from './content/arkpedia-typhon.js';
+import { customizeDegenbrecherKit, installDegenbrecher } from './content/arkpedia-degenbrecher.js';
 import { customizeIreneKit, installIrene } from './content/arkpedia-irene.js';
 import { customizeTexasAlterKit, installTexasAlter } from './content/arkpedia-texas-alter.js';
 import { customizeGnosisKit, installGnosis } from './content/arkpedia-gnosis.js';
@@ -458,6 +459,7 @@ export class StandardBattle extends Battle {
     customizeTexasAlterKit({ battle: this, id, def, unit, kit });
     customizeTyphonKit({ battle: this, id, def, unit, kit });
     customizeIreneKit({ battle: this, id, def, unit, kit });
+    customizeDegenbrecherKit({ battle: this, id, def, unit, kit });
     customizeEyjafjallaKit({ battle: this, id, def, unit, kit });
     customizeFrostKit({ battle: this, id, def, unit, kit });
     customizeMayerKit({ battle: this, id, def, unit, kit });
@@ -609,6 +611,7 @@ export class StandardBattle extends Battle {
     installTexasAlter({ battle: this, unit, def });
     installTyphon({ battle: this, unit, def });
     installIrene({ battle: this, unit, def });
+    installDegenbrecher({ battle: this, unit, def });
     installEyjafjalla({ battle: this, unit, def });
     installFrost({ battle: this, unit, def });
     installMayer({ battle: this, unit, def });

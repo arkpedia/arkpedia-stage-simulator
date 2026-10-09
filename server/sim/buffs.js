@@ -83,7 +83,7 @@ export const STATUS = Object.freeze({
   // source — fear.js, stamped by Battle.applyStatus)
   fear: { flags: { fear: true, unblockable: true }, immune: 'feared' },
   // 战栗: 被阻挡后无法进行普通攻击
-  tremble: { flags: { tremble: true }, immune: 'feared' },
+  tremble: { flags: { tremble: true }, immune: 'disarmedcombat' },
   disarm: { flags: { disarm: true } },
   // 隐匿 (ba.invisible): 不阻挡时不成为敌方攻击的目标 (an ally: only the enemy it blocks attacks it — targeting.js)
   stealth: { flags: { stealth: true } },

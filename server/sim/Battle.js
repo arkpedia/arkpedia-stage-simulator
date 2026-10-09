@@ -1486,6 +1486,11 @@ export class Battle {
       if (tpl.attract && b) this._setAttractPoint(target, b, opts.point ?? value, source);
       // 恐惧: the hit position and the source's position of every application (fear.js — the fan of reachable tiles)
       if (key === 'fear' && b && target.side === 'enemy') stampFear(this, target, b, source);
+      // Native DISARMED_COMBAT interrupts the blocked enemy's combat ability.
+      if (key === 'tremble' && target.side === 'enemy' && target.blockedBy) {
+        target.attackControlEpoch = (target.attackControlEpoch ?? 0) + 1;
+        target.atkCd = Math.max(target.atkCd, target.s.interval);
+      }
     }
     const f = tpl.flags;
     if (f && target.side === 'enemy' && (f.levitate || f.unblockable || f.fear)) this._unblock(target);

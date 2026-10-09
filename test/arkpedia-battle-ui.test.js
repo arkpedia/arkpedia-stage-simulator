@@ -21,6 +21,7 @@ test('skill asset names preserve internal apostrophes and Greek text while resol
   assert.equal(skillIconFile('Chestnut', 'Little by Little'), 'Chestnut - Little By Little.webp');
   assert.equal(skillIconFile('Dusk', 'Image over Form'), 'Dusk - Image Over Form.webp');
   assert.equal(skillIconFile('Nearl the Radiant Knight', 'Night-Scouring Gleam'), 'Nearl the Radiant Knight - Night-scouring Gleam.webp');
+  assert.equal(skillIconFile('Degenbrecher', 'Return To Silence'), 'Degenbrecher - Return to Silence.webp');
   assert.equal(skillIconFile('Yato', null), null);
   assert.equal(classNames.WARRIOR, 'Guard');
   assert.equal(classNames.PIONEER, 'Vanguard');
