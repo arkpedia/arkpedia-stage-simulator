@@ -125,6 +125,7 @@ import { customizeMudrockKit, installMudrock } from './content/arkpedia-mudrock.
 import { customizeBlazeKit, installBlaze } from './content/arkpedia-blaze.js';
 import { customizeGavialInvincibleKit, installGavialInvincible } from './content/arkpedia-gavial-invincible.js';
 import { customizeFiammettaKit, installFiammetta } from './content/arkpedia-fiammetta.js';
+import { customizeHornKit, installHorn } from './content/arkpedia-horn.js';
 import { customizeEyjafjallaKit, installEyjafjalla } from './content/arkpedia-eyjafjalla.js';
 import { customizeFiveStarSupportFourthKit, installFiveStarSupportFourth } from './content/arkpedia-five-star-support-fourth.js';
 import { customizeFiveStarSpecialistExpansionKit, installFiveStarSpecialistExpansion } from './content/arkpedia-five-star-specialist-expansion.js';
@@ -448,6 +449,7 @@ export class StandardBattle extends Battle {
     customizeBlazeKit({ battle: this, id, def, unit, kit });
     customizeGavialInvincibleKit({ battle: this, id, def, unit, kit });
     customizeFiammettaKit({ battle: this, id, def, unit, kit });
+    customizeHornKit({ battle: this, id, def, unit, kit });
     customizeEyjafjallaKit({ battle: this, id, def, unit, kit });
     customizeFrostKit({ battle: this, id, def, unit, kit });
     customizeMayerKit({ battle: this, id, def, unit, kit });
@@ -594,6 +596,7 @@ export class StandardBattle extends Battle {
     installBlaze({ battle: this, unit, def });
     installGavialInvincible({ battle: this, unit, def });
     installFiammetta({ battle: this, unit, def });
+    installHorn({ battle: this, unit, def });
     installEyjafjalla({ battle: this, unit, def });
     installFrost({ battle: this, unit, def });
     installMayer({ battle: this, unit, def });
@@ -696,6 +699,8 @@ export class StandardBattle extends Battle {
       ? selectedRegularSummon(this, id)?.unit : this.bench[id]?.unit;
     if (unit?.alive && unit.skill.active && unit.skill.spec.manualCancel) {
       if (!unit.canAct || unit.s.flags.silence) return false;
+      if (unit.skill.spec.canManualCancel?.() === false) return false;
+      if (unit.skill.spec.onManualCancel) return !!unit.skill.spec.onManualCancel();
       unit.skill.end('manual');
       return true;
     }

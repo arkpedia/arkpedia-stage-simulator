@@ -495,7 +495,7 @@ export class StageRenderer {
             .drawRect(x - 1, y + 6, w + 2, 5)
             .endFill();
           view.hp
-            .beginFill(skill.state === "active" ? 0xffa235 : 0x9bd538)
+            .beginFill(skill.state === "overloaded" ? 0xf04c39 : skill.state === "active" ? 0xffa235 : 0x9bd538)
             .drawRect(x, y + 7, w * skill.fraction, 3)
             .endFill();
           if (skill.ready) {

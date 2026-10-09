@@ -15,6 +15,8 @@ export function skillHud(skill) {
   if (skill.spec?.hideInactiveHud && !skill.active && !skill.pending) return null;
   const clamp = (n) => Math.max(0, Math.min(1, Number.isFinite(n) ? n : 0));
   const ready = skill.ready && !skill.active && !skill.pending;
+  const splitGauge = skill.active && typeof skill.spec?.overloadState === 'function';
+  const overloaded = !!(splitGauge && skill.spec.overloadState());
   let fraction, text;
   if (skill.pending) {
     fraction = 1;
@@ -30,6 +32,10 @@ export function skillHud(skill) {
       : Number.isFinite(skill.timeLeft)
         ? `Skill active · ${Math.ceil(skill.timeLeft)}s`
         : "Skill active";
+    if (splitGauge) {
+      fraction = clamp(fraction * 2 - (overloaded ? 0 : 1));
+      if (overloaded) text = `Overload · ${text}`;
+    }
   } else if (skill.exhausted) {
     fraction = 0;
     text = 'No skill uses remaining';
@@ -40,11 +46,11 @@ export function skillHud(skill) {
   }
   return {
     fraction,
-    state: skill.active || skill.pending || (ready && !skill.manual) ? "active" : "charging",
+    state: overloaded ? 'overloaded' : skill.active || skill.pending || (ready && !skill.manual) ? "active" : "charging",
     // Automatic skills trigger themselves; the diamond invites a manual action only.
     ready: !!(ready && skill.manual),
     canActivate: !!(ready && skill.manual && skill.castEligible !== false),
-    canCancel: !!(skill.active && skill.spec?.manualCancel),
+    canCancel: !!(skill.active && skill.spec?.manualCancel && skill.spec.canManualCancel?.() !== false),
     text,
   };
 }

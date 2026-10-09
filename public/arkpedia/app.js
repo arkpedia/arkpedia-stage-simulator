@@ -773,7 +773,7 @@ function drawHud() {
       skillButton.classList.toggle('ready', !!hud?.canActivate);
       const label = hud?.canCancel ? 'Stop skill' : hud?.canActivate ? 'Skill ready · Activate' : hud?.text ?? 'Skill unavailable';
       skillButton.setAttribute('aria-label', label); skillButton.title = label;
-      skillButton.querySelector('.field-sp').textContent = hud?.canActivate ? 'READY' : hud?.text.match(/^\d+ \/ \d+ SP/)?.[0] ?? (hud?.state === 'active' ? 'ACTIVE' : 'PASSIVE');
+      skillButton.querySelector('.field-sp').textContent = hud?.canActivate ? 'READY' : hud?.text.match(/^\d+ \/ \d+ SP/)?.[0] ?? (hud?.state === 'overloaded' ? 'OVERLOAD' : hud?.state === 'active' ? 'ACTIVE' : 'PASSIVE');
     }
   }
   const hover = dragging?.over ? { ...dragging.over, dir: "RIGHT" } : null;

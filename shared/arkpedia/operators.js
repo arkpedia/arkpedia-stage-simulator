@@ -122,6 +122,7 @@ import { MUDROCK_OPERATORS } from './mudrock-operators.js';
 import { BLAZE_OPERATORS } from './blaze-operators.js';
 import { GAVIAL_INVINCIBLE_OPERATORS } from './gavial-invincible-operators.js';
 import { FIAMMETTA_OPERATORS } from './fiammetta-operators.js';
+import { HORN_OPERATORS } from './horn-operators.js';
 import { EYJAFJALLA_OPERATORS } from './eyjafjalla-operators.js';
 import { FIVE_STAR_SPECIALIST_EXPANSION_OPERATORS } from './five-star-specialist-expansion-operators.js';
 export const REGULAR_OPERATORS = Object.freeze({
@@ -251,6 +252,7 @@ export const REGULAR_OPERATORS = Object.freeze({
   ...GAVIAL_INVINCIBLE_OPERATORS,
   ...EYJAFJALLA_OPERATORS,
   ...FIAMMETTA_OPERATORS,
+  ...HORN_OPERATORS,
   ...FROST_OPERATORS,
   ...MAYER_OPERATORS,
   ...FANG_FIRE_SHARPENED_OPERATORS,
