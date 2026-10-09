@@ -11,6 +11,7 @@ import { createKaltsitMon3tr } from './arkpedia-kaltsit.js';
 import { createSceneBuggyCam } from './arkpedia-scene.js';
 import { createSlumberfoot } from './arkpedia-blacknight.js';
 import { createWindflitBattery } from './arkpedia-windflit.js';
+import { createCatherineDevice } from './arkpedia-catherine.js';
 import { createAlannaDevice } from './arkpedia-alanna.js';
 import { createMayerRobotter } from './arkpedia-mayer.js';
 import { createFrostMat } from './arkpedia-frost.js';
@@ -71,6 +72,7 @@ export function deployRegularSummon(battle, key, row, col, dir = 'RIGHT') {
     : state.ownerId === 'char_336_folivo' ? createSceneBuggyCam(battle, state, row, col, dir)
     : state.ownerId === 'char_476_blkngt' ? createSlumberfoot(battle, state, row, col)
     : state.ownerId === 'char_433_windft' ? createWindflitBattery(battle, state, row, col, dir)
+    : state.ownerId === 'char_4162_cathy' ? createCatherineDevice(battle, state, row, col, dir)
     : state.ownerId === 'char_4178_alanna' ? createAlannaDevice(battle, state, row, col, dir)
     : state.ownerId === 'char_242_otter' ? createMayerRobotter(battle, state, row, col)
     : state.ownerId === 'char_458_rfrost' ? createFrostMat(battle, state, row, col)

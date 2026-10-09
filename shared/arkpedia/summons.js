@@ -12,6 +12,8 @@ export const REGULAR_SUMMONS = Object.freeze({
     deploymentSlotCost: 0, chooseFacing: false, fixedRotation: true, healFree: true,
     refundRatio: 0, noAttack: true, sourceStockLimit: true,
     includeReadyCardInStock: true, excludeWalkingEnemy: true }),
+  char_4162_cathy: Object.freeze({ tokenId: 'token_10041_cathy_catsld',
+    deploymentSlotCost: 0, chooseFacing: true, healFree: true, refundRatio: .5, noAttack: true }),
   char_4178_alanna: Object.freeze({ tokenId: 'token_10045_alanna_crane',
     deploymentSlotCost: 0, chooseFacing: true, healFree: true,
     refundRatio: .5, noAttack: true, additiveBornStock: true }),
@@ -108,6 +110,16 @@ export function summonRecordFor(ownerId, build, tokens) {
     if (config.sourceStockLimit) stats.maxDeckStackCnt += talent.bb.max_deck_stack_cnt ?? 0;
   }
   let skill = null;
+  if (ownerId === 'char_4162_cathy') {
+    const ids = ['sktok_cathy_catsld_1', 'sktok_cathy_catsld_2'];
+    if (source.skills?.length !== ids.length || source.skills.some((s, i) =>
+      s.id !== ids[i] || s.levels?.length !== 1 || s.levels[0].prefabId !== ids[i]
+      || s.levels[0].skillType !== 'PASSIVE' || s.levels[0].spData.spCost !== 0
+      || s.levels[0].duration !== 0 || s.levels[0].blackboard?.length !== 0))
+      throw Error('Unreviewed Catherine passive device skill');
+    // Both original token prefabs are empty passives. No recycle button or
+    // charge-replenishment ability is inferred from an unused DB template.
+  }
   if (['char_451_robin', 'char_458_rfrost'].includes(ownerId)) {
     const name = ownerId === 'char_451_robin' ? 'robin' : 'rfrost';
     const index = [`skchr_${name}_1`, `skchr_${name}_2`].indexOf(build.skillId);

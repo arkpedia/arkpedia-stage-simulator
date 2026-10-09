@@ -92,6 +92,7 @@ import { customizePhilaeKit, installPhilae } from './content/arkpedia-philae.js'
 import { customizeWindflitKit, installWindflit } from './content/arkpedia-windflit.js';
 import { customizeBlemishineKit, installBlemishine } from './content/arkpedia-blemishine.js';
 import { customizeFlametailKit, installFlametail } from './content/arkpedia-flametail.js';
+import { customizeCatherineKit, installCatherine } from './content/arkpedia-catherine.js';
 import { customizeAlannaKit, installAlanna } from './content/arkpedia-alanna.js';
 import { customizeSaileachKit, installSaileach, adjustSaileachCost, consumeSaileachCard } from './content/arkpedia-saileach.js';
 import { customizeSurtrKit, installSurtr } from './content/arkpedia-surtr.js';
@@ -419,6 +420,7 @@ export class StandardBattle extends Battle {
     customizeBlemishineKit({ battle: this, id, def, unit, kit });
     customizeFlametailKit({ battle: this, id, def, unit, kit });
     customizeAlannaKit({ battle: this, id, def, unit, kit });
+    customizeCatherineKit({ battle: this, id, def, unit, kit });
     customizeSaileachKit({ battle: this, id, def, unit, kit });
     customizeSurtrKit({ battle: this, id, def, unit, kit });
     customizeSpuriaKit({ battle: this, id, def, unit, kit });
@@ -552,6 +554,7 @@ export class StandardBattle extends Battle {
     installBlemishine({ battle: this, unit, def });
     installFlametail({ battle: this, unit, def });
     installAlanna({ battle: this, unit, def });
+    installCatherine({ battle: this, unit, def });
     installSaileach({ battle: this, unit, def });
     installSurtr({ battle: this, unit, def });
     installSpuria({ battle: this, unit, def });

@@ -16,8 +16,8 @@ export function skillIconFile(operator, skill) {
 
 export function skillDescriptionText(level) {
   const values = Object.fromEntries((level.blackboard ?? []).map((entry) => [entry.key.toLowerCase(), entry.value]));
-  // The game writes this unit type in literal angle brackets, not as a rich-text tag.
-  return (level.description ?? '').replace(/<Substitute>/g, 'Substitute').replace(/<[^>]*>/g, '').replace(
+  // These game unit types use literal brackets rather than rich-text tags.
+  return (level.description ?? '').replace(/<(Substitute|Support Devices)>/g, '$1').replace(/<[^>]*>/g, '').replace(
     /\{([^}:]+)(?::([^}]+))?\}/g,
     (placeholder, key, format) => {
       const negative = key.startsWith('-');

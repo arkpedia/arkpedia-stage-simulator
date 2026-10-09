@@ -10,6 +10,8 @@ test('Dollkeeper skill text retains the summoned unit name and source values', (
   }), 'Gains 120% ATK and summons a Substitute; cost -50%, lasts 20 seconds.');
   assert.equal(skillDescriptionText({description:'Unknown {not_imported} <@ba.vdown>value</>'}), 'Unknown {not_imported} value');
   assert.equal(skillDescriptionText({}), '');
+  assert.equal(skillDescriptionText({ description: 'Blocks 2 enemies; Can use <Support Devices> in battles' }),
+    'Blocks 2 enemies; Can use Support Devices in battles');
 });
 
 test('skill asset names preserve internal apostrophes and Greek text while resolving source aliases', () => {

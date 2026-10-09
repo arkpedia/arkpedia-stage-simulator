@@ -34,7 +34,7 @@
   },
   "sd": {
     "repository": "arkpedia/arkpedia-sd-assets",
-    "commit": "b3e87f6df1e021be8644af44df87619190880911",
+    "commit": "0cdabbe96a4ec3761c19fd74cc828a5253cc439b",
     "models": {
       "operator/char_123_fang/default/front": {
         "kind": "operator",
@@ -50327,6 +50327,189 @@
           "height": 609.483
         }
       },
+      "operator/char_4162_cathy/default/front": {
+        "kind": "operator",
+        "id": "char_4162_cathy",
+        "variant": "default",
+        "facing": "front",
+        "spineVersion": "3.8.99",
+        "source": {
+          "key": "operators",
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "spine/char_4162_cathy/char_4162_cathy/Front"
+        },
+        "skeleton": {
+          "path": "models/operator/char_4162_cathy/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4162_cathy.skel",
+          "bytes": 205421,
+          "sha256": "10fdc48595b459203b9c6893baae156768f37dc79db028ef30ea9db02e9b5b46"
+        },
+        "atlas": {
+          "path": "models/operator/char_4162_cathy/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4162_cathy.atlas",
+          "bytes": 9984,
+          "sha256": "8e9f81ceafaa0373f1cd894e1ec65500e21263608f14e1798fb1f9ea9cc45cd5"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_4162_cathy/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4162_cathy.png",
+            "bytes": 136536,
+            "sha256": "021d0b30b8e1ccd6adce6585f75e8140cafbe2530cab4725fb6c7cbf373418a6"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Attack": 1.5,
+          "Default": 0,
+          "Die": 1,
+          "Idle": 3.333,
+          "Skill_1": 1.5,
+          "Skill_2_Begin": 0.433,
+          "Skill_2_End": 0.433,
+          "Skill_2_Loop": 2.667,
+          "Start": 1
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null
+          },
+          "attackDown": null,
+          "skill": {
+            "begin": null,
+            "loop": "Skill_1",
+            "end": null,
+            "index": 0,
+            "idle": null
+          },
+          "die": "Die",
+          "move": null,
+          "stun": null,
+          "skills": {
+            "0": {
+              "begin": null,
+              "loop": "Skill_1",
+              "end": null,
+              "index": 0,
+              "idle": null
+            },
+            "1": {
+              "begin": "Skill_2_Begin",
+              "loop": "Skill_2_Loop",
+              "end": "Skill_2_End",
+              "index": 1,
+              "idle": null
+            }
+          }
+        },
+        "hits": {
+          "Attack": [
+            0.5
+          ],
+          "Skill_1": [
+            0.5
+          ]
+        },
+        "bounds": {
+          "x": -105.818,
+          "y": -2.009,
+          "width": 277.268,
+          "height": 395.126
+        }
+      },
+      "operator/char_4162_cathy/default/back": {
+        "kind": "operator",
+        "id": "char_4162_cathy",
+        "variant": "default",
+        "facing": "back",
+        "spineVersion": "3.8.99",
+        "source": {
+          "key": "operators",
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "spine/char_4162_cathy/char_4162_cathy/Back"
+        },
+        "skeleton": {
+          "path": "models/operator/char_4162_cathy/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4162_cathy.skel",
+          "bytes": 117597,
+          "sha256": "90ce4564dd476fdeee82254ea2427515f66a1407022f1463589bb5b009655ea2"
+        },
+        "atlas": {
+          "path": "models/operator/char_4162_cathy/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4162_cathy.atlas",
+          "bytes": 5220,
+          "sha256": "a6308ec76c894fdecab4ee6f2dff49cf9c6a1c7cbdc0e43df79772d4b6e8f5bb"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_4162_cathy/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4162_cathy.png",
+            "bytes": 90487,
+            "sha256": "e8afbc7709e1a9b3970a4358de9fe700fa14ab1aa826ab9d0c6218496ac25ffa"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Attack": 1.5,
+          "Default": 0,
+          "Idle": 1.667,
+          "Skill_1": 1.5,
+          "Skill_2_Begin": 0.433,
+          "Skill_2_End": 0.433,
+          "Skill_2_Loop": 2.667,
+          "Start": 1
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null
+          },
+          "attackDown": null,
+          "skill": {
+            "begin": null,
+            "loop": "Skill_1",
+            "end": null,
+            "index": 0,
+            "idle": null
+          },
+          "die": null,
+          "move": null,
+          "stun": null,
+          "skills": {
+            "0": {
+              "begin": null,
+              "loop": "Skill_1",
+              "end": null,
+              "index": 0,
+              "idle": null
+            },
+            "1": {
+              "begin": "Skill_2_Begin",
+              "loop": "Skill_2_Loop",
+              "end": "Skill_2_End",
+              "index": 1,
+              "idle": null
+            }
+          }
+        },
+        "hits": {
+          "Attack": [
+            0.5
+          ],
+          "Skill_1": [
+            0.5
+          ]
+        },
+        "bounds": {
+          "x": 557.127,
+          "y": -2.072,
+          "width": 285.155,
+          "height": 392.045
+        }
+      },
       "operator/char_479_sleach/default/front": {
         "kind": "operator",
         "id": "char_479_sleach",
@@ -56098,6 +56281,225 @@
           "height": 515.892
         }
       },
+      "operator/token_10041_cathy_catsld/default/front": {
+        "kind": "operator",
+        "id": "token_10041_cathy_catsld",
+        "variant": "default",
+        "facing": "front",
+        "source": {
+          "key": "global-client",
+          "kind": "assetbundle",
+          "bundle": {
+            "path": "pkgrps/btl_pfb_tokens_0.ab",
+            "md5": "5ab8526b9e59e97cc7e94ed6a248013d",
+            "sha256": "eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f",
+            "bytes": 5060143,
+            "resourceVersion": "26-09-23-17-49-43_b9cc4a",
+            "url": "https://ark-us-static-online.yo-star.com/assetbundle/official/Android/assets/26-09-23-17-49-43_b9cc4a/pkgrps_btl_pfb_tokens_0.dat",
+            "transforms": [
+              "Original RGBA alpha retained; native _StraightAlphaInput0 premultiplied RGB clamped to A for compression bleed; no split Alpha texture exists",
+              "atlas texture dimensions normalized and pma: true recorded"
+            ]
+          },
+          "directory": "pkgrps/btl_pfb_tokens_0.ab",
+          "extractedSkeleton": "token_10041_cathy_catsld.skel",
+          "originalPathIds": {
+            "animator": "-6529827747100787297",
+            "skeletonAnimation": "-8750296699620065889",
+            "skeletonDataAsset": "4536181969370955380",
+            "textAsset": "8295159364608795359",
+            "atlasAsset": "7540700437454560927",
+            "atlasTextAsset": "5629598062311816212",
+            "material": "364099576641165316",
+            "rgbTexture": "8871852992983624432",
+            "alphaTexture": "0"
+          },
+          "transforms": [
+            "Original RGBA alpha retained; native _StraightAlphaInput0 premultiplied RGB clamped to A for compression bleed; no split Alpha texture exists",
+            "atlas texture dimensions normalized and pma: true recorded"
+          ],
+          "materialFloats": {
+            "_BaselineZ": 0,
+            "_Cutoff": 0.10000000149011612,
+            "_DitherIntensity": 0,
+            "_OutlineMipLevel": 0,
+            "_OutlineReferenceTexWidth": 1024,
+            "_OutlineSmoothness": 1,
+            "_OutlineWidth": 3,
+            "_StencilComp": 8,
+            "_StencilRef": 1,
+            "_StraightAlphaInput": 0,
+            "_ThresholdEnd": 0.25,
+            "_Use8Neighbourhood": 1,
+            "_UseAlphaTex": 0,
+            "_UseBleed": 1,
+            "_UseDither": 0,
+            "_UseFixedFormula": 0,
+            "_UseTintBlack": 0
+          }
+        },
+        "spineVersion": "3.8.99",
+        "skeleton": {
+          "path": "models/operator/token_10041_cathy_catsld/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/token_10041_cathy_catsld.skel",
+          "bytes": 16471,
+          "sha256": "6055eeb98a41270f9edbcc260b1043395b40ebbd75b24a41faeae21827e259b4"
+        },
+        "atlas": {
+          "path": "models/operator/token_10041_cathy_catsld/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/token_10041_cathy_catsld.atlas",
+          "bytes": 1719,
+          "sha256": "8bb9cceed485d5892e8612a80ffc72ab8cea23a5106838df972bfa952a06c380"
+        },
+        "textures": [
+          {
+            "path": "models/operator/token_10041_cathy_catsld/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/token_10041_cathy_catsld.png",
+            "bytes": 13219,
+            "sha256": "36d27cdb6f4263cadb542e38d85afd467225d76bc441bfd5a6b12b65e80e963d"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Default": 0,
+          "Die": 0.567,
+          "Idle": 0.7,
+          "Start": 0.667
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": null,
+          "attackDown": null,
+          "skill": null,
+          "die": "Die",
+          "move": null,
+          "stun": "Idle"
+        },
+        "hits": {},
+        "bounds": {
+          "x": 160.056,
+          "y": -1.331,
+          "width": 201.714,
+          "height": 335.376
+        },
+        "avatar": {
+          "path": "models/operator/token_10041_cathy_catsld/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png",
+          "bytes": 37382,
+          "sha256": "5d7baeff3b6ad105035ca3e2b00d5200e1b4a61555445a0c19886e9b7e5b0fe6",
+          "source": {
+            "repository": "fexli/ArknightsResource",
+            "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+            "directory": "avatar/ASSISTANT"
+          }
+        }
+      },
+      "operator/token_10041_cathy_catsld/default/back": {
+        "kind": "operator",
+        "id": "token_10041_cathy_catsld",
+        "variant": "default",
+        "facing": "back",
+        "source": {
+          "key": "global-client",
+          "kind": "assetbundle",
+          "bundle": {
+            "path": "pkgrps/btl_pfb_tokens_0.ab",
+            "md5": "5ab8526b9e59e97cc7e94ed6a248013d",
+            "sha256": "eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f",
+            "bytes": 5060143,
+            "resourceVersion": "26-09-23-17-49-43_b9cc4a",
+            "url": "https://ark-us-static-online.yo-star.com/assetbundle/official/Android/assets/26-09-23-17-49-43_b9cc4a/pkgrps_btl_pfb_tokens_0.dat",
+            "transforms": [
+              "Original RGBA alpha retained; native _StraightAlphaInput0 premultiplied RGB clamped to A for compression bleed; no split Alpha texture exists",
+              "atlas texture dimensions normalized and pma: true recorded"
+            ]
+          },
+          "directory": "pkgrps/btl_pfb_tokens_0.ab",
+          "extractedSkeleton": "token_10041_cathy_catsld.skel",
+          "originalPathIds": {
+            "animator": "-6529827747100787297",
+            "skeletonAnimation": "7088402573345258911",
+            "skeletonDataAsset": "-5045784943107176665",
+            "textAsset": "5827191562966740029",
+            "atlasAsset": "3336857742580886784",
+            "atlasTextAsset": "-2841195859794216468",
+            "material": "3110422463429099002",
+            "rgbTexture": "3000751526514175534",
+            "alphaTexture": "0"
+          },
+          "transforms": [
+            "Original RGBA alpha retained; native _StraightAlphaInput0 premultiplied RGB clamped to A for compression bleed; no split Alpha texture exists",
+            "atlas texture dimensions normalized and pma: true recorded"
+          ],
+          "materialFloats": {
+            "_BaselineZ": 0,
+            "_Cutoff": 0.10000000149011612,
+            "_DitherIntensity": 0,
+            "_OutlineMipLevel": 0,
+            "_OutlineReferenceTexWidth": 1024,
+            "_OutlineSmoothness": 1,
+            "_OutlineWidth": 3,
+            "_StencilComp": 8,
+            "_StencilRef": 1,
+            "_StraightAlphaInput": 0,
+            "_ThresholdEnd": 0.25,
+            "_Use8Neighbourhood": 1,
+            "_UseAlphaTex": 0,
+            "_UseBleed": 1,
+            "_UseDither": 0,
+            "_UseFixedFormula": 0,
+            "_UseTintBlack": 0
+          }
+        },
+        "spineVersion": "3.8.99",
+        "skeleton": {
+          "path": "models/operator/token_10041_cathy_catsld/default/back/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/token_10041_cathy_catsld.skel",
+          "bytes": 15258,
+          "sha256": "c26374993ecfd55742eb39a18fd9bbd9681b55b4f0c37e1bf516986e042c7d83"
+        },
+        "atlas": {
+          "path": "models/operator/token_10041_cathy_catsld/default/back/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/token_10041_cathy_catsld.atlas",
+          "bytes": 1720,
+          "sha256": "9bac880a071cee1d86bbcef45109c603eadec5c946e8eddb4e5506e84b44108f"
+        },
+        "textures": [
+          {
+            "path": "models/operator/token_10041_cathy_catsld/default/back/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/token_10041_cathy_catsld.png",
+            "bytes": 12518,
+            "sha256": "5d28e6cb45fb3b65cb94fd2e3a809a8217c6aeb7f8e6f87237849cc6f2d08f13"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Default": 0,
+          "Idle": 0.7,
+          "Start": 0.667
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": null,
+          "attackDown": null,
+          "skill": null,
+          "die": null,
+          "move": null,
+          "stun": "Idle"
+        },
+        "hits": {},
+        "bounds": {
+          "x": -67.486,
+          "y": -2.244,
+          "width": 199.812,
+          "height": 338.29
+        },
+        "avatar": {
+          "path": "models/operator/token_10041_cathy_catsld/default/back/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png",
+          "bytes": 37382,
+          "sha256": "5d7baeff3b6ad105035ca3e2b00d5200e1b4a61555445a0c19886e9b7e5b0fe6",
+          "source": {
+            "repository": "fexli/ArknightsResource",
+            "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+            "directory": "avatar/ASSISTANT"
+          }
+        }
+      },
       "operator/token_10022_kazema_shadow/default/front": {
         "kind": "operator",
         "id": "token_10022_kazema_shadow",
@@ -60872,7 +61274,7 @@
     },
     "art": {
       "repository": "arkpedia/arkpedia-sd-assets",
-      "commit": "b3e87f6df1e021be8644af44df87619190880911",
+      "commit": "0cdabbe96a4ec3761c19fd74cc828a5253cc439b",
       "scene": {
         "path": "stages/0-1/26-09-23-17-49-43_b9cc4a/scene.json",
         "bytes": 4479,
@@ -60881,7 +61283,7 @@
     },
     "gates": {
       "repository": "arkpedia/arkpedia-sd-assets",
-      "commit": "b3e87f6df1e021be8644af44df87619190880911",
+      "commit": "0cdabbe96a4ec3761c19fd74cc828a5253cc439b",
       "pack": {
         "path": "effects/standard-gates/26-09-23-17-49-43_b9cc4a/gates.json",
         "bytes": 3507,
@@ -422198,6 +422600,1217 @@
         }
       ]
     },
+    "char_4162_cathy": {
+      "id": "char_4162_cathy",
+      "name": "Catherine",
+      "description": "Blocks 2 enemies; Can use <Support Devices> in battles",
+      "rarity": 5,
+      "profession": "SUPPORT",
+      "subProfessionId": "craftsman",
+      "position": "MELEE",
+      "nationId": "victoria",
+      "groupId": null,
+      "teamId": null,
+      "phases": [
+        {
+          "maxLevel": 50,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 1219,
+                "atk": 232,
+                "def": 190,
+                "magicResistance": 0,
+                "cost": 16,
+                "blockCnt": 2,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.5,
+                "respawnTime": 80,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 50,
+              "data": {
+                "maxHp": 1670,
+                "atk": 342,
+                "def": 274,
+                "magicResistance": 0,
+                "cost": 16,
+                "blockCnt": 2,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.5,
+                "respawnTime": 80,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ]
+        },
+        {
+          "maxLevel": 70,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 1670,
+                "atk": 342,
+                "def": 274,
+                "magicResistance": 0,
+                "cost": 18,
+                "blockCnt": 2,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.5,
+                "respawnTime": 80,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 70,
+              "data": {
+                "maxHp": 2144,
+                "atk": 456,
+                "def": 353,
+                "magicResistance": 0,
+                "cost": 18,
+                "blockCnt": 2,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.5,
+                "respawnTime": 80,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ]
+        },
+        {
+          "maxLevel": 80,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 2144,
+                "atk": 456,
+                "def": 353,
+                "magicResistance": 0,
+                "cost": 20,
+                "blockCnt": 2,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.5,
+                "respawnTime": 80,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 80,
+              "data": {
+                "maxHp": 2680,
+                "atk": 550,
+                "def": 420,
+                "magicResistance": 0,
+                "cost": 20,
+                "blockCnt": 2,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.5,
+                "respawnTime": 80,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ]
+        }
+      ],
+      "favorKeyFrames": [
+        {
+          "level": 0,
+          "data": {
+            "maxHp": 0,
+            "atk": 0,
+            "def": 0,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false
+          }
+        },
+        {
+          "level": 50,
+          "data": {
+            "maxHp": 0,
+            "atk": 40,
+            "def": 40,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false
+          }
+        }
+      ],
+      "potentialRanks": [
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "RESPAWN_TIME",
+            "formulaItem": "ADDITION",
+            "value": -10,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [],
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ]
+      ],
+      "trait": null,
+      "talents": [
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_0",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Directional Support Signal",
+              "description": "Carries 2 Support Devices (max 2 deployed at once) that grant an Operator a <$ba.barrier>Barrier</> equal to 10% of Catherine's Max HP (if target has not received an attack within 5s, <$ba.barrier>Barrier</> replenishes by 6% of Catherine's Max HP every second, cannot go over the starting limit); effects from Devices do not stack",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "cnt",
+                  "value": 2,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": "token_10041_cathy_catsld",
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_0",
+                "level": 1
+              },
+              "requiredPotentialRank": 4,
+              "prefabKey": "1",
+              "name": "Directional Support Signal",
+              "description": "Carries 2 Support Devices (max 2 deployed at once) that grant an Operator a <$ba.barrier>Barrier</> equal to 12% <@ba.talpu>(+2%)</> of Catherine's Max HP (if target has not received an attack within 5s, <$ba.barrier>Barrier</> replenishes by 6% of Catherine's Max HP every second, cannot go over the starting limit); effects from Devices do not stack",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "cnt",
+                  "value": 2,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": "token_10041_cathy_catsld",
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Directional Support Signal",
+              "description": "Carries 3 Support Devices (max 2 deployed at once) that grant an Operator a <$ba.barrier>Barrier</> equal to 15% of Catherine's Max HP (if target has not received an attack within 5s, <$ba.barrier>Barrier</> replenishes by 6% of Catherine's Max HP every second, cannot go over the starting limit); effects from Devices do not stack",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "cnt",
+                  "value": 3,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": "token_10041_cathy_catsld",
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 1
+              },
+              "requiredPotentialRank": 4,
+              "prefabKey": "1",
+              "name": "Directional Support Signal",
+              "description": "Carries 3 Support Devices (max 2 deployed at once) that grant an Operator a <$ba.barrier>Barrier</> equal to 17% <@ba.talpu>(+2%)</> of Catherine's Max HP (if target has not received an attack within 5s, <$ba.barrier>Barrier</> replenishes by 6% of Catherine's Max HP every second, cannot go over the starting limit); effects from Devices do not stack",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "cnt",
+                  "value": 3,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": "token_10041_cathy_catsld",
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Directional Support Signal",
+              "description": "Carries 3 Support Devices (max 2 deployed at once) that grant an Operator a <$ba.barrier>Barrier</> equal to 20% of Catherine's Max HP (if target has not received an attack within 5s, <$ba.barrier>Barrier</> replenishes by 6% of Catherine's Max HP every second, cannot go over the starting limit); effects from Devices do not stack",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "cnt",
+                  "value": 3,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": "token_10041_cathy_catsld",
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 4,
+              "prefabKey": "1",
+              "name": "Directional Support Signal",
+              "description": "Carries 3 Support Devices (max 2 deployed at once) that grant an Operator a <$ba.barrier>Barrier</> equal to 22% <@ba.talpu>(+2%)</> of Catherine's Max HP (if target has not received an attack within 5s, <$ba.barrier>Barrier</> replenishes by 6% of Catherine's Max HP every second, cannot go over the starting limit); effects from Devices do not stack",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "cnt",
+                  "value": 3,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": "token_10041_cathy_catsld",
+              "isHideTalent": false
+            }
+          ]
+        },
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_0",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "2",
+              "name": null,
+              "description": "-",
+              "rangeId": null,
+              "blackboard": [],
+              "tokenKey": null,
+              "isHideTalent": true
+            }
+          ]
+        },
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_0",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "3",
+              "name": null,
+              "description": "-",
+              "rangeId": null,
+              "blackboard": [],
+              "tokenKey": null,
+              "isHideTalent": true
+            }
+          ]
+        }
+      ],
+      "skills": [
+        {
+          "id": "skchr_cathy_1",
+          "unlockCondition": {
+            "phase": "PHASE_0",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "Wrought by Age",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{s1_atk:0%}</>, DEF <@ba.vup>+{s1_def:0%}</> for self and other operators who have a <$ba.barrier>Barrier</> granted by her Device(s)",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_cathy_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "s1_atk",
+                  "value": 0.05,
+                  "valueStr": null
+                },
+                {
+                  "key": "s1_def",
+                  "value": 0.05,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Wrought by Age",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{s1_atk:0%}</>, DEF <@ba.vup>+{s1_def:0%}</> for self and other operators who have a <$ba.barrier>Barrier</> granted by her Device(s)",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_cathy_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "s1_atk",
+                  "value": 0.06,
+                  "valueStr": null
+                },
+                {
+                  "key": "s1_def",
+                  "value": 0.06,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Wrought by Age",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{s1_atk:0%}</>, DEF <@ba.vup>+{s1_def:0%}</> for self and other operators who have a <$ba.barrier>Barrier</> granted by her Device(s)",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_cathy_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "s1_atk",
+                  "value": 0.07,
+                  "valueStr": null
+                },
+                {
+                  "key": "s1_def",
+                  "value": 0.07,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Wrought by Age",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{s1_atk:0%}</>, DEF <@ba.vup>+{s1_def:0%}</> for self and other operators who have a <$ba.barrier>Barrier</> granted by her Device(s)",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_cathy_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "s1_atk",
+                  "value": 0.08,
+                  "valueStr": null
+                },
+                {
+                  "key": "s1_def",
+                  "value": 0.08,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Wrought by Age",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{s1_atk:0%}</>, DEF <@ba.vup>+{s1_def:0%}</> for self and other operators who have a <$ba.barrier>Barrier</> granted by her Device(s)",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_cathy_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "s1_atk",
+                  "value": 0.09,
+                  "valueStr": null
+                },
+                {
+                  "key": "s1_def",
+                  "value": 0.09,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Wrought by Age",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{s1_atk:0%}</>, DEF <@ba.vup>+{s1_def:0%}</> for self and other operators who have a <$ba.barrier>Barrier</> granted by her Device(s)",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_cathy_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "s1_atk",
+                  "value": 0.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "s1_def",
+                  "value": 0.1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Wrought by Age",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{s1_atk:0%}</>, DEF <@ba.vup>+{s1_def:0%}</> for self and other operators who have a <$ba.barrier>Barrier</> granted by her Device(s)",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_cathy_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "s1_atk",
+                  "value": 0.11,
+                  "valueStr": null
+                },
+                {
+                  "key": "s1_def",
+                  "value": 0.11,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Wrought by Age",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{s1_atk:0%}</>, DEF <@ba.vup>+{s1_def:0%}</> for self and other operators who have a <$ba.barrier>Barrier</> granted by her Device(s)",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_cathy_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "s1_atk",
+                  "value": 0.12,
+                  "valueStr": null
+                },
+                {
+                  "key": "s1_def",
+                  "value": 0.12,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Wrought by Age",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{s1_atk:0%}</>, DEF <@ba.vup>+{s1_def:0%}</> for self and other operators who have a <$ba.barrier>Barrier</> granted by her Device(s)",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_cathy_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "s1_atk",
+                  "value": 0.13,
+                  "valueStr": null
+                },
+                {
+                  "key": "s1_def",
+                  "value": 0.13,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Wrought by Age",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{s1_atk:0%}</>, DEF <@ba.vup>+{s1_def:0%}</> for self and other operators who have a <$ba.barrier>Barrier</> granted by her Device(s)",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_cathy_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "s1_atk",
+                  "value": 0.15,
+                  "valueStr": null
+                },
+                {
+                  "key": "s1_def",
+                  "value": 0.15,
+                  "valueStr": null
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "skchr_cathy_2",
+          "unlockCondition": {
+            "phase": "PHASE_1",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "Tempered by War",
+              "rangeId": null,
+              "description": "Stops attacking, Max HP <@ba.vup>+{max_hp:0%}</>, DEF <@ba.vup>+{def:0%}</>; Device effect changes to granting a <$ba.barrier>Barrier</> to the target Operator equivalent to <@ba.vup>{overwrite_ratio:0%}</> of Catherine's Max HP every second (cannot exceed her Talent's limit)",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 40,
+                "initSp": 15,
+                "increment": 1
+              },
+              "prefabId": "skchr_cathy_2",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "max_hp",
+                  "value": 0.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "def",
+                  "value": 0.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "overwrite_ratio",
+                  "value": 0.06,
+                  "valueStr": null
+                },
+                {
+                  "key": "interval",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Tempered by War",
+              "rangeId": null,
+              "description": "Stops attacking, Max HP <@ba.vup>+{max_hp:0%}</>, DEF <@ba.vup>+{def:0%}</>; Device effect changes to granting a <$ba.barrier>Barrier</> to the target Operator equivalent to <@ba.vup>{overwrite_ratio:0%}</> of Catherine's Max HP every second (cannot exceed her Talent's limit)",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 40,
+                "initSp": 15,
+                "increment": 1
+              },
+              "prefabId": "skchr_cathy_2",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "max_hp",
+                  "value": 0.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "def",
+                  "value": 0.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "overwrite_ratio",
+                  "value": 0.06,
+                  "valueStr": null
+                },
+                {
+                  "key": "interval",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Tempered by War",
+              "rangeId": null,
+              "description": "Stops attacking, Max HP <@ba.vup>+{max_hp:0%}</>, DEF <@ba.vup>+{def:0%}</>; Device effect changes to granting a <$ba.barrier>Barrier</> to the target Operator equivalent to <@ba.vup>{overwrite_ratio:0%}</> of Catherine's Max HP every second (cannot exceed her Talent's limit)",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 40,
+                "initSp": 15,
+                "increment": 1
+              },
+              "prefabId": "skchr_cathy_2",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "max_hp",
+                  "value": 0.35,
+                  "valueStr": null
+                },
+                {
+                  "key": "def",
+                  "value": 0.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "overwrite_ratio",
+                  "value": 0.06,
+                  "valueStr": null
+                },
+                {
+                  "key": "interval",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Tempered by War",
+              "rangeId": null,
+              "description": "Stops attacking, Max HP <@ba.vup>+{max_hp:0%}</>, DEF <@ba.vup>+{def:0%}</>; Device effect changes to granting a <$ba.barrier>Barrier</> to the target Operator equivalent to <@ba.vup>{overwrite_ratio:0%}</> of Catherine's Max HP every second (cannot exceed her Talent's limit)",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 35,
+                "initSp": 15,
+                "increment": 1
+              },
+              "prefabId": "skchr_cathy_2",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "max_hp",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "def",
+                  "value": 0.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "overwrite_ratio",
+                  "value": 0.06,
+                  "valueStr": null
+                },
+                {
+                  "key": "interval",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Tempered by War",
+              "rangeId": null,
+              "description": "Stops attacking, Max HP <@ba.vup>+{max_hp:0%}</>, DEF <@ba.vup>+{def:0%}</>; Device effect changes to granting a <$ba.barrier>Barrier</> to the target Operator equivalent to <@ba.vup>{overwrite_ratio:0%}</> of Catherine's Max HP every second (cannot exceed her Talent's limit)",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 35,
+                "initSp": 15,
+                "increment": 1
+              },
+              "prefabId": "skchr_cathy_2",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "max_hp",
+                  "value": 0.45,
+                  "valueStr": null
+                },
+                {
+                  "key": "def",
+                  "value": 0.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "overwrite_ratio",
+                  "value": 0.06,
+                  "valueStr": null
+                },
+                {
+                  "key": "interval",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Tempered by War",
+              "rangeId": null,
+              "description": "Stops attacking, Max HP <@ba.vup>+{max_hp:0%}</>, DEF <@ba.vup>+{def:0%}</>; Device effect changes to granting a <$ba.barrier>Barrier</> to the target Operator equivalent to <@ba.vup>{overwrite_ratio:0%}</> of Catherine's Max HP every second (cannot exceed her Talent's limit)",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 35,
+                "initSp": 15,
+                "increment": 1
+              },
+              "prefabId": "skchr_cathy_2",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "max_hp",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "def",
+                  "value": 0.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "overwrite_ratio",
+                  "value": 0.06,
+                  "valueStr": null
+                },
+                {
+                  "key": "interval",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Tempered by War",
+              "rangeId": null,
+              "description": "Stops attacking, Max HP <@ba.vup>+{max_hp:0%}</>, DEF <@ba.vup>+{def:0%}</>; Device effect changes to granting a <$ba.barrier>Barrier</> to the target Operator equivalent to <@ba.vup>{overwrite_ratio:0%}</> of Catherine's Max HP every second (cannot exceed her Talent's limit)",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 32,
+                "initSp": 15,
+                "increment": 1
+              },
+              "prefabId": "skchr_cathy_2",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "max_hp",
+                  "value": 0.55,
+                  "valueStr": null
+                },
+                {
+                  "key": "def",
+                  "value": 0.15,
+                  "valueStr": null
+                },
+                {
+                  "key": "overwrite_ratio",
+                  "value": 0.06,
+                  "valueStr": null
+                },
+                {
+                  "key": "interval",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Tempered by War",
+              "rangeId": null,
+              "description": "Stops attacking, Max HP <@ba.vup>+{max_hp:0%}</>, DEF <@ba.vup>+{def:0%}</>; Device effect changes to granting a <$ba.barrier>Barrier</> to the target Operator equivalent to <@ba.vup>{overwrite_ratio:0%}</> of Catherine's Max HP every second (cannot exceed her Talent's limit)",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 32,
+                "initSp": 15,
+                "increment": 1
+              },
+              "prefabId": "skchr_cathy_2",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "max_hp",
+                  "value": 0.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "def",
+                  "value": 0.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "overwrite_ratio",
+                  "value": 0.06,
+                  "valueStr": null
+                },
+                {
+                  "key": "interval",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Tempered by War",
+              "rangeId": null,
+              "description": "Stops attacking, Max HP <@ba.vup>+{max_hp:0%}</>, DEF <@ba.vup>+{def:0%}</>; Device effect changes to granting a <$ba.barrier>Barrier</> to the target Operator equivalent to <@ba.vup>{overwrite_ratio:0%}</> of Catherine's Max HP every second (cannot exceed her Talent's limit)",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 32,
+                "initSp": 15,
+                "increment": 1
+              },
+              "prefabId": "skchr_cathy_2",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "max_hp",
+                  "value": 0.65,
+                  "valueStr": null
+                },
+                {
+                  "key": "def",
+                  "value": 0.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "overwrite_ratio",
+                  "value": 0.06,
+                  "valueStr": null
+                },
+                {
+                  "key": "interval",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Tempered by War",
+              "rangeId": null,
+              "description": "Stops attacking, Max HP <@ba.vup>+{max_hp:0%}</>, DEF <@ba.vup>+{def:0%}</>; Device effect changes to granting a <$ba.barrier>Barrier</> to the target Operator equivalent to <@ba.vup>{overwrite_ratio:0%}</> of Catherine's Max HP every second (cannot exceed her Talent's limit)",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 30,
+                "initSp": 15,
+                "increment": 1
+              },
+              "prefabId": "skchr_cathy_2",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "max_hp",
+                  "value": 0.7,
+                  "valueStr": null
+                },
+                {
+                  "key": "def",
+                  "value": 0.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "overwrite_ratio",
+                  "value": 0.06,
+                  "valueStr": null
+                },
+                {
+                  "key": "interval",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "char_479_sleach": {
       "id": "char_479_sleach",
       "name": "Saileach",
@@ -467613,6 +469226,564 @@
     }
   },
   "tokens": {
+    "token_10041_cathy_catsld": {
+      "id": "token_10041_cathy_catsld",
+      "name": "Crawler Protection Unit",
+      "profession": "TOKEN",
+      "subProfessionId": "notchar1",
+      "position": "ALL",
+      "phases": [
+        {
+          "maxLevel": 50,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 100,
+                "atk": 100,
+                "def": 0,
+                "magicResistance": 0,
+                "cost": 5,
+                "blockCnt": 0,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 15,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 2,
+                "maxDeckStackCnt": 3,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 50,
+              "data": {
+                "maxHp": 100,
+                "atk": 100,
+                "def": 0,
+                "magicResistance": 0,
+                "cost": 5,
+                "blockCnt": 0,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 15,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 2,
+                "maxDeckStackCnt": 3,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ]
+        },
+        {
+          "maxLevel": 70,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 100,
+                "atk": 100,
+                "def": 0,
+                "magicResistance": 0,
+                "cost": 5,
+                "blockCnt": 0,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 15,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 2,
+                "maxDeckStackCnt": 3,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 70,
+              "data": {
+                "maxHp": 100,
+                "atk": 100,
+                "def": 0,
+                "magicResistance": 0,
+                "cost": 5,
+                "blockCnt": 0,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 15,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 2,
+                "maxDeckStackCnt": 3,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ]
+        },
+        {
+          "maxLevel": 80,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 100,
+                "atk": 100,
+                "def": 0,
+                "magicResistance": 0,
+                "cost": 5,
+                "blockCnt": 0,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 15,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 2,
+                "maxDeckStackCnt": 3,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 80,
+              "data": {
+                "maxHp": 100,
+                "atk": 100,
+                "def": 0,
+                "magicResistance": 0,
+                "cost": 5,
+                "blockCnt": 0,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 15,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 2,
+                "maxDeckStackCnt": 3,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ]
+        }
+      ],
+      "trait": {
+        "candidates": [
+          {
+            "unlockCondition": {
+              "phase": "PHASE_0",
+              "level": 1
+            },
+            "requiredPotentialRank": 0,
+            "blackboard": [],
+            "overrideDescripton": "Cannot be attacked",
+            "prefabKey": null,
+            "rangeId": null
+          }
+        ]
+      },
+      "talents": [
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_0",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Directional Support Signal",
+              "description": "Grants an Operator within range a <$ba.barrier>Barrier</> equal to 10% of Catherine's Max HP (if target has not received an attack within 5s, <$ba.barrier>Barrier</> replenishes by 6% of Catherine's Max HP every second, cannot go over the starting limit); effects from Devices do not stack; Unlimited duration",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "cnt",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "interval",
+                  "value": 5,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_shield_ratio",
+                  "value": 0.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "catsld_t_1[timer][interval].interval",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "shield_ratio_each_trigger",
+                  "value": 0.06,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_0",
+                "level": 1
+              },
+              "requiredPotentialRank": 4,
+              "prefabKey": "1",
+              "name": "Directional Support Signal",
+              "description": "Grants an Operator within range a <$ba.barrier>Barrier</> equal to 12% <@ba.talpu>(+2%)</> of Catherine's Max HP (if target has not received an attack within 5s, <$ba.barrier>Barrier</> replenishes by 6% of Catherine's Max HP every second, cannot go over the starting limit); effects from Devices do not stack; Unlimited duration",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "cnt",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "interval",
+                  "value": 5,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_shield_ratio",
+                  "value": 0.12,
+                  "valueStr": null
+                },
+                {
+                  "key": "catsld_t_1[timer][interval].interval",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "shield_ratio_each_trigger",
+                  "value": 0.06,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Directional Support Signal",
+              "description": "Grants an Operator within range a <$ba.barrier>Barrier</> equal to 15% of Catherine's Max HP (if target has not received an attack within 5s, <$ba.barrier>Barrier</> replenishes by 6% of Catherine's Max HP every second, cannot go over the starting limit); effects from Devices do not stack; Unlimited duration",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "cnt",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "interval",
+                  "value": 5,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_shield_ratio",
+                  "value": 0.15,
+                  "valueStr": null
+                },
+                {
+                  "key": "catsld_t_1[timer][interval].interval",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "shield_ratio_each_trigger",
+                  "value": 0.06,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 1
+              },
+              "requiredPotentialRank": 4,
+              "prefabKey": "1",
+              "name": "Directional Support Signal",
+              "description": "Grants an Operator within range a <$ba.barrier>Barrier</> equal to 17% <@ba.talpu>(+2%)</> of Catherine's Max HP (if target has not received an attack within 5s, <$ba.barrier>Barrier</> replenishes by 6% of Catherine's Max HP every second, cannot go over the starting limit); effects from Devices do not stack; Unlimited duration",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "cnt",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "interval",
+                  "value": 5,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_shield_ratio",
+                  "value": 0.17,
+                  "valueStr": null
+                },
+                {
+                  "key": "catsld_t_1[timer][interval].interval",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "shield_ratio_each_trigger",
+                  "value": 0.06,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Directional Support Signal",
+              "description": "Grants an Operator within range a <$ba.barrier>Barrier</> equal to 20% of Catherine's Max HP (if target has not received an attack within 5s, <$ba.barrier>Barrier</> replenishes by 6% of Catherine's Max HP every second, cannot go over the starting limit); effects from Devices do not stack; Unlimited duration",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "cnt",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "interval",
+                  "value": 5,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_shield_ratio",
+                  "value": 0.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "catsld_t_1[timer][interval].interval",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "shield_ratio_each_trigger",
+                  "value": 0.06,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 4,
+              "prefabKey": "1",
+              "name": "Directional Support Signal",
+              "description": "Grants an Operator within range a <$ba.barrier>Barrier</> equal to 22% <@ba.talpu>(+2%)</> of Catherine's Max HP (if target has not received an attack within 5s, <$ba.barrier>Barrier</> replenishes by 6% of Catherine's Max HP every second, cannot go over the starting limit); effects from Devices do not stack; Unlimited duration",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "cnt",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "interval",
+                  "value": 5,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_shield_ratio",
+                  "value": 0.22,
+                  "valueStr": null
+                },
+                {
+                  "key": "catsld_t_1[timer][interval].interval",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "shield_ratio_each_trigger",
+                  "value": 0.06,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            }
+          ]
+        }
+      ],
+      "skills": [
+        {
+          "id": "sktok_cathy_catsld_1",
+          "unlockCondition": {
+            "phase": "PHASE_0",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "Wrought by Age",
+              "rangeId": null,
+              "description": null,
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "sktok_cathy_catsld_1",
+              "duration": 0,
+              "blackboard": []
+            }
+          ]
+        },
+        {
+          "id": "sktok_cathy_catsld_2",
+          "unlockCondition": {
+            "phase": "PHASE_1",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "Tempered by War",
+              "rangeId": null,
+              "description": null,
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "sktok_cathy_catsld_2",
+              "duration": 0,
+              "blackboard": []
+            }
+          ]
+        }
+      ],
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/0cdabbe96a4ec3761c19fd74cc828a5253cc439b/models/operator/token_10041_cathy_catsld/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+    },
     "token_10022_kazema_shadow": {
       "id": "token_10022_kazema_shadow",
       "name": "Kaminingyo",
@@ -468081,7 +470252,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b3e87f6df1e021be8644af44df87619190880911/models/operator/token_10022_kazema_shadow/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/0cdabbe96a4ec3761c19fd74cc828a5253cc439b/models/operator/token_10022_kazema_shadow/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10001_deepcl_tentac": {
       "id": "token_10001_deepcl_tentac",
@@ -468395,7 +470566,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b3e87f6df1e021be8644af44df87619190880911/models/operator/token_10001_deepcl_tentac/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/0cdabbe96a4ec3761c19fd74cc828a5253cc439b/models/operator/token_10001_deepcl_tentac/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10018_robrta_mach": {
       "id": "token_10018_robrta_mach",
@@ -468885,7 +471056,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b3e87f6df1e021be8644af44df87619190880911/models/operator/token_10018_robrta_mach/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/0cdabbe96a4ec3761c19fd74cc828a5253cc439b/models/operator/token_10018_robrta_mach/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10014_bstalk_crab": {
       "id": "token_10014_bstalk_crab",
@@ -469214,7 +471385,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b3e87f6df1e021be8644af44df87619190880911/models/operator/token_10014_bstalk_crab/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/0cdabbe96a4ec3761c19fd74cc828a5253cc439b/models/operator/token_10014_bstalk_crab/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10011_beewax_oblisk": {
       "id": "token_10011_beewax_oblisk",
@@ -470159,7 +472330,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b3e87f6df1e021be8644af44df87619190880911/models/operator/token_10011_beewax_oblisk/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/0cdabbe96a4ec3761c19fd74cc828a5253cc439b/models/operator/token_10011_beewax_oblisk/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10006_vodfox_doll": {
       "id": "token_10006_vodfox_doll",
@@ -470795,7 +472966,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b3e87f6df1e021be8644af44df87619190880911/models/operator/token_10006_vodfox_doll/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/0cdabbe96a4ec3761c19fd74cc828a5253cc439b/models/operator/token_10006_vodfox_doll/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10003_cgbird_bird": {
       "id": "token_10003_cgbird_bird",
@@ -471090,7 +473261,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b3e87f6df1e021be8644af44df87619190880911/models/operator/token_10003_cgbird_bird/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/0cdabbe96a4ec3761c19fd74cc828a5253cc439b/models/operator/token_10003_cgbird_bird/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10000_silent_healrb": {
       "id": "token_10000_silent_healrb",
@@ -471473,7 +473644,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b3e87f6df1e021be8644af44df87619190880911/models/operator/token_10000_silent_healrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/0cdabbe96a4ec3761c19fd74cc828a5253cc439b/models/operator/token_10000_silent_healrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10015_dusk_drgn": {
       "id": "token_10015_dusk_drgn",
@@ -471887,7 +474058,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b3e87f6df1e021be8644af44df87619190880911/models/operator/token_10015_dusk_drgn/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/0cdabbe96a4ec3761c19fd74cc828a5253cc439b/models/operator/token_10015_dusk_drgn/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10007_phatom_twin": {
       "id": "token_10007_phatom_twin",
@@ -473666,7 +475837,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b3e87f6df1e021be8644af44df87619190880911/models/operator/token_10007_phatom_twin/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/0cdabbe96a4ec3761c19fd74cc828a5253cc439b/models/operator/token_10007_phatom_twin/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10008_cqbw_box": {
       "id": "token_10008_cqbw_box",
@@ -474239,7 +476410,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b3e87f6df1e021be8644af44df87619190880911/models/operator/token_10008_cqbw_box/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/0cdabbe96a4ec3761c19fd74cc828a5253cc439b/models/operator/token_10008_cqbw_box/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10029_slent2_protrb": {
       "id": "token_10029_slent2_protrb",
@@ -474984,7 +477155,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b3e87f6df1e021be8644af44df87619190880911/models/operator/token_10029_slent2_protrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/0cdabbe96a4ec3761c19fd74cc828a5253cc439b/models/operator/token_10029_slent2_protrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10019_nearl2_sword": {
       "id": "token_10019_nearl2_sword",
@@ -475771,7 +477942,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b3e87f6df1e021be8644af44df87619190880911/models/operator/token_10019_nearl2_sword/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/0cdabbe96a4ec3761c19fd74cc828a5253cc439b/models/operator/token_10019_nearl2_sword/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10002_kalts_mon3tr": {
       "id": "token_10002_kalts_mon3tr",
@@ -476189,7 +478360,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b3e87f6df1e021be8644af44df87619190880911/models/operator/token_10002_kalts_mon3tr/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/0cdabbe96a4ec3761c19fd74cc828a5253cc439b/models/operator/token_10002_kalts_mon3tr/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10010_folivo_car": {
       "id": "token_10010_folivo_car",
@@ -477810,7 +479981,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b3e87f6df1e021be8644af44df87619190880911/models/operator/token_10010_folivo_car/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/0cdabbe96a4ec3761c19fd74cc828a5253cc439b/models/operator/token_10010_folivo_car/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10021_blkngt_hypnos": {
       "id": "token_10021_blkngt_hypnos",
@@ -478225,7 +480396,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b3e87f6df1e021be8644af44df87619190880911/models/operator/token_10021_blkngt_hypnos/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/0cdabbe96a4ec3761c19fd74cc828a5253cc439b/models/operator/token_10021_blkngt_hypnos/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10023_windft_wrench": {
       "id": "token_10023_windft_wrench",
@@ -479389,7 +481560,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b3e87f6df1e021be8644af44df87619190880911/models/operator/token_10023_windft_wrench/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/0cdabbe96a4ec3761c19fd74cc828a5253cc439b/models/operator/token_10023_windft_wrench/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10045_alanna_crane": {
       "id": "token_10045_alanna_crane",
@@ -479789,7 +481960,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b3e87f6df1e021be8644af44df87619190880911/models/operator/token_10045_alanna_crane/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/0cdabbe96a4ec3761c19fd74cc828a5253cc439b/models/operator/token_10045_alanna_crane/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10013_robin_mine": {
       "id": "token_10013_robin_mine",
@@ -480720,7 +482891,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b3e87f6df1e021be8644af44df87619190880911/models/operator/token_10013_robin_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/0cdabbe96a4ec3761c19fd74cc828a5253cc439b/models/operator/token_10013_robin_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10016_rfrost_mine": {
       "id": "token_10016_rfrost_mine",
@@ -481651,7 +483822,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b3e87f6df1e021be8644af44df87619190880911/models/operator/token_10016_rfrost_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/0cdabbe96a4ec3761c19fd74cc828a5253cc439b/models/operator/token_10016_rfrost_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10004_otter_motter": {
       "id": "token_10004_otter_motter",
@@ -483000,7 +485171,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b3e87f6df1e021be8644af44df87619190880911/models/operator/token_10004_otter_motter/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/0cdabbe96a4ec3761c19fd74cc828a5253cc439b/models/operator/token_10004_otter_motter/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     }
   },
   "enemies": {
@@ -483051,7 +485222,7 @@
   },
   "skillEffects": {
     "repository": "arkpedia/arkpedia-sd-assets",
-    "commit": "b3e87f6df1e021be8644af44df87619190880911",
+    "commit": "0cdabbe96a4ec3761c19fd74cc828a5253cc439b",
     "pack": {
       "path": "effects/charge-cost/26-09-23-17-49-43_b9cc4a/effect.json",
       "bytes": 15311,
