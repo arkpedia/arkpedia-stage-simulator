@@ -104,5 +104,7 @@ assert reachable == set(E['templates'])
 assert dbkeys == set(E['buffDatabase'])
 assert len(E['tables']['skills']) == 3
 assert all(len(value['levels']) == 10 for value in E['tables']['skills'].values())
-assert E['enabledOperators'] == [] and E['runtimeMapping'] == {}
+assert E['enabledOperators'] == ['char_4010_etlchi']
+assert E['runtimeMapping']['adapter'] == 'server/sim/content/arkpedia-entelechia.js'
+assert E['frameParity'] is False and E['moduleSupport'] is False and E['nativeParticleSupport'] is False
 print(f'Verified {count} native components, {len(bundles)} bundles, {len(E["templates"])} templates, 30 ranks and both original skeleton chains')

@@ -2,6 +2,7 @@
 import * as THREE from "/vendor/three.module.js";
 import { fitCamera, syncThreeCamera, pickTile } from "/js/render/projection.js";
 import { BattleActor } from "./battle-actor.js";
+import { HeartCandleActor } from "./heart-candle.js";
 import { regularVisualHeight } from "./regular-form-visual.js";
 import { createAssets } from "/js/assets.js";
 import { regionEdges } from "/shared/arkpedia/placement.js";
@@ -57,6 +58,9 @@ export class StageRenderer {
     this.controls.className = "tile-controls";
     this.controls.inert = true;
     host.append(this.controls);
+    this.candleStatus = document.createElement('div');
+    this.candleStatus.className = 'stage-art-status heart-candle-status';
+    host.append(this.candleStatus);
     const sky = new THREE.HemisphereLight(0xcce2e4, 0x33454a, 2.2);
     // The gameplay plane is X/Y and height is Z, unlike Three's default Y-up.
     sky.position.set(0, 0, 1);
@@ -409,6 +413,8 @@ export class StageRenderer {
     this.drawPreview();
     this.onLayout?.();
     const operatorLabels = new Map();
+    this.candleStatus.textContent = battle?.enemies.some(e => e.alive && e.mem?.entelechiaHost)
+      ? 'Heart Candle artwork: temporary marker' : '';
     if (battle) {
       const live = new Set();
       for (const u of battle.units) {
@@ -436,9 +442,10 @@ export class StageRenderer {
         }
         if (!view) {
           const loaded = this.preloaded.get(key);
-          if (!loaded) continue;
+          const heartCandle = u.defId === 'enemy_5601_entlec' && u.mem?.entelechiaHost;
+          if (!loaded && !heartCandle) continue;
           const skillIndex = this.data.operators[u.defId]?.skills.findIndex(skill => skill.id === u.skill?.id);
-          const actor = new BattleActor(loaded.skeleton, loaded.entry,
+          const actor = heartCandle ? new HeartCandleActor(P) : new BattleActor(loaded.skeleton, loaded.entry,
             skillIndex >= 0 ? skillIndex : null,
             { attackDrivenSkill: u.profile?.attackDrivenSkill === true });
           const hp = new P.Graphics();

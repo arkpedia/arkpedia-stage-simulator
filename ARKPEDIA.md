@@ -854,7 +854,7 @@ The independent source verifier matches 147 components, six bundles, ten templat
 
 Verification: 56 Weedy adapter tests, eight source tests and 37 related caster/HUD checks pass (101 focused checks). The final full regression passes 8,658 tests, nine skipped and no failures (8,667 total). Local landscape browser checks used E2 Lv90/P1/zero trust and M3, with natural DP/SP. Late S1 placement defeated one remaining enemy after ten escapes. S2 reached 64/70 before the first run ended, then an earlier deployment with maxed Ptilopsis automatically activated and cleared all 11 enemies without escapes; the active state was confirmed by its tile accessibility label. S3 reached 33/33 with its ready icon, deployed the original cannon without consuming another deployment slot, showed the corrected casting label and resumed charging after an empty release. Browser checks do not claim a linked damaging S3 impact; all-rank impact, remote-cast and rupture behavior are covered by production-engine tests. Artwork/chibi/icons loaded and no console warnings/errors were observed.
 
-### Entelechia: full-kit source foundation (adapter pending)
+### Entelechia: source foundation at 4e98adc (before the playable adapter)
 
 `data/arkpedia-entelechia-prefabs.json` retains all three skills and 30 ranks, promotion/potential-selected talents, 148 original components, six checksum-verified client bundles and both operator skeleton pointer chains. The evidence includes Heart Candle's original `enemy_5601_entlec` controller from `battle/enm_pfb_23.ab`, its enemy table entry and the recursive closure of 26 table templates. This is source evidence; Entelechia is not yet in the playable registry. Coverage remains 336/431 forms and 707 skills, with 95 forms remaining. Existing operator, token, enemy, asset and source-pin runtime records are unchanged.
 
@@ -874,3 +874,24 @@ node --test test/arkpedia-entelechia-source.test.js
 ```
 
 The independent verifier compares all 148 native components, six bundles, 26 table templates (25 present in the native holder), 30 ranks and both original skeleton chains. All ten new source checks and 41 combined source/roster checks pass; a repeated extraction produces identical evidence bytes. This batch changes source tooling/evidence and documentation only; it adds no new browser combat claim. The prior runtime regression at `3bfd233` remains 8,658 passed, nine skipped and no failures.
+
+### Entelechia: playable full combat kit
+
+Entelechia now has all three original skills and all 30 rank tables. The adapter replaces inherited Stronghold talent/trait behavior with her regular-stage kit:
+
+- Ground AoE attacks, external-healing rejection, and source `.05s`/block-count collection followed by queued `.12s` self-heals.
+- Pre-mitigation maximum-HP theft through final attribute addition, a capped retained owner gain, current-HP preservation/clamping, and per-source Arts DoT that extends on new hits and survives retreat.
+- The E2 one-use emergency heal, native initial undeadable guard, strict below-25% trigger, and Physical-only damage resistance. Scripted removal still bypasses the guard.
+- S1's two immediate strikes on each captured target at the original attack event, with source multipliers and attack-recovery SP.
+- S2's self plus one other ground carrier, source `x-4` tile AoE pulses, carrier-dependent air targeting, disabled ordinary attacks, and cleanup on expiry/retreat.
+- S3's source ATK/ASPD/range, original A/B attack clips, three highest-current-HP ground hosts, and Heart Candles that copy current HP/DEF/RES. Candles do not affect the enemy counter, block or leak; only an Entelechia source can damage them. The non-BUFF damage floor remains Physical damage, and the host receives the same accepted amount through a sourceless HP-loss bridge. Host removal, owner retreat and global skill-end cleanup remove candles.
+
+Heart Candle's original prefab uses `EmptyAnimator`. Its temporary renderer marker is explicitly labelled and does not borrow another enemy's Spine artwork. Original particles/audio remain unfinished. Native immunity names are mapped to the engine's `frozen` and `disarmedcombat` contracts; this does not turn the source's single named ignored-buff rule into blanket status rejection.
+
+Closed native selectors and controllers retain explicit limits in the evidence record: S2 carrier ranking uses nearby enemies then distance, its first pulse uses a local interval clock, and S3 creation follows the `.333s` begin clip. Candle placement uses the nearest passable tile and the original `.35` ownerward offset. The forwarded host-loss bridge bypasses mitigation/shields but does not reproduce the original receipt masks, direct HP-loss cancellation or native undeath bypass. Native event/cancellation ordering, modules and game-frame parity remain unverified.
+
+The independent verifier still matches 148 original components, six bundles, 26 table templates, 30 ranks and both original facing skeleton chains. All 336 previous operators, 25 tokens, existing enemy/stage records, source pins and existing SD model records remain unchanged. The runtime adds only Entelechia and her two already-published facing models; the asset repository is unchanged. Coverage is **337/431 pinned forms and 710 skills**, with 94 forms remaining: 37 from the older Global snapshot and 57 outside it.
+
+Verification: 53 focused combat tests and ten source tests pass; the combined source/roster run passes 83 checks. These include every rank, damage attribution, the emergency guard, healing/DoT, source-only candle targeting, immunity names, carrier selection, natural duration expiry and lifecycle cleanup. Local landscape browser checks confirmed S1 attack-recovery readiness during combat, S2 manual activation/pulses with increasing defeated count and HP gain, and S3 natural ready/active states and source stat changes. S3 was also checked at E2 Lv1/Rank1. No browser warnings/errors were observed. The low-HP 0-1 hosts died quickly during S3 startup; candle creation, linked damage and lifecycle are engine-tested, with no separate live-marker/VFX fidelity claim.
+
+The final full regression passes 8,721 tests, nine skipped and no failures (8,730 total). The previous 374 count remains an older Global snapshot; the complete pinned target remains 429 operators / 431 forms, including Amiya's three forms.

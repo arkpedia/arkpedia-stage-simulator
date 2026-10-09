@@ -10,15 +10,17 @@ const component = (group, key, id) => e[group][key].flatMap(o => o.components).f
 const actions = (key, event) => e.templates[key].eventToActions[event];
 const bb = values => Object.fromEntries(values.map(v => [v.key, v.value]));
 
-test('Entelechia source foundation keeps all30 ranks without claiming playable kit coverage', () => {
-  assert.deepEqual(e.enabledOperators, []); assert.deepEqual(e.runtimeMapping, {});
-  assert.equal(REGULAR_OPERATORS[ID], undefined); assert.equal(data.operators[ID], undefined);
+test('Entelechia full-kit registry keeps all30 ranks without claiming native frame or particle parity', () => {
+  assert.deepEqual(e.enabledOperators, [ID]);
+  assert.equal(e.runtimeMapping.adapter, 'server/sim/content/arkpedia-entelechia.js');
+  assert.deepEqual(REGULAR_OPERATORS[ID].skillIds, Object.keys(e.tables.skills));
+  assert.equal(data.operators[ID].skills.length, 3);
   assert.equal(e.frameParity, false); assert.equal(e.moduleSupport, false); assert.equal(e.nativeParticleSupport, false);
   assert.equal(e.source.bundles.length, 6);
   assert.equal(Object.keys(e.tables.skills).length, 3);
   for (const skill of Object.values(e.tables.skills)) assert.equal(skill.levels.length, 10);
   assert.equal(Object.keys(e.templates).length, 26); assert.equal(Object.keys(e.originalTemplates).length, 25);
-  assert.ok(e.verificationLimits.some(s => s.includes('not runtime combat verification')));
+  assert.ok(e.verificationLimits.some(s => s.includes('does not establish game frame parity')));
 });
 
 test('S1 has two zero-gap strikes from one native event, not two fabricated animation hits', () => {
@@ -67,6 +69,9 @@ test('emergency heal is a once-only HP checker and physical resistance, not a pe
   const resistance = actions('etlchi_t_2[resistance]', 'ON_TAKE_DAMAGE')[0];
   assert.equal(resistance._damageMask, 'PHYSICAL'); assert.equal(resistance._isOneMinus, true);
   assert.equal(resistance._isStackable, false);
+  const guard = rows('characters', ID).flatMap(d => d._buffs ?? []).find(b => b.buffKey === 'etlchi_t_2[undead]');
+  assert.deepEqual(guard.attributes.abnormalFlags, [6]);
+  assert.ok(actions('etlchi_t_2[heal]', 'ON_BUFF_START').some(a => a._buffKey === 'etlchi_t_2[undead]'));
 });
 
 test('S2 retains carrier selection, disarm and source x-4 AoE instead of generic melee splash', () => {

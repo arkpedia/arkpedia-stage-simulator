@@ -78,7 +78,11 @@ export function enemyStealthed(e) {
 export function canTargetEnemy(attacker, e, profile) {
   if (!e.alive || e.hidden || !e.deployed) return false;
   const f = e.s.flags;
-  if (f.untargetable || (f.sleep && !(profile && profile.hitSleep))) return false;
+  // Reviewed native selectors may ignore TargetFree for an explicit recipient
+  // (Entelechia S3 Heart Candles). No general invulnerability/stealth bypass.
+  const ignoreTargetFree = typeof profile?.ignoreTargetFree === 'function'
+    && profile.ignoreTargetFree(attacker, e) === true;
+  if ((f.untargetable && !ignoreTargetFree) || (f.sleep && !(profile && profile.hitSleep))) return false;
   if (f.stealth && enemyStealthed(e) && !profile?.ignoreStealth) return false;
   if (typeof profile?.canTarget === 'function' && !profile.canTarget(attacker, e)) return false;
   if (e.isFlying && !(profile && profile.canHitFly)) return false;

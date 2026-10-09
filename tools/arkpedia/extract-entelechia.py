@@ -205,7 +205,7 @@ evidence = {
                                     if row['path'] == 'en_US/gamedata/buff_table.json')},
                'bundles': source_bundles, 'modelRepository': 'fexli/ArknightsResource', 'modelCommit': MODEL},
     'frameParity': False, 'moduleSupport': False, 'nativeParticleSupport': False,
-    'enabledOperators': [], 'reviewStatus': 'Source foundation; full-kit adapter pending',
+    'enabledOperators': [ID], 'reviewStatus': 'Full-kit combat adapter with explicit native fidelity limits',
     'enemies': enemies, 'tokens': {}, 'characters': characters, 'skills': skills, 'projectiles': {},
     'chararts': chararts, 'officialSkeletonBindings': bindings, 'models': models,
     'templates': {key: bt[key] for key in sorted(templates)},
@@ -214,13 +214,28 @@ evidence = {
     'tables': {'character': ct[ID], 'tokens': {},
                'enemies': {row['Key']: row['Value'] for row in read(C / 'enemy_database.json')['enemies'] if row['Key'] == CANDLE},
                'skills': {key: st[key] for key in SKILLS}, 'ranges': {key: rt[key] for key in sorted(ranges)}},
-    'runtimeMapping': {},
+    'runtimeMapping': {
+        'adapter': 'server/sim/content/arkpedia-entelechia.js',
+        'trait': 'Ground range AoE; .05s block-count collector and .12s self-heal queue, including S2 NORMAL pulses; excludes BUFF DoT.',
+        'bloodBank': 'Pre-mitigation final-addition HP transfer with persistent owner cap; current HP clamp; per-source Arts DoT extends and survives removal.',
+        'secondServing': 'Native initial undeadable guard, strict below25 percent check, one heal and Physical-only resistance; scripted removal bypasses guard.',
+        'S1': 'Two immediate captured-input strikes at the original .4s attack event; uncapped ASPD scaling.',
+        'S2': 'Self plus one other ground carrier, x-4 tile pulses every source interval; lifted carrier admits air; ordinary attacks disabled.',
+        'S3': 'Source ATK/ASPD/range, A/B strike clips, three highest-current-HP ground hosts, current HP/DEF/RES copy, non-scoring candle lifecycle.',
+        'heartCandle': 'Explicit S3 TargetFree selection; Entelechia source restriction, non-BUFF35 percent ATK floor, sourceless host-loss bridge and global skill-end cleanup.',
+        'visuals': 'Original operator facing skeletons and skill clips; Heart Candle uses a labelled temporary marker, no fabricated Spine model.'
+    },
     'verificationLimits': [
-        'The adapter is not enabled. Source evidence is not runtime combat verification.',
+        'Source checks and local engine/browser checks are distinct. The adapter does not establish game frame parity.',
         'The pinned Global table contains entlec_a[line_effect_core], absent from this older native template holder; preserve both sources without claiming particle parity.',
-        'Heart Candle uses the native EmptyAnimator, not an enemy Spine skeleton. Candle visuals require the original effect system.',
-        'Closed native controller execution and frame timing have not been recovered by reading serialized fields.'],
+        'Heart Candle uses the native EmptyAnimator, not an enemy Spine skeleton. Its labelled temporary marker is not original effect artwork.',
+        'Closed selector enums are bounded: S2 carrier ranking uses nearby enemy count then distance; S3 mask639 excludes marked candles/props/traps but permits bosses.',
+        'S2 first pulse uses an interval clock and S3 creation follows the .333s begin clip; exact native FSM/event ordering remains unverified.',
+        'Nearest passable tile and .35 owner-facing offset are a local placement bridge, not recovered native placement execution.',
+        'The native unmodifiable NoSourceDamage/mask/shield pipeline is bridged to sourceless host HP loss; direct HP-loss cancellation and native undeath bypass are unverified.',
+        'Pre-mitigation steal, post-acceptance DoT/heal and current-HP preservation are engine event bridges; native miss/cancellation order is unverified.',
+        'Original particles/audio, modules, closed controller execution and exact frame timing remain unfinished.'],
     'nativeTemplateGaps': sorted(templates - native_templates.keys()),
 }
 (ROOT / 'data/arkpedia-entelechia-prefabs.json').write_text(json.dumps(evidence, indent=2) + '\n')
-print(f'Rebuilt {len(templates)} reachable table templates, {len(evidence["originalTemplates"])} native templates and 30 source ranks; adapter held')
+print(f'Rebuilt {len(templates)} reachable table templates, {len(evidence["originalTemplates"])} native templates and 30 source ranks; retained bounded adapter review')
