@@ -3,6 +3,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import data from '../data/arkpedia-mvp.json' with { type: 'json' };
 import evidence from '../data/arkpedia-five-star-sniper-fourth-prefabs.json' with { type: 'json' };
+import heyakEvidence from '../data/arkpedia-hoolheyak-prefabs.json' with { type: 'json' };
 import { FIVE_STAR_SNIPER_FOURTH_OPERATORS } from '../shared/arkpedia/five-star-sniper-fourth-operators.js';
 import { REGULAR_OPERATORS } from '../shared/arkpedia/operators.js';
 import { defaultBuild } from '../shared/arkpedia/loadout.js';
@@ -30,7 +31,11 @@ function readyAuto(u){u.skill.gainSp(u.skill.spCost,'test');assert.equal(u.skill
 
 test('fourth sniper durable source retains original wave count/formula kinds/projectiles and whole-kit deferrals',()=>{
  assert.equal(evidence.frameParity,false);assert.equal(evidence.moduleSupport,false);assert.equal(Object.keys(FIVE_STAR_SNIPER_FOURTH_OPERATORS).length,3);
- for(const id of['char_4027_heyak','char_4046_ebnhlz']){assert.equal(REGULAR_OPERATORS[id],undefined);assert.ok(evidence.deferredOperators[id].reason.length>180);}
+ // These are historical whole-kit deferrals. Ho'olheyak now has a separate complete review.
+ for(const id of['char_4027_heyak','char_4046_ebnhlz'])assert.ok(evidence.deferredOperators[id].reason.length>180);
+ assert.equal(REGULAR_OPERATORS.char_4046_ebnhlz,undefined);
+ assert.deepEqual(REGULAR_OPERATORS.char_4027_heyak.skillIds,Object.keys(heyakEvidence.tables.skills));
+ assert.deepEqual(heyakEvidence.enabledOperators,['char_4027_heyak']);
  for(const id of[EX,AO,ER])for(const face of['Front','Back']){assert.match(evidence.models[id][face].sha256,/^[a-f0-9]{64}$/);assert.equal(evidence.officialSkeletonBindings[id][face].sha256,evidence.models[id][face].sha256);}
  const multi=nodes(evidence.characters[EX]).find(c=>c._additionalTimes===1);assert.equal(multi._waitAttackEventForAllAttacks,1);assert.equal(multi._splitDamage,0);
  assert.deepEqual(evidence.models[EX].Front.hits.Skill_Right_Loop,[.1,.267]);near(evidence.models[EX].Front.durations.Skill_Right_Begin,.667);
