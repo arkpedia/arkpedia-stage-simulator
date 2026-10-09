@@ -90,6 +90,7 @@ import { PHILAE_OPERATORS } from './philae-operators.js';
 import { WINDFLIT_OPERATORS } from './windflit-operators.js';
 import { BLEMISHINE_OPERATORS } from './blemishine-operators.js';
 import { FLAMETAIL_OPERATORS } from './flametail-operators.js';
+import { SENSHI_OPERATORS } from './senshi-operators.js';
 import { CATHERINE_OPERATORS } from './catherine-operators.js';
 import { ALANNA_OPERATORS } from './alanna-operators.js';
 import { SAILEACH_OPERATORS } from './saileach-operators.js';
@@ -223,6 +224,7 @@ export const REGULAR_OPERATORS = Object.freeze({
   ...FLAMETAIL_OPERATORS,
   ...ALANNA_OPERATORS,
   ...CATHERINE_OPERATORS,
+  ...SENSHI_OPERATORS,
   ...SAILEACH_OPERATORS,
   ...SURTR_OPERATORS,
   ...SPURIA_OPERATORS,
