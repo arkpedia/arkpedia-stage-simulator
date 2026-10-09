@@ -513,7 +513,10 @@ function summonDetails(entry) {
     <p class="sp-readout">${entry.stock} remaining · ${raw.cost} DP · ${entry.config.deploymentSlotCost} deployment slot${entry.config.deploymentSlotCost === 1 ? '' : 's'}</p>
     ${recovery}<p class="skill-description">${entry.ownerId === 'char_003_kalts' ? 'Can be healed only by Kal’tsit. ' : entry.config.healFree ? 'Cannot receive ordinary healing. ' : ''}${entry.config.tacticalPoint ? 'Its tactical point stays in place while the reinforcement recovers. ' : ''}Leaves the field when its summoner is removed.</p>
     ${unit && skillSourceFor(unit) !== unit
-      ? operatorSkillDetails(battle.bench[entry.ownerId].build, skillSourceFor(unit)) : ''}`;
+      ? operatorSkillDetails(battle.bench[entry.ownerId].build, skillSourceFor(unit))
+      : unit && !unit.skill.noSkill ? operatorSkillDetails(battle.bench[entry.ownerId].build, unit,
+        data.tokens[entry.record.id].skills.find(s => s.id === entry.record.skill.skillId)
+          ?.levels[battle.bench[entry.ownerId].build.skillRank - 1]) : ''}`;
 }
 function operatorDetails(build, unit) {
   const record = recordFor(build, data);
@@ -532,9 +535,9 @@ function operatorDetails(build, unit) {
     <div class="meter hp"><span style="width:${Math.min(1, Math.max(0, hp / maxHp)) * 100}%"></span></div>
     ${rangeDiagram(record.rangeGrid)}`;
 }
-function operatorSkillDetails(build, unit) {
+function operatorSkillDetails(build, unit, tokenLevel = null) {
   const hud = unit ? skillHud(unit.skill) : null;
-  const level = data.operators[build.id].skills.find((entry) => entry.id === build.skillId)?.levels[build.skillRank - 1];
+  const level = tokenLevel ?? data.operators[build.id].skills.find((entry) => entry.id === build.skillId)?.levels[build.skillRank - 1];
   const recovery = {
     INCREASE_WITH_TIME: "Auto recovery",
     INCREASE_WHEN_ATTACK: "Offensive recovery",
@@ -750,7 +753,10 @@ function drawHud() {
         if (b.kind === 'token') retreatRegularSummon(battle, selected); else battle.retreatOperator(selected);
         selected = null; drawHud();
       });
-      field.querySelector('#skill')?.addEventListener('click', () => { battle.activateOperator(skillUnit.defId); drawHud(); });
+      field.querySelector('#skill')?.addEventListener('click', () => {
+        battle.activateOperator(skillUnit === unit && b.kind === 'token' ? summonUnitId(unit) : skillUnit.defId);
+        drawHud();
+      });
     }
     command.querySelector('.command-stats').innerHTML = b.kind === 'operator' ? operatorDetails(b.build, unit) : '';
     const copy = operatorTabContent(b, skillUnit);

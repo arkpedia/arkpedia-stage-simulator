@@ -17,7 +17,7 @@ import { customizeGuardExpansionKit, installGuardExpansion } from './content/ark
 import { customizeSupportExpansionKit, installSupportExpansion } from './content/arkpedia-support-expansion.js';
 import { customizeCasterExpansionKit, installCasterExpansion } from './content/arkpedia-caster-expansion.js';
 import { customizeSniperExpansionKit, installSniperExpansion } from './content/arkpedia-sniper-expansion.js';
-import { customizeSummonerKit, installSummoner } from './content/arkpedia-summons.js';
+import { customizeSummonerKit, installSummoner, selectedRegularSummon } from './content/arkpedia-summons.js';
 import { customizeRobotExpansionKit, installRobotExpansion } from './content/arkpedia-robot-expansion.js';
 import { customizeFiveStarGuardKit, installFiveStarGuard } from './content/arkpedia-five-star-guards.js';
 import { customizeFiveStarCasterKit, installFiveStarCaster } from './content/arkpedia-five-star-casters.js';
@@ -117,6 +117,7 @@ import { customizeKazemaruKit, installKazemaru } from './content/arkpedia-kazema
 import { customizeAakKit, installAak } from './content/arkpedia-aak.js';
 import { customizeFrostKit, installFrost } from './content/arkpedia-frost.js';
 import { customizeRobinKit, installRobin } from './content/arkpedia-robin.js';
+import { customizeWulfeniteKit, installWulfenite } from './content/arkpedia-wulfenite.js';
 import { customizeFiveStarSupportFourthKit, installFiveStarSupportFourth } from './content/arkpedia-five-star-support-fourth.js';
 import { customizeFiveStarSpecialistExpansionKit, installFiveStarSpecialistExpansion } from './content/arkpedia-five-star-specialist-expansion.js';
 import { catalogueFor, recordFor } from "../../shared/arkpedia/loadout.js";
@@ -431,6 +432,7 @@ export class StandardBattle extends Battle {
     customizeSurtrKit({ battle: this, id, def, unit, kit });
     customizeSpuriaKit({ battle: this, id, def, unit, kit });
     customizeRobinKit({ battle: this, id, def, unit, kit });
+    customizeWulfeniteKit({ battle: this, id, def, unit, kit });
     customizeFrostKit({ battle: this, id, def, unit, kit });
     customizeMayerKit({ battle: this, id, def, unit, kit });
     customizeFangFireSharpenedKit({ battle: this, id, def, unit, kit });
@@ -568,6 +570,7 @@ export class StandardBattle extends Battle {
     installSurtr({ battle: this, unit, def });
     installSpuria({ battle: this, unit, def });
     installRobin({ battle: this, unit, def });
+    installWulfenite({ battle: this, unit, def });
     installFrost({ battle: this, unit, def });
     installMayer({ battle: this, unit, def });
     installFangFireSharpened({ battle: this, unit, def });
@@ -665,7 +668,8 @@ export class StandardBattle extends Battle {
   }
   activateOperator(id) {
     if (!canDeployInViewport(this.viewport) || this.finished) return false;
-    const unit = this.bench[id]?.unit;
+    const unit = typeof id === 'string' && id.startsWith('token:')
+      ? selectedRegularSummon(this, id)?.unit : this.bench[id]?.unit;
     if (unit?.alive && unit.skill.active && unit.skill.spec.manualCancel) {
       if (!unit.canAct || unit.s.flags.silence) return false;
       unit.skill.end('manual');

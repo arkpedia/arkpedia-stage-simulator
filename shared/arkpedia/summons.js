@@ -1,6 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Only explicitly reviewed regular-stage tokens may enter the deployment deck.
 export const REGULAR_SUMMONS = Object.freeze({
+  char_4171_wulfen: Object.freeze({ tokenId: 'token_10044_wulfen_mine',
+    deploymentSlotCost: 0, chooseFacing: false, fixedRotation: true, healFree: true,
+    refundRatio: 0, noAttack: true, sourceStockLimit: true,
+    includeReadyCardInStock: true, excludeWalkingEnemy: true }),
   char_242_otter: Object.freeze({ tokenId: 'token_10004_otter_motter',
     deploymentSlotCost: 1, chooseFacing: false, healFree: true, refundRatio: .5,
     attackClip: 'Attack', additiveBornStock: true, bornStockBudget: true }),
@@ -111,6 +115,27 @@ export function summonRecordFor(ownerId, build, tokens) {
     if (config.sourceStockLimit) stats.maxDeckStackCnt += talent.bb.max_deck_stack_cnt ?? 0;
   }
   let skill = null;
+  if (ownerId === 'char_4171_wulfen') {
+    const index = ['skchr_wulfen_1', 'skchr_wulfen_2'].indexOf(build.skillId);
+    const id = ['sktok_wulfen_1', 'sktok_wulfen_2'][index];
+    const entry = source.skills?.find(row => row.id === id);
+    const elite = phaseNumber(entry?.unlockCondition?.phase);
+    if (!entry || !Number.isInteger(elite) || build.elite < elite
+      || !Number.isSafeInteger(build.skillRank) || build.skillRank < 1
+      || build.skillRank > Math.min([4, 7, 10][build.elite], entry.levels.length))
+      throw Error('Unsupported Wulfenite trap skill or rank');
+    const level = entry.levels[build.skillRank - 1], bb = blackboard(level.blackboard);
+    const keys = index ? ['cnt', 'atk_scale', 'def', 'duration'] : ['cnt', 'atk_scale', 'stun'];
+    if (level.skillType !== 'MANUAL' || level.prefabId !== id
+      || level.spData.spType !== 'INCREASE_WITH_TIME' || level.spData.spCost !== 8
+      || level.spData.initSp !== 0 || level.spData.maxChargeTime !== 1
+      || Object.keys(bb).length !== keys.length || keys.some(k => !Number.isFinite(bb[k]))
+      || index === 1 && !level.rangeGrid?.length)
+      throw Error('Unreviewed Wulfenite trap source');
+    skill = { skillId: id, name: level.name, skillType: level.skillType,
+      durationType: level.durationType, duration: level.duration, description: level.description,
+      rangeGrid: level.rangeGrid, ...level.spData, bb, trigger: { rule: 'NEVER' } };
+  }
   if (ownerId === 'char_4162_cathy') {
     const ids = ['sktok_cathy_catsld_1', 'sktok_cathy_catsld_2'];
     if (source.skills?.length !== ids.length || source.skills.some((s, i) =>
@@ -185,12 +210,11 @@ export function summonRecordFor(ownerId, build, tokens) {
       trigger: { rule: 'NEVER' } };
   }
   if (config.tacticalPoint) stats.respawnTime = talents[0].bb.interval;
-  // Robin and Frost's source talents explicitly say 6/8/10 total stored traps. Their
-  // native stacked-card field excludes the ready card (5/7/9). This UI holds
-  // both in one stock count; other summons retain their reviewed semantics.
+  // Reviewed trap stock combines the ready card with native stacked cards:
+  // Robin/Frost 6/8/10, Wulfenite 2/3/4. Other summons retain their semantics.
   if (config.includeReadyCardInStock) {
     if (stats.maxDeckStackCnt + 1 !== stats.maxDeployCount
-      || stats.maxDeployCount !== [6, 8, 10][build.elite])
+      || stats.maxDeployCount !== (ownerId === 'char_4171_wulfen' ? [2, 3, 4] : [6, 8, 10])[build.elite])
       throw Error('Unreviewed trap total stored capacity');
     stats.maxDeckStackCnt++;
   }

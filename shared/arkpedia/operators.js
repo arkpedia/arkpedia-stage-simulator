@@ -114,6 +114,7 @@ import { KAZEMARU_OPERATORS } from './kazemaru-operators.js';
 import { AAK_OPERATORS } from './aak-operators.js';
 import { FROST_OPERATORS } from './frost-operators.js';
 import { ROBIN_OPERATORS } from './robin-operators.js';
+import { WULFENITE_OPERATORS } from './wulfenite-operators.js';
 import { FIVE_STAR_SPECIALIST_EXPANSION_OPERATORS } from './five-star-specialist-expansion-operators.js';
 export const REGULAR_OPERATORS = Object.freeze({
   char_123_fang: { skillId: "skcom_charge_cost[1]", talentKeys: ["cost"], mechanic: "dp", prefabId: "skcom_charge_cost", templateKey: "charge_cost" },
@@ -233,6 +234,7 @@ export const REGULAR_OPERATORS = Object.freeze({
   ...SURTR_OPERATORS,
   ...SPURIA_OPERATORS,
   ...ROBIN_OPERATORS,
+  ...WULFENITE_OPERATORS,
   ...FROST_OPERATORS,
   ...MAYER_OPERATORS,
   ...FANG_FIRE_SHARPENED_OPERATORS,
