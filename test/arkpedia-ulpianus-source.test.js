@@ -5,9 +5,10 @@ import evidence from '../data/arkpedia-ulpianus-prefabs.json' with { type:'json'
 import data from '../data/arkpedia-mvp.json' with { type:'json' };
 import { REGULAR_OPERATORS } from '../shared/arkpedia/operators.js';
 const ID='char_4145_ulpia';
-test('full native source and all ranks are retained without prematurely enabling a partial Ulpianus kit',()=>{
-  assert.equal(REGULAR_OPERATORS[ID],undefined);assert.equal(data.operators[ID],undefined);
-  assert.deepEqual(evidence.enabledOperators,[]);assert.equal(evidence.frameParity,false);
+test('full native source and all ranks are retained for the enabled three-skill Ulpianus adapter',()=>{
+  assert.deepEqual(REGULAR_OPERATORS[ID].skillIds,['skchr_ulpia_1','skchr_ulpia_2','skchr_ulpia_3']);
+  assert.ok(data.operators[ID]);
+  assert.deepEqual(evidence.enabledOperators,[ID]);assert.equal(evidence.frameParity,false);
   assert.equal(evidence.moduleSupport,false);assert.equal(evidence.nativeParticleSupport,false);
   assert.equal(evidence.source.bundles.length,6);assert.equal(Object.keys(evidence.templates).length,10);
   assert.equal(Object.keys(evidence.tables.skills).length,3);

@@ -132,6 +132,7 @@ import { IANA_OPERATORS } from './iana-operators.js';
 import { BRIGID_OPERATORS } from './brigid-operators.js';
 import { EBENHOLZ_OPERATORS } from './ebenholz-operators.js';
 import { LIN_OPERATORS } from './lin-operators.js';
+import { ULPIANUS_OPERATORS } from './ulpianus-operators.js';
 import { HOOLHEYAK_OPERATORS } from './hoolheyak-operators.js';
 import { GOLDENGLOW_OPERATORS } from './goldenglow-operators.js';
 import { LEE_OPERATORS } from './lee-operators.js';
@@ -292,6 +293,7 @@ export const REGULAR_OPERATORS = Object.freeze({
   ...HOOLHEYAK_OPERATORS,
   ...EBENHOLZ_OPERATORS,
   ...LIN_OPERATORS,
+  ...ULPIANUS_OPERATORS,
   ...CHEN_ALTER_OPERATORS,
   ...FROST_OPERATORS,
   ...MAYER_OPERATORS,

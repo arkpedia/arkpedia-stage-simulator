@@ -59,8 +59,8 @@
   "frameParity": false,
   "moduleSupport": false,
   "nativeParticleSupport": false,
-  "enabledOperators": [],
-  "reviewStatus": "Native source verified; full-kit adapter pending",
+  "enabledOperators": ["char_4145_ulpia"],
+  "reviewStatus": "Native source verified; all three skills and both talents mapped and tested locally",
   "tokens": {
     "token_10039_ulpia_block": [
       {
@@ -11857,17 +11857,19 @@
     }
   },
   "runtimeMapping": {
-    "movement": "Adapter must explicitly select carry/rebuild state. Native HP-ratio, skill-progress and selected kill-stack carry are retained source requirements; all other state is not implicitly retained.",
+    "movement": "sourceMoveRespawn carries selected self kill stacks, source-owned Abyssal grants and deck effects; rebuilds active S3 modifiers; assigns captured HP ratio against reconstructed MAX_HP; preserves skill activation and remaining time. Other resident temporary buffs are detached. This explicit local policy is not native C# lifecycle parity.",
     "reservation": "Source footprint has EmptyAnimator and zero slots; reserve origin without inventing a combat chibi.",
-    "clock": "Source clip/hit times are evidence; closed RespawnBegin/selector/capture-net dispatch still needs a bounded runtime interpretation and tests."
+    "clock": "Original facing clips and capped attack clocks drive release; S3 uses Begin .433 emission, ReStart_A/B, End .333 and Back .833. S1 uses a live INPUT2 set, speed10 flight, linear second-part capture over1.3s, a minimum1s link and1s post-delay. Closed native dispatch remains a bounded local interpretation.",
+    "damageReceipt": "First-talent healing reads current HP after an accepted mitigated/shield receipt, ignores cancelled hits and direct HP loss, and obeys HealFree. Native lethal receipt/event ordering is not certified.",
+    "anchor": "Select first forward ground target's integer root tile, otherwise farthest in-map range6-1 tile; blast applies stun then physical damage before attempted move. Occupied/nondeployable endpoints refuse movement without suppressing the blast. Exact swept-body selector and native fallback are not recovered.",
+    "return": "Release the zero-slot origin marker, hold S3 stats through End, restore home HP ratio and clear SP, then play Back. In-place return also advances the local lifetime. True death/retreat never returns or resurrects the owner."
   },
   "verificationLimits": [
     "TileSelector filter28 exact first-target/max-forward/fallback tile ordering; official selected description supports only the primary first-hit-or-max-distance rule. Existing inherited second-next-tile fallback and wall-stop law comes from secondary PRTS, not serialized selector proof.",
-    "Projectile extraActionEvent3 versus damage/stun/respawn execution ordering; native C# dispatch not recovered. Need bound and substantive tests before enabling.",
-    "Native RespawnBegin class exact return deadline/availability through control/skill expiry/owner hidden/unborn projectile; Source Begin .433 emission and Back/ReStart clocks alone do not prove the custom lifecycle.",
-    "S1 capture-net pull versus damage/link-resolve ordering and postFilter10 enemy priority; cannot silently reuse once-immediate pull.",
-    "Resident external buff/control retention vs fresh-respawn cleanup is graph-implied only. Source Abyssal aura removeBuffIncludeReborning0 is a direct exception to blanket source-owned aura cleanup; persistent unowned emitted output cannot be silently discarded.",
-    "Full kit is not registered yet. This evidence does not increase playable coverage.",
+    "Projectile extraActionEvent3 versus damage/stun/respawn execution ordering is mapped locally as stun, physical damage, then move; native C# dispatch is not recovered.",
+    "Native RespawnBegin deadline, coincident callbacks and forceRespawnInPlace arbitration are unrecovered. Source clocks are retained; local return advances a lifetime even when already home.",
+    "S1 capture-net physics and postFilter10 priority are unrecovered. Local route-progress targeting, linear timed pull through shared displacement geometry and minimum link/post clocks are tested approximations, not once-immediate pull or game-frame parity.",
+    "Resident buff cleanup is an explicit local policy, not proven native wholesale transfer. Source Abyssal rebirth-detach exception and emitted S1 output survive source move/removal as mapped; elemental/memory fields and other native born passives are not reconstructed.",
     "Native Unity particles, audio, modules and game-frame parity remain unfinished."
   ],
   "sourceContracts": [
@@ -11886,14 +11888,17 @@
   "neededSharedContracts": [
     {
       "contract": "source-authorized move-respawn lifetime bridge",
+      "resolvedBy": "server/sim/content/arkpedia-source-move.js with explicit Ulpianus carry/rebuild policy and HP-ratio assignment",
       "reason": "Current moveRedeploy intentionally keeps all state. Need an opt-in source move transaction with explicit capture/rebirth and adapter-selected carry policy; graph-proven HP ratio, skill progress and self-stack state must carry. Whether other resident buffs/controls reset requires an approved bounded interpretation; source detach/remove-on-reborning flags must be handled separately and cannot justify a blanket aura wipe."
     },
     {
       "contract": "tile reservation and return",
+      "resolvedBy": "Battle.tileReservation/releaseTileReservations/isReservedTile and Ulpianus End/Back return adapter",
       "reason": "Exact original footprint occupies old tile with zero slots and owner-exclusion dynamic tile state. Reserve until return/real withdrawal/death, release reservation before return, prevent foreign occupation, refresh block/range/spatial state at each valid landing without mutating global deployment limit."
     },
     {
       "contract": "source-only move reason versus ordinary retreat/death",
+      "resolvedBy": "Dedicated sourceMoveFinish/sourceMoveBorn hooks, lifetime guards and real-removal cleanup; no ordinary death/deploy events",
       "reason": "Do not call ordinary death/kill hooks, refund DP, consume card stock, or increment true redeploy multiplier. Reborn deploy effects must be deliberately allowed with exact no-SP clear stage and lifetime cleanup."
     }
   ]

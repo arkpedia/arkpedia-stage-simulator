@@ -2104,12 +2104,19 @@ export class Battle {
    * the official 拉力起点 in front of an operator. Returns the tiles moved.
    */
   pull(e, force, { to, center = null, stop = PULL_STOP_RADIUS } = {}) {
-    if (!this._displaceable(e) || !to) return 0;
+    const plan = this.planPull(e, force, { to, center, stop });
+    return plan ? this.displace(e, plan.direction, plan.distance) : 0;
+  }
+
+  /** Same weight/stop geometry without changing occupancy, block or route.
+   * Source-reviewed capture links can spend this distance over their own clock. */
+  planPull(e, force, { to, center = null, stop = PULL_STOP_RADIUS } = {}) {
+    if (!this._displaceable(e) || !to) return null;
     // an enemy the puller itself blocks already stands in front of it (at contact) [ASSUMED: no pull, no unblocking]
-    if (center && center.side === 'ally' && e.blockedBy === center) return 0;
+    if (center && center.side === 'ally' && e.blockedBy === center) return null;
     const tx = fin(to.x, e.x), ty = fin(to.y, e.y);
     const dx = tx - e.x, dy = ty - e.y, d0 = Math.hypot(dx, dy);
-    if (!(d0 > 1e-6)) return 0;
+    if (!(d0 > 1e-6)) return null;
     const ux = dx / d0, uy = dy / d0;
     // travel until inside the stop circle around `center` (smaller root of |e + t·u − c| = stop), else up to `to`
     let full = d0;
@@ -2122,7 +2129,7 @@ export class Battle {
     }
     const level = this.forceLevel(e, force);
     const dist = level >= 0 ? full : level === -1 ? Math.min(full, PULL_WEAK_SHARE * d0) : level === -2 ? Math.min(full, PULL_CRAWL) : 0;
-    return dist > 1e-6 ? this.displace(e, { x: ux, y: uy }, dist) : 0;
+    return dist > 1e-6 ? { direction: { x: ux, y: uy }, distance: dist } : null;
   }
 
   /** Official distance (tiles) a push of 力度 `force` would move `e` on open ground (0 when it cannot be displaced). */
@@ -2190,6 +2197,7 @@ export class Battle {
    */
   isReservedTile(r, c) {
     if (!Number.isInteger(r) || !Number.isInteger(c) || r < 0 || r >= ROWS || c < 0 || c >= COLS) return true;
+    if (this.tileReservation(r, c)) return true;
     const u = this._occ[r * COLS + c];
     if (u && u.alive) return true;
     for (const a of this.allyUnits) {
