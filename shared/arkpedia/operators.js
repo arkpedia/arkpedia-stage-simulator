@@ -106,6 +106,7 @@ import { VULPIS_OPERATORS } from './vulpis-operators.js';
 import { SAGA_OPERATORS } from './saga-operators.js';
 import { EUNECTES_OPERATORS } from './eunectes-operators.js';
 import { BENA_OPERATORS } from './bena-operators.js';
+import { KAZEMARU_OPERATORS } from './kazemaru-operators.js';
 import { AAK_OPERATORS } from './aak-operators.js';
 import { FROST_OPERATORS } from './frost-operators.js';
 import { ROBIN_OPERATORS } from './robin-operators.js';
@@ -238,6 +239,7 @@ export const REGULAR_OPERATORS = Object.freeze({
   ...EUNECTES_OPERATORS,
   ...AAK_OPERATORS,
   ...BENA_OPERATORS,
+  ...KAZEMARU_OPERATORS,
   ...PHANTOM_OPERATORS,
   ...HOOK_EXPANSION_OPERATORS,
   ...FIVE_STAR_SPECIALIST_EXPANSION_OPERATORS,

@@ -1,7 +1,16 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { classNames, rangeStripes, skillIconFile, operatorAssetName } from '../shared/arkpedia/battle-ui.js';
+import { classNames, rangeStripes, skillIconFile, operatorAssetName, skillDescriptionText } from '../shared/arkpedia/battle-ui.js';
+
+test('Dollkeeper skill text retains the summoned unit name and source values', () => {
+  assert.equal(skillDescriptionText({
+    description: 'Gains <@ba.vup>{atk:0%}</> ATK and summons a <Substitute>; cost {-hp_ratio:0%}, lasts {duration} seconds.',
+    blackboard: [{key:'ATK', value:1.2}, {key:'hp_ratio', value:.5}, {key:'duration', value:20}],
+  }), 'Gains 120% ATK and summons a Substitute; cost -50%, lasts 20 seconds.');
+  assert.equal(skillDescriptionText({description:'Unknown {not_imported} <@ba.vdown>value</>'}), 'Unknown {not_imported} value');
+  assert.equal(skillDescriptionText({}), '');
+});
 
 test('skill asset names preserve internal apostrophes and Greek text while resolving source aliases', () => {
   assert.equal(skillIconFile('Ceobe', "'Really Hot Knives'"), 'Ceobe - Really Hot Knives.webp');

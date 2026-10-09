@@ -10,7 +10,7 @@ import {
 import { maxedSupport } from "/shared/arkpedia/squad.js";
 import { StageRenderer } from "./renderer.js";
 import { absoluteRangeKeys } from "/sim/targeting.js";
-import { classNames, skillIconFile, operatorAssetName } from "/shared/arkpedia/battle-ui.js";
+import { classNames, skillIconFile, operatorAssetName, skillDescriptionText } from "/shared/arkpedia/battle-ui.js";
 import { swipeFacing } from "/shared/arkpedia/placement.js";
 import { skillHud, skillSourceFor } from "/shared/arkpedia/skill-hud.js";
 import { battleHud } from "/shared/arkpedia/battle-hud.js";
@@ -104,17 +104,7 @@ function battleReadouts() {
   </div>`;
 }
 function skillDescription(level) {
-  const values = Object.fromEntries((level.blackboard ?? []).map((entry) => [entry.key.toLowerCase(), entry.value]));
-  return escape((level.description ?? "").replace(/<[^>]*>/g, "").replace(
-    /\{([^}:]+)(?::([^}]+))?\}/g,
-    (placeholder, key, format) => {
-      const negative = key.startsWith("-");
-      const source = values[(negative ? key.slice(1) : key).toLowerCase()];
-      if (typeof source !== "number") return placeholder;
-      const value = source * (negative ? -1 : 1);
-      return format?.includes("%") ? Math.round(value * 100) + "%" : String(value);
-    },
-  ));
+  return escape(skillDescriptionText(level));
 }
 const builds = Object.fromEntries(ops.map((o) => [o.id, defaultBuild(o)]));
 const supportSkills = Object.fromEntries(ops.map((o) => [o.id, defaultBuild(o).skillId]));

@@ -14,6 +14,21 @@ export function skillIconFile(operator, skill) {
   return `${operatorAssetName(operator)} - ${aliases[safe] ?? safe}.webp`;
 }
 
+export function skillDescriptionText(level) {
+  const values = Object.fromEntries((level.blackboard ?? []).map((entry) => [entry.key.toLowerCase(), entry.value]));
+  // The game writes this unit type in literal angle brackets, not as a rich-text tag.
+  return (level.description ?? '').replace(/<Substitute>/g, 'Substitute').replace(/<[^>]*>/g, '').replace(
+    /\{([^}:]+)(?::([^}]+))?\}/g,
+    (placeholder, key, format) => {
+      const negative = key.startsWith('-');
+      const source = values[(negative ? key.slice(1) : key).toLowerCase()];
+      if (typeof source !== 'number') return placeholder;
+      const value = source * (negative ? -1 : 1);
+      return format?.includes('%') ? Math.round(value * 100) + '%' : String(value);
+    },
+  );
+}
+
 // Clip diagonal stripes to the top face BEFORE projecting onto raised/ground tiles.
 export function rangeStripes() {
   const clip = (points, boundary, greater) => {
