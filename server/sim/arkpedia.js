@@ -108,6 +108,7 @@ import { customizeChenKit, installChen } from './content/arkpedia-chen.js';
 import { customizeVulpisKit, installVulpis } from './content/arkpedia-vulpis.js';
 import { customizeSagaKit, installSaga } from './content/arkpedia-saga.js';
 import { customizeEunectesKit, installEunectes } from './content/arkpedia-eunectes.js';
+import { customizeAakKit, installAak } from './content/arkpedia-aak.js';
 import { customizeFrostKit, installFrost } from './content/arkpedia-frost.js';
 import { customizeRobinKit, installRobin } from './content/arkpedia-robin.js';
 import { customizeFiveStarSupportFourthKit, installFiveStarSupportFourth } from './content/arkpedia-five-star-support-fourth.js';
@@ -432,6 +433,7 @@ export class StandardBattle extends Battle {
     customizeVulpisKit({ battle: this, id, def, unit, kit });
     customizeSagaKit({ battle: this, id, def, unit, kit });
     customizeEunectesKit({ battle: this, id, def, unit, kit });
+    customizeAakKit({ battle: this, id, def, unit, kit });
     customizePhantomKit({ battle: this, id, def, unit, kit });
     customizeHookExpansionKit({ battle: this, id, def, unit, kit });
     customizeFiveStarSupportFourthKit({ battle: this, id, def, unit, kit });
@@ -562,6 +564,7 @@ export class StandardBattle extends Battle {
     installVulpis({ battle: this, unit, def });
     installSaga({ battle: this, unit, def });
     installEunectes({ battle: this, unit, def });
+    installAak({ battle: this, unit, def });
     installHookExpansion({ battle: this, unit, def });
     installFiveStarSupportFourth({ battle: this, unit, def });
     installFiveStarSpecialistExpansion({ battle: this, unit, def });
