@@ -130,6 +130,7 @@ import { customizeTyphonKit, installTyphon } from './content/arkpedia-typhon.js'
 import { customizeDegenbrecherKit, installDegenbrecher } from './content/arkpedia-degenbrecher.js';
 import { customizeChongyueKit, installChongyue } from './content/arkpedia-chongyue.js';
 import { customizePepeKit, installPepe } from './content/arkpedia-pepe.js';
+import { customizeChenAlterKit, installChenAlter } from './content/arkpedia-chen-alter.js';
 import { customizeIreneKit, installIrene } from './content/arkpedia-irene.js';
 import { customizeTexasAlterKit, installTexasAlter } from './content/arkpedia-texas-alter.js';
 import { customizeGnosisKit, installGnosis } from './content/arkpedia-gnosis.js';
@@ -464,6 +465,7 @@ export class StandardBattle extends Battle {
     customizeDegenbrecherKit({ battle: this, id, def, unit, kit });
     customizeChongyueKit({ battle: this, id, def, unit, kit });
     customizePepeKit({ battle: this, id, def, unit, kit });
+    customizeChenAlterKit({ battle: this, id, def, unit, kit });
     customizeEyjafjallaKit({ battle: this, id, def, unit, kit });
     customizeFrostKit({ battle: this, id, def, unit, kit });
     customizeMayerKit({ battle: this, id, def, unit, kit });
@@ -618,6 +620,7 @@ export class StandardBattle extends Battle {
     installDegenbrecher({ battle: this, unit, def });
     installChongyue({ battle: this, unit, def });
     installPepe({ battle: this, unit, def });
+    installChenAlter({ battle: this, unit, def });
     installEyjafjalla({ battle: this, unit, def });
     installFrost({ battle: this, unit, def });
     installMayer({ battle: this, unit, def });

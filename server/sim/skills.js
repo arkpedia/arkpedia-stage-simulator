@@ -494,6 +494,12 @@ export class SkillRuntime {
     // AK: attacks made by the skill (the "next attack" of an instant/charge skill, every attack of a running timed
     // skill — including the one that ends it) never recover attack-type SP ⇒ a cost-N skill fires every N+1 attacks.
     const skillAttack = this.active && (this.isTimed || (!!usedOverride && this.pending));
+    if (this.active && this.kind === 'ammo' && !noAmmo && b._hooks.beforeAmmoUse) {
+      const ctx = { unit: this.unit, skill: this, spareShotProb: 0 };
+      b.emit('beforeAmmoUse', ctx);
+      // Highest source chance wins; an already free extra shot draws no RNG.
+      if (ctx.spareShotProb > 0 && b.rng() < Math.min(1, ctx.spareShotProb)) noAmmo = true;
+    }
     if (this.active && typeof this.spec.onAttack === 'function') {
       const fn = this.spec.onAttack;
       const ctx = this._ctx({ targets, noAmmo: !!noAmmo });

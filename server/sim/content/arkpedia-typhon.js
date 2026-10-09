@@ -183,6 +183,7 @@ export function customizeTyphonKit({ battle: b, id, def, unit: u, kit }) {
     },
     onTick: () => { if (u.mem.typhonMark) pollMark(b, u, u.mem.typhonMark); },
     onAttack: ctx => {
+      if (ctx.noAmmo) return;
       ctx.noAmmo = true;
       const sk = u.skill; sk.ammoLeft--; b.emit('ammoUsed', { unit: u, left: sk.ammoLeft, skill: sk });
       if (sk.ammoLeft > 0) return;
