@@ -128,6 +128,7 @@ import { DEGENBRECHER_OPERATORS } from './degenbrecher-operators.js';
 import { CHONGYUE_OPERATORS } from './chongyue-operators.js';
 import { PEPE_OPERATORS } from './pepe-operators.js';
 import { CROWNSLAYER_OPERATORS } from './crownslayer-operators.js';
+import { IANA_OPERATORS } from './iana-operators.js';
 import { ASCALON_OPERATORS } from './ascalon-operators.js';
 import { GLADIIA_OPERATORS } from './gladiia-operators.js';
 import { CHEN_ALTER_OPERATORS } from './chen-alter-operators.js';
@@ -274,6 +275,7 @@ export const REGULAR_OPERATORS = Object.freeze({
   ...GLADIIA_OPERATORS,
   ...ASCALON_OPERATORS,
   ...CROWNSLAYER_OPERATORS,
+  ...IANA_OPERATORS,
   ...CHEN_ALTER_OPERATORS,
   ...FROST_OPERATORS,
   ...MAYER_OPERATORS,

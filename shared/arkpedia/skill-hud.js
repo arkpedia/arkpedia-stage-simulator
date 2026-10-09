@@ -9,7 +9,14 @@ export function skillSourceFor(unit) {
 }
 
 export function skillHud(skill) {
-  if (!skill || skill.noSkill || skill.kind === "passive") return null;
+  if (!skill || skill.noSkill) return null;
+  // Source SpShowBuff can display an independent form timer even for a passive
+  // skill. This opt-in presentation does not change skill activation or SP.
+  const formTimer = skill.spec?.formCountdown?.();
+  if (formTimer) return { fraction: Math.max(0, Math.min(1, formTimer.remaining / formTimer.duration)),
+    state: 'active', ready: false, canActivate: false, canCancel: false,
+    text: `${formTimer.label} · ${Math.ceil(formTimer.remaining)}s` };
+  if (skill.kind === "passive") return null;
   // On-deployment effects expose their active duration, not a fictional
   // recharge/ready gauge after their one deployment window has ended.
   if (skill.spec?.hideInactiveHud && !skill.active && !skill.pending) return null;
