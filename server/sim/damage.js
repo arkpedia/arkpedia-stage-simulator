@@ -559,9 +559,12 @@ export function heal(battle, source, target, amount, opts = {}) {
   const self = source === target || !!opts.self;
   if (!self && (target.s.flags.noHeal || (target.profile && target.profile.noHeal))) return 0;
   if (target.s.flags.healFree && !opts.regen && !opts.ignoreHealFree) return 0;
-  let amt = amount * (source && source.s ? source.s.healingDealtMul : 1) * target.s.healingTakenMul;
+  // Native HealViaMaxHpRatio can explicitly skip modifier events. Keep
+  // heal-free checks, HP clamping, credit and presentation for that path.
+  let amt = opts.skipModifierEvent ? amount
+    : amount * (source && source.s ? source.s.healingDealtMul : 1) * target.s.healingTakenMul;
   if (!(amt > 0) || !Number.isFinite(amt)) return 0;
-  if (battle._hooks.heal) {
+  if (battle._hooks.heal && !opts.skipModifierEvent) {
     const ctx = { source, target, amount: amt, opts };
     battle.emit('heal', ctx);
     amt = Number.isFinite(ctx.amount) ? Math.max(0, ctx.amount) : 0;

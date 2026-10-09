@@ -18,6 +18,9 @@ export function skillHud(skill) {
   const charged = !!(ready && skill.spec?.chargedState?.());
   const splitGauge = skill.active && typeof skill.spec?.overloadState === 'function';
   const overloaded = !!(splitGauge && skill.spec.overloadState());
+  // A born sequence may precede the finite effect window. Its content clock
+  // keeps the gauge full during startup without inventing extra effect seconds.
+  const remaining = skill.spec?.durationRemaining?.() ?? skill.timeLeft;
   let fraction, text;
   if (skill.pending) {
     fraction = 1;
@@ -25,13 +28,13 @@ export function skillHud(skill) {
   } else if (skill.active) {
     fraction = skill.kind === "ammo"
       ? clamp(skill.ammoLeft / skill.ammoMax)
-      : Number.isFinite(skill.timeLeft)
-        ? clamp(skill.timeLeft / skill.duration)
+      : Number.isFinite(remaining)
+        ? clamp(remaining / skill.duration)
         : 1;
     text = skill.kind === "ammo"
       ? `${skill.ammoLeft} ammo remaining`
-      : Number.isFinite(skill.timeLeft)
-        ? `Skill active · ${Math.ceil(skill.timeLeft)}s`
+      : Number.isFinite(remaining)
+        ? `Skill active · ${Math.ceil(remaining)}s`
         : "Skill active";
     if (splitGauge) {
       fraction = clamp(fraction * 2 - (overloaded ? 0 : 1));

@@ -223,7 +223,7 @@ export function aggregateMods(buffs) {
         if (k === 'shield') continue;
         // Sluggish is one named status: overlapping zone/attack sources do
         // not compound -80% movement into -96% or erase each other's timers.
-        if (b.status === 'sanctuary' && ['physTakenMul', 'artsTakenMul', 'trueTakenMul'].includes(k))
+        if (b.status === 'sanctuary' && ['physTakenMul', 'artsTakenMul', 'trueTakenMul', 'elementalTakenMul'].includes(k))
           sanctuary[k] = Math.min(sanctuary[k] ?? 1, v);
         else if (b.tags?.includes('inspire') && ['atkFinalFlat', 'defFinalFlat', 'hpFinalFlat'].includes(k))
           inspire[k] = Math.max(inspire[k] ?? 0, v * st);
