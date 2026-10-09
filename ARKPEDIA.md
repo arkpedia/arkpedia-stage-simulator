@@ -370,3 +370,11 @@ Tecno implements both skills and all 20 ranks. Normal attacks deal Arts damage t
 S1 increases her ATK and the dancers' HP, DEF and block count. S2 increases both their attack speeds, expands her range and lets the dancers fire ranged Arts attacks into that host range. When S2 ends, only surviving dancers are withdrawn and rebuilt near Tecno with full HP. Death or retreat removes her dancers and pending spawn attempts; launched projectiles retain their own lifetime. Original operator and token animations are used, including a single original Puppet Dancer skeleton with front/back delivery aliases.
 
 `data/arkpedia-tecno-prefabs.json` retains six verified native bundles, 118 components, 11 reachable templates, all source ranks and original skeleton/texture/portrait chains. Compiled selector priorities, tile sorting, source indirection for MAX_HP healing, birth-FSM timing, HP rebasing and native frame ordering remain bounded local mappings documented there. Original particle rendering, audio and modules are not implemented.
+
+### Iana source recovery
+
+`data/arkpedia-iana-source-hold.json` retains five original bundles, 163 native components (including selector transforms), nine reachable templates, all 20 skill ranks, animation aliases and both verified operator skeleton chains. It does not enable Iana in the playable roster.
+
+The Mirage has no attack ability. Substitute modes attack one ground or aerial target with Physical damage; their fatal path removes the undeadable guard rather than creating another substitute. S1's original switch-in event triggers a marked-attacker/fallback projectile with a delayed area hit. S2 uses a separate substitute mode, Invisibility, ASPD and an enemy Invisibility-immunity aura that removes its effect when targets leave.
+
+Before enabling the kit, verify the native incoming-hit `TriggerSkill(checkBeforeTrigger=false)` result and damage/fatal ordering, S1 projectile area geometry and fallback selection, and the composite animation/skill countdown phases. The recorded substitute range does not establish S1's explosion area. These gaps are kept explicit instead of inheriting another Dollkeeper's behavior.
