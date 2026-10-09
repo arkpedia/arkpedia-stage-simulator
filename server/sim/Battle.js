@@ -1234,6 +1234,10 @@ export class Battle {
     if (unit?.mem?.noInspire && (b?.status === 'inspire' || b?.tags?.includes('inspire'))) return null;
     if (!unit || (!unit.alive && !b.allowDead)) return null;
     const buff = makeBuff(b);
+    if (this._hooks.beforeBuff) {
+      const ctx = this.emit('beforeBuff', { unit, buff, cancel: false });
+      if (ctx.cancel || (!unit.alive && !b.allowDead)) return null;
+    }
     const accepted = applied => {
       const f = applied.flags;
       // Record interruption at application, rather than relying on a later
@@ -1421,7 +1425,8 @@ export class Battle {
     // levitated — a hovering 近地悬浮 enemy is WALK in its data, so it can be levitated (no 缚地 / 浮空强化 in this mode)
     if (key === 'levitate' && (target.motion === 'FLY' || target.s.flags.levitate)) return false;
     if (this._hooks.beforeStatus) {
-      const c = this.emit('beforeStatus', { source: opts.source ?? null, target, status: key, duration, value, cancel: false });
+      const c = this.emit('beforeStatus', { source: opts.source ?? null, target, status: key, duration, value, cancel: false,
+        sourceStatusResistable: opts.sourceStatusResistable });
       if (c.cancel || !target.alive) return false;
       const d = Number(c.duration);
       if (d === Infinity || (Number.isFinite(d) && d > 0)) duration = d;
@@ -1465,12 +1470,15 @@ export class Battle {
     if (tpl.palsy) {
       this.addBuff(target, { ...palsyBuff(value ?? 1), duration, source });
     } else if (tpl.valued != null && typeof tpl.mods === 'function' && opts.refresh == null) {
-      this._applyValuedStatus(target, ownedKey, { ...tpl, mods: modsForValue, statusKey: key }, duration, value ?? tpl.valued, source);
+      this._applyValuedStatus(target, ownedKey, { ...tpl, mods: modsForValue, statusKey: key,
+        buff: { ...tpl.buff, sourceStatusResistable: opts.sourceStatusResistable } }, duration, value ?? tpl.valued, source);
     } else {
       const mods = tpl.enemyOnlyMods && target.side !== 'enemy' ? null : typeof modsForValue === 'function' ? modsForValue(value) : (modsForValue || null);
       // Owned non-valued status instances let a zone remove its own effects
       // without erasing another source's status. Status identity stays `key`.
-      const b = this.addBuff(target, { key: ownedKey, duration, refresh: opts.refresh ?? 'extend', mods, flags: tpl.flags || null, status: key, visible: true, source });
+      const b = this.addBuff(target, { key: ownedKey, duration, refresh: opts.refresh ?? 'extend', mods, flags: tpl.flags || null, status: key, visible: true, source,
+        sourceStatusResistable: opts.sourceStatusResistable });
+      if (!b) return false;
       if (tpl.attract && b) this._setAttractPoint(target, b, opts.point ?? value, source);
       // 恐惧: the hit position and the source's position of every application (fear.js — the fan of reachable tiles)
       if (key === 'fear' && b && target.side === 'enemy') stampFear(this, target, b, source);

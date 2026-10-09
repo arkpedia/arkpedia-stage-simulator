@@ -544,8 +544,8 @@ function operatorSkillDetails(build, unit, tokenLevel = null) {
     INCREASE_WHEN_TAKEN_DAMAGE: "Defensive recovery",
   }[level?.spData.spType] || "Passive";
   return `${level ? `<section class="operator-skill"><img class="skill-icon" src="${skillIcon(build)}" alt=""><div class="skill-copy"><h3>${escape(level.name)} <small>${rankLabel(build.skillRank)}</small></h3>
-    <div class="skill-tags"><span class="${level.spData.spType === "INCREASE_WITH_TIME" ? "auto" : "manual"}">${recovery}</span><span class="${level.skillType === "AUTO" ? "auto" : "manual"}">${level.skillType === "AUTO" ? "Auto activation" : level.skillType === "MANUAL" ? "Manual activation" : "Passive"}</span>${level.duration > 0 ? `<span>${level.duration}s</span>` : ""}</div>
-    <p class="sp-readout">${hud?.text.replace(/ · (?:Auto|Manual) activation/g, "") || `${level.spData.initSp} / ${level.spData.spCost} SP on deployment`}</p>
+    <div class="skill-tags">${level.skillType !== "PASSIVE" ? `<span class="${level.spData.spType === "INCREASE_WITH_TIME" ? "auto" : "manual"}">${recovery}</span>` : ""}<span class="${level.skillType === "AUTO" ? "auto" : "manual"}">${level.skillType === "AUTO" ? "Auto activation" : level.skillType === "MANUAL" ? "Manual activation" : "Passive"}</span>${level.duration > 0 ? `<span>${level.duration}s</span>` : ""}</div>
+    ${hud || level.skillType !== "PASSIVE" ? `<p class="sp-readout">${hud?.text.replace(/ · (?:Auto|Manual) activation/g, "") || `${level.spData.initSp} / ${level.spData.spCost} SP on deployment`}</p>` : ""}
     ${hud ? `<div class="meter ${hud.state}"><span style="width:${hud.fraction * 100}%"></span></div>` : ""}
     <p class="skill-description">${skillDescription(level)}</p></div></section>` : ""}`;
 }
@@ -715,7 +715,8 @@ function drawHud() {
   if (b) {
     const skillUnit = skillSourceFor(unit);
     const hud = skillUnit ? skillHud(skillUnit.skill) : null;
-    const canActivate = !!((hud?.canActivate || hud?.canCancel) && skillUnit.canAct && !skillUnit.s.flags.silence);
+    const canActivate = !!((hud?.canActivate || hud?.canCancel)
+      && (skillUnit.canAct || skillUnit.skill?.spec.allowAbnormalCast) && !skillUnit.s.flags.silence);
     if (command.dataset.selection !== selected || command.dataset.alive !== String(!!unit)) {
       operatorTab = 'skill';
       command.innerHTML = `<div class="operator-portrait"><img src="${b.art}" alt="${escape(b.name)} ${b.kind === 'operator' ? 'base artwork' : 'original avatar'}" draggable="false"></div>

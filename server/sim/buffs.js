@@ -173,6 +173,9 @@ export function makeBuff(b) {
       ['ally', 'enemy'].includes(side)))],
     persist: !!b.persist,
     status: b.status ?? null,
+    // Native buff-table YES/NO overrides are distinct from the broader legacy
+    // Resist catalogue. Absence means AUTOMATIC, interpreted by a reviewed kit.
+    sourceStatusResistable: b.sourceStatusResistable ?? null,
     visible: b.visible ?? false,
     data: b.data ?? {},
     seq: ++buffSeq,

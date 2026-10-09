@@ -10,6 +10,9 @@ export function skillSourceFor(unit) {
 
 export function skillHud(skill) {
   if (!skill || skill.noSkill || skill.kind === "passive") return null;
+  // On-deployment effects expose their active duration, not a fictional
+  // recharge/ready gauge after their one deployment window has ended.
+  if (skill.spec?.hideInactiveHud && !skill.active && !skill.pending) return null;
   const clamp = (n) => Math.max(0, Math.min(1, Number.isFinite(n) ? n : 0));
   const ready = skill.ready && !skill.active && !skill.pending;
   let fraction, text;
