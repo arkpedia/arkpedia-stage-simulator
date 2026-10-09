@@ -239,6 +239,10 @@ export function dealDamage(battle, source, target, dmgIn) {
   // tag, 伤害提升 items / bonds / modules, reflect, "受到来自…的伤害") can recognise it; `credit` names the unit that still
   // gets the stats and the kill (PRTS 伤害分类 无来源 ③)
   const hs = dmg.sourceless ? null : source;
+  // Opt-in output effects can count an issued HP-damage instance before the
+  // recipient prevents it. Existing modifier and damage-receipt hooks retain
+  // their order; elemental buildup uses its separate pipeline above.
+  if (battle._hooks.outputDamage) battle.emit('outputDamage', { source: hs, target, dmg, credit: source });
   let ts = target.s;
   if (ts.flags.invulnerable || sleepBlocks(target, hs, dmg) || liftoffEvades(target, hs, dmg)) return 0;
   if (battle._hooks.hit) {
