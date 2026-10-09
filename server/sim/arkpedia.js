@@ -121,6 +121,7 @@ import { customizeWulfeniteKit, installWulfenite } from './content/arkpedia-wulf
 import { customizeTippiKit, installTippi } from './content/arkpedia-tippi.js';
 import { customizeLessingKit, installLessing } from './content/arkpedia-lessing.js';
 import { customizePenanceKit, installPenance } from './content/arkpedia-penance.js';
+import { customizeMudrockKit, installMudrock } from './content/arkpedia-mudrock.js';
 import { customizeFiveStarSupportFourthKit, installFiveStarSupportFourth } from './content/arkpedia-five-star-support-fourth.js';
 import { customizeFiveStarSpecialistExpansionKit, installFiveStarSpecialistExpansion } from './content/arkpedia-five-star-specialist-expansion.js';
 import { catalogueFor, recordFor } from "../../shared/arkpedia/loadout.js";
@@ -439,6 +440,7 @@ export class StandardBattle extends Battle {
     customizeTippiKit({ battle: this, id, def, unit, kit });
     customizeLessingKit({ battle: this, id, def, unit, kit });
     customizePenanceKit({ battle: this, id, def, unit, kit });
+    customizeMudrockKit({ battle: this, id, def, unit, kit });
     customizeFrostKit({ battle: this, id, def, unit, kit });
     customizeMayerKit({ battle: this, id, def, unit, kit });
     customizeFangFireSharpenedKit({ battle: this, id, def, unit, kit });
@@ -580,6 +582,7 @@ export class StandardBattle extends Battle {
     installTippi({ battle: this, unit, def });
     installLessing({ battle: this, unit, def });
     installPenance({ battle: this, unit, def });
+    installMudrock({ battle: this, unit, def });
     installFrost({ battle: this, unit, def });
     installMayer({ battle: this, unit, def });
     installFangFireSharpened({ battle: this, unit, def });
