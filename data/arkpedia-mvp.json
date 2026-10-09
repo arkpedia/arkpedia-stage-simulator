@@ -52467,6 +52467,231 @@
           "height": 416.515
         }
       },
+      "operator/char_4065_judge/default/front": {
+        "kind": "operator",
+        "id": "char_4065_judge",
+        "variant": "default",
+        "facing": "front",
+        "spineVersion": "3.8.99",
+        "source": {
+          "key": "operators",
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "spine/char_4065_judge/char_4065_judge/Front"
+        },
+        "skeleton": {
+          "path": "models/operator/char_4065_judge/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4065_judge.skel",
+          "bytes": 538246,
+          "sha256": "5a3a69f1289e1c9adf43a585289dfe75fb7ddd5390dbe19bc7caff30e7069ed2"
+        },
+        "atlas": {
+          "path": "models/operator/char_4065_judge/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4065_judge.atlas",
+          "bytes": 8841,
+          "sha256": "ee29e9e955fb764cd2d1b9e96286738850c15f2f4d72dff73f99ed224626964b"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_4065_judge/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4065_judge.png",
+            "bytes": 117704,
+            "sha256": "e205e10f457b592a377e4821291987d68130eb8e6f06c04037d170eb7ab45019"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Attack": 1.6,
+          "Attack_Down": 1.6,
+          "Default": 0,
+          "Die": 1,
+          "Idle": 4,
+          "Skill_1_Attack": 1.167,
+          "Skill_1_Begin": 0.333,
+          "Skill_1_Idle": 1.333,
+          "Skill_2_Begin": 0.333,
+          "Skill_2_End": 0.333,
+          "Skill_2_Loop": 1,
+          "Skill_3_Attack": 1.6,
+          "Skill_3_Begin": 0.267,
+          "Skill_3_End": 0.267,
+          "Skill_3_Idle": 1,
+          "Skill_Down_3_Attack": 1.6,
+          "Start": 1
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null
+          },
+          "attackDown": {
+            "begin": null,
+            "loop": "Attack_Down",
+            "end": null
+          },
+          "skill": {
+            "begin": "Skill_1_Begin",
+            "loop": "Skill_1_Attack",
+            "end": null,
+            "index": 0,
+            "idle": "Skill_1_Idle"
+          },
+          "die": "Die",
+          "move": null,
+          "stun": null,
+          "skills": {
+            "0": {
+              "begin": "Skill_1_Begin",
+              "loop": "Skill_1_Attack",
+              "end": null,
+              "index": 0,
+              "idle": "Skill_1_Idle"
+            },
+            "1": {
+              "begin": "Skill_2_Begin",
+              "loop": "Skill_2_Loop",
+              "end": "Skill_2_End",
+              "index": 1,
+              "idle": null
+            },
+            "2": {
+              "begin": "Skill_3_Begin",
+              "loop": "Skill_3_Attack",
+              "end": "Skill_3_End",
+              "index": 2,
+              "idle": "Skill_3_Idle"
+            }
+          }
+        },
+        "hits": {
+          "Attack": [
+            0.567
+          ],
+          "Attack_Down": [
+            0.567
+          ],
+          "Skill_1_Attack": [
+            0.3
+          ],
+          "Skill_3_Attack": [
+            0.467
+          ],
+          "Skill_Down_3_Attack": [
+            0.467
+          ]
+        },
+        "bounds": {
+          "x": -147.802,
+          "y": -1.832,
+          "width": 309.555,
+          "height": 406.5
+        }
+      },
+      "operator/char_4065_judge/default/back": {
+        "kind": "operator",
+        "id": "char_4065_judge",
+        "variant": "default",
+        "facing": "back",
+        "spineVersion": "3.8.99",
+        "source": {
+          "key": "operators",
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "spine/char_4065_judge/char_4065_judge/Back"
+        },
+        "skeleton": {
+          "path": "models/operator/char_4065_judge/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4065_judge.skel",
+          "bytes": 227568,
+          "sha256": "1e7ad4a57dda6517f672df99970de198ff381386e387cf0c27b89b1dd0efbf9b"
+        },
+        "atlas": {
+          "path": "models/operator/char_4065_judge/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4065_judge.atlas",
+          "bytes": 5147,
+          "sha256": "e872dd0ddaff5fc09dcf850680571bb57d28ebc69525b93ce74b5cde746a067f"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_4065_judge/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4065_judge.png",
+            "bytes": 89265,
+            "sha256": "8995c2c4e4840e8c62fdf907ab1b425419a9a1bf22263bd8e62187c42c5a1a38"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Attack": 1.6,
+          "Default": 0,
+          "Idle": 1.333,
+          "Skill_1_Attack": 1.167,
+          "Skill_1_Begin": 0.333,
+          "Skill_1_Idle": 1.333,
+          "Skill_3_Attack": 1.6,
+          "Skill_3_Begin": 0.267,
+          "Skill_3_End": 0.267,
+          "Skill_3_Idle": 1,
+          "Start": 1
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null
+          },
+          "attackDown": null,
+          "skill": {
+            "begin": "Skill_1_Begin",
+            "loop": "Skill_1_Attack",
+            "end": null,
+            "index": 0,
+            "idle": "Skill_1_Idle"
+          },
+          "die": null,
+          "move": null,
+          "stun": null,
+          "skills": {
+            "0": {
+              "begin": "Skill_1_Begin",
+              "loop": "Skill_1_Attack",
+              "end": null,
+              "index": 0,
+              "idle": "Skill_1_Idle"
+            },
+            "1": {
+              "begin": null,
+              "loop": "Attack",
+              "end": null,
+              "via": "attack",
+              "index": 1,
+              "idle": null
+            },
+            "2": {
+              "begin": "Skill_3_Begin",
+              "loop": "Skill_3_Attack",
+              "end": "Skill_3_End",
+              "index": 2,
+              "idle": "Skill_3_Idle"
+            }
+          }
+        },
+        "hits": {
+          "Attack": [
+            0.567
+          ],
+          "Skill_1_Attack": [
+            0.3
+          ],
+          "Skill_3_Attack": [
+            0.467
+          ]
+        },
+        "bounds": {
+          "x": -147.802,
+          "y": -1.832,
+          "width": 309.555,
+          "height": 406.5
+        }
+      },
       "operator/char_458_rfrost/default/front": {
         "kind": "operator",
         "id": "char_458_rfrost",
@@ -442052,6 +442277,2086 @@
                 {
                   "key": "magical_value",
                   "value": 600,
+                  "valueStr": null
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "char_4065_judge": {
+      "id": "char_4065_judge",
+      "name": "Penance",
+      "description": "<@ba.kw>Cannot</> be healed by allies",
+      "rarity": 6,
+      "profession": "TANK",
+      "subProfessionId": "unyield",
+      "position": "MELEE",
+      "nationId": "siracusa",
+      "groupId": null,
+      "teamId": null,
+      "phases": [
+        {
+          "maxLevel": 50,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 1732,
+                "atk": 368,
+                "def": 234,
+                "magicResistance": 10,
+                "cost": 32,
+                "blockCnt": 2,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.6,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 50,
+              "data": {
+                "maxHp": 2279,
+                "atk": 512,
+                "def": 355,
+                "magicResistance": 10,
+                "cost": 32,
+                "blockCnt": 2,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.6,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ]
+        },
+        {
+          "maxLevel": 80,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 2279,
+                "atk": 512,
+                "def": 355,
+                "magicResistance": 10,
+                "cost": 34,
+                "blockCnt": 3,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.6,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 80,
+              "data": {
+                "maxHp": 2960,
+                "atk": 683,
+                "def": 474,
+                "magicResistance": 10,
+                "cost": 34,
+                "blockCnt": 3,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.6,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ]
+        },
+        {
+          "maxLevel": 90,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 2960,
+                "atk": 683,
+                "def": 474,
+                "magicResistance": 10,
+                "cost": 36,
+                "blockCnt": 3,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.6,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 90,
+              "data": {
+                "maxHp": 4055,
+                "atk": 876,
+                "def": 616,
+                "magicResistance": 10,
+                "cost": 36,
+                "blockCnt": 3,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.6,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ]
+        }
+      ],
+      "favorKeyFrames": [
+        {
+          "level": 0,
+          "data": {
+            "maxHp": 0,
+            "atk": 0,
+            "def": 0,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false
+          }
+        },
+        {
+          "level": 50,
+          "data": {
+            "maxHp": 600,
+            "atk": 40,
+            "def": 0,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false
+          }
+        }
+      ],
+      "potentialRanks": [
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [],
+        [
+          {
+            "attributeType": "ATK",
+            "formulaItem": "ADDITION",
+            "value": 28,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [],
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ]
+      ],
+      "trait": null,
+      "talents": [
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_0",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Guardian of the Law",
+              "description": "After deployment, immediately gains a <$ba.barrier>Barrier</> equal to 30% Max HP",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "max_hp_ratio",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "kill_hp_ratio",
+                  "value": 0,
+                  "valueStr": null
+                },
+                {
+                  "key": "born_hp_ratio",
+                  "value": 0.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "higher_effect_hp_ratio",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_0",
+                "level": 1
+              },
+              "requiredPotentialRank": 2,
+              "prefabKey": "1",
+              "name": "Guardian of the Law",
+              "description": "After deployment, immediately gains a <$ba.barrier>Barrier</> equal to 35% <@ba.talpu>(+5%)</> Max HP",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "max_hp_ratio",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "kill_hp_ratio",
+                  "value": 0,
+                  "valueStr": null
+                },
+                {
+                  "key": "born_hp_ratio",
+                  "value": 0.35,
+                  "valueStr": null
+                },
+                {
+                  "key": "higher_effect_hp_ratio",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Guardian of the Law",
+              "description": "After deployment, immediately gains a <$ba.barrier>Barrier</> equal to 30% Max HP; When defeating an enemy, gains a <$ba.barrier>Barrier</> equal to 6% Max HP (Cannot exceed 300% Max HP)",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "max_hp_ratio",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "kill_hp_ratio",
+                  "value": 0.06,
+                  "valueStr": null
+                },
+                {
+                  "key": "born_hp_ratio",
+                  "value": 0.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "higher_effect_hp_ratio",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 1
+              },
+              "requiredPotentialRank": 2,
+              "prefabKey": "1",
+              "name": "Guardian of the Law",
+              "description": "After deployment, immediately gains a <$ba.barrier>Barrier</> equal to 35% <@ba.talpu>(+5%)</> Max HP; When defeating an enemy, gains a <$ba.barrier>Barrier</> equal to 6% Max HP (Cannot exceed 300% Max HP)",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "max_hp_ratio",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "kill_hp_ratio",
+                  "value": 0.06,
+                  "valueStr": null
+                },
+                {
+                  "key": "born_hp_ratio",
+                  "value": 0.35,
+                  "valueStr": null
+                },
+                {
+                  "key": "higher_effect_hp_ratio",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Guardian of the Law",
+              "description": "After deployment, immediately gains a <$ba.barrier>Barrier</> equal to 50% Max HP; When defeating an enemy, gains a <$ba.barrier>Barrier</> equal to 10% Max HP (Cannot exceed 300% Max HP)",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "max_hp_ratio",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "kill_hp_ratio",
+                  "value": 0.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "born_hp_ratio",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "higher_effect_hp_ratio",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 2,
+              "prefabKey": "1",
+              "name": "Guardian of the Law",
+              "description": "After deployment, immediately gains a <$ba.barrier>Barrier</> equal to 55% <@ba.talpu>(+5%)</> Max HP; When defeating an enemy, gains a <$ba.barrier>Barrier</> equal to 10% Max HP (Cannot exceed 300% Max HP)",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "max_hp_ratio",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "kill_hp_ratio",
+                  "value": 0.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "born_hp_ratio",
+                  "value": 0.55,
+                  "valueStr": null
+                },
+                {
+                  "key": "higher_effect_hp_ratio",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            }
+          ]
+        },
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "2",
+              "name": "Wreathed in Thorns",
+              "description": "Each time this unit is attacked while under the effect of her own <$ba.barrier>Barrier</>, deals 50% ATK as Arts damage to the attacker",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 0.5,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 4,
+              "prefabKey": "2",
+              "name": "Wreathed in Thorns",
+              "description": "Each time this unit is attacked while under the effect of her own <$ba.barrier>Barrier</>, deals 53% <@ba.talpu>(+3%)</> ATK as Arts damage to the attacker",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 0.53,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            }
+          ]
+        }
+      ],
+      "skills": [
+        {
+          "id": "skchr_judge_1",
+          "unlockCondition": {
+            "phase": "PHASE_0",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "Last Word",
+              "rangeId": null,
+              "description": "The next attack deals an additional instance of Arts damage equal to <@ba.vup>{atk_scale_2:0%}</> ATK\n<$ba.charged>Charged</> effect: The next attack deals <@ba.vup>{judge_s_1_enhance_checker.atk_scale:0%}</> damage and Stuns the target for <@ba.vup>{stun}</> seconds",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 2,
+                "spCost": 6,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_judge_1",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk_scale_2",
+                  "value": 1.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "judge_s_1_enhance_checker.atk_scale",
+                  "value": 1.8,
+                  "valueStr": null
+                },
+                {
+                  "key": "stun",
+                  "value": 3,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Last Word",
+              "rangeId": null,
+              "description": "The next attack deals an additional instance of Arts damage equal to <@ba.vup>{atk_scale_2:0%}</> ATK\n<$ba.charged>Charged</> effect: The next attack deals <@ba.vup>{judge_s_1_enhance_checker.atk_scale:0%}</> damage and Stuns the target for <@ba.vup>{stun}</> seconds",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 2,
+                "spCost": 6,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_judge_1",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk_scale_2",
+                  "value": 1.45,
+                  "valueStr": null
+                },
+                {
+                  "key": "judge_s_1_enhance_checker.atk_scale",
+                  "value": 1.8,
+                  "valueStr": null
+                },
+                {
+                  "key": "stun",
+                  "value": 3,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Last Word",
+              "rangeId": null,
+              "description": "The next attack deals an additional instance of Arts damage equal to <@ba.vup>{atk_scale_2:0%}</> ATK\n<$ba.charged>Charged</> effect: The next attack deals <@ba.vup>{judge_s_1_enhance_checker.atk_scale:0%}</> damage and Stuns the target for <@ba.vup>{stun}</> seconds",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 2,
+                "spCost": 6,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_judge_1",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk_scale_2",
+                  "value": 1.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "judge_s_1_enhance_checker.atk_scale",
+                  "value": 1.8,
+                  "valueStr": null
+                },
+                {
+                  "key": "stun",
+                  "value": 3,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Last Word",
+              "rangeId": null,
+              "description": "The next attack deals an additional instance of Arts damage equal to <@ba.vup>{atk_scale_2:0%}</> ATK\n<$ba.charged>Charged</> effect: The next attack deals <@ba.vup>{judge_s_1_enhance_checker.atk_scale:0%}</> damage and Stuns the target for <@ba.vup>{stun}</> seconds",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 2,
+                "spCost": 5,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_judge_1",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk_scale_2",
+                  "value": 1.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "judge_s_1_enhance_checker.atk_scale",
+                  "value": 1.8,
+                  "valueStr": null
+                },
+                {
+                  "key": "stun",
+                  "value": 3,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Last Word",
+              "rangeId": null,
+              "description": "The next attack deals an additional instance of Arts damage equal to <@ba.vup>{atk_scale_2:0%}</> ATK\n<$ba.charged>Charged</> effect: The next attack deals <@ba.vup>{judge_s_1_enhance_checker.atk_scale:0%}</> damage and Stuns the target for <@ba.vup>{stun}</> seconds",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 2,
+                "spCost": 5,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_judge_1",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk_scale_2",
+                  "value": 1.65,
+                  "valueStr": null
+                },
+                {
+                  "key": "judge_s_1_enhance_checker.atk_scale",
+                  "value": 1.8,
+                  "valueStr": null
+                },
+                {
+                  "key": "stun",
+                  "value": 3,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Last Word",
+              "rangeId": null,
+              "description": "The next attack deals an additional instance of Arts damage equal to <@ba.vup>{atk_scale_2:0%}</> ATK\n<$ba.charged>Charged</> effect: The next attack deals <@ba.vup>{judge_s_1_enhance_checker.atk_scale:0%}</> damage and Stuns the target for <@ba.vup>{stun}</> seconds",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 2,
+                "spCost": 5,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_judge_1",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk_scale_2",
+                  "value": 1.7,
+                  "valueStr": null
+                },
+                {
+                  "key": "judge_s_1_enhance_checker.atk_scale",
+                  "value": 1.8,
+                  "valueStr": null
+                },
+                {
+                  "key": "stun",
+                  "value": 3,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Last Word",
+              "rangeId": null,
+              "description": "The next attack deals an additional instance of Arts damage equal to <@ba.vup>{atk_scale_2:0%}</> ATK\n<$ba.charged>Charged</> effect: The next attack deals <@ba.vup>{judge_s_1_enhance_checker.atk_scale:0%}</> damage and Stuns the target for <@ba.vup>{stun}</> seconds",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 2,
+                "spCost": 4,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_judge_1",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk_scale_2",
+                  "value": 1.8,
+                  "valueStr": null
+                },
+                {
+                  "key": "judge_s_1_enhance_checker.atk_scale",
+                  "value": 1.8,
+                  "valueStr": null
+                },
+                {
+                  "key": "stun",
+                  "value": 3,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Last Word",
+              "rangeId": null,
+              "description": "The next attack deals an additional instance of Arts damage equal to <@ba.vup>{atk_scale_2:0%}</> ATK\n<$ba.charged>Charged</> effect: The next attack deals <@ba.vup>{judge_s_1_enhance_checker.atk_scale:0%}</> damage and Stuns the target for <@ba.vup>{stun}</> seconds",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 2,
+                "spCost": 4,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_judge_1",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk_scale_2",
+                  "value": 1.9,
+                  "valueStr": null
+                },
+                {
+                  "key": "judge_s_1_enhance_checker.atk_scale",
+                  "value": 1.8,
+                  "valueStr": null
+                },
+                {
+                  "key": "stun",
+                  "value": 4,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Last Word",
+              "rangeId": null,
+              "description": "The next attack deals an additional instance of Arts damage equal to <@ba.vup>{atk_scale_2:0%}</> ATK\n<$ba.charged>Charged</> effect: The next attack deals <@ba.vup>{judge_s_1_enhance_checker.atk_scale:0%}</> damage and Stuns the target for <@ba.vup>{stun}</> seconds",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 2,
+                "spCost": 4,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_judge_1",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk_scale_2",
+                  "value": 1.95,
+                  "valueStr": null
+                },
+                {
+                  "key": "judge_s_1_enhance_checker.atk_scale",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "stun",
+                  "value": 4,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Last Word",
+              "rangeId": null,
+              "description": "The next attack deals an additional instance of Arts damage equal to <@ba.vup>{atk_scale_2:0%}</> ATK\n<$ba.charged>Charged</> effect: The next attack deals <@ba.vup>{judge_s_1_enhance_checker.atk_scale:0%}</> damage and Stuns the target for <@ba.vup>{stun}</> seconds",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 2,
+                "spCost": 3,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_judge_1",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk_scale_2",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "judge_s_1_enhance_checker.atk_scale",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "stun",
+                  "value": 5,
+                  "valueStr": null
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "skchr_judge_2",
+          "unlockCondition": {
+            "phase": "PHASE_1",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "Stoic Atonement",
+              "rangeId": "x-4",
+              "description": "Stops attacking and gains <@ba.vup>{damage_resistance:0%}</> <$ba.protect>Sanctuary</>; deals <@ba.vup>{atk_scale:0%}</> Arts damage to all nearby Ground enemies every second; While this skill is active, increases the <$ba.barrier>Barrier</> effect of Talent 1 by <@ba.vup>{shield_scale:0%}</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 40,
+                "initSp": 10,
+                "increment": 1
+              },
+              "prefabId": "skchr_judge_2",
+              "duration": 20,
+              "blackboard": [
+                {
+                  "key": "damage_resistance",
+                  "value": 0.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk_scale",
+                  "value": 0.7,
+                  "valueStr": null
+                },
+                {
+                  "key": "shield_scale",
+                  "value": 0.4,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Stoic Atonement",
+              "rangeId": "x-4",
+              "description": "Stops attacking and gains <@ba.vup>{damage_resistance:0%}</> <$ba.protect>Sanctuary</>; deals <@ba.vup>{atk_scale:0%}</> Arts damage to all nearby Ground enemies every second; While this skill is active, increases the <$ba.barrier>Barrier</> effect of Talent 1 by <@ba.vup>{shield_scale:0%}</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 39,
+                "initSp": 10,
+                "increment": 1
+              },
+              "prefabId": "skchr_judge_2",
+              "duration": 20,
+              "blackboard": [
+                {
+                  "key": "damage_resistance",
+                  "value": 0.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk_scale",
+                  "value": 0.75,
+                  "valueStr": null
+                },
+                {
+                  "key": "shield_scale",
+                  "value": 0.4,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Stoic Atonement",
+              "rangeId": "x-4",
+              "description": "Stops attacking and gains <@ba.vup>{damage_resistance:0%}</> <$ba.protect>Sanctuary</>; deals <@ba.vup>{atk_scale:0%}</> Arts damage to all nearby Ground enemies every second; While this skill is active, increases the <$ba.barrier>Barrier</> effect of Talent 1 by <@ba.vup>{shield_scale:0%}</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 38,
+                "initSp": 10,
+                "increment": 1
+              },
+              "prefabId": "skchr_judge_2",
+              "duration": 20,
+              "blackboard": [
+                {
+                  "key": "damage_resistance",
+                  "value": 0.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk_scale",
+                  "value": 0.8,
+                  "valueStr": null
+                },
+                {
+                  "key": "shield_scale",
+                  "value": 0.4,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Stoic Atonement",
+              "rangeId": "x-4",
+              "description": "Stops attacking and gains <@ba.vup>{damage_resistance:0%}</> <$ba.protect>Sanctuary</>; deals <@ba.vup>{atk_scale:0%}</> Arts damage to all nearby Ground enemies every second; While this skill is active, increases the <$ba.barrier>Barrier</> effect of Talent 1 by <@ba.vup>{shield_scale:0%}</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 37,
+                "initSp": 12,
+                "increment": 1
+              },
+              "prefabId": "skchr_judge_2",
+              "duration": 20,
+              "blackboard": [
+                {
+                  "key": "damage_resistance",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk_scale",
+                  "value": 0.9,
+                  "valueStr": null
+                },
+                {
+                  "key": "shield_scale",
+                  "value": 0.6,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Stoic Atonement",
+              "rangeId": "x-4",
+              "description": "Stops attacking and gains <@ba.vup>{damage_resistance:0%}</> <$ba.protect>Sanctuary</>; deals <@ba.vup>{atk_scale:0%}</> Arts damage to all nearby Ground enemies every second; While this skill is active, increases the <$ba.barrier>Barrier</> effect of Talent 1 by <@ba.vup>{shield_scale:0%}</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 36,
+                "initSp": 12,
+                "increment": 1
+              },
+              "prefabId": "skchr_judge_2",
+              "duration": 20,
+              "blackboard": [
+                {
+                  "key": "damage_resistance",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk_scale",
+                  "value": 0.95,
+                  "valueStr": null
+                },
+                {
+                  "key": "shield_scale",
+                  "value": 0.6,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Stoic Atonement",
+              "rangeId": "x-4",
+              "description": "Stops attacking and gains <@ba.vup>{damage_resistance:0%}</> <$ba.protect>Sanctuary</>; deals <@ba.vup>{atk_scale:0%}</> Arts damage to all nearby Ground enemies every second; While this skill is active, increases the <$ba.barrier>Barrier</> effect of Talent 1 by <@ba.vup>{shield_scale:0%}</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 35,
+                "initSp": 12,
+                "increment": 1
+              },
+              "prefabId": "skchr_judge_2",
+              "duration": 20,
+              "blackboard": [
+                {
+                  "key": "damage_resistance",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk_scale",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "shield_scale",
+                  "value": 0.6,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Stoic Atonement",
+              "rangeId": "x-4",
+              "description": "Stops attacking and gains <@ba.vup>{damage_resistance:0%}</> <$ba.protect>Sanctuary</>; deals <@ba.vup>{atk_scale:0%}</> Arts damage to all nearby Ground enemies every second; While this skill is active, increases the <$ba.barrier>Barrier</> effect of Talent 1 by <@ba.vup>{shield_scale:0%}</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 34,
+                "initSp": 14,
+                "increment": 1
+              },
+              "prefabId": "skchr_judge_2",
+              "duration": 20,
+              "blackboard": [
+                {
+                  "key": "damage_resistance",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk_scale",
+                  "value": 1.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "shield_scale",
+                  "value": 0.8,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Stoic Atonement",
+              "rangeId": "x-4",
+              "description": "Stops attacking and gains <@ba.vup>{damage_resistance:0%}</> <$ba.protect>Sanctuary</>; deals <@ba.vup>{atk_scale:0%}</> Arts damage to all nearby Ground enemies every second; While this skill is active, increases the <$ba.barrier>Barrier</> effect of Talent 1 by <@ba.vup>{shield_scale:0%}</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 32,
+                "initSp": 16,
+                "increment": 1
+              },
+              "prefabId": "skchr_judge_2",
+              "duration": 20,
+              "blackboard": [
+                {
+                  "key": "damage_resistance",
+                  "value": 0.55,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk_scale",
+                  "value": 1.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "shield_scale",
+                  "value": 0.8,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Stoic Atonement",
+              "rangeId": "x-4",
+              "description": "Stops attacking and gains <@ba.vup>{damage_resistance:0%}</> <$ba.protect>Sanctuary</>; deals <@ba.vup>{atk_scale:0%}</> Arts damage to all nearby Ground enemies every second; While this skill is active, increases the <$ba.barrier>Barrier</> effect of Talent 1 by <@ba.vup>{shield_scale:0%}</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 31,
+                "initSp": 18,
+                "increment": 1
+              },
+              "prefabId": "skchr_judge_2",
+              "duration": 20,
+              "blackboard": [
+                {
+                  "key": "damage_resistance",
+                  "value": 0.55,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk_scale",
+                  "value": 1.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "shield_scale",
+                  "value": 0.8,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Stoic Atonement",
+              "rangeId": "x-4",
+              "description": "Stops attacking and gains <@ba.vup>{damage_resistance:0%}</> <$ba.protect>Sanctuary</>; deals <@ba.vup>{atk_scale:0%}</> Arts damage to all nearby Ground enemies every second; While this skill is active, increases the <$ba.barrier>Barrier</> effect of Talent 1 by <@ba.vup>{shield_scale:0%}</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 30,
+                "initSp": 20,
+                "increment": 1
+              },
+              "prefabId": "skchr_judge_2",
+              "duration": 20,
+              "blackboard": [
+                {
+                  "key": "damage_resistance",
+                  "value": 0.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk_scale",
+                  "value": 1.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "shield_scale",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "id": "skchr_judge_3",
+          "unlockCondition": {
+            "phase": "PHASE_2",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "Trial of Thorns",
+              "rangeId": null,
+              "description": "Immediately gains a <$ba.barrier>Barrier</> equal to <@ba.vup>{hp_ratio:0%}</> Max HP; Attack Interval <@ba.vdown>increases</>, ATK <@ba.vup>+{atk:0%}</>, and makes enemies more likely to attack this unit",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_TAKEN_DAMAGE",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 30,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_judge_3",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "hp_ratio",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": 0.9,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "taunt_level",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Trial of Thorns",
+              "rangeId": null,
+              "description": "Immediately gains a <$ba.barrier>Barrier</> equal to <@ba.vup>{hp_ratio:0%}</> Max HP; Attack Interval <@ba.vdown>increases</>, ATK <@ba.vup>+{atk:0%}</>, and makes enemies more likely to attack this unit",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_TAKEN_DAMAGE",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 29,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_judge_3",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "hp_ratio",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": 0.9,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 2.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "taunt_level",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Trial of Thorns",
+              "rangeId": null,
+              "description": "Immediately gains a <$ba.barrier>Barrier</> equal to <@ba.vup>{hp_ratio:0%}</> Max HP; Attack Interval <@ba.vdown>increases</>, ATK <@ba.vup>+{atk:0%}</>, and makes enemies more likely to attack this unit",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_TAKEN_DAMAGE",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 28,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_judge_3",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "hp_ratio",
+                  "value": 0.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": 0.9,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 2.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "taunt_level",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Trial of Thorns",
+              "rangeId": null,
+              "description": "Immediately gains a <$ba.barrier>Barrier</> equal to <@ba.vup>{hp_ratio:0%}</> Max HP; Attack Interval <@ba.vdown>increases</>, ATK <@ba.vup>+{atk:0%}</>, and makes enemies more likely to attack this unit",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_TAKEN_DAMAGE",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 27,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_judge_3",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "hp_ratio",
+                  "value": 0.7,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": 0.9,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 2.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "taunt_level",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Trial of Thorns",
+              "rangeId": null,
+              "description": "Immediately gains a <$ba.barrier>Barrier</> equal to <@ba.vup>{hp_ratio:0%}</> Max HP; Attack Interval <@ba.vdown>increases</>, ATK <@ba.vup>+{atk:0%}</>, and makes enemies more likely to attack this unit",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_TAKEN_DAMAGE",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 26,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_judge_3",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "hp_ratio",
+                  "value": 0.8,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": 0.9,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 2.8,
+                  "valueStr": null
+                },
+                {
+                  "key": "taunt_level",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Trial of Thorns",
+              "rangeId": null,
+              "description": "Immediately gains a <$ba.barrier>Barrier</> equal to <@ba.vup>{hp_ratio:0%}</> Max HP; Attack Interval <@ba.vdown>increases</>, ATK <@ba.vup>+{atk:0%}</>, and makes enemies more likely to attack this unit",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_TAKEN_DAMAGE",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 25,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_judge_3",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "hp_ratio",
+                  "value": 0.9,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": 0.9,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "taunt_level",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Trial of Thorns",
+              "rangeId": null,
+              "description": "Immediately gains a <$ba.barrier>Barrier</> equal to <@ba.vup>{hp_ratio:0%}</> Max HP; Attack Interval <@ba.vdown>increases</>, ATK <@ba.vup>+{atk:0%}</>, and makes enemies more likely to attack this unit",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_TAKEN_DAMAGE",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 24,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_judge_3",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "hp_ratio",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": 0.9,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 3.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "taunt_level",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Trial of Thorns",
+              "rangeId": null,
+              "description": "Immediately gains a <$ba.barrier>Barrier</> equal to <@ba.vup>{hp_ratio:0%}</> Max HP; Attack Interval <@ba.vdown>increases</>, ATK <@ba.vup>+{atk:0%}</>, and makes enemies more likely to attack this unit",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_TAKEN_DAMAGE",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 22,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_judge_3",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "hp_ratio",
+                  "value": 1.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": 0.9,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 3.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "taunt_level",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Trial of Thorns",
+              "rangeId": null,
+              "description": "Immediately gains a <$ba.barrier>Barrier</> equal to <@ba.vup>{hp_ratio:0%}</> Max HP; Attack Interval <@ba.vdown>increases</>, ATK <@ba.vup>+{atk:0%}</>, and makes enemies more likely to attack this unit",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_TAKEN_DAMAGE",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 21,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_judge_3",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "hp_ratio",
+                  "value": 1.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": 0.9,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 3.7,
+                  "valueStr": null
+                },
+                {
+                  "key": "taunt_level",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Trial of Thorns",
+              "rangeId": null,
+              "description": "Immediately gains a <$ba.barrier>Barrier</> equal to <@ba.vup>{hp_ratio:0%}</> Max HP; Attack Interval <@ba.vdown>increases</>, ATK <@ba.vup>+{atk:0%}</>, and makes enemies more likely to attack this unit",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_TAKEN_DAMAGE",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 20,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_judge_3",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "hp_ratio",
+                  "value": 1.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": 0.9,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 4,
+                  "valueStr": null
+                },
+                {
+                  "key": "taunt_level",
+                  "value": 1,
                   "valueStr": null
                 }
               ]

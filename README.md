@@ -1,6 +1,6 @@
 # 卫戍协议：盟约 · Stronghold Protocol: Alliance
 
-> **Arkpedia fork:** a playable regular-stage prototype for **0-1 Collapse** is available with `npm run start:arkpedia`. It supports 307 operator forms and 622 skills, configurable builds through E2/M3 where available, an optional maxed support, animated chibis and manual deployment/combat. See [ARKPEDIA.md](ARKPEDIA.md) for scope and limitations. The original application below still uses Stronghold rules. Original licensing and contributor credits remain intact.
+> **Arkpedia fork:** a playable regular-stage prototype for **0-1 Collapse** is available with `npm run start:arkpedia`. It supports 308 operator forms and 625 skills, configurable builds through E2/M3 where available, an optional maxed support, animated chibis and manual deployment/combat. See [ARKPEDIA.md](ARKPEDIA.md) for scope and limitations. The original application below still uses Stronghold rules. Original licensing and contributor credits remain intact.
 
 《明日方舟》季节性自走棋塔防玩法「卫戍协议：盟约」的**非官方同人复刻**：浏览器即开即玩，单人或 1–4 人联机合作。
 
