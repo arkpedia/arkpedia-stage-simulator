@@ -14,7 +14,7 @@ export const ADD_KEYS = Object.freeze([
   'atkFlat', 'atkFinalFlat', 'atkPct', 'defFlat', 'defFinalFlat', 'defPct', 'hpFlat', 'hpFinalFlat', 'hpPct', 'resFlat', 'resPct', 'aspd', 'batFlat', 'batPct', 'blockCnt',
   'rangeExtend', 'defIgnoreFlat', 'defIgnorePct', 'resIgnoreFlat', 'resIgnorePct', 'dodgePhys', 'dodgeArts',
   'spRecoveryFlat', 'maxTargets', 'taunt', 'hpRegen', 'hpRegenRatio', 'spCostFlat', 'moveFlat', 'movePct', 'massFlat',
-  'flatDamageResistance', 'damageHpFloorRatio',
+  'flatDamageResistance', 'damageHpFloorRatio', 'hitRatePhys', 'hitRateArts',
 ]);
 /** Multiplicative mod keys (product; ^ stacks). */
 export const MUL_KEYS = Object.freeze([

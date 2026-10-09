@@ -2,7 +2,7 @@
 //
 // dealDamage order: (element → gauge path) | invulnerable? / 对地规避 (a ground enemy's damage to an airborne 起飞 ally —
 //   targeting.js evadesGround; not `ignoreSelect` damage: no selection, e.g. a debuff's tick) → 'hit' hook (mutable DamageInfo, may set cancel)
-//   → dodge (phys/arts, canDodge) → mitigation (phys: DEF, arts: RES, true: none)
+//   → attacker hit rate → dodge (phys/arts, canDodge) → mitigation (phys: DEF, arts: RES, true: none)
 //   → × source dmgDealtMul (× phys/artsDealtMul) × target dmgTakenMul (not for 元素伤害) × type-taken mul × dmg.mul
 //   → optional 'damageFinal' hook (mutable final amount after mitigation and flat resistance)
 //   → 限伤 (leaders in boss / hidden battles: a hit of ceil(final) ≥ BOSS_HIT_LIMIT is cancelled, see leaderHitCancelled)
@@ -249,6 +249,17 @@ export function dealDamage(battle, source, target, dmgIn) {
     if (ts.flags.invulnerable || sleepBlocks(target, hs, dmg)) return 0;
   }
   const type = dmg.type;
+  // Native DAMAGE_HITRATE attributes belong to the attacker. A failed hit
+  // precedes the recipient's independent evade roll and can miss any recipient.
+  // Non-missable, true/elemental and sourceless damage bypass this roll.
+  if (hs && dmg.canDodge && (type === 'phys' || type === 'arts')) {
+    const p = type === 'phys' ? hs.s.hitRatePhys : hs.s.hitRateArts;
+    if (p < 1 && (p <= 0 || battle.rng() >= p)) {
+      battle.fx('dodge', { x: target.x, y: target.y, id: target.id });
+      if (battle._hooks.hitFailed) battle.emit('hitFailed', { source: hs, target, dmg });
+      return 0;
+    }
+  }
   // dodge
   if (dmg.canDodge && (type === 'phys' || type === 'arts')) {
     const p = type === 'phys' ? ts.dodgePhys : ts.dodgeArts;

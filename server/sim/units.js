@@ -140,6 +140,8 @@ export class Unit {
       taunt: (Number.isFinite(b.tauntLevel) ? b.tauntLevel : 0) + a('taunt') + (flags.taunt === true ? 1 : 0),
       dodgePhys: clamp(a('dodgePhys'), 0, 1),
       dodgeArts: clamp(a('dodgeArts'), 0, 1),
+      hitRatePhys: clamp(1 + a('hitRatePhys'), 0, 1),
+      hitRateArts: clamp(1 + a('hitRateArts'), 0, 1),
       defIgnoreFlat: a('defIgnoreFlat'),
       defIgnorePct: clamp(a('defIgnorePct'), 0, 1),
       resIgnoreFlat: a('resIgnoreFlat'),
