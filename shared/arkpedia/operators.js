@@ -130,6 +130,7 @@ import { PEPE_OPERATORS } from './pepe-operators.js';
 import { CROWNSLAYER_OPERATORS } from './crownslayer-operators.js';
 import { IANA_OPERATORS } from './iana-operators.js';
 import { BRIGID_OPERATORS } from './brigid-operators.js';
+import { YATO_ALTER_OPERATORS } from './yato-alter-operators.js';
 import { SPECTER_ALTER_OPERATORS } from './specter-alter-operators.js';
 import { ASCALON_OPERATORS } from './ascalon-operators.js';
 import { GLADIIA_OPERATORS } from './gladiia-operators.js';
@@ -280,6 +281,7 @@ export const REGULAR_OPERATORS = Object.freeze({
   ...IANA_OPERATORS,
   ...BRIGID_OPERATORS,
   ...SPECTER_ALTER_OPERATORS,
+  ...YATO_ALTER_OPERATORS,
   ...CHEN_ALTER_OPERATORS,
   ...FROST_OPERATORS,
   ...MAYER_OPERATORS,
