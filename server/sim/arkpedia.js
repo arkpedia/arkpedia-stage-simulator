@@ -126,6 +126,7 @@ import { customizeBlazeKit, installBlaze } from './content/arkpedia-blaze.js';
 import { customizeGavialInvincibleKit, installGavialInvincible } from './content/arkpedia-gavial-invincible.js';
 import { customizeFiammettaKit, installFiammetta } from './content/arkpedia-fiammetta.js';
 import { customizeHornKit, installHorn } from './content/arkpedia-horn.js';
+import { customizeGnosisKit, installGnosis } from './content/arkpedia-gnosis.js';
 import { customizeEyjafjallaKit, installEyjafjalla } from './content/arkpedia-eyjafjalla.js';
 import { customizeFiveStarSupportFourthKit, installFiveStarSupportFourth } from './content/arkpedia-five-star-support-fourth.js';
 import { customizeFiveStarSpecialistExpansionKit, installFiveStarSpecialistExpansion } from './content/arkpedia-five-star-specialist-expansion.js';
@@ -450,6 +451,7 @@ export class StandardBattle extends Battle {
     customizeGavialInvincibleKit({ battle: this, id, def, unit, kit });
     customizeFiammettaKit({ battle: this, id, def, unit, kit });
     customizeHornKit({ battle: this, id, def, unit, kit });
+    customizeGnosisKit({ battle: this, id, def, unit, kit });
     customizeEyjafjallaKit({ battle: this, id, def, unit, kit });
     customizeFrostKit({ battle: this, id, def, unit, kit });
     customizeMayerKit({ battle: this, id, def, unit, kit });
@@ -597,6 +599,7 @@ export class StandardBattle extends Battle {
     installGavialInvincible({ battle: this, unit, def });
     installFiammetta({ battle: this, unit, def });
     installHorn({ battle: this, unit, def });
+    installGnosis({ battle: this, unit, def });
     installEyjafjalla({ battle: this, unit, def });
     installFrost({ battle: this, unit, def });
     installMayer({ battle: this, unit, def });

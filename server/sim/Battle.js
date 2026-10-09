@@ -1441,7 +1441,9 @@ export class Battle {
     }
     if (key === 'levitate' && target.s.massLevel > LEVITATE_HALF_WEIGHT) duration /= 2;
     if (!(duration > 0)) return false;
-    if (key === 'cold' && target.findBuff('cold') && !(immune && immune.has('frozen'))) {
+    // Original c2e_cold producers can retain independent one-trigger layers.
+    // Their adapter pairs accepted, post-resistance lifetimes itself.
+    if (key === 'cold' && opts.coldPairing !== 'independent' && target.findBuff('cold') && !(immune && immune.has('frozen'))) {
       // PRTS 术语释义 寒冷: 友方寒冷 pairs into 冻结, 「持续时间取双方之中最高」. `duration` is this cold after 抵抗;
       // the cold already on the target keeps timeLeft. addBuff refresh 'extend' below sets that cold to the same max.
       // COLD_FREEZE_DURATION is only the fallback when neither side has a duration. resistApplied: that max is already

@@ -504,7 +504,7 @@ export class StageRenderer {
               radius = Math.max(9, Math.min(13, point.s * 0.12));
             view.hp
               .lineStyle(1.5, 0x242820)
-              .beginFill(0xffd953)
+              .beginFill(skill.charged ? 0xf04c39 : 0xffd953)
               .drawPolygon([
                 point.x, cy - radius,
                 point.x + radius, cy,

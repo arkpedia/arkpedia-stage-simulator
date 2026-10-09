@@ -15,6 +15,7 @@ export function skillHud(skill) {
   if (skill.spec?.hideInactiveHud && !skill.active && !skill.pending) return null;
   const clamp = (n) => Math.max(0, Math.min(1, Number.isFinite(n) ? n : 0));
   const ready = skill.ready && !skill.active && !skill.pending;
+  const charged = !!(ready && skill.spec?.chargedState?.());
   const splitGauge = skill.active && typeof skill.spec?.overloadState === 'function';
   const overloaded = !!(splitGauge && skill.spec.overloadState());
   let fraction, text;
@@ -44,8 +45,10 @@ export function skillHud(skill) {
     fraction = cost > 0 ? clamp(skill.spTotal / cost) : ready ? 1 : 0;
     text = `${Math.floor(skill.spTotal)} / ${cost} SP · ${skill.manual ? "Manual" : "Auto"} activation${ready ? " · Ready" : ""}`;
   }
+  if (charged) text = `Charged · ${text}`;
   return {
     fraction,
+    ...(charged ? { charged: true } : {}),
     state: overloaded ? 'overloaded' : skill.active || skill.pending || (ready && !skill.manual) ? "active" : "charging",
     // Automatic skills trigger themselves; the diamond invites a manual action only.
     ready: !!(ready && skill.manual),
