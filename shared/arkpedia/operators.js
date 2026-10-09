@@ -125,6 +125,7 @@ import { FIAMMETTA_OPERATORS } from './fiammetta-operators.js';
 import { HORN_OPERATORS } from './horn-operators.js';
 import { TYPHON_OPERATORS } from './typhon-operators.js';
 import { DEGENBRECHER_OPERATORS } from './degenbrecher-operators.js';
+import { CHONGYUE_OPERATORS } from './chongyue-operators.js';
 import { IRENE_OPERATORS } from './irene-operators.js';
 import { TEXAS_ALTER_OPERATORS } from './texas-alter-operators.js';
 import { GNOSIS_OPERATORS } from './gnosis-operators.js';
@@ -263,6 +264,7 @@ export const REGULAR_OPERATORS = Object.freeze({
   ...TYPHON_OPERATORS,
   ...IRENE_OPERATORS,
   ...DEGENBRECHER_OPERATORS,
+  ...CHONGYUE_OPERATORS,
   ...FROST_OPERATORS,
   ...MAYER_OPERATORS,
   ...FANG_FIRE_SHARPENED_OPERATORS,

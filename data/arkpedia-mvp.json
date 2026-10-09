@@ -55290,6 +55290,273 @@
           "height": 1176.312
         }
       },
+      "operator/char_2024_chyue/default/front": {
+        "kind": "operator",
+        "id": "char_2024_chyue",
+        "variant": "default",
+        "facing": "front",
+        "spineVersion": "3.8.99",
+        "source": {
+          "key": "operators",
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "spine/char_2024_chyue/char_2024_chyue/Front"
+        },
+        "skeleton": {
+          "path": "models/operator/char_2024_chyue/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_2024_chyue.skel",
+          "bytes": 644516,
+          "sha256": "902eadfa5a050361532dd742a9fed1a86daa05d099d3489ed4992f108244106c"
+        },
+        "atlas": {
+          "path": "models/operator/char_2024_chyue/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_2024_chyue.atlas",
+          "bytes": 15532,
+          "sha256": "82bef552ddef69fabd4931dffc0a25f8508e47670c8a0f3d1d3380b28d252b29"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_2024_chyue/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_2024_chyue.png",
+            "bytes": 181206,
+            "sha256": "1481865faaebd9290b678cde95828d4b94198f475f075ed75b7c7aca9dbdf6f7"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Attack_A": 1,
+          "Attack_B": 1,
+          "Default": 0,
+          "Die": 1,
+          "Idle": 2,
+          "Skill_1": 1,
+          "Skill_1_Charged": 1,
+          "Skill_2_Begin": 0.833,
+          "Skill_2_End": 1.167,
+          "Skill_3": 1.167,
+          "Skill_3_Change": 1.167,
+          "Skill_3_Charged": 1.167,
+          "Skill_3_Idle": 2,
+          "Skill_3_Loop_A": 1,
+          "Skill_3_Loop_B": 1,
+          "Start": 1
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": null,
+            "loop": "Attack_A",
+            "end": null,
+            "via": "attackAny"
+          },
+          "attackDown": null,
+          "skill": {
+            "begin": null,
+            "loop": "Skill_1",
+            "end": null,
+            "index": 0,
+            "idle": null
+          },
+          "die": "Die",
+          "move": null,
+          "stun": null,
+          "skills": {
+            "0": {
+              "begin": null,
+              "loop": "Skill_1",
+              "end": null,
+              "index": 0,
+              "idle": null
+            },
+            "1": {
+              "begin": null,
+              "loop": "Skill_2_Begin",
+              "end": "Skill_2_End",
+              "index": 1,
+              "idle": null
+            },
+            "2": {
+              "begin": null,
+              "loop": "Skill_3",
+              "end": null,
+              "index": 2,
+              "idle": "Skill_3_Idle"
+            }
+          }
+        },
+        "hits": {
+          "Attack_A": [
+            0.167
+          ],
+          "Attack_B": [
+            0.167
+          ],
+          "Skill_1": [
+            0.167
+          ],
+          "Skill_1_Charged": [
+            0.167
+          ],
+          "Skill_2_Begin": [
+            0.367
+          ],
+          "Skill_2_End": [
+            0.033
+          ],
+          "Skill_3": [
+            0.333
+          ],
+          "Skill_3_Change": [
+            0.333
+          ],
+          "Skill_3_Charged": [
+            0.333
+          ],
+          "Skill_3_Loop_A": [
+            0.167
+          ],
+          "Skill_3_Loop_B": [
+            0.167
+          ]
+        },
+        "bounds": {
+          "x": -447.426,
+          "y": -11.691,
+          "width": 572.86,
+          "height": 454.152
+        }
+      },
+      "operator/char_2024_chyue/default/back": {
+        "kind": "operator",
+        "id": "char_2024_chyue",
+        "variant": "default",
+        "facing": "back",
+        "spineVersion": "3.8.99",
+        "source": {
+          "key": "operators",
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "spine/char_2024_chyue/char_2024_chyue/Back"
+        },
+        "skeleton": {
+          "path": "models/operator/char_2024_chyue/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_2024_chyue.skel",
+          "bytes": 425303,
+          "sha256": "73fa8d6feca0bbd1001150bdbeb198eb7ce64808746d9ae057d8824043743547"
+        },
+        "atlas": {
+          "path": "models/operator/char_2024_chyue/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_2024_chyue.atlas",
+          "bytes": 11932,
+          "sha256": "1b65854391dd2cdae36ccbb9a544ef68135f07e3360baa0c28a8b0b4cd68bb6a"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_2024_chyue/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_2024_chyue.png",
+            "bytes": 165197,
+            "sha256": "62a8391f6942056aa1f51b1a4914e87072aba71017b287445629e575278bfa7d"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Attack_A": 1,
+          "Attack_B": 1,
+          "Default": 0,
+          "Idle": 2,
+          "Skill_1": 1,
+          "Skill_1_Charged": 1,
+          "Skill_2_Begin": 0.833,
+          "Skill_2_End": 1.167,
+          "Skill_3": 1.167,
+          "Skill_3_Change": 1.167,
+          "Skill_3_Charged": 1.167,
+          "Skill_3_Idle": 2,
+          "Skill_3_Loop_A": 1,
+          "Skill_3_Loop_B": 1,
+          "Start": 1
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": null,
+            "loop": "Attack_A",
+            "end": null,
+            "via": "attackAny"
+          },
+          "attackDown": null,
+          "skill": {
+            "begin": null,
+            "loop": "Skill_1",
+            "end": null,
+            "index": 0,
+            "idle": null
+          },
+          "die": null,
+          "move": null,
+          "stun": null,
+          "skills": {
+            "0": {
+              "begin": null,
+              "loop": "Skill_1",
+              "end": null,
+              "index": 0,
+              "idle": null
+            },
+            "1": {
+              "begin": null,
+              "loop": "Skill_2_Begin",
+              "end": "Skill_2_End",
+              "index": 1,
+              "idle": null
+            },
+            "2": {
+              "begin": null,
+              "loop": "Skill_3",
+              "end": null,
+              "index": 2,
+              "idle": "Skill_3_Idle"
+            }
+          }
+        },
+        "hits": {
+          "Attack_A": [
+            0.167
+          ],
+          "Attack_B": [
+            0.167
+          ],
+          "Skill_1": [
+            0.167
+          ],
+          "Skill_1_Charged": [
+            0.167
+          ],
+          "Skill_2_Begin": [
+            0.367
+          ],
+          "Skill_2_End": [
+            0.033
+          ],
+          "Skill_3": [
+            0.333
+          ],
+          "Skill_3_Change": [
+            0.333
+          ],
+          "Skill_3_Charged": [
+            0.333
+          ],
+          "Skill_3_Loop_A": [
+            0.167
+          ],
+          "Skill_3_Loop_B": [
+            0.167
+          ]
+        },
+        "bounds": {
+          "x": -447.426,
+          "y": -11.691,
+          "width": 572.86,
+          "height": 454.152
+        }
+      },
       "operator/char_458_rfrost/default/front": {
         "kind": "operator",
         "id": "char_458_rfrost",
@@ -471193,6 +471460,1884 @@
                   -2,
                   0
                 ]
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "char_2024_chyue": {
+      "id": "char_2024_chyue",
+      "name": "Chongyue",
+      "description": "Blocks 1 enemy",
+      "rarity": 6,
+      "profession": "WARRIOR",
+      "subProfessionId": "fighter",
+      "position": "MELEE",
+      "nationId": "yan",
+      "groupId": "sui",
+      "teamId": null,
+      "phases": [
+        {
+          "maxLevel": 50,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 1246,
+                "atk": 242,
+                "def": 156,
+                "magicResistance": 0,
+                "cost": 9,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 0.78,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 50,
+              "data": {
+                "maxHp": 1684,
+                "atk": 357,
+                "def": 224,
+                "magicResistance": 0,
+                "cost": 9,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 0.78,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ]
+        },
+        {
+          "maxLevel": 80,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 1684,
+                "atk": 357,
+                "def": 224,
+                "magicResistance": 0,
+                "cost": 11,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 0.78,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 80,
+              "data": {
+                "maxHp": 2160,
+                "atk": 477,
+                "def": 304,
+                "magicResistance": 0,
+                "cost": 11,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 0.78,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ]
+        },
+        {
+          "maxLevel": 90,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 2160,
+                "atk": 477,
+                "def": 304,
+                "magicResistance": 0,
+                "cost": 11,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 0.78,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 90,
+              "data": {
+                "maxHp": 2635,
+                "atk": 590,
+                "def": 363,
+                "magicResistance": 0,
+                "cost": 11,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 0.78,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ]
+        }
+      ],
+      "favorKeyFrames": [
+        {
+          "level": 0,
+          "data": {
+            "maxHp": 0,
+            "atk": 0,
+            "def": 0,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false
+          }
+        },
+        {
+          "level": 50,
+          "data": {
+            "maxHp": 0,
+            "atk": 60,
+            "def": 30,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false
+          }
+        }
+      ],
+      "potentialRanks": [
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "RESPAWN_TIME",
+            "formulaItem": "ADDITION",
+            "value": -4,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "ATK",
+            "formulaItem": "ADDITION",
+            "value": 24,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [],
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ]
+      ],
+      "trait": null,
+      "talents": [
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "An End to War",
+              "description": "18% chance for normal attacks to increase the damage Chongyue deals to the target by 55% for 2.5s",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "prob",
+                  "value": 0.18,
+                  "valueStr": null
+                },
+                {
+                  "key": "damage_scale",
+                  "value": 1.55,
+                  "valueStr": null
+                },
+                {
+                  "key": "up_duration",
+                  "value": 2.5,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 1
+              },
+              "requiredPotentialRank": 4,
+              "prefabKey": "1",
+              "name": "An End to War",
+              "description": "20%<@ba.talpu> (+2%)</> chance for normal attacks to increase the damage Chongyue deals to the target by 60%<@ba.talpu> (+5%)</> for 2.5s",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "prob",
+                  "value": 0.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "damage_scale",
+                  "value": 1.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "up_duration",
+                  "value": 2.5,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "An End to War",
+              "description": "23% chance for normal attacks to increase the damage Chongyue deals to the target by 65% for 2.5s",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "prob",
+                  "value": 0.23,
+                  "valueStr": null
+                },
+                {
+                  "key": "damage_scale",
+                  "value": 1.65,
+                  "valueStr": null
+                },
+                {
+                  "key": "up_duration",
+                  "value": 2.5,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 4,
+              "prefabKey": "1",
+              "name": "An End to War",
+              "description": "25%<@ba.talpu> (+2%)</> chance for normal attacks to increase the damage Chongyue deals to the target by 70%<@ba.talpu> (+5%)</> for 2.5s",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "prob",
+                  "value": 0.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "damage_scale",
+                  "value": 1.7,
+                  "valueStr": null
+                },
+                {
+                  "key": "up_duration",
+                  "value": 2.5,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            }
+          ]
+        },
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "2",
+              "name": "All Are Guests",
+              "description": "Chongyue recovers 3 SP if he defeats at least one enemy with a skill",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "sp",
+                  "value": 3,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            }
+          ]
+        }
+      ],
+      "skills": [
+        {
+          "id": "skchr_chyue_1",
+          "unlockCondition": {
+            "phase": "PHASE_0",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "Abundant",
+              "rangeId": null,
+              "description": "Deals <@ba.vup>{atk_scale:0%}</> ATK as Physical damage to the target. When at maximum charges, removes all charges and deals damage for each charge removed\n<@ba.rem>Max 3 charges</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 3,
+                "spCost": 6,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_chyue_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 2.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "cnt",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "times",
+                  "value": 3,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Abundant",
+              "rangeId": null,
+              "description": "Deals <@ba.vup>{atk_scale:0%}</> ATK as Physical damage to the target. When at maximum charges, removes all charges and deals damage for each charge removed\n<@ba.rem>Max 3 charges</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 3,
+                "spCost": 6,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_chyue_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 2.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "cnt",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "times",
+                  "value": 3,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Abundant",
+              "rangeId": null,
+              "description": "Deals <@ba.vup>{atk_scale:0%}</> ATK as Physical damage to the target. When at maximum charges, removes all charges and deals damage for each charge removed\n<@ba.rem>Max 3 charges</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 3,
+                "spCost": 6,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_chyue_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 2.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "cnt",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "times",
+                  "value": 3,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Abundant",
+              "rangeId": null,
+              "description": "Deals <@ba.vup>{atk_scale:0%}</> ATK as Physical damage to the target. When at maximum charges, removes all charges and deals damage for each charge removed\n<@ba.rem>Max 3 charges</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 3,
+                "spCost": 5,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_chyue_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 2.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "cnt",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "times",
+                  "value": 3,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Abundant",
+              "rangeId": null,
+              "description": "Deals <@ba.vup>{atk_scale:0%}</> ATK as Physical damage to the target. When at maximum charges, removes all charges and deals damage for each charge removed\n<@ba.rem>Max 3 charges</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 3,
+                "spCost": 5,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_chyue_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 2.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "cnt",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "times",
+                  "value": 3,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Abundant",
+              "rangeId": null,
+              "description": "Deals <@ba.vup>{atk_scale:0%}</> ATK as Physical damage to the target. When at maximum charges, removes all charges and deals damage for each charge removed\n<@ba.rem>Max 3 charges</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 3,
+                "spCost": 5,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_chyue_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 2.7,
+                  "valueStr": null
+                },
+                {
+                  "key": "cnt",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "times",
+                  "value": 3,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Abundant",
+              "rangeId": null,
+              "description": "Deals <@ba.vup>{atk_scale:0%}</> ATK as Physical damage to the target. When at maximum charges, removes all charges and deals damage for each charge removed\n<@ba.rem>Max 3 charges</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 3,
+                "spCost": 4,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_chyue_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 2.9,
+                  "valueStr": null
+                },
+                {
+                  "key": "cnt",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "times",
+                  "value": 3,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Abundant",
+              "rangeId": null,
+              "description": "Deals <@ba.vup>{atk_scale:0%}</> ATK as Physical damage to the target. When at maximum charges, removes all charges and deals damage for each charge removed\n<@ba.rem>Max 3 charges</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 3,
+                "spCost": 4,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_chyue_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 3.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "cnt",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "times",
+                  "value": 3,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Abundant",
+              "rangeId": null,
+              "description": "Deals <@ba.vup>{atk_scale:0%}</> ATK as Physical damage to the target. When at maximum charges, removes all charges and deals damage for each charge removed\n<@ba.rem>Max 3 charges</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 3,
+                "spCost": 4,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_chyue_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 3.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "cnt",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "times",
+                  "value": 3,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Abundant",
+              "rangeId": null,
+              "description": "Deals <@ba.vup>{atk_scale:0%}</> ATK as Physical damage to the target. When at maximum charges, removes all charges and deals damage for each charge removed\n<@ba.rem>Max 3 charges</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 3,
+                "spCost": 3,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_chyue_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 4,
+                  "valueStr": null
+                },
+                {
+                  "key": "cnt",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "times",
+                  "value": 3,
+                  "valueStr": null
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "skchr_chyue_2",
+          "unlockCondition": {
+            "phase": "PHASE_1",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "Whisk",
+              "rangeId": "x-4",
+              "description": "Deals <@ba.vup>{atk_scale:0%}</> ATK as Physical damage to up to <@ba.vup>{max_target}</> enemies and causes targets affected by Talent 1 to <$ba.levitate>Levitate</>, then removes <$ba.levitate>Levitate</> from all enemies with <$ba.levitate>Levitate</>, activates Talent 1 on them with 100% chance, and deals <@ba.vup>{atk_scale_down:0%}</> ATK as Physical damage\n<@ba.rem>Max 2 charges</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 2,
+                "spCost": 13,
+                "initSp": 5,
+                "increment": 1
+              },
+              "prefabId": "skchr_chyue_2",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "max_target",
+                  "value": 4,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk_scale_down",
+                  "value": 3.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk_scale",
+                  "value": 2.5,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Whisk",
+              "rangeId": "x-4",
+              "description": "Deals <@ba.vup>{atk_scale:0%}</> ATK as Physical damage to up to <@ba.vup>{max_target}</> enemies and causes targets affected by Talent 1 to <$ba.levitate>Levitate</>, then removes <$ba.levitate>Levitate</> from all enemies with <$ba.levitate>Levitate</>, activates Talent 1 on them with 100% chance, and deals <@ba.vup>{atk_scale_down:0%}</> ATK as Physical damage\n<@ba.rem>Max 2 charges</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 2,
+                "spCost": 13,
+                "initSp": 5,
+                "increment": 1
+              },
+              "prefabId": "skchr_chyue_2",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "max_target",
+                  "value": 4,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk_scale_down",
+                  "value": 3.7,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk_scale",
+                  "value": 2.6,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Whisk",
+              "rangeId": "x-4",
+              "description": "Deals <@ba.vup>{atk_scale:0%}</> ATK as Physical damage to up to <@ba.vup>{max_target}</> enemies and causes targets affected by Talent 1 to <$ba.levitate>Levitate</>, then removes <$ba.levitate>Levitate</> from all enemies with <$ba.levitate>Levitate</>, activates Talent 1 on them with 100% chance, and deals <@ba.vup>{atk_scale_down:0%}</> ATK as Physical damage\n<@ba.rem>Max 2 charges</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 2,
+                "spCost": 13,
+                "initSp": 5,
+                "increment": 1
+              },
+              "prefabId": "skchr_chyue_2",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "max_target",
+                  "value": 4,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk_scale_down",
+                  "value": 3.9,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk_scale",
+                  "value": 2.7,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Whisk",
+              "rangeId": "x-4",
+              "description": "Deals <@ba.vup>{atk_scale:0%}</> ATK as Physical damage to up to <@ba.vup>{max_target}</> enemies and causes targets affected by Talent 1 to <$ba.levitate>Levitate</>, then removes <$ba.levitate>Levitate</> from all enemies with <$ba.levitate>Levitate</>, activates Talent 1 on them with 100% chance, and deals <@ba.vup>{atk_scale_down:0%}</> ATK as Physical damage\n<@ba.rem>Max 2 charges</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 2,
+                "spCost": 12,
+                "initSp": 6,
+                "increment": 1
+              },
+              "prefabId": "skchr_chyue_2",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "max_target",
+                  "value": 4,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk_scale_down",
+                  "value": 4.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk_scale",
+                  "value": 2.9,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Whisk",
+              "rangeId": "x-4",
+              "description": "Deals <@ba.vup>{atk_scale:0%}</> ATK as Physical damage to up to <@ba.vup>{max_target}</> enemies and causes targets affected by Talent 1 to <$ba.levitate>Levitate</>, then removes <$ba.levitate>Levitate</> from all enemies with <$ba.levitate>Levitate</>, activates Talent 1 on them with 100% chance, and deals <@ba.vup>{atk_scale_down:0%}</> ATK as Physical damage\n<@ba.rem>Max 2 charges</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 2,
+                "spCost": 12,
+                "initSp": 6,
+                "increment": 1
+              },
+              "prefabId": "skchr_chyue_2",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "max_target",
+                  "value": 4,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk_scale_down",
+                  "value": 4.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk_scale",
+                  "value": 3.1,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Whisk",
+              "rangeId": "x-4",
+              "description": "Deals <@ba.vup>{atk_scale:0%}</> ATK as Physical damage to up to <@ba.vup>{max_target}</> enemies and causes targets affected by Talent 1 to <$ba.levitate>Levitate</>, then removes <$ba.levitate>Levitate</> from all enemies with <$ba.levitate>Levitate</>, activates Talent 1 on them with 100% chance, and deals <@ba.vup>{atk_scale_down:0%}</> ATK as Physical damage\n<@ba.rem>Max 2 charges</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 2,
+                "spCost": 12,
+                "initSp": 6,
+                "increment": 1
+              },
+              "prefabId": "skchr_chyue_2",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "max_target",
+                  "value": 4,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk_scale_down",
+                  "value": 4.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk_scale",
+                  "value": 3.3,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Whisk",
+              "rangeId": "x-4",
+              "description": "Deals <@ba.vup>{atk_scale:0%}</> ATK as Physical damage to up to <@ba.vup>{max_target}</> enemies and causes targets affected by Talent 1 to <$ba.levitate>Levitate</>, then removes <$ba.levitate>Levitate</> from all enemies with <$ba.levitate>Levitate</>, activates Talent 1 on them with 100% chance, and deals <@ba.vup>{atk_scale_down:0%}</> ATK as Physical damage\n<@ba.rem>Max 2 charges</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 2,
+                "spCost": 11,
+                "initSp": 7,
+                "increment": 1
+              },
+              "prefabId": "skchr_chyue_2",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "max_target",
+                  "value": 4,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk_scale_down",
+                  "value": 4.8,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk_scale",
+                  "value": 3.5,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Whisk",
+              "rangeId": "x-4",
+              "description": "Deals <@ba.vup>{atk_scale:0%}</> ATK as Physical damage to up to <@ba.vup>{max_target}</> enemies and causes targets affected by Talent 1 to <$ba.levitate>Levitate</>, then removes <$ba.levitate>Levitate</> from all enemies with <$ba.levitate>Levitate</>, activates Talent 1 on them with 100% chance, and deals <@ba.vup>{atk_scale_down:0%}</> ATK as Physical damage\n<@ba.rem>Max 2 charges</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 2,
+                "spCost": 11,
+                "initSp": 7,
+                "increment": 1
+              },
+              "prefabId": "skchr_chyue_2",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "max_target",
+                  "value": 4,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk_scale_down",
+                  "value": 5.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk_scale",
+                  "value": 3.8,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Whisk",
+              "rangeId": "x-4",
+              "description": "Deals <@ba.vup>{atk_scale:0%}</> ATK as Physical damage to up to <@ba.vup>{max_target}</> enemies and causes targets affected by Talent 1 to <$ba.levitate>Levitate</>, then removes <$ba.levitate>Levitate</> from all enemies with <$ba.levitate>Levitate</>, activates Talent 1 on them with 100% chance, and deals <@ba.vup>{atk_scale_down:0%}</> ATK as Physical damage\n<@ba.rem>Max 2 charges</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 2,
+                "spCost": 11,
+                "initSp": 7,
+                "increment": 1
+              },
+              "prefabId": "skchr_chyue_2",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "max_target",
+                  "value": 4,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk_scale_down",
+                  "value": 5.8,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk_scale",
+                  "value": 4.1,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Whisk",
+              "rangeId": "x-4",
+              "description": "Deals <@ba.vup>{atk_scale:0%}</> ATK as Physical damage to up to <@ba.vup>{max_target}</> enemies and causes targets affected by Talent 1 to <$ba.levitate>Levitate</>, then removes <$ba.levitate>Levitate</> from all enemies with <$ba.levitate>Levitate</>, activates Talent 1 on them with 100% chance, and deals <@ba.vup>{atk_scale_down:0%}</> ATK as Physical damage\n<@ba.rem>Max 2 charges</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 2,
+                "spCost": 10,
+                "initSp": 9,
+                "increment": 1
+              },
+              "prefabId": "skchr_chyue_2",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "max_target",
+                  "value": 4,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk_scale_down",
+                  "value": 6.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk_scale",
+                  "value": 4.5,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "id": "skchr_chyue_3",
+          "unlockCondition": {
+            "phase": "PHASE_2",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "Anatta",
+              "rangeId": null,
+              "description": "Deals <@ba.vup>{atk_scale:0%}</> ATK as Physical damage to the target and nearby enemies; after this skill has been used <@ba.vup>5 times</>: Chongyue's <@ba.vup>attack range increases</> and attacks <@ba.vup>hit twice</>; this skill becomes <@ba.vdown>auto-activated</> and <@ba.vup>deals damage an extra time</>.",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 12,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_chyue_3",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 1.8,
+                  "valueStr": null
+                },
+                {
+                  "key": "cast_cnt",
+                  "value": 5,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Anatta",
+              "rangeId": null,
+              "description": "Deals <@ba.vup>{atk_scale:0%}</> ATK as Physical damage to the target and nearby enemies; after this skill has been used <@ba.vup>5 times</>: Chongyue's <@ba.vup>attack range increases</> and attacks <@ba.vup>hit twice</>; this skill becomes <@ba.vdown>auto-activated</> and <@ba.vup>deals damage an extra time</>.",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 12,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_chyue_3",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "cast_cnt",
+                  "value": 5,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Anatta",
+              "rangeId": null,
+              "description": "Deals <@ba.vup>{atk_scale:0%}</> ATK as Physical damage to the target and nearby enemies; after this skill has been used <@ba.vup>5 times</>: Chongyue's <@ba.vup>attack range increases</> and attacks <@ba.vup>hit twice</>; this skill becomes <@ba.vdown>auto-activated</> and <@ba.vup>deals damage an extra time</>.",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 12,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_chyue_3",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 2.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "cast_cnt",
+                  "value": 5,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Anatta",
+              "rangeId": null,
+              "description": "Deals <@ba.vup>{atk_scale:0%}</> ATK as Physical damage to the target and nearby enemies; after this skill has been used <@ba.vup>5 times</>: Chongyue's <@ba.vup>attack range increases</> and attacks <@ba.vup>hit twice</>; this skill becomes <@ba.vdown>auto-activated</> and <@ba.vup>deals damage an extra time</>.",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 11,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_chyue_3",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 2.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "cast_cnt",
+                  "value": 5,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Anatta",
+              "rangeId": null,
+              "description": "Deals <@ba.vup>{atk_scale:0%}</> ATK as Physical damage to the target and nearby enemies; after this skill has been used <@ba.vup>5 times</>: Chongyue's <@ba.vup>attack range increases</> and attacks <@ba.vup>hit twice</>; this skill becomes <@ba.vdown>auto-activated</> and <@ba.vup>deals damage an extra time</>.",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 11,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_chyue_3",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 2.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "cast_cnt",
+                  "value": 5,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Anatta",
+              "rangeId": null,
+              "description": "Deals <@ba.vup>{atk_scale:0%}</> ATK as Physical damage to the target and nearby enemies; after this skill has been used <@ba.vup>5 times</>: Chongyue's <@ba.vup>attack range increases</> and attacks <@ba.vup>hit twice</>; this skill becomes <@ba.vdown>auto-activated</> and <@ba.vup>deals damage an extra time</>.",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 11,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_chyue_3",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 2.8,
+                  "valueStr": null
+                },
+                {
+                  "key": "cast_cnt",
+                  "value": 5,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Anatta",
+              "rangeId": null,
+              "description": "Deals <@ba.vup>{atk_scale:0%}</> ATK as Physical damage to the target and nearby enemies; after this skill has been used <@ba.vup>5 times</>: Chongyue's <@ba.vup>attack range increases</> and attacks <@ba.vup>hit twice</>; this skill becomes <@ba.vdown>auto-activated</> and <@ba.vup>deals damage an extra time</>.",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 10,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_chyue_3",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "cast_cnt",
+                  "value": 5,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Anatta",
+              "rangeId": null,
+              "description": "Deals <@ba.vup>{atk_scale:0%}</> ATK as Physical damage to the target and nearby enemies; after this skill has been used <@ba.vup>5 times</>: Chongyue's <@ba.vup>attack range increases</> and attacks <@ba.vup>hit twice</>; this skill becomes <@ba.vdown>auto-activated</> and <@ba.vup>deals damage an extra time</>.",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 10,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_chyue_3",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 3.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "cast_cnt",
+                  "value": 5,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Anatta",
+              "rangeId": null,
+              "description": "Deals <@ba.vup>{atk_scale:0%}</> ATK as Physical damage to the target and nearby enemies; after this skill has been used <@ba.vup>5 times</>: Chongyue's <@ba.vup>attack range increases</> and attacks <@ba.vup>hit twice</>; this skill becomes <@ba.vdown>auto-activated</> and <@ba.vup>deals damage an extra time</>.",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 10,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_chyue_3",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 3.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "cast_cnt",
+                  "value": 5,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Anatta",
+              "rangeId": null,
+              "description": "Deals <@ba.vup>{atk_scale:0%}</> ATK as Physical damage to the target and nearby enemies; after this skill has been used <@ba.vup>5 times</>: Chongyue's <@ba.vup>attack range increases</> and attacks <@ba.vup>hit twice</>; this skill becomes <@ba.vdown>auto-activated</> and <@ba.vup>deals damage an extra time</>.",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 8,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_chyue_3",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 3.8,
+                  "valueStr": null
+                },
+                {
+                  "key": "cast_cnt",
+                  "value": 5,
+                  "valueStr": null
+                }
               ]
             }
           ]
