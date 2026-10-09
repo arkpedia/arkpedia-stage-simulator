@@ -120,6 +120,7 @@ import { LESSING_OPERATORS } from './lessing-operators.js';
 import { PENANCE_OPERATORS } from './penance-operators.js';
 import { MUDROCK_OPERATORS } from './mudrock-operators.js';
 import { BLAZE_OPERATORS } from './blaze-operators.js';
+import { GAVIAL_INVINCIBLE_OPERATORS } from './gavial-invincible-operators.js';
 import { FIVE_STAR_SPECIALIST_EXPANSION_OPERATORS } from './five-star-specialist-expansion-operators.js';
 export const REGULAR_OPERATORS = Object.freeze({
   char_123_fang: { skillId: "skcom_charge_cost[1]", talentKeys: ["cost"], mechanic: "dp", prefabId: "skcom_charge_cost", templateKey: "charge_cost" },
@@ -245,6 +246,7 @@ export const REGULAR_OPERATORS = Object.freeze({
   ...PENANCE_OPERATORS,
   ...MUDROCK_OPERATORS,
   ...BLAZE_OPERATORS,
+  ...GAVIAL_INVINCIBLE_OPERATORS,
   ...FROST_OPERATORS,
   ...MAYER_OPERATORS,
   ...FANG_FIRE_SHARPENED_OPERATORS,

@@ -1197,6 +1197,7 @@ export class Battle {
     if (i >= 0) bl.blocking.splice(i, 1);
     e.blockedBy = null;
     this._stealthSwitch(e);
+    if (this._hooks.unblocked) this.emit('unblocked', { blocker: bl, enemy: e });
   }
 
   /** Release every enemy blocked by ally `u` (death, retreat, block count drop, substitution…). */
@@ -1205,6 +1206,7 @@ export class Battle {
     const was = u.blocking;
     u.blocking = [];
     for (const e of was) if (e.blockedBy === u) { e.blockedBy = null; this._stealthSwitch(e); }
+    if (this._hooks.unblocked) this.emit('unblocked', { blocker: u, enemies: was });
   }
 
   /**

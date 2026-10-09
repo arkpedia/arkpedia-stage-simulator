@@ -99,6 +99,7 @@ export function enforceBlockCapacity(b, u) {
   while (used > cap && u.blocking.length) {
     const e = u.blocking.pop();
     if (e.blockedBy === u) { e.blockedBy = null; b._stealthSwitch(e); }   // a released 隐匿 enemy hides again later
+    if (b._hooks.unblocked) b.emit('unblocked', { blocker: u, enemy: e });
     used -= e.blockWeight ?? 1;
   }
 }
