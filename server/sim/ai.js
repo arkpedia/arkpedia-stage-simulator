@@ -113,6 +113,17 @@ export function acquireTargets(b, u, prof) {
     if (Array.isArray(targets)) {
       const seen = new Set();
       return targets.filter(t => {
+        // Reviewed tile abilities attack a location even without occupants.
+        // Only an explicit tile profile admits a centre inside this stage;
+        // ordinary unit selectors must not accept fabricated live entities.
+        if (prof.tileTargets && t?.kind === 'tile' && t.side === 'tile') {
+          const { tileR: r, tileC: c } = t;
+          if (!Number.isInteger(r) || !Number.isInteger(c) || !b.grid.inRect(r, c)
+            || t.x !== c || t.y !== r || !t.alive || !t.deployed) return false;
+          const key = `tile:${r},${c}`;
+          if (seen.has(key)) return false;
+          seen.add(key); return true;
+        }
         if (!t || seen.has(t) || !t.alive || !t.deployed || t.hidden) return false;
         seen.add(t);
         if (t.side === 'enemy') return canTargetEnemy(u, t, prof);
