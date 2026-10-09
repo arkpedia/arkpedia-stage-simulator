@@ -6,5 +6,5 @@ export const GUARD_SIX_STAR_SECOND_OPERATORS = Object.freeze({
     talentKeys: ['peak_performance.hp_ratio', 'peak_performance.atk', 'value'],
     passiveTalentKeys: [], mechanic: 'pallas' },
 });
-// Blaze's source is retained, but the continuous attack-to-finisher dispatcher
-// remains unresolved. Enabling S1/S2 alone would omit part of her playable kit.
+// Blaze's initial extraction is retained here as historical evidence. Her full
+// kit and bounded continuous-attack mapping now live in blaze-operators.js.
