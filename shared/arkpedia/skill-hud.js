@@ -15,6 +15,7 @@ export function skillHud(skill) {
   if (skill.spec?.hideInactiveHud && !skill.active && !skill.pending) return null;
   const clamp = (n) => Math.max(0, Math.min(1, Number.isFinite(n) ? n : 0));
   const ready = skill.ready && !skill.active && !skill.pending;
+  const manual = skill.manual || skill.spec?.manualActivation?.() === true;
   const charged = !!(ready && skill.spec?.chargedState?.());
   const splitGauge = skill.active && typeof skill.spec?.overloadState === 'function';
   const overloaded = !!(splitGauge && skill.spec.overloadState());
@@ -53,9 +54,9 @@ export function skillHud(skill) {
     fraction,
     ...(charged ? { charged: true } : {}),
     state: overloaded ? 'overloaded' : skill.active || skill.pending || (ready && !skill.manual) ? "active" : "charging",
-    // Automatic skills trigger themselves; the diamond invites a manual action only.
-    ready: !!(ready && skill.manual),
-    canActivate: !!(ready && skill.manual && skill.castEligible !== false),
+    // Automatic skills may explicitly permit a conditional manual action (Pepe S1).
+    ready: !!(ready && manual),
+    canActivate: !!(ready && manual && skill.castEligible !== false),
     canCancel: !!(skill.active && skill.spec?.manualCancel && skill.spec.canManualCancel?.() !== false),
     text,
   };
