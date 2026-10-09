@@ -120,8 +120,7 @@ export function acquireTargets(b, u, prof) {
         // A reviewed healing ability may select its own heal-free summon.
         // This recipient predicate never relaxes isolation or other no-heal
         // rules, and ordinary selectors keep their existing restrictions.
-        const ignoreHealFree = prof.dmgType === 'heal'
-          && typeof prof.heal?.ignoreHealFree === 'function'
+        const ignoreHealFree = typeof prof.heal?.ignoreHealFree === 'function'
           && prof.heal.ignoreHealFree(b, u, t) === true;
         return !flags.untargetable && (!flags.healFree || ignoreHealFree)
           && (t === u || !(flags.noHeal || t.profile?.noHeal || flags.isolated));
