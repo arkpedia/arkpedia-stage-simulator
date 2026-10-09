@@ -118,6 +118,7 @@ import { customizeAakKit, installAak } from './content/arkpedia-aak.js';
 import { customizeFrostKit, installFrost } from './content/arkpedia-frost.js';
 import { customizeRobinKit, installRobin } from './content/arkpedia-robin.js';
 import { customizeWulfeniteKit, installWulfenite } from './content/arkpedia-wulfenite.js';
+import { customizeTippiKit, installTippi } from './content/arkpedia-tippi.js';
 import { customizeFiveStarSupportFourthKit, installFiveStarSupportFourth } from './content/arkpedia-five-star-support-fourth.js';
 import { customizeFiveStarSpecialistExpansionKit, installFiveStarSpecialistExpansion } from './content/arkpedia-five-star-specialist-expansion.js';
 import { catalogueFor, recordFor } from "../../shared/arkpedia/loadout.js";
@@ -433,6 +434,7 @@ export class StandardBattle extends Battle {
     customizeSpuriaKit({ battle: this, id, def, unit, kit });
     customizeRobinKit({ battle: this, id, def, unit, kit });
     customizeWulfeniteKit({ battle: this, id, def, unit, kit });
+    customizeTippiKit({ battle: this, id, def, unit, kit });
     customizeFrostKit({ battle: this, id, def, unit, kit });
     customizeMayerKit({ battle: this, id, def, unit, kit });
     customizeFangFireSharpenedKit({ battle: this, id, def, unit, kit });
@@ -571,6 +573,7 @@ export class StandardBattle extends Battle {
     installSpuria({ battle: this, unit, def });
     installRobin({ battle: this, unit, def });
     installWulfenite({ battle: this, unit, def });
+    installTippi({ battle: this, unit, def });
     installFrost({ battle: this, unit, def });
     installMayer({ battle: this, unit, def });
     installFangFireSharpened({ battle: this, unit, def });
