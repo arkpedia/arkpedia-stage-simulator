@@ -56242,6 +56242,233 @@
           "height": 505.509
         }
       },
+      "operator/char_1502_crosly/default/front": {
+        "kind": "operator",
+        "id": "char_1502_crosly",
+        "variant": "default",
+        "facing": "front",
+        "spineVersion": "3.8.99",
+        "source": {
+          "key": "operators",
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "spine/char_1502_crosly/char_1502_crosly/Front"
+        },
+        "skeleton": {
+          "path": "models/operator/char_1502_crosly/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_1502_crosly.skel",
+          "bytes": 426556,
+          "sha256": "66ef04c7ebe81b11006b5a7cdd00b3737d23a9306e5b5a373e8f48cc83c967c3"
+        },
+        "atlas": {
+          "path": "models/operator/char_1502_crosly/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_1502_crosly.atlas",
+          "bytes": 8898,
+          "sha256": "7eacc95c71b5a4820867d6b79a4efb124f2d268c2bfee477565f56318dbe3ebd"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_1502_crosly/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_1502_crosly.png",
+            "bytes": 241012,
+            "sha256": "0b28b2f2492f29416ccebbba2c602466652f13ba99e4c15fbc8f6189d8fc660f"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Attack_A": 0.933,
+          "Attack_B": 0.933,
+          "Default": 0,
+          "Die": 1,
+          "Idle": 10,
+          "Skill_1_A": 0.933,
+          "Skill_1_B": 0.933,
+          "Skill_2_End": 1.3,
+          "Skill_2_Idle": 1.667,
+          "Skill_3_End": 0.5,
+          "Skill_3_Loop": 4,
+          "Start": 1,
+          "Start_2": 1,
+          "Start_3": 1
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": null,
+            "loop": "Attack_A",
+            "end": null,
+            "via": "attackAny"
+          },
+          "attackDown": null,
+          "skill": {
+            "begin": null,
+            "loop": "Skill_1_A",
+            "end": null,
+            "index": 0,
+            "idle": null
+          },
+          "die": "Die",
+          "move": null,
+          "stun": null,
+          "skills": {
+            "0": {
+              "begin": null,
+              "loop": "Skill_1_A",
+              "end": null,
+              "index": 0,
+              "idle": null
+            },
+            "1": {
+              "begin": null,
+              "loop": "Skill_2_Idle",
+              "end": "Skill_2_End",
+              "index": 1,
+              "idle": "Skill_2_Idle"
+            },
+            "2": {
+              "begin": null,
+              "loop": "Skill_3_Loop",
+              "end": "Skill_3_End",
+              "index": 2,
+              "idle": null
+            }
+          }
+        },
+        "hits": {
+          "Attack_A": [
+            0.433
+          ],
+          "Attack_B": [
+            0.433
+          ],
+          "Skill_1_A": [
+            0.433
+          ],
+          "Skill_1_B": [
+            0.433
+          ],
+          "Skill_2_End": [
+            0.6
+          ]
+        },
+        "bounds": {
+          "x": -194.917,
+          "y": -1.473,
+          "width": 306.618,
+          "height": 379.024
+        }
+      },
+      "operator/char_1502_crosly/default/back": {
+        "kind": "operator",
+        "id": "char_1502_crosly",
+        "variant": "default",
+        "facing": "back",
+        "spineVersion": "3.8.99",
+        "source": {
+          "key": "operators",
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "spine/char_1502_crosly/char_1502_crosly/Back"
+        },
+        "skeleton": {
+          "path": "models/operator/char_1502_crosly/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_1502_crosly.skel",
+          "bytes": 238301,
+          "sha256": "c1cef7eb8bc6674063a2b8e5d4fbcb3041730e20bed44956e8e7cd0f541113be"
+        },
+        "atlas": {
+          "path": "models/operator/char_1502_crosly/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_1502_crosly.atlas",
+          "bytes": 5872,
+          "sha256": "bc93ed49ba8569a9f48270d56fd7ea1060491b9b7b257875b8e2647f5d9b34e9"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_1502_crosly/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_1502_crosly.png",
+            "bytes": 184201,
+            "sha256": "c8f7079b21fdbb779884927918f450b58dece039fc9365efd22772b95b662c76"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Attack_A": 0.933,
+          "Attack_B": 0.933,
+          "Default": 0,
+          "Idle": 5,
+          "Skill_1_A": 0.933,
+          "Skill_1_B": 0.933,
+          "Skill_2_End": 1.3,
+          "Skill_2_Idle": 1.667,
+          "Skill_3_End": 0.5,
+          "Skill_3_Loop": 5,
+          "Start": 1,
+          "Start_2": 1,
+          "Start_3": 1
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": null,
+            "loop": "Attack_A",
+            "end": null,
+            "via": "attackAny"
+          },
+          "attackDown": null,
+          "skill": {
+            "begin": null,
+            "loop": "Skill_1_A",
+            "end": null,
+            "index": 0,
+            "idle": null
+          },
+          "die": null,
+          "move": null,
+          "stun": null,
+          "skills": {
+            "0": {
+              "begin": null,
+              "loop": "Skill_1_A",
+              "end": null,
+              "index": 0,
+              "idle": null
+            },
+            "1": {
+              "begin": null,
+              "loop": "Skill_2_Idle",
+              "end": "Skill_2_End",
+              "index": 1,
+              "idle": "Skill_2_Idle"
+            },
+            "2": {
+              "begin": null,
+              "loop": "Skill_3_Loop",
+              "end": "Skill_3_End",
+              "index": 2,
+              "idle": null
+            }
+          }
+        },
+        "hits": {
+          "Attack_A": [
+            0.433
+          ],
+          "Attack_B": [
+            0.433
+          ],
+          "Skill_1_A": [
+            0.433
+          ],
+          "Skill_1_B": [
+            0.433
+          ],
+          "Skill_2_End": [
+            0.6
+          ]
+        },
+        "bounds": {
+          "x": -194.305,
+          "y": -1.463,
+          "width": 306.006,
+          "height": 379.014
+        }
+      },
       "operator/char_1013_chen2/default/front": {
         "kind": "operator",
         "id": "char_1013_chen2",
@@ -481027,6 +481254,2394 @@
                 [
                   -2,
                   1
+                ]
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "char_1502_crosly": {
+      "id": "char_1502_crosly",
+      "name": "Crownslayer",
+      "description": "Significantly <@ba.kw>reduced</> Redeployment Time",
+      "rarity": 6,
+      "profession": "SPECIAL",
+      "subProfessionId": "executor",
+      "position": "MELEE",
+      "nationId": "rhodes",
+      "groupId": null,
+      "teamId": null,
+      "phases": [
+        {
+          "maxLevel": 50,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 792,
+                "atk": 210,
+                "def": 147,
+                "magicResistance": 0,
+                "cost": 10,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 0.93,
+                "respawnTime": 22,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 50,
+              "data": {
+                "maxHp": 1057,
+                "atk": 310,
+                "def": 210,
+                "magicResistance": 0,
+                "cost": 10,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 0.93,
+                "respawnTime": 22,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ]
+        },
+        {
+          "maxLevel": 80,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 1057,
+                "atk": 310,
+                "def": 210,
+                "magicResistance": 0,
+                "cost": 12,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 0.93,
+                "respawnTime": 22,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 80,
+              "data": {
+                "maxHp": 1322,
+                "atk": 425,
+                "def": 273,
+                "magicResistance": 0,
+                "cost": 12,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 0.93,
+                "respawnTime": 22,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ]
+        },
+        {
+          "maxLevel": 90,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 1322,
+                "atk": 425,
+                "def": 273,
+                "magicResistance": 0,
+                "cost": 12,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 0.93,
+                "respawnTime": 22,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 90,
+              "data": {
+                "maxHp": 1695,
+                "atk": 545,
+                "def": 325,
+                "magicResistance": 0,
+                "cost": 12,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 0.93,
+                "respawnTime": 22,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ]
+        }
+      ],
+      "favorKeyFrames": [
+        {
+          "level": 0,
+          "data": {
+            "maxHp": 0,
+            "atk": 0,
+            "def": 0,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false
+          }
+        },
+        {
+          "level": 50,
+          "data": {
+            "maxHp": 0,
+            "atk": 90,
+            "def": 0,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false
+          }
+        }
+      ],
+      "potentialRanks": [
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "RESPAWN_TIME",
+            "formulaItem": "ADDITION",
+            "value": -4,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [],
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ]
+      ],
+      "trait": null,
+      "talents": [
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "t1",
+              "name": "Swallow Your Suffering",
+              "description": "Creates a smoke cloud around herself while skill is active; ground enemies within the cloud have -15% Physical and Arts hit rate",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "damage_hitrate_physical",
+                  "value": -0.15,
+                  "valueStr": null
+                },
+                {
+                  "key": "damage_hitrate_magical",
+                  "value": -0.15,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "t1",
+              "name": "Swallow Your Suffering",
+              "description": "Creates a smoke cloud around herself while skill is active; ground enemies within the cloud have -20% Physical and Arts hit rate",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "damage_hitrate_physical",
+                  "value": -0.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "damage_hitrate_magical",
+                  "value": -0.2,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            }
+          ]
+        },
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "t2",
+              "name": "Crownslayer's Glory",
+              "description": "Deals 20% more Physical damage to ground enemies that have not yet dealt damage to her",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "damage_scale",
+                  "value": 1.2,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 4,
+              "prefabKey": "t2",
+              "name": "Crownslayer's Glory",
+              "description": "Deals 22% <@ba.talpu>(+2)</> more Physical damage to ground enemies that have not yet dealt damage to her",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "damage_scale",
+                  "value": 1.22,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            }
+          ]
+        }
+      ],
+      "skills": [
+        {
+          "id": "skchr_crosly_1",
+          "unlockCondition": {
+            "phase": "PHASE_0",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "Smoke and Mirrors",
+              "rangeId": "1-1",
+              "description": "After deployment, ATK <@ba.vup>+{atk:0%}</>, and gain <@ba.vup>{prob:0%}</> Physical and Arts Dodge",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 0,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 0
+              },
+              "prefabId": "skchr_crosly_1",
+              "duration": 10,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob",
+                  "value": 0.2,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Smoke and Mirrors",
+              "rangeId": "1-1",
+              "description": "After deployment, ATK <@ba.vup>+{atk:0%}</>, and gain <@ba.vup>{prob:0%}</> Physical and Arts Dodge",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 0,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 0
+              },
+              "prefabId": "skchr_crosly_1",
+              "duration": 10,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.55,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob",
+                  "value": 0.2,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Smoke and Mirrors",
+              "rangeId": "1-1",
+              "description": "After deployment, ATK <@ba.vup>+{atk:0%}</>, and gain <@ba.vup>{prob:0%}</> Physical and Arts Dodge",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 0,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 0
+              },
+              "prefabId": "skchr_crosly_1",
+              "duration": 10,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob",
+                  "value": 0.2,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Smoke and Mirrors",
+              "rangeId": "1-1",
+              "description": "After deployment, ATK <@ba.vup>+{atk:0%}</>, and gain <@ba.vup>{prob:0%}</> Physical and Arts Dodge",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 0,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 0
+              },
+              "prefabId": "skchr_crosly_1",
+              "duration": 10,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.65,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob",
+                  "value": 0.3,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Smoke and Mirrors",
+              "rangeId": "1-1",
+              "description": "After deployment, ATK <@ba.vup>+{atk:0%}</>, and gain <@ba.vup>{prob:0%}</> Physical and Arts Dodge",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 0,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 0
+              },
+              "prefabId": "skchr_crosly_1",
+              "duration": 10,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.7,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob",
+                  "value": 0.3,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Smoke and Mirrors",
+              "rangeId": "1-1",
+              "description": "After deployment, ATK <@ba.vup>+{atk:0%}</>, and gain <@ba.vup>{prob:0%}</> Physical and Arts Dodge",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 0,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 0
+              },
+              "prefabId": "skchr_crosly_1",
+              "duration": 10,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.75,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob",
+                  "value": 0.3,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Smoke and Mirrors",
+              "rangeId": "1-1",
+              "description": "After deployment, ATK <@ba.vup>+{atk:0%}</>, and gain <@ba.vup>{prob:0%}</> Physical and Arts Dodge",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 0,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 0
+              },
+              "prefabId": "skchr_crosly_1",
+              "duration": 10,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.8,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob",
+                  "value": 0.4,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Smoke and Mirrors",
+              "rangeId": "1-1",
+              "description": "After deployment, ATK <@ba.vup>+{atk:0%}</>, and gain <@ba.vup>{prob:0%}</> Physical and Arts Dodge",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 0,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 0
+              },
+              "prefabId": "skchr_crosly_1",
+              "duration": 10,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.85,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob",
+                  "value": 0.4,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Smoke and Mirrors",
+              "rangeId": "1-1",
+              "description": "After deployment, ATK <@ba.vup>+{atk:0%}</>, and gain <@ba.vup>{prob:0%}</> Physical and Arts Dodge",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 0,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 0
+              },
+              "prefabId": "skchr_crosly_1",
+              "duration": 10,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.9,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob",
+                  "value": 0.4,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Smoke and Mirrors",
+              "rangeId": "1-1",
+              "description": "After deployment, ATK <@ba.vup>+{atk:0%}</>, and gain <@ba.vup>{prob:0%}</> Physical and Arts Dodge",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 0,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 0
+              },
+              "prefabId": "skchr_crosly_1",
+              "duration": 10,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob",
+                  "value": 0.5,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "id": "skchr_crosly_2",
+          "unlockCondition": {
+            "phase": "PHASE_1",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "Smokebomb Blast",
+              "rangeId": "1-1",
+              "description": "After deployment, stops attacking for <@ba.vup>{duration}</>s, less likely to be attacked by enemies, Talent 1's Physical and Arts hit rate reduction effect on ground enemies increases to <@ba.vup>{talent_scale}</>x; when the skill ends, deals <@ba.vup>{attack@atk_scale_s2:0%}</> ATK as Physical damage to all ground enemies within the smoke",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 0,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 0
+              },
+              "prefabId": "skchr_crosly_2",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "duration",
+                  "value": 8,
+                  "valueStr": null
+                },
+                {
+                  "key": "taunt_level",
+                  "value": -1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@atk_scale_s2",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "talent_scale",
+                  "value": 1.5,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Smokebomb Blast",
+              "rangeId": "1-1",
+              "description": "After deployment, stops attacking for <@ba.vup>{duration}</>s, less likely to be attacked by enemies, Talent 1's Physical and Arts hit rate reduction effect on ground enemies increases to <@ba.vup>{talent_scale}</>x; when the skill ends, deals <@ba.vup>{attack@atk_scale_s2:0%}</> ATK as Physical damage to all ground enemies within the smoke",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 0,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 0
+              },
+              "prefabId": "skchr_crosly_2",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "duration",
+                  "value": 8,
+                  "valueStr": null
+                },
+                {
+                  "key": "taunt_level",
+                  "value": -1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@atk_scale_s2",
+                  "value": 2.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "talent_scale",
+                  "value": 1.5,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Smokebomb Blast",
+              "rangeId": "1-1",
+              "description": "After deployment, stops attacking for <@ba.vup>{duration}</>s, less likely to be attacked by enemies, Talent 1's Physical and Arts hit rate reduction effect on ground enemies increases to <@ba.vup>{talent_scale}</>x; when the skill ends, deals <@ba.vup>{attack@atk_scale_s2:0%}</> ATK as Physical damage to all ground enemies within the smoke",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 0,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 0
+              },
+              "prefabId": "skchr_crosly_2",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "duration",
+                  "value": 8,
+                  "valueStr": null
+                },
+                {
+                  "key": "taunt_level",
+                  "value": -1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@atk_scale_s2",
+                  "value": 2.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "talent_scale",
+                  "value": 1.5,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Smokebomb Blast",
+              "rangeId": "1-1",
+              "description": "After deployment, stops attacking for <@ba.vup>{duration}</>s, less likely to be attacked by enemies, Talent 1's Physical and Arts hit rate reduction effect on ground enemies increases to <@ba.vup>{talent_scale}</>x; when the skill ends, deals <@ba.vup>{attack@atk_scale_s2:0%}</> ATK as Physical damage to all ground enemies within the smoke",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 0,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 0
+              },
+              "prefabId": "skchr_crosly_2",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "duration",
+                  "value": 8,
+                  "valueStr": null
+                },
+                {
+                  "key": "taunt_level",
+                  "value": -1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@atk_scale_s2",
+                  "value": 2.7,
+                  "valueStr": null
+                },
+                {
+                  "key": "talent_scale",
+                  "value": 2,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Smokebomb Blast",
+              "rangeId": "1-1",
+              "description": "After deployment, stops attacking for <@ba.vup>{duration}</>s, less likely to be attacked by enemies, Talent 1's Physical and Arts hit rate reduction effect on ground enemies increases to <@ba.vup>{talent_scale}</>x; when the skill ends, deals <@ba.vup>{attack@atk_scale_s2:0%}</> ATK as Physical damage to all ground enemies within the smoke",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 0,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 0
+              },
+              "prefabId": "skchr_crosly_2",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "duration",
+                  "value": 8,
+                  "valueStr": null
+                },
+                {
+                  "key": "taunt_level",
+                  "value": -1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@atk_scale_s2",
+                  "value": 2.9,
+                  "valueStr": null
+                },
+                {
+                  "key": "talent_scale",
+                  "value": 2,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Smokebomb Blast",
+              "rangeId": "1-1",
+              "description": "After deployment, stops attacking for <@ba.vup>{duration}</>s, less likely to be attacked by enemies, Talent 1's Physical and Arts hit rate reduction effect on ground enemies increases to <@ba.vup>{talent_scale}</>x; when the skill ends, deals <@ba.vup>{attack@atk_scale_s2:0%}</> ATK as Physical damage to all ground enemies within the smoke",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 0,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 0
+              },
+              "prefabId": "skchr_crosly_2",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "duration",
+                  "value": 8,
+                  "valueStr": null
+                },
+                {
+                  "key": "taunt_level",
+                  "value": -1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@atk_scale_s2",
+                  "value": 3.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "talent_scale",
+                  "value": 2,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Smokebomb Blast",
+              "rangeId": "1-1",
+              "description": "After deployment, stops attacking for <@ba.vup>{duration}</>s, less likely to be attacked by enemies, Talent 1's Physical and Arts hit rate reduction effect on ground enemies increases to <@ba.vup>{talent_scale}</>x; when the skill ends, deals <@ba.vup>{attack@atk_scale_s2:0%}</> ATK as Physical damage to all ground enemies within the smoke",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 0,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 0
+              },
+              "prefabId": "skchr_crosly_2",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "duration",
+                  "value": 8,
+                  "valueStr": null
+                },
+                {
+                  "key": "taunt_level",
+                  "value": -1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@atk_scale_s2",
+                  "value": 3.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "talent_scale",
+                  "value": 2,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Smokebomb Blast",
+              "rangeId": "1-1",
+              "description": "After deployment, stops attacking for <@ba.vup>{duration}</>s, less likely to be attacked by enemies, Talent 1's Physical and Arts hit rate reduction effect on ground enemies increases to <@ba.vup>{talent_scale}</>x; when the skill ends, deals <@ba.vup>{attack@atk_scale_s2:0%}</> ATK as Physical damage to all ground enemies within the smoke",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 0,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 0
+              },
+              "prefabId": "skchr_crosly_2",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "duration",
+                  "value": 8,
+                  "valueStr": null
+                },
+                {
+                  "key": "taunt_level",
+                  "value": -1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@atk_scale_s2",
+                  "value": 4,
+                  "valueStr": null
+                },
+                {
+                  "key": "talent_scale",
+                  "value": 2.5,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Smokebomb Blast",
+              "rangeId": "1-1",
+              "description": "After deployment, stops attacking for <@ba.vup>{duration}</>s, less likely to be attacked by enemies, Talent 1's Physical and Arts hit rate reduction effect on ground enemies increases to <@ba.vup>{talent_scale}</>x; when the skill ends, deals <@ba.vup>{attack@atk_scale_s2:0%}</> ATK as Physical damage to all ground enemies within the smoke",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 0,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 0
+              },
+              "prefabId": "skchr_crosly_2",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "duration",
+                  "value": 8,
+                  "valueStr": null
+                },
+                {
+                  "key": "taunt_level",
+                  "value": -1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@atk_scale_s2",
+                  "value": 4.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "talent_scale",
+                  "value": 2.5,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Smokebomb Blast",
+              "rangeId": "1-1",
+              "description": "After deployment, stops attacking for <@ba.vup>{duration}</>s, less likely to be attacked by enemies, Talent 1's Physical and Arts hit rate reduction effect on ground enemies increases to <@ba.vup>{talent_scale}</>x; when the skill ends, deals <@ba.vup>{attack@atk_scale_s2:0%}</> ATK as Physical damage to all ground enemies within the smoke",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 0,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 0
+              },
+              "prefabId": "skchr_crosly_2",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "duration",
+                  "value": 8,
+                  "valueStr": null
+                },
+                {
+                  "key": "taunt_level",
+                  "value": -1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@atk_scale_s2",
+                  "value": 5,
+                  "valueStr": null
+                },
+                {
+                  "key": "talent_scale",
+                  "value": 2.5,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "id": "skchr_crosly_3",
+          "unlockCondition": {
+            "phase": "PHASE_2",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "Smokescreen Execution",
+              "rangeId": "x-1",
+              "description": "After deployment, Talent 1's range expands; Crownslayer disappears within the smoke, gaining <$ba.invisible>Invisibility</> and her Block becomes 0; every <@ba.vup>{attack@times}</>s, she will appear and deal <@ba.vup>{attack@atk_scale_s3:0%}</> ATK as Physical damage twice to a ground enemy within the smoke and <$ba.stun>Stun</> them for <@ba.vup>{attack@stun}</>s (a single target can only be targeted once every <@ba.vup>{mark_duration}</>s)",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 0,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 0
+              },
+              "prefabId": "skchr_crosly_3",
+              "duration": 16,
+              "blackboard": [
+                {
+                  "key": "attack@s3_cd",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@times",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@hit_interval",
+                  "value": 0.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@atk_scale_s3",
+                  "value": 1.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@stun",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "mark_duration",
+                  "value": 6,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  2,
+                  0
+                ],
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -2
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -2,
+                  0
+                ]
+              ]
+            },
+            {
+              "name": "Smokescreen Execution",
+              "rangeId": "x-1",
+              "description": "After deployment, Talent 1's range expands; Crownslayer disappears within the smoke, gaining <$ba.invisible>Invisibility</> and her Block becomes 0; every <@ba.vup>{attack@times}</>s, she will appear and deal <@ba.vup>{attack@atk_scale_s3:0%}</> ATK as Physical damage twice to a ground enemy within the smoke and <$ba.stun>Stun</> them for <@ba.vup>{attack@stun}</>s (a single target can only be targeted once every <@ba.vup>{mark_duration}</>s)",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 0,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 0
+              },
+              "prefabId": "skchr_crosly_3",
+              "duration": 16,
+              "blackboard": [
+                {
+                  "key": "attack@s3_cd",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@times",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@hit_interval",
+                  "value": 0.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@atk_scale_s3",
+                  "value": 1.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@stun",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "mark_duration",
+                  "value": 6,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  2,
+                  0
+                ],
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -2
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -2,
+                  0
+                ]
+              ]
+            },
+            {
+              "name": "Smokescreen Execution",
+              "rangeId": "x-1",
+              "description": "After deployment, Talent 1's range expands; Crownslayer disappears within the smoke, gaining <$ba.invisible>Invisibility</> and her Block becomes 0; every <@ba.vup>{attack@times}</>s, she will appear and deal <@ba.vup>{attack@atk_scale_s3:0%}</> ATK as Physical damage twice to a ground enemy within the smoke and <$ba.stun>Stun</> them for <@ba.vup>{attack@stun}</>s (a single target can only be targeted once every <@ba.vup>{mark_duration}</>s)",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 0,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 0
+              },
+              "prefabId": "skchr_crosly_3",
+              "duration": 16,
+              "blackboard": [
+                {
+                  "key": "attack@s3_cd",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@times",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@hit_interval",
+                  "value": 0.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@atk_scale_s3",
+                  "value": 1.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@stun",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "mark_duration",
+                  "value": 6,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  2,
+                  0
+                ],
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -2
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -2,
+                  0
+                ]
+              ]
+            },
+            {
+              "name": "Smokescreen Execution",
+              "rangeId": "x-1",
+              "description": "After deployment, Talent 1's range expands; Crownslayer disappears within the smoke, gaining <$ba.invisible>Invisibility</> and her Block becomes 0; every <@ba.vup>{attack@times}</>s, she will appear and deal <@ba.vup>{attack@atk_scale_s3:0%}</> ATK as Physical damage twice to a ground enemy within the smoke and <$ba.stun>Stun</> them for <@ba.vup>{attack@stun}</>s (a single target can only be targeted once every <@ba.vup>{mark_duration}</>s)",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 0,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 0
+              },
+              "prefabId": "skchr_crosly_3",
+              "duration": 16,
+              "blackboard": [
+                {
+                  "key": "attack@s3_cd",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@times",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@hit_interval",
+                  "value": 0.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@atk_scale_s3",
+                  "value": 1.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@stun",
+                  "value": 1.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "mark_duration",
+                  "value": 6,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  2,
+                  0
+                ],
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -2
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -2,
+                  0
+                ]
+              ]
+            },
+            {
+              "name": "Smokescreen Execution",
+              "rangeId": "x-1",
+              "description": "After deployment, Talent 1's range expands; Crownslayer disappears within the smoke, gaining <$ba.invisible>Invisibility</> and her Block becomes 0; every <@ba.vup>{attack@times}</>s, she will appear and deal <@ba.vup>{attack@atk_scale_s3:0%}</> ATK as Physical damage twice to a ground enemy within the smoke and <$ba.stun>Stun</> them for <@ba.vup>{attack@stun}</>s (a single target can only be targeted once every <@ba.vup>{mark_duration}</>s)",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 0,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 0
+              },
+              "prefabId": "skchr_crosly_3",
+              "duration": 16,
+              "blackboard": [
+                {
+                  "key": "attack@s3_cd",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@times",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@hit_interval",
+                  "value": 0.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@atk_scale_s3",
+                  "value": 1.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@stun",
+                  "value": 1.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "mark_duration",
+                  "value": 6,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  2,
+                  0
+                ],
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -2
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -2,
+                  0
+                ]
+              ]
+            },
+            {
+              "name": "Smokescreen Execution",
+              "rangeId": "x-1",
+              "description": "After deployment, Talent 1's range expands; Crownslayer disappears within the smoke, gaining <$ba.invisible>Invisibility</> and her Block becomes 0; every <@ba.vup>{attack@times}</>s, she will appear and deal <@ba.vup>{attack@atk_scale_s3:0%}</> ATK as Physical damage twice to a ground enemy within the smoke and <$ba.stun>Stun</> them for <@ba.vup>{attack@stun}</>s (a single target can only be targeted once every <@ba.vup>{mark_duration}</>s)",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 0,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 0
+              },
+              "prefabId": "skchr_crosly_3",
+              "duration": 16,
+              "blackboard": [
+                {
+                  "key": "attack@s3_cd",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@times",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@hit_interval",
+                  "value": 0.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@atk_scale_s3",
+                  "value": 1.7,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@stun",
+                  "value": 1.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "mark_duration",
+                  "value": 6,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  2,
+                  0
+                ],
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -2
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -2,
+                  0
+                ]
+              ]
+            },
+            {
+              "name": "Smokescreen Execution",
+              "rangeId": "x-1",
+              "description": "After deployment, Talent 1's range expands; Crownslayer disappears within the smoke, gaining <$ba.invisible>Invisibility</> and her Block becomes 0; every <@ba.vup>{attack@times}</>s, she will appear and deal <@ba.vup>{attack@atk_scale_s3:0%}</> ATK as Physical damage twice to a ground enemy within the smoke and <$ba.stun>Stun</> them for <@ba.vup>{attack@stun}</>s (a single target can only be targeted once every <@ba.vup>{mark_duration}</>s)",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 0,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 0
+              },
+              "prefabId": "skchr_crosly_3",
+              "duration": 16,
+              "blackboard": [
+                {
+                  "key": "attack@s3_cd",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@times",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@hit_interval",
+                  "value": 0.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@atk_scale_s3",
+                  "value": 1.9,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@stun",
+                  "value": 1.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "mark_duration",
+                  "value": 6,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  2,
+                  0
+                ],
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -2
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -2,
+                  0
+                ]
+              ]
+            },
+            {
+              "name": "Smokescreen Execution",
+              "rangeId": "x-1",
+              "description": "After deployment, Talent 1's range expands; Crownslayer disappears within the smoke, gaining <$ba.invisible>Invisibility</> and her Block becomes 0; every <@ba.vup>{attack@times}</>s, she will appear and deal <@ba.vup>{attack@atk_scale_s3:0%}</> ATK as Physical damage twice to a ground enemy within the smoke and <$ba.stun>Stun</> them for <@ba.vup>{attack@stun}</>s (a single target can only be targeted once every <@ba.vup>{mark_duration}</>s)",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 0,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 0
+              },
+              "prefabId": "skchr_crosly_3",
+              "duration": 16,
+              "blackboard": [
+                {
+                  "key": "attack@s3_cd",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@times",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@hit_interval",
+                  "value": 0.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@atk_scale_s3",
+                  "value": 2.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@stun",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "mark_duration",
+                  "value": 6,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  2,
+                  0
+                ],
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -2
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -2,
+                  0
+                ]
+              ]
+            },
+            {
+              "name": "Smokescreen Execution",
+              "rangeId": "x-1",
+              "description": "After deployment, Talent 1's range expands; Crownslayer disappears within the smoke, gaining <$ba.invisible>Invisibility</> and her Block becomes 0; every <@ba.vup>{attack@times}</>s, she will appear and deal <@ba.vup>{attack@atk_scale_s3:0%}</> ATK as Physical damage twice to a ground enemy within the smoke and <$ba.stun>Stun</> them for <@ba.vup>{attack@stun}</>s (a single target can only be targeted once every <@ba.vup>{mark_duration}</>s)",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 0,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 0
+              },
+              "prefabId": "skchr_crosly_3",
+              "duration": 16,
+              "blackboard": [
+                {
+                  "key": "attack@s3_cd",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@times",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@hit_interval",
+                  "value": 0.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@atk_scale_s3",
+                  "value": 2.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@stun",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "mark_duration",
+                  "value": 6,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  2,
+                  0
+                ],
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -2
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -2,
+                  0
+                ]
+              ]
+            },
+            {
+              "name": "Smokescreen Execution",
+              "rangeId": "x-1",
+              "description": "After deployment, Talent 1's range expands; Crownslayer disappears within the smoke, gaining <$ba.invisible>Invisibility</> and her Block becomes 0; every <@ba.vup>{attack@times}</>s, she will appear and deal <@ba.vup>{attack@atk_scale_s3:0%}</> ATK as Physical damage twice to a ground enemy within the smoke and <$ba.stun>Stun</> them for <@ba.vup>{attack@stun}</>s (a single target can only be targeted once every <@ba.vup>{mark_duration}</>s)",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 0,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 0
+              },
+              "prefabId": "skchr_crosly_3",
+              "duration": 16,
+              "blackboard": [
+                {
+                  "key": "attack@s3_cd",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@times",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@hit_interval",
+                  "value": 0.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@atk_scale_s3",
+                  "value": 2.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@stun",
+                  "value": 4,
+                  "valueStr": null
+                },
+                {
+                  "key": "mark_duration",
+                  "value": 6,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  2,
+                  0
+                ],
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -2
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -2,
+                  0
                 ]
               ]
             }

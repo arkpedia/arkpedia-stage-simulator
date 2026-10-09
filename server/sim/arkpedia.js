@@ -130,6 +130,7 @@ import { customizeTyphonKit, installTyphon } from './content/arkpedia-typhon.js'
 import { customizeDegenbrecherKit, installDegenbrecher } from './content/arkpedia-degenbrecher.js';
 import { customizeChongyueKit, installChongyue } from './content/arkpedia-chongyue.js';
 import { customizePepeKit, installPepe } from './content/arkpedia-pepe.js';
+import { customizeCrownslayerKit, installCrownslayer } from './content/arkpedia-crownslayer.js';
 import { customizeAscalonKit, installAscalon } from './content/arkpedia-ascalon.js';
 import { customizeGladiiaKit, installGladiia } from './content/arkpedia-gladiia.js';
 import { customizeChenAlterKit, installChenAlter } from './content/arkpedia-chen-alter.js';
@@ -468,6 +469,7 @@ export class StandardBattle extends Battle {
     customizeChongyueKit({ battle: this, id, def, unit, kit });
     customizePepeKit({ battle: this, id, def, unit, kit });
     customizeGladiiaKit({ battle: this, id, def, unit, kit });
+    customizeCrownslayerKit({ battle: this, id, def, unit, kit });
     customizeAscalonKit({ battle: this, id, def, unit, kit });
     customizeChenAlterKit({ battle: this, id, def, unit, kit });
     customizeEyjafjallaKit({ battle: this, id, def, unit, kit });
@@ -625,6 +627,7 @@ export class StandardBattle extends Battle {
     installChongyue({ battle: this, unit, def });
     installPepe({ battle: this, unit, def });
     installGladiia({ battle: this, unit, def });
+    installCrownslayer({ battle: this, unit, def });
     installAscalon({ battle: this, unit, def });
     installChenAlter({ battle: this, unit, def });
     installEyjafjalla({ battle: this, unit, def });
