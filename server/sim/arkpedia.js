@@ -133,6 +133,7 @@ import { customizePepeKit, installPepe } from './content/arkpedia-pepe.js';
 import { customizeCrownslayerKit, installCrownslayer } from './content/arkpedia-crownslayer.js';
 import { customizeIanaKit, installIana } from './content/arkpedia-iana.js';
 import { customizeBrigidKit, installBrigid } from './content/arkpedia-brigid.js';
+import { customizeEbenholzKit, installEbenholz } from './content/arkpedia-ebenholz.js';
 import { customizeHoolheyakKit, installHoolheyak } from './content/arkpedia-hoolheyak.js';
 import { customizeGoldenglowKit, installGoldenglow } from './content/arkpedia-goldenglow.js';
 import { customizeLeeKit, installLee } from './content/arkpedia-lee.js';
@@ -486,6 +487,7 @@ export class StandardBattle extends Battle {
     customizeLeeKit({ battle: this, id, def, unit, kit });
     customizeGoldenglowKit({ battle: this, id, def, unit, kit });
     customizeHoolheyakKit({ battle: this, id, def, unit, kit });
+    customizeEbenholzKit({ battle: this, id, def, unit, kit });
     customizeAscalonKit({ battle: this, id, def, unit, kit });
     customizeChenAlterKit({ battle: this, id, def, unit, kit });
     customizeEyjafjallaKit({ battle: this, id, def, unit, kit });
@@ -651,6 +653,7 @@ export class StandardBattle extends Battle {
     installLee({ battle: this, unit, def });
     installGoldenglow({ battle: this, unit, def });
     installHoolheyak({ battle: this, unit, def });
+    installEbenholz({ battle: this, unit, def });
     installAscalon({ battle: this, unit, def });
     installChenAlter({ battle: this, unit, def });
     installEyjafjalla({ battle: this, unit, def });

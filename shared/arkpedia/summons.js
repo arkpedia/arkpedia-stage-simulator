@@ -66,6 +66,7 @@ export const REGULAR_SUMMONS = Object.freeze({
 // Automatic source spawns have no deployment-deck card, but their original
 // models must load with the owner before battle can draw the spawned unit.
 export const REGULAR_AUTOMATIC_TOKENS = Object.freeze({
+  char_4046_ebnhlz: Object.freeze(['token_10024_ebnhlz_rcube']),
   char_4164_tecno: Object.freeze(['token_10042_tecno_puppet']),
   char_4016_kazema: Object.freeze(['token_10022_kazema_shadow']),
   char_344_beewax: Object.freeze(['token_10011_beewax_oblisk']),

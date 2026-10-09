@@ -11,9 +11,9 @@ import { REGULAR_SUMMONS, REGULAR_AUTOMATIC_TOKENS,
   regularTokenIdsFor } from '../shared/arkpedia/summons.js';
 
 test('automatic mines, Freelings and Obelisks load with their selected owners without adding deck cards', () => {
-  const owners = ['char_113_cqbw', 'char_2015_dusk', 'char_344_beewax'];
+  const owners = ['char_113_cqbw', 'char_2015_dusk', 'char_344_beewax', 'char_4046_ebnhlz'];
   assert.deepEqual(regularTokenIdsFor(owners), ['token_10008_cqbw_box',
-    'token_10015_dusk_drgn', 'token_10011_beewax_oblisk']);
+    'token_10015_dusk_drgn', 'token_10011_beewax_oblisk', 'token_10024_ebnhlz_rcube']);
   for (const owner of owners) assert.equal(REGULAR_SUMMONS[owner], undefined);
   assert.deepEqual(regularTokenIdsFor(['char_002_amiya']), [], 'unselected owners never allocate their token assets');
   assert.deepEqual(regularTokenIdsFor([owners[0], owners[0]]), ['token_10008_cqbw_box']);

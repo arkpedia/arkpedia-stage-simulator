@@ -31,9 +31,9 @@ function readyAuto(u){u.skill.gainSp(u.skill.spCost,'test');assert.equal(u.skill
 
 test('fourth sniper durable source retains original wave count/formula kinds/projectiles and whole-kit deferrals',()=>{
  assert.equal(evidence.frameParity,false);assert.equal(evidence.moduleSupport,false);assert.equal(Object.keys(FIVE_STAR_SNIPER_FOURTH_OPERATORS).length,3);
- // These are historical whole-kit deferrals. Ho'olheyak now has a separate complete review.
+ // These are historical whole-kit deferrals. Ho'olheyak and Ebenholz now have separate bounded full-kit reviews.
  for(const id of['char_4027_heyak','char_4046_ebnhlz'])assert.ok(evidence.deferredOperators[id].reason.length>180);
- assert.equal(REGULAR_OPERATORS.char_4046_ebnhlz,undefined);
+ assert.deepEqual(REGULAR_OPERATORS.char_4046_ebnhlz.skillIds,['skchr_ebnhlz_1','skchr_ebnhlz_2','skchr_ebnhlz_3']);
  assert.deepEqual(REGULAR_OPERATORS.char_4027_heyak.skillIds,Object.keys(heyakEvidence.tables.skills));
  assert.deepEqual(heyakEvidence.enabledOperators,['char_4027_heyak']);
  for(const id of[EX,AO,ER])for(const face of['Front','Back']){assert.match(evidence.models[id][face].sha256,/^[a-f0-9]{64}$/);assert.equal(evidence.officialSkeletonBindings[id][face].sha256,evidence.models[id][face].sha256);}
