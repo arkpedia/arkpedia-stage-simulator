@@ -124,6 +124,7 @@ import { GAVIAL_INVINCIBLE_OPERATORS } from './gavial-invincible-operators.js';
 import { FIAMMETTA_OPERATORS } from './fiammetta-operators.js';
 import { HORN_OPERATORS } from './horn-operators.js';
 import { TYPHON_OPERATORS } from './typhon-operators.js';
+import { IRENE_OPERATORS } from './irene-operators.js';
 import { TEXAS_ALTER_OPERATORS } from './texas-alter-operators.js';
 import { GNOSIS_OPERATORS } from './gnosis-operators.js';
 import { EYJAFJALLA_OPERATORS } from './eyjafjalla-operators.js';
@@ -259,6 +260,7 @@ export const REGULAR_OPERATORS = Object.freeze({
   ...GNOSIS_OPERATORS,
   ...TEXAS_ALTER_OPERATORS,
   ...TYPHON_OPERATORS,
+  ...IRENE_OPERATORS,
   ...FROST_OPERATORS,
   ...MAYER_OPERATORS,
   ...FANG_FIRE_SHARPENED_OPERATORS,
