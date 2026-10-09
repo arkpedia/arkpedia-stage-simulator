@@ -32,7 +32,7 @@ export function skillHud(skill) {
   let fraction, text;
   if (skill.pending) {
     fraction = 1;
-    text = "Skill ready · Next attack";
+    text = skill.spec?.pendingText ?? "Skill ready · Next attack";
   } else if (skill.active) {
     fraction = skill.kind === "ammo"
       ? clamp(skill.ammoLeft / skill.ammoMax)

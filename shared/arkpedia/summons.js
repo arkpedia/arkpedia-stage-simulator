@@ -1,6 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Only explicitly reviewed regular-stage tokens may enter the deployment deck.
 export const REGULAR_SUMMONS = Object.freeze({
+  char_400_weedy: Object.freeze({ tokenId: 'token_10009_weedy_cannon',
+    deploymentSlotCost: 0, chooseFacing: true, healFree: false, refundRatio: .5,
+    minimumElite: 1, rechargeOnFinish: true, preserveCooldown: true }),
   char_4171_wulfen: Object.freeze({ tokenId: 'token_10044_wulfen_mine',
     deploymentSlotCost: 0, chooseFacing: false, fixedRotation: true, healFree: true,
     refundRatio: 0, noAttack: true, sourceStockLimit: true,
@@ -116,6 +119,18 @@ export function summonRecordFor(ownerId, build, tokens) {
     if (config.sourceStockLimit) stats.maxDeckStackCnt += talent.bb.max_deck_stack_cnt ?? 0;
   }
   let skill = null;
+  if (ownerId === 'char_400_weedy' && build.skillId === 'skchr_weedy_3') {
+    const entry = source.skills?.find(s => s.id === 'sktok_weedy_token');
+    if (!entry || build.elite !== 2 || !Number.isSafeInteger(build.skillRank)
+      || build.skillRank < 1 || build.skillRank > 10) throw Error('Unsupported Weedy cannon skill rank');
+    const level = entry.levels[build.skillRank - 1], bb = blackboard(level.blackboard);
+    const keys = ['force', 'stun', 'atk_scale', 'duration', 'dist', 'value', 'interval'];
+    if (level.prefabId !== entry.id || level.skillType !== 'MANUAL' || !level.rangeGrid?.length
+      || Object.keys(bb).length !== keys.length || keys.some(k => !Number.isFinite(bb[k])))
+      throw Error('Unreviewed Weedy cannon source');
+    skill = { skillId: entry.id, name: level.name, bb, rangeGrid: level.rangeGrid,
+      trigger: { rule: 'NEVER' } };
+  }
   if (ownerId === 'char_4171_wulfen') {
     const index = ['skchr_wulfen_1', 'skchr_wulfen_2'].indexOf(build.skillId);
     const id = ['sktok_wulfen_1', 'sktok_wulfen_2'][index];
@@ -228,6 +243,6 @@ export function summonRecordFor(ownerId, build, tokens) {
     rangeGrid: phase.rangeGrid, dmgType: 'phys', attackKind: 'melee', canHitFly: false,
     abnormal: config.healFree ? ['healFree'] : [], talents, skill,
     arkpedia: { elite: build.elite, level: build.level, potential: build.potential,
-      ...(ownerId === 'char_250_phatom' ? { skillRank: build.skillRank } : {}) },
+      ...(['char_250_phatom', 'char_400_weedy'].includes(ownerId) ? { skillRank: build.skillRank } : {}) },
   };
 }

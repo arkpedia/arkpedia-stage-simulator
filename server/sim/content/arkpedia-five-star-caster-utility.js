@@ -4,6 +4,7 @@ import evidence from '../../../data/arkpedia-five-star-caster-utility-prefabs.js
 import { acquireTargets, effectiveProfile, resolveHit } from '../ai.js';
 import { absoluteRangeKeys, canTargetAlly, canTargetEnemy, tileKeyOf } from '../targeting.js';
 import { COLS } from '../constants.js';
+import { applyDistanceRupture } from './arkpedia-rupture.js';
 
 const ABS = 'char_405_absin', NIG = 'char_164_nightm', QAN = 'char_466_qanik';
 const SAN = 'char_341_sntlla', DEL = 'char_4110_delphn';
@@ -67,24 +68,8 @@ function nightmareLaunch(b, u, p, target, info) {
   }
 }
 function nightmareRupture(b, u, target, bb) {
-  const key = `nightmare:rupture:${u.id}`, old = target.findBuff(key);
-  // Reapplying the same Nightmare updates its duration without treating the
-  // pre-existing path segment as a second copy of damage.
-  if (old) { old.timeLeft = Math.max(old.timeLeft, bb.duration); return; }
-  let x = target.x, y = target.y, acc = 0, stopped = false;
-  const flush = () => {
-    const distance = Math.hypot(target.x - x, target.y - y); x = target.x; y = target.y;
-    if (live(target) && distance > 0) b.dealDamage(u, target, { amount: bb.value * distance,
-      type: 'true', isSkill: true, tags: ['dot', 'nightmare:rupture'], applyWay: 'none', ignoreSelect: true });
-  };
-  const stop = () => { if (stopped) return; stopped = true; flush(); b.off(timer); };
-  const buff = b.addBuff(target, { key, source: u, duration: bb.duration, mods: { moveMul: 1 + bb.move_speed },
-    onExpire: stop, onRemove: stop });
-  if (!buff) return;
-  const timer = b.on('tick', ({ dt }) => {
-    if (!target.findBuff(key)) { stop(); return; }
-    acc += dt; if (acc + 1e-9 >= bb.interval) { acc %= bb.interval; flush(); }
-  }, { owner: target });
+  return applyDistanceRupture(b, u, target, bb, { key: `nightmare:rupture:${u.id}`,
+    tag: 'nightmare:rupture', mods: { moveMul: 1 + bb.move_speed } });
 }
 function nightmareCast(b, u, s) {
   const seq = u.deploySeq, delay = model(u).hits.Attack[0] / Math.min(1, u.s.aspd / 100);

@@ -2172,6 +2172,7 @@ export class Battle {
     if (!(eff > 0)) return 0;
     const ux = dxv / len, uy = dyv / len;
     let moved = 0;
+    const from = { x: e.x, y: e.y };
     const stepLen = 0.1;
     while (moved + 1e-9 < eff) {
       const s = Math.min(stepLen, eff - moved); // (the last step is a partial one: 0.12 tiles moves 0.12, not 0.2)
@@ -2185,6 +2186,8 @@ export class Battle {
       this._unblock(e);
       if (e.route) e.route.pts = null;
       this.fx('displace', { x: e.x, y: e.y, id: e.id });
+      if (this._hooks.enemyDisplaced) this.emit('enemyDisplaced', {
+        unit: e, from, to: { x: e.x, y: e.y }, distance: moved });
     }
     return moved;
   }

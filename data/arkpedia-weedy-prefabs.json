@@ -59,8 +59,10 @@
   "frameParity": false,
   "moduleSupport": false,
   "nativeParticleSupport": false,
-  "enabledOperators": [],
-  "reviewStatus": "Verified native source and original cannon artwork; full-kit combat adapter pending",
+  "enabledOperators": [
+    "char_400_weedy"
+  ],
+  "reviewStatus": "Verified native source and original cannon artwork; full-kit bounded combat adapter enabled",
   "tokens": {
     "token_10009_weedy_cannon": [
       {
@@ -11553,13 +11555,22 @@
       }
     }
   },
-  "runtimeMapping": {},
+  "runtimeMapping": {
+    "normal": "Block-count ground INPUT capture; original capped hit event; no ordinary knockback.",
+    "s1": "Uncapped original event, ground block-count capture, knockback/stun and one dead-input charge refund.",
+    "s2": "Permanent AUTO toggle; percentage BAT, source range extension, captured ground homing splash and push.",
+    "s3": "Fixed .333s release, captured ground/air victim, independent speed8 projectile/radius1.2 and source cast waits for resolution. Unborn work cancels on control/removal; emitted work persists.",
+    "cannon": "Original Front/Back artwork; zero-slot directional ALL card, own stats/nearest ground attack,15/20s deployment-clock life,finish recharge,35s preserved independent cooldown,2DP withdrawal refund.",
+    "remote": "Only owned cannon within the selected Manhattan radius receives owner S3 activation; original selected rank/range and additional E2 force. Local transfer samples current host ATK at impact; token has no independent manual skill.",
+    "rupture": "Shared first-source/value override with Nightmare; later application extends duration. Per-step Euclidean travel plus explicit displacement receipts; finish flush. Initialized before the instantaneous local push to preserve its distance.",
+    "spAura": "x-5 self/cardinal-adjacent owner-only recipient,1 ordinary SP every3s; noSP/active timed skills refuse gain; leaving aura resets elapsed clock.",
+    "animation": "Original normal/S1/S2/S3 and cannon Start/Idle/Attack/Skill clips. First cannon engagement uses original Begin/Loop at a bounded .167+.033 attack clock; closed native animator mixing is not recovered."
+  },
   "verificationLimits": [
-    "Weedy and the cannon are not registered as playable; this source/artwork audit does not increase gameplay coverage.",
     "Original component bytes,40 skill ranks,table ranges,animation bindings,hit events and dependency pointers are verified. This does not establish native controller execution order or frame parity.",
-    "TriggerTokenSkillWithinManhattanDistance and DamageByDistance are closed native code. Host-ATK transfer,token selection,rupture overwrite/distance sampling and emitted-projectile interruption need bounded runtime policies and regression tests.",
-    "Shared simulator shift geometry differs from native continuous knockback. Applying rupture after an instantaneous local shift would omit that movement; the adapter must account for it explicitly.",
-    "Token-born lifetime,finish recharge,owner redeployment,captured-victim loss and pending source-cast interruption must be verified before enabling the full kit.",
+    "TriggerTokenSkillWithinManhattanDistance and DamageByDistance are closed native code. Host ATK sampled at impact, owner-only SP recipient, first-source/value rupture override and captured empty/dead-input dispatch are explicit bounded local policies.",
+    "Shared simulator shift geometry is an instantaneous local shift rather than native continuous knockback. The rupture tracker initializes before that shift and collects actual displacement receipts; native five-frame sampling and teleport cutoff are not recovered.",
+    "Unborn work is deployment/control-epoch gated; emitted projectiles/rupture persist through source removal. Fixed local cast clocks, cannon entry/exit animator mixing and aura attachment clocks are not native-frame-certified.",
     "Original Unity particles/audio and equipment modules are not supported; the cannon textures retain the original PMA material and merged RGB/Alpha."
   ],
   "originalCannonModels": {

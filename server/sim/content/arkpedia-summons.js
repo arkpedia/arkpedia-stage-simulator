@@ -17,6 +17,7 @@ import { createMayerRobotter } from './arkpedia-mayer.js';
 import { createFrostMat } from './arkpedia-frost.js';
 import { createRobinClip } from './arkpedia-robin.js';
 import { createWulfeniteMine } from './arkpedia-wulfenite.js';
+import { createWeedyCannon } from './arkpedia-weedy.js';
 import { installSilenceParadigmaticDrone } from './arkpedia-silence-paradigmatic.js';
 
 const live = unit => unit?.alive && unit.deployed;
@@ -69,6 +70,7 @@ export function deployRegularSummon(battle, key, row, col, dir = 'RIGHT') {
   if (!['UP', 'DOWN', 'LEFT', 'RIGHT'].includes(dir)) throw Error('Choose a facing direction.');
   const state = cardState(battle, key), source = evidence.tokens[state.record.id];
   const token = state.ownerId === 'char_250_phatom' ? createPhantomClone(battle, state, row, col, dir)
+    : state.ownerId === 'char_400_weedy' ? createWeedyCannon(battle, state, row, col, dir)
     : state.ownerId === 'char_003_kalts' ? createKaltsitMon3tr(battle, state, row, col, dir)
     : state.ownerId === 'char_336_folivo' ? createSceneBuggyCam(battle, state, row, col, dir)
     : state.ownerId === 'char_476_blkngt' ? createSlumberfoot(battle, state, row, col)
@@ -174,14 +176,14 @@ export function installSummoner({ battle, unit, def }) {
   const config = REGULAR_SUMMONS[def.id];
   if (!config || config.skillId && def.skill?.id !== config.skillId
     || config.minimumElite != null && def.raw.arkpedia.elite < config.minimumElite) return;
-  const build = ['char_250_phatom', 'char_451_robin', 'char_458_rfrost', 'char_242_otter', 'char_4171_wulfen'].includes(def.id)
+  const build = ['char_400_weedy', 'char_250_phatom', 'char_451_robin', 'char_458_rfrost', 'char_242_otter', 'char_4171_wulfen'].includes(def.id)
     ? { ...def.raw.arkpedia, skillId: def.skill.id } : def.raw.arkpedia;
   const key = summonCardId(def.id), record = summonRecordFor(def.id, build, battle.data.raw.tokens);
   if (!battle.regularSummons) battle.regularSummons = new Map();
   const previous = battle.regularSummons.get(key);
   const state = { key, ownerId: def.id, owner: unit, tokenId: record.id, config,
     record, stock: config.additiveBornStock ? previous?.stock ?? 0 : 0,
-    readyAt: def.id === 'char_250_phatom' ? previous?.readyAt ?? battle.time : battle.time, unit: null,
+    readyAt: def.id === 'char_250_phatom' || config.preserveCooldown ? previous?.readyAt ?? battle.time : battle.time, unit: null,
     syncSkill: () => unit.mem.summonSkillSync?.(battle),
   };
   battle.regularSummons.set(key, state);
@@ -197,7 +199,7 @@ export function installSummoner({ battle, unit, def }) {
       // maxDeckStackCnt/maxDeployCount remain untouched in the record.
       if (config.bornStockBudget) { state.stockBudget = bornCount; state.stock = Math.min(bornCount, state.stock); }
       if (def.id === 'char_250_phatom') state.stock = Math.min(1, state.stock);
-      else state.readyAt = battle.time;
+      else if (!config.preserveCooldown) state.readyAt = battle.time;
       if (config.stockLimit) battle.removeBuff(unit, 'shamare:stock-full');
       if (def.id === 'char_108_silent') battle.removeBuff(unit, 'silence:stock-full');
       if (['char_451_robin', 'char_458_rfrost', 'char_4171_wulfen'].includes(def.id)) state.syncSkill();

@@ -8,9 +8,10 @@ const ID = 'char_400_weedy', TOKEN = 'token_10009_weedy_cannon';
 const rows = (group, id) => e[group][id].flatMap(o => o.components.map(c => c.data));
 const bb = list => Object.fromEntries(list.map(r => [r.key, r.value]));
 
-test('Weedy audit preserves all40 ranks without enabling partial combat coverage', () => {
-  assert.deepEqual(e.enabledOperators, []);
-  assert.equal(REGULAR_OPERATORS[ID], undefined); assert.equal(data.operators[ID], undefined);
+test('Weedy full adapter preserves all40 ranks and explicitly bounded combat coverage', () => {
+  assert.deepEqual(e.enabledOperators, [ID]);
+  assert.equal(REGULAR_OPERATORS[ID].mechanic, 'weedy'); assert.ok(data.operators[ID]);
+  assert.ok(data.tokens[TOKEN]);
   assert.equal(e.frameParity, false); assert.equal(e.moduleSupport, false);
   assert.equal(e.nativeParticleSupport, false);
   assert.equal(e.source.bundles.length, 6);
