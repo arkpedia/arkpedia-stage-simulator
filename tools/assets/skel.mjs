@@ -58,10 +58,11 @@ const round3 = (x) => Math.round(Number(x) * 1000) / 1000;
  * Parse a Spine 3.8 binary skeleton.
  * @param {Uint8Array} bytes .skel file contents
  * @param {Set<string>} [atlasRegions] region names of the matching atlas (optional, for validation)
+ * @param {{includeEventPayloads?: boolean}} [options] retain exact event values for source audits
  * @returns {SkelInfo}
  * @throws on malformed data
  */
-export function parseSkel(bytes, atlasRegions) {
+export function parseSkel(bytes, atlasRegions, { includeEventPayloads = false } = {}) {
   const r = loadRuntime();
   const missing = new Set();
   const bin = new r.SkeletonBinary(makeLoader(r, atlasRegions, missing));
@@ -72,12 +73,15 @@ export function parseSkel(bytes, atlasRegions) {
   const animations = data.animations.map((a) => a.name);
   const durations = {};
   const hits = {};
+  const eventPayloads = {};
   for (const a of data.animations) {
     durations[a.name] = round3(a.duration);
     for (const t of a.timelines) {
       if (!t || !Array.isArray(t.events)) continue;
       for (const e of t.events) {
         const nm = e?.data?.name;
+        if (includeEventPayloads) (eventPayloads[a.name] ||= []).push({ time: e.time,
+          name: nm, int: e.intValue, float: e.floatValue, string: e.stringValue });
         if (typeof nm === 'string' && /^onattack$/i.test(nm)) {
           (hits[a.name] ||= []).push(round3(e.time));
         }
@@ -95,6 +99,7 @@ export function parseSkel(bytes, atlasRegions) {
     durations,
     events: data.events.map((e) => e.name),
     hits,
+    ...(includeEventPayloads ? { eventPayloads } : {}),
     bounds,
     missingRegions: [...missing].sort(),
   };

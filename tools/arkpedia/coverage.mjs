@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 // SPDX-License-Identifier: GPL-3.0-or-later
-import { readFile, writeFile } from "node:fs/promises";
+import { readFile } from "node:fs/promises";
+import { writeJSONAtomic } from './write-json.mjs';
 import { pathToFileURL } from "node:url";
 import { execFileSync } from 'node:child_process';
 import { kitCoverage } from "../kit-coverage.mjs";
@@ -59,9 +60,9 @@ export function coverageFor({ characters, enemies, chess, inherited, data, asset
       enemiesWithStrongholdCandidates: enemyRows.filter(e => e.strongholdCandidate).length,
     },
     ...(rosterTarget ? { fullRosterTarget: { ...rosterTarget.summary, source: rosterTarget.source,
-      playableOperatorForms: operators.filter(o => o.playable).length,
+      playableOperatorForms: rosterTarget.operators.filter(o => !!data.operators[o.id]).length,
       remainingOperatorForms: rosterTarget.operators.filter(o => !data.operators[o.id]).length,
-      remainingOutsideGlobalSnapshot: rosterTarget.operators.filter(o => !characters[o.id]).length,
+      remainingOutsideGlobalSnapshot: rosterTarget.operators.filter(o => !characters[o.id] && !data.operators[o.id]).length,
       missingForms: rosterTarget.operators.filter(o => !data.operators[o.id]).map(o => o.id),
     } } : {}),
     operators, enemies: enemyRows,
@@ -84,7 +85,7 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
   })).models;
   const rosterTarget = await read("../../data/arkpedia-roster-target.json");
   const report = coverageFor({ characters, enemies, chess, inherited: kitCoverage(), data, assetModels, rosterTarget });
-  await writeFile(new URL("../../data/arkpedia-coverage.json", import.meta.url), `${JSON.stringify(report, null, 2)}\n`);
+  await writeJSONAtomic(new URL("../../data/arkpedia-coverage.json", import.meta.url), report);
   const { missingForms, source, ...fullRosterTarget } = report.fullRosterTarget;
   console.log(JSON.stringify({ globalSnapshot: report.summary, fullRosterTarget: {
     ...fullRosterTarget, sourceCommit: source.commit,

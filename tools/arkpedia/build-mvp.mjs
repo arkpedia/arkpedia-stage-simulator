@@ -5,6 +5,8 @@ import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { REGULAR_OPERATORS, assertRegularOperator } from "../../shared/arkpedia/operators.js";
 import { assertRegularEnemies } from "../../shared/arkpedia/enemies.js";
+import { compileReviewedOperators, operatorChannel } from "./operator-source.mjs";
+import { writeJSONAtomic } from "./write-json.mjs";
 import { compileBuffTemplate } from "../../shared/arkpedia/behavior.js";
 const cache = new URL("../../.cache/arkpedia/", import.meta.url);
 await mkdir(cache, { recursive: true });
@@ -57,58 +59,19 @@ const [characters, skills, ranges, enemies, stage, geometry, buffTemplates, orig
 if (originalLevel.mapData.tags != null && (!Array.isArray(originalLevel.mapData.tags)
   || originalLevel.mapData.tags.some(tag => typeof tag !== 'string'))) throw Error('Unsupported source map tags');
 const ids = Object.keys(REGULAR_OPERATORS);
-const operators = Object.fromEntries(
-  ids.map((id) => {
-    const c = characters[id];
-    const rarity = Number(c?.rarity?.replace("TIER_", ""));
-    const shape = { 1: [1, [0]], 2: [1, [0]], 3: [2, [1]],
-      4: [3, [2]], 5: [3, [2, 3]], 6: [3, [3]] }[rarity];
-    if (!c || !shape || c.phases.length !== shape[0] || !shape[1].includes(c.skills.length))
-      throw new Error(`Unsupported operator shape: ${id}`);
-    return [
-      id,
-      {
-        id,
-        name: c.name,
-        description: c.description,
-        rarity,
-        profession: c.profession,
-        subProfessionId: c.subProfessionId,
-        position: c.position,
-        nationId: c.nationId,
-        groupId: c.groupId,
-        teamId: c.teamId,
-        phases: c.phases.map((p) => ({
-          maxLevel: p.maxLevel,
-          attributesKeyFrames: p.attributesKeyFrames,
-          rangeGrid: ranges[p.rangeId].grids.map((p) => [p.row, p.col]),
-        })),
-        favorKeyFrames: c.favorKeyFrames,
-        potentialRanks: c.potentialRanks.map(
-          (p) => p.buff?.attributes?.attributeModifiers ?? [],
-        ),
-        trait: c.trait ? {
-          ...c.trait,
-          candidates: c.trait.candidates.map((candidate) => candidate.rangeId
-            ? { ...candidate, rangeGrid: ranges[candidate.rangeId].grids.map((p) => [p.row, p.col]) }
-            : candidate),
-        } : null,
-        talents: c.talents.map((talent) => ({
-          ...talent,
-          candidates: talent.candidates.map((candidate) => candidate.rangeId
-            ? { ...candidate, rangeGrid: ranges[candidate.rangeId].grids.map((p) => [p.row, p.col]) }
-            : candidate),
-        })),
-        skills: c.skills.map((s) => ({
-          id: s.skillId,
-          unlockCondition: s.unlockCond,
-          levels: skills[s.skillId].levels.map(level => level.rangeId
-            ? { ...level, rangeGrid: ranges[level.rangeId].grids.map(p => [p.row, p.col]) } : level),
-        })),
-      },
-    ];
-  }),
-);
+const usesCN = ids.some(id => operatorChannel(id, REGULAR_OPERATORS[id]) === 'cn');
+const cnEvidence = usesCN ? JSON.parse(await readFile(new URL('../../data/arkpedia-cn-source.json', import.meta.url), 'utf8')) : null;
+if (cnEvidence) {
+  const roster = JSON.parse(await readFile(new URL('../../data/arkpedia-roster-target.json', import.meta.url), 'utf8'));
+  if (cnEvidence.source.repository !== roster.source.repository || cnEvidence.source.commit !== roster.source.commit
+    || cnEvidence.globalSource.commit !== pins[paths.character_table[0]]
+    || cnEvidence.globalSource.characterTableSha256 !== createHash('sha256').update(await readFile(new URL('character_table.json', cache))).digest('hex'))
+    throw Error('CN candidate tables do not match the reviewed roster/Global snapshot');
+  for (const id of ids) if (operatorChannel(id, REGULAR_OPERATORS[id]) === 'cn' && REGULAR_OPERATORS[id].templateKey)
+    throw Error(`CN shared skill-prefab binding requires a separate native review: ${id}`);
+}
+const operators = compileReviewedOperators({ registry: REGULAR_OPERATORS,
+  global: { characters, skills, ranges }, cn: cnEvidence?.tables });
 for (const op of Object.values(operators)) assertRegularOperator(op);
 const tokenIds = ['token_10009_weedy_cannon', 'token_10024_ebnhlz_rcube', 'token_10044_wulfen_mine', 'token_10042_tecno_puppet', 'token_10041_cathy_catsld', 'token_10022_kazema_shadow', 'token_10001_deepcl_tentac', 'token_10018_robrta_mach', 'token_10014_bstalk_crab', 'token_10011_beewax_oblisk', 'token_10006_vodfox_doll', 'token_10003_cgbird_bird', 'token_10000_silent_healrb', 'token_10015_dusk_drgn', 'token_10007_phatom_twin', 'token_10008_cqbw_box', 'token_10029_slent2_protrb', 'token_10019_nearl2_sword', 'token_10002_kalts_mon3tr', 'token_10010_folivo_car', 'token_10021_blkngt_hypnos', 'token_10023_windft_wrench', 'token_10045_alanna_crane', 'token_10013_robin_mine', 'token_10016_rfrost_mine', 'token_10004_otter_motter'];
 const tokens = Object.fromEntries(tokenIds.map(id => {
@@ -222,7 +185,8 @@ for (const token of Object.values(tokens)) {
 }
 const output = {
   schemaVersion: 1,
-  sources: pins,
+  sources: cnEvidence ? { ...pins, [cnEvidence.source.repository]: cnEvidence.source.commit } : pins,
+  ...(cnEvidence ? { operatorSourceChannels: Object.fromEntries(ids.map(id => [id, operatorChannel(id, REGULAR_OPERATORS[id])])) } : {}),
   behaviors: {
     source: { repository: paths.buff_template_data[0], commit: pins[paths.buff_template_data[0]],
       path: paths.buff_template_data[1], sha256: tableHash },
@@ -285,9 +249,9 @@ for (const [id,support] of Object.entries(REGULAR_OPERATORS)) {
 }
 output.skillEffects = {repository:"arkpedia/arkpedia-sd-assets",commit:sdCommit,
   pack:stageAssets.effects.chargeCost,bindings};
-await writeFile(
+await writeJSONAtomic(
   new URL("../../data/arkpedia-mvp.json", import.meta.url),
-  `${JSON.stringify(output, null, 2)}\n`,
+  output,
 );
 console.log(
   `Built ${stage.code}: ${ids.length} operators, ${Object.keys(enemyRecords).length} enemies; SD ${sdCommit}`,
