@@ -17,6 +17,7 @@ import { createAlannaDevice } from './arkpedia-alanna.js';
 import { createMayerRobotter } from './arkpedia-mayer.js';
 import { createFrostMat } from './arkpedia-frost.js';
 import { createSkadiSeaborn } from './arkpedia-skadi-alter.js';
+import { createTypewriter } from './arkpedia-pozemka.js';
 import { createDorothyResonator } from './arkpedia-dorothy.js';
 import { createRobinClip } from './arkpedia-robin.js';
 import { createWulfeniteMine } from './arkpedia-wulfenite.js';
@@ -89,6 +90,7 @@ export function deployRegularSummon(battle, key, row, col, dir = 'RIGHT') {
     : state.ownerId === 'char_242_otter' ? createMayerRobotter(battle, state, row, col)
     : state.ownerId === 'char_458_rfrost' ? createFrostMat(battle, state, row, col)
     : state.ownerId === 'char_1012_skadi2' ? createSkadiSeaborn(battle, state, row, col)
+    : state.ownerId === 'char_4055_bgsnow' ? createTypewriter(battle, state, row, col, dir)
     : state.ownerId === 'char_4048_doroth' ? createDorothyResonator(battle, state, row, col)
     : state.ownerId === 'char_451_robin' ? createRobinClip(battle, state, row, col)
     : state.ownerId === 'char_4171_wulfen' ? createWulfeniteMine(battle, state, row, col)
@@ -187,7 +189,7 @@ export function installSummoner({ battle, unit, def }) {
   const config = REGULAR_SUMMONS[def.id];
   if (!config || config.skillId && def.skill?.id !== config.skillId
     || config.minimumElite != null && def.raw.arkpedia.elite < config.minimumElite) return;
-  const build = ['char_1012_skadi2', 'char_4048_doroth', 'char_400_weedy', 'char_250_phatom', 'char_451_robin', 'char_458_rfrost', 'char_242_otter', 'char_4171_wulfen'].includes(def.id)
+  const build = ['char_4055_bgsnow', 'char_1012_skadi2', 'char_4048_doroth', 'char_400_weedy', 'char_250_phatom', 'char_451_robin', 'char_458_rfrost', 'char_242_otter', 'char_4171_wulfen'].includes(def.id)
     ? { ...def.raw.arkpedia, skillId: def.skill.id } : def.raw.arkpedia;
   const key = summonCardId(def.id), record = summonRecordFor(def.id, build, battle.data.raw.tokens);
   if (!battle.regularSummons) battle.regularSummons = new Map();

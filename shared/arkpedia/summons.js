@@ -1,6 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Only explicitly reviewed regular-stage tokens may enter the deployment deck.
 export const REGULAR_SUMMONS = Object.freeze({
+  char_4055_bgsnow: Object.freeze({ tokenId: 'token_10026_bgsnow_subbow',
+    deploymentSlotCost: 0, chooseFacing: true, healFree: true,
+    refundRatio: 0, rechargeOnFinish: true, preserveCooldown: true }),
   char_1012_skadi2: Object.freeze({ tokenId: 'token_10017_skadi2_dedant',
     deploymentSlotCost: 0, chooseFacing: false, fixedRotation: true, healFree: false,
     refundRatio: 0, noAttack: true, minimumElite: 1, rechargeOnFinish: true }),
@@ -166,6 +169,25 @@ export function summonRecordFor(ownerId, build, tokens) {
       durationType: level.durationType, duration: level.duration, description: level.description,
       rangeGrid: level.rangeGrid, ...level.spData, bb, trigger: { rule: 'NEVER' } };
   }
+  if (ownerId === 'char_4055_bgsnow') {
+    const index = ['skchr_bgsnow_1', 'skchr_bgsnow_2', 'skchr_bgsnow_3'].indexOf(build.skillId);
+    const id = ['sktok_bgsnow_1', 'sktok_bgsnow_2', 'sktok_bgsnow_3'][index];
+    const entry = source.skills?.find(row => row.id === id);
+    if (!entry || index > build.elite || !Number.isSafeInteger(build.skillRank)
+      || build.skillRank < 1 || build.skillRank > Math.min([4, 7, 10][build.elite], entry.levels.length))
+      throw Error('Unsupported Typewriter skill or rank');
+    const level = entry.levels[build.skillRank - 1], bb = blackboard(level.blackboard);
+    const keys = index === 0 ? ['atk', 'prob', 'atk_scale'] : index === 1 ? ['atk_scale', 'respawn_time']
+      : ['attack@atk_scale', 'base_attack_time'];
+    if (level.skillType !== 'MANUAL' || level.prefabId !== id || level.spData.spType !== 8
+      || level.spData.spCost !== 0 || Object.keys(bb).length !== keys.length
+      || keys.some(k => !Number.isFinite(bb[k])) || index === 2 && !level.rangeGrid?.length
+      || stats.cost !== 5 || stats.respawnTime !== 40 || stats.maxDeployCount !== 1
+      || stats.blockCnt !== 0 || talents[0]?.bb.interval !== [15, 20, 25][build.elite])
+      throw Error('Unreviewed Typewriter source');
+    skill = { skillId: id, name: level.name, bb, rangeGrid: level.rangeGrid,
+      trigger: { rule: 'NEVER' } };
+  }
   if (ownerId === 'char_1012_skadi2') {
     const index = ['skchr_skadi2_1', 'skchr_skadi2_2', 'skchr_skadi2_3'].indexOf(build.skillId);
     const id = ['sktok_skadi2_1', 'sktok_skadi2_2', 'sktok_skadi2_3'][index];
@@ -297,7 +319,7 @@ export function summonRecordFor(ownerId, build, tokens) {
     throw Error('Unsupported summon source limits or range');
   return { id: source.id, name: source.name, profession: source.profession,
     subProfessionId: source.subProfessionId, position: source.position, stats,
-    rangeGrid: phase.rangeGrid, dmgType: 'phys', attackKind: 'melee', canHitFly: false,
+    rangeGrid: phase.rangeGrid, dmgType: 'phys', attackKind: 'melee', canHitFly: ownerId === 'char_4055_bgsnow',
     abnormal: config.healFree ? ['healFree'] : [], talents, skill,
     arkpedia: { elite: build.elite, level: build.level, potential: build.potential,
       ...(['char_250_phatom', 'char_400_weedy'].includes(ownerId) ? { skillRank: build.skillRank } : {}) },

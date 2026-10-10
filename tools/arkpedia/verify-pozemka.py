@@ -147,9 +147,9 @@ assert hot['versionId'] == E['source']['nativeClient'] == '26-09-23-17-49-43_b9c
 for record in E['source']['bundles']:
     native = next(row for row in hot['abInfos'] if row['name'] == record['path'])
     assert (record['md5'], record['size']) == (native['md5'], native['abSize'])
-assert len(E['recoveredFacts']) == 8 and len(E['verificationLimits']) == 3 and len(E['holdReasons']) == 1
-assert E['enabledOperators'] == [] and E['heldOperators'] == ['char_4055_bgsnow']
-assert E['reviewStatus'] == 'Complete source foundation; operator and Typewriter runtime adapter pending'
+assert len(E['recoveredFacts']) == 8 and len(E['verificationLimits']) == 3 and len(E['holdReasons']) == 0 and len(E['runtimeContracts']) == 8
+assert E['enabledOperators'] == ['char_4055_bgsnow'] and E['heldOperators'] == []
+assert E['reviewStatus'] == 'Reviewed three-skill owner and Typewriter adapter with explicit native-dispatch limits'
 assert E['frameParity'] is False and E['moduleSupport'] is False and E['nativeParticleSupport'] is False
 assert set(E['tables']['skills']) == {'skchr_bgsnow_1','skchr_bgsnow_2','skchr_bgsnow_3'}
 assert set(E['tables']['tokenSkills']) == {'sktok_bgsnow_1','sktok_bgsnow_2','sktok_bgsnow_3'}
@@ -230,4 +230,4 @@ assert json.loads((C/'pozemka-source/models.json').read_text()) == {'char_4055_b
 assert json.loads((C/'pozemka-source/typewriter/sources.json').read_text()) == E['originalTypewriterModels']
 for face,r in E['originalTypewriterModels']['models']['token_10026_bgsnow_subbow']['facings'].items():
     assert E['models']['token_10026_bgsnow_subbow'][face.capitalize()] == {**r,'sha256':r['files']['token_10026_bgsnow_subbow.skel']['sha256'],'bytes':r['files']['token_10026_bgsnow_subbow.skel']['bytes']}
-print(f'Verified {count} native components, {len(bundles)} bundles, {len(E["templates"])} templates, 30 owner plus 30 token ranks, {len(E["projectiles"])} projectile trees and four original facing skeleton chains; Pozëmka adapter remains pending')
+print(f'Verified {count} native components, {len(bundles)} bundles, {len(E["templates"])} templates, 30 owner plus 30 token ranks, {len(E["projectiles"])} projectile trees and four original facing skeleton chains; eight reviewed runtime contracts enabled')

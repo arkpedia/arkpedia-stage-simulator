@@ -11,13 +11,13 @@ const bb=values=>Object.fromEntries(values.map(v=>[v.key,v.valueStr||v.value]));
 const near=(a,b)=>assert.ok(Math.abs(a-b)<1e-6,`${a} != ${b}`);
 const actions=(key,event)=>e.templates[key].eventToActions[event];
 
-test('Pozëmka source foundation retains complete owner/token graphs without claiming playable coverage',()=>{
-  assert.deepEqual(e.enabledOperators,[]);assert.deepEqual(e.heldOperators,[ID]);
-  assert.equal(REGULAR_OPERATORS[ID],undefined);assert.equal(data.operators[ID],undefined);assert.equal(data.tokens[TOKEN],undefined);
+test('Pozëmka reviewed adapter retains complete owner/token graphs and explicit fidelity limits',()=>{
+  assert.deepEqual(e.enabledOperators,[ID]);assert.deepEqual(e.heldOperators,[]);
+  assert.ok(REGULAR_OPERATORS[ID]);assert.equal(data.operators[ID].skills.length,3);assert.equal(data.tokens[TOKEN].skills.length,3);
   assert.equal(rows.length,215);assert.equal(e.source.bundles.length,6);
   assert.equal(Object.keys(e.templates).length,17);assert.equal(Object.keys(e.projectiles).length,6);
   assert.deepEqual(e.nativeTemplateGaps,[]);assert.deepEqual(Object.keys(e.originalTemplates),Object.keys(e.templates));
-  assert.equal(e.recoveredFacts.length,8);assert.equal(e.verificationLimits.length,3);assert.equal(e.holdReasons.length,1);
+  assert.equal(e.recoveredFacts.length,8);assert.equal(e.verificationLimits.length,3);assert.equal(e.holdReasons.length,0);assert.equal(e.runtimeContracts.length,8);
   for(const key of ['frameParity','moduleSupport','nativeParticleSupport'])assert.equal(e[key],false);
 });
 test('all sixty owner/token rank records retain separate skill identities and wrappers',()=>{
