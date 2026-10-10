@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Unregistered damage/talent links. The cast controller must supply accepted
+// Damage/talent links. The cast controller must supply accepted
 // projectile births; this module does not choose either original S2 event.
 import evidence from '../../../data/arkpedia-nymph-prefabs.json' with { type: 'json' };
 import { bodyInKeys } from '../body.js';
@@ -17,7 +17,7 @@ const key = (u, suffix) => `nymph:${u.id}:${suffix}`;
 /** A source-owned listener and DoT clock. Higher-priority S2 replaces the
  * lower coefficient and triggers immediately; equal/weaker applications keep
  * the current clock. This is an explicit local override contract, not decoded
- * compiled buff ordering. No roster or source record enables this adapter. */
+ * compiled buff ordering. */
 export class NymphCombatLinks {
   constructor(b, u) {
     if (u.def.charId !== NYMPH_ID) throw Error('Nymph links require Nymph source data');

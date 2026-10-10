@@ -15,10 +15,14 @@ function nodes(value, match, out = []) {
 }
 const near = (a, b) => assert.ok(Math.abs(a - b) < 1e-6, `${a} != ${b}`);
 
-test('Nymph whole kit is held; source preparation cannot turn on a partial S1/S3 adapter', () => {
-  assert.deepEqual(e.enabledOperators, []); assert.deepEqual(e.runtimeMapping, {});
-  assert.match(e.reviewStatus, /S2 animation-event consumption is unresolved/);
-  assert.equal(REGULAR_OPERATORS[ID], undefined); assert.equal(data.operators[ID], undefined);
+test('Nymph registers the complete three-skill kit with explicit local S2 timing limits', () => {
+  assert.deepEqual(e.enabledOperators, [ID]); assert.deepEqual(e.runtimeMapping, { [ID]: 'nymph' });
+  assert.match(e.historicalReviewStatus, /S2 animation-event consumption is unresolved/);
+  assert.deepEqual(REGULAR_OPERATORS[ID].skillIds, ['skchr_nymph_1', 'skchr_nymph_2', 'skchr_nymph_3']);
+  assert.deepEqual(data.operators[ID].skills.map(s => s.id), REGULAR_OPERATORS[ID].skillIds);
+  assert.equal(e.runtimeContracts.length, 8);
+  assert.match(e.runtimeContracts[1], /earliest payload once/);
+  assert.match(e.runtimeContracts[1], /cast-finish timing remain unverified/);
   assert.equal(e.frameParity, false); assert.equal(e.moduleSupport, false); assert.equal(e.nativeParticleSupport, false);
 });
 test('source closure retains all thirty ranks, twelve projectile trees and thirteen native templates', () => {
@@ -51,6 +55,19 @@ test('one S2 Ranged ability retains source event wait, capped playback and inval
   const a = abilities[0]; assert.equal(a._projectileKey, 'projectile_chr_nymph_s2');
   assert.equal(a._waitForAttackEvent, 1); assert.equal(a._maxAnimScale, 1);
   assert.equal(a._emitToInputPosWhenTargetIsInvalid, 1); assert.equal(a._interuptIfTargetDead, 0);
+});
+test('S2 resolves its own pointer to the same serialized ordinary single-target selector filters', () => {
+  const own = records({ s: e.skills.skchr_nymph_2 });
+  const ability = own.find(d => d._projectileKey === 'projectile_chr_nymph_s2');
+  const selector = e.skills.skchr_nymph_2.flatMap(o => o.components)
+    .find(c => c.pathId === ability._selector.m_PathID).data;
+  const ordinary = records(e.characters).find(d => d._abnormalFlag != null);
+  const fields = ['_targetSide', '_targetMotion', '_targetCategory', '_postFilter', '_abnormalFlag',
+    '_abnormalCombo', '_forceIgnoreCamouflage', '_limitTargetNum', '_maxTargetKey', '_maxNum',
+    '_sortByTauntAtLast', '_ignoreHitRange', '_abilityInputTargetAsSortSource'];
+  for (const field of fields) assert.equal(selector[field], ordinary[field], field);
+  assert.equal(selector._maxNum, 1); assert.equal(ability._timeMode, 1);
+  // Equality is source evidence, not proof of numeric enum/C# execution.
 });
 test('S2 direct-on-reach and delayed stop splash remain separate; only the direct branch creates Fear', () => {
   const ds = records({ p: e.projectiles.projectile_chr_nymph_s2 });

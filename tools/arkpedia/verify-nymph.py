@@ -102,8 +102,10 @@ assert reachable == set(E['templates'])
 assert dbkeys == set(E['buffDatabase'])
 assert len(E['tables']['skills']) == 3
 assert all(len(value['levels']) == 10 for value in E['tables']['skills'].values())
-assert E['enabledOperators'] == []
-assert E['runtimeMapping'] == {}
+assert E['enabledOperators'] == ['char_4146_nymph']
+assert E['runtimeMapping'] == {'char_4146_nymph': 'nymph'}
+assert len(E['runtimeContracts']) == 8
+assert 'native' in E['runtimeContracts'][1].lower() and 'unverified' in E['runtimeContracts'][1]
 assert len(E['projectiles']) == 12
 assert E['frameParity'] is False and E['moduleSupport'] is False and E['nativeParticleSupport'] is False
 print(f'Verified {count} native components, {len(bundles)} bundles, {len(E["templates"])} templates, 30 ranks and both original skeleton chains')

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Direct source-fed fixtures keep Nymph unregistered. S2 event policies are
-// experimental alternatives under test, not recovered native event semantics.
+// Direct source-fed fixtures bypass public registration. S2 event policies are
+// explicit alternatives under test, not recovered native event semantics.
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import data from '../data/arkpedia-mvp.json' with { type: 'json' };

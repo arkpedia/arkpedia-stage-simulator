@@ -4,7 +4,8 @@
 
 Run with .cache/map-env/bin/python tools/arkpedia/extract-nymph.py.
 Requires the pinned Global tables, native client bundles and model checkout
-already used by this project's source audits. This does not enable the kit.
+already used by this project's source audits. Runtime mappings below remain
+distinct from the checksum-verified native facts.
 Includes all normal/S1/S2/S3 projectile trees and their original buff closure.
 """
 from collections import defaultdict
@@ -228,5 +229,42 @@ evidence = {
         'Original particles/audio and modules remain unfinished.'],
     'nativeTemplateGaps': sorted(templates - native_templates.keys()),
 }
+evidence['historicalReviewStatus'] = evidence['reviewStatus']
+evidence['enabledOperators'] = [ID]
+evidence['runtimeMapping'] = {ID: 'nymph'}
+evidence['reviewStatus'] = 'Complete ordinary kit with explicit local execution contracts'
+evidence['runtimeContracts'] = [
+    'The S2 selector pointer resolves to the same serialized filter/single-target values as ordinary Attack. '
+    'Use shared legal ground/flying range and ordinary priority; capture at command start and retain the original '
+    'input point if the selected victim disappears. Native selector enum execution is not recovered.',
+    'S2 has one Ranged request and two identical OnAttack payloads. The regular simulator explicitly consumes '
+    'the earliest payload once; it never emits a second projectile. Use capped playback and a pending cast '
+    'through the original full Skill_2 clip, holding SP and preventing a second command. '
+    'Native numeric timeMode1, compiled event cursor and cast-finish timing remain unverified.',
+    'Ordinary/S3 attacks capture one/two distinct victims and release at the original facing event with capped '
+    'playback. The selected attack interval is separate from clip completion. Invalid captured victims do not '
+    'produce accepted attack hooks, attack SP or replacement victims.',
+    'S1 applies selected ATK immediately without restarting the ordinary FSM; current mode is sampled at '
+    'projectile birth. S3 cancels unborn work, commits its uninterruptible original Begin, then applies selected '
+    'ATK/ASPD/range for the actual selected duration. End restores stats/range and dispatches the original clip.',
+    'One-second original Start owns the deployment entrance; manual activation and attacks wait until it ends. '
+    'Numeric native born dispatch remains unverified. Withdrawal cancels owned phases/listeners/stacks; a new '
+    'deployment receives a new controller and selected initial SP.',
+    'Talent1 accepted outgoing damage creates one delayed source/victim listener. Stronger S2 DoT replaces '
+    'its clock with an immediate pulse; equal/weaker applications retain it. Cleanup samples burst expiry '
+    'before output. Talent2 stacks only on in-range Necrosis start, up to the selected promotion/potential cap.',
+    'Damage reads current ATK at impact; injury derives from accepted calculated Arts before shields. '
+    'S2 direct Fear is locally gated after accepted Arts, unlike the retained native graph listing Fear first. '
+    'The separate delayed stop splash retains its arrival centre and checks owner lifetime again.',
+    'All thirty selected ranks, promotion/level/potential/trust and original facing art are compiled from pinned '
+    'Global records. Conditional Talent2 ATK is excluded from passive stats. Controllers own animation dispatch; '
+    'generic accepted attack events must not overwrite their original clips.',
+]
+evidence['verificationLimits'][1] = ('Original S2 has one Ranged ability and two identical OnAttack payloads at '
+    '.267/.467. The simulator uses the explicit first-event/full-clip contract; native cursor, numeric '
+    'timeMode1 and cast-finish timing remain unverified, and frame parity is not claimed.')
+evidence['verificationLimits'][3] = ('Talent1 source listener is delayed .1s and per-source DoT triggers '
+    'immediately then each second. The linked real-engine adapter validates local replacement/cleanup clocks, '
+    'not compiled native same-frame ordering.')
 (ROOT / 'data/arkpedia-nymph-prefabs.json').write_text(json.dumps(evidence, indent=2) + '\n')
 print(f'Rebuilt {len(templates)} reachable table templates, {len(evidence["originalTemplates"])} native templates and 30 source ranks; retained full-kit source review')

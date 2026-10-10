@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Source-fed real-engine fixtures bypass roster registration and the unresolved
-// S2 cast animation controller. No fixture chooses one of its two OnAttack events.
+// Source-fed real-engine fixtures bypass public builds and the S2 cast
+// controller. No fixture chooses one of its two original OnAttack events.
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import data from '../data/arkpedia-mvp.json' with { type: 'json' };

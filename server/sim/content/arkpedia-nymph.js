@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Unregistered controller. S2 requires a caller-supplied experimental event /
-// selector contract: neither identical native payload is silently preferred.
+// S2 requires an explicit local event/selector contract. Serialized native
+// fields and identical event payloads do not recover the compiled cursor.
 import evidence from '../../../data/arkpedia-nymph-prefabs.json' with { type: 'json' };
 import { NymphCombatLinks, NYMPH_ID } from './arkpedia-nymph-links.js';
 import { bodyInKeys } from '../body.js';
@@ -41,7 +41,7 @@ export class NymphController {
   canCast() {
     const u = this.u;
     return !this.stopped && live(u) && u.canAct && !u.s.flags.silence
-      && !['s2', 's3-begin', 's3-end'].includes(this.phase?.kind)
+      && !['entrance', 's2', 's3-begin', 's3-end'].includes(this.phase?.kind)
       && (this.skill !== 2 || !!this.s2Target());
   }
   s2Target() {
@@ -122,6 +122,10 @@ export class NymphController {
     const { b, u } = this;
     if (this.stopped) return;
     if (!live(u)) { this.stop(); return; }
+    if (this.phase?.kind === 'entrance') {
+      if (b.time + 1e-9 >= this.phase.readyAt) { this.phase = null; this.idle(); }
+      this.controlEpoch = u.attackControlEpoch; return;
+    }
     // Native S3 activation predelay is explicitly uninterruptible. Control
     // blocks later attacks, but does not cancel the committed mode transition.
     if (this.phase?.kind === 's3-begin') {
@@ -173,7 +177,7 @@ export class NymphController {
   }
 }
 
-/** Test/integration entry point only. No runtime import or roster enables it. */
+/** Source-validated entry point. S2 never silently supplies a release policy. */
 export function prepareNymphKit(b, u, { s2Contract } = {}) {
   if (u.def.charId !== NYMPH_ID) throw Error('Nymph controller requires Nymph source data');
   const s = u.def.skill, rank = u.def.raw.arkpedia?.skillRank;
@@ -186,7 +190,7 @@ export function prepareNymphKit(b, u, { s2Contract } = {}) {
     || s.maxCharges !== selected.spData.maxChargeTime
     || Object.keys(s.bb).length !== Object.keys(values).length
     || Object.entries(values).some(([k, v]) => s.bb[k] !== v)
-    || JSON.stringify(s.rangeGrid) !== JSON.stringify(range)) throw Error('Incomplete Nymph selected source skill');
+    || JSON.stringify(s.rangeGrid ?? []) !== JSON.stringify(range)) throw Error('Incomplete Nymph selected source skill');
   const links = new NymphCombatLinks(b, u);
   let controller;
   try { controller = new NymphController(b, u, links, s2Contract); }
@@ -205,4 +209,36 @@ export function prepareNymphKit(b, u, { s2Contract } = {}) {
       onStart: () => controller.startSkill(), onEnd: () => controller.endSkill() },
   };
   return { kit, controller, links };
+}
+
+// Deliberate simulator mapping: one ranged request consumes the earliest
+// original event, selects an ordinary legal victim and holds SP through the
+// original clip. This does not claim recovered native cursor/finish timing.
+const regularS2Contract = Object.freeze({
+  eventIndex: 0,
+  selectTarget: (b, u) => nymphCandidates(b, u)[0],
+  reviewNote: 'Local single-request/first-event/full-clip contract; native event consumption and timeMode remain unverified',
+});
+
+export function customizeNymphKit({ battle, id, unit, kit }) {
+  if (id !== NYMPH_ID) return;
+  if (!evidence.enabledOperators.includes(id) || evidence.runtimeMapping[id] !== 'nymph')
+    throw Error('Nymph source record lacks a complete runtime review');
+  const prepared = prepareNymphKit(battle, unit, { s2Contract: regularS2Contract });
+  kit.install = null;
+  Object.assign(kit, prepared.kit);
+}
+
+export function installNymph({ battle: b, unit: u, def }) {
+  if (def.charId !== NYMPH_ID) return;
+  const controller = u.mem.nymphController;
+  if (!controller) throw Error('Missing selected Nymph controller');
+  controller.install();
+  // Start is an original one-second entrance. A fresh deployment owns its
+  // clock; neither attacks nor manual commands can overwrite the entrance.
+  b.on('deploy', ({ unit }) => {
+    if (unit !== u) return;
+    controller.visual('Start');
+    controller.phase = { kind: 'entrance', readyAt: b.time + model(u).durations.Start };
+  }, { owner: u });
 }
