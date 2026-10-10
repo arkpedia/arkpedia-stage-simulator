@@ -30,6 +30,7 @@ const ordinary = component('characters', '2024263541393947419');
 const nextAttack = component('skills', '-3989187602593460007');
 const recovery = component('skills', '1896313461372113113');
 const radius = component('projectiles', '6236940736852187368').m_Radius;
+const aftershockScale = flat(evidence.tables.character.trait.candidates[0].blackboard)['attack@append_atk_scale'];
 const model = u => evidence.models[ROSMONTIS_ID][['UP','LEFT'].includes(u.dir) ? 'Back' : 'Front'];
 const interpolate = (frames, level) => {
   const lo = frames[0], hi = frames.at(-1);
@@ -69,19 +70,19 @@ export function selectedRosmontisBuild(build) {
     aura:flat(talents.find(v => v.prefabKey === '2')?.blackboard ?? []).atk ?? 0 };
 }
 
-function selected(u, contract) {
-  if (contract !== ROSMONTIS_ATTACK_CONTRACT) throw Error('Rosmontis requires the reviewed attack contract');
+export function validateRosmontisSelection(u, contract, expectedContract, index) {
+  if (contract !== expectedContract) throw Error('Rosmontis requires the reviewed attack contract');
   if (u.def.charId !== ROSMONTIS_ID || u.mem.rosmontisAttackController || u.deploySeq !== 0)
     throw Error('Rosmontis requires a fresh original owner');
   const build = { ...u.def.raw.arkpedia, skillId:u.def.skill?.id }, r = selectedRosmontisBuild(build), s = u.def.skill;
   if (u.def.raw.arkpedia.skillId != null && u.def.raw.arkpedia.skillId !== build.skillId
-    || r.index !== 0 || s.skillType !== 'AUTO' || s.spType !== 'attack'
+    || r.index !== index || s.skillType !== r.source.skillType || s.spType !== (index===0?'attack':'time')
     || s.spCost !== r.source.spData.spCost || s.initSp !== r.source.spData.initSp
     || s.maxCharges !== r.source.spData.maxChargeTime || s.duration !== r.source.duration
     || !same(s.bb, r.bb) || !same(s.rangeGrid ?? [], grid(r.source.rangeId))
     || !same(u.rangeGrid, r.rangeGrid) || !same(u.def.stats, normalizeChess({ stats:r.stats }).stats)
     || !same(u.def.talents.map(v => v.bb), r.talents.map(v => flat(v.blackboard))))
-    throw Error('Incomplete Rosmontis ordinary/S1 selected source');
+    throw Error('Incomplete Rosmontis selected source');
   if (ordinary._additionalTimes !== 1 || ordinary._waitForAttackEvent !== 1
     || nextAttack._onlyFeedActiveBuffToFirstOne !== 1 || nextAttack._additionalTimes !== 1
     || recovery._recoverSpIfTargetDead !== 1 || ordinary._triggerDelta <= 0)
@@ -186,7 +187,7 @@ export class RosmontisAttackController {
       // Every receipt uses the ordinary damage pipeline independently: DEF,
       // RES, penetration, dodge, shields, hit hooks, hurt SP and kill credit.
       if (!canTargetEnemy(u,target,{ groundOnly:true,canHitFly:false })) continue;
-      const scale=index ? this.record.bb.append_atk_scale : 1;
+      const scale=index ? aftershockScale : 1;
       b.dealDamage(u,target,{ amount:u.s.atk*u.s.atkScaleMul*scale,type:'phys',
         isAttack:true,isSkill:command.isSkill,isSplash:true,applyWay:'ranged',attackId:command.attackId,
         tags:index?['aftershock']:[] });
@@ -234,7 +235,7 @@ export class RosmontisAttackController {
     const target=this.targets()[0];
     if (!target) { this.visual('Idle',1,true); return; }
     const epoch=u.attackControlEpoch, targetSeq=target.deploySeq;
-    const skill=!u.s.flags.silence && u.skill.ready && u.skill.activate('source-next-attack');
+    const skill=this.record.index===0 && !u.s.flags.silence && u.skill.ready && u.skill.activate('source-next-attack');
     // Skill-start hooks may remove/control the owner or kill the chosen input
     // before the attack phase exists. Do not leave a spent pending S1 behind.
     if (!this.valid() || !u.canAct || u.s.flags.disarm || epoch!==u.attackControlEpoch) {
@@ -290,7 +291,7 @@ export class RosmontisAttackController {
 }
 
 export function prepareRosmontisAttacks(b,u,{contract}={}) {
-  const record=selected(u,contract),controller=new RosmontisAttackController(b,u,record);
+  const record=validateRosmontisSelection(u,contract,ROSMONTIS_ATTACK_CONTRACT,0),controller=new RosmontisAttackController(b,u,record);
   const kit={ trait:{ noAttack:true,attackDrivenSkill:true,attack:'ranged',dmgType:'phys',projectile:'none',
     hits:1,hitsFn:null,chain:null,splashRadius:0,heal:null,canHitFly:false,groundOnly:true,
     install:null,afterAttack:null,onHit:null,onEachHit:null,requiresAcceptedLaunch:true,attackVisual:'none',

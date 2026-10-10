@@ -87,12 +87,20 @@ test('S2 preserves rank-dependent ATK, duration and stun plus percentage interva
   const a = c('8002166357578185499');
   assert.equal(a._additionalTimes, 3); near(a._triggerDelta, .15);
   assert.equal(a._onlyFeedActiveBuffToFirstOne, 0); assert.equal(a._waitForAttackEvent, 0);
+  assert.equal(a._selectTargetTiming, 0); assert.equal(a._castToFirstRoundTargetLocationsAtProjectileBirth, 0);
+  assert.equal(a._maxAnimScale, 1); assert.equal(a._waitForProjectileInvalid, 0);
+  assert.equal(a._activeBuffs[0].isDamageMissable, 0);
   for (const key of ['projectile_chr_rosmon_s2','projectile_chr_rosmon_s2_after_shock']) {
     const rows = e.projectiles[key].flatMap(r => r.components);
     assert.equal(rows.find(r => r.data.m_Radius != null).data.m_Radius, 1.5);
     const movement = rows.find(r => r.data._immediatelyReach != null).data;
     assert.equal(movement._immediatelyReach, 0); assert.equal(movement._checkReached, 0);
     assert.equal(movement._attachToMountPoint, 1);
+    assert.equal(movement._keepUpdate, 0); assert.equal(movement._followTarget, 0);
+    const body = rows.find(r => r.data._lifeTime != null).data;
+    near(body._lifeTime, 1.2); assert.equal(body._lifeTimeType, 1);
+    assert.equal(body._alwaysReachInTheEnd, 1); assert.equal(body._stopWhenSourceInvalid, 0);
+    assert.equal(rows.find(r => r.data._onlyCheckHitWhenReachTarget != null).data._onlyCheckHitWhenReachTarget, 1);
   }
   assert.deepEqual(e.templates['rosmon_s_2[stun]'].eventToActions.ON_BUFF_START.map(type), ['Dice','CreateBuff']);
 });
