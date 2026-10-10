@@ -39,6 +39,7 @@ export function catalogueFor(data) {
         op.id,
         {
           id: op.id,
+          ...(op.formOf ? { formOf: op.formOf } : {}),
           promotions: op.phases.map((p, elite) => ({
             elite,
             maxLevel: p.maxLevel,

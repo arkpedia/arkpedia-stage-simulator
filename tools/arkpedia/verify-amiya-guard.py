@@ -171,9 +171,9 @@ for face, record in E['officialSkeletonBindings']['char_1001_amiya2'].items():
     assert record['faceSwitcherPathId'] in expected_art
 assert E['source']['commit'] == '57010cb5b2afea112cae57daa756b58676ba6850'
 assert E['source']['modelCommit'] == 'd0b5af0b004b044d322397ce5ae79632b6d9fcdd'
-assert E['enabledOperators'] == [] and E['heldOperators'] == ['char_1001_amiya2']
-assert E['reviewStatus'] == 'Complete Global Guard-form source foundation; combat adapter pending'
-assert len(E['recoveredFacts']) == 8 and len(E['verificationLimits']) == 3 and len(E['holdReasons']) == 1
+assert E['enabledOperators'] == ['char_1001_amiya2'] and E['heldOperators'] == []
+assert E['reviewStatus'] == 'Complete Global Guard-form source and bounded two-skill combat adapter'
+assert len(E['recoveredFacts']) == 8 and len(E['verificationLimits']) == 3 and len(E['holdReasons']) == 0 and len(E['runtimeContracts']) == 7
 assert E['frameParity'] is False and E['moduleSupport'] is False and E['nativeParticleSupport'] is False
 assert set(E['tables']['skills']) == set(E['skills']) == {'skchr_amiya2_1','skchr_amiya2_2'}
 assert all(len(s['levels']) == 10 for s in E['tables']['skills'].values())
@@ -183,4 +183,4 @@ assert set(E['officialSkeletonBindings']['char_1001_amiya2']) == {'Front','Back'
 subprocess.check_call(['node', 'tools/arkpedia/inspect-amiya-guard.mjs'],
     cwd=ROOT, stdout=subprocess.DEVNULL)
 assert json.loads((C/'amiya-guard-source/models.json').read_text()) == E['models']
-print(f'Verified {count} native components, {len(bundles)} bundles, {len(E["templates"])} templates, 20 ranks, both original facing skeleton chains and pinned Global form unlock data; combat adapter remains pending')
+print(f'Verified {count} native components, {len(bundles)} bundles, {len(E["templates"])} templates, 20 ranks, both original facing skeleton chains and pinned Global form unlock data; bounded combat contracts remain explicit')

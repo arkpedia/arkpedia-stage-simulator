@@ -61,8 +61,26 @@ export function operatorChannel(id, support) {
 export function compileReviewedOperators({ registry, global, cn }) {
   return Object.fromEntries(Object.entries(registry).map(([id, support]) => {
     const channel = operatorChannel(id, support);
-    const tables = channel === 'cn' ? cn : global;
+    let tables = channel === 'cn' ? cn : global;
     if (!tables) throw Error(`Missing pinned ${channel} operator tables: ${id}`);
+    if (support.sourceForm) {
+      if (channel !== 'global' || support.sourceForm !== 'patch')
+        throw Error(`Unreviewed alternate-form channel: ${id}`);
+      const patch = global.forms, owners = Object.entries(patch?.infos ?? {})
+        .filter(([, info]) => info.tmplIds.includes(id));
+      if (!patch?.patchChars?.[id] || owners.length !== 1 || !patch.unlockConds[id]
+        || patch.patchDetailInfoList[id]?.patchId !== id)
+        throw Error(`Missing complete Global alternate-form data: ${id}`);
+      if (global.characters[id]) throw Error(`Conflicting Global alternate-form record: ${id}`);
+      tables = { ...global, characters: { ...global.characters, [id]: patch.patchChars[id] } };
+      const record = compileOperatorRecord(id, tables);
+      record.formOf = owners[0][0];
+      record.sourceName = record.name;
+      record.formClass = patch.patchDetailInfoList[id].infoParam;
+      record.name = `${record.name} (${record.formClass})`;
+      record.formUnlock = patch.unlockConds[id];
+      return [id, record];
+    }
     return compileOperator(id, tables);
   }));
 }

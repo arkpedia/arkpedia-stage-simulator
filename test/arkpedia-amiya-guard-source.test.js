@@ -22,10 +22,10 @@ function nodes(value, predicate, out = []) {
 }
 const type = name => n => n.$type?.split(',')[0].endsWith(`+${name}`);
 
-test('Guard form source does not register an incomplete combat kit', () => {
-  assert.deepEqual(e.enabledOperators, []); assert.deepEqual(e.heldOperators, [ID]);
-  assert.equal(REGULAR_OPERATORS[ID], undefined); assert.equal(data.operators[ID], undefined);
-  assert.match(e.reviewStatus, /combat adapter pending/);
+test('Guard form registers only its complete reviewed two-skill kit', () => {
+  assert.deepEqual(e.enabledOperators, [ID]); assert.deepEqual(e.heldOperators, []);
+  assert.equal(REGULAR_OPERATORS[ID].mechanic, 'amiya-guard'); assert.equal(data.operators[ID].skills.length, 2);
+  assert.match(e.reviewStatus, /bounded two-skill combat adapter/); assert.equal(e.runtimeContracts.length, 7);
   assert.equal(e.frameParity, false); assert.equal(e.moduleSupport, false);
   assert.equal(e.nativeParticleSupport, false); assert.deepEqual(e.nativeTemplateGaps, []);
   assert.deepEqual(Object.keys(e.templates), Object.keys(e.originalTemplates));

@@ -201,8 +201,8 @@ evidence = {'schemaVersion': 1, 'source': {'repository': 'Kengxxiao/ArknightsGam
     'buffDatabase': {'path': 'en_US/gamedata/buff_table.json', 'sha256': digest((C / 'lessing-source/buff_table.json').read_bytes())},
     'bundles': source_bundles, 'modelRepository': 'fexli/ArknightsResource', 'modelCommit': MODEL},
     'frameParity': False, 'moduleSupport': False, 'nativeParticleSupport': False,
-    'enabledOperators': [], 'heldOperators': [ID],
-    'reviewStatus': 'Complete Global Guard-form source foundation; combat adapter pending',
+    'enabledOperators': [ID], 'heldOperators': [],
+    'reviewStatus': 'Complete Global Guard-form source and bounded two-skill combat adapter',
     'characters': characters, 'skills': skills, 'chararts': chararts,
     'models': models, 'officialSkeletonBindings': bindings, 'projectiles': projectiles,
     'templates': {k: bt[k] for k in sorted(templates)},
@@ -223,11 +223,20 @@ evidence = {'schemaVersion': 1, 'source': {'repository': 'Kengxxiao/ArknightsGam
         'MultiAttack attack-state buff listens ON_TARGET_KILLED and creates stacked selected ATK/RES holders with stripBlackboardParamsWithBuffKey=true. Selected kill cap is 3; ATK 0.4/RES 20 at M3. Attack-state finish removes cancellation and triggers SkillEnd. SkillEnd preserves 0.2s original End; mode 2 subsequent ordinary attacks use PURE and Skill_2_Loop through the native Skill_2_Attack animation alias.',
         'Skill lifetime finish removes kill and visual holders and restores the default mode with FSM restart. Original Front/Back binaries follow native FaceSwitcher and skeleton pointer chains byte-for-byte; no native particles/audio are claimed.'
     ],
+    'runtimeContracts': [
+        'The reviewed Global patch form compiles independently from the ordinary table, retains its source name/class/unlock metadata and shares parent Amiya identity for squad/support exclusion. No CN fallback is used.',
+        'Ordinary and S1 attacks use original eventPayloads rather than rounded hit summaries. S1 schedules its second receipt against the original attack-start clock, keeps the same victim and cancels on source control, retirement or skill generation change.',
+        'S2 locally consumes the first selected-times original events: nine Arts receipts and a final canceled direct branch followed by fixed 0.4s True damage. The eleventh payload and native preDelay 0.867 remain evidence, not an extra hit or a certified compiled cursor/delay conversion.',
+        'Each S2 payload samples the legal lowest-current-HP ground body in rotated skill range, with stable sequence/ID ties. The final delayed branch preserves victim identity and discards it after invalidation rather than selecting a substitute.',
+        'The cast retains native maximum animation scale 1, waits through the literal Skill_2 clip and at least minPostDelay 0.2 after the delayed final receipt, then plays Skill_2_End. Temporary invulnerability, no-block, forced-disarm and stun/freeze/silence immunity end with this phase; selected total duration includes it.',
+        'Attack-state owned kills apply capped additive selected ATK/RES bonuses, including the delayed final kill. Skill finish removes the owned holders and restores ordinary Arts; after the cast but during S2, normal attacks use original Skill_2_Loop and True damage.',
+        'Global once-per-battle use is stored on the Guard bench entry across new unit instances. The shared one-stack aura selects the strongest live producer, replaces its selected ATK/DEF percentages when the skill changes, includes late allied units and excludes devices; source removal and battle end clear it.'
+    ],
     'verificationLimits': [
-        'S2 native timing 2 retarget phase, preDelay versus original event cursor, ten damage strikes versus eleven payloads and final delayed damage/cancellation ordering require an explicit executable combat contract.',
-        'Shared aura replacement/removal, global once-per-battle persistence across redeployment and kills during the final delayed branch must be verified together; isolated S1 or a guessed ten-hit burst does not establish complete Guard-form support.',
+        'S2 native timing 2 retarget phase, preDelay versus original event cursor, ten damage strikes versus eleven payloads and final delayed damage/cancellation ordering use explicit local executable contracts; the compiled callback/event cursor remains unverified.',
+        'Shared aura replacement/removal, global once-per-battle persistence across redeployment and kills during the final delayed branch are covered together by combat tests. Local contracts do not certify native same-frame priority or callback ordering.',
         'Compiled callback ordering, native frame parity, modules and original Unity VFX/audio remain unverified.'
     ],
-    'holdReasons': ['Complete ordinary attack, both skills and all talent/lifecycle actions require a reviewed combat adapter.']}
+    'holdReasons': []}
 (ROOT / 'data/arkpedia-amiya-guard-prefabs.json').write_text(json.dumps(evidence, indent=2) + '\n')
 print('Extracted Amiya Guard:', len(templates), 'templates,', len(projectiles), 'projectiles,', len(source_bundles), 'bundles')

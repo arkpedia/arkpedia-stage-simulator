@@ -31,6 +31,7 @@ const paths = {
   geometry: ["arkpedia/arkpedia-data", "source/data/stage-geometry/0-1.json"],
   buff_template_data: ["Kengxxiao/ArknightsGameData_YoStar", "en_US/gamedata/battle/buff_template_data.json"],
   original_level: ["Kengxxiao/ArknightsGameData_YoStar", "en_US/gamedata/levels/obt/main/level_main_00-01.json"],
+  char_patch_table: ["Kengxxiao/ArknightsGameData_YoStar", "en_US/gamedata/excel/char_patch_table.json"],
 };
 if (process.argv.includes("--refresh")) {
   const pins = {};
@@ -54,7 +55,7 @@ if (process.argv.includes("--refresh")) {
 }
 const read = async (name) =>
   JSON.parse(await readFile(new URL(`${name}.json`, cache), "utf8"));
-const [characters, skills, ranges, enemies, stage, geometry, buffTemplates, originalLevel, pins] =
+const [characters, skills, ranges, enemies, stage, geometry, buffTemplates, originalLevel, forms, pins] =
   await Promise.all(Object.keys(paths).concat("pins").map(read));
 if (originalLevel.mapData.tags != null && (!Array.isArray(originalLevel.mapData.tags)
   || originalLevel.mapData.tags.some(tag => typeof tag !== 'string'))) throw Error('Unsupported source map tags');
@@ -70,8 +71,18 @@ if (cnEvidence) {
   for (const id of ids) if (operatorChannel(id, REGULAR_OPERATORS[id]) === 'cn' && REGULAR_OPERATORS[id].templateKey)
     throw Error(`CN shared skill-prefab binding requires a separate native review: ${id}`);
 }
+const usesForms = ids.some(id => REGULAR_OPERATORS[id].sourceForm);
+let formSource;
+if (usesForms) {
+  const evidence = JSON.parse(await readFile(new URL('../../data/arkpedia-amiya-guard-prefabs.json', import.meta.url)));
+  const hash = createHash('sha256').update(await readFile(new URL('char_patch_table.json', cache))).digest('hex');
+  if (evidence.source.commit !== pins[paths.character_table[0]] || hash !== evidence.source.tableHashes.char_patch_table)
+    throw Error('Global alternate-form cache differs from the reviewed source');
+  formSource = { commit: evidence.source.commit, sha256: hash,
+    patchTable: evidence.source.patchTable, formIds: Object.keys(forms.patchChars) };
+}
 const operators = compileReviewedOperators({ registry: REGULAR_OPERATORS,
-  global: { characters, skills, ranges }, cn: cnEvidence?.tables });
+  global: { characters, skills, ranges, forms }, cn: cnEvidence?.tables });
 for (const op of Object.values(operators)) assertRegularOperator(op);
 const tokenIds = ['token_10026_bgsnow_subbow', 'token_10017_skadi2_dedant', 'token_10025_doroth_recttp', 'token_10036_lasher_mcbird', 'token_10032_jesca2_jckshd', 'token_10040_siege2_vlion', 'token_10009_weedy_cannon', 'token_10024_ebnhlz_rcube', 'token_10044_wulfen_mine', 'token_10042_tecno_puppet', 'token_10041_cathy_catsld', 'token_10022_kazema_shadow', 'token_10001_deepcl_tentac', 'token_10018_robrta_mach', 'token_10014_bstalk_crab', 'token_10011_beewax_oblisk', 'token_10006_vodfox_doll', 'token_10003_cgbird_bird', 'token_10000_silent_healrb', 'token_10015_dusk_drgn', 'token_10007_phatom_twin', 'token_10008_cqbw_box', 'token_10029_slent2_protrb', 'token_10019_nearl2_sword', 'token_10002_kalts_mon3tr', 'token_10010_folivo_car', 'token_10021_blkngt_hypnos', 'token_10023_windft_wrench', 'token_10045_alanna_crane', 'token_10013_robin_mine', 'token_10016_rfrost_mine', 'token_10004_otter_motter'];
 const tokens = Object.fromEntries(tokenIds.map(id => {
@@ -190,6 +201,7 @@ for (const token of Object.values(tokens)) {
 }
 const output = {
   schemaVersion: 1,
+  ...(formSource ? { globalAlternateFormSource: formSource } : {}),
   sources: cnEvidence ? { ...pins, [cnEvidence.source.repository]: cnEvidence.source.commit } : pins,
   ...(cnEvidence ? { operatorSourceChannels: Object.fromEntries(ids.map(id => [id, operatorChannel(id, REGULAR_OPERATORS[id])])) } : {}),
   behaviors: {

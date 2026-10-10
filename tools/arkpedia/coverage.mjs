@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 // SPDX-License-Identifier: GPL-3.0-or-later
 import { readFile } from "node:fs/promises";
+import { createHash } from 'node:crypto';
 import { writeJSONAtomic } from './write-json.mjs';
 import { pathToFileURL } from "node:url";
 import { execFileSync } from 'node:child_process';
@@ -11,7 +12,7 @@ import { REGULAR_OPERATORS, assertRegularOperator } from "../../shared/arkpedia/
 import { REGULAR_ENEMIES } from "../../shared/arkpedia/enemies.js";
 
 /** Source coverage, not a claim of game fidelity. Mode kits remain candidates. */
-export function coverageFor({ characters, enemies, chess, inherited, data, assetModels = data.sd.models, rosterTarget = null }) {
+export function coverageFor({ characters, enemies, chess, inherited, data, assetModels = data.sd.models, rosterTarget = null, globalForms = {} }) {
   const operators = Object.entries(characters)
     .filter(([id, op]) => id.startsWith("char_") && !op.isNotObtainable && !["TOKEN", "TRAP"].includes(op.profession))
     .sort(([a], [b]) => a.localeCompare(b))
@@ -62,8 +63,13 @@ export function coverageFor({ characters, enemies, chess, inherited, data, asset
     ...(rosterTarget ? { fullRosterTarget: { ...rosterTarget.summary, source: rosterTarget.source,
       playableOperatorForms: rosterTarget.operators.filter(o => !!data.operators[o.id]).length,
       remainingOperatorForms: rosterTarget.operators.filter(o => !data.operators[o.id]).length,
-      remainingOutsideGlobalSnapshot: rosterTarget.operators.filter(o => !characters[o.id] && !data.operators[o.id]).length,
+      remainingOutsideGlobalSnapshot: rosterTarget.operators.filter(o => !characters[o.id] && !globalForms[o.id] && !data.operators[o.id]).length,
+      remainingOutsideOrdinaryGlobalTable: rosterTarget.operators.filter(o => !characters[o.id] && !data.operators[o.id]).length,
       missingForms: rosterTarget.operators.filter(o => !data.operators[o.id]).map(o => o.id),
+    } } : {}),
+    ...(data.globalAlternateFormSource ? { globalAlternateForms: {
+      source: data.globalAlternateFormSource,
+      forms: Object.keys(globalForms).map(id => ({ id, playable: !!data.operators[id] })),
     } } : {}),
     operators, enemies: enemyRows,
   };
@@ -84,7 +90,14 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
     cwd: new URL('../../../arkpedia-sd-assets/', import.meta.url), encoding: 'utf8', maxBuffer: 16 * 1024 * 1024,
   })).models;
   const rosterTarget = await read("../../data/arkpedia-roster-target.json");
-  const report = coverageFor({ characters, enemies, chess, inherited: kitCoverage(), data, assetModels, rosterTarget });
+  let globalForms = {};
+  if (data.globalAlternateFormSource) {
+    const bytes = await readFile(new URL('../../.cache/arkpedia/char_patch_table.json', import.meta.url));
+    if (createHash('sha256').update(bytes).digest('hex') !== data.globalAlternateFormSource.sha256)
+      throw Error('Global form coverage cache differs from the reviewed snapshot');
+    globalForms = JSON.parse(bytes).patchChars;
+  }
+  const report = coverageFor({ characters, enemies, chess, inherited: kitCoverage(), data, assetModels, rosterTarget, globalForms });
   await writeJSONAtomic(new URL("../../data/arkpedia-coverage.json", import.meta.url), report);
   const { missingForms, source, ...fullRosterTarget } = report.fullRosterTarget;
   console.log(JSON.stringify({ globalSnapshot: report.summary, fullRosterTarget: {

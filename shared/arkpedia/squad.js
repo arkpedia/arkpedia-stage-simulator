@@ -75,6 +75,8 @@ export function prepareSquad(selection, catalogue) {
   const support = selection.support ? maxedSupport(selection.support, catalogue) : null;
   const ids = [...operators.map((operator) => operator.id), ...(support ? [support.id] : [])];
   if (new Set(ids).size !== ids.length) throw new Error('Squad and support must use distinct operators');
+  const identities = ids.map(id => catalogue[id].formOf ?? id);
+  if (new Set(identities).size !== identities.length) throw new Error('Choose only one form of each operator, including support');
   return Object.freeze({ operators: Object.freeze(operators), support });
 }
 

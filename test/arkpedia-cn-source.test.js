@@ -18,11 +18,20 @@ test('CN candidate pin matches the full roster and never increases playable cove
   for (const row of roster.source.tables)
     assert.deepEqual(cn.source.tables.find(r => r.path === row.path)?.sha256, row.sha256);
   assert.deepEqual(cn.enabledOperators, []);
-  assert.equal(Object.keys(cn.tables.characters).length, coverage.fullRosterTarget.remainingOutsideGlobalSnapshot);
+  // This candidate snapshot predates the explicit Global patch-table import.
+  // Guard and Medic Amiya also exist in Global; do not label them CN-only.
+  const globalForms = new Set(data.globalAlternateFormSource?.formIds ?? []);
+  assert.equal(Object.keys(cn.tables.characters).filter(id => !globalForms.has(id) && !data.operators[id]).length,
+    coverage.fullRosterTarget.remainingOutsideGlobalSnapshot);
   for (const id of Object.keys(cn.tables.characters)) {
-    assert.ok(coverage.fullRosterTarget.missingForms.includes(id));
-    assert.equal(data.operators[id], undefined);
-    assert.equal(REGULAR_OPERATORS[id], undefined);
+    if (data.operators[id]) {
+      assert.ok(globalForms.has(id));
+      assert.equal(REGULAR_OPERATORS[id].sourceForm, 'patch');
+      assert.equal(operatorChannel(id, REGULAR_OPERATORS[id]), 'global');
+    } else {
+      assert.ok(coverage.fullRosterTarget.missingForms.includes(id));
+      assert.equal(REGULAR_OPERATORS[id], undefined);
+    }
   }
   assert.equal(cn.summary.skills, 132); assert.equal(cn.summary.skillRanks, 1320);
   assert.deepEqual(cn.source.tables.map(r => r.path.split('/').at(-1)),
