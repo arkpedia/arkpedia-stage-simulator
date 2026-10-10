@@ -1002,3 +1002,22 @@ Verification: 31 focused combat/source checks pass. The full `npm test` run repo
 Coverage is **340/431 pinned forms and 718 skills**, with **91 forms remaining**: 34 from the older Global snapshot and 57 outside it. The target remains 429 distinct operators / 431 forms.
 
 Fidelity limits: the 30-Hz simulator rounds animation-event deadlines to its next step. Source Begin/End clips bound local transition waits; native C# dispatch order, restart-frame ordering and game-frame parity are not certified. Native Sluggish uses the shared database; stock interpretation retains the native ready card separately from stored stack count. Modules, original projectiles/particles/audio and full native status ordering remain separate work. This feature branch is separate from production.
+
+
+## Fuze: verified full-kit source foundation
+
+`data/arkpedia-fuze-prefabs.json` retains both skills at all 20 ranks, selected elite/potential talent candidates, all 56 native Transform/behaviour/collider components, five checksum-verified client bundles, both shared templates and the complete grenade projectile tree. The independent verifier reconstructs object/component membership from original GameObject/Transform pointers, closes serialized dependency graphs and compares both original facing skeleton chains and exact animation-event payloads. This extends the earlier cache-only hold into reproducible, committed source evidence.
+
+The audit preserves these distinctions:
+
+- Ordinary/S1 victim limits follow the current block count. S1 alone permits range extension and supplies separate ATK/ASPD/range modifiers, 100 ammunition, count event 4 and manual discard.
+- Ballistic Shield checks a ranged modifier source, rolls the selected chance and blocks Physical damage. It is not a flat damage multiplier; its native buff is not silenceable.
+- Cluster Charge has a specialized manual trigger with no serialized tile geometry. Selected skill text requires high ground immediately ahead and a passable tile behind. Its source controller permits three uses per deployment.
+- The skill has one original `OnAttack` event at 1.2 seconds, four additional emissions separated by .5 seconds, and independent `.25`/zero offset fields. These fields do not establish destination positions or five separate animation events.
+- The original grenade has speed eight, a 1.8-second delay after reaching its destination, radius 1.2, ground collision and camouflage bypass. Stop-only collision and its native hit-count mode remain separate from travel and reach.
+
+Fuze remains unavailable. The compiled destination-offset axis/order, specialized tile trigger and reach/stop/collision phases are unresolved. Inventing five centered instant explosions could change both damage coverage and timing. The pinned independent calculator corroborates S1 damage and the five S2 damage coefficients but does not simulate grenade locations or lifecycle. S1 alone is not counted as complete operator support.
+
+Reproduce with `node tools/arkpedia/inspect-fuze.mjs`, `.cache/map-env/bin/python tools/arkpedia/extract-fuze.py` and `.cache/map-env/bin/python tools/arkpedia/verify-fuze.py`. The verifier also accepts an alternate evidence-file path. Re-extraction produces identical bytes. Nine source checks cover both skill ranks, victim/ammo limits, probabilistic talent guards, the opaque trigger, projectile geometry/timing fields and original facing clips. Negative verification rejects an omitted trigger component, an omitted shared template, a falsified grenade radius and a falsified animation event.
+
+This foundation does not change runtime content, assets or the local preview. Coverage remains **340/431 forms and 718 skills**, with **91 forms remaining**. The preceding full runtime regression passed 8,940 tests with nine skipped and zero failures; this source-only change is validated separately with the focused source/roster checks. Native C# dispatch, modules, original VFX/audio and game-frame parity remain unverified.
