@@ -80,11 +80,11 @@
   "frameParity": false,
   "moduleSupport": false,
   "nativeParticleSupport": false,
-  "enabledOperators": [],
-  "heldOperators": [
+  "enabledOperators": [
     "char_4123_ela"
   ],
-  "reviewStatus": "Source foundation only: mine, ammunition, talent and skill controllers await review",
+  "heldOperators": [],
+  "reviewStatus": "Complete ordinary kit with explicit local execution contracts",
   "characters": {
     "char_4123_ela": [
       {
@@ -16994,9 +16994,23 @@
     "Owner death and withdrawal are different native paths. ON_OWNER_KILLED sets Boomed and invokes DeadBoom; ON_OWNER_FINISH invokes WithdrawBoom only if that marker is zero. Death projectiles retain an approximately 0.8-second delay and 0.9-second lifetime; withdrawal projectiles have zero delay and 0.1-second lifetime. Owner finish also kills owned tokens.",
     "Both original owner skeleton pointer chains are byte-verified against the pinned model repository. The original base mine is extracted through its native token animator, single skeleton, atlas, material and RGBA texture, with two intentional facing aliases; it is not the alternate skin available in the model repository."
   ],
-  "holdReasons": [
+  "holdReasons": [],
+  "historicalReviewStatus": "Source foundation only: mine, ammunition, talent and skill controllers await review",
+  "historicalHoldReasons": [
     "Complete mine placement, selected stock/capacity, trigger area, status/marker lifetime, skill-end recharge and owner-finish output must be integrated and tested before playable registration.",
     "Ordinary and cached-projectile talent rolls, S2 splash/penetration and S3 ammunition/target priority need source-fed controllers with interruption, finish and redeployment cleanup. Serialized fields do not establish compiled FSM/frame parity.",
     "No partial skill or asset-only import counts as complete operator support; modules, original particles/audio and native same-frame execution remain unfinished."
+  ],
+  "runtimeMapping": {
+    "char_4123_ela": "ela"
+  },
+  "runtimeContracts": [
+    "All thirty selected no-module source ranks and owner promotion, level, trust and potential feed public builds. Mine stats and blackboards remain independent, without owner trust/stat transfer or generic duplicate critical talent.",
+    "Ordinary and skill attacks use whole original facing-specific Start/Begin/Loop/End clips and events with uncapped local animation scaling. Accepted launches own attack identity, attack SP and ammunition; interruption discards unborn commands. Compiled native FSM and same-frame ordering are unverified.",
+    "S1 automatically time-recovers one mine and holds SP at full stock. S2 uses attack recovery, twenty seconds, selected DEF/range/penetration and one captured-point splash at its source projectile stop. S3 uses time recovery, forty rounds, manual finish, selected ATK/interval and marker priority after core blocker priority. Live S2/S3 finish recharges one/two mines without resetting placement cooldown.",
+    "Original mines use zero slots, fixed facing, five DP/five-second placement cooldown and promotion/potential stock. Walking enemies prohibit placement; native OnStart arms and OnAttack samples grounded recipients in the distinct effect circle. Mines deal no direct damage or attack SP, and owner removal clears owned mines.",
+    "Paired S1 hit-rate penalties/Slow, S2 Stun, S3 Slow/Fragile and independent influence marker retain their selected lifetimes. Bullseye uses any marker or selected probability. Marker overlap and critical/dodge ordering are explicit local choices; original callback priority is unverified.",
+    "Owner finish captures one independent unmanaged output at the old position: killed uses the source 0.9-second lifetime, withdrawal uses 0.1 seconds. Movement delay is inside that lifetime. Recipients are sampled at projectile stop, ignoring camouflage but respecting target-free and ground filters. No direct damage, stock or SP is invented; killed does not also withdraw. Buff transport and exact native callback timing are unverified.",
+    "Original owner and RGBA mine skeleton chains are byte-verified; fixed mine front/back aliases share one original skeleton and no Die clip. Born attacks/bursts survive old owner removal without affecting new stock. Battle end cancels pending output. Modules, original particles/audio and frame parity are not supported."
   ]
 }

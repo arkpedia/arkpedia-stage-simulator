@@ -1,6 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Only explicitly reviewed regular-stage tokens may enter the deployment deck.
 export const REGULAR_SUMMONS = Object.freeze({
+  char_4123_ela: Object.freeze({ tokenId: 'token_10033_ela_grzmot',
+    deploymentSlotCost: 0, chooseFacing: false, fixedRotation: true, healFree: true,
+    refundRatio: 0, noAttack: true, sourceStockLimit: true,
+    includeReadyCardInStock: true, excludeWalkingEnemy: true }),
   char_4117_ray: Object.freeze({ tokenId: 'token_10034_ray_sndbst',
     deploymentSlotCost: 0, chooseFacing: false, fixedRotation: true, healFree: false,
     refundRatio: .5, noAttack: true, minimumElite: 1, rechargeOnFinish: true,
@@ -143,6 +147,19 @@ export function summonRecordFor(ownerId, build, tokens) {
     if (config.sourceStockLimit) stats.maxDeckStackCnt += talent.bb.max_deck_stack_cnt ?? 0;
   }
   let skill = null;
+  if (ownerId === 'char_4123_ela') {
+    const index = ['skchr_ela_1', 'skchr_ela_2', 'skchr_ela_3'].indexOf(build.skillId);
+    const id = `sktok_ela_${index + 1}`, entry = source.skills?.find(s => s.id === id);
+    if (!entry || index < 0 || index > build.elite || !Number.isSafeInteger(build.skillRank)
+      || build.skillRank < 1 || build.skillRank > [4, 7, 10][build.elite]
+      || !Number.isSafeInteger(build.potential) || build.potential < 1 || build.potential > 6
+      || build.module && build.module !== 'none') throw Error('Unsupported Ela mine build');
+    const level = entry.levels[build.skillRank - 1], bb = blackboard(level.blackboard);
+    if (!level || level.prefabId !== id || bb.projectile_range !== 1.7
+      || stats.cost !== 5 || stats.respawnTime !== 5 || stats.maxDeployCount !== [2, 3, 4][build.elite])
+      throw Error('Unreviewed Ela mine source');
+    skill = { skillId: id, name: level.name, bb, trigger: { rule: 'NEVER' } };
+  }
   if (ownerId === 'char_400_weedy' && build.skillId === 'skchr_weedy_3') {
     const entry = source.skills?.find(s => s.id === 'sktok_weedy_token');
     if (!entry || build.elite !== 2 || !Number.isSafeInteger(build.skillRank)
@@ -344,7 +361,7 @@ export function summonRecordFor(ownerId, build, tokens) {
   // Robin/Frost 6/8/10, Wulfenite 2/3/4. Other summons retain their semantics.
   if (config.includeReadyCardInStock) {
     if (stats.maxDeckStackCnt + 1 !== stats.maxDeployCount
-      || stats.maxDeployCount !== (ownerId === 'char_4171_wulfen' ? [2, 3, 4] : [6, 8, 10])[build.elite])
+      || stats.maxDeployCount !== (['char_4171_wulfen', 'char_4123_ela'].includes(ownerId) ? [2, 3, 4] : [6, 8, 10])[build.elite])
       throw Error('Unreviewed trap total stored capacity');
     stats.maxDeckStackCnt++;
   }

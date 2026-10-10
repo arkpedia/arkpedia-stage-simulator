@@ -15,10 +15,11 @@ const component = (group, id) => {
 const flat = rows => Object.fromEntries(rows.map(r => [r.key, r.value]));
 const type = (node, name) => assert.ok(node.$type?.split(',')[0].endsWith(`+${name}`));
 
-test('Ela source foundation stays held until the complete kit is reviewed', () => {
-  assert.deepEqual(e.enabledOperators, []); assert.deepEqual(e.heldOperators, [ID]);
-  assert.equal(REGULAR_OPERATORS[ID], undefined); assert.equal(data.operators[ID], undefined);
-  assert.equal(e.runtimeMapping, undefined); assert.equal(e.holdReasons.length, 3);
+test('Ela ordinary kit is registered with explicit fidelity limits and intact source foundation', () => {
+  assert.deepEqual(e.enabledOperators, [ID]); assert.deepEqual(e.heldOperators, []);
+  assert.ok(REGULAR_OPERATORS[ID]); assert.ok(data.operators[ID]);
+  assert.equal(e.runtimeMapping[ID], 'ela'); assert.equal(e.holdReasons.length, 0);
+  assert.equal(e.historicalHoldReasons.length, 3); assert.equal(e.runtimeContracts.length, 7);
   assert.equal(e.source.bundles.length, 6); assert.equal(Object.keys(e.templates).length, 9);
   assert.deepEqual(e.nativeTemplateGaps, []);
   assert.deepEqual(Object.keys(e.originalTemplates), Object.keys(e.templates));

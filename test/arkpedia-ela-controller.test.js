@@ -11,6 +11,7 @@ import { defaultBuild } from '../shared/arkpedia/loadout.js';
 import { absoluteRangeKeys } from '../server/sim/targeting.js';
 import { ELA_ID, ELA_INFLUENCE } from '../server/sim/content/arkpedia-ela-mines.js';
 import { prepareElaKit, ELA_OWNER_CONTRACT, selectedElaCritical } from '../server/sim/content/arkpedia-ela.js';
+import { ElaOwnerFinish, ELA_FINISH_POLICY } from '../server/sim/content/arkpedia-ela-finish.js';
 
 const near = (a, z) => assert.ok(Math.abs(a - z) < 1e-5, `${a} != ${z}`);
 function advance(b, seconds) {
@@ -387,7 +388,7 @@ test('source attack caching, original events and critical callbacks remain disti
     assert.equal(rows[0]._conditionNode._checkSourceHost, false);
     assert.equal(rows[0]._failNodes[0]._probKey, 'prob');
   }
-  assert.deepEqual(evidence.enabledOperators, []); assert.match(ELA_OWNER_CONTRACT.reviewNote, /not implemented/);
+  assert.deepEqual(evidence.enabledOperators, [ELA_ID]); assert.match(ELA_OWNER_CONTRACT.reviewNote, /local mappings/);
 });
 
 test('single-target selection rejects unselectable enemies and reveals camouflage blocked by another ally', () => {
@@ -404,4 +405,106 @@ test('single-target selection rejects unselectable enemies and reveals camouflag
       until(f, () => f.hits.length === 1); near(f.hits[0].amount, f.u.s.atk);
     }
   }
+});
+
+test('owner finish requires an explicit reviewed policy without installing unowned hooks on failure', () => {
+  const f = make();
+  for (const options of [{}, { policy: ELA_FINISH_POLICY }, { policy: 'die-event', reviewNote: 'fixture' }]) {
+    const count = Object.values(f.b._hooks).flat().length;
+    assert.throws(() => new ElaOwnerFinish(f.b, f.u, f.build, options), /reviewed/);
+    assert.equal(Object.values(f.b._hooks).flat().length, count);
+  }
+});
+
+test('all thirty selected ranks emit paired ground effects on either finish path without direct damage', () => {
+  for (const skill of [1, 2, 3]) for (let rank = 1; rank <= 10; rank++) for (const reason of ['killed', 'retreat']) {
+    const f = make({ skill, rank }), e = enemy(f), outputs = [], stock = f.deck.state.stock;
+    f.b.on('elaFinish', ctx => outputs.push(ctx));
+    if (reason === 'killed') f.b.kill(f.u); else f.b.retreat(f.u);
+    const state = f.controller.finish.state; assert.ok(state);
+    assert.equal(state.kind, reason === 'killed' ? 'dead' : 'withdraw');
+    assert.equal(f.controller.finish.begin('withdraw'), false);
+    advance(f.b, state.path.lifetime + f.b.dt);
+    assert.equal(outputs.length, 1); assert.equal(outputs[0].source, f.u);
+    assert.deepEqual(outputs[0].targets, [e]); assert.equal(e.findBuff(ELA_INFLUENCE).source, f.u);
+    near(e.hp, 1e7); assert.equal(f.hits.length, 0); assert.equal(f.attacks.length, 0);
+    assert.equal(f.deck.state.stock, stock); assert.equal(f.u.stats.attacks, 0);
+    const bb = f.record.skill.bb;
+    if (skill === 1) { near(e.s.hitRatePhys, 1 + bb.damage_hitrate_physical); near(e.s.hitRateArts, 1 + bb.damage_hitrate_magical); }
+    if (skill === 2) assert.equal(e.s.flags.stun, true);
+    if (skill === 3) near(e.s.dmgTakenMul, bb.damage_scale);
+    assert.equal(f.controller.finish.closed, true); assert.equal(f.controller.finish.handles.length, 0);
+  }
+});
+
+test('death burst uses the source stop boundary independently of Front Die event and Back facing', () => {
+  for (const dir of ['RIGHT', 'LEFT', 'UP', 'DOWN']) {
+    const f = make({ skill: 3, dir }), e = enemy(f), outputs = [];
+    f.b.on('elaFinish', ctx => outputs.push({ ...ctx, time: f.b.time })); f.b.kill(f.u);
+    const state = f.controller.finish.state;
+    near(state.path.movementDelay, .800000011920929); near(state.path.lifetime, .8999999761581421);
+    advance(f.b, .8); assert.equal(outputs.length, 0); assert.equal(e.findBuff(ELA_INFLUENCE), null);
+    until(f, () => outputs.length === 1);
+    assert.ok(outputs[0].time >= state.readyAt - 1e-7);
+    assert.ok(outputs[0].time < state.readyAt + f.b.dt + 1e-7);
+    assert.equal(f.controller.finish.begin('withdraw'), false); advance(f.b, .3); assert.equal(outputs.length, 1);
+  }
+});
+
+test('withdrawal has zero movement delay and applies only at its short stop boundary', () => {
+  const f = make({ skill: 2 }), e = enemy(f), outputs = [];
+  f.b.on('elaFinish', ctx => outputs.push({ ...ctx, time: f.b.time })); f.b.retreat(f.u);
+  const state = f.controller.finish.state; assert.equal(state.path.movementDelay, 0);
+  near(state.path.lifetime, .10000000149011612);
+  assert.equal(outputs.length, 0); advance(f.b, .067); assert.equal(outputs.length, 0);
+  until(f, () => outputs.length === 1); assert.equal(e.s.flags.stun, true);
+  assert.ok(outputs[0].time >= state.readyAt - 1e-7); assert.ok(outputs[0].time < state.readyAt + f.b.dt + 1e-7);
+});
+
+test('owner finish resamples the captured origin with ground/stealth/target-free filters and huge bodies', () => {
+  const f = make({ skill: 2 }), early = enemy(f), outputs = [];
+  const huge = enemy(f, { x: 7.5, area: { w: 2, h: 1, dx: 0, dy: 0 } });
+  const outside = enemy(f, { x: 6.71 }), fly = enemy(f, { x: 5.5, fly: true });
+  const camou = enemy(f, { x: 5.7 }), hidden = enemy(f, { x: 5.8 }), free = enemy(f, { x: 5.9 });
+  const sleeping = enemy(f, { x: 6.1 });
+  for (const [e, flag] of [[camou, 'camou'], [hidden, 'stealth'], [free, 'untargetable'], [sleeping, 'sleep']])
+    f.b.addBuff(e, { key: `fixture:${flag}`, flags: { [flag]: true } });
+  f.b.on('elaFinish', ctx => outputs.push(ctx)); f.b.kill(f.u);
+  early.x = 12; f.u.x = 12; f.u.y = 12; const late = enemy(f, { x: 5, y: 5.5 });
+  until(f, () => outputs.length === 1);
+  for (const e of [huge, camou, late]) assert.ok(e.findBuff(ELA_INFLUENCE));
+  for (const e of [early, outside, fly, hidden, free, sleeping]) assert.equal(e.findBuff(ELA_INFLUENCE), null);
+  assert.deepEqual(outputs[0].point, { x: 5, y: 5 });
+});
+
+test('pending finish output kills mines immediately and cannot credit resources to a fresh owner', () => {
+  const f = make({ skill: 3 }), outputs = []; f.deck.place(5, 7); const e = enemy(f);
+  f.b.on('elaFinish', ctx => outputs.push(ctx)); f.b.kill(f.u);
+  assert.equal(f.deck.mines.size, 0); assert.equal(f.deck.valid(), false);
+  const fresh = make({ skill: 3, battle: f.b });
+  assert.equal(fresh.deck.state.stock, 3); until(f, () => outputs.length === 1);
+  assert.equal(e.findBuff(ELA_INFLUENCE).source, f.u); assert.notEqual(f.u, fresh.u);
+  assert.equal(fresh.deck.state.stock, 3); assert.equal(fresh.u.stats.attacks, 0);
+  assert.equal(f.deck.recharge(2), false); assert.equal(f.hits.length, 0);
+});
+
+test('finish Stun immunity does not cancel the separate influence marker or create a damage receipt', () => {
+  const f = make({ skill: 2 }), e = enemy(f); e.def.immune.add('stun');
+  f.b.retreat(f.u); advance(f.b, .2);
+  assert.equal(!!e.s.flags.stun, false); assert.ok(e.findBuff(ELA_INFLUENCE)); assert.equal(f.hits.length, 0);
+});
+
+test('battle end cancels a pending unmanaged burst and releases its surviving hook', () => {
+  const f = make({ skill: 3 }), e = enemy(f), outputs = [];
+  f.b.on('elaFinish', ctx => outputs.push(ctx)); f.b.kill(f.u);
+  f.b.emit('battleEnd', {}); advance(f.b, 1.1);
+  assert.equal(outputs.length, 0); assert.equal(e.findBuff(ELA_INFLUENCE), null);
+  assert.equal(f.controller.finish.state.cancelled, true); assert.equal(f.controller.finish.handles.length, 0);
+  assert.equal(f.controller.finish.timer.cancelled, true);
+});
+
+test('an undeployed source owner cannot emit a burst or leave a finish watcher after setup is aborted', () => {
+  const f = make({ defer: true }); assert.equal(f.controller.finish.begin('withdraw'), false);
+  f.controller.stop(); assert.equal(f.controller.finish.closed, true);
+  assert.equal(f.controller.finish.handles.length, 0); assert.equal(f.controller.finish.state, null);
 });

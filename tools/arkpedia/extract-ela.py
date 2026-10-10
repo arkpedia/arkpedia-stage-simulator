@@ -228,5 +228,22 @@ evidence = {
         'No partial skill or asset-only import counts as complete operator support; modules, original particles/audio and native same-frame execution remain unfinished.',
     ],
 }
+# Runtime review metadata is separate from the immutable native extraction.
+evidence['historicalReviewStatus'] = evidence['reviewStatus']
+evidence['historicalHoldReasons'] = evidence['holdReasons']
+evidence['enabledOperators'] = [ID]
+evidence['heldOperators'] = []
+evidence['runtimeMapping'] = {ID: 'ela'}
+evidence['reviewStatus'] = 'Complete ordinary kit with explicit local execution contracts'
+evidence['holdReasons'] = []
+evidence['runtimeContracts'] = [
+    'All thirty selected no-module source ranks and owner promotion, level, trust and potential feed public builds. Mine stats and blackboards remain independent, without owner trust/stat transfer or generic duplicate critical talent.',
+    'Ordinary and skill attacks use whole original facing-specific Start/Begin/Loop/End clips and events with uncapped local animation scaling. Accepted launches own attack identity, attack SP and ammunition; interruption discards unborn commands. Compiled native FSM and same-frame ordering are unverified.',
+    'S1 automatically time-recovers one mine and holds SP at full stock. S2 uses attack recovery, twenty seconds, selected DEF/range/penetration and one captured-point splash at its source projectile stop. S3 uses time recovery, forty rounds, manual finish, selected ATK/interval and marker priority after core blocker priority. Live S2/S3 finish recharges one/two mines without resetting placement cooldown.',
+    'Original mines use zero slots, fixed facing, five DP/five-second placement cooldown and promotion/potential stock. Walking enemies prohibit placement; native OnStart arms and OnAttack samples grounded recipients in the distinct effect circle. Mines deal no direct damage or attack SP, and owner removal clears owned mines.',
+    'Paired S1 hit-rate penalties/Slow, S2 Stun, S3 Slow/Fragile and independent influence marker retain their selected lifetimes. Bullseye uses any marker or selected probability. Marker overlap and critical/dodge ordering are explicit local choices; original callback priority is unverified.',
+    'Owner finish captures one independent unmanaged output at the old position: killed uses the source 0.9-second lifetime, withdrawal uses 0.1 seconds. Movement delay is inside that lifetime. Recipients are sampled at projectile stop, ignoring camouflage but respecting target-free and ground filters. No direct damage, stock or SP is invented; killed does not also withdraw. Buff transport and exact native callback timing are unverified.',
+    'Original owner and RGBA mine skeleton chains are byte-verified; fixed mine front/back aliases share one original skeleton and no Die clip. Born attacks/bursts survive old owner removal without affecting new stock. Battle end cancels pending output. Modules, original particles/audio and frame parity are not supported.',
+]
 (ROOT / 'data/arkpedia-ela-prefabs.json').write_text(json.dumps(evidence, indent=2) + '\n')
 print('Extracted Ela source:', len(templates), 'templates,', len(projectiles), 'projectiles and', len(source_bundles), 'verified bundles')

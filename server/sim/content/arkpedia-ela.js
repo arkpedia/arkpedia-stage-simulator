@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Unregistered owner adapter. Owner-finish output and public build/asset
-// integration remain separate work; this file never enables roster support.
+// Source-fed ordinary kit. Native compiled FSM and frame parity are unverified.
 import evidence from '../../../data/arkpedia-ela-prefabs.json' with { type: 'json' };
 import { sourceCandidate } from '../../../shared/arkpedia/summons.js';
 import { canTargetEnemy, sortEnemyTargets } from '../targeting.js';
 import { bodyInKeys, bodyInRadius } from '../body.js';
 import { ELA_ID, ELA_INFLUENCE, ElaMineDeck, selectedElaMine } from './arkpedia-ela-mines.js';
+import { ElaOwnerFinish, ELA_FINISH_POLICY } from './arkpedia-ela-finish.js';
 
 const live = u => u?.alive && u.deployed && !u.hidden && !u._removing;
 const flat = rows => Object.fromEntries(rows.map(r => [r.key, r.value]));
@@ -27,9 +27,10 @@ export const ELA_OWNER_CONTRACT = Object.freeze({
   phasePolicy: 'source-clips-local-v1', entrance: 'whole-source-start-clip',
   attackPost: 'max-interval-and-source-loop', skillTransitions: 'whole-source-begin-and-end-clips',
   criticalTiming: 'ordinary-impact-and-s3-birth', splashTiming: 'source-projectile-stop',
-  reviewNote: 'Uncapped clip scaling, current source stats for ordinary/S2 impacts, captured S3 ATK/critical and marker-first priority are local mappings. Owner-finish output is not implemented.',
+  finishBurstPolicy: ELA_FINISH_POLICY,
+  reviewNote: 'Uncapped clip scaling, current source stats for ordinary/S2 impacts, captured S3 ATK/critical, marker-first priority and owner-finish projectile-stop transport are local mappings. Native FSM, callback ordering, particles and modules are unverified.',
 });
-const validContract = c => ['phasePolicy', 'entrance', 'attackPost', 'skillTransitions', 'criticalTiming', 'splashTiming']
+const validContract = c => ['phasePolicy', 'entrance', 'attackPost', 'skillTransitions', 'criticalTiming', 'splashTiming', 'finishBurstPolicy']
   .every(k => c?.[k] === ELA_OWNER_CONTRACT[k]) && typeof c?.reviewNote === 'string' && !!c.reviewNote.trim();
 
 function checkNative() {
@@ -59,6 +60,7 @@ export class ElaOwnerController {
     this.b = b; this.u = u; this.record = record; this.critical = critical;
     this.skill = record.index + 1; this.mode = 0; this.phase = null; this.chain = false;
     this.stopped = false; this.handles = []; this.deck = null;
+    this.finish = new ElaOwnerFinish(b, u, record.build, { policy: contract.finishBurstPolicy, reviewNote: contract.reviewNote });
     this.controlEpoch = u.attackControlEpoch;
   }
   clip(mode, part) {
@@ -228,15 +230,17 @@ export class ElaOwnerController {
     if (this.handles.length || this.stopped) return;
     const { b, u } = this;
     this.deck = new ElaMineDeck(b, u, this.record.build);
+    this.finish.install();
     this.handles = [b.on('tick', () => this.tick(), { owner: u }),
       b.on('deploy', ({ unit }) => { if (unit === u) this.enter(); }, { owner: u }),
       b.on('death', ({ unit }) => { if (unit === u) this.stop(); }, { owner: u }),
-      b.on('battleEnd', () => this.stop(), { owner: u })];
+      b.on('battleEnd', () => { this.finish.dispose(); this.stop(); }, { owner: u })];
     if (live(u)) this.enter(); else this.idle();
   }
   stop() {
     if (this.stopped) return;
     this.stopped = true; this.phase = null; this.chain = false; this.mode = 0;
+    if (this.b.finished || this.u.deploySeq <= 0) this.finish.dispose();
     this.u.skill?.end('owner-finish'); this.b.removeBuff(this.u, 'ela:finish-sp');
     this.deck?.close(); this.u.mem.regularFormVisual = null;
     for (const h of this.handles) this.b.off(h); this.handles = [];
@@ -245,7 +249,10 @@ export class ElaOwnerController {
 
 export function prepareElaKit(b, u, { contract } = {}) {
   if (u.def.charId !== ELA_ID) throw Error('Ela owner controller requires Ela source data');
-  const build = u.def.raw.arkpedia, record = selectedElaMine(build), critical = selectedElaCritical(build);
+  if (u.def.raw.arkpedia.skillId != null && u.def.raw.arkpedia.skillId !== u.def.skill.id)
+    throw Error('Mismatched Ela selected skill');
+  const build = { ...u.def.raw.arkpedia, skillId: u.def.skill.id };
+  const record = selectedElaMine(build), critical = selectedElaCritical(build);
   const s = u.def.skill, selected = evidence.tables.skills[build.skillId].levels[build.skillRank - 1];
   const grids = id => id ? evidence.tables.ranges[id].grids.map(p => [p.row, p.col]) : [];
   if (!s || s.id !== build.skillId || s.spType !== (record.index === 1 ? 'attack' : 'time')
@@ -271,4 +278,18 @@ export function prepareElaKit(b, u, { contract } = {}) {
       onStart: () => controller.startSkill(), onEnd: () => controller.endSkill() },
   };
   return { kit, controller, record, critical };
+}
+
+export function customizeElaKit({ battle, id, unit, kit }) {
+  if (id !== ELA_ID) return;
+  if (!evidence.enabledOperators.includes(id) || evidence.runtimeMapping?.[id] !== 'ela')
+    throw Error('Ela source record lacks a complete runtime review');
+  const prepared = prepareElaKit(battle, unit, { contract: ELA_OWNER_CONTRACT });
+  unit.mem.elaController = prepared.controller;
+  kit.install = null; Object.assign(kit, prepared.kit);
+}
+export function installEla({ unit, def }) {
+  if (def.charId !== ELA_ID) return;
+  if (!unit.mem.elaController) throw Error('Missing selected Ela controller');
+  unit.mem.elaController.install();
 }

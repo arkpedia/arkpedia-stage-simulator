@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Unregistered source-fed mine/deck adapter. The full Ela attack/skill and
-// owner-finish controllers must be reviewed before public registration.
+// Source-fed mine/deck adapter; native compiled event dispatch is unverified.
 import evidence from '../../../data/arkpedia-ela-prefabs.json' with { type: 'json' };
 import { sourceCandidate } from '../../../shared/arkpedia/summons.js';
 import { summonPlacementError } from './arkpedia-summons.js';
@@ -58,9 +57,11 @@ export function selectedElaMine(build) {
     || sourceStats.cost !== 5 || sourceStats.respawnTime !== 5 || bb.projectile_range !== 1.7)
     throw Error('Unreviewed Ela mine stock or placement source');
   return { id: ELA_MINE, name: token.name, profession: token.profession,
-    position: token.position, stats: { ...sourceStats, maxDeckStackCnt: capacity }, sourceStats,
+    subProfessionId: token.subProfessionId, position: token.position,
+    stats: { ...sourceStats, maxDeckStackCnt: capacity }, sourceStats,
     rangeGrid: evidence.tables.ranges[phase.rangeId].grids.map(g => [g.row, g.col]),
     talents: [], initialStock, index, skill: { skillId: id, name: skill.name, bb },
+    arkpedia: { elite: build.elite, level: build.level, potential: build.potential },
     build: { ...build }, spine: ELA_MINE, avatar: ELA_MINE };
 }
 

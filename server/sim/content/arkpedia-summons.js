@@ -81,6 +81,12 @@ export function deployRegularSummon(battle, key, row, col, dir = 'RIGHT') {
   if (error) throw Error(error);
   if (!['UP', 'DOWN', 'LEFT', 'RIGHT'].includes(dir)) throw Error('Choose a facing direction.');
   const state = cardState(battle, key), source = evidence.tokens[state.record.id];
+  // Ela's source-fed deck owns its charge/cooldown transaction and lifecycle.
+  if (state.ownerId === 'char_4123_ela') {
+    const deck = state.owner.mem.elaController?.deck;
+    if (!deck || deck.state !== state) throw Error('Missing current Ela mine deck.');
+    return deck.place(row, col);
+  }
   const token = state.ownerId === 'char_250_phatom' ? createPhantomClone(battle, state, row, col, dir)
     : state.ownerId === 'char_1034_jesca2' ? createJessicaShield(battle, state, row, col)
     : state.ownerId === 'char_400_weedy' ? createWeedyCannon(battle, state, row, col, dir)
@@ -192,6 +198,7 @@ export function customizeSummonerKit({ id, def, unit, kit }) {
 /** After setup, before deployment. The original owner-finish ability removes
  * all owned Tentacles. Stock is charged afresh on a new owner deployment. */
 export function installSummoner({ battle, unit, def }) {
+  if (def.id === 'char_4123_ela') return; // Installed by the reviewed Ela controller.
   const config = REGULAR_SUMMONS[def.id];
   if (!config || config.skillId && def.skill?.id !== config.skillId
     || config.minimumElite != null && def.raw.arkpedia.elite < config.minimumElite) return;

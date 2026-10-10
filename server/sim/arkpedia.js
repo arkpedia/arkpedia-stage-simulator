@@ -101,6 +101,7 @@ import { customizeColdshotKit, installColdshot } from './content/arkpedia-coldsh
 import { customizeNymphKit, installNymph } from './content/arkpedia-nymph.js';
 import { customizeLemuenKit, installLemuen } from './content/arkpedia-lemuen.js';
 import { customizeNarantKit, installNarant } from './content/arkpedia-narant.js';
+import { customizeElaKit, installEla } from './content/arkpedia-ela.js';
 import { customizeBlacknightKit, installBlacknight } from './content/arkpedia-blacknight.js';
 import { customizeChristineKit, installChristine } from './content/arkpedia-christine.js';
 import { customizeExecutorReaperKit, installExecutorReaper } from './content/arkpedia-executor-reaper.js';
@@ -488,6 +489,7 @@ export class StandardBattle extends Battle {
     customizeNymphKit({ battle: this, id, def, unit, kit });
     customizeLemuenKit({ battle: this, id, def, unit, kit });
     customizeNarantKit({ battle: this, id, def, unit, kit });
+    customizeElaKit({ battle: this, id, def, unit, kit });
     customizeChristineKit({ battle: this, id, def, unit, kit });
     customizeExecutorReaperKit({ battle: this, id, def, unit, kit });
     customizePhilaeKit({ battle: this, id, def, unit, kit });
@@ -676,6 +678,7 @@ export class StandardBattle extends Battle {
     installNymph({ battle: this, unit, def });
     installLemuen({ battle: this, unit, def });
     installNarant({ battle: this, unit, def });
+    installEla({ battle: this, unit, def });
     installChristine({ battle: this, unit, def });
     installExecutorReaper({ battle: this, unit, def });
     installPhilae({ battle: this, unit, def });
