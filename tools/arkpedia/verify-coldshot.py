@@ -139,7 +139,9 @@ assert hot['versionId'] == E['source']['nativeClient'] == '26-09-23-17-49-43_b9c
 for record in E['source']['bundles']:
     native = next(row for row in hot['abInfos'] if row['name'] == record['path'])
     assert (record['md5'], record['size']) == (native['md5'], native['abSize'])
-assert E['enabledOperators'] == [] and E['heldOperators'] == ['char_4104_coldst']
+assert E['enabledOperators'] == ['char_4104_coldst'] and E['heldOperators'] == []
+assert E['holdReasons'] == [] and len(E['historicalHoldReasons']) == 3
+assert len(E['runtimeContracts']) == 7 and all(isinstance(c, str) and c for c in E['runtimeContracts'])
 assert E['frameParity'] is False and E['moduleSupport'] is False and E['nativeParticleSupport'] is False
 assert set(E['tables']['skills']) == {'skcom_atk_up[3]', 'skchr_coldst_2'}
 assert all(len(s['levels']) == 10 for s in E['tables']['skills'].values())
@@ -152,4 +154,4 @@ assert proof['excerpt'] == ''.join(raw.decode().splitlines(keepends=True)[1649:1
 # payloads. Hash-valid art is insufficient if the event summaries were edited.
 subprocess.check_call(['node', 'tools/arkpedia/inspect-coldshot.mjs'], cwd=ROOT, stdout=subprocess.DEVNULL)
 assert json.loads((C/'coldshot-source/models.json').read_text()) == E['models']
-print(f'Verified {count} native components, {len(bundles)} bundles, {len(E["templates"])} templates, 20 ranks, {len(E["projectiles"])} projectile trees and two original skeleton chains; Coldshot remains held')
+print(f'Verified {count} native components, {len(bundles)} bundles, {len(E["templates"])} templates, 20 ranks, {len(E["projectiles"])} projectile trees and two original skeleton chains; Coldshot has explicit reviewed execution contracts')

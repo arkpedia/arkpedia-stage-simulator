@@ -23,13 +23,14 @@ function nodes(value, predicate, out = []) {
 }
 const type = name => n => n.$type?.split(',')[0].endsWith(`+${name}`);
 
-test('Coldshot source preservation does not enable a partial kit or change coverage', () => {
-  assert.deepEqual(e.enabledOperators, []);
-  assert.deepEqual(e.heldOperators, [ID]);
-  assert.equal(REGULAR_OPERATORS[ID], undefined);
-  assert.equal(data.operators[ID], undefined);
-  assert.match(e.reviewStatus, /conditional reload interruption is unresolved/);
-  assert.ok(e.holdReasons.some(r => /ReloadAttack/.test(r)));
+test('Coldshot complete ordinary kit retains native evidence and separates local execution contracts', () => {
+  assert.deepEqual(e.enabledOperators, [ID]);
+  assert.deepEqual(e.heldOperators, []);
+  assert.equal(REGULAR_OPERATORS[ID].mechanic, 'coldshot');
+  assert.deepEqual(data.operators[ID].skills.map(s => s.id), ['skcom_atk_up[3]', 'skchr_coldst_2']);
+  assert.match(e.reviewStatus, /explicit local execution contracts/);
+  assert.equal(e.runtimeContracts.length, 7);
+  assert.ok(e.historicalHoldReasons.some(r => /ReloadAttack/.test(r)));
   assert.equal(e.frameParity, false);
   assert.equal(e.moduleSupport, false);
   assert.equal(e.nativeParticleSupport, false);
@@ -132,7 +133,7 @@ test('ammo controllers preserve numerical callbacks without inventing OnAttack e
   // The graph supports module-added extra ammo, but the ordinary trait does
   // not supply that key. Its absence must not be mistaken for a two-round load.
   for (const c of e.tables.character.trait.candidates) assert.equal(bb(c.blackboard).extra_add, undefined);
-  assert.ok(e.holdReasons.some(r => /event5/.test(r)));
+  assert.ok(e.historicalHoldReasons.some(r => /event5/.test(r)));
 });
 
 test('reload flag cleanup is delayed and conditional on leaving the attack state', () => {

@@ -52,11 +52,11 @@
   "frameParity": false,
   "moduleSupport": false,
   "nativeParticleSupport": false,
-  "enabledOperators": [],
-  "heldOperators": [
+  "enabledOperators": [
     "char_4104_coldst"
   ],
-  "reviewStatus": "Source foundation only: conditional reload interruption is unresolved",
+  "heldOperators": [],
+  "reviewStatus": "Complete ordinary kit with explicit local execution contracts",
   "characters": {
     "char_4104_coldst": [
       {
@@ -9096,9 +9096,19 @@
     "Actual native two-facing ordinary Attack_Begin.167,Attack_Loop1.6 OnAttack.067; Reload_Begin.167,Reload_Loop1.6 OnAttack1; Reload_Break.167. S2attackLoop2.4 OnAttack.067, reloadLoop2.4 OnAttack1.5 with same .167 begin/break. Original ammo increment/decrement AttachBuff controllers have numeric startEvent5/endEvent3; no executable mapping from that event to literal OnAttack or cast completion is recovered.",
     "S1 source standard manual duration30 ATK up all10ranks. S2 exact manual duration20..40/ATK40..140%, reload_interval+.8 and1s Sluggish. Native coldst_s_2[reload] adds/removes reload_interval in traitBB; selected behavior corroborates longer absolute reload. Talents own .02 delayed-first checker and not-valid attack/2s-delay phase; exact startup versus clip-finish timer remains unrecovered."
   ],
-  "holdReasons": [
+  "holdReasons": [],
+  "historicalHoldReasons": [
     "Whole regular kit remains unsupported because native composite reload\u2192ReloadAttack switch timing, retained partial reload clock, triggerValidTypes enum and reloadFlag interruption ordering are material gameplay contracts. A legal victim returning during reload could interrupt before any refill, immediately after numeric event5/refill, or at a later cooldown phase. Existing Reload_Break is explicit but does not recover that phase. Do not impose full-window-only reentry for implementation convenience.",
     "Independent primary calculator corroborates overall exhausted1.6/2.4+current attack interval cycle, but has no event/FSM/reentry simulation. It cannot settle the first bullet timing, first-only Begin/Break accumulation or whether ammunition is spent/restored at literal events versus class callback5.",
     "No generic trait-ammo approximation or invented Attack/Reload event is enabled. Original complete graphs, all20 ranks, native pointer-chain facing bytes and calculator blob/excerpt are durable for a later native controller or independently measured source recovery."
+  ],
+  "runtimeContracts": [
+    "Use each original Loop OnAttack payload as the local fire/refill deadline. Numeric native startEvent5/endEvent3 are preserved, not decoded or asserted equivalent. Fire animation rate fits the current attack interval; original reload1.6/2.4 and Begin remain fixed against ASPD.",
+    "A legal target interrupts partial reload immediately when a round exists, retaining completed refills and discarding unfinished work. With zero rounds, wait for the original refill event then enter original Reload_Break before remaining fixed cooldown ends. Skill2 restarts cancel pending work but preserve stored rounds.",
+    "Selected trait capacities4/6/8 deploy full. Consume one only at accepted single-target projectile birth; add one at each accepted refill event and clamp. Missing native no-module extra_add is mapped to zero as a local contract, not a recovered field.",
+    "Sample the selected talent validator before entering attack-invalid Begin/Loop. Keep invalid until birth or cancellation; start the selected two-second delay there and observe the source .02 checker on engine ticks. Initial deployment delay is separate. Numeric attack-finish callback3 and compiled same-frame order remain unrecovered.",
+    "S1 applies selected ATK/duration without a mode restart. S2 applies selected ATK/duration, original skill attack/reload mode and additive .8 reload interval, restoring ordinary mode at expiry. Born projectiles retain selected talent/skill/Slow metadata while reading current ATK at impact.",
+    "Single-target speed15/projectile lifetime10 are source fields. S2 applies source one-second80%Sluggish after an accepted calculated damage receipt, including shielded hits; miss, cancellation and invulnerability do not apply it. Native status-before/after-damage ordering is not claimed.",
+    "Controller owns original facing Begin/Loop/Reload_Break animations; attack events use animation none and do not replace them. Ammunition HUD is separate from SP. Removal cancels unborn work and resource callbacks while already born projectiles retain their victim effects."
   ]
 }
