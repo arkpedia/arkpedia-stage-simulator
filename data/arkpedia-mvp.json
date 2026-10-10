@@ -34,7 +34,7 @@
   },
   "sd": {
     "repository": "arkpedia/arkpedia-sd-assets",
-    "commit": "24695f24754c188e2c8642ac34c98b41b67479c1",
+    "commit": "d060ddb23db412c7d47ebc8d99ef5effc627b4ef",
     "models": {
       "operator/char_123_fang/default/front": {
         "kind": "operator",
@@ -59680,6 +59680,217 @@
           "height": 669.326
         }
       },
+      "operator/char_245_cello/default/front": {
+        "kind": "operator",
+        "id": "char_245_cello",
+        "variant": "default",
+        "facing": "front",
+        "spineVersion": "3.8.99",
+        "source": {
+          "key": "operators",
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "spine/char_245_cello/char_245_cello/Front"
+        },
+        "skeleton": {
+          "path": "models/operator/char_245_cello/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_245_cello.skel",
+          "bytes": 548512,
+          "sha256": "403650f192c5a8f21c6f850697f910242f7ef754677342e4c1c4d3b883c00cc7"
+        },
+        "atlas": {
+          "path": "models/operator/char_245_cello/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_245_cello.atlas",
+          "bytes": 10116,
+          "sha256": "116abf8aa025b6dfc6eb4828d0b64f2daf452c56e317cde4bfc95c3b4606cb73"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_245_cello/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_245_cello.png",
+            "bytes": 109101,
+            "sha256": "24fe5a860b2698016ebc0ecac268f0e8eda96550dea9838bf666b9b174eb8b36"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Attack": 1.6,
+          "Default": 0,
+          "Die": 1,
+          "Idle": 8,
+          "Skill_1": 1.6,
+          "Skill_2_Attack": 1.6,
+          "Skill_2_Begin": 0.233,
+          "Skill_2_End": 0.333,
+          "Skill_2_Idle": 1,
+          "Skill_3_Begin": 0.333,
+          "Skill_3_End": 1.667,
+          "Skill_3_Loop": 6,
+          "Start": 1
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null
+          },
+          "attackDown": null,
+          "skill": {
+            "begin": null,
+            "loop": "Skill_1",
+            "end": null,
+            "index": 0,
+            "idle": null
+          },
+          "die": "Die",
+          "move": null,
+          "stun": null,
+          "skills": {
+            "0": {
+              "begin": null,
+              "loop": "Skill_1",
+              "end": null,
+              "index": 0,
+              "idle": null
+            },
+            "1": {
+              "begin": "Skill_2_Begin",
+              "loop": "Skill_2_Attack",
+              "end": "Skill_2_End",
+              "index": 1,
+              "idle": "Skill_2_Idle"
+            },
+            "2": {
+              "begin": "Skill_3_Begin",
+              "loop": "Skill_3_Loop",
+              "end": "Skill_3_End",
+              "index": 2,
+              "idle": null
+            }
+          }
+        },
+        "hits": {
+          "Attack": [
+            0.433
+          ],
+          "Skill_1": [
+            0.533
+          ],
+          "Skill_2_Attack": [
+            0.867
+          ]
+        },
+        "bounds": {
+          "x": -220.403,
+          "y": -8.924,
+          "width": 603.068,
+          "height": 423.316
+        }
+      },
+      "operator/char_245_cello/default/back": {
+        "kind": "operator",
+        "id": "char_245_cello",
+        "variant": "default",
+        "facing": "back",
+        "spineVersion": "3.8.99",
+        "source": {
+          "key": "operators",
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "spine/char_245_cello/char_245_cello/Back"
+        },
+        "skeleton": {
+          "path": "models/operator/char_245_cello/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_245_cello.skel",
+          "bytes": 468712,
+          "sha256": "4de496ad92c34c5a31fa14cffad0fa217cbe652078b06bc4c283c80a4b2cd1f0"
+        },
+        "atlas": {
+          "path": "models/operator/char_245_cello/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_245_cello.atlas",
+          "bytes": 5708,
+          "sha256": "c95a7eda688a1faa6de3b9fab28d005943d49a268e6c01695cdc41b6c2c925d7"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_245_cello/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_245_cello.png",
+            "bytes": 87232,
+            "sha256": "2070bed3754644d11b1a9d8197e21e79add55c57377a415aba9bd625b28549b6"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Attack": 1.6,
+          "Default": 0,
+          "Idle": 8,
+          "Skill_1": 1.6,
+          "Skill_2_Attack": 1.6,
+          "Skill_2_Begin": 0.233,
+          "Skill_2_End": 0.333,
+          "Skill_2_Idle": 1,
+          "Skill_3_Begin": 0.333,
+          "Skill_3_End": 1.667,
+          "Skill_3_Loop": 6,
+          "Start": 1
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null
+          },
+          "attackDown": null,
+          "skill": {
+            "begin": null,
+            "loop": "Skill_1",
+            "end": null,
+            "index": 0,
+            "idle": null
+          },
+          "die": null,
+          "move": null,
+          "stun": null,
+          "skills": {
+            "0": {
+              "begin": null,
+              "loop": "Skill_1",
+              "end": null,
+              "index": 0,
+              "idle": null
+            },
+            "1": {
+              "begin": "Skill_2_Begin",
+              "loop": "Skill_2_Attack",
+              "end": "Skill_2_End",
+              "index": 1,
+              "idle": "Skill_2_Idle"
+            },
+            "2": {
+              "begin": "Skill_3_Begin",
+              "loop": "Skill_3_Loop",
+              "end": "Skill_3_End",
+              "index": 2,
+              "idle": null
+            }
+          }
+        },
+        "hits": {
+          "Attack": [
+            0.433
+          ],
+          "Skill_1": [
+            0.533
+          ],
+          "Skill_2_Attack": [
+            0.867
+          ]
+        },
+        "bounds": {
+          "x": -220.403,
+          "y": -8.924,
+          "width": 603.068,
+          "height": 423.316
+        }
+      },
       "operator/char_4010_etlchi/default/front": {
         "kind": "operator",
         "id": "char_4010_etlchi",
@@ -71442,7 +71653,7 @@
     },
     "art": {
       "repository": "arkpedia/arkpedia-sd-assets",
-      "commit": "24695f24754c188e2c8642ac34c98b41b67479c1",
+      "commit": "d060ddb23db412c7d47ebc8d99ef5effc627b4ef",
       "scene": {
         "path": "stages/0-1/26-09-23-17-49-43_b9cc4a/scene.json",
         "bytes": 4479,
@@ -71451,7 +71662,7 @@
     },
     "gates": {
       "repository": "arkpedia/arkpedia-sd-assets",
-      "commit": "24695f24754c188e2c8642ac34c98b41b67479c1",
+      "commit": "d060ddb23db412c7d47ebc8d99ef5effc627b4ef",
       "pack": {
         "path": "effects/standard-gates/26-09-23-17-49-43_b9cc4a/gates.json",
         "bytes": 3507,
@@ -515462,6 +515673,2589 @@
         }
       ]
     },
+    "char_245_cello": {
+      "id": "char_245_cello",
+      "name": "Virtuosa",
+      "description": "Attacks deal <@ba.kw>Arts damage</>, and can inflict <@ba.kw>Elemental Injury</>",
+      "rarity": 6,
+      "profession": "SUPPORT",
+      "subProfessionId": "ritualist",
+      "position": "RANGED",
+      "nationId": "laterano",
+      "groupId": null,
+      "teamId": null,
+      "phases": [
+        {
+          "maxLevel": 50,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 484,
+                "atk": 231,
+                "def": 48,
+                "magicResistance": 5,
+                "cost": 14,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.6,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 50,
+              "data": {
+                "maxHp": 702,
+                "atk": 321,
+                "def": 70,
+                "magicResistance": 5,
+                "cost": 14,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.6,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              1,
+              -1
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              0,
+              -1
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              -1,
+              -1
+            ],
+            [
+              -1,
+              0
+            ],
+            [
+              -1,
+              1
+            ],
+            [
+              -1,
+              2
+            ]
+          ]
+        },
+        {
+          "maxLevel": 80,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 702,
+                "atk": 321,
+                "def": 70,
+                "magicResistance": 10,
+                "cost": 16,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.6,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 80,
+              "data": {
+                "maxHp": 936,
+                "atk": 407,
+                "def": 93,
+                "magicResistance": 10,
+                "cost": 16,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.6,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              1,
+              -1
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              0,
+              -1
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              -1,
+              -1
+            ],
+            [
+              -1,
+              0
+            ],
+            [
+              -1,
+              1
+            ],
+            [
+              -1,
+              2
+            ]
+          ]
+        },
+        {
+          "maxLevel": 90,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 936,
+                "atk": 407,
+                "def": 93,
+                "magicResistance": 15,
+                "cost": 16,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.6,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 90,
+              "data": {
+                "maxHp": 1201,
+                "atk": 485,
+                "def": 109,
+                "magicResistance": 15,
+                "cost": 16,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.6,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              1,
+              -1
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              0,
+              -1
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              -1,
+              -1
+            ],
+            [
+              -1,
+              0
+            ],
+            [
+              -1,
+              1
+            ],
+            [
+              -1,
+              2
+            ]
+          ]
+        }
+      ],
+      "favorKeyFrames": [
+        {
+          "level": 0,
+          "data": {
+            "maxHp": 0,
+            "atk": 0,
+            "def": 0,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false
+          }
+        },
+        {
+          "level": 50,
+          "data": {
+            "maxHp": 300,
+            "atk": 40,
+            "def": 0,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false
+          }
+        }
+      ],
+      "potentialRanks": [
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "RESPAWN_TIME",
+            "formulaItem": "ADDITION",
+            "value": -6,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "ATK",
+            "formulaItem": "ADDITION",
+            "value": 23,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [],
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ]
+      ],
+      "trait": null,
+      "talents": [
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_0",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Wordless Elegy",
+              "description": "Enemies within attack range take 6% ATK as <$ba.dt.apoptosis2>Necrosis damage</> per second",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "ep_damage_ratio",
+                  "value": 0.06,
+                  "valueStr": null
+                },
+                {
+                  "key": "sluggish",
+                  "value": 0,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Wordless Elegy",
+              "description": "Enemies within attack range take 8% ATK as <$ba.dt.apoptosis2>Necrosis damage</> per second, and are <$ba.sluggish>Slowed</> for 0.2s",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "ep_damage_ratio",
+                  "value": 0.08,
+                  "valueStr": null
+                },
+                {
+                  "key": "sluggish",
+                  "value": 0.2,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Wordless Elegy",
+              "description": "Enemies within attack range take 10% ATK as <$ba.dt.apoptosis2>Necrosis damage</> per second, and are <$ba.sluggish>Slowed</> for 0.2s",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "ep_damage_ratio",
+                  "value": 0.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "sluggish",
+                  "value": 0.2,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            }
+          ]
+        },
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "2",
+              "name": "Mental Inversion",
+              "description": "Enemies within attack range take 20% more <$ba.dt.apoptosis2>Necrosis damage</>",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "ep_damage_scale",
+                  "value": 1.2,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 4,
+              "prefabKey": "2",
+              "name": "Mental Inversion",
+              "description": "Enemies within attack range take 22% more <$ba.dt.apoptosis2>Necrosis damage</> <@ba.talpu>(+2%)</>",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "ep_damage_scale",
+                  "value": 1.22,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            }
+          ]
+        }
+      ],
+      "skills": [
+        {
+          "id": "skchr_cello_1",
+          "unlockCondition": {
+            "phase": "PHASE_0",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "'Golden Ecstasy'",
+              "rangeId": null,
+              "description": "Deal <@ba.vup>{atk_scale:0%}</> ATK as Arts damage, and an additional <@ba.vup>{ep_damage_ratio:0%}</> ATK as <$ba.dt.apoptosis2>Necrosis damage</> if the enemy is not under the burst effect\n<@ba.rem>Can store 1 charge and cannot use normal attacks when skill is inactive</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 7,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_cello_1",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 1.8,
+                  "valueStr": null
+                },
+                {
+                  "key": "ep_damage_ratio",
+                  "value": 0.75,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "'Golden Ecstasy'",
+              "rangeId": null,
+              "description": "Deal <@ba.vup>{atk_scale:0%}</> ATK as Arts damage, and an additional <@ba.vup>{ep_damage_ratio:0%}</> ATK as <$ba.dt.apoptosis2>Necrosis damage</> if the enemy is not under the burst effect\n<@ba.rem>Can store 1 charge and cannot use normal attacks when skill is inactive</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 7,
+                "initSp": 2,
+                "increment": 1
+              },
+              "prefabId": "skchr_cello_1",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 1.9,
+                  "valueStr": null
+                },
+                {
+                  "key": "ep_damage_ratio",
+                  "value": 0.75,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "'Golden Ecstasy'",
+              "rangeId": null,
+              "description": "Deal <@ba.vup>{atk_scale:0%}</> ATK as Arts damage, and an additional <@ba.vup>{ep_damage_ratio:0%}</> ATK as <$ba.dt.apoptosis2>Necrosis damage</> if the enemy is not under the burst effect\n<@ba.rem>Can store 1 charge and cannot use normal attacks when skill is inactive</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 7,
+                "initSp": 4,
+                "increment": 1
+              },
+              "prefabId": "skchr_cello_1",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "ep_damage_ratio",
+                  "value": 0.75,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "'Golden Ecstasy'",
+              "rangeId": null,
+              "description": "Deal <@ba.vup>{atk_scale:0%}</> ATK as Arts damage, and an additional <@ba.vup>{ep_damage_ratio:0%}</> ATK as <$ba.dt.apoptosis2>Necrosis damage</> if the enemy is not under the burst effect\n<@ba.rem>Can store 2 charges and cannot use normal attacks when skill is inactive</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 2,
+                "spCost": 7,
+                "initSp": 6,
+                "increment": 1
+              },
+              "prefabId": "skchr_cello_1",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 2.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "ep_damage_ratio",
+                  "value": 0.85,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "'Golden Ecstasy'",
+              "rangeId": null,
+              "description": "Deal <@ba.vup>{atk_scale:0%}</> ATK as Arts damage, and an additional <@ba.vup>{ep_damage_ratio:0%}</> ATK as <$ba.dt.apoptosis2>Necrosis damage</> if the enemy is not under the burst effect\n<@ba.rem>Can store 2 charges and cannot use normal attacks when skill is inactive</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 2,
+                "spCost": 7,
+                "initSp": 8,
+                "increment": 1
+              },
+              "prefabId": "skchr_cello_1",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 2.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "ep_damage_ratio",
+                  "value": 0.85,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "'Golden Ecstasy'",
+              "rangeId": null,
+              "description": "Deal <@ba.vup>{atk_scale:0%}</> ATK as Arts damage, and an additional <@ba.vup>{ep_damage_ratio:0%}</> ATK as <$ba.dt.apoptosis2>Necrosis damage</> if the enemy is not under the burst effect\n<@ba.rem>Can store 2 charges and cannot use normal attacks when skill is inactive</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 2,
+                "spCost": 7,
+                "initSp": 10,
+                "increment": 1
+              },
+              "prefabId": "skchr_cello_1",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 2.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "ep_damage_ratio",
+                  "value": 0.85,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "'Golden Ecstasy'",
+              "rangeId": null,
+              "description": "Deal <@ba.vup>{atk_scale:0%}</> ATK as Arts damage, and an additional <@ba.vup>{ep_damage_ratio:0%}</> ATK as <$ba.dt.apoptosis2>Necrosis damage</> if the enemy is not under the burst effect\n<@ba.rem>Can store 2 charges and cannot use normal attacks when skill is inactive</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 2,
+                "spCost": 6,
+                "initSp": 12,
+                "increment": 1
+              },
+              "prefabId": "skchr_cello_1",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 2.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "ep_damage_ratio",
+                  "value": 0.95,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "'Golden Ecstasy'",
+              "rangeId": null,
+              "description": "Deal <@ba.vup>{atk_scale:0%}</> ATK as Arts damage, and an additional <@ba.vup>{ep_damage_ratio:0%}</> ATK as <$ba.dt.apoptosis2>Necrosis damage</> if the enemy is not under the burst effect\n<@ba.rem>Can store 3 charges and cannot use normal attacks when skill is inactive</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 3,
+                "spCost": 6,
+                "initSp": 14,
+                "increment": 1
+              },
+              "prefabId": "skchr_cello_1",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 2.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "ep_damage_ratio",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "'Golden Ecstasy'",
+              "rangeId": null,
+              "description": "Deal <@ba.vup>{atk_scale:0%}</> ATK as Arts damage, and an additional <@ba.vup>{ep_damage_ratio:0%}</> ATK as <$ba.dt.apoptosis2>Necrosis damage</> if the enemy is not under the burst effect\n<@ba.rem>Can store 3 charges and cannot use normal attacks when skill is inactive</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 3,
+                "spCost": 6,
+                "initSp": 16,
+                "increment": 1
+              },
+              "prefabId": "skchr_cello_1",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 2.8,
+                  "valueStr": null
+                },
+                {
+                  "key": "ep_damage_ratio",
+                  "value": 1.05,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "'Golden Ecstasy'",
+              "rangeId": null,
+              "description": "Deal <@ba.vup>{atk_scale:0%}</> ATK as Arts damage, and an additional <@ba.vup>{ep_damage_ratio:0%}</> ATK as <$ba.dt.apoptosis2>Necrosis damage</> if the enemy is not under the burst effect\n<@ba.rem>Can store 3 charges and cannot use normal attacks when skill is inactive</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 3,
+                "spCost": 6,
+                "initSp": 18,
+                "increment": 1
+              },
+              "prefabId": "skchr_cello_1",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "ep_damage_ratio",
+                  "value": 1.1,
+                  "valueStr": null
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "skchr_cello_2",
+          "unlockCondition": {
+            "phase": "PHASE_1",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "'Requiem Mass'",
+              "rangeId": null,
+              "description": "ASPD <@ba.vup>+{attack_speed}</>, attack <@ba.vup>1</> additional target; when this unit and the allied Operator with highest ATK within range deal damage to an enemy, additionally deal <@ba.vup>{ep_damage_ratio:0%}</> ATK as <$ba.dt.apoptosis2>Necrosis damage</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 38,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_cello_2",
+              "duration": 20,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 15,
+                  "valueStr": null
+                },
+                {
+                  "key": "ep_damage_ratio",
+                  "value": 0.1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "'Requiem Mass'",
+              "rangeId": null,
+              "description": "ASPD <@ba.vup>+{attack_speed}</>, attack <@ba.vup>1</> additional target; when this unit and the allied Operator with highest ATK within range deal damage to an enemy, additionally deal <@ba.vup>{ep_damage_ratio:0%}</> ATK as <$ba.dt.apoptosis2>Necrosis damage</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 37,
+                "initSp": 2,
+                "increment": 1
+              },
+              "prefabId": "skchr_cello_2",
+              "duration": 20,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 20,
+                  "valueStr": null
+                },
+                {
+                  "key": "ep_damage_ratio",
+                  "value": 0.1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "'Requiem Mass'",
+              "rangeId": null,
+              "description": "ASPD <@ba.vup>+{attack_speed}</>, attack <@ba.vup>1</> additional target; when this unit and the allied Operator with highest ATK within range deal damage to an enemy, additionally deal <@ba.vup>{ep_damage_ratio:0%}</> ATK as <$ba.dt.apoptosis2>Necrosis damage</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 36,
+                "initSp": 4,
+                "increment": 1
+              },
+              "prefabId": "skchr_cello_2",
+              "duration": 20,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 25,
+                  "valueStr": null
+                },
+                {
+                  "key": "ep_damage_ratio",
+                  "value": 0.1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "'Requiem Mass'",
+              "rangeId": null,
+              "description": "ASPD <@ba.vup>+{attack_speed}</>, attack <@ba.vup>1</> additional target; when this unit and the allied Operator with highest ATK within range deal damage to an enemy, additionally deal <@ba.vup>{ep_damage_ratio:0%}</> ATK as <$ba.dt.apoptosis2>Necrosis damage</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 34,
+                "initSp": 7,
+                "increment": 1
+              },
+              "prefabId": "skchr_cello_2",
+              "duration": 20,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 30,
+                  "valueStr": null
+                },
+                {
+                  "key": "ep_damage_ratio",
+                  "value": 0.15,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "'Requiem Mass'",
+              "rangeId": null,
+              "description": "ASPD <@ba.vup>+{attack_speed}</>, attack <@ba.vup>1</> additional target; when this unit and the allied Operator with highest ATK within range deal damage to an enemy, additionally deal <@ba.vup>{ep_damage_ratio:0%}</> ATK as <$ba.dt.apoptosis2>Necrosis damage</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 33,
+                "initSp": 9,
+                "increment": 1
+              },
+              "prefabId": "skchr_cello_2",
+              "duration": 20,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 35,
+                  "valueStr": null
+                },
+                {
+                  "key": "ep_damage_ratio",
+                  "value": 0.15,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "'Requiem Mass'",
+              "rangeId": null,
+              "description": "ASPD <@ba.vup>+{attack_speed}</>, attack <@ba.vup>1</> additional target; when this unit and the allied Operator with highest ATK within range deal damage to an enemy, additionally deal <@ba.vup>{ep_damage_ratio:0%}</> ATK as <$ba.dt.apoptosis2>Necrosis damage</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 32,
+                "initSp": 11,
+                "increment": 1
+              },
+              "prefabId": "skchr_cello_2",
+              "duration": 20,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 40,
+                  "valueStr": null
+                },
+                {
+                  "key": "ep_damage_ratio",
+                  "value": 0.15,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "'Requiem Mass'",
+              "rangeId": null,
+              "description": "ASPD <@ba.vup>+{attack_speed}</>, attack <@ba.vup>1</> additional target; when this unit and the allied Operator with highest ATK within range deal damage to an enemy, additionally deal <@ba.vup>{ep_damage_ratio:0%}</> ATK as <$ba.dt.apoptosis2>Necrosis damage</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 30,
+                "initSp": 14,
+                "increment": 1
+              },
+              "prefabId": "skchr_cello_2",
+              "duration": 20,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 45,
+                  "valueStr": null
+                },
+                {
+                  "key": "ep_damage_ratio",
+                  "value": 0.2,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "'Requiem Mass'",
+              "rangeId": null,
+              "description": "ASPD <@ba.vup>+{attack_speed}</>, attack <@ba.vup>1</> additional target; when this unit and the allied Operator with highest ATK within range deal damage to an enemy, additionally deal <@ba.vup>{ep_damage_ratio:0%}</> ATK as <$ba.dt.apoptosis2>Necrosis damage</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 28,
+                "initSp": 14,
+                "increment": 1
+              },
+              "prefabId": "skchr_cello_2",
+              "duration": 20,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 50,
+                  "valueStr": null
+                },
+                {
+                  "key": "ep_damage_ratio",
+                  "value": 0.2,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "'Requiem Mass'",
+              "rangeId": null,
+              "description": "ASPD <@ba.vup>+{attack_speed}</>, attack <@ba.vup>1</> additional target; when this unit and the allied Operator with highest ATK within range deal damage to an enemy, additionally deal <@ba.vup>{ep_damage_ratio:0%}</> ATK as <$ba.dt.apoptosis2>Necrosis damage</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 26,
+                "initSp": 14,
+                "increment": 1
+              },
+              "prefabId": "skchr_cello_2",
+              "duration": 20,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 55,
+                  "valueStr": null
+                },
+                {
+                  "key": "ep_damage_ratio",
+                  "value": 0.2,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "'Requiem Mass'",
+              "rangeId": null,
+              "description": "ASPD <@ba.vup>+{attack_speed}</>, attack <@ba.vup>1</> additional target; when this unit and the allied Operator with highest ATK within range deal damage to an enemy, additionally deal <@ba.vup>{ep_damage_ratio:0%}</> ATK as <$ba.dt.apoptosis2>Necrosis damage</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 24,
+                "initSp": 14,
+                "increment": 1
+              },
+              "prefabId": "skchr_cello_2",
+              "duration": 20,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 60,
+                  "valueStr": null
+                },
+                {
+                  "key": "ep_damage_ratio",
+                  "value": 0.25,
+                  "valueStr": null
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "skchr_cello_3",
+          "unlockCondition": {
+            "phase": "PHASE_2",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "'Liberal Tango'",
+              "rangeId": "y-8",
+              "description": "<@ba.vdown>Stops attacking</>, Attack Range <@ba.vup>increases</>, ATK <@ba.vup>+{atk:0%}</>, 2nd Talent effect increased to <@ba.vup>{scale_delta_to_one}</>x; when skill is active, for all other Operators within range, the one with the highest max HP gains max HP <@ba.vup>+{cello_s_3[max_hp].max_hp:0%}</>, the one with the highest ATK gains ATK <@ba.vup>+{cello_s_3[atk].atk:0%}</>, and the one with the highest DEF gains DEF <@ba.vup>+{cello_s_3[def].def:0%}</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 60,
+                "initSp": 20,
+                "increment": 1
+              },
+              "prefabId": "skchr_cello_3",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.7,
+                  "valueStr": null
+                },
+                {
+                  "key": "scale_delta_to_one",
+                  "value": 1.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "cello_s_3[max_hp].max_hp",
+                  "value": 0.15,
+                  "valueStr": null
+                },
+                {
+                  "key": "cello_s_3[atk].atk",
+                  "value": 0.15,
+                  "valueStr": null
+                },
+                {
+                  "key": "cello_s_3[def].def",
+                  "value": 0.15,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  2,
+                  -1
+                ],
+                [
+                  2,
+                  0
+                ],
+                [
+                  2,
+                  1
+                ],
+                [
+                  2,
+                  2
+                ],
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  1,
+                  3
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  0,
+                  3
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ],
+                [
+                  -1,
+                  3
+                ],
+                [
+                  -2,
+                  -1
+                ],
+                [
+                  -2,
+                  0
+                ],
+                [
+                  -2,
+                  1
+                ],
+                [
+                  -2,
+                  2
+                ]
+              ]
+            },
+            {
+              "name": "'Liberal Tango'",
+              "rangeId": "y-8",
+              "description": "<@ba.vdown>Stops attacking</>, Attack Range <@ba.vup>increases</>, ATK <@ba.vup>+{atk:0%}</>, 2nd Talent effect increased to <@ba.vup>{scale_delta_to_one}</>x; when skill is active, for all other Operators within range, the one with the highest max HP gains max HP <@ba.vup>+{cello_s_3[max_hp].max_hp:0%}</>, the one with the highest ATK gains ATK <@ba.vup>+{cello_s_3[atk].atk:0%}</>, and the one with the highest DEF gains DEF <@ba.vup>+{cello_s_3[def].def:0%}</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 60,
+                "initSp": 22,
+                "increment": 1
+              },
+              "prefabId": "skchr_cello_3",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.8,
+                  "valueStr": null
+                },
+                {
+                  "key": "scale_delta_to_one",
+                  "value": 1.7,
+                  "valueStr": null
+                },
+                {
+                  "key": "cello_s_3[max_hp].max_hp",
+                  "value": 0.15,
+                  "valueStr": null
+                },
+                {
+                  "key": "cello_s_3[atk].atk",
+                  "value": 0.15,
+                  "valueStr": null
+                },
+                {
+                  "key": "cello_s_3[def].def",
+                  "value": 0.15,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  2,
+                  -1
+                ],
+                [
+                  2,
+                  0
+                ],
+                [
+                  2,
+                  1
+                ],
+                [
+                  2,
+                  2
+                ],
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  1,
+                  3
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  0,
+                  3
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ],
+                [
+                  -1,
+                  3
+                ],
+                [
+                  -2,
+                  -1
+                ],
+                [
+                  -2,
+                  0
+                ],
+                [
+                  -2,
+                  1
+                ],
+                [
+                  -2,
+                  2
+                ]
+              ]
+            },
+            {
+              "name": "'Liberal Tango'",
+              "rangeId": "y-8",
+              "description": "<@ba.vdown>Stops attacking</>, Attack Range <@ba.vup>increases</>, ATK <@ba.vup>+{atk:0%}</>, 2nd Talent effect increased to <@ba.vup>{scale_delta_to_one}</>x; when skill is active, for all other Operators within range, the one with the highest max HP gains max HP <@ba.vup>+{cello_s_3[max_hp].max_hp:0%}</>, the one with the highest ATK gains ATK <@ba.vup>+{cello_s_3[atk].atk:0%}</>, and the one with the highest DEF gains DEF <@ba.vup>+{cello_s_3[def].def:0%}</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 60,
+                "initSp": 24,
+                "increment": 1
+              },
+              "prefabId": "skchr_cello_3",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.9,
+                  "valueStr": null
+                },
+                {
+                  "key": "scale_delta_to_one",
+                  "value": 1.8,
+                  "valueStr": null
+                },
+                {
+                  "key": "cello_s_3[max_hp].max_hp",
+                  "value": 0.15,
+                  "valueStr": null
+                },
+                {
+                  "key": "cello_s_3[atk].atk",
+                  "value": 0.15,
+                  "valueStr": null
+                },
+                {
+                  "key": "cello_s_3[def].def",
+                  "value": 0.15,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  2,
+                  -1
+                ],
+                [
+                  2,
+                  0
+                ],
+                [
+                  2,
+                  1
+                ],
+                [
+                  2,
+                  2
+                ],
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  1,
+                  3
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  0,
+                  3
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ],
+                [
+                  -1,
+                  3
+                ],
+                [
+                  -2,
+                  -1
+                ],
+                [
+                  -2,
+                  0
+                ],
+                [
+                  -2,
+                  1
+                ],
+                [
+                  -2,
+                  2
+                ]
+              ]
+            },
+            {
+              "name": "'Liberal Tango'",
+              "rangeId": "y-8",
+              "description": "<@ba.vdown>Stops attacking</>, Attack Range <@ba.vup>increases</>, ATK <@ba.vup>+{atk:0%}</>, 2nd Talent effect increased to <@ba.vup>{scale_delta_to_one}</>x; when skill is active, for all other Operators within range, the one with the highest max HP gains max HP <@ba.vup>+{cello_s_3[max_hp].max_hp:0%}</>, the one with the highest ATK gains ATK <@ba.vup>+{cello_s_3[atk].atk:0%}</>, and the one with the highest DEF gains DEF <@ba.vup>+{cello_s_3[def].def:0%}</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 60,
+                "initSp": 26,
+                "increment": 1
+              },
+              "prefabId": "skchr_cello_3",
+              "duration": 32,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 1.05,
+                  "valueStr": null
+                },
+                {
+                  "key": "scale_delta_to_one",
+                  "value": 1.9,
+                  "valueStr": null
+                },
+                {
+                  "key": "cello_s_3[max_hp].max_hp",
+                  "value": 0.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "cello_s_3[atk].atk",
+                  "value": 0.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "cello_s_3[def].def",
+                  "value": 0.2,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  2,
+                  -1
+                ],
+                [
+                  2,
+                  0
+                ],
+                [
+                  2,
+                  1
+                ],
+                [
+                  2,
+                  2
+                ],
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  1,
+                  3
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  0,
+                  3
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ],
+                [
+                  -1,
+                  3
+                ],
+                [
+                  -2,
+                  -1
+                ],
+                [
+                  -2,
+                  0
+                ],
+                [
+                  -2,
+                  1
+                ],
+                [
+                  -2,
+                  2
+                ]
+              ]
+            },
+            {
+              "name": "'Liberal Tango'",
+              "rangeId": "y-8",
+              "description": "<@ba.vdown>Stops attacking</>, Attack Range <@ba.vup>increases</>, ATK <@ba.vup>+{atk:0%}</>, 2nd Talent effect increased to <@ba.vup>{scale_delta_to_one}</>x; when skill is active, for all other Operators within range, the one with the highest max HP gains max HP <@ba.vup>+{cello_s_3[max_hp].max_hp:0%}</>, the one with the highest ATK gains ATK <@ba.vup>+{cello_s_3[atk].atk:0%}</>, and the one with the highest DEF gains DEF <@ba.vup>+{cello_s_3[def].def:0%}</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 60,
+                "initSp": 28,
+                "increment": 1
+              },
+              "prefabId": "skchr_cello_3",
+              "duration": 32,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 1.15,
+                  "valueStr": null
+                },
+                {
+                  "key": "scale_delta_to_one",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "cello_s_3[max_hp].max_hp",
+                  "value": 0.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "cello_s_3[atk].atk",
+                  "value": 0.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "cello_s_3[def].def",
+                  "value": 0.2,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  2,
+                  -1
+                ],
+                [
+                  2,
+                  0
+                ],
+                [
+                  2,
+                  1
+                ],
+                [
+                  2,
+                  2
+                ],
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  1,
+                  3
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  0,
+                  3
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ],
+                [
+                  -1,
+                  3
+                ],
+                [
+                  -2,
+                  -1
+                ],
+                [
+                  -2,
+                  0
+                ],
+                [
+                  -2,
+                  1
+                ],
+                [
+                  -2,
+                  2
+                ]
+              ]
+            },
+            {
+              "name": "'Liberal Tango'",
+              "rangeId": "y-8",
+              "description": "<@ba.vdown>Stops attacking</>, Attack Range <@ba.vup>increases</>, ATK <@ba.vup>+{atk:0%}</>, 2nd Talent effect increased to <@ba.vup>{scale_delta_to_one}</>x; when skill is active, for all other Operators within range, the one with the highest max HP gains max HP <@ba.vup>+{cello_s_3[max_hp].max_hp:0%}</>, the one with the highest ATK gains ATK <@ba.vup>+{cello_s_3[atk].atk:0%}</>, and the one with the highest DEF gains DEF <@ba.vup>+{cello_s_3[def].def:0%}</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 60,
+                "initSp": 30,
+                "increment": 1
+              },
+              "prefabId": "skchr_cello_3",
+              "duration": 32,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 1.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "scale_delta_to_one",
+                  "value": 2.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "cello_s_3[max_hp].max_hp",
+                  "value": 0.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "cello_s_3[atk].atk",
+                  "value": 0.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "cello_s_3[def].def",
+                  "value": 0.2,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  2,
+                  -1
+                ],
+                [
+                  2,
+                  0
+                ],
+                [
+                  2,
+                  1
+                ],
+                [
+                  2,
+                  2
+                ],
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  1,
+                  3
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  0,
+                  3
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ],
+                [
+                  -1,
+                  3
+                ],
+                [
+                  -2,
+                  -1
+                ],
+                [
+                  -2,
+                  0
+                ],
+                [
+                  -2,
+                  1
+                ],
+                [
+                  -2,
+                  2
+                ]
+              ]
+            },
+            {
+              "name": "'Liberal Tango'",
+              "rangeId": "y-8",
+              "description": "<@ba.vdown>Stops attacking</>, Attack Range <@ba.vup>increases</>, ATK <@ba.vup>+{atk:0%}</>, 2nd Talent effect increased to <@ba.vup>{scale_delta_to_one}</>x; when skill is active, for all other Operators within range, the one with the highest max HP gains max HP <@ba.vup>+{cello_s_3[max_hp].max_hp:0%}</>, the one with the highest ATK gains ATK <@ba.vup>+{cello_s_3[atk].atk:0%}</>, and the one with the highest DEF gains DEF <@ba.vup>+{cello_s_3[def].def:0%}</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 60,
+                "initSp": 32,
+                "increment": 1
+              },
+              "prefabId": "skchr_cello_3",
+              "duration": 34,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 1.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "scale_delta_to_one",
+                  "value": 2.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "cello_s_3[max_hp].max_hp",
+                  "value": 0.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "cello_s_3[atk].atk",
+                  "value": 0.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "cello_s_3[def].def",
+                  "value": 0.25,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  2,
+                  -1
+                ],
+                [
+                  2,
+                  0
+                ],
+                [
+                  2,
+                  1
+                ],
+                [
+                  2,
+                  2
+                ],
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  1,
+                  3
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  0,
+                  3
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ],
+                [
+                  -1,
+                  3
+                ],
+                [
+                  -2,
+                  -1
+                ],
+                [
+                  -2,
+                  0
+                ],
+                [
+                  -2,
+                  1
+                ],
+                [
+                  -2,
+                  2
+                ]
+              ]
+            },
+            {
+              "name": "'Liberal Tango'",
+              "rangeId": "y-8",
+              "description": "<@ba.vdown>Stops attacking</>, Attack Range <@ba.vup>increases</>, ATK <@ba.vup>+{atk:0%}</>, 2nd Talent effect increased to <@ba.vup>{scale_delta_to_one}</>x; when skill is active, for all other Operators within range, the one with the highest max HP gains max HP <@ba.vup>+{cello_s_3[max_hp].max_hp:0%}</>, the one with the highest ATK gains ATK <@ba.vup>+{cello_s_3[atk].atk:0%}</>, and the one with the highest DEF gains DEF <@ba.vup>+{cello_s_3[def].def:0%}</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 60,
+                "initSp": 35,
+                "increment": 1
+              },
+              "prefabId": "skchr_cello_3",
+              "duration": 36,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 1.55,
+                  "valueStr": null
+                },
+                {
+                  "key": "scale_delta_to_one",
+                  "value": 2.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "cello_s_3[max_hp].max_hp",
+                  "value": 0.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "cello_s_3[atk].atk",
+                  "value": 0.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "cello_s_3[def].def",
+                  "value": 0.25,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  2,
+                  -1
+                ],
+                [
+                  2,
+                  0
+                ],
+                [
+                  2,
+                  1
+                ],
+                [
+                  2,
+                  2
+                ],
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  1,
+                  3
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  0,
+                  3
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ],
+                [
+                  -1,
+                  3
+                ],
+                [
+                  -2,
+                  -1
+                ],
+                [
+                  -2,
+                  0
+                ],
+                [
+                  -2,
+                  1
+                ],
+                [
+                  -2,
+                  2
+                ]
+              ]
+            },
+            {
+              "name": "'Liberal Tango'",
+              "rangeId": "y-8",
+              "description": "<@ba.vdown>Stops attacking</>, Attack Range <@ba.vup>increases</>, ATK <@ba.vup>+{atk:0%}</>, 2nd Talent effect increased to <@ba.vup>{scale_delta_to_one}</>x; when skill is active, for all other Operators within range, the one with the highest max HP gains max HP <@ba.vup>+{cello_s_3[max_hp].max_hp:0%}</>, the one with the highest ATK gains ATK <@ba.vup>+{cello_s_3[atk].atk:0%}</>, and the one with the highest DEF gains DEF <@ba.vup>+{cello_s_3[def].def:0%}</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 60,
+                "initSp": 37,
+                "increment": 1
+              },
+              "prefabId": "skchr_cello_3",
+              "duration": 38,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 1.65,
+                  "valueStr": null
+                },
+                {
+                  "key": "scale_delta_to_one",
+                  "value": 2.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "cello_s_3[max_hp].max_hp",
+                  "value": 0.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "cello_s_3[atk].atk",
+                  "value": 0.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "cello_s_3[def].def",
+                  "value": 0.25,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  2,
+                  -1
+                ],
+                [
+                  2,
+                  0
+                ],
+                [
+                  2,
+                  1
+                ],
+                [
+                  2,
+                  2
+                ],
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  1,
+                  3
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  0,
+                  3
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ],
+                [
+                  -1,
+                  3
+                ],
+                [
+                  -2,
+                  -1
+                ],
+                [
+                  -2,
+                  0
+                ],
+                [
+                  -2,
+                  1
+                ],
+                [
+                  -2,
+                  2
+                ]
+              ]
+            },
+            {
+              "name": "'Liberal Tango'",
+              "rangeId": "y-8",
+              "description": "<@ba.vdown>Stops attacking</>, Attack Range <@ba.vup>increases</>, ATK <@ba.vup>+{atk:0%}</>, 2nd Talent effect increased to <@ba.vup>{scale_delta_to_one}</>x; when skill is active, for all other Operators within range, the one with the highest max HP gains max HP <@ba.vup>+{cello_s_3[max_hp].max_hp:0%}</>, the one with the highest ATK gains ATK <@ba.vup>+{cello_s_3[atk].atk:0%}</>, and the one with the highest DEF gains DEF <@ba.vup>+{cello_s_3[def].def:0%}</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 60,
+                "initSp": 40,
+                "increment": 1
+              },
+              "prefabId": "skchr_cello_3",
+              "duration": 40,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 1.8,
+                  "valueStr": null
+                },
+                {
+                  "key": "scale_delta_to_one",
+                  "value": 2.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "cello_s_3[max_hp].max_hp",
+                  "value": 0.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "cello_s_3[atk].atk",
+                  "value": 0.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "cello_s_3[def].def",
+                  "value": 0.3,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  2,
+                  -1
+                ],
+                [
+                  2,
+                  0
+                ],
+                [
+                  2,
+                  1
+                ],
+                [
+                  2,
+                  2
+                ],
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  1,
+                  3
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  0,
+                  3
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ],
+                [
+                  -1,
+                  3
+                ],
+                [
+                  -2,
+                  -1
+                ],
+                [
+                  -2,
+                  0
+                ],
+                [
+                  -2,
+                  1
+                ],
+                [
+                  -2,
+                  2
+                ]
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "char_4010_etlchi": {
       "id": "char_4010_etlchi",
       "name": "Entelechia",
@@ -559115,7 +561909,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/24695f24754c188e2c8642ac34c98b41b67479c1/models/operator/token_10036_lasher_mcbird/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d060ddb23db412c7d47ebc8d99ef5effc627b4ef/models/operator/token_10036_lasher_mcbird/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10032_jesca2_jckshd": {
       "id": "token_10032_jesca2_jckshd",
@@ -559452,7 +562246,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/24695f24754c188e2c8642ac34c98b41b67479c1/models/operator/token_10032_jesca2_jckshd/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d060ddb23db412c7d47ebc8d99ef5effc627b4ef/models/operator/token_10032_jesca2_jckshd/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10040_siege2_vlion": {
       "id": "token_10040_siege2_vlion",
@@ -560884,7 +563678,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/24695f24754c188e2c8642ac34c98b41b67479c1/models/operator/token_10009_weedy_cannon/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d060ddb23db412c7d47ebc8d99ef5effc627b4ef/models/operator/token_10009_weedy_cannon/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10024_ebnhlz_rcube": {
       "id": "token_10024_ebnhlz_rcube",
@@ -561457,7 +564251,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/24695f24754c188e2c8642ac34c98b41b67479c1/models/operator/token_10024_ebnhlz_rcube/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d060ddb23db412c7d47ebc8d99ef5effc627b4ef/models/operator/token_10024_ebnhlz_rcube/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10044_wulfen_mine": {
       "id": "token_10044_wulfen_mine",
@@ -562658,7 +565452,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/24695f24754c188e2c8642ac34c98b41b67479c1/models/operator/token_10044_wulfen_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d060ddb23db412c7d47ebc8d99ef5effc627b4ef/models/operator/token_10044_wulfen_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10042_tecno_puppet": {
       "id": "token_10042_tecno_puppet",
@@ -562907,7 +565701,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/24695f24754c188e2c8642ac34c98b41b67479c1/models/operator/token_10042_tecno_puppet/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d060ddb23db412c7d47ebc8d99ef5effc627b4ef/models/operator/token_10042_tecno_puppet/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10041_cathy_catsld": {
       "id": "token_10041_cathy_catsld",
@@ -563465,7 +566259,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/24695f24754c188e2c8642ac34c98b41b67479c1/models/operator/token_10041_cathy_catsld/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d060ddb23db412c7d47ebc8d99ef5effc627b4ef/models/operator/token_10041_cathy_catsld/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10022_kazema_shadow": {
       "id": "token_10022_kazema_shadow",
@@ -563935,7 +566729,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/24695f24754c188e2c8642ac34c98b41b67479c1/models/operator/token_10022_kazema_shadow/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d060ddb23db412c7d47ebc8d99ef5effc627b4ef/models/operator/token_10022_kazema_shadow/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10001_deepcl_tentac": {
       "id": "token_10001_deepcl_tentac",
@@ -564249,7 +567043,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/24695f24754c188e2c8642ac34c98b41b67479c1/models/operator/token_10001_deepcl_tentac/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d060ddb23db412c7d47ebc8d99ef5effc627b4ef/models/operator/token_10001_deepcl_tentac/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10018_robrta_mach": {
       "id": "token_10018_robrta_mach",
@@ -564739,7 +567533,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/24695f24754c188e2c8642ac34c98b41b67479c1/models/operator/token_10018_robrta_mach/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d060ddb23db412c7d47ebc8d99ef5effc627b4ef/models/operator/token_10018_robrta_mach/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10014_bstalk_crab": {
       "id": "token_10014_bstalk_crab",
@@ -565068,7 +567862,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/24695f24754c188e2c8642ac34c98b41b67479c1/models/operator/token_10014_bstalk_crab/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d060ddb23db412c7d47ebc8d99ef5effc627b4ef/models/operator/token_10014_bstalk_crab/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10011_beewax_oblisk": {
       "id": "token_10011_beewax_oblisk",
@@ -566013,7 +568807,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/24695f24754c188e2c8642ac34c98b41b67479c1/models/operator/token_10011_beewax_oblisk/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d060ddb23db412c7d47ebc8d99ef5effc627b4ef/models/operator/token_10011_beewax_oblisk/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10006_vodfox_doll": {
       "id": "token_10006_vodfox_doll",
@@ -566649,7 +569443,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/24695f24754c188e2c8642ac34c98b41b67479c1/models/operator/token_10006_vodfox_doll/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d060ddb23db412c7d47ebc8d99ef5effc627b4ef/models/operator/token_10006_vodfox_doll/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10003_cgbird_bird": {
       "id": "token_10003_cgbird_bird",
@@ -566944,7 +569738,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/24695f24754c188e2c8642ac34c98b41b67479c1/models/operator/token_10003_cgbird_bird/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d060ddb23db412c7d47ebc8d99ef5effc627b4ef/models/operator/token_10003_cgbird_bird/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10000_silent_healrb": {
       "id": "token_10000_silent_healrb",
@@ -567327,7 +570121,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/24695f24754c188e2c8642ac34c98b41b67479c1/models/operator/token_10000_silent_healrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d060ddb23db412c7d47ebc8d99ef5effc627b4ef/models/operator/token_10000_silent_healrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10015_dusk_drgn": {
       "id": "token_10015_dusk_drgn",
@@ -567741,7 +570535,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/24695f24754c188e2c8642ac34c98b41b67479c1/models/operator/token_10015_dusk_drgn/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d060ddb23db412c7d47ebc8d99ef5effc627b4ef/models/operator/token_10015_dusk_drgn/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10007_phatom_twin": {
       "id": "token_10007_phatom_twin",
@@ -569520,7 +572314,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/24695f24754c188e2c8642ac34c98b41b67479c1/models/operator/token_10007_phatom_twin/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d060ddb23db412c7d47ebc8d99ef5effc627b4ef/models/operator/token_10007_phatom_twin/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10008_cqbw_box": {
       "id": "token_10008_cqbw_box",
@@ -570093,7 +572887,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/24695f24754c188e2c8642ac34c98b41b67479c1/models/operator/token_10008_cqbw_box/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d060ddb23db412c7d47ebc8d99ef5effc627b4ef/models/operator/token_10008_cqbw_box/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10029_slent2_protrb": {
       "id": "token_10029_slent2_protrb",
@@ -570838,7 +573632,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/24695f24754c188e2c8642ac34c98b41b67479c1/models/operator/token_10029_slent2_protrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d060ddb23db412c7d47ebc8d99ef5effc627b4ef/models/operator/token_10029_slent2_protrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10019_nearl2_sword": {
       "id": "token_10019_nearl2_sword",
@@ -571625,7 +574419,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/24695f24754c188e2c8642ac34c98b41b67479c1/models/operator/token_10019_nearl2_sword/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d060ddb23db412c7d47ebc8d99ef5effc627b4ef/models/operator/token_10019_nearl2_sword/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10002_kalts_mon3tr": {
       "id": "token_10002_kalts_mon3tr",
@@ -572043,7 +574837,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/24695f24754c188e2c8642ac34c98b41b67479c1/models/operator/token_10002_kalts_mon3tr/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d060ddb23db412c7d47ebc8d99ef5effc627b4ef/models/operator/token_10002_kalts_mon3tr/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10010_folivo_car": {
       "id": "token_10010_folivo_car",
@@ -573664,7 +576458,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/24695f24754c188e2c8642ac34c98b41b67479c1/models/operator/token_10010_folivo_car/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d060ddb23db412c7d47ebc8d99ef5effc627b4ef/models/operator/token_10010_folivo_car/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10021_blkngt_hypnos": {
       "id": "token_10021_blkngt_hypnos",
@@ -574079,7 +576873,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/24695f24754c188e2c8642ac34c98b41b67479c1/models/operator/token_10021_blkngt_hypnos/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d060ddb23db412c7d47ebc8d99ef5effc627b4ef/models/operator/token_10021_blkngt_hypnos/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10023_windft_wrench": {
       "id": "token_10023_windft_wrench",
@@ -575243,7 +578037,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/24695f24754c188e2c8642ac34c98b41b67479c1/models/operator/token_10023_windft_wrench/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d060ddb23db412c7d47ebc8d99ef5effc627b4ef/models/operator/token_10023_windft_wrench/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10045_alanna_crane": {
       "id": "token_10045_alanna_crane",
@@ -575643,7 +578437,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/24695f24754c188e2c8642ac34c98b41b67479c1/models/operator/token_10045_alanna_crane/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d060ddb23db412c7d47ebc8d99ef5effc627b4ef/models/operator/token_10045_alanna_crane/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10013_robin_mine": {
       "id": "token_10013_robin_mine",
@@ -576574,7 +579368,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/24695f24754c188e2c8642ac34c98b41b67479c1/models/operator/token_10013_robin_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d060ddb23db412c7d47ebc8d99ef5effc627b4ef/models/operator/token_10013_robin_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10016_rfrost_mine": {
       "id": "token_10016_rfrost_mine",
@@ -577505,7 +580299,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/24695f24754c188e2c8642ac34c98b41b67479c1/models/operator/token_10016_rfrost_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d060ddb23db412c7d47ebc8d99ef5effc627b4ef/models/operator/token_10016_rfrost_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10004_otter_motter": {
       "id": "token_10004_otter_motter",
@@ -578854,7 +581648,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/24695f24754c188e2c8642ac34c98b41b67479c1/models/operator/token_10004_otter_motter/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d060ddb23db412c7d47ebc8d99ef5effc627b4ef/models/operator/token_10004_otter_motter/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     }
   },
   "enemies": {
@@ -578905,7 +581699,7 @@
   },
   "skillEffects": {
     "repository": "arkpedia/arkpedia-sd-assets",
-    "commit": "24695f24754c188e2c8642ac34c98b41b67479c1",
+    "commit": "d060ddb23db412c7d47ebc8d99ef5effc627b4ef",
     "pack": {
       "path": "effects/charge-cost/26-09-23-17-49-43_b9cc4a/effect.json",
       "bytes": 15311,
