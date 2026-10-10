@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "operator": "char_4138_narant",
+  "source": {
+    "site": "PRTS",
+    "title": "娜仁图亚",
+    "revision": 435081,
+    "timestamp": "2026-10-05T08:08:01Z",
+    "url": "https://prts.wiki/index.php?title=%E5%A8%9C%E4%BB%81%E5%9B%BE%E4%BA%9A&oldid=435081",
+    "contentSha256": "cedb30a20058f04c1947128c7bd52fafcc51604724e0aa312a2b339de13097af"
+  },
+  "nativeFrameParity": false,
+  "referenceNotes": [
+    "Attack availability depends on recovering the thrown blades.",
+    "Outgoing speed is 15; return speed is 3.75.",
+    "S1 bounce radius is 1.7; prefer untouched targets, then nearest targets. Bounce travel speed is 6."
+  ],
+  "webMappingLimits": [
+    "S1 times is mapped to additional bounce transitions after the primary hit. Repeat fallback clears the local recent-hit memory; native callback ordering is unverified.",
+    "S2 forward motion uses the native moveAheadSpeed in tile units for the selected duration. Outbound damage is trace-only; return collision uses a swept radius-0.5 circle and one hit per victim. Native phase/trajectory dispatch is unverified.",
+    "S3 counts three born projectiles in a volley; the last successful hand arrival checks the current source deployment and active S3 before the selected capped tile AoE. Native all-return dispatch, curved trajectories, VFX and exact frame ordering are unverified.",
+    "Projectile lifetime ends owned work and gating. Native final trace hits apply only to previously unhit original victim lives. Expiry is not a successful hand return."
+  ]
+}
