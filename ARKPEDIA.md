@@ -1254,3 +1254,22 @@ Local verification: **9,176 tests passed, nine skipped, zero failed** across the
 Local browser evidence at `http://localhost:3182/arkpedia/`: Pozëmka deploys for 20 DP at E2 Lv90/Pot1/trust0, attacks, naturally reaches S3 Ready35/35, and activates with a visible 30-second countdown. Typewriter rejects a ground tile, opens the facing picker on legal high ground, deploys for 5 DP, displays its original model and expanded S3 range, and leaves the deployment-slot count unchanged. Its details show its own ATK866 and no manual skill control. Desktop1280x720 and landscape844x390 render the selected operator panel; portrait390x844 preserves the paused battle behind the rotation gate. Temporary viewport overrides are reset; the paused preview remains usable. These interaction checks do not certify physical-device behavior or native damage/frame parity.
 
 Eight explicit `runtimeContracts` document first-only Begin resets, S2 dispatch/cancellation, active token attachment, focus/adjacency sampling, DEF-holder priority and finish/recharge ordering. Compiled same-frame callback behavior is not certified. Modules, native frame parity and original Unity particles/audio remain separate work; simple authoritative arrow visuals do not establish native VFX parity. This remains a draft public simulator feature branch, not a production release.
+
+
+## Amiya Guard: complete Global source foundation
+
+Guard Amiya lives in the Global `char_patch_table.json`, rather than the ordinary character table. The foundation preserves her parent form group, Guard class metadata and `main_08-16` completion requirement. It uses Global commit `57010cb5b2afea112cae57daa756b58676ba6850` and independently checks patch Git blob `fc84d705f44b9c2e430069c482fbf935a995952e`. The raw patch data does not replace the existing character cache or register her as an unrelated character.
+
+- Preserve ordinary Arts attacks, both complete skills, all 20 ranks and the E1/E2 ATK/DEF aura, including its doubled active-skill variant.
+- Preserve S1's two original attack events, native double-strike controller and Arts-only dodge.
+- Preserve S2's global once-per-battle limit, target-required lowest-HP selector, attack-state kill bonuses, separate final delayed True-damage branch, mode transitions and cleanup.
+- Retain eleven original S2 animation payloads without guessing which ten the compiled strike controller consumes. The final branch cancels direct damage before its separate delayed receipt; it is not an extra immediate Arts hit.
+- Retain both original facing skeleton chains, the native FaceSwitcher and all recursively referenced native/table templates. Modules and original Unity particles/audio remain separate work.
+
+Durable tools under `tools/arkpedia/` are `fetch-amiya-guard.mjs`, `inspect-amiya-guard.mjs`, `extract-amiya-guard.py` and `verify-amiya-guard.py`. Run them in that order using Node and `.cache/map-env/bin/python`; shared pinned tables/bundles and the original model checkout use the existing source cache. The fetcher verifies the immutable Global patch blob and original Guard bundle checksums before extraction.
+
+The independent verifier matches **81 native components, five checksum-verified bundles, eight templates, 20 ranks, both original facing chains and Global form unlock data**. It reconstructs component membership and template dependencies and reparses original skeleton event payloads. Re-extraction is byte-identical. All **85 focused source/roster checks** pass, including ten new Guard cases. Seven altered records are rejected: omitted character/skill components, omitted delayed-damage template, omitted FaceSwitcher, invented final animation timing, omitted rank and omitted unlock rule.
+
+This source-only batch preserves existing runtime files, registration, coverage and asset pins. Coverage remains **347/431 forms and 739 skills**, with **84 forms remaining**. The preceding full runtime regression remains 9,176 passed, nine skipped and zero failures; this batch does not claim a fresh full regression or browser combat run. The local preview responds successfully.
+
+Amiya Guard remains unavailable pending her complete combat adapter and explicit Global patch-table integration. The S2 event cursor, retarget timing, delayed cancellation/damage order, aura ownership and once-per-battle persistence across redeployment require executable contracts and combat tests. Native frame parity and compiled callback order remain unverified. This is a draft simulator feature-branch source update, not a production release.
