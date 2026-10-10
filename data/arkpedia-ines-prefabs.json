@@ -52,11 +52,11 @@
   "frameParity": false,
   "moduleSupport": false,
   "nativeParticleSupport": false,
-  "enabledOperators": [],
-  "heldOperators": [
+  "enabledOperators": [
     "char_4087_ines"
   ],
-  "reviewStatus": "Source foundation only: persistent Shadow Sentry and S3 retrieval require a runtime adapter",
+  "heldOperators": [],
+  "reviewStatus": "Playable bounded three-skill adapter; original dispatch and VFX are not frame certified",
   "characters": {
     "char_4087_ines": [
       {
@@ -10433,8 +10433,18 @@
     "S3 normal branch adds ATK/mode2 and retrieves managed sentries after triggerInterval.03; its guarded return projectile travels at speed10, radius1 scaled from projectile_range, caps hits using selected max_target, cannot hit the same victim repeatedly and carries a distinct serialized Physical damage action.",
     "All six recursively referenced projectile trees, nine native buff templates and fixed/selected ranges are retained. Original particle keys remain evidence and are not rendered or counted as model support."
   ],
-  "holdReasons": [
-    "Source foundation only. Persistent Shadow Sentry ownership, first-deployment S3 replacement and its retrieval projectile require explicit runtime adapters before enabling the complete kit.",
-    "Native C# dispatch, same-frame ordering, original particles/audio and modules have not been recovered."
+  "runtimeMapping": {
+    "attack": "One retained input target; original facing Attack/Combat and S2 replacement events scaled by uncapped ASPD; ranged homing or blocked direct impact.",
+    "talent1": "Source-specific first-hit Bind and capped flat ATK theft; invalid victims return owner ATK, independent Bind retains selected duration.",
+    "skill1": "Shared nonstacking fixed Arts DOT, selected ATK snapshot, .9s first tick then 1s cadence, selected DP on first attachment and no DOT SP.",
+    "skill2": "Manual invisibility, selected ATK/range, shared capped ASPD theft; owner gains survive invalid victims until mode cleanup; accepted output grants selected DP.",
+    "sentry": "Battle-owned fixed oriented three-tile reveal/slow area survives retreat, overlaps once, replaces an old Sentry and cleans exit/end; no unit/card/slot.",
+    "skill3": "First zero-cost/no-slot Start_Skill return has no refund, count increase or cooldown. Later original Start event adds selected ATK; .03s delayed retrieval sweeps a scaled radius at speed10, with selected unique hit cap."
+  },
+  "verificationLimits": [
+    "Local pre-mitigation hit and accepted damaged receipts bridge native before-target/output phases. Native C# priorities, evade ordering, same-frame dispatch and exact first-deployment occupancy are not recovered.",
+    "S1 EXTEND replaces the source ATK snapshot and retains one tick cadence without repeat DP; compiled refresh/ON_BUFF_START interaction under externally accelerated reapplication is not certified.",
+    "Retrieval uses swept-circle contact with native radius and speed, ordered by distance then spawn sequence. Native collider shape, moving-body contact and same-frame selection ordering are not certified.",
+    "Shadow Sentry uses an explicitly temporary field marker. Original Unity particles/audio, modules and frame parity remain unsupported."
   ]
 }

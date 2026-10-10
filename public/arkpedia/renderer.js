@@ -413,8 +413,10 @@ export class StageRenderer {
     this.drawPreview();
     this.onLayout?.();
     const operatorLabels = new Map();
-    this.candleStatus.textContent = battle?.enemies.some(e => e.alive && e.mem?.entelechiaHost)
-      ? 'Heart Candle artwork: temporary marker' : '';
+    this.candleStatus.textContent = [
+      battle?.enemies.some(e => e.alive && e.mem?.entelechiaHost) ? 'Heart Candle artwork: temporary marker' : '',
+      battle?.inesState?.sentry ? 'Shadow Sentry artwork: temporary marker' : '',
+    ].filter(Boolean).join(' · ');
     if (battle) {
       const live = new Set();
       for (const u of battle.units) {
@@ -587,6 +589,17 @@ export class StageRenderer {
       this.pixi.stage.addChild(this.fx);
     }
     this.fx.clear();
+    const sentry = battle?.inesState?.sentry;
+    if (sentry) {
+      const p = this.projection.project(sentry.x, sentry.y,
+        this.heightAt(Math.round(sentry.y), Math.round(sentry.x)) + .12);
+      const r = Math.max(5, Math.min(11, p.s * .13));
+      // Keep the persistent managed projectile visible without fabricating a
+      // summon, HP/SP bar, deployment card or original Unity particle artwork.
+      this.fx.lineStyle(1.5, 0xe9caa2, .95).beginFill(0x20212d, .9)
+        .drawPolygon([p.x, p.y-r*1.7, p.x+r*.6, p.y, p.x, p.y+r*.5, p.x-r*.6, p.y])
+        .endFill().lineStyle(0);
+    }
     this.effects = this.effects.filter((e) => (e.age += dt) < 0.22);
     for (const e of this.effects) {
       const a = this.projection.project(

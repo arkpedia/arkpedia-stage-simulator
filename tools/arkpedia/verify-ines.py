@@ -140,8 +140,9 @@ assert hot['versionId'] == E['source']['nativeClient'] == '26-09-23-17-49-43_b9c
 for record in E['source']['bundles']:
     native = next(row for row in hot['abInfos'] if row['name'] == record['path'])
     assert (record['md5'], record['size']) == (native['md5'], native['abSize'])
-assert len(E['recoveredFacts']) == 8 and len(E['holdReasons']) == 2
-assert E['enabledOperators'] == [] and E['heldOperators'] == ['char_4087_ines']
+assert len(E['recoveredFacts']) == 8 and len(E['verificationLimits']) == 4
+assert set(E['runtimeMapping']) == {'attack', 'talent1', 'skill1', 'skill2', 'sentry', 'skill3'}
+assert E['enabledOperators'] == ['char_4087_ines'] and E['heldOperators'] == []
 assert E['frameParity'] is False and E['moduleSupport'] is False and E['nativeParticleSupport'] is False
 assert set(E['tables']['skills']) == {'skchr_ines_1', 'skchr_ines_2', 'skchr_ines_3'}
 assert all(len(s['levels']) == 10 for s in E['tables']['skills'].values())
@@ -149,4 +150,4 @@ assert all(len(s['levels']) == 10 for s in E['tables']['skills'].values())
 # payloads. Hash-valid art is insufficient if the event summaries were edited.
 subprocess.check_call(['node', 'tools/arkpedia/inspect-ines.mjs'], cwd=ROOT, stdout=subprocess.DEVNULL)
 assert json.loads((C/'ines-source/models.json').read_text()) == E['models']
-print(f'Verified {count} native components, {len(bundles)} bundles, {len(E["templates"])} templates, 30 ranks, {len(E["projectiles"])} projectile trees and two original skeleton chains; Ines remains held')
+print(f'Verified {count} native components, {len(bundles)} bundles, {len(E["templates"])} templates, 30 ranks, {len(E["projectiles"])} projectile trees and two original skeleton chains; bounded adapter enabled, no native frame/FX certification')

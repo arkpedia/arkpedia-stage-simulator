@@ -11,9 +11,11 @@ const component = id => rows.find(c => c.pathId === id).data;
 const bb = values => Object.fromEntries(values.map(v => [v.key, v.value]));
 const near = (a, b) => assert.ok(Math.abs(a - b) < 1e-6, `${a} != ${b}`);
 
-test('Ines full source kit stays separate from playable coverage until its runtime is implemented', () => {
-  assert.deepEqual(e.enabledOperators, []); assert.deepEqual(e.heldOperators, [ID]);
-  assert.equal(REGULAR_OPERATORS[ID], undefined); assert.equal(data.operators[ID], undefined);
+test('Ines source kit enables the reviewed adapter without claiming native frame or FX support', () => {
+  assert.deepEqual(e.enabledOperators, [ID]); assert.deepEqual(e.heldOperators, []);
+  assert.deepEqual(REGULAR_OPERATORS[ID].skillIds, ['skchr_ines_1', 'skchr_ines_2', 'skchr_ines_3']);
+  assert.ok(data.operators[ID]);
+  assert.equal(Object.keys(e.runtimeMapping).length, 6); assert.equal(e.verificationLimits.length, 4);
   assert.equal(rows.length, 143); assert.equal(e.source.bundles.length, 5);
   assert.deepEqual(e.nativeTemplateGaps, []);
   assert.equal(Object.keys(e.templates).length, 9);

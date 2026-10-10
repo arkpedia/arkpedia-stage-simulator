@@ -60294,6 +60294,239 @@
           "height": 443.426
         }
       },
+      "operator/char_4087_ines/default/front": {
+        "kind": "operator",
+        "id": "char_4087_ines",
+        "variant": "default",
+        "facing": "front",
+        "spineVersion": "3.8.99",
+        "source": {
+          "key": "operators",
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "spine/char_4087_ines/char_4087_ines/Front"
+        },
+        "skeleton": {
+          "path": "models/operator/char_4087_ines/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4087_ines.skel",
+          "bytes": 379264,
+          "sha256": "d08b965616318f78a68ba95ab8916fdd8d5b2221a30ff216cf15c12b7af4feb9"
+        },
+        "atlas": {
+          "path": "models/operator/char_4087_ines/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4087_ines.atlas",
+          "bytes": 11401,
+          "sha256": "0ecc88dc0a3c32985a45dd86c7d2687475f217f8d8de3769a99b33c147f76a08"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_4087_ines/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4087_ines.png",
+            "bytes": 139796,
+            "sha256": "7ee9cf427f78035127029c370d811f3cfd60c1976996bb621cad11eb3bb45a01"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Attack": 1,
+          "Combat": 1,
+          "Default": 0,
+          "Die": 1,
+          "Idle": 4,
+          "Skill_2_Attack": 1,
+          "Skill_2_Begin": 0.167,
+          "Skill_2_Combat": 1,
+          "Skill_2_End": 0.667,
+          "Skill_2_Idle": 4,
+          "Start": 1,
+          "Start_Skill": 1
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null
+          },
+          "attackDown": null,
+          "skill": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null,
+            "via": "attack",
+            "index": 0,
+            "idle": null
+          },
+          "die": "Die",
+          "move": null,
+          "stun": null,
+          "skills": {
+            "0": {
+              "begin": null,
+              "loop": "Attack",
+              "end": null,
+              "via": "attack",
+              "index": 0,
+              "idle": null
+            },
+            "1": {
+              "begin": "Skill_2_Begin",
+              "loop": "Skill_2_Attack",
+              "end": "Skill_2_End",
+              "index": 1,
+              "idle": "Skill_2_Idle"
+            },
+            "2": {
+              "begin": null,
+              "loop": "Attack",
+              "end": null,
+              "via": "attack",
+              "index": 2,
+              "idle": null
+            }
+          }
+        },
+        "hits": {
+          "Attack": [
+            0.467
+          ],
+          "Combat": [
+            0.333
+          ],
+          "Skill_2_Attack": [
+            0.467
+          ],
+          "Skill_2_Combat": [
+            0.467
+          ],
+          "Start": [
+            0.2
+          ],
+          "Start_Skill": [
+            0.167
+          ]
+        },
+        "bounds": {
+          "x": -490.393,
+          "y": -121.371,
+          "width": 2038.633,
+          "height": 513.246
+        }
+      },
+      "operator/char_4087_ines/default/back": {
+        "kind": "operator",
+        "id": "char_4087_ines",
+        "variant": "default",
+        "facing": "back",
+        "spineVersion": "3.8.99",
+        "source": {
+          "key": "operators",
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "spine/char_4087_ines/char_4087_ines/Back"
+        },
+        "skeleton": {
+          "path": "models/operator/char_4087_ines/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4087_ines.skel",
+          "bytes": 232007,
+          "sha256": "479994331fbdc260627ad3037a2acf2604c7df544ed5eaf7e351bb833ac4ab6a"
+        },
+        "atlas": {
+          "path": "models/operator/char_4087_ines/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4087_ines.atlas",
+          "bytes": 6991,
+          "sha256": "f9c34b79efd1867c08289ad8012aa3090aa1acfef429f0a958c6d9b4209aca70"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_4087_ines/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4087_ines.png",
+            "bytes": 108364,
+            "sha256": "33e3a09280195108632f989b73325340fa36dc93f545bb4cb79c332359770492"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Attack": 1,
+          "Combat": 1,
+          "Default": 0,
+          "Idle": 4,
+          "Skill_2_Attack": 1,
+          "Skill_2_Begin": 0.167,
+          "Skill_2_Combat": 1,
+          "Skill_2_End": 0.667,
+          "Skill_2_Idle": 4,
+          "Start": 1,
+          "Start_Skill": 1
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null
+          },
+          "attackDown": null,
+          "skill": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null,
+            "via": "attack",
+            "index": 0,
+            "idle": null
+          },
+          "die": null,
+          "move": null,
+          "stun": null,
+          "skills": {
+            "0": {
+              "begin": null,
+              "loop": "Attack",
+              "end": null,
+              "via": "attack",
+              "index": 0,
+              "idle": null
+            },
+            "1": {
+              "begin": "Skill_2_Begin",
+              "loop": "Skill_2_Attack",
+              "end": "Skill_2_End",
+              "index": 1,
+              "idle": "Skill_2_Idle"
+            },
+            "2": {
+              "begin": null,
+              "loop": "Attack",
+              "end": null,
+              "via": "attack",
+              "index": 2,
+              "idle": null
+            }
+          }
+        },
+        "hits": {
+          "Attack": [
+            0.467
+          ],
+          "Combat": [
+            0.333
+          ],
+          "Skill_2_Attack": [
+            0.467
+          ],
+          "Skill_2_Combat": [
+            0.467
+          ],
+          "Start": [
+            0.2
+          ],
+          "Start_Skill": [
+            0.167
+          ]
+        },
+        "bounds": {
+          "x": -490.393,
+          "y": -121.371,
+          "width": 2038.633,
+          "height": 513.246
+        }
+      },
       "operator/char_4010_etlchi/default/front": {
         "kind": "operator",
         "id": "char_4010_etlchi",
@@ -522573,6 +522806,2076 @@
                 {
                   "key": "hp_ratio",
                   "value": 0.05,
+                  "valueStr": null
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "char_4087_ines": {
+      "id": "char_4087_ines",
+      "name": "Ines",
+      "description": "Has <@ba.kw>reduced</> Redeployment Time, can use ranged attacks",
+      "rarity": 6,
+      "profession": "PIONEER",
+      "subProfessionId": "agent",
+      "position": "MELEE",
+      "nationId": null,
+      "groupId": "babel",
+      "teamId": null,
+      "phases": [
+        {
+          "maxLevel": 50,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 1000,
+                "atk": 256,
+                "def": 106,
+                "magicResistance": 0,
+                "cost": 9,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 35,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 50,
+              "data": {
+                "maxHp": 1390,
+                "atk": 366,
+                "def": 175,
+                "magicResistance": 0,
+                "cost": 9,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 35,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ]
+          ]
+        },
+        {
+          "maxLevel": 80,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 1390,
+                "atk": 366,
+                "def": 175,
+                "magicResistance": 0,
+                "cost": 11,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 35,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 80,
+              "data": {
+                "maxHp": 1760,
+                "atk": 482,
+                "def": 241,
+                "magicResistance": 0,
+                "cost": 11,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 35,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ]
+          ]
+        },
+        {
+          "maxLevel": 90,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 1760,
+                "atk": 482,
+                "def": 241,
+                "magicResistance": 0,
+                "cost": 11,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 35,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 90,
+              "data": {
+                "maxHp": 2121,
+                "atk": 589,
+                "def": 281,
+                "magicResistance": 0,
+                "cost": 11,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 35,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ]
+          ]
+        }
+      ],
+      "favorKeyFrames": [
+        {
+          "level": 0,
+          "data": {
+            "maxHp": 0,
+            "atk": 0,
+            "def": 0,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false
+          }
+        },
+        {
+          "level": 50,
+          "data": {
+            "maxHp": 0,
+            "atk": 50,
+            "def": 30,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false
+          }
+        }
+      ],
+      "potentialRanks": [
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "RESPAWN_TIME",
+            "formulaItem": "ADDITION",
+            "value": -4,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "ATTACK_SPEED",
+            "formulaItem": "ADDITION",
+            "value": 8,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [],
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ]
+      ],
+      "trait": {
+        "candidates": [
+          {
+            "unlockCondition": {
+              "phase": "PHASE_2",
+              "level": 1
+            },
+            "requiredPotentialRank": 0,
+            "blackboard": [
+              {
+                "key": "runtime_cost",
+                "value": -9999,
+                "valueStr": null
+              }
+            ],
+            "overrideDescripton": null,
+            "prefabKey": "-1",
+            "rangeId": null
+          }
+        ]
+      },
+      "talents": [
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Shadow Weaver",
+              "description": "The first hit on each enemy <$ba.root>Binds</> the target for 3 seconds and <$ba.steal>Steals</> 50 ATK (effect expires when enemy is defeated or Ines retreats)",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "steal_atk",
+                  "value": 50,
+                  "valueStr": null
+                },
+                {
+                  "key": "steal_atk_max",
+                  "value": 10000,
+                  "valueStr": null
+                },
+                {
+                  "key": "duration",
+                  "value": 3,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 1
+              },
+              "requiredPotentialRank": 4,
+              "prefabKey": "1",
+              "name": "Shadow Weaver",
+              "description": "The first hit on each enemy <$ba.root>Binds</> the target for 3 seconds and <$ba.steal>Steals</> 60 <@ba.talpu>(+10)</> ATK (effect expires when enemy is defeated or Ines retreats)",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "steal_atk",
+                  "value": 60,
+                  "valueStr": null
+                },
+                {
+                  "key": "steal_atk_max",
+                  "value": 12000,
+                  "valueStr": null
+                },
+                {
+                  "key": "duration",
+                  "value": 3,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Shadow Weaver",
+              "description": "The first hit on each enemy <$ba.root>Binds</> the target for 5 seconds and <$ba.steal>Steals</> 90 ATK (effect expires when enemy is defeated or Ines retreats)",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "steal_atk",
+                  "value": 90,
+                  "valueStr": null
+                },
+                {
+                  "key": "steal_atk_max",
+                  "value": 18000,
+                  "valueStr": null
+                },
+                {
+                  "key": "duration",
+                  "value": 5,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 4,
+              "prefabKey": "1",
+              "name": "Shadow Weaver",
+              "description": "The first hit on each enemy <$ba.root>Binds</> the target for 5 seconds and <$ba.steal>Steals</> 100 <@ba.talpu>(+10)</> ATK (effect expires when enemy is defeated or Ines retreats)",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "steal_atk",
+                  "value": 100,
+                  "valueStr": null
+                },
+                {
+                  "key": "steal_atk_max",
+                  "value": 20000,
+                  "valueStr": null
+                },
+                {
+                  "key": "duration",
+                  "value": 5,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            }
+          ]
+        },
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "2",
+              "name": "Shadow Sentry",
+              "description": "Enemies within Attack Range lose <$ba.invisible>Invisibility</> and have -30% Movement Speed; after retreating, Ines leaves behind a Shadow Sentry with the same effect (Max 1)",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "move_speed",
+                  "value": -0.3,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            }
+          ]
+        }
+      ],
+      "skills": [
+        {
+          "id": "skchr_ines_1",
+          "unlockCondition": {
+            "phase": "PHASE_0",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "Shadow Raid",
+              "rangeId": null,
+              "description": "The next attack deals <@ba.vup>{bleed_atk_scale:0%}</> ATK as Arts damage to the target every second for <@ba.vup>{bleed_duration}</> seconds (does not stack), gains <@ba.vup>{cost}</> DP",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 5,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_ines_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "bleed_atk_scale",
+                  "value": 0.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "bleed_duration",
+                  "value": 3,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Shadow Raid",
+              "rangeId": null,
+              "description": "The next attack deals <@ba.vup>{bleed_atk_scale:0%}</> ATK as Arts damage to the target every second for <@ba.vup>{bleed_duration}</> seconds (does not stack), gains <@ba.vup>{cost}</> DP",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 5,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_ines_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "bleed_atk_scale",
+                  "value": 0.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "bleed_duration",
+                  "value": 3,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Shadow Raid",
+              "rangeId": null,
+              "description": "The next attack deals <@ba.vup>{bleed_atk_scale:0%}</> ATK as Arts damage to the target every second for <@ba.vup>{bleed_duration}</> seconds (does not stack), gains <@ba.vup>{cost}</> DP",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 5,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_ines_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "bleed_atk_scale",
+                  "value": 0.35,
+                  "valueStr": null
+                },
+                {
+                  "key": "bleed_duration",
+                  "value": 3,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Shadow Raid",
+              "rangeId": null,
+              "description": "The next attack deals <@ba.vup>{bleed_atk_scale:0%}</> ATK as Arts damage to the target every second for <@ba.vup>{bleed_duration}</> seconds (does not stack), gains <@ba.vup>{cost}</> DP",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 4,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_ines_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "bleed_atk_scale",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "bleed_duration",
+                  "value": 3,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Shadow Raid",
+              "rangeId": null,
+              "description": "The next attack deals <@ba.vup>{bleed_atk_scale:0%}</> ATK as Arts damage to the target every second for <@ba.vup>{bleed_duration}</> seconds (does not stack), gains <@ba.vup>{cost}</> DP",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 4,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_ines_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "bleed_atk_scale",
+                  "value": 0.45,
+                  "valueStr": null
+                },
+                {
+                  "key": "bleed_duration",
+                  "value": 3,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Shadow Raid",
+              "rangeId": null,
+              "description": "The next attack deals <@ba.vup>{bleed_atk_scale:0%}</> ATK as Arts damage to the target every second for <@ba.vup>{bleed_duration}</> seconds (does not stack), gains <@ba.vup>{cost}</> DP",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 4,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_ines_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "bleed_atk_scale",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "bleed_duration",
+                  "value": 3,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Shadow Raid",
+              "rangeId": null,
+              "description": "The next attack deals <@ba.vup>{bleed_atk_scale:0%}</> ATK as Arts damage to the target every second for <@ba.vup>{bleed_duration}</> seconds (does not stack), gains <@ba.vup>{cost}</> DP",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 3,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_ines_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "bleed_atk_scale",
+                  "value": 0.55,
+                  "valueStr": null
+                },
+                {
+                  "key": "bleed_duration",
+                  "value": 3,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Shadow Raid",
+              "rangeId": null,
+              "description": "The next attack deals <@ba.vup>{bleed_atk_scale:0%}</> ATK as Arts damage to the target every second for <@ba.vup>{bleed_duration}</> seconds (does not stack), gains <@ba.vup>{cost}</> DP",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 3,
+                "initSp": 1,
+                "increment": 1
+              },
+              "prefabId": "skchr_ines_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "bleed_atk_scale",
+                  "value": 0.65,
+                  "valueStr": null
+                },
+                {
+                  "key": "bleed_duration",
+                  "value": 3,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Shadow Raid",
+              "rangeId": null,
+              "description": "The next attack deals <@ba.vup>{bleed_atk_scale:0%}</> ATK as Arts damage to the target every second for <@ba.vup>{bleed_duration}</> seconds (does not stack), gains <@ba.vup>{cost}</> DP",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 3,
+                "initSp": 2,
+                "increment": 1
+              },
+              "prefabId": "skchr_ines_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "bleed_atk_scale",
+                  "value": 0.7,
+                  "valueStr": null
+                },
+                {
+                  "key": "bleed_duration",
+                  "value": 3,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Shadow Raid",
+              "rangeId": null,
+              "description": "The next attack deals <@ba.vup>{bleed_atk_scale:0%}</> ATK as Arts damage to the target every second for <@ba.vup>{bleed_duration}</> seconds (does not stack), gains <@ba.vup>{cost}</> DP",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 3,
+                "initSp": 3,
+                "increment": 1
+              },
+              "prefabId": "skchr_ines_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "bleed_atk_scale",
+                  "value": 0.8,
+                  "valueStr": null
+                },
+                {
+                  "key": "bleed_duration",
+                  "value": 3,
+                  "valueStr": null
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "skchr_ines_2",
+          "unlockCondition": {
+            "phase": "PHASE_1",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "Murky Night",
+              "rangeId": "3-13",
+              "description": "Attack range <@ba.vup>expands</>, gains <@ba.vup>+{atk:0%}</> ATK and <$ba.invisible>Invisibility</>, each attack grants <@ba.vup>{cost}</> DP and <$ba.steal>Steals</><@ba.vup>{attack@steal_atk_speed}</> ASPD from the target (Caps at {attack@steal_atk_speed_max}, lasts until skill ends or Ines is retreated)",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 30,
+                "initSp": 5,
+                "increment": 1
+              },
+              "prefabId": "skchr_ines_2",
+              "duration": 12,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@steal_atk_speed",
+                  "value": 4,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@steal_atk_speed_max",
+                  "value": 40,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  0,
+                  3
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ]
+              ]
+            },
+            {
+              "name": "Murky Night",
+              "rangeId": "3-13",
+              "description": "Attack range <@ba.vup>expands</>, gains <@ba.vup>+{atk:0%}</> ATK and <$ba.invisible>Invisibility</>, each attack grants <@ba.vup>{cost}</> DP and <$ba.steal>Steals</><@ba.vup>{attack@steal_atk_speed}</> ASPD from the target (Caps at {attack@steal_atk_speed_max}, lasts until skill ends or Ines is retreated)",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 29,
+                "initSp": 5,
+                "increment": 1
+              },
+              "prefabId": "skchr_ines_2",
+              "duration": 12,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.45,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@steal_atk_speed",
+                  "value": 4,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@steal_atk_speed_max",
+                  "value": 40,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  0,
+                  3
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ]
+              ]
+            },
+            {
+              "name": "Murky Night",
+              "rangeId": "3-13",
+              "description": "Attack range <@ba.vup>expands</>, gains <@ba.vup>+{atk:0%}</> ATK and <$ba.invisible>Invisibility</>, each attack grants <@ba.vup>{cost}</> DP and <$ba.steal>Steals</><@ba.vup>{attack@steal_atk_speed}</> ASPD from the target (Caps at {attack@steal_atk_speed_max}, lasts until skill ends or Ines is retreated)",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 28,
+                "initSp": 5,
+                "increment": 1
+              },
+              "prefabId": "skchr_ines_2",
+              "duration": 12,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@steal_atk_speed",
+                  "value": 4,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@steal_atk_speed_max",
+                  "value": 40,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  0,
+                  3
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ]
+              ]
+            },
+            {
+              "name": "Murky Night",
+              "rangeId": "3-13",
+              "description": "Attack range <@ba.vup>expands</>, gains <@ba.vup>+{atk:0%}</> ATK and <$ba.invisible>Invisibility</>, each attack grants <@ba.vup>{cost}</> DP and <$ba.steal>Steals</><@ba.vup>{attack@steal_atk_speed}</> ASPD from the target (Caps at {attack@steal_atk_speed_max}, lasts until skill ends or Ines is retreated)",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 27,
+                "initSp": 10,
+                "increment": 1
+              },
+              "prefabId": "skchr_ines_2",
+              "duration": 12,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@steal_atk_speed",
+                  "value": 5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@steal_atk_speed_max",
+                  "value": 50,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  0,
+                  3
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ]
+              ]
+            },
+            {
+              "name": "Murky Night",
+              "rangeId": "3-13",
+              "description": "Attack range <@ba.vup>expands</>, gains <@ba.vup>+{atk:0%}</> ATK and <$ba.invisible>Invisibility</>, each attack grants <@ba.vup>{cost}</> DP and <$ba.steal>Steals</><@ba.vup>{attack@steal_atk_speed}</> ASPD from the target (Caps at {attack@steal_atk_speed_max}, lasts until skill ends or Ines is retreated)",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 26,
+                "initSp": 10,
+                "increment": 1
+              },
+              "prefabId": "skchr_ines_2",
+              "duration": 12,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.65,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@steal_atk_speed",
+                  "value": 5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@steal_atk_speed_max",
+                  "value": 50,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  0,
+                  3
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ]
+              ]
+            },
+            {
+              "name": "Murky Night",
+              "rangeId": "3-13",
+              "description": "Attack range <@ba.vup>expands</>, gains <@ba.vup>+{atk:0%}</> ATK and <$ba.invisible>Invisibility</>, each attack grants <@ba.vup>{cost}</> DP and <$ba.steal>Steals</><@ba.vup>{attack@steal_atk_speed}</> ASPD from the target (Caps at {attack@steal_atk_speed_max}, lasts until skill ends or Ines is retreated)",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 25,
+                "initSp": 10,
+                "increment": 1
+              },
+              "prefabId": "skchr_ines_2",
+              "duration": 12,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.7,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@steal_atk_speed",
+                  "value": 5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@steal_atk_speed_max",
+                  "value": 50,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  0,
+                  3
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ]
+              ]
+            },
+            {
+              "name": "Murky Night",
+              "rangeId": "3-13",
+              "description": "Attack range <@ba.vup>expands</>, gains <@ba.vup>+{atk:0%}</> ATK and <$ba.invisible>Invisibility</>, each attack grants <@ba.vup>{cost}</> DP and <$ba.steal>Steals</><@ba.vup>{attack@steal_atk_speed}</> ASPD from the target (Caps at {attack@steal_atk_speed_max}, lasts until skill ends or Ines is retreated)",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 24,
+                "initSp": 15,
+                "increment": 1
+              },
+              "prefabId": "skchr_ines_2",
+              "duration": 12,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.8,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@steal_atk_speed",
+                  "value": 6,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@steal_atk_speed_max",
+                  "value": 60,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  0,
+                  3
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ]
+              ]
+            },
+            {
+              "name": "Murky Night",
+              "rangeId": "3-13",
+              "description": "Attack range <@ba.vup>expands</>, gains <@ba.vup>+{atk:0%}</> ATK and <$ba.invisible>Invisibility</>, each attack grants <@ba.vup>{cost}</> DP and <$ba.steal>Steals</><@ba.vup>{attack@steal_atk_speed}</> ASPD from the target (Caps at {attack@steal_atk_speed_max}, lasts until skill ends or Ines is retreated)",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 23,
+                "initSp": 15,
+                "increment": 1
+              },
+              "prefabId": "skchr_ines_2",
+              "duration": 12,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.9,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@steal_atk_speed",
+                  "value": 6,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@steal_atk_speed_max",
+                  "value": 60,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  0,
+                  3
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ]
+              ]
+            },
+            {
+              "name": "Murky Night",
+              "rangeId": "3-13",
+              "description": "Attack range <@ba.vup>expands</>, gains <@ba.vup>+{atk:0%}</> ATK and <$ba.invisible>Invisibility</>, each attack grants <@ba.vup>{cost}</> DP and <$ba.steal>Steals</><@ba.vup>{attack@steal_atk_speed}</> ASPD from the target (Caps at {attack@steal_atk_speed_max}, lasts until skill ends or Ines is retreated)",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 22,
+                "initSp": 15,
+                "increment": 1
+              },
+              "prefabId": "skchr_ines_2",
+              "duration": 12,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@steal_atk_speed",
+                  "value": 6,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@steal_atk_speed_max",
+                  "value": 60,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  0,
+                  3
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ]
+              ]
+            },
+            {
+              "name": "Murky Night",
+              "rangeId": "3-13",
+              "description": "Attack range <@ba.vup>expands</>, gains <@ba.vup>+{atk:0%}</> ATK and <$ba.invisible>Invisibility</>, each attack grants <@ba.vup>{cost}</> DP and <$ba.steal>Steals</><@ba.vup>{attack@steal_atk_speed}</> ASPD from the target (Caps at {attack@steal_atk_speed_max}, lasts until skill ends or Ines is retreated)",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 20,
+                "initSp": 15,
+                "increment": 1
+              },
+              "prefabId": "skchr_ines_2",
+              "duration": 12,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 1.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@steal_atk_speed",
+                  "value": 7,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@steal_atk_speed_max",
+                  "value": 70,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  0,
+                  3
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "id": "skchr_ines_3",
+          "unlockCondition": {
+            "phase": "PHASE_2",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "Solitary Return",
+              "rangeId": null,
+              "description": "<@ba.rem>The first deployment costs 0 DP, places a Shadow Sentry on the field, and immediately refreshes Redeployment Time</>\nAfter deployment, <@ba.vup>+{atk:0%}</> ATK, immediately retrieves the Shadow Sentry, and deals <@ba.vup>{atk_scale:0%}</> ATK as Physical damage to up to <@ba.vup>{max_target}</> enemies it passes through; while active, gains <@ba.vup>{cost}</> DP for each attack on an enemy",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_ines_3",
+              "duration": 9,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk_scale",
+                  "value": 0.8,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_target",
+                  "value": 4,
+                  "valueStr": null
+                },
+                {
+                  "key": "projectile_range",
+                  "value": 1.4,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Solitary Return",
+              "rangeId": null,
+              "description": "<@ba.rem>The first deployment costs 0 DP, places a Shadow Sentry on the field, and immediately refreshes Redeployment Time</>\nAfter deployment, <@ba.vup>+{atk:0%}</> ATK, immediately retrieves the Shadow Sentry, and deals <@ba.vup>{atk_scale:0%}</> ATK as Physical damage to up to <@ba.vup>{max_target}</> enemies it passes through; while active, gains <@ba.vup>{cost}</> DP for each attack on an enemy",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_ines_3",
+              "duration": 9,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.7,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk_scale",
+                  "value": 0.9,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_target",
+                  "value": 4,
+                  "valueStr": null
+                },
+                {
+                  "key": "projectile_range",
+                  "value": 1.4,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Solitary Return",
+              "rangeId": null,
+              "description": "<@ba.rem>The first deployment costs 0 DP, places a Shadow Sentry on the field, and immediately refreshes Redeployment Time</>\nAfter deployment, <@ba.vup>+{atk:0%}</> ATK, immediately retrieves the Shadow Sentry, and deals <@ba.vup>{atk_scale:0%}</> ATK as Physical damage to up to <@ba.vup>{max_target}</> enemies it passes through; while active, gains <@ba.vup>{cost}</> DP for each attack on an enemy",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_ines_3",
+              "duration": 9,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.8,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk_scale",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_target",
+                  "value": 4,
+                  "valueStr": null
+                },
+                {
+                  "key": "projectile_range",
+                  "value": 1.4,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Solitary Return",
+              "rangeId": null,
+              "description": "<@ba.rem>The first deployment costs 0 DP, places a Shadow Sentry on the field, and immediately refreshes Redeployment Time</>\nAfter deployment, <@ba.vup>+{atk:0%}</> ATK, immediately retrieves the Shadow Sentry, and deals <@ba.vup>{atk_scale:0%}</> ATK as Physical damage to up to <@ba.vup>{max_target}</> enemies it passes through; while active, gains <@ba.vup>{cost}</> DP for each attack on an enemy",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_ines_3",
+              "duration": 11,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.9,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk_scale",
+                  "value": 1.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_target",
+                  "value": 4,
+                  "valueStr": null
+                },
+                {
+                  "key": "projectile_range",
+                  "value": 1.4,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Solitary Return",
+              "rangeId": null,
+              "description": "<@ba.rem>The first deployment costs 0 DP, places a Shadow Sentry on the field, and immediately refreshes Redeployment Time</>\nAfter deployment, <@ba.vup>+{atk:0%}</> ATK, immediately retrieves the Shadow Sentry, and deals <@ba.vup>{atk_scale:0%}</> ATK as Physical damage to up to <@ba.vup>{max_target}</> enemies it passes through; while active, gains <@ba.vup>{cost}</> DP for each attack on an enemy",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_ines_3",
+              "duration": 11,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk_scale",
+                  "value": 1.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_target",
+                  "value": 4,
+                  "valueStr": null
+                },
+                {
+                  "key": "projectile_range",
+                  "value": 1.4,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Solitary Return",
+              "rangeId": null,
+              "description": "<@ba.rem>The first deployment costs 0 DP, places a Shadow Sentry on the field, and immediately refreshes Redeployment Time</>\nAfter deployment, <@ba.vup>+{atk:0%}</> ATK, immediately retrieves the Shadow Sentry, and deals <@ba.vup>{atk_scale:0%}</> ATK as Physical damage to up to <@ba.vup>{max_target}</> enemies it passes through; while active, gains <@ba.vup>{cost}</> DP for each attack on an enemy",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_ines_3",
+              "duration": 11,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 1.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk_scale",
+                  "value": 1.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_target",
+                  "value": 4,
+                  "valueStr": null
+                },
+                {
+                  "key": "projectile_range",
+                  "value": 1.4,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Solitary Return",
+              "rangeId": null,
+              "description": "<@ba.rem>The first deployment costs 0 DP, places a Shadow Sentry on the field, and immediately refreshes Redeployment Time</>\nAfter deployment, <@ba.vup>+{atk:0%}</> ATK, immediately retrieves the Shadow Sentry, and deals <@ba.vup>{atk_scale:0%}</> ATK as Physical damage to up to <@ba.vup>{max_target}</> enemies it passes through; while active, gains <@ba.vup>{cost}</> DP for each attack on an enemy",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_ines_3",
+              "duration": 13,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 1.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk_scale",
+                  "value": 1.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_target",
+                  "value": 5,
+                  "valueStr": null
+                },
+                {
+                  "key": "projectile_range",
+                  "value": 1.4,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Solitary Return",
+              "rangeId": null,
+              "description": "<@ba.rem>The first deployment costs 0 DP, places a Shadow Sentry on the field, and immediately refreshes Redeployment Time</>\nAfter deployment, <@ba.vup>+{atk:0%}</> ATK, immediately retrieves the Shadow Sentry, and deals <@ba.vup>{atk_scale:0%}</> ATK as Physical damage to up to <@ba.vup>{max_target}</> enemies it passes through; while active, gains <@ba.vup>{cost}</> DP for each attack on an enemy",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_ines_3",
+              "duration": 14,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 1.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk_scale",
+                  "value": 1.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_target",
+                  "value": 5,
+                  "valueStr": null
+                },
+                {
+                  "key": "projectile_range",
+                  "value": 1.4,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Solitary Return",
+              "rangeId": null,
+              "description": "<@ba.rem>The first deployment costs 0 DP, places a Shadow Sentry on the field, and immediately refreshes Redeployment Time</>\nAfter deployment, <@ba.vup>+{atk:0%}</> ATK, immediately retrieves the Shadow Sentry, and deals <@ba.vup>{atk_scale:0%}</> ATK as Physical damage to up to <@ba.vup>{max_target}</> enemies it passes through; while active, gains <@ba.vup>{cost}</> DP for each attack on an enemy",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_ines_3",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 1.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk_scale",
+                  "value": 1.8,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_target",
+                  "value": 5,
+                  "valueStr": null
+                },
+                {
+                  "key": "projectile_range",
+                  "value": 1.4,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Solitary Return",
+              "rangeId": null,
+              "description": "<@ba.rem>The first deployment costs 0 DP, places a Shadow Sentry on the field, and immediately refreshes Redeployment Time</>\nAfter deployment, <@ba.vup>+{atk:0%}</> ATK, immediately retrieves the Shadow Sentry, and deals <@ba.vup>{atk_scale:0%}</> ATK as Physical damage to up to <@ba.vup>{max_target}</> enemies it passes through; while active, gains <@ba.vup>{cost}</> DP for each attack on an enemy",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_ines_3",
+              "duration": 16,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 1.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk_scale",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_target",
+                  "value": 6,
+                  "valueStr": null
+                },
+                {
+                  "key": "projectile_range",
+                  "value": 1.4,
                   "valueStr": null
                 }
               ]

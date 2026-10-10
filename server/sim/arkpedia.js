@@ -85,6 +85,7 @@ import { customizeZuoleKit, installZuole } from './content/arkpedia-zuole.js';
 import { customizeBobbingKit, installBobbing } from './content/arkpedia-bobbing.js';
 import { customizeSceneKit, installScene } from './content/arkpedia-scene.js';
 import { customizeSkadiAlterKit, installSkadiAlter } from './content/arkpedia-skadi-alter.js';
+import { customizeInesKit, installInes, adjustInesCost } from './content/arkpedia-ines.js';
 import { customizeDorothyKit, installDorothy } from './content/arkpedia-dorothy.js';
 import { customizeVirtuosaKit, installVirtuosa } from './content/arkpedia-virtuosa.js';
 import { customizeSandReckonerKit, installSandReckoner } from './content/arkpedia-sand-reckoner.js';
@@ -322,6 +323,8 @@ export class StandardBattle extends Battle {
       .reduce((slots, unit) => slots + (unit.deploymentSlotCost ?? 1), 0);
   }
   deploymentSlotCost(id) {
+    if (id === 'char_4087_ines' && this.bench[id]?.build.skillId === 'skchr_ines_3'
+      && !this.inesState?.firstUsed) return 0;
     const config = REGULAR_OPERATORS[id];
     if (config?.deploymentSlotExemptSkillIds?.includes(this.bench[id]?.build.skillId)) return 0;
     return (this.bench[id]?.build.elite ?? 0) >= (config?.deploymentSlotExemptMinElite ?? 0)
@@ -334,7 +337,7 @@ export class StandardBattle extends Battle {
     const ordinary = Math.floor(this.data.getChess(id).stats.cost
       * Math.min(2, 1 + entry.deployments * 0.5));
     const vanguard = adjustFiveStarVanguardSecondCost(this, id, ordinary);
-    return adjustAshCost(this, id, adjustFangFireSharpenedCost(this, id, adjustSaileachCost(this, id, adjustJieyunCost(this, id, vanguard))));
+    return adjustInesCost(this, id, adjustAshCost(this, id, adjustFangFireSharpenedCost(this, id, adjustSaileachCost(this, id, adjustJieyunCost(this, id, vanguard)))));
   }
   placementError(id, row, col) {
     const entry = this.bench[id];
@@ -460,6 +463,7 @@ export class StandardBattle extends Battle {
     customizeVirtuosaKit({ battle: this, id, def, unit, kit });
     customizeDorothyKit({ battle: this, id, def, unit, kit });
     customizeSkadiAlterKit({ battle: this, id, def, unit, kit });
+    customizeInesKit({ battle: this, id, def, unit, kit });
     customizeChilchuckKit({ battle: this, id, def, unit, kit });
     customizeBlacknightKit({ battle: this, id, def, unit, kit });
     customizeChristineKit({ battle: this, id, def, unit, kit });
@@ -636,6 +640,7 @@ export class StandardBattle extends Battle {
     installVirtuosa({ battle: this, unit, def });
     installDorothy({ battle: this, unit, def });
     installSkadiAlter({ battle: this, unit, def });
+    installInes({ battle: this, unit, def });
     installChilchuck({ battle: this, unit, def });
     installBlacknight({ battle: this, unit, def });
     installChristine({ battle: this, unit, def });
