@@ -86,6 +86,7 @@ import { customizeBobbingKit, installBobbing } from './content/arkpedia-bobbing.
 import { customizeSceneKit, installScene } from './content/arkpedia-scene.js';
 import { customizeSkadiAlterKit, installSkadiAlter } from './content/arkpedia-skadi-alter.js';
 import { customizeInesKit, installInes, adjustInesCost } from './content/arkpedia-ines.js';
+import { customizeCivilightKit, installCivilight } from './content/arkpedia-civilight.js';
 import { customizeDorothyKit, installDorothy } from './content/arkpedia-dorothy.js';
 import { customizeVirtuosaKit, installVirtuosa } from './content/arkpedia-virtuosa.js';
 import { customizeSandReckonerKit, installSandReckoner } from './content/arkpedia-sand-reckoner.js';
@@ -464,6 +465,7 @@ export class StandardBattle extends Battle {
     customizeDorothyKit({ battle: this, id, def, unit, kit });
     customizeSkadiAlterKit({ battle: this, id, def, unit, kit });
     customizeInesKit({ battle: this, id, def, unit, kit });
+    customizeCivilightKit({ battle: this, id, def, unit, kit });
     customizeChilchuckKit({ battle: this, id, def, unit, kit });
     customizeBlacknightKit({ battle: this, id, def, unit, kit });
     customizeChristineKit({ battle: this, id, def, unit, kit });
@@ -641,6 +643,7 @@ export class StandardBattle extends Battle {
     installDorothy({ battle: this, unit, def });
     installSkadiAlter({ battle: this, unit, def });
     installInes({ battle: this, unit, def });
+    installCivilight({ battle: this, unit, def });
     installChilchuck({ battle: this, unit, def });
     installBlacknight({ battle: this, unit, def });
     installChristine({ battle: this, unit, def });

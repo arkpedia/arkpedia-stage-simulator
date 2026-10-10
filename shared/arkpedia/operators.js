@@ -138,6 +138,7 @@ import { VINA_OPERATORS } from './vina-operators.js';
 import { JESSICA_OPERATORS } from './jessica-operators.js';
 import { SKADI_ALTER_OPERATORS } from './skadi-alter-operators.js';
 import { INES_OPERATORS } from './ines-operators.js';
+import { CIVILIGHT_OPERATORS } from './civilight-operators.js';
 import { DOROTHY_OPERATORS } from './dorothy-operators.js';
 import { VIRTUOSA_OPERATORS } from './virtuosa-operators.js';
 import { SAND_RECKONER_OPERATORS } from './sand-reckoner-operators.js';
@@ -311,6 +312,7 @@ export const REGULAR_OPERATORS = Object.freeze({
   ...DOROTHY_OPERATORS,
   ...SKADI_ALTER_OPERATORS,
   ...INES_OPERATORS,
+  ...CIVILIGHT_OPERATORS,
   ...ENTELECHIA_OPERATORS,
   ...CHEN_ALTER_OPERATORS,
   ...FROST_OPERATORS,

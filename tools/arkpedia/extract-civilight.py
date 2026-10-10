@@ -195,8 +195,8 @@ evidence = {'schemaVersion': 1, 'source': {'repository': 'Kengxxiao/ArknightsGam
     'buffDatabase': {'path': 'en_US/gamedata/buff_table.json', 'sha256': digest((C / 'lessing-source/buff_table.json').read_bytes())},
     'bundles': source_bundles, 'modelRepository': 'fexli/ArknightsResource', 'modelCommit': MODEL},
     'frameParity': False, 'moduleSupport': False, 'nativeParticleSupport': False,
-    'enabledOperators': [], 'heldOperators': [ID],
-    'reviewStatus': 'Complete source foundation: dedicated mutable orbit and HP redistribution adapter pending',
+    'enabledOperators': [ID], 'heldOperators': [],
+    'reviewStatus': 'Playable bounded three-skill orbital and HP redistribution adapter',
     'characters': characters, 'skills': skills, 'chararts': chararts,
     'models': models, 'officialSkeletonBindings': bindings, 'projectiles': projectiles,
     'projectileVariants': projectile_variants,
@@ -217,10 +217,24 @@ evidence = {'schemaVersion': 1, 'source': {'repository': 'Kengxxiao/ArknightsGam
         'S3 records recipient current/max HP, sums those quantities, computes the weighted total-HP ratio, applies it using skipModifierEvent1 and clears collectors. Collection/calculation have distinct native controllers with raw 1s intervals while selected table keys supply 2s. Talent2 uses a global Sarkaz filter and nonstacking one-minus damage scaling.',
         'All twelve original four-mode main/graphic/logic projectile trees and recursively referenced buffs, orbit movement and collision-controller fields are retained. Raw FP/SInt64 cooldown and speed fields are evidence, not a claim that compiled unit conversion or same-frame dispatch is recovered.'
     ],
-    'holdReasons': [
-        'A dedicated source-backed mutable orbital emitter, collision lifecycle, mode transition and recipient controller is required before enabling the full kit.',
-        'HP redistribution collector ordering, compiled dispatch/field unit conversion, native frame parity, modules and original Unity particles/audio are not yet certified.'
+    'holdReasons': [],
+    'runtimeContract': [
+        'Dedicated per-owner orbit slots move counterclockwise, sweep collision chords, disappear individually and respawn on selected cooldowns. Default/S1 use three allied-operator particles; S2 fills six enemy-damage particles and changes radius/speed; S3 preserves particles. Mode changes reset slots through an explicit local emitter contract.',
+        'Per-recipient regeneration waits one second on entry, uses live owner ATK and only the same producer mark, and bypasses ordinary healing modifiers. ATK/MaxHP Inspiration uses immediate one-second refreshes and the highest selected percentage per stat. Bards remain immune.',
+        'S2 collides with ground/air enemies independently of sight, issues selected True damage and attaches selected Bind through the outputDamage hook, including other issued HP damage. Original native damage/modifier callback priorities are not claimed.',
+        'S3 applies an atomic collect/calculate/apply redistribution on activation and every selected two seconds. All live recipient maxHP values resolve before recording HP; their summed HP is distributed by maximum HP without healing, damage, shield or SP receipts.',
+        'One strongest deployed Civilight grants global Sarkaz-source damage resistance without duplicate owner stacking. Retreat/death/end remove aura effects, owned marks and particle visuals; original Begin/Loop/End clips use generation-safe transitions.'
+    ],
+    'gameplayCorroboration': [{
+        'url': 'https://prts.wiki/w/%E9%AD%94%E7%8E%8B',
+        'scope': 'Default orbit: 30 degrees/second, radius1.15, collision radius0.4, independent respawns. S2: 0.9 radians/second, radius changes0.01/frame to2; finish replaces particles and changes speed to1 radian/second and radius to1. Bind applies to all owner HP damage. S3 uses summed HP divided by summed maximum HP. This corroborates gameplay interpretation, not native C# dispatch.'
+    }],
+    'fidelityLimits': [
+        'Original FP/SInt64 storage, profession masks and serialized movement fields are retained. Compiled conversions/enum dispatch are not recovered; default angular speed is mapped from the talent degrees and S2/finish speed from skill radians, corroborated by gameplay reference.',
+        'Radius interpolation maps the original0.01/frame field onto the simulator30Hz clock. Starting orbital phase, mode reset/refill timing, swept chords against moving bodies/huge colliders, recipient ties and same-frame mark expiry/cooldown/HP collector ordering are bounded simulator contracts.',
+        'Regeneration, Inspiration, outputDamage and hit resistance hooks bridge native action/attribute phases. Shared maxHP changes preserve HP fraction; compiled collector ordering, external modifier priorities and source status AUTOMATIC dispatch remain uncertified.',
+        'Native frame parity, modules and original Unity particles/audio remain unsupported. Orbital visuals are temporary markers at authoritative collision positions, not imported native VFX.'
     ]}
 (ROOT / 'data/arkpedia-civilight-prefabs.json').write_text(json.dumps(evidence, indent=2) + '\n')
-print('Extracted held Civilight Eterna kit: 30 source ranks,', len(templates), 'reachable templates,',
+print('Extracted Civilight Eterna kit: 30 source ranks,', len(templates), 'reachable templates,',
     len(db_keys), 'database entries,', len(projectiles), 'projectiles and', len(source_bundles), 'verified bundles')

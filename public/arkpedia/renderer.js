@@ -619,10 +619,11 @@ export class StageRenderer {
     for (const projectile of [
       ...(battle?.projectiles.list ?? []).filter(p => p.data?.arkpediaTrackedVisual),
       ...(battle?.regularVisualProjectiles ?? []),
+      ...(battle?.civilightParticles ?? []),
     ]) {
       const point = this.projection.project(projectile.x, projectile.y,
         this.heightAt(Math.round(projectile.y), Math.round(projectile.x)) + 0.5);
-      this.fx.beginFill(0xfbd29a, 0.85).drawCircle(point.x, point.y, 3).endFill();
+      this.fx.beginFill(projectile.color ?? 0xfbd29a, 0.85).drawCircle(point.x, point.y, 3).endFill();
     }
     this.gates?.update(battle?.time ?? 0);
     this.skillParticles?.render(battle?.time ?? 0, this.projection, this.heightAt);

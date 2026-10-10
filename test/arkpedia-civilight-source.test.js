@@ -13,9 +13,12 @@ const near = (a, b) => assert.ok(Math.abs(a - b) < 1e-6, `${a} != ${b}`);
 const actions = (key, event) => e.templates[key].eventToActions[event];
 const type = (rows, kind) => rows.find(a => a.$type.includes('+' + kind + ','));
 
-test('complete Civilight source graphs stay outside playable coverage pending their dedicated controller', () => {
-  assert.deepEqual(e.enabledOperators, []); assert.deepEqual(e.heldOperators, [ID]);
-  assert.equal(REGULAR_OPERATORS[ID], undefined); assert.equal(data.operators[ID], undefined);
+test('complete Civilight source graphs retain explicit runtime contracts and fidelity limits', () => {
+  assert.deepEqual(e.enabledOperators, [ID]); assert.deepEqual(e.heldOperators, []);
+  assert.deepEqual(REGULAR_OPERATORS[ID].skillIds,Object.keys(e.tables.skills));
+  assert.equal(data.operators[ID].skills.length,3);
+  assert.equal(e.runtimeContract.length,5);assert.equal(e.fidelityLimits.length,4);
+  assert.deepEqual(e.holdReasons,[]);assert.equal(e.gameplayCorroboration.length,1);
   assert.equal(rows.length, 186); assert.equal(e.source.bundles.length, 5);
   assert.deepEqual(e.nativeTemplateGaps, []);
   assert.equal(Object.keys(e.templates).length, 12); assert.equal(Object.keys(e.buffDatabase).length, 2);

@@ -157,8 +157,10 @@ assert hot['versionId'] == E['source']['nativeClient'] == '26-09-23-17-49-43_b9c
 for record in E['source']['bundles']:
     native = next(row for row in hot['abInfos'] if row['name'] == record['path'])
     assert (record['md5'], record['size']) == (native['md5'], native['abSize'])
-assert len(E['recoveredFacts']) == 8 and len(E['holdReasons']) == 2
-assert E['enabledOperators'] == [] and E['heldOperators'] == ['char_4134_cetsyr']
+assert len(E['recoveredFacts']) == 8 and E['holdReasons'] == []
+assert E['enabledOperators'] == ['char_4134_cetsyr'] and E['heldOperators'] == []
+assert len(E['runtimeContract']) == 5 and len(E['fidelityLimits']) == 4
+assert len(E['gameplayCorroboration']) == 1
 assert E['frameParity'] is False and E['moduleSupport'] is False and E['nativeParticleSupport'] is False
 assert set(E['tables']['skills']) == {'skchr_cetsyr_1', 'skchr_cetsyr_2', 'skchr_cetsyr_3'}
 assert all(len(s['levels']) == 10 for s in E['tables']['skills'].values())
@@ -166,4 +168,4 @@ assert all(len(s['levels']) == 10 for s in E['tables']['skills'].values())
 # payloads. Hash-valid art is insufficient if the event summaries were edited.
 subprocess.check_call(['node', 'tools/arkpedia/inspect-civilight.mjs'], cwd=ROOT, stdout=subprocess.DEVNULL)
 assert json.loads((C/'civilight-source/models.json').read_text()) == E['models']
-print(f'Verified {count} native components, {len(bundles)} bundles, {len(E["templates"])} templates, 30 ranks, {len(E["projectiles"])} projectile trees and two facing aliases of one original skeleton chain; Civilight Eterna remains held')
+print(f'Verified {count} native components, {len(bundles)} bundles, {len(E["templates"])} templates, 30 ranks, {len(E["projectiles"])} projectile trees and two facing aliases of one original skeleton chain; bounded Civilight Eterna adapter recorded')
