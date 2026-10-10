@@ -34,7 +34,7 @@
   },
   "sd": {
     "repository": "arkpedia/arkpedia-sd-assets",
-    "commit": "40d4586daaaf764020f5b58db1b23cdd12e3d0e9",
+    "commit": "fb67c0ef55edeec917c2768642005d4d517bb469",
     "models": {
       "operator/char_123_fang/default/front": {
         "kind": "operator",
@@ -58994,6 +58994,237 @@
           "height": 699.178
         }
       },
+      "operator/char_1019_siege2/default/front": {
+        "kind": "operator",
+        "id": "char_1019_siege2",
+        "variant": "default",
+        "facing": "front",
+        "spineVersion": "3.8.99",
+        "source": {
+          "key": "operators",
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "spine/char_1019_siege2/char_1019_siege2/Front"
+        },
+        "skeleton": {
+          "path": "models/operator/char_1019_siege2/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_1019_siege2.skel",
+          "bytes": 582246,
+          "sha256": "6b9395034c91fa3d9ba6b6b0df00cd55e62c270da71e4065435a4041cd42926e"
+        },
+        "atlas": {
+          "path": "models/operator/char_1019_siege2/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_1019_siege2.atlas",
+          "bytes": 10577,
+          "sha256": "92f4d0adb700ad1c4eb1c576aa1f9a9d26cdd3c88f0b446e94cc6d7b1bdb200d"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_1019_siege2/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_1019_siege2.png",
+            "bytes": 169228,
+            "sha256": "949ab35d3ff0e7528b42ca2ca07a3d412aac65811a9da3c12eb5ce9b38fa739e"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Attack_1": 1.267,
+          "Attack_2": 1.267,
+          "Default": 0,
+          "Die": 1,
+          "Idle": 4,
+          "Skill_1": 1.267,
+          "Skill_2_Begin": 0.5,
+          "Skill_2_Idle": 3.5,
+          "Skill_2_Loop": 1.267,
+          "Skill_3_Begin": 0.4,
+          "Skill_3_End": 0.833,
+          "Skill_3_Idle": 1,
+          "Skill_3_Loop": 1.267,
+          "Skill_Down_2_Loop": 1.267,
+          "Start": 1
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": null,
+            "loop": "Attack_1",
+            "end": null,
+            "via": "attackAny"
+          },
+          "attackDown": null,
+          "skill": {
+            "begin": null,
+            "loop": "Skill_1",
+            "end": null,
+            "index": 0,
+            "idle": null
+          },
+          "die": "Die",
+          "move": null,
+          "stun": null,
+          "skills": {
+            "0": {
+              "begin": null,
+              "loop": "Skill_1",
+              "end": null,
+              "index": 0,
+              "idle": null
+            },
+            "1": {
+              "begin": "Skill_2_Begin",
+              "loop": "Skill_2_Loop",
+              "end": null,
+              "index": 1,
+              "idle": "Skill_2_Idle"
+            },
+            "2": {
+              "begin": "Skill_3_Begin",
+              "loop": "Skill_3_Loop",
+              "end": "Skill_3_End",
+              "index": 2,
+              "idle": "Skill_3_Idle"
+            }
+          }
+        },
+        "hits": {
+          "Attack_1": [
+            0.5
+          ],
+          "Attack_2": [
+            0.5
+          ],
+          "Skill_1": [
+            0.633
+          ],
+          "Skill_2_Loop": [
+            0.5
+          ],
+          "Skill_3_Loop": [
+            0.433
+          ],
+          "Skill_Down_2_Loop": [
+            0.5
+          ]
+        },
+        "bounds": {
+          "x": -171.001,
+          "y": -110.338,
+          "width": 312.422,
+          "height": 536.339
+        }
+      },
+      "operator/char_1019_siege2/default/back": {
+        "kind": "operator",
+        "id": "char_1019_siege2",
+        "variant": "default",
+        "facing": "back",
+        "spineVersion": "3.8.99",
+        "source": {
+          "key": "operators",
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "spine/char_1019_siege2/char_1019_siege2/Back"
+        },
+        "skeleton": {
+          "path": "models/operator/char_1019_siege2/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_1019_siege2.skel",
+          "bytes": 435437,
+          "sha256": "5d7f3a33c02e9c5e97eb9f5262427502e2b1293007cac923ac33952cc3d71b37"
+        },
+        "atlas": {
+          "path": "models/operator/char_1019_siege2/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_1019_siege2.atlas",
+          "bytes": 5814,
+          "sha256": "1a8c2eab170b815e8e625bfc9483bcacad26fd478dcd0a0759610dcbd8fadcd4"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_1019_siege2/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_1019_siege2.png",
+            "bytes": 149403,
+            "sha256": "b77442493cdf8d3c011c85b99964e9a9485fdc1b8c252371d398a997469a2e50"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Attack_1": 1.267,
+          "Attack_2": 1.267,
+          "Default": 0,
+          "Idle": 4,
+          "Skill_1": 1.267,
+          "Skill_2_Begin": 0.5,
+          "Skill_2_Idle": 3.5,
+          "Skill_2_Loop": 1.267,
+          "Skill_3_Begin": 0.4,
+          "Skill_3_End": 0.833,
+          "Skill_3_Idle": 1,
+          "Skill_3_Loop": 1.267,
+          "Start": 1
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": null,
+            "loop": "Attack_1",
+            "end": null,
+            "via": "attackAny"
+          },
+          "attackDown": null,
+          "skill": {
+            "begin": null,
+            "loop": "Skill_1",
+            "end": null,
+            "index": 0,
+            "idle": null
+          },
+          "die": null,
+          "move": null,
+          "stun": null,
+          "skills": {
+            "0": {
+              "begin": null,
+              "loop": "Skill_1",
+              "end": null,
+              "index": 0,
+              "idle": null
+            },
+            "1": {
+              "begin": "Skill_2_Begin",
+              "loop": "Skill_2_Loop",
+              "end": null,
+              "index": 1,
+              "idle": "Skill_2_Idle"
+            },
+            "2": {
+              "begin": "Skill_3_Begin",
+              "loop": "Skill_3_Loop",
+              "end": "Skill_3_End",
+              "index": 2,
+              "idle": "Skill_3_Idle"
+            }
+          }
+        },
+        "hits": {
+          "Attack_1": [
+            0.5
+          ],
+          "Attack_2": [
+            0.5
+          ],
+          "Skill_1": [
+            0.633
+          ],
+          "Skill_2_Loop": [
+            0.533
+          ],
+          "Skill_3_Loop": [
+            0.433
+          ]
+        },
+        "bounds": {
+          "x": -173.524,
+          "y": -110.345,
+          "width": 327.248,
+          "height": 534.872
+        }
+      },
       "operator/char_4010_etlchi/default/front": {
         "kind": "operator",
         "id": "char_4010_etlchi",
@@ -64438,6 +64669,144 @@
           "width": 306.352,
           "height": 515.892
         }
+      },
+      "operator/token_10040_siege2_vlion/default/front": {
+        "kind": "operator",
+        "id": "token_10040_siege2_vlion",
+        "variant": "default",
+        "facing": "front",
+        "source": {
+          "key": "global-client",
+          "kind": "assetbundle",
+          "bundle": {
+            "path": "pkgrps/btl_pfb_tokens_0.ab",
+            "bytes": 5060143,
+            "md5": "5ab8526b9e59e97cc7e94ed6a248013d",
+            "sha256": "eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f",
+            "resourceVersion": "26-09-23-17-49-43_b9cc4a",
+            "url": "https://ark-us-static-online.yo-star.com/assetbundle/official/Android/assets/26-09-23-17-49-43_b9cc4a/pkgrps_btl_pfb_tokens_0.dat",
+            "transforms": [
+              "Native RGBA texture preserved",
+              "atlas texture dimensions normalized and pma: true recorded"
+            ]
+          },
+          "directory": "pkgrps/btl_pfb_tokens_0.ab",
+          "extractedSkeleton": "token_10040_siege2_vlion.skel",
+          "facingAlias": "single-original-model",
+          "transforms": [
+            "Native RGBA texture preserved",
+            "atlas texture dimensions normalized and pma: true recorded"
+          ]
+        },
+        "spineVersion": "3.8.99",
+        "skeleton": {
+          "path": "models/operator/token_10040_siege2_vlion/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/token_10040_siege2_vlion.skel",
+          "bytes": 94657,
+          "sha256": "2c6f823107dcac3b7051a5a8db894ed0fe6d8f456d38ed6457cabf9a5756b3e4"
+        },
+        "atlas": {
+          "path": "models/operator/token_10040_siege2_vlion/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/token_10040_siege2_vlion.atlas",
+          "bytes": 2945,
+          "sha256": "5e1e38f0b38a34fa23872f1a577bc90ce176ae17a742456e5a7cb6081a86c2f4"
+        },
+        "textures": [
+          {
+            "path": "models/operator/token_10040_siege2_vlion/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/token_10040_siege2_vlion.png",
+            "bytes": 134460,
+            "sha256": "0a40ee1e5b81b0711f465d590f5d854ddcb2f843d022b29c215db95cc52c2256"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Attack": 1.267,
+          "Default": 0,
+          "Die_1": 1,
+          "Die_2": 1,
+          "Idle": 1.333,
+          "Start": 0.5,
+          "Stun": 0.833
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "die": "Die_1",
+          "attack": "Attack"
+        },
+        "hits": {
+          "Attack": [
+            0.5
+          ]
+        },
+        "bounds": null
+      },
+      "operator/token_10040_siege2_vlion/default/back": {
+        "kind": "operator",
+        "id": "token_10040_siege2_vlion",
+        "variant": "default",
+        "facing": "back",
+        "source": {
+          "key": "global-client",
+          "kind": "assetbundle",
+          "bundle": {
+            "path": "pkgrps/btl_pfb_tokens_0.ab",
+            "bytes": 5060143,
+            "md5": "5ab8526b9e59e97cc7e94ed6a248013d",
+            "sha256": "eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f",
+            "resourceVersion": "26-09-23-17-49-43_b9cc4a",
+            "url": "https://ark-us-static-online.yo-star.com/assetbundle/official/Android/assets/26-09-23-17-49-43_b9cc4a/pkgrps_btl_pfb_tokens_0.dat",
+            "transforms": [
+              "Native RGBA texture preserved",
+              "atlas texture dimensions normalized and pma: true recorded"
+            ]
+          },
+          "directory": "pkgrps/btl_pfb_tokens_0.ab",
+          "extractedSkeleton": "token_10040_siege2_vlion.skel",
+          "facingAlias": "single-original-model",
+          "transforms": [
+            "Native RGBA texture preserved",
+            "atlas texture dimensions normalized and pma: true recorded"
+          ]
+        },
+        "spineVersion": "3.8.99",
+        "skeleton": {
+          "path": "models/operator/token_10040_siege2_vlion/default/back/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/token_10040_siege2_vlion.skel",
+          "bytes": 94657,
+          "sha256": "2c6f823107dcac3b7051a5a8db894ed0fe6d8f456d38ed6457cabf9a5756b3e4"
+        },
+        "atlas": {
+          "path": "models/operator/token_10040_siege2_vlion/default/back/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/token_10040_siege2_vlion.atlas",
+          "bytes": 2945,
+          "sha256": "5e1e38f0b38a34fa23872f1a577bc90ce176ae17a742456e5a7cb6081a86c2f4"
+        },
+        "textures": [
+          {
+            "path": "models/operator/token_10040_siege2_vlion/default/back/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/token_10040_siege2_vlion.png",
+            "bytes": 134460,
+            "sha256": "0a40ee1e5b81b0711f465d590f5d854ddcb2f843d022b29c215db95cc52c2256"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Attack": 1.267,
+          "Default": 0,
+          "Die_1": 1,
+          "Die_2": 1,
+          "Idle": 1.333,
+          "Start": 0.5,
+          "Stun": 0.833
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "die": "Die_1",
+          "attack": "Attack"
+        },
+        "hits": {
+          "Attack": [
+            0.5
+          ]
+        },
+        "bounds": null
       },
       "operator/token_10009_weedy_cannon/default/front": {
         "kind": "operator",
@@ -70256,7 +70625,7 @@
     },
     "art": {
       "repository": "arkpedia/arkpedia-sd-assets",
-      "commit": "40d4586daaaf764020f5b58db1b23cdd12e3d0e9",
+      "commit": "fb67c0ef55edeec917c2768642005d4d517bb469",
       "scene": {
         "path": "stages/0-1/26-09-23-17-49-43_b9cc4a/scene.json",
         "bytes": 4479,
@@ -70265,7 +70634,7 @@
     },
     "gates": {
       "repository": "arkpedia/arkpedia-sd-assets",
-      "commit": "40d4586daaaf764020f5b58db1b23cdd12e3d0e9",
+      "commit": "fb67c0ef55edeec917c2768642005d4d517bb469",
       "pack": {
         "path": "effects/standard-gates/26-09-23-17-49-43_b9cc4a/gates.json",
         "bytes": 3507,
@@ -508932,6 +509301,2008 @@
         }
       ]
     },
+    "char_1019_siege2": {
+      "id": "char_1019_siege2",
+      "name": "Vina Victoria",
+      "description": "Deals <@ba.kw>Arts damage</>",
+      "rarity": 6,
+      "profession": "WARRIOR",
+      "subProfessionId": "artsfghter",
+      "position": "MELEE",
+      "nationId": "victoria",
+      "groupId": null,
+      "teamId": null,
+      "phases": [
+        {
+          "maxLevel": 50,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 1320,
+                "atk": 289,
+                "def": 189,
+                "magicResistance": 10,
+                "cost": 19,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.25,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 50,
+              "data": {
+                "maxHp": 1738,
+                "atk": 420,
+                "def": 271,
+                "magicResistance": 10,
+                "cost": 19,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.25,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ]
+        },
+        {
+          "maxLevel": 80,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 1738,
+                "atk": 420,
+                "def": 271,
+                "magicResistance": 10,
+                "cost": 21,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.25,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 80,
+              "data": {
+                "maxHp": 2200,
+                "atk": 546,
+                "def": 348,
+                "magicResistance": 10,
+                "cost": 21,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.25,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ]
+        },
+        {
+          "maxLevel": 90,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 2200,
+                "atk": 546,
+                "def": 348,
+                "magicResistance": 15,
+                "cost": 21,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.25,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 90,
+              "data": {
+                "maxHp": 2895,
+                "atk": 675,
+                "def": 420,
+                "magicResistance": 15,
+                "cost": 21,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.25,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ]
+        }
+      ],
+      "favorKeyFrames": [
+        {
+          "level": 0,
+          "data": {
+            "maxHp": 0,
+            "atk": 0,
+            "def": 0,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false
+          }
+        },
+        {
+          "level": 50,
+          "data": {
+            "maxHp": 0,
+            "atk": 70,
+            "def": 30,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false
+          }
+        }
+      ],
+      "potentialRanks": [
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [],
+        [
+          {
+            "attributeType": "ATK",
+            "formulaItem": "ADDITION",
+            "value": 28,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [],
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ]
+      ],
+      "trait": null,
+      "talents": [
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "The Kings' Sighs",
+              "description": "This unit and friendly units within the surrounding 8 tiles take 12% less Physical damage, and Vina gains +3% ATK for each friendly unit within this range",
+              "rangeId": "x-4",
+              "blackboard": [
+                {
+                  "key": "damage_resistance",
+                  "value": 0.12,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.03,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false,
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 1
+              },
+              "requiredPotentialRank": 4,
+              "prefabKey": "1",
+              "name": "The Kings' Sighs",
+              "description": "This unit and friendly units within the surrounding 8 tiles take 14% <@ba.talpu>(+2%)</> less Physical damage, and Vina gains +4% <@ba.talpu>(+1%)</> ATK for each friendly unit within this range",
+              "rangeId": "x-4",
+              "blackboard": [
+                {
+                  "key": "damage_resistance",
+                  "value": 0.14,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.04,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false,
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "The Kings' Sighs",
+              "description": "This unit and friendly units within the surrounding 8 tiles take 20% less Physical damage, and Vina gains +5% ATK for each friendly unit within this range",
+              "rangeId": "x-4",
+              "blackboard": [
+                {
+                  "key": "damage_resistance",
+                  "value": 0.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.05,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false,
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 4,
+              "prefabKey": "1",
+              "name": "The Kings' Sighs",
+              "description": "This unit and friendly units within the surrounding 8 tiles take 22% <@ba.talpu>(+2%)</> less Physical damage, and Vina gains +6% <@ba.talpu>(+1%)</> ATK for each friendly unit within this range",
+              "rangeId": "x-4",
+              "blackboard": [
+                {
+                  "key": "damage_resistance",
+                  "value": 0.22,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.06,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false,
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "2",
+              "name": "Unsheathed Sword",
+              "description": "When damaging an enemy for the first time, inflicts <$ba.tremble>Frighten</> for 4s",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "not_combat",
+                  "value": 4,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 2,
+              "prefabKey": "2",
+              "name": "Unsheathed Sword",
+              "description": "When damaging an enemy for the first time, inflicts <$ba.tremble>Frighten</> for 5s <@ba.talpu>(+1)</>",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "not_combat",
+                  "value": 5,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            }
+          ]
+        }
+      ],
+      "skills": [
+        {
+          "id": "skchr_siege2_1",
+          "unlockCondition": {
+            "phase": "PHASE_0",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "Reforged Radiance",
+              "rangeId": "x-5",
+              "description": "The next attack deals <@ba.vup>{atk_scale:0%}</> ATK as <@ba.vup>True</> damage to all surrounding ground enemies",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 8,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_siege2_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 0.6,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  0
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  0
+                ]
+              ]
+            },
+            {
+              "name": "Reforged Radiance",
+              "rangeId": "x-5",
+              "description": "The next attack deals <@ba.vup>{atk_scale:0%}</> ATK as <@ba.vup>True</> damage to all surrounding ground enemies",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 8,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_siege2_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 0.7,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  0
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  0
+                ]
+              ]
+            },
+            {
+              "name": "Reforged Radiance",
+              "rangeId": "x-5",
+              "description": "The next attack deals <@ba.vup>{atk_scale:0%}</> ATK as <@ba.vup>True</> damage to all surrounding ground enemies",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 8,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_siege2_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 0.8,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  0
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  0
+                ]
+              ]
+            },
+            {
+              "name": "Reforged Radiance",
+              "rangeId": "x-5",
+              "description": "The next attack deals <@ba.vup>{atk_scale:0%}</> ATK as <@ba.vup>True</> damage to all surrounding ground enemies",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 7,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_siege2_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 0.9,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  0
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  0
+                ]
+              ]
+            },
+            {
+              "name": "Reforged Radiance",
+              "rangeId": "x-5",
+              "description": "The next attack deals <@ba.vup>{atk_scale:0%}</> ATK as <@ba.vup>True</> damage to all surrounding ground enemies",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 7,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_siege2_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  0
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  0
+                ]
+              ]
+            },
+            {
+              "name": "Reforged Radiance",
+              "rangeId": "x-5",
+              "description": "The next attack deals <@ba.vup>{atk_scale:0%}</> ATK as <@ba.vup>True</> damage to all surrounding ground enemies",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 7,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_siege2_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 1.1,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  0
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  0
+                ]
+              ]
+            },
+            {
+              "name": "Reforged Radiance",
+              "rangeId": "x-5",
+              "description": "The next attack deals <@ba.vup>{atk_scale:0%}</> ATK as <@ba.vup>True</> damage to all surrounding ground enemies",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 5,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_siege2_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 1.2,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  0
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  0
+                ]
+              ]
+            },
+            {
+              "name": "Reforged Radiance",
+              "rangeId": "x-5",
+              "description": "The next attack deals <@ba.vup>{atk_scale:0%}</> ATK as <@ba.vup>True</> damage to all surrounding ground enemies",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 5,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_siege2_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 1.4,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  0
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  0
+                ]
+              ]
+            },
+            {
+              "name": "Reforged Radiance",
+              "rangeId": "x-5",
+              "description": "The next attack deals <@ba.vup>{atk_scale:0%}</> ATK as <@ba.vup>True</> damage to all surrounding ground enemies",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 5,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_siege2_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 1.6,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  0
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  0
+                ]
+              ]
+            },
+            {
+              "name": "Reforged Radiance",
+              "rangeId": "x-5",
+              "description": "The next attack deals <@ba.vup>{atk_scale:0%}</> ATK as <@ba.vup>True</> damage to all surrounding ground enemies",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 5,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_siege2_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 1.8,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  0
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  0
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "id": "skchr_siege2_2",
+          "unlockCondition": {
+            "phase": "PHASE_1",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "Homeward Bound",
+              "rangeId": "2-2",
+              "description": "Passive Effect: if there are 2 or more friendly units within Talent 1's range, Vina's SP recovery <@ba.vup>+{sp_recovery_per_sec}/s</>\nUpon automatic activation: Attack Range <@ba.vup>+1</>, ATK <@ba.vup>+{atk:0%}</>, attack target count <@ba.vup>+1</>\n<@ba.rem>Unlimited duration</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 90,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_siege2_2",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "sp_recovery_per_sec",
+                  "value": 0.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 1.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_target",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "buff_stack_cnt",
+                  "value": 2,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ]
+              ]
+            },
+            {
+              "name": "Homeward Bound",
+              "rangeId": "2-2",
+              "description": "Passive Effect: if there are 2 or more friendly units within Talent 1's range, Vina's SP recovery <@ba.vup>+{sp_recovery_per_sec}/s</>\nUpon automatic activation: Attack Range <@ba.vup>+1</>, ATK <@ba.vup>+{atk:0%}</>, attack target count <@ba.vup>+1</>\n<@ba.rem>Unlimited duration</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 90,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_siege2_2",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "sp_recovery_per_sec",
+                  "value": 0.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 1.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_target",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "buff_stack_cnt",
+                  "value": 2,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ]
+              ]
+            },
+            {
+              "name": "Homeward Bound",
+              "rangeId": "2-2",
+              "description": "Passive Effect: if there are 2 or more friendly units within Talent 1's range, Vina's SP recovery <@ba.vup>+{sp_recovery_per_sec}/s</>\nUpon automatic activation: Attack Range <@ba.vup>+1</>, ATK <@ba.vup>+{atk:0%}</>, attack target count <@ba.vup>+1</>\n<@ba.rem>Unlimited duration</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 90,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_siege2_2",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "sp_recovery_per_sec",
+                  "value": 0.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 1.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_target",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "buff_stack_cnt",
+                  "value": 2,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ]
+              ]
+            },
+            {
+              "name": "Homeward Bound",
+              "rangeId": "2-2",
+              "description": "Passive Effect: if there are 2 or more friendly units within Talent 1's range, Vina's SP recovery <@ba.vup>+{sp_recovery_per_sec}/s</>\nUpon automatic activation: Attack Range <@ba.vup>+1</>, ATK <@ba.vup>+{atk:0%}</>, attack target count <@ba.vup>+1</>\n<@ba.rem>Unlimited duration</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 80,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_siege2_2",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "sp_recovery_per_sec",
+                  "value": 0.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 1.35,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_target",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "buff_stack_cnt",
+                  "value": 2,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ]
+              ]
+            },
+            {
+              "name": "Homeward Bound",
+              "rangeId": "2-2",
+              "description": "Passive Effect: if there are 2 or more friendly units within Talent 1's range, Vina's SP recovery <@ba.vup>+{sp_recovery_per_sec}/s</>\nUpon automatic activation: Attack Range <@ba.vup>+1</>, ATK <@ba.vup>+{atk:0%}</>, attack target count <@ba.vup>+1</>\n<@ba.rem>Unlimited duration</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 80,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_siege2_2",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "sp_recovery_per_sec",
+                  "value": 0.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 1.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_target",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "buff_stack_cnt",
+                  "value": 2,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ]
+              ]
+            },
+            {
+              "name": "Homeward Bound",
+              "rangeId": "2-2",
+              "description": "Passive Effect: if there are 2 or more friendly units within Talent 1's range, Vina's SP recovery <@ba.vup>+{sp_recovery_per_sec}/s</>\nUpon automatic activation: Attack Range <@ba.vup>+1</>, ATK <@ba.vup>+{atk:0%}</>, attack target count <@ba.vup>+1</>\n<@ba.rem>Unlimited duration</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 80,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_siege2_2",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "sp_recovery_per_sec",
+                  "value": 0.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 1.45,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_target",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "buff_stack_cnt",
+                  "value": 2,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ]
+              ]
+            },
+            {
+              "name": "Homeward Bound",
+              "rangeId": "2-2",
+              "description": "Passive Effect: if there are 2 or more friendly units within Talent 1's range, Vina's SP recovery <@ba.vup>+{sp_recovery_per_sec}/s</>\nUpon automatic activation: Attack Range <@ba.vup>+1</>, ATK <@ba.vup>+{atk:0%}</>, attack target count <@ba.vup>+1</>\n<@ba.rem>Unlimited duration</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 70,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_siege2_2",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "sp_recovery_per_sec",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 1.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_target",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "buff_stack_cnt",
+                  "value": 2,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ]
+              ]
+            },
+            {
+              "name": "Homeward Bound",
+              "rangeId": "2-2",
+              "description": "Passive Effect: if there are 2 or more friendly units within Talent 1's range, Vina's SP recovery <@ba.vup>+{sp_recovery_per_sec}/s</>\nUpon automatic activation: Attack Range <@ba.vup>+1</>, ATK <@ba.vup>+{atk:0%}</>, attack target count <@ba.vup>+1</>\n<@ba.rem>Unlimited duration</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 70,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_siege2_2",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "sp_recovery_per_sec",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 1.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_target",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "buff_stack_cnt",
+                  "value": 2,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ]
+              ]
+            },
+            {
+              "name": "Homeward Bound",
+              "rangeId": "2-2",
+              "description": "Passive Effect: if there are 2 or more friendly units within Talent 1's range, Vina's SP recovery <@ba.vup>+{sp_recovery_per_sec}/s</>\nUpon automatic activation: Attack Range <@ba.vup>+1</>, ATK <@ba.vup>+{atk:0%}</>, attack target count <@ba.vup>+1</>\n<@ba.rem>Unlimited duration</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 70,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_siege2_2",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "sp_recovery_per_sec",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 1.7,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_target",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "buff_stack_cnt",
+                  "value": 2,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ]
+              ]
+            },
+            {
+              "name": "Homeward Bound",
+              "rangeId": "2-2",
+              "description": "Passive Effect: if there are 2 or more friendly units within Talent 1's range, Vina's SP recovery <@ba.vup>+{sp_recovery_per_sec}/s</>\nUpon automatic activation: Attack Range <@ba.vup>+1</>, ATK <@ba.vup>+{atk:0%}</>, attack target count <@ba.vup>+1</>\n<@ba.rem>Unlimited duration</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 70,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_siege2_2",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "sp_recovery_per_sec",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 1.8,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_target",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "buff_stack_cnt",
+                  "value": 2,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "id": "skchr_siege2_3",
+          "unlockCondition": {
+            "phase": "PHASE_2",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "And All Be In My Name",
+              "rangeId": null,
+              "description": "Summons Golden Vows on deployable tiles within Talent 1's range; when skill is active, can attack enemies being blocked by friendly units in Talent 1's range; ATK <@ba.vup>+{atk:0%}</>, attack target count <@ba.vup>+1</>, Attack Interval <@ba.vup>reduces</>, attacks deal <@ba.vup>True</> damage",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 70,
+                "initSp": 20,
+                "increment": 1
+              },
+              "prefabId": "skchr_siege2_3",
+              "duration": 25,
+              "blackboard": [
+                {
+                  "key": "base_attack_time",
+                  "value": -0.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 1.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_target",
+                  "value": 2,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "And All Be In My Name",
+              "rangeId": null,
+              "description": "Summons Golden Vows on deployable tiles within Talent 1's range; when skill is active, can attack enemies being blocked by friendly units in Talent 1's range; ATK <@ba.vup>+{atk:0%}</>, attack target count <@ba.vup>+1</>, Attack Interval <@ba.vup>reduces</>, attacks deal <@ba.vup>True</> damage",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 70,
+                "initSp": 20,
+                "increment": 1
+              },
+              "prefabId": "skchr_siege2_3",
+              "duration": 25,
+              "blackboard": [
+                {
+                  "key": "base_attack_time",
+                  "value": -0.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 1.35,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_target",
+                  "value": 2,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "And All Be In My Name",
+              "rangeId": null,
+              "description": "Summons Golden Vows on deployable tiles within Talent 1's range; when skill is active, can attack enemies being blocked by friendly units in Talent 1's range; ATK <@ba.vup>+{atk:0%}</>, attack target count <@ba.vup>+1</>, Attack Interval <@ba.vup>reduces</>, attacks deal <@ba.vup>True</> damage",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 70,
+                "initSp": 20,
+                "increment": 1
+              },
+              "prefabId": "skchr_siege2_3",
+              "duration": 25,
+              "blackboard": [
+                {
+                  "key": "base_attack_time",
+                  "value": -0.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 1.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_target",
+                  "value": 2,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "And All Be In My Name",
+              "rangeId": null,
+              "description": "Summons Golden Vows on deployable tiles within Talent 1's range; when skill is active, can attack enemies being blocked by friendly units in Talent 1's range; ATK <@ba.vup>+{atk:0%}</>, attack target count <@ba.vup>+1</>, Attack Interval <@ba.vup>reduces</>, attacks deal <@ba.vup>True</> damage",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 65,
+                "initSp": 25,
+                "increment": 1
+              },
+              "prefabId": "skchr_siege2_3",
+              "duration": 25,
+              "blackboard": [
+                {
+                  "key": "base_attack_time",
+                  "value": -0.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 1.45,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_target",
+                  "value": 2,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "And All Be In My Name",
+              "rangeId": null,
+              "description": "Summons Golden Vows on deployable tiles within Talent 1's range; when skill is active, can attack enemies being blocked by friendly units in Talent 1's range; ATK <@ba.vup>+{atk:0%}</>, attack target count <@ba.vup>+1</>, Attack Interval <@ba.vup>reduces</>, attacks deal <@ba.vup>True</> damage",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 65,
+                "initSp": 25,
+                "increment": 1
+              },
+              "prefabId": "skchr_siege2_3",
+              "duration": 25,
+              "blackboard": [
+                {
+                  "key": "base_attack_time",
+                  "value": -0.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 1.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_target",
+                  "value": 2,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "And All Be In My Name",
+              "rangeId": null,
+              "description": "Summons Golden Vows on deployable tiles within Talent 1's range; when skill is active, can attack enemies being blocked by friendly units in Talent 1's range; ATK <@ba.vup>+{atk:0%}</>, attack target count <@ba.vup>+1</>, Attack Interval <@ba.vup>reduces</>, attacks deal <@ba.vup>True</> damage",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 65,
+                "initSp": 25,
+                "increment": 1
+              },
+              "prefabId": "skchr_siege2_3",
+              "duration": 25,
+              "blackboard": [
+                {
+                  "key": "base_attack_time",
+                  "value": -0.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 1.55,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_target",
+                  "value": 2,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "And All Be In My Name",
+              "rangeId": null,
+              "description": "Summons Golden Vows on deployable tiles within Talent 1's range; when skill is active, can attack enemies being blocked by friendly units in Talent 1's range; ATK <@ba.vup>+{atk:0%}</>, attack target count <@ba.vup>+2</>, Attack Interval <@ba.vup>reduces</>, attacks deal <@ba.vup>True</> damage",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 60,
+                "initSp": 30,
+                "increment": 1
+              },
+              "prefabId": "skchr_siege2_3",
+              "duration": 25,
+              "blackboard": [
+                {
+                  "key": "base_attack_time",
+                  "value": -0.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 1.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_target",
+                  "value": 3,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "And All Be In My Name",
+              "rangeId": null,
+              "description": "Summons Golden Vows on deployable tiles within Talent 1's range; when skill is active, can attack enemies being blocked by friendly units in Talent 1's range; ATK <@ba.vup>+{atk:0%}</>, attack target count <@ba.vup>+2</>, Attack Interval <@ba.vup>reduces</>, attacks deal <@ba.vup>True</> damage",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 57,
+                "initSp": 31,
+                "increment": 1
+              },
+              "prefabId": "skchr_siege2_3",
+              "duration": 25,
+              "blackboard": [
+                {
+                  "key": "base_attack_time",
+                  "value": -0.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 1.7,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_target",
+                  "value": 3,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "And All Be In My Name",
+              "rangeId": null,
+              "description": "Summons Golden Vows on deployable tiles within Talent 1's range; when skill is active, can attack enemies being blocked by friendly units in Talent 1's range; ATK <@ba.vup>+{atk:0%}</>, attack target count <@ba.vup>+2</>, Attack Interval <@ba.vup>reduces</>, attacks deal <@ba.vup>True</> damage",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 54,
+                "initSp": 33,
+                "increment": 1
+              },
+              "prefabId": "skchr_siege2_3",
+              "duration": 25,
+              "blackboard": [
+                {
+                  "key": "base_attack_time",
+                  "value": -0.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 1.8,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_target",
+                  "value": 3,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "And All Be In My Name",
+              "rangeId": null,
+              "description": "Summons Golden Vows on deployable tiles within Talent 1's range; when skill is active, can attack enemies being blocked by friendly units in Talent 1's range; ATK <@ba.vup>+{atk:0%}</>, attack target count <@ba.vup>+3</>, Attack Interval <@ba.vup>reduces</>, attacks deal <@ba.vup>True</> damage",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 50,
+                "initSp": 35,
+                "increment": 1
+              },
+              "prefabId": "skchr_siege2_3",
+              "duration": 25,
+              "blackboard": [
+                {
+                  "key": "base_attack_time",
+                  "value": -0.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 1.9,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_target",
+                  "value": 4,
+                  "valueStr": null
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "char_4010_etlchi": {
       "id": "char_4010_etlchi",
       "name": "Entelechia",
@@ -551663,6 +554034,283 @@
     }
   },
   "tokens": {
+    "token_10040_siege2_vlion": {
+      "id": "token_10040_siege2_vlion",
+      "name": "Golden Vows",
+      "profession": "TOKEN",
+      "subProfessionId": "notchar1",
+      "position": "MELEE",
+      "phases": [
+        {
+          "maxLevel": 50,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 4000,
+                "atk": 247,
+                "def": 211,
+                "magicResistance": 0,
+                "cost": 0,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 2.5,
+                "respawnTime": 0,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 50,
+              "data": {
+                "maxHp": 4000,
+                "atk": 335,
+                "def": 211,
+                "magicResistance": 0,
+                "cost": 0,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 2.5,
+                "respawnTime": 0,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ]
+          ]
+        },
+        {
+          "maxLevel": 80,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 4000,
+                "atk": 335,
+                "def": 211,
+                "magicResistance": 0,
+                "cost": 0,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 2.5,
+                "respawnTime": 0,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 80,
+              "data": {
+                "maxHp": 4000,
+                "atk": 425,
+                "def": 240,
+                "magicResistance": 0,
+                "cost": 0,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 2.5,
+                "respawnTime": 0,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ]
+          ]
+        },
+        {
+          "maxLevel": 90,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 4000,
+                "atk": 425,
+                "def": 270,
+                "magicResistance": 0,
+                "cost": 0,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 2.5,
+                "respawnTime": 0,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 90,
+              "data": {
+                "maxHp": 4000,
+                "atk": 500,
+                "def": 300,
+                "magicResistance": 0,
+                "cost": 0,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 2.5,
+                "respawnTime": 0,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ]
+          ]
+        }
+      ],
+      "trait": null,
+      "talents": [
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": null,
+              "description": "-",
+              "rangeId": null,
+              "blackboard": [],
+              "tokenKey": null,
+              "isHideTalent": true
+            }
+          ]
+        }
+      ],
+      "skills": [
+        {
+          "id": null,
+          "unlockCondition": {
+            "phase": "PHASE_0",
+            "level": 1
+          },
+          "levels": []
+        },
+        {
+          "id": null,
+          "unlockCondition": {
+            "phase": "PHASE_1",
+            "level": 1
+          },
+          "levels": []
+        },
+        {
+          "id": null,
+          "unlockCondition": {
+            "phase": "PHASE_2",
+            "level": 1
+          },
+          "levels": []
+        }
+      ],
+      "automaticOnly": true,
+      "avatar": null
+    },
     "token_10009_weedy_cannon": {
       "id": "token_10009_weedy_cannon",
       "name": "Industrial Water Cannon",
@@ -552816,7 +555464,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/40d4586daaaf764020f5b58db1b23cdd12e3d0e9/models/operator/token_10009_weedy_cannon/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/fb67c0ef55edeec917c2768642005d4d517bb469/models/operator/token_10009_weedy_cannon/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10024_ebnhlz_rcube": {
       "id": "token_10024_ebnhlz_rcube",
@@ -553389,7 +556037,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/40d4586daaaf764020f5b58db1b23cdd12e3d0e9/models/operator/token_10024_ebnhlz_rcube/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/fb67c0ef55edeec917c2768642005d4d517bb469/models/operator/token_10024_ebnhlz_rcube/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10044_wulfen_mine": {
       "id": "token_10044_wulfen_mine",
@@ -554590,7 +557238,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/40d4586daaaf764020f5b58db1b23cdd12e3d0e9/models/operator/token_10044_wulfen_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/fb67c0ef55edeec917c2768642005d4d517bb469/models/operator/token_10044_wulfen_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10042_tecno_puppet": {
       "id": "token_10042_tecno_puppet",
@@ -554839,7 +557487,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/40d4586daaaf764020f5b58db1b23cdd12e3d0e9/models/operator/token_10042_tecno_puppet/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/fb67c0ef55edeec917c2768642005d4d517bb469/models/operator/token_10042_tecno_puppet/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10041_cathy_catsld": {
       "id": "token_10041_cathy_catsld",
@@ -555397,7 +558045,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/40d4586daaaf764020f5b58db1b23cdd12e3d0e9/models/operator/token_10041_cathy_catsld/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/fb67c0ef55edeec917c2768642005d4d517bb469/models/operator/token_10041_cathy_catsld/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10022_kazema_shadow": {
       "id": "token_10022_kazema_shadow",
@@ -555867,7 +558515,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/40d4586daaaf764020f5b58db1b23cdd12e3d0e9/models/operator/token_10022_kazema_shadow/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/fb67c0ef55edeec917c2768642005d4d517bb469/models/operator/token_10022_kazema_shadow/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10001_deepcl_tentac": {
       "id": "token_10001_deepcl_tentac",
@@ -556181,7 +558829,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/40d4586daaaf764020f5b58db1b23cdd12e3d0e9/models/operator/token_10001_deepcl_tentac/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/fb67c0ef55edeec917c2768642005d4d517bb469/models/operator/token_10001_deepcl_tentac/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10018_robrta_mach": {
       "id": "token_10018_robrta_mach",
@@ -556671,7 +559319,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/40d4586daaaf764020f5b58db1b23cdd12e3d0e9/models/operator/token_10018_robrta_mach/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/fb67c0ef55edeec917c2768642005d4d517bb469/models/operator/token_10018_robrta_mach/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10014_bstalk_crab": {
       "id": "token_10014_bstalk_crab",
@@ -557000,7 +559648,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/40d4586daaaf764020f5b58db1b23cdd12e3d0e9/models/operator/token_10014_bstalk_crab/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/fb67c0ef55edeec917c2768642005d4d517bb469/models/operator/token_10014_bstalk_crab/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10011_beewax_oblisk": {
       "id": "token_10011_beewax_oblisk",
@@ -557945,7 +560593,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/40d4586daaaf764020f5b58db1b23cdd12e3d0e9/models/operator/token_10011_beewax_oblisk/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/fb67c0ef55edeec917c2768642005d4d517bb469/models/operator/token_10011_beewax_oblisk/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10006_vodfox_doll": {
       "id": "token_10006_vodfox_doll",
@@ -558581,7 +561229,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/40d4586daaaf764020f5b58db1b23cdd12e3d0e9/models/operator/token_10006_vodfox_doll/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/fb67c0ef55edeec917c2768642005d4d517bb469/models/operator/token_10006_vodfox_doll/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10003_cgbird_bird": {
       "id": "token_10003_cgbird_bird",
@@ -558876,7 +561524,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/40d4586daaaf764020f5b58db1b23cdd12e3d0e9/models/operator/token_10003_cgbird_bird/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/fb67c0ef55edeec917c2768642005d4d517bb469/models/operator/token_10003_cgbird_bird/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10000_silent_healrb": {
       "id": "token_10000_silent_healrb",
@@ -559259,7 +561907,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/40d4586daaaf764020f5b58db1b23cdd12e3d0e9/models/operator/token_10000_silent_healrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/fb67c0ef55edeec917c2768642005d4d517bb469/models/operator/token_10000_silent_healrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10015_dusk_drgn": {
       "id": "token_10015_dusk_drgn",
@@ -559673,7 +562321,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/40d4586daaaf764020f5b58db1b23cdd12e3d0e9/models/operator/token_10015_dusk_drgn/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/fb67c0ef55edeec917c2768642005d4d517bb469/models/operator/token_10015_dusk_drgn/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10007_phatom_twin": {
       "id": "token_10007_phatom_twin",
@@ -561452,7 +564100,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/40d4586daaaf764020f5b58db1b23cdd12e3d0e9/models/operator/token_10007_phatom_twin/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/fb67c0ef55edeec917c2768642005d4d517bb469/models/operator/token_10007_phatom_twin/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10008_cqbw_box": {
       "id": "token_10008_cqbw_box",
@@ -562025,7 +564673,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/40d4586daaaf764020f5b58db1b23cdd12e3d0e9/models/operator/token_10008_cqbw_box/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/fb67c0ef55edeec917c2768642005d4d517bb469/models/operator/token_10008_cqbw_box/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10029_slent2_protrb": {
       "id": "token_10029_slent2_protrb",
@@ -562770,7 +565418,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/40d4586daaaf764020f5b58db1b23cdd12e3d0e9/models/operator/token_10029_slent2_protrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/fb67c0ef55edeec917c2768642005d4d517bb469/models/operator/token_10029_slent2_protrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10019_nearl2_sword": {
       "id": "token_10019_nearl2_sword",
@@ -563557,7 +566205,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/40d4586daaaf764020f5b58db1b23cdd12e3d0e9/models/operator/token_10019_nearl2_sword/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/fb67c0ef55edeec917c2768642005d4d517bb469/models/operator/token_10019_nearl2_sword/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10002_kalts_mon3tr": {
       "id": "token_10002_kalts_mon3tr",
@@ -563975,7 +566623,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/40d4586daaaf764020f5b58db1b23cdd12e3d0e9/models/operator/token_10002_kalts_mon3tr/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/fb67c0ef55edeec917c2768642005d4d517bb469/models/operator/token_10002_kalts_mon3tr/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10010_folivo_car": {
       "id": "token_10010_folivo_car",
@@ -565596,7 +568244,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/40d4586daaaf764020f5b58db1b23cdd12e3d0e9/models/operator/token_10010_folivo_car/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/fb67c0ef55edeec917c2768642005d4d517bb469/models/operator/token_10010_folivo_car/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10021_blkngt_hypnos": {
       "id": "token_10021_blkngt_hypnos",
@@ -566011,7 +568659,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/40d4586daaaf764020f5b58db1b23cdd12e3d0e9/models/operator/token_10021_blkngt_hypnos/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/fb67c0ef55edeec917c2768642005d4d517bb469/models/operator/token_10021_blkngt_hypnos/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10023_windft_wrench": {
       "id": "token_10023_windft_wrench",
@@ -567175,7 +569823,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/40d4586daaaf764020f5b58db1b23cdd12e3d0e9/models/operator/token_10023_windft_wrench/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/fb67c0ef55edeec917c2768642005d4d517bb469/models/operator/token_10023_windft_wrench/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10045_alanna_crane": {
       "id": "token_10045_alanna_crane",
@@ -567575,7 +570223,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/40d4586daaaf764020f5b58db1b23cdd12e3d0e9/models/operator/token_10045_alanna_crane/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/fb67c0ef55edeec917c2768642005d4d517bb469/models/operator/token_10045_alanna_crane/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10013_robin_mine": {
       "id": "token_10013_robin_mine",
@@ -568506,7 +571154,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/40d4586daaaf764020f5b58db1b23cdd12e3d0e9/models/operator/token_10013_robin_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/fb67c0ef55edeec917c2768642005d4d517bb469/models/operator/token_10013_robin_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10016_rfrost_mine": {
       "id": "token_10016_rfrost_mine",
@@ -569437,7 +572085,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/40d4586daaaf764020f5b58db1b23cdd12e3d0e9/models/operator/token_10016_rfrost_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/fb67c0ef55edeec917c2768642005d4d517bb469/models/operator/token_10016_rfrost_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10004_otter_motter": {
       "id": "token_10004_otter_motter",
@@ -570786,7 +573434,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/40d4586daaaf764020f5b58db1b23cdd12e3d0e9/models/operator/token_10004_otter_motter/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/fb67c0ef55edeec917c2768642005d4d517bb469/models/operator/token_10004_otter_motter/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     }
   },
   "enemies": {
@@ -570837,7 +573485,7 @@
   },
   "skillEffects": {
     "repository": "arkpedia/arkpedia-sd-assets",
-    "commit": "40d4586daaaf764020f5b58db1b23cdd12e3d0e9",
+    "commit": "fb67c0ef55edeec917c2768642005d4d517bb469",
     "pack": {
       "path": "effects/charge-cost/26-09-23-17-49-43_b9cc4a/effect.json",
       "bytes": 15311,
