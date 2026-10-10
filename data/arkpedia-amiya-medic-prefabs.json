@@ -58,11 +58,11 @@
   "frameParity": false,
   "moduleSupport": false,
   "nativeParticleSupport": false,
-  "enabledOperators": [],
-  "heldOperators": [
+  "enabledOperators": [
     "char_1037_amiya3"
   ],
-  "reviewStatus": "Complete Global Medic-form source foundation; combat adapter pending",
+  "heldOperators": [],
+  "reviewStatus": "Complete Global Medic-form source and bounded two-skill combat adapter",
   "characters": {
     "char_1037_amiya3": [
       {
@@ -7816,17 +7816,19 @@
     "Both original facing skeleton chains are byte-identical to their pinned imported originals. Attack, S1 Attack, S2 Attack and S2 Begin retain exact original OnAttack payloads; Front and Back S1 Begin durations differ.",
     "All 102 character, skill and projectile components, both projectile trees, nine recursive table/native templates, all 20 ranks, animation hooks, FaceSwitcher and form unlock data are retained without substituting a partial combat kit."
   ],
-  "runtimeContracts": [],
-  "verificationLimits": [
-    "Serialized controllers, selectors, animation payloads and action graphs establish source facts, not execution of the compiled client. Damage/heal callback order, target acquisition ties, skill-clock origin and burst-stack sampling still require explicit executable contracts.",
-    "Exact OnAttack payload times are retained. Parsed clip durations are rounded to three decimals; compiled animation transition/frame parity, maxAnimScale scheduling and distinct-facing Begin timing are not certified.",
-    "Native Unity particles, audio and module combat behavior remain unimplemented. Preserved effect/audio references are not evidence of rendering or gameplay support.",
-    "This record does not enable Medic Amiya, publish her models to the playable asset manifest, or validate browser combat. Existing coverage and the pinned 348-form runtime remain unchanged."
+  "runtimeContracts": [
+    "Ordinary and S1 attacks select one legal enemy at attack start and release at the original facing event with playback capped at 1. Fired speed-10 projectiles retain Arts damage and sample current source ATK on arrival; unfired attacks cancel on control, mode change or redeployment.",
+    "The accepted calculated-damage hook resolves S1 ATTACK-family area healing before its separate trait receipt. It samples active mode and allied eligibility at damage time; the trait uses pre-shield/pre-overkill damage and selects lowest HP ratio then deployment/identity order. Native callback ordering and selector ties are not compiled-client parity.",
+    "S1 preserves enemy attack range and independently rotates the selected x-1 area for all eligible allies, including self and target-free allies. Direct healing respects heal-free/no-heal restrictions; flat max-HP regeneration remains separate.",
+    "Skill duration starts at activation and includes its Begin clip. Begin/End clocks use the parsed original facing clip duration divided by capped playback rate. Cast control blocks ordinary attacks without granting invulnerability or status immunity; interruptions discard the unissued burst without refunding its use.",
+    "S2 permits a no-target cast and stores its selected one-use limit on the bench across redeployment. It selects legal enemies at the original Begin event, snapshots pre-bonus burst ATK, resolves independent Arts receipts, then caps bonus stacks by accepted positive calculated receipts. Those local sampling/ordering choices are explicit, not recovered compiled enum semantics.",
+    "S2 applies selected ASPD/movement debuffs to surviving accepted burst targets, and uses subsequent separate direct True-damage receipts for two distinct legal enemies. Skill finish removes ATK holders and restores mode; enemy debuffs retain their own selected clock. Later kills do not add stacks.",
+    "The HP and regeneration auras choose the strongest live producer separately, each as one shared holder, include later allies and target-free units, exclude devices/heal-free units, and remove owned effects on retreat/death/battle end. HP changes use the existing ratio-preserving stat pipeline; regeneration samples current max HP without duplicate skill-mode holders."
   ],
-  "holdReasons": [
-    "Implement and combat-test calculated-damage trait healing, separate S1 ATTACK-family area healing, healing eligibility and projectile invalidation before roster registration.",
-    "Implement and combat-test the S2 burst, selected enemy-count stack cap, debuff lifetime, two-target True mode, interruption/cleanup and once-per-battle persistence across redeployment.",
-    "Implement and combat-test the owned max-HP/regeneration aura, selected promotion values, later allies, removal and stacking with existing auras without duplicate S1/S2 regeneration.",
-    "Import and verify both original facing models, compile the complete Global patch form, preserve squad identity, and validate the complete adapter locally before marking the form playable."
-  ]
+  "verificationLimits": [
+    "Serialized controllers, selectors, animation payloads and action graphs establish source facts. The local adapter defines damage/heal callback ordering, selector ties, skill-clock origin, burst-stack sampling and aura membership; compiled-client ordering and enum execution remain unverified.",
+    "Exact OnAttack payload times are retained. Parsed clip durations are rounded to three decimals; compiled animation transition/frame parity and maxAnimScale scheduling are not certified.",
+    "Native Unity particles/audio and module combat remain unimplemented. Original facing models/portrait are separately verified; preserved effect/audio references do not establish native VFX support."
+  ],
+  "holdReasons": []
 }

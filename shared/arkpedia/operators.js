@@ -141,6 +141,7 @@ import { INES_OPERATORS } from './ines-operators.js';
 import { REED_ALTER_OPERATORS } from './reed-alter-operators.js';
 import { POZEMKA_OPERATORS } from './pozemka-operators.js';
 import { AMIYA_GUARD_OPERATORS } from './amiya-guard-operators.js';
+import { AMIYA_MEDIC_OPERATORS } from './amiya-medic-operators.js';
 import { CIVILIGHT_OPERATORS } from './civilight-operators.js';
 import { DOROTHY_OPERATORS } from './dorothy-operators.js';
 import { VIRTUOSA_OPERATORS } from './virtuosa-operators.js';
@@ -319,6 +320,7 @@ export const REGULAR_OPERATORS = Object.freeze({
   ...REED_ALTER_OPERATORS,
   ...POZEMKA_OPERATORS,
   ...AMIYA_GUARD_OPERATORS,
+  ...AMIYA_MEDIC_OPERATORS,
   ...ENTELECHIA_OPERATORS,
   ...CHEN_ALTER_OPERATORS,
   ...FROST_OPERATORS,

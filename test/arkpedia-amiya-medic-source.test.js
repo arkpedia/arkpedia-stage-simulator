@@ -14,16 +14,16 @@ const near = (a, b) => assert.ok(Math.abs(a - b) < 1e-6, `${a} != ${b}`);
 const actions = (key, event) => e.templates[key].eventToActions[event];
 const type = (values, name) => values.filter(v => v.$type?.split(',')[0].endsWith(`+${name}`));
 
-test('Medic source foundation retains the complete kit while combat registration stays held', () => {
-  assert.deepEqual(e.enabledOperators, []); assert.deepEqual(e.heldOperators, [ID]);
-  assert.equal(REGULAR_OPERATORS[ID], undefined); assert.equal(data.operators[ID], undefined);
-  assert.match(e.reviewStatus, /source foundation; combat adapter pending/);
+test('Medic source retains the complete reviewed two-skill kit and explicit execution limits', () => {
+  assert.deepEqual(e.enabledOperators, [ID]); assert.deepEqual(e.heldOperators, []);
+  assert.equal(REGULAR_OPERATORS[ID].mechanic, 'amiya-medic'); assert.equal(data.operators[ID].skills.length, 2);
+  assert.match(e.reviewStatus, /bounded two-skill combat adapter/);
   assert.equal(rows.length, 102); assert.equal(e.source.bundles.length, 5);
   assert.equal(Object.keys(e.templates).length, 9); assert.equal(Object.keys(e.projectiles).length, 2);
   assert.deepEqual(e.nativeTemplateGaps, []);
   assert.deepEqual(Object.keys(e.templates), Object.keys(e.originalTemplates));
-  assert.equal(e.recoveredFacts.length, 9); assert.deepEqual(e.runtimeContracts, []);
-  assert.equal(e.verificationLimits.length, 4); assert.equal(e.holdReasons.length, 4);
+  assert.equal(e.recoveredFacts.length, 9); assert.equal(e.runtimeContracts.length, 7);
+  assert.equal(e.verificationLimits.length, 3); assert.equal(e.holdReasons.length, 0);
   for (const key of ['frameParity', 'moduleSupport', 'nativeParticleSupport']) assert.equal(e[key], false);
 });
 

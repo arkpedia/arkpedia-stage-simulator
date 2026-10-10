@@ -74,9 +74,17 @@ if (cnEvidence) {
 const usesForms = ids.some(id => REGULAR_OPERATORS[id].sourceForm);
 let formSource;
 if (usesForms) {
-  const evidence = JSON.parse(await readFile(new URL('../../data/arkpedia-amiya-guard-prefabs.json', import.meta.url)));
+  const audits = await Promise.all(ids.filter(id => REGULAR_OPERATORS[id].sourceForm).map(async id => {
+    const name = id === 'char_1001_amiya2' ? 'amiya-guard' : id === 'char_1037_amiya3' ? 'amiya-medic' : null;
+    if (!name) throw Error(`Unreviewed Global alternate form: ${id}`);
+    const evidence = JSON.parse(await readFile(new URL(`../../data/arkpedia-${name}-prefabs.json`, import.meta.url)));
+    if (!evidence.enabledOperators.includes(id) || evidence.heldOperators.includes(id))
+      throw Error(`Global alternate form lacks complete combat review: ${id}`);
+    return evidence;
+  }));
+  const evidence = audits[0];
   const hash = createHash('sha256').update(await readFile(new URL('char_patch_table.json', cache))).digest('hex');
-  if (evidence.source.commit !== pins[paths.character_table[0]] || hash !== evidence.source.tableHashes.char_patch_table)
+  if (audits.some(e => e.source.commit !== pins[paths.character_table[0]] || hash !== e.source.tableHashes.char_patch_table))
     throw Error('Global alternate-form cache differs from the reviewed source');
   formSource = { commit: evidence.source.commit, sha256: hash,
     patchTable: evidence.source.patchTable, formIds: Object.keys(forms.patchChars) };

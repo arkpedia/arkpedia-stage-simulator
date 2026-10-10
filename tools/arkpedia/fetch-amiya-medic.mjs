@@ -55,3 +55,17 @@ for (const [name, path] of [
   console.log(`Verified ${name}`);
 }
 console.log('Verified immutable Global Amiya patch table');
+const skinTable = { path: 'en_US/gamedata/excel/skin_table.json',
+  sha: '0317e4b9816b64a76084592891c8bf9c63b6fab6', size: 2815110 };
+const skinPath = new URL('skin_table.json', out);
+try { bytes = await readFile(skinPath); }
+catch (error) {
+  if (error.code !== 'ENOENT') throw error;
+  bytes = await download(`https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData_YoStar/${commit}/${skinTable.path}`);
+}
+if (bytes.length !== skinTable.size || hash('sha1', Buffer.concat([
+  Buffer.from(`blob ${bytes.length}\0`), bytes])) !== skinTable.sha)
+  throw Error('Global skin table differs from its pinned Git blob');
+await writeFile(skinPath, bytes);
+await writeFile(new URL('skin-table-source.json', out), `${JSON.stringify(skinTable)}\n`);
+console.log('Verified immutable Global skin table for Medic portrait identity');

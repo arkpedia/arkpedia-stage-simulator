@@ -186,9 +186,9 @@ assert count == 102
 assert len(E['templates']) == 9 and len(E['projectiles']) == 2
 assert E['source']['commit'] == '57010cb5b2afea112cae57daa756b58676ba6850'
 assert E['source']['modelCommit'] == 'd0b5af0b004b044d322397ce5ae79632b6d9fcdd'
-assert E['enabledOperators'] == [] and E['heldOperators'] == ['char_1037_amiya3']
-assert E['reviewStatus'] == 'Complete Global Medic-form source foundation; combat adapter pending'
-assert len(E['recoveredFacts']) == 9 and len(E['verificationLimits']) == 4 and len(E['holdReasons']) == 4 and E['runtimeContracts'] == []
+assert E['enabledOperators'] == ['char_1037_amiya3'] and E['heldOperators'] == []
+assert E['reviewStatus'] == 'Complete Global Medic-form source and bounded two-skill combat adapter'
+assert len(E['recoveredFacts']) == 9 and len(E['verificationLimits']) == 3 and E['holdReasons'] == [] and len(E['runtimeContracts']) == 7
 assert E['frameParity'] is False and E['moduleSupport'] is False and E['nativeParticleSupport'] is False
 assert set(E['tables']['skills']) == set(E['skills']) == {'skchr_amiya3_1','skchr_amiya3_2'}
 assert all(len(s['levels']) == 10 for s in E['tables']['skills'].values())
@@ -198,4 +198,4 @@ assert set(E['officialSkeletonBindings']['char_1037_amiya3']) == {'Front','Back'
 subprocess.check_call(['node', 'tools/arkpedia/inspect-amiya-medic.mjs'],
     cwd=ROOT, stdout=subprocess.DEVNULL)
 assert json.loads((C/'amiya-medic-source/models.json').read_text()) == E['models']
-print(f'Verified {count} native components, {len(bundles)} bundles, {len(E["templates"])} templates, 20 ranks, both original facing skeleton chains and pinned Global form unlock data; Medic form remains held pending its complete combat adapter')
+print(f'Verified {count} native components, {len(bundles)} bundles, {len(E["templates"])} templates, 20 ranks, both original facing skeleton chains and pinned Global form unlock data; bounded combat contracts remain explicit')
