@@ -1954,3 +1954,23 @@ node --test test/arkpedia-wisadel-source.test.js
 ```
 
 Wiš’adel remains **unavailable** pending ordinary/S1 combat, S2 overload, S3 ammunition and Shadow lifecycle controllers, original asset publication, full-kit integration and browser review. Coverage stays **359/431 forms and 771 skills**, with 72 forms remaining. The MVP and asset pin are unchanged. The local preview was found stopped, restarted and checked separately; source tests do not certify combat, modules, particles/audio or compiled Unity frame parity. The last full runtime regression remains the Rosmontis milestone above.
+
+### Wiš’adel: private ordinary/S1 combat (2026-10-11)
+
+Added unregistered, source-selected ordinary/S1 controllers and a shared afterimage/projectile subsystem. These are tested engine components, **not playable full-kit support**.
+
+- Select level/trust/potential, promotion-specific Souvenir coefficients and all ten S1 ranks; reject incomplete or altered loadouts before installing hooks.
+- Use original facing entrance/attack events, non-repeating ordinary A/B/C selection and the original `Skill_1` clip. Cap S1 playback at one and keep its SP lock until the captured clip finishes; lost PRECAST input refunds its charge, control does not.
+- Fly independent native projectile parts at speed ten. Preserve five/eight-second timeouts, ground splash radii and absolute reached delays of .15/.5/.65 seconds. Main-target bonus, main damage and each aftershock are separate live-ATK receipts.
+- Attach one nonstacking afterimage to the primary target, roll separately on aftershock victims and consume successful detonations. Explosions admit airborne enemies and can use a lethal aftershock's original-life centre, matching the native action's `ALL` motion and disabled alive-centre check.
+- Preserve damage mitigation, dodge, barriers, immunity/Resist, status life checks, kill credit and one offensive-SP event per accepted attack. Parent finish removes owned marks while born outputs can finish; battle finish cancels the remaining outputs.
+- Check moving/changed-life inputs, shared foreign marks, reentrant removal/replacement, changed-life damage callbacks and independent projectile timeouts.
+
+**37 controller checks plus nine source checks pass.** The full runtime suite passes **9,982 tests, with nine skipped and zero failures**. The native audit still verifies all 224 components and rejects eight altered records; all ten source/artwork outputs reproduce exactly. Run:
+
+```sh
+node --test test/arkpedia-wisadel-attacks.test.js test/arkpedia-wisadel-source.test.js
+.cache/map-env/bin/python tools/arkpedia/audit-wisadel.py
+```
+
+The exact contract is exported as `WISADEL_ATTACK_CONTRACT`; root/mount geometry, sampled homing, random clip selection, first-source mark claims, ordered receipts and same-tick status life snapshots are explicit local mappings. Compiled Unity frame parity, original particles/audio and modules remain unverified. **T2 Shadows, S2 overload, S3 ammunition, original asset publication, full-kit integration and browser review are next.** The public registry, MVP and SD pin remain unchanged: **359/431 forms, 771 skills, 72 remaining**. The existing local preview was confirmed listening and serving HTTP 200 without a restart; it does not expose this private adapter.

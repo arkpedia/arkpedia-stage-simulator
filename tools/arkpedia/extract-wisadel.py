@@ -202,7 +202,7 @@ evidence = {
         'bundles': source_bundles, 'modelRepository': 'fexli/ArknightsResource', 'modelCommit': MODEL},
     'frameParity': False, 'moduleSupport': False, 'nativeParticleSupport': False,
     'enabledOperators': [], 'heldOperators': [ID],
-    'reviewStatus': 'Source foundation only: afterimages, Revenant Shadows and all three skill controllers await review',
+    'reviewStatus': 'Private ordinary/S1 combat checked separately; full kit remains unavailable pending Shadows and S2/S3 integration',
     'characters': characters, 'tokens': tokens, 'skills': skills, 'chararts': chararts,
     'models': models, 'tokenArtwork': token_artwork, 'tokenModels': token_models, 'officialSkeletonBindings': bindings, 'projectiles': projectiles,
     'templates': {k: bt[k] for k in sorted(templates)},
@@ -216,7 +216,7 @@ evidence = {
         'The native ordinary selector has three attack abilities, disallows consecutive repeats and does not require visiting every ability once.',
         'Ordinary/S1 owner attack events occur at 0.6s; S2 loops at 0.267s and S3 loops at 0.533s in the pinned original skeletons.',
         'Ordinary, S2, S1 and S3 projectile collision radii are 0.9, 0.9, 1.1 and 2.5 tiles; ordinary/S1/S3 reached delay is 0.15s.',
-        'Afterimage ownership follows the source talent buff; detonation first checks probability and the marked target, then applies a 1.1-tile physical explosion.',
+        'Afterimage ownership follows the source talent buff; detonation checks probability and a shared mark, applies a 1.1-tile all-motion physical explosion without requiring a live centre, then consumes the mark.',
         'All ten S1 ranks preserve offensive SP and next-attack aftershock/stun coefficients; the native skill graph retains distinct common, shock and terminal stun abilities.',
         'S2 is explicitly an overload skill with ordinary skill mode 1 and overload mode 2; its BAT modifier is additive and the overload attack adds three emissions at 0.1s spacing.',
         'All ten S3 ranks preserve ammunition, additive BAT and immediate Shadow counts; M3 grants six rounds, two new Shadows and three SP to marked Shadows.',
@@ -225,7 +225,7 @@ evidence = {
         'The original Shadow uses one skeleton with a left/right switcher and embedded 216x216 RGBA texture; front/back import aliases preserve those same source bytes.'
     ],
     'holdReasons': [
-        'Ordinary/S1 damage, afterimage trigger receipts and offensive SP require selected-rank controllers and combat tests.',
+        'Ordinary/S1 controllers are private; full selected-loadout/public lifecycle integration and browser review remain required.',
         'S2 overload targeting and cancellable phases, S3 ammunition and persistent Shadow placement/ownership require full runtime review.',
         'Original Shadow publication, selected-loadout/public lifecycle tests and browser review remain open; serialized data does not establish compiled frame parity.'
     ],

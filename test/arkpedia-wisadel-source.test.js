@@ -52,6 +52,10 @@ test('afterimage explosion checks both probability and the mark before physical 
   assert.deepEqual(nodes.slice(0,3).map(type),['Dice','CheckContainsBuff','AOEDamage']);
   assert.equal(nodes[0]._probKey,'prob');assert.deepEqual(nodes[1]._buffKeys,['wisdel_t_1[bomb]']);
   assert.equal(nodes[2]._damageType,'PHYSICAL');assert.equal(nodes[2]._damageScale,'bomb_atk_scale');near(nodes[2]._radius,1.1);
+  assert.equal(nodes[2]._targetOptions.targetMotion,'ALL');assert.equal(nodes[2]._checkTargetAlive,false);
+  assert.equal(nodes[1]._checkBuffSource,false);
+  assert.ok(nodes.at(-1).$type.includes('FinishBuffsById'));
+  assert.equal(nodes.at(-1)._buffKey,'wisdel_t_1[bomb]');assert.equal(nodes.at(-1)._checkBuffSource,false);
   const derived=e.templates['wisdel_t_1[bomb]'].eventToActions.ON_BUFF_START[0]._succeedNodes[0];
   assert.equal(type(derived),'AttachAsDerivedBuffById');assert.equal(derived._finishDerivedBuffIfParentFinish,true);
 });
