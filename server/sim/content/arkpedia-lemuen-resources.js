@@ -12,7 +12,8 @@ const key = (u, suffix) => `lemuen:${u.id}:${suffix}`;
 
 /** Capacity changes never restore current rounds. The controller supplies one
  * accepted attack ID per group, and explicitly ends the cast after its own
- * original finish phase. Unborn/cancelled work must not call consume(). */
+ * original finish phase. Only accepted attack/aim/mark identities consume a
+ * round; interruption after acceptance never refunds that round. */
 export class LemuenAmmunition {
   constructor(skill, rank) {
     this.skill = skill; this.rank = rank;

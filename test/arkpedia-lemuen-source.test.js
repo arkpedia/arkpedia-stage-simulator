@@ -143,3 +143,32 @@ test('Wanted selectors do not restrict marks to their own source', () => {
   const s3 = component('characters', '1495319038171142683');
   assert.deepEqual(s3._buffs, ['lemuen_s3_range', 'char_lemuen_range_aim']); assert.equal(s3._filterBuffSource, 0);
 });
+
+test('mode/selector and progress records preserve S1 grouping and S2 ordinary fallback', () => {
+  const s1 = component('characters', '7801039473947105819');
+  assert.equal(s1._maxNum, 2); assert.equal(s1._sortAsSelectorOrder, 0);
+  assert.equal(s1._onlyResizeWhenFilter, 1);
+  const progress = component('characters', '-994602773985109477');
+  assert.equal(progress._expendPerTrigger, 1); assert.equal(progress._countEvent, 4);
+  assert.equal(progress._resetWhenAttackFinished, 1); assert.equal(progress._resetImmediatelyWhenProgressEnd, 0);
+  const fallback = component('characters', '2370178821216852507');
+  assert.deepEqual(fallback._abilities.map(p => p.m_PathID), ['-3206290821302134245', '7634395930177755675']);
+  assert.equal(fallback._coolDownAbilityIndex, 1);
+  const animation = component('characters', '795574543030671899');
+  assert.deepEqual(animation._default, { beginAnim: 'Skill_2_Begin', loopAnim: 'Skill_2_Idle', endAnim: 'Skill_2_End' });
+  assert.equal(animation._waitForAttachFinishEvent, 1);
+});
+test('original ammunition skills retain deactivation and distinct activation-animation choices', () => {
+  const ids = ['-8869155622810923566', '-7874779650039904576'];
+  for (const id of ids) {
+    const s = component('skills', id);
+    assert.equal(s._canDiscardRemainingCount, 1); assert.equal(s._finishSkillWithProgress, 1);
+    assert.equal(s._allowSpRecoveryWhenAffecting, 0); assert.equal(s._uninterruptibleOnAbilityPredelay, 1);
+  }
+  const first = component('skills', ids[0]), second = component('skills', ids[1]);
+  assert.equal(first._playSkillBeginAnim, 1); assert.equal(first._beginAnim, 'Skill_1_Begin');
+  assert.equal(second._playSkillBeginAnim, 0); assert.equal(second._beginAnim, '');
+  const mark = component('characters', '-3762993244653430245');
+  near(mark._preDelay, .10000000149011612); assert.equal(mark._cooldownKey, 'aim_interval');
+  assert.equal(mark._selectTargetTiming, 1); assert.equal(mark._waitForAttackEvent, 0);
+});

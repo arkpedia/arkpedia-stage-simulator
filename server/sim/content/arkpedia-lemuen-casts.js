@@ -58,8 +58,9 @@ export class LemuenAiming {
     this.state = null; this.clearEffect(s.target);
     const currentValue = this.links.snapshotS2(s.scale);
     const validLife = s.target.deploySeq === s.targetLife;
-    const born = !!(validLife && this.links.launch(s.target, s.attackId, 2, { currentValue }));
-    this.result = { ...s, reason, currentValue, born, completedAt: this.b.time };
+    const projectile = validLife && this.links.launch(s.target, s.attackId, 2, { currentValue });
+    const born = !!projectile;
+    this.result = { ...s, reason, currentValue, born, projectile: projectile || null, completedAt: this.b.time };
     return born;
   }
   clearEffect(e) { if (this.effect) this.b.removeBuff(e, this.effect); this.effect = null; }
