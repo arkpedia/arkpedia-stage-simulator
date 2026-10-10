@@ -1021,3 +1021,29 @@ Fuze remains unavailable. The compiled destination-offset axis/order, specialize
 Reproduce with `node tools/arkpedia/inspect-fuze.mjs`, `.cache/map-env/bin/python tools/arkpedia/extract-fuze.py` and `.cache/map-env/bin/python tools/arkpedia/verify-fuze.py`. The verifier also accepts an alternate evidence-file path. Re-extraction produces identical bytes. Nine source checks cover both skill ranks, victim/ammo limits, probabilistic talent guards, the opaque trigger, projectile geometry/timing fields and original facing clips. Negative verification rejects an omitted trigger component, an omitted shared template, a falsified grenade radius and a falsified animation event.
 
 This foundation does not change runtime content, assets or the local preview. Coverage remains **340/431 forms and 718 skills**, with **91 forms remaining**. The preceding full runtime regression passed 8,940 tests with nine skipped and zero failures; this source-only change is validated separately with the focused source/roster checks. Native C# dispatch, modules, original VFX/audio and game-frame parity remain unverified.
+
+## Skadi the Corrupting Heart: owner and Seaborn source foundation
+
+`data/arkpedia-skadi-alter-prefabs.json` now retains the complete owner and Seaborn hierarchies, including all three token skill prefabs omitted by the earlier coarse bard audit. It preserves 218 native components, six checksum-verified original client bundles, 17 reachable templates, both shared Inspiration database records, 30 owner ranks and 30 token ranks. The independent verifier reconstructs whole object/component membership, resolves serialized dependencies, checks original template-holder bytes and reparses the original skeleton events.
+
+- Healing and Inspiration have immediate one-second trigger clocks. S3 uses different initial offsets: `.90s` for owner damage, `.85s` for Seaborn damage and `.95s` for owner HP loss, then one-second intervals. These are serialized offsets relative to native buff attachment, not a claim of exact game-frame activation timing.
+- S1 has a separate scaled-MaxHP/full-heal startup and protection aura. Protection orders `DamageSplit(BUFF_SOURCE, NORMAL)` before nonstack one-minus `DamageScale` at `LOWER_PRIORITY`. The native fields alone do not settle transferred damage's mitigation, recursion suppression or event-envelope handling.
+- Each Seaborn skill has a hidden infinite wrapper and a separate mode/aura graph. The owner triggers and interrupts token skills through its own controller; token lifetime and recharge-on-finish are separate contracts. Native slot cost is zero, DP cost five, recharge 30 seconds and E1/E2 lifetime 15/25 seconds. No direction picker is required.
+- Inspiration retains immune-recipient filtering, derived-buff replacement and source final-scaler ownership. Talent 2 retains ordinary/Abyssal bonuses, one override bucket, owner recipient restrictions and the Seaborn's additional Skadi-mark exclusion.
+- Original Skadi uses one fixed skeleton; Seaborn uses one skeleton plus its native facing switch. The Seaborn's literal death mapping uses `Idle`; no `Die` or attack animation is invented. Original RGB and separated alpha textures are recovered through the material pointers.
+
+Reproduce with the existing pinned caches:
+
+```sh
+.cache/map-env/bin/python tools/arkpedia/extract-skadi-alter-models.py
+node tools/arkpedia/inspect-skadi-alter.mjs
+.cache/map-env/bin/python tools/arkpedia/extract-skadi-alter.py
+.cache/map-env/bin/python tools/arkpedia/verify-skadi-alter.py
+node --test test/arkpedia-skadi-alter-source.test.js
+```
+
+The verifier accepts an optional evidence-file path. Re-extraction produces identical bytes. Nine new source checks pass; 38 combined Skadi/Fuze/source/roster checks pass. Negative verification rejects an omitted token-skill component, an altered first-trigger delay, an omitted heal template, an incorrect alpha pointer and invented owner animation events.
+
+Seaborn front/back facing aliases are published on the assets feature branch at `d060ddb23db412c7d47ebc8d99ef5effc627b4ef`. All 809 existing model records are preserved, 17 asset checks pass and 811 complete models validate. They are prepared assets, not a deployed summon: the playable snapshot still pins its preceding asset revision, and no runtime/operator/summon/snapshot content changes in this batch.
+
+Skadi remains unavailable pending S1 transfer semantics and a verified adapter for owner-stat ownership, mode synchronization, aura overlap and recharge. Coverage remains **340/431 pinned forms and 718 skills**, with **91 forms remaining**. The preceding full runtime regression remains 8,940 passed, nine skipped and zero failures; this source-only change adds no browser combat claim. The local preview still responds successfully. Modules, original VFX/audio and native frame parity remain separate work.
