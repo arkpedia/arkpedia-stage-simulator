@@ -16,6 +16,7 @@ import { createCatherineDevice } from './arkpedia-catherine.js';
 import { createAlannaDevice } from './arkpedia-alanna.js';
 import { createMayerRobotter } from './arkpedia-mayer.js';
 import { createFrostMat } from './arkpedia-frost.js';
+import { createDorothyResonator } from './arkpedia-dorothy.js';
 import { createRobinClip } from './arkpedia-robin.js';
 import { createWulfeniteMine } from './arkpedia-wulfenite.js';
 import { createWeedyCannon } from './arkpedia-weedy.js';
@@ -86,6 +87,7 @@ export function deployRegularSummon(battle, key, row, col, dir = 'RIGHT') {
     : state.ownerId === 'char_4178_alanna' ? createAlannaDevice(battle, state, row, col, dir)
     : state.ownerId === 'char_242_otter' ? createMayerRobotter(battle, state, row, col)
     : state.ownerId === 'char_458_rfrost' ? createFrostMat(battle, state, row, col)
+    : state.ownerId === 'char_4048_doroth' ? createDorothyResonator(battle, state, row, col)
     : state.ownerId === 'char_451_robin' ? createRobinClip(battle, state, row, col)
     : state.ownerId === 'char_4171_wulfen' ? createWulfeniteMine(battle, state, row, col)
     : state.config.tacticalPoint ? createMetalCrab(battle, state, row, col)
@@ -183,7 +185,7 @@ export function installSummoner({ battle, unit, def }) {
   const config = REGULAR_SUMMONS[def.id];
   if (!config || config.skillId && def.skill?.id !== config.skillId
     || config.minimumElite != null && def.raw.arkpedia.elite < config.minimumElite) return;
-  const build = ['char_400_weedy', 'char_250_phatom', 'char_451_robin', 'char_458_rfrost', 'char_242_otter', 'char_4171_wulfen'].includes(def.id)
+  const build = ['char_4048_doroth', 'char_400_weedy', 'char_250_phatom', 'char_451_robin', 'char_458_rfrost', 'char_242_otter', 'char_4171_wulfen'].includes(def.id)
     ? { ...def.raw.arkpedia, skillId: def.skill.id } : def.raw.arkpedia;
   const key = summonCardId(def.id), record = summonRecordFor(def.id, build, battle.data.raw.tokens);
   if (!battle.regularSummons) battle.regularSummons = new Map();
@@ -209,7 +211,7 @@ export function installSummoner({ battle, unit, def }) {
       else if (!config.preserveCooldown) state.readyAt = battle.time;
       if (config.stockLimit) battle.removeBuff(unit, 'shamare:stock-full');
       if (def.id === 'char_108_silent') battle.removeBuff(unit, 'silence:stock-full');
-      if (['char_451_robin', 'char_458_rfrost', 'char_4171_wulfen'].includes(def.id)) state.syncSkill();
+      if (['char_4048_doroth', 'char_451_robin', 'char_458_rfrost', 'char_4171_wulfen'].includes(def.id)) state.syncSkill();
     }
     if (live(unit) && unit.skill.active) state.syncSkill();
   }, { owner: unit });

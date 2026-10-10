@@ -143,7 +143,8 @@ assert hot['versionId'] == E['source']['nativeClient'] == '26-09-23-17-49-43_b9c
 for record in E['source']['bundles']:
     native = next(row for row in hot['abInfos'] if row['name'] == record['path'])
     assert (record['md5'], record['size']) == (native['md5'], native['abSize'])
-assert E['enabledOperators'] == [] and E['heldOperators'] == ['char_4048_doroth']
+assert E['enabledOperators'] == ['char_4048_doroth'] and E['heldOperators'] == []
+assert E['holdReasons'] == [] and len(E['runtimeContract']) == 5
 assert E['frameParity'] is False and E['moduleSupport'] is False and E['nativeParticleSupport'] is False
 assert set(E['tables']['skills']) == {'skchr_doroth_1', 'skchr_doroth_2', 'skchr_doroth_3'}
 assert set(E['tables']['tokenSkills']) == {'sktok_doroth_1', 'sktok_doroth_2', 'sktok_doroth_3'}
@@ -210,4 +211,4 @@ for face,model in E['tokenModels'][TOKEN].items():
     assert model['sha256'] == record['sha256'] and model['bytes'] == record['bytes']
 # Both facing aliases intentionally point at the same original skeleton.
 assert art['models'][TOKEN]['facings']['front']['files'] == art['models'][TOKEN]['facings']['back']['files']
-print(f'Verified {count} native components, {len(bundles)} bundles, {len(E["templates"])} templates, 30 owner plus 30 token ranks, {len(E["projectiles"])} projectile trees and three original skeleton chains; Dorothy adapter pending')
+print(f'Verified {count} native components, {len(bundles)} bundles, {len(E["templates"])} templates, 30 owner plus 30 token ranks, {len(E["projectiles"])} projectile trees and three original skeleton chains; Dorothy bounded adapter enabled; native frame parity remains unverified')

@@ -58,10 +58,10 @@
   "frameParity": false,
   "moduleSupport": false,
   "nativeParticleSupport": false,
-  "enabledOperators": [],
-  "heldOperators": [
+  "enabledOperators": [
     "char_4048_doroth"
   ],
+  "heldOperators": [],
   "characters": {
     "char_4048_doroth": [
       {
@@ -12943,14 +12943,18 @@
     }
   },
   "nativeTemplateGaps": [],
-  "holdReasons": [
-    "The combat adapter is pending full owner/token stock, free initial-placement, Dreamer stacks and three trap-effect implementations.",
-    "Native assignment of the two Resonator OnAttack events to explosion and TriggerNearby, and trigger interval blackboard binding require a bounded dispatch contract before runtime enablement."
+  "holdReasons": [],
+  "runtimeContract": [
+    "Free born traps use deterministic random eligible ground tiles within owner range, spend no DP or stored cards and refresh the token cooldown.",
+    "Owner ATK including current modifiers is sampled at trap placement; Dreamer stacks on activation before explosion.",
+    "Explosion uses the first Resonator OnAttack event, neighbour marking uses the second; the two Resonator OnAttack events never cause duplicate damage.",
+    "S3 uses the table interval of 2s for one non-stacking delayed chain, refreshed by repeated marks; only same-owner marked Resonators in the nine-tile cross qualify.",
+    "S1 retains its contact target; S2 and S3 resample eligible ground targets at impact. Debuff/control precedes damage; S2 single-target Bind counts eligible selected targets."
   ],
-  "reviewStatus": "Dorothy owner and Resonator full-kit source foundation; combat adapter pending",
+  "reviewStatus": "Dorothy owner and Resonator three-skill bounded combat adapter enabled",
   "verificationLimits": [
     "Native C# dispatch, trap ATK transfer timing, stock accounting for free initial traps and same-frame trap/buff ordering are not frame certified.",
-    "S3 interval blackboard (2s) and native fixed triggerInterval (1s) are retained separately; their binding needs verification.",
+    "S3 interval blackboard (2s) and native fixed triggerInterval (1s) are retained separately; the adapter chooses the table interval without claiming native dispatch proof.",
     "Modules, original Unity particles and audio are not implemented."
   ]
 }

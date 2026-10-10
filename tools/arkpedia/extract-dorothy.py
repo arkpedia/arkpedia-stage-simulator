@@ -4,8 +4,8 @@
 
 Run with .cache/map-env/bin/python tools/arkpedia/extract-dorothy.py.
 Requires the pinned Global tables, native client bundles and model checkout
-already used by this project's source audits. Combat adapter is not yet enabled.
-Preserves all source ranks, skills and shared dependencies before implementing the combat adapter.
+already used by this project's source audits. The bounded combat adapter is enabled.
+Preserves all source ranks, skills and shared dependencies alongside explicit runtime contracts.
 """
 from collections import defaultdict
 import hashlib
@@ -188,7 +188,7 @@ evidence = {'schemaVersion': 1, 'source': {'repository': 'Kengxxiao/ArknightsGam
     'buffDatabase': {'path': 'en_US/gamedata/buff_table.json', 'sha256': digest((C / 'lessing-source/buff_table.json').read_bytes())},
     'bundles': source_bundles, 'modelRepository': 'fexli/ArknightsResource', 'modelCommit': MODEL},
     'frameParity': False, 'moduleSupport': False, 'nativeParticleSupport': False,
-    'enabledOperators': [], 'heldOperators': [ID],
+    'enabledOperators': [ID], 'heldOperators': [],
     
     'characters': characters, 'tokens': tokens, 'skills': skills, 'chararts': chararts,
     'models': models, 'tokenArtwork': token_artwork, 'tokenModels': token_models, 'officialSkeletonBindings': bindings, 'projectiles': projectiles,
@@ -199,8 +199,9 @@ evidence = {'schemaVersion': 1, 'source': {'repository': 'Kengxxiao/ArknightsGam
         'tokenSkills': {x['skillId']: st[x['skillId']] for x in ct[TOKEN]['skills']},
         'ranges': {k: rt[k] for k in sorted(ranges)}},
     'nativeTemplateGaps': sorted(templates - native_templates.keys()),
-    'holdReasons': ['The combat adapter is pending full owner/token stock, free initial-placement, Dreamer stacks and three trap-effect implementations.', 'Native assignment of the two Resonator OnAttack events to explosion and TriggerNearby, and trigger interval blackboard binding require a bounded dispatch contract before runtime enablement.'],
-    'reviewStatus': 'Dorothy owner and Resonator full-kit source foundation; combat adapter pending',
-    'verificationLimits': ['Native C# dispatch, trap ATK transfer timing, stock accounting for free initial traps and same-frame trap/buff ordering are not frame certified.', 'S3 interval blackboard (2s) and native fixed triggerInterval (1s) are retained separately; their binding needs verification.', 'Modules, original Unity particles and audio are not implemented.']}
+    'holdReasons': [],
+    'runtimeContract': ['Free born traps use deterministic random eligible ground tiles within owner range, spend no DP or stored cards and refresh the token cooldown.', 'Owner ATK including current modifiers is sampled at trap placement; Dreamer stacks on activation before explosion.', 'Explosion uses the first Resonator OnAttack event, neighbour marking uses the second; the two Resonator OnAttack events never cause duplicate damage.', 'S3 uses the table interval of 2s for one non-stacking delayed chain, refreshed by repeated marks; only same-owner marked Resonators in the nine-tile cross qualify.', 'S1 retains its contact target; S2 and S3 resample eligible ground targets at impact. Debuff/control precedes damage; S2 single-target Bind counts eligible selected targets.'],
+    'reviewStatus': 'Dorothy owner and Resonator three-skill bounded combat adapter enabled',
+    'verificationLimits': ['Native C# dispatch, trap ATK transfer timing, stock accounting for free initial traps and same-frame trap/buff ordering are not frame certified.', 'S3 interval blackboard (2s) and native fixed triggerInterval (1s) are retained separately; the adapter chooses the table interval without claiming native dispatch proof.', 'Modules, original Unity particles and audio are not implemented.']}
 (ROOT / 'data/arkpedia-dorothy-prefabs.json').write_text(json.dumps(evidence, indent=2) + '\n')
 print('Extracted Dorothy full kit:',len(templates),'templates,',len(projectiles),'projectile trees')

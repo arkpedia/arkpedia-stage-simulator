@@ -11,13 +11,14 @@ const bb=values=>Object.fromEntries(values.map(v=>[v.key,v.value]));
 const near=(x,y)=>assert.ok(Math.abs(x-y)<1e-6,`${x} != ${y}`);
 const all=components({...e.characters,...e.tokens,...e.skills,...e.projectiles});
 
-test('Dorothy evidence contains whole owner, Resonator and six skill graphs without enabling an incomplete kit',()=>{
+test('Dorothy evidence contains whole owner, Resonator and six skill graphs with bounded runtime contracts',()=>{
  assert.equal(all.length,164);assert.equal(e.source.bundles.length,6);
  assert.deepEqual(Object.keys(e.skills),[...Object.keys(e.tables.skills),...Object.keys(e.tables.tokenSkills)]);
  assert.equal(Object.keys(e.templates).length,8);assert.deepEqual(e.nativeTemplateGaps,[]);
  assert.deepEqual(Object.keys(e.originalTemplates),Object.keys(e.templates));
- assert.deepEqual(e.enabledOperators,[]);assert.deepEqual(e.heldOperators,[ID]);
- assert.equal(REGULAR_OPERATORS[ID],undefined);assert.equal(data.operators[ID],undefined);
+ assert.deepEqual(e.enabledOperators,[ID]);assert.deepEqual(e.heldOperators,[]);
+ assert.equal(e.runtimeContract.length,5);
+ assert.equal(REGULAR_OPERATORS[ID].skillIds.length,3);assert.equal(data.operators[ID].skills.length,3);
  assert.equal(e.frameParity,false);assert.equal(e.moduleSupport,false);assert.equal(e.nativeParticleSupport,false);
 });
 test('all 30 owner and 30 token ranks preserve their selected effects and separate SP contracts',()=>{
@@ -97,7 +98,7 @@ test('original Resonator has two literal attack events and one shared skeleton f
  near(models.front.durations.Start,.433);near(models.front.durations.Attack,.333);
  const events=models.front.eventPayloads.Attack;assert.equal(events.length,2);
  assert.ok(events.every(x=>x.name==='OnAttack'));near(events[0].time,4/15);near(events[1].time,1/3);
- assert.ok(e.holdReasons.some(s=>/two Resonator OnAttack events/.test(s)));
+ assert.ok(e.runtimeContract.some(s=>/two Resonator OnAttack events/.test(s)));
  for(const face of ['Front','Back'])near(e.models[ID][face].hits.Attack[0],.333);
 });
 test('original owner projectiles remain tracked single-hit speed10 through source removal',()=>{

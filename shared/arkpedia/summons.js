@@ -1,6 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Only explicitly reviewed regular-stage tokens may enter the deployment deck.
 export const REGULAR_SUMMONS = Object.freeze({
+  char_4048_doroth: Object.freeze({ tokenId: 'token_10025_doroth_recttp',
+    deploymentSlotCost: 0, chooseFacing: false, fixedRotation: true, healFree: true,
+    refundRatio: 0, noAttack: true, sourceStockLimit: true,
+    includeReadyCardInStock: true, excludeWalkingEnemy: true }),
   char_4140_lasher: Object.freeze({ tokenId: 'token_10036_lasher_mcbird',
     deploymentSlotCost: 1, chooseFacing: true, healFree: true,
     refundRatio: .5, attackClip: 'Attack', sourceStockLimit: true, readyCardPlusStack: true }),
@@ -158,6 +162,25 @@ export function summonRecordFor(ownerId, build, tokens) {
     skill = { skillId: id, name: level.name, skillType: level.skillType,
       durationType: level.durationType, duration: level.duration, description: level.description,
       rangeGrid: level.rangeGrid, ...level.spData, bb, trigger: { rule: 'NEVER' } };
+  }
+  if (ownerId === 'char_4048_doroth') {
+    const index = ['skchr_doroth_1', 'skchr_doroth_2', 'skchr_doroth_3'].indexOf(build.skillId);
+    const id = ['sktok_doroth_1', 'sktok_doroth_2', 'sktok_doroth_3'][index];
+    const entry = source.skills?.find(row => row.id === id);
+    const elite = phaseNumber(entry?.unlockCondition?.phase);
+    if (!entry || !Number.isInteger(elite) || build.elite < elite
+      || !Number.isSafeInteger(build.skillRank) || build.skillRank < 1
+      || build.skillRank > Math.min([4, 7, 10][build.elite], entry.levels.length))
+      throw Error('Unsupported Dorothy Resonator skill or rank');
+    const level = entry.levels[build.skillRank - 1], bb = blackboard(level.blackboard);
+    const keys = index === 0 ? ['cnt', 'atk_scale', 'def', 'duration']
+      : index === 1 ? ['cnt', 'atk_scale', 'cnt_2', 'duration', 'duration_2']
+      : ['cnt', 'atk_scale', 'sluggish', 'interval'];
+    if (level.skillType !== 'AUTO' || level.prefabId !== id || level.spData.spCost !== 0
+      || Object.keys(bb).length !== keys.length || keys.some(k => !Number.isFinite(bb[k]))
+      || index === 2 && !level.rangeGrid?.length)
+      throw Error('Unreviewed Dorothy Resonator source');
+    skill = { skillId: id, name: level.name, bb, rangeGrid: level.rangeGrid, trigger: { rule: 'NEVER' } };
   }
   if (ownerId === 'char_4162_cathy') {
     const ids = ['sktok_cathy_catsld_1', 'sktok_cathy_catsld_2'];
