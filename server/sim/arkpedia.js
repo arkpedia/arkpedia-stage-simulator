@@ -138,6 +138,7 @@ import { customizeLinKit, installLin } from './content/arkpedia-lin.js';
 import { customizeUlpianusKit, installUlpianus } from './content/arkpedia-ulpianus.js';
 import { customizeWeedyKit, installWeedy } from './content/arkpedia-weedy.js';
 import { customizeVinaKit, installVina } from './content/arkpedia-vina.js';
+import { customizeJessicaKit, installJessica } from './content/arkpedia-jessica.js';
 import { customizeEntelechiaKit, installEntelechia } from './content/arkpedia-entelechia.js';
 import { customizeHoolheyakKit, installHoolheyak } from './content/arkpedia-hoolheyak.js';
 import { customizeGoldenglowKit, installGoldenglow } from './content/arkpedia-goldenglow.js';
@@ -498,6 +499,7 @@ export class StandardBattle extends Battle {
     customizeUlpianusKit({ battle: this, id, def, unit, kit });
     customizeWeedyKit({ battle: this, id, def, unit, kit });
     customizeVinaKit({ battle: this, id, def, unit, kit });
+    customizeJessicaKit({ battle: this, id, def, unit, kit });
     customizeEntelechiaKit({ battle: this, id, def, unit, kit });
     customizeAscalonKit({ battle: this, id, def, unit, kit });
     customizeChenAlterKit({ battle: this, id, def, unit, kit });
@@ -669,6 +671,7 @@ export class StandardBattle extends Battle {
     installUlpianus({ battle: this, unit, def });
     installWeedy({ battle: this, unit, def });
     installVina({ battle: this, unit, def });
+    installJessica({ battle: this, unit, def });
     installEntelechia({ battle: this, unit, def });
     installAscalon({ battle: this, unit, def });
     installChenAlter({ battle: this, unit, def });

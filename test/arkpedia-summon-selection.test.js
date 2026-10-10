@@ -6,6 +6,7 @@ import { createContext, runInContext } from 'node:vm';
 import data from '../data/arkpedia-mvp.json' with { type: 'json' };
 import { StandardBattle } from '../server/sim/arkpedia.js';
 import { defaultBuild } from '../shared/arkpedia/loadout.js';
+import { skillHud, skillSourceFor } from '../shared/arkpedia/skill-hud.js';
 import { summonCardId, summonUnitId } from '../shared/arkpedia/summons.js';
 import { selectedRegularSummon, summonPlacementError, deployRegularSummon,
   regularSummonCards, retreatRegularSummon } from '../server/sim/content/arkpedia-summons.js';
@@ -19,7 +20,7 @@ function make(id) {
   source.stage.geometry.waves[0].spawns = []; source.stage.battle.dp_per_second = 0;
   const battle = new StandardBattle(source, { operators: [defaultBuild(source.operators[id])] });
   battle.autoFinish = false; battle.setViewport('fullscreen-workspace'); battle.addDp('arkpedia', 99);
-  battle.deployOperator(id, id === 'char_484_robrta' ? 2 : 3, id === 'char_484_robrta' ? 7 : 2, 'RIGHT');
+  battle.deployOperator(id, id === 'char_484_robrta' ? 2 : 3, id === 'char_484_robrta' ? 7 : id === 'char_1034_jesca2' ? 5 : 2, 'RIGHT');
   const context = createContext({ battle, data: source, selected: summonCardId(id), pending: null,
     battleError: '', landscapeRequired: false, drawHud: () => {},
     icon: () => '', artwork: () => '', summonIcon: () => '',
@@ -57,4 +58,24 @@ test('Modeler drop keeps facing pending, then facing release selects its actual 
   context.selected = summonCardId('char_484_robrta'); pick(3, 3);
   assert.equal(entry().unit, token); assert.equal(context.battleError, '');
   assert.equal(regularSummonCards(battle)[0].stock, 2); assert.deepEqual(battle.errors, []);
+});
+
+
+test('Mobile Riot Shield selection renders its stats and lifetime without a fictional token skill', () => {
+  const { battle, context, pick, entry } = make('char_1034_jesca2');
+  pick(3, 4);
+  const token = entry().unit;
+  assert.equal(token.defId, 'token_10032_jesca2_jckshd');
+  assert.equal(entry().record.skill, null);
+  Object.assign(context, { skillSourceFor, skillHud, escape: x => String(x),
+    operatorSkillDetails: () => { throw Error('Shield has no active skill'); } });
+  runInContext(fn('summonDetails', 'operatorDetails'), context);
+  const html = runInContext('summonDetails(selectedEntry())', context);
+  assert.match(html, /Jessica the Liberated · E2 · Lv 90/);
+  assert.match(html, /Shield remaining · 50s/);
+  assert.match(html, /0 deployment slots/);
+  assert.match(html, /Cannot receive ordinary healing/);
+  assert.match(html, /HP/);
+  assert.equal(skillHud(token.skill).canActivate, false);
+  assert.deepEqual(battle.errors, []);
 });

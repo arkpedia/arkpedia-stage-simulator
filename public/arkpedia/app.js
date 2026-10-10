@@ -501,6 +501,7 @@ function pick(row, col) {
 }
 function summonDetails(entry) {
   const unit = entry.unit, raw = entry.record.stats, stats = unit?.s;
+  const lifetime = unit?.skill.spec?.formCountdown ? skillHud(unit.skill) : null;
   const hp = unit?.hp ?? raw.maxHp, maxHp = stats?.maxHp ?? raw.maxHp;
   const numbers = [['ATK', stats?.atk ?? raw.atk], ['DEF', stats?.def ?? raw.def],
     ['RES', stats?.res ?? raw.magicResistance], ['Block', stats?.blockCnt ?? raw.blockCnt]];
@@ -511,10 +512,10 @@ function summonDetails(entry) {
     <div class="hp-readout"><span>HP</span><strong>${Math.min(Math.ceil(hp), Math.round(maxHp))} / ${Math.round(maxHp)}</strong></div>
     <div class="meter hp"><span style="width:${Math.min(1, Math.max(0, hp / maxHp)) * 100}%"></span></div>
     <p class="sp-readout">${entry.stock} remaining · ${raw.cost} DP · ${entry.config.deploymentSlotCost} deployment slot${entry.config.deploymentSlotCost === 1 ? '' : 's'}</p>
-    ${recovery}<p class="skill-description">${entry.ownerId === 'char_003_kalts' ? 'Can be healed only by Kal’tsit. ' : entry.config.healFree ? 'Cannot receive ordinary healing. ' : ''}${entry.config.tacticalPoint ? 'Its tactical point stays in place while the reinforcement recovers. ' : ''}Leaves the field when its summoner is removed.</p>
+    ${recovery}${lifetime ? `<p class="sp-readout">${escape(lifetime.text)}</p><div class="meter active"><span style="width:${lifetime.fraction * 100}%"></span></div>` : ''}<p class="skill-description">${entry.ownerId === 'char_003_kalts' ? 'Can be healed only by Kal’tsit. ' : entry.config.healFree ? 'Cannot receive ordinary healing. ' : ''}${entry.config.tacticalPoint ? 'Its tactical point stays in place while the reinforcement recovers. ' : ''}Leaves the field when its summoner is removed.</p>
     ${unit && skillSourceFor(unit) !== unit
       ? operatorSkillDetails(battle.bench[entry.ownerId].build, skillSourceFor(unit))
-      : unit && !unit.skill.noSkill ? operatorSkillDetails(battle.bench[entry.ownerId].build, unit,
+      : unit && !unit.skill.noSkill && entry.record.skill ? operatorSkillDetails(battle.bench[entry.ownerId].build, unit,
         data.tokens[entry.record.id].skills.find(s => s.id === entry.record.skill.skillId)
           ?.levels[battle.bench[entry.ownerId].build.skillRank - 1]) : ''}`;
 }
@@ -749,7 +750,7 @@ function drawHud() {
           selectTab(next); next.focus();
         };
       }
-      field.innerHTML = unit ? `<svg class="field-frame" aria-hidden="true" viewBox="-100 -100 200 200"><path d="M0 -95L95 0L0 95L-95 0Z"/></svg><button id="retreat" aria-label="Retreat ${escape(b.name)}" title="Retreat"><svg aria-hidden="true" viewBox="0 0 32 32"><circle cx="19" cy="5" r="3"/><path d="M7 12l6-3 5 3 5 3h6M18 12l-5 7 7 3 3 7M13 19l-5 9M4 5h7M4 5l3-3M4 5l3 3"/></svg></button>${!skillUnit.skill.noSkill ? `<button id="skill" aria-label="Activate skill"><img src="${skillIcon(b.kind === 'operator' ? b.build : battle.bench[b.ownerId].build)}" alt=""><span class="field-sp"></span></button>` : ''}` : '';
+      field.innerHTML = unit ? `<svg class="field-frame" aria-hidden="true" viewBox="-100 -100 200 200"><path d="M0 -95L95 0L0 95L-95 0Z"/></svg><button id="retreat" aria-label="Retreat ${escape(b.name)}" title="Retreat"><svg aria-hidden="true" viewBox="0 0 32 32"><circle cx="19" cy="5" r="3"/><path d="M7 12l6-3 5 3 5 3h6M18 12l-5 7 7 3 3 7M13 19l-5 9M4 5h7M4 5l3-3M4 5l3 3"/></svg></button>${!skillUnit.skill.noSkill && skillUnit.skill.kind !== "passive" ? `<button id="skill" aria-label="Activate skill"><img src="${skillIcon(b.kind === 'operator' ? b.build : battle.bench[b.ownerId].build)}" alt=""><span class="field-sp"></span></button>` : ''}` : '';
       field.querySelector('#retreat')?.addEventListener('click', () => {
         if (b.kind === 'token') retreatRegularSummon(battle, selected); else battle.retreatOperator(selected);
         selected = null; drawHud();

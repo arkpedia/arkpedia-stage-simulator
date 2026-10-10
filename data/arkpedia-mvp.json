@@ -34,7 +34,7 @@
   },
   "sd": {
     "repository": "arkpedia/arkpedia-sd-assets",
-    "commit": "fb67c0ef55edeec917c2768642005d4d517bb469",
+    "commit": "9c6e01b4d06def1502f78c187756e2104072578d",
     "models": {
       "operator/char_123_fang/default/front": {
         "kind": "operator",
@@ -59225,6 +59225,264 @@
           "height": 534.872
         }
       },
+      "operator/char_1034_jesca2/default/front": {
+        "kind": "operator",
+        "id": "char_1034_jesca2",
+        "variant": "default",
+        "facing": "front",
+        "spineVersion": "3.8.99",
+        "source": {
+          "key": "operators",
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "spine/char_1034_jesca2/char_1034_jesca2/Front"
+        },
+        "skeleton": {
+          "path": "models/operator/char_1034_jesca2/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_1034_jesca2.skel",
+          "bytes": 741300,
+          "sha256": "2e20be7bbf6a32cc2f59661cac78d9e4c8d229d21de75087e9c6c80e71a38379"
+        },
+        "atlas": {
+          "path": "models/operator/char_1034_jesca2/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_1034_jesca2.atlas",
+          "bytes": 10166,
+          "sha256": "207d371afb479e5cadc17d9fcb180c1a97c48eeabc5980afa8bb1ef008a10255"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_1034_jesca2/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_1034_jesca2.png",
+            "bytes": 147822,
+            "sha256": "1db65facae7409ec9653a4c1a7aba1dad98c4820ae523556590c3412399f87d7"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Attack": 1.2,
+          "Attack_Down": 1.2,
+          "Default": 0,
+          "Die": 1,
+          "Idle": 2,
+          "Skill_1_Begin": 0.333,
+          "Skill_1_Idle": 2,
+          "Skill_1_Loop": 1.2,
+          "Skill_2_Begin": 0.167,
+          "Skill_2_End": 0.167,
+          "Skill_2_Idle": 2,
+          "Skill_2_Loop": 0.367,
+          "Skill_3_Begin": 0.333,
+          "Skill_3_End": 0.333,
+          "Skill_3_Idle": 2,
+          "Skill_3_Loop": 1.8,
+          "Skill_3_Skill": 1.8,
+          "Skill_Down_1_Loop": 1.2,
+          "Skill_Down_2_Loop": 0.367,
+          "Skill_Down_3_Begin": 0.333,
+          "Skill_Down_3_End": 0.333,
+          "Skill_Down_3_Idle": 2,
+          "Skill_Down_3_Loop": 1.8,
+          "Skill_Down_3_Skill": 1.8,
+          "Start": 1
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null
+          },
+          "attackDown": {
+            "begin": null,
+            "loop": "Attack_Down",
+            "end": null
+          },
+          "skill": {
+            "begin": "Skill_1_Begin",
+            "loop": "Skill_1_Loop",
+            "end": null,
+            "index": 0,
+            "idle": "Skill_1_Idle"
+          },
+          "die": "Die",
+          "move": null,
+          "stun": null,
+          "skills": {
+            "0": {
+              "begin": "Skill_1_Begin",
+              "loop": "Skill_1_Loop",
+              "end": null,
+              "index": 0,
+              "idle": "Skill_1_Idle"
+            },
+            "1": {
+              "begin": "Skill_2_Begin",
+              "loop": "Skill_2_Loop",
+              "end": "Skill_2_End",
+              "index": 1,
+              "idle": "Skill_2_Idle"
+            },
+            "2": {
+              "begin": "Skill_3_Begin",
+              "loop": "Skill_3_Loop",
+              "end": "Skill_3_End",
+              "index": 2,
+              "idle": "Skill_3_Idle"
+            }
+          }
+        },
+        "hits": {
+          "Attack": [
+            0.067
+          ],
+          "Attack_Down": [
+            0.067
+          ],
+          "Skill_1_Loop": [
+            0.067
+          ],
+          "Skill_2_Loop": [
+            0.033
+          ],
+          "Skill_3_Loop": [
+            0.033
+          ],
+          "Skill_3_Skill": [
+            0.033
+          ],
+          "Skill_Down_1_Loop": [
+            0.067
+          ],
+          "Skill_Down_2_Loop": [
+            0.033
+          ],
+          "Skill_Down_3_Loop": [
+            0.033
+          ],
+          "Skill_Down_3_Skill": [
+            0.033
+          ]
+        },
+        "bounds": {
+          "x": -326.034,
+          "y": -10.123,
+          "width": 2514.107,
+          "height": 585.293
+        }
+      },
+      "operator/char_1034_jesca2/default/back": {
+        "kind": "operator",
+        "id": "char_1034_jesca2",
+        "variant": "default",
+        "facing": "back",
+        "spineVersion": "3.8.99",
+        "source": {
+          "key": "operators",
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "spine/char_1034_jesca2/char_1034_jesca2/Back"
+        },
+        "skeleton": {
+          "path": "models/operator/char_1034_jesca2/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_1034_jesca2.skel",
+          "bytes": 309024,
+          "sha256": "b2c047b0850c57ae09092ef730adce7bb30d3760540bca23731c313792b97de7"
+        },
+        "atlas": {
+          "path": "models/operator/char_1034_jesca2/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_1034_jesca2.atlas",
+          "bytes": 5978,
+          "sha256": "c225756f49c4db639bdf3ac36e764cc76f0876981c550d353210ffae009899ea"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_1034_jesca2/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_1034_jesca2.png",
+            "bytes": 117597,
+            "sha256": "d7d6912d1084179c6e4d3e7f6595ab2f56011a0872583435f227db483d69a4f9"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Attack": 1.2,
+          "Default": 0,
+          "Idle": 2,
+          "Skill_1_Begin": 0.333,
+          "Skill_1_Idle": 2,
+          "Skill_1_Loop": 1.2,
+          "Skill_2_Begin": 0.167,
+          "Skill_2_End": 0.167,
+          "Skill_2_Idle": 2,
+          "Skill_2_Loop": 0.367,
+          "Skill_3_Begin": 0.333,
+          "Skill_3_End": 0.333,
+          "Skill_3_Idle": 2,
+          "Skill_3_Loop": 1.8,
+          "Skill_3_Skill": 1.8,
+          "Start": 1
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null
+          },
+          "attackDown": null,
+          "skill": {
+            "begin": "Skill_1_Begin",
+            "loop": "Skill_1_Loop",
+            "end": null,
+            "index": 0,
+            "idle": "Skill_1_Idle"
+          },
+          "die": null,
+          "move": null,
+          "stun": null,
+          "skills": {
+            "0": {
+              "begin": "Skill_1_Begin",
+              "loop": "Skill_1_Loop",
+              "end": null,
+              "index": 0,
+              "idle": "Skill_1_Idle"
+            },
+            "1": {
+              "begin": "Skill_2_Begin",
+              "loop": "Skill_2_Loop",
+              "end": "Skill_2_End",
+              "index": 1,
+              "idle": "Skill_2_Idle"
+            },
+            "2": {
+              "begin": "Skill_3_Begin",
+              "loop": "Skill_3_Loop",
+              "end": "Skill_3_End",
+              "index": 2,
+              "idle": "Skill_3_Idle"
+            }
+          }
+        },
+        "hits": {
+          "Attack": [
+            0.067
+          ],
+          "Skill_1_Loop": [
+            0.067
+          ],
+          "Skill_2_Loop": [
+            0.033
+          ],
+          "Skill_3_Loop": [
+            0.033
+          ],
+          "Skill_3_Skill": [
+            0.033
+          ]
+        },
+        "bounds": {
+          "x": -326.034,
+          "y": -10.123,
+          "width": 2514.107,
+          "height": 585.293
+        }
+      },
       "operator/char_4010_etlchi/default/front": {
         "kind": "operator",
         "id": "char_4010_etlchi",
@@ -64668,6 +64926,182 @@
           "y": -1.446,
           "width": 306.352,
           "height": 515.892
+        }
+      },
+      "operator/token_10032_jesca2_jckshd/default/front": {
+        "kind": "operator",
+        "id": "token_10032_jesca2_jckshd",
+        "variant": "default",
+        "facing": "front",
+        "source": {
+          "key": "global-client",
+          "kind": "assetbundle",
+          "bundle": {
+            "path": "pkgrps/btl_pfb_tokens_0.ab",
+            "bytes": 5060143,
+            "md5": "5ab8526b9e59e97cc7e94ed6a248013d",
+            "sha256": "eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f",
+            "resourceVersion": "26-09-23-17-49-43_b9cc4a",
+            "url": "https://ark-us-static-online.yo-star.com/assetbundle/official/Android/assets/26-09-23-17-49-43_b9cc4a/pkgrps_btl_pfb_tokens_0.dat",
+            "transforms": [
+              "RGB plus separated Alpha texture merge",
+              "atlas texture dimensions normalized and pma: true recorded"
+            ]
+          },
+          "directory": "pkgrps/btl_pfb_tokens_0.ab",
+          "extractedSkeleton": "token_10032_jesca2_jckshd.skel",
+          "originalPathIds": {
+            "rootPathId": "1628380726038222064",
+            "animatorPathId": "8998169267867800816",
+            "skeletonAnimationPathId": "-5349212840606575376",
+            "skeletonDataAssetPathId": "5079316279793708544",
+            "textAssetPathId": "553445906048760639",
+            "atlasAssetPathId": "-4348610166741996108",
+            "atlasTextAssetPathId": "3182663652503334781",
+            "materialPathId": "-7064510418030767083",
+            "rgbTexturePathId": "-5998442339073814465",
+            "alphaTexturePathId": "1980439140119216349"
+          },
+          "transforms": [
+            "RGB plus separated Alpha texture merge",
+            "atlas texture dimensions normalized and pma: true recorded"
+          ]
+        },
+        "spineVersion": "3.8.99",
+        "skeleton": {
+          "path": "models/operator/token_10032_jesca2_jckshd/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/token_10032_jesca2_jckshd.skel",
+          "bytes": 4718,
+          "sha256": "9dfcec475f29204f840a1a63cffcb4c52239753ab00c81c345f5ef848887f535"
+        },
+        "atlas": {
+          "path": "models/operator/token_10032_jesca2_jckshd/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/token_10032_jesca2_jckshd.atlas",
+          "bytes": 485,
+          "sha256": "34f372ace9c06501d60b0290e624e21a92daf0f0375461a515cefdf3974fbd4d"
+        },
+        "textures": [
+          {
+            "path": "models/operator/token_10032_jesca2_jckshd/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/token_10032_jesca2_jckshd.png",
+            "bytes": 7210,
+            "sha256": "036a2e9699eed7924fc7ebc16f4d14cc2e103c9be72d9a46d22a19a67012dcbc"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Default": 0,
+          "Die": 1,
+          "Idle": 1,
+          "Start": 1
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "die": "Die",
+          "attack": null
+        },
+        "hits": {},
+        "bounds": {
+          "x": -95.509,
+          "y": -1.252,
+          "width": 372.723,
+          "height": 308.75
+        },
+        "avatar": {
+          "path": "models/operator/token_10032_jesca2_jckshd/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png",
+          "bytes": 19893,
+          "sha256": "3f52838054abdecb544e663233c6fbe6ddde94cfe9e70a18f1aac7003d18d1e2",
+          "source": {
+            "repository": "fexli/ArknightsResource",
+            "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+            "directory": "avatar/ASSISTANT"
+          }
+        }
+      },
+      "operator/token_10032_jesca2_jckshd/default/back": {
+        "kind": "operator",
+        "id": "token_10032_jesca2_jckshd",
+        "variant": "default",
+        "facing": "back",
+        "source": {
+          "key": "global-client",
+          "kind": "assetbundle",
+          "bundle": {
+            "path": "pkgrps/btl_pfb_tokens_0.ab",
+            "bytes": 5060143,
+            "md5": "5ab8526b9e59e97cc7e94ed6a248013d",
+            "sha256": "eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f",
+            "resourceVersion": "26-09-23-17-49-43_b9cc4a",
+            "url": "https://ark-us-static-online.yo-star.com/assetbundle/official/Android/assets/26-09-23-17-49-43_b9cc4a/pkgrps_btl_pfb_tokens_0.dat",
+            "transforms": [
+              "RGB plus separated Alpha texture merge",
+              "atlas texture dimensions normalized and pma: true recorded"
+            ]
+          },
+          "directory": "pkgrps/btl_pfb_tokens_0.ab",
+          "extractedSkeleton": "token_10032_jesca2_jckshd.skel",
+          "originalPathIds": {
+            "rootPathId": "1628380726038222064",
+            "animatorPathId": "8998169267867800816",
+            "skeletonAnimationPathId": "-7761378403206114064",
+            "skeletonDataAssetPathId": "4896316579605686665",
+            "textAssetPathId": "845452701767503091",
+            "atlasAssetPathId": "8794337737768507103",
+            "atlasTextAssetPathId": "-1000798518450209771",
+            "materialPathId": "8952767783588237960",
+            "rgbTexturePathId": "7266134605487007876",
+            "alphaTexturePathId": "3555394204401817876"
+          },
+          "transforms": [
+            "RGB plus separated Alpha texture merge",
+            "atlas texture dimensions normalized and pma: true recorded"
+          ]
+        },
+        "spineVersion": "3.8.99",
+        "skeleton": {
+          "path": "models/operator/token_10032_jesca2_jckshd/default/back/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/token_10032_jesca2_jckshd.skel",
+          "bytes": 6093,
+          "sha256": "9557b02ca0cbfcde90fad109ed9db95b7008008d1a5931bcdded529e8ee68ac3"
+        },
+        "atlas": {
+          "path": "models/operator/token_10032_jesca2_jckshd/default/back/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/token_10032_jesca2_jckshd.atlas",
+          "bytes": 1127,
+          "sha256": "db3bfcd5b382f10762511d7a045c61c4d462c77677fb172fb19510da1df2b8fe"
+        },
+        "textures": [
+          {
+            "path": "models/operator/token_10032_jesca2_jckshd/default/back/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/token_10032_jesca2_jckshd.png",
+            "bytes": 7484,
+            "sha256": "28236a641e5b3a6fd5612330931d264e0b56ebda37e8a0853fdc5fc81cf3c491"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Default": 0,
+          "Die": 1,
+          "Idle": 1,
+          "Start": 1
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "die": "Die",
+          "attack": null
+        },
+        "hits": {},
+        "bounds": {
+          "x": -95.509,
+          "y": -1.252,
+          "width": 372.723,
+          "height": 308.75
+        },
+        "avatar": {
+          "path": "models/operator/token_10032_jesca2_jckshd/default/back/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png",
+          "bytes": 19893,
+          "sha256": "3f52838054abdecb544e663233c6fbe6ddde94cfe9e70a18f1aac7003d18d1e2",
+          "source": {
+            "repository": "fexli/ArknightsResource",
+            "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+            "directory": "avatar/ASSISTANT"
+          }
         }
       },
       "operator/token_10040_siege2_vlion/default/front": {
@@ -70625,7 +71059,7 @@
     },
     "art": {
       "repository": "arkpedia/arkpedia-sd-assets",
-      "commit": "fb67c0ef55edeec917c2768642005d4d517bb469",
+      "commit": "9c6e01b4d06def1502f78c187756e2104072578d",
       "scene": {
         "path": "stages/0-1/26-09-23-17-49-43_b9cc4a/scene.json",
         "bytes": 4479,
@@ -70634,7 +71068,7 @@
     },
     "gates": {
       "repository": "arkpedia/arkpedia-sd-assets",
-      "commit": "fb67c0ef55edeec917c2768642005d4d517bb469",
+      "commit": "9c6e01b4d06def1502f78c187756e2104072578d",
       "pack": {
         "path": "effects/standard-gates/26-09-23-17-49-43_b9cc4a/gates.json",
         "bytes": 3507,
@@ -511303,6 +511737,2218 @@
         }
       ]
     },
+    "char_1034_jesca2": {
+      "id": "char_1034_jesca2",
+      "name": "Jessica the Liberated",
+      "description": "Blocks 3 enemies and attacks from long range.",
+      "rarity": 6,
+      "profession": "TANK",
+      "subProfessionId": "shotprotector",
+      "position": "MELEE",
+      "nationId": "columbia",
+      "groupId": "blacksteel",
+      "teamId": null,
+      "phases": [
+        {
+          "maxLevel": 50,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 1455,
+                "atk": 269,
+                "def": 258,
+                "magicResistance": 0,
+                "cost": 19,
+                "blockCnt": 3,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.2,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 50,
+              "data": {
+                "maxHp": 1941,
+                "atk": 346,
+                "def": 386,
+                "magicResistance": 0,
+                "cost": 19,
+                "blockCnt": 3,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.2,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ]
+          ]
+        },
+        {
+          "maxLevel": 80,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 1941,
+                "atk": 346,
+                "def": 386,
+                "magicResistance": 0,
+                "cost": 21,
+                "blockCnt": 3,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.2,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 80,
+              "data": {
+                "maxHp": 2589,
+                "atk": 433,
+                "def": 522,
+                "magicResistance": 0,
+                "cost": 21,
+                "blockCnt": 3,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.2,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ]
+          ]
+        },
+        {
+          "maxLevel": 90,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 2589,
+                "atk": 433,
+                "def": 522,
+                "magicResistance": 0,
+                "cost": 23,
+                "blockCnt": 3,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.2,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 90,
+              "data": {
+                "maxHp": 3608,
+                "atk": 522,
+                "def": 716,
+                "magicResistance": 0,
+                "cost": 23,
+                "blockCnt": 3,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.2,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ]
+          ]
+        }
+      ],
+      "favorKeyFrames": [
+        {
+          "level": 0,
+          "data": {
+            "maxHp": 0,
+            "atk": 0,
+            "def": 0,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false
+          }
+        },
+        {
+          "level": 50,
+          "data": {
+            "maxHp": 0,
+            "atk": 60,
+            "def": 60,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false
+          }
+        }
+      ],
+      "potentialRanks": [
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [],
+        [
+          {
+            "attributeType": "ATK",
+            "formulaItem": "ADDITION",
+            "value": 28,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [],
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ]
+      ],
+      "trait": null,
+      "talents": [
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_0",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Adaptable",
+              "description": "Can use a Mobile Riot Shield that lasts for 20 seconds. The Mobile Riot Shield can only be deployed in the four tiles adjacent to Jessica the Liberated, and when deployed, Jessica the Liberated immediately turns to face the shield and increases the DEF of herself and units behind her by 5%",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "def",
+                  "value": 0.05,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": "token_10032_jesca2_jckshd",
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_0",
+                "level": 1
+              },
+              "requiredPotentialRank": 2,
+              "prefabKey": "1",
+              "name": "Adaptable",
+              "description": "Can use a Mobile Riot Shield that lasts for 20 seconds. The Mobile Riot Shield can only be deployed in the four tiles adjacent to Jessica the Liberated, and when deployed, Jessica the Liberated immediately turns to face the shield and increases the DEF of herself and units behind her by 8% <@ba.talpu>(+3%)</>",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "def",
+                  "value": 0.08,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": "token_10032_jesca2_jckshd",
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Adaptable",
+              "description": "Can use a Mobile Riot Shield that lasts for 35 seconds. The Mobile Riot Shield can only be deployed in the four tiles adjacent to Jessica the Liberated, and when deployed, Jessica the Liberated immediately turns to face the shield and increases the DEF of herself and units behind her by 10%",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "def",
+                  "value": 0.1,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": "token_10032_jesca2_jckshd",
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 1
+              },
+              "requiredPotentialRank": 2,
+              "prefabKey": "1",
+              "name": "Adaptable",
+              "description": "Can use a Mobile Riot Shield that lasts for 35 seconds. The Mobile Riot Shield can only be deployed in the four tiles adjacent to Jessica the Liberated, and when deployed, Jessica the Liberated immediately turns to face the shield and increases the DEF of herself and units behind her by 13% <@ba.talpu>(+3%)</>",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "def",
+                  "value": 0.13,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": "token_10032_jesca2_jckshd",
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Adaptable",
+              "description": "Can use a Mobile Riot Shield that lasts for 50 seconds. The Mobile Riot Shield can only be deployed in the four tiles adjacent to Jessica the Liberated, and when deployed, Jessica the Liberated immediately turns to face the shield and increases the DEF of herself and units behind her by 15%",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "def",
+                  "value": 0.15,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": "token_10032_jesca2_jckshd",
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 2,
+              "prefabKey": "1",
+              "name": "Adaptable",
+              "description": "Can use a Mobile Riot Shield that lasts for 50 seconds. The Mobile Riot Shield can only be deployed in the four tiles adjacent to Jessica the Liberated, and when deployed, Jessica the Liberated immediately turns to face the shield and increases the DEF of herself and units behind her by 18% <@ba.talpu>(+3%)</>",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "def",
+                  "value": 0.18,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": "token_10032_jesca2_jckshd",
+              "isHideTalent": false
+            }
+          ]
+        },
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "2",
+              "name": "Charge and Release",
+              "description": "When the Mobile Riot Shield receives damage, 50% chance to restore 1 SP to Jessica the Liberated",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "sp",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob",
+                  "value": 0.5,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 4,
+              "prefabKey": "2",
+              "name": "Charge and Release",
+              "description": "When the Mobile Riot Shield receives damage, 55% <@ba.talpu>(+5%)</> chance to restore 1 SP to Jessica the Liberated",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "sp",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob",
+                  "value": 0.55,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            }
+          ]
+        }
+      ],
+      "skills": [
+        {
+          "id": "skchr_jesca2_1",
+          "unlockCondition": {
+            "phase": "PHASE_0",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "Hold the Line",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>, increases DEF of self and Mobile Riot Shield by <@ba.vup>+{def:0%}</>, and increases duration of Mobile Riot Shield by <@ba.vup>+{duration}</> seconds\n<@ba.rem>Unlimited duration</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 100,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_jesca2_1",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "def",
+                  "value": 0.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "duration",
+                  "value": 20,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Hold the Line",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>, increases DEF of self and Mobile Riot Shield by <@ba.vup>+{def:0%}</>, and increases duration of Mobile Riot Shield by <@ba.vup>+{duration}</> seconds\n<@ba.rem>Unlimited duration</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 100,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_jesca2_1",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "def",
+                  "value": 0.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "duration",
+                  "value": 20,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Hold the Line",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>, increases DEF of self and Mobile Riot Shield by <@ba.vup>+{def:0%}</>, and increases duration of Mobile Riot Shield by <@ba.vup>+{duration}</> seconds\n<@ba.rem>Unlimited duration</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 100,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_jesca2_1",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "def",
+                  "value": 0.35,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.35,
+                  "valueStr": null
+                },
+                {
+                  "key": "duration",
+                  "value": 20,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Hold the Line",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>, increases DEF of self and Mobile Riot Shield by <@ba.vup>+{def:0%}</>, and increases duration of Mobile Riot Shield by <@ba.vup>+{duration}</> seconds\n<@ba.rem>Unlimited duration</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 100,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_jesca2_1",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "def",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "duration",
+                  "value": 20,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Hold the Line",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>, increases DEF of self and Mobile Riot Shield by <@ba.vup>+{def:0%}</>, and increases duration of Mobile Riot Shield by <@ba.vup>+{duration}</> seconds\n<@ba.rem>Unlimited duration</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 100,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_jesca2_1",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "def",
+                  "value": 0.45,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.45,
+                  "valueStr": null
+                },
+                {
+                  "key": "duration",
+                  "value": 20,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Hold the Line",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>, increases DEF of self and Mobile Riot Shield by <@ba.vup>+{def:0%}</>, and increases duration of Mobile Riot Shield by <@ba.vup>+{duration}</> seconds\n<@ba.rem>Unlimited duration</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 100,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_jesca2_1",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "def",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "duration",
+                  "value": 20,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Hold the Line",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>, increases DEF of self and Mobile Riot Shield by <@ba.vup>+{def:0%}</>, and increases duration of Mobile Riot Shield by <@ba.vup>+{duration}</> seconds\n<@ba.rem>Unlimited duration</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 90,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_jesca2_1",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "def",
+                  "value": 0.55,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.55,
+                  "valueStr": null
+                },
+                {
+                  "key": "duration",
+                  "value": 20,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Hold the Line",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>, increases DEF of self and Mobile Riot Shield by <@ba.vup>+{def:0%}</>, and increases duration of Mobile Riot Shield by <@ba.vup>+{duration}</> seconds\n<@ba.rem>Unlimited duration</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 80,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_jesca2_1",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "def",
+                  "value": 0.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "duration",
+                  "value": 25,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Hold the Line",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>, increases DEF of self and Mobile Riot Shield by <@ba.vup>+{def:0%}</>, and increases duration of Mobile Riot Shield by <@ba.vup>+{duration}</> seconds\n<@ba.rem>Unlimited duration</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 75,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_jesca2_1",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "def",
+                  "value": 0.65,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.65,
+                  "valueStr": null
+                },
+                {
+                  "key": "duration",
+                  "value": 25,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Hold the Line",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>, increases DEF of self and Mobile Riot Shield by <@ba.vup>+{def:0%}</>, and increases duration of Mobile Riot Shield by <@ba.vup>+{duration}</> seconds\n<@ba.rem>Unlimited duration</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 70,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_jesca2_1",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "def",
+                  "value": 0.7,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.7,
+                  "valueStr": null
+                },
+                {
+                  "key": "duration",
+                  "value": 30,
+                  "valueStr": null
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "skchr_jesca2_2",
+          "unlockCondition": {
+            "phase": "PHASE_1",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "Covered Defense",
+              "rangeId": "2-5",
+              "description": "Attack Range <@ba.vup>expands</>, ATK <@ba.vup>+{atk:0%}</>, Attack Interval <@ba.vup>reduces significantly</>, and gains <@ba.vup>75%</> Physical and Arts dodge",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 35,
+                "initSp": 15,
+                "increment": 1
+              },
+              "prefabId": "skchr_jesca2_2",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": -0.9,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob",
+                  "value": 0.75,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ]
+              ]
+            },
+            {
+              "name": "Covered Defense",
+              "rangeId": "2-5",
+              "description": "Attack Range <@ba.vup>expands</>, ATK <@ba.vup>+{atk:0%}</>, Attack Interval <@ba.vup>reduces significantly</>, and gains <@ba.vup>75%</> Physical and Arts dodge",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 35,
+                "initSp": 15,
+                "increment": 1
+              },
+              "prefabId": "skchr_jesca2_2",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.35,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": -0.9,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob",
+                  "value": 0.75,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ]
+              ]
+            },
+            {
+              "name": "Covered Defense",
+              "rangeId": "2-5",
+              "description": "Attack Range <@ba.vup>expands</>, ATK <@ba.vup>+{atk:0%}</>, Attack Interval <@ba.vup>reduces significantly</>, and gains <@ba.vup>75%</> Physical and Arts dodge",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 35,
+                "initSp": 15,
+                "increment": 1
+              },
+              "prefabId": "skchr_jesca2_2",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": -0.9,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob",
+                  "value": 0.75,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ]
+              ]
+            },
+            {
+              "name": "Covered Defense",
+              "rangeId": "2-5",
+              "description": "Attack Range <@ba.vup>expands</>, ATK <@ba.vup>+{atk:0%}</>, Attack Interval <@ba.vup>reduces significantly</>, and gains <@ba.vup>75%</> Physical and Arts dodge",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 35,
+                "initSp": 15,
+                "increment": 1
+              },
+              "prefabId": "skchr_jesca2_2",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.45,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": -0.9,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob",
+                  "value": 0.75,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ]
+              ]
+            },
+            {
+              "name": "Covered Defense",
+              "rangeId": "2-5",
+              "description": "Attack Range <@ba.vup>expands</>, ATK <@ba.vup>+{atk:0%}</>, Attack Interval <@ba.vup>reduces significantly</>, and gains <@ba.vup>75%</> Physical and Arts dodge",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 35,
+                "initSp": 15,
+                "increment": 1
+              },
+              "prefabId": "skchr_jesca2_2",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": -0.9,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob",
+                  "value": 0.75,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ]
+              ]
+            },
+            {
+              "name": "Covered Defense",
+              "rangeId": "2-5",
+              "description": "Attack Range <@ba.vup>expands</>, ATK <@ba.vup>+{atk:0%}</>, Attack Interval <@ba.vup>reduces significantly</>, and gains <@ba.vup>75%</> Physical and Arts dodge",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 35,
+                "initSp": 15,
+                "increment": 1
+              },
+              "prefabId": "skchr_jesca2_2",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.55,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": -0.9,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob",
+                  "value": 0.75,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ]
+              ]
+            },
+            {
+              "name": "Covered Defense",
+              "rangeId": "2-5",
+              "description": "Attack Range <@ba.vup>expands</>, ATK <@ba.vup>+{atk:0%}</>, Attack Interval <@ba.vup>reduces significantly</>, and gains <@ba.vup>75%</> Physical and Arts dodge",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 35,
+                "initSp": 20,
+                "increment": 1
+              },
+              "prefabId": "skchr_jesca2_2",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": -0.9,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob",
+                  "value": 0.75,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ]
+              ]
+            },
+            {
+              "name": "Covered Defense",
+              "rangeId": "2-5",
+              "description": "Attack Range <@ba.vup>expands</>, ATK <@ba.vup>+{atk:0%}</>, Attack Interval <@ba.vup>reduces significantly</>, and gains <@ba.vup>75%</> Physical and Arts dodge",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 35,
+                "initSp": 20,
+                "increment": 1
+              },
+              "prefabId": "skchr_jesca2_2",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.65,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": -0.9,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob",
+                  "value": 0.75,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ]
+              ]
+            },
+            {
+              "name": "Covered Defense",
+              "rangeId": "2-5",
+              "description": "Attack Range <@ba.vup>expands</>, ATK <@ba.vup>+{atk:0%}</>, Attack Interval <@ba.vup>reduces significantly</>, and gains <@ba.vup>75%</> Physical and Arts dodge",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 32,
+                "initSp": 22,
+                "increment": 1
+              },
+              "prefabId": "skchr_jesca2_2",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.7,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": -0.9,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob",
+                  "value": 0.75,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ]
+              ]
+            },
+            {
+              "name": "Covered Defense",
+              "rangeId": "2-5",
+              "description": "Attack Range <@ba.vup>expands</>, ATK <@ba.vup>+{atk:0%}</>, Attack Interval <@ba.vup>reduces significantly</>, and gains <@ba.vup>75%</> Physical and Arts dodge",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 30,
+                "initSp": 25,
+                "increment": 1
+              },
+              "prefabId": "skchr_jesca2_2",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.75,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": -0.9,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob",
+                  "value": 0.75,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "id": "skchr_jesca2_3",
+          "unlockCondition": {
+            "phase": "PHASE_2",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "Saturation Burst",
+              "rangeId": null,
+              "description": "Attack Range <@ba.vup>+1</>, Attack Interval <@ba.vdown>increases</>, ATK <@ba.vup>+{atk:0%}</>, DEF <@ba.vup>+{jesca2_s_3[def].def:0%}</>, Mobile Riot Shield gains <@ba.vup>+{jesca2_s_3_token[def].def:0%}</> DEF\nWhen the Mobile Riot Shield is deployed, immediately fires a shell forward that explodes upon reaching a target or its max distance, dealing <@ba.vup>{attack@extrabomb.atk_scale:0%}</> ATK as Physical damage to all enemies in an area and <$ba.stun>stunning</> them for <@ba.vup>{attack@extrabomb.stun}</> seconds\n<@ba.rem>Skill activation grants {attack@trigger_time} Ammo, and the skill ends when all Ammo is used (can be manually deactivated)</>",
+              "skillType": "MANUAL",
+              "durationType": "AMMO",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 50,
+                "initSp": 20,
+                "increment": 1
+              },
+              "prefabId": "skchr_jesca2_3",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "jesca2_s_3_token[def].def",
+                  "value": 0.75,
+                  "valueStr": null
+                },
+                {
+                  "key": "ability_range_forward_extend",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": 0.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@extrabomb.stun",
+                  "value": 5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@extrabomb.atk_scale",
+                  "value": 2.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@trigger_time",
+                  "value": 20,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@extrabomb.projectile_range",
+                  "value": 1.7,
+                  "valueStr": null
+                },
+                {
+                  "key": "jesca2_s_3[def].def",
+                  "value": 0.2,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Saturation Burst",
+              "rangeId": null,
+              "description": "Attack Range <@ba.vup>+1</>, Attack Interval <@ba.vdown>increases</>, ATK <@ba.vup>+{atk:0%}</>, DEF <@ba.vup>+{jesca2_s_3[def].def:0%}</>, Mobile Riot Shield gains <@ba.vup>+{jesca2_s_3_token[def].def:0%}</> DEF\nWhen the Mobile Riot Shield is deployed, immediately fires a shell forward that explodes upon reaching a target or its max distance, dealing <@ba.vup>{attack@extrabomb.atk_scale:0%}</> ATK as Physical damage to all enemies in an area and <$ba.stun>stunning</> them for <@ba.vup>{attack@extrabomb.stun}</> seconds\n<@ba.rem>Skill activation grants {attack@trigger_time} Ammo, and the skill ends when all Ammo is used (can be manually deactivated)</>",
+              "skillType": "MANUAL",
+              "durationType": "AMMO",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 50,
+                "initSp": 20,
+                "increment": 1
+              },
+              "prefabId": "skchr_jesca2_3",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 2.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "jesca2_s_3_token[def].def",
+                  "value": 0.8,
+                  "valueStr": null
+                },
+                {
+                  "key": "ability_range_forward_extend",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": 0.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@extrabomb.stun",
+                  "value": 5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@extrabomb.atk_scale",
+                  "value": 2.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@trigger_time",
+                  "value": 20,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@extrabomb.projectile_range",
+                  "value": 1.7,
+                  "valueStr": null
+                },
+                {
+                  "key": "jesca2_s_3[def].def",
+                  "value": 0.3,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Saturation Burst",
+              "rangeId": null,
+              "description": "Attack Range <@ba.vup>+1</>, Attack Interval <@ba.vdown>increases</>, ATK <@ba.vup>+{atk:0%}</>, DEF <@ba.vup>+{jesca2_s_3[def].def:0%}</>, Mobile Riot Shield gains <@ba.vup>+{jesca2_s_3_token[def].def:0%}</> DEF\nWhen the Mobile Riot Shield is deployed, immediately fires a shell forward that explodes upon reaching a target or its max distance, dealing <@ba.vup>{attack@extrabomb.atk_scale:0%}</> ATK as Physical damage to all enemies in an area and <$ba.stun>stunning</> them for <@ba.vup>{attack@extrabomb.stun}</> seconds\n<@ba.rem>Skill activation grants {attack@trigger_time} Ammo, and the skill ends when all Ammo is used (can be manually deactivated)</>",
+              "skillType": "MANUAL",
+              "durationType": "AMMO",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 50,
+                "initSp": 20,
+                "increment": 1
+              },
+              "prefabId": "skchr_jesca2_3",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 2.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "jesca2_s_3_token[def].def",
+                  "value": 0.9,
+                  "valueStr": null
+                },
+                {
+                  "key": "ability_range_forward_extend",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": 0.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@extrabomb.stun",
+                  "value": 5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@extrabomb.atk_scale",
+                  "value": 2.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@trigger_time",
+                  "value": 20,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@extrabomb.projectile_range",
+                  "value": 1.7,
+                  "valueStr": null
+                },
+                {
+                  "key": "jesca2_s_3[def].def",
+                  "value": 0.35,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Saturation Burst",
+              "rangeId": null,
+              "description": "Attack Range <@ba.vup>+1</>, Attack Interval <@ba.vdown>increases</>, ATK <@ba.vup>+{atk:0%}</>, DEF <@ba.vup>+{jesca2_s_3[def].def:0%}</>, Mobile Riot Shield gains <@ba.vup>+{jesca2_s_3_token[def].def:0%}</> DEF\nWhen the Mobile Riot Shield is deployed, immediately fires a shell forward that explodes upon reaching a target or its max distance, dealing <@ba.vup>{attack@extrabomb.atk_scale:0%}</> ATK as Physical damage to all enemies in an area and <$ba.stun>stunning</> them for <@ba.vup>{attack@extrabomb.stun}</> seconds\n<@ba.rem>Skill activation grants {attack@trigger_time} Ammo, and the skill ends when all Ammo is used (can be manually deactivated)</>",
+              "skillType": "MANUAL",
+              "durationType": "AMMO",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 50,
+                "initSp": 20,
+                "increment": 1
+              },
+              "prefabId": "skchr_jesca2_3",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 2.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "jesca2_s_3_token[def].def",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "ability_range_forward_extend",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": 0.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@extrabomb.stun",
+                  "value": 5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@extrabomb.atk_scale",
+                  "value": 2.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@trigger_time",
+                  "value": 20,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@extrabomb.projectile_range",
+                  "value": 1.7,
+                  "valueStr": null
+                },
+                {
+                  "key": "jesca2_s_3[def].def",
+                  "value": 0.5,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Saturation Burst",
+              "rangeId": null,
+              "description": "Attack Range <@ba.vup>+1</>, Attack Interval <@ba.vdown>increases</>, ATK <@ba.vup>+{atk:0%}</>, DEF <@ba.vup>+{jesca2_s_3[def].def:0%}</>, Mobile Riot Shield gains <@ba.vup>+{jesca2_s_3_token[def].def:0%}</> DEF\nWhen the Mobile Riot Shield is deployed, immediately fires a shell forward that explodes upon reaching a target or its max distance, dealing <@ba.vup>{attack@extrabomb.atk_scale:0%}</> ATK as Physical damage to all enemies in an area and <$ba.stun>stunning</> them for <@ba.vup>{attack@extrabomb.stun}</> seconds\n<@ba.rem>Skill activation grants {attack@trigger_time} Ammo, and the skill ends when all Ammo is used (can be manually deactivated)</>",
+              "skillType": "MANUAL",
+              "durationType": "AMMO",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 50,
+                "initSp": 20,
+                "increment": 1
+              },
+              "prefabId": "skchr_jesca2_3",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 2.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "jesca2_s_3_token[def].def",
+                  "value": 1.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "ability_range_forward_extend",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": 0.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@extrabomb.stun",
+                  "value": 5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@extrabomb.atk_scale",
+                  "value": 2.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@trigger_time",
+                  "value": 20,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@extrabomb.projectile_range",
+                  "value": 1.7,
+                  "valueStr": null
+                },
+                {
+                  "key": "jesca2_s_3[def].def",
+                  "value": 0.55,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Saturation Burst",
+              "rangeId": null,
+              "description": "Attack Range <@ba.vup>+1</>, Attack Interval <@ba.vdown>increases</>, ATK <@ba.vup>+{atk:0%}</>, DEF <@ba.vup>+{jesca2_s_3[def].def:0%}</>, Mobile Riot Shield gains <@ba.vup>+{jesca2_s_3_token[def].def:0%}</> DEF\nWhen the Mobile Riot Shield is deployed, immediately fires a shell forward that explodes upon reaching a target or its max distance, dealing <@ba.vup>{attack@extrabomb.atk_scale:0%}</> ATK as Physical damage to all enemies in an area and <$ba.stun>stunning</> them for <@ba.vup>{attack@extrabomb.stun}</> seconds\n<@ba.rem>Skill activation grants {attack@trigger_time} Ammo, and the skill ends when all Ammo is used (can be manually deactivated)</>",
+              "skillType": "MANUAL",
+              "durationType": "AMMO",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 50,
+                "initSp": 20,
+                "increment": 1
+              },
+              "prefabId": "skchr_jesca2_3",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 2.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "jesca2_s_3_token[def].def",
+                  "value": 1.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "ability_range_forward_extend",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": 0.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@extrabomb.stun",
+                  "value": 5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@extrabomb.atk_scale",
+                  "value": 2.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@trigger_time",
+                  "value": 20,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@extrabomb.projectile_range",
+                  "value": 1.7,
+                  "valueStr": null
+                },
+                {
+                  "key": "jesca2_s_3[def].def",
+                  "value": 0.6,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Saturation Burst",
+              "rangeId": null,
+              "description": "Attack Range <@ba.vup>+1</>, Attack Interval <@ba.vdown>increases</>, ATK <@ba.vup>+{atk:0%}</>, DEF <@ba.vup>+{jesca2_s_3[def].def:0%}</>, Mobile Riot Shield gains <@ba.vup>+{jesca2_s_3_token[def].def:0%}</> DEF\nWhen the Mobile Riot Shield is deployed, immediately fires a shell forward that explodes upon reaching a target or its max distance, dealing <@ba.vup>{attack@extrabomb.atk_scale:0%}</> ATK as Physical damage to all enemies in an area and <$ba.stun>stunning</> them for <@ba.vup>{attack@extrabomb.stun}</> seconds\n<@ba.rem>Skill activation grants {attack@trigger_time} Ammo, and the skill ends when all Ammo is used (can be manually deactivated)</>",
+              "skillType": "MANUAL",
+              "durationType": "AMMO",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 45,
+                "initSp": 25,
+                "increment": 1
+              },
+              "prefabId": "skchr_jesca2_3",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 2.7,
+                  "valueStr": null
+                },
+                {
+                  "key": "jesca2_s_3_token[def].def",
+                  "value": 1.35,
+                  "valueStr": null
+                },
+                {
+                  "key": "ability_range_forward_extend",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": 0.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@extrabomb.stun",
+                  "value": 5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@extrabomb.atk_scale",
+                  "value": 2.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@trigger_time",
+                  "value": 20,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@extrabomb.projectile_range",
+                  "value": 1.7,
+                  "valueStr": null
+                },
+                {
+                  "key": "jesca2_s_3[def].def",
+                  "value": 0.65,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Saturation Burst",
+              "rangeId": null,
+              "description": "Attack Range <@ba.vup>+1</>, Attack Interval <@ba.vdown>increases</>, ATK <@ba.vup>+{atk:0%}</>, DEF <@ba.vup>+{jesca2_s_3[def].def:0%}</>, Mobile Riot Shield gains <@ba.vup>+{jesca2_s_3_token[def].def:0%}</> DEF\nWhen the Mobile Riot Shield is deployed, immediately fires a shell forward that explodes upon reaching a target or its max distance, dealing <@ba.vup>{attack@extrabomb.atk_scale:0%}</> ATK as Physical damage to all enemies in an area and <$ba.stun>stunning</> them for <@ba.vup>{attack@extrabomb.stun}</> seconds\n<@ba.rem>Skill activation grants {attack@trigger_time} Ammo, and the skill ends when all Ammo is used (can be manually deactivated)</>",
+              "skillType": "MANUAL",
+              "durationType": "AMMO",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 45,
+                "initSp": 28,
+                "increment": 1
+              },
+              "prefabId": "skchr_jesca2_3",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 2.8,
+                  "valueStr": null
+                },
+                {
+                  "key": "jesca2_s_3_token[def].def",
+                  "value": 1.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "ability_range_forward_extend",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": 0.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@extrabomb.stun",
+                  "value": 5.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@extrabomb.atk_scale",
+                  "value": 2.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@trigger_time",
+                  "value": 20,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@extrabomb.projectile_range",
+                  "value": 1.7,
+                  "valueStr": null
+                },
+                {
+                  "key": "jesca2_s_3[def].def",
+                  "value": 0.7,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Saturation Burst",
+              "rangeId": null,
+              "description": "Attack Range <@ba.vup>+1</>, Attack Interval <@ba.vdown>increases</>, ATK <@ba.vup>+{atk:0%}</>, DEF <@ba.vup>+{jesca2_s_3[def].def:0%}</>, Mobile Riot Shield gains <@ba.vup>+{jesca2_s_3_token[def].def:0%}</> DEF\nWhen the Mobile Riot Shield is deployed, immediately fires a shell forward that explodes upon reaching a target or its max distance, dealing <@ba.vup>{attack@extrabomb.atk_scale:0%}</> ATK as Physical damage to all enemies in an area and <$ba.stun>stunning</> them for <@ba.vup>{attack@extrabomb.stun}</> seconds\n<@ba.rem>Skill activation grants {attack@trigger_time} Ammo, and the skill ends when all Ammo is used (can be manually deactivated)</>",
+              "skillType": "MANUAL",
+              "durationType": "AMMO",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 42,
+                "initSp": 28,
+                "increment": 1
+              },
+              "prefabId": "skchr_jesca2_3",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 2.9,
+                  "valueStr": null
+                },
+                {
+                  "key": "jesca2_s_3_token[def].def",
+                  "value": 1.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "ability_range_forward_extend",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": 0.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@extrabomb.stun",
+                  "value": 5.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@extrabomb.atk_scale",
+                  "value": 2.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@trigger_time",
+                  "value": 20,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@extrabomb.projectile_range",
+                  "value": 1.7,
+                  "valueStr": null
+                },
+                {
+                  "key": "jesca2_s_3[def].def",
+                  "value": 0.75,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Saturation Burst",
+              "rangeId": null,
+              "description": "Attack Range <@ba.vup>+1</>, Attack Interval <@ba.vdown>increases</>, ATK <@ba.vup>+{atk:0%}</>, DEF <@ba.vup>+{jesca2_s_3[def].def:0%}</>, Mobile Riot Shield gains <@ba.vup>+{jesca2_s_3_token[def].def:0%}</> DEF\nWhen the Mobile Riot Shield is deployed, immediately fires a shell forward that explodes upon reaching a target or its max distance, dealing <@ba.vup>{attack@extrabomb.atk_scale:0%}</> ATK as Physical damage to all enemies in an area and <$ba.stun>stunning</> them for <@ba.vup>{attack@extrabomb.stun}</> seconds\n<@ba.rem>Skill activation grants {attack@trigger_time} Ammo, and the skill ends when all Ammo is used (can be manually deactivated)</>",
+              "skillType": "MANUAL",
+              "durationType": "AMMO",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 40,
+                "initSp": 30,
+                "increment": 1
+              },
+              "prefabId": "skchr_jesca2_3",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 3.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "jesca2_s_3_token[def].def",
+                  "value": 1.7,
+                  "valueStr": null
+                },
+                {
+                  "key": "ability_range_forward_extend",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": 0.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@extrabomb.stun",
+                  "value": 6,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@extrabomb.atk_scale",
+                  "value": 2.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@trigger_time",
+                  "value": 20,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@extrabomb.projectile_range",
+                  "value": 1.7,
+                  "valueStr": null
+                },
+                {
+                  "key": "jesca2_s_3[def].def",
+                  "value": 0.8,
+                  "valueStr": null
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "char_4010_etlchi": {
       "id": "char_4010_etlchi",
       "name": "Entelechia",
@@ -554034,6 +556680,343 @@
     }
   },
   "tokens": {
+    "token_10032_jesca2_jckshd": {
+      "id": "token_10032_jesca2_jckshd",
+      "name": "Mobile Riot Shield",
+      "profession": "TOKEN",
+      "subProfessionId": "notchar1",
+      "position": "MELEE",
+      "phases": [
+        {
+          "maxLevel": 50,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 1731,
+                "atk": 0,
+                "def": 348,
+                "magicResistance": 0,
+                "cost": 5,
+                "blockCnt": 2,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 30,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 50,
+              "data": {
+                "maxHp": 2249,
+                "atk": 0,
+                "def": 465,
+                "magicResistance": 0,
+                "cost": 5,
+                "blockCnt": 2,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 30,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ]
+          ]
+        },
+        {
+          "maxLevel": 80,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 2368,
+                "atk": 0,
+                "def": 480,
+                "magicResistance": 0,
+                "cost": 5,
+                "blockCnt": 2,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 30,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 80,
+              "data": {
+                "maxHp": 2888,
+                "atk": 0,
+                "def": 600,
+                "magicResistance": 0,
+                "cost": 5,
+                "blockCnt": 2,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 30,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ]
+          ]
+        },
+        {
+          "maxLevel": 90,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 3041,
+                "atk": 0,
+                "def": 619,
+                "magicResistance": 0,
+                "cost": 5,
+                "blockCnt": 2,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 30,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 90,
+              "data": {
+                "maxHp": 3802,
+                "atk": 0,
+                "def": 755,
+                "magicResistance": 0,
+                "cost": 5,
+                "blockCnt": 2,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 30,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ]
+          ]
+        }
+      ],
+      "trait": null,
+      "talents": [
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_0",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": null,
+              "description": "More likely to be attacked",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "duration",
+                  "value": 20,
+                  "valueStr": null
+                },
+                {
+                  "key": "taunt_level",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": true
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": null,
+              "description": "More likely to be attacked",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "duration",
+                  "value": 35,
+                  "valueStr": null
+                },
+                {
+                  "key": "taunt_level",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": true
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": null,
+              "description": "More likely to be attacked",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "duration",
+                  "value": 50,
+                  "valueStr": null
+                },
+                {
+                  "key": "taunt_level",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": true
+            }
+          ]
+        }
+      ],
+      "skills": [
+        {
+          "id": null,
+          "unlockCondition": {
+            "phase": "PHASE_0",
+            "level": 1
+          },
+          "levels": []
+        },
+        {
+          "id": null,
+          "unlockCondition": {
+            "phase": "PHASE_1",
+            "level": 1
+          },
+          "levels": []
+        },
+        {
+          "id": null,
+          "unlockCondition": {
+            "phase": "PHASE_2",
+            "level": 1
+          },
+          "levels": []
+        }
+      ],
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/9c6e01b4d06def1502f78c187756e2104072578d/models/operator/token_10032_jesca2_jckshd/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+    },
     "token_10040_siege2_vlion": {
       "id": "token_10040_siege2_vlion",
       "name": "Golden Vows",
@@ -555464,7 +558447,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/fb67c0ef55edeec917c2768642005d4d517bb469/models/operator/token_10009_weedy_cannon/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/9c6e01b4d06def1502f78c187756e2104072578d/models/operator/token_10009_weedy_cannon/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10024_ebnhlz_rcube": {
       "id": "token_10024_ebnhlz_rcube",
@@ -556037,7 +559020,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/fb67c0ef55edeec917c2768642005d4d517bb469/models/operator/token_10024_ebnhlz_rcube/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/9c6e01b4d06def1502f78c187756e2104072578d/models/operator/token_10024_ebnhlz_rcube/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10044_wulfen_mine": {
       "id": "token_10044_wulfen_mine",
@@ -557238,7 +560221,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/fb67c0ef55edeec917c2768642005d4d517bb469/models/operator/token_10044_wulfen_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/9c6e01b4d06def1502f78c187756e2104072578d/models/operator/token_10044_wulfen_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10042_tecno_puppet": {
       "id": "token_10042_tecno_puppet",
@@ -557487,7 +560470,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/fb67c0ef55edeec917c2768642005d4d517bb469/models/operator/token_10042_tecno_puppet/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/9c6e01b4d06def1502f78c187756e2104072578d/models/operator/token_10042_tecno_puppet/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10041_cathy_catsld": {
       "id": "token_10041_cathy_catsld",
@@ -558045,7 +561028,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/fb67c0ef55edeec917c2768642005d4d517bb469/models/operator/token_10041_cathy_catsld/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/9c6e01b4d06def1502f78c187756e2104072578d/models/operator/token_10041_cathy_catsld/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10022_kazema_shadow": {
       "id": "token_10022_kazema_shadow",
@@ -558515,7 +561498,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/fb67c0ef55edeec917c2768642005d4d517bb469/models/operator/token_10022_kazema_shadow/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/9c6e01b4d06def1502f78c187756e2104072578d/models/operator/token_10022_kazema_shadow/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10001_deepcl_tentac": {
       "id": "token_10001_deepcl_tentac",
@@ -558829,7 +561812,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/fb67c0ef55edeec917c2768642005d4d517bb469/models/operator/token_10001_deepcl_tentac/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/9c6e01b4d06def1502f78c187756e2104072578d/models/operator/token_10001_deepcl_tentac/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10018_robrta_mach": {
       "id": "token_10018_robrta_mach",
@@ -559319,7 +562302,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/fb67c0ef55edeec917c2768642005d4d517bb469/models/operator/token_10018_robrta_mach/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/9c6e01b4d06def1502f78c187756e2104072578d/models/operator/token_10018_robrta_mach/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10014_bstalk_crab": {
       "id": "token_10014_bstalk_crab",
@@ -559648,7 +562631,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/fb67c0ef55edeec917c2768642005d4d517bb469/models/operator/token_10014_bstalk_crab/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/9c6e01b4d06def1502f78c187756e2104072578d/models/operator/token_10014_bstalk_crab/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10011_beewax_oblisk": {
       "id": "token_10011_beewax_oblisk",
@@ -560593,7 +563576,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/fb67c0ef55edeec917c2768642005d4d517bb469/models/operator/token_10011_beewax_oblisk/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/9c6e01b4d06def1502f78c187756e2104072578d/models/operator/token_10011_beewax_oblisk/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10006_vodfox_doll": {
       "id": "token_10006_vodfox_doll",
@@ -561229,7 +564212,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/fb67c0ef55edeec917c2768642005d4d517bb469/models/operator/token_10006_vodfox_doll/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/9c6e01b4d06def1502f78c187756e2104072578d/models/operator/token_10006_vodfox_doll/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10003_cgbird_bird": {
       "id": "token_10003_cgbird_bird",
@@ -561524,7 +564507,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/fb67c0ef55edeec917c2768642005d4d517bb469/models/operator/token_10003_cgbird_bird/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/9c6e01b4d06def1502f78c187756e2104072578d/models/operator/token_10003_cgbird_bird/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10000_silent_healrb": {
       "id": "token_10000_silent_healrb",
@@ -561907,7 +564890,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/fb67c0ef55edeec917c2768642005d4d517bb469/models/operator/token_10000_silent_healrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/9c6e01b4d06def1502f78c187756e2104072578d/models/operator/token_10000_silent_healrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10015_dusk_drgn": {
       "id": "token_10015_dusk_drgn",
@@ -562321,7 +565304,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/fb67c0ef55edeec917c2768642005d4d517bb469/models/operator/token_10015_dusk_drgn/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/9c6e01b4d06def1502f78c187756e2104072578d/models/operator/token_10015_dusk_drgn/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10007_phatom_twin": {
       "id": "token_10007_phatom_twin",
@@ -564100,7 +567083,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/fb67c0ef55edeec917c2768642005d4d517bb469/models/operator/token_10007_phatom_twin/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/9c6e01b4d06def1502f78c187756e2104072578d/models/operator/token_10007_phatom_twin/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10008_cqbw_box": {
       "id": "token_10008_cqbw_box",
@@ -564673,7 +567656,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/fb67c0ef55edeec917c2768642005d4d517bb469/models/operator/token_10008_cqbw_box/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/9c6e01b4d06def1502f78c187756e2104072578d/models/operator/token_10008_cqbw_box/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10029_slent2_protrb": {
       "id": "token_10029_slent2_protrb",
@@ -565418,7 +568401,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/fb67c0ef55edeec917c2768642005d4d517bb469/models/operator/token_10029_slent2_protrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/9c6e01b4d06def1502f78c187756e2104072578d/models/operator/token_10029_slent2_protrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10019_nearl2_sword": {
       "id": "token_10019_nearl2_sword",
@@ -566205,7 +569188,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/fb67c0ef55edeec917c2768642005d4d517bb469/models/operator/token_10019_nearl2_sword/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/9c6e01b4d06def1502f78c187756e2104072578d/models/operator/token_10019_nearl2_sword/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10002_kalts_mon3tr": {
       "id": "token_10002_kalts_mon3tr",
@@ -566623,7 +569606,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/fb67c0ef55edeec917c2768642005d4d517bb469/models/operator/token_10002_kalts_mon3tr/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/9c6e01b4d06def1502f78c187756e2104072578d/models/operator/token_10002_kalts_mon3tr/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10010_folivo_car": {
       "id": "token_10010_folivo_car",
@@ -568244,7 +571227,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/fb67c0ef55edeec917c2768642005d4d517bb469/models/operator/token_10010_folivo_car/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/9c6e01b4d06def1502f78c187756e2104072578d/models/operator/token_10010_folivo_car/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10021_blkngt_hypnos": {
       "id": "token_10021_blkngt_hypnos",
@@ -568659,7 +571642,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/fb67c0ef55edeec917c2768642005d4d517bb469/models/operator/token_10021_blkngt_hypnos/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/9c6e01b4d06def1502f78c187756e2104072578d/models/operator/token_10021_blkngt_hypnos/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10023_windft_wrench": {
       "id": "token_10023_windft_wrench",
@@ -569823,7 +572806,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/fb67c0ef55edeec917c2768642005d4d517bb469/models/operator/token_10023_windft_wrench/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/9c6e01b4d06def1502f78c187756e2104072578d/models/operator/token_10023_windft_wrench/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10045_alanna_crane": {
       "id": "token_10045_alanna_crane",
@@ -570223,7 +573206,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/fb67c0ef55edeec917c2768642005d4d517bb469/models/operator/token_10045_alanna_crane/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/9c6e01b4d06def1502f78c187756e2104072578d/models/operator/token_10045_alanna_crane/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10013_robin_mine": {
       "id": "token_10013_robin_mine",
@@ -571154,7 +574137,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/fb67c0ef55edeec917c2768642005d4d517bb469/models/operator/token_10013_robin_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/9c6e01b4d06def1502f78c187756e2104072578d/models/operator/token_10013_robin_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10016_rfrost_mine": {
       "id": "token_10016_rfrost_mine",
@@ -572085,7 +575068,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/fb67c0ef55edeec917c2768642005d4d517bb469/models/operator/token_10016_rfrost_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/9c6e01b4d06def1502f78c187756e2104072578d/models/operator/token_10016_rfrost_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10004_otter_motter": {
       "id": "token_10004_otter_motter",
@@ -573434,7 +576417,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/fb67c0ef55edeec917c2768642005d4d517bb469/models/operator/token_10004_otter_motter/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/9c6e01b4d06def1502f78c187756e2104072578d/models/operator/token_10004_otter_motter/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     }
   },
   "enemies": {
@@ -573485,7 +576468,7 @@
   },
   "skillEffects": {
     "repository": "arkpedia/arkpedia-sd-assets",
-    "commit": "fb67c0ef55edeec917c2768642005d4d517bb469",
+    "commit": "9c6e01b4d06def1502f78c187756e2104072578d",
     "pack": {
       "path": "effects/charge-cost/26-09-23-17-49-43_b9cc4a/effect.json",
       "bytes": 15311,

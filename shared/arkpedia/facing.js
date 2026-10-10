@@ -2,7 +2,7 @@
 // Enemy deploy direction is not its walking direction. Keep visual facing through
 // waits/vertical legs, then turn when it moves horizontally or attacks a blocker.
 export function spriteFacing(unit, previous = {}) {
-  if (unit.side !== "enemy") return unit.dir === "LEFT" ? -1 : 1;
+  if (unit.side !== "enemy") return (unit.mem?.regularVisualDirection ?? unit.dir) === "LEFT" ? -1 : 1;
   const blocker = unit.blockedBy;
   if (blocker?.alive && Math.abs(blocker.x - unit.x) > 0.01)
     return blocker.x < unit.x ? -1 : 1;

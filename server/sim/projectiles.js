@@ -125,7 +125,7 @@ export class ProjectileSystem {
       if (p.onMove) this.battle._safe(() => p.onMove({ battle: this.battle,
         projectile: p, previous, x: p.x, y: p.y }), 'projectile.onMove', p.source);
     }
-    this.list = keep;
+    this.list = keep.filter(p => !p.removed);
     this.arriving = arrived;
     for (const p of arrived) {
       if (p.removed || !p.onHit) continue;

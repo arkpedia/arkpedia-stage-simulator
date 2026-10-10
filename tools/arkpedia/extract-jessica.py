@@ -194,7 +194,7 @@ evidence = {'schemaVersion': 1, 'source': {'repository': 'Kengxxiao/ArknightsGam
     'buffDatabase': {'path': 'en_US/gamedata/buff_table.json', 'sha256': digest((C / 'lessing-source/buff_table.json').read_bytes())},
     'bundles': source_bundles, 'modelRepository': 'fexli/ArknightsResource', 'modelCommit': MODEL},
     'frameParity': False, 'moduleSupport': False, 'nativeParticleSupport': False,
-    'enabledOperators': [], 'reviewStatus': 'Complete source foundation; combat adapter pending',
+    'enabledOperators': [ID], 'reviewStatus': 'Complete source kit mapped to a bounded regular-stage combat adapter',
     'characters': characters, 'skills': skills, 'tokens': tokens, 'chararts': chararts,
     'models': models, 'officialSkeletonBindings': bindings, 'originalShieldModels': token_model, 'projectiles': projectiles,
     'templates': {k: bt[k] for k in sorted(templates)},
@@ -203,11 +203,22 @@ evidence = {'schemaVersion': 1, 'source': {'repository': 'Kengxxiao/ArknightsGam
     'tables': {'character': ct[ID], 'tokens': {TOKEN: ct[TOKEN]},
         'skills': {k: st[k] for k in SKILLS}, 'ranges': {k: rt[k] for k in sorted(ranges)}},
     'nativeTemplateGaps': sorted(templates - native_templates.keys()),
-    'runtimeMapping': {},
+    'runtimeMapping': {
+        'operator': ID, 'token': TOKEN, 'skillIds': SKILLS,
+        'normalFire': 'Single-target ground/air physical homing projectile; original attack events and source speed 10.',
+        'shield': 'Adjacent cardinal ground tile, zero slots, 5 DP, two blocks, taunt, heal-free, source elite lifetime, finish-started 30-second recharge.',
+        'direction': 'Body/range rotates immediately; original facing waits in local 0.1-second intervals while incapacitated or blocking; removal restores saved direction.',
+        'talents': 'Shield-dependent owner/rear DEF and selected-potential E2 damage-to-SP probability; ordinary active-skill SP locks apply.',
+        'S1': 'Permanent ATK/DEF, matching shield DEF and once-per-shield lifetime extension.',
+        'S2': 'Finite ATK/BAT/dodge/range modifiers; original Begin/Loop/End clips.',
+        'S3': 'Twenty rounds, separate owner/token DEF, ATK/BAT/range modifiers; shell competes with ordinary fire without consuming ammunition.',
+        'shell': 'Original release event, source speed/collider/radius/ATK/stun; first swept collision or terminal arrival detonates once; emitted shots survive cancellation.'
+    },
     'verificationLimits': [
         'Original C# controller execution, event dispatch ordering and game-frame parity are not recovered from serialized components.',
-        'Shield deployment constraints, direction/body-face wait and reset, rear DEF aura, lifespan extension and recharge require a reviewed combat/UI adapter.',
-        'S3 shell release competes with the ordinary attack through the native composite ability; collision/terminal explosion, ammo accounting and cancellation need individual verification.',
-        'Modules, particles and audio are not implemented. No combat kit is enabled by this source extraction.']}
+        'Closed tile filter 12 is mapped to the furthest on-map forward tile in the active range. Continuous swept collision replaces native 0.03-second polling.',
+        'Local clocks implement body/face waits, composite shell interruption and event-4 ammo release plus final animation tail; native frame ordering is not certified.',
+        'Shield SP uses positive post-mitigation damage hooks; native ON_TAKE_DAMAGE dispatch order is not certified. Shell damage reads current owner ATK at impact.',
+        'Modules, original particles and audio are not implemented.']}
 (ROOT / 'data/arkpedia-jessica-prefabs.json').write_text(json.dumps(evidence, indent=2) + '\n')
 print('Extracted Jessica, Mobile Riot Shield, 30 source ranks and', len(templates), 'reachable templates')

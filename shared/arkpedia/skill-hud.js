@@ -15,7 +15,7 @@ export function skillHud(skill) {
   const formTimer = skill.spec?.formCountdown?.();
   if (formTimer) return { fraction: Math.max(0, Math.min(1, formTimer.remaining / formTimer.duration)),
     state: 'active', ready: false, canActivate: false, canCancel: false,
-    text: `${formTimer.label} · ${Math.ceil(formTimer.remaining)}s` };
+    text: `${formTimer.label} · ${Math.ceil(Math.max(0, formTimer.remaining - 1e-9))}s` };
   if (skill.kind === "passive") return null;
   // On-deployment effects expose their active duration, not a fictional
   // recharge/ready gauge after their one deployment window has ended.

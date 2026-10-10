@@ -18,6 +18,7 @@ import { createFrostMat } from './arkpedia-frost.js';
 import { createRobinClip } from './arkpedia-robin.js';
 import { createWulfeniteMine } from './arkpedia-wulfenite.js';
 import { createWeedyCannon } from './arkpedia-weedy.js';
+import { createJessicaShield } from './arkpedia-jessica.js';
 import { installSilenceParadigmaticDrone } from './arkpedia-silence-paradigmatic.js';
 
 const live = unit => unit?.alive && unit.deployed;
@@ -51,6 +52,8 @@ export function summonPlacementError(battle, key, row, col) {
     return 'Select a tile on the map.';
   if (state.config.limitByHostAttackRange && !state.owner.rangeKeySet.has(row * 21 + col))
     return "Choose a tile inside the summoner's attack range.";
+  if (state.config.adjacentToHost && Math.abs(row - state.owner.tileR) + Math.abs(col - state.owner.tileC) !== 1)
+    return 'Choose a tile next to the summoner.';
   const tile = battle.grid.tile(row, col);
   if (tile.build !== 'ALL' && tile.build !== state.record.position
     && !(state.record.position === 'ALL' && ['MELEE', 'RANGED'].includes(tile.build)))
@@ -70,6 +73,7 @@ export function deployRegularSummon(battle, key, row, col, dir = 'RIGHT') {
   if (!['UP', 'DOWN', 'LEFT', 'RIGHT'].includes(dir)) throw Error('Choose a facing direction.');
   const state = cardState(battle, key), source = evidence.tokens[state.record.id];
   const token = state.ownerId === 'char_250_phatom' ? createPhantomClone(battle, state, row, col, dir)
+    : state.ownerId === 'char_1034_jesca2' ? createJessicaShield(battle, state, row, col)
     : state.ownerId === 'char_400_weedy' ? createWeedyCannon(battle, state, row, col, dir)
     : state.ownerId === 'char_003_kalts' ? createKaltsitMon3tr(battle, state, row, col, dir)
     : state.ownerId === 'char_336_folivo' ? createSceneBuggyCam(battle, state, row, col, dir)

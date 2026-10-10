@@ -108,7 +108,12 @@ assert reachable == set(E['templates'])
 assert dbkeys == set(E['buffDatabase'])
 assert projectile_keys == set(E['projectiles'])
 assert range_keys == set(E['tables']['ranges'])
-assert E['enabledOperators'] == [] and E['runtimeMapping'] == {}
+assert E['enabledOperators'] == ['char_1034_jesca2']
+assert E['runtimeMapping']['operator'] == 'char_1034_jesca2'
+assert E['runtimeMapping']['token'] == 'token_10032_jesca2_jckshd'
+assert E['runtimeMapping']['skillIds'] == ['skchr_jesca2_1', 'skchr_jesca2_2', 'skchr_jesca2_3']
+assert set(E['runtimeMapping']) == {'operator','token','skillIds','normalFire','shield','direction','talents','S1','S2','S3','shell'}
+assert len(E['verificationLimits']) == 5
 assert len(E['tables']['skills']) == 3
 assert all(len(s['levels']) == 10 for s in E['tables']['skills'].values())
 assert len(E['source']['bundles']) == 6

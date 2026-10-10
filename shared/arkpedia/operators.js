@@ -135,6 +135,7 @@ import { LIN_OPERATORS } from './lin-operators.js';
 import { ULPIANUS_OPERATORS } from './ulpianus-operators.js';
 import { WEEDY_OPERATORS } from './weedy-operators.js';
 import { VINA_OPERATORS } from './vina-operators.js';
+import { JESSICA_OPERATORS } from './jessica-operators.js';
 import { ENTELECHIA_OPERATORS } from './entelechia-operators.js';
 import { HOOLHEYAK_OPERATORS } from './hoolheyak-operators.js';
 import { GOLDENGLOW_OPERATORS } from './goldenglow-operators.js';
@@ -299,6 +300,7 @@ export const REGULAR_OPERATORS = Object.freeze({
   ...ULPIANUS_OPERATORS,
   ...WEEDY_OPERATORS,
   ...VINA_OPERATORS,
+  ...JESSICA_OPERATORS,
   ...ENTELECHIA_OPERATORS,
   ...CHEN_ALTER_OPERATORS,
   ...FROST_OPERATORS,

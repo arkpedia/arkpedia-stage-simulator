@@ -21,11 +21,14 @@ function nodes(value, match, result = []) {
 }
 const type = name => n => n.$type?.split(',')[0].endsWith(`+${name}`);
 
-test('Jessica preparation preserves the complete source kit without enabling partial gameplay', () => {
-  assert.deepEqual(e.enabledOperators, []); assert.deepEqual(e.runtimeMapping, {});
-  assert.match(e.reviewStatus, /combat adapter pending/);
-  assert.equal(REGULAR_OPERATORS[ID], undefined); assert.equal(data.operators[ID], undefined);
-  assert.equal(data.tokens[TOKEN], undefined);
+test('Jessica enables all three source skills and the complete shield dependency together', () => {
+  assert.deepEqual(e.enabledOperators, [ID]);
+  const skillIds = ['skchr_jesca2_1', 'skchr_jesca2_2', 'skchr_jesca2_3'];
+  assert.deepEqual(e.runtimeMapping.skillIds, skillIds);
+  assert.match(e.reviewStatus, /bounded regular-stage combat adapter/);
+  assert.deepEqual(REGULAR_OPERATORS[ID].skillIds, skillIds);
+  assert.deepEqual(data.operators[ID].skills.map(s => s.id), skillIds);
+  assert.ok(data.tokens[TOKEN]);
   assert.equal(e.frameParity, false); assert.equal(e.moduleSupport, false);
   assert.equal(e.nativeParticleSupport, false);
   assert.equal(e.source.bundles.length, 6);

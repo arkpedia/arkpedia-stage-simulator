@@ -422,7 +422,7 @@ export class StageRenderer {
         live.add(u.id);
         // Reviewed original abilities can explicitly face the Front skeleton
         // while healing, even when the operator is deployed facing up.
-        const back = u.side === "ally" && u.dir === "UP"
+        const back = u.side === "ally" && (u.mem?.regularVisualDirection ?? u.dir) === "UP"
           && u.mem?.regularAttackFacing !== "Front" && !u.mem?.regularFormVisual?.forceFront;
         let key =
           u.side === "ally"
