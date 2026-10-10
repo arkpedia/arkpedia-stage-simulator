@@ -221,5 +221,22 @@ evidence = {
         'No partial skill, generic projectile substitution or asset-only import counts as complete playable support.',
     ],
 }
+# Runtime review annotations remain separate from recovered client facts.
+evidence['historicalReviewStatus'] = evidence['reviewStatus']
+evidence['historicalHoldReasons'] = evidence['holdReasons']
+evidence['enabledOperators'] = [ID]
+evidence['heldOperators'] = []
+evidence['runtimeMapping'] = {ID: 'narant'}
+evidence['reviewStatus'] = 'Complete ordinary kit with explicit local execution contracts'
+evidence['holdReasons'] = []
+evidence['runtimeContracts'] = [
+    'Pinned selected promotion, level, potential, trust and all thirty source skill ranks feed ordinary builds. Conditional theft and dodge/hit-rate talents are excluded from passive stat parsing. Modules are not supported.',
+    'Ordinary attacks and selected modes use exact original facing-specific OnAttack payloads, maxAnimScale1 and whole source clips. A local max-interval-clip-and-return policy gates the next throw. Whole Start/Begin/End clips and expiry-before-release are explicit web choices; compiled native FSM, timeMode and frame ordering are unverified.',
+    'S1 is a persistent manual stance switched by instant time-recovered commands in either direction. It removes the far forward column while retaining the rear column; three additional bounces prefer fresh victims before nearest/spawn-order ties and reset recent-hit memory only for repeat fallback. Native counting/reset dispatch remains unverified.',
+    'S2 recovers one attack SP per accepted ordinary birth, not per collision or return. Its source thirty-second window holds SP, applies selected outgoing Slow and coefficients, maps forward speed to tile units, and sweeps each eligible return victim once. Native outbound collision/trajectory dispatch is unverified.',
+    'S3 births three named source variants per accepted attack, with one attack event. Invalid captured victims use the saved position rather than a later life or retarget. Last successful hand arrival gates selected capped x-4 AoE while this deployment and S3 remain active. Native curved paths, counting and all-return dispatch are unverified.',
+    'Talent1 maps the native damage hook to local pre-mitigation hit receipts. Gains and each victim have independent caps and final-addition stats, retaining the strongest penalty per attribute; gains survive victim loss but withdrawal removes both sides. Native priority/dodge/cancellation ordering is unverified.',
+    'Talent2 keeps Physical/Arts dodge distinct from one shared nonstacking x-4 enemy hit-rate penalty with surviving-provider ownership. Born blades survive source withdrawal; old lives cannot feed a fresh deployment. Pending commands and owned talent/phase hooks are cleaned on death/withdrawal; End holds SP. Native particles/audio and exact frame parity are not claimed.',
+]
 (ROOT / 'data/arkpedia-narant-prefabs.json').write_text(json.dumps(evidence, indent=2) + '\n')
 print('Extracted Narantuya source:', len(templates), 'templates,', len(projectiles), 'projectiles and', len(source_bundles), 'verified bundles')

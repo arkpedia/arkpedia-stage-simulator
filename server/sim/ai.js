@@ -185,7 +185,12 @@ export function performAttack(b, u, prof, targets, opts = null) {
   if (b._hooks.beforeAttack) {
     const ctx = { attacker: u, targets, isSkill, profile: prof };
     b.emit('beforeAttack', ctx);
-    targets = (ctx.targets || []).filter((t) => t && t.alive);
+    // A reviewed source ability may retain its previously captured input
+    // position after that unit dies. The predicate cannot restore a target
+    // explicitly removed by a beforeAttack hook; ordinary attacks still
+    // discard dead inputs.
+    targets = (ctx.targets || []).filter((t) => t && (typeof prof.acceptAttackInput === 'function'
+      ? prof.acceptAttackInput(t) : t.alive));
     if (!targets.length || !u.alive) return;
   }
   u.lastAttackAt = b.time;

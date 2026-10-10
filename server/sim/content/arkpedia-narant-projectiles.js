@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Unregistered returning-projectile links, fed by arkpedia-narant-prefabs.json.
+// Returning-projectile links, fed by arkpedia-narant-prefabs.json.
 // Native compiled mover/FSM callbacks are unavailable. Explicit web mappings:
 // S1 times counts additional bounces, nearest/spawn-order ties and repeat-reset;
 // S2 moveAheadSpeed is in world tile units, only the trace victim is hit outbound,
@@ -109,10 +109,17 @@ export class NarantuyaProjectiles {
   }
   /** One accepted attack birth; its caller owns attack events, SP and skill
    * phases. Born work is independent of skill expiry/source withdrawal. */
-  launch(target, attackId, mode, { rank = this.u.def.raw.arkpedia?.skillRank } = {}) {
+  launch(target, attackId, mode, { rank = this.u.def.raw.arkpedia?.skillRank, input = null } = {}) {
     if (![0, 1, 2, 3].includes(mode)) throw Error('Invalid Narantuya projectile mode');
     const bb = mode ? selectedNarantBlackboard(mode, rank) : null;
-    if (!this.canAttack() || !this.legal(target, true)) return false;
+    if (input && (![input.x, input.y].every(Number.isFinite) || !Number.isInteger(input.seq)))
+      throw Error('Invalid Narantuya captured input');
+    const validTarget = this.legal(target, true) && (!input || target.deploySeq === input.seq);
+    // S3 explicitly emits at the captured position when the input victim
+    // becomes invalid. No other mode inherits this exception, and a later
+    // life of the same unit must not receive an old attack's primary hits.
+    if (!this.canAttack() || !validTarget && !(mode === 3 && input)) return false;
+    const victim = validTarget ? target : null;
     const group = mode === 3 ? [paths[3], ...additional] : [paths[mode]];
     const state = { seq: this.u.deploySeq, born: this.b.time, remaining: group.length,
       complete: false, failed: false, timers: [], projectiles: new Set(), pendingTrace: new Map(),
@@ -132,7 +139,8 @@ export class NarantuyaProjectiles {
         this.s3Followup(attackId, bb);
       if (this.flight === state) this.flight = null;
     };
-    for (const source of group) state.pendingTrace.set(source.name, { target, seq: target.deploySeq, source });
+    if (victim) for (const source of group)
+      state.pendingTrace.set(source.name, { target: victim, seq: victim.deploySeq, source });
     state.timers.push(this.b.after(state.limit, () => {
       // Native ordinary/S2/S3 bodies retain a final trace hit. Apply it only
       // for a still-unhit original life; expiry does not fabricate hand return.
@@ -173,7 +181,8 @@ export class NarantuyaProjectiles {
     };
     const recentlyHit = new Map(), everHit = new Set();
     let bounces = mode === 1 ? bb['attack@times'] : 0;
-    const outward = (victim, from, source, speed) => add({ from, target: victim, speed,
+    const outward = (victim, from, source, speed) => add({ from,
+      ...(victim ? { target: victim } : { to: { x: input.x, y: input.y } }), speed,
       visual: 'boomerang', expireInPlace: mode === 1,
       onHit: ({ target: e, x, y }) => {
         if (state.complete) return;
@@ -204,7 +213,7 @@ export class NarantuyaProjectiles {
             expireInPlace: true, visual: 'boomerang', onHit: ({ x, y }) => hand({ x, y }, source) }, source);
         } else delay(source.mover._delayTime ?? source.mover._delayAfterReached, () => hand(point, source));
       } }, source);
-    for (const source of group) outward(target, state.origin, source, source.mover._speed);
+    for (const source of group) outward(victim, state.origin, source, source.mover._speed);
     return state;
   }
 }

@@ -158,10 +158,13 @@ assert hot['versionId'] == E['source']['nativeClient'] == '26-09-23-17-49-43_b9c
 for record in E['source']['bundles']:
     native = next(row for row in hot['abInfos'] if row['name'] == record['path'])
     assert (record['md5'], record['size']) == (native['md5'], native['abSize'])
-assert E['enabledOperators'] == [] and E['heldOperators'] == ['char_4138_narant']
-assert 'runtimeMapping' not in E and 'runtimeContracts' not in E
+assert E['enabledOperators'] == ['char_4138_narant'] and E['heldOperators'] == []
+assert E['runtimeMapping'] == {'char_4138_narant': 'narant'}
+assert E['reviewStatus'] == 'Complete ordinary kit with explicit local execution contracts'
+assert len(E['runtimeContracts']) == 7
+assert len(E['historicalHoldReasons']) == 3
 assert len(E['recoveredFacts']) == 8
-assert len(E['holdReasons']) == 3
+assert E['holdReasons'] == []
 assert E['frameParity'] is False and E['moduleSupport'] is False and E['nativeParticleSupport'] is False
 assert set(E['tables']['skills']) == {'skchr_narant_1', 'skchr_narant_2', 'skchr_narant_3'}
 assert all(len(s['levels']) == 10 for s in E['tables']['skills'].values())

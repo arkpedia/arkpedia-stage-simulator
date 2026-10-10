@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Unregistered talent review. Native flags/ranges are pinned in the prefab
+// Source-fed talents. Native flags/ranges are pinned in the prefab
 // evidence; final-addition and strongest-victim semantics in gameplay notes.
 // `hit` is a pre-mitigation bridge, not certified Unity callback ordering.
 import evidence from '../../../data/arkpedia-narant-prefabs.json' with { type: 'json' };

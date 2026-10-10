@@ -16,11 +16,13 @@ const component = (group, id) => {
 const flat = rows => Object.fromEntries(rows.map(r => [r.key, r.value]));
 const type = (node, name) => assert.ok(node.$type?.split(',')[0].endsWith(`+${name}`));
 
-test('Narantuya remains held while the complete source kit is preserved', () => {
-  assert.deepEqual(e.enabledOperators, []); assert.deepEqual(e.heldOperators, [ID]);
-  assert.equal(REGULAR_OPERATORS[ID], undefined); assert.equal(data.operators[ID], undefined);
-  assert.match(e.reviewStatus, /controllers await review/);
-  assert.equal(e.recoveredFacts.length, 8); assert.equal(e.holdReasons.length, 3);
+test('Narantuya public runtime review preserves complete source facts and explicit fidelity limits', () => {
+  assert.deepEqual(e.enabledOperators, [ID]); assert.deepEqual(e.heldOperators, []);
+  assert.equal(REGULAR_OPERATORS[ID].mechanic, 'narant'); assert.ok(data.operators[ID]);
+  assert.equal(e.runtimeMapping[ID], 'narant'); assert.equal(e.runtimeContracts.length, 7);
+  assert.match(e.historicalReviewStatus, /controllers await review/);
+  assert.equal(e.recoveredFacts.length, 8); assert.equal(e.historicalHoldReasons.length, 3);
+  assert.deepEqual(e.holdReasons, []);
   assert.equal(e.source.bundles.length, 5); assert.equal(Object.keys(e.templates).length, 7);
   assert.deepEqual(e.nativeTemplateGaps, []);
   assert.deepEqual(Object.keys(e.originalTemplates), Object.keys(e.templates));
@@ -78,7 +80,7 @@ test('returning movers retain selected phases rather than generic instant attack
     const attack = component('characters', id);
     assert.equal(attack._waitForAttackEvent, 1); assert.equal(attack._waitForProjectileInvalid, 0);
   }
-  assert.match(e.holdReasons[0], /attack gating/); // Trait gating is not proved by the ordinary attack field.
+  assert.match(e.historicalHoldReasons[0], /attack gating/); // Trait gating is not proved by the ordinary attack field.
 });
 
 test('S2 preserves forward movement, return coefficient and collision metadata independently', () => {

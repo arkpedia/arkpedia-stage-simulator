@@ -101,6 +101,39 @@ test('an old source return cannot release a newer deployment flight', () => {
   advance(f.b, .3); assert.equal(fresh.complete, true); assert.equal(f.links.canAttack(), true);
 });
 
+test('only S3 accepts a finite captured invalid input and never homes on a later target life', () => {
+  for (const mode of [0, 1, 2, 3]) {
+    const f = make({ skill: mode || 1 }), e = enemy(f.b);
+    const input = { x: e.x, y: e.y, seq: e.deploySeq };
+    e.deploySeq++; e.x = 7; e.y = 3;
+    const flight = f.links.launch(e, `invalid-${mode}`, mode, { input });
+    assert.equal(!!flight, mode === 3);
+    if (mode === 3) for (const p of f.b.projectiles.list) {
+      assert.equal(p.target, null); near(p.tx, input.x); near(p.ty, input.y);
+    }
+    advance(f.b, .8); assert.equal(f.hits.length, 0); assert.equal(f.links.canAttack(), true);
+    near(e.hp, 1e7);
+  }
+  const f = make({ skill: 3 }), e = enemy(f.b); e.alive = false;
+  assert.equal(f.links.launch(e, 1, 3), false);
+  for (const input of [{ x: NaN, y: 1, seq: 1 }, { x: 1, y: 1, seq: .5 }])
+    assert.throws(() => f.links.launch(e, 1, 3, { input }), /captured input/);
+  assert.equal(f.b.projectiles.list.length, 0); assert.equal(f.links.canAttack(), true);
+});
+
+test('all S3 ranks retain their final-return AoE after an invalid-position birth', () => {
+  for (let rank = 1; rank <= 10; rank++) {
+    const f = make({ skill: 3, rank }), lost = enemy(f.b), nearOwner = enemy(f.b, { x: 4.5 });
+    const input = { x: lost.x, y: lost.y, seq: lost.deploySeq }; lost.hidden = true;
+    activate(f); f.links.launch(lost, `fallback-${rank}`, 3, { input });
+    advance(f.b, .6);
+    assert.equal(f.hits.length, 1); assert.equal(f.hits[0].target, nearOwner);
+    assert.ok(f.hits[0].dmg.tags.includes('narant:s3-return')); near(lost.hp, 1e7);
+    near(1e7 - nearOwner.hp, f.u.s.atk * f.selected.atk_scale_aoe);
+    assert.equal(f.links.canAttack(), true);
+  }
+});
+
 test('expiry releases gating and retains a single pending native final trace hit', () => {
   const f = make(), e = enemy(f.b), atk = f.u.s.atk;
   f.b.projectiles.registerSpeedAura({ owner: f.u, contains: () => true, scale: .001 });
