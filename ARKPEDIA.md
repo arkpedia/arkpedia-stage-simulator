@@ -1932,3 +1932,25 @@ Original Tactical Equipment skeleton, atlas and texture are published in `arkped
 Browser checks used E2 Lv90/P1/zero trust/M3 on original 0-1 with natural DP/SP. S1 shows offensive recovery and automatic activation, with combat and a 0/2 SP readout. S2 charged to 30/30, activated manually, displayed ATK **688 → 1,066**, and continued combat with its active countdown. S3 charged to 60/60, activated manually, displayed ATK **688 → 1,204** and both original equipment models while the deployment limit stayed at seven. The observed S3 window added two defeated enemies; owner retreat removed both pieces and restored all eight slots. Browser warnings/errors were empty. Screenshots: `browser-s1.png`, `browser-s2.png`, `browser-s3.png` in the same cache directory. These are focused skill playtests, not zero-escape clears or isolated proof of every receipt or native callback. Mobile/touch review remains open.
 
 The exact controller contracts still distinguish serialized source facts from local timing, geometry, transition and lifecycle mappings. **Compiled game-frame parity, modules and original particles/audio remain unverified.** This publication updates the draft simulator and asset feature branches and the local preview; it does not promote the private app or production.
+
+### Wiš’adel: verified source foundation (2026-10-11)
+
+Recovered the original owner and Revenant’s Shadow kit, all three skills, eight projectile hierarchies, thirteen buff templates and original skeleton events. The independent verifier checks **224 native components across six checksum-verified bundles**, all thirty owner skill ranks, ten Shadow skill ranks, reachable dependencies and complete component membership against the original client bytes.
+
+- Preserve ordinary attack selection without inventing a strict three-animation cycle, separate projectile splash radii and aftershock delays, and probability/afterimage checks before explosions.
+- Preserve S1 offensive SP and rank-specific aftershock/stun coefficients, S2 overload modes and additive attack-interval modifiers, and S3 ammunition, immediate Shadow count and marked-Shadow SP.
+- Recover the Shadow’s original 216×216 embedded RGBA texture, skeleton, atlas and native left/right switcher. Front/back import records alias the same original skeleton; no replacement artwork is generated.
+- Retain native ownership checks for Camouflage, the zero deployment-limit occupation count and owner-finish token cleanup. The native deck-visibility flag remains false; automatic spawning must not be described as a native hidden-deck flag.
+
+**Nine source checks pass.** The independent audit rejects eight altered evidence records and reproduces ten source/artwork outputs byte-for-byte. Reproduce after fetching the pinned bundles:
+
+```sh
+node tools/arkpedia/fetch-wisadel.mjs
+.cache/map-env/bin/python tools/arkpedia/extract-wisadel-models.py
+node tools/arkpedia/inspect-wisadel.mjs
+.cache/map-env/bin/python tools/arkpedia/extract-wisadel.py
+.cache/map-env/bin/python tools/arkpedia/audit-wisadel.py
+node --test test/arkpedia-wisadel-source.test.js
+```
+
+Wiš’adel remains **unavailable** pending ordinary/S1 combat, S2 overload, S3 ammunition and Shadow lifecycle controllers, original asset publication, full-kit integration and browser review. Coverage stays **359/431 forms and 771 skills**, with 72 forms remaining. The MVP and asset pin are unchanged. The local preview was found stopped, restarted and checked separately; source tests do not certify combat, modules, particles/audio or compiled Unity frame parity. The last full runtime regression remains the Rosmontis milestone above.
