@@ -214,6 +214,7 @@ export function performAttack(b, u, prof, targets, opts = null) {
   } : null;
   for (const t of targets) b._ev(visual ? ['atk', u.id, t.id, vis, visual] : ['atk', u.id, t.id, vis]);
   const release = () => {
+    let acceptedLaunches = 0;
     // A source ability whose selectTargetTiming is CAST selects at the strike,
     // so enemies entering or leaving its range during windup are handled then.
     if (prof.retargetOnRelease) targets = acquireTargets(b, u, prof);
@@ -232,7 +233,10 @@ export function performAttack(b, u, prof, targets, opts = null) {
       // A source projectile can implement its own flight/collision/dwell behaviour
       // while keeping attack hooks, IDs and SP consumption on the ordinary path.
       if (prof.launchAttack) {
-        b._safe(() => prof.launchAttack(b, u, prof, t, info), 'profile.launchAttack', u);
+        b._safe(() => {
+          const accepted = prof.launchAttack(b, u, prof, t, info);
+          if (accepted === true) acceptedLaunches++;
+        }, 'profile.launchAttack', u);
       } else if (ranged && t.side === 'enemy' && prof.projectile === 'boomerang') {
         throwBoomerang(b, u, prof, t, info);
       } else if (ranged && t.side === 'enemy') {
@@ -245,6 +249,9 @@ export function performAttack(b, u, prof, targets, opts = null) {
         resolveHit(b, u, prof, t, info, t.x, t.y);
       }
     }
+    // Opt-in source controllers spend ammunition and recover attack SP only
+    // after a legal projectile birth. Existing profiles keep their old path.
+    if (prof.requiresAcceptedLaunch && acceptedLaunches === 0) return;
     if (b._hooks.attack) b.emit('attack', { attacker: u, targets, isSkill });
     if (u.skill) u.skill.onAttackPerformed(targets, isSkill, !!(opts && opts.noAmmo));
     if (prof.afterAttack) b._safe(() => prof.afterAttack(b, u, targets, { inputTargets, attackId }), 'profile.afterAttack', u);
