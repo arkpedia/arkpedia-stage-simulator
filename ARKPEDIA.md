@@ -1841,3 +1841,28 @@ Swire is now selectable with all three skills and all thirty ranks. This superse
 Browser review on the local 0-1 workspace confirms source build selection, nine-DP placement and facing, original owner and Champagne Bomb art, passive coin gauges, bomb combat, automatic S3 activation, manual cancellation/coin clearing, subsequent reactivation and no browser warnings/errors. S1's actual heal receipts, lethal recovery and S3 ending target/knockback behavior are verified in the real-engine tests rather than this browser run. Screenshots and logs are in `.cache/arkpedia/swire-alter-source/`. A viewport override did not resize the selected in-app test tab, so mobile/touch and physical-phone behavior are not newly certified.
 
 Compiled Unity frame/callback parity, original coin trails, native particle/audio effects, random mount-point offsets and modules remain unfinished. Composite timing, damage inheritance, marking, ending/impact ordering and short lethal protection retain the explicit local contracts documented above. This is the public draft simulator branch; no private application or production promotion is included.
+
+## Rosmontis: verified source foundation (2026-10-11)
+
+`data/arkpedia-rosmontis-prefabs.json` retains the native owner, all three skills, Tactical Equipment, seven projectile trees, nine reachable buff templates, selected Global tables and original animation events. The independent verifier checks **180 components, six bundles, thirty owner ranks, ten paired equipment ranks and three original skeleton chains** against the checksum-verified client and pinned Git blobs.
+
+- Preserve alternating ordinary attacks, a main Physical splash and a separate half-scale aftershock at the native `.15` delta. S1 feeds its additional Arts buff only to the main projectile's recipients.
+- Preserve S2's one main and three aftershock projectiles, radius `1.5`, per-buff stun roll and selected ATK/duration values. Its attached-to-mount projectile does not check arrival and its attack ability does not wait for `OnAttack`; the original clip marker alone cannot determine combat timing.
+- Preserve S3's summon-first sequence, blocked-target selector, preference for owned equipment blockees, two-target limit and percentage attack-interval modifier. The automatic equipment selector keeps its one-to-two legal-ground-tile requirement, native filter and final random ordering.
+- Keep equipment's source stats, zero deployment-slot cost, hidden deck flag, heal prohibition, birth animation, surrounding stun, flat blocked-enemy DEF reduction and owner/skill cleanup marks. Its original fixed-facing skeleton, atlas, material and RGB/separate-alpha textures are extracted into the local source cache. The two facing aliases deliberately share the same art; no avatar is invented.
+- Keep selected flat DEF penetration and the Caster-count condition on the one-recipient/self aura. Recipient replacement, attack scheduling, birth events and cleanup still need explicit runtime controllers and real-engine checks.
+
+All **nine new source-contract tests and forty related tests pass**, with zero failures or skips. The audit rejects eight modified fixtures and confirms ten evidence/artwork outputs reproduce byte-for-byte. Logs and the audit report are in `.cache/arkpedia/rosmontis-source/`.
+
+Reproduce after preparing the pinned shared source cache used by the other native audits:
+
+```sh
+node tools/arkpedia/fetch-rosmontis.mjs
+.cache/map-env/bin/python tools/arkpedia/extract-rosmontis-models.py
+node tools/arkpedia/inspect-rosmontis.mjs
+.cache/map-env/bin/python tools/arkpedia/extract-rosmontis.py
+.cache/map-env/bin/python tools/arkpedia/audit-rosmontis.py
+node --test test/arkpedia-rosmontis-source.test.js
+```
+
+Rosmontis remains unavailable pending all three combat controllers, selected-build/lifecycle tests, asset publication and public integration review. Coverage remains **358/431 forms and 768 skills**. This source-only change does not alter the MVP, asset pin or browser battle; the existing preview returns HTTP 200. The last full runtime suite is the Swire milestone above. Native particle/audio effects, modules and compiled Unity callback/FSM/frame parity are not certified.
