@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Unregistered source-fed controller. Local scheduling contracts remain
-// explicit until selected public builds and browser combat have been reviewed.
+// Source-fed controller. Public execution uses explicit local scheduling
+// contracts; native frame ordering, modules and original particles are unverified.
 import evidence from '../../../data/arkpedia-lemuen-prefabs.json' with { type: 'json' };
 import { LEMUEN_ID, LemuenCombatLinks } from './arkpedia-lemuen-links.js';
 import { LemuenAmmunition, LemuenTalentLinks, lemuenCandidates, lemuenWanted } from './arkpedia-lemuen-resources.js';
@@ -246,10 +246,14 @@ export class LemuenController {
     }
     if (u.atkCd <= 1e-9) this.startOrdinary();
   }
-  install() {
-    if (this.timer || this.stopped) return;
+  enter() {
+    this.talents.talent2At = this.b.time + (this.talents.t2?.interval ?? Infinity);
     this.visual('Start');
     this.phase = { kind: 'entrance', readyAt: this.b.time + model(this.u).durations.Start };
+  }
+  install() {
+    if (this.timer || this.stopped) return;
+    if (live(this.u)) this.enter(); else this.idle();
     this.timer = this.b.every(this.b.dt, () => this.tick(), { owner: this.u });
     this.deathHook = this.b.on('death', ({ unit }) => { if (unit === this.u) this.stop(); });
   }
@@ -297,4 +301,40 @@ export function prepareLemuenKit(b, u, { contracts } = {}) {
       onEnd: ({ reason }) => controller.endSkill(reason) },
   };
   return { kit, controller, links, ammo, talents };
+}
+
+// Reviewed regular-stage choices, not recovered native callback execution.
+const regularContracts = Object.freeze({
+  wanted: { wantedContract: 'continuous-union-v1',
+    reviewNote: 'Current Laterano union retains entry time; strongest surviving owner supplies one bonus. Native derived stacking order is unverified.' },
+  aiming: { firstCheck: 'immediate', boundary: 'expiry-before-trigger',
+    isLethal: ({ unit, target, scale }) => unit.s.atk * scale > target.hp + target.s.def,
+    reviewNote: 'Strict current HP+DEF predicate; native CheckAbilityDamageDeadly handling of shields and modifiers is unverified.' },
+  bombardment: { parentEvent: 'one-child-at-first-period', parentExpiry: 'before-period', childTravel: 'lifetime',
+    sampleOffset: ({ battle, maximum }) => {
+      const angle = battle.rng() * Math.PI * 2, radius = Math.sqrt(battle.rng()) * maximum;
+      return { x: Math.cos(angle) * radius, y: Math.sin(angle) * radius };
+    },
+    reviewNote: 'Seeded uniform disk within the source offset; one child per parent at first period with lifetime mapped to travel. Native spread and callbacks are unverified.' },
+  controller: { phasePolicy: 'source-clips-local-v1', s2AimStart: 'after-begin-clip',
+    s3FirstMark: 'begin-plus-predelay', normalPost: 'max-interval-invalid-plus-minimum',
+    s2Post: 'invalid-plus-minimum-and-clip',
+    reviewNote: 'Original clip/event values feed local phase clocks; compiled timeMode, numeric counters and same-frame ordering remain unverified.' },
+});
+
+export function customizeLemuenKit({ battle, id, unit, kit }) {
+  if (id !== LEMUEN_ID) return;
+  if (!evidence.enabledOperators.includes(id) || evidence.runtimeMapping[id] !== 'lemuen')
+    throw Error('Lemuen source record lacks a complete runtime review');
+  const prepared = prepareLemuenKit(battle, unit, { contracts: regularContracts });
+  kit.install = null;
+  Object.assign(kit, prepared.kit);
+}
+
+export function installLemuen({ battle: b, unit: u, def }) {
+  if (def.charId !== LEMUEN_ID) return;
+  const controller = u.mem.lemuenController;
+  if (!controller) throw Error('Missing selected Lemuen controller');
+  controller.install();
+  b.on('deploy', ({ unit }) => { if (unit === u) controller.enter(); }, { owner: u });
 }

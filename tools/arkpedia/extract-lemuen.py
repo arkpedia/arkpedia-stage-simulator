@@ -4,8 +4,8 @@
 
 Run with .cache/map-env/bin/python tools/arkpedia/extract-lemuen.py.
 Requires the pinned Global tables, native client bundles and model checkout
-already used by this project's source audits. This does not enable the kit.
-Preserves all source ranks and linked dependencies without enabling an unverified kit.
+already used by this project's source audits. Preserves native facts separately
+from the documented public controller review and its local execution contracts.
 """
 from collections import defaultdict
 import hashlib
@@ -218,5 +218,22 @@ evidence = {'schemaVersion': 1, 'source': {'repository': 'Kengxxiao/ArknightsGam
     ],
     'holdReasons': ['Source foundation only: Wanted marking, aimed fire, ammunition and bombardment require reviewed controllers and engine tests.'],
 }
+evidence['historicalReviewStatus'] = evidence['reviewStatus']
+evidence['historicalHoldReasons'] = evidence['holdReasons']
+evidence['enabledOperators'] = [ID]
+evidence['heldOperators'] = []
+evidence['runtimeMapping'] = {ID: 'lemuen'}
+evidence['reviewStatus'] = 'Complete ordinary kit with explicit local execution contracts'
+evidence['holdReasons'] = []
+evidence['runtimeContracts'] = [
+    'All thirty selected ranks and promotion/level/potential/trust come from pinned Global records. Conditional Talent2 ATK is excluded from passive stats; no-module ex_add_count stays zero.',
+    'Deployment starts the original one-second entrance and a fresh twenty-second Talent2 clock. Capacity increases without refilling current ammunition. Withdrawal clears owned work and a new deployment receives fresh source SP.',
+    'Wanted uses a continuous union of current Laterano ranges and one strongest surviving damage bonus. Native stacked/derived same-frame ordering remains unverified.',
+    'Ordinary/S1 use original facing events and local interval/projectile-invalid post-delay clocks. S1 captures two distinct victims and spends one round per accepted volley. Generic attack events do not replace controller art.',
+    'S2 starts aiming after the original Begin, checks strict current HP+DEF immediately, samples expiry before equal triggers, and snapshots ATK on finish. Native deadly checks with shields/modifiers remain unverified. Ordinary fallback spends no ammunition.',
+    'S2 waits for cached projectile invalidation plus source minimum delay and the End clip; its final round does not replay End. Manual cancellation cancels unborn aim; born cached shots survive.',
+    'S3 marks after Begin plus predelay and follows selected cadence. Release snapshots ATK/positions and emits one child per parent at the first period, using seeded uniform disk spread within the source offset and child lifetime as travel. Native spread, managed ordering and callback execution are unverified.',
+    'Source withdrawal before S3 release discards managed marks; already released unowned parents/children survive. Source End clips hold SP and new commands. Numeric counters, timeMode, native frame parity, modules, particles and audio are not claimed.',
+]
 (ROOT / 'data/arkpedia-lemuen-prefabs.json').write_text(json.dumps(evidence, indent=2) + '\n')
 print('Extracted Lemuen source:', len(templates), 'templates,', len(projectiles), 'projectiles and', len(source_bundles), 'verified bundles')

@@ -148,7 +148,9 @@ assert hot['versionId'] == E['source']['nativeClient'] == '26-09-23-17-49-43_b9c
 for record in E['source']['bundles']:
     native = next(row for row in hot['abInfos'] if row['name'] == record['path'])
     assert (record['md5'], record['size']) == (native['md5'], native['abSize'])
-assert E['enabledOperators'] == [] and E['heldOperators'] == ['char_4193_lemuen']
+assert E['enabledOperators'] == ['char_4193_lemuen'] and E['heldOperators'] == []
+assert E['runtimeMapping'] == {'char_4193_lemuen': 'lemuen'}
+assert len(E['runtimeContracts']) == 8 and E['holdReasons'] == []
 assert E['frameParity'] is False and E['moduleSupport'] is False and E['nativeParticleSupport'] is False
 assert set(E['tables']['skills']) == {'skchr_lemuen_1', 'skchr_lemuen_2', 'skchr_lemuen_3'}
 assert all(len(s['levels']) == 10 for s in E['tables']['skills'].values())

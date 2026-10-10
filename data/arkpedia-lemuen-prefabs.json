@@ -74,11 +74,11 @@
   "frameParity": false,
   "moduleSupport": false,
   "nativeParticleSupport": false,
-  "enabledOperators": [],
-  "heldOperators": [
+  "enabledOperators": [
     "char_4193_lemuen"
   ],
-  "reviewStatus": "Source foundation only: Wanted, aiming and bombardment execution await review",
+  "heldOperators": [],
+  "reviewStatus": "Complete ordinary kit with explicit local execution contracts",
   "characters": {
     "char_4193_lemuen": [
       {
@@ -13045,7 +13045,22 @@
     "Normal/S1 use current impact-time ATK and ordinary Dodge/DEF/shield rules. S2 requires an explicit current_value snapshot, ignoring Dodge only. Original speed12/lifetime5 are mapped through the local projectile engine; native movement and end-callback parity remain unverified.",
     "S3 requires explicit cached_atk and a supplied blast position. The local collision kernel uses body distance for rings and area radius; exact native CheckDistanceToProjectileCenter handling of huge bodies remains unverified. This is no native spread or bombardment scheduling claim."
   ],
-  "holdReasons": [
+  "holdReasons": [],
+  "historicalReviewStatus": "Source foundation only: Wanted, aiming and bombardment execution await review",
+  "historicalHoldReasons": [
     "Source foundation only: Wanted marking, aimed fire, ammunition and bombardment require reviewed controllers and engine tests."
+  ],
+  "runtimeMapping": {
+    "char_4193_lemuen": "lemuen"
+  },
+  "runtimeContracts": [
+    "All thirty selected ranks and promotion/level/potential/trust come from pinned Global records. Conditional Talent2 ATK is excluded from passive stats; no-module ex_add_count stays zero.",
+    "Deployment starts the original one-second entrance and a fresh twenty-second Talent2 clock. Capacity increases without refilling current ammunition. Withdrawal clears owned work and a new deployment receives fresh source SP.",
+    "Wanted uses a continuous union of current Laterano ranges and one strongest surviving damage bonus. Native stacked/derived same-frame ordering remains unverified.",
+    "Ordinary/S1 use original facing events and local interval/projectile-invalid post-delay clocks. S1 captures two distinct victims and spends one round per accepted volley. Generic attack events do not replace controller art.",
+    "S2 starts aiming after the original Begin, checks strict current HP+DEF immediately, samples expiry before equal triggers, and snapshots ATK on finish. Native deadly checks with shields/modifiers remain unverified. Ordinary fallback spends no ammunition.",
+    "S2 waits for cached projectile invalidation plus source minimum delay and the End clip; its final round does not replay End. Manual cancellation cancels unborn aim; born cached shots survive.",
+    "S3 marks after Begin plus predelay and follows selected cadence. Release snapshots ATK/positions and emits one child per parent at the first period, using seeded uniform disk spread within the source offset and child lifetime as travel. Native spread, managed ordering and callback execution are unverified.",
+    "Source withdrawal before S3 release discards managed marks; already released unowned parents/children survive. Source End clips hold SP and new commands. Numeric counters, timeMode, native frame parity, modules, particles and audio are not claimed."
   ]
 }

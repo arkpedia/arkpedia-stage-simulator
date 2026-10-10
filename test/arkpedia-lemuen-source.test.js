@@ -22,9 +22,11 @@ function nodes(value, predicate, found = []) {
 }
 const type = name => n => n.$type?.split(',')[0].endsWith(`+${name}`);
 
-test('the complete source foundation stays held until the full controller and public path are reviewed', () => {
-  assert.deepEqual(e.enabledOperators, []); assert.deepEqual(e.heldOperators, [ID]);
-  assert.equal(REGULAR_OPERATORS[ID], undefined); assert.equal(data.operators[ID], undefined);
+test('public Lemuen review preserves complete source facts and explicit native fidelity limits', () => {
+  assert.deepEqual(e.enabledOperators, [ID]); assert.deepEqual(e.heldOperators, []);
+  assert.equal(e.runtimeMapping[ID], 'lemuen'); assert.equal(e.runtimeContracts.length, 8);
+  assert.deepEqual(e.holdReasons, []); assert.match(e.historicalReviewStatus, /Source foundation/);
+  assert.equal(REGULAR_OPERATORS[ID].mechanic, 'lemuen'); assert.ok(data.operators[ID]);
   assert.equal(e.source.bundles.length, 5); assert.deepEqual(e.nativeTemplateGaps, []);
   assert.deepEqual(Object.keys(e.originalTemplates), Object.keys(e.templates));
   assert.equal(Object.keys(e.templates).length, 15); assert.equal(Object.keys(e.projectiles).length, 6);

@@ -87,6 +87,7 @@ import { VIGIL_OPERATORS } from './vigil-operators.js';
 import { RAY_OPERATORS } from './ray-operators.js';
 import { COLDSHOT_OPERATORS } from './coldshot-operators.js';
 import { NYMPH_OPERATORS } from './nymph-operators.js';
+import { LEMUEN_OPERATORS } from './lemuen-operators.js';
 import { BLACKNIGHT_OPERATORS } from './blacknight-operators.js';
 import { CHRISTINE_OPERATORS } from './christine-operators.js';
 import { EXECUTOR_REAPER_OPERATORS } from './executor-reaper-operators.js';
@@ -271,6 +272,7 @@ export const REGULAR_OPERATORS = Object.freeze({
   ...RAY_OPERATORS,
   ...COLDSHOT_OPERATORS,
   ...NYMPH_OPERATORS,
+  ...LEMUEN_OPERATORS,
   ...CHRISTINE_OPERATORS,
   ...EXECUTOR_REAPER_OPERATORS,
   ...PHILAE_OPERATORS,
