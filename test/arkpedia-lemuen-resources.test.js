@@ -251,3 +251,11 @@ test('delayed installation retains the actual deployment origin for Talent2', ()
   advance(f.b, 15.9); assert.equal(delayed.talent2Applied, false);
   advance(f.b, .1); settle(f.b); assert.equal(delayed.talent2Applied, true);
 });
+
+test('target selection accepts Wanted from another owner, matching the native source-independent filter', () => {
+  const f = make({ elite: 0 }), other = owner(f.b, { potential: 5, col: 3 }), e = enemy(f.b, { x: 7 });
+  range(f.u); range(other.u, e); other.links.tick(); advance(f.b, 6); settle(f.b);
+  assert.equal(other.links.hasWanted(e), true); assert.equal(f.links.hasWanted(e), false);
+  assert.deepEqual(lemuenCandidates(f.b, f.u, f.links), [e]);
+  other.links.stop(); assert.deepEqual(lemuenCandidates(f.b, f.u, f.links), []);
+});

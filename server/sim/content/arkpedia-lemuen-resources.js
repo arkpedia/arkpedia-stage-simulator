@@ -15,6 +15,7 @@ const key = (u, suffix) => `lemuen:${u.id}:${suffix}`;
  * original finish phase. Unborn/cancelled work must not call consume(). */
 export class LemuenAmmunition {
   constructor(skill, rank) {
+    this.skill = skill; this.rank = rank;
     this.base = selectedLemuenBlackboard(skill, rank)['attack@trigger_time'];
     if (!Number.isInteger(this.base) || this.base <= 0) throw Error('Unreviewed Lemuen ammunition');
     this.bonuses = new Map(); this.accepted = new Set();
@@ -146,11 +147,15 @@ export class LemuenTalentLinks {
   }
 }
 
+export function lemuenWanted(b, e) {
+  return !!b._lemuenWantedRegistry && [...b._lemuenWantedRegistry.owners].some(owner => owner.hasWanted(e));
+}
+
 export function lemuenCandidates(b, u, talents, max = 1) {
   if (!Number.isInteger(max) || max <= 0) throw Error('Invalid Lemuen target cap');
   if (!live(u) || !talents.live) return [];
   const rows = b.enemies.filter(e => canTargetEnemy(u, e, profile)
     && (!e.s.flags.camou || e.blockedBy)
-    && (bodyInKeys(e, u.rangeKeySet) || e.blockedBy === u || talents.hasWanted(e)));
+    && (bodyInKeys(e, u.rangeKeySet) || e.blockedBy === u || lemuenWanted(b, e)));
   sortEnemyTargets(b, u, rows, 'lowDef'); return rows.slice(0, max);
 }

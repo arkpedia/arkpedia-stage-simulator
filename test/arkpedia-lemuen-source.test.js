@@ -122,3 +122,24 @@ test('original facing clips and events stay distinct from generic attack interva
   }
   assert.ok(e.models[ID].Front.durations.Skill_Down_1_Loop);
 });
+
+test('aim trigger and managed projectile lifetimes remain native fields rather than generic skill durations', () => {
+  const aiming = component('characters', '-6940815333245527525')._buffs[0];
+  assert.equal(aiming.waitFirstTriggerInterval, 0); assert.equal(aiming.lifeTimeType, 1);
+  assert.equal(aiming.durationKey, 'aim_duration');
+  const parent = component('projectiles', '-2682328012059873200');
+  assert.equal(parent._lifeTime, 10); assert.equal(parent._lifeTimeType, 1);
+  assert.equal(parent._managedBySource, 0); assert.equal(parent._stopAfterFirstHit, 1);
+  assert.equal(parent._stopWhenSourceInvalid, 0);
+  const child = component('projectiles', '-2502470814032737163');
+  assert.equal(child._lifeTime, .25); assert.equal(child._alwaysReachInTheEnd, 1);
+  assert.equal(child._stopWhenSourceInvalid, 0);
+});
+test('Wanted selectors do not restrict marks to their own source', () => {
+  for (const id of ['5150534373900409371', '4206040012710402587']) {
+    const selector = component('characters', id);
+    assert.equal(selector._buffKey, 'char_lemuen_range_aim'); assert.equal(selector._filterBuffSource, 0);
+  }
+  const s3 = component('characters', '1495319038171142683');
+  assert.deepEqual(s3._buffs, ['lemuen_s3_range', 'char_lemuen_range_aim']); assert.equal(s3._filterBuffSource, 0);
+});
