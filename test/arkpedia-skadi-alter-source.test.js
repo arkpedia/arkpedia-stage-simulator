@@ -14,11 +14,11 @@ const skillBuff = (key, name) => buffs({ [key]: e.skills[key] }).find(b => b.buf
 const bb = values => Object.fromEntries(values.map(v => [v.key, v.value]));
 const near = (a, b) => assert.ok(Math.abs(a - b) < 1e-6, `${a} != ${b}`);
 
-test('Skadi audit includes every owner and Seaborn skill without counting source records as playable', () => {
-  assert.deepEqual(e.enabledOperators, []);
-  assert.deepEqual(e.heldOperators, [ID]);
-  assert.equal(REGULAR_OPERATORS[ID], undefined);
-  assert.equal(data.operators[ID], undefined);
+test('Skadi audit retains all owner/token graphs and explicit bounded runtime contracts', () => {
+  assert.deepEqual(e.enabledOperators, [ID]);
+  assert.deepEqual(e.heldOperators, []);
+  assert.deepEqual(REGULAR_OPERATORS[ID].skillIds, Object.keys(e.tables.skills));
+  assert.equal(data.operators[ID].skills.length, 3);
   assert.equal(rows.length, 218);
   assert.equal(e.source.bundles.length, 6);
   assert.deepEqual(e.nativeTemplateGaps, []);
@@ -28,7 +28,10 @@ test('Skadi audit includes every owner and Seaborn skill without counting source
   assert.equal(e.frameParity, false);
   assert.equal(e.nativeParticleSupport, false);
   assert.equal(e.moduleSupport, false);
-  assert.ok(e.holdReasons.some(r => /mitigation, recursion suppression/.test(r)));
+  assert.deepEqual(e.holdReasons, []);
+  assert.equal(e.runtimeContract.length, 5);
+  assert.ok(e.fidelityLimits.some(r => /not recovered/.test(r)));
+  assert.equal(e.gameplayCorroboration.length, 2);
   assert.deepEqual(Object.keys(e.skills), [...Object.keys(e.tables.skills), ...Object.keys(e.tables.tokenSkills)]);
 });
 

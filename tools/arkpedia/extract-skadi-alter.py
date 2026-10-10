@@ -195,8 +195,21 @@ evidence = {'schemaVersion': 1, 'source': {'repository': 'Kengxxiao/ArknightsGam
     'buffDatabase': {'path': 'en_US/gamedata/buff_table.json', 'sha256': digest((C / 'lessing-source/buff_table.json').read_bytes())},
     'bundles': source_bundles, 'modelRepository': 'fexli/ArknightsResource', 'modelCommit': MODEL},
     'frameParity': False, 'moduleSupport': False, 'nativeParticleSupport': False,
-    'enabledOperators': [], 'heldOperators': [ID],
-    'reviewStatus': 'Complete owner and Seaborn source foundation; S1 DamageSplit event semantics remain held',
+    'enabledOperators': [ID], 'heldOperators': [],
+    'reviewStatus': 'Complete bounded owner/Seaborn runtime; native dispatch and frame parity remain unverified',
+    'runtimeContract': [
+        'S1 shares the post-mitigation amount at damageFinal priority -2000, before shields; the owner receives HP loss with inherited credit/origin, bypassing repeat mitigation and sharing recursion. Strongest protection wins across overlapping areas. Serialized NORMAL is not reinterpreted as a fresh attack.',
+        'Seaborn areas use live host ATK/DEF and selected matching ranks, immediately mirror an active owner mode, interrupt when it ends, expire independently after15/25s and recharge one stock30s after removal. Host removal clears owned Seaborn and all recipient effects.',
+        'Healing reaches self and eligible allies once per second with immediate entry, merging owner/Seaborn overlap. It bypasses heal-free/no-heal and healing multipliers as regeneration but honors regeneration multipliers and isolation. Inspiration ignores isolation and excludes immune bards.',
+        'Inspiration chooses the strongest source ratio per attribute and applies live host-derived final additions refreshed every1s; owner and Seaborn do not stack support effects. Predatory Habits follows other operators in either area and Abyssal group tags.',
+        'S3 uses independent per-enemy clocks with native first delays .9s/.85s, then1s, plus owner-only5% maxHP loss beginning .95s. Both damage areas credit the host and stack; no ordinary attack or visible token skill is invented.'
+    ],
+    'gameplayCorroboration': [
+        {'url': 'https://prts.wiki/w/Skadi_the_Corrupting_Heart', 'checked': '2026-10-10',
+         'claims': ['Transferred damage is HP loss, cannot transfer existing HP loss and has priority -2000.', 'Inspiration prioritizes ratio rather than final numerical value.', 'S1 full-heal precedes subsequent effects.']},
+        {'url': 'https://arknights.wiki.gg/wiki/Skadi_the_Corrupting_Heart', 'checked': '2026-10-10',
+         'claims': ['S1 transfer follows damage mitigation and becomes direct HP removal.']}
+    ],
     'characters': characters, 'skills': skills, 'tokens': tokens, 'chararts': chararts,
     'models': models, 'officialSkeletonBindings': bindings, 'originalSeabornModels': token_model, 'projectiles': projectiles,
     'templates': {k: bt[k] for k in sorted(templates)},
@@ -215,10 +228,11 @@ evidence = {'schemaVersion': 1, 'source': {'repository': 'Kengxxiao/ArknightsGam
         'Seaborn is native category2, slot0, any deployable tile and no direction picker. Source cost5, respawn30, maxDeployCount1; selected E1/E2 lifetime15/25 is separate from recharge on owner finish. Host death removes owned tokens.',
         'Seaborn uses one original skeleton plus a FaceSwitcher; front/back publication intentionally aliases the same native skeleton. RGB and separate alpha dependencies are followed through material pointers, not duplicate filenames.'
     ],
-    'holdReasons': [
-        'S1 DamageSplit has only recipient BUFF_SOURCE and attackType NORMAL serialized. LOWER_PRIORITY and one-minus nonstack DamageScale establish ordering intent, but do not recover the compiled transferred-damage mitigation, recursion suppression or exact event envelope. A generic raw HP-loss or repeated mitigated attack substitute is not certified.',
-        'The prior coarse bard audit omitted the three Seaborn skill prefab hierarchies. They are now retained with template closure and selected ranks; a runtime adapter must prove owner-stat ownership, mode synchronization, overlap nonstacking and finish-recharge behavior before complete kit enablement.',
-        'No operator is enabled by art import or a source-only audit. Original C# frame ordering, modules, particles and audio remain unverified.'
+    'holdReasons': [],
+    'fidelityLimits': [
+        'Original compiled C# DamageSplit dispatcher and exact event envelope are not recovered. Post-mitigation/pre-shield sharing, inherited origin and HP-loss bookkeeping are explicit local mappings corroborated by gameplay references, not native frame certification.',
+        'Token host-stat transfer, nonstack overlap and mode synchronization are bounded contracts tested locally. Source-source tie order, tick quantization and same-frame modifier ordering are not certified.',
+        'All original owner/token graphs and selected ranks remain retained. Modules, native particles and audio are unavailable; original art alone does not imply full visual fidelity.'
     ]}
 (ROOT / 'data/arkpedia-skadi-alter-prefabs.json').write_text(json.dumps(evidence, indent=2) + '\n')
-print('Extracted held Skadi/Seaborn full source kit:', len(templates), 'templates,',len(source_bundles),'verified bundles')
+print('Extracted bounded Skadi/Seaborn full source kit:', len(templates), 'templates,',len(source_bundles),'verified bundles')

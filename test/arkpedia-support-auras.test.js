@@ -56,7 +56,7 @@ test('Heidi Inspiration samples live producer stats each1sec and source detach r
 });
 
 test('Heidi/Sora independent Inspiration strongest perstat with expiry fallback and explicit noInspire/Bard immunity',()=>{
- const{b,deploy}=make(HEI,{others:[build(SOR,{skill:1}),FAN]}),u=deploy(),sora=deploy(SOR,1,5),a=deploy(FAN,2,5);b.addBuff(sora,{key:'test:atk',mods:{atkPct:3}});cast(b,sora);cast(b,u);advance(b,.05);const strongest=Math.max(sora.s.atk*sora.def.skill.bb.atk,u.s.atk*1.1);near(a.s.atk,a.base.atk*1.05+strongest);b.retreat(sora);near(a.s.atk,a.base.atk*1.05+u.s.atk*1.1);a.mem.noInspire=true;advance(b,.05);near(a.s.atk,a.base.atk*1.05);assert.equal(u.findBuff(`sora:inspiration:${sora.id}`),null);
+ const{b,deploy}=make(HEI,{others:[build(SOR,{skill:1}),FAN]}),u=deploy(),sora=deploy(SOR,1,5),a=deploy(FAN,2,5);b.addBuff(sora,{key:'test:atk',mods:{atkPct:3}});cast(b,sora);cast(b,u);advance(b,.05);assert.ok(sora.s.atk*sora.def.skill.bb.atk>u.s.atk*1.1);near(a.s.atk,a.base.atk*1.05+u.s.atk*1.1);b.retreat(u);advance(b,.05);near(a.s.atk,a.base.atk+sora.s.atk*sora.def.skill.bb.atk);a.mem.noInspire=true;advance(b,.05);near(a.s.atk,a.base.atk);assert.equal(u.findBuff(`sora:inspiration:${sora.id}`),null);
 });
 
 test('Heidi block/recovery exclude isolation, Inspiration includes isolation but rejects immune_to_encourage',()=>{

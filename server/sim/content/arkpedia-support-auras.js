@@ -139,7 +139,9 @@ function syncHeidi(b, u, def) {
           : { defFinalFlat: u.s.def * def.skill.bb.def, hpFinalFlat: u.s.maxHp * def.skill.bb.max_hp };
         const old = a.findBuff(inspireKey);
         if (!old || Object.keys(mods).some(k => old.mods[k] !== mods[k]))
-          b.addBuff(a, { key: inspireKey, source: u, tags: ['inspire'], mods });
+          b.addBuff(a, { key: inspireKey, source: u, tags: ['inspire'], mods,
+            data: { inspirePriority: first ? { atkFinalFlat: def.skill.bb.atk }
+              : { defFinalFlat: def.skill.bb.def, hpFinalFlat: def.skill.bb.max_hp } } });
       };
       b.addBuff(a, { key: checkerKey, source: u, interval: 1, onTick: refresh }); refresh();
     }

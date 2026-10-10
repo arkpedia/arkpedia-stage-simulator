@@ -1,6 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Only explicitly reviewed regular-stage tokens may enter the deployment deck.
 export const REGULAR_SUMMONS = Object.freeze({
+  char_1012_skadi2: Object.freeze({ tokenId: 'token_10017_skadi2_dedant',
+    deploymentSlotCost: 0, chooseFacing: false, fixedRotation: true, healFree: false,
+    refundRatio: 0, noAttack: true, minimumElite: 1, rechargeOnFinish: true }),
   char_4048_doroth: Object.freeze({ tokenId: 'token_10025_doroth_recttp',
     deploymentSlotCost: 0, chooseFacing: false, fixedRotation: true, healFree: true,
     refundRatio: 0, noAttack: true, sourceStockLimit: true,
@@ -162,6 +165,25 @@ export function summonRecordFor(ownerId, build, tokens) {
     skill = { skillId: id, name: level.name, skillType: level.skillType,
       durationType: level.durationType, duration: level.duration, description: level.description,
       rangeGrid: level.rangeGrid, ...level.spData, bb, trigger: { rule: 'NEVER' } };
+  }
+  if (ownerId === 'char_1012_skadi2') {
+    const index = ['skchr_skadi2_1', 'skchr_skadi2_2', 'skchr_skadi2_3'].indexOf(build.skillId);
+    const id = ['sktok_skadi2_1', 'sktok_skadi2_2', 'sktok_skadi2_3'][index];
+    const entry = source.skills?.find(row => row.id === id);
+    if (!entry || build.elite < 1 || index === 2 && build.elite < 2
+      || !Number.isSafeInteger(build.skillRank) || build.skillRank < 1
+      || build.skillRank > Math.min([4, 7, 10][build.elite], entry.levels.length))
+      throw Error('Unsupported Skadi Seaborn skill or rank');
+    const level = entry.levels[build.skillRank - 1], bb = blackboard(level.blackboard);
+    const keys = index === 0 ? ['max_hp', 'attack@atk_to_hp_recovery_ratio', 'damage_resistance']
+      : index === 1 ? ['atk', 'def', 'attack@atk_to_hp_recovery_ratio'] : ['atk_scale', 'atk'];
+    if (level.skillType !== 'PASSIVE' || level.prefabId !== id || level.duration !== -1
+      || level.spData.spCost !== 0 || level.spData.spType !== 8
+      || Object.keys(bb).length !== keys.length || keys.some(k => !Number.isFinite(bb[k]))
+      || stats.cost !== 5 || stats.respawnTime !== 30 || stats.maxDeployCount !== 1
+      || talents[0]?.bb.duration !== [0, 15, 25][build.elite])
+      throw Error('Unreviewed Skadi Seaborn source');
+    skill = { skillId: id, name: level.name, bb, trigger: { rule: 'NEVER' } };
   }
   if (ownerId === 'char_4048_doroth') {
     const index = ['skchr_doroth_1', 'skchr_doroth_2', 'skchr_doroth_3'].indexOf(build.skillId);

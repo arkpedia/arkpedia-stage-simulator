@@ -108,7 +108,9 @@ assert reachable == set(E['templates'])
 assert dbkeys == set(E['buffDatabase'])
 assert projectile_keys == set(E['projectiles'])
 assert range_keys == set(E['tables']['ranges'])
-assert E['enabledOperators'] == [] and E['heldOperators'] == ['char_1012_skadi2']
+assert E['enabledOperators'] == ['char_1012_skadi2'] and E['heldOperators'] == []
+assert len(E['runtimeContract']) == 5 and len(E['gameplayCorroboration']) == 2
+assert any('not recovered' in reason for reason in E['fidelityLimits'])
 assert set(E['tables']['skills']) == {'skchr_skadi2_1','skchr_skadi2_2','skchr_skadi2_3'}
 assert set(E['tables']['tokenSkills']) == {'sktok_skadi2_1','sktok_skadi2_2','sktok_skadi2_3'}
 assert set(E['skills']) == set(E['tables']['skills']) | set(E['tables']['tokenSkills'])
@@ -200,4 +202,4 @@ for face, record in E['originalSeabornModels']['models']['token_10017_skadi2_ded
     model = E['models']['token_10017_skadi2_dedant'][face.capitalize()]
     assert model == {**record, 'sha256': record['files']['token_10017_skadi2_dedant.skel']['sha256'],
         'bytes': record['files']['token_10017_skadi2_dedant.skel']['bytes']}
-print(f'Verified {count} native components, {len(bundles)} bundles, {len(E["templates"])} templates, 30 owner plus 30 token ranks and both original single-skeleton chains; Skadi remains held')
+print(f'Verified {count} native components, {len(bundles)} bundles, {len(E["templates"])} templates, 30 owner plus 30 token ranks and both original single-skeleton chains; bounded Skadi runtime metadata retains fidelity limits')

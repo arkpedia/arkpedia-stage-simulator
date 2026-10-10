@@ -200,9 +200,10 @@ export function aggregateMods(buffs) {
   // strongest instance of a named status contributes its modifiers.
   const strongest = new Map();
   const sanctuary = Object.create(null);
-  // Source Inspire channels choose the highest final addition independently
-  // for ATK, DEF and MAX_HP. Keep owned weaker instances for expiry fallback;
-  // unrelated final additions still sum normally.
+  // Reviewed Inspiration producers rank their source ratio, independently per
+  // attribute, then apply that producer's final addition. Keep weaker owned
+  // instances for expiry fallback; unrelated final additions still sum.
+  // Legacy hand-built instances without priority retain their numeric ordering.
   const inspire = Object.create(null);
   for (const b of buffs) {
     const tpl = STATUS[b.status];
@@ -225,8 +226,10 @@ export function aggregateMods(buffs) {
         // not compound -80% movement into -96% or erase each other's timers.
         if (b.status === 'sanctuary' && ['physTakenMul', 'artsTakenMul', 'trueTakenMul', 'elementalTakenMul'].includes(k))
           sanctuary[k] = Math.min(sanctuary[k] ?? 1, v);
-        else if (b.tags?.includes('inspire') && ['atkFinalFlat', 'defFinalFlat', 'hpFinalFlat'].includes(k))
-          inspire[k] = Math.max(inspire[k] ?? 0, v * st);
+        else if (b.tags?.includes('inspire') && ['atkFinalFlat', 'defFinalFlat', 'hpFinalFlat'].includes(k)) {
+          const rank = Number.isFinite(b.data?.inspirePriority?.[k]) ? b.data.inspirePriority[k] : v * st;
+          if (!inspire[k] || rank > inspire[k].rank) inspire[k] = { rank, value: v * st };
+        }
         else if (k === 'damageHpFloorRatio') add[k] = Math.max(add[k] ?? 0, v);
         else if (k === 'moveMul' && b.status === 'sluggish') sluggishMoveMul = Math.min(sluggishMoveMul, v);
         else if (k.endsWith('Mul')) mul[k] = (mul[k] ?? 1) * (st === 1 ? v : Math.pow(v, st));
@@ -247,7 +250,7 @@ export function aggregateMods(buffs) {
   // Apply after unrelated multipliers so Fragile composes independently of
   // source insertion order. Weaker owned channels resume after removal/expiry.
   for (const k of Object.keys(sanctuary)) mul[k] = (mul[k] ?? 1) * sanctuary[k];
-  for (const k of Object.keys(inspire)) add[k] = (add[k] ?? 0) + inspire[k];
+  for (const k of Object.keys(inspire)) add[k] = (add[k] ?? 0) + inspire[k].value;
   for (const k of ['dodgePhys', 'dodgeArts']) {
     const d = dodge[k];
     if (d) add[k] = (add[k] ?? 0) + (d.n === 1 ? d.p : 1 - d.miss);

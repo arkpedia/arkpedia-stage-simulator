@@ -174,7 +174,8 @@ function syncSora(b, u, def) {
     if (!eligible) b.removeBuff(ally, inspireKey);
     else if (ally.findBuff(inspireKey)?.mods.atkFinalFlat !== u.s.atk * def.skill.bb.atk)
       b.addBuff(ally, { key: inspireKey, source: u, tags: ['inspire'],
-        mods: { atkFinalFlat: u.s.atk * def.skill.bb.atk } });
+        mods: { atkFinalFlat: u.s.atk * def.skill.bb.atk },
+        data: { inspirePriority: { atkFinalFlat: def.skill.bb.atk } } });
   }
   for (const enemy of b.enemies) {
     const inside = active && first && bodyInKeys(enemy, u.rangeKeySet)
