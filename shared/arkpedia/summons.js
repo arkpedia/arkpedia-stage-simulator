@@ -43,6 +43,9 @@ export const REGULAR_SUMMONS = Object.freeze({
   char_433_windft: Object.freeze({ tokenId: 'token_10023_windft_wrench',
     deploymentSlotCost: 0, chooseFacing: true, healFree: true,
     refundRatio: 0, noAttack: true }),
+  char_427_vigil: Object.freeze({ tokenId: 'token_10028_vigil_wolf',
+    deploymentSlotCost: 0, chooseFacing: false, healFree: true, refundRatio: 0,
+    attackClip: 'Attack', stockLimit: 1, tacticalPoint: true, limitByHostAttackRange: true }),
   char_476_blkngt: Object.freeze({ tokenId: 'token_10021_blkngt_hypnos',
     deploymentSlotCost: 0, chooseFacing: false, healFree: true,
     refundRatio: 0, attackClip: 'Attack', stockLimit: 1, tacticalPoint: true,
@@ -298,6 +301,22 @@ export function summonRecordFor(ownerId, build, tokens) {
       durationType: level.durationType, duration: level.duration,
       rangeGrid: level.rangeGrid, ...level.spData, bb,
       trigger: { rule: 'NEVER' } };
+  }
+  if (ownerId === 'char_427_vigil') {
+    const index = ['skchr_vigil_1', 'skchr_vigil_2', 'skchr_vigil_3'].indexOf(build.skillId);
+    if (index < 0 || index > build.elite || !Number.isSafeInteger(build.skillRank)
+      || build.skillRank < 1 || build.skillRank > [4, 7, 10][build.elite]
+      || stats.cost !== 0 || stats.respawnTime !== 10 || stats.maxDeployCount !== 1
+      || stats.blockCnt !== 0 || talents[0]?.bb.interval !== [30, 27, 25][build.elite])
+      throw Error('Unreviewed Vigil Wolfpack build or stats');
+    const ids = ['sktok_vigil_wolf_1', 'sktok_vigil_wolf_2', 'sktok_vigil_wolf_3'];
+    if (source.skills?.length !== 3 || source.skills.some((s, i) => s.id !== ids[i]
+      || s.levels.length !== [1, 1, 10][i] || s.levels.some(l => l.prefabId !== ids[i]
+        || l.skillType !== 'PASSIVE' || l.spData.spCost !== 0
+        || i < 2 && l.blackboard.length !== 0))) throw Error('Unreviewed Wolfpack source skills');
+    const bb = blackboard(source.skills[2].levels[build.skillRank - 1].blackboard);
+    if (Object.keys(bb).length !== 1 || !Number.isFinite(bb['attack@vigil_wolf_s_3.atk_scale']))
+      throw Error('Unreviewed Wolfpack S3 coefficient');
   }
   if (config.tacticalPoint) stats.respawnTime = talents[0].bb.interval;
   // Reviewed trap stock combines the ready card with native stacked cards:

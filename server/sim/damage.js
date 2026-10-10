@@ -357,15 +357,25 @@ export function applyHpLoss(battle, source, target, amount, dmg) {
     // neither damage immunity nor protection against scripted removal.
     if (target.s.flags.undeadable)
       target.hp = Math.max(Math.min(1, target.s.maxHp), target.hp);
+    let postFatal = null;
     if (target.hp <= 0) {
       target.hp = 0;
       if (battle._hooks.fatal) {
         const fctx = { unit: target, source: hs, credit: source, dmg, amount, prevented: false };
         battle.emit('fatal', fctx);
-        if (fctx.prevented && target.alive) { if (target.hp < 1) target.hp = Math.min(1, target.s.maxHp); }
+        if (fctx.prevented && target.alive) {
+          if (typeof fctx.afterHpLoss === 'function') postFatal = fctx.afterHpLoss;
+          else if (target.hp < 1) target.hp = Math.min(1, target.s.maxHp);
+        }
       }
     }
     dealt = Math.max(0, before - Math.max(0, target.hp));
+    // Opt-in native before/post fatal repair: account lost HP before healing.
+    // Existing fatal handlers retain their original immediate-repair semantics.
+    if (postFatal) {
+      postFatal();
+      if (target.alive && target.hp < 1) target.hp = Math.min(1, target.s.maxHp);
+    }
   }
   // damage dealt (unit stats, the results screen's 造成伤害) never counts a unit's own side — its own drain or 流失 (源石溶剂,
   // 史尔特尔 S3 …), friendly damage; `taken` and the kill credit do

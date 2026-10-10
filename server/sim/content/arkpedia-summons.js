@@ -10,6 +10,7 @@ import { createPhantomClone } from './arkpedia-phantom.js';
 import { createKaltsitMon3tr } from './arkpedia-kaltsit.js';
 import { createSceneBuggyCam } from './arkpedia-scene.js';
 import { createClockworkFowlbeast } from './arkpedia-sand-reckoner.js';
+import { createWolfpack } from './arkpedia-vigil.js';
 import { createSlumberfoot } from './arkpedia-blacknight.js';
 import { createWindflitBattery } from './arkpedia-windflit.js';
 import { createCatherineDevice } from './arkpedia-catherine.js';
@@ -83,6 +84,7 @@ export function deployRegularSummon(battle, key, row, col, dir = 'RIGHT') {
     : state.ownerId === 'char_003_kalts' ? createKaltsitMon3tr(battle, state, row, col, dir)
     : state.ownerId === 'char_336_folivo' ? createSceneBuggyCam(battle, state, row, col, dir)
     : state.ownerId === 'char_4140_lasher' ? createClockworkFowlbeast(battle, state, row, col, dir)
+    : state.ownerId === 'char_427_vigil' ? createWolfpack(battle, state, row, col)
     : state.ownerId === 'char_476_blkngt' ? createSlumberfoot(battle, state, row, col)
     : state.ownerId === 'char_433_windft' ? createWindflitBattery(battle, state, row, col, dir)
     : state.ownerId === 'char_4162_cathy' ? createCatherineDevice(battle, state, row, col, dir)
@@ -189,7 +191,7 @@ export function installSummoner({ battle, unit, def }) {
   const config = REGULAR_SUMMONS[def.id];
   if (!config || config.skillId && def.skill?.id !== config.skillId
     || config.minimumElite != null && def.raw.arkpedia.elite < config.minimumElite) return;
-  const build = ['char_4055_bgsnow', 'char_1012_skadi2', 'char_4048_doroth', 'char_400_weedy', 'char_250_phatom', 'char_451_robin', 'char_458_rfrost', 'char_242_otter', 'char_4171_wulfen'].includes(def.id)
+  const build = ['char_427_vigil', 'char_4055_bgsnow', 'char_1012_skadi2', 'char_4048_doroth', 'char_400_weedy', 'char_250_phatom', 'char_451_robin', 'char_458_rfrost', 'char_242_otter', 'char_4171_wulfen'].includes(def.id)
     ? { ...def.raw.arkpedia, skillId: def.skill.id } : def.raw.arkpedia;
   const key = summonCardId(def.id), record = summonRecordFor(def.id, build, battle.data.raw.tokens);
   if (!battle.regularSummons) battle.regularSummons = new Map();

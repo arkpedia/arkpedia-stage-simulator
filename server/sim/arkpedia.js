@@ -95,6 +95,7 @@ import { customizeDorothyKit, installDorothy } from './content/arkpedia-dorothy.
 import { customizeVirtuosaKit, installVirtuosa } from './content/arkpedia-virtuosa.js';
 import { customizeSandReckonerKit, installSandReckoner } from './content/arkpedia-sand-reckoner.js';
 import { customizeChilchuckKit, installChilchuck } from './content/arkpedia-chilchuck.js';
+import { customizeVigilKit, installVigil } from './content/arkpedia-vigil.js';
 import { customizeBlacknightKit, installBlacknight } from './content/arkpedia-blacknight.js';
 import { customizeChristineKit, installChristine } from './content/arkpedia-christine.js';
 import { customizeExecutorReaperKit, installExecutorReaper } from './content/arkpedia-executor-reaper.js';
@@ -476,6 +477,7 @@ export class StandardBattle extends Battle {
     customizeAmiyaMedicKit({ battle: this, id, def, unit, kit });
     customizeChilchuckKit({ battle: this, id, def, unit, kit });
     customizeBlacknightKit({ battle: this, id, def, unit, kit });
+    customizeVigilKit({ battle: this, id, def, unit, kit });
     customizeChristineKit({ battle: this, id, def, unit, kit });
     customizeExecutorReaperKit({ battle: this, id, def, unit, kit });
     customizePhilaeKit({ battle: this, id, def, unit, kit });
@@ -658,6 +660,7 @@ export class StandardBattle extends Battle {
     installAmiyaMedic({ battle: this, unit, def });
     installChilchuck({ battle: this, unit, def });
     installBlacknight({ battle: this, unit, def });
+    installVigil({ battle: this, unit, def });
     installChristine({ battle: this, unit, def });
     installExecutorReaper({ battle: this, unit, def });
     installPhilae({ battle: this, unit, def });

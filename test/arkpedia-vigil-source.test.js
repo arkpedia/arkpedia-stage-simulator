@@ -25,13 +25,13 @@ const template = key => e.templates[key];
 const token = e.tables.tokens[TOKEN];
 const near = (a, b) => assert.ok(Math.abs(a - b) < 1e-6, `${a} != ${b}`);
 
-test('complete Vigil source remains held without registering a partial kit or generic Wolfpack', () => {
-  assert.deepEqual(e.enabledOperators, []); assert.deepEqual(e.heldOperators, [ID]);
-  assert.equal(REGULAR_OPERATORS[ID], undefined); assert.equal(REGULAR_SUMMONS[ID], undefined);
-  assert.equal(data.operators[ID], undefined); assert.equal(data.tokens[TOKEN], undefined);
-  assert.deepEqual(e.runtimeContracts, []);
-  assert.ok(e.holdReasons.some(r => /runActionOnEvent 2/.test(r)));
-  assert.ok(e.holdReasons.some(r => /waitAttackEventForAllAttacks 0/.test(r)));
+test('complete Vigil source registers all three skills and original Wolfpack with explicit dispatcher limits', () => {
+  assert.deepEqual(e.enabledOperators, [ID]); assert.deepEqual(e.heldOperators, []);
+  assert.deepEqual(REGULAR_OPERATORS[ID].skillIds, ['skchr_vigil_1','skchr_vigil_2','skchr_vigil_3']); assert.equal(REGULAR_SUMMONS[ID].tokenId,TOKEN);
+  assert.equal(data.operators[ID].skills.length,3); assert.equal(data.tokens[TOKEN].skills.length,3);
+  assert.equal(e.runtimeContracts.length,7); assert.deepEqual(e.holdReasons,[]);
+  assert.ok(e.historicalHoldReasons.some(r => /runActionOnEvent 2/.test(r)));
+  assert.ok(e.historicalHoldReasons.some(r => /waitAttackEventForAllAttacks 0/.test(r)));
   for (const key of ['frameParity', 'moduleSupport', 'nativeParticleSupport']) assert.equal(e[key], false);
   assert.equal(e.source.bundles.length, 6); assert.equal(rows('characters').length + rows('tokens').length
     + rows('skills').length + rows('projectiles').length, 184);

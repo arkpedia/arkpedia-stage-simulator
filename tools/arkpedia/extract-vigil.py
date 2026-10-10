@@ -222,8 +222,8 @@ evidence = {'schemaVersion': 1, 'source': {'repository': 'Kengxxiao/ArknightsGam
     'buffDatabase': {'path': 'en_US/gamedata/buff_table.json', 'sha256': digest((C / 'lessing-source/buff_table.json').read_bytes())},
     'bundles': source_bundles, 'modelRepository': 'fexli/ArknightsResource', 'modelCommit': MODEL},
     'frameParity': False, 'moduleSupport': False, 'nativeParticleSupport': False,
-    'enabledOperators': [], 'heldOperators': [ID],
-    'reviewStatus': 'Full Vigil and default Wolfpack source foundation; Wolfpack lifecycle and three-skill combat adapter pending',
+    'enabledOperators': [ID], 'heldOperators': [],
+    'reviewStatus': 'Complete three-skill Vigil and default Wolfpack adapter under explicit bounded dispatcher contracts',
     'characters': characters, 'skills': skills, 'chararts': chararts,
     'tokens': tokens, 'originalWolfpackArt': original_token_art, 'models': models, 'officialSkeletonBindings': bindings, 'projectiles': projectiles,
     'templates': {k: bt[k] for k in sorted(templates)},
@@ -251,9 +251,18 @@ evidence = {'schemaVersion': 1, 'source': {'repository': 'Kengxxiao/ArknightsGam
         'The default Wolfpack uses one original skeleton linked through the shared token bundle animator, SkeletonAnimation, SkeletonDataAsset and atlas, plus its native FaceSwitcher. Its Attack event is 0.466666669 and Start event 0.400000006. Alternate skinpack models are excluded.',
         'All four original projectiles have speed ten, lifetime ten and stopWhenSourceInvalid zero. The complete template closure also retains module-dependent fatal/dodge branches as source evidence without enabling module support.'
     ],
-    'runtimeContracts': [],
+    'runtimeContracts': [
+        'S1/S2 apply their source immediate DP and token command on skill activation. Event-free one-second clips are decorative; no synthetic disarm, SP hold or delayed callback is introduced.',
+        'S3 releases all three separate projectile trees at the first OnAttack event, using native additionalTimes 2, zero triggerDelta and waitAttackEventForAllAttacks 0. Attack animations cycle A/B/C; later identical events do not create more projectiles.',
+        'Wolfpack attacks select one ground victim at the original Attack event. The base Physical receipt runs source calculation; additional head receipts suppress it, so they do not replay S2 scaling or T2 DEF penetration. Each head independently emits its selected S3 host-ATK Arts receipt without recursive source calculation.',
+        'Native before/post fatal repair is represented by an opt-in afterHpLoss callback: count lost HP, consume one head or enter persistent rest, then restore HP. Shields, misses and undeadable do not enter this callback.',
+        'Initial activation after one second starts with two heads; rebirth starts with one. Below-cap natural growth runs every selected interval. Losing a head resets that growth clock; S1 adding a head preserves an existing clock. Reopening a capped clock starts a fresh interval.',
+        'S2 heals once at an accepted ability release and consumes the captured next-attack charge at release completion. A killed selected victim grants one DP once; unborn interrupted attacks retain the charge.',
+        'Rounded S3 DP intervals admit a pulse within half a simulation tick of expiry, capped by the advertised selected-rank pulse count. No initial pulse or post-expiry pulse is emitted.',
+    ],
     'verificationLimits': ['Native compiled ordering, frame parity, modules and original Unity particles/audio are unverified.'],
-    'holdReasons': [
+    'holdReasons': [],
+    'historicalHoldReasons': [
         'Vigil and Wolfpack remain unregistered until their complete linked lifecycle and three-skill combat adapter is verified.',
         'Event-free Skill1/Skill2 clips, waitForAttackEvent 1 and numeric runActionOnEvent 2 do not establish compiled cast/buff dispatch. No guessed animation release or one-second cast timer is substituted.',
         'S3 additionalTimes 2, zero triggerDelta and waitAttackEventForAllAttacks 0 must be reconciled with three identical OnAttack payloads per A/B/C clip; one projectile per animation event is not assumed.',

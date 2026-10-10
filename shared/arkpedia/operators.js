@@ -83,6 +83,7 @@ import { ZUOLE_OPERATORS } from './zuole-operators.js';
 import { BOBBING_OPERATORS } from './bobbing-operators.js';
 import { SCENE_OPERATORS } from './scene-operators.js';
 import { CHILCHUCK_OPERATORS } from './chilchuck-operators.js';
+import { VIGIL_OPERATORS } from './vigil-operators.js';
 import { BLACKNIGHT_OPERATORS } from './blacknight-operators.js';
 import { CHRISTINE_OPERATORS } from './christine-operators.js';
 import { EXECUTOR_REAPER_OPERATORS } from './executor-reaper-operators.js';
@@ -263,6 +264,7 @@ export const REGULAR_OPERATORS = Object.freeze({
   ...SCENE_OPERATORS,
   ...CHILCHUCK_OPERATORS,
   ...BLACKNIGHT_OPERATORS,
+  ...VIGIL_OPERATORS,
   ...CHRISTINE_OPERATORS,
   ...EXECUTOR_REAPER_OPERATORS,
   ...PHILAE_OPERATORS,
