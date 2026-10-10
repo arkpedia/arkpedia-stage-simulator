@@ -34,7 +34,7 @@
   },
   "sd": {
     "repository": "arkpedia/arkpedia-sd-assets",
-    "commit": "9c6e01b4d06def1502f78c187756e2104072578d",
+    "commit": "24695f24754c188e2c8642ac34c98b41b67479c1",
     "models": {
       "operator/char_123_fang/default/front": {
         "kind": "operator",
@@ -59483,6 +59483,203 @@
           "height": 585.293
         }
       },
+      "operator/char_4140_lasher/default/front": {
+        "kind": "operator",
+        "id": "char_4140_lasher",
+        "variant": "default",
+        "facing": "front",
+        "spineVersion": "3.8.99",
+        "source": {
+          "key": "operators",
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "spine/char_4140_lasher/char_4140_lasher/Front"
+        },
+        "skeleton": {
+          "path": "models/operator/char_4140_lasher/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4140_lasher.skel",
+          "bytes": 571476,
+          "sha256": "ec616996535ca9fdf83658a6742c6cae2aac788fa4109e68e84cc3e5ac3b56df"
+        },
+        "atlas": {
+          "path": "models/operator/char_4140_lasher/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4140_lasher.atlas",
+          "bytes": 10209,
+          "sha256": "74660ba79600eb2bba754d9deb985a0f48fc4d70cafc0841214758a6023500c9"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_4140_lasher/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4140_lasher.png",
+            "bytes": 163988,
+            "sha256": "9a1a8a105a19b7166857a01f99125cf026023ac5e1ca0268ffb25772ac135763"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Attack": 1.6,
+          "Default": 0,
+          "Die": 1,
+          "Idle": 5.333,
+          "Skill_1_Begin": 0.267,
+          "Skill_1_End": 0.267,
+          "Skill_1_Idle": 5.333,
+          "Skill_1_Loop": 0.8,
+          "Skill_2_Begin": 0.267,
+          "Skill_2_End": 0.267,
+          "Skill_2_Idle": 6,
+          "Skill_2_Loop": 1.6,
+          "Start": 1
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null
+          },
+          "attackDown": null,
+          "skill": {
+            "begin": "Skill_1_Begin",
+            "loop": "Skill_1_Loop",
+            "end": "Skill_1_End",
+            "index": 0,
+            "idle": "Skill_1_Idle"
+          },
+          "die": "Die",
+          "move": null,
+          "stun": null,
+          "skills": {
+            "0": {
+              "begin": "Skill_1_Begin",
+              "loop": "Skill_1_Loop",
+              "end": "Skill_1_End",
+              "index": 0,
+              "idle": "Skill_1_Idle"
+            },
+            "1": {
+              "begin": "Skill_2_Begin",
+              "loop": "Skill_2_Loop",
+              "end": "Skill_2_End",
+              "index": 1,
+              "idle": "Skill_2_Idle"
+            }
+          }
+        },
+        "hits": {
+          "Attack": [
+            0.533
+          ],
+          "Skill_1_Loop": [
+            0.1
+          ],
+          "Skill_2_Loop": [
+            0.1
+          ]
+        },
+        "bounds": {
+          "x": -364.379,
+          "y": -211.376,
+          "width": 571.654,
+          "height": 669.326
+        }
+      },
+      "operator/char_4140_lasher/default/back": {
+        "kind": "operator",
+        "id": "char_4140_lasher",
+        "variant": "default",
+        "facing": "back",
+        "spineVersion": "3.8.99",
+        "source": {
+          "key": "operators",
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "spine/char_4140_lasher/char_4140_lasher/Back"
+        },
+        "skeleton": {
+          "path": "models/operator/char_4140_lasher/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4140_lasher.skel",
+          "bytes": 392515,
+          "sha256": "85f6e9e351049bc9b1d3d8160b8ba99fdc11cb7c51eebe073f63e4ffa8130ea1"
+        },
+        "atlas": {
+          "path": "models/operator/char_4140_lasher/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4140_lasher.atlas",
+          "bytes": 6286,
+          "sha256": "0b4280ba6d3a3ced8b3678896ec1b5be6316bf44c8b618845fa8cbc397f6ffc0"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_4140_lasher/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4140_lasher.png",
+            "bytes": 134380,
+            "sha256": "55198c65bb41c7ff8995521234b7c0c72bd94fd54e4935981e62920b3e9a2ae2"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Attack": 1.6,
+          "Default": 0,
+          "Idle": 5.333,
+          "Skill_1_Begin": 0.267,
+          "Skill_1_End": 0.267,
+          "Skill_1_Idle": 1.333,
+          "Skill_1_Loop": 0.8,
+          "Skill_2_Begin": 0.267,
+          "Skill_2_End": 0.267,
+          "Skill_2_Idle": 6,
+          "Skill_2_Loop": 1.6,
+          "Start": 1
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null
+          },
+          "attackDown": null,
+          "skill": {
+            "begin": "Skill_1_Begin",
+            "loop": "Skill_1_Loop",
+            "end": "Skill_1_End",
+            "index": 0,
+            "idle": "Skill_1_Idle"
+          },
+          "die": null,
+          "move": null,
+          "stun": null,
+          "skills": {
+            "0": {
+              "begin": "Skill_1_Begin",
+              "loop": "Skill_1_Loop",
+              "end": "Skill_1_End",
+              "index": 0,
+              "idle": "Skill_1_Idle"
+            },
+            "1": {
+              "begin": "Skill_2_Begin",
+              "loop": "Skill_2_Loop",
+              "end": "Skill_2_End",
+              "index": 1,
+              "idle": "Skill_2_Idle"
+            }
+          }
+        },
+        "hits": {
+          "Attack": [
+            0.533
+          ],
+          "Skill_1_Loop": [
+            0.1
+          ],
+          "Skill_2_Loop": [
+            0.1
+          ]
+        },
+        "bounds": {
+          "x": -364.379,
+          "y": -211.376,
+          "width": 571.654,
+          "height": 669.326
+        }
+      },
       "operator/char_4010_etlchi/default/front": {
         "kind": "operator",
         "id": "char_4010_etlchi",
@@ -64926,6 +65123,192 @@
           "y": -1.446,
           "width": 306.352,
           "height": 515.892
+        }
+      },
+      "operator/token_10036_lasher_mcbird/default/front": {
+        "kind": "operator",
+        "id": "token_10036_lasher_mcbird",
+        "variant": "default",
+        "facing": "front",
+        "source": {
+          "key": "global-client",
+          "kind": "assetbundle",
+          "bundle": {
+            "path": "pkgrps/btl_pfb_tokens_0.ab",
+            "bytes": 5060143,
+            "md5": "5ab8526b9e59e97cc7e94ed6a248013d",
+            "sha256": "eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f",
+            "resourceVersion": "26-09-23-17-49-43_b9cc4a",
+            "url": "https://ark-us-static-online.yo-star.com/assetbundle/official/Android/assets/26-09-23-17-49-43_b9cc4a/pkgrps_btl_pfb_tokens_0.dat",
+            "transforms": [
+              "Original native RGBA texture decoded directly; separate alpha disabled",
+              "atlas texture dimensions normalized and pma: true recorded"
+            ]
+          },
+          "directory": "pkgrps/btl_pfb_tokens_0.ab",
+          "extractedSkeleton": "token_10036_lasher_mcbird.skel",
+          "originalPathIds": {
+            "rootPathId": "6251597178142721909",
+            "animatorPathId": "-489972476804003979",
+            "skeletonAnimationPathId": "8879058806585689973",
+            "skeletonDataAssetPathId": "-8952813949449280874",
+            "textAssetPathId": "7085419537515094393",
+            "atlasAssetPathId": "6331218493254479652",
+            "atlasTextAssetPathId": "-2520459201552621320",
+            "materialPathId": "2359620980725892876",
+            "rgbTexturePathId": "-4356344419274691471",
+            "alphaTexturePathId": "0",
+            "faceSwitcherPathId": "-4195710545332664459"
+          },
+          "transforms": [
+            "Original native RGBA texture decoded directly; separate alpha disabled",
+            "atlas texture dimensions normalized and pma: true recorded"
+          ]
+        },
+        "spineVersion": "3.8.99",
+        "skeleton": {
+          "path": "models/operator/token_10036_lasher_mcbird/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/token_10036_lasher_mcbird.skel",
+          "bytes": 44799,
+          "sha256": "919e4ceb3702aac64fc9a13ff1e5563f500a5a298496b504f7d4d485510141de"
+        },
+        "atlas": {
+          "path": "models/operator/token_10036_lasher_mcbird/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/token_10036_lasher_mcbird.atlas",
+          "bytes": 2192,
+          "sha256": "dbd4e622f026fc89b8b73c783aca9dca85d5f5624985bb00cae31da3ee3c3fe5"
+        },
+        "textures": [
+          {
+            "path": "models/operator/token_10036_lasher_mcbird/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/token_10036_lasher_mcbird.png",
+            "bytes": 32639,
+            "sha256": "511f12f1401d13961baf7d1286357ef62a2b96c2a2052cc86d122bfbe0fc70dc"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Attack": 1.6,
+          "Default": 0,
+          "Die": 1,
+          "Idle": 1.333,
+          "Skill": 1.6,
+          "Start": 1
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "die": "Die",
+          "attack": null
+        },
+        "hits": {
+          "Attack": [
+            0.567
+          ],
+          "Skill": [
+            0.533
+          ]
+        },
+        "bounds": null,
+        "avatar": {
+          "path": "models/operator/token_10036_lasher_mcbird/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png",
+          "bytes": 27041,
+          "sha256": "24d9a7744378c2366d8ffe0f5df7084c38ba3752029b3b775fe49d64419dd48e",
+          "source": {
+            "repository": "fexli/ArknightsResource",
+            "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+            "directory": "avatar/ASSISTANT"
+          }
+        }
+      },
+      "operator/token_10036_lasher_mcbird/default/back": {
+        "kind": "operator",
+        "id": "token_10036_lasher_mcbird",
+        "variant": "default",
+        "facing": "back",
+        "source": {
+          "key": "global-client",
+          "kind": "assetbundle",
+          "bundle": {
+            "path": "pkgrps/btl_pfb_tokens_0.ab",
+            "bytes": 5060143,
+            "md5": "5ab8526b9e59e97cc7e94ed6a248013d",
+            "sha256": "eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f",
+            "resourceVersion": "26-09-23-17-49-43_b9cc4a",
+            "url": "https://ark-us-static-online.yo-star.com/assetbundle/official/Android/assets/26-09-23-17-49-43_b9cc4a/pkgrps_btl_pfb_tokens_0.dat",
+            "transforms": [
+              "Original native RGBA texture decoded directly; separate alpha disabled",
+              "atlas texture dimensions normalized and pma: true recorded"
+            ]
+          },
+          "directory": "pkgrps/btl_pfb_tokens_0.ab",
+          "extractedSkeleton": "token_10036_lasher_mcbird.skel",
+          "originalPathIds": {
+            "rootPathId": "6251597178142721909",
+            "animatorPathId": "-489972476804003979",
+            "skeletonAnimationPathId": "8879058806585689973",
+            "skeletonDataAssetPathId": "-8952813949449280874",
+            "textAssetPathId": "7085419537515094393",
+            "atlasAssetPathId": "6331218493254479652",
+            "atlasTextAssetPathId": "-2520459201552621320",
+            "materialPathId": "2359620980725892876",
+            "rgbTexturePathId": "-4356344419274691471",
+            "alphaTexturePathId": "0",
+            "faceSwitcherPathId": "-4195710545332664459"
+          },
+          "transforms": [
+            "Original native RGBA texture decoded directly; separate alpha disabled",
+            "atlas texture dimensions normalized and pma: true recorded"
+          ]
+        },
+        "spineVersion": "3.8.99",
+        "skeleton": {
+          "path": "models/operator/token_10036_lasher_mcbird/default/back/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/token_10036_lasher_mcbird.skel",
+          "bytes": 44799,
+          "sha256": "919e4ceb3702aac64fc9a13ff1e5563f500a5a298496b504f7d4d485510141de"
+        },
+        "atlas": {
+          "path": "models/operator/token_10036_lasher_mcbird/default/back/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/token_10036_lasher_mcbird.atlas",
+          "bytes": 2192,
+          "sha256": "dbd4e622f026fc89b8b73c783aca9dca85d5f5624985bb00cae31da3ee3c3fe5"
+        },
+        "textures": [
+          {
+            "path": "models/operator/token_10036_lasher_mcbird/default/back/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/token_10036_lasher_mcbird.png",
+            "bytes": 32639,
+            "sha256": "511f12f1401d13961baf7d1286357ef62a2b96c2a2052cc86d122bfbe0fc70dc"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Attack": 1.6,
+          "Default": 0,
+          "Die": 1,
+          "Idle": 1.333,
+          "Skill": 1.6,
+          "Start": 1
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "die": "Die",
+          "attack": null
+        },
+        "hits": {
+          "Attack": [
+            0.567
+          ],
+          "Skill": [
+            0.533
+          ]
+        },
+        "bounds": null,
+        "avatar": {
+          "path": "models/operator/token_10036_lasher_mcbird/default/back/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png",
+          "bytes": 27041,
+          "sha256": "24d9a7744378c2366d8ffe0f5df7084c38ba3752029b3b775fe49d64419dd48e",
+          "source": {
+            "repository": "fexli/ArknightsResource",
+            "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+            "directory": "avatar/ASSISTANT"
+          }
         }
       },
       "operator/token_10032_jesca2_jckshd/default/front": {
@@ -71059,7 +71442,7 @@
     },
     "art": {
       "repository": "arkpedia/arkpedia-sd-assets",
-      "commit": "9c6e01b4d06def1502f78c187756e2104072578d",
+      "commit": "24695f24754c188e2c8642ac34c98b41b67479c1",
       "scene": {
         "path": "stages/0-1/26-09-23-17-49-43_b9cc4a/scene.json",
         "bytes": 4479,
@@ -71068,7 +71451,7 @@
     },
     "gates": {
       "repository": "arkpedia/arkpedia-sd-assets",
-      "commit": "9c6e01b4d06def1502f78c187756e2104072578d",
+      "commit": "24695f24754c188e2c8642ac34c98b41b67479c1",
       "pack": {
         "path": "effects/standard-gates/26-09-23-17-49-43_b9cc4a/gates.json",
         "bytes": 3507,
@@ -513949,6 +514332,1136 @@
         }
       ]
     },
+    "char_4140_lasher": {
+      "id": "char_4140_lasher",
+      "name": "Sand Reckoner",
+      "description": "Deals <@ba.kw>Arts damage</>\nCan use <@ba.kw>Summons</> in battles",
+      "rarity": 5,
+      "profession": "SUPPORT",
+      "subProfessionId": "summoner",
+      "position": "RANGED",
+      "nationId": "sargon",
+      "groupId": null,
+      "teamId": null,
+      "phases": [
+        {
+          "maxLevel": 50,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 463,
+                "atk": 203,
+                "def": 69,
+                "magicResistance": 15,
+                "cost": 9,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.6,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 50,
+              "data": {
+                "maxHp": 626,
+                "atk": 290,
+                "def": 99,
+                "magicResistance": 15,
+                "cost": 9,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.6,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              -1,
+              0
+            ],
+            [
+              -1,
+              1
+            ],
+            [
+              -1,
+              2
+            ]
+          ]
+        },
+        {
+          "maxLevel": 70,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 626,
+                "atk": 290,
+                "def": 99,
+                "magicResistance": 20,
+                "cost": 11,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.6,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 70,
+              "data": {
+                "maxHp": 814,
+                "atk": 387,
+                "def": 132,
+                "magicResistance": 20,
+                "cost": 11,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.6,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              0,
+              3
+            ],
+            [
+              -1,
+              0
+            ],
+            [
+              -1,
+              1
+            ],
+            [
+              -1,
+              2
+            ]
+          ]
+        },
+        {
+          "maxLevel": 80,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 814,
+                "atk": 387,
+                "def": 132,
+                "magicResistance": 20,
+                "cost": 11,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.6,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 80,
+              "data": {
+                "maxHp": 1031,
+                "atk": 450,
+                "def": 160,
+                "magicResistance": 20,
+                "cost": 11,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.6,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              0,
+              3
+            ],
+            [
+              -1,
+              0
+            ],
+            [
+              -1,
+              1
+            ],
+            [
+              -1,
+              2
+            ]
+          ]
+        }
+      ],
+      "favorKeyFrames": [
+        {
+          "level": 0,
+          "data": {
+            "maxHp": 0,
+            "atk": 0,
+            "def": 0,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false
+          }
+        },
+        {
+          "level": 50,
+          "data": {
+            "maxHp": 200,
+            "atk": 35,
+            "def": 0,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false
+          }
+        }
+      ],
+      "potentialRanks": [
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "RESPAWN_TIME",
+            "formulaItem": "ADDITION",
+            "value": -4,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "MAGIC_RESISTANCE",
+            "formulaItem": "ADDITION",
+            "value": 8,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "RESPAWN_TIME",
+            "formulaItem": "ADDITION",
+            "value": -6,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ]
+      ],
+      "trait": null,
+      "talents": [
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_0",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Teachings of the Dead Craftsman",
+              "description": "Can summon 3 Clockwork Fowlbeasts. Clockwork Fowlbeasts and Sand Reckoner deal 10% more damage to Machine enemies",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "cnt",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "damage_scale",
+                  "value": 1.1,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": "token_10036_lasher_mcbird",
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Teachings of the Dead Craftsman",
+              "description": "Can summon 4 Clockwork Fowlbeasts. Clockwork Fowlbeasts and Sand Reckoner deal 20% more damage to Machine enemies",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "cnt",
+                  "value": 4,
+                  "valueStr": null
+                },
+                {
+                  "key": "damage_scale",
+                  "value": 1.2,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": "token_10036_lasher_mcbird",
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Teachings of the Dead Craftsman",
+              "description": "Can summon 5 Clockwork Fowlbeasts. Clockwork Fowlbeasts and Sand Reckoner deal 20% more damage to Machine enemies",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "cnt",
+                  "value": 5,
+                  "valueStr": null
+                },
+                {
+                  "key": "damage_scale",
+                  "value": 1.2,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": "token_10036_lasher_mcbird",
+              "isHideTalent": false
+            }
+          ]
+        }
+      ],
+      "skills": [
+        {
+          "id": "skchr_lasher_1",
+          "unlockCondition": {
+            "phase": "PHASE_0",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "Winding Up",
+              "rangeId": null,
+              "description": "Sand Reckoner and all of his Clockwork Fowlbeasts gain <@ba.vup>+{attack_speed}</> ASPD",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 40,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_lasher_1",
+              "duration": 10,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 35,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Winding Up",
+              "rangeId": null,
+              "description": "Sand Reckoner and all of his Clockwork Fowlbeasts gain <@ba.vup>+{attack_speed}</> ASPD",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 39,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_lasher_1",
+              "duration": 10,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 35,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Winding Up",
+              "rangeId": null,
+              "description": "Sand Reckoner and all of his Clockwork Fowlbeasts gain <@ba.vup>+{attack_speed}</> ASPD",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 38,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_lasher_1",
+              "duration": 10,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 35,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Winding Up",
+              "rangeId": null,
+              "description": "Sand Reckoner and all of his Clockwork Fowlbeasts gain <@ba.vup>+{attack_speed}</> ASPD",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 37,
+                "initSp": 5,
+                "increment": 1
+              },
+              "prefabId": "skchr_lasher_1",
+              "duration": 10,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 40,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Winding Up",
+              "rangeId": null,
+              "description": "Sand Reckoner and all of his Clockwork Fowlbeasts gain <@ba.vup>+{attack_speed}</> ASPD",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 36,
+                "initSp": 5,
+                "increment": 1
+              },
+              "prefabId": "skchr_lasher_1",
+              "duration": 10,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 40,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Winding Up",
+              "rangeId": null,
+              "description": "Sand Reckoner and all of his Clockwork Fowlbeasts gain <@ba.vup>+{attack_speed}</> ASPD",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 35,
+                "initSp": 5,
+                "increment": 1
+              },
+              "prefabId": "skchr_lasher_1",
+              "duration": 10,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 40,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Winding Up",
+              "rangeId": null,
+              "description": "Sand Reckoner and all of his Clockwork Fowlbeasts gain <@ba.vup>+{attack_speed}</> ASPD",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 34,
+                "initSp": 15,
+                "increment": 1
+              },
+              "prefabId": "skchr_lasher_1",
+              "duration": 10,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 45,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Winding Up",
+              "rangeId": null,
+              "description": "Sand Reckoner and all of his Clockwork Fowlbeasts gain <@ba.vup>+{attack_speed}</> ASPD",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 33,
+                "initSp": 15,
+                "increment": 1
+              },
+              "prefabId": "skchr_lasher_1",
+              "duration": 10,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 50,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Winding Up",
+              "rangeId": null,
+              "description": "Sand Reckoner and all of his Clockwork Fowlbeasts gain <@ba.vup>+{attack_speed}</> ASPD",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 32,
+                "initSp": 15,
+                "increment": 1
+              },
+              "prefabId": "skchr_lasher_1",
+              "duration": 10,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 55,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Winding Up",
+              "rangeId": null,
+              "description": "Sand Reckoner and all of his Clockwork Fowlbeasts gain <@ba.vup>+{attack_speed}</> ASPD",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 30,
+                "initSp": 20,
+                "increment": 1
+              },
+              "prefabId": "skchr_lasher_1",
+              "duration": 10,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 60,
+                  "valueStr": null
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "skchr_lasher_2",
+          "unlockCondition": {
+            "phase": "PHASE_1",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "Weighing the Scales",
+              "rangeId": null,
+              "description": "Immediately obtains 1 Clockwork Fowlbeast. Clockwork Fowlbeasts gain <@ba.vup>+{atk:0%}</> ATK and will prioritize attacking the heaviest enemies. Clockwork Fowlbeast attacks will <$ba.sluggish>Slow</> targets for 1 second",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 50,
+                "initSp": 20,
+                "increment": 1
+              },
+              "prefabId": "skchr_lasher_2",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "sluggish",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.27,
+                  "valueStr": null
+                },
+                {
+                  "key": "cnt",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Weighing the Scales",
+              "rangeId": null,
+              "description": "Immediately obtains 1 Clockwork Fowlbeast. Clockwork Fowlbeasts gain <@ba.vup>+{atk:0%}</> ATK and will prioritize attacking the heaviest enemies. Clockwork Fowlbeast attacks will <$ba.sluggish>Slow</> targets for 1 second",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 49,
+                "initSp": 20,
+                "increment": 1
+              },
+              "prefabId": "skchr_lasher_2",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "sluggish",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.28,
+                  "valueStr": null
+                },
+                {
+                  "key": "cnt",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Weighing the Scales",
+              "rangeId": null,
+              "description": "Immediately obtains 1 Clockwork Fowlbeast. Clockwork Fowlbeasts gain <@ba.vup>+{atk:0%}</> ATK and will prioritize attacking the heaviest enemies. Clockwork Fowlbeast attacks will <$ba.sluggish>Slow</> targets for 1 second",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 48,
+                "initSp": 20,
+                "increment": 1
+              },
+              "prefabId": "skchr_lasher_2",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "sluggish",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.29,
+                  "valueStr": null
+                },
+                {
+                  "key": "cnt",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Weighing the Scales",
+              "rangeId": null,
+              "description": "Immediately obtains 1 Clockwork Fowlbeast. Clockwork Fowlbeasts gain <@ba.vup>+{atk:0%}</> ATK and will prioritize attacking the heaviest enemies. Clockwork Fowlbeast attacks will <$ba.sluggish>Slow</> targets for 1 second",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 47,
+                "initSp": 20,
+                "increment": 1
+              },
+              "prefabId": "skchr_lasher_2",
+              "duration": 16,
+              "blackboard": [
+                {
+                  "key": "sluggish",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.31,
+                  "valueStr": null
+                },
+                {
+                  "key": "cnt",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Weighing the Scales",
+              "rangeId": null,
+              "description": "Immediately obtains 1 Clockwork Fowlbeast. Clockwork Fowlbeasts gain <@ba.vup>+{atk:0%}</> ATK and will prioritize attacking the heaviest enemies. Clockwork Fowlbeast attacks will <$ba.sluggish>Slow</> targets for 1 second",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 46,
+                "initSp": 20,
+                "increment": 1
+              },
+              "prefabId": "skchr_lasher_2",
+              "duration": 16,
+              "blackboard": [
+                {
+                  "key": "sluggish",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.32,
+                  "valueStr": null
+                },
+                {
+                  "key": "cnt",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Weighing the Scales",
+              "rangeId": null,
+              "description": "Immediately obtains 1 Clockwork Fowlbeast. Clockwork Fowlbeasts gain <@ba.vup>+{atk:0%}</> ATK and will prioritize attacking the heaviest enemies. Clockwork Fowlbeast attacks will <$ba.sluggish>Slow</> targets for 1 second",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 45,
+                "initSp": 20,
+                "increment": 1
+              },
+              "prefabId": "skchr_lasher_2",
+              "duration": 16,
+              "blackboard": [
+                {
+                  "key": "sluggish",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.32,
+                  "valueStr": null
+                },
+                {
+                  "key": "cnt",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Weighing the Scales",
+              "rangeId": null,
+              "description": "Immediately obtains 1 Clockwork Fowlbeast. Clockwork Fowlbeasts gain <@ba.vup>+{atk:0%}</> ATK and will prioritize attacking the heaviest enemies. Clockwork Fowlbeast attacks will <$ba.sluggish>Slow</> targets for 1 second",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 44,
+                "initSp": 20,
+                "increment": 1
+              },
+              "prefabId": "skchr_lasher_2",
+              "duration": 17,
+              "blackboard": [
+                {
+                  "key": "sluggish",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.34,
+                  "valueStr": null
+                },
+                {
+                  "key": "cnt",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Weighing the Scales",
+              "rangeId": null,
+              "description": "Immediately obtains 1 Clockwork Fowlbeast. Clockwork Fowlbeasts gain <@ba.vup>+{atk:0%}</> ATK and will prioritize attacking the heaviest enemies. Clockwork Fowlbeast attacks will <$ba.sluggish>Slow</> targets for 1 second",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 43,
+                "initSp": 20,
+                "increment": 1
+              },
+              "prefabId": "skchr_lasher_2",
+              "duration": 18,
+              "blackboard": [
+                {
+                  "key": "sluggish",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.36,
+                  "valueStr": null
+                },
+                {
+                  "key": "cnt",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Weighing the Scales",
+              "rangeId": null,
+              "description": "Immediately obtains 1 Clockwork Fowlbeast. Clockwork Fowlbeasts gain <@ba.vup>+{atk:0%}</> ATK and will prioritize attacking the heaviest enemies. Clockwork Fowlbeast attacks will <$ba.sluggish>Slow</> targets for 1 second",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 42,
+                "initSp": 20,
+                "increment": 1
+              },
+              "prefabId": "skchr_lasher_2",
+              "duration": 19,
+              "blackboard": [
+                {
+                  "key": "sluggish",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.38,
+                  "valueStr": null
+                },
+                {
+                  "key": "cnt",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Weighing the Scales",
+              "rangeId": null,
+              "description": "Immediately obtains 1 Clockwork Fowlbeast. Clockwork Fowlbeasts gain <@ba.vup>+{atk:0%}</> ATK and will prioritize attacking the heaviest enemies. Clockwork Fowlbeast attacks will <$ba.sluggish>Slow</> targets for 1 second",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 40,
+                "initSp": 20,
+                "increment": 1
+              },
+              "prefabId": "skchr_lasher_2",
+              "duration": 20,
+              "blackboard": [
+                {
+                  "key": "sluggish",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "cnt",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "char_4010_etlchi": {
       "id": "char_4010_etlchi",
       "name": "Entelechia",
@@ -556680,6 +558193,930 @@
     }
   },
   "tokens": {
+    "token_10036_lasher_mcbird": {
+      "id": "token_10036_lasher_mcbird",
+      "name": "Clockwork Fowlbeast",
+      "profession": "TOKEN",
+      "subProfessionId": "notchar1",
+      "position": "RANGED",
+      "phases": [
+        {
+          "maxLevel": 50,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 438,
+                "atk": 153,
+                "def": 43,
+                "magicResistance": 0,
+                "cost": 8,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.6,
+                "respawnTime": 10,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 5,
+                "maxDeckStackCnt": 4,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 50,
+              "data": {
+                "maxHp": 592,
+                "atk": 219,
+                "def": 62,
+                "magicResistance": 0,
+                "cost": 8,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.6,
+                "respawnTime": 10,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 5,
+                "maxDeckStackCnt": 4,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              -1,
+              0
+            ],
+            [
+              -1,
+              1
+            ],
+            [
+              -1,
+              2
+            ]
+          ]
+        },
+        {
+          "maxLevel": 70,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 592,
+                "atk": 219,
+                "def": 70,
+                "magicResistance": 0,
+                "cost": 8,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.6,
+                "respawnTime": 10,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 5,
+                "maxDeckStackCnt": 4,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 70,
+              "data": {
+                "maxHp": 769,
+                "atk": 292,
+                "def": 83,
+                "magicResistance": 0,
+                "cost": 8,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.6,
+                "respawnTime": 10,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 5,
+                "maxDeckStackCnt": 4,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              -1,
+              0
+            ],
+            [
+              -1,
+              1
+            ],
+            [
+              -1,
+              2
+            ]
+          ]
+        },
+        {
+          "maxLevel": 80,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 769,
+                "atk": 292,
+                "def": 90,
+                "magicResistance": 0,
+                "cost": 8,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.6,
+                "respawnTime": 10,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 5,
+                "maxDeckStackCnt": 4,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 80,
+              "data": {
+                "maxHp": 974,
+                "atk": 340,
+                "def": 100,
+                "magicResistance": 0,
+                "cost": 8,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.6,
+                "respawnTime": 10,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 5,
+                "maxDeckStackCnt": 4,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              -1,
+              0
+            ],
+            [
+              -1,
+              1
+            ],
+            [
+              -1,
+              2
+            ]
+          ]
+        }
+      ],
+      "trait": null,
+      "talents": [
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_0",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Teachings of the Dead Craftsman",
+              "description": "Deals 10% more damage to Machine enemies",
+              "rangeId": null,
+              "blackboard": [],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Teachings of the Dead Craftsman",
+              "description": "Deals 20% more damage to Machine enemies",
+              "rangeId": null,
+              "blackboard": [],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Teachings of the Dead Craftsman",
+              "description": "Deals 20% more damage to Machine enemies",
+              "rangeId": null,
+              "blackboard": [],
+              "tokenKey": null,
+              "isHideTalent": false
+            }
+          ]
+        }
+      ],
+      "skills": [
+        {
+          "id": "sktok_lasher_mcbird_1",
+          "unlockCondition": {
+            "phase": "PHASE_0",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "Winding Up",
+              "rangeId": null,
+              "description": "Clockwork Fowlbeast gains <@ba.vup>+{attack_speed}</> ASPD",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "sktok_lasher_mcbird_1",
+              "duration": 10,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 35,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Winding Up",
+              "rangeId": null,
+              "description": "Clockwork Fowlbeast gains <@ba.vup>+{attack_speed}</> ASPD",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "sktok_lasher_mcbird_1",
+              "duration": 10,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 35,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Winding Up",
+              "rangeId": null,
+              "description": "Clockwork Fowlbeast gains <@ba.vup>+{attack_speed}</> ASPD",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "sktok_lasher_mcbird_1",
+              "duration": 10,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 35,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Winding Up",
+              "rangeId": null,
+              "description": "Clockwork Fowlbeast gains <@ba.vup>+{attack_speed}</> ASPD",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "sktok_lasher_mcbird_1",
+              "duration": 10,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 40,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Winding Up",
+              "rangeId": null,
+              "description": "Clockwork Fowlbeast gains <@ba.vup>+{attack_speed}</> ASPD",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "sktok_lasher_mcbird_1",
+              "duration": 10,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 40,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Winding Up",
+              "rangeId": null,
+              "description": "Clockwork Fowlbeast gains <@ba.vup>+{attack_speed}</> ASPD",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "sktok_lasher_mcbird_1",
+              "duration": 10,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 40,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Winding Up",
+              "rangeId": null,
+              "description": "Clockwork Fowlbeast gains <@ba.vup>+{attack_speed}</> ASPD",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "sktok_lasher_mcbird_1",
+              "duration": 10,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 45,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Winding Up",
+              "rangeId": null,
+              "description": "Clockwork Fowlbeast gains <@ba.vup>+{attack_speed}</> ASPD",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "sktok_lasher_mcbird_1",
+              "duration": 10,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 50,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Winding Up",
+              "rangeId": null,
+              "description": "Clockwork Fowlbeast gains <@ba.vup>+{attack_speed}</> ASPD",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "sktok_lasher_mcbird_1",
+              "duration": 10,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 55,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Winding Up",
+              "rangeId": null,
+              "description": "Clockwork Fowlbeast gains <@ba.vup>+{attack_speed}</> ASPD",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "sktok_lasher_mcbird_1",
+              "duration": 10,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 60,
+                  "valueStr": null
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "sktok_lasher_mcbird_2",
+          "unlockCondition": {
+            "phase": "PHASE_1",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "Weighing the Scales",
+              "rangeId": null,
+              "description": "Clockwork Fowlbeasts gain <@ba.vup>+{atk:0%}</> ATK and will prioritize attacking the heaviest enemies. Clockwork Fowlbeast attacks will <$ba.sluggish>Slow</> targets for 1 second",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "sktok_lasher_mcbird_2",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "attack@sluggish",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.27,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Weighing the Scales",
+              "rangeId": null,
+              "description": "Clockwork Fowlbeasts gain <@ba.vup>+{atk:0%}</> ATK and will prioritize attacking the heaviest enemies. Clockwork Fowlbeast attacks will <$ba.sluggish>Slow</> targets for 1 second",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "sktok_lasher_mcbird_2",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "attack@sluggish",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.28,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Weighing the Scales",
+              "rangeId": null,
+              "description": "Clockwork Fowlbeasts gain <@ba.vup>+{atk:0%}</> ATK and will prioritize attacking the heaviest enemies. Clockwork Fowlbeast attacks will <$ba.sluggish>Slow</> targets for 1 second",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "sktok_lasher_mcbird_2",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "attack@sluggish",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.29,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Weighing the Scales",
+              "rangeId": null,
+              "description": "Clockwork Fowlbeasts gain <@ba.vup>+{atk:0%}</> ATK and will prioritize attacking the heaviest enemies. Clockwork Fowlbeast attacks will <$ba.sluggish>Slow</> targets for 1 second",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "sktok_lasher_mcbird_2",
+              "duration": 16,
+              "blackboard": [
+                {
+                  "key": "attack@sluggish",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.31,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Weighing the Scales",
+              "rangeId": null,
+              "description": "Clockwork Fowlbeasts gain <@ba.vup>+{atk:0%}</> ATK and will prioritize attacking the heaviest enemies. Clockwork Fowlbeast attacks will <$ba.sluggish>Slow</> targets for 1 second",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "sktok_lasher_mcbird_2",
+              "duration": 16,
+              "blackboard": [
+                {
+                  "key": "attack@sluggish",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.32,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Weighing the Scales",
+              "rangeId": null,
+              "description": "Clockwork Fowlbeasts gain <@ba.vup>+{atk:0%}</> ATK and will prioritize attacking the heaviest enemies. Clockwork Fowlbeast attacks will <$ba.sluggish>Slow</> targets for 1 second",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "sktok_lasher_mcbird_2",
+              "duration": 16,
+              "blackboard": [
+                {
+                  "key": "attack@sluggish",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.32,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Weighing the Scales",
+              "rangeId": null,
+              "description": "Clockwork Fowlbeasts gain <@ba.vup>+{atk:0%}</> ATK and will prioritize attacking the heaviest enemies. Clockwork Fowlbeast attacks will <$ba.sluggish>Slow</> targets for 1 second",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "sktok_lasher_mcbird_2",
+              "duration": 17,
+              "blackboard": [
+                {
+                  "key": "attack@sluggish",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.34,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Weighing the Scales",
+              "rangeId": null,
+              "description": "Clockwork Fowlbeasts gain <@ba.vup>+{atk:0%}</> ATK and will prioritize attacking the heaviest enemies. Clockwork Fowlbeast attacks will <$ba.sluggish>Slow</> targets for 1 second",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "sktok_lasher_mcbird_2",
+              "duration": 18,
+              "blackboard": [
+                {
+                  "key": "attack@sluggish",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.36,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Weighing the Scales",
+              "rangeId": null,
+              "description": "Clockwork Fowlbeasts gain <@ba.vup>+{atk:0%}</> ATK and will prioritize attacking the heaviest enemies. Clockwork Fowlbeast attacks will <$ba.sluggish>Slow</> targets for 1 second",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "sktok_lasher_mcbird_2",
+              "duration": 19,
+              "blackboard": [
+                {
+                  "key": "attack@sluggish",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.38,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Weighing the Scales",
+              "rangeId": null,
+              "description": "Clockwork Fowlbeasts gain <@ba.vup>+{atk:0%}</> ATK and will prioritize attacking the heaviest enemies. Clockwork Fowlbeast attacks will <$ba.sluggish>Slow</> targets for 1 second",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "sktok_lasher_mcbird_2",
+              "duration": 20,
+              "blackboard": [
+                {
+                  "key": "attack@sluggish",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.4,
+                  "valueStr": null
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/24695f24754c188e2c8642ac34c98b41b67479c1/models/operator/token_10036_lasher_mcbird/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+    },
     "token_10032_jesca2_jckshd": {
       "id": "token_10032_jesca2_jckshd",
       "name": "Mobile Riot Shield",
@@ -557015,7 +559452,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/9c6e01b4d06def1502f78c187756e2104072578d/models/operator/token_10032_jesca2_jckshd/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/24695f24754c188e2c8642ac34c98b41b67479c1/models/operator/token_10032_jesca2_jckshd/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10040_siege2_vlion": {
       "id": "token_10040_siege2_vlion",
@@ -558447,7 +560884,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/9c6e01b4d06def1502f78c187756e2104072578d/models/operator/token_10009_weedy_cannon/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/24695f24754c188e2c8642ac34c98b41b67479c1/models/operator/token_10009_weedy_cannon/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10024_ebnhlz_rcube": {
       "id": "token_10024_ebnhlz_rcube",
@@ -559020,7 +561457,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/9c6e01b4d06def1502f78c187756e2104072578d/models/operator/token_10024_ebnhlz_rcube/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/24695f24754c188e2c8642ac34c98b41b67479c1/models/operator/token_10024_ebnhlz_rcube/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10044_wulfen_mine": {
       "id": "token_10044_wulfen_mine",
@@ -560221,7 +562658,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/9c6e01b4d06def1502f78c187756e2104072578d/models/operator/token_10044_wulfen_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/24695f24754c188e2c8642ac34c98b41b67479c1/models/operator/token_10044_wulfen_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10042_tecno_puppet": {
       "id": "token_10042_tecno_puppet",
@@ -560470,7 +562907,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/9c6e01b4d06def1502f78c187756e2104072578d/models/operator/token_10042_tecno_puppet/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/24695f24754c188e2c8642ac34c98b41b67479c1/models/operator/token_10042_tecno_puppet/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10041_cathy_catsld": {
       "id": "token_10041_cathy_catsld",
@@ -561028,7 +563465,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/9c6e01b4d06def1502f78c187756e2104072578d/models/operator/token_10041_cathy_catsld/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/24695f24754c188e2c8642ac34c98b41b67479c1/models/operator/token_10041_cathy_catsld/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10022_kazema_shadow": {
       "id": "token_10022_kazema_shadow",
@@ -561498,7 +563935,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/9c6e01b4d06def1502f78c187756e2104072578d/models/operator/token_10022_kazema_shadow/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/24695f24754c188e2c8642ac34c98b41b67479c1/models/operator/token_10022_kazema_shadow/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10001_deepcl_tentac": {
       "id": "token_10001_deepcl_tentac",
@@ -561812,7 +564249,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/9c6e01b4d06def1502f78c187756e2104072578d/models/operator/token_10001_deepcl_tentac/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/24695f24754c188e2c8642ac34c98b41b67479c1/models/operator/token_10001_deepcl_tentac/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10018_robrta_mach": {
       "id": "token_10018_robrta_mach",
@@ -562302,7 +564739,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/9c6e01b4d06def1502f78c187756e2104072578d/models/operator/token_10018_robrta_mach/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/24695f24754c188e2c8642ac34c98b41b67479c1/models/operator/token_10018_robrta_mach/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10014_bstalk_crab": {
       "id": "token_10014_bstalk_crab",
@@ -562631,7 +565068,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/9c6e01b4d06def1502f78c187756e2104072578d/models/operator/token_10014_bstalk_crab/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/24695f24754c188e2c8642ac34c98b41b67479c1/models/operator/token_10014_bstalk_crab/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10011_beewax_oblisk": {
       "id": "token_10011_beewax_oblisk",
@@ -563576,7 +566013,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/9c6e01b4d06def1502f78c187756e2104072578d/models/operator/token_10011_beewax_oblisk/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/24695f24754c188e2c8642ac34c98b41b67479c1/models/operator/token_10011_beewax_oblisk/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10006_vodfox_doll": {
       "id": "token_10006_vodfox_doll",
@@ -564212,7 +566649,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/9c6e01b4d06def1502f78c187756e2104072578d/models/operator/token_10006_vodfox_doll/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/24695f24754c188e2c8642ac34c98b41b67479c1/models/operator/token_10006_vodfox_doll/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10003_cgbird_bird": {
       "id": "token_10003_cgbird_bird",
@@ -564507,7 +566944,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/9c6e01b4d06def1502f78c187756e2104072578d/models/operator/token_10003_cgbird_bird/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/24695f24754c188e2c8642ac34c98b41b67479c1/models/operator/token_10003_cgbird_bird/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10000_silent_healrb": {
       "id": "token_10000_silent_healrb",
@@ -564890,7 +567327,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/9c6e01b4d06def1502f78c187756e2104072578d/models/operator/token_10000_silent_healrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/24695f24754c188e2c8642ac34c98b41b67479c1/models/operator/token_10000_silent_healrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10015_dusk_drgn": {
       "id": "token_10015_dusk_drgn",
@@ -565304,7 +567741,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/9c6e01b4d06def1502f78c187756e2104072578d/models/operator/token_10015_dusk_drgn/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/24695f24754c188e2c8642ac34c98b41b67479c1/models/operator/token_10015_dusk_drgn/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10007_phatom_twin": {
       "id": "token_10007_phatom_twin",
@@ -567083,7 +569520,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/9c6e01b4d06def1502f78c187756e2104072578d/models/operator/token_10007_phatom_twin/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/24695f24754c188e2c8642ac34c98b41b67479c1/models/operator/token_10007_phatom_twin/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10008_cqbw_box": {
       "id": "token_10008_cqbw_box",
@@ -567656,7 +570093,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/9c6e01b4d06def1502f78c187756e2104072578d/models/operator/token_10008_cqbw_box/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/24695f24754c188e2c8642ac34c98b41b67479c1/models/operator/token_10008_cqbw_box/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10029_slent2_protrb": {
       "id": "token_10029_slent2_protrb",
@@ -568401,7 +570838,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/9c6e01b4d06def1502f78c187756e2104072578d/models/operator/token_10029_slent2_protrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/24695f24754c188e2c8642ac34c98b41b67479c1/models/operator/token_10029_slent2_protrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10019_nearl2_sword": {
       "id": "token_10019_nearl2_sword",
@@ -569188,7 +571625,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/9c6e01b4d06def1502f78c187756e2104072578d/models/operator/token_10019_nearl2_sword/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/24695f24754c188e2c8642ac34c98b41b67479c1/models/operator/token_10019_nearl2_sword/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10002_kalts_mon3tr": {
       "id": "token_10002_kalts_mon3tr",
@@ -569606,7 +572043,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/9c6e01b4d06def1502f78c187756e2104072578d/models/operator/token_10002_kalts_mon3tr/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/24695f24754c188e2c8642ac34c98b41b67479c1/models/operator/token_10002_kalts_mon3tr/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10010_folivo_car": {
       "id": "token_10010_folivo_car",
@@ -571227,7 +573664,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/9c6e01b4d06def1502f78c187756e2104072578d/models/operator/token_10010_folivo_car/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/24695f24754c188e2c8642ac34c98b41b67479c1/models/operator/token_10010_folivo_car/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10021_blkngt_hypnos": {
       "id": "token_10021_blkngt_hypnos",
@@ -571642,7 +574079,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/9c6e01b4d06def1502f78c187756e2104072578d/models/operator/token_10021_blkngt_hypnos/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/24695f24754c188e2c8642ac34c98b41b67479c1/models/operator/token_10021_blkngt_hypnos/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10023_windft_wrench": {
       "id": "token_10023_windft_wrench",
@@ -572806,7 +575243,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/9c6e01b4d06def1502f78c187756e2104072578d/models/operator/token_10023_windft_wrench/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/24695f24754c188e2c8642ac34c98b41b67479c1/models/operator/token_10023_windft_wrench/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10045_alanna_crane": {
       "id": "token_10045_alanna_crane",
@@ -573206,7 +575643,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/9c6e01b4d06def1502f78c187756e2104072578d/models/operator/token_10045_alanna_crane/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/24695f24754c188e2c8642ac34c98b41b67479c1/models/operator/token_10045_alanna_crane/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10013_robin_mine": {
       "id": "token_10013_robin_mine",
@@ -574137,7 +576574,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/9c6e01b4d06def1502f78c187756e2104072578d/models/operator/token_10013_robin_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/24695f24754c188e2c8642ac34c98b41b67479c1/models/operator/token_10013_robin_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10016_rfrost_mine": {
       "id": "token_10016_rfrost_mine",
@@ -575068,7 +577505,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/9c6e01b4d06def1502f78c187756e2104072578d/models/operator/token_10016_rfrost_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/24695f24754c188e2c8642ac34c98b41b67479c1/models/operator/token_10016_rfrost_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10004_otter_motter": {
       "id": "token_10004_otter_motter",
@@ -576417,7 +578854,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/9c6e01b4d06def1502f78c187756e2104072578d/models/operator/token_10004_otter_motter/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/24695f24754c188e2c8642ac34c98b41b67479c1/models/operator/token_10004_otter_motter/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     }
   },
   "enemies": {
@@ -576468,7 +578905,7 @@
   },
   "skillEffects": {
     "repository": "arkpedia/arkpedia-sd-assets",
-    "commit": "9c6e01b4d06def1502f78c187756e2104072578d",
+    "commit": "24695f24754c188e2c8642ac34c98b41b67479c1",
     "pack": {
       "path": "effects/charge-cost/26-09-23-17-49-43_b9cc4a/effect.json",
       "bytes": 15311,

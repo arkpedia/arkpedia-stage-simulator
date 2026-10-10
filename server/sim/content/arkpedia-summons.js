@@ -9,6 +9,7 @@ import { installSilenceDrone } from './arkpedia-five-star-medic-fourth.js';
 import { createPhantomClone } from './arkpedia-phantom.js';
 import { createKaltsitMon3tr } from './arkpedia-kaltsit.js';
 import { createSceneBuggyCam } from './arkpedia-scene.js';
+import { createClockworkFowlbeast } from './arkpedia-sand-reckoner.js';
 import { createSlumberfoot } from './arkpedia-blacknight.js';
 import { createWindflitBattery } from './arkpedia-windflit.js';
 import { createCatherineDevice } from './arkpedia-catherine.js';
@@ -57,7 +58,8 @@ export function summonPlacementError(battle, key, row, col) {
   const tile = battle.grid.tile(row, col);
   if (tile.build !== 'ALL' && tile.build !== state.record.position
     && !(state.record.position === 'ALL' && ['MELEE', 'RANGED'].includes(tile.build)))
-    return state.record.position === 'ALL' ? 'Choose a deployable tile.' : 'Choose a melee tile.';
+    return state.record.position === 'ALL' ? 'Choose a deployable tile.'
+      : state.record.position === 'RANGED' ? 'Choose a high-ground tile.' : 'Choose a melee tile.';
   if (battle.allyUnits.some(unit => live(unit) && unit.tileR === row && unit.tileC === col))
     return 'Tile is occupied.';
   if (state.config.excludeWalkingEnemy && battle.enemies.some(enemy => live(enemy)
@@ -77,6 +79,7 @@ export function deployRegularSummon(battle, key, row, col, dir = 'RIGHT') {
     : state.ownerId === 'char_400_weedy' ? createWeedyCannon(battle, state, row, col, dir)
     : state.ownerId === 'char_003_kalts' ? createKaltsitMon3tr(battle, state, row, col, dir)
     : state.ownerId === 'char_336_folivo' ? createSceneBuggyCam(battle, state, row, col, dir)
+    : state.ownerId === 'char_4140_lasher' ? createClockworkFowlbeast(battle, state, row, col, dir)
     : state.ownerId === 'char_476_blkngt' ? createSlumberfoot(battle, state, row, col)
     : state.ownerId === 'char_433_windft' ? createWindflitBattery(battle, state, row, col, dir)
     : state.ownerId === 'char_4162_cathy' ? createCatherineDevice(battle, state, row, col, dir)

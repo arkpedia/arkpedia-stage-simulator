@@ -1,6 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Only explicitly reviewed regular-stage tokens may enter the deployment deck.
 export const REGULAR_SUMMONS = Object.freeze({
+  char_4140_lasher: Object.freeze({ tokenId: 'token_10036_lasher_mcbird',
+    deploymentSlotCost: 1, chooseFacing: true, healFree: true,
+    refundRatio: .5, attackClip: 'Attack', sourceStockLimit: true, readyCardPlusStack: true }),
   char_1034_jesca2: Object.freeze({ tokenId: 'token_10032_jesca2_jckshd',
     deploymentSlotCost: 0, chooseFacing: false, fixedRotation: true, healFree: true,
     refundRatio: .5, noAttack: true, rechargeOnFinish: true, adjacentToHost: true }),
@@ -240,6 +243,11 @@ export function summonRecordFor(ownerId, build, tokens) {
   }
   if (config.sourceStockLimit && (!Number.isSafeInteger(stats.maxDeckStackCnt) || stats.maxDeckStackCnt < 1))
     throw Error('Unsupported summon source stock limit');
+  if (config.readyCardPlusStack) {
+    if (ownerId !== 'char_4140_lasher' || stats.maxDeckStackCnt !== 4 || stats.maxDeployCount !== 5)
+      throw Error('Unreviewed Clockwork Fowlbeast stored capacity');
+    stats.maxDeckStackCnt++;
+  }
   if (!Number.isSafeInteger(stats.maxDeployCount) || stats.maxDeployCount < 1 || !phase.rangeGrid?.length)
     throw Error('Unsupported summon source limits or range');
   return { id: source.id, name: source.name, profession: source.profession,
