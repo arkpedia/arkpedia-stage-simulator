@@ -17,13 +17,14 @@ const nodes=value=>{
 };
 const type=(v,kind)=>nodes(v).filter(n=>n.$type.includes('+'+kind+','));
 
-test('Reed full source foundation stays held without changing playable coverage or native fidelity claims',()=>{
-  assert.deepEqual(e.enabledOperators,[]);assert.deepEqual(e.heldOperators,[ID]);
-  assert.equal(REGULAR_OPERATORS[ID],undefined);assert.equal(data.operators[ID],undefined);
+test('Reed full three-skill adapter retains all original source graphs and explicit native fidelity limits',()=>{
+  assert.deepEqual(e.enabledOperators,[ID]);assert.deepEqual(e.heldOperators,[]);
+  assert.equal(REGULAR_OPERATORS[ID].mechanic,'reed-alter');assert.equal(data.operators[ID].skills.length,3);
   assert.equal(rows.length,97);assert.equal(e.source.bundles.length,5);
   assert.equal(Object.keys(e.templates).length,16);assert.equal(Object.keys(e.projectiles).length,4);
   assert.deepEqual(e.nativeTemplateGaps,[]);assert.deepEqual(Object.keys(e.originalTemplates),Object.keys(e.templates));
-  assert.equal(e.recoveredFacts.length,8);assert.equal(e.holdReasons.length,3);
+  assert.equal(e.recoveredFacts.length,8);assert.equal(e.runtimeContracts.length,8);assert.equal(e.fidelityLimits.length,3);
+  assert.equal(e.holdReasons,undefined);
   for(const key of ['frameParity','moduleSupport','nativeParticleSupport'])assert.equal(e[key],false);
 });
 test('all thirty ranks retain generic S1 identity, manual recharge and separate selected S2/S3 coefficients',()=>{

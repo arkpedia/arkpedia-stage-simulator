@@ -278,6 +278,8 @@ export function dealDamage(battle, source, target, dmgIn) {
   // recognise their own (tagged) damage — never re-create such a loss with a fresh loseHp.
   if (ts.flags.hitCount || ts.flags.hitCountArts) {
     const counts = !(ts.flags.hitCountArts && !ts.flags.hitCount && type === 'phys');
+    if (battle._hooks.calculatedDamage) battle.emit('calculatedDamage',
+      { source: hs, target, dmg, credit: source, amount: counts ? 1 : 0 });
     return applyHpLoss(battle, source, target, absorbShields(battle, target, counts ? 1 : 0, type,
       { source: hs, applyWay: dmg.applyWay }), dmg);
   }
@@ -315,6 +317,10 @@ export function dealDamage(battle, source, target, dmgIn) {
   // 限伤: a leader's hit of ≥ BOSS_HIT_LIMIT in a boss / hidden battle is cancelled before it reaches shields / HP — what
   // ran before it (the attack, its SP, `hit` hook effects, separate element 损伤) stays; nothing after it happens
   if (final > 0 && leaderHitCancelled(battle, target, final)) return 0;
+  // Opt-in calculated receipts retain the accepted, fully modified amount,
+  // independently of shields, HP floors and overkill. They cannot modify it.
+  if (battle._hooks.calculatedDamage) battle.emit('calculatedDamage',
+    { source: hs, target, dmg, credit: source, amount: final });
   final = absorbShields(battle, target, final, type, { source: hs, applyWay: dmg.applyWay });
   // Native damage-only HP floor (Blaze): limit the actual post-shield loss.
   // This never raises already-low HP. Scripted kill and loseHp call their own
@@ -586,6 +592,9 @@ export function heal(battle, source, target, amount, opts = {}) {
     // a handler may have killed / retreated the target: healing a dead unit would leave it "dead with hp > 0"
     if (!target.alive || !target.deployed) return 0;
   }
+  if (battle._hooks.calculatedHeal && !opts.skipModifierEvent)
+    battle.emit('calculatedHeal', { source, target, amount: amt, opts });
+  if (!target.alive || !target.deployed) return 0;
   const max = target.s.maxHp;
   const actual = Math.max(0, Math.min(amt, max - target.hp));
   target.hp = Math.min(max, target.hp + actual);

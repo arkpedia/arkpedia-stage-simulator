@@ -620,6 +620,7 @@ export class StageRenderer {
       ...(battle?.projectiles.list ?? []).filter(p => p.data?.arkpediaTrackedVisual),
       ...(battle?.regularVisualProjectiles ?? []),
       ...(battle?.civilightParticles ?? []),
+      ...(battle?.reedFireballs ?? []),
     ]) {
       const point = this.projection.project(projectile.x, projectile.y,
         this.heightAt(Math.round(projectile.y), Math.round(projectile.x)) + 0.5);

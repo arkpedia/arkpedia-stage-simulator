@@ -140,8 +140,11 @@ assert hot['versionId'] == E['source']['nativeClient'] == '26-09-23-17-49-43_b9c
 for record in E['source']['bundles']:
     native = next(row for row in hot['abInfos'] if row['name'] == record['path'])
     assert (record['md5'], record['size']) == (native['md5'], native['abSize'])
-assert len(E['recoveredFacts']) == 8 and len(E['holdReasons']) == 3
-assert E['enabledOperators'] == [] and E['heldOperators'] == ['char_1020_reed2']
+assert len(E['recoveredFacts']) == 8
+assert E['enabledOperators'] == ['char_1020_reed2'] and E['heldOperators'] == []
+assert E['reviewStatus'] == 'Reviewed three-skill regular-stage adapter with explicit native-dispatch limits'
+assert len(E['runtimeContracts']) == 8 and len(E['fidelityLimits']) == 3
+assert 'holdReasons' not in E
 assert E['frameParity'] is False and E['moduleSupport'] is False and E['nativeParticleSupport'] is False
 assert set(E['tables']['skills']) == {'skcom_quickattack[3]', 'skchr_reed2_2', 'skchr_reed2_3'}
 assert set(E['skills']) == {s['levels'][0]['prefabId'] for s in E['tables']['skills'].values()}
@@ -170,4 +173,4 @@ for row in E['projectiles']['projectile_chr_reed2_fire']:
 # payloads. Hash-valid art is insufficient if the event summaries were edited.
 subprocess.check_call(['node', 'tools/arkpedia/inspect-reed-alter.mjs'], cwd=ROOT, stdout=subprocess.DEVNULL)
 assert json.loads((C/'reed-alter-source/models.json').read_text()) == E['models']
-print(f'Verified {count} native components, {len(bundles)} bundles, {len(E["templates"])} templates, 30 ranks, {len(E["projectiles"])} projectile trees and two original skeleton chains; Reed the Flame Shadow remains held')
+print(f'Verified {count} native components, {len(bundles)} bundles, {len(E["templates"])} templates, 30 ranks, {len(E["projectiles"])} projectile trees and two original skeleton chains; Reed the Flame Shadow adapter enabled with explicit fidelity limits')

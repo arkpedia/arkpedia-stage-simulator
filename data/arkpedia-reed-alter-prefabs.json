@@ -52,11 +52,11 @@
   "frameParity": false,
   "moduleSupport": false,
   "nativeParticleSupport": false,
-  "enabledOperators": [],
-  "heldOperators": [
+  "enabledOperators": [
     "char_1020_reed2"
   ],
-  "reviewStatus": "Complete source foundation: three-skill regular-stage adapter pending",
+  "heldOperators": [],
+  "reviewStatus": "Reviewed three-skill regular-stage adapter with explicit native-dispatch limits",
   "characters": {
     "char_1020_reed2": [
       {
@@ -9470,9 +9470,19 @@
     "S3 copies selected promotion/potential talent@atk and talent@damage_scale into its skill blackboard before applying mode1. Its selected probability1, ATK increase, DOT coefficient, explosion coefficient and radius remain separate. Native holder compares aoe_scale before replacing a shared diffuse buff; DOT is independent per producer with first trigger0.2s followed by1s intervals.",
     "S3 owner-killed diffusion checks a live source, emits its visual projectile, then immediately creates holder/DOT and a separate delayed0.1s Arts splash buff on eligible ground/air targets. Native radius default1.1 and selected range_radius1.7 remain separate. The splash buff lifetime0.15 and first trigger0.1 are not an instant explosion. Source-specific finish actions remove DOT/diffuse; owner control cleanup separately removes ordinary Cinder."
   ],
-  "holdReasons": [
-    "The complete three-skill adapter must implement calculated-damage healing and self-heal without recursion, ordinary versus S3 Cinder ownership/priority, per-host orbital fireball collisions and source-bound delayed diffusion cleanup before enabling the operator.",
-    "Compiled eventless back-facing S2 dispatch, selector postFilter47/professionMask639, raw collision FP conversion, native damage/healing callback order and same-frame chain priorities remain uncertified. They require explicit reviewed gameplay mappings rather than invented source events.",
-    "Native frame parity, modules and original Unity particles/audio remain separate work. Full source evidence and prepared art do not establish playable coverage."
+  "runtimeContracts": [
+    "Ordinary and S3 attacks use the original facing events with maximum animation scale1, speed10 homing projectiles and one/two selected ground/air victims. S1 uses selected ATK/ASPD and all thirty rank records remain original.",
+    "Accepted calculatedDamage receipts run after local mitigation/final modifiers and before shields, HP floors and overkill. CalculatedHeal receipts run after local healing modifiers and before HP clamping. Trait heals one lowest-HP legal ally or the explicit fireball host; E2 reflection uses calculated healing and excludes self-target receipts.",
+    "One shared ordinary Cinder retains the strongest damage_scale producer and extends its selected duration. Its ATK modifier is separate from strongest-only Arts Fragility, so other fragility does not suppress its ATK reduction. Equal/weaker producers retain incumbent ownership.",
+    "S2 selects ground-first operators then HP ratio/deployment order, excludes summons and retains healing-immune hosts for damage. All facings visibly use the verified front Skill_2 cast event; original eventless Back art remains unchanged. Pre-release controls cancel emission.",
+    "Three particles per S2 host orbit counterclockwise at radius0.5, speed150 degrees/s and collider radius0.600000024. Swept two-degree chords use deterministic spawn-order collision ties and selected1.5s cooldown. Camouflage is bypassed; invisible/sleeping/target-free and airborne enemies remain filtered. Each emitted orbit retains selected lifetime across skill detachment and stops for source/host withdrawal.",
+    "S3 copies selected talent ATK/Arts Fragility into a private runtime blackboard, adds selected owner ATK and retains original Begin/Loop/Attack/End art. Existing ordinary Cinder is not retroactively upgraded. Each producer owns its DOT clock: first0.2s then every1s with live owner ATK and no refresh reset.",
+    "A shared enhanced Cinder holder compares selected aoe_scale; weaker/equal producers keep incumbent diffusion ownership while their DOT remains independent. Death diffusion selects radius1.7 ground/air victims, attaches holder/DOT immediately and emits separate0.1s delayed Arts blasts. Already issued blasts can survive skill end; new enhanced Cinder/chains require a live active producer.",
+    "Skill end removes only source-owned enhanced holder/DOT; source withdrawal removes its ordinary Cinder and orbits. Leaks do not diffuse. Battle-end cleanup preserves unrelated producers and statuses. Full combat and browser regression remain separate validation."
+  ],
+  "fidelityLimits": [
+    "Compiled eventless back-facing S2 dispatch, selector postFilter47/professionMask639, raw collision FP conversion and native damage/healing callback priority remain uncertified; the reviewed gameplay mappings above are simulator contracts.",
+    "Orbital sweep chords, collision tie order, shared Cinder priority/expiry interactions and same-frame delayed diffusion use deterministic local dispatch; original Unity compiled scheduling and particle trajectories are not claimed.",
+    "Native frame parity, modules and original Unity particles/audio remain separate work. Original operator art and simple authoritative projectile markers do not establish native VFX parity."
   ]
 }
