@@ -52,11 +52,11 @@
   "frameParity": false,
   "moduleSupport": false,
   "nativeParticleSupport": false,
-  "enabledOperators": [],
-  "heldOperators": [
+  "enabledOperators": [
     "char_4126_fuze"
   ],
-  "reviewStatus": "Source foundation only: Cluster Charge destination and stop dispatch remain unresolved",
+  "heldOperators": [],
+  "reviewStatus": "Complete ordinary kit with explicit local execution contracts",
   "characters": {
     "char_4126_fuze": [
       {
@@ -4788,9 +4788,30 @@
     "Native grenade speed8, delayAfterReached1.8, radius1.2, onlyCheckHitWhenStop1, ground-only and ignoreCamouflage1 are preserved. hitNumType2/maxHitNum1/stopAfterMaxHit1 do not independently settle AoE collision versus stopping dispatch.",
     "Both original facing skeletons match native chararts pointers; original Skill_2 and Front Skill_Down_2 have OnAttack1.2/full duration3.333. S1 Begin.233/Loop1.2/OnAttack.2; original End is Front1.367/Back1.267."
   ],
-  "holdReasons": [
+  "holdReasons": [],
+  "historicalReviewStatus": "Source foundation only: Cluster Charge destination and stop dispatch remain unresolved",
+  "historicalHoldReasons": [
     "Cluster Charge uses a specialized trigger with no serialized tile geometry and a specialized MultiProjectile ability with offset.25/beginOffset0. Its compiled destination axis, offset ordering and allowed passable/high-ground combinations are not recovered. Collapsing five grenades to one center or inventing a dispersion pattern materially changes damage coverage.",
     "The projectile retains delayAfterReached1.8 and collision only at stop. Native reach/stop/lifetime and hitNumType2 dispatch cannot be inferred from those fields alone; a simple five immediate explosions would change timing and possibly victim count.",
     "The complete ordinary kit remains unavailable until both skills can be implemented. S1 alone, a generic AoE S2, or unrelated attack-projectile substitutions do not establish complete operator support."
+  ],
+  "runtimeMapping": {
+    "char_4126_fuze": "fuze"
+  },
+  "geometryEvidence": {
+    "kind": "authored-gameplay-observations",
+    "url": "https://prts.wiki/index.php?title=%E5%AF%BC%E7%81%AB%E7%B4%A2&oldid=434903",
+    "revision": 434903,
+    "snapshot": "rendered-html",
+    "sha256": "b813c56aa473d6bb1456ef9570742bba162b57affd89b4259de2805809c0011f",
+    "retrievedAt": "2026-10-10T19:52:53.545141+00:00"
+  },
+  "runtimeContracts": [
+    "All twenty no-module selected source ranks and owner promotion, level, trust and potential feed public builds. Ordinary/S1 attacks cap recipients by current block count with a one-victim floor; ordinary ignores range extensions, S1 uses selected forward extension.",
+    "Whole original facing-specific Start/Begin/Loop/End clips and hit events gate ordinary/S1 output with animation acceleration capped at one. Attack cooldown preserves selected ASPD cadence and may restart the original clip before its end. Accepted multi-target attacks spend one of 100 S1 rounds; interruption discards unborn output, manual discard and exhaustion restore ordinary stats/range and hold SP through End. Compiled native FSM ordering is unverified.",
+    "Authored gameplay observations corroborate the adjacent high-ground/blocking surface, central passable tile two steps forward, one/two/three-cell contiguous landing width and five right-to-left emissions at width times .25 spacing. Exact edge endpoints, gadget origin and local dynamic-obstacle classifier are explicit mappings, not recovered compiled tile dispatch.",
+    "S2 consumes one of three uses, begins emission at original OnAttack1.2, then launches four further fixed-point grenades .5 seconds apart. Each moves at source speed8 and waits source delayAfterReached1.8 before stop-only radius1.2 ground damage. Total projectile life10 caps the landing delay, with forced reach at the fixed-step expiry boundary. Area recipients are sampled at stop, ignoring camouflage; each output uses its selected coefficient and then-current old-source ATK with normal per-recipient mitigation. Native stop/collision/lifetime callback priority and exact destination boundaries remain unverified.",
+    "Control or owner departure cancels unborn S2 emissions; already born unmanaged grenades persist without affecting a fresh owner or replenishing uses. Battle end clears flying and planted output and controller hooks. Ballistic Shield selects promotion/potential probability and fully prevents Physical receipts from locally classified ranged sources, including while silenced; it is not generic dodge or flat mitigation.",
+    "Both original owner skeleton chains are byte-verified. Modules, original particle/audio assets, exact Unity callbacks and frame parity remain unsupported; generic projectile/explosion visuals do not count as original VFX."
   ]
 }

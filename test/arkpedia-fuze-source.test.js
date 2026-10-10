@@ -12,11 +12,13 @@ const component = id => rows.find(c => c.pathId === id).data;
 const bb = values => Object.fromEntries(values.map(v => [v.key, v.value]));
 const near = (a, b) => assert.ok(Math.abs(a - b) < 1e-6, `${a} != ${b}`);
 
-test('Fuze complete source audit retains both skills without enabling an unresolved kit', () => {
-  assert.deepEqual(e.enabledOperators, []);
-  assert.deepEqual(e.heldOperators, [ID]);
-  assert.equal(REGULAR_OPERATORS[ID], undefined);
-  assert.equal(data.operators[ID], undefined);
+test('Fuze complete source audit retains both ordinary skills with separate reviewed runtime contracts', () => {
+  assert.deepEqual(e.enabledOperators, [ID]);
+  assert.deepEqual(e.heldOperators, []);
+  assert.equal(e.runtimeMapping[ID], "fuze");
+  assert.equal(e.runtimeContracts.length, 6);
+  assert.deepEqual(REGULAR_OPERATORS[ID].skillIds, ["skchr_fuze_1", "skchr_fuze_2"]);
+  assert.equal(data.operators[ID].skills.length, 2);
   assert.equal(rows.length, 56);
   assert.equal(e.source.bundles.length, 5);
   assert.deepEqual(e.nativeTemplateGaps, []);
@@ -26,8 +28,8 @@ test('Fuze complete source audit retains both skills without enabling an unresol
   assert.equal(e.frameParity, false);
   assert.equal(e.moduleSupport, false);
   assert.equal(e.nativeParticleSupport, false);
-  assert.ok(e.holdReasons.some(r => /five grenades to one center/.test(r)));
-  assert.ok(e.holdReasons.some(r => /only at stop/.test(r)));
+  assert.ok(e.historicalHoldReasons.some(r => /five grenades to one center/.test(r)));
+  assert.ok(e.historicalHoldReasons.some(r => /only at stop/.test(r)));
 });
 
 test('all 20 source ranks preserve manual ammo and bounded Cluster Charge uses', () => {
@@ -121,7 +123,7 @@ test('S2 requires its opaque native manual trigger and has three uses per deploy
   const trigger = component(skill._trigger.m_PathID);
   assert.equal(trigger.m_Script.m_PathID, '7692650582132910872');
   assert.deepEqual(Object.keys(trigger).filter(k => !k.startsWith('m_')), []);
-  assert.ok(e.holdReasons.some(r => /no serialized tile geometry/.test(r)));
+  assert.ok(e.historicalHoldReasons.some(r => /no serialized tile geometry/.test(r)));
 });
 
 test('five-emission fields and offsets remain separate from the single animation event', () => {

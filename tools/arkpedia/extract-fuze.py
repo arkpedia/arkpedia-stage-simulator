@@ -4,8 +4,8 @@
 
 Run with .cache/map-env/bin/python tools/arkpedia/extract-fuze.py.
 Requires the pinned Global tables, native client bundles and model checkout
-already used by this project's source audits. This does not enable the kit.
-Preserves all source ranks, ammunition and Cluster Charge dependencies without enabling an unverified kit.
+already used by this project's source audits. Runtime review metadata is kept separate from native extraction.
+Preserves all source ranks, ammunition and Cluster Charge dependencies with explicit local execution limits.
 """
 from collections import defaultdict
 import hashlib
@@ -219,6 +219,27 @@ evidence = {'schemaVersion': 1, 'source': {'repository': 'Kengxxiao/ArknightsGam
         'The complete ordinary kit remains unavailable until both skills can be implemented. S1 alone, a generic AoE S2, or unrelated attack-projectile substitutions do not establish complete operator support.'
     ]}
 
+# Keep the immutable extraction separate from reviewed local execution.
+notes = read(ROOT / 'data/arkpedia-fuze-gameplay-notes.json')
+assert notes['source']['revision'] == 434903
+assert digest((C / 'fuze-source/prts-page.html').read_bytes()) == notes['source']['sha256']
+evidence['historicalReviewStatus'] = evidence['reviewStatus']
+evidence['historicalHoldReasons'] = evidence['holdReasons']
+evidence['enabledOperators'] = [ID]
+evidence['heldOperators'] = []
+evidence['runtimeMapping'] = {ID: 'fuze'}
+evidence['reviewStatus'] = 'Complete ordinary kit with explicit local execution contracts'
+evidence['holdReasons'] = []
+evidence['geometryEvidence'] = notes['source']
+evidence['runtimeContracts'] = [
+    'All twenty no-module selected source ranks and owner promotion, level, trust and potential feed public builds. Ordinary/S1 attacks cap recipients by current block count with a one-victim floor; ordinary ignores range extensions, S1 uses selected forward extension.',
+    'Whole original facing-specific Start/Begin/Loop/End clips and hit events gate ordinary/S1 output with animation acceleration capped at one. Attack cooldown preserves selected ASPD cadence and may restart the original clip before its end. Accepted multi-target attacks spend one of 100 S1 rounds; interruption discards unborn output, manual discard and exhaustion restore ordinary stats/range and hold SP through End. Compiled native FSM ordering is unverified.',
+    'Authored gameplay observations corroborate the adjacent high-ground/blocking surface, central passable tile two steps forward, one/two/three-cell contiguous landing width and five right-to-left emissions at width times .25 spacing. Exact edge endpoints, gadget origin and local dynamic-obstacle classifier are explicit mappings, not recovered compiled tile dispatch.',
+    'S2 consumes one of three uses, begins emission at original OnAttack1.2, then launches four further fixed-point grenades .5 seconds apart. Each moves at source speed8 and waits source delayAfterReached1.8 before stop-only radius1.2 ground damage. Total projectile life10 caps the landing delay, with forced reach at the fixed-step expiry boundary. Area recipients are sampled at stop, ignoring camouflage; each output uses its selected coefficient and then-current old-source ATK with normal per-recipient mitigation. Native stop/collision/lifetime callback priority and exact destination boundaries remain unverified.',
+    'Control or owner departure cancels unborn S2 emissions; already born unmanaged grenades persist without affecting a fresh owner or replenishing uses. Battle end clears flying and planted output and controller hooks. Ballistic Shield selects promotion/potential probability and fully prevents Physical receipts from locally classified ranged sources, including while silenced; it is not generic dodge or flat mitigation.',
+    'Both original owner skeleton chains are byte-verified. Modules, original particle/audio assets, exact Unity callbacks and frame parity remain unsupported; generic projectile/explosion visuals do not count as original VFX.',
+]
+
 (ROOT / 'data/arkpedia-fuze-prefabs.json').write_text(json.dumps(evidence, indent=2) + '\n')
-print('Extracted held Fuze kit: 20 source ranks,', len(templates), 'reachable templates,',
+print('Extracted reviewed Fuze kit: 20 source ranks,', len(templates), 'reachable templates,',
     len(db_keys), 'database entries,', len(projectiles), 'projectiles and', len(source_bundles), 'verified bundles')

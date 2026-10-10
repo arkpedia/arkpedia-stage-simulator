@@ -139,7 +139,15 @@ assert hot['versionId'] == E['source']['nativeClient'] == '26-09-23-17-49-43_b9c
 for record in E['source']['bundles']:
     native = next(row for row in hot['abInfos'] if row['name'] == record['path'])
     assert (record['md5'], record['size']) == (native['md5'], native['abSize'])
-assert E['enabledOperators'] == [] and E['heldOperators'] == ['char_4126_fuze']
+assert E['enabledOperators'] == ['char_4126_fuze'] and E['heldOperators'] == []
+assert E['runtimeMapping'] == {'char_4126_fuze': 'fuze'}
+assert E['reviewStatus'] == 'Complete ordinary kit with explicit local execution contracts'
+assert len(E['runtimeContracts']) == 6 and len(E['historicalHoldReasons']) == 3
+assert E['holdReasons'] == []
+notes = json.loads((ROOT / 'data/arkpedia-fuze-gameplay-notes.json').read_text())
+assert E['geometryEvidence'] == notes['source']
+assert notes['source']['revision'] == 434903
+assert hashlib.sha256((C / 'fuze-source/prts-page.html').read_bytes()).hexdigest() == notes['source']['sha256']
 assert E['frameParity'] is False and E['moduleSupport'] is False and E['nativeParticleSupport'] is False
 assert set(E['tables']['skills']) == {'skchr_fuze_1', 'skchr_fuze_2'}
 assert all(len(s['levels']) == 10 for s in E['tables']['skills'].values())
@@ -152,4 +160,4 @@ assert proof['excerpt'] == ''.join(raw.decode().splitlines(keepends=True)[2766:2
 # payloads. Hash-valid art is insufficient if the event summaries were edited.
 subprocess.check_call(['node', 'tools/arkpedia/inspect-fuze.mjs'], cwd=ROOT, stdout=subprocess.DEVNULL)
 assert json.loads((C/'fuze-source/models.json').read_text()) == E['models']
-print(f'Verified {count} native components, {len(bundles)} bundles, {len(E["templates"])} templates, 20 ranks, {len(E["projectiles"])} projectile trees and two original skeleton chains; Fuze remains held')
+print(f'Verified {count} native components, {len(bundles)} bundles, {len(E["templates"])} templates, 20 ranks, {len(E["projectiles"])} projectile trees and two original skeleton chains; ordinary kit uses explicit local contracts')

@@ -19,9 +19,9 @@ function cast(u,n=1){u.skill.setSpTotal(u.skill.spCost*n);assert.equal(u.skill.a
 function hit(b,u,e,s=1){const hp=e.hp;u.atkCd=1000;b.forceAttack(u,[e]);advance(b,s);u.atkCd=1000;return hp-e.hp;}
 const comps=rs=>rs.flatMap(r=>r.components);
 
-test('sixth guards keep exact original source hashes, ten skills and Fuze exclusion',()=>{
+test('sixth guards keep exact original source hashes, ten skills and separate Fuze runtime',()=>{
  assert.equal(evidence.sourceVersion,'26-09-23-17-49-43_b9cc4a');assert.equal(Object.keys(evidence.skills).length,10);
- assert.equal(FIVE_STAR_GUARD_SIXTH_OPERATORS.char_4126_fuze,undefined);assert.equal(data.operators.char_4126_fuze,undefined);
+ assert.equal(FIVE_STAR_GUARD_SIXTH_OPERATORS.char_4126_fuze,undefined);assert.equal(data.operators.char_4126_fuze.skills.length,2);
  for(const[id,cfg]of Object.entries(FIVE_STAR_GUARD_SIXTH_OPERATORS)){assert.equal(data.operators[id].skills.length,2);
   assert.match(evidence.sourceBundles.find(x=>x.path===`charpack/${id}.ab`).sha256,/^[a-f0-9]{64}$/);
   for(const face of['Front','Back'])assert.match(evidence.originalModels[id][face].sha256,/^[a-f0-9]{64}$/);

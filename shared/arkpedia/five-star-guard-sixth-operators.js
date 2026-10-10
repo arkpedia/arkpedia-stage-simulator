@@ -12,5 +12,4 @@ export const FIVE_STAR_GUARD_SIXTH_OPERATORS = Object.freeze({
     talentKeys: ['def', 'respawn_time', 'ability_range_forward_extend'],
     passiveTalentKeys: ['def'], mechanic: 'tachanka' },
 });
-// Fuze's native five-pellet dispersion has source offset=.25/beginOffset=0,
-// but its position dispatcher is unrecovered. Both skills stay unsupported.
+// Fuze is reviewed separately in fuze-operators.js with both ordinary skills.
