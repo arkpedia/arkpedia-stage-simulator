@@ -194,7 +194,7 @@ test('all S3 ranks use selected duration/ATK/retrieval scale/radius/target cap',
     assert.equal(hits.length,u.skill.bb.max_target);
     assert.equal(new Set(hits.map(x=>x.target)).size,hits.length);
     for(const hit of hits)near(hit.dmg.amount,u.base.atk*(1+u.skill.bb.atk)*u.skill.bb.atk_scale
-      +90*(1+u.skill.bb.atk)*u.skill.bb.atk_scale*hits.indexOf(hit));
+      +90*u.skill.bb.atk_scale*hits.indexOf(hit));
     assert.ok(es.at(-1).hp===100000);near(u.skill.duration,evidence.tables.skills.skchr_ines_3.levels[rank-1].duration);
     advance(b,u.skill.duration);assert.equal(u.skill.active,false);assert.equal(u.skill.exhausted,true);
     near(u.s.atk,u.base.atk+90*hits.length);

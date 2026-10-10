@@ -35,7 +35,7 @@ function steal(b, u, e, talent) {
   if (!(amount > 0)) return;
   const total = (u.mem.entelechiaVictims.get(e) ?? 0) + amount;
   u.mem.entelechiaVictims.set(e, total); u.mem.entelechiaStolen += amount;
-  maxHpBuff(b, e, { key: stealKey(u), source: u, mods: { hpFinalFlat: -total } });
+  maxHpBuff(b, e, { key: stealKey(u), source: u, tags: ['steal-victim'], mods: { hpFinalFlat: -total } });
   maxHpBuff(b, u, { key: 'entelechia:gain', source: u, mods: { hpFinalFlat: u.mem.entelechiaStolen } });
 }
 function installHealing(b, u, def) {

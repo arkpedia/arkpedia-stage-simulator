@@ -25,8 +25,8 @@ function steal(b, u, e) {
   // Native low-DEF/cancellation dispatch remains an explicit fidelity limit.
   const total = (u.mem.surferVictims.get(e) ?? 0) + amount;
   u.mem.surferVictims.set(e, total); u.mem.surferStolen += amount;
-  b.addBuff(e, { key: victimKey(u), source: u, mods: { defFlat: -total } });
-  b.addBuff(u, { key: 'surfer:def-owner', source: u, mods: { defFlat: u.mem.surferStolen } });
+  b.addBuff(e, { key: victimKey(u), source: u, tags: ['steal-victim'], mods: { defFinalFlat: -total } });
+  b.addBuff(u, { key: 'surfer:def-owner', source: u, mods: { defFinalFlat: u.mem.surferStolen } });
 }
 
 function form(b, u, begin, idle) {

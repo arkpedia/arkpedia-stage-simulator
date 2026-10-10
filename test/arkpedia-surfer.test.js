@@ -122,7 +122,7 @@ test('S2 steals before the same physical hit, sharing one owner cap across every
 test('bounded flat-transfer rule preserves external buffs and shared DEF floor',()=>{
   const {b,deploy}=make(),{u}=deploy(),e=enemy(b,{def:20});
   b.addBuff(e,{key:'test:external',mods:{defFlat:10}});const before=u.s.def;cast(b,u);shot(b,u,e);advance(b,.7);
-  near(u.s.def,before+55);assert.equal(e.findBuff(key(u)).mods.defFlat,-55);assert.ok(e.s.def>=0);
+  near(u.s.def,before+55);assert.equal(e.findBuff(key(u)).mods.defFinalFlat,-55);assert.ok(e.s.def>=0);
   u.skill.end('duration');near(u.s.def,before);near(e.s.def,30);assert.ok(e.findBuff('test:external'));
 });
 test('target invalidation removes only victim reduction and does not replenish Surfer cap or gain',()=>{

@@ -54,7 +54,7 @@ function sentry(b, u) {
 function syncAtk(b, u) {
   const sum = [...u.mem.inesAtk.values()].reduce((n, v) => n + v, 0);
   if (!sum) b.removeBuff(u, 'ines:atk-owner');
-  else b.addBuff(u, { key: 'ines:atk-owner', source: u, mods: { atkFlat: sum } });
+  else b.addBuff(u, { key: 'ines:atk-owner', source: u, mods: { atkFinalFlat: sum } });
 }
 function clearSpeed(b, u) {
   for (const e of u.mem.inesSpeed.keys()) b.removeBuff(e, key(u, 'speed'));
@@ -79,7 +79,7 @@ function firstHit(b, u, e) {
   const amount = Math.min(t.steal_atk, Math.max(0, t.steal_atk_max - total));
   if (amount > 0) {
     u.mem.inesAtk.set(e, amount);
-    b.addBuff(e, { key: key(u, 'atk'), source: u, mods: { atkFlat: -amount } });
+    b.addBuff(e, { key: key(u, 'atk'), source: u, tags: ['steal-victim'], mods: { atkFinalFlat: -amount } });
     syncAtk(b, u);
   }
 }
@@ -90,7 +90,7 @@ function speedHit(b, u, e) {
   if (!(amount > 0)) return;
   const targetTotal = (u.mem.inesSpeed.get(e) ?? 0) + amount;
   u.mem.inesSpeed.set(e, targetTotal); u.mem.inesSpeedTotal += amount;
-  b.addBuff(e, { key: key(u, 'speed'), source: u, mods: { aspd: -targetTotal } });
+  b.addBuff(e, { key: key(u, 'speed'), source: u, tags: ['steal-victim'], mods: { aspd: -targetTotal } });
   b.addBuff(u, { key: 'ines:speed-owner', source: u, mods: { aspd: u.mem.inesSpeedTotal } });
 }
 function bleed(b, u, e) {

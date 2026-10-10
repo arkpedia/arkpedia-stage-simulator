@@ -72,7 +72,7 @@ function stealSpeed(b, u, target) {
   if (!(amount > 0)) return;
   u.mem.vivianaStolen += amount; u.mem.vivianaStealTargets.add(target);
   const key = `viviana:steal:${u.id}`, prior = -(target.findBuff(key)?.mods.aspd ?? 0);
-  b.addBuff(target, { key, source: u, mods: { aspd: -(prior + amount) } });
+  b.addBuff(target, { key, source: u, tags: ['steal-victim'], mods: { aspd: -(prior + amount) } });
   ownedMods(b, u, 'viviana:steal-owner', { aspd: u.mem.vivianaStolen });
 }
 function vivianaTargets(b, u, p) {

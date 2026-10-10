@@ -205,6 +205,10 @@ export function aggregateMods(buffs) {
   // instances for expiry fallback; unrelated final additions still sum.
   // Legacy hand-built instances without priority retain their numeric ordering.
   const inspire = Object.create(null);
+  // Steal's victim penalties choose the strongest reduction per attribute.
+  // Owned gains are separate, untagged final additions. Keep weaker sources
+  // attached so they resume when the strongest source leaves.
+  const stolen = Object.create(null);
   let pozemkaDefMul = 1;
   for (const b of buffs) {
     const tpl = STATUS[b.status];
@@ -231,6 +235,9 @@ export function aggregateMods(buffs) {
           const rank = Number.isFinite(b.data?.inspirePriority?.[k]) ? b.data.inspirePriority[k] : v * st;
           if (!inspire[k] || rank > inspire[k].rank) inspire[k] = { rank, value: v * st };
         }
+        else if (b.tags?.includes('steal-victim') &&
+          ['atkFinalFlat', 'defFinalFlat', 'hpFinalFlat', 'aspd'].includes(k) && v < 0)
+          stolen[k] = Math.min(stolen[k] ?? 0, v * st);
         else if (k === 'defMul' && b.tags?.includes('pozemka:def-priority')) pozemkaDefMul = Math.min(pozemkaDefMul, v);
         else if (k === 'damageHpFloorRatio') add[k] = Math.max(add[k] ?? 0, v);
         else if (k === 'moveMul' && b.status === 'sluggish') sluggishMoveMul = Math.min(sluggishMoveMul, v);
@@ -253,6 +260,7 @@ export function aggregateMods(buffs) {
   // source insertion order. Weaker owned channels resume after removal/expiry.
   for (const k of Object.keys(sanctuary)) mul[k] = (mul[k] ?? 1) * sanctuary[k];
   for (const k of Object.keys(inspire)) add[k] = (add[k] ?? 0) + inspire[k].value;
+  for (const k of Object.keys(stolen)) add[k] = (add[k] ?? 0) + stolen[k];
   if (pozemkaDefMul !== 1) mul.defMul = (mul.defMul ?? 1) * pozemkaDefMul;
   for (const k of ['dodgePhys', 'dodgeArts']) {
     const d = dodge[k];

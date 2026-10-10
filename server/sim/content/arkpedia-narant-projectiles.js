@@ -81,11 +81,14 @@ export class NarantuyaProjectiles {
     return live(target) && canTargetEnemy(this.u, target, profile)
       && (!selecting || ignoreCamouflage || !target.s.flags.camou || target.blockedBy);
   }
-  impact(target, scale, attackId, tag, { slow = 0, melee = false } = {}) {
+  impact(target, scale, attackId, tag, { slow = 0, melee = false, deployment = this.u.deploySeq } = {}) {
     if (!this.legal(target)) return false;
     const dmg = makeDamageInfo({ amount: this.u.s.atk * this.u.s.atkScaleMul * scale,
       type: 'phys', applyWay: melee ? 'melee' : 'ranged', isProjectile: !melee,
       canDodge: true, isAttack: true, isSkill: tag !== 'normal', attackId, tags: [`narant:${tag}`] });
+    // A born old blade can still deal damage after withdrawal. It cannot
+    // trigger talent accumulation belonging to a later owner deployment.
+    dmg.narantDeployment = deployment;
     // Database Slow is missable. A calculated receipt exists after hit-rate,
     // dodge and cancellation checks even when shields absorb all HP damage.
     let accepted = false;
@@ -136,7 +139,7 @@ export class NarantuyaProjectiles {
       for (const { target: e, seq, source } of state.pendingTrace.values())
         if (source.body._alwaysHitTraceTargetInTheEnd === 1 && e.deploySeq === seq && this.legal(e))
           this.impact(e, mode ? bb['attack@atk_scale'] : 1, attackId,
-            mode ? `s${mode}` : 'normal', { slow: mode === 2 ? bb['attack@sluggish'] : 0 });
+            mode ? `s${mode}` : 'normal', { slow: mode === 2 ? bb['attack@sluggish'] : 0, deployment: state.seq });
       finish(true);
     }));
     const add = (spec, source) => {
@@ -160,7 +163,7 @@ export class NarantuyaProjectiles {
             .map(e => ({ e, t: narantContactTime(e, previous, { x, y }, returnRadius) }))
             .filter(c => c.t !== null).sort((a, z) => a.t - z.t || a.e.spawnSeq - z.e.spawnSeq);
           for (const { e } of contacts) {
-            hit.add(e); this.impact(e, bb['attack@atk_scale_comeback'], attackId, 's2-return');
+            hit.add(e); this.impact(e, bb['attack@atk_scale_comeback'], attackId, 's2-return', { deployment: state.seq });
           }
         } : null,
         onHit: ({ x, y }) => {
@@ -178,7 +181,7 @@ export class NarantuyaProjectiles {
         if (remaining() <= 1e-9) { finish(true); return; }
         if (this.legal(e)) {
           this.impact(e, mode ? bb['attack@atk_scale'] : 1, attackId,
-            mode ? `s${mode}` : 'normal', { slow: mode === 2 ? bb['attack@sluggish'] : 0 });
+            mode ? `s${mode}` : 'normal', { slow: mode === 2 ? bb['attack@sluggish'] : 0, deployment: state.seq });
           recentlyHit.set(e, this.b.time); everHit.add(e);
         }
         state.pendingTrace.delete(source.name);
