@@ -91,6 +91,7 @@ import { LEMUEN_OPERATORS } from './lemuen-operators.js';
 import { NARANT_OPERATORS } from './narant-operators.js';
 import { ELA_OPERATORS } from './ela-operators.js';
 import { FUZE_OPERATORS } from './fuze-operators.js';
+import { ROSMONTIS_OPERATORS } from './rosmontis-operators.js';
 import { SWIRE_ALTER_OPERATORS } from './swire-alter-operators.js';
 import { BLACKNIGHT_OPERATORS } from './blacknight-operators.js';
 import { CHRISTINE_OPERATORS } from './christine-operators.js';
@@ -281,6 +282,7 @@ export const REGULAR_OPERATORS = Object.freeze({
   ...ELA_OPERATORS,
   ...FUZE_OPERATORS,
   ...SWIRE_ALTER_OPERATORS,
+  ...ROSMONTIS_OPERATORS,
   ...CHRISTINE_OPERATORS,
   ...EXECUTOR_REAPER_OPERATORS,
   ...PHILAE_OPERATORS,

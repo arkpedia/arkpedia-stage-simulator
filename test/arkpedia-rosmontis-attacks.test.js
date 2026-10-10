@@ -50,9 +50,9 @@ function caster(f,{row=4,col=5,profession='CASTER',kind='op',flags={}}={}) {
 }
 const ready=f=>f.u.skill.addCharge(1);
 
-test('ordinary/S1 stay private until S2/S3 and public gates are complete',()=>{
-  assert.equal(REGULAR_OPERATORS[ID],undefined); assert.equal(data.operators[ID],undefined);
-  assert.deepEqual(e.enabledOperators,[]);assert.ok(e.heldOperators.includes(ID));
+test('ordinary/S1 adapter retains exact contracts after public integration',()=>{
+  assert.equal(REGULAR_OPERATORS[ID].mechanic,'rosmontis');assert.ok(data.operators[ID]);
+  assert.deepEqual(e.enabledOperators,[ID]);assert.deepEqual(e.heldOperators,[]);
   assert.equal(CONTRACT.frameParity,false); assert.throws(()=>make({skill:2}),/Incomplete/);
   assert.throws(()=>make({skill:3}),/Incomplete/); assert.throws(()=>make({contract:{...CONTRACT}}),/contract/);
 });

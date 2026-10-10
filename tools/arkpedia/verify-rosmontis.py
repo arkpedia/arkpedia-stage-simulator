@@ -161,10 +161,10 @@ assert hot['versionId'] == E['source']['nativeClient'] == '26-09-23-17-49-43_b9c
 for record in E['source']['bundles']:
     native = next(row for row in hot['abInfos'] if row['name'] == record['path'])
     assert (record['md5'], record['size']) == (native['md5'], native['abSize'])
-assert E['enabledOperators'] == [] and E['heldOperators'] == ['char_391_rosmon']
-assert E['reviewStatus'] == 'Source foundation only: aftershocks, Caster aura and tactical equipment controllers await review'
-assert len(E['holdReasons']) == 3 and len(E['recoveredFacts']) == 9
-assert 'runtimeMapping' not in E and 'runtimeContracts' not in E
+assert E['enabledOperators'] == ['char_391_rosmon'] and E['heldOperators'] == []
+assert E['reviewStatus'] == 'Complete no-module ordinary kit with explicit local execution contracts'
+assert E['holdReasons'] == [] and len(E['recoveredFacts']) == 9
+assert E['runtimeMapping'] == {'char_391_rosmon': 'rosmontis'} and len(E['runtimeContracts']) == 8
 assert E['frameParity'] is False and E['moduleSupport'] is False and E['nativeParticleSupport'] is False
 assert set(E['tables']['skills']) == {'skchr_rosmon_1', 'skchr_rosmon_2', 'skchr_rosmon_3'}
 assert set(E['tables']['tokenSkills']) == {'sktok_rosmon'}
@@ -236,4 +236,4 @@ for face,model in E['tokenModels'][TOKEN].items():
     assert model['sha256'] == record['sha256'] and model['bytes'] == record['bytes']
 # Both facing aliases intentionally point at the same original skeleton.
 assert art['models'][TOKEN]['facings']['front']['files'] == art['models'][TOKEN]['facings']['back']['files']
-print(f'Verified {count} native components, {len(bundles)} bundles, {len(E["templates"])} templates, 30 owner plus 10 token ranks, {len(E["projectiles"])} projectile trees and three original skeleton chains; source foundation remains held pending full kit integration')
+print(f'Verified {count} native components, {len(bundles)} bundles, {len(E["templates"])} templates, 30 owner plus 10 token ranks, {len(E["projectiles"])} projectile trees and three original skeleton chains; explicit no-module runtime mapping retained without certifying compiled frame parity')

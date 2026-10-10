@@ -57,9 +57,9 @@ const ready=f=>f.u.skill.addCharge(1);
 const activate=f=>{ready(f);assert.equal(f.u.skill.activate('fixture'),true);};
 const tokens=f=>[...f.controller.equipment.tokens.keys()];
 
-test('S3 is private; fresh exact selected source and contract are required',()=>{
-  assert.equal(REGULAR_OPERATORS[ID],undefined);assert.equal(data.operators[ID],undefined);
-  assert.deepEqual(e.enabledOperators,[]);assert.equal(CONTRACT.frameParity,false);
+test('S3 adapter requires fresh exact selected source and contract',()=>{
+  assert.equal(REGULAR_OPERATORS[ID].mechanic,'rosmontis');assert.ok(data.operators[ID]);
+  assert.deepEqual(e.enabledOperators,[ID]);assert.equal(CONTRACT.frameParity,false);
   assert.throws(()=>make({skill:1}),/Incomplete/);assert.throws(()=>make({skill:2}),/Incomplete/);
   assert.throws(()=>make({contract:{...CONTRACT}}),/contract/);
   const f=make({defer:true});

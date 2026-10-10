@@ -213,7 +213,7 @@ evidence = {
         'ranges': {k: rt[k] for k in sorted(ranges)}},
     'nativeTemplateGaps': sorted(templates - native_templates.keys()),
     'recoveredFacts': [
-        'All thirty owner ranks and ten paired equipment ranks retain the pinned Global blackboards. S1 is an automatic offensive-recovery next-attack skill; S2 and S3 are manual time-recovery skills. Promotion, potential, trust and token level data are retained without registering playable support.',
+        'All thirty owner ranks and ten paired equipment ranks retain the pinned Global blackboards. S1 is an automatic offensive-recovery next-attack skill; S2 and S3 are manual time-recovery skills. Promotion, potential, trust and token level data are retained separately from the explicit runtime contracts.',
         'Ordinary attacks alternate original Attack_A and Attack_B abilities. Each uses one Physical main projectile and one delayed aftershock at native delta .15, with append_atk_scale .5 and native circular radius approximately .9. Separate attack input, projectile birth, hit recipients and source-invalid behavior must not be collapsed into a generic two-target attack.',
         'S1 uses the original Attack_A clip, main Physical projectile and one .15-delayed aftershock. Only the first projectile receives the rosmon_s_1 active buff; its ON_BUFF_START applies the selected extra_atk_scale as Magical damage. The Arts receipt belongs to the main splash recipients and does not repeat on the aftershock.',
         'S2 selects mode one, applies ATK and base-attack-time percentage modifiers and fires one main plus three aftershock projectiles at .15 deltas. Native radius is 1.5 for both projectile types; the stun action rolls selected prob on each buff start. The attached-to-mount projectile has checkReached false and immediatelyReach false; damage timing cannot be inferred solely from the Skill_2 OnAttack clip marker.',
@@ -229,6 +229,23 @@ evidence = {
         'Serialized actions and clip markers alone do not establish compiled Unity callback/FSM/frame parity. Rosmontis remains unavailable until all three skills pass public runtime integration checks.'
     ],
 }
+# Public support is gated by all three source-fed adapters and full-kit tests.
+evidence['enabledOperators'] = [ID]
+evidence['heldOperators'] = []
+evidence['holdReasons'] = []
+evidence['runtimeMapping'] = {ID: 'rosmontis'}
+evidence['reviewStatus'] = 'Complete no-module ordinary kit with explicit local execution contracts'
+evidence['runtimeContracts'] = [
+    'All thirty selected owner ranks, ten paired equipment ranks and selected promotion, level, trust and potential feed the three skills. Override inherited Bombarder aftershocks and generic talent installers; one source controller owns every accepted command and Caster claim.',
+    'Ordinary/S1 captures one eligible ground input and original facing attack clock. Separate full/half Physical circles retain their birth centre; only S1 main recipients receive current-ATK Arts. One accepted command generates offensive SP, with SP held through S1 full clip. Lost-input refund and control/receipt ordering are local mappings.',
+    'S2 uses four independently emitted CAST projectiles, source .15 spacing, absolute 1.2-second lifetimes, radius 1.5 and independent selected stun rolls per surviving recipient. Its percentage interval modifier is additive with external BAT modifiers. Source mode ends independently of accepted volleys.',
+    'S3 places up to two legal melee equipment tiles before applying selected mode stats, even with zero or one available tile. Enemy-root minimum-taunt priority, nearest eligible enemy and random fallback use local geometry/tie mapping. DEF final multiplier one leaves DEF unchanged.',
+    'S3 captures up to two blocked inputs and prioritizes own equipment blockees. Explicit .17 pre-delay and .15 aftershock delta scale by selected base/current interval; capped original Loop playback does not hold attack cadence. Main traces alone can hit blocked air; ground splash recipients need not be blocked.',
+    'Equipment uses selected token level stats, fixed facing and zero deck/DP/slot cost. Original Start completion maps to source centre-ground landing stun. It blocks two, prohibits healing and both regeneration contributions and applies flat DEF -160 only to actual blockees. Skill/owner finish clears owned tokens and claims; destroyed equipment is not replenished.',
+    'Caster aura uses one extra eligible Caster plus conditional self bonus, selected source penetration and independent owner-life claims. Accepted aftershocks retain birth centres through control, mode exit and owner withdrawal with current source stats; battle finish cancels output. Fresh public redeployment cannot inherit state or claims.',
+    'Original owner/equipment skeletons and source clip references are retained. Begin/End holds, callback clocks, birth/block timing, damage/status ordering and claim lifecycle are explicit local mappings. Modules, original particles/audio and compiled Unity FSM/frame parity remain unsupported or uncertified.'
+]
+
 (ROOT / 'data/arkpedia-rosmontis-prefabs.json').write_text(json.dumps(evidence, indent=2) + '\n')
 print('Extracted Rosmontis source:', len(templates), 'templates,',
     len(projectiles), 'projectiles and', len(source_bundles), 'verified bundles')

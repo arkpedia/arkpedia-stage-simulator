@@ -55,9 +55,9 @@ const ready=f=>f.u.skill.addCharge(1);
 
 const activate=f=>{ready(f);assert.equal(f.u.skill.activate('fixture'),true);};
 
-test('S2 remains private and rejects other skills, fabricated contracts, modules and changed source fields',()=>{
-  assert.equal(REGULAR_OPERATORS[ID],undefined);assert.equal(data.operators[ID],undefined);
-  assert.equal(CONTRACT.frameParity,false);assert.deepEqual(e.enabledOperators,[]);
+test('S2 adapter rejects other skills, fabricated contracts, modules and changed source fields',()=>{
+  assert.equal(REGULAR_OPERATORS[ID].mechanic,'rosmontis');assert.ok(data.operators[ID]);
+  assert.equal(CONTRACT.frameParity,false);assert.deepEqual(e.enabledOperators,[ID]);
   assert.throws(()=>make({skill:1}),/Incomplete/);assert.throws(()=>make({skill:3}),/Incomplete/);
   assert.throws(()=>make({contract:{...CONTRACT}}),/contract/);
   const f=make({defer:true});

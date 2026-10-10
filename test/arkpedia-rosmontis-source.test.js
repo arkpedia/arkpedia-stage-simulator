@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Native contracts for the held Rosmontis kit; source recovery is not enablement.
+// Native contracts and explicit local runtime gates for Rosmontis.
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import e from '../data/arkpedia-rosmontis-prefabs.json' with { type: 'json' };
@@ -15,10 +15,10 @@ const type = action => action.$type.split('+').at(-1).split(',')[0];
 const near = (a, z) => assert.ok(Math.abs(a - z) < 1e-6, `${a} != ${z}`);
 const levels = n => e.tables.skills[`skchr_rosmon_${n}`].levels;
 
-test('Rosmontis source recovery preserves native identities while keeping the incomplete kit unavailable', () => {
-  assert.deepEqual(e.enabledOperators, []); assert.deepEqual(e.heldOperators, [ID]);
-  assert.equal(REGULAR_OPERATORS[ID], undefined); assert.equal(data.operators[ID], undefined);
-  assert.equal(e.runtimeMapping, undefined); assert.equal(e.runtimeContracts, undefined);
+test('Rosmontis preserves native identities and explicit no-module runtime gates', () => {
+  assert.deepEqual(e.enabledOperators, [ID]); assert.deepEqual(e.heldOperators, []);
+  assert.equal(REGULAR_OPERATORS[ID].mechanic, 'rosmontis'); assert.ok(data.operators[ID]);
+  assert.deepEqual(e.runtimeMapping, {[ID]:'rosmontis'}); assert.equal(e.runtimeContracts.length, 8);
   assert.equal(e.frameParity, false); assert.equal(e.moduleSupport, false);
   assert.equal(e.nativeParticleSupport, false);
   assert.equal(e.source.commit, '57010cb5b2afea112cae57daa756b58676ba6850');
@@ -29,7 +29,7 @@ test('Rosmontis source recovery preserves native identities while keeping the in
   assert.deepEqual(e.nativeTemplateGaps, []);
   assert.deepEqual(Object.keys(e.originalTemplates), Object.keys(e.templates));
   assert.deepEqual(Object.keys(e.buffDatabase), ['stun']);
-  assert.equal(e.recoveredFacts.length, 9); assert.equal(e.holdReasons.length, 3);
+  assert.equal(e.recoveredFacts.length, 9); assert.deepEqual(e.holdReasons, []);
 });
 
 test('all selected S1 ranks retain offensive SP and main-only Arts coefficients', () => {

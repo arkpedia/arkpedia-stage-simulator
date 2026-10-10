@@ -45,8 +45,8 @@ original = json.loads(SOURCE.read_text())
 def altered(name):
     # Every fixture starts from the independently verified, unmodified record.
     e = json.loads(json.dumps(original))
-    if name == 'premature-enable':
-        e['enabledOperators'] = ['char_391_rosmon']; e['heldOperators'] = []
+    if name == 'missing-runtime-gate':
+        e['enabledOperators'] = []; e['heldOperators'] = ['char_391_rosmon']
     elif name == 'omitted-component':
         e['characters']['char_391_rosmon'][0]['components'].pop()
     elif name == 'missing-projectile':
@@ -66,7 +66,7 @@ def altered(name):
     return e
 
 rejections = []
-for name in ['premature-enable','omitted-component','missing-projectile','changed-skill-rank',
+for name in ['missing-runtime-gate','omitted-component','missing-projectile','changed-skill-rank',
              'changed-original-event','changed-alpha-pointer','changed-buff-action','changed-skeleton-binding']:
     path = OUT / ('negative-' + name + '.json')
     path.write_text(json.dumps(altered(name)) + '\n')
@@ -76,6 +76,6 @@ for name in ['premature-enable','omitted-component','missing-projectile','change
     print('Rejected ' + name, flush=True)
 
 report = {'baseline': baseline, 'reproducibleOutputs': before, 'negativeFixtures': rejections,
-          'playable': False, 'frameParity': False}
+          'publicRuntimeMapping': 'rosmontis', 'frameParity': False}
 (OUT/'review-audit.json').write_text(json.dumps(report, indent=2) + '\n')
 print(f'Native audit passed; {len(before)} outputs reproduce exactly and {len(rejections)} modified records are rejected', flush=True)
