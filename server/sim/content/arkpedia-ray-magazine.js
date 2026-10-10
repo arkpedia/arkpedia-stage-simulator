@@ -73,13 +73,14 @@ export class RayMagazine {
     this.epoch++;
     return true;
   }
-  beginReload(now) {
+  beginReload(now, { preDelay = 0 } = {}) {
     this.time(now);
+    if (!finiteTime(preDelay)) throw Error('Invalid Ray reload startup clock');
     if (this.removed || this.reload || this.bullets >= this.capacity) return null;
     const generation = ++this.epoch;
     this.reloadFlag = true;
     this.resetAt = null;
-    this.reload = { generation, start: now, readyAt: now + this.reloadInterval,
+    this.reload = { generation, start: now, readyAt: now + preDelay + this.reloadInterval,
       modeIndex: this.modeIndex, interval: this.reloadInterval };
     return { ...this.reload };
   }

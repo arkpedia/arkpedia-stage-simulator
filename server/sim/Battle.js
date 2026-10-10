@@ -2075,7 +2075,8 @@ export class Battle {
    * push (PRTS 推与拉: one frame less of travel than a 弹道 push — constants.js PUSH_TILES_EFFECT / PUSH_EFFECT_SKILLS).
    * Returns the tiles moved.
    */
-  push(e, force, { from = null, dir = null, fixed = false, fixedAngle = false, inward = false, effect = false } = {}) {
+  push(e, force, { from = null, dir = null, fixed = false, fixedAngle = false, inward = false,
+    effect = false, directionalReduction = 2, onFall = null } = {}) {
     if (!this._displaceable(e)) return 0;
     let level = this.forceLevel(e, force);
     const fx0 = fin(from?.x, e.x), fy0 = fin(from?.y, e.y);
@@ -2086,7 +2087,7 @@ export class Battle {
     if (dl > 0) {
       ux = dirX / dl; uy = dirY / dl;
       if (from && !fixed && (d < PUSH_DIRECTIONAL_MIN_DIST || (!fixedAngle && vx * ux + vy * uy < d * Math.SQRT1_2))) {
-        level -= 2;
+        level -= Math.max(0, fin(directionalReduction, 2));
         if (d > 1e-6) { ux = vx / d; uy = vy / d; }
       }
     } else if (d > 1e-6) { ux = vx / d; uy = vy / d; }
@@ -2094,7 +2095,7 @@ export class Battle {
     else return 0;
     let dist = pushTiles(level, effect);
     if (inward && !(dl > 0)) { ux = -ux; uy = -uy; dist = Math.min(dist, Math.max(0, d - PULL_STOP_RADIUS)); }
-    return this.displace(e, { x: ux, y: uy }, dist);
+    return this.displace(e, { x: ux, y: uy }, dist, { onFall });
   }
 
   /**
@@ -2163,7 +2164,7 @@ export class Battle {
    * ⇒ no movement (_displaceable). The tiles it may cross follow its movement (`motion`): a hovering enemy walks the
    * ground, so it stays on ground-passable tiles.
    */
-  displace(e, dir, distance) {
+  displace(e, dir, distance, { onFall = null } = {}) {
     if (!this._displaceable(e) || !dir) return 0;
     const dxv = fin(dir.x, 0), dyv = fin(dir.y, 0);
     const len = Math.hypot(dxv, dyv);
@@ -2178,6 +2179,16 @@ export class Battle {
       const s = Math.min(stepLen, eff - moved); // (the last step is a partial one: 0.12 tiles moves 0.12, not 0.2)
       const nx = e.x + ux * s, ny = e.y + uy * s;
       const r = Math.round(ny), c = Math.round(nx);
+      // Explicit regular-stage fall adapters can observe a ground body crossing
+      // a source hole. Other content keeps the existing passability-only mover.
+      // The adapter owns kill credit and once-only source callbacks; this mover
+      // does not invent an ordinary damage receipt for a fall.
+      if (e.motion !== 'FLY' && typeof onFall === 'function' && this.grid.inRect(r, c)
+        && this.grid.tile(r, c).key === 'tile_hole') {
+        e.x = nx; e.y = ny; moved += s;
+        this._safe(() => onFall(e), 'displace.onFall', e);
+        break;
+      }
       const ok = e.motion === 'FLY' ? this.grid.inRect(r, c) : this.grid.groundPassable(r, c);
       if (!ok) break;
       e.x = nx; e.y = ny; moved += s;
