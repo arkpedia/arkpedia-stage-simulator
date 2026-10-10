@@ -1753,3 +1753,30 @@ The independent verifier matches **56 native components, five checksum-verified 
 Browser review confirms Fuze's original base artwork/chibi, selected S2 M3 build, keyboard tile placement/facing, ordinary combat, HP/SP gauge and readiness. Clicking the ready action activates Cluster Charge and returns to ordinary SP recovery after the cast; no browser errors/warnings were recorded. The paused review screenshot is `.cache/arkpedia/fuze-source/public-s2-browser.png`. Touch/drag gestures, browser S1 manual cancellation and original particle/audio playback were not verified in this batch.
 
 Exact endpoint/gadget-origin geometry, native trigger/FSM/stop/collision/lifetime callback ordering, transferred-source statistics and ranged-source classification are documented local mappings. Modules, original VFX/audio and frame parity remain unsupported. Reproduce with `.cache/map-env/bin/python tools/arkpedia/extract-fuze.py`, `.cache/map-env/bin/python tools/arkpedia/verify-fuze.py` and `node --test test/arkpedia-fuze*.test.js`; extraction and verification require the checksum-matched original caches and the pinned authored HTML snapshot. The review metadata is separate from preserved native evidence.
+
+## Swire the Elegant Wit: complete source foundation (2026-10-11)
+
+Swire remains outside the playable roster until her ordinary attacks, coin economy, Champagne Bombs and all three skills are integrated together. This batch recovers their complete source dependencies and prepares original bomb artwork. Coverage remains **357/431 forms and 765 playable source skills**, with 74 forms remaining; 55 are outside the pinned Global snapshot. Runtime registration, MVP, coverage, stage records and SD asset revision `69183d2` are unchanged from `dc2d402`.
+
+- Preserve all thirty operator ranks and ten paired bomb ranks, thirteen native templates, the complete ending-projectile tree, database Slow and whole operator/token/skill component membership. Serialized action graphs remain intact and participate in dependency discovery.
+- Retain passive S1/S2 special-SP fields and their rank-dependent coin capacities: one-to-three and three-to-five. S3's source activation type is **AUTO**, with five time-SP and unlimited duration; its coin capacity is ten. Native coin transport uses character SP. It must not be replaced with an ordinary shared skill-cooldown implementation.
+- Keep three-DP/three-second trait payment and zero retreat refund separate from conditional coin gain and persistent promotion/potential-selected ATK stacks. Preserve the preprocessing reference to optional hidden talent key `11` without inventing a base talent or certifying compiled preprocessing order.
+- Preserve lethal recovery's before-HP-zero cost check, modifier consumption, DP expenditure and doubling, followed by the separate post-HP-zero heal. Its `.7/.8` max-HP ratio ignores heal-free while retaining healing modifier events; this is not generic evasion.
+- Keep S1's surrounding low-HP ally selection and healing event separate from its coin action. S2 uses automatic random ground/passable/buildable placement in the native `x-6` range, with no bomb deck card. The bomb switches mode after three seconds, then adds a second hit about `.1` seconds later, with Slow only on the first hit. Native event `3` withdrawal and `.2`-second hit/clip boundaries require explicit runtime dispatch review.
+- Preserve S3's two distinct ordinary hit events, owner-attributed kill coins, finish-time coin snapshot/clear, marked range/blockee recipients, random selector, `.07`-second repeated projectile births, speed eight and relative knockback. Do not collapse its attacks or ending coins into one aggregate damage output.
+- Verify both original operator skeleton pointer chains and the base Champagne Bomb's animator, skeleton, atlas, material, RGB and separate alpha textures. Bomb front/back aliases intentionally share one original skeleton; its 256×256 texture is not a generic trap or alternate skin. These prepared files are not yet published to SD assets or counted as playable models.
+
+The independent audit verifies **190 native components, six checksum-matched bundles, thirteen templates, forty owner/token ranks, one projectile tree and three original skeleton chains**. All **29 focused tests pass**, including ten new source gates plus Fuze/Ela source and roster regressions. Eight negative fixtures are rejected: omitted token component, omitted lethal template, omitted token rank, missing ending projectile, changed S3 hit event, premature playable activation, missing alpha texture and wrong owner facing chain. Repeat extraction produces twelve byte-identical evidence/artwork outputs. Logs, altered fixtures and hashes are in `.cache/arkpedia/swire-alter-source/`.
+
+Reproduce with the existing pinned shared source cache and model checkout:
+
+```sh
+node tools/arkpedia/fetch-swire-alter.mjs
+.cache/map-env/bin/python tools/arkpedia/extract-swire-alter-models.py
+node tools/arkpedia/inspect-swire-alter.mjs
+.cache/map-env/bin/python tools/arkpedia/extract-swire-alter.py
+.cache/map-env/bin/python tools/arkpedia/verify-swire-alter.py
+node --test test/arkpedia-swire-alter-source.test.js
+```
+
+Coin capacity/resource transitions, accepted attack/placement spending, aged-bomb withdrawal ordering, lethal-heal modifier ordering and S3 finishing/interruption are still runtime work. Compiled Unity callbacks/FSM/frame parity, modules, original particles/audio and physical-phone review remain unfinished. No new browser combat support is claimed. The existing local preview returns HTTP 200; the last full runtime regression remains `dc2d402` (9,712 passed, nine skipped, zero failures). This is a public draft feature-branch source update, with no production promotion or hosted-CI claim.
