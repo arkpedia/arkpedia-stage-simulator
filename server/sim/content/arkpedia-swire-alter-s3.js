@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Private S3 adapter. Public installation and visual review are still held.
+// Source-selected S3 adapter; the public wrapper binds the reviewed contract.
 import evidence from '../../../data/arkpedia-swire-alter-prefabs.json' with { type: 'json' };
 import { SWIRE_ALTER_ID, selectedSwireEconomy } from './arkpedia-swire-alter-economy.js';
 import { SwirePassiveController } from './arkpedia-swire-alter-passives.js';
@@ -35,7 +35,9 @@ function selectedS3(u, contract) {
   if (contract !== SWIRE_S3_CONTRACT) throw Error('Swire S3 requires the reviewed local contract');
   if (u.def.charId !== SWIRE_ALTER_ID || u.mem.swireCoinEconomy)
     throw Error('Swire S3 requires a fresh original owner');
-  const build = u.def.raw.arkpedia, r = selectedSwireEconomy(build), s = u.def.skill;
+  if (u.def.raw.arkpedia.skillId != null && u.def.raw.arkpedia.skillId !== u.def.skill?.id)
+    throw Error('Mismatched Swire selected S3 skill');
+  const build = { ...u.def.raw.arkpedia, skillId: u.def.skill?.id }, r = selectedSwireEconomy(build), s = u.def.skill;
   const source = evidence.tables.skills[r.skillId].levels[build.skillRank - 1];
   if (r.index !== 2 || s?.id !== build.skillId || s.skillType !== 'AUTO' || s.spType !== 'time'
     || s.spCost !== source.spData.spCost || s.initSp !== source.spData.initSp

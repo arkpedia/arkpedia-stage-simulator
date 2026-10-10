@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Unregistered S1/S2 combat adapter. S3 and the public kit are still held.
+// Source-selected S1/S2 adapter; the public wrapper binds the reviewed contract.
 import evidence from '../../../data/arkpedia-swire-alter-prefabs.json' with { type: 'json' };
 import { SWIRE_ALTER_ID, SWIRE_ECONOMY_CONTRACT, selectedSwireEconomy,
   SwireCoinEconomy } from './arkpedia-swire-alter-economy.js';
@@ -45,7 +45,9 @@ function selectedPassive(u, contract) {
   if (contract !== SWIRE_PASSIVE_CONTRACT) throw Error('Swire passives require the reviewed local contract');
   if (u.def.charId !== SWIRE_ALTER_ID || u.mem.swireCoinEconomy)
     throw Error('Swire passives require a fresh original owner');
-  const build = u.def.raw.arkpedia, r = selectedSwireEconomy(build), s = u.def.skill;
+  if (u.def.raw.arkpedia.skillId != null && u.def.raw.arkpedia.skillId !== u.def.skill?.id)
+    throw Error('Mismatched Swire selected passive skill');
+  const build = { ...u.def.raw.arkpedia, skillId: u.def.skill?.id }, r = selectedSwireEconomy(build), s = u.def.skill;
   const source = evidence.tables.skills[r.skillId].levels[build.skillRank - 1];
   if (r.index > 1 || s?.id !== build.skillId || s.skillType !== 'PASSIVE' || s.spType !== 'none'
     || s.spCost !== source.spData.spCost || s.initSp !== source.spData.initSp
@@ -115,6 +117,7 @@ export class SwireChampagneBombs {
     const damageSnapshot = { atk: u.s.atk, atkScaleMul: u.s.atkScaleMul };
     const kit = { skill: null, trait: { noAttack: true }, install: (battle, t) => {
       t.kind = 'device'; t.deploymentSlotCost = 0;
+      t.mem.regularHideHp = true; // Native alwaysHideHp=1.
       t.mem.swireBomb = { owner: u, damageSnapshot, aged: false };
       battle.addBuff(t, { key: 'swire2:device-category', persist: true, allowDead: true,
         flags: { untargetable: true, healFree: true, noSp: true } });
@@ -299,7 +302,7 @@ export class SwirePassiveController {
   }
 }
 
-/** Private preparation seam only. Reject S3 rather than imply full support. */
+/** Selected passive preparation seam. The complete wrapper dispatches S3 separately. */
 export function prepareSwirePassives(b, u, { contract } = {}) {
   const record = selectedPassive(u, contract), controller = new SwirePassiveController(b, u, record);
   const kit = { trait: { noAttack: true, attackDrivenSkill: true, attack: 'melee', projectile: 'none',

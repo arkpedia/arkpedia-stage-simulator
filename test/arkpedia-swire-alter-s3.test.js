@@ -69,9 +69,9 @@ function end(f, coins = 1) {
 }
 const marked = t => t.buffs.some(b => b.key === MARK);
 
-test('S3 stays private and requires complete selected source builds before installing hooks', () => {
-  assert.equal(REGULAR_OPERATORS[ID], undefined); assert.equal(data.operators[ID], undefined);
-  assert.deepEqual(e.enabledOperators, []); assert.equal(e.runtimeMapping, undefined); assert.equal(CONTRACT.frameParity, false);
+test('S3 preparation still requires complete selected source builds before installing hooks', () => {
+  assert.ok(REGULAR_OPERATORS[ID]); assert.ok(data.operators[ID]);
+  assert.deepEqual(e.enabledOperators, [ID]); assert.equal(e.runtimeMapping[ID], 'swire-alter'); assert.equal(CONTRACT.frameParity, false);
   assert.throws(() => make({ skill: 1 }), /Incomplete/); assert.throws(() => make({ elite: 1 }), /Unsupported/);
   assert.throws(() => make({ contract: { ...CONTRACT } }), /contract/);
   const f = make({ defer: true });

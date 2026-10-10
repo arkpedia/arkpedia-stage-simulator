@@ -228,6 +228,25 @@ evidence = {
         'Serialized fields and original animation events do not establish compiled Unity callback/FSM/frame parity. No partial skill, inherited Stronghold kit or asset-only import counts as playable support.',
     ],
 }
+# Keep native extraction and its original holds separate from reviewed local execution.
+evidence['historicalReviewStatus'] = evidence['reviewStatus']
+evidence['historicalHoldReasons'] = evidence['holdReasons']
+evidence['enabledOperators'] = [ID]
+evidence['heldOperators'] = []
+evidence['runtimeMapping'] = {ID: 'swire-alter'}
+evidence['reviewStatus'] = 'Complete ordinary kit with explicit local execution contracts'
+evidence['holdReasons'] = []
+evidence['runtimeContracts'] = [
+    'All thirty no-module selected source ranks and public promotion, level, trust and potential feed the three ordinary-stage skills. Override inherited Merchant payment and Stronghold talent installers; source Coin economy alone owns upkeep and talent state. Native zero retreat refund is retained.',
+    'Coins use a separate source-owned wallet and HUD. Active-skill upkeep charges three DP every three seconds, gains selected coins and adds capped ordinary ATK percentages; ATK survives skill end until owner finish. Starting coins, kill credit, capacity and accepted spending retain selected source values without ordinary attack-SP transport.',
+    'Lethal recovery checks available DP, charges the current five/doubling cost, applies the one-HP floor and then ordinary max-HP-ratio healing. The .01-second protection window is an authored PRTS note quantized to simulation ticks; compiled Unity protection and callback parity are unverified.',
+    'Ordinary attacks capture one PRECAST enemy. S1 replaces that attack with the selected lowest-HP-ratio eligible surrounding ally and consumes a coin at accepted original healing birth. S2 prefers an enemy root tile or random legal cross-range tile, rechecks CAST legality, consumes a coin and automatically creates the original zero-slot/no-card Champagne Bomb. No duplicated profession payment occurs.',
+    'Bomb placement snapshots owner ATK and attack scale separately from token table stats. Original Start does not postpone arming; PRECAST age at three seconds selects one or two same-input Physical receipts with a native .1-second delta, first-receipt Slow and final-receipt withdrawal. Owner finish clears idle/unborn bombs, while an accepted delayed receipt may finish. Infinite lifetime/HP-hide flags are recorded; untargetable device category is not a blanket damage bypass.',
+    'S3 automatically opens at five time-SP and retains unlimited duration. One PRECAST ordinary attack uses two separate original scaled Loop markers, full ATK per receipt and one attack identity/event. Manual cancellation snapshots closing coins once before skillEnd clears the wallet, immediately claims source frontal/blockee marks and holds ordinary SP through the original unscaled End clip.',
+    'S3 ending independently chooses a currently eligible ground recipient bearing the shared mark per coin, including marked enemies outside the initial area. Original End event and .07-second native delta create speed-eight/ten-second homing shots with selected Physical coefficient, current owner ATK at impact and radial push. Mark claims, control/range rechecks, root geometry and impact ordering are local policies; born shots survive owner finish, battle finish cancels them and fresh owners cannot inherit resources.',
+    'Original owner facing skeletons and Champagne Bomb skeleton/atlas/material/RGB-plus-alpha chain remain intact. Resource HUD and original clip playback are supported; original coin trails, random mount-point offsets, particles, audio, modules and compiled Unity FSM/frame parity are not implemented or certified.'
+]
+
 (ROOT / 'data/arkpedia-swire-alter-prefabs.json').write_text(json.dumps(evidence, indent=2) + '\n')
 print('Extracted Swire the Elegant Wit source:', len(templates), 'templates,',
     len(projectiles), 'projectiles and', len(source_bundles), 'verified bundles')

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Source gates only. Swire's complete regular-stage controller is not enabled.
+// Native source gates and explicit ordinary-stage runtime review metadata.
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import e from '../data/arkpedia-swire-alter-prefabs.json' with { type: 'json' };
@@ -15,19 +15,20 @@ const type = v => v.$type.split('+').at(-1).split(',')[0];
 const actions = (key, event) => e.templates[key].eventToActions[event];
 const near = (a, b) => assert.ok(Math.abs(a - b) < 1e-6, `${a} != ${b}`);
 
-test('Swire source foundation cannot silently enable an incomplete public kit', () => {
-  assert.deepEqual(e.enabledOperators, []);
-  assert.deepEqual(e.heldOperators, [ID]);
-  assert.equal(REGULAR_OPERATORS[ID], undefined);
-  assert.equal(data.operators[ID], undefined);
+test('Swire complete ordinary kit retains native source identity and explicit fidelity limits', () => {
+  assert.deepEqual(e.enabledOperators, [ID]);
+  assert.deepEqual(e.heldOperators, []);
+  assert.equal(REGULAR_OPERATORS[ID].mechanic, 'swire-alter');
+  assert.ok(data.operators[ID]);
   assert.equal(rows.length, 190);
   assert.equal(e.source.bundles.length, 6);
   assert.equal(e.recoveredFacts.length, 8);
-  assert.equal(e.holdReasons.length, 3);
+  assert.equal(e.holdReasons.length, 0); assert.equal(e.historicalHoldReasons.length, 3);
+  assert.equal(e.runtimeContracts.length, 8);
   assert.equal(e.frameParity, false);
   assert.equal(e.moduleSupport, false);
   assert.equal(e.nativeParticleSupport, false);
-  assert.equal(e.runtimeMapping, undefined);
+  assert.equal(e.runtimeMapping[ID], 'swire-alter');
   assert.deepEqual(e.nativeTemplateGaps, []);
   assert.equal(Object.keys(e.templates).length, 13);
   assert.deepEqual(Object.keys(e.originalTemplates), Object.keys(e.templates));

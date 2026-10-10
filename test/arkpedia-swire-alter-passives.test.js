@@ -77,9 +77,9 @@ function place(f, tile = { row: 5, col: 7 }) {
   f.controller.wallet.upkeep.cancel(); return t;
 }
 
-test('partial passives stay private and reject S3, missing contracts and malformed selected builds before hooks', () => {
-  assert.equal(REGULAR_OPERATORS[ID], undefined); assert.equal(data.operators[ID], undefined);
-  assert.deepEqual(e.enabledOperators, []); assert.equal(e.runtimeMapping, undefined);
+test('passive preparation rejects S3, missing contracts and malformed selected builds before hooks', () => {
+  assert.ok(REGULAR_OPERATORS[ID]); assert.ok(data.operators[ID]);
+  assert.deepEqual(e.enabledOperators, [ID]); assert.equal(e.runtimeMapping[ID], 'swire-alter');
   assert.equal(CONTRACT.frameParity, false);
   assert.throws(() => make({ skill: 3 }), /Incomplete/);
   assert.throws(() => make({ contract: { ...CONTRACT } }), /contract/);

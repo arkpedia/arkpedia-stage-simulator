@@ -47,8 +47,8 @@ function enemy(b) {
 function lethal(f, source = enemy(f.b)) { return f.b.loseHp(f.u, f.u.s.maxHp * 2, { source }); }
 
 test('private economy cannot enable the incomplete operator or change public coverage', () => {
-  assert.equal(REGULAR_OPERATORS[ID], undefined); assert.equal(data.operators[ID], undefined);
-  assert.deepEqual(e.enabledOperators, []); assert.equal(e.runtimeMapping, undefined);
+  assert.ok(REGULAR_OPERATORS[ID]); assert.ok(data.operators[ID]);
+  assert.deepEqual(e.enabledOperators, [ID]); assert.equal(e.runtimeMapping[ID], 'swire-alter');
   assert.equal(CONTRACT.frameParity, false);
 });
 test('all thirty ranks select their exact source coin capacities and blackboards', () => {

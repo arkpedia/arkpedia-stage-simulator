@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Unregistered source-fed resource adapter. This is not a complete Swire kit.
+// Source-fed resource adapter, shared by all three Swire skill controllers.
 import evidence from '../../../data/arkpedia-swire-alter-prefabs.json' with { type: 'json' };
 import { sourceCandidate } from '../../../shared/arkpedia/summons.js';
 

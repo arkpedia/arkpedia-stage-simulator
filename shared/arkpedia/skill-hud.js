@@ -22,6 +22,14 @@ export function skillHud(skill) {
   if (formTimer) return { fraction: Math.max(0, Math.min(1, formTimer.remaining / formTimer.duration)),
     state: 'active', ready: false, canActivate: false, canCancel: false,
     text: `${formTimer.label} · ${Math.ceil(Math.max(0, formTimer.remaining - 1e-9))}s` };
+  // Coins are a source-owned wallet, not ordinary SP or skill readiness. Keep
+  // one interpretation for both the field gauge and the selected-operator UI.
+  const resource = skill.spec?.resourceGauge?.();
+  if (resource) return {
+    fraction: Math.max(0, Math.min(1, resource.current / resource.maximum)),
+    state: 'active', ready: false, canActivate: false, canCancel: !!resource.canCancel,
+    text: `${resource.current} / ${resource.maximum} ${resource.label}${resource.ending ? ' · Ending' : ''}`,
+  };
   if (skill.kind === "passive") return null;
   // On-deployment effects expose their active duration, not a fictional
   // recharge/ready gauge after their one deployment window has ended.
