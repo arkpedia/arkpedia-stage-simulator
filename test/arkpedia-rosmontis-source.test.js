@@ -114,6 +114,7 @@ test('S3 paired token ranks preserve selected stun, blocked-target selector and 
     assert.equal(s.skillType, 'MANUAL'); assert.equal(s.spData.initSp, 35);
     assert.equal(bb(s.blackboard).base_attack_time, -.5);
     assert.equal(bb(s.blackboard)['attack@max_target'], 2);
+    assert.equal(bb(s.blackboard).def, 1);
     assert.deepEqual(t.blackboard, s.blackboard); assert.equal(t.skillType, 'AUTO'); assert.equal(t.spData.spCost, 0);
   }
   assert.deepEqual(c('-1685444342655389443')._abilities.map(v => v.m_PathID), ['7280470274788913405','2308109288669081853']);
@@ -121,7 +122,16 @@ test('S3 paired token ranks preserve selected stun, blocked-target selector and 
   assert.equal(target._abnormalFlag, 20); assert.equal(target._abnormalCombo, 2);
   assert.equal(target._shrinkInTheEnd, 1); assert.equal(target._shrinkNum, 2);
   assert.equal(target._pickMyTokenFirst, 1);
-  assert.equal(c('-525305113394709733')._additionalTimes, 1);
+  assert.equal(target._targetMotion, 3);
+  assert.equal(c('-1685444342655389443')._alwaysNext, 1);
+  const attack = c('-525305113394709733');
+  assert.equal(attack._additionalTimes, 1); assert.equal(attack._waitForAttackEvent, 0);
+  assert.equal(attack._selectTargetTiming, 1); near(attack._preDelay, .17); near(attack._triggerDelta, .15);
+  assert.equal(attack._maxAnimScale, 1); assert.equal(attack._castToFirstRoundTargetLocationsAtProjectileBirth, 1);
+  const metadata = c('-2478265015880290051');
+  assert.equal(metadata._canCastDuringBorn, 1); assert.equal(metadata._allowNoTarget, 1);
+  assert.equal(metadata._checkHasTargetBeforeDoCast, 0); assert.equal(metadata._canSilenced, 0);
+  assert.equal(metadata._allowSpRecoveryWhenAffecting, 0);
 });
 
 test('automatic equipment selector retains legal ground tiles, one-to-two count and hidden zero-slot ownership', () => {
@@ -143,6 +153,8 @@ test('equipment has independent source stats, heal-free, flat blocked DEF reduct
   assert.deepEqual(bb(e.tables.token.talents[0].candidates[0].blackboard), { duration:25, def:-160 });
   const passive = c('-4208363989957885602')._buffs[0];
   assert.deepEqual(passive.attributes.abnormalFlags, [7]);
+  assert.deepEqual(passive.attributes.attributeModifiers.map(v => [v.attributeType,v.formulaItem,v.value]),
+    [[13,3,0],[19,3,0]]);
   const block = c('-5764927146475863714');
   assert.equal(block._useBlockAsMin, 1);
   assert.deepEqual(block._buffsToBlockee[0].attributes.attributeModifiers,
@@ -152,6 +164,10 @@ test('equipment has independent source stats, heal-free, flat blocked DEF reduct
   assert.equal(end._buffKey, 'rosmon_token_s3_mark');
   assert.equal(type(e.templates.die_to_kill_token.eventToActions.ON_OWNER_FINISH[0]), 'KillTokens');
   assert.equal(c('-8443908124375782465')._activeBuffs[0].buffKey, 'stun');
+  assert.equal(c('-8443908124375782465')._atkScale, 0);
+  assert.equal(c('4033724824449051583')._targetMotion, 1);
+  assert.equal(c('4033724824449051583')._ignoreHitRange, 0);
+  assert.deepEqual(e.tables.ranges[e.tables.token.phases[2].rangeId].grids.map(v => [v.row,v.col]), [[0,0]]);
 });
 
 test('promotion and potential select flat penetration while the Caster aura retains its conditional count', () => {
