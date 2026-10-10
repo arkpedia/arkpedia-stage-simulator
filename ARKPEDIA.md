@@ -1665,3 +1665,28 @@ The full repository regression passes **9,617 tests, nine skipped and zero failu
 Local desktop browser review at `http://localhost:3182/arkpedia/` verifies search, all three M3 skill choices, actual raised-tile placement, original artwork/chibi, HP/SP and ready controls. S1 switched stance, reset its gauge and shortened the highlighted range. S2 charged from 8 to 15 SP through ordinary attacks and activated its thirty-second window; its combat run cleared 0-1 with eight defeated and three escaped. S3 charged from 20 to 30 SP, activated its twenty-second window and continued combat with the original skill animation. Browser warning/error logs were empty. Screenshots are under `.cache/arkpedia/narant-source/screenshots/`; the temporary QA tab is left paused during S3. Detailed three-blade grouping, invalid-input fallback and exact return collision assertions are engine-test evidence, not inferred from screenshots. Physical-phone interaction remains unverified.
 
 Original clips/events drive an explicit `source-clips-local-v1` web execution contract. Compiled Unity FSM scheduling, numeric time modes, callback priority and same-frame parity are not recovered. S1 uses three additional bounce transitions; repeat fallback, S2 forward-speed units and return deduplication, S3 all-return dispatch and lifetime ordering remain documented local mappings. S3 uses straight web trajectories; original curved trajectory fields are retained as evidence. Modules, original Unity particles/audio and native frame parity remain unfinished. This is a draft public simulator feature-branch update, not a production release.
+
+## Ela: original mine and complete source foundation (2026-10-11)
+
+Ela remains unregistered until her complete ordinary kit, mines and all three skills are implemented and tested. Coverage stays **355/431 pinned forms and 760 skills**, with **76 forms remaining**. MVP, runtime registration, coverage, roster target and the SD asset revision are unchanged from `4493113`. This batch adds source evidence and original artwork preparation, with no new playable operator or browser combat claim.
+
+- Preserve all thirty operator and thirty paired mine skill ranks, nine native templates, three database buffs, complete operator/token/skill/projectile component trees and the original animation events.
+- Recover the original base GRZMOT Mine through the client token's animator, skeleton, atlas, material and RGBA texture pointers. Both facing aliases use the same original skeleton. The model repository's alternate skin is not substituted; the recovered artwork is not yet imported into the public asset set.
+- Keep the **1.35-unit trigger circle** separate from the **1.7-unit effect circle**, with the original walking-enemy filters and occupied-tile exclusion. Preserve promotion stock/capacity fields and potential-selected talent values without treating their serialized values as verified execution rules.
+- Retain each mine's Slow, Stun, hit-rate penalties, influence marker or Fragile effects. Mine active-buff lists contain no direct damage. The critical-hit talent checks the influence marker without requiring it to come from the same Ela; ordinary and cached-projectile calculation hooks stay separate.
+- Preserve automatic S1 recharge, S2 attack recovery/range/DEF penetration, S3's forty-round ammunition/manual finish fields and skill-end recharge actions. Their controller timing, stock limits and target priority still need runtime review.
+- Keep death and retreat output separate: death marks `Boomed` and emits a delayed projectile; the finish path only emits retreat output when that marker is zero. Preserve their different delay/lifetime values and owned-token cleanup.
+
+Rebuild and audit with the existing pinned shared source cache and model checkout:
+
+```sh
+node tools/arkpedia/fetch-ela.mjs
+.cache/map-env/bin/python tools/arkpedia/extract-ela-models.py
+node tools/arkpedia/inspect-ela.mjs
+.cache/map-env/bin/python tools/arkpedia/extract-ela.py
+.cache/map-env/bin/python tools/arkpedia/verify-ela.py
+```
+
+The independent audit verifies **234 native components, six bundles, nine templates, sixty skill ranks, nine projectile trees and three original skeleton chains**. All **32 focused tests pass**, including eight new Ela source cases, Narantuya/Dorothy source checks and roster regressions. Eight altered records are rejected: changed death delay, dropped token component, changed token rank, missing projectile, changed animation event, premature playable activation, wrong token texture and missing owner facing binding. Repeating the complete extraction produces twelve byte-identical evidence/model outputs. Logs and negative fixtures are under `.cache/arkpedia/ela-source/`.
+
+Global `57010cb`, CN `a550f5e`, native client `26-09-23-17-49-43_b9cc4a`, model source `d0b5af0` and SD assets `d788b0b` remain pinned. The last full runtime regression is `4493113` (**9,617 passed, nine skipped, zero failures**); it was not rerun for this source-only batch. The local preview returns HTTP 200. Mine/controller integration, modules, original particles/audio and compiled Unity frame parity remain unfinished. This is a draft public simulator update, with no production promotion.
