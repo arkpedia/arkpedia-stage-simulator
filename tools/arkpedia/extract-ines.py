@@ -197,7 +197,7 @@ evidence = {'schemaVersion': 1, 'source': {'repository': 'Kengxxiao/ArknightsGam
     'tables': {'character': ct[ID], 'skills': {k: st[k] for k in SKILLS},
         'ranges': {k: rt[k] for k in sorted(ranges)}},
     'nativeTemplateGaps': sorted(templates - native_templates.keys()),
-    
+
     'recoveredFacts': [
         'All 30 selected skill ranks, source promotion/potential talents, regular attack modes and original facing event payloads are retained. Ranged Attack hits at .467s, blocked Combat at .333s; S2 replacement Attack and Combat both hit at .467s.',
         'Talent1 checks a source-specific first-hit mark before binding and triggering ATK theft. Native steal-atk ends both target and owner contributions when the victim becomes invalid; S2 steal-ASPD ends the victim contribution but retains the owner contribution until its mode ends.',
