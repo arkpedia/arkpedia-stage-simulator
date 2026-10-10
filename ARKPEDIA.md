@@ -964,3 +964,22 @@ Local browser evidence at E2 Lv90/P1/zero trust/S3 M3: automatic shield facing a
 Coverage is **339/431 pinned forms and 716 skills**, with **92 forms remaining**: 35 from the older Global snapshot and 57 outside it. The complete target remains 429 distinct operators / 431 forms. Prepared CN tables are not playable coverage.
 
 Fidelity limits remain explicit in the evidence. Closed tile filter 12 uses the furthest on-map forward tile in the active range; continuous swept collision replaces native .03-second polling. Local clocks implement body/face waits, shell interruption and event-4 ammo release plus final animation tail. Shield SP uses positive post-mitigation damage hooks; native ON_TAKE_DAMAGE ordering is not certified. Shell damage reads current owner ATK at impact. Native C# ordering, game-frame parity, modules and original VFX/audio remain unverified or unimplemented. The feature branch remains separate from production.
+
+## Coldshot: verified source foundation, not yet playable
+
+`data/arkpedia-coldshot-prefabs.json` preserves the complete ordinary source kit: both skills at all 10 ranks, elite/potential talent candidates, trait capacities of 4/6/8, both native attack modes, normal/reload-break/reload branches, two projectiles, 10 reachable templates and the shared Sluggish database entry. The earlier sniper evidence remains historical; this record adds full Transform membership, recursive shared dependencies and exact animation event payloads.
+
+Reproduce and independently verify it with:
+
+```sh
+node tools/arkpedia/inspect-coldshot.mjs
+.cache/map-env/bin/python tools/arkpedia/extract-coldshot.py
+.cache/map-env/bin/python tools/arkpedia/verify-coldshot.py
+node --test test/arkpedia-coldshot-source.test.js
+```
+
+The verifier checks 122 native components against five checksum-verified Global client bundles, all 20 skill ranks, the original template holder, complete prefab/component membership, both original skeleton pointer chains and their parsed event payloads. It also checks the pinned calculator excerpt against its SHA-256 and Git blob hash. The calculator corroborates overall damage/reload values; it does not establish the native reload state machine.
+
+Coldshot remains unavailable. Native ammo callbacks use numeric event 5, while reload clips contain literal `OnAttack` events; those are not proven equivalent. A returning target has a separate `Reload_Break` attack, but its transition time, partial reload retention and event ordering remain unresolved. Skill 2 adds 0.8 to the trait reload interval and restarts the native state machine. The talent has an initial delay and attack-invalid state, so a simple time-since-last-hit timer is insufficient. Nine source regression checks preserve these distinctions and prevent this source-only record from increasing playable coverage. All 29 focused source/roster checks passed. Negative verification rejected an omitted component, an omitted shared template and a falsified reload event.
+
+No runtime, asset publication or local-preview changes are made by this foundation. Supported coverage remains 339/431 forms and 716 skills, with 92 forms remaining. Original particles, modules and game-frame parity remain separate work.
