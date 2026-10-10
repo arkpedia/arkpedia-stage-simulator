@@ -174,6 +174,9 @@ export class SandbeastMagazine {
     this.collected = 0;
     this.finished = false;
   }
+  get ammoUi() {
+    return this.enabled && !this.finished ? { current: this.collected, maximum: this.capacity } : null;
+  }
   /** Collection is driven by the reviewed owner hit callback; no damage or
    * fabricated attack/SP event is emitted by the zero-ATK token controller. */
   collect() {

@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Unregistered Ray combat links. The complete retained native source lives in
-// arkpedia-ray-prefabs.json. Registration waits for the linked FSM, summon,
-// shift/fall and browser review; this module does not enable a partial roster.
+// Ray combat links. The complete retained native source lives in
+// arkpedia-ray-prefabs.json; executable scheduling contracts are explicit.
 import evidence from '../../../data/arkpedia-ray-prefabs.json' with { type: 'json' };
 import { absoluteRangeKeys, canTargetEnemy, sortEnemyTargets } from '../targeting.js';
 import { bodyInKeys } from '../body.js';
@@ -36,7 +35,7 @@ export function rayCandidates(b, u) {
 }
 
 /** Original Loop release payload. Begin/Break clocks are deliberately supplied
- * by the pending FSM rather than guessed by this projectile/hit layer. */
+ * by the linked FSM rather than guessed by this projectile/hit layer. */
 export function rayFireEvent(u, mode = 0) {
   const face = ['LEFT', 'UP'].includes(u.dir) ? 'Back' : 'Front';
   const prefix = mode ? `Skill_${u.dir === 'DOWN' ? 'Down_' : ''}${mode}`

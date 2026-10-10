@@ -1,6 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Only explicitly reviewed regular-stage tokens may enter the deployment deck.
 export const REGULAR_SUMMONS = Object.freeze({
+  char_4117_ray: Object.freeze({ tokenId: 'token_10034_ray_sndbst',
+    deploymentSlotCost: 0, chooseFacing: false, fixedRotation: true, healFree: false,
+    refundRatio: .5, noAttack: true, minimumElite: 1, rechargeOnFinish: true,
+    stockLimit: 1, limitByHostAttackRange: true }),
   char_4055_bgsnow: Object.freeze({ tokenId: 'token_10026_bgsnow_subbow',
     deploymentSlotCost: 0, chooseFacing: true, healFree: true,
     refundRatio: 0, rechargeOnFinish: true, preserveCooldown: true }),
@@ -301,6 +305,23 @@ export function summonRecordFor(ownerId, build, tokens) {
       durationType: level.durationType, duration: level.duration,
       rangeGrid: level.rangeGrid, ...level.spData, bb,
       trigger: { rule: 'NEVER' } };
+  }
+  if (ownerId === 'char_4117_ray') {
+    const index = ['skchr_ray_1', 'skchr_ray_2', 'skchr_ray_3'].indexOf(build.skillId);
+    if (![1, 2].includes(build.elite) || index < 0 || index > build.elite
+      || !Number.isSafeInteger(build.skillRank) || build.skillRank < 1
+      || build.skillRank > [4, 7, 10][build.elite]
+      || stats.cost !== 3 || stats.respawnTime !== 30 || stats.maxDeployCount !== 1
+      || stats.blockCnt !== 0 || talents[0]?.bb.duration !== (build.elite === 1 ? 15 : 25))
+      throw Error('Unreviewed Ray Sandbeast build or stats');
+    if (source.skills?.length !== 3 || source.skills[0].id !== null || source.skills[0].levels.length
+      || source.skills[2].id !== null || source.skills[2].levels.length
+      || source.skills[1].id !== 'sktok_ray_2' || source.skills[1].levels.length !== 10
+      || source.skills[1].levels.some(l => l.prefabId !== 'sktok_ray_2'
+        || l.skillType !== 'PASSIVE' || l.spData.spCost !== 0 || l.blackboard.length !== 0))
+      throw Error('Unreviewed Sandbeast original skill slots');
+    if (index === 1) skill = { skillId: 'sktok_ray_2', name: source.skills[1].levels[build.skillRank - 1].name,
+      bb: {}, trigger: { rule: 'NEVER' } };
   }
   if (ownerId === 'char_427_vigil') {
     const index = ['skchr_vigil_1', 'skchr_vigil_2', 'skchr_vigil_3'].indexOf(build.skillId);

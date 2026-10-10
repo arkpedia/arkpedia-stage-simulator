@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Linked Ray/Sandbeast controller. Kept outside roster registration until its
-// selected-loadout and browser checks pass. Serialized graphs remain in the
+// Linked Ray/Sandbeast controller. Selected builds use the complete kit.
+// Serialized graphs remain in the
 // source audit; phase clocks below are explicit executable contracts.
 import evidence from '../../../data/arkpedia-ray-prefabs.json' with { type: 'json' };
 import { RayMagazine, SandbeastMagazine } from './arkpedia-ray-magazine.js';
@@ -164,7 +164,7 @@ export function customizeRayKit({ battle: b, id, def, unit: u, kit }) {
   kit.install = null;
   kit.trait = { noAttack: true, install: null, attack: 'ranged', projectile: 'arrow',
     dmgType: 'phys', canHitFly: true, maxTargets: 1, hits: 1, hitAllBlocked: false,
-    attackDrivenSkill: true, requiresAcceptedLaunch: true,
+    attackDrivenSkill: true, requiresAcceptedLaunch: true, attackVisual: 'none',
     launchAttack: (_battle, _a, _p, target, info) => links.fire(target, { ...info, mode: controller.mode }) };
   const s = def.skill, mode = Number(s.id.at(-1));
   kit.skill = { id: s.id, name: s.name, kind: mode === 2 ? 'toggle' : 'duration',

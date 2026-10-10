@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Real-engine linked-controller fixtures. Registration and selected-loadout
-// compiler tests remain separate; no held operator is inserted into the MVP.
+// Real-engine linked-controller fixtures. Selected-loadout and deployment
+// compiler checks live separately in arkpedia-ray.test.js.
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import data from '../data/arkpedia-mvp.json' with { type: 'json' };

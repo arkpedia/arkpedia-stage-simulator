@@ -21,11 +21,11 @@ function nodes(value, predicate, out = []) {
 const type = name => n => n.$type?.split(',')[0].endsWith(`+${name}`);
 const component = id => rows.find(c => c.pathId === id).data;
 
-test('Ray source audit preserves complete kit without claiming playable coverage', () => {
-  assert.deepEqual(e.enabledOperators, []); assert.deepEqual(e.heldOperators, [ID]);
-  assert.equal(REGULAR_OPERATORS[ID], undefined); assert.equal(data.operators[ID], undefined);
-  assert.deepEqual(e.runtimeContracts, []);
-  assert.ok(e.holdReasons.some(r => /Reload clips have no Spine events/.test(r)));
+test('Ray source audit preserves complete registered kit and explicit execution limits', () => {
+  assert.deepEqual(e.enabledOperators, [ID]); assert.deepEqual(e.heldOperators, []);
+  assert.equal(REGULAR_OPERATORS[ID].mechanic, 'ray'); assert.equal(data.operators[ID].skills.length, 3);
+  assert.equal(e.runtimeContracts.length, 9); assert.deepEqual(e.holdReasons, []);
+  assert.ok(e.historicalHoldReasons.some(r => /Reload clips have no Spine events/.test(r)));
   for (const k of ['frameParity', 'moduleSupport', 'nativeParticleSupport']) assert.equal(e[k], false);
   assert.equal(e.source.bundles.length, 6);
   assert.deepEqual(e.nativeTemplateGaps, []);

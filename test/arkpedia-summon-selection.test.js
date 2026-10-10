@@ -6,7 +6,7 @@ import { createContext, runInContext } from 'node:vm';
 import data from '../data/arkpedia-mvp.json' with { type: 'json' };
 import { StandardBattle } from '../server/sim/arkpedia.js';
 import { defaultBuild } from '../shared/arkpedia/loadout.js';
-import { skillHud, skillSourceFor } from '../shared/arkpedia/skill-hud.js';
+import { skillHud, skillSourceFor, ammunitionHud } from '../shared/arkpedia/skill-hud.js';
 import { summonCardId, summonUnitId } from '../shared/arkpedia/summons.js';
 import { selectedRegularSummon, summonPlacementError, deployRegularSummon,
   regularSummonCards, retreatRegularSummon } from '../server/sim/content/arkpedia-summons.js';
@@ -67,7 +67,7 @@ test('Mobile Riot Shield selection renders its stats and lifetime without a fict
   const token = entry().unit;
   assert.equal(token.defId, 'token_10032_jesca2_jckshd');
   assert.equal(entry().record.skill, null);
-  Object.assign(context, { skillSourceFor, skillHud, escape: x => String(x),
+  Object.assign(context, { skillSourceFor, skillHud, ammunitionHud, escape: x => String(x),
     operatorSkillDetails: () => { throw Error('Shield has no active skill'); } });
   runInContext(fn('summonDetails', 'operatorDetails'), context);
   const html = runInContext('summonDetails(selectedEntry())', context);

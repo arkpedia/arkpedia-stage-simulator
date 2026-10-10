@@ -58,11 +58,11 @@
   "frameParity": false,
   "moduleSupport": false,
   "nativeParticleSupport": false,
-  "enabledOperators": [],
-  "heldOperators": [
+  "enabledOperators": [
     "char_4117_ray"
   ],
-  "reviewStatus": "Full Ray and default Sandbeast source foundation; ammunition and summon combat adapter pending",
+  "heldOperators": [],
+  "reviewStatus": "Complete three-skill Ray and default Sandbeast adapter; explicit local execution contracts remain",
   "characters": {
     "char_4117_ray": [
       {
@@ -21914,13 +21914,24 @@
     "Extreme Focus uses a dedicated stack-on-target controller with family mask 15, max-stack blackboard 3 and selected E2 ATK .08/.09 at potential 5; it does not use the serialized placeholder maxStackCnt 1 as the talent cap.",
     "Default Sandbeast uses one original skeleton linked from pkgrps/btl_pfb_tokens_0.ab, with its native FaceSwitcher and atlas. Alternate costume skinpack is excluded. Ray has two original facing skeletons and linked facing control; all four original projectile trees have speed 15."
   ],
-  "runtimeContracts": [],
+  "runtimeContracts": [
+    "Original fire Begin/Loop/End clocks scale with selected attack speed; fixed reload uses original Begin once followed by fixed Loop deadlines. Numeric native ammo callbacks are retained without treating them as Spine events.",
+    "Accepted single-target projectile births consume ordinary ammunition and grant attack SP. Current ATK is sampled at impact; target-focus stacks are sampled at accepted birth and retain through idle/reload.",
+    "S1 is a finite original-clip command that holds its selected charge and SP lock through Loop/End, requires a legal target and bypasses ordinary ammunition. Owned direct/fall kill callbacks grant the selected bonus once.",
+    "S3 gates initial partial magazines on a full fixed refill. Born projectile coefficient and Bind survive expiry; one qualifying activation-owned kill returns selected SP once after skill finish.",
+    "Sandbeast begins its aura and selected lifetime at the original OnStart event. Its S2-only ground-hit collection has no ordinary token attacks, healing or attack-SP receipts.",
+    "One card is supplied on owner deployment. Token finish starts a thirty-second independent stock clock; active S2 holds its selected ratio on current and already-cooling cards, and removal restores the unscaled remainder.",
+    "Absent native Sandbeast extra_add is explicitly mapped to zero for collected-ammunition return. This is a local execution contract, not a recovered serialized default.",
+    "S1 uses numeric off-axis force reduction one and opt-in ground-hole crossing through existing instantaneous 0.1-tile displacement steps with rounded tile centres. Default callers retain reduction two and prior passability rules; native collider/frame parity is unverified.",
+    "The explicit phase controller owns original Ray clips; accepted attack events do not restart a generic attack animation. Source owner/selected-S2 token ammunition is presented separately from skill SP and readiness."
+  ],
   "verificationLimits": [
     "Original serialized controllers and animation events do not prove compiled native callback ordering or frame parity.",
-    "Ammunition, reload interruption, Sandbeast targeting and refund, S1 kill reload, S2 permanent mode and S3 reload/kill-SP behavior require a complete combat adapter.",
+    "Local reload, cast, hole collision and missing extra_add contracts are explicit; native execution parity is not established by source and fixture tests.",
     "Modules, native Unity particles and audio remain separate work."
   ],
-  "holdReasons": [
+  "holdReasons": [],
+  "historicalHoldReasons": [
     "Ray and Sandbeast are source-audited together but are not registered as playable until the complete ammunition and three-skill adapter is verified.",
     "Reload clips have no Spine events while native reload abilities set waitForAttackEvent 1; startEvent 5/endEvent 3 ammo hooks and reload-break composite dispatch require an explicit verified scheduling contract.",
     "S1 ordinary/fall kill bonus, collected-ammo refund and S3 full-reload transition must not be approximated by generic summon or per-shot timers."

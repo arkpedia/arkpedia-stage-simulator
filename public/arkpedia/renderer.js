@@ -8,7 +8,7 @@ import { createAssets } from "/js/assets.js";
 import { regionEdges } from "/shared/arkpedia/placement.js";
 import { rangeStripes } from "/shared/arkpedia/battle-ui.js";
 import { spriteFacing } from "/shared/arkpedia/facing.js";
-import { skillHud, skillSourceFor } from "/shared/arkpedia/skill-hud.js";
+import { skillHud, skillSourceFor, ammunitionHud } from "/shared/arkpedia/skill-hud.js";
 import { regularTokenIdsFor } from "/shared/arkpedia/summons.js";
 import { artBase } from "/shared/arkpedia/stage-art.js";
 import { loadStageArt } from "./stage-art.js";
@@ -535,11 +535,19 @@ export class StageRenderer {
               .endFill();
           }
         }
+        const ammunition = u.side === 'ally' ? ammunitionHud(u) : null;
+        if (ammunition) {
+          const top = y + (skill ? 13 : 6), segment = w / ammunition.maximum;
+          for (let i = 0; i < ammunition.maximum; i++) view.hp
+            .beginFill(i < ammunition.current ? 0x63c7ef : 0x243a43, .95)
+            .drawRect(x + i * segment, top, Math.max(1, segment - 1), 3)
+            .endFill();
+        }
         view.hp.zIndex = 3000;
         if (u.side === "ally")
           operatorLabels.set(
             `${u.tileR},${u.tileC}`,
-            `${u.name}, row ${u.tileR + 1}, column ${u.tileC + 1}. ${skill?.text || (u.skill?.noSkill ? "No skills" : "Passive skill")}`,
+            `${u.name}, row ${u.tileR + 1}, column ${u.tileC + 1}. ${skill?.text || (u.skill?.noSkill ? "No skills" : "Passive skill")}${ammunition ? `. ${ammunition.text}` : ''}`,
           );
       }
       for (const [id, v] of this.views)

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Real engine fixtures, deliberately outside selectable roster registration.
+// Real engine source fixtures, separate from selected-build integration tests.
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import data from '../data/arkpedia-mvp.json' with { type: 'json' };
@@ -78,9 +78,9 @@ function scout(f, { enabled = f.u.skill.id === 'skchr_ray_2', x = 5, y = 2 } = {
   f.links.attachScout(t); return t;
 }
 
-test('Ray remains unregistered while combat links are tested in real-engine source fixtures', () => {
-  assert.equal(data.operators[RAY_ID], undefined);
-  assert.deepEqual(evidence.enabledOperators, []);
+test('registered Ray combat links reject an incomplete constructor contract', () => {
+  assert.equal(data.operators[RAY_ID].skills.length, 3);
+  assert.deepEqual(evidence.enabledOperators, [RAY_ID]);
   assert.throws(() => new RayCombatLinks({}, { defId: RAY_ID }, {}), /contract/);
 });
 test('all directions retain exact original normal and three skill release payloads', () => {

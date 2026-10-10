@@ -12,7 +12,7 @@ import { StageRenderer } from "./renderer.js";
 import { absoluteRangeKeys } from "/sim/targeting.js";
 import { classNames, skillIconFile, operatorAssetName, skillDescriptionText } from "/shared/arkpedia/battle-ui.js";
 import { swipeFacing } from "/shared/arkpedia/placement.js";
-import { skillHud, skillSourceFor } from "/shared/arkpedia/skill-hud.js";
+import { skillHud, skillSourceFor, ammunitionHud } from "/shared/arkpedia/skill-hud.js";
 import { battleHud } from "/shared/arkpedia/battle-hud.js";
 import { requiresLandscape } from "/shared/arkpedia/viewport.js";
 import { summonUnitId } from "/shared/arkpedia/summons.js";
@@ -501,6 +501,7 @@ function pick(row, col) {
 }
 function summonDetails(entry) {
   const unit = entry.unit, raw = entry.record.stats, stats = unit?.s;
+  const ammunition = ammunitionHud(unit);
   const lifetime = unit?.skill.spec?.formCountdown ? skillHud(unit.skill) : null;
   const hp = unit?.hp ?? raw.maxHp, maxHp = stats?.maxHp ?? raw.maxHp;
   const numbers = [['ATK', stats?.atk ?? raw.atk], ['DEF', stats?.def ?? raw.def],
@@ -512,7 +513,7 @@ function summonDetails(entry) {
     <div class="hp-readout"><span>HP</span><strong>${Math.min(Math.ceil(hp), Math.round(maxHp))} / ${Math.round(maxHp)}</strong></div>
     <div class="meter hp"><span style="width:${Math.min(1, Math.max(0, hp / maxHp)) * 100}%"></span></div>
     <p class="sp-readout">${entry.stock} remaining · ${raw.cost} DP · ${entry.config.deploymentSlotCost} deployment slot${entry.config.deploymentSlotCost === 1 ? '' : 's'}</p>
-    ${recovery}${lifetime ? `<p class="sp-readout">${escape(lifetime.text)}</p><div class="meter active"><span style="width:${lifetime.fraction * 100}%"></span></div>` : ''}<p class="skill-description">${entry.ownerId === 'char_003_kalts' ? 'Can be healed only by Kal’tsit. ' : entry.config.healFree ? 'Cannot receive ordinary healing. ' : ''}${entry.config.tacticalPoint ? 'Its tactical point stays in place while the reinforcement recovers. ' : ''}Leaves the field when its summoner is removed.</p>
+    ${ammunition ? `<p class="sp-readout">${escape(ammunition.text)} collected</p>` : ''}${recovery}${lifetime ? `<p class="sp-readout">${escape(lifetime.text)}</p><div class="meter active"><span style="width:${lifetime.fraction * 100}%"></span></div>` : ''}<p class="skill-description">${entry.ownerId === 'char_003_kalts' ? 'Can be healed only by Kal’tsit. ' : entry.config.healFree ? 'Cannot receive ordinary healing. ' : ''}${entry.config.tacticalPoint ? 'Its tactical point stays in place while the reinforcement recovers. ' : ''}Leaves the field when its summoner is removed.</p>
     ${unit && skillSourceFor(unit) !== unit
       ? operatorSkillDetails(battle.bench[entry.ownerId].build, skillSourceFor(unit))
       : unit && !unit.skill.noSkill && entry.record.skill ? operatorSkillDetails(battle.bench[entry.ownerId].build, unit,
@@ -521,6 +522,7 @@ function summonDetails(entry) {
 }
 function operatorDetails(build, unit) {
   const record = recordFor(build, data);
+  const ammunition = ammunitionHud(unit);
   const stats = unit?.s;
   const hp = unit?.hp ?? record.stats.maxHp;
   const maxHp = stats?.maxHp ?? record.stats.maxHp;
@@ -534,7 +536,7 @@ function operatorDetails(build, unit) {
     <dl class="operator-stats">${numbers.map(([label, value]) => `<div><dt>${label}</dt><dd>${Math.round(value)}</dd></div>`).join("")}</dl>
     <div class="hp-readout"><span>HP</span><strong>${Math.min(Math.ceil(hp), Math.round(maxHp))} / ${Math.round(maxHp)}</strong></div>
     <div class="meter hp"><span style="width:${Math.min(1, Math.max(0, hp / maxHp)) * 100}%"></span></div>
-    ${rangeDiagram(record.rangeGrid)}`;
+    ${ammunition ? `<p class="sp-readout">${escape(ammunition.text)}</p>` : ''}${rangeDiagram(record.rangeGrid)}`;
 }
 function operatorSkillDetails(build, unit, tokenLevel = null) {
   const hud = unit ? skillHud(unit.skill) : null;

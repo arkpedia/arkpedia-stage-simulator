@@ -172,7 +172,7 @@ for owner, facings in E['officialSkeletonBindings'].items():
             (C / f'ray-source/sandbeast/{TOKEN}.atlas').write_bytes(ar)
 subprocess.check_call(['node','tools/arkpedia/inspect-ray.mjs'],cwd=ROOT,stdout=subprocess.DEVNULL)
 assert json.loads((C / 'ray-source/models.json').read_text()) == E['models']
-assert E['enabledOperators'] == [] and E['heldOperators'] == [ID]
-assert E['runtimeContracts'] == [] and E['holdReasons']
+assert E['enabledOperators'] == [ID] and E['heldOperators'] == []
+assert len(E['runtimeContracts']) == 9 and E['holdReasons'] == [] and len(E['historicalHoldReasons']) == 3
 assert all(E[k] is False for k in ['frameParity','moduleSupport','nativeParticleSupport'])
-print(f'Verified {count} native components, 6 bundles, {len(ts)} templates, 40 ranks, {len(ps)} projectile trees and original Ray/Sandbeast skeleton chains; Ray remains held')
+print(f'Verified {count} native components, 6 bundles, {len(ts)} templates, 40 ranks, {len(ps)} projectile trees and original Ray/Sandbeast skeleton chains; Ray enabled with explicit execution contracts')
