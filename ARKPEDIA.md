@@ -2323,3 +2323,28 @@ Validation:
 - Evidence: `distance-focused-tests.log`, `distance-cache-absent-tests.log`, `distance-render-review.log`, `distance-particle-browser-review.json` and `distance-particle-{desktop,mobile}.png` under the local Lappland source cache. Both screenshots were inspected.
 
 Coverage remains **360/431 forms and 774 skills**, with 71 forms remaining. Lappland is still unavailable in the public roster. No original asset, SD pin, public battle rule or production deployment is changed.
+
+### Lappland controller-to-effect motion bridge
+
+`server/sim/content/arkpedia-lappland-motion.js` now records the private S3 controller's real cruise coordinates through read-only battle hooks. All four original cruise projectile records bind `whitw2_skill_03_token_trail_01`; their corresponding attachment projectiles have no main effect. The recorder checks these bindings before installing hooks. It records births, movement and terminal boundaries for each owner, deployment generation, cast generation and drone slot, including Alpha Wolf's delayed extra drone.
+
+Cruise segments end on attachment. A reappearing drone starts a new segment at time zero, so its source square-offset relocation does not create a connecting trail or false distance births. Skill end, owner retirement, cast restart and battle finish close surviving segments. Same-frame callback retirement/restart cannot retain invalid old drones. Snapshots copy positions immediately instead of retaining mutable drone references; exported data cannot modify combat. Installing after S3 is already running fails explicitly rather than inventing missing birth history. Disposal releases every recorder hook.
+
+```sh
+node tools/arkpedia/record-lappland-motion.mjs
+node --test test/arkpedia-lappland-motion.test.js test/arkpedia-lappland-alter.test.js
+```
+
+The command creates `.cache/arkpedia/lappland-alter-source/battle-motion-replay.json` and `battle-motion-receipt.json`. The deterministic component fixture uses original selected E2/90/P1/S3M3 stats and controller behavior on a deliberately enlarged, flat 19×21 fixture board, with a fixed test RNG and pinned enemies. It captures three cruise paths followed by three reappearance paths: **six tracks, 605 position samples, 8.3 seconds of simulation**. All first-generation drones attach by 5.3 seconds. Both output files reproduce byte-for-byte. The receipt hashes the selected source manifest, MVP input, controller, movement controller, recorder and fixture/generator code.
+
+The original-effect inspector accepts this recording through **Movement JSON**, selects the source cruise root and exposes each recorded segment through **Recorded drone**. Track switching resets the effect clock and recomputes camera framing. Playback stays within the selected recorded interval; a zero-duration segment remains inspectable at time zero with Play disabled. Invalid hashes, bindings, clocks, identities, endpoints or scope claims fail before replacing the current recording. Plain movement arrays and Clear movement retain their previous behavior. **Full path** preserves a fixed inspection camera; optional **Follow effect** keeps the artwork visible at close range without changing particles or combat.
+
+Validation:
+
+- **218 focused checks passed, zero failures/skips**: all 123 private Lappland runtime cases, 83 existing source-effect/decoder/render/importer checks and twelve new motion-bridge checks.
+- New checks verify actual tick coordinates and birth clocks, unchanged combat snapshots/events/RNG, attachment/reappearance boundaries, independent owners, source-generation cleanup, delayed Alpha Wolf births, same-frame reentrant casts, hook disposal, strict parsing and explicit history limits.
+- Software WebGL2 compiles all 23 shader variants and reviews 35 roots across 312 static/clip frames without JavaScript/shader errors.
+- Separate desktop/390px mobile review loads all six recorded segments into the 19-component S3 root, verifies particle world coordinates against rendered positions, finite original trail geometry, reverse scrubbing, track switching, source-hash/clock rejection, Full path/Follow effect, Play/Pause, clear/reload and zero-duration controls. There is no horizontal overflow. Desktop/mobile screenshots were inspected.
+- Evidence: `battle-motion-focused-tests.log`, `battle-motion-render-review.log`, `battle-motion-browser-review.json`, `battle-motion-{desktop,mobile}.png` and the two motion export files in the local Lappland source cache.
+
+This closes the movement-data handoff to the inspector, **not public battle rendering or native fidelity**. The coordinate mapping is board `(x,y)` to effect `(x,0,y)`; native mount-point height, rotation, source-to-camera projection and intermediate compiled motion are not recovered. Cruise/attachment effect lifetime and native FSM timing are still local presentation mappings. The fixture is an actual execution of this simulator's source-bound controller, not a game-client replay or the original 0-1 stage. Native shader/noise/trail/event/RNG fidelity limits remain open. Coverage remains **360/431 forms, 774 skills and 71 remaining forms**. Lappland remains outside the public roster; the existing battle preview and published SD pin are unchanged.

@@ -10,6 +10,7 @@ import {sampleParticleCurve} from '/shared/arkpedia/native-particle-curves.js';
 import {effectMeshColors} from '/shared/arkpedia/native-effect-mesh.js';
 import {createEffectPose} from '/shared/arkpedia/native-effect-pose.js';
 import {createEffectTrail,createEffectTrajectory} from '/shared/arkpedia/native-effect-trail.js';
+import {readLapplandMotionInput} from '/shared/arkpedia/lappland-effect-motion.js';
 const effect=document.querySelector('#effect'),clipSelect=document.querySelector('#clip'),time=document.querySelector('#time');
 const status=document.querySelector('#status'),play=document.querySelector('#play'),host=document.querySelector('#scene');
 const renderer=new T.WebGLRenderer({antialias:true,preserveDrawingBuffer:true});
@@ -19,6 +20,9 @@ const camera=new T.PerspectiveCamera(35,1,.001,100);camera.up.set(0,1,0);
 let pack,animations,shaders,pose,group,playing=false,clock=0,timeWindow=3,last,draws=[],blocked=[],geometries=[],materials=[];
 let trajectory=null;
 let inspectionBounds=null;
+let motionInput=null,motionIndex=0,sourcePackSha256,sourceTimeWindow=3;
+const motionTrack=document.querySelector('#motion-track'),motionLabel=document.querySelector('#motion-track-label');
+const cameraMode=document.querySelector('#camera-mode');
 const textures=new Map(),defaults=new Map(),nodeObjects=new Map();
 const sha=async bytes=>[...new Uint8Array(await crypto.subtle.digest('SHA-256',bytes))].map(b=>b.toString(16).padStart(2,'0')).join('');
 async function bytes(entry){
@@ -200,25 +204,50 @@ async function rebuildRoot(name){
   // off at the old fixed three-second review window.
   const periods=[...pose.nodes.values()].flatMap(n=>(pack.records[n.gameObject].references??[])
     .map(r=>pack.records[r.target]).filter(r=>r?.type==='ParticleSystem').map(r=>r.data.lengthInSec*2));
-  timeWindow=Math.max(3,...periods,...pose.instances.map(i=>animations.clips[i.clip].stop));time.max=String(timeWindow);
+  sourceTimeWindow=Math.max(3,...periods,...pose.instances.map(i=>animations.clips[i.clip].stop));
+  timeWindow=motionInput?.kind==='lappland-s3-battle-motion'?motionInput.tracks[motionIndex].samples.at(-1).time:sourceTimeWindow;time.max=String(timeWindow);
   clock=0;time.value='0';draw();
   group.updateMatrixWorld(true);inspectionBounds=new T.Box3().setFromObject(group);
   if(inspectionBounds.isEmpty())inspectionBounds.set(new T.Vector3(-.25,-.25,-.25),new T.Vector3(.25,.25,.25));
   if(trajectory)inspectionBounds.translate(new T.Vector3().fromArray(trajectory.sample(0)).negate());
   fitCamera();draw();
   updateStatus();
-  globalThis.effectReview={compileResults,pose,draws,blocked,setTime(t){clock=t;time.value=String(t);draw();},setClip(id){clipSelect.value=id;draw();},
-    async selectRoot(name){effect.value=name;await rebuild();},
-    setTrajectory(samples){const next=samples===null?null:createEffectTrajectory(samples);trajectory=next;fitCamera();draw();updateStatus();}};
-  }finally{effect.disabled=clipSelect.disabled=time.disabled=play.disabled=false;}
+  globalThis.effectReview={compileResults,pose,draws,blocked,setTime(t){
+    if(!Number.isFinite(t)||motionInput?.kind==='lappland-s3-battle-motion'&&(t<0||t>timeWindow))throw Error('Outside recorded motion clock');
+    clock=t;time.value=String(t);draw();},setClip(id){clipSelect.value=id;draw();},
+    async selectRoot(name){if(motionInput?.kind==='lappland-s3-battle-motion'&&name!==motionInput.tracks[motionIndex].effect)clearMotion();effect.value=name;await rebuild();},
+    loadMotion:loadMotionInput,
+    setTrajectory(samples){const next=samples===null?null:createEffectTrajectory(samples);clearMotion();trajectory=next;fitCamera();draw();updateStatus();}};
+  }finally{effect.disabled=clipSelect.disabled=false;time.disabled=play.disabled=timeWindow===0;}
+}
+function clearMotion(){
+  motionInput=null;motionIndex=0;trajectory=null;motionTrack.replaceChildren();motionLabel.hidden=true;
+  timeWindow=sourceTimeWindow;time.max=String(timeWindow);time.disabled=play.disabled=false;
+}
+async function loadMotionInput(value){
+  const next=readLapplandMotionInput(value,sourcePackSha256);
+  playing=false;play.textContent='Play';
+  if(next.kind==='movement'){globalThis.effectReview.setTrajectory(next.tracks[0].samples);return;}
+  motionInput=next;motionIndex=0;trajectory=createEffectTrajectory(next.tracks[0].samples);
+  motionTrack.replaceChildren(...next.tracks.map((t,i)=>new Option(`Drone ${t.slot+1} · ${t.start.toFixed(2)}s`,String(i))));motionLabel.hidden=false;
+  effect.value=next.tracks[0].effect;await rebuild();
+}
+function selectMotionTrack(index){
+  if(!motionInput||!Number.isInteger(index)||!motionInput.tracks[index])throw Error('Unknown recorded drone motion');
+  playing=false;play.textContent='Play';motionIndex=index;trajectory=createEffectTrajectory(motionInput.tracks[index].samples);
+  clock=0;time.value='0';timeWindow=motionInput.tracks[index].samples.at(-1).time;time.max=String(timeWindow);time.disabled=play.disabled=timeWindow===0;
+  fitCamera();draw();updateStatus();
 }
 function fitCamera(){
   if(!inspectionBounds)return;
   const bounds=inspectionBounds.clone();
   if(trajectory){
-    const movement=new T.Box3();
-    for(const t of trajectory.times(timeWindow))movement.expandByPoint(new T.Vector3().fromArray(trajectory.sample(t)));
-    bounds.min.add(movement.min);bounds.max.add(movement.max);
+    if(cameraMode.value==='follow')bounds.translate(new T.Vector3().fromArray(trajectory.sample(clock)));
+    else{
+      const movement=new T.Box3();
+      for(const t of trajectory.times(timeWindow))movement.expandByPoint(new T.Vector3().fromArray(trajectory.sample(t)));
+      bounds.min.add(movement.min);bounds.max.add(movement.max);
+    }
   }
   const centre=bounds.getCenter(new T.Vector3()),extent=bounds.getSize(new T.Vector3()).length();
   const size=Number.isFinite(extent)?Math.max(extent,.5):.5;
@@ -229,6 +258,7 @@ function fitCamera(){
 }
 function updateStatus(){
   status.textContent=`${draws.length} original mesh/billboard/trail components inspected. ${blocked.length} components remain unplayed.\nSource-emitter/explicit-clip inspection: sphere/box/straight-cone emission, recorded-distance births, velocity, grid frames and local curl-noise/speed-limit replay with explicit world birth frames. View-aligned stretch trails use original widths, gradients and materials. ${trajectory?'Recorded movement is loaded.':'Load movement JSON to inspect trails; static source poses do not invent a path.'} Other shapes, native script motion and Animator transitions remain unplayed. Distance births interpolate recorded world-position segments; prewarm holds the start pose. Shape RNG/event phases, trail joins/expiry/UV orientation, noise field, timing, native coordinates and color management are not verified against game frames.`;
+  if(motionInput?.kind==='lappland-s3-battle-motion')status.textContent+='\nMotion comes from the private simulator controller; cruise segments end at attachment. Reappearance starts a new segment. Native flight, rotation, mount-point height and FSM timing remain unverified.';
 }
 function samplePose(t){
   const state=pose.sample(t,clipSelect.value||null);
@@ -278,7 +308,7 @@ function draw(){
     if(n.euler)o.quaternion.setFromEuler(new T.Euler(...n.euler.map(v=>v*Math.PI/180),'ZXY'));else o.quaternion.fromArray(n.rotation);
     o.visible=n.visible;
   }
-  group.updateMatrixWorld(true);camera.updateMatrixWorld(true);
+  group.updateMatrixWorld(true);if(cameraMode.value==='follow')fitCamera();camera.updateMatrixWorld(true);
   const birthStates=new Map();
   for(const entry of draws){
     const {component,mesh,emitter,trail,pool,baseColors,baseUVs,transform,particleSource,alignment}=entry;
@@ -352,6 +382,7 @@ let compileResults;
 try{
   const r=await fetch('/review-assets/manifest.json');if(!r.ok)throw Error('Start tools/arkpedia/preview-lappland-effects.mjs to inspect the cached original assets.');
   const meta=await r.json(),raw=await bytes(meta.effects.pack);
+  sourcePackSha256=meta.effects.pack.sha256;
   pack=await new Response(new Blob([raw]).stream().pipeThrough(new DecompressionStream('gzip'))).json();
   animations=JSON.parse(new TextDecoder().decode(await bytes(meta.animations.artifact)));
   shaders=JSON.parse(new TextDecoder().decode(await bytes(meta.shaders.artifact)));
@@ -359,16 +390,18 @@ try{
   for(const name of Object.keys(pack.roots))effect.add(new Option(name.replace('whitw2_',''),name));
   effect.value='whitw2_token_01';await rebuild();
   effect.disabled=clipSelect.disabled=time.disabled=play.disabled=false;
-  effect.onchange=async()=>{playing=false;play.textContent='Play';await rebuild();};
+  effect.onchange=async()=>{playing=false;play.textContent='Play';if(motionInput?.kind==='lappland-s3-battle-motion')clearMotion();await rebuild();};
   clipSelect.onchange=()=>{playing=false;play.textContent='Play';clock=0;time.value='0';draw();};
   time.oninput=()=>{playing=false;play.textContent='Play';clock=Number(time.value);draw();};
   play.onclick=()=>{playing=!playing;play.textContent=playing?'Pause':'Play';last=undefined;};
   document.querySelector('#movement').onchange=async e=>{
     const file=e.target.files[0];if(!file)return;
-    try{if(file.size>2000000)throw Error('Movement JSON exceeds 2 MB');globalThis.effectReview.setTrajectory(JSON.parse(await file.text()));}
+    try{if(file.size>2000000)throw Error('Movement JSON exceeds 2 MB');await loadMotionInput(JSON.parse(await file.text()));}
     catch(error){status.textContent=error.message;}
   };
   document.querySelector('#clear-movement').onclick=()=>{globalThis.effectReview.setTrajectory(null);document.querySelector('#movement').value='';};
+  motionTrack.onchange=()=>selectMotionTrack(Number(motionTrack.value));
+  cameraMode.onchange=()=>{fitCamera();draw();};
   function frame(now){if(playing){clock=(clock+(last===undefined?0:(now-last)/1000))%timeWindow;time.value=String(clock);draw();}last=now;requestAnimationFrame(frame);}requestAnimationFrame(frame);
 }catch(e){status.textContent=e.message;console.error(e);}
 addEventListener('pagehide',()=>{observer.disconnect();renderer.dispose();for(const m of materials)m.dispose();for(const g of geometries)g.dispose();for(const t of [...textures.values(),...defaults.values()])t.dispose();},{once:true});
