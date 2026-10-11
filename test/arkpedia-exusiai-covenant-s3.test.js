@@ -29,7 +29,7 @@ function owner(b,{rank=10,elite=2,level=e.tables.character.phases[elite].maxLeve
   b.on('exusiaiCovenantBombBirth',ctx=>{if(ctx.owner===u)bombs.push({...ctx,time:b.time});});
   b.on('damaged',ctx=>{if(ctx.source===u)hits.push({...ctx,time:b.time});});
   b.on('attack',ctx=>{if(ctx.attacker===u)attacks.push({...ctx,time:b.time});});
-  
+
   const deploy=()=>{u.player.dp=99;assert.ok(b._deploy(u,{initial:false}));u.player.dp=99;};if(!defer)deploy();
   return {b,u,build,deploy,hits,attacks,births,bombs,...prepared};
 }
@@ -236,4 +236,3 @@ test('battle finish clears all born projectiles and detached S3 command state',(
   assert.equal(shots(f).length,0);assert.equal(f.controller.stopped,true);assert.equal(f.controller.phase,null);
   assert.equal(f.b.projectiles.list.filter(p=>p.data?.exusiaiCovenantOwner===f.controller).length,0);
 });
-
