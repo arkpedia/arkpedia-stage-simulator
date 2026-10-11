@@ -236,8 +236,8 @@ export function installGuardExpansion({ battle, unit, def }) {
       const target = c.unit;
       battle._unblock(target);
       battle.addBuff(target, { key: 'cripple', source: unit,
-        mods: { moveMul: 1 + talent.bb.move_speed, blockCntMul: 0 },
-        flags: { disarm: true, healFree: true, unblockable: true },
+        mods: { moveMul: 1 + talent.bb.move_speed, blockCntMul: 0, hpRegenMul: 0 },
+        flags: { disarm: true, healFree: true, noHpRecovery: true, unblockable: true },
         interval: talent.bb.interval, onTick: () => {
           if (!target.hidden) battle.kill(target, null);
         }, data: { sp: talent.bb.sp } });

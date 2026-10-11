@@ -1387,7 +1387,9 @@ export class Battle {
         if (regen > 0 && u.hp < u.s.maxHp) {
           u._regenAcc = (u._regenAcc ?? 0) + regen * dt;
           if (u._regenAcc >= 1 || u.hp + u._regenAcc >= u.s.maxHp) {
-            this.heal(u, u, u._regenAcc, { self: true, silent: true, regen: true });
+            // HP_RECOVERY_PER_SEC is an attribute update, not a heal modifier
+            // output. It bypasses healing multipliers and output-heal listeners.
+            this.heal(u, u, u._regenAcc, { self: true, silent: true, regen: true, skipModifierEvent: true });
             u._regenAcc = 0;
           }
         }
