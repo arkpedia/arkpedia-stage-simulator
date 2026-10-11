@@ -8,6 +8,7 @@ import { bodyInKeys, bodyInRadius } from '../body.js';
 import { applyHpLoss, makeDamageInfo } from '../damage.js';
 import { EXUSIAI_COVENANT_S1_CONTRACT, ExusiaiCovenantS1 } from './arkpedia-exusiai-covenant-s1.js';
 import { EXUSIAI_COVENANT_S2_CONTRACT, ExusiaiCovenantS2 } from './arkpedia-exusiai-covenant-s2.js';
+import { EXUSIAI_COVENANT_S3_CONTRACT, ExusiaiCovenantS3 } from './arkpedia-exusiai-covenant-s3.js';
 
 export const EXUSIAI_COVENANT_ID = 'char_1041_angel2';
 export const EXUSIAI_COVENANT_CORE_CONTRACT = Object.freeze({
@@ -146,6 +147,7 @@ export class ExusiaiCovenantCoreController {
     }, { owner: u });
   }
   release(t, info) {
+    if (this.phase?.kind === 's3-attack') return this.s3?.release(t, info) ?? false;
     if (this.phase?.kind === 's2-attack') return this.s2?.release(t, info) ?? false;
     if (this.s1?.burst?.accepting) return this.s1.releaseBurst(t, info);
     if (this.phase?.kind === 's1-attack') return this.s1?.release(t, info) ?? false;
@@ -177,9 +179,10 @@ export class ExusiaiCovenantCoreController {
       applyHpLoss(b, u, u, amount,
         makeDamageInfo({ amount, type: 'true', noSp: true, isAttack: true, tags: ['angel2:drain'] }));
     }
-    if (u.hidden) { this.phase = null; this.s1?.hidden(); return; }
+    if (u.hidden) { this.phase = null; this.s1?.hidden(); this.s3?.hidden(); return; }
     if (this.s1?.tick()) return;
     if (this.s2?.tick()) return;
+    if (this.s3?.tick()) return;
     let p = this.phase;
     if (p?.kind === 'entrance') { if (b.time + 1e-9 < p.readyAt) return; this.phase = null; p = null; }
     if (!u.canAct || u.s.flags.disarm || p && p.epoch !== u.attackControlEpoch) {
@@ -285,5 +288,31 @@ export function prepareExusiaiCovenantS2(b, u, { contract } = {}) {
     trigger: { rule: 'NEVER' }, manualCancel: true, attack: {},
     canActivate: () => controller.s2.canCast(), onStart: () => controller.s2.start(),
     onEnd: ctx => controller.s2.end(ctx.reason) };
+  return prepared;
+}
+
+export function prepareExusiaiCovenantS3(b, u, { contract } = {}) {
+  if (contract !== EXUSIAI_COVENANT_S3_CONTRACT) throw Error('Exusiai Covenant S3 requires the reviewed skill contract');
+  const record = validate(u, EXUSIAI_COVENANT_CORE_CONTRACT);
+  if (record.index !== 2) throw Error('Exusiai Covenant S3 requires the selected third skill');
+  for (const id of ['7303740197574534383', '-700871714258295569']) {
+    const a = component(id);
+    if (a._waitForAttackEvent !== 1 || a._useCachedAtkOnly !== 0 || a._maxAnimScale !== 1
+      || a._additionalTimes !== 4 || a._triggerDelta !== .10000000149011612
+      || a._waitAttackEventForAllAttacks !== 0 || a._limitToOneTargetAfterFirstRound !== 0
+      || a._interruptAbilityOnDetach !== 1) throw Error('Unreviewed Exusiai Covenant S3 volley');
+  }
+  if (component('-3515024303529728785')._expendPerTrigger !== 5
+    || component('-1444526159829080849')._expendPerTrigger !== 5
+    || component('2275396499278483937')._speed !== 30
+    || component('5276092084022503678')._canDiscardRemainingCount !== 1)
+    throw Error('Unreviewed Exusiai Covenant S3 ammunition');
+  const prepared = prepareExusiaiCovenantCore(b, u, { contract: EXUSIAI_COVENANT_CORE_CONTRACT });
+  const { controller, kit } = prepared;
+  controller.s3 = new ExusiaiCovenantS3(controller);
+  kit.skill = { kind: 'ammo', ammo: record.bb['attack@trigger_time'], duration: 0,
+    trigger: { rule: 'NEVER' }, manualCancel: true, attack: {}, mods: { atkPct: record.bb.atk },
+    canActivate: () => controller.s3.canCast(), onStart: () => controller.s3.start(),
+    onAttack: ctx => controller.s3.consume(ctx), onEnd: ctx => controller.s3.end(ctx.reason) };
   return prepared;
 }
