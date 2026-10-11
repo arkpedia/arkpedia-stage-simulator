@@ -61855,6 +61855,239 @@
           "height": 577.833
         }
       },
+      "operator/char_2025_shu/default/front": {
+        "kind": "operator",
+        "id": "char_2025_shu",
+        "variant": "default",
+        "facing": "front",
+        "spineVersion": "3.8.99",
+        "source": {
+          "key": "operators",
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "spine/char_2025_shu/char_2025_shu/Front"
+        },
+        "skeleton": {
+          "path": "models/operator/char_2025_shu/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_2025_shu.skel",
+          "bytes": 522905,
+          "sha256": "b67207dc8e1ec895afd602803ace1922401edb19bafe3277ca50821d88e73507"
+        },
+        "atlas": {
+          "path": "models/operator/char_2025_shu/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_2025_shu.atlas",
+          "bytes": 12311,
+          "sha256": "f98a88da86be205b416f443e766328fc60992f705be0466e85c01d685786992c"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_2025_shu/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_2025_shu.png",
+            "bytes": 438449,
+            "sha256": "716f4f625eb153395225cfc258a92e936ec666d6963fcc7572cd45194363a5e7"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Attack_1": 1.2,
+          "Attack_2": 1.3,
+          "Default": 0,
+          "Die": 1,
+          "Idle": 4,
+          "Skill_2_Attack": 1.3,
+          "Skill_2_Begin": 0.267,
+          "Skill_2_End": 0.267,
+          "Skill_2_Idle": 4,
+          "Skill_3_Attack_1": 1.2,
+          "Skill_3_Attack_2": 1.3,
+          "Skill_3_Begin": 0.167,
+          "Skill_3_End": 0.5,
+          "Skill_3_Idle": 4,
+          "Start": 1
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": null,
+            "loop": "Attack_1",
+            "end": null,
+            "via": "attackAny"
+          },
+          "attackDown": null,
+          "skill": {
+            "begin": null,
+            "loop": "Attack_1",
+            "end": null,
+            "via": "attack",
+            "index": 0,
+            "idle": null
+          },
+          "die": "Die",
+          "move": null,
+          "stun": null,
+          "skills": {
+            "0": {
+              "begin": null,
+              "loop": "Attack_1",
+              "end": null,
+              "via": "attack",
+              "index": 0,
+              "idle": null
+            },
+            "1": {
+              "begin": "Skill_2_Begin",
+              "loop": "Skill_2_Attack",
+              "end": "Skill_2_End",
+              "index": 1,
+              "idle": "Skill_2_Idle"
+            },
+            "2": {
+              "begin": "Skill_3_Begin",
+              "loop": "Skill_3_Attack_1",
+              "end": "Skill_3_End",
+              "index": 2,
+              "idle": "Skill_3_Idle"
+            }
+          }
+        },
+        "hits": {
+          "Attack_1": [
+            0.533
+          ],
+          "Attack_2": [
+            0.533
+          ],
+          "Skill_2_Attack": [
+            0.533
+          ],
+          "Skill_3_Attack_1": [
+            0.533
+          ],
+          "Skill_3_Attack_2": [
+            0.533
+          ]
+        },
+        "bounds": {
+          "x": -323.212,
+          "y": -5.138,
+          "width": 582.824,
+          "height": 715.616
+        }
+      },
+      "operator/char_2025_shu/default/back": {
+        "kind": "operator",
+        "id": "char_2025_shu",
+        "variant": "default",
+        "facing": "back",
+        "spineVersion": "3.8.99",
+        "source": {
+          "key": "operators",
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "spine/char_2025_shu/char_2025_shu/Back"
+        },
+        "skeleton": {
+          "path": "models/operator/char_2025_shu/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_2025_shu.skel",
+          "bytes": 327042,
+          "sha256": "b7255c1d3ee42ef19f9bb9aefd0caf990fee227c2dc7a2485743a88ad3d69061"
+        },
+        "atlas": {
+          "path": "models/operator/char_2025_shu/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_2025_shu.atlas",
+          "bytes": 8575,
+          "sha256": "91cb7c6950de3b703fa333aa3d636158688719701a884dc1beb74ee53e735263"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_2025_shu/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_2025_shu.png",
+            "bytes": 356332,
+            "sha256": "cb4fda6a73cd9d33738dea05bf39210b8a8ce5a102c9dcd2c8f494f777da359c"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Attack_1": 1.2,
+          "Attack_2": 1.3,
+          "Default": 0,
+          "Idle": 4,
+          "Skill_2_Attack": 1.3,
+          "Skill_2_Begin": 0.267,
+          "Skill_2_End": 0.267,
+          "Skill_2_Idle": 4,
+          "Skill_3_Attack_1": 1.2,
+          "Skill_3_Attack_2": 1.3,
+          "Skill_3_Begin": 0.167,
+          "Skill_3_End": 0.167,
+          "Skill_3_Idle": 4,
+          "Start": 1
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": null,
+            "loop": "Attack_1",
+            "end": null,
+            "via": "attackAny"
+          },
+          "attackDown": null,
+          "skill": {
+            "begin": null,
+            "loop": "Attack_1",
+            "end": null,
+            "via": "attack",
+            "index": 0,
+            "idle": null
+          },
+          "die": null,
+          "move": null,
+          "stun": null,
+          "skills": {
+            "0": {
+              "begin": null,
+              "loop": "Attack_1",
+              "end": null,
+              "via": "attack",
+              "index": 0,
+              "idle": null
+            },
+            "1": {
+              "begin": "Skill_2_Begin",
+              "loop": "Skill_2_Attack",
+              "end": "Skill_2_End",
+              "index": 1,
+              "idle": "Skill_2_Idle"
+            },
+            "2": {
+              "begin": "Skill_3_Begin",
+              "loop": "Skill_3_Attack_1",
+              "end": "Skill_3_End",
+              "index": 2,
+              "idle": "Skill_3_Idle"
+            }
+          }
+        },
+        "hits": {
+          "Attack_1": [
+            0.533
+          ],
+          "Attack_2": [
+            0.533
+          ],
+          "Skill_2_Attack": [
+            0.533
+          ],
+          "Skill_3_Attack_1": [
+            0.533
+          ],
+          "Skill_3_Attack_2": [
+            0.533
+          ]
+        },
+        "bounds": {
+          "x": -323.212,
+          "y": -5.138,
+          "width": 582.824,
+          "height": 715.616
+        }
+      },
       "operator/char_4027_heyak/default/front": {
         "kind": "operator",
         "id": "char_4027_heyak",
@@ -545138,6 +545371,3476 @@
             }
           ]
         }
+      ]
+    },
+    "char_2025_shu": {
+      "id": "char_2025_shu",
+      "name": "Shu",
+      "description": "Can heal allies by using skill(s)",
+      "rarity": 6,
+      "profession": "TANK",
+      "subProfessionId": "guardian",
+      "position": "MELEE",
+      "nationId": "yan",
+      "groupId": "sui",
+      "teamId": null,
+      "phases": [
+        {
+          "maxLevel": 50,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 1334,
+                "atk": 203,
+                "def": 250,
+                "magicResistance": 10,
+                "cost": 18,
+                "blockCnt": 2,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.2,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 50,
+              "data": {
+                "maxHp": 1804,
+                "atk": 290,
+                "def": 369,
+                "magicResistance": 10,
+                "cost": 18,
+                "blockCnt": 2,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.2,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ]
+          ]
+        },
+        {
+          "maxLevel": 80,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 1804,
+                "atk": 290,
+                "def": 369,
+                "magicResistance": 10,
+                "cost": 20,
+                "blockCnt": 3,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.2,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 80,
+              "data": {
+                "maxHp": 2313,
+                "atk": 392,
+                "def": 493,
+                "magicResistance": 10,
+                "cost": 20,
+                "blockCnt": 3,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.2,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ]
+          ]
+        },
+        {
+          "maxLevel": 90,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 2313,
+                "atk": 392,
+                "def": 493,
+                "magicResistance": 10,
+                "cost": 22,
+                "blockCnt": 3,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.2,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 90,
+              "data": {
+                "maxHp": 3213,
+                "atk": 479,
+                "def": 602,
+                "magicResistance": 10,
+                "cost": 22,
+                "blockCnt": 3,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.2,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ]
+          ]
+        }
+      ],
+      "favorKeyFrames": [
+        {
+          "level": 0,
+          "data": {
+            "maxHp": 0,
+            "atk": 0,
+            "def": 0,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false
+          }
+        },
+        {
+          "level": 50,
+          "data": {
+            "maxHp": 0,
+            "atk": 50,
+            "def": 60,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false
+          }
+        }
+      ],
+      "potentialRanks": [
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "MAX_HP",
+            "formulaItem": "ADDITION",
+            "value": 200,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "ATK",
+            "formulaItem": "ADDITION",
+            "value": 25,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [],
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ]
+      ],
+      "trait": null,
+      "talents": [
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Myriad Grains, Everlasting",
+              "description": "When healing an Operator, sows seeds on that tile and the adjacent 4 tiles, bestowing the following effects: Restores 40 HP/s, grants 5% <$ba.protect>Sanctuary</>",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "hp_recovery_per_sec",
+                  "value": 40,
+                  "valueStr": null
+                },
+                {
+                  "key": "damage_resistance",
+                  "value": 0.05,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 1
+              },
+              "requiredPotentialRank": 4,
+              "prefabKey": "1",
+              "name": "Myriad Grains, Everlasting",
+              "description": "When healing an Operator, sows seeds on that tile and the adjacent 4 tiles, bestowing the following effects: Restores 45 <@ba.talpu>(+5)</> HP/s, grants 7% <@ba.talpu>(+2%)</> <$ba.protect>Sanctuary</>",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "hp_recovery_per_sec",
+                  "value": 45,
+                  "valueStr": null
+                },
+                {
+                  "key": "damage_resistance",
+                  "value": 0.07,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Myriad Grains, Everlasting",
+              "description": "When healing an Operator, sows seeds on that tile and the adjacent 4 tiles, bestowing the following effects: Restores 70 HP/s, grants 10% <$ba.protect>Sanctuary</>",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "hp_recovery_per_sec",
+                  "value": 70,
+                  "valueStr": null
+                },
+                {
+                  "key": "damage_resistance",
+                  "value": 0.1,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 4,
+              "prefabKey": "1",
+              "name": "Myriad Grains, Everlasting",
+              "description": "When healing an Operator, sows seeds on that tile and the adjacent 4 tiles, bestowing the following effects: Restores 75 <@ba.talpu>(+5)</> HP/s, grants 12% <@ba.talpu>(+2%)</> <$ba.protect>Sanctuary</>",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "hp_recovery_per_sec",
+                  "value": 75,
+                  "valueStr": null
+                },
+                {
+                  "key": "damage_resistance",
+                  "value": 0.12,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            }
+          ]
+        },
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "2",
+              "name": "From Seasons Fourfold",
+              "description": "If there are Operators with at least 3 different classes on the field, all Operators gain +12% Max HP; if there are at least 3 Operators with the same class on the field, all Operators gain +12 ASPD; if there are at least 4 [Sui] Operators in the squad, all Operators gain +12% ATK, and 1 SP every 4 seconds",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "max_hp",
+                  "value": 0.12,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack_speed",
+                  "value": 12,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.12,
+                  "valueStr": null
+                },
+                {
+                  "key": "interval",
+                  "value": 4,
+                  "valueStr": null
+                },
+                {
+                  "key": "sp",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            }
+          ]
+        }
+      ],
+      "skills": [
+        {
+          "id": "skchr_shu_1",
+          "unlockCondition": {
+            "phase": "PHASE_0",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "Verdant Wisdom",
+              "rangeId": "x-4",
+              "description": "The next attack restores HP equal to <@ba.vup>{heal_scale:0%}</> ATK to a nearby friendly unit with less than 50% HP\n<@ba.rem>Can store {ct} charge(s)</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 6,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_shu_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "heal_scale",
+                  "value": 1.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "ct",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Verdant Wisdom",
+              "rangeId": "x-4",
+              "description": "The next attack restores HP equal to <@ba.vup>{heal_scale:0%}</> ATK to a nearby friendly unit with less than 50% HP\n<@ba.rem>Can store {ct} charge(s)</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 6,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_shu_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "heal_scale",
+                  "value": 1.15,
+                  "valueStr": null
+                },
+                {
+                  "key": "ct",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Verdant Wisdom",
+              "rangeId": "x-4",
+              "description": "The next attack restores HP equal to <@ba.vup>{heal_scale:0%}</> ATK to a nearby friendly unit with less than 50% HP\n<@ba.rem>Can store {ct} charge(s)</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 6,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_shu_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "heal_scale",
+                  "value": 1.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "ct",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Verdant Wisdom",
+              "rangeId": "x-4",
+              "description": "The next attack restores HP equal to <@ba.vup>{heal_scale:0%}</> ATK to a nearby friendly unit with less than 50% HP\n<@ba.rem>Can store {ct} charge(s)</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 5,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_shu_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "heal_scale",
+                  "value": 1.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "ct",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Verdant Wisdom",
+              "rangeId": "x-4",
+              "description": "The next attack restores HP equal to <@ba.vup>{heal_scale:0%}</> ATK to a nearby friendly unit with less than 50% HP\n<@ba.rem>Can store {ct} charge(s)</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 5,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_shu_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "heal_scale",
+                  "value": 1.35,
+                  "valueStr": null
+                },
+                {
+                  "key": "ct",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Verdant Wisdom",
+              "rangeId": "x-4",
+              "description": "The next attack restores HP equal to <@ba.vup>{heal_scale:0%}</> ATK to a nearby friendly unit with less than 50% HP\n<@ba.rem>Can store {ct} charge(s)</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 5,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_shu_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "heal_scale",
+                  "value": 1.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "ct",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Verdant Wisdom",
+              "rangeId": "x-4",
+              "description": "The next attack restores HP equal to <@ba.vup>{heal_scale:0%}</> ATK to a nearby friendly unit with less than 50% HP\n<@ba.rem>Can store {ct} charge(s)</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 2,
+                "spCost": 5,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_shu_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "heal_scale",
+                  "value": 1.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "ct",
+                  "value": 2,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Verdant Wisdom",
+              "rangeId": "x-4",
+              "description": "The next attack restores HP equal to <@ba.vup>{heal_scale:0%}</> ATK to a nearby friendly unit with less than 50% HP\n<@ba.rem>Can store {ct} charge(s)</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 2,
+                "spCost": 4,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_shu_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "heal_scale",
+                  "value": 1.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "ct",
+                  "value": 2,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Verdant Wisdom",
+              "rangeId": "x-4",
+              "description": "The next attack restores HP equal to <@ba.vup>{heal_scale:0%}</> ATK to a nearby friendly unit with less than 50% HP\n<@ba.rem>Can store {ct} charge(s)</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 2,
+                "spCost": 4,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_shu_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "heal_scale",
+                  "value": 1.7,
+                  "valueStr": null
+                },
+                {
+                  "key": "ct",
+                  "value": 2,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Verdant Wisdom",
+              "rangeId": "x-4",
+              "description": "The next attack restores HP equal to <@ba.vup>{heal_scale:0%}</> ATK to a nearby friendly unit with less than 50% HP\n<@ba.rem>Can store {ct} charge(s)</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 3,
+                "spCost": 4,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_shu_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "heal_scale",
+                  "value": 1.8,
+                  "valueStr": null
+                },
+                {
+                  "key": "ct",
+                  "value": 3,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "id": "skchr_shu_2",
+          "unlockCondition": {
+            "phase": "PHASE_1",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "Bountiful Harvest",
+              "rangeId": "x-1",
+              "description": "<@ba.vdown>Stops</> attacking to focus on healing up to <@ba.vup>2</> allied units within range; ATK <@ba.vup>+{atk:0%}</>, Block <@ba.vup>+{block_cnt}</>, Talent 1 effect increases to <@ba.vup>{extra_extend_scale}</> x\n<@ba.rem>Heals will use a special attack interval</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 40,
+                "initSp": 10,
+                "increment": 1
+              },
+              "prefabId": "skchr_shu_2",
+              "duration": 25,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "extra_extend_scale",
+                  "value": 1.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "block_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_target",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": 1.3,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  2,
+                  0
+                ],
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -2
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -2,
+                  0
+                ]
+              ]
+            },
+            {
+              "name": "Bountiful Harvest",
+              "rangeId": "x-1",
+              "description": "<@ba.vdown>Stops</> attacking to focus on healing up to <@ba.vup>2</> allied units within range; ATK <@ba.vup>+{atk:0%}</>, Block <@ba.vup>+{block_cnt}</>, Talent 1 effect increases to <@ba.vup>{extra_extend_scale}</> x\n<@ba.rem>Heals will use a special attack interval</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 40,
+                "initSp": 10,
+                "increment": 1
+              },
+              "prefabId": "skchr_shu_2",
+              "duration": 25,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "extra_extend_scale",
+                  "value": 1.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "block_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_target",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": 1.3,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  2,
+                  0
+                ],
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -2
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -2,
+                  0
+                ]
+              ]
+            },
+            {
+              "name": "Bountiful Harvest",
+              "rangeId": "x-1",
+              "description": "<@ba.vdown>Stops</> attacking to focus on healing up to <@ba.vup>2</> allied units within range; ATK <@ba.vup>+{atk:0%}</>, Block <@ba.vup>+{block_cnt}</>, Talent 1 effect increases to <@ba.vup>{extra_extend_scale}</> x\n<@ba.rem>Heals will use a special attack interval</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 40,
+                "initSp": 10,
+                "increment": 1
+              },
+              "prefabId": "skchr_shu_2",
+              "duration": 25,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "extra_extend_scale",
+                  "value": 1.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "block_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_target",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": 1.3,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  2,
+                  0
+                ],
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -2
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -2,
+                  0
+                ]
+              ]
+            },
+            {
+              "name": "Bountiful Harvest",
+              "rangeId": "x-1",
+              "description": "<@ba.vdown>Stops</> attacking to focus on healing up to <@ba.vup>2</> allied units within range; ATK <@ba.vup>+{atk:0%}</>, Block <@ba.vup>+{block_cnt}</>, Talent 1 effect increases to <@ba.vup>{extra_extend_scale}</> x\n<@ba.rem>Heals will use a special attack interval</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 35,
+                "initSp": 15,
+                "increment": 1
+              },
+              "prefabId": "skchr_shu_2",
+              "duration": 25,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "extra_extend_scale",
+                  "value": 1.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "block_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_target",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": 1.3,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  2,
+                  0
+                ],
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -2
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -2,
+                  0
+                ]
+              ]
+            },
+            {
+              "name": "Bountiful Harvest",
+              "rangeId": "x-1",
+              "description": "<@ba.vdown>Stops</> attacking to focus on healing up to <@ba.vup>2</> allied units within range; ATK <@ba.vup>+{atk:0%}</>, Block <@ba.vup>+{block_cnt}</>, Talent 1 effect increases to <@ba.vup>{extra_extend_scale}</> x\n<@ba.rem>Heals will use a special attack interval</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 35,
+                "initSp": 15,
+                "increment": 1
+              },
+              "prefabId": "skchr_shu_2",
+              "duration": 25,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.7,
+                  "valueStr": null
+                },
+                {
+                  "key": "extra_extend_scale",
+                  "value": 1.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "block_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_target",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": 1.3,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  2,
+                  0
+                ],
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -2
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -2,
+                  0
+                ]
+              ]
+            },
+            {
+              "name": "Bountiful Harvest",
+              "rangeId": "x-1",
+              "description": "<@ba.vdown>Stops</> attacking to focus on healing up to <@ba.vup>2</> allied units within range; ATK <@ba.vup>+{atk:0%}</>, Block <@ba.vup>+{block_cnt}</>, Talent 1 effect increases to <@ba.vup>{extra_extend_scale}</> x\n<@ba.rem>Heals will use a special attack interval</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 35,
+                "initSp": 15,
+                "increment": 1
+              },
+              "prefabId": "skchr_shu_2",
+              "duration": 25,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.8,
+                  "valueStr": null
+                },
+                {
+                  "key": "extra_extend_scale",
+                  "value": 1.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "block_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_target",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": 1.3,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  2,
+                  0
+                ],
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -2
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -2,
+                  0
+                ]
+              ]
+            },
+            {
+              "name": "Bountiful Harvest",
+              "rangeId": "x-1",
+              "description": "<@ba.vdown>Stops</> attacking to focus on healing up to <@ba.vup>2</> allied units within range; ATK <@ba.vup>+{atk:0%}</>, Block <@ba.vup>+{block_cnt}</>, Talent 1 effect increases to <@ba.vup>{extra_extend_scale}</> x\n<@ba.rem>Heals will use a special attack interval</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 30,
+                "initSp": 20,
+                "increment": 1
+              },
+              "prefabId": "skchr_shu_2",
+              "duration": 25,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.9,
+                  "valueStr": null
+                },
+                {
+                  "key": "extra_extend_scale",
+                  "value": 1.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "block_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_target",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": 1.3,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  2,
+                  0
+                ],
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -2
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -2,
+                  0
+                ]
+              ]
+            },
+            {
+              "name": "Bountiful Harvest",
+              "rangeId": "x-1",
+              "description": "<@ba.vdown>Stops</> attacking to focus on healing up to <@ba.vup>2</> allied units within range; ATK <@ba.vup>+{atk:0%}</>, Block <@ba.vup>+{block_cnt}</>, Talent 1 effect increases to <@ba.vup>{extra_extend_scale}</> x\n<@ba.rem>Heals will use a special attack interval</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 30,
+                "initSp": 20,
+                "increment": 1
+              },
+              "prefabId": "skchr_shu_2",
+              "duration": 25,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "extra_extend_scale",
+                  "value": 1.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "block_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_target",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": 1.3,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  2,
+                  0
+                ],
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -2
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -2,
+                  0
+                ]
+              ]
+            },
+            {
+              "name": "Bountiful Harvest",
+              "rangeId": "x-1",
+              "description": "<@ba.vdown>Stops</> attacking to focus on healing up to <@ba.vup>2</> allied units within range; ATK <@ba.vup>+{atk:0%}</>, Block <@ba.vup>+{block_cnt}</>, Talent 1 effect increases to <@ba.vup>{extra_extend_scale}</> x\n<@ba.rem>Heals will use a special attack interval</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 30,
+                "initSp": 20,
+                "increment": 1
+              },
+              "prefabId": "skchr_shu_2",
+              "duration": 25,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 1.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "extra_extend_scale",
+                  "value": 1.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "block_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_target",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": 1.3,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  2,
+                  0
+                ],
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -2
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -2,
+                  0
+                ]
+              ]
+            },
+            {
+              "name": "Bountiful Harvest",
+              "rangeId": "x-1",
+              "description": "<@ba.vdown>Stops</> attacking to focus on healing up to <@ba.vup>2</> allied units within range; ATK <@ba.vup>+{atk:0%}</>, Block <@ba.vup>+{block_cnt}</>, Talent 1 effect increases to <@ba.vup>{extra_extend_scale}</> x\n<@ba.rem>Heals will use a special attack interval</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 25,
+                "initSp": 20,
+                "increment": 1
+              },
+              "prefabId": "skchr_shu_2",
+              "duration": 25,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 1.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "extra_extend_scale",
+                  "value": 1.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "block_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_target",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": 1.3,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  2,
+                  0
+                ],
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -2
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -2,
+                  0
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "id": "skchr_shu_3",
+          "unlockCondition": {
+            "phase": "PHASE_2",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "Samsara",
+              "rangeId": "x-2",
+              "description": "Healing range <@ba.vup>expands</>, attacks now also heal allied Operators, and ATK <@ba.vup>+{atk:0%}</>. If there are ground enemies on sowed tiles, all allied units within skill range gain <@ba.vup>+{e_atk:0%}</> ATK and <@ba.vup>+{e_attack_speed}</> ASPD; When an enemy passes through a sowed tile, it gains the following effect: Teleport back to this location after moving more than <@ba.vup>{max_distance}</> tile(s) away",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 60,
+                "initSp": 20,
+                "increment": 1
+              },
+              "prefabId": "skchr_shu_3",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "e_atk",
+                  "value": 0.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "e_attack_speed",
+                  "value": 10,
+                  "valueStr": null
+                },
+                {
+                  "key": "e_max_stack_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_distance",
+                  "value": 4,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  2,
+                  -1
+                ],
+                [
+                  2,
+                  0
+                ],
+                [
+                  2,
+                  1
+                ],
+                [
+                  1,
+                  -2
+                ],
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  -2
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  -2
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ],
+                [
+                  -2,
+                  -1
+                ],
+                [
+                  -2,
+                  0
+                ],
+                [
+                  -2,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Samsara",
+              "rangeId": "x-2",
+              "description": "Healing range <@ba.vup>expands</>, attacks now also heal allied Operators, and ATK <@ba.vup>+{atk:0%}</>. If there are ground enemies on sowed tiles, all allied units within skill range gain <@ba.vup>+{e_atk:0%}</> ATK and <@ba.vup>+{e_attack_speed}</> ASPD; When an enemy passes through a sowed tile, it gains the following effect: Teleport back to this location after moving more than <@ba.vup>{max_distance}</> tile(s) away",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 60,
+                "initSp": 20,
+                "increment": 1
+              },
+              "prefabId": "skchr_shu_3",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.14,
+                  "valueStr": null
+                },
+                {
+                  "key": "e_atk",
+                  "value": 0.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "e_attack_speed",
+                  "value": 10,
+                  "valueStr": null
+                },
+                {
+                  "key": "e_max_stack_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_distance",
+                  "value": 4,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  2,
+                  -1
+                ],
+                [
+                  2,
+                  0
+                ],
+                [
+                  2,
+                  1
+                ],
+                [
+                  1,
+                  -2
+                ],
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  -2
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  -2
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ],
+                [
+                  -2,
+                  -1
+                ],
+                [
+                  -2,
+                  0
+                ],
+                [
+                  -2,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Samsara",
+              "rangeId": "x-2",
+              "description": "Healing range <@ba.vup>expands</>, attacks now also heal allied Operators, and ATK <@ba.vup>+{atk:0%}</>. If there are ground enemies on sowed tiles, all allied units within skill range gain <@ba.vup>+{e_atk:0%}</> ATK and <@ba.vup>+{e_attack_speed}</> ASPD; When an enemy passes through a sowed tile, it gains the following effect: Teleport back to this location after moving more than <@ba.vup>{max_distance}</> tile(s) away",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 60,
+                "initSp": 20,
+                "increment": 1
+              },
+              "prefabId": "skchr_shu_3",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.18,
+                  "valueStr": null
+                },
+                {
+                  "key": "e_atk",
+                  "value": 0.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "e_attack_speed",
+                  "value": 10,
+                  "valueStr": null
+                },
+                {
+                  "key": "e_max_stack_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_distance",
+                  "value": 4,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  2,
+                  -1
+                ],
+                [
+                  2,
+                  0
+                ],
+                [
+                  2,
+                  1
+                ],
+                [
+                  1,
+                  -2
+                ],
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  -2
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  -2
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ],
+                [
+                  -2,
+                  -1
+                ],
+                [
+                  -2,
+                  0
+                ],
+                [
+                  -2,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Samsara",
+              "rangeId": "x-2",
+              "description": "Healing range <@ba.vup>expands</>, attacks now also heal allied Operators, and ATK <@ba.vup>+{atk:0%}</>. If there are ground enemies on sowed tiles, all allied units within skill range gain <@ba.vup>+{e_atk:0%}</> ATK and <@ba.vup>+{e_attack_speed}</> ASPD; When an enemy passes through a sowed tile, it gains the following effect: Teleport back to this location after moving more than <@ba.vup>{max_distance}</> tile(s) away",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 55,
+                "initSp": 25,
+                "increment": 1
+              },
+              "prefabId": "skchr_shu_3",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.22,
+                  "valueStr": null
+                },
+                {
+                  "key": "e_atk",
+                  "value": 0.15,
+                  "valueStr": null
+                },
+                {
+                  "key": "e_attack_speed",
+                  "value": 15,
+                  "valueStr": null
+                },
+                {
+                  "key": "e_max_stack_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_distance",
+                  "value": 4,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  2,
+                  -1
+                ],
+                [
+                  2,
+                  0
+                ],
+                [
+                  2,
+                  1
+                ],
+                [
+                  1,
+                  -2
+                ],
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  -2
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  -2
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ],
+                [
+                  -2,
+                  -1
+                ],
+                [
+                  -2,
+                  0
+                ],
+                [
+                  -2,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Samsara",
+              "rangeId": "x-2",
+              "description": "Healing range <@ba.vup>expands</>, attacks now also heal allied Operators, and ATK <@ba.vup>+{atk:0%}</>. If there are ground enemies on sowed tiles, all allied units within skill range gain <@ba.vup>+{e_atk:0%}</> ATK and <@ba.vup>+{e_attack_speed}</> ASPD; When an enemy passes through a sowed tile, it gains the following effect: Teleport back to this location after moving more than <@ba.vup>{max_distance}</> tile(s) away",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 55,
+                "initSp": 25,
+                "increment": 1
+              },
+              "prefabId": "skchr_shu_3",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.26,
+                  "valueStr": null
+                },
+                {
+                  "key": "e_atk",
+                  "value": 0.15,
+                  "valueStr": null
+                },
+                {
+                  "key": "e_attack_speed",
+                  "value": 15,
+                  "valueStr": null
+                },
+                {
+                  "key": "e_max_stack_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_distance",
+                  "value": 4,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  2,
+                  -1
+                ],
+                [
+                  2,
+                  0
+                ],
+                [
+                  2,
+                  1
+                ],
+                [
+                  1,
+                  -2
+                ],
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  -2
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  -2
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ],
+                [
+                  -2,
+                  -1
+                ],
+                [
+                  -2,
+                  0
+                ],
+                [
+                  -2,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Samsara",
+              "rangeId": "x-2",
+              "description": "Healing range <@ba.vup>expands</>, attacks now also heal allied Operators, and ATK <@ba.vup>+{atk:0%}</>. If there are ground enemies on sowed tiles, all allied units within skill range gain <@ba.vup>+{e_atk:0%}</> ATK and <@ba.vup>+{e_attack_speed}</> ASPD; When an enemy passes through a sowed tile, it gains the following effect: Teleport back to this location after moving more than <@ba.vup>{max_distance}</> tile(s) away",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 55,
+                "initSp": 25,
+                "increment": 1
+              },
+              "prefabId": "skchr_shu_3",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "e_atk",
+                  "value": 0.15,
+                  "valueStr": null
+                },
+                {
+                  "key": "e_attack_speed",
+                  "value": 15,
+                  "valueStr": null
+                },
+                {
+                  "key": "e_max_stack_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_distance",
+                  "value": 4,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  2,
+                  -1
+                ],
+                [
+                  2,
+                  0
+                ],
+                [
+                  2,
+                  1
+                ],
+                [
+                  1,
+                  -2
+                ],
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  -2
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  -2
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ],
+                [
+                  -2,
+                  -1
+                ],
+                [
+                  -2,
+                  0
+                ],
+                [
+                  -2,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Samsara",
+              "rangeId": "x-2",
+              "description": "Healing range <@ba.vup>expands</>, attacks now also heal allied Operators, and ATK <@ba.vup>+{atk:0%}</>. If there are ground enemies on sowed tiles, all allied units within skill range gain <@ba.vup>+{e_atk:0%}</> ATK and <@ba.vup>+{e_attack_speed}</> ASPD; When an enemy passes through a sowed tile, it gains the following effect: Teleport back to this location after moving more than <@ba.vup>{max_distance}</> tile(s) away",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 50,
+                "initSp": 30,
+                "increment": 1
+              },
+              "prefabId": "skchr_shu_3",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.34,
+                  "valueStr": null
+                },
+                {
+                  "key": "e_atk",
+                  "value": 0.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "e_attack_speed",
+                  "value": 20,
+                  "valueStr": null
+                },
+                {
+                  "key": "e_max_stack_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_distance",
+                  "value": 3,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  2,
+                  -1
+                ],
+                [
+                  2,
+                  0
+                ],
+                [
+                  2,
+                  1
+                ],
+                [
+                  1,
+                  -2
+                ],
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  -2
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  -2
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ],
+                [
+                  -2,
+                  -1
+                ],
+                [
+                  -2,
+                  0
+                ],
+                [
+                  -2,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Samsara",
+              "rangeId": "x-2",
+              "description": "Healing range <@ba.vup>expands</>, attacks now also heal allied Operators, and ATK <@ba.vup>+{atk:0%}</>. If there are ground enemies on sowed tiles, all allied units within skill range gain <@ba.vup>+{e_atk:0%}</> ATK and <@ba.vup>+{e_attack_speed}</> ASPD; When an enemy passes through a sowed tile, it gains the following effect: Teleport back to this location after moving more than <@ba.vup>{max_distance}</> tile(s) away",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 47,
+                "initSp": 30,
+                "increment": 1
+              },
+              "prefabId": "skchr_shu_3",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.38,
+                  "valueStr": null
+                },
+                {
+                  "key": "e_atk",
+                  "value": 0.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "e_attack_speed",
+                  "value": 20,
+                  "valueStr": null
+                },
+                {
+                  "key": "e_max_stack_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_distance",
+                  "value": 3,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  2,
+                  -1
+                ],
+                [
+                  2,
+                  0
+                ],
+                [
+                  2,
+                  1
+                ],
+                [
+                  1,
+                  -2
+                ],
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  -2
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  -2
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ],
+                [
+                  -2,
+                  -1
+                ],
+                [
+                  -2,
+                  0
+                ],
+                [
+                  -2,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Samsara",
+              "rangeId": "x-2",
+              "description": "Healing range <@ba.vup>expands</>, attacks now also heal allied Operators, and ATK <@ba.vup>+{atk:0%}</>. If there are ground enemies on sowed tiles, all allied units within skill range gain <@ba.vup>+{e_atk:0%}</> ATK and <@ba.vup>+{e_attack_speed}</> ASPD; When an enemy passes through a sowed tile, it gains the following effect: Teleport back to this location after moving more than <@ba.vup>{max_distance}</> tile(s) away",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 47,
+                "initSp": 30,
+                "increment": 1
+              },
+              "prefabId": "skchr_shu_3",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.44,
+                  "valueStr": null
+                },
+                {
+                  "key": "e_atk",
+                  "value": 0.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "e_attack_speed",
+                  "value": 25,
+                  "valueStr": null
+                },
+                {
+                  "key": "e_max_stack_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_distance",
+                  "value": 3,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  2,
+                  -1
+                ],
+                [
+                  2,
+                  0
+                ],
+                [
+                  2,
+                  1
+                ],
+                [
+                  1,
+                  -2
+                ],
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  -2
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  -2
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ],
+                [
+                  -2,
+                  -1
+                ],
+                [
+                  -2,
+                  0
+                ],
+                [
+                  -2,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Samsara",
+              "rangeId": "x-2",
+              "description": "Healing range <@ba.vup>expands</>, attacks now also heal allied Operators, and ATK <@ba.vup>+{atk:0%}</>. If there are ground enemies on sowed tiles, all allied units within skill range gain <@ba.vup>+{e_atk:0%}</> ATK and <@ba.vup>+{e_attack_speed}</> ASPD; When an enemy passes through a sowed tile, it gains the following effect: Teleport back to this location after moving more than <@ba.vup>{max_distance}</> tile(s) away",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 45,
+                "initSp": 30,
+                "increment": 1
+              },
+              "prefabId": "skchr_shu_3",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "e_atk",
+                  "value": 0.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "e_attack_speed",
+                  "value": 25,
+                  "valueStr": null
+                },
+                {
+                  "key": "e_max_stack_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_distance",
+                  "value": 2,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  2,
+                  -1
+                ],
+                [
+                  2,
+                  0
+                ],
+                [
+                  2,
+                  1
+                ],
+                [
+                  1,
+                  -2
+                ],
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  -2
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  -2
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ],
+                [
+                  -2,
+                  -1
+                ],
+                [
+                  -2,
+                  0
+                ],
+                [
+                  -2,
+                  1
+                ]
+              ]
+            }
+          ]
+        }
+      ],
+      "factionTags": [
+        "yan",
+        "sui"
       ]
     },
     "char_4027_heyak": {

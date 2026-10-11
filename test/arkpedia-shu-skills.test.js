@@ -72,9 +72,9 @@ function sow(f, r = 7, c = 7) {
   const a = ally(f, { row: r, col: c }); f.b.heal(f.u, a, 1); return a;
 }
 
-test('skill bridge requires exact source contract and does not enable Shu in the public dataset', () => {
+test('skill bridge requires exact source contract and preserves the held native extraction receipt', () => {
   assert.throws(() => make({ contract: { ...SHU_SKILL_CONTRACT } }), /contract/);
-  assert.equal(data.operators[SHU_ID], undefined); assert.deepEqual(source.enabledOperators, []);
+  assert.deepEqual(source.enabledOperators, []); assert.deepEqual(source.heldOperators, [SHU_ID]);
 });
 
 for (const skill of [1, 2, 3]) test(`Shu S${skill}: all ten source ranks preserve SP, charges, duration and modifiers`, () => {

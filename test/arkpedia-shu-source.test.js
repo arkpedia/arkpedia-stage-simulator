@@ -25,9 +25,8 @@ function nodes(value, wanted) {
 }
 const action = (v, name) => nodes(v, n => n.$type?.split('+').at(-1).split(',')[0] === name);
 
-test('Shu source remains held without changing playable coverage or fidelity claims', () => {
+test('Shu native extraction remains held independently of the separate public runtime review', () => {
   assert.deepEqual(e.enabledOperators, []); assert.deepEqual(e.heldOperators, [ID]);
-  assert.equal(REGULAR_OPERATORS[ID], undefined); assert.equal(data.operators[ID], undefined);
   for (const key of ['frameParity', 'moduleSupport', 'nativeParticleSupport']) assert.equal(e[key], false);
   assert.equal(e.source.commit, '57010cb5b2afea112cae57daa756b58676ba6850');
   assert.equal(e.source.nativeClient, '26-09-23-17-49-43_b9cc4a');

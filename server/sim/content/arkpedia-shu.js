@@ -89,13 +89,26 @@ const professionAlly = a => live(a) && a.kind === 'op';
 // Native deck talent is separate from the deployed owner's aura. Keep one
 // squad-level controller across fresh Shu unit objects/redeployments.
 export function installShuSquad(b, u, record) {
-  if (!record.seasons.interval) return null;
-  if (b.shuSquad) return b.shuSquad;
   const records = new Map([[ID, u.def]]);
   for (const id of Object.keys(b.bench ?? {})) {
     const def = b.data.getChess(id);
     if (def?.charId) records.set(def.charId, def);
   }
+  return installSquad(b, record, u, records);
+}
+
+// The deck talent applies before Shu is deployed and persists after retreat.
+// Its public owner is the battle, rather than a fabricated deployed unit.
+export function installShuRoster({ battle: b, records }) {
+  if (!records[ID]) return null;
+  const selected = selectedShuBuild({ ...records[ID].arkpedia, skillId: records[ID].skill.skillId });
+  return installSquad(b, selected, null, new Map(Object.entries(records)
+    .map(([id, record]) => [id, normalizeChess(record)])));
+}
+
+function installSquad(b, record, source, records) {
+  if (!record.seasons.interval) return null;
+  if (b.shuSquad) return b.shuSquad;
   const suiCount = [...records.values()].filter(d => d.tags.includes('sui')).length;
   const enabled = suiCount >= shuSourceComponent('-3066102878310402781')._options.minCntToTrig;
   const entries = new Map(), key = 'shu:seasons:squad';
@@ -108,8 +121,8 @@ export function installShuSquad(b, u, record) {
   const tick = () => {
     if (b.finished) { state.stop(); return; }
     for (const a of b.allyUnits) {
-      if (!enabled || !professionAlly(a)) { mods(b, a, key, null, u); entries.delete(a); continue; }
-      mods(b, a, key, { atkPct: record.seasons.atk }, u);
+      if (!enabled || !professionAlly(a)) { mods(b, a, key, null, source); entries.delete(a); continue; }
+      mods(b, a, key, { atkPct: record.seasons.atk }, source);
       let entry = entries.get(a);
       if (!entry || entry.seq !== a.deploySeq) {
         entry = { seq: a.deploySeq, nextSp: b.time + record.seasons.interval }; entries.set(a, entry);

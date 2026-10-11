@@ -166,6 +166,7 @@ import { BLAZE_IGNITING_OPERATORS } from './blaze-igniting-operators.js';
 import { EXUSIAI_COVENANT_OPERATORS } from './exusiai-covenant-operators.js';
 import { MAGALLAN_OPERATORS } from './magallan-operators.js';
 import { LING_OPERATORS } from './ling-operators.js';
+import { SHU_OPERATORS } from './shu-operators.js';
 import { LEE_OPERATORS } from './lee-operators.js';
 import { YATO_ALTER_OPERATORS } from './yato-alter-operators.js';
 import { SPECTER_ALTER_OPERATORS } from './specter-alter-operators.js';
@@ -338,6 +339,7 @@ export const REGULAR_OPERATORS = Object.freeze({
   ...EXUSIAI_COVENANT_OPERATORS,
   ...MAGALLAN_OPERATORS,
   ...LING_OPERATORS,
+  ...SHU_OPERATORS,
   ...HOOLHEYAK_OPERATORS,
   ...EBENHOLZ_OPERATORS,
   ...LIN_OPERATORS,

@@ -65,7 +65,7 @@ const regenKey = f => `shu:sowing:regen:${f.u.id}`;
 const sanctuaryKey = f => `shu:sowing:sanctuary:${f.u.id}`;
 const sui = ['char_2014_nian', 'char_2015_dusk', 'char_2023_ling'];
 
-test('Shu source builds preserve all ranks/SP while active skills stay held', () => {
+test('Shu core-only contract preserves all ranks/SP without enabling active skills', () => {
   for (const skill of [1, 2, 3]) for (let rank = 1; rank <= 10; rank++) {
     const f = make({ skill, rank });
     assert.equal(f.u.skill.spCost, f.record.source.spData.spCost);
@@ -73,7 +73,6 @@ test('Shu source builds preserve all ranks/SP while active skills stay held', ()
     until(f, () => f.u.skill.ready, 50);
     const sp = f.u.skill.spTotal;
     assert.equal(f.u.skill.activate(), false); near(f.u.skill.spTotal, sp);
-    assert.equal(data.operators[ID], undefined);
   }
 });
 
