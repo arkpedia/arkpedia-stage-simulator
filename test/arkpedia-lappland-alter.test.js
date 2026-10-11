@@ -25,7 +25,8 @@ function make({rank=10,elite=2,level=e.tables.character.phases[elite].maxLevel,p
   const def=normalizeChess({chessId:ID,charId:ID,name:c.name,profession:c.profession,position:c.position,
     subProfessionId:c.subProfessionId,stats:r.stats,rangeGrid:r.rangeGrid,talents:r.talents,
     tags:[c.nationId,c.groupId,c.teamId].filter(v=>typeof v==='string'&&v),
-    skill:{...r.source,...r.source.spData,skillId:build.skillId,rangeGrid:[],trigger:{rule:'NEVER'}},arkpedia:build});
+    skill:{...r.source,...r.source.spData,skillId:build.skillId,
+      rangeGrid:r.source.rangeId?e.tables.ranges[r.source.rangeId].grids.map(v=>[v.row,v.col]):[],trigger:{rule:'NEVER'}},arkpedia:build});
   const u=b._makeAlly(b.getPlayer('arkpedia'),def,'op',5,5,{dir});
   const prepared=prepareLapplandAttacks(b,u,{contract});b._setupUnit(u,prepared.kit);prepared.controller.install();
   const hits=[],attacks=[],births=[],strikes=[],locks=[],rewards=[];
@@ -46,11 +47,11 @@ function enemy(f,{row=5,col=6,hp=1e7,res=0,fly=false,taunt=0,flags={}}={}){
 }
 function active(f){f.u.skill.addCharge(1);assert.equal(f.controller.toggle(),true);}
 
-test('ordinary/S1 remains private until the full Lappland kit is reviewed',()=>{
+test('ordinary/S1/S2 remains private until the full Lappland kit is reviewed',()=>{
   assert.equal(REGULAR_OPERATORS[ID],undefined);assert.equal(data.operators[ID],undefined);
   assert.deepEqual(e.enabledOperators,[]);assert.equal(CONTRACT.frameParity,false);
   assert.throws(()=>make({contract:{...CONTRACT}}),/contract/);
-  assert.throws(()=>make({skill:2}),/Incomplete/);assert.throws(()=>make({skill:3}),/Incomplete/);
+  assert.throws(()=>make({skill:3}),/Incomplete/);
 });
 test('selected source combines exact promotion, trust, potential and unlocks',()=>{
   const b={elite:2,level:90,potential:1,trust:0,skillId:'skchr_whitw2_1',skillRank:10};
@@ -292,4 +293,151 @@ test('squad SP persists after owner withdrawal, resets on recipient redeploy and
   assert.ok(f.b._deploy(z,{initial:false}));near(z.skill.sp,0);
   f.b.forceEnd();const hooks=Object.values(f.b._hooks).flat().filter(h=>!h.removed);
   assert.equal(hooks.some(h=>h.name==='deploy'&&!h.owner),false);
+});
+
+for(let rank=1;rank<=10;rank++)test(`S2 rank ${rank}: selected initial SP, timed ATK, four drones, range and duration`,()=>{
+  const f=make({skill:2,rank}),t=enemy(f,{row:7,col:5});
+  near(f.u.skill.sp,[0,2,4,6,8,10,12,14,16,18][rank-1]);
+  assert.equal(f.controller.count(),1);assert.equal(f.controller.targets().includes(t),false);
+  active(f);assert.equal(f.u.skill.kind,'duration');assert.equal(f.controller.count(),4);
+  assert.equal(f.controller.toggle(),false);assert.equal(f.u.liveRangeGrid.length,14);
+  near(f.u.skill.timeLeft,[12,13,14,15,16,17,18,20,21,22][rank-1]);
+  until(f,()=>f.strikes.length===4);assert.equal(f.attacks.length,1);
+  for(const x of f.hits.filter(x=>x.dmg.tags.includes('lappland:remote-drone')))
+    near(x.amount,342*(1+[.4,.45,.5,.6,.65,.7,.8,.95,1.05,1.2][rank-1])*.2);
+  near(f.u.skill.sp,0);assert.equal(f.u.skill.gainSp(20,'test'),0);
+  until(f,()=>!f.u.skill.active,24);near(f.b.time,f.record.source.duration,f.b.dt*2);
+  near(f.u.s.atk,342);assert.equal(f.controller.count(),1);assert.equal(f.controller.targets().includes(t),false);
+  assert.deepEqual(f.u.liveRangeGrid,f.record.rangeGrid);assert.ok(f.controller.slots.every(s=>!s.lock));
+});
+for(const dir of ['RIGHT','LEFT','UP','DOWN'])test(`S2 ${dir}: facing range, original begin/attack event and owner caster`,()=>{
+  const f=make({skill:2,dir}),[row,col]={RIGHT:[7,5],LEFT:[3,5],UP:[5,3],DOWN:[5,7]}[dir];
+  enemy(f,{row,col});active(f);until(f,()=>f.strikes.length===4);
+  near(f.strikes[0].time,1.4,f.b.dt*2);assert.equal(f.u.mem.regularFormVisual.clip,'Skill_2_Loop');
+  assert.equal(f.births.filter(x=>x.kind==='caster').length,1);
+  until(f,()=>f.hits.length>=5);near(f.hits.find(x=>x.dmg.tags.includes('lappland:caster')).amount,752.4);
+});
+test('S2 selected ordinary attacks start with one drone, including E1 rank seven',()=>{
+  const f=make({skill:2,elite:1,rank:7});enemy(f);until(f,()=>f.hits.length===2);
+  assert.equal(f.births.length,2);assert.equal(f.births.filter(x=>x.kind==='normal-drone').length,1);
+  near(f.hits[1].amount,f.u.s.atk*.2);
+});
+test('S2 each free slot independently draws a random target with replacement, ignoring caster priority',()=>{
+  const f=make({skill:2}),a=enemy(f,{taunt:100}),z=enemy(f,{col:7});
+  const draws=[.99,.99,0,.99,.99,.99,0,.99];let n=0;f.b.rng=()=>draws[n++]??.99;
+  active(f);until(f,()=>f.locks.length===4);
+  assert.deepEqual(f.locks.map(x=>x.target),[z,a,z,a]);assert.equal(n,8);
+  assert.equal(f.births[0].target,a);assert.deepEqual(f.strikes.map(x=>x.scale),[.2,.2,.2,.2]);
+});
+test('S2 locks keep moving targets outside acquisition range until their life becomes invalid',()=>{
+  const f=make({skill:2}),t=enemy(f);active(f);until(f,()=>f.strikes.length===4);
+  f.b.on('tick',()=>{t.moving=true;},{priority:100});t.x=17;t.y=10;
+  advance(f.b,2);assert.ok(f.strikes.length>=8);assert.ok(f.controller.slots.slice(0,4).every(s=>s.lock===t));
+  assert.equal(f.controller.targets(true).includes(t),false);
+  t.deploySeq++;advance(f.b,f.b.dt);assert.ok(f.controller.slots.every(s=>!s.lock));
+  const old=f.strikes.length;advance(f.b,2);assert.equal(f.strikes.length,old);
+});
+test('S2 new targets exclude hidden, camouflage, stealth and enemies outside its expanded range',()=>{
+  const f=make({skill:2});const good=enemy(f,{row:7,col:5,fly:true});
+  enemy(f,{row:8,col:5});enemy(f,{row:7,col:6,flags:{camou:true}});
+  enemy(f,{row:6,col:5,flags:{stealth:true}});const hidden=enemy(f,{col:7});hidden.hidden=true;
+  active(f);until(f,()=>f.locks.length===4);assert.ok(f.locks.every(x=>x.target===good));
+});
+test('S2 target death reselects independently and resets each affected slot ramp',()=>{
+  const f=make({skill:2}),a=enemy(f);active(f);until(f,()=>f.strikes.length===8);
+  f.b.kill(a,f.u);const z=enemy(f,{col:7});until(f,()=>f.locks.length===8);
+  assert.ok(f.locks.slice(4).every(x=>x.target===z));assert.ok(f.strikes.slice(8,12).every(x=>x.scale===.2));
+});
+test('S2 a lethal early drone makes later selectors use the remaining live target',()=>{
+  const f=make({skill:2}),a=enemy(f,{hp:1}),z=enemy(f,{col:7,taunt:100});f.b.rng=()=>.99;
+  // Put the lethal target last in regular priority so the .99 draw selects it.
+  active(f);until(f,()=>f.locks.length===4);
+  assert.equal(f.locks[0].target,a);assert.ok(f.locks.slice(1).every(x=>x.target===z));
+});
+test('S2 Fear rolls only for actual drones; zero rolls apply source duration and source stamp',()=>{
+  const f=make({skill:2}),t=enemy(f);const rolls=[];
+  f.b.rng=()=>0;f.b.on('lapplandFearRoll',x=>rolls.push(x));active(f);until(f,()=>f.strikes.length===4);
+  assert.equal(rolls.length,4);assert.ok(rolls.every(x=>x.success));assert.ok(t.s.flags.fear);
+  near(t.findBuff('fear').duration,1);assert.equal(t.findBuff('fear').data.fear.sx,f.u.x);
+  until(f,()=>f.hits.some(x=>x.dmg.tags.includes('lappland:caster')));assert.equal(rolls.length,4);
+});
+test('S2 Fear honors immunity and status resistance',()=>{
+  for(const immune of [true,false]){
+    const f=make({skill:2}),t=enemy(f);f.b.rng=()=>0;
+    if(immune)t.def.immune.add('feared');
+    else f.b.applyStatus(t,'resist',{value:.5,duration:50});
+    active(f);until(f,()=>f.strikes.length===4);
+    if(immune)assert.equal(t.s.flags.fear,undefined);else near(t.findBuff('fear').duration,.5);
+  }
+});
+test('S2 damage-missable Fear skips evasion but survives complete shield absorption',()=>{
+  for(const shield of [false,true]){
+    const f=make({skill:2}),t=enemy(f);f.b.rng=()=>0;
+    f.b.addBuff(t,shield?{key:'fixture:shield',shield:1e8}:{key:'fixture:evade',mods:{dodgeArts:1}});
+    active(f);until(f,()=>f.strikes.length===4);near(t.hp,1e7);
+    assert.equal(!!t.s.flags.fear,shield);
+    assert.equal((f.b._hooks.calculatedDamage??[]).length,0);
+  }
+});
+test('S2 control keeps existing drones but prevents acquisitions until the owner can act',()=>{
+  const f=make({skill:2}),a=enemy(f);active(f);until(f,()=>f.strikes.length===4);
+  f.b.applyStatus(f.u,'stun',{duration:3});advance(f.b,1.5);assert.ok(f.strikes.length>=8);
+  f.b.kill(a,f.u);enemy(f,{col:7});const old=f.locks.length;advance(f.b,1);assert.equal(f.locks.length,old);
+  until(f,()=>f.locks.length===old+4);
+});
+test('S2 callback removal cancels later drone receipts and Fear; caster birth remains independent',()=>{
+  const f=make({skill:2});enemy(f);let rolls=0;
+  f.b.on('lapplandFearRoll',()=>rolls++);
+  f.b.on('damaged',x=>{if(x.source===f.u&&x.dmg.tags.includes('lappland:remote-drone'))f.b.retreat(f.u,{permanent:true});});
+  active(f);until(f,()=>f.controller.stopped);
+  assert.equal(f.strikes.length,1);assert.equal(rolls,0);assert.equal(f.controller.handles.length,0);
+  const before=f.hits.length;advance(f.b,1);assert.equal(f.hits.length,before+1);
+});
+test('S2 Fear-roll callback mode exit cannot attach the status or emit later slots',()=>{
+  const f=make({skill:2}),t=enemy(f);f.b.rng=()=>0;
+  f.b.on('lapplandFearRoll',()=>f.u.skill.end('fixture'));active(f);until(f,()=>!f.u.skill.active);
+  assert.equal(f.strikes.length,1);assert.equal(t.s.flags.fear,undefined);
+});
+test('S2 upgrades to five drones after Alpha Wolf without granting the S1 passive',()=>{
+  const f=make({skill:2,potential:6});advance(f.b,48.1);const t=enemy(f);assert.equal(f.controller.count(),2);
+  active(f);until(f,()=>f.strikes.length===5);assert.equal(f.controller.count(),5);
+  assert.equal(f.controller.slots[4].lock,t);assert.equal(f.controller.slots[5].lock,null);
+  assert.ok(t.s.flags.silence);near(t.findBuff('silence').duration,2);
+});
+test('S2 casts without enemies, spends exactly 28 SP and returns to normal after its selected duration',()=>{
+  const f=make({skill:2});advance(f.b,10.1);assert.equal(f.u.skill.charges,1);
+  assert.equal(f.controller.toggle(),true);near(f.u.skill.sp,0);
+  advance(f.b,23);assert.equal(f.u.skill.active,false);assert.equal(f.births.length,0);
+  assert.equal(f.locks.length,0);assert.equal(f.u.skill.activations,1);
+});
+test('S2 skill end detaches drones; already-born caster uses live ordinary ATK on impact',()=>{
+  const f=make({skill:2});enemy(f,{row:7,col:5});active(f);until(f,()=>f.births.length===1);
+  assert.equal(f.strikes.length,4);f.u.skill.end('fixture');const old=f.strikes.length;
+  until(f,()=>f.hits.some(x=>x.dmg.tags.includes('lappland:caster')));
+  near(f.hits.find(x=>x.dmg.tags.includes('lappland:caster')).amount,342);assert.equal(f.strikes.length,old);
+});
+test('S2 attack-speed changes cap the owner loop while attached drone periods use live interval',()=>{
+  const f=make({skill:2});enemy(f);f.b.addBuff(f.u,{key:'fixture:haste',mods:{aspd:100}});active(f);
+  until(f,()=>f.strikes.length>=12);assert.ok(f.attacks.length<=3);
+  near(f.strikes[4].time-f.strikes[0].time,.65,f.b.dt*2);
+  if(f.attacks.length>1)near(f.attacks[1].time-f.attacks[0].time,1.3,f.b.dt*2);
+  assert.equal(f.u.mem.regularFormVisual.speed,1);
+});
+test('S2 failed casts and interrupted unborn attacks do not spend charges or launch outputs',()=>{
+  const f=make({skill:2});enemy(f);f.u.skill.addCharge(1);
+  for(const flags of [{stun:true},{disarm:true}]){
+    f.b.addBuff(f.u,{key:'fixture:control',flags});assert.equal(f.controller.toggle(),false);
+    assert.equal(f.u.skill.charges,1);f.b.removeBuff(f.u,'fixture:control');
+  }
+  assert.equal(f.controller.toggle(),true);until(f,()=>f.controller.phase?.kind==='attack');
+  f.b.addBuff(f.u,{key:'fixture:control',flags:{stun:true}});f.b.removeBuff(f.u,'fixture:control');
+  advance(f.b,.45);assert.equal(f.births.length,0);assert.equal(f.strikes.length,0);
+});
+test('S2 damage callback changed target life cannot attach Fear to the replacement',()=>{
+  const f=make({skill:2}),t=enemy(f);f.b.rng=()=>0;let once=false;
+  f.b.on('damaged',x=>{if(!once&&x.source===f.u&&x.dmg.tags.includes('lappland:remote-drone')){
+    once=true;t.deploySeq++;f.b.applyStatus(f.u,'stun',{duration:2});
+  }});
+  active(f);until(f,()=>once);assert.equal(f.strikes.length,1);assert.equal(t.s.flags.fear,undefined);
+  advance(f.b,.1);assert.ok(f.controller.slots.every(s=>!s.lock));
 });
