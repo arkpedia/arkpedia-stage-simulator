@@ -7,6 +7,7 @@ import { absoluteRangeKeys, canTargetEnemy, sortEnemyTargets } from '../targetin
 import { bodyInKeys, bodyInRadius } from '../body.js';
 import { applyHpLoss, makeDamageInfo } from '../damage.js';
 import { EXUSIAI_COVENANT_S1_CONTRACT, ExusiaiCovenantS1 } from './arkpedia-exusiai-covenant-s1.js';
+import { EXUSIAI_COVENANT_S2_CONTRACT, ExusiaiCovenantS2 } from './arkpedia-exusiai-covenant-s2.js';
 
 export const EXUSIAI_COVENANT_ID = 'char_1041_angel2';
 export const EXUSIAI_COVENANT_CORE_CONTRACT = Object.freeze({
@@ -145,6 +146,7 @@ export class ExusiaiCovenantCoreController {
     }, { owner: u });
   }
   release(t, info) {
+    if (this.phase?.kind === 's2-attack') return this.s2?.release(t, info) ?? false;
     if (this.s1?.burst?.accepting) return this.s1.releaseBurst(t, info);
     if (this.phase?.kind === 's1-attack') return this.s1?.release(t, info) ?? false;
     const { u, b } = this, p = this.phase;
@@ -177,6 +179,7 @@ export class ExusiaiCovenantCoreController {
     }
     if (u.hidden) { this.phase = null; this.s1?.hidden(); return; }
     if (this.s1?.tick()) return;
+    if (this.s2?.tick()) return;
     let p = this.phase;
     if (p?.kind === 'entrance') { if (b.time + 1e-9 < p.readyAt) return; this.phase = null; p = null; }
     if (!u.canAct || u.s.flags.disarm || p && p.epoch !== u.attackControlEpoch) {
@@ -218,7 +221,7 @@ export class ExusiaiCovenantCoreController {
   }
   stop() {
     if (this.stopped) return;
-    this.stopped = true; this.s1?.ownerStop(); this.phase = null; this.syncAura();
+    this.stopped = true; this.s1?.ownerStop(); this.s2?.ownerStop(); this.phase = null; this.syncAura();
     if (this.b.finished) this.b.projectiles.remove(p => p.data?.exusiaiCovenantOwner === this);
     this.u.mem.regularFormVisual = null; delete this.u.mem.regularVisualDirection;
     for (const h of this.handles) this.b.off(h); this.handles = [];
@@ -256,5 +259,31 @@ export function prepareExusiaiCovenantS1(b, u, { contract } = {}) {
     canActivate: () => controller.s1.canCast(), onStart: () => controller.s1.start(),
     onAttack: ctx => { if (controller.s1.burst) ctx.noAmmo = true; },
     onEnd: ctx => controller.s1.end(ctx.reason), onManualCancel: () => controller.s1.manualStop() };
+  return prepared;
+}
+
+export function prepareExusiaiCovenantS2(b, u, { contract } = {}) {
+  if (contract !== EXUSIAI_COVENANT_S2_CONTRACT) throw Error('Exusiai Covenant S2 requires the reviewed skill contract');
+  const record = validate(u, EXUSIAI_COVENANT_CORE_CONTRACT);
+  if (record.index !== 1) throw Error('Exusiai Covenant S2 requires the selected second skill');
+  for (const id of ['3670591584193012975', '-5719382545127709457']) {
+    const a = component(id);
+    if (a._waitForAttackEvent !== 0 || a._useCachedAtkOnly !== 1 || a._transferSource !== 1 || a._maxAnimScale !== 1)
+      throw Error('Unreviewed Exusiai Covenant S2 projectile dispatch');
+  }
+  const selector = component('-1471925624412839651'), steal = component('-848266832636746513');
+  if (selector._excludeOwner !== 1 || selector._professionMask !== 639 || selector._postFilter !== 4
+    || steal._attributeType !== 7 || steal._formulaType !== 2 || steal._finishTargetBuffWhenInvalid !== 1
+    || steal._finishOwnerBuffWhenTargetInvalid !== 0 || component('3215183870520921349')._speed !== 30
+    || evidence.templates['angel2_s_2[shield]'].eventToActions.ON_BUFF_START[0]._targetType !== 'BUFF_SOURCE'
+    || evidence.templates['angel2_s_2[cleaner]'].eventToActions.ON_BUFF_START[0]._checkBuffSource !== true)
+    throw Error('Unreviewed Exusiai Covenant S2 loan and shield');
+  const prepared = prepareExusiaiCovenantCore(b, u, { contract: EXUSIAI_COVENANT_CORE_CONTRACT });
+  const { controller, kit } = prepared;
+  controller.s2 = new ExusiaiCovenantS2(controller);
+  kit.skill = { kind: 'ammo', ammo: record.bb['attack@trigger_time'], duration: 0,
+    trigger: { rule: 'NEVER' }, manualCancel: true, attack: {},
+    canActivate: () => controller.s2.canCast(), onStart: () => controller.s2.start(),
+    onEnd: ctx => controller.s2.end(ctx.reason) };
   return prepared;
 }
