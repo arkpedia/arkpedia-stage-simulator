@@ -2641,4 +2641,18 @@ These commands use the existing pinned tables, shared native bundle cache and or
 
 Exusiai remains outside the public roster until her ordinary attack, all three skills, both talents, coordinate deployment/redeployment and removal lifecycle pass engine and browser review. This source increment does not increase the **363/431** playable coverage or satisfy the Arkpedia dev release gate.
 
+### Exusiai selected-source combat core
+
+`server/sim/content/arkpedia-exusiai-covenant.js` adds a diagnostic adapter behind `EXUSIAI_COVENANT_CORE_CONTRACT`. It accepts complete fresh selected builds, preserves both talent potential upgrades, includes Exusiai's secondary Laterano affiliation and rejects modules and locked/incomplete builds. All three skill activations remain disabled in this ordinary-attack diagnostic.
+
+- Ordinary attacks retain the original first-attack Begin/Loop events, DOWN variant and Back facing, one speed-thirty physical projectile, target-life/eligibility checks and control interruption. Born projectiles survive withdrawal; battle finish clears them.
+- The one-percent current-Max-HP drain waits one second, bypasses shields and damage modifiers, grants no damage SP and cannot reduce HP below one. Removal stops it; temporary hidden state preserves the controller.
+- The global aura applies only to deployed operators whose selected source skill has AMMO duration, includes its owner, doubles the ATK bonus for Laterano, and removes derived buffs when either side becomes ineligible. Exusiai's Laterano affiliation comes from `subPower`, despite her primary Penguin Logistics/Lungmen affiliation.
+- Ammo consumption runs the per-bullet self-healing loop before independent bombardment rolls. It respects healing modifiers and heal-free state. Free shots do not heal. Successful rolls release separate fixed-point radius-1.3 physical splash receipts, including aerial and camouflaged area victims. Owner removal cancels unborn rounds while born projectiles retain their impact.
+- Horn S2's manual ammo dump now includes the actual consumed `count` in its `ammoUsed` event. Existing ammo deductions, damage and presentation stay the same. Real-engine Ch'en S3 and Horn S2 checks exercise two- and three-bullet consumption respectively.
+
+Native compiled listener dispatch, target-marker removal and selector comparators are unavailable. The bounded mapping captures eligible candidates from the consuming ally's current range, reselects among surviving original lives per round, spaces projectile births by the serialized `.1` seconds and uses the original `.3`-second fixed-point delay. Current source ATK is read on impact. The first ordinary clip opening and cadence use original clips. These are explicit local execution mappings; they do not establish Unity callback or frame parity. Native delivery, all three skill modes, modules, original particles/audio and public/browser integration remain unfinished.
+
+The core has **seventeen engine checks**, including actual public ammunition users, all four facings, control interruption, target replacement, withdrawal, temporary hidden state, aura cleanup, heal ordering and multi-bullet counts. Run `node --test test/arkpedia-exusiai-covenant.test.js`. The source and public roster gates remain separate; playable coverage is still **363/431**.
+
 Full regression for public Blaze: **10,889 passed, zero failures, nine existing skips** across 10,898 tests and 325 suites (`.cache/arkpedia/blaze-igniting-source/public-all-tests.log`). Rebuilding public data and coverage reproduces both files byte-for-byte (`public-rebuild-review.json`). The original native foundation bytes are unchanged. This increment can publish independently of the held app integration.

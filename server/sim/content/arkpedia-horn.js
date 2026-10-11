@@ -135,7 +135,7 @@ function dump(b, u) {
     watch.cancel(); if (!valid()) return;
     const info = { isSkill: true, attackId: ++b._attackSeq };
     sk.ammoLeft = Math.max(0, sk.ammoLeft - count);
-    b.emit('ammoUsed', { unit: u, left: sk.ammoLeft, skill: sk });
+    b.emit('ammoUsed', { unit: u, left: sk.ammoLeft, skill: sk, count });
     lose(b, u, u.hp * bb['attack@s2.hp_ratio'], 'horn:dump-cost', false);
     // Remaining missiles are independent after release; physical ATK stays
     // cached across every missile, while the native Arts action reads live ATK.
