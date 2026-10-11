@@ -2019,3 +2019,31 @@ node --test test/arkpedia-wisadel-attacks.test.js test/arkpedia-wisadel-s2.test.
 `WISADEL_SHADOW_CONTRACT` records the local mappings: native tile-filter/sort geometry and tie order, deployment-time castOnLocate/FSM dispatch, fixed-root mount/line travel, fractional RNG and forced-SP callback semantics, numeric flag aliases, host-range sorting and derived-claim arbitration. The disabled ordinary-trigger binding still needs integration review. **S3 ammunition/marked-Shadow SP, original Shadow publication, full selected-loadout/public lifecycle integration and browser review remain required.** Compiled Unity frame parity, modules and original effects/audio remain unverified.
 
 Coverage stays **359/431 forms and 771 skills**, with **72 forms remaining**. The MVP and SD asset pin are unchanged. The existing local process still listens on port 3182 and serves HTTP 200; the browser does not expose this private helper.
+
+### Wiš’adel: private S3 ammunition and Shadow integration (2026-10-11)
+
+Added the unregistered, source-selected S3 controller and integrated the reviewed Shadow helper. This completes the private skill components; **pinning the published Shadow artwork, full public transaction/lifecycle integration and browser review still gate playable support**.
+
+- Preserve all ten ranks, manual time SP, six ammunition rounds, selected ATK and additive BAT. Allow manual discard and no-target activation. Map the native holder's `resetWhenAttackFinished` to the captured original OnAttackFinished event: the last round keeps its skill and SP lock until that event, then plays End.
+- Retain original Begin/Loop/End clips, facing events and capped captured playback. Keep cooldown separate with an attack-finished floor, rather than treating the full five-second visual clip as an unconditional attack lock. Mode exit/control cancels unborn output; original target identity is captured at accepted birth.
+- Preserve the native ALL-motion S3 selectors and projectile filters. A raw priority input receives the separate two-second `wisdel_s_3_mark[target]` before windup. At strike, prefer current marked candidates, with current-priority fallback; do not confuse this selection marker with the Souvenir afterimage. Preserve foreign marks and the timed marker on cast cancellation.
+- Emit speed-ten, five-second homing shots with a 2.5-tile main splash and independent .15-second half-strength aftershock. Respect the original `useCachedAtkOnly` field: shot ATK, rank coefficient and S3 proc chance are captured at birth; mitigation remains live. The independent talent AOEDamage action reads live owner ATK and its own talent coefficient.
+- Retain cached born damage and S3 detonation probability after manual/natural skill expiry. Parent finish removes derived afterimages and talent effects, while born main/shock outputs can finish. Battle finish cancels every remaining output. Preserve airborne explosion victims, lethal original-life centres, dodge/mitigation, kill credit, ammo hooks and callback life guards.
+- Create one/two new Shadows according to rank, respecting legal placement and the existing three-token cap. They cost no DP or deployment slots and persist after skill expiry. The original new-token SP action checks `BUFF_SOURCE` (the host marker), gives non-forced SP to `BUFF_OWNER` (the new token), then consumes the host marker: the local mapping gifts three SP only to the first successful new Shadow. Existing tokens and the second new token receive no fabricated bonus; noSp can reject the non-forced grant.
+
+**42 new S3 checks and 165 focused controller/source checks pass, with zero failures or skips.** They cover all ranks/facings, airborne main/shock collateral, marked/current selection, slow/high-ASPD clocks, cached versus live damage, final exhaustion, six-round counting, spare-ammo hooks, no-target/cap/no-tile behavior, first-new-token SP, active Shadow casting, control, manual cancellation, changed lives, withdrawal, timeout, lethal explosions, mitigation/dodge and reentrant battle/owner removal.
+
+The full runtime suite passes **10,101 tests, with nine skipped and zero failures (10,110 total)**. The independent native audit verifies 224 components, six bundles, thirteen templates, forty owner/token ranks, eight projectile trees and three original skeleton chains. Eight altered fixtures are rejected, and ten source/artwork outputs reproduce exactly. Logs: `s3-related-focused.log`, `s3-final-runtime-regression.log` and `s3-native-audit.log` under `.cache/arkpedia/wisadel-source/`.
+
+Run:
+
+```sh
+node --test test/arkpedia-wisadel-attacks.test.js test/arkpedia-wisadel-s2.test.js test/arkpedia-wisadel-s3.test.js test/arkpedia-wisadel-shadows.test.js test/arkpedia-wisadel-source.test.js
+.cache/map-env/bin/python tools/arkpedia/audit-wisadel.py
+```
+
+`WISADEL_S3_CONTRACT` distinguishes source records from the local mappings for selection/mark dispatch, root/mount coordinates, sampled homing, cached-ATK/probability transfer, Begin/End/FSM and ammo-holder/event/cooldown clocks, spawn callback order and non-forced SP setter semantics. **Published Shadow asset pinning, disabled ordinary-trigger binding review, full selected-loadout/public lifecycle integration and browser review remain open.** Compiled Unity frame parity, modules and original effects/audio remain unverified.
+
+Original Shadow artwork is published to the SD feature branch at `b15f375ef1a8c7ec4816eaefd7578354ec76963b`. Asset validation passes for **831 complete records**, all nineteen asset tests pass, and the prior 829 manifest records remain identical. Both logical facings retain the original skeleton/texture bytes and native pointers. The simulator remains on its existing SD pin until public integration.
+
+Coverage remains **359/431 forms and 771 skills**, with **72 forms remaining**. The public registry, MVP and SD pin are unchanged. The existing local preview process still serves HTTP 200 on port 3182; it does not expose this unregistered adapter.

@@ -202,7 +202,7 @@ evidence = {
         'bundles': source_bundles, 'modelRepository': 'fexli/ArknightsResource', 'modelCommit': MODEL},
     'frameParity': False, 'moduleSupport': False, 'nativeParticleSupport': False,
     'enabledOperators': [], 'heldOperators': [ID],
-    'reviewStatus': 'Private ordinary/S1/S2 and Shadow components checked separately; full kit remains unavailable pending S3 and public integration',
+    'reviewStatus': 'Private ordinary/S1/S2/S3 and Shadow components checked separately; full kit remains unavailable pending public integration',
     'characters': characters, 'tokens': tokens, 'skills': skills, 'chararts': chararts,
     'models': models, 'tokenArtwork': token_artwork, 'tokenModels': token_models, 'officialSkeletonBindings': bindings, 'projectiles': projectiles,
     'templates': {k: bt[k] for k in sorted(templates)},
@@ -219,14 +219,14 @@ evidence = {
         'Afterimage ownership follows the source talent buff; detonation checks probability and a shared mark, applies a 1.1-tile all-motion physical explosion without requiring a live centre, then consumes the mark.',
         'All ten S1 ranks preserve offensive SP and next-attack aftershock/stun coefficients; the native skill graph retains distinct common, shock and terminal stun abilities.',
         'S2 is explicitly an overload skill with ordinary skill mode 1 and overload mode 2; its BAT modifier is additive and the overload attack adds three emissions at 0.1s spacing.',
-        'All ten S3 ranks preserve ammunition, additive BAT and immediate Shadow counts; M3 grants six rounds, two new Shadows and three SP to marked Shadows.',
+        'All ten S3 ranks preserve ammunition, additive BAT and immediate Shadow counts; M3 grants six rounds and two new Shadows. The new-token SP action checks and consumes a host marker.',
         'Revenant Shadows have a zero deployment-limit occupation count; their native notShowInDeck flag is false, so automatic local spawning must not misrepresent that flag.',
         'The Shadow aura uses x-5 and validates its host before granting Camouflage; owner finish invokes KillTokens and S3 text explicitly preserves Shadows after skill expiry.',
         'The original Shadow uses one skeleton with a left/right switcher and embedded 216x216 RGBA texture; front/back import aliases preserve those same source bytes.'
     ],
     'holdReasons': [
-        'Ordinary/S1/S2 controllers and the Shadow helper are private; full selected-loadout/public lifecycle integration and browser review remain required.',
-        'S3 ammunition, marked-Shadow SP and integration of persistent Shadows require full runtime review; private component checks do not establish public full-kit support.',
+        'Ordinary/S1/S2/S3 controllers and the Shadow helper are private; full selected-loadout/public lifecycle integration and browser review remain required.',
+        'S3 cached ATK, ammunition-holder clocks and persistent Shadow/SP integration use reviewed local mappings; public transaction and lifecycle tests remain required.',
         'Disabled Shadow ordinary-trigger binding, original Shadow publication, selected-loadout/public lifecycle tests and browser review remain open; serialized data does not establish compiled frame parity.'
     ],
 }

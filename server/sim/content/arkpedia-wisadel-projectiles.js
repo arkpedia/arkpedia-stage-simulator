@@ -10,7 +10,7 @@ const ground = { groundOnly:true,canHitFly:false }, allMotion = { canHitFly:true
 // Shared across owners: the native explosion action explicitly does not require
 // a live centre target. Preserve its mark until a lethal shock's action resolves.
 const shockDepth = new WeakMap();
-const specs = Object.fromEntries(['default','s1','s1_shock','s1_shock2','s1_bomb','s2'].map(key => {
+const specs = Object.fromEntries(['default','s1','s1_shock','s1_shock2','s1_bomb','s2','s3'].map(key => {
   const rows=evidence.projectiles[`projectile_chr_wisdel_${key}`].flatMap(r=>r.components.map(c=>c.data));
   const mover=rows.find(c=>c._delayAfterReached!=null), root=rows.find(c=>c._lifeTime!=null);
   return [key,{ radius:rows.find(c=>c.m_Radius!=null).m_Radius,
@@ -44,8 +44,10 @@ export class WisadelProjectiles {
     const command={ target,targetSeq:target.deploySeq,ownerSeq:this.u.deploySeq,
       attackId:info.attackId,isSkill,x:this.u.x,y:this.u.y,lastX:target.x,lastY:target.y,
       bornAt:this.b.time,cancelled:false,timers:[],mode:options?.mode??(isSkill?'s1':'ordinary'),
-      scale:options?.scale??1,emission:options?.emission??0 };
-    const keys=command.mode==='s2'?['s2']:isSkill?['s1','s1_shock','s1_shock2','s1_bomb']:['default'];
+      scale:options?.scale??1,emission:options?.emission??0,
+      cachedAtk:options?.mode==='s3'?this.u.s.atk*this.u.s.atkScaleMul:null,
+      procChance:options?.mode==='s3'?this.record.bb['attack@prob']:null };
+    const keys=command.mode==='s3'?['s3']:command.mode==='s2'?['s2']:isSkill?['s1','s1_shock','s1_shock2','s1_bomb']:['default'];
     command.parts=keys.map(key=>({key,spec:specs[key],x:specs[key].static?target.x:this.u.x,
       y:specs[key].static?target.y:this.u.y,lastX:target.x,lastY:target.y,
       updatedAt:this.b.time,arrived:false,done:false,stunVictims:null}));
@@ -84,7 +86,7 @@ export class WisadelProjectiles {
   arrive(command,part) {
     if(!this.valid(command)||part.arrived)return;
     part.arrived=true;
-    const main=part.key==='default'||part.key==='s1'||part.key==='s2';
+    const main=part.key==='default'||part.key==='s1'||part.key==='s2'||part.key==='s3';
     if(main){ command.x=part.x;command.y=part.y;command.arrived=true; }
     if(part.key==='s1_bomb'){
       for(const v of part.stunVictims) {
@@ -119,24 +121,25 @@ export class WisadelProjectiles {
   hit(command,kind,part) {
     if(!this.valid(command))return;
     this.b.emit('wisadelProjectileImpact',{ owner:this.u,command,kind,part });
-    for(const v of this.victims(part.x,part.y,part.spec.radius,ground)) {
+    const profile=command.mode==='s3'?allMotion:ground;
+    for(const v of this.victims(part.x,part.y,part.spec.radius,profile)) {
       if(!this.valid(command))break;
-      if(!this.sameLife(v,ground))continue;
+      if(!this.sameLife(v,profile))continue;
       const primary=v.target===command.target && v.seq===command.targetSeq;
       if(kind==='main'&&primary)this.attach(v.target,v.seq);
-      if(!this.valid(command)||!this.sameLife(v,ground))continue;
+      if(!this.valid(command)||!this.sameLife(v,profile))continue;
       const mark=v.target.findBuff(WISADEL_AFTERIMAGE);
       const scale=command.scale*(kind==='main'?1:command.mode==='s1'?this.record.bb.append_atk_scale:trait['attack@append_atk_scale']);
       const shock=kind==='aftershock';
       if(shock)shockDepth.set(v.target,(shockDepth.get(v.target)??0)+1);
       try {
-        this.b.dealDamage(this.u,v.target,{amount:this.u.s.atk*this.u.s.atkScaleMul*scale*
+        this.b.dealDamage(this.u,v.target,{amount:(command.cachedAtk??this.u.s.atk*this.u.s.atkScaleMul)*scale*
           (primary?this.talent('main_atk_scale',1):1),type:'phys',isAttack:true,
           isSkill:command.isSkill,isSplash:true,applyWay:'ranged',attackId:command.attackId,
           tags:shock?['aftershock']:[] });
         if(v.target.deploySeq!==v.seq && mark?.data.wisadelLife===v.seq)this.b.removeBuff(v.target,mark);
         if(shock&&this.valid(command)&&v.target.deploySeq===v.seq&&
-          (!v.target.alive||this.sameLife(v,ground)))this.explode(command,v);
+          (!v.target.alive||this.sameLife(v,profile)))this.explode(command,v);
       } finally {
         if(shock){
           const depth=shockDepth.get(v.target)-1;
@@ -152,7 +155,9 @@ export class WisadelProjectiles {
   explode(command,v) {
     // Native Dice precedes CheckContainsBuff: each valid shock victim rolls,
     // including unmarked victims. E0 has no talent and consumes no such roll.
-    if(!this.talentActive() || this.b.rng()>=this.talent('prob'))return;
+    if(!this.talentActive())return;
+    const roll=this.b.rng(),prob=command.procChance??this.talent('prob');
+    if(!this.valid(command)||!this.talentActive()||roll>=prob)return;
     const mark=v.target.findBuff(WISADEL_AFTERIMAGE);
     if(!mark || mark.data.wisadelLife!==v.seq || this.detonating.has(mark))return;
     this.detonating.add(mark);

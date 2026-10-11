@@ -94,6 +94,14 @@ test('S3 preserves six ammunition rounds and rank-dependent Shadow counts, costs
   assert.deepEqual(nodes.map(type),['CheckContainsBuff','ModifySp','FinishBuffsById']);
   assert.deepEqual(nodes[0]._buffKeys,['wisdel_s_3[token_mark]']);assert.equal(nodes[1]._spString,'sp');
   assert.equal(nodes[2]._buffKey,'wisdel_s_3[token_mark]');
+  assert.equal(nodes[0]._targetType,'BUFF_SOURCE');assert.equal(nodes[1]._targetType,'BUFF_OWNER');
+  assert.equal(nodes[1]._forceFlag,false);assert.equal(nodes[2]._targetType,'BUFF_SOURCE');
+  const metadata=c('1668951707761770651');assert.equal(metadata._canDiscardRemainingCount,1);
+  assert.equal(metadata._fetchFromMainAttack,1);assert.equal(metadata._fromMainRawAttack,1);
+  const shot=c('-6478552835978072609');assert.equal(shot._useCachedAtkOnly,1);assert.equal(shot._transferSource,1);
+  assert.equal(c('4682802530119347679')._targetMotion,3);
+  assert.equal(c('2128818526141836767')._resetWhenAttackFinished,1);
+  assert.equal(c('1941470665804115423')._activeBuffs[0].lifeTime,2);
 });
 test('Shadow ownership, Camouflage and deck flags retain the original distinctions',()=>{
   const root=c('7531983340995195566');assert.equal(root._occupiedRemainingCharacterCnt,0);assert.equal(root._notShowInDeck,0);
