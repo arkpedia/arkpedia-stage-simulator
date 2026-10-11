@@ -9,6 +9,7 @@ import {particleWorldPosition,particleSheetUV} from '/shared/arkpedia/native-par
 import {sampleParticleCurve} from '/shared/arkpedia/native-particle-curves.js';
 import {effectMeshColors} from '/shared/arkpedia/native-effect-mesh.js';
 import {createEffectPose} from '/shared/arkpedia/native-effect-pose.js';
+import {createEffectTrail,createEffectTrajectory} from '/shared/arkpedia/native-effect-trail.js';
 const effect=document.querySelector('#effect'),clipSelect=document.querySelector('#clip'),time=document.querySelector('#time');
 const status=document.querySelector('#status'),play=document.querySelector('#play'),host=document.querySelector('#scene');
 const renderer=new T.WebGLRenderer({antialias:true,preserveDrawingBuffer:true});
@@ -16,6 +17,7 @@ renderer.setPixelRatio(Math.min(devicePixelRatio,2));host.append(renderer.domEle
 const scene=new T.Scene();scene.background=new T.Color('#142027');
 const camera=new T.PerspectiveCamera(35,1,.001,100);camera.up.set(0,1,0);
 let pack,animations,shaders,pose,group,playing=false,clock=0,timeWindow=3,last,draws=[],blocked=[],geometries=[],materials=[];
+let trajectory=null;
 const textures=new Map(),defaults=new Map(),nodeObjects=new Map();
 const sha=async bytes=>[...new Uint8Array(await crypto.subtle.digest('SHA-256',bytes))].map(b=>b.toString(16).padStart(2,'0')).join('');
 async function bytes(entry){
@@ -144,7 +146,7 @@ async function rebuildRoot(name){
   for(const [component,r] of pose.renderers){
     const record=pack.records[component];if(!r.enabled)continue;
     try{
-      let meshId,particleSource,emitter,billboard=false;
+      let meshId,particleSource,emitter,trail,billboard=false;
       if(record.type==='MeshRenderer'){
         const go=pack.records[r.gameObject];const filter=(go.references??[]).map(r=>r.target).find(k=>pack.records[k]?.type==='MeshFilter');
         meshId=target(filter,'m_Mesh');
@@ -162,15 +164,21 @@ async function rebuildRoot(name){
         }
         billboard=record.data.m_RenderMode===0;
         if(!billboard)meshId=target(component,'m_Mesh');
-      }else throw Error('Trail lifecycle not playing');
+      }else if(record.type==='TrailRenderer'){
+        if(r.materials.length!==1)throw Error('Native multi-material trail needs review');
+        trail=createEffectTrail(record.data);
+      }
+      else throw Error('Native renderer needs review');
       const mat=r.materials[0];if(!mat)throw Error('Unresolved original material');
-      const material=await makeMaterial(component,mat.id),g=billboard?billboardGeometry():geometry(meshId);
+      const material=await makeMaterial(component,mat.id),g=trail?new T.BufferGeometry():billboard?billboardGeometry():geometry(meshId);
+      if(trail){geometries.push(g);g.setAttribute('position',new T.Float32BufferAttribute([],3));g.setAttribute('in_POSITION0',g.getAttribute('position'));g.setAttribute('in_COLOR0',new T.Float32BufferAttribute([],4));g.setAttribute('in_TEXCOORD0',new T.Float32BufferAttribute([],2));}
       if(particleSource?.UVModule?.enabled&&Array.from({length:8},(_,i)=>g.getAttribute('in_TEXCOORD'+i)).some(a=>a&&a.itemSize!==2))throw Error('Native multidimensional particle UV stream needs review');
       const mesh=new T.Mesh(g,material);
+      mesh.renderOrder=record.data.m_SortingOrder??0;
       if(particleSource){const d=particleSource.InitialModule,x=sampleParticleCurve(d.startSize,0);
         mesh.scale.fromArray(d.size3D?[x,sampleParticleCurve(d.startSizeY,0),sampleParticleCurve(d.startSizeZ,0)]:[x,x,x]);}
 
-      nodeObjects.get(r.transform).add(mesh);draws.push({component,transform:r.transform,particleSource,alignment:record.data.m_RenderAlignment,mesh,emitter,pool:emitter?[mesh]:null,
+      nodeObjects.get(r.transform).add(mesh);draws.push({component,transform:r.transform,particleSource,trail,alignment:record.data.m_RenderAlignment,mesh,emitter,pool:emitter?[mesh]:null,
         baseColors:emitter?g.getAttribute('in_COLOR0').array.slice():null,
         baseUVs:emitter?Array.from({length:8},(_,i)=>g.getAttribute('in_TEXCOORD'+i)?.array.slice()??null):null});
       mesh.onBeforeRender=function(){
@@ -197,10 +205,33 @@ async function rebuildRoot(name){
   const extent=bounds.getSize(new T.Vector3()).length(),size=Number.isFinite(extent)?Math.max(extent,.5):.5;
   if(!centre.toArray().every(Number.isFinite))centre.set(0,0,0);
   camera.position.copy(centre).add(new T.Vector3(.2,.35,1).normalize().multiplyScalar(size*1.8));camera.lookAt(centre);draw();
-  status.textContent=`${draws.length} original mesh/billboard components inspected. ${blocked.length} components remain unplayed.\nSource-emitter/explicit-clip inspection: box/straight-cone emission, velocity, grid frames and a local curl-noise/speed-limit replay are playing. Other shapes, trails, script motion and Animator transitions remain unplayed. Noise field, timing, native coordinates and color management are not verified against game frames.`;
+  updateStatus();
   globalThis.effectReview={compileResults,pose,draws,blocked,setTime(t){clock=t;time.value=String(t);draw();},setClip(id){clipSelect.value=id;draw();},
-    async selectRoot(name){effect.value=name;await rebuild();}};
+    async selectRoot(name){effect.value=name;await rebuild();},
+    setTrajectory(samples){const next=samples===null?null:createEffectTrajectory(samples);trajectory=next;draw();updateStatus();}};
   }finally{effect.disabled=clipSelect.disabled=time.disabled=play.disabled=false;}
+}
+function updateStatus(){
+  status.textContent=`${draws.length} original mesh/billboard/trail components inspected. ${blocked.length} components remain unplayed.\nSource-emitter/explicit-clip inspection: box/straight-cone emission, velocity, grid frames and local curl-noise/speed-limit replay. View-aligned stretch trails use original widths, gradients and materials. ${trajectory?'Recorded movement is loaded.':'Load movement JSON to inspect trails; static source poses do not invent a path.'} Other shapes, native script motion and Animator transitions remain unplayed. Trail joins/expiry/UV orientation, noise field, timing, native coordinates and color management are not verified against game frames.`;
+}
+function samplePose(t){
+  const state=pose.sample(t,clipSelect.value||null);
+  if(trajectory){const offset=trajectory.sample(t);for(const n of state.nodes.values())if(!n.parent)n.position=n.position.map((v,i)=>v+offset[i]);}
+  return state;
+}
+function updateTrailGeometry(g,data){
+  if(g.getAttribute('position').array.length!==data.positions.length){
+    // Release old GPU buffers before resizing; equal-size scrubs reuse them.
+    g.dispose();
+    g.setAttribute('position',new T.Float32BufferAttribute(data.positions,3));g.setAttribute('in_POSITION0',g.getAttribute('position'));
+    g.setAttribute('in_COLOR0',new T.Float32BufferAttribute(data.colors,4));g.setAttribute('in_TEXCOORD0',new T.Float32BufferAttribute(data.uvs,2));g.setIndex(data.indices);
+  }else{
+    for(const [name,values]of [['position',data.positions],['in_COLOR0',data.colors],['in_TEXCOORD0',data.uvs]]){
+      const attribute=g.getAttribute(name);attribute.array.set(values);attribute.needsUpdate=true;
+    }
+  }
+  if(data.indices.length){g.computeBoundingBox();g.computeBoundingSphere();}
+  else{g.boundingBox?.makeEmpty();if(g.boundingSphere)g.boundingSphere.radius=0;}
 }
 function particleFrame(transform,state){
   const worlds=new Map();
@@ -220,7 +251,7 @@ function particleFrame(transform,state){
 }
 function draw(){
   if(!pose)return;
-  const state=pose.sample(clock,clipSelect.value||null);
+  const state=samplePose(clock);
   for(const [id,n] of state.nodes){const o=nodeObjects.get(id);o.position.fromArray(n.position);o.scale.fromArray(n.scale);
     if(n.euler)o.quaternion.setFromEuler(new T.Euler(...n.euler.map(v=>v*Math.PI/180),'ZXY'));else o.quaternion.fromArray(n.rotation);
     o.visible=n.visible;
@@ -228,7 +259,18 @@ function draw(){
   group.updateMatrixWorld(true);camera.updateMatrixWorld(true);
   const birthStates=new Map();
   for(const entry of draws){
-    const {component,mesh,emitter,pool,baseColors,baseUVs,transform,particleSource,alignment}=entry;
+    const {component,mesh,emitter,trail,pool,baseColors,baseUVs,transform,particleSource,alignment}=entry;
+    if(trail){
+      const history=trajectory?trajectory.times(clock).map(t=>{
+        if(!birthStates.has(t))birthStates.set(t,samplePose(t));
+        const s=birthStates.get(t);return {time:t,position:particleFrame(transform,s).position.toArray(),emitting:s.nodes.get(transform).visible};
+      }):[];
+      const data=trail.sample(clock,history,camera.position.toArray());entry.trailData=data;
+      const g=mesh.geometry,inverse=new T.Matrix4().copy(mesh.parent.matrixWorld).invert();
+      mesh.visible=data.indices.length>0&&mesh.parent.matrixWorld.determinant()!==0;
+      mesh.matrixAutoUpdate=false;mesh.matrix.copy(inverse);mesh.matrixWorldNeedsUpdate=true;
+      updateTrailGeometry(g,data);
+    }
     if(emitter){
       const particles=emitter.sample(clock);
       const current=particleFrame(transform,state);
@@ -247,7 +289,7 @@ function draw(){
             // Prewarm precedes visible playback: hold the source start pose
             // before time zero rather than looping a clip into the past.
             const t=Math.max(0,particle.birthTime);
-            if(!birthStates.has(t))birthStates.set(t,pose.sample(t,clipSelect.value||null));
+            if(!birthStates.has(t))birthStates.set(t,samplePose(t));
             const b=particleFrame(transform,birthStates.get(t));
             born=new T.Matrix4().compose(b.position,b.rotation,particleSource.scalingMode===0||particleSource.scalingMode===2?b.scale:b.localScale);
           }
@@ -293,6 +335,12 @@ try{
   clipSelect.onchange=()=>{playing=false;play.textContent='Play';clock=0;time.value='0';draw();};
   time.oninput=()=>{playing=false;play.textContent='Play';clock=Number(time.value);draw();};
   play.onclick=()=>{playing=!playing;play.textContent=playing?'Pause':'Play';last=undefined;};
+  document.querySelector('#movement').onchange=async e=>{
+    const file=e.target.files[0];if(!file)return;
+    try{if(file.size>2000000)throw Error('Movement JSON exceeds 2 MB');globalThis.effectReview.setTrajectory(JSON.parse(await file.text()));}
+    catch(error){status.textContent=error.message;}
+  };
+  document.querySelector('#clear-movement').onclick=()=>{globalThis.effectReview.setTrajectory(null);document.querySelector('#movement').value='';};
   function frame(now){if(playing){clock=(clock+(last===undefined?0:(now-last)/1000))%timeWindow;time.value=String(clock);draw();}last=now;requestAnimationFrame(frame);}requestAnimationFrame(frame);
 }catch(e){status.textContent=e.message;console.error(e);}
 addEventListener('pagehide',()=>{observer.disconnect();renderer.dispose();for(const m of materials)m.dispose();for(const g of geometries)g.dispose();for(const t of [...textures.values(),...defaults.values()])t.dispose();},{once:true});

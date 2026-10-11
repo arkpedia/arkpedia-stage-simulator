@@ -9,6 +9,7 @@
     h1{font-size:17px;margin:0}label{display:flex;gap:8px;align-items:center;font-size:13px}
     button,select{background:#263b41;color:#e3f2ee;border:1px solid #64d5ae;padding:8px;border-radius:4px}
     select{max-width:320px}input[type=range]{width:140px}output{min-width:44px}
+    input[type=file]{max-width:205px}
     #scene{flex:1;min-height:0;overflow:hidden;touch-action:none}canvas{display:block;width:100%;height:100%}
     #status{padding:10px 16px;font-size:13px;white-space:pre-line;max-height:24dvh;overflow:auto}
     @media(max-width:600px){header{gap:8px;padding:8px}h1{width:100%}select{max-width:210px}#status{padding:8px;font-size:12px}}
@@ -19,6 +20,7 @@
     <label>Clip <select id="clip" disabled></select></label>
     <button id="play" disabled>Play</button>
     <label>Time <input id="time" type="range" min="0" max="3" step="0.01" value="0" disabled><output id="clock">0.00s</output></label>
+    <label>Movement JSON <input id="movement" type="file" accept="application/json,.json"></label><button id="clear-movement">Clear movement</button>
   </header>
   <div id="scene"></div><div id="status" role="status">Loading pinned original mesh, shader and animation inputs…</div>
   <script type="module" src="./lappland-effect-preview.js"></script>
