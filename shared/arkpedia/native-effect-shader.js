@@ -28,3 +28,18 @@ export function selectEffectProgram(shader, keywords) {
   if (programs.length !== 1) throw new Error('Missing or ambiguous original material keyword variant');
   return programs[0];
 }
+
+// Include integer toggles: leaving them unset changes native branches even when
+// the GLSL program compiles successfully. Reject unknown uniform types instead
+// of silently relying on WebGL's zero-initialized values.
+export function effectUniformDeclarations(port) {
+  const declarations=new Map();
+  for(const stage of [port.vertex,port.fragment])for(const m of stage.matchAll(/uniform\s+(?:(?:highp|mediump|lowp)\s+)?(\w+)\s+(\w+)(?:\[(\d+)\])?\s*;/g)){
+    const [,type,name,count]=m;
+    if(!['float','int','vec2','vec3','vec4','sampler2D'].includes(type))throw new Error('Unsupported native uniform type '+type);
+    const d={type,name,count:count?Number(count):null};
+    if(declarations.has(name)&&JSON.stringify(declarations.get(name))!==JSON.stringify(d))throw new Error('Conflicting native uniform declaration '+name);
+    declarations.set(name,d);
+  }
+  return [...declarations.values()];
+}

@@ -60,7 +60,8 @@ original_meta = MANIFEST.read_text()
 original_pack = gzip.decompress((DIRECTORY / 'native-effects.bin').read_bytes()).decode()
 names = ['enabled-before-rendering', 'false-renderer-verification', 'omitted-prefab',
          'omitted-child', 'changed-transform', 'changed-material', 'changed-animation',
-         'changed-mesh', 'changed-texture-pixels', 'omitted-unresolved-reference',
+         'changed-mesh', 'changed-color-byte', 'changed-color-format', 'changed-uv-channel',
+         'changed-texture-pixels', 'omitted-unresolved-reference',
          'changed-shader', 'changed-script-binding', 'changed-source-bundle']
 results = []
 for name in names:
@@ -92,6 +93,12 @@ for name in names:
         r['data']['m_SampleRate'] += 1
     elif name == 'changed-mesh':
         next(iter(pack['meshes'].values()))['positions'][0][0] += .1
+    elif name == 'changed-color-byte':
+        next(m for m in pack['meshes'].values() if m['colors'])['colors'][0][0] -= 1
+    elif name == 'changed-color-format':
+        next(m for m in pack['meshes'].values() if m['colors'])['vertexChannels'][3]['format'] = 6
+    elif name == 'changed-uv-channel':
+        next(m for m in pack['meshes'].values() if m['uvChannels'][0])['uvChannels'][0][0][0] += .1
     elif name == 'changed-texture-pixels':
         key, entry = next(iter(pack['textures'].items()))
         image = Image.open(DIRECTORY / entry['path']).convert('RGBA')

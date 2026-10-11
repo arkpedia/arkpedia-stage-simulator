@@ -134,6 +134,7 @@ def verify(cache, directory, manifest):
             assert pack['meshes'][key] == {'positions': normalized(h.m_Vertices), 'uv': normalized(h.m_UV0),
                 'normals': normalized(h.m_Normals), 'tangents': normalized(h.m_Tangents),
                 'colors': normalized(h.m_Colors),
+                'vertexChannels': normalized(tree['m_VertexData']['m_Channels']),
                 'uvChannels': [normalized(getattr(h, f'm_UV{i}')) for i in range(8)],
                 'submeshTriangles': normalized(h.get_triangles())}
             assert r['data'] == {'name': tree['m_Name'], 'bounds': normalized(tree['m_LocalAABB'])}

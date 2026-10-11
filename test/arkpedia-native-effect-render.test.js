@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {webglEffectProgram,selectEffectProgram} from '../shared/arkpedia/native-effect-shader.js';
+import {webglEffectProgram,selectEffectProgram,effectUniformDeclarations} from '../shared/arkpedia/native-effect-shader.js';
+import {effectMeshColors} from '../shared/arkpedia/native-effect-mesh.js';
 import {createEffectPose} from '../shared/arkpedia/native-effect-pose.js';
 import meta from '../data/arkpedia-lappland-effect-shaders.json' with {type:'json'};
 import mvp from '../data/arkpedia-mvp.json' with {type:'json'};
@@ -26,6 +27,31 @@ test('shader keyword variants require one exact native match',()=>{
   assert.equal(selectEffectProgram(shader,['FIRST','SECOND','FIRST']),b);
   assert.throws(()=>selectEffectProgram(shader,['FIRST']));
   assert.throws(()=>selectEffectProgram({programs:{a,also:a}},[]));
+});
+
+test('native integer branches and matrix arrays cannot be silently omitted',()=>{
+  const port={vertex:'uniform highp vec4 hlslcc_mtx4x4unity_MatrixVP[4];\nuniform int _ToggleUseDissolve;',
+    fragment:'uniform mediump int _ToggleUseDissolve;\nuniform mediump sampler2D _MainTex;'};
+  assert.deepEqual(effectUniformDeclarations(port),[
+    {type:'vec4',name:'hlslcc_mtx4x4unity_MatrixVP',count:4},
+    {type:'int',name:'_ToggleUseDissolve',count:null},{type:'sampler2D',name:'_MainTex',count:null}]);
+  assert.throws(()=>effectUniformDeclarations({vertex:'uniform mat4 _Matrix;',fragment:''}),/Unsupported/);
+  assert.throws(()=>effectUniformDeclarations({vertex:'uniform int _Toggle;',fragment:'uniform float _Toggle;'}),/Conflicting/);
+});
+
+test('source UNorm8 colors normalize RGB and alpha once before particle tint',()=>{
+  const mesh={positions:[[0,0,0],[1,0,0]],colors:[[255,128,0,102],[32,255,255,0]],
+    vertexChannels:[{},{},{},{dimension:4,format:2}]};
+  const original=structuredClone(mesh);
+  assert.deepEqual(effectMeshColors(mesh),[1,128/255,0,.4,32/255,1,1,0]);
+  assert.deepEqual(effectMeshColors(mesh,[.5,1,2,.25]),[.5,128/255,0,.1,16/255,1,2,0]);
+  assert.deepEqual(mesh,original);
+  const floating={...mesh,colors:[[1,.5,0,.4],[.2,1,1,0]],vertexChannels:[{},{},{},{dimension:4,format:0}]};
+  assert.deepEqual(effectMeshColors(floating),floating.colors.flat());
+  for(const format of [3,6])assert.throws(()=>effectMeshColors({...mesh,vertexChannels:[{},{},{},{dimension:4,format}]}),/Unsupported/);
+  assert.throws(()=>effectMeshColors({...mesh,colors:[[256,0,0,0],[0,0,0,0]]}),/UNorm8/);
+  assert.throws(()=>effectMeshColors({...mesh,vertexChannels:[]}),/descriptor/);
+  assert.deepEqual(effectMeshColors({...mesh,colors:null,vertexChannels:[{},{},{},{dimension:0,format:0}]}),[1,1,1,1,1,1,1,1]);
 });
 
 function fixture(){

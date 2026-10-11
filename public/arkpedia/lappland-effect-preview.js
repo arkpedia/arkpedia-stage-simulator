@@ -1,8 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Inspect original mesh templates and explicit clip poses. This deliberately
-// does not stand in for particle/trail lifecycle or a reviewed battle renderer.
+// Inspect original meshes, supported stationary emitters and explicit clips.
+// This is not a completed particle/trail lifecycle or reviewed battle renderer.
 import * as T from '/vendor/three.module.js';
-import {webglEffectProgram,selectEffectProgram} from '/shared/arkpedia/native-effect-shader.js';
+import {webglEffectProgram,selectEffectProgram,effectUniformDeclarations} from '/shared/arkpedia/native-effect-shader.js';
+import {createStationaryParticles} from '/shared/arkpedia/native-stationary-particles.js';
+import {sampleParticleCurve} from '/shared/arkpedia/native-particle-curves.js';
+import {effectMeshColors} from '/shared/arkpedia/native-effect-mesh.js';
 import {createEffectPose} from '/shared/arkpedia/native-effect-pose.js';
 const effect=document.querySelector('#effect'),clipSelect=document.querySelector('#clip'),time=document.querySelector('#time');
 const status=document.querySelector('#status'),play=document.querySelector('#play'),host=document.querySelector('#scene');
@@ -10,7 +13,7 @@ const renderer=new T.WebGLRenderer({antialias:true,preserveDrawingBuffer:true});
 renderer.setPixelRatio(Math.min(devicePixelRatio,2));host.append(renderer.domElement);
 const scene=new T.Scene();scene.background=new T.Color('#142027');
 const camera=new T.PerspectiveCamera(35,1,.001,100);camera.up.set(0,1,0);
-let pack,animations,shaders,pose,group,playing=false,clock=0,last,draws=[],blocked=[],geometries=[],materials=[];
+let pack,animations,shaders,pose,group,playing=false,clock=0,timeWindow=3,last,draws=[],blocked=[],geometries=[],materials=[];
 const textures=new Map(),defaults=new Map(),nodeObjects=new Map();
 const sha=async bytes=>[...new Uint8Array(await crypto.subtle.digest('SHA-256',bytes))].map(b=>b.toString(16).padStart(2,'0')).join('');
 async function bytes(entry){
@@ -73,10 +76,9 @@ async function makeMaterial(component,material){
   if(!shader||shader.passes.length!==1)throw Error('Unsupported native multipass shader');
   const source=selectEffectProgram(shader,data.m_ValidKeywords),port=webglEffectProgram(source.source),props=pose.renderers.get(component).materials[0].properties;
   const uniforms={};
-  const declarations=[...new Map([...port.vertex.matchAll(/uniform\s+(?:(?:highp|mediump|lowp)\s+)?(float|vec[234]|sampler2D)\s+(\w+)(?:\[(\d+)\])?\s*;/g),
-    ...port.fragment.matchAll(/uniform\s+(?:(?:highp|mediump|lowp)\s+)?(float|vec[234]|sampler2D)\s+(\w+)(?:\[(\d+)\])?\s*;/g)].map(m=>[m[2],m])).values()];
-  for(const [,type,name,size] of declarations){
-    if(size){if(type!=='vec4'||size!=='4'||!name.startsWith('hlslcc_mtx4x4'))throw Error('Unsupported native uniform array');uniforms[name]={value:new Float32Array(16)};continue;}
+  const declarations=effectUniformDeclarations(port);
+  for(const {type,name,count:size} of declarations){
+    if(size){if(type!=='vec4'||size!==4||!name.startsWith('hlslcc_mtx4x4'))throw Error('Unsupported native uniform array');uniforms[name]={value:new Float32Array(16)};continue;}
     if(type==='sampler2D'){uniforms[name]={value:await sourceTexture(material,name,shader)};continue;}
     if(name==='_WorldSpaceCameraPos'){uniforms[name]={value:new T.Vector3()};continue;}
     if(name==='_Time'||name==='_SinTime'||name==='_CosTime'){uniforms[name]={value:new T.Vector4()};continue;}
@@ -84,10 +86,11 @@ async function makeMaterial(component,material){
     if(value===undefined){
       const d=shader.properties.m_Props.find(p=>p.m_Name===name);
       if(!d)throw Error('Unmapped native uniform '+name);
-      value=type==='float'?d['m_DefValue[0]']:Array.from({length:Number(type.slice(3))},(_,i)=>d['m_DefValue['+i+']']);
+      value=['float','int'].includes(type)?d['m_DefValue[0]']:Array.from({length:Number(type.slice(3))},(_,i)=>d['m_DefValue['+i+']']);
     }
-    if(type==='float'&&typeof value!=='number'||type!=='float'&&!Array.isArray(value))throw Error('Native uniform shape mismatch '+name);
-    uniforms[name]={value:type==='float'?value:new T['Vector'+type.slice(3)](...value)};
+    if(['float','int'].includes(type)&&typeof value!=='number'||!['float','int'].includes(type)&&!Array.isArray(value))throw Error('Native uniform shape mismatch '+name);
+    if(type==='int'&&!Number.isInteger(value))throw Error('Noninteger native shader toggle '+name);
+    uniforms[name]={value:['float','int'].includes(type)?value:new T['Vector'+type.slice(3)](...value)};
   }
   const q=shader.passes[0].state,b=q.rtBlend0,zTest=stateValue(q.zTest,props),cull=stateValue(q.culling,props);
   if(![0,2,4,8].includes(zTest)||![0,1,2].includes(cull))throw Error('Native depth/cull mode needs review');
@@ -107,13 +110,21 @@ function geometry(id,color=null){
   g.setAttribute('in_POSITION0',new T.Float32BufferAttribute(d.positions.flat(),d.positions[0].length));
   if(d.normals)g.setAttribute('in_NORMAL0',new T.Float32BufferAttribute(d.normals.flat(),d.normals[0].length));
   d.uvChannels.forEach((uv,i)=>{if(uv)g.setAttribute('in_TEXCOORD'+i,new T.Float32BufferAttribute(uv.flat(),uv[0].length));});
-  const colors=d.colors??d.positions.map(()=>[1,1,1,1]);
-  g.setAttribute('in_COLOR0',new T.Float32BufferAttribute(colors.flatMap(c=>c.map((v,i)=>v*(color?.[i]??1))),4));
+  g.setAttribute('in_COLOR0',new T.Float32BufferAttribute(effectMeshColors(d,color??[1,1,1,1]),4));
   // Three's bounds computation uses the standard attribute name even though
   // the original shader binds its original GLES input name.
   g.setAttribute('position',g.getAttribute('in_POSITION0'));g.setIndex(d.submeshTriangles.flat(2));return g;
 }
-function constant(curve){if(curve.minMaxState!==0)throw Error('Particle template has a varying initial curve');return curve.scalar;}
+function billboardGeometry(){
+  // Billboard mode has no authored Mesh asset: its quad is generated by the
+  // particle renderer. This local XY mapping is explicit, not a replacement for
+  // an unresolved source Mesh reference.
+  const g=new T.PlaneGeometry(1,1);geometries.push(g);
+  g.setAttribute('in_POSITION0',g.getAttribute('position'));
+  g.setAttribute('in_NORMAL0',g.getAttribute('normal'));
+  g.setAttribute('in_TEXCOORD0',g.getAttribute('uv'));
+  g.setAttribute('in_COLOR0',new T.Float32BufferAttribute(Array(16).fill(1),4));return g;
+}
 let rebuildQueue=Promise.resolve();
 function rebuild(){
   const name=effect.value;
@@ -131,24 +142,27 @@ async function rebuildRoot(name){
   for(const [component,r] of pose.renderers){
     const record=pack.records[component];if(!r.enabled)continue;
     try{
-      let meshId,size=1,angle=0,color=null;
+      let meshId,particleSource,emitter,billboard=false;
       if(record.type==='MeshRenderer'){
         const go=pack.records[r.gameObject];const filter=(go.references??[]).map(r=>r.target).find(k=>pack.records[k]?.type==='MeshFilter');
         meshId=target(filter,'m_Mesh');
       }else if(record.type==='ParticleSystemRenderer'){
-        if(record.data.m_RenderMode!==4)throw Error('Billboard particle lifecycle not playing');
+        if(![0,4].includes(record.data.m_RenderMode)||record.data.m_RenderAlignment!==2)throw Error('Particle alignment/render mode not playing');
+        if(record.data.m_UseCustomVertexStreams||Object.values(record.data.m_Pivot).some(v=>v!==0)||Object.values(record.data.m_Flip).some(v=>v!==0))throw Error('Particle vertex streams/pivot/flip need review');
         const ps=(pack.records[r.gameObject].references??[]).map(r=>r.target).find(k=>pack.records[k]?.type==='ParticleSystem');
-        const d=pack.records[ps].data.InitialModule;
-        if(d.size3D||d.rotation3D||d.startColor.minMaxState!==0)throw Error('Dynamic particle template needs lifecycle playback');
-        size=constant(d.startSize);angle=constant(d.startRotation);color=['r','g','b','a'].map(k=>d.startColor.maxColor[k]);
-        meshId=target(component,'m_Mesh');
+        particleSource=pack.records[ps].data;emitter=createStationaryParticles(particleSource);
+        billboard=record.data.m_RenderMode===0;
+        if(!billboard)meshId=target(component,'m_Mesh');
       }else throw Error('Trail lifecycle not playing');
       const mat=r.materials[0];if(!mat)throw Error('Unresolved original material');
-      const material=await makeMaterial(component,mat.id),g=geometry(meshId,color);
-      const mesh=new T.Mesh(g,material);mesh.scale.setScalar(size);mesh.rotation.z=angle;
-      nodeObjects.get(r.transform).add(mesh);draws.push({component,mesh});
-      mesh.onBeforeRender=()=>{
-        const u=material.uniforms,matrix=mesh.matrixWorld;
+      const material=await makeMaterial(component,mat.id),g=billboard?billboardGeometry():geometry(meshId);
+      const mesh=new T.Mesh(g,material);
+      if(particleSource){const d=particleSource.InitialModule,x=sampleParticleCurve(d.startSize,0);
+        mesh.scale.fromArray(d.size3D?[x,sampleParticleCurve(d.startSizeY,0),sampleParticleCurve(d.startSizeZ,0)]:[x,x,x]);}
+
+      nodeObjects.get(r.transform).add(mesh);draws.push({component,mesh,emitter,pool:emitter?[mesh]:null,baseColors:emitter?g.getAttribute('in_COLOR0').array.slice():null});
+      mesh.onBeforeRender=function(){
+        const u=material.uniforms,matrix=this.matrixWorld;
         if(u.hlslcc_mtx4x4unity_ObjectToWorld)u.hlslcc_mtx4x4unity_ObjectToWorld.value.set(matrix.elements);
         if(u.hlslcc_mtx4x4unity_WorldToObject)u.hlslcc_mtx4x4unity_WorldToObject.value.set(new T.Matrix4().copy(matrix).invert().elements);
         if(u.hlslcc_mtx4x4unity_MatrixVP)u.hlslcc_mtx4x4unity_MatrixVP.value.set(new T.Matrix4().multiplyMatrices(camera.projectionMatrix,camera.matrixWorldInverse).elements);
@@ -159,10 +173,15 @@ async function rebuildRoot(name){
   clipSelect.replaceChildren(new Option('Static native pose',''));
   for(const id of new Set(pose.instances.map(i=>i.clip)))clipSelect.add(new Option(animations.clips[id].name,id));
   if(clipSelect.options.length>1)clipSelect.selectedIndex=1;
+  // Inspect two native emitter periods rather than cutting five-second systems
+  // off at the old fixed three-second review window.
+  const periods=[...pose.nodes.values()].flatMap(n=>(pack.records[n.gameObject].references??[])
+    .map(r=>pack.records[r.target]).filter(r=>r?.type==='ParticleSystem').map(r=>r.data.lengthInSec*2));
+  timeWindow=Math.max(3,...periods,...pose.instances.map(i=>animations.clips[i.clip].stop));time.max=String(timeWindow);
   clock=0;time.value='0';draw();
   group.updateMatrixWorld(true);const bounds=new T.Box3().setFromObject(group),centre=bounds.getCenter(new T.Vector3());
   const size=Math.max(bounds.getSize(new T.Vector3()).length(),.5);camera.position.copy(centre).add(new T.Vector3(.2,.35,1).normalize().multiplyScalar(size*1.8));camera.lookAt(centre);draw();
-  status.textContent=`${draws.length} original mesh templates rendered. ${blocked.length} components remain unplayed.\nMesh/explicit-clip inspection only: emission, trails, script motion and Animator transitions are not playing. Native coordinates, color management and camera mapping are not yet verified against a game frame.`;
+  status.textContent=`${draws.length} original mesh/billboard components inspected. ${blocked.length} components remain unplayed.\nStationary emitter/explicit-clip inspection: moving/shape particles, trails, script motion and Animator transitions are not playing. Native coordinates, color management and camera mapping are not yet verified against a game frame.`;
   globalThis.effectReview={compileResults,pose,draws,blocked,setTime(t){clock=t;time.value=String(t);draw();},setClip(id){clipSelect.value=id;draw();},
     async selectRoot(name){effect.value=name;await rebuild();}};
   }finally{effect.disabled=clipSelect.disabled=time.disabled=play.disabled=false;}
@@ -174,7 +193,21 @@ function draw(){
     if(n.euler)o.quaternion.setFromEuler(new T.Euler(...n.euler.map(v=>v*Math.PI/180),'ZXY'));else o.quaternion.fromArray(n.rotation);
     o.visible=n.visible;
   }
-  for(const {component,mesh} of draws){const p=state.renderers.get(component).materials[0].properties,u=mesh.material.uniforms;
+  for(const entry of draws){
+    const {component,mesh,emitter,pool,baseColors}=entry;
+    if(emitter){
+      const particles=emitter.sample(clock);
+      while(pool.length<particles.length){const clone=mesh.clone();clone.geometry=mesh.geometry.clone();geometries.push(clone.geometry);clone.onBeforeRender=mesh.onBeforeRender;mesh.parent.add(clone);pool.push(clone);}
+      pool.forEach((part,i)=>{
+        const particle=particles[i];part.visible=!!particle;
+        if(!particle)return;
+        part.scale.fromArray(particle.size);part.rotation.z=particle.rotation;
+        const colors=part.geometry.getAttribute('in_COLOR0');
+        for(let j=0;j<baseColors.length;j++)colors.array[j]=baseColors[j]*particle.color[j%4];
+        colors.needsUpdate=true;
+      });
+    }
+    const p=state.renderers.get(component).materials[0].properties,u=mesh.material.uniforms;
     for(const [name,{value}] of Object.entries(u))if(Object.hasOwn(p,name)){
       if(typeof p[name]==='number')u[name].value=p[name];else value.fromArray(p[name]);
     }
@@ -200,6 +233,6 @@ try{
   clipSelect.onchange=()=>{playing=false;play.textContent='Play';clock=0;time.value='0';draw();};
   time.oninput=()=>{playing=false;play.textContent='Play';clock=Number(time.value);draw();};
   play.onclick=()=>{playing=!playing;play.textContent=playing?'Pause':'Play';last=undefined;};
-  function frame(now){if(playing){clock=(clock+(last===undefined?0:(now-last)/1000))%3;time.value=String(clock);draw();}last=now;requestAnimationFrame(frame);}requestAnimationFrame(frame);
+  function frame(now){if(playing){clock=(clock+(last===undefined?0:(now-last)/1000))%timeWindow;time.value=String(clock);draw();}last=now;requestAnimationFrame(frame);}requestAnimationFrame(frame);
 }catch(e){status.textContent=e.message;console.error(e);}
 addEventListener('pagehide',()=>{observer.disconnect();renderer.dispose();for(const m of materials)m.dispose();for(const g of geometries)g.dispose();for(const t of [...textures.values(),...defaults.values()])t.dispose();},{once:true});
