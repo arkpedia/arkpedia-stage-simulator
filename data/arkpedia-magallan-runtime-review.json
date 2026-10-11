@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "operatorId": "char_248_mgllan",
+  "enabledOperators": ["char_248_mgllan"],
+  "sourceFoundation": "arkpedia-magallan-prefabs.json",
+  "sourceFoundationSha256": "f07014ea063f905a2358371f4a5449b02963b4326fbf92af4c4fe7e24b5799f8",
+  "droneArtworkSha256": "d08f94af7aaa0777174683de3aecc5ffd495c9a232d433b2d5ea7717a34791e8",
+  "scope": "Selected-source ordinary owner/drone attacks, all three skills, drone stock/deployment/invisibility/recycle lifecycle and public builds/controls; historical extraction receipts remain independently held.",
+  "frameParity": false,
+  "moduleSupport": false,
+  "nativeShaderParity": false,
+  "nativeParticleSupport": false,
+  "verification": [
+    "test/arkpedia-magallan-public.test.js",
+    "test/arkpedia-magallan.test.js",
+    "test/arkpedia-magallan-source.test.js",
+    "test/arkpedia-magallan-art.test.js",
+    "tools/arkpedia/verify-magallan.py",
+    "tools/arkpedia/verify-magallan-models.py",
+    "tools/arkpedia/review-magallan-public.mjs"
+  ],
+  "limits": [
+    "Compiled trigger and first-pulse clocks, blackboard prefixing, deck/recharge callback order, selector postFilter4, collision groups and mode/animation completion clocks remain bounded local mappings.",
+    "S1 uses the source Sluggish and UNMOVABLE actions; it does not invent Freeze or RES reduction.",
+    "Original drone skeletons, split-alpha textures and events are published. Single-skeleton facings retain native FaceSwitcher provenance without certifying its compiled clock.",
+    "Native shaders, particles, audio, modules and Unity frame parity remain unimplemented."
+  ]
+}

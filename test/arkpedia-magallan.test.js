@@ -65,7 +65,8 @@ const place = (f, row = 12, col = 10, dir = 'RIGHT') => deployRegularSummon(f.b,
 const hits = (f, u) => f.hits.filter(h => h.source === u);
 
 test('core requires complete source builds, original fresh owner and exact reviewed contract', () => {
-  assert.equal(REGULAR_OPERATORS[ID], undefined); assert.equal(data.operators[ID], undefined);
+  assert.deepEqual(REGULAR_OPERATORS[ID].skillIds, [1, 2, 3].map(n => `skchr_mgllan_${n}`));
+  assert.ok(data.operators[ID]);
   assert.equal(CONTRACT.frameParity, false);
   assert.throws(() => make({ contract: { ...CONTRACT } }), /contract/);
   const valid = make().build;
@@ -336,11 +337,11 @@ test('battle end retires live projectiles, deck hooks and token attacks', () => 
 
 const cast = f => { f.u.skill.addCharge(1); assert.ok(f.u.skill.activate()); };
 
-test('complete skill runtime requires its own reviewed contract and stays out of the public roster', () => {
+test('complete skill runtime requires its own reviewed contract independently of public approval', () => {
   assert.throws(() => make({ skills: true, contract: CONTRACT }), /skill contract/);
   assert.throws(() => make({ skills: true, contract: { ...MAGALLAN_SKILL_CONTRACT } }), /skill contract/);
   assert.equal(MAGALLAN_SKILL_CONTRACT.frameParity, false);
-  assert.equal(data.operators[ID], undefined); assert.equal(REGULAR_OPERATORS[ID], undefined);
+  assert.ok(data.operators[ID]); assert.equal(REGULAR_OPERATORS[ID].mechanic, 'magallan');
 });
 
 test('all thirty source ranks recover natural SP, run fifteen seconds and recycle a surviving drone once', () => {
