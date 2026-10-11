@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import { bodyInKeys } from '../body.js';
 import { areaSelectable } from '../targeting.js';
-import { prepareMagallanCore, MAGALLAN_CORE_CONTRACT, magallanSourceComponent as comp } from './arkpedia-magallan.js';
+import { MAGALLAN_ID, prepareMagallanCore, MAGALLAN_CORE_CONTRACT, magallanSourceComponent as comp } from './arkpedia-magallan.js';
 
 export const MAGALLAN_SKILL_CONTRACT = Object.freeze({
-  scope: 'Selected-source S1 passive/active pulses, S2 owner/drone ASPD and direct area attacks, S3 owner/drone ATK and enlarged arrival splash; public roster/artwork held',
+  scope: 'Selected-source S1 passive/active pulses, S2 owner/drone ASPD and direct area attacks, S3 owner/drone ATK and enlarged arrival splash; public approval is separately source/artwork-bound',
   mapping: 'Source time SP and fifteen-second manual duration, silence permission, mode changes without FSM restart; owner-driven delayed interval pulses propagate immediate token range actions. Slow uses -80% movement, Bind uses UNMOVABLE and rank duration. Existing and newly deployed drones receive the active modifier. Natural/manual skill finish returns surviving drones through ordered recycle; removal kills them without card recovery.',
   limits: 'Compiled trigger clock/first pulse, duration key prefixing, mode detachment/release ordering, selector postFilter4 and collision-group dispatch are explicit local mappings, not certified Unity frame parity. Modules, native default drone textures, shaders, particles/audio and public browser integration still require review.',
   frameParity: false,
@@ -104,3 +104,15 @@ export function prepareMagallanSkills(b, u, { contract } = {}) {
     onStart: () => bridge.start(), onEnd: ({ reason }) => bridge.end(reason),
   } } };
 }
+
+// Public selected-kit adapter. The historical extraction receipt stays held;
+// runtime approval is separately bound to it and the default-drone artwork.
+export function customizeMagallanKit({ battle, id, unit, kit }) {
+  if (id !== MAGALLAN_ID) return;
+  const prepared = prepareMagallanSkills(battle, unit, { contract: MAGALLAN_SKILL_CONTRACT });
+  // Shared summon inspection reads the selected owner's build from its record.
+  // This display context does not transfer trust or potential stats to drones.
+  prepared.record.token.arkpedia = { ...unit.def.raw.arkpedia };
+  Object.assign(kit, prepared.kit);
+}
+export function installMagallan({ unit }) { unit.mem.magallanController?.install(); }

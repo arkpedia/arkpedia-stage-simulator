@@ -19,11 +19,11 @@ const bb = rows => Object.fromEntries(rows.map(r => [r.key, r.valueStr ?? r.valu
 const near = (a, b) => assert.ok(Math.abs(a - b) < 1e-6, `${a} != ${b}`);
 const type = node => node.$type.split('+').at(-1).split(',')[0];
 
-test('Magallan source foundation remains held until the complete runtime is reviewed', () => {
+test('Magallan historical source foundation remains independent from public runtime approval', () => {
   assert.deepEqual(e.enabledOperators, []);
   assert.deepEqual(e.heldOperators, [ID]);
-  assert.equal(REGULAR_OPERATORS[ID], undefined);
-  assert.equal(data.operators[ID], undefined);
+  assert.deepEqual(REGULAR_OPERATORS[ID].skillIds, [1, 2, 3].map(n => `skchr_mgllan_${n}`));
+  assert.ok(data.operators[ID]);
   for (const key of ['frameParity', 'moduleSupport', 'nativeParticleSupport']) assert.equal(e[key], false);
   assert.equal(e.source.commit, '57010cb5b2afea112cae57daa756b58676ba6850');
   assert.equal(e.source.nativeClient, '26-09-23-17-49-43_b9cc4a');
