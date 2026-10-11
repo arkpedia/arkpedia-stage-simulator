@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "operatorId": "char_1040_blaze2",
+  "enabledOperators": [
+    "char_1040_blaze2"
+  ],
+  "sourceFoundation": "arkpedia-blaze-igniting-prefabs.json",
+  "sourceFoundationSha256": "f426ca2c3c8441cfc29db5303e0cf9b4edbe8455691c1ec5601ff6ed6b5839e9",
+  "scope": "Selected-source ordinary combat, all three skills, both talents and public deployment lifecycle. Historical native extraction remains held independently; this review controls public runtime enablement.",
+  "frameParity": false,
+  "moduleSupport": false,
+  "nativeParticleSupport": false,
+  "verification": [
+    "test/arkpedia-blaze-igniting-public.test.js",
+    "test/arkpedia-blaze-igniting.test.js",
+    "test/arkpedia-blaze-igniting-s1.test.js",
+    "test/arkpedia-blaze-igniting-s2.test.js",
+    "test/arkpedia-blaze-igniting-s3.test.js",
+    "test/arkpedia-blaze-igniting-source.test.js",
+    "tools/arkpedia/review-blaze-igniting-public.mjs"
+  ],
+  "limits": [
+    "S1 ties, host lifetime, ratio/real-damage dispatch and trigger phase use documented local mappings.",
+    "S2 DoTile uses the impact root tile; entry clocks, duplicate priority and self-hit/callback ordering remain unverified.",
+    "S3 transferred-source bonus uses birth ATK; count recovery and fatal skill interruption use explicit local bridges.",
+    "Native entry invulnerability duration, abnormal flags, compiled callbacks/revival routing, mount offsets and Unity frame parity remain unverified.",
+    "Original particles/audio and modules are not enabled."
+  ]
+}

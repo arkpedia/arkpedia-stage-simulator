@@ -4,7 +4,7 @@ import {absoluteRangeKeys,canTargetEnemy} from '../targeting.js';
 import {bodyInKeys,bodyInRadius} from '../body.js';
 
 export const BLAZE_IGNITING_S1_CONTRACT=Object.freeze({
-  scope:'Private selected-source automatic S1 ally-hosted damage field; public integration remains held',
+  scope:'Selected-source automatic S1 ally-hosted damage field; public enablement has a separate runtime review',
   cast:'Selected natural SP, highest-Max-HP in-range operator including self, original Skill_1 release event, release-time ATK snapshot',
   field:'Selected radius, interval and lifetime; ally-following sourceless Arts output followed by FIRE injury; emitted ally-hosted fields outlive caster retreat',
   mapping:'Source text supplies the ATK ratio; post-settlement HP damage is the native real-damage receipt bridge. Skill_1 uses unscaled source game-second timings with a clip-end SP lock. Equal-Max-HP ties choose latest deployment; same-anchor fields replace rather than stack. The host buff owns twenty interval ticks including its terminal tick.',

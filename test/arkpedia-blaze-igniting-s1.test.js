@@ -58,7 +58,7 @@ const arts=a=>a.filter(x=>x.dmg.tags.includes('blaze2:s1-field'));
 const injury=a=>a.filter(x=>x.dmg.tags.includes('blaze2:s1-injury'));
 
 test('S1 private adapter does not enable the public operator or the core-only activated skills',()=>{
-  assert.equal(REGULAR_OPERATORS[ID],undefined);assert.equal(data.operators[ID],undefined);assert.deepEqual(e.enabledOperators,[]);
+  assert.equal(REGULAR_OPERATORS[ID].mechanic,'blaze-igniting');assert.ok(data.operators[ID]);assert.deepEqual(e.enabledOperators,[]);
   const f=make({defer:true,sourceS1:false});f.controller.stop();delete f.u.mem.blazeIgnitingController;
   assert.throws(()=>prepareBlazeIgnitingS1(f.b,f.u,{contract:{...S1_CONTRACT}}),/contract/);
   const z=make({skill:2,sourceS1:false,defer:true});z.controller.stop();delete z.u.mem.blazeIgnitingController;

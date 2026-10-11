@@ -165,6 +165,7 @@ import { customizeHoolheyakKit, installHoolheyak } from './content/arkpedia-hool
 import { customizeGoldenglowKit, installGoldenglow } from './content/arkpedia-goldenglow.js';
 import { customizeLapplandKit, installLappland, installLapplandSquad } from './content/arkpedia-lappland-alter.js';
 import { captureThornsRoads, THORNS_LODESTAR_ID, customizeThornsLodestarKit, installThornsLodestar } from './content/arkpedia-thorns-lodestar.js';
+import { customizeBlazeIgnitingKit, installBlazeIgniting } from './content/arkpedia-blaze-igniting.js';
 import { customizeLeeKit, installLee } from './content/arkpedia-lee.js';
 import { customizeYatoAlterKit, installYatoAlter } from './content/arkpedia-yato-alter.js';
 import { customizeSpecterAlterKit, installSpecterAlter, prepareSpecterAlterSquad } from './content/arkpedia-specter-alter.js';
@@ -544,6 +545,7 @@ export class StandardBattle extends Battle {
     customizeGoldenglowKit({ battle: this, id, def, unit, kit });
     customizeLapplandKit({ battle: this, id, def, unit, kit });
     customizeThornsLodestarKit({ battle: this, id, unit, kit });
+    customizeBlazeIgnitingKit({ battle: this, id, unit, kit });
     customizeHoolheyakKit({ battle: this, id, def, unit, kit });
     customizeEbenholzKit({ battle: this, id, def, unit, kit });
     customizeLinKit({ battle: this, id, def, unit, kit });
@@ -739,6 +741,7 @@ export class StandardBattle extends Battle {
     installGoldenglow({ battle: this, unit, def });
     installLappland({ battle: this, unit, def });
     installThornsLodestar({ unit });
+    installBlazeIgniting({ unit });
     installHoolheyak({ battle: this, unit, def });
     installEbenholz({ battle: this, unit, def });
     installLin({ battle: this, unit, def });
