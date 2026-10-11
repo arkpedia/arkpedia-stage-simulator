@@ -6,6 +6,7 @@ import { normalizeChess, flattenBlackboard } from '../simdata.js';
 import { absoluteRangeKeys, canTargetEnemy, sortEnemyTargets } from '../targeting.js';
 import { bodyInKeys, bodyInRadius } from '../body.js';
 import { applyHpLoss, makeDamageInfo } from '../damage.js';
+import { EXUSIAI_COVENANT_S1_CONTRACT, ExusiaiCovenantS1 } from './arkpedia-exusiai-covenant-s1.js';
 
 export const EXUSIAI_COVENANT_ID = 'char_1041_angel2';
 export const EXUSIAI_COVENANT_CORE_CONTRACT = Object.freeze({
@@ -144,6 +145,8 @@ export class ExusiaiCovenantCoreController {
     }, { owner: u });
   }
   release(t, info) {
+    if (this.s1?.burst?.accepting) return this.s1.releaseBurst(t, info);
+    if (this.phase?.kind === 's1-attack') return this.s1?.release(t, info) ?? false;
     const { u, b } = this, p = this.phase;
     if (!this.valid() || !u.canAct || u.s.flags.disarm || p?.kind !== 'attack' || p.accepted
       || p.target !== t || p.targetSeq !== t.deploySeq || p.epoch !== u.attackControlEpoch
@@ -172,7 +175,8 @@ export class ExusiaiCovenantCoreController {
       applyHpLoss(b, u, u, amount,
         makeDamageInfo({ amount, type: 'true', noSp: true, isAttack: true, tags: ['angel2:drain'] }));
     }
-    if (u.hidden) { this.phase = null; return; }
+    if (u.hidden) { this.phase = null; this.s1?.hidden(); return; }
+    if (this.s1?.tick()) return;
     let p = this.phase;
     if (p?.kind === 'entrance') { if (b.time + 1e-9 < p.readyAt) return; this.phase = null; p = null; }
     if (!u.canAct || u.s.flags.disarm || p && p.epoch !== u.attackControlEpoch) {
@@ -214,7 +218,7 @@ export class ExusiaiCovenantCoreController {
   }
   stop() {
     if (this.stopped) return;
-    this.stopped = true; this.phase = null; this.syncAura();
+    this.stopped = true; this.s1?.ownerStop(); this.phase = null; this.syncAura();
     if (this.b.finished) this.b.projectiles.remove(p => p.data?.exusiaiCovenantOwner === this);
     this.u.mem.regularFormVisual = null; delete this.u.mem.regularVisualDirection;
     for (const h of this.handles) this.b.off(h); this.handles = [];
@@ -230,4 +234,27 @@ export function prepareExusiaiCovenantCore(b, u, { contract } = {}) {
     launchAttack: (_b, _u, _p, t, info) => controller.release(t, info) },
   skill: { kind: 'instant', trigger: { rule: 'NEVER' }, canActivate: () => false }, talents: [], install: null };
   return { record, controller, kit };
+}
+
+export function prepareExusiaiCovenantS1(b, u, { contract } = {}) {
+  if (contract !== EXUSIAI_COVENANT_S1_CONTRACT) throw Error('Exusiai Covenant S1 requires the reviewed skill contract');
+  const record = validate(u, EXUSIAI_COVENANT_CORE_CONTRACT);
+  if (record.index !== 0) throw Error('Exusiai Covenant S1 requires the selected first skill');
+  const attack = component('1907782741202953455'), burst = component('5571565256772543727');
+  if (attack._waitForAttackEvent !== 1 || attack._maxAnimScale !== 1 || attack._useCachedAtkOnly !== 0
+    || burst._animKey !== 'Skill_1_Close' || burst._triggerDelta !== .05000000074505806
+    || burst._waitAttackEventForAllAttacks !== 0 || burst._limitToOneTargetAfterFirstRound !== 0
+    || component('-4786399778558772475')._preDelay !== .30000001192092896
+    || component('-1823870851832874235')._canDiscardRemainingCount !== 1
+    || component('-6354835174965532718')._speed !== 30 || component('2077853693862095778')._speed !== 10)
+    throw Error('Unreviewed Exusiai Covenant S1 native ability');
+  const prepared = prepareExusiaiCovenantCore(b, u, { contract: EXUSIAI_COVENANT_CORE_CONTRACT });
+  const { controller, kit } = prepared;
+  controller.s1 = new ExusiaiCovenantS1(controller);
+  kit.skill = { kind: 'ammo', ammo: record.bb['attack@trigger_time'], duration: 0,
+    trigger: { rule: 'SP_FULL' }, manualCancel: true, attack: { priority: 'fly' },
+    canActivate: () => controller.s1.canCast(), onStart: () => controller.s1.start(),
+    onAttack: ctx => { if (controller.s1.burst) ctx.noAmmo = true; },
+    onEnd: ctx => controller.s1.end(ctx.reason), onManualCancel: () => controller.s1.manualStop() };
+  return prepared;
 }
