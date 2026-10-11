@@ -8,7 +8,7 @@ import {normalizeChess} from '../server/sim/simdata.js';
 import {defaultBuild} from '../shared/arkpedia/loadout.js';
 import {REGULAR_OPERATORS} from '../shared/arkpedia/operators.js';
 import {THORNS_LODESTAR_ID as ID,THORNS_CORE_CONTRACT as CONTRACT,selectedThornsBuild,
-  prepareThornsCore,prepareThornsS1,prepareThornsS2,prepareThornsS3,THORNS_S1_CONTRACT,THORNS_S2_CONTRACT,THORNS_S3_CONTRACT,thornsStraightTiles} from '../server/sim/content/arkpedia-thorns-lodestar.js';
+  prepareThornsCore,prepareThornsS1,prepareThornsS2,prepareThornsS3,THORNS_S1_CONTRACT,THORNS_S2_CONTRACT,THORNS_S3_CONTRACT,thornsStraightTiles,captureThornsRoads} from '../server/sim/content/arkpedia-thorns-lodestar.js';
 const near=(a,z,eps=1e-5)=>assert.ok(Math.abs(a-z)<eps,`${a} != ${z}`);
 function advance(b,s){for(let i=0;i<Math.ceil(s/b.dt-1e-9);i++)b.step();assert.deepEqual(b.errors,[]);}
 function until(f,p,s=12){const end=f.b.time+s;while(!p()&&f.b.time<end)advance(f.b,f.b.dt);assert.ok(p(),`Expected condition at ${f.b.time}`);}
@@ -622,6 +622,28 @@ test('S3 preparation rejects copied contracts and wrong selected skills',()=>{
   const f=make({skill:3,defer:true});assert.throws(()=>prepareThornsS3(f.b,f.u,{contract:{...THORNS_S3_CONTRACT}}),/contract/);
   const z=make({skill:2,defer:true});z.controller.stop();delete z.u.mem.thornsController;
   assert.throws(()=>prepareThornsS3(z.b,z.u,{contract:THORNS_S3_CONTRACT}),/third skill/);
+});
+
+for(const [prepare,contract,selected,label]of [
+  [prepareThornsS1,THORNS_S1_CONTRACT,2,'first'],
+  [prepareThornsS2,THORNS_S2_CONTRACT,1,'second'],
+  [prepareThornsS3,THORNS_S3_CONTRACT,2,'third'],
+])test(`rejected ${label}-skill preparation cannot capture the battle-start road map`,()=>{
+  const source=make({skill:selected,defer:true});
+  // A separate battle has never prepared Thorns. The fixture's selected owner
+  // record is valid, but belongs to a different skill than this adapter.
+  const b=new StandardBattle(data,{operators:[defaultBuild(data.operators.char_289_gyuki)]});
+  const u=b._makeAlly(b.getPlayer('arkpedia'),source.u.def,'op',5,5,{dir:'RIGHT'});
+  const hooks=Object.fromEntries(Object.entries(b._hooks).map(([k,v])=>[k,v.length]));
+  const mem={...u.mem};
+  assert.throws(()=>prepare(b,u,{contract}),new RegExp(`selected ${label} skill`));
+  assert.deepEqual(u.mem,mem);
+  assert.deepEqual(Object.fromEntries(Object.entries(b._hooks).map(([k,v])=>[k,v.length])),hooks);
+  b.time=.2;
+  // If the rejected attempt captured terrain, this call incorrectly succeeds,
+  // masking the missing battle-initialization capture in a future public path.
+  assert.throws(()=>captureThornsRoads(b),/before combat/);
+  assert.throws(()=>prepareThornsCore(b,u,{contract:CONTRACT}),/before combat/);
 });
 
 

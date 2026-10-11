@@ -2492,3 +2492,11 @@ node --test test/arkpedia-thorns-lodestar.test.js test/arkpedia-thorns-lodestar-
 Evidence logs are under ignored `.cache/arkpedia/thorns-lodestar-source/`: `s3-tests.log`, `s3-polygon-tests.log` and `s3-all-tests.log`. Public roster/data and the SD asset pin remain unchanged at **361/431 forms, 777 skills, 70 remaining forms**. Public Thorns requires closing the source timing/anchor synchronization review and then verifying its real squad-selector, deployment and browser lifecycle. The full remaining-roster goal remains active.
 
 Full runtime regression for the private S3 increment: **10,609 passed, zero failures, nine existing skips** across 10,618 tests. The same port-3182 process responds HTTP 200 and serves all 361 unchanged public operator records. This establishes the tested private execution and broader runtime regression; public Thorns/browser and original dispatch-clock verification remain open.
+
+### Thorns skill preparation: reject before capturing terrain
+
+The S1/S2/S3 review adapters now validate the selected skill and applicable native fields before constructing their shared controller. Controller construction captures the battle-start road map. Previously, rejecting a valid source record for the wrong skill still created that snapshot, so a later preparation could incorrectly bypass the required battle-initialization capture.
+
+Three regression cases reproduced this for S1, S2 and S3 before the change. They use a separate battle that has never prepared Thorns, reject the mismatched skill, check unchanged owner memory and hooks, advance the battle clock, and verify that both direct road capture and subsequent core preparation still reject a late first capture. All **209 focused combat, native-source and polygon checks pass**, with zero failures/skips. Logs: `.cache/arkpedia/thorns-lodestar-source/preparation-before.log` and `preparation-after.log`.
+
+This closes a preparation side effect needed for the eventual public lifecycle; it does not resolve the S3 dispatch-clock mapping or enable Thorns. Public data, assets and coverage remain **361/431 forms, 777 skills and 70 remaining forms**. The full regression above is the prior S3 run, not a new full-suite run for this preparation-only change.

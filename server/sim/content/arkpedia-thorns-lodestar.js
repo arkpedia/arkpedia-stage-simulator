@@ -264,7 +264,13 @@ export class ThornsCoreController{
 }
 
 export function prepareThornsCore(b,u,{contract}={}){
-  const record=validate(u,contract),controller=new ThornsCoreController(b,u,record);
+  return prepareCore(b,u,validate(u,contract));
+}
+
+// Constructing the controller captures battle-start terrain. Validate the whole
+// selected skill first, so a rejected setup cannot create that shared snapshot.
+function prepareCore(b,u,record){
+  const controller=new ThornsCoreController(b,u,record);
   const kit={trait:{noAttack:true,attackDrivenSkill:true,attack:'ranged',dmgType:'arts',projectile:'none',
     hits:1,hitsFn:null,chain:null,splashRadius:0,heal:null,...air,install:null,onHit:null,onEachHit:null,
     requiresAcceptedLaunch:true,attackVisual:'none',launchAttack:(_b,_u,_p,t,info)=>controller.release(t,info)},
@@ -275,8 +281,9 @@ export function prepareThornsCore(b,u,{contract}={}){
 /** Private S1 gameplay review path. Public registration still requires the complete three-skill kit. */
 export function prepareThornsS1(b,u,{contract}={}){
   if(contract!==THORNS_S1_CONTRACT)throw Error('Thorns S1 requires the reviewed field contract');
-  const prepared=prepareThornsCore(b,u,{contract:THORNS_CORE_CONTRACT});
-  if(prepared.record.index!==0)throw Error('Thorns S1 requires the selected first skill');
+  const record=validate(u,THORNS_CORE_CONTRACT);
+  if(record.index!==0)throw Error('Thorns S1 requires the selected first skill');
+  const prepared=prepareCore(b,u,record);
   const {controller,kit}=prepared;
   controller.s1=new ThornsS1Fields(controller);
   kit.skill={kind:'toggle',trigger:{rule:'NEVER'},manualCancel:false,
@@ -287,8 +294,8 @@ export function prepareThornsS1(b,u,{contract}={}){
 /** Private S2 review. Full public enablement also requires S3 and browser lifecycle checks. */
 export function prepareThornsS2(b,u,{contract}={}){
   if(contract!==THORNS_S2_CONTRACT)throw Error('Thorns S2 requires the reviewed field contract');
-  const prepared=prepareThornsCore(b,u,{contract:THORNS_CORE_CONTRACT});
-  if(prepared.record.index!==1)throw Error('Thorns S2 requires the selected second skill');
+  const record=validate(u,THORNS_CORE_CONTRACT);
+  if(record.index!==1)throw Error('Thorns S2 requires the selected second skill');
   for(const id of ['4209454866455700025','5514365045461983801']){
     const a=component(id);
     if(a._animKey!=='Skill_2'||a._maxAnimScale!==1||a._waitForAttackEvent!==1
@@ -298,7 +305,7 @@ export function prepareThornsS2(b,u,{contract}={}){
   const move=component('-4919525718460828233'),hit=component('-9079490138040142409');
   if(move._speed!==10||move._clearTraceTargetWhenReached!==1||hit._targetOptions.targetMotion!==1
     ||hit._targetOptions.targetSide!==3||hit._onlyCheckHitWhenReachTarget!==1)throw Error('Unreviewed Thorns S2 projectile');
-  const {controller,kit}=prepared;
+  const prepared=prepareCore(b,u,record),{controller,kit}=prepared;
   controller.s2=new ThornsS2Fields(controller);
   kit.skill={kind:'toggle',trigger:{rule:'NEVER'},manualCancel:false,
     canActivate:()=>controller.s2.canCast(),onStart:()=>controller.s2.start(),onEnd:()=>controller.s2.end()};
@@ -309,13 +316,13 @@ export function prepareThornsS2(b,u,{contract}={}){
 /** Private polygon execution; original creator/Token clocks are still held for comparison. */
 export function prepareThornsS3(b,u,{contract}={}){
   if(contract!==THORNS_S3_CONTRACT)throw Error('Thorns S3 requires the reviewed polygon contract');
-  const prepared=prepareThornsCore(b,u,{contract:THORNS_CORE_CONTRACT});
-  if(prepared.record.index!==2)throw Error('Thorns S3 requires the selected third skill');
+  const record=validate(u,THORNS_CORE_CONTRACT);
+  if(record.index!==2)throw Error('Thorns S3 requires the selected third skill');
   const a=component('6382547234017107355'),poly=component('-6779247284765065877'),hit=component('-1321748048543089301');
   if(a._animKey!=='Skill_3_Loop'||a._maxAnimScale!==1||a._waitForAttackEvent!==1||a._atkScale!==0
     ||poly._polygonLineColliderWide!==.32499998807907104||poly._polygonColliderOffset!==.32499998807907104
     ||hit._waitFirstPeriod!==0||hit._intervalBbKey!=='interval')throw Error('Unreviewed Thorns S3 polygon source');
-  const {controller,kit}=prepared;controller.s3=new ThornsS3Fields(controller);
+  const prepared=prepareCore(b,u,record),{controller,kit}=prepared;controller.s3=new ThornsS3Fields(controller);
   kit.skill={kind:'toggle',trigger:{rule:'NEVER'},manualCancel:false,
     canActivate:()=>controller.s3.canCast(),onStart:()=>controller.s3.start(),onEnd:()=>controller.s3.end()};
   return prepared;
