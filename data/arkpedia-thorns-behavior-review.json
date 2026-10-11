@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "source": "https://prts.wiki/w/%E5%BC%95%E6%98%9F%E6%A3%98%E5%88%BA",
+  "checkedAt": "2026-10-11",
+  "scope": "Published behavior observations; complements pinned original bundles, not compiled Unity proof",
+  "talent2": {"tileScan": "battle-start static terrain"},
+  "s1": {"overlap": "additive", "priority": ["lowest HP ratio", "latest deployment"]},
+  "s2": {
+    "radius": 1.1,
+    "radiusIncreasePerSecond": 0.143,
+    "moveTilesPerSecond": 0.1,
+    "motionAndGrowthCap": "remaining_time, unaffected by talent extension",
+    "direction": "away from owner deployment tile; zero on own tile",
+    "overlap": "additive damage and regeneration; multiplicative healing/recovery reduction"
+  },
+  "nativeCrosscheck": {
+    "s1ParentAndDerivedDisableOverride": true,
+    "s2ParentAndDerivedDisableOverride": true,
+    "s2InitialRadiusKey": "projectile_range",
+    "s2RadiusIncreaseFormula": "projectile_range * value",
+    "s2TravelSpeedKey": "projectile_move_speed",
+    "s2NativeExtraMoveSpeed": 0.20000000298023224,
+    "nativeExtraMoveSpeedUnitConversionVerified": false
+  },
+  "frameParity": false
+}

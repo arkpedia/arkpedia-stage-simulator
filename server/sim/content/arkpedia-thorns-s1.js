@@ -7,7 +7,7 @@ export const THORNS_S1_CONTRACT=Object.freeze({
   scope:'Private selected-source S1 automatic field; S2/S3 and public lifecycle remain held',
   cast:'Natural selected SP; original capped Skill event/clip, ability-start duration extension, release-time cached ATK',
   field:'Speed-ten homing throw; stationary x-4 arrival field, continuous HP regeneration and flat DEF, recipient leave/expiry cleanup; emitted fields survive retreat',
-  mapping:'Native postFilter39/professionMask767 is mapped to lowest HP ratio then deployment order; clip completion ends the cast SP lock. Overlapping shared buffs retain the first active claimant with fallback. Root-rounded arrival tiles and duration starting at arrival are local mappings.',
+  mapping:'Native postFilter39/professionMask767 is mapped to lowest HP ratio then latest deployment; clip completion ends the cast SP lock. Native disableOverride derived buffs stay independently parent-owned and stack. Root-rounded arrival tiles and duration starting at arrival are local mappings.',
   limits:'Original particles/audio, compiled selector/override priority, native flight-to-field duration clock and Unity frame parity remain unverified',
   frameParity:false,
 });
@@ -15,22 +15,16 @@ const ID='char_1039_thorn2',KEY='thorns2_s_1[buff]';
 const live=t=>t?.alive&&t.deployed&&!t.hidden&&!t._removing;
 const model=u=>evidence.models[ID][['UP','LEFT'].includes(u.dir)?'Back':'Front'];
 const grid=evidence.tables.ranges['x-4'].grids.map(v=>[v.row,v.col]);
-const battles=new WeakMap();
-// One named native derived buff, not additive healing from every overlapping field.
+let fieldSeq=0;
+// Native disableOverride1: each projectile owns its derived instance. Identical
+// display/template keys must not collapse separate parent fields into one buff.
 function claim(field,t,enabled){
-  const b=field.system.b;let recipients=battles.get(b);
-  if(!recipients){recipients=new Map();battles.set(b,recipients);}
-  let entry=recipients.get(t);if(!entry){entry={claims:new Map(),applied:null,winner:null};recipients.set(t,entry);}
-  if(enabled)entry.claims.set(field,t.deploySeq);else entry.claims.delete(field);
-  for(const [f,seq]of entry.claims)if(!f.active||!live(t)||seq!==t.deploySeq)entry.claims.delete(f);
-  const winner=entry.claims.keys().next().value??null;
-  if(winner){
-    if(entry.winner!==winner||entry.applied!==t.findBuff(KEY)){
-      if(entry.applied)b.removeBuff(t,entry.applied);
-      entry.winner=winner;entry.applied=b.addBuff(t,{key:KEY,source:winner.system.u,
-        mods:{hpRegen:winner.cachedAtk*winner.ratio,defFlat:winner.def}});
-    }
-  }else{if(entry.applied)b.removeBuff(t,entry.applied);recipients.delete(t);}
+  const b=field.system.b,old=field.buffs.get(t),key=`${KEY}:${field.id}`;
+  if(!enabled||!field.active||!live(t)){
+    if(old)b.removeBuff(t,old);field.buffs.delete(t);return;
+  }
+  if(!old||t.findBuff(key)!==old)field.buffs.set(t,b.addBuff(t,{key,source:field.system.u,
+    data:{nativeBuffKey:KEY,thornsField:field},mods:{hpRegen:field.cachedAtk*field.ratio,defFlat:field.def}}));
 }
 
 export class ThornsS1Fields{
@@ -43,7 +37,7 @@ export class ThornsS1Fields{
     // Native selector ignores ally-target-free: an isolated unit can be the
     // selected landing anchor, although the field's hit checker excludes it.
     return this.b.allyUnits.filter(t=>live(t)&&t.kind!=='device'&&!t.s.flags.untargetable
-      &&!t.s.flags.healFree&&bodyInKeys(t,keys)).sort((a,z)=>a.hpRatio-z.hpRatio||a.deploySeq-z.deploySeq);
+      &&!t.s.flags.healFree&&bodyInKeys(t,keys)).sort((a,z)=>a.hpRatio-z.hpRatio||z.deploySeq-a.deploySeq);
   }
   canCast(){return this.core.valid()&&this.u.canAct&&!this.u.s.flags.disarm&&!this.cast
     &&this.core.phase?.kind!=='entrance'&&this.candidates().length>0;}
@@ -82,8 +76,8 @@ export class ThornsS1Fields{
     b.emit('thornsS1Throw',{owner:u,target:c.target,projectile:p,cachedAtk,duration:c.duration});
   }
   arrive({x,y,cachedAtk,duration}){
-    const field={system:this,active:true,x,y,row:Math.round(y),col:Math.round(x),cachedAtk,
-      ratio:this.record.bb.hp_recovery_per_sec_ratio,def:this.record.bb.def,expiresAt:this.b.time+duration,recipients:new Map()};
+    const field={id:++fieldSeq,system:this,active:true,x,y,row:Math.round(y),col:Math.round(x),cachedAtk,
+      ratio:this.record.bb.hp_recovery_per_sec_ratio,def:this.record.bb.def,expiresAt:this.b.time+duration,recipients:new Map(),buffs:new Map()};
     field.keys=new Set(absoluteRangeKeys(grid,field.row,field.col,'RIGHT'));
     this.fields.push(field);this.updateField(field);this.b.emit('thornsS1Field',{owner:this.u,field});
   }

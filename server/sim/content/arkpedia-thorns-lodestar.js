@@ -8,7 +8,8 @@ import {bodyInKeys} from '../body.js';
 import {makeDamageInfo} from '../damage.js';
 import {COLS} from '../constants.js';
 import {ThornsS1Fields,THORNS_S1_CONTRACT} from './arkpedia-thorns-s1.js';
-export {THORNS_S1_CONTRACT};
+import {ThornsS2Fields,THORNS_S2_CONTRACT} from './arkpedia-thorns-s2.js';
+export {THORNS_S1_CONTRACT,THORNS_S2_CONTRACT};
 
 export const THORNS_LODESTAR_ID='char_1039_thorn2';
 export const THORNS_CORE_CONTRACT=Object.freeze({
@@ -16,7 +17,7 @@ export const THORNS_CORE_CONTRACT=Object.freeze({
   attacks:'Original Front/Back Attack or passive S3 Skill_3_Loop events, speed capped at one; one Arts projectile per accepted command',
   lifetime:'Released speed-ten projectiles survive owner removal; target life and eligibility are rechecked at impact',
   talents:'Selected unconditional self ATK; ability-start duration extension from other in-range operators; global speed and extra speed on six-tile straight ground runs',
-  mapping:'Root-position targeting, no-device unit categories, operator professionMask639, groundPassable tile runs, strongest shared aura with fallback, tick-sampled aura changes and clip-end cadence are local execution mappings',
+  mapping:'Root-position targeting, no-device unit categories, operator professionMask639, battle-start terrain-passability runs, strongest shared aura with fallback, tick-sampled aura membership and clip-end cadence are local execution mappings',
   limits:'S1/S2/S3 activated fields, original particles/audio, modules, compiled target filters/override priorities and Unity frame parity remain unreviewed',
   frameParity:false,
 });
@@ -86,6 +87,16 @@ function validate(u,contract){
 // talents from private duplicate owners. Retain weaker claims for removal fallback.
 // Choosing the greatest magnitude is a local override mapping, not recovered Unity priority.
 const auraBattles=new WeakMap();
+const roadBattles=new WeakMap();
+export function captureThornsRoads(b){
+  let roads=roadBattles.get(b);
+  if(!roads){
+    if(b.time!==0)throw Error('Capture Thorns road talent before combat');
+    // Runtime crates do not change the original static terrain scan.
+    roads=thornsStraightTiles(b.grid,6,true);roadBattles.set(b,roads);
+  }
+  return roads;
+}
 function claimsFor(b,t,key){
   let recipients=auraBattles.get(b);if(!recipients){recipients=new Map();auraBattles.set(b,recipients);}
   let channels=recipients.get(t);if(!channels){channels=new Map();recipients.set(t,channels);}
@@ -111,7 +122,7 @@ function auraClaim(controller,t,key,value){
 }
 
 /** Union of horizontal/vertical maximal passable runs; six units never substitute for six tiles. */
-export function thornsStraightTiles(field,min=6){
+export function thornsStraightTiles(field,min=6,ignoreObstacles=false){
   const result=new Set(),R=field.rect;
   for(const horizontal of [true,false]){
     const outer0=horizontal?R.r0:R.c0,outer1=horizontal?R.r1:R.c1;
@@ -121,7 +132,7 @@ export function thornsStraightTiles(field,min=6){
       const flush=()=>{if(run.length>=min)for(const k of run)result.add(k);run=[];};
       for(let inner=inner0;inner<=inner1;inner++){
         const r=horizontal?outer:inner,c=horizontal?inner:outer;
-        if(field.groundPassable(r,c))run.push(r*COLS+c);else flush();
+        if(field.groundPassable(r,c,ignoreObstacles))run.push(r*COLS+c);else flush();
       }
       flush();
     }
@@ -130,7 +141,7 @@ export function thornsStraightTiles(field,min=6){
 }
 
 export class ThornsCoreController{
-  constructor(b,u,record){this.b=b;this.u=u;this.record=record;this.seq=null;this.stopped=false;this.phase=null;this.handles=[];this.auraClaims=new Map();this.atkBuff=null;this.s1=null;}
+  constructor(b,u,record){this.b=b;this.u=u;this.record=record;this.roads=captureThornsRoads(b);this.seq=null;this.stopped=false;this.phase=null;this.handles=[];this.auraClaims=new Map();this.atkBuff=null;this.s1=null;this.s2=null;}
   valid(){return !this.stopped&&!this.b.finished&&live(this.u)&&this.seq===this.u.deploySeq;}
   eligible(t){return live(t)&&canTargetEnemy(this.u,t,air)&&(!t.s.flags.camou||!!t.blockedBy);}
   visual(clip,speed=1,loop=false){
@@ -162,7 +173,7 @@ export class ThornsCoreController{
     const {b,u,record:r}=this;
     if(!this.atkBuff||u.findBuff(this.atkBuff.key)!==this.atkBuff)
       this.atkBuff=b.addBuff(u,{key:'thorn2_t_1',source:u,mods:{atkPct:r.extension.atk}});
-    const desired=new Map(),tiles=r.speed.cnt?thornsStraightTiles(b.grid,r.speed.cnt):new Set();
+    const desired=new Map(),tiles=r.speed.cnt?this.roads:new Set();
     if(r.speed.cnt)for(const t of [...b.allyUnits,...b.enemies]){
       if(!live(t)||t.kind==='device')continue;
       const ally=t.side==='ally';
@@ -196,12 +207,12 @@ export class ThornsCoreController{
   tick(){
     if(!this.valid()){
       if(this.seq!==null&&this.u.alive&&this.u.deployed&&this.seq===this.u.deploySeq&&this.u.hidden){
-        this.clearTalents();this.s1?.interrupt('hidden');this.phase=null;return;
+        this.clearTalents();this.s1?.interrupt('hidden');this.s2?.interrupt('hidden');this.phase=null;return;
       }
       if(this.seq!==null)this.stop();return;
     }
     this.syncTalents();if(!this.valid())return;
-    if(this.s1?.tick())return;
+    if(this.s1?.tick()||this.s2?.tick())return;
     const {u,b}=this;let p=this.phase;
     if(p?.kind==='entrance'){
       if(b.time+1e-9<p.readyAt)return;
@@ -243,7 +254,7 @@ export class ThornsCoreController{
   }
   stop(){
     if(this.stopped)return;
-    this.stopped=true;this.s1?.ownerStop();this.phase=null;this.clearTalents();
+    this.stopped=true;this.s1?.ownerStop();this.s2?.ownerStop();this.phase=null;this.clearTalents();
     // Emitted ordinary shots survive owner removal, but never a finished battle.
     if(this.b.finished)this.b.projectiles.remove(p=>p.data?.thornsOwner===this);
     this.u.mem.regularFormVisual=null;delete this.u.mem.regularVisualDirection;
@@ -269,5 +280,26 @@ export function prepareThornsS1(b,u,{contract}={}){
   controller.s1=new ThornsS1Fields(controller);
   kit.skill={kind:'toggle',trigger:{rule:'NEVER'},manualCancel:false,
     canActivate:()=>controller.s1.canCast(),onStart:()=>controller.s1.start(),onEnd:()=>controller.s1.end()};
+  return prepared;
+}
+
+/** Private S2 review. Full public enablement also requires S3 and browser lifecycle checks. */
+export function prepareThornsS2(b,u,{contract}={}){
+  if(contract!==THORNS_S2_CONTRACT)throw Error('Thorns S2 requires the reviewed field contract');
+  const prepared=prepareThornsCore(b,u,{contract:THORNS_CORE_CONTRACT});
+  if(prepared.record.index!==1)throw Error('Thorns S2 requires the selected second skill');
+  for(const id of ['4209454866455700025','5514365045461983801']){
+    const a=component(id);
+    if(a._animKey!=='Skill_2'||a._maxAnimScale!==1||a._waitForAttackEvent!==1
+      ||a._atkScale!==0||a._useCachedAtkOnly!==0||a._projectileKey!=='projectile_chr_thorn2_s2'
+      ||!a._activeBuffs.some(v=>v.buffKey==='thorn2_s_2'&&v.disableOverride===1))throw Error('Unreviewed Thorns S2 ability');
+  }
+  const move=component('-4919525718460828233'),hit=component('-9079490138040142409');
+  if(move._speed!==10||move._clearTraceTargetWhenReached!==1||hit._targetOptions.targetMotion!==1
+    ||hit._targetOptions.targetSide!==3||hit._onlyCheckHitWhenReachTarget!==1)throw Error('Unreviewed Thorns S2 projectile');
+  const {controller,kit}=prepared;
+  controller.s2=new ThornsS2Fields(controller);
+  kit.skill={kind:'toggle',trigger:{rule:'NEVER'},manualCancel:false,
+    canActivate:()=>controller.s2.canCast(),onStart:()=>controller.s2.start(),onEnd:()=>controller.s2.end()};
   return prepared;
 }

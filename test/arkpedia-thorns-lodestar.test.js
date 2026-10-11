@@ -8,12 +8,12 @@ import {normalizeChess} from '../server/sim/simdata.js';
 import {defaultBuild} from '../shared/arkpedia/loadout.js';
 import {REGULAR_OPERATORS} from '../shared/arkpedia/operators.js';
 import {THORNS_LODESTAR_ID as ID,THORNS_CORE_CONTRACT as CONTRACT,selectedThornsBuild,
-  prepareThornsCore,prepareThornsS1,THORNS_S1_CONTRACT,thornsStraightTiles} from '../server/sim/content/arkpedia-thorns-lodestar.js';
+  prepareThornsCore,prepareThornsS1,prepareThornsS2,THORNS_S1_CONTRACT,THORNS_S2_CONTRACT,thornsStraightTiles} from '../server/sim/content/arkpedia-thorns-lodestar.js';
 const near=(a,z,eps=1e-5)=>assert.ok(Math.abs(a-z)<eps,`${a} != ${z}`);
 function advance(b,s){for(let i=0;i<Math.ceil(s/b.dt-1e-9);i++)b.step();assert.deepEqual(b.errors,[]);}
 function until(f,p,s=12){const end=f.b.time+s;while(!p()&&f.b.time<end)advance(f.b,f.b.dt);assert.ok(p(),`Expected condition at ${f.b.time}`);}
 function owner(b,{rank=10,elite=2,level=e.tables.character.phases[elite].maxLevel,potential=1,trust=0,
-  skill=1,dir='RIGHT',defer=false,row=5,col=5,contract=CONTRACT,sourceS1=false}={}){
+  skill=1,dir='RIGHT',defer=false,row=5,col=5,contract=CONTRACT,sourceS1=false,sourceS2=false}={}){
   const build={elite,level,potential,trust,skillId:`skchr_thorn2_${skill}`,skillRank:Math.min(rank,[4,7,10][elite])};
   const r=selectedThornsBuild(build),c=e.tables.character;
   const def=normalizeChess({chessId:ID,charId:ID,name:c.name,profession:c.profession,position:c.position,
@@ -22,7 +22,7 @@ function owner(b,{rank=10,elite=2,level=e.tables.character.phases[elite].maxLeve
     skill:{...r.source,...r.source.spData,skillId:build.skillId,
       rangeGrid:r.source.rangeId?e.tables.ranges[r.source.rangeId].grids.map(v=>[v.row,v.col]):[],trigger:{rule:'NEVER'}},arkpedia:build});
   const u=b._makeAlly(b.getPlayer('arkpedia'),def,'op',row,col,{dir});
-  const prepared=sourceS1?prepareThornsS1(b,u,{contract:THORNS_S1_CONTRACT}):prepareThornsCore(b,u,{contract});b._setupUnit(u,prepared.kit);prepared.controller.install();
+  const prepared=sourceS1?prepareThornsS1(b,u,{contract:THORNS_S1_CONTRACT}):sourceS2?prepareThornsS2(b,u,{contract:THORNS_S2_CONTRACT}):prepareThornsCore(b,u,{contract});b._setupUnit(u,prepared.kit);prepared.controller.install();
   const hits=[],attacks=[],births=[];
   b.on('damaged',ctx=>{if(ctx.source===u)hits.push({...ctx,time:b.time});});
   b.on('attack',ctx=>{if(ctx.attacker===u)attacks.push({...ctx,time:b.time});});
@@ -36,11 +36,12 @@ function make(opts={}){
   const b=new StandardBattle(d,{operators:[defaultBuild(d.operators.char_289_gyuki)]});
   b.autoFinish=false;b.recordEvents=true;b.rng=()=>.99;b.setViewport('fullscreen-workspace');
   b.grid.tiles=b.grid.tiles.map(t=>({...t,height:'LOW',build:'ALL',pass:'ALL'}));
+  if(opts.roads)terrain({b},opts.roads);
   return owner(b,opts);
 }
 function enemy(f,{row=5,col=6,hp=1e7,res=0,fly=false,taunt=0,flags={}}={}){
   const t=f.b.spawnEnemy('enemy_1007_slime',{pos:[row,col]});
-  Object.assign(t.base,{maxHp:hp,atk:0,def:0,res,moveSpeed:0,tauntLevel:taunt});t.markDirty();t.hp=hp;
+  Object.assign(t.base,{maxHp:hp,atk:0,def:0,res,moveSpeed:0,tauntLevel:taunt});t.markDirty();void t.s;t.hp=hp;
   if(fly)t.motion='FLY';f.b.addBuff(t,{key:'fixture:pin',flags:{noMove:true,disarm:true,...flags}});
   f.b._buildEnemyIndex();return t;
 }
@@ -161,21 +162,22 @@ test('tile aura uses maximal six-or-longer straight runs, never diagonals or six
   terrain(f,Array.from({length:6},(_,i)=>[5,5+i]));assert.equal(thornsStraightTiles(f.b.grid).size,6);
   terrain(f,Array.from({length:7},(_,i)=>[5+i,5]));assert.equal(thornsStraightTiles(f.b.grid).size,7);
   terrain(f,Array.from({length:6},(_,i)=>[5+i,5+i]));assert.equal(thornsStraightTiles(f.b.grid).size,0);
-  for(let i=0;i<6;i++)ally(f,{row:2,col:2+i});advance(f.b,.1);near(f.u.s.aspd,105);
+  const z=make({roads:Array.from({length:6},(_,i)=>[5+i,5+i])});
+  for(let i=0;i<6;i++)ally(z,{row:2,col:2+i});advance(z.b,.1);near(z.u.s.aspd,105);
 });
 test('global base speed includes air/heal-free allies; extra speed follows eligible ground lines and motion',()=>{
-  const f=make(),t=ally(f,{flags:{healFree:true}}),z=enemy(f,{fly:true});
+  const f=make({roads:Array.from({length:6},(_,i)=>[5,5+i])}),t=ally(f,{flags:{healFree:true}}),z=enemy(f,{fly:true});
   const isolated=ally(f,{row:7,col:7,flags:{isolated:true}}),device=ally(f,{row:8,col:8,kind:'device'});
   terrain(f,Array.from({length:6},(_,i)=>[5,5+i]));advance(f.b,.1);
   near(t.s.aspd,110);near(z.s.aspd,90);near(isolated.s.aspd,100);near(device.s.aspd,100);
   t.x=6;t.y=6;z.x=6;z.y=6;advance(f.b,.1);near(t.s.aspd,105);near(z.s.aspd,95);
 });
-test('terrain and crate changes remove and restore extra speed without stacking base buffs',()=>{
-  const f=make(),t=ally(f);terrain(f,Array.from({length:6},(_,i)=>[5,5+i]));advance(f.b,.1);near(t.s.aspd,110);
-  f.b.grid.setObstacle(5,8,true,'crate');advance(f.b,.1);near(t.s.aspd,105);
+test('battle-start road eligibility survives runtime crate/terrain changes without stacking base buffs',()=>{
+  const f=make({roads:Array.from({length:6},(_,i)=>[5,5+i])}),t=ally(f);advance(f.b,.1);near(t.s.aspd,110);
+  f.b.grid.setObstacle(5,8,true,'crate');advance(f.b,.1);near(t.s.aspd,110);
   f.b.grid.setObstacle(5,8,false,'crate');advance(f.b,.1);near(t.s.aspd,110);
   for(let i=0;i<12;i++)advance(f.b,.1);assert.equal(t.buffs.filter(v=>v.key==='thorn2_t_2_speed_ally').length,1);
-  f.b.grid.tiles[5*21+8]={...f.b.grid.tiles[5*21+8],pass:'FLY'};advance(f.b,.1);near(t.s.aspd,105);
+  f.b.grid.tiles[5*21+8]={...f.b.grid.tiles[5*21+8],pass:'FLY'};advance(f.b,.1);near(t.s.aspd,110);
 });
 test('hidden, removed and changed-life recipients lose old aura claims and reacquire without compounding',()=>{
   const f=make(),t=ally(f),z=enemy(f);advance(f.b,.1);near(t.s.aspd,110);near(z.s.aspd,90);
@@ -208,7 +210,7 @@ test('temporarily hidden owner detaches both talents and resumes on the same dep
 });
 
 const s1=f=>f.controller.s1;
-const fieldBuff=t=>t.findBuff('thorns2_s_1[buff]');
+const fieldBuff=t=>t.buffs.find(v=>v.data?.nativeBuffKey==='thorns2_s_1[buff]')??null;
 const holdSp=f=>f.b.addBuff(f.u,{key:'fixture:holdSP',flags:{noSp:true}});
 for(let rank=1;rank<=10;rank++)test(`S1 rank ${rank} casts with natural SP and gives source continuous regeneration/DEF`,()=>{
   const f=make({sourceS1:true,rank}),t=ally(f);t.hp=1000;
@@ -288,12 +290,12 @@ test('S1 emitted flight and field survive retreat with cached ATK and independen
   near(t.s.hpRegen,551.1*.2);near(field.cachedAtk,551.1);assert.equal(f.controller.stopped,true);assert.ok(s1(f).handles.length>0);
   until(f,()=>s1(f).fields.length===0,15);assert.equal(fieldBuff(t),null);assert.equal(s1(f).handles.length,0);
 });
-test('S1 named field buff never stacks on overlap and a remaining field resumes when the incumbent expires',()=>{
+test('S1 independently owned fields stack and expiring one preserves the remaining contribution',()=>{
   const f=make({sourceS1:true}),t=ally(f);t.hp=1000;until(f,()=>s1(f).fields.length===1);holdSp(f);
   const old=s1(f).fields[0];const z=owner(f.b,{sourceS1:true,row:6,col:5,potential:5});
-  until(z,()=>s1(z).fields.length===1);holdSp(z);near(t.s.hpRegen,old.cachedAtk*.2);
-  assert.equal(t.buffs.filter(v=>v.key==='thorns2_s_1[buff]').length,1);
-  until(f,()=>!old.active,15);near(t.s.hpRegen,s1(z).fields[0].cachedAtk*.2);
+  until(z,()=>s1(z).fields.length===1);holdSp(z);near(t.s.hpRegen,(old.cachedAtk+s1(z).fields[0].cachedAtk)*.2);near(t.s.def,200);
+  assert.equal(t.buffs.filter(v=>v.data?.nativeBuffKey==='thorns2_s_1[buff]').length,2);
+  until(f,()=>!old.active,15);near(t.s.hpRegen,s1(z).fields[0].cachedAtk*.2);near(t.s.def,100);
   f.b.forceEnd('fixture');assert.equal(fieldBuff(t),null);assert.equal(s1(f).handles.length,0);assert.equal(s1(z).handles.length,0);
 });
 test('S1 recipient hide/new life and field completion never leak a derived buff',()=>{
@@ -320,4 +322,204 @@ test('finished battle clears released ordinary shots and S1 flights before any l
     f.b.forceEnd('fixture');assert.equal(f.b.projectiles.list.filter(p=>p.data?.thornsOwner===f.controller||p.data?.thornsS1===s1(f)).length,0);
     assert.equal(f.controller.stopped,true);if(sourceS1)assert.equal(s1(f).handles.length,0);
   }
+});
+
+const s2=f=>f.controller.s2;
+function makeS2(opts={}){return make({...opts,skill:2,sourceS2:true});}
+function startS2(f){until(f,()=>f.u.skill.ready&&s2(f).canCast(),35);assert.equal(f.u.skill.activate(),true);}
+function s2Dots(f){const hits=[];f.b.on('damaged',c=>{if(c.dmg?.tags?.includes('thorns:s2'))hits.push({...c,time:f.b.time});});return hits;}
+function enemyHeal(f,t,amount=400){t.hp=t.s.maxHp-10000;return f.b.heal(t,t,amount,{self:true});}
+const s2Buff=t=>t.buffs.find(v=>v.data?.nativeBuffKey?.startsWith('thorn2_s'))??null;
+for(let rank=1;rank<=10;rank++)test(`S2 rank ${rank}: manual natural SP, source charges, cached regeneration and mitigated periodic damage`,()=>{
+  const f=makeS2({rank}),a=ally(f),t=enemy(f,{res:50}),dots=s2Dots(f),ends=[];a.hp=1000;
+  f.b.on('skillEnd',c=>{if(c.unit===f.u)ends.push(f.b.time);});
+  until(f,()=>f.u.skill.ready,35);assert.equal(f.u.skill.activations,0);advance(f.b,.3);assert.equal(f.u.skill.activations,0);
+  startS2(f);const start=f.b.time;assert.equal(f.u.skill.active,true);const charge=f.u.skill.charges;
+  until(f,()=>s2(f).fields.length===1);const field=s2(f).fields[0],bb=f.record.bb;
+  assert.equal(field.startX,6);assert.equal(field.startY,5);near(field.radius,1.1);near(field.cachedAtk,551.1);
+  near(a.s.hpRegen,551.1*bb.hp_recovery_per_sec_ratio_chr);near(enemyHeal(f,t),200);
+  near(field.expiresAt-field.bornAt,bb.projectile_delay_time+3);assert.equal(dots.length,0);
+  until(f,()=>dots.length===1);near(dots[0].time-field.bornAt,.9,f.b.dt*2);
+  near(dots[0].amount,551.1*bb.atk_scale*.5);assert.equal(dots[0].target,t);assert.equal(dots[0].source,null);
+  until(f,()=>!f.u.skill.active);near(ends[0]-start,1.5,f.b.dt*2);assert.equal(f.u.skill.charges,charge);
+  assert.equal(f.u.skill.maxCharges,rank>=7?2:1);advance(f.b,.2);assert.ok(f.u.skill.sp>0);
+});
+for(const [dir,x,y]of [['RIGHT',7,5],['UP',5,7],['LEFT',3,5],['DOWN',5,3]])test(`S2 ${dir}: no-enemy throw uses the farthest forward tile and exact capped original event`,()=>{
+  const f=makeS2({dir}),throws=[];f.b.on('thornsS2Throw',c=>throws.push({...c,time:f.b.time}));
+  f.b.addBuff(f.u,{key:'fixture:fast',mods:{aspd:100}});startS2(f);const start=f.b.time;
+  until(f,()=>throws.length===1);near(throws[0].time-start,.566666663,f.b.dt*2);
+  assert.equal(f.u.mem.regularFormVisual.clip,'Skill_2');near(f.u.mem.regularFormVisual.speed,1);
+  assert.equal(throws[0].x,x);assert.equal(throws[0].y,y);
+  until(f,()=>s2(f).fields.length===1);const field=s2(f).fields[0];advance(f.b,2);
+  near(field.x,x+(x-5)/2*.1*2);near(field.y,y+(y-5)/2*.1*2);near(field.radius,1.1*(1+.13*2));
+});
+test('S2 slowed original cast stretches release/clip and stops SP until completion',()=>{
+  const f=makeS2({elite:1,rank:7}),throws=[];f.b.addBuff(f.u,{key:'fixture:slow',mods:{aspd:-50}});
+  f.b.on('thornsS2Throw',c=>throws.push({...c,time:f.b.time}));startS2(f);const start=f.b.time,sp=f.u.skill.sp;
+  until(f,()=>throws.length===1);near(throws[0].time-start,.566666663*2,f.b.dt*2);near(f.u.skill.sp,sp);
+  until(f,()=>!f.u.skill.active);near(f.b.time-start,3,f.b.dt*2);
+});
+test('S2 two charges retain partial SP, allow separate fields and never auto-cast',()=>{
+  const f=makeS2();until(f,()=>f.u.skill.charges===2,60);assert.equal(f.u.skill.activations,0);
+  startS2(f);assert.equal(f.u.skill.charges,1);assert.equal(f.u.skill.activate(),false);
+  until(f,()=>!f.u.skill.active);advance(f.b,2);const partial=f.u.skill.sp;assert.ok(partial>0&&partial<20);
+  assert.ok(f.u.skill.activate());near(f.u.skill.sp,partial);assert.equal(f.u.skill.charges,0);
+  until(f,()=>s2(f).fields.length===2);assert.equal(f.u.skill.activations,2);
+});
+test('S2 enemy motion is sampled at release and landing remains fixed after target removal',()=>{
+  const f=makeS2(),t=enemy(f),throws=[];f.b.on('thornsS2Throw',c=>throws.push(c));startS2(f);
+  t.x=7;t.y=6;until(f,()=>throws.length===1);assert.equal(throws[0].x,7);assert.equal(throws[0].y,6);
+  t.x=10;t.y=10;f.b.kill(t);until(f,()=>s2(f).fields.length===1);near(s2(f).fields[0].startX,7);near(s2(f).fields[0].startY,6);
+});
+test('S2 losing the pre-event enemy retains its original root tile and does not refund the spent charge',()=>{
+  const f=makeS2(),t=enemy(f);startS2(f);const charge=f.u.skill.charges;f.b.kill(t);
+  until(f,()=>s2(f).fields.length===1);assert.equal(s2(f).fields[0].startX,6);assert.equal(f.u.skill.charges,charge);
+});
+test('S2 lifetime extends while motion and growth stop at selected base remaining_time',()=>{
+  const f=makeS2(),t=ally(f);startS2(f);until(f,()=>s2(f).fields.length===1);holdSp(f);
+  const field=s2(f).fields[0],bb=f.record.bb;advance(f.b,bb.remaining_time+1);
+  assert.equal(field.active,true);near(field.x,7+.1*bb.remaining_time);near(field.radius,1.1*(1+.13*bb.remaining_time));
+  const x=field.x,r=field.radius;advance(f.b,1);near(field.x,x);near(field.radius,r);
+  until(f,()=>!field.active,5);assert.equal(s2Buff(t),null);
+});
+test('S2 a same-tile enemy yields a growing stationary field instead of a fabricated drift direction',()=>{
+  const f=makeS2(),t=enemy(f,{col:5});startS2(f);until(f,()=>s2(f).fields.length===1);const field=s2(f).fields[0];
+  advance(f.b,2);near(field.x,5);near(field.y,5);near(field.radius,1.1*(1+.13*2));assert.ok(s2Buff(t));
+});
+test('S2 newly covered recipients get their own .9-second damage clock; leave/re-entry and new lives reset it',()=>{
+  const f=makeS2(),t=enemy(f),dots=s2Dots(f);startS2(f);until(f,()=>s2(f).fields.length===1);
+  t.x=12;t.y=12;advance(f.b,1.1);assert.equal(s2Buff(t),null);assert.equal(dots.length,0);
+  const field=s2(f).fields[0];t.x=field.x;t.y=field.y;advance(f.b,f.b.dt);const enter=f.b.time;
+  advance(f.b,.8);assert.equal(dots.length,0);until(f,()=>dots.length===1);near(dots[0].time-enter,.9,f.b.dt*2);
+  t.deploySeq++;advance(f.b,f.b.dt);const life=f.b.time;advance(f.b,.8);assert.equal(dots.length,1);
+  until(f,()=>dots.length===2);near(dots[1].time-life,.9,f.b.dt*2);
+  t.hidden=true;advance(f.b,.1);assert.equal(s2Buff(t),null);t.hidden=false;advance(f.b,.1);assert.ok(s2Buff(t));
+});
+test('S2 fields exclude devices, isolated/heal-free/target-free allies and airborne or target-free enemies',()=>{
+  const f=makeS2(),anchor=enemy(f),a=ally(f),token=ally(f,{row:6,col:6,kind:'token'});
+  const rejected=[ally(f,{row:4,col:6,kind:'device'}),ally(f,{row:5,col:7,flags:{isolated:true}}),
+    ally(f,{row:6,col:5,flags:{healFree:true}}),ally(f,{row:4,col:5,flags:{untargetable:true}}),
+    enemy(f,{fly:true}),enemy(f,{flags:{untargetable:true}}),enemy(f,{flags:{sleep:true}}),enemy(f,{flags:{stealth:true}})];
+  startS2(f);until(f,()=>s2(f).fields.length===1);
+  assert.ok(s2Buff(anchor));assert.ok(s2Buff(a));assert.ok(s2Buff(token));for(const t of rejected)assert.equal(s2Buff(t),null);
+  anchor.motion='FLY';advance(f.b,.1);assert.equal(s2Buff(anchor),null);
+});
+test('S2 selection excludes air/camouflage while collateral ground camouflage can receive the field',()=>{
+  const f=makeS2(),air=enemy(f,{fly:true,col:6}),camou=enemy(f,{flags:{camou:true},col:7});
+  startS2(f);until(f,()=>s2(f).fields.length===1);assert.equal(s2(f).fields[0].startX,7);
+  assert.equal(s2Buff(air),null);assert.ok(s2Buff(camou));
+});
+test('S2 overlapping fields stack regeneration/damage and multiply healing and both kinds of HP recovery',()=>{
+  const f=makeS2(),t=enemy(f),a=ally(f),dots=s2Dots(f);a.hp=1000;
+  f.b.addBuff(t,{key:'fixture:regen',mods:{hpRegen:100,hpRegenRatio:.001}});startS2(f);
+  until(f,()=>s2(f).fields.length===1);const old=s2(f).fields[0];until(f,()=>!f.u.skill.active);holdSp(f);
+  const z=owner(f.b,{sourceS2:true,skill:2,row:6,col:5,potential:5});startS2(z);until(z,()=>s2(z).fields.length===1);holdSp(z);
+  const other=s2(z).fields[0];near(a.s.hpRegen,(old.cachedAtk+other.cachedAtk)*.18);
+  near(enemyHeal(f,t),100);near(t.s.hpRegen,(100+.001*t.s.maxHp)*.25);
+  const oldCount=dots.length;advance(f.b,1.2);assert.ok(dots.length>=oldCount+2);
+  until(f,()=>!old.active,20);near(t.s.hpRegen,(100+.001*t.s.maxHp)*.5);near(enemyHeal(f,t),200);near(a.s.hpRegen,other.cachedAtk*.18);
+  f.b.forceEnd('fixture');near(t.s.hpRegen,100+.001*t.s.maxHp);near(enemyHeal(f,t),400);near(a.s.hpRegen,0);
+});
+test('S2 DOT caches release ATK and ignores source damage modifiers while retaining enemy mitigation',()=>{
+  const f=makeS2(),t=enemy(f,{res:50}),dots=s2Dots(f);startS2(f);
+  f.b.addBuff(f.u,{key:'fixture:atk',mods:{atkPct:1,dmgDealtMul:3,resIgnoreFlat:50}});
+  until(f,()=>s2(f).fields.length===1);const cached=s2(f).fields[0].cachedAtk;near(cached,501*2.1);
+  f.b.removeBuff(f.u,'fixture:atk');f.b.addBuff(t,{key:'fixture:fragile',mods:{dmgTakenMul:1.5}});
+  f.b.retreat(f.u);until(f,()=>dots.length===1);near(dots[0].amount,cached*1.8*.5*1.5);
+  assert.equal(dots[0].source,null);assert.equal(f.controller.stopped,true);
+  until(f,()=>s2(f).fields.length===0,25);assert.equal(s2(f).handles.length,0);assert.equal(s2Buff(t),null);
+});
+for(const flag of ['stun','freeze','sleep','disarm'])test(`S2 ${flag} cancels an unreleased cast but does not remove a released field`,()=>{
+  const f=makeS2();startS2(f);f.b.addBuff(f.u,{key:'fixture:control',flags:{[flag]:true}});advance(f.b,1);
+  assert.equal(s2(f).fields.length,0);assert.equal(f.u.skill.active,false);
+  const z=makeS2();startS2(z);until(z,()=>s2(z).fields.length===1);z.b.addBuff(z.u,{key:'fixture:control',flags:{[flag]:true}});
+  advance(z.b,1);assert.equal(s2(z).fields.length,1);
+});
+test('S2 between-tick control and temporary owner hiding cancel only the unborn cast',()=>{
+  const f=makeS2();startS2(f);f.b.addBuff(f.u,{key:'fixture:control',flags:{stun:true}});f.b.removeBuff(f.u,'fixture:control');
+  advance(f.b,1);assert.equal(s2(f).fields.length,0);assert.equal(f.u.skill.active,false);
+  const z=makeS2();startS2(z);z.u.hidden=true;advance(z.b,.1);assert.equal(z.u.skill.active,false);
+  z.u.hidden=false;advance(z.b,.1);assert.equal(z.controller.stopped,false);
+});
+test('S2 source silence does not block manual activation; noSp prevents natural recharge',()=>{
+  const f=makeS2();f.b.addBuff(f.u,{key:'fixture:noSP',flags:{noSp:true}});advance(f.b,25);assert.equal(f.u.skill.ready,false);
+  f.b.removeBuff(f.u,'fixture:noSP');f.b.addBuff(f.u,{key:'fixture:silence',flags:{silence:true}});startS2(f);until(f,()=>s2(f).fields.length===1);
+});
+test('S2 released flights survive source retreat; finished battles remove flights, fields and all derived instances',()=>{
+  const f=makeS2(),a=ally(f),throws=[];f.b.on('thornsS2Throw',c=>throws.push(c));startS2(f);until(f,()=>throws.length===1);
+  f.b.retreat(f.u);until(f,()=>s2(f).fields.length===1);assert.ok(s2Buff(a));f.b.forceEnd('fixture');
+  assert.equal(s2Buff(a),null);assert.equal(s2(f).fields.length,0);assert.equal(s2(f).handles.length,0);
+  const z=makeS2(),shots=[];z.b.on('thornsS2Throw',c=>shots.push(c));startS2(z);until(z,()=>shots.length===1);z.b.forceEnd('fixture');
+  assert.equal(z.b.projectiles.list.filter(p=>p.data?.thornsS2).length,0);assert.equal(s2(z).fields.length,0);
+});
+test('S2 no valid forward tile does not consume its charge; changing direction restores eligibility',()=>{
+  const f=makeS2({col:20});until(f,()=>f.u.skill.ready,35);assert.equal(f.u.skill.activate(),false);assert.equal(f.u.skill.charges,1);
+  f.u.dir='LEFT';f.b._refreshRange(f.u);assert.equal(f.u.skill.activate(),true);until(f,()=>s2(f).fields.length===1);assert.equal(s2(f).fields[0].startX,18);
+});
+test('S1 equal-HP-ratio targets use the latest deployment instead of the oldest',()=>{
+  const f=make({sourceS1:true}),a=ally(f),z=ally(f,{row:6,col:6}),throws=[];a.hp=z.hp=5000;
+  f.b.on('thornsS1Throw',c=>throws.push(c));until(f,()=>throws.length===1);assert.equal(throws[0].target,z);
+});
+
+test('S2 enemy healing/recovery reduction applies to actual HP changes and detaches on leaving the field',()=>{
+  const f=makeS2(),t=enemy(f);t.hp=1000;f.b.addBuff(t,{key:'fixture:regeneration',mods:{hpRegen:100,hpRegenRatio:.0001}});
+  startS2(f);until(f,()=>s2(f).fields.length===1);near(t.s.hpRegen,550);
+  const regenBefore=t.hp;advance(f.b,.3);near(t.hp-regenBefore,165,1.1);
+  const before=t.hp;f.b.heal(t,t,200,{self:true});near(t.hp-before,100);
+  t.x=15;t.y=15;advance(f.b,.1);near(t.s.hpRegen,1100);near(enemyHeal(f,t),400);
+  const after=t.hp;f.b.heal(t,t,200,{self:true});near(t.hp-after,200);assert.equal(s2Buff(t),null);
+});
+test('S2 growth reaches new ground recipients without replacing the original enemy DOT clock',()=>{
+  const f=makeS2(),t=enemy(f),a=ally(f,{row:5,col:8}),dots=s2Dots(f);startS2(f);until(f,()=>s2(f).fields.length===1);
+  assert.equal(s2Buff(a),null);until(f,()=>!!s2Buff(a),10);near(a.s.hpRegen,551.1*.18);
+  assert.ok(dots.length>=3);for(let i=1;i<dots.length;i++)near(dots[i].time-dots[i-1].time,1,f.b.dt*2);
+  assert.ok(s2Buff(t));
+});
+test('S2 delayed field ticks kill the enemy once and remove its derived buff without recursive damage',()=>{
+  const f=makeS2(),t=enemy(f),dots=s2Dots(f);startS2(f);until(f,()=>s2(f).fields.length===1);t.hp=1;
+  until(f,()=>!t.alive);assert.equal(dots.length,1);assert.equal(s2Buff(t),null);advance(f.b,2);assert.equal(dots.length,1);
+});
+test('S2 native ground/heal-free hit checker detaches when an enemy becomes heal-free',()=>{
+  const f=makeS2(),t=enemy(f),dots=s2Dots(f);startS2(f);until(f,()=>s2(f).fields.length===1);
+  f.b.addBuff(t,{key:'fixture:healFree',flags:{healFree:true}});advance(f.b,1.1);assert.equal(s2Buff(t),null);assert.equal(dots.length,0);
+  f.b.removeBuff(t,'fixture:healFree');advance(f.b,f.b.dt);until(f,()=>dots.length===1);assert.ok(s2Buff(t));
+});
+test('S2 native circle checks large enemy bodies rather than only their center',()=>{
+  const f=makeS2(),t=enemy(f);startS2(f);until(f,()=>s2(f).fields.length===1);const field=s2(f).fields[0];
+  t.x=field.x+2;t.y=field.y;t.hitArea={w:3,h:1,dx:0,dy:0};advance(f.b,f.b.dt);assert.ok(s2Buff(t));
+  t.hitArea=null;advance(f.b,f.b.dt);assert.equal(s2Buff(t),null);
+});
+test('S2 deferred battle finish requested during DOT removes all fields/instances at the phase boundary',()=>{
+  const f=makeS2(),t=enemy(f),z=enemy(f),dots=s2Dots(f);startS2(f);until(f,()=>s2(f).fields.length===1);
+  f.b.on('damaged',ctx=>{if(ctx.dmg?.tags?.includes('thorns:s2'))f.b.forceEnd('fixture:receipt');});
+  until(f,()=>f.b.finished);assert.equal(dots.length,2);assert.equal(s2Buff(t),null);assert.equal(s2Buff(z),null);assert.equal(s2(f).handles.length,0);
+});
+test('S2 preparation rejects the wrong selected skill or copied contract before installing hooks',()=>{
+  const f=make({defer:true});f.controller.stop();delete f.u.mem.thornsController;
+  const counts=Object.fromEntries(Object.entries(f.b._hooks).map(([k,v])=>[k,v.length]));
+  assert.throws(()=>prepareThornsS2(f.b,f.u,{contract:THORNS_S2_CONTRACT}),/second skill/);
+  assert.throws(()=>prepareThornsS2(f.b,f.u,{contract:{...THORNS_S2_CONTRACT}}),/contract/);
+  assert.deepEqual(Object.fromEntries(Object.entries(f.b._hooks).map(([k,v])=>[k,v.length])),counts);
+});
+test('road capture rejects a late first preparation instead of scanning changed runtime terrain',()=>{
+  const f=make();advance(f.b,.2);
+  // A second controller in a previously captured battle shares its initial road map.
+  const z=owner(f.b,{defer:true});assert.equal(z.controller.roads,f.controller.roads);z.controller.stop();
+  const b=new StandardBattle(data,{operators:[defaultBuild(data.operators.char_289_gyuki)]});b.time=.2;
+  assert.throws(()=>owner(b,{defer:true}),/before combat/);
+});
+
+
+test('S2 ordinary heal modifier survives owner retreat without changing regeneration or explicit event bypass',()=>{
+  const f=makeS2(),t=enemy(f);startS2(f);until(f,()=>s2(f).fields.length===1);
+  f.b.retreat(f.u);near(enemyHeal(f,t),200);
+  t.hp=t.s.maxHp-10000;near(f.b.heal(t,t,400,{self:true,regen:true}),400);
+  near(f.b.heal(t,t,400,{self:true,skipModifierEvent:true}),400);
+  f.b.forceEnd('fixture');near(enemyHeal(f,t),400);assert.equal(s2(f).handles.length,0);
+});
+test('S2 healing modifier composes with other incoming heal modifiers without reducing regeneration twice',()=>{
+  const f=makeS2(),t=enemy(f);f.b.addBuff(t,{key:'fixture:incoming-heal',mods:{healingTakenMul:.8}});
+  startS2(f);until(f,()=>s2(f).fields.length===1);near(enemyHeal(f,t),160);
+  f.b.removeBuff(t,'fixture:incoming-heal');near(enemyHeal(f,t),200);
+  f.b.removeBuff(t,s2Buff(t));near(enemyHeal(f,t),400);
 });
