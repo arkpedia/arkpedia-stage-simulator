@@ -452,8 +452,11 @@ export function elementIntake(target) {
   return target.s.elemTakenMul * Math.max(MIN_DAMAGE_RATIO, 1 - clamp01(res / 100));
 }
 
-/** Element gauge accumulation + burst. Fires `elementHit` { source, target, dmg } first (mutable amount/mul, cancel). */
+/** Element gauge accumulation + burst. Fires `elementHit` { source, target, dmg, credit } first (mutable amount/mul, cancel). */
 export function applyElement(battle, source, target, dmg) {
+  // Match HP damage: a sourceless injury has no hook-visible attacker, but
+  // retains its producer for gauge statistics and the resulting burst credit.
+  const hs = dmg.sourceless ? null : source;
   const el = dmg.element;
   if (!el || !(el in target.elem)) return 0;
   if (!hasHp(target)) return 0; // a killing blow's rider: the target is dead, nothing fills or bursts (header)
@@ -461,7 +464,7 @@ export function applyElement(battle, source, target, dmg) {
   if (liftoffEvades(target, dmg.sourceless ? null : source, dmg)) return 0;
   if (burstLocked(target, el)) return 0;
   if (battle._hooks.elementHit) {
-    battle.emit('elementHit', { source, target, dmg });
+    battle.emit('elementHit', { source: hs, target, dmg, credit: source });
     if (dmg.cancel || !target.alive || !target.deployed || burstLocked(target, el)) return 0;
     if (dmg.type !== 'element') return dealDamage(battle, source, target, dmg); // a handler converted it
   }
@@ -472,7 +475,7 @@ export function applyElement(battle, source, target, dmg) {
   target.elem[el] = Math.min(max, target.elem[el] + amt);
   battle._ev(['dmg', target.id, Math.round(amt), el]);
   if (source) source.stats.elem = (source.stats.elem ?? 0) + amt;
-  if (battle._hooks.damaged) battle.emit('damaged', { source, target, amount: amt, type: 'element', dmg });
+  if (battle._hooks.damaged) battle.emit('damaged', { source: hs, target, amount: amt, type: 'element', dmg, credit: source });
   if (target.elem[el] >= max && target.alive) elementBurst(battle, source, target, el);
   return amt;
 }

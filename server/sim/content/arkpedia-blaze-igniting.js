@@ -7,6 +7,8 @@ import {normalizeChess,flattenBlackboard} from '../simdata.js';
 import {absoluteRangeKeys,canTargetEnemy,sortEnemyTargets} from '../targeting.js';
 import {bodyInKeys,bodyInRadius} from '../body.js';
 import {makeDamageInfo} from '../damage.js';
+import {BlazeIgnitingS1Fields,BLAZE_IGNITING_S1_CONTRACT} from './arkpedia-blaze-igniting-s1.js';
+export {BLAZE_IGNITING_S1_CONTRACT};
 
 export const BLAZE_IGNITING_ID='char_1040_blaze2';
 export const BLAZE_IGNITING_CORE_CONTRACT=Object.freeze({
@@ -75,7 +77,7 @@ function validate(u,contract){
 }
 
 export class BlazeIgnitingCoreController{
-  constructor(b,u,record){this.b=b;this.u=u;this.record=record;this.seq=null;this.stopped=false;this.phase=null;this.handles=[];this.reborn=null;this.downState=null;}
+  constructor(b,u,record){this.b=b;this.u=u;this.record=record;this.seq=null;this.stopped=false;this.phase=null;this.handles=[];this.reborn=null;this.downState=null;this.s1=null;}
   valid(){return !this.stopped&&!this.b.finished&&live(this.u)&&this.seq===this.u.deploySeq;}
   eligible(t){return live(t)&&canTargetEnemy(this.u,t,air)&&(!t.s.flags.camou||!!t.blockedBy);}
   visual(clip,speed=1,loop=false){
@@ -104,7 +106,7 @@ export class BlazeIgnitingCoreController{
     // Account fatal HP loss before repairing the one-HP runtime floor.
     ctx.afterHpLoss=()=>{
       if(!this.valid())return;
-      u.hp=Math.min(1,u.s.maxHp);this.phase=null;
+      u.hp=Math.min(1,u.s.maxHp);this.phase=null;this.s1?.interrupt('downed');
       // Native ClearAllBuffs excludes durable instances. Runtime persist is a
       // local durability bridge; own state is created after clearing modifiers.
       for(const buff of [...u.buffs])if(!buff.persist)b.removeBuff(u,buff);
@@ -158,6 +160,7 @@ export class BlazeIgnitingCoreController{
       }
       return;
     }
+    if(this.s1?.tick())return;
     let p=this.phase;
     if(p?.kind==='entrance'){
       if(b.time+1e-9<p.readyAt)return;
@@ -195,7 +198,7 @@ export class BlazeIgnitingCoreController{
   }
   stop(){
     if(this.stopped)return;
-    this.stopped=true;this.phase=null;this.reborn=null;
+    this.stopped=true;this.s1?.ownerStop();this.phase=null;this.reborn=null;
     if(this.downState)this.b.removeBuff(this.u,this.downState);this.downState=null;
     this.b.removeBuff(this.u,'blaze2_back_to_default');
     // Ordinary shots survive removal, but not a finished battle.
@@ -211,4 +214,21 @@ export function prepareBlazeIgnitingCore(b,u,{contract}={}){
     requiresAcceptedLaunch:true,attackVisual:'none',launchAttack:(_b,_u,_p,t,info)=>controller.release(t,info)},
     skill:{kind:'instant',trigger:{rule:'NEVER'},canActivate:()=>false},talents:[],install:null};
   return {record,controller,kit};
+}
+
+/** Private automatic field; source evidence stays separate from runtime review. */
+export function prepareBlazeIgnitingS1(b,u,{contract}={}){
+  if(contract!==BLAZE_IGNITING_S1_CONTRACT)throw Error('Blaze Igniting S1 requires the reviewed field contract');
+  const record=validate(u,BLAZE_IGNITING_CORE_CONTRACT);
+  if(record.index!==0)throw Error('Blaze Igniting S1 requires the selected first skill');
+  const a=component('5063277333753124571'),selector=component('-5998297771449952549');
+  if(a._animKey!=='Skill_1'||a._waitForAttackEvent!==1||a._maxAnimScale!==-1||a._timeMode!==1
+    ||selector._postFilter!==19||selector._professionMask!==639||selector._excludeOwner!==0
+    ||!a._activeBuffs.some(v=>v.buffKey==='blaze2_s_1'&&v.durationKey==='max_duration'&&v.overrideType===3))
+    throw Error('Unreviewed Blaze Igniting S1 native field');
+  const prepared=prepareBlazeIgnitingCore(b,u,{contract:BLAZE_IGNITING_CORE_CONTRACT});
+  const {controller,kit}=prepared;controller.s1=new BlazeIgnitingS1Fields(controller);
+  kit.skill={kind:'toggle',trigger:{rule:'NEVER'},manualCancel:false,
+    canActivate:()=>controller.s1.canCast(),onStart:()=>controller.s1.start(),onEnd:()=>controller.s1.end()};
+  return prepared;
 }
