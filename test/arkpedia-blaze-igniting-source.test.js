@@ -34,6 +34,11 @@ test('S2 cleanup distinguishes leaving a tile from finishing the skill',()=>{
  const start=e.templates['blaze2_s_2[on_tile]'].eventToActions.ON_BUFF_START[0];assert.equal(start._isDerivedBuff,true);assert.equal(start._finishDerivedBuffIfParentFinish,true);assert.equal(start._buff.lifeTimeType,'INFINITY');
  assert.equal(start._buff.attributes.attributeModifiers[0].attributeType,'MOVE_SPEED');assert.equal(start._buff.attributes.attributeModifiers[0].value,-.5);
  const tick=e.templates['blaze2_s_2[on_tile]'].eventToActions.ON_BUFF_TRIGGER;assert.equal(tick[0]._assignRealDamageToBB,true);assert.equal(tick[1]._multiplyParamKey,'element_damage_scale');assert.equal(tick[2]._elementDamageType,'FIRE');
+ assert.equal(tick[0]._baseOnHostAtk,false);assert.equal(tick[0]._forceUseProjectileCachedAtk,false);assert.equal(tick[2]._noSource,false);
+ const holder=comp('-7463294883404487943');assert.equal(holder._clearBuffWhenAbilityDetached,1);
+ for(const rows of [holder._buffsWhenCasted,holder._buffsWhenEnemyEnter]){assert.equal(rows[0].waitFirstTriggerInterval,0);assert.equal(rows[0].blackboard.find(v=>v.key==='interval').value,1);}
+ const cost=e.templates['blaze2_s_2[self_damage]'].eventToActions.ON_BUFF_START[0];assert.equal(type(cost),'DamageViaMaxHpRatio');
+ assert.equal(cost._ignoreForSp,true);assert.equal(cost._skipModifierEvent,true);assert.equal(cost._isUndeadable,false);assert.equal(cost._damageType,'PURE');
 });
 test('S3 uses a delayed stop-only radius hit without borrowing an Attack event',()=>{
  const a=comp('-3061221568776543495');assert.equal(a._projectileKey,'projectile_chr_blaze2_s3');assert.equal(a._waitForAttackEvent,0);

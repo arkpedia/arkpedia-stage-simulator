@@ -8,7 +8,8 @@ import {absoluteRangeKeys,canTargetEnemy,sortEnemyTargets} from '../targeting.js
 import {bodyInKeys,bodyInRadius} from '../body.js';
 import {makeDamageInfo} from '../damage.js';
 import {BlazeIgnitingS1Fields,BLAZE_IGNITING_S1_CONTRACT} from './arkpedia-blaze-igniting-s1.js';
-export {BLAZE_IGNITING_S1_CONTRACT};
+import {BlazeIgnitingS2Tiles,BLAZE_IGNITING_S2_CONTRACT} from './arkpedia-blaze-igniting-s2.js';
+export {BLAZE_IGNITING_S1_CONTRACT,BLAZE_IGNITING_S2_CONTRACT};
 
 export const BLAZE_IGNITING_ID='char_1040_blaze2';
 export const BLAZE_IGNITING_CORE_CONTRACT=Object.freeze({
@@ -77,7 +78,7 @@ function validate(u,contract){
 }
 
 export class BlazeIgnitingCoreController{
-  constructor(b,u,record){this.b=b;this.u=u;this.record=record;this.seq=null;this.stopped=false;this.phase=null;this.handles=[];this.reborn=null;this.downState=null;this.s1=null;}
+  constructor(b,u,record){this.b=b;this.u=u;this.record=record;this.seq=null;this.stopped=false;this.phase=null;this.handles=[];this.reborn=null;this.downState=null;this.s1=null;this.s2=null;}
   valid(){return !this.stopped&&!this.b.finished&&live(this.u)&&this.seq===this.u.deploySeq;}
   eligible(t){return live(t)&&canTargetEnemy(this.u,t,air)&&(!t.s.flags.camou||!!t.blockedBy);}
   visual(clip,speed=1,loop=false){
@@ -106,7 +107,7 @@ export class BlazeIgnitingCoreController{
     // Account fatal HP loss before repairing the one-HP runtime floor.
     ctx.afterHpLoss=()=>{
       if(!this.valid())return;
-      u.hp=Math.min(1,u.s.maxHp);this.phase=null;this.s1?.interrupt('downed');
+      u.hp=Math.min(1,u.s.maxHp);this.phase=null;this.s1?.interrupt('downed');this.s2?.interrupt('downed');
       // Native ClearAllBuffs excludes durable instances. Runtime persist is a
       // local durability bridge; own state is created after clearing modifiers.
       for(const buff of [...u.buffs])if(!buff.persist)b.removeBuff(u,buff);
@@ -131,6 +132,7 @@ export class BlazeIgnitingCoreController{
     b.emit('blazeIgnitingRevival',{owner:u,state:this.reborn});
   }
   release(t,info){
+    if(this.phase?.kind==='s2-attack')return this.s2?.release(t,info)??false;
     const p=this.phase,{u,b}=this;
     if(!this.valid()||this.reborn||!u.canAct||u.s.flags.disarm||!p||p.kind!=='attack'||p.accepted
       ||p.target!==t||p.targetSeq!==t.deploySeq||p.epoch!==u.attackControlEpoch
@@ -161,6 +163,7 @@ export class BlazeIgnitingCoreController{
       return;
     }
     if(this.s1?.tick())return;
+    if(this.s2?.tick())return;
     let p=this.phase;
     if(p?.kind==='entrance'){
       if(b.time+1e-9<p.readyAt)return;
@@ -198,7 +201,7 @@ export class BlazeIgnitingCoreController{
   }
   stop(){
     if(this.stopped)return;
-    this.stopped=true;this.s1?.ownerStop();this.phase=null;this.reborn=null;
+    this.stopped=true;this.s1?.ownerStop();this.s2?.ownerStop();this.phase=null;this.reborn=null;
     if(this.downState)this.b.removeBuff(this.u,this.downState);this.downState=null;
     this.b.removeBuff(this.u,'blaze2_back_to_default');
     // Ordinary shots survive removal, but not a finished battle.
@@ -230,5 +233,27 @@ export function prepareBlazeIgnitingS1(b,u,{contract}={}){
   const {controller,kit}=prepared;controller.s1=new BlazeIgnitingS1Fields(controller);
   kit.skill={kind:'toggle',trigger:{rule:'NEVER'},manualCancel:false,
     canActivate:()=>controller.s1.canCast(),onStart:()=>controller.s1.start(),onEnd:()=>controller.s1.end()};
+  return prepared;
+}
+
+/** Private duration mode; public enablement waits for all three skills. */
+export function prepareBlazeIgnitingS2(b,u,{contract}={}){
+  if(contract!==BLAZE_IGNITING_S2_CONTRACT)throw Error('Blaze Igniting S2 requires the reviewed tile contract');
+  const record=validate(u,BLAZE_IGNITING_CORE_CONTRACT);
+  if(record.index!==1)throw Error('Blaze Igniting S2 requires the selected second skill');
+  const a=component('-3195934114113625351'),holder=component('-7463294883404487943'),p=component('8377817986924095052');
+  if(a._animKey!=='Skill_2_Loop'||a._maxAnimScale!==1||a._atkScale!==1||a._useCachedAtkOnly!==0
+    ||a._projectileKey!=='projectile_chr_blaze2_s2'||component('3811374675922069068')._speed!==99
+    ||p._lifeTime!==10||p._stopWhenSourceInvalid!==0||holder._clearBuffWhenAbilityDetached!==1
+    ||holder._buffsWhenEnemyEnter[0].waitFirstTriggerInterval!==0
+    ||holder._buffsWhenEnemyEnter[0].blackboard.find(v=>v.key==='interval')?.value!==1)
+    throw Error('Unreviewed Blaze Igniting S2 native tile mode');
+  const prepared=prepareBlazeIgnitingCore(b,u,{contract:BLAZE_IGNITING_CORE_CONTRACT});
+  const {controller,kit}=prepared;controller.s2=new BlazeIgnitingS2Tiles(controller);
+  kit.skill={kind:'duration',trigger:{rule:'NEVER'},manualCancel:false,
+    mods:{atkPct:record.bb.atk,batFlat:record.bb.base_attack_time},
+    targeting:{rangeGrid:grid(record.source.rangeId),maxTargets:record.bb['attack@max_target']},
+    canActivate:()=>controller.s2.canCast(),onStart:()=>controller.s2.start(),
+    onAttack:()=>controller.s2.selfCost(),onEnd:({reason})=>controller.s2.end(reason)};
   return prepared;
 }
