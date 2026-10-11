@@ -295,6 +295,7 @@ export class Battle {
     const u = new Unit({
       id: ++this._idSeq, side: 'ally', kind, def, defId: def.id, name: def.name, ownerId: ps ? ps.playerId : null,
       uid: extra.uid ?? null, ownerUnit: extra.ownerUnit ?? null, x: c, y: r, tileR: r, tileC: c,
+      tags: def.tags ?? [],
       dir: extra.dir != null ? normDir(extra.dir) : extra.facing != null ? normDir(extra.facing) : ps ? ps.dir : 'RIGHT',
       base: {
         maxHp: st.maxHp, atk: st.atk, def: st.def, res: st.res, aspd: st.aspd, bat: st.bat, blockCnt: st.blockCnt,
@@ -408,7 +409,10 @@ export class Battle {
       this._phase('scheduled', () => this._runScheduled());
       this._phase('spawns', () => this._processSpawns());
       this._phase('dp', () => {
-        for (const ps of this.players) ps.dp = Math.min(this.flags.dpMax, ps.dp + this.flags.dpPerSec * dt);
+        for (const ps of this.players) {
+          const rate = this.dpRecoveryRateFor?.(ps.id) ?? this.flags.dpPerSec;
+          ps.dp = Math.min(this.flags.dpMax, ps.dp + rate * dt);
+        }
       });
       this._phase('buffs', () => this._tickBuffs(dt));
       this._phase('enemies', () => {
@@ -875,6 +879,8 @@ export class Battle {
       return false;
     }
     const k = R0 * COLS + C0;
+    const reservation = this.tileReservation(R0, C0);
+    if (reservation && reservation.owner !== u) return false;
     const occ = this._occ[k];
     if (occ && occ !== u && occ.alive && occ.deployed) { this.log(`tile ${R0},${C0} occupied; ${u} not deployed`); return false; }
     // "倒地干员所在地块视为可部署，但所有我方单位在此处的部署行为将被阻止" (PRTS 卫戍协议/帮助 §作战阶段 单位部署)
@@ -950,6 +956,7 @@ export class Battle {
     unit.removeReason = reason;
     unit.deployed = false;
     unit.deathAt = this.time;
+    this.releaseTileReservations(unit);
     // while the removal bookkeeping runs, a skill onEnd handler must not redeploy the unit (it would come back
     // alive but without its tile in _occ, its buffs wiped and a respawn timer pending) — redeploy from `death` instead
     unit._removing = true;
@@ -1193,6 +1200,7 @@ export class Battle {
     if (i >= 0) bl.blocking.splice(i, 1);
     e.blockedBy = null;
     this._stealthSwitch(e);
+    if (this._hooks.unblocked) this.emit('unblocked', { blocker: bl, enemy: e });
   }
 
   /** Release every enemy blocked by ally `u` (death, retreat, block count drop, substitution…). */
@@ -1201,6 +1209,7 @@ export class Battle {
     const was = u.blocking;
     u.blocking = [];
     for (const e of was) if (e.blockedBy === u) { e.blockedBy = null; this._stealthSwitch(e); }
+    if (this._hooks.unblocked) this.emit('unblocked', { blocker: u, enemies: was });
   }
 
   /**
@@ -1225,8 +1234,23 @@ export class Battle {
   // buffs & statuses
 
   addBuff(unit, b) {
+    // Source opt-in immunity for bards whose trait rejects Inspire. Producers
+    // describe the effect semantically; arbitrary display keys stay unrelated.
+    if (unit?.mem?.noInspire && (b?.status === 'inspire' || b?.tags?.includes('inspire'))) return null;
     if (!unit || (!unit.alive && !b.allowDead)) return null;
     const buff = makeBuff(b);
+    if (this._hooks.beforeBuff) {
+      const ctx = this.emit('beforeBuff', { unit, buff, cancel: false });
+      if (ctx.cancel || (!unit.alive && !b.allowDead)) return null;
+    }
+    const accepted = applied => {
+      const f = applied.flags;
+      // Record interruption at application, rather than relying on a later
+      // sampled flag. A short control can expire before the next combat tick.
+      if (f && (f.stun || f.freeze || f.sleep || f.levitate || f.disarm))
+        unit.attackControlEpoch = (unit.attackControlEpoch ?? 0) + 1;
+      return applied;
+    };
     const list = unit.buffs;
     let idx = -1;
     for (let i = 0; i < list.length; i++) if (list[i].key === buff.key) { idx = i; break; }
@@ -1242,21 +1266,31 @@ export class Battle {
           old.duration = buff.duration;
           if (buff.mods) old.mods = buff.mods;
           if (buff.flags) old.flags = buff.flags;
+          if (buff.shield > 0 || buff.shieldHits > 0) {
+            old.shieldTypes = buff.shieldTypes;
+            old.shieldApplyWays = buff.shieldApplyWays;
+            old.shieldSourceSides = buff.shieldSourceSides;
+          }
           unit.markDirty();
-          return old;
+          return accepted(old);
         case 'extend':
           old.timeLeft = Math.max(old.timeLeft, buff.duration);
           old.duration = Math.max(old.duration, buff.duration);
           if (buff.mods) old.mods = buff.mods;
           if (buff.flags) old.flags = buff.flags;
+          if (buff.shield > 0 || buff.shieldHits > 0) {
+            old.shieldTypes = buff.shieldTypes;
+            old.shieldApplyWays = buff.shieldApplyWays;
+            old.shieldSourceSides = buff.shieldSourceSides;
+          }
           if (buff.shield > old.shield) old.shield = buff.shield;
           if (buff.shieldHits > old.shieldHits) old.shieldHits = buff.shieldHits;
           unit.markDirty();
-          return old;
+          return accepted(old);
         default:
           list[idx] = buff;
           unit.markDirty();
-          return buff;
+          return accepted(buff);
       }
     }
     if (buff.refresh === 'independent') {
@@ -1272,15 +1306,21 @@ export class Battle {
       const key = buff.status ?? buff.key;
       if (list.filter((x) => (x.status ?? x.key) === key).length === 1) this._ev(['status', unit.id, key, 1]);
     }
-    return buff;
+    return accepted(buff);
   }
 
   removeBuff(unit, keyOrBuff) {
     if (!unit) return 0;
     let n = 0;
-    for (let i = unit.buffs.length - 1; i >= 0; i--) {
-      const b = unit.buffs[i];
-      if (b === keyOrBuff || b.key === keyOrBuff) { this._removeBuffAt(unit, i, true); n++; }
+    // Removal callbacks can remove an earlier buff or install a replacement.
+    // Revalidate original identities, preserving reverse callback order without
+    // consuming replacements or indexing a list changed by a nested removal.
+    for (const buff of unit.buffs.slice().reverse()) {
+      if (buff !== keyOrBuff && buff.key !== keyOrBuff) continue;
+      const i = unit.buffs.indexOf(buff);
+      if (i < 0) continue;
+      this._removeBuffAt(unit, i, true);
+      n++;
     }
     return n;
   }
@@ -1289,6 +1329,7 @@ export class Battle {
     const b = unit.buffs[i];
     if (!b) return;
     unit.buffs.splice(i, 1);
+    if (b.status === 'resist' && !unit.buffs.some((x) => x.status === 'resist')) unit._resistPalsyAcc = 0;
     unit.markDirty();
     if ((b.visible || b.status)) {
       const key = b.status ?? b.key;
@@ -1302,6 +1343,17 @@ export class Battle {
     for (let i = 0, n = units.length; i < n; i++) { // units created by onTick handlers start ticking next tick
       const u = units[i];
       if (!u.alive || u.removed) continue;
+      // 抵抗 is one named effect even when several sources own its instances.
+      // Preserve one decay cadence through overlap and source handoff.
+      if (u.buffs.some((b) => b.status === 'resist')) {
+        u._resistPalsyAcc = (u._resistPalsyAcc ?? 0) + dt;
+        while (u._resistPalsyAcc >= RESIST_PALSY_DECAY - 1e-9) {
+          u._resistPalsyAcc -= RESIST_PALSY_DECAY;
+          const p = u.findBuff('palsy');
+          if (p && --p.stacks <= 0) this.removeBuff(u, p);
+          else if (p) u.markDirty();
+        }
+      } else u._resistPalsyAcc = 0;
       if (u.buffs.length) {
         const arr = u.buffs.slice();
         for (const b of arr) {
@@ -1378,7 +1430,8 @@ export class Battle {
     // levitated — a hovering 近地悬浮 enemy is WALK in its data, so it can be levitated (no 缚地 / 浮空强化 in this mode)
     if (key === 'levitate' && (target.motion === 'FLY' || target.s.flags.levitate)) return false;
     if (this._hooks.beforeStatus) {
-      const c = this.emit('beforeStatus', { source: opts.source ?? null, target, status: key, duration, value, cancel: false });
+      const c = this.emit('beforeStatus', { source: opts.source ?? null, target, status: key, duration, value, cancel: false,
+        sourceStatusResistable: opts.sourceStatusResistable });
       if (c.cancel || !target.alive) return false;
       const d = Number(c.duration);
       if (d === Infinity || (Number.isFinite(d) && d > 0)) duration = d;
@@ -1391,7 +1444,9 @@ export class Battle {
     }
     if (key === 'levitate' && target.s.massLevel > LEVITATE_HALF_WEIGHT) duration /= 2;
     if (!(duration > 0)) return false;
-    if (key === 'cold' && target.findBuff('cold') && !(immune && immune.has('frozen'))) {
+    // Original c2e_cold producers can retain independent one-trigger layers.
+    // Their adapter pairs accepted, post-resistance lifetimes itself.
+    if (key === 'cold' && opts.coldPairing !== 'independent' && target.findBuff('cold') && !(immune && immune.has('frozen'))) {
       // PRTS 术语释义 寒冷: 友方寒冷 pairs into 冻结, 「持续时间取双方之中最高」. `duration` is this cold after 抵抗;
       // the cold already on the target keeps timeLeft. addBuff refresh 'extend' below sets that cold to the same max.
       // COLD_FREEZE_DURATION is only the fallback when neither side has a duration. resistApplied: that max is already
@@ -1410,16 +1465,35 @@ export class Battle {
     const source = opts.source ?? null;
     let entered = true;
     for (const b of target.buffs) if ((b.status ?? b.key) === key) { entered = false; break; }
+    // Native damage_resistance[IncludePure] retains Sanctuary identity, but
+    // also reduces True damage. Ordinary Sanctuary never gains that channel.
+    const modsForValue = key === 'sanctuary' && opts.includePure === true
+      ? v => { const m = tpl.mods(v); return { ...m, trueTakenMul: m.physTakenMul }; }
+      : tpl.mods;
+    // Default keys separate the two native type masks. An explicit owned key
+    // identifies one producer and must retain the same type mask on refresh.
+    const ownedKey = opts.key ?? (key === 'sanctuary' && opts.includePure === true
+      ? 'sanctuary:include-pure' : key);
     if (tpl.palsy) {
       this.addBuff(target, { ...palsyBuff(value ?? 1), duration, source });
     } else if (tpl.valued != null && typeof tpl.mods === 'function' && opts.refresh == null) {
-      this._applyValuedStatus(target, key, tpl, duration, value ?? tpl.valued, source);
+      this._applyValuedStatus(target, ownedKey, { ...tpl, mods: modsForValue, statusKey: key,
+        buff: { ...tpl.buff, sourceStatusResistable: opts.sourceStatusResistable } }, duration, value ?? tpl.valued, source);
     } else {
-      const mods = tpl.enemyOnlyMods && target.side !== 'enemy' ? null : typeof tpl.mods === 'function' ? tpl.mods(value) : (tpl.mods || null);
-      const b = this.addBuff(target, { key, duration, refresh: opts.refresh ?? 'extend', mods, flags: tpl.flags || null, status: key, visible: true, source });
+      const mods = tpl.enemyOnlyMods && target.side !== 'enemy' ? null : typeof modsForValue === 'function' ? modsForValue(value) : (modsForValue || null);
+      // Owned non-valued status instances let a zone remove its own effects
+      // without erasing another source's status. Status identity stays `key`.
+      const b = this.addBuff(target, { key: ownedKey, duration, refresh: opts.refresh ?? 'extend', mods, flags: tpl.flags || null, status: key, visible: true, source,
+        sourceStatusResistable: opts.sourceStatusResistable });
+      if (!b) return false;
       if (tpl.attract && b) this._setAttractPoint(target, b, opts.point ?? value, source);
       // 恐惧: the hit position and the source's position of every application (fear.js — the fan of reachable tiles)
       if (key === 'fear' && b && target.side === 'enemy') stampFear(this, target, b, source);
+      // Native DISARMED_COMBAT interrupts the blocked enemy's combat ability.
+      if (key === 'tremble' && target.side === 'enemy' && target.blockedBy) {
+        target.attackControlEpoch = (target.attackControlEpoch ?? 0) + 1;
+        target.atkCd = Math.max(target.atkCd, target.s.interval);
+      }
     }
     const f = tpl.flags;
     if (f && target.side === 'enemy' && (f.levitate || f.unblockable || f.fear)) this._unblock(target);
@@ -1476,8 +1550,8 @@ export class Battle {
   _applyValuedStatus(target, key, tpl, duration, value, source) {
     const strength = (v) => Math.abs(Number.isFinite(v) ? v : tpl.valued);
     const make = (v, dur, tail) => ({
-      ...(tpl.buff || null),   // extra buff fields of the status (抵抗: the 麻痹 decay tick)
-      key, duration: dur, refresh: 'replace', mods: tpl.mods(v), flags: tpl.flags || null, status: tpl.plain ? null : key,
+      ...(tpl.buff || null),   // extra buff fields of the status
+      key, duration: dur, refresh: 'replace', mods: tpl.mods(v), flags: tpl.flags || null, status: tpl.plain ? null : tpl.statusKey ?? key,
       visible: !tpl.plain, source,
       data: { value: v, tail },
       onExpire: ({ battle, unit, buff }) => {
@@ -1485,7 +1559,7 @@ export class Battle {
         if (t && t.until - battle.time > 1e-6 && unit.alive) battle.addBuff(unit, make(t.value, t.until - battle.time, null));
       },
     });
-    const old = target.buffs.find((b) => b.key === key && (tpl.plain || b.status === key));
+    const old = target.buffs.find((b) => b.key === key && (tpl.plain || b.status === (tpl.statusKey ?? key)));
     if (!old) { this.addBuff(target, make(value, duration, null)); return; }
     const oldV = old.data && Number.isFinite(old.data.value) ? old.data.value : tpl.valued;
     const oldEnd = this.time + old.timeLeft, newEnd = this.time + duration;
@@ -1850,6 +1924,7 @@ export class Battle {
     if (!Number.isInteger(row) || !Number.isInteger(col) || !this.grid.inRect(row, col)) return null;
     const occ = this._occ[row * COLS + col];
     if (occ && occ.alive) return null;
+    if (this.tileReservation(row, col)) return null;
     if (this.downOn(row, col)) return null;
     const hp = fin(opts.hp, 100);
     const bat = fin(opts.bat, 1), aspd = fin(opts.aspd, 100);
@@ -1908,6 +1983,8 @@ export class Battle {
   setObstacle(r, c, on, kind = 'block') { this.grid.setObstacle(r, c, on, kind); }
 
   addProjectile(p) { return this.projectiles.add(p); }
+  registerProjectileSpeedAura(spec) { return this.projectiles.registerSpeedAura(spec); }
+  removeProjectiles(predicate) { return this.projectiles.remove(predicate); }
 
   /** Move an ally to another tile (keeps state); never onto a living unit or a knocked-out operator (downOn). */
   relocate(unit, r, c) {
@@ -1916,6 +1993,8 @@ export class Battle {
     if (!unit || unit.side !== 'ally' || !unit.alive || !unit.deployed) return false;
     if (!Number.isInteger(r) || !Number.isInteger(c) || !this.grid.inRect(r, c)) return false;
     const k = r * COLS + c;
+    const reservation = this.tileReservation(r, c);
+    if (reservation && reservation.owner !== unit) return false;
     if (this._occ[k] && this._occ[k] !== unit && this._occ[k].alive) return false;
     if (this.downOn(r, c)) return false;
     const ok = unit.tileR * COLS + unit.tileC;
@@ -1928,6 +2007,24 @@ export class Battle {
     if (unit.obstacle) this.grid.setObstacle(r, c, true, unit.obstacleKind);
     this._refreshRange(unit); // current + base range, CUSTOM_RANGE trigger keys
     return true;
+  }
+
+  /** Zero-slot source footprint, separate from units, obstacles and knock-out bodies. */
+  tileReservation(r, c) { return this._tileReservations?.get(r * COLS + c) ?? null; }
+
+  reserveTile(owner, r, c, sourceKey) {
+    if (!owner?.alive || !owner.deployed || !Number.isInteger(r) || !Number.isInteger(c)
+      || !this.grid.inRect(r, c) || typeof sourceKey !== 'string' || !sourceKey) return false;
+    const k = r * COLS + c, occupied = this._occ[k], old = this.tileReservation(r, c);
+    if ((old && old.owner !== owner) || (occupied?.alive && occupied !== owner) || this.downOn(r, c)) return false;
+    (this._tileReservations ??= new Map()).set(k, { owner, row: r, col: c, sourceKey });
+    return true;
+  }
+
+  releaseTileReservations(owner, sourceKey = null) {
+    for (const [k, reservation] of this._tileReservations ?? [])
+      if (reservation.owner === owner && (sourceKey == null || reservation.sourceKey === sourceKey))
+        this._tileReservations.delete(k);
   }
 
   /**
@@ -1978,7 +2075,8 @@ export class Battle {
    * push (PRTS 推与拉: one frame less of travel than a 弹道 push — constants.js PUSH_TILES_EFFECT / PUSH_EFFECT_SKILLS).
    * Returns the tiles moved.
    */
-  push(e, force, { from = null, dir = null, fixed = false, fixedAngle = false, inward = false, effect = false } = {}) {
+  push(e, force, { from = null, dir = null, fixed = false, fixedAngle = false, inward = false,
+    effect = false, directionalReduction = 2, onFall = null } = {}) {
     if (!this._displaceable(e)) return 0;
     let level = this.forceLevel(e, force);
     const fx0 = fin(from?.x, e.x), fy0 = fin(from?.y, e.y);
@@ -1989,7 +2087,7 @@ export class Battle {
     if (dl > 0) {
       ux = dirX / dl; uy = dirY / dl;
       if (from && !fixed && (d < PUSH_DIRECTIONAL_MIN_DIST || (!fixedAngle && vx * ux + vy * uy < d * Math.SQRT1_2))) {
-        level -= 2;
+        level -= Math.max(0, fin(directionalReduction, 2));
         if (d > 1e-6) { ux = vx / d; uy = vy / d; }
       }
     } else if (d > 1e-6) { ux = vx / d; uy = vy / d; }
@@ -1997,7 +2095,7 @@ export class Battle {
     else return 0;
     let dist = pushTiles(level, effect);
     if (inward && !(dl > 0)) { ux = -ux; uy = -uy; dist = Math.min(dist, Math.max(0, d - PULL_STOP_RADIUS)); }
-    return this.displace(e, { x: ux, y: uy }, dist);
+    return this.displace(e, { x: ux, y: uy }, dist, { onFall });
   }
 
   /**
@@ -2007,12 +2105,19 @@ export class Battle {
    * the official 拉力起点 in front of an operator. Returns the tiles moved.
    */
   pull(e, force, { to, center = null, stop = PULL_STOP_RADIUS } = {}) {
-    if (!this._displaceable(e) || !to) return 0;
+    const plan = this.planPull(e, force, { to, center, stop });
+    return plan ? this.displace(e, plan.direction, plan.distance) : 0;
+  }
+
+  /** Same weight/stop geometry without changing occupancy, block or route.
+   * Source-reviewed capture links can spend this distance over their own clock. */
+  planPull(e, force, { to, center = null, stop = PULL_STOP_RADIUS } = {}) {
+    if (!this._displaceable(e) || !to) return null;
     // an enemy the puller itself blocks already stands in front of it (at contact) [ASSUMED: no pull, no unblocking]
-    if (center && center.side === 'ally' && e.blockedBy === center) return 0;
+    if (center && center.side === 'ally' && e.blockedBy === center) return null;
     const tx = fin(to.x, e.x), ty = fin(to.y, e.y);
     const dx = tx - e.x, dy = ty - e.y, d0 = Math.hypot(dx, dy);
-    if (!(d0 > 1e-6)) return 0;
+    if (!(d0 > 1e-6)) return null;
     const ux = dx / d0, uy = dy / d0;
     // travel until inside the stop circle around `center` (smaller root of |e + t·u − c| = stop), else up to `to`
     let full = d0;
@@ -2025,7 +2130,7 @@ export class Battle {
     }
     const level = this.forceLevel(e, force);
     const dist = level >= 0 ? full : level === -1 ? Math.min(full, PULL_WEAK_SHARE * d0) : level === -2 ? Math.min(full, PULL_CRAWL) : 0;
-    return dist > 1e-6 ? this.displace(e, { x: ux, y: uy }, dist) : 0;
+    return dist > 1e-6 ? { direction: { x: ux, y: uy }, distance: dist } : null;
   }
 
   /** Official distance (tiles) a push of 力度 `force` would move `e` on open ground (0 when it cannot be displaced). */
@@ -2059,7 +2164,7 @@ export class Battle {
    * ⇒ no movement (_displaceable). The tiles it may cross follow its movement (`motion`): a hovering enemy walks the
    * ground, so it stays on ground-passable tiles.
    */
-  displace(e, dir, distance) {
+  displace(e, dir, distance, { onFall = null } = {}) {
     if (!this._displaceable(e) || !dir) return 0;
     const dxv = fin(dir.x, 0), dyv = fin(dir.y, 0);
     const len = Math.hypot(dxv, dyv);
@@ -2068,11 +2173,22 @@ export class Battle {
     if (!(eff > 0)) return 0;
     const ux = dxv / len, uy = dyv / len;
     let moved = 0;
+    const from = { x: e.x, y: e.y };
     const stepLen = 0.1;
     while (moved + 1e-9 < eff) {
       const s = Math.min(stepLen, eff - moved); // (the last step is a partial one: 0.12 tiles moves 0.12, not 0.2)
       const nx = e.x + ux * s, ny = e.y + uy * s;
       const r = Math.round(ny), c = Math.round(nx);
+      // Explicit regular-stage fall adapters can observe a ground body crossing
+      // a source hole. Other content keeps the existing passability-only mover.
+      // The adapter owns kill credit and once-only source callbacks; this mover
+      // does not invent an ordinary damage receipt for a fall.
+      if (e.motion !== 'FLY' && typeof onFall === 'function' && this.grid.inRect(r, c)
+        && this.grid.tile(r, c).key === 'tile_hole') {
+        e.x = nx; e.y = ny; moved += s;
+        this._safe(() => onFall(e), 'displace.onFall', e);
+        break;
+      }
       const ok = e.motion === 'FLY' ? this.grid.inRect(r, c) : this.grid.groundPassable(r, c);
       if (!ok) break;
       e.x = nx; e.y = ny; moved += s;
@@ -2081,6 +2197,8 @@ export class Battle {
       this._unblock(e);
       if (e.route) e.route.pts = null;
       this.fx('displace', { x: e.x, y: e.y, id: e.id });
+      if (this._hooks.enemyDisplaced) this.emit('enemyDisplaced', {
+        unit: e, from, to: { x: e.x, y: e.y }, distance: moved });
     }
     return moved;
   }
@@ -2093,6 +2211,7 @@ export class Battle {
    */
   isReservedTile(r, c) {
     if (!Number.isInteger(r) || !Number.isInteger(c) || r < 0 || r >= ROWS || c < 0 || c >= COLS) return true;
+    if (this.tileReservation(r, c)) return true;
     const u = this._occ[r * COLS + c];
     if (u && u.alive) return true;
     for (const a of this.allyUnits) {

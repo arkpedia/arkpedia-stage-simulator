@@ -1,0 +1,293 @@
+{
+  "sourceVersion": "26-09-23-17-49-43_b9cc4a",
+  "tableCommit": "57010cb5b2afea112cae57daa756b58676ba6850",
+  "sourceBundles": [
+    {
+      "path": "charpack/char_235_jesica.ab",
+      "md5": "1a872410191430a3cb44fee18e23fa6e",
+      "size": 19750,
+      "sha256": "daa97fffc7150e865e37d81ae0cc3533fd0ef122460a6a859d386c6c40cfcb48"
+    },
+    {
+      "path": "charpack/char_126_shotst.ab",
+      "md5": "fd4917796dc515be912adc285ee64989",
+      "size": 18953,
+      "sha256": "0412ad74b1923b3e24c5353d108902c7ce8afea1a4f4fccdd750614d36e6b7cd"
+    },
+    {
+      "path": "charpack/char_190_clour.ab",
+      "md5": "ec20e87623a420c9ae8bda7cb03f9964",
+      "size": 21624,
+      "sha256": "0ed5f024afe275e03e7cc631d6d16a97f5d13bfd72e9409e490aead35c58be46"
+    },
+    {
+      "path": "charpack/char_133_mm.ab",
+      "md5": "a7e83290a3521ee232c293ac9e55ca0c",
+      "size": 21048,
+      "sha256": "75f2e584d328b000005820a6a275ff0fde26d88cd46733ce9dbed3e373178b7d"
+    },
+    {
+      "path": "battle/prefabs/[uc]skills.ab",
+      "md5": "ff06dc9bb5516d069c8c0017207653ca",
+      "size": 1163240,
+      "sha256": "1c026938f054218f7e6bda9000162b2a6f30c9bd93e1ae9763d9d6df2270499c"
+    }
+  ],
+  "jessica": {
+    "s2": [
+      {
+        "pathId": "-3593510588403948577",
+        "buffs": [
+          {
+            "buffKey": "jesica_s_2",
+            "templateKey": "evade",
+            "maxStackCnt": 1,
+            "independentCharacterSource": 0,
+            "attributeModifiers": [
+              {
+                "attributeType": 1,
+                "formulaItem": 1,
+                "value": 0.0,
+                "loadFromBlackboard": 1,
+                "fetchBaseValueFromSourceEntity": 0
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "evadeTemplate": {
+      "templateKey": "evade",
+      "effectKey": "",
+      "onEventPriority": "DEFAULT",
+      "eventToActions": {
+        "ON_TAKE_DAMAGE": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+Evade, Assembly-CSharp",
+            "_damageMask": "PHYSICAL_AND_MAGICAL",
+            "_applyWayFilter": "ALL"
+          }
+        ]
+      }
+    }
+  },
+  "meteor": {
+    "s1": [
+      {
+        "pathId": "-6560543116870626081",
+        "buffs": [
+          {
+            "buffKey": "shotst_s_1",
+            "templateKey": "empty",
+            "maxStackCnt": 1,
+            "independentCharacterSource": 1,
+            "attributeModifiers": [
+              {
+                "attributeType": 2,
+                "formulaItem": 3,
+                "value": 0.0,
+                "loadFromBlackboard": 1,
+                "fetchBaseValueFromSourceEntity": 0
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "s2": [
+      {
+        "pathId": "-2589633766527961005",
+        "buffs": [
+          {
+            "buffKey": "shotst_s_2",
+            "templateKey": "empty",
+            "maxStackCnt": 1,
+            "independentCharacterSource": 1,
+            "attributeModifiers": [
+              {
+                "attributeType": 2,
+                "formulaItem": 3,
+                "value": 0.0,
+                "loadFromBlackboard": 1,
+                "fetchBaseValueFromSourceEntity": 0
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "s2Selector": {
+      "pathId": "5439842871613814867",
+      "maxNum": 5,
+      "limitTargetNum": 1,
+      "targetMotion": 3
+    },
+    "antiAirTemplate": {
+      "templateKey": "airforce_enhance",
+      "effectKey": "",
+      "onEventPriority": "DEFAULT",
+      "eventToActions": {
+        "ON_CALCULATE_DAMAGE": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+IfTarget, Assembly-CSharp",
+            "_targetType": "TARGET",
+            "_motionMask": "FLY_ONLY",
+            "_checkTargetAlive": false,
+            "_checkApplyWay": false,
+            "_checkTargetUnitType": false,
+            "_unitType": "ENEMY",
+            "_applyWay": "NONE",
+            "_checkTargetFree": false
+          },
+          {
+            "$type": "Torappu.Battle.Action.Nodes+AtkScaleUp, Assembly-CSharp",
+            "_filterApplyWay": false,
+            "_filterProjectileKey": "",
+            "_applyWay": "ALL",
+            "_defaultValue": 1.0,
+            "_filterNoneApplyWay": false,
+            "_cancelIfAtkScaleZero": false,
+            "_atkScaleKey": "atk_scale"
+          }
+        ]
+      }
+    }
+  },
+  "vermeil": {
+    "talent": [
+      {
+        "pathId": "6765619250718993463",
+        "buffs": [
+          {
+            "buffKey": "clour_t_1",
+            "templateKey": "empty",
+            "maxStackCnt": 1,
+            "independentCharacterSource": 0,
+            "attributeModifiers": [
+              {
+                "attributeType": 14,
+                "formulaItem": 1,
+                "value": 0.0,
+                "loadFromBlackboard": 1,
+                "fetchBaseValueFromSourceEntity": 0
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "s2": [
+      {
+        "pathId": "-6667743346215883683",
+        "buffs": [
+          {
+            "buffKey": "clour_s_2",
+            "templateKey": "switch_mode",
+            "maxStackCnt": 1,
+            "independentCharacterSource": 0,
+            "attributeModifiers": [
+              {
+                "attributeType": 1,
+                "formulaItem": 1,
+                "value": 0.0,
+                "loadFromBlackboard": 1,
+                "fetchBaseValueFromSourceEntity": 0
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "may": {
+    "s1": [
+      {
+        "pathId": "6997003709392759035",
+        "buffs": [
+          {
+            "buffKey": "sluggish",
+            "templateKey": "empty",
+            "maxStackCnt": 1,
+            "independentCharacterSource": 0,
+            "attributeModifiers": []
+          }
+        ]
+      }
+    ],
+    "s2": [
+      {
+        "pathId": "-590944837069024903",
+        "buffs": [
+          {
+            "buffKey": "mm_s_2",
+            "templateKey": "switch_mode",
+            "maxStackCnt": 1,
+            "independentCharacterSource": 0,
+            "attributeModifiers": [
+              {
+                "attributeType": 8,
+                "formulaItem": 1,
+                "value": 0.0,
+                "loadFromBlackboard": 1,
+                "fetchBaseValueFromSourceEntity": 0
+              },
+              {
+                "attributeType": 1,
+                "formulaItem": 1,
+                "value": 0.0,
+                "loadFromBlackboard": 1,
+                "fetchBaseValueFromSourceEntity": 0
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "skillAttack": [
+      {
+        "pathId": "-1074202291831238505",
+        "buffs": []
+      },
+      {
+        "pathId": "1461104044418732183",
+        "buffs": [
+          {
+            "buffKey": "sluggish",
+            "templateKey": "",
+            "maxStackCnt": 1,
+            "independentCharacterSource": 0,
+            "attributeModifiers": []
+          },
+          {
+            "buffKey": "mm_s_2[stun]",
+            "templateKey": "mm_s_2",
+            "maxStackCnt": 1,
+            "independentCharacterSource": 0,
+            "attributeModifiers": []
+          }
+        ]
+      }
+    ],
+    "stunTemplate": {
+      "templateKey": "mm_s_2",
+      "effectKey": "",
+      "onEventPriority": "DEFAULT",
+      "eventToActions": {
+        "ON_BUFF_FINISH": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+Dice, Assembly-CSharp",
+            "_probKey": "prob"
+          },
+          {
+            "$type": "Torappu.Battle.Action.Nodes+CreateBuffById, Assembly-CSharp",
+            "_buffKey": "stun",
+            "_buffOwner": "BUFF_OWNER",
+            "_isDerivedBuff": false,
+            "_loadFromBlackboard": false,
+            "_finishDerivedBuffIfParentFinish": false
+          }
+        ]
+      }
+    }
+  }
+}

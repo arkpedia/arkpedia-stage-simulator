@@ -1,0 +1,4851 @@
+{
+  "schemaVersion": 1,
+  "frameParity": false,
+  "moduleSupport": false,
+  "unityParticleSupport": false,
+  "source": {
+    "version": "26-09-23-17-49-43_b9cc4a",
+    "tableCommit": "57010cb5b2afea112cae57daa756b58676ba6850",
+    "bundles": [
+      {
+        "path": "charpack/char_4015_spuria.ab",
+        "size": 23062,
+        "md5": "cd3ab6830980e39168e93c3b4913c1fb",
+        "sha256": "277c93dcc1eb05da8d9ae731696ecd606ca56d554d03f074725d2b8d6fed92cc"
+      },
+      {
+        "path": "chararts/char_4015_spuria.ab",
+        "md5": "689faa9e0d2a913fb35d690cfeecab41",
+        "size": 1952361,
+        "sha256": "d17308add9068d7c96ed7b86a334b84c1f5ad56b6e347bc62abf35f907ef2b10"
+      },
+      {
+        "path": "battle/prefabs/[uc]skills.ab",
+        "size": 1163240,
+        "md5": "ff06dc9bb5516d069c8c0017207653ca",
+        "sha256": "1c026938f054218f7e6bda9000162b2a6f30c9bd93e1ae9763d9d6df2270499c"
+      },
+      {
+        "path": "battle/prefabs/[uc]projectiles.ab",
+        "size": 1605622,
+        "md5": "0b1d64a8aba25913161f5fd7174cab34",
+        "sha256": "3d68c63bf7a7d658e65035a9c71dfc9a00e4804563b922185499d108dfb7f639"
+      },
+      {
+        "path": "config/buff_template_holder.ab",
+        "size": 1667266,
+        "md5": "59813e1a533561f969f525a2846815e0",
+        "sha256": "e092efe8b6479546a0641449c1e2ef81ba51b8bac67f7a5d1bbf3c3bbdd817ce"
+      }
+    ]
+  },
+  "characters": {
+    "char_4015_spuria": [
+      {
+        "object": "Trait",
+        "pathId": "-8084961966975548234",
+        "components": [
+          {
+            "pathId": "1488286283834721462",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_metadata": {
+              "namedAsAlias": "",
+              "blackboardPrefix": ""
+            },
+            "_interruptAbilityOnDetach": 0,
+            "_attachPassiveBuffsOnDummy": 1,
+            "_ignoreIfOwnerDead": 0,
+            "_forceAsDmgOrHealAbility": 0,
+            "_buffs": [
+              {
+                "attributes": {
+                  "abnormalFlags": [],
+                  "abnormalImmunes": [],
+                  "abnormalAntis": [],
+                  "abnormalCombos": [],
+                  "abnormalComboImmunes": [],
+                  "attributeModifiers": []
+                },
+                "buffKey": "spuria_tr",
+                "loadFromDB": 0,
+                "isDurableBuff": 0,
+                "isDamageMissable": 0,
+                "isSilenceable": 0,
+                "isStunnable": 0,
+                "isFreezable": 0,
+                "isLevitatable": 0,
+                "statusResistable": 2,
+                "templateKey": "periodic_damage_by_hp_ratio[skip_modifier_fix][undeadable]",
+                "disableOverride": 0,
+                "overrideKey": "",
+                "overrideType": 0,
+                "maxStackCnt": 1,
+                "refreshRemainingTimeWhenStackMax": 0,
+                "clearAllStackCntWhenTimeUp": 0,
+                "maxValidStackCnt": -1,
+                "independentCharacterSource": 0,
+                "overrideEffectKey": "",
+                "overrideOnEventPriority": 0,
+                "onEventPriority": 0,
+                "audioSignal": "",
+                "lifeTimeType": 2,
+                "takeSnapshotWhenExtend": 0,
+                "durationKey": "duration",
+                "lifeTime": 0,
+                "triggerLifeType": 2,
+                "triggerCnt": 0,
+                "triggerInterval": 1,
+                "waitFirstTriggerInterval": 1,
+                "firstTriggerInterval": -1,
+                "priority": -1,
+                "priorityBBKeys": [],
+                "stripBlackboardParamsWithBuffKey": 0,
+                "blackboard": [],
+                "enableInitDirectionFromSource": 0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "object": "Ability0",
+        "pathId": "-6711516339287096138",
+        "components": [
+          {
+            "pathId": "-4942701746776767306",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_metadata": {
+              "namedAsAlias": "",
+              "blackboardPrefix": ""
+            },
+            "_interruptAbilityOnDetach": 0,
+            "_attachPassiveBuffsOnDummy": 1,
+            "_ignoreIfOwnerDead": 0,
+            "_forceAsDmgOrHealAbility": 0,
+            "_buffs": [
+              {
+                "attributes": {
+                  "abnormalFlags": [],
+                  "abnormalImmunes": [],
+                  "abnormalAntis": [],
+                  "abnormalCombos": [],
+                  "abnormalComboImmunes": [],
+                  "attributeModifiers": []
+                },
+                "buffKey": "spuria_s_2[no_effect]",
+                "loadFromDB": 0,
+                "isDurableBuff": 0,
+                "isDamageMissable": 0,
+                "isSilenceable": 0,
+                "isStunnable": 0,
+                "isFreezable": 0,
+                "isLevitatable": 0,
+                "statusResistable": 2,
+                "templateKey": "empty",
+                "disableOverride": 0,
+                "overrideKey": "spuria_s_2[effect]",
+                "overrideType": 0,
+                "maxStackCnt": 1,
+                "refreshRemainingTimeWhenStackMax": 0,
+                "clearAllStackCntWhenTimeUp": 0,
+                "maxValidStackCnt": -1,
+                "independentCharacterSource": 0,
+                "overrideEffectKey": "",
+                "overrideOnEventPriority": 0,
+                "onEventPriority": 0,
+                "audioSignal": "",
+                "lifeTimeType": 2,
+                "takeSnapshotWhenExtend": 0,
+                "durationKey": "duration",
+                "lifeTime": 0,
+                "triggerLifeType": 0,
+                "triggerCnt": 0,
+                "triggerInterval": -1,
+                "waitFirstTriggerInterval": 1,
+                "firstTriggerInterval": -1,
+                "priority": 1,
+                "priorityBBKeys": [],
+                "stripBlackboardParamsWithBuffKey": 0,
+                "blackboard": [],
+                "enableInitDirectionFromSource": 0
+              }
+            ],
+            "_checker": {
+              "m_FileID": 0,
+              "m_PathID": "-2670114289111399242"
+            },
+            "_unmanagedBuffsWhenToggleOn": [],
+            "_setToggleFalseOnDetached": 0,
+            "_isInverseToggle": 0
+          },
+          {
+            "pathId": "-2670114289111399242",
+            "_abnormalFlags": [
+              0
+            ],
+            "_abnormalCombos": [],
+            "_disableWhenAbnormalFlag": 0
+          }
+        ]
+      },
+      {
+        "object": "Selector",
+        "pathId": "-4759833697379547978",
+        "components": [
+          {
+            "pathId": "-1727495666053020490",
+            "_keepTarget": 0,
+            "_minTargetNum": 1,
+            "_overrideSearchTargetTick": -1
+          },
+          {
+            "pathId": "994241178724271286",
+            "_extendable": 0
+          },
+          {
+            "pathId": "6186909151268111542",
+            "_targetSide": 2,
+            "_targetMotion": 3,
+            "_targetCategory": 1,
+            "_postFilter": 4,
+            "_ignoreTargetFree": 0,
+            "_onlyIgnoreSomeOfTargetFreeCase": 0,
+            "_abnormalFlag": 29,
+            "_abnormalCombo": 2,
+            "_ignoreAllyTargetFree": 0,
+            "_ignoreHealFree": 0,
+            "_forceIgnoreCamouflage": 0,
+            "_needProfessionMask": 0,
+            "_professionMask": 0,
+            "_limitTargetNum": 1,
+            "_maxTargetKey": "max_target",
+            "_maxNum": 1,
+            "_excludeOwner": 0,
+            "_sortByTauntAtLast": 0,
+            "_ignoreHitRange": 0,
+            "_checkUnitType": 0,
+            "_unitTypeMask": 0,
+            "_abilityInputTargetAsSortSource": 0
+          }
+        ]
+      },
+      {
+        "object": "1",
+        "pathId": "-3290953547247713098",
+        "components": [
+          {
+            "pathId": "-8570462868701051722",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_metadata": {
+              "namedAsAlias": "",
+              "blackboardPrefix": ""
+            },
+            "_interruptAbilityOnDetach": 0,
+            "_attachPassiveBuffsOnDummy": 1,
+            "_ignoreIfOwnerDead": 0,
+            "_forceAsDmgOrHealAbility": 0,
+            "_buffs": [],
+            "_additiveActiveBuffs": [
+              {
+                "attributes": {
+                  "abnormalFlags": [],
+                  "abnormalImmunes": [],
+                  "abnormalAntis": [],
+                  "abnormalCombos": [],
+                  "abnormalComboImmunes": [],
+                  "attributeModifiers": []
+                },
+                "buffKey": "spuria_t_1",
+                "loadFromDB": 0,
+                "isDurableBuff": 0,
+                "isDamageMissable": 0,
+                "isSilenceable": 0,
+                "isStunnable": 0,
+                "isFreezable": 0,
+                "isLevitatable": 0,
+                "statusResistable": 2,
+                "templateKey": "spuria_t_1",
+                "disableOverride": 0,
+                "overrideKey": "",
+                "overrideType": 0,
+                "maxStackCnt": 1,
+                "refreshRemainingTimeWhenStackMax": 0,
+                "clearAllStackCntWhenTimeUp": 0,
+                "maxValidStackCnt": -1,
+                "independentCharacterSource": 0,
+                "overrideEffectKey": "",
+                "overrideOnEventPriority": 0,
+                "onEventPriority": 0,
+                "audioSignal": "",
+                "lifeTimeType": 0,
+                "takeSnapshotWhenExtend": 0,
+                "durationKey": "duration",
+                "lifeTime": 0,
+                "triggerLifeType": 0,
+                "triggerCnt": 0,
+                "triggerInterval": -1,
+                "waitFirstTriggerInterval": 1,
+                "firstTriggerInterval": -1,
+                "priority": -1,
+                "priorityBBKeys": [],
+                "stripBlackboardParamsWithBuffKey": 0,
+                "blackboard": [],
+                "enableInitDirectionFromSource": 0
+              }
+            ],
+            "_targetFamilyMask": 3,
+            "_targetValidator": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_probKey": ""
+          },
+          {
+            "pathId": "494109744831005878",
+            "_overwriteTalentKey": "",
+            "_overwriteParentRangeId": 0,
+            "_checkValidBySkillIndex": [],
+            "_attachInDummy": 0,
+            "_defaultModeIndex": -1,
+            "_attackBlackboardModeIndex": -1,
+            "_extraAttackBlackboardModeIndices": [],
+            "_overrideDefaultRangeId": 0,
+            "_applyTalentScale": 0,
+            "_influenceSkillBlackboard": 0,
+            "_applyTalentRange": 0,
+            "_applyBlackboardBySkill": 0,
+            "_applyStrBlackboardBySkill": 0,
+            "_writeRangeIdToProjectileBlackboard": 0,
+            "_affectWhenNotRootTalent": 0,
+            "_scaleCertainKeyFlag": 0,
+            "_scaleCertainKeyList": [],
+            "_scaleCertainMode": 0,
+            "_scaleModeIndices": []
+          }
+        ]
+      },
+      {
+        "object": "Selector",
+        "pathId": "1592193954517222582",
+        "components": [
+          {
+            "pathId": "-7772347480533367626",
+            "_extendable": 0
+          },
+          {
+            "pathId": "-2640264246206135114",
+            "_targetSide": 2,
+            "_targetMotion": 3,
+            "_targetCategory": 1,
+            "_postFilter": 4,
+            "_ignoreTargetFree": 0,
+            "_onlyIgnoreSomeOfTargetFreeCase": 0,
+            "_abnormalFlag": 29,
+            "_abnormalCombo": 2,
+            "_ignoreAllyTargetFree": 0,
+            "_ignoreHealFree": 0,
+            "_forceIgnoreCamouflage": 0,
+            "_needProfessionMask": 0,
+            "_professionMask": 0,
+            "_limitTargetNum": 1,
+            "_maxTargetKey": "max_target",
+            "_maxNum": 1,
+            "_excludeOwner": 0,
+            "_sortByTauntAtLast": 0,
+            "_ignoreHitRange": 0,
+            "_checkUnitType": 0,
+            "_unitTypeMask": 0,
+            "_abilityInputTargetAsSortSource": 0
+          },
+          {
+            "pathId": "3286282295235839158",
+            "_keepTarget": 0,
+            "_minTargetNum": 1,
+            "_overrideSearchTargetTick": -1
+          }
+        ]
+      },
+      {
+        "object": "char_4015_spuria",
+        "pathId": "3443674547202426038",
+        "components": [
+          {
+            "pathId": "-3510930569869196106",
+            "m_Offset": {
+              "x": 0,
+              "y": 0
+            },
+            "m_Radius": 0.25
+          },
+          {
+            "pathId": "-1243488604949052234",
+            "_animator": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_modes": [
+              {
+                "m_FileID": 0,
+                "m_PathID": "-6588021395762314058"
+              },
+              {
+                "m_FileID": 0,
+                "m_PathID": "-6317259145528015690"
+              }
+            ],
+            "_commonAbilities": [],
+            "_uiMountPoint": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_effectTransform": {
+              "m_FileID": 0,
+              "m_PathID": "-7695027588523162442"
+            },
+            "_shadow": {
+              "m_FileID": 0,
+              "m_PathID": "2434627702674752694"
+            },
+            "_defaultBodyColor": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 1
+            },
+            "_hideShadowOnRecycle": 0,
+            "_overrideGraphicBound": -1,
+            "_hudPluginReplacePairs": [],
+            "_showDebugName": 0,
+            "_skinHolder": {
+              "m_FileID": 0,
+              "m_PathID": "-4123568097179859786"
+            },
+            "_motionMode": 0,
+            "_blockMode": 0,
+            "_ignoreBlockMode": 0,
+            "_isFixedRotation": 0,
+            "_occupiedRemainingCharacterCnt": 1,
+            "_useRealBornTimeFromAnim": 0,
+            "_buildCondition": {
+              "buildableType": 2,
+              "isTryingOverlapCharacater": 0,
+              "needSpecifyDirection": 1,
+              "limitByHostAttackRange": 0,
+              "limitByHostAbilityRange": 0,
+              "abilityName": "",
+              "tileKey": "",
+              "extraBuildConditionArray": {
+                "SerializedState": "null",
+                "SerializedObjectReferences": []
+              },
+              "advancedBuildableMask": 1,
+              "overlapOptions": {
+                "_verifySourceId": 0,
+                "_verifySourceIds": [],
+                "_verifySourceProfession": 0,
+                "_verifySourceProfessions": 0,
+                "_isAllConditionOR": 1,
+                "_overlapPriority": 0,
+                "_changeTargetGraphicColor": 0
+              },
+              "excludeNoTargetTile": 0,
+              "extraLocateRange": "",
+              "checkManuallyBuildableType": 0,
+              "manuallyBuildableType": 0,
+              "_excludeOccupiedByWalkEnemy": 0,
+              "allowWalkEnemyInHostRange": 0,
+              "_checkUpdateBuildable": 0
+            },
+            "_traitAbility": {
+              "m_FileID": 0,
+              "m_PathID": "1488286283834721462"
+            },
+            "_withdrawCostRecoverRatio": 0.5,
+            "_maxWithdrawCostRatioOfRawCost": 1,
+            "_directionTransform": {
+              "m_FileID": 0,
+              "m_PathID": "-270787219125304138"
+            },
+            "_directionIndicator": {
+              "m_FileID": 0,
+              "m_PathID": "1948621749264123062"
+            },
+            "_startEffect": "",
+            "_deadEffect": "",
+            "_playStartVocal": 1,
+            "_showDeadTweenColor": 1,
+            "_useSpecificDeadAnim": 0,
+            "_onlyPlayStartEffectOnce": 0,
+            "_dontMoveCameraWhenFocus": 0,
+            "_disableCharInfoPanel": 0,
+            "_disableRotateWhenDead": 0,
+            "_disableSetDirectionWhenDummy": 0,
+            "_clearProjectileWhenDead": 0,
+            "_useIdForAudioSignalMask": 0,
+            "_preprocessData": 0,
+            "_disableClickCharacterInfo": 0,
+            "_skillUiFollowHeadPint": 0
+          }
+        ]
+      },
+      {
+        "object": "Shadow",
+        "pathId": "3677673191021544630",
+        "components": [
+          {
+            "pathId": "2434627702674752694",
+            "_autoAttachToGround": 0,
+            "_attachOffset": 0.10000000149011612,
+            "_simplyUseTileHeight": 0,
+            "_enableAdvanced": 0,
+            "_alwaysUseSpineOffset": 0,
+            "_sprite": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_graphic": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_faceSwitcher": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_boneToFollow": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_specialInit": 0,
+            "_simpleFollow": 0,
+            "_easeType": 1
+          }
+        ]
+      },
+      {
+        "object": "S2",
+        "pathId": "3824667975704970422",
+        "components": [
+          {
+            "pathId": "-6317259145528015690",
+            "_bodyTransform": {
+              "m_FileID": 0,
+              "m_PathID": "-7671673708253543242"
+            },
+            "_animatorHooker": {
+              "m_FileID": 0,
+              "m_PathID": "2959939267230696630"
+            },
+            "_overrideStartEffect": "",
+            "_overrideDeadEffect": "",
+            "_combat": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_attack": {
+              "m_FileID": 0,
+              "m_PathID": "720897642068837558"
+            },
+            "_attackTrigger": {
+              "m_FileID": 0,
+              "m_PathID": "3286282295235839158"
+            },
+            "_hideUIAttackRange": 0,
+            "_updateAttackRangeExtendByAttributeDirty": 0,
+            "_rangeToShow": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_extraRangesToShow": [],
+            "_generalAbilities": [
+              {
+                "m_FileID": 0,
+                "m_PathID": "-4942701746776767306"
+              }
+            ],
+            "_addIndexToSignalId": 1,
+            "_includeIndexZero": 0,
+            "_alwaysHideHp": {
+              "isDefined": 0,
+              "value": 0
+            },
+            "_alwaysHideSp": {
+              "isDefined": 0,
+              "value": 0
+            }
+          },
+          {
+            "pathId": "2959939267230696630",
+            "_excludeAnimKeys": [
+              "Born"
+            ],
+            "_replaceAnimPairs": [
+              {
+                "fromAnimKey": "Die",
+                "toAnimKey": "Skill_Stun"
+              },
+              {
+                "fromAnimKey": "Idle",
+                "toAnimKey": "Skill_Idle"
+              }
+            ],
+            "_disableSwitchSettings": []
+          }
+        ]
+      },
+      {
+        "object": "Attack",
+        "pathId": "6608849409060242614",
+        "components": [
+          {
+            "pathId": "720897642068837558",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "-2640264246206135114"
+            },
+            "_metadata": {
+              "namedAsAlias": "",
+              "blackboardPrefix": ""
+            },
+            "_interruptAbilityOnDetach": 0,
+            "_attachPassiveBuffsOnDummy": 1,
+            "_ignoreIfOwnerDead": 0,
+            "_forceAsDmgOrHealAbility": 0,
+            "_waitForAttackEvent": 1,
+            "_interuptIfTargetDead": 0,
+            "_resetCdStrategy": 1,
+            "_selectTargetSource": 2,
+            "_selectTargetTiming": 0,
+            "_timeMode": 0,
+            "_alwaysIncludeTarget": 1,
+            "_allowNoTarget": 0,
+            "_animKey": "Skill_Loop",
+            "_endAnimKey": "",
+            "_downAnimKey": "Skill_Down_Loop",
+            "_downEndAnimKey": "",
+            "_upAnimKey": "",
+            "_upEndAnimKey": "",
+            "_cooldown": 0,
+            "_cooldownKey": "duration",
+            "_preDelay": 0,
+            "_escapeTime": 0,
+            "_faceToTarget": 1,
+            "_faceToDefault": 0,
+            "_faceToFront": 0,
+            "_faceToFirstCastTarget": 0,
+            "_forceFaceToDirection": 0,
+            "_activeBuffs": [],
+            "_maxAnimScale": -1,
+            "_onlyPlayEndAnimWhenIsLastAbility": 0,
+            "_ignorePalsyInterrupt": 0,
+            "_atkScale": 1,
+            "_atkScaleKey": "atk_scale",
+            "_attackType": 1,
+            "_elementDamageType": 0,
+            "_epDamageRatio": 0,
+            "_useDynamicAttackType": 0,
+            "_deliveryParaWhenReplaceActionNode": 0,
+            "_projectileKey": "projectile_spuria_s2",
+            "_mountPointType": 2,
+            "_useMountGroup": 0,
+            "_mountGroup": {
+              "loopType": 0,
+              "mountPoints": []
+            },
+            "_damageType": 1,
+            "_waitForProjectileInvalid": 0,
+            "_notClearProjectileWhenCastEnd": 0,
+            "_fireAttackFinishWhenProjectileInvalid": 0,
+            "_minPostDelayWhenProjectileInvalid": 0,
+            "_waitForAnimEndWhenProjectileInvalid": 0,
+            "_projectileDestination": 0,
+            "_extraDamageType": 0,
+            "_emitToInputPosWhenTargetIsInvalid": 0,
+            "_emitToInputRootTileWhenTargetIsInvalid": 0,
+            "_useCachedAtkOnly": 0,
+            "_transferSource": 0,
+            "_extraProjectileKeys": [],
+            "_fireCreateProjectileEvent": 0
+          },
+          {
+            "pathId": "1187153144936596662",
+            "_hitEffects": [],
+            "_castEffects": [
+              {
+                "_directionType": 3,
+                "_effects": [
+                  "spuria_skill_02_start_01",
+                  "spuria_skill_02_start_01",
+                  "spuria_skill_02_start_03",
+                  "spuria_skill_02_start_01"
+                ],
+                "_oneshot": 0,
+                "_startEvent": 2,
+                "_endEvent": 3,
+                "_onlyOnce": 0,
+                "_useFourDirectionalFace": 0,
+                "_delayIfFirstAttack": 0,
+                "_hookEffectAfterFirstAttack": ""
+              }
+            ],
+            "_attachEffects": [
+              {
+                "_directionType": 0,
+                "_effects": [
+                  "spuria_idle_01"
+                ],
+                "_onlyAttachOnDummy": 0
+              },
+              {
+                "_directionType": 0,
+                "_effects": [
+                  "spuria_skill_02_buff_wing_01_F"
+                ],
+                "_onlyAttachOnDummy": 0
+              },
+              {
+                "_directionType": 0,
+                "_effects": [
+                  "spuria_skill_02_buff_wing_02_F"
+                ],
+                "_onlyAttachOnDummy": 0
+              },
+              {
+                "_directionType": 0,
+                "_effects": [
+                  "spuria_skill_02_buff_wing_03_F"
+                ],
+                "_onlyAttachOnDummy": 0
+              },
+              {
+                "_directionType": 0,
+                "_effects": [
+                  "spuria_skill_02_buff_wing_04_F"
+                ],
+                "_onlyAttachOnDummy": 0
+              }
+            ],
+            "_inputTargetEffects": [],
+            "_castTargetEffects": [],
+            "_convertCastEndToAttachFinish": 0,
+            "_recalculatePlaybackSpeed": 0,
+            "_preDelayFactor": 0
+          }
+        ]
+      },
+      {
+        "object": "Default",
+        "pathId": "7737183786910680246",
+        "components": [
+          {
+            "pathId": "-6588021395762314058",
+            "_bodyTransform": {
+              "m_FileID": 0,
+              "m_PathID": "-6585366277680659274"
+            },
+            "_animatorHooker": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_overrideStartEffect": "",
+            "_overrideDeadEffect": "",
+            "_combat": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_attack": {
+              "m_FileID": 0,
+              "m_PathID": "-2162316790132112202"
+            },
+            "_attackTrigger": {
+              "m_FileID": 0,
+              "m_PathID": "-1727495666053020490"
+            },
+            "_hideUIAttackRange": 0,
+            "_updateAttackRangeExtendByAttributeDirty": 0,
+            "_rangeToShow": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_extraRangesToShow": [],
+            "_generalAbilities": [],
+            "_addIndexToSignalId": 0,
+            "_includeIndexZero": 0,
+            "_alwaysHideHp": {
+              "isDefined": 0,
+              "value": 0
+            },
+            "_alwaysHideSp": {
+              "isDefined": 0,
+              "value": 0
+            }
+          }
+        ]
+      },
+      {
+        "object": "Attack",
+        "pathId": "8976184684665570486",
+        "components": [
+          {
+            "pathId": "-2162316790132112202",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "6186909151268111542"
+            },
+            "_metadata": {
+              "namedAsAlias": "",
+              "blackboardPrefix": ""
+            },
+            "_interruptAbilityOnDetach": 0,
+            "_attachPassiveBuffsOnDummy": 1,
+            "_ignoreIfOwnerDead": 0,
+            "_forceAsDmgOrHealAbility": 0,
+            "_waitForAttackEvent": 1,
+            "_interuptIfTargetDead": 0,
+            "_resetCdStrategy": 1,
+            "_selectTargetSource": 2,
+            "_selectTargetTiming": 0,
+            "_timeMode": 0,
+            "_alwaysIncludeTarget": 1,
+            "_allowNoTarget": 0,
+            "_animKey": "",
+            "_endAnimKey": "Attack_End",
+            "_downAnimKey": "",
+            "_downEndAnimKey": "Attack_Down_End",
+            "_upAnimKey": "",
+            "_upEndAnimKey": "",
+            "_cooldown": 0,
+            "_cooldownKey": "duration",
+            "_preDelay": 0,
+            "_escapeTime": 0.16699999570846558,
+            "_faceToTarget": 1,
+            "_faceToDefault": 0,
+            "_faceToFront": 0,
+            "_faceToFirstCastTarget": 0,
+            "_forceFaceToDirection": 0,
+            "_activeBuffs": [],
+            "_maxAnimScale": -1,
+            "_onlyPlayEndAnimWhenIsLastAbility": 0,
+            "_ignorePalsyInterrupt": 0,
+            "_atkScale": 1,
+            "_atkScaleKey": "atk_scale",
+            "_attackType": 1,
+            "_elementDamageType": 0,
+            "_epDamageRatio": 0,
+            "_useDynamicAttackType": 0,
+            "_deliveryParaWhenReplaceActionNode": 0,
+            "_projectileKey": "projectile_spuria",
+            "_mountPointType": 2,
+            "_useMountGroup": 0,
+            "_mountGroup": {
+              "loopType": 0,
+              "mountPoints": []
+            },
+            "_damageType": 1,
+            "_waitForProjectileInvalid": 0,
+            "_notClearProjectileWhenCastEnd": 0,
+            "_fireAttackFinishWhenProjectileInvalid": 0,
+            "_minPostDelayWhenProjectileInvalid": 0,
+            "_waitForAnimEndWhenProjectileInvalid": 0,
+            "_projectileDestination": 0,
+            "_extraDamageType": 0,
+            "_emitToInputPosWhenTargetIsInvalid": 0,
+            "_emitToInputRootTileWhenTargetIsInvalid": 0,
+            "_useCachedAtkOnly": 0,
+            "_transferSource": 0,
+            "_extraProjectileKeys": [],
+            "_fireCreateProjectileEvent": 0
+          },
+          {
+            "pathId": "3506218088884798646",
+            "_hitEffects": [],
+            "_castEffects": [
+              {
+                "_directionType": 3,
+                "_effects": [
+                  "spuria_attack_start_01",
+                  "spuria_attack_start_01",
+                  "spuria_attack_start_03",
+                  "spuria_attack_start_01"
+                ],
+                "_oneshot": 0,
+                "_startEvent": 2,
+                "_endEvent": 3,
+                "_onlyOnce": 0,
+                "_useFourDirectionalFace": 0,
+                "_delayIfFirstAttack": 0,
+                "_hookEffectAfterFirstAttack": ""
+              }
+            ],
+            "_attachEffects": [
+              {
+                "_directionType": 0,
+                "_effects": [
+                  "spuria_idle_01"
+                ],
+                "_onlyAttachOnDummy": 0
+              }
+            ],
+            "_inputTargetEffects": [],
+            "_castTargetEffects": [],
+            "_convertCastEndToAttachFinish": 0,
+            "_recalculatePlaybackSpeed": 0,
+            "_preDelayFactor": 0
+          },
+          {
+            "pathId": "6825216519819691190",
+            "_beginAnim": "Attack_Begin",
+            "_oneshotAnim": "Attack_Loop",
+            "_endAnim": "",
+            "_fixAnimWhenCooldownSlow": 1,
+            "_overrideDownAnimation": 1,
+            "_down": {
+              "beginAnim": "Attack_Down_Begin",
+              "oneshotAnim": "Attack_Down_Loop",
+              "endAnim": ""
+            },
+            "_faceToTarget": 1,
+            "_minAnimScale": -1,
+            "_maxAnimScale": -1,
+            "_onlyPlayBeginAnimWhenFirstAttack": 1
+          }
+        ]
+      }
+    ]
+  },
+  "skills": {
+    "skchr_spuria_2": [
+      {
+        "object": "ally",
+        "pathId": "-6137695882248729315",
+        "components": [
+          {
+            "pathId": "-511499545050690275",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "-9063470865960284899"
+            },
+            "_metadata": {
+              "namedAsAlias": "",
+              "blackboardPrefix": ""
+            },
+            "_interruptAbilityOnDetach": 0,
+            "_attachPassiveBuffsOnDummy": 1,
+            "_ignoreIfOwnerDead": 0,
+            "_forceAsDmgOrHealAbility": 0,
+            "_waitForAttackEvent": 0,
+            "_interuptIfTargetDead": 0,
+            "_resetCdStrategy": 1,
+            "_selectTargetSource": 2,
+            "_selectTargetTiming": 0,
+            "_timeMode": 1,
+            "_alwaysIncludeTarget": 1,
+            "_allowNoTarget": 0,
+            "_animKey": "Skill_Begin",
+            "_endAnimKey": "",
+            "_downAnimKey": "",
+            "_downEndAnimKey": "",
+            "_upAnimKey": "",
+            "_upEndAnimKey": "",
+            "_cooldown": 0,
+            "_cooldownKey": "duration",
+            "_preDelay": 0,
+            "_escapeTime": 0,
+            "_faceToTarget": 0,
+            "_faceToDefault": 0,
+            "_faceToFront": 0,
+            "_faceToFirstCastTarget": 0,
+            "_forceFaceToDirection": 0,
+            "_activeBuffs": [
+              {
+                "attributes": {
+                  "abnormalFlags": [],
+                  "abnormalImmunes": [],
+                  "abnormalAntis": [],
+                  "abnormalCombos": [],
+                  "abnormalComboImmunes": [],
+                  "attributeModifiers": [
+                    {
+                      "attributeType": 1,
+                      "formulaItem": 1,
+                      "value": 0,
+                      "loadFromBlackboard": 1,
+                      "fetchBaseValueFromSourceEntity": 0
+                    },
+                    {
+                      "attributeType": 7,
+                      "formulaItem": 0,
+                      "value": 0,
+                      "loadFromBlackboard": 1,
+                      "fetchBaseValueFromSourceEntity": 0
+                    }
+                  ]
+                },
+                "buffKey": "spuria_s_2[ally]",
+                "loadFromDB": 0,
+                "isDurableBuff": 0,
+                "isDamageMissable": 0,
+                "isSilenceable": 0,
+                "isStunnable": 0,
+                "isFreezable": 0,
+                "isLevitatable": 0,
+                "statusResistable": 2,
+                "templateKey": "spuria_s_2[ally]",
+                "disableOverride": 0,
+                "overrideKey": "",
+                "overrideType": 0,
+                "maxStackCnt": 1,
+                "refreshRemainingTimeWhenStackMax": 0,
+                "clearAllStackCntWhenTimeUp": 0,
+                "maxValidStackCnt": -1,
+                "independentCharacterSource": 0,
+                "overrideEffectKey": "spuria_skill_02_drone_allay",
+                "overrideOnEventPriority": 0,
+                "onEventPriority": 0,
+                "audioSignal": "",
+                "lifeTimeType": 1,
+                "takeSnapshotWhenExtend": 0,
+                "durationKey": "duration",
+                "lifeTime": 0,
+                "triggerLifeType": 0,
+                "triggerCnt": 0,
+                "triggerInterval": -1,
+                "waitFirstTriggerInterval": 1,
+                "firstTriggerInterval": -1,
+                "priority": -1,
+                "priorityBBKeys": [],
+                "stripBlackboardParamsWithBuffKey": 0,
+                "blackboard": [],
+                "enableInitDirectionFromSource": 0
+              }
+            ],
+            "_maxAnimScale": -1,
+            "_onlyPlayEndAnimWhenIsLastAbility": 0,
+            "_ignorePalsyInterrupt": 0,
+            "_actions": {
+              "SerializedState": "null",
+              "SerializedObjectReferences": []
+            },
+            "_attackType": 0,
+            "_useDynamicAttackType": 0
+          }
+        ]
+      },
+      {
+        "object": "SkillTrigger",
+        "pathId": "347874848907119901",
+        "components": [
+          {
+            "pathId": "-9063470865960284899",
+            "_targetSide": 1,
+            "_targetMotion": 3,
+            "_targetCategory": 1,
+            "_postFilter": 21,
+            "_ignoreTargetFree": 0,
+            "_onlyIgnoreSomeOfTargetFreeCase": 0,
+            "_abnormalFlag": 29,
+            "_abnormalCombo": 2,
+            "_ignoreAllyTargetFree": 0,
+            "_ignoreHealFree": 0,
+            "_forceIgnoreCamouflage": 0,
+            "_needProfessionMask": 1,
+            "_professionMask": 2,
+            "_limitTargetNum": 1,
+            "_maxTargetKey": "max_target",
+            "_maxNum": 1,
+            "_excludeOwner": 1,
+            "_sortByTauntAtLast": 0,
+            "_ignoreHitRange": 0,
+            "_checkUnitType": 0,
+            "_unitTypeMask": 0,
+            "_abilityInputTargetAsSortSource": 0
+          },
+          {
+            "pathId": "-2701450028396393187",
+            "_keepTarget": 0,
+            "_minTargetNum": 1,
+            "_overrideSearchTargetTick": -1
+          },
+          {
+            "pathId": "4043338544075885853",
+            "_extendable": 0
+          }
+        ]
+      },
+      {
+        "object": "skchr_spuria_2",
+        "pathId": "7317771945219247389",
+        "components": [
+          {
+            "pathId": "-409466613610263267",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_metadata": {
+              "namedAsAlias": "",
+              "blackboardPrefix": ""
+            },
+            "_interruptAbilityOnDetach": 0,
+            "_attachPassiveBuffsOnDummy": 1,
+            "_ignoreIfOwnerDead": 0,
+            "_forceAsDmgOrHealAbility": 0,
+            "_abilities": [
+              {
+                "m_FileID": 0,
+                "m_PathID": "-511499545050690275"
+              },
+              {
+                "m_FileID": 0,
+                "m_PathID": "7926291756872420637"
+              }
+            ],
+            "_alwaysNext": 0,
+            "_forceNextIfCastFail": 0,
+            "_checkCanUseSubAbility": 0,
+            "_useLongestAbilityCooldown": 0,
+            "_fireCastStartEventWhenCast": 0,
+            "_stopMoveNextWhenNotCasting": 0,
+            "_alsoInterruptCurrentSubAbility": 0,
+            "_interruptableSubAbilityIndice": [],
+            "_alsoStopSubAbilityAffect": 0,
+            "_alsoResetSubAbilityCooldown": 0,
+            "_setDataExceptRedundance": 0,
+            "_interruptIfTargetDead": 0,
+            "_castToInputPosIfTargetInvalid": 0,
+            "_timeMode": 1,
+            "_enableLoop": 0,
+            "_abilityLoopSettings": []
+          },
+          {
+            "pathId": "1309657834710093085",
+            "_maxTriggerTime": -1,
+            "_allowSpRecoveryWhenAffecting": 0,
+            "_limitGlobalTriggerTime": 0,
+            "_hidden": 0,
+            "_showSpBarEvenHidden": 0,
+            "_showSpAsBulletMode": 0,
+            "_showSpRatioAsProgress": 0,
+            "_playCharWordVoice": 1,
+            "_playCharWordWithPassiveType": 0,
+            "_canCastWithNoSp": 0,
+            "_canSilenced": 0,
+            "_canUseInAbnormalState": 0,
+            "_defaultModeIndex": -1,
+            "_attackBlackboardModeIndex": -1,
+            "_extraAttackBlackboardModeIndices": [],
+            "_rangeIdModeIndex": -1,
+            "_extraRangeIdModeIndices": [],
+            "_rangeIdUsageType": 7,
+            "_writeDurationToAttackBlackboard": 0,
+            "_attachSignalIds": 0,
+            "_extraAbilities": [],
+            "_useEscapeTime": 0,
+            "_earlySkillFinishAtAttackFinished": 0,
+            "_showProgressToNext": 0,
+            "_hideSkillStackCount": 0,
+            "_hideHudSkillStackCount": 0,
+            "_playSkillBeginAnim": 0,
+            "_beginAnim": "",
+            "_beginAnimDown": "",
+            "_beginEffect": [],
+            "_useFaceVector": 0,
+            "_beginAnimValidator": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_availableValidator": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_trigger": {
+              "m_FileID": 0,
+              "m_PathID": "-2701450028396393187"
+            },
+            "_switchToState": 1,
+            "_uninterruptibleOnAbilityPredelay": 0,
+            "_canSwitchDuringBorn": 1,
+            "_canCastDuringBorn": 1,
+            "_checkHasTargetBeforeDoCast": 0,
+            "_useTriggerInManualMode": 1,
+            "_allowNoTarget": 0,
+            "_shouldCastLikeAttack": 0,
+            "_isRemoteControlled": 0,
+            "_hideRangeToShow": 0,
+            "_forceUseBaseShowRange": 0,
+            "_rangeToShow": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_recoverSpIfNoTarget": 0,
+            "_resetAbilityCooldownWhenCastEnd": 0,
+            "_onlyAvailableWhenTokenValid": 0,
+            "_hasUniStackColor": 0
+          }
+        ]
+      },
+      {
+        "object": "self",
+        "pathId": "8337677843073846557",
+        "components": [
+          {
+            "pathId": "7926291756872420637",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_metadata": {
+              "namedAsAlias": "",
+              "blackboardPrefix": ""
+            },
+            "_interruptAbilityOnDetach": 0,
+            "_attachPassiveBuffsOnDummy": 1,
+            "_ignoreIfOwnerDead": 0,
+            "_forceAsDmgOrHealAbility": 0,
+            "_waitForAttackEvent": 1,
+            "_interuptIfTargetDead": 0,
+            "_resetCdStrategy": 1,
+            "_buffs": [
+              {
+                "attributes": {
+                  "abnormalFlags": [],
+                  "abnormalImmunes": [],
+                  "abnormalAntis": [],
+                  "abnormalCombos": [],
+                  "abnormalComboImmunes": [],
+                  "attributeModifiers": []
+                },
+                "buffKey": "spuria_s_2[mode]",
+                "loadFromDB": 0,
+                "isDurableBuff": 0,
+                "isDamageMissable": 0,
+                "isSilenceable": 0,
+                "isStunnable": 0,
+                "isFreezable": 0,
+                "isLevitatable": 0,
+                "statusResistable": 2,
+                "templateKey": "switch_mode_restart_fsm",
+                "disableOverride": 0,
+                "overrideKey": "",
+                "overrideType": 0,
+                "maxStackCnt": 1,
+                "refreshRemainingTimeWhenStackMax": 0,
+                "clearAllStackCntWhenTimeUp": 0,
+                "maxValidStackCnt": -1,
+                "independentCharacterSource": 0,
+                "overrideEffectKey": "",
+                "overrideOnEventPriority": 0,
+                "onEventPriority": 0,
+                "audioSignal": "",
+                "lifeTimeType": 1,
+                "takeSnapshotWhenExtend": 0,
+                "durationKey": "duration",
+                "lifeTime": 0,
+                "triggerLifeType": 0,
+                "triggerCnt": 0,
+                "triggerInterval": -1,
+                "waitFirstTriggerInterval": 1,
+                "firstTriggerInterval": -1,
+                "priority": -1,
+                "priorityBBKeys": [],
+                "stripBlackboardParamsWithBuffKey": 0,
+                "blackboard": [
+                  {
+                    "key": "mode",
+                    "value": 1,
+                    "valueStr": ""
+                  }
+                ],
+                "enableInitDirectionFromSource": 0
+              },
+              {
+                "attributes": {
+                  "abnormalFlags": [],
+                  "abnormalImmunes": [],
+                  "abnormalAntis": [],
+                  "abnormalCombos": [],
+                  "abnormalComboImmunes": [],
+                  "attributeModifiers": [
+                    {
+                      "attributeType": 1,
+                      "formulaItem": 1,
+                      "value": 0,
+                      "loadFromBlackboard": 1,
+                      "fetchBaseValueFromSourceEntity": 0
+                    },
+                    {
+                      "attributeType": 7,
+                      "formulaItem": 0,
+                      "value": 0,
+                      "loadFromBlackboard": 1,
+                      "fetchBaseValueFromSourceEntity": 0
+                    }
+                  ]
+                },
+                "buffKey": "spuria_s_2[self]",
+                "loadFromDB": 0,
+                "isDurableBuff": 0,
+                "isDamageMissable": 0,
+                "isSilenceable": 0,
+                "isStunnable": 0,
+                "isFreezable": 0,
+                "isLevitatable": 0,
+                "statusResistable": 2,
+                "templateKey": "spuria_s_2[self]",
+                "disableOverride": 0,
+                "overrideKey": "",
+                "overrideType": 0,
+                "maxStackCnt": 1,
+                "refreshRemainingTimeWhenStackMax": 0,
+                "clearAllStackCntWhenTimeUp": 0,
+                "maxValidStackCnt": -1,
+                "independentCharacterSource": 0,
+                "overrideEffectKey": "spuria_skill_02_buff_02",
+                "overrideOnEventPriority": 0,
+                "onEventPriority": 0,
+                "audioSignal": "",
+                "lifeTimeType": 1,
+                "takeSnapshotWhenExtend": 0,
+                "durationKey": "duration",
+                "lifeTime": 0,
+                "triggerLifeType": 0,
+                "triggerCnt": 0,
+                "triggerInterval": -1,
+                "waitFirstTriggerInterval": 1,
+                "firstTriggerInterval": -1,
+                "priority": -1,
+                "priorityBBKeys": [],
+                "stripBlackboardParamsWithBuffKey": 0,
+                "blackboard": [],
+                "enableInitDirectionFromSource": 0
+              },
+              {
+                "attributes": {
+                  "abnormalFlags": [],
+                  "abnormalImmunes": [],
+                  "abnormalAntis": [],
+                  "abnormalCombos": [],
+                  "abnormalComboImmunes": [],
+                  "attributeModifiers": []
+                },
+                "buffKey": "spuria_s_2[effect]",
+                "loadFromDB": 0,
+                "isDurableBuff": 0,
+                "isDamageMissable": 0,
+                "isSilenceable": 0,
+                "isStunnable": 0,
+                "isFreezable": 0,
+                "isLevitatable": 0,
+                "statusResistable": 2,
+                "templateKey": "spuria_s_2[effect]",
+                "disableOverride": 0,
+                "overrideKey": "spuria_s_2[effect]",
+                "overrideType": 0,
+                "maxStackCnt": 1,
+                "refreshRemainingTimeWhenStackMax": 0,
+                "clearAllStackCntWhenTimeUp": 0,
+                "maxValidStackCnt": -1,
+                "independentCharacterSource": 0,
+                "overrideEffectKey": "",
+                "overrideOnEventPriority": 0,
+                "onEventPriority": 0,
+                "audioSignal": "",
+                "lifeTimeType": 1,
+                "takeSnapshotWhenExtend": 0,
+                "durationKey": "duration",
+                "lifeTime": 0,
+                "triggerLifeType": 0,
+                "triggerCnt": 0,
+                "triggerInterval": -1,
+                "waitFirstTriggerInterval": 1,
+                "firstTriggerInterval": -1,
+                "priority": 0,
+                "priorityBBKeys": [],
+                "stripBlackboardParamsWithBuffKey": 0,
+                "blackboard": [],
+                "enableInitDirectionFromSource": 0
+              }
+            ],
+            "_waitForCasting": 0,
+            "_updateLifetimeWhenSpellStart": 0,
+            "_preDelay": 0,
+            "_escapeTime": 0,
+            "_checkBuffEarlyFinish": 0,
+            "_passiveBuffs": [],
+            "_ignoreInfiniteBuffCooldown": 0,
+            "_enableUpdateCooldown": 0
+          }
+        ]
+      }
+    ],
+    "skchr_spuria_1": [
+      {
+        "object": "skchr_spuria_1",
+        "pathId": "-829432498145635597",
+        "components": [
+          {
+            "pathId": "-3356848750164421901",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_metadata": {
+              "namedAsAlias": "",
+              "blackboardPrefix": ""
+            },
+            "_interruptAbilityOnDetach": 0,
+            "_attachPassiveBuffsOnDummy": 1,
+            "_ignoreIfOwnerDead": 0,
+            "_forceAsDmgOrHealAbility": 0,
+            "_waitForAttackEvent": 1,
+            "_interuptIfTargetDead": 0,
+            "_resetCdStrategy": 1,
+            "_buffs": [
+              {
+                "attributes": {
+                  "abnormalFlags": [],
+                  "abnormalImmunes": [],
+                  "abnormalAntis": [],
+                  "abnormalCombos": [],
+                  "abnormalComboImmunes": [],
+                  "attributeModifiers": [
+                    {
+                      "attributeType": 7,
+                      "formulaItem": 0,
+                      "value": 0,
+                      "loadFromBlackboard": 1,
+                      "fetchBaseValueFromSourceEntity": 0
+                    }
+                  ]
+                },
+                "buffKey": "spuria_s_1",
+                "loadFromDB": 0,
+                "isDurableBuff": 0,
+                "isDamageMissable": 0,
+                "isSilenceable": 0,
+                "isStunnable": 0,
+                "isFreezable": 0,
+                "isLevitatable": 0,
+                "statusResistable": 2,
+                "templateKey": "empty",
+                "disableOverride": 0,
+                "overrideKey": "",
+                "overrideType": 0,
+                "maxStackCnt": 1,
+                "refreshRemainingTimeWhenStackMax": 0,
+                "clearAllStackCntWhenTimeUp": 0,
+                "maxValidStackCnt": -1,
+                "independentCharacterSource": 0,
+                "overrideEffectKey": "spuria_skill_01_buff",
+                "overrideOnEventPriority": 0,
+                "onEventPriority": 0,
+                "audioSignal": "",
+                "lifeTimeType": 1,
+                "takeSnapshotWhenExtend": 0,
+                "durationKey": "duration",
+                "lifeTime": 0,
+                "triggerLifeType": 0,
+                "triggerCnt": 0,
+                "triggerInterval": -1,
+                "waitFirstTriggerInterval": 1,
+                "firstTriggerInterval": -1,
+                "priority": -1,
+                "priorityBBKeys": [],
+                "stripBlackboardParamsWithBuffKey": 0,
+                "blackboard": [],
+                "enableInitDirectionFromSource": 0
+              }
+            ],
+            "_waitForCasting": 0,
+            "_updateLifetimeWhenSpellStart": 0,
+            "_preDelay": 0,
+            "_escapeTime": 0,
+            "_checkBuffEarlyFinish": 0,
+            "_passiveBuffs": [],
+            "_ignoreInfiniteBuffCooldown": 0,
+            "_enableUpdateCooldown": 0
+          },
+          {
+            "pathId": "3173490281440236275",
+            "_maxTriggerTime": -1,
+            "_allowSpRecoveryWhenAffecting": 0,
+            "_limitGlobalTriggerTime": 0,
+            "_hidden": 0,
+            "_showSpBarEvenHidden": 0,
+            "_showSpAsBulletMode": 0,
+            "_showSpRatioAsProgress": 0,
+            "_playCharWordVoice": 1,
+            "_playCharWordWithPassiveType": 0,
+            "_canCastWithNoSp": 0,
+            "_canSilenced": 0,
+            "_canUseInAbnormalState": 0,
+            "_defaultModeIndex": -1,
+            "_attackBlackboardModeIndex": -1,
+            "_extraAttackBlackboardModeIndices": [],
+            "_rangeIdModeIndex": -1,
+            "_extraRangeIdModeIndices": [],
+            "_rangeIdUsageType": 7,
+            "_writeDurationToAttackBlackboard": 0,
+            "_attachSignalIds": 0,
+            "_extraAbilities": [],
+            "_useEscapeTime": 0,
+            "_earlySkillFinishAtAttackFinished": 0,
+            "_showProgressToNext": 0,
+            "_hideSkillStackCount": 0,
+            "_hideHudSkillStackCount": 0,
+            "_playSkillBeginAnim": 0,
+            "_beginAnim": "",
+            "_beginAnimDown": "",
+            "_beginEffect": [],
+            "_useFaceVector": 0,
+            "_beginAnimValidator": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_availableValidator": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_overrideStartEffect": "",
+            "_switchToState": 0,
+            "_castOnLocate": 1,
+            "_overrideAudioSignalId": 0
+          }
+        ]
+      }
+    ]
+  },
+  "projectiles": {
+    "projectile_spuria_graphic": [
+      {
+        "object": "projectile_spuria_graphic",
+        "pathId": "2092590899529606641",
+        "components": [
+          {
+            "pathId": "-6224004766953675279",
+            "_randomDelayToBorn": 0,
+            "_bodyTransform": {
+              "m_FileID": 0,
+              "m_PathID": "-3495100315530336783"
+            },
+            "_keepAlreadyHitTime": -1,
+            "_mainEffect": "spuria_attack_trail",
+            "_clearMainEffectWhenReached": 1,
+            "_actionController": {
+              "_detachBuffsWhenTargetLeave": 0,
+              "_detachAllBuffsWhenStopped": 0,
+              "_onlyAddBuffsToTraceTarget": 0,
+              "_onlyAddBuffsToTargetOnce": 0,
+              "_dontAddBuffs": 0,
+              "_excludeAttachments": 0,
+              "_useSelfBlackboard": 0,
+              "_extraBuffsInTheEnd": [],
+              "_useExtraBuffsWhenStopHit": 0,
+              "_addExtraBuffsWhenReached": 0,
+              "_detachAllExtraBuffsWhenStopped": 0
+            },
+            "_fixDealHitTargetLeft": 1,
+            "_stopGraphicProjectileWhenClearMainEffect": 0,
+            "_overrideAudioSignal": "",
+            "_fireProjectileReachedEvent": 0,
+            "_eliminatableStatus": 0,
+            "_movementAdjustableStatus": 0,
+            "_managedBySource": 0,
+            "_projectileType": 0,
+            "_containsChildrenBehaviours": 0,
+            "_canHitSameTargetMultipleTimes": 0,
+            "_lifeTimeType": 1,
+            "_lifeTime": 5,
+            "_getLifeTimeFromBB": 0,
+            "_hitNumType": 1,
+            "_maxHitNum": 1,
+            "_getMaxHitNumFromBB": 0,
+            "_maxHitNumBBKey": "",
+            "_stopAfterMaxHit": 1,
+            "_stopAfterFirstHit": 0,
+            "_stopWhenSourceInvalid": 0,
+            "_alwaysHitTraceTargetInTheEnd": 1,
+            "_alwaysHitTraceTargetWhenReached": 0,
+            "_alwaysReachInTheEnd": 0,
+            "_limitedMaxHitNumToSourceBlockedCnt": 0,
+            "_allowZeroBlockCntLimit": 0
+          },
+          {
+            "pathId": "4449753329737950705",
+            "_rotateToTarget": 1,
+            "_forceReachedWhenTimeup": 1,
+            "_useSourceDirection": 0,
+            "_useTargetDirection": 0,
+            "_useStartToTarget": 0,
+            "_awayFromSourceAsDirection": 0,
+            "_flyToTargetLocationOnly": 0,
+            "_useSourceDirectionRandomArcAngleStart": 0,
+            "_useSourceToTargetRandomArcAngleStart": 0,
+            "_useSourceDirectionArcAngleWithRatio": 0,
+            "_useSourceToTargetArcAngleWithRatio": 0,
+            "_sourceDirectionArcAngleRatio": 0,
+            "_flyToPredefinedLocation": 0,
+            "_predefinedLocation": 0,
+            "_freezeRotationZ": 0,
+            "_freezeRotationXY": 0,
+            "_exactMatchCameraForward": 0,
+            "_resetToTargetPosWhenReached": 0,
+            "_resetToTracetargetMapPosV3": 0,
+            "_handleWithIBuildableTarget": 0,
+            "_forceResetToTargetPosWhenReached": 0,
+            "_fixOnProjectileReached": 0,
+            "_onlyReachedInTime": 0,
+            "_moveType": 1,
+            "_moveTypeData": {
+              "data": []
+            },
+            "_speed": 15,
+            "_distance": 0,
+            "_comeBack": 0,
+            "_comeBackSpeedScale": 0.25,
+            "_delayToStart": 0,
+            "_delayAfterReached": 0,
+            "_delayToReachAfterHit": 0,
+            "_clearTraceTargetWhenReached": 1,
+            "_updateDelayTimeOnlyOnce": 0,
+            "_skipSmoothLerpDirection": 0,
+            "_addInertia": 0,
+            "_turnSpeed": 0,
+            "_useDynamicSpeed": 0,
+            "_deltaSpeedPerSec": 0,
+            "_finalSpeed": 0,
+            "_randomOffset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "_forceUseTargetMountPoint": 0
+          }
+        ]
+      }
+    ],
+    "projectile_spuria_logic": [
+      {
+        "object": "projectile_spuria_logic",
+        "pathId": "-632670814996380216",
+        "components": [
+          {
+            "pathId": "-7375251853464156728",
+            "_effectsWhenStart": [],
+            "_effectsWhenReached": [],
+            "_effectsWhenHit": [
+              "spuria_attack_hit"
+            ],
+            "_effectsToTargetWhenStart": [],
+            "_effectsToTileWhenStart": [],
+            "_effectsWhenStop": [],
+            "_effectOnTrigger": [],
+            "_onlyPlayHitEffectOnTraceTarget": 0,
+            "_onlyPlayHitEffectOnNotTraceTarget": 0,
+            "_onlyPlayHitEffectOnce": 0,
+            "_clearHitEffectOnStop": 0,
+            "_clearPlayEffectOnStop": 0,
+            "_clearEffectsOnTileOnStop": 0,
+            "_clearReachedEffectWhenStop": 0,
+            "_alwaysPlayStartEffects": 0,
+            "_playStartEffectOnlyOnProjectile": 0,
+            "_useSourceFaceVector": 0,
+            "_useSourceFaceVectorOnHit": 0,
+            "_forceReachTargetGround": 0,
+            "_followTargetGround": 0,
+            "_replaceMainEffectWhenReach": 0,
+            "_mainEffectToReplace": "",
+            "_useTraceTargetWhenReach": 0,
+            "_setReachEffectOnProjectile": 0,
+            "_syncEffectScaleViaProjectile": 0
+          },
+          {
+            "pathId": "-6809661673813424696",
+            "_randomDelayToBorn": 0,
+            "_bodyTransform": {
+              "m_FileID": 0,
+              "m_PathID": "2418728402884183496"
+            },
+            "_keepAlreadyHitTime": -1,
+            "_mainEffect": "",
+            "_clearMainEffectWhenReached": 1,
+            "_actionController": {
+              "_detachBuffsWhenTargetLeave": 0,
+              "_detachAllBuffsWhenStopped": 0,
+              "_onlyAddBuffsToTraceTarget": 0,
+              "_onlyAddBuffsToTargetOnce": 0,
+              "_dontAddBuffs": 0,
+              "_excludeAttachments": 0,
+              "_useSelfBlackboard": 0,
+              "_extraBuffsInTheEnd": [],
+              "_useExtraBuffsWhenStopHit": 0,
+              "_addExtraBuffsWhenReached": 0,
+              "_detachAllExtraBuffsWhenStopped": 0
+            },
+            "_fixDealHitTargetLeft": 1,
+            "_stopGraphicProjectileWhenClearMainEffect": 0,
+            "_overrideAudioSignal": "",
+            "_fireProjectileReachedEvent": 0,
+            "_eliminatableStatus": 0,
+            "_movementAdjustableStatus": 0,
+            "_managedBySource": 0,
+            "_projectileType": 0,
+            "_containsChildrenBehaviours": 0,
+            "_canHitSameTargetMultipleTimes": 0,
+            "_lifeTimeType": 1,
+            "_lifeTime": 5,
+            "_getLifeTimeFromBB": 0,
+            "_hitNumType": 1,
+            "_maxHitNum": 1,
+            "_getMaxHitNumFromBB": 0,
+            "_maxHitNumBBKey": "",
+            "_stopAfterMaxHit": 1,
+            "_stopAfterFirstHit": 0,
+            "_stopWhenSourceInvalid": 0,
+            "_alwaysHitTraceTargetInTheEnd": 1,
+            "_alwaysHitTraceTargetWhenReached": 0,
+            "_alwaysReachInTheEnd": 0,
+            "_limitedMaxHitNumToSourceBlockedCnt": 0,
+            "_allowZeroBlockCntLimit": 0
+          },
+          {
+            "pathId": "-339586248078834232",
+            "_rotateToTarget": 1,
+            "_forceReachedWhenTimeup": 1,
+            "_useSourceDirection": 0,
+            "_useTargetDirection": 0,
+            "_useStartToTarget": 0,
+            "_awayFromSourceAsDirection": 0,
+            "_flyToTargetLocationOnly": 0,
+            "_useSourceDirectionRandomArcAngleStart": 0,
+            "_useSourceToTargetRandomArcAngleStart": 0,
+            "_useSourceDirectionArcAngleWithRatio": 0,
+            "_useSourceToTargetArcAngleWithRatio": 0,
+            "_sourceDirectionArcAngleRatio": 0,
+            "_flyToPredefinedLocation": 0,
+            "_predefinedLocation": 0,
+            "_freezeRotationZ": 0,
+            "_freezeRotationXY": 0,
+            "_exactMatchCameraForward": 0,
+            "_resetToTargetPosWhenReached": 0,
+            "_resetToTracetargetMapPosV3": 0,
+            "_handleWithIBuildableTarget": 0,
+            "_forceResetToTargetPosWhenReached": 0,
+            "_fixOnProjectileReached": 0,
+            "_onlyReachedInTime": 0,
+            "_moveType": 1,
+            "_moveTypeData": {
+              "data": []
+            },
+            "_speed": 15,
+            "_distance": 0,
+            "_comeBack": 0,
+            "_comeBackSpeedScale": 0.25,
+            "_delayToStart": 0,
+            "_delayAfterReached": 0,
+            "_delayToReachAfterHit": 0,
+            "_clearTraceTargetWhenReached": 1,
+            "_updateDelayTimeOnlyOnce": 0,
+            "_skipSmoothLerpDirection": 0,
+            "_addInertia": 0,
+            "_turnSpeed": 0,
+            "_useDynamicSpeed": 0,
+            "_deltaSpeedPerSec": 0,
+            "_finalSpeed": 0,
+            "_randomOffset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "_forceUseTargetMountPoint": 0
+          }
+        ]
+      }
+    ],
+    "projectile_spuria": [
+      {
+        "object": "projectile_spuria",
+        "pathId": "6240308392967694981",
+        "components": [
+          {
+            "pathId": "-8519971926731756923",
+            "_effectsWhenStart": [],
+            "_effectsWhenReached": [],
+            "_effectsWhenHit": [
+              "spuria_attack_hit"
+            ],
+            "_effectsToTargetWhenStart": [],
+            "_effectsToTileWhenStart": [],
+            "_effectsWhenStop": [],
+            "_effectOnTrigger": [],
+            "_onlyPlayHitEffectOnTraceTarget": 0,
+            "_onlyPlayHitEffectOnNotTraceTarget": 0,
+            "_onlyPlayHitEffectOnce": 0,
+            "_clearHitEffectOnStop": 0,
+            "_clearPlayEffectOnStop": 0,
+            "_clearEffectsOnTileOnStop": 0,
+            "_clearReachedEffectWhenStop": 0,
+            "_alwaysPlayStartEffects": 0,
+            "_playStartEffectOnlyOnProjectile": 0,
+            "_useSourceFaceVector": 0,
+            "_useSourceFaceVectorOnHit": 0,
+            "_forceReachTargetGround": 0,
+            "_followTargetGround": 0,
+            "_replaceMainEffectWhenReach": 0,
+            "_mainEffectToReplace": "",
+            "_useTraceTargetWhenReach": 0,
+            "_setReachEffectOnProjectile": 0,
+            "_syncEffectScaleViaProjectile": 0
+          },
+          {
+            "pathId": "-6675779927963112827",
+            "_randomDelayToBorn": 0,
+            "_bodyTransform": {
+              "m_FileID": 0,
+              "m_PathID": "4963321661681330821"
+            },
+            "_keepAlreadyHitTime": -1,
+            "_mainEffect": "spuria_attack_trail",
+            "_clearMainEffectWhenReached": 1,
+            "_actionController": {
+              "_detachBuffsWhenTargetLeave": 0,
+              "_detachAllBuffsWhenStopped": 0,
+              "_onlyAddBuffsToTraceTarget": 0,
+              "_onlyAddBuffsToTargetOnce": 0,
+              "_dontAddBuffs": 0,
+              "_excludeAttachments": 0,
+              "_useSelfBlackboard": 0,
+              "_extraBuffsInTheEnd": [],
+              "_useExtraBuffsWhenStopHit": 0,
+              "_addExtraBuffsWhenReached": 0,
+              "_detachAllExtraBuffsWhenStopped": 0
+            },
+            "_fixDealHitTargetLeft": 1,
+            "_stopGraphicProjectileWhenClearMainEffect": 0,
+            "_overrideAudioSignal": "",
+            "_fireProjectileReachedEvent": 0,
+            "_eliminatableStatus": 0,
+            "_movementAdjustableStatus": 0,
+            "_managedBySource": 0,
+            "_projectileType": 0,
+            "_containsChildrenBehaviours": 0,
+            "_canHitSameTargetMultipleTimes": 0,
+            "_lifeTimeType": 1,
+            "_lifeTime": 5,
+            "_getLifeTimeFromBB": 0,
+            "_hitNumType": 1,
+            "_maxHitNum": 1,
+            "_getMaxHitNumFromBB": 0,
+            "_maxHitNumBBKey": "",
+            "_stopAfterMaxHit": 1,
+            "_stopAfterFirstHit": 0,
+            "_stopWhenSourceInvalid": 0,
+            "_alwaysHitTraceTargetInTheEnd": 1,
+            "_alwaysHitTraceTargetWhenReached": 0,
+            "_alwaysReachInTheEnd": 0,
+            "_limitedMaxHitNumToSourceBlockedCnt": 0,
+            "_allowZeroBlockCntLimit": 0
+          },
+          {
+            "pathId": "6862034830570252933",
+            "_rotateToTarget": 1,
+            "_forceReachedWhenTimeup": 1,
+            "_useSourceDirection": 0,
+            "_useTargetDirection": 0,
+            "_useStartToTarget": 0,
+            "_awayFromSourceAsDirection": 0,
+            "_flyToTargetLocationOnly": 0,
+            "_useSourceDirectionRandomArcAngleStart": 0,
+            "_useSourceToTargetRandomArcAngleStart": 0,
+            "_useSourceDirectionArcAngleWithRatio": 0,
+            "_useSourceToTargetArcAngleWithRatio": 0,
+            "_sourceDirectionArcAngleRatio": 0,
+            "_flyToPredefinedLocation": 0,
+            "_predefinedLocation": 0,
+            "_freezeRotationZ": 0,
+            "_freezeRotationXY": 0,
+            "_exactMatchCameraForward": 0,
+            "_resetToTargetPosWhenReached": 0,
+            "_resetToTracetargetMapPosV3": 0,
+            "_handleWithIBuildableTarget": 0,
+            "_forceResetToTargetPosWhenReached": 0,
+            "_fixOnProjectileReached": 0,
+            "_onlyReachedInTime": 0,
+            "_moveType": 1,
+            "_moveTypeData": {
+              "data": []
+            },
+            "_speed": 15,
+            "_distance": 0,
+            "_comeBack": 0,
+            "_comeBackSpeedScale": 0.25,
+            "_delayToStart": 0,
+            "_delayAfterReached": 0,
+            "_delayToReachAfterHit": 0,
+            "_clearTraceTargetWhenReached": 1,
+            "_updateDelayTimeOnlyOnce": 0,
+            "_skipSmoothLerpDirection": 0,
+            "_addInertia": 0,
+            "_turnSpeed": 0,
+            "_useDynamicSpeed": 0,
+            "_deltaSpeedPerSec": 0,
+            "_finalSpeed": 0,
+            "_randomOffset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "_forceUseTargetMountPoint": 0
+          }
+        ]
+      }
+    ],
+    "projectile_spuria_s2_logic": [
+      {
+        "object": "projectile_spuria_s2_logic",
+        "pathId": "-1976270863299248734",
+        "components": [
+          {
+            "pathId": "-5336822392762139230",
+            "_randomDelayToBorn": 0,
+            "_bodyTransform": {
+              "m_FileID": 0,
+              "m_PathID": "-1146964090773897822"
+            },
+            "_keepAlreadyHitTime": -1,
+            "_mainEffect": "",
+            "_clearMainEffectWhenReached": 1,
+            "_actionController": {
+              "_detachBuffsWhenTargetLeave": 0,
+              "_detachAllBuffsWhenStopped": 0,
+              "_onlyAddBuffsToTraceTarget": 0,
+              "_onlyAddBuffsToTargetOnce": 0,
+              "_dontAddBuffs": 0,
+              "_excludeAttachments": 0,
+              "_useSelfBlackboard": 0,
+              "_extraBuffsInTheEnd": [],
+              "_useExtraBuffsWhenStopHit": 0,
+              "_addExtraBuffsWhenReached": 0,
+              "_detachAllExtraBuffsWhenStopped": 0
+            },
+            "_fixDealHitTargetLeft": 1,
+            "_stopGraphicProjectileWhenClearMainEffect": 0,
+            "_overrideAudioSignal": "",
+            "_fireProjectileReachedEvent": 0,
+            "_eliminatableStatus": 0,
+            "_movementAdjustableStatus": 0,
+            "_managedBySource": 0,
+            "_projectileType": 0,
+            "_containsChildrenBehaviours": 0,
+            "_canHitSameTargetMultipleTimes": 0,
+            "_lifeTimeType": 1,
+            "_lifeTime": 5,
+            "_getLifeTimeFromBB": 0,
+            "_hitNumType": 1,
+            "_maxHitNum": 1,
+            "_getMaxHitNumFromBB": 0,
+            "_maxHitNumBBKey": "",
+            "_stopAfterMaxHit": 1,
+            "_stopAfterFirstHit": 0,
+            "_stopWhenSourceInvalid": 0,
+            "_alwaysHitTraceTargetInTheEnd": 1,
+            "_alwaysHitTraceTargetWhenReached": 0,
+            "_alwaysReachInTheEnd": 0,
+            "_limitedMaxHitNumToSourceBlockedCnt": 0,
+            "_allowZeroBlockCntLimit": 0
+          },
+          {
+            "pathId": "-4536933510814564958",
+            "_effectsWhenStart": [],
+            "_effectsWhenReached": [],
+            "_effectsWhenHit": [
+              "spuria_skill_02_hit"
+            ],
+            "_effectsToTargetWhenStart": [],
+            "_effectsToTileWhenStart": [],
+            "_effectsWhenStop": [],
+            "_effectOnTrigger": [],
+            "_onlyPlayHitEffectOnTraceTarget": 0,
+            "_onlyPlayHitEffectOnNotTraceTarget": 0,
+            "_onlyPlayHitEffectOnce": 0,
+            "_clearHitEffectOnStop": 0,
+            "_clearPlayEffectOnStop": 0,
+            "_clearEffectsOnTileOnStop": 0,
+            "_clearReachedEffectWhenStop": 0,
+            "_alwaysPlayStartEffects": 0,
+            "_playStartEffectOnlyOnProjectile": 0,
+            "_useSourceFaceVector": 0,
+            "_useSourceFaceVectorOnHit": 0,
+            "_forceReachTargetGround": 0,
+            "_followTargetGround": 0,
+            "_replaceMainEffectWhenReach": 0,
+            "_mainEffectToReplace": "",
+            "_useTraceTargetWhenReach": 0,
+            "_setReachEffectOnProjectile": 0,
+            "_syncEffectScaleViaProjectile": 0
+          },
+          {
+            "pathId": "4792587639223025058",
+            "_rotateToTarget": 1,
+            "_forceReachedWhenTimeup": 1,
+            "_useSourceDirection": 0,
+            "_useTargetDirection": 0,
+            "_useStartToTarget": 0,
+            "_awayFromSourceAsDirection": 0,
+            "_flyToTargetLocationOnly": 0,
+            "_useSourceDirectionRandomArcAngleStart": 0,
+            "_useSourceToTargetRandomArcAngleStart": 0,
+            "_useSourceDirectionArcAngleWithRatio": 0,
+            "_useSourceToTargetArcAngleWithRatio": 0,
+            "_sourceDirectionArcAngleRatio": 0,
+            "_flyToPredefinedLocation": 0,
+            "_predefinedLocation": 0,
+            "_freezeRotationZ": 0,
+            "_freezeRotationXY": 0,
+            "_exactMatchCameraForward": 0,
+            "_resetToTargetPosWhenReached": 0,
+            "_resetToTracetargetMapPosV3": 0,
+            "_handleWithIBuildableTarget": 0,
+            "_forceResetToTargetPosWhenReached": 0,
+            "_fixOnProjectileReached": 0,
+            "_onlyReachedInTime": 0,
+            "_moveType": 1,
+            "_moveTypeData": {
+              "data": []
+            },
+            "_speed": 15,
+            "_distance": 0,
+            "_comeBack": 0,
+            "_comeBackSpeedScale": 0.25,
+            "_delayToStart": 0,
+            "_delayAfterReached": 0,
+            "_delayToReachAfterHit": 0,
+            "_clearTraceTargetWhenReached": 1,
+            "_updateDelayTimeOnlyOnce": 0,
+            "_skipSmoothLerpDirection": 0,
+            "_addInertia": 0,
+            "_turnSpeed": 0,
+            "_useDynamicSpeed": 0,
+            "_deltaSpeedPerSec": 0,
+            "_finalSpeed": 0,
+            "_randomOffset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "_forceUseTargetMountPoint": 0
+          }
+        ]
+      }
+    ],
+    "projectile_spuria_s2_graphic": [
+      {
+        "object": "projectile_spuria_s2_graphic",
+        "pathId": "8747545886755129236",
+        "components": [
+          {
+            "pathId": "-3508963762108168300",
+            "_rotateToTarget": 1,
+            "_forceReachedWhenTimeup": 1,
+            "_useSourceDirection": 0,
+            "_useTargetDirection": 0,
+            "_useStartToTarget": 0,
+            "_awayFromSourceAsDirection": 0,
+            "_flyToTargetLocationOnly": 0,
+            "_useSourceDirectionRandomArcAngleStart": 0,
+            "_useSourceToTargetRandomArcAngleStart": 0,
+            "_useSourceDirectionArcAngleWithRatio": 0,
+            "_useSourceToTargetArcAngleWithRatio": 0,
+            "_sourceDirectionArcAngleRatio": 0,
+            "_flyToPredefinedLocation": 0,
+            "_predefinedLocation": 0,
+            "_freezeRotationZ": 0,
+            "_freezeRotationXY": 0,
+            "_exactMatchCameraForward": 0,
+            "_resetToTargetPosWhenReached": 0,
+            "_resetToTracetargetMapPosV3": 0,
+            "_handleWithIBuildableTarget": 0,
+            "_forceResetToTargetPosWhenReached": 0,
+            "_fixOnProjectileReached": 0,
+            "_onlyReachedInTime": 0,
+            "_moveType": 1,
+            "_moveTypeData": {
+              "data": []
+            },
+            "_speed": 15,
+            "_distance": 0,
+            "_comeBack": 0,
+            "_comeBackSpeedScale": 0.25,
+            "_delayToStart": 0,
+            "_delayAfterReached": 0,
+            "_delayToReachAfterHit": 0,
+            "_clearTraceTargetWhenReached": 1,
+            "_updateDelayTimeOnlyOnce": 0,
+            "_skipSmoothLerpDirection": 0,
+            "_addInertia": 0,
+            "_turnSpeed": 0,
+            "_useDynamicSpeed": 0,
+            "_deltaSpeedPerSec": 0,
+            "_finalSpeed": 0,
+            "_randomOffset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "_forceUseTargetMountPoint": 0
+          },
+          {
+            "pathId": "-2522095711123470444",
+            "_randomDelayToBorn": 0,
+            "_bodyTransform": {
+              "m_FileID": 0,
+              "m_PathID": "1142082928370255764"
+            },
+            "_keepAlreadyHitTime": -1,
+            "_mainEffect": "spuria_skill_02_trail",
+            "_clearMainEffectWhenReached": 1,
+            "_actionController": {
+              "_detachBuffsWhenTargetLeave": 0,
+              "_detachAllBuffsWhenStopped": 0,
+              "_onlyAddBuffsToTraceTarget": 0,
+              "_onlyAddBuffsToTargetOnce": 0,
+              "_dontAddBuffs": 0,
+              "_excludeAttachments": 0,
+              "_useSelfBlackboard": 0,
+              "_extraBuffsInTheEnd": [],
+              "_useExtraBuffsWhenStopHit": 0,
+              "_addExtraBuffsWhenReached": 0,
+              "_detachAllExtraBuffsWhenStopped": 0
+            },
+            "_fixDealHitTargetLeft": 1,
+            "_stopGraphicProjectileWhenClearMainEffect": 0,
+            "_overrideAudioSignal": "",
+            "_fireProjectileReachedEvent": 0,
+            "_eliminatableStatus": 0,
+            "_movementAdjustableStatus": 0,
+            "_managedBySource": 0,
+            "_projectileType": 0,
+            "_containsChildrenBehaviours": 0,
+            "_canHitSameTargetMultipleTimes": 0,
+            "_lifeTimeType": 1,
+            "_lifeTime": 5,
+            "_getLifeTimeFromBB": 0,
+            "_hitNumType": 1,
+            "_maxHitNum": 1,
+            "_getMaxHitNumFromBB": 0,
+            "_maxHitNumBBKey": "",
+            "_stopAfterMaxHit": 1,
+            "_stopAfterFirstHit": 0,
+            "_stopWhenSourceInvalid": 0,
+            "_alwaysHitTraceTargetInTheEnd": 1,
+            "_alwaysHitTraceTargetWhenReached": 0,
+            "_alwaysReachInTheEnd": 0,
+            "_limitedMaxHitNumToSourceBlockedCnt": 0,
+            "_allowZeroBlockCntLimit": 0
+          }
+        ]
+      }
+    ],
+    "projectile_spuria_s2": [
+      {
+        "object": "projectile_spuria_s2",
+        "pathId": "-4989734583364088263",
+        "components": [
+          {
+            "pathId": "-1106880640081588679",
+            "_randomDelayToBorn": 0,
+            "_bodyTransform": {
+              "m_FileID": 0,
+              "m_PathID": "4798017441286393401"
+            },
+            "_keepAlreadyHitTime": -1,
+            "_mainEffect": "spuria_skill_02_trail",
+            "_clearMainEffectWhenReached": 1,
+            "_actionController": {
+              "_detachBuffsWhenTargetLeave": 0,
+              "_detachAllBuffsWhenStopped": 0,
+              "_onlyAddBuffsToTraceTarget": 0,
+              "_onlyAddBuffsToTargetOnce": 0,
+              "_dontAddBuffs": 0,
+              "_excludeAttachments": 0,
+              "_useSelfBlackboard": 0,
+              "_extraBuffsInTheEnd": [],
+              "_useExtraBuffsWhenStopHit": 0,
+              "_addExtraBuffsWhenReached": 0,
+              "_detachAllExtraBuffsWhenStopped": 0
+            },
+            "_fixDealHitTargetLeft": 1,
+            "_stopGraphicProjectileWhenClearMainEffect": 0,
+            "_overrideAudioSignal": "",
+            "_fireProjectileReachedEvent": 0,
+            "_eliminatableStatus": 0,
+            "_movementAdjustableStatus": 0,
+            "_managedBySource": 0,
+            "_projectileType": 0,
+            "_containsChildrenBehaviours": 0,
+            "_canHitSameTargetMultipleTimes": 0,
+            "_lifeTimeType": 1,
+            "_lifeTime": 5,
+            "_getLifeTimeFromBB": 0,
+            "_hitNumType": 1,
+            "_maxHitNum": 1,
+            "_getMaxHitNumFromBB": 0,
+            "_maxHitNumBBKey": "",
+            "_stopAfterMaxHit": 1,
+            "_stopAfterFirstHit": 0,
+            "_stopWhenSourceInvalid": 0,
+            "_alwaysHitTraceTargetInTheEnd": 1,
+            "_alwaysHitTraceTargetWhenReached": 0,
+            "_alwaysReachInTheEnd": 0,
+            "_limitedMaxHitNumToSourceBlockedCnt": 0,
+            "_allowZeroBlockCntLimit": 0
+          },
+          {
+            "pathId": "1070443633063038521",
+            "_rotateToTarget": 1,
+            "_forceReachedWhenTimeup": 1,
+            "_useSourceDirection": 0,
+            "_useTargetDirection": 0,
+            "_useStartToTarget": 0,
+            "_awayFromSourceAsDirection": 0,
+            "_flyToTargetLocationOnly": 0,
+            "_useSourceDirectionRandomArcAngleStart": 0,
+            "_useSourceToTargetRandomArcAngleStart": 0,
+            "_useSourceDirectionArcAngleWithRatio": 0,
+            "_useSourceToTargetArcAngleWithRatio": 0,
+            "_sourceDirectionArcAngleRatio": 0,
+            "_flyToPredefinedLocation": 0,
+            "_predefinedLocation": 0,
+            "_freezeRotationZ": 0,
+            "_freezeRotationXY": 0,
+            "_exactMatchCameraForward": 0,
+            "_resetToTargetPosWhenReached": 0,
+            "_resetToTracetargetMapPosV3": 0,
+            "_handleWithIBuildableTarget": 0,
+            "_forceResetToTargetPosWhenReached": 0,
+            "_fixOnProjectileReached": 0,
+            "_onlyReachedInTime": 0,
+            "_moveType": 1,
+            "_moveTypeData": {
+              "data": []
+            },
+            "_speed": 15,
+            "_distance": 0,
+            "_comeBack": 0,
+            "_comeBackSpeedScale": 0.25,
+            "_delayToStart": 0,
+            "_delayAfterReached": 0,
+            "_delayToReachAfterHit": 0,
+            "_clearTraceTargetWhenReached": 1,
+            "_updateDelayTimeOnlyOnce": 0,
+            "_skipSmoothLerpDirection": 0,
+            "_addInertia": 0,
+            "_turnSpeed": 0,
+            "_useDynamicSpeed": 0,
+            "_deltaSpeedPerSec": 0,
+            "_finalSpeed": 0,
+            "_randomOffset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "_forceUseTargetMountPoint": 0
+          },
+          {
+            "pathId": "2828691028582469177",
+            "_effectsWhenStart": [],
+            "_effectsWhenReached": [],
+            "_effectsWhenHit": [
+              "spuria_skill_02_hit"
+            ],
+            "_effectsToTargetWhenStart": [],
+            "_effectsToTileWhenStart": [],
+            "_effectsWhenStop": [],
+            "_effectOnTrigger": [],
+            "_onlyPlayHitEffectOnTraceTarget": 0,
+            "_onlyPlayHitEffectOnNotTraceTarget": 0,
+            "_onlyPlayHitEffectOnce": 0,
+            "_clearHitEffectOnStop": 0,
+            "_clearPlayEffectOnStop": 0,
+            "_clearEffectsOnTileOnStop": 0,
+            "_clearReachedEffectWhenStop": 0,
+            "_alwaysPlayStartEffects": 0,
+            "_playStartEffectOnlyOnProjectile": 0,
+            "_useSourceFaceVector": 0,
+            "_useSourceFaceVectorOnHit": 0,
+            "_forceReachTargetGround": 0,
+            "_followTargetGround": 0,
+            "_replaceMainEffectWhenReach": 0,
+            "_mainEffectToReplace": "",
+            "_useTraceTargetWhenReach": 0,
+            "_setReachEffectOnProjectile": 0,
+            "_syncEffectScaleViaProjectile": 0
+          }
+        ]
+      }
+    ]
+  },
+  "buffTemplates": {
+    "spuria_s_2[effect]": {
+      "templateKey": "spuria_s_2[effect]",
+      "effectKey": "",
+      "onEventPriority": "DEFAULT",
+      "eventToActions": {
+        "ON_BUFF_ENABLE": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+CreateBuff, Assembly-CSharp",
+            "_buff": {
+              "attributes": {
+                "abnormalFlags": [],
+                "abnormalImmunes": [],
+                "abnormalAntis": [],
+                "abnormalCombos": [],
+                "abnormalComboImmunes": [],
+                "attributeModifiers": []
+              },
+              "buffKey": "spuria_s_2[light]",
+              "loadFromDB": false,
+              "isDurableBuff": false,
+              "isDamageMissable": false,
+              "isSilenceable": false,
+              "isStunnable": false,
+              "isFreezable": false,
+              "isLevitatable": false,
+              "statusResistable": "AUTOMATIC",
+              "templateKey": "empty",
+              "disableOverride": false,
+              "overrideKey": null,
+              "overrideType": "DEFAULT",
+              "maxStackCnt": 1,
+              "refreshRemainingTimeWhenStackMax": false,
+              "clearAllStackCntWhenTimeUp": false,
+              "maxValidStackCnt": -1,
+              "independentCharacterSource": false,
+              "overrideEffectKey": "spuria_skill_02_buff_01",
+              "overrideOnEventPriority": false,
+              "onEventPriority": "DEFAULT",
+              "audioSignal": null,
+              "lifeTimeType": "LIMITED",
+              "takeSnapshotWhenExtend": false,
+              "durationKey": null,
+              "lifeTime": 0,
+              "triggerLifeType": "IMMEDIATELY",
+              "triggerCnt": 0,
+              "triggerInterval": -1,
+              "waitFirstTriggerInterval": true,
+              "firstTriggerInterval": -1,
+              "priority": -1,
+              "priorityBBKeys": [],
+              "stripBlackboardParamsWithBuffKey": false,
+              "blackboard": []
+            },
+            "_buffOwner": "BUFF_OWNER",
+            "_isDerivedBuff": true,
+            "_finishDerivedBuffIfParentFinish": true
+          }
+        ],
+        "ON_BUFF_DISABLE": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+FinishDerivedBuff, Assembly-CSharp",
+            "_updateOverrideMap": true
+          }
+        ]
+      }
+    },
+    "spuria_s_2[ally]": {
+      "templateKey": "spuria_s_2[ally]",
+      "effectKey": "",
+      "onEventPriority": "DEFAULT",
+      "eventToActions": {
+        "ON_OUTPUT_ATK_OR_HEAL": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+CheckContainsBuff, Assembly-CSharp",
+            "_targetType": "BUFF_OWNER",
+            "_buffKeys": [
+              "spuria_s_2[mark]"
+            ],
+            "isAND": true,
+            "_loadFromBlackboard": false,
+            "_checkBuffSource": false,
+            "_buffSourceType": "BUFF_SOURCE",
+            "_checkSourceHost": false
+          },
+          {
+            "$type": "Torappu.Battle.Action.Nodes+IfElse, Assembly-CSharp",
+            "_conditionNode": {
+              "$type": "Torappu.Battle.Action.Nodes+FilterAbilityFamily, Assembly-CSharp",
+              "_familyGroupMask": "ATTACK_OR_COMBAT"
+            },
+            "_succeedNodes": [
+              {
+                "$type": "Torappu.Battle.Action.Nodes+IfElse, Assembly-CSharp",
+                "_conditionNode": {
+                  "$type": "Torappu.Battle.Action.Nodes+Dice, Assembly-CSharp",
+                  "_probKey": "prob"
+                },
+                "_succeedNodes": [
+                  {
+                    "$type": "Torappu.Battle.Action.Nodes+CreateBuff, Assembly-CSharp",
+                    "_buff": {
+                      "attributes": {
+                        "abnormalFlags": [
+                          "STUNNED"
+                        ],
+                        "abnormalImmunes": [],
+                        "abnormalAntis": [],
+                        "abnormalCombos": [],
+                        "abnormalComboImmunes": [],
+                        "attributeModifiers": []
+                      },
+                      "buffKey": "spuria_s_2[stun]",
+                      "loadFromDB": false,
+                      "isDurableBuff": false,
+                      "isDamageMissable": false,
+                      "isSilenceable": false,
+                      "isStunnable": false,
+                      "isFreezable": false,
+                      "isLevitatable": false,
+                      "statusResistable": "AUTOMATIC",
+                      "templateKey": "empty",
+                      "disableOverride": false,
+                      "overrideKey": null,
+                      "overrideType": "DEFAULT",
+                      "maxStackCnt": 1,
+                      "refreshRemainingTimeWhenStackMax": false,
+                      "clearAllStackCntWhenTimeUp": false,
+                      "maxValidStackCnt": -1,
+                      "independentCharacterSource": false,
+                      "overrideEffectKey": "buff_stun",
+                      "overrideOnEventPriority": false,
+                      "onEventPriority": "DEFAULT",
+                      "audioSignal": null,
+                      "lifeTimeType": "LIMITED",
+                      "takeSnapshotWhenExtend": false,
+                      "durationKey": "stun_time",
+                      "lifeTime": 0,
+                      "triggerLifeType": "IMMEDIATELY",
+                      "triggerCnt": 0,
+                      "triggerInterval": -1,
+                      "waitFirstTriggerInterval": true,
+                      "firstTriggerInterval": -1,
+                      "priority": -1,
+                      "priorityBBKeys": [],
+                      "stripBlackboardParamsWithBuffKey": false,
+                      "blackboard": []
+                    },
+                    "_buffOwner": "BUFF_OWNER",
+                    "_isDerivedBuff": false,
+                    "_finishDerivedBuffIfParentFinish": true
+                  },
+                  {
+                    "$type": "Torappu.Battle.Action.Nodes+CreateEffect, Assembly-CSharp",
+                    "_targetType": "TARGET",
+                    "_sourceType": "SOURCE",
+                    "_effectKey": "spuria_skill_02_stun_03",
+                    "_useSourceFaceVactor": false,
+                    "_useSourceToTargetDirection": false,
+                    "_useAttackPlaybackSpeed": false
+                  },
+                  {
+                    "$type": "Torappu.Battle.Action.Nodes+FinishDerivedBuff, Assembly-CSharp",
+                    "_updateOverrideMap": true
+                  }
+                ],
+                "_failNodes": null
+              }
+            ],
+            "_failNodes": [
+              {
+                "$type": "Torappu.Battle.Action.Nodes+FilterAbilityFamily, Assembly-CSharp",
+                "_familyGroupMask": "SKILL"
+              },
+              {
+                "$type": "Torappu.Battle.Action.Nodes+IfElse, Assembly-CSharp",
+                "_conditionNode": {
+                  "$type": "Torappu.Battle.Action.Nodes+Dice, Assembly-CSharp",
+                  "_probKey": "prob"
+                },
+                "_succeedNodes": [
+                  {
+                    "$type": "Torappu.Battle.Action.Nodes+CreateBuff, Assembly-CSharp",
+                    "_buff": {
+                      "attributes": {
+                        "abnormalFlags": [
+                          "STUNNED"
+                        ],
+                        "abnormalImmunes": [],
+                        "abnormalAntis": [],
+                        "abnormalCombos": [],
+                        "abnormalComboImmunes": [],
+                        "attributeModifiers": []
+                      },
+                      "buffKey": "spuria_s_2[stun]",
+                      "loadFromDB": false,
+                      "isDurableBuff": false,
+                      "isDamageMissable": false,
+                      "isSilenceable": false,
+                      "isStunnable": false,
+                      "isFreezable": false,
+                      "isLevitatable": false,
+                      "statusResistable": "AUTOMATIC",
+                      "templateKey": "empty",
+                      "disableOverride": false,
+                      "overrideKey": null,
+                      "overrideType": "DEFAULT",
+                      "maxStackCnt": 1,
+                      "refreshRemainingTimeWhenStackMax": false,
+                      "clearAllStackCntWhenTimeUp": false,
+                      "maxValidStackCnt": -1,
+                      "independentCharacterSource": false,
+                      "overrideEffectKey": "buff_stun",
+                      "overrideOnEventPriority": false,
+                      "onEventPriority": "DEFAULT",
+                      "audioSignal": null,
+                      "lifeTimeType": "LIMITED",
+                      "takeSnapshotWhenExtend": false,
+                      "durationKey": "stun_time",
+                      "lifeTime": 0,
+                      "triggerLifeType": "IMMEDIATELY",
+                      "triggerCnt": 0,
+                      "triggerInterval": -1,
+                      "waitFirstTriggerInterval": true,
+                      "firstTriggerInterval": -1,
+                      "priority": -1,
+                      "priorityBBKeys": [],
+                      "stripBlackboardParamsWithBuffKey": false,
+                      "blackboard": []
+                    },
+                    "_buffOwner": "BUFF_OWNER",
+                    "_isDerivedBuff": false,
+                    "_finishDerivedBuffIfParentFinish": true
+                  },
+                  {
+                    "$type": "Torappu.Battle.Action.Nodes+CreateEffect, Assembly-CSharp",
+                    "_targetType": "TARGET",
+                    "_sourceType": "SOURCE",
+                    "_effectKey": "spuria_skill_02_stun_03",
+                    "_useSourceFaceVactor": false,
+                    "_useSourceToTargetDirection": false,
+                    "_useAttackPlaybackSpeed": false
+                  },
+                  {
+                    "$type": "Torappu.Battle.Action.Nodes+FinishDerivedBuff, Assembly-CSharp",
+                    "_updateOverrideMap": true
+                  }
+                ],
+                "_failNodes": null
+              }
+            ]
+          }
+        ],
+        "ON_ABILITY_START": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+CreateBuff, Assembly-CSharp",
+            "_buff": {
+              "attributes": {
+                "abnormalFlags": [],
+                "abnormalImmunes": [],
+                "abnormalAntis": [],
+                "abnormalCombos": [],
+                "abnormalComboImmunes": [],
+                "attributeModifiers": []
+              },
+              "buffKey": "spuria_s_2[mark]",
+              "loadFromDB": false,
+              "isDurableBuff": false,
+              "isDamageMissable": false,
+              "isSilenceable": false,
+              "isStunnable": false,
+              "isFreezable": false,
+              "isLevitatable": false,
+              "statusResistable": "AUTOMATIC",
+              "templateKey": "empty",
+              "disableOverride": false,
+              "overrideKey": null,
+              "overrideType": "DEFAULT",
+              "maxStackCnt": 1,
+              "refreshRemainingTimeWhenStackMax": false,
+              "clearAllStackCntWhenTimeUp": false,
+              "maxValidStackCnt": -1,
+              "independentCharacterSource": false,
+              "overrideEffectKey": null,
+              "overrideOnEventPriority": false,
+              "onEventPriority": "DEFAULT",
+              "audioSignal": null,
+              "lifeTimeType": "INFINITY",
+              "takeSnapshotWhenExtend": false,
+              "durationKey": null,
+              "lifeTime": 0,
+              "triggerLifeType": "IMMEDIATELY",
+              "triggerCnt": 0,
+              "triggerInterval": -1,
+              "waitFirstTriggerInterval": true,
+              "firstTriggerInterval": -1,
+              "priority": -1,
+              "priorityBBKeys": [],
+              "stripBlackboardParamsWithBuffKey": false,
+              "blackboard": []
+            },
+            "_buffOwner": "BUFF_OWNER",
+            "_isDerivedBuff": true,
+            "_finishDerivedBuffIfParentFinish": true
+          }
+        ],
+        "ON_ABILITY_FINISH": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+FinishDerivedBuff, Assembly-CSharp",
+            "_updateOverrideMap": true
+          }
+        ]
+      }
+    },
+    "spuria_s_2[self]": {
+      "templateKey": "spuria_s_2[self]",
+      "effectKey": "",
+      "onEventPriority": "DEFAULT",
+      "eventToActions": {
+        "ON_OUTPUT_ATK_OR_HEAL": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+CheckContainsBuff, Assembly-CSharp",
+            "_targetType": "BUFF_OWNER",
+            "_buffKeys": [
+              "spuria_s_2[mark]"
+            ],
+            "isAND": true,
+            "_loadFromBlackboard": false,
+            "_checkBuffSource": false,
+            "_buffSourceType": "BUFF_SOURCE",
+            "_checkSourceHost": false
+          },
+          {
+            "$type": "Torappu.Battle.Action.Nodes+IfElse, Assembly-CSharp",
+            "_conditionNode": {
+              "$type": "Torappu.Battle.Action.Nodes+FilterAbilityFamily, Assembly-CSharp",
+              "_familyGroupMask": "ATTACK_OR_COMBAT"
+            },
+            "_succeedNodes": [
+              {
+                "$type": "Torappu.Battle.Action.Nodes+IfElse, Assembly-CSharp",
+                "_conditionNode": {
+                  "$type": "Torappu.Battle.Action.Nodes+Dice, Assembly-CSharp",
+                  "_probKey": "prob"
+                },
+                "_succeedNodes": [
+                  {
+                    "$type": "Torappu.Battle.Action.Nodes+CreateBuff, Assembly-CSharp",
+                    "_buff": {
+                      "attributes": {
+                        "abnormalFlags": [
+                          "STUNNED"
+                        ],
+                        "abnormalImmunes": [],
+                        "abnormalAntis": [],
+                        "abnormalCombos": [],
+                        "abnormalComboImmunes": [],
+                        "attributeModifiers": []
+                      },
+                      "buffKey": "spuria_s_2[stun]",
+                      "loadFromDB": false,
+                      "isDurableBuff": false,
+                      "isDamageMissable": false,
+                      "isSilenceable": false,
+                      "isStunnable": false,
+                      "isFreezable": false,
+                      "isLevitatable": false,
+                      "statusResistable": "AUTOMATIC",
+                      "templateKey": "empty",
+                      "disableOverride": false,
+                      "overrideKey": null,
+                      "overrideType": "DEFAULT",
+                      "maxStackCnt": 1,
+                      "refreshRemainingTimeWhenStackMax": false,
+                      "clearAllStackCntWhenTimeUp": false,
+                      "maxValidStackCnt": -1,
+                      "independentCharacterSource": false,
+                      "overrideEffectKey": "buff_stun",
+                      "overrideOnEventPriority": false,
+                      "onEventPriority": "DEFAULT",
+                      "audioSignal": null,
+                      "lifeTimeType": "LIMITED",
+                      "takeSnapshotWhenExtend": false,
+                      "durationKey": "stun_time",
+                      "lifeTime": 0,
+                      "triggerLifeType": "IMMEDIATELY",
+                      "triggerCnt": 0,
+                      "triggerInterval": -1,
+                      "waitFirstTriggerInterval": true,
+                      "firstTriggerInterval": -1,
+                      "priority": -1,
+                      "priorityBBKeys": [],
+                      "stripBlackboardParamsWithBuffKey": false,
+                      "blackboard": []
+                    },
+                    "_buffOwner": "BUFF_OWNER",
+                    "_isDerivedBuff": false,
+                    "_finishDerivedBuffIfParentFinish": true
+                  },
+                  {
+                    "$type": "Torappu.Battle.Action.Nodes+IfElse, Assembly-CSharp",
+                    "_conditionNode": {
+                      "$type": "Torappu.Battle.Action.Nodes+CheckFaceDirection, Assembly-CSharp",
+                      "_target": "TARGET",
+                      "_direction": "DOWN"
+                    },
+                    "_succeedNodes": [
+                      {
+                        "$type": "Torappu.Battle.Action.Nodes+CreateEffect, Assembly-CSharp",
+                        "_targetType": "TARGET",
+                        "_sourceType": "SOURCE",
+                        "_effectKey": "spuria_skill_02_stun_02",
+                        "_useSourceFaceVactor": false,
+                        "_useSourceToTargetDirection": false,
+                        "_useAttackPlaybackSpeed": false
+                      }
+                    ],
+                    "_failNodes": [
+                      {
+                        "$type": "Torappu.Battle.Action.Nodes+CreateEffect, Assembly-CSharp",
+                        "_targetType": "TARGET",
+                        "_sourceType": "SOURCE",
+                        "_effectKey": "spuria_skill_02_stun_01",
+                        "_useSourceFaceVactor": false,
+                        "_useSourceToTargetDirection": false,
+                        "_useAttackPlaybackSpeed": false
+                      }
+                    ]
+                  },
+                  {
+                    "$type": "Torappu.Battle.Action.Nodes+FinishDerivedBuff, Assembly-CSharp",
+                    "_updateOverrideMap": true
+                  }
+                ],
+                "_failNodes": null
+              }
+            ],
+            "_failNodes": [
+              {
+                "$type": "Torappu.Battle.Action.Nodes+FilterAbilityFamily, Assembly-CSharp",
+                "_familyGroupMask": "SKILL"
+              },
+              {
+                "$type": "Torappu.Battle.Action.Nodes+IfElse, Assembly-CSharp",
+                "_conditionNode": {
+                  "$type": "Torappu.Battle.Action.Nodes+Dice, Assembly-CSharp",
+                  "_probKey": "prob"
+                },
+                "_succeedNodes": [
+                  {
+                    "$type": "Torappu.Battle.Action.Nodes+CreateBuff, Assembly-CSharp",
+                    "_buff": {
+                      "attributes": {
+                        "abnormalFlags": [
+                          "STUNNED"
+                        ],
+                        "abnormalImmunes": [],
+                        "abnormalAntis": [],
+                        "abnormalCombos": [],
+                        "abnormalComboImmunes": [],
+                        "attributeModifiers": []
+                      },
+                      "buffKey": "spuria_s_2[stun]",
+                      "loadFromDB": false,
+                      "isDurableBuff": false,
+                      "isDamageMissable": false,
+                      "isSilenceable": false,
+                      "isStunnable": false,
+                      "isFreezable": false,
+                      "isLevitatable": false,
+                      "statusResistable": "AUTOMATIC",
+                      "templateKey": "empty",
+                      "disableOverride": false,
+                      "overrideKey": null,
+                      "overrideType": "DEFAULT",
+                      "maxStackCnt": 1,
+                      "refreshRemainingTimeWhenStackMax": false,
+                      "clearAllStackCntWhenTimeUp": false,
+                      "maxValidStackCnt": -1,
+                      "independentCharacterSource": false,
+                      "overrideEffectKey": "buff_stun",
+                      "overrideOnEventPriority": false,
+                      "onEventPriority": "DEFAULT",
+                      "audioSignal": null,
+                      "lifeTimeType": "LIMITED",
+                      "takeSnapshotWhenExtend": false,
+                      "durationKey": "stun_time",
+                      "lifeTime": 0,
+                      "triggerLifeType": "IMMEDIATELY",
+                      "triggerCnt": 0,
+                      "triggerInterval": -1,
+                      "waitFirstTriggerInterval": true,
+                      "firstTriggerInterval": -1,
+                      "priority": -1,
+                      "priorityBBKeys": [],
+                      "stripBlackboardParamsWithBuffKey": false,
+                      "blackboard": []
+                    },
+                    "_buffOwner": "BUFF_OWNER",
+                    "_isDerivedBuff": false,
+                    "_finishDerivedBuffIfParentFinish": true
+                  },
+                  {
+                    "$type": "Torappu.Battle.Action.Nodes+IfElse, Assembly-CSharp",
+                    "_conditionNode": {
+                      "$type": "Torappu.Battle.Action.Nodes+CheckFaceDirection, Assembly-CSharp",
+                      "_target": "TARGET",
+                      "_direction": "DOWN"
+                    },
+                    "_succeedNodes": [
+                      {
+                        "$type": "Torappu.Battle.Action.Nodes+CreateEffect, Assembly-CSharp",
+                        "_targetType": "TARGET",
+                        "_sourceType": "SOURCE",
+                        "_effectKey": "spuria_skill_02_stun_02",
+                        "_useSourceFaceVactor": false,
+                        "_useSourceToTargetDirection": false,
+                        "_useAttackPlaybackSpeed": false
+                      }
+                    ],
+                    "_failNodes": [
+                      {
+                        "$type": "Torappu.Battle.Action.Nodes+CreateEffect, Assembly-CSharp",
+                        "_targetType": "TARGET",
+                        "_sourceType": "SOURCE",
+                        "_effectKey": "spuria_skill_02_stun_01",
+                        "_useSourceFaceVactor": false,
+                        "_useSourceToTargetDirection": false,
+                        "_useAttackPlaybackSpeed": false
+                      }
+                    ]
+                  },
+                  {
+                    "$type": "Torappu.Battle.Action.Nodes+FinishDerivedBuff, Assembly-CSharp",
+                    "_updateOverrideMap": true
+                  }
+                ],
+                "_failNodes": null
+              }
+            ]
+          }
+        ],
+        "ON_ABILITY_START": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+CreateBuff, Assembly-CSharp",
+            "_buff": {
+              "attributes": {
+                "abnormalFlags": [],
+                "abnormalImmunes": [],
+                "abnormalAntis": [],
+                "abnormalCombos": [],
+                "abnormalComboImmunes": [],
+                "attributeModifiers": []
+              },
+              "buffKey": "spuria_s_2[mark]",
+              "loadFromDB": false,
+              "isDurableBuff": false,
+              "isDamageMissable": false,
+              "isSilenceable": false,
+              "isStunnable": false,
+              "isFreezable": false,
+              "isLevitatable": false,
+              "statusResistable": "AUTOMATIC",
+              "templateKey": "empty",
+              "disableOverride": false,
+              "overrideKey": null,
+              "overrideType": "DEFAULT",
+              "maxStackCnt": 1,
+              "refreshRemainingTimeWhenStackMax": false,
+              "clearAllStackCntWhenTimeUp": false,
+              "maxValidStackCnt": -1,
+              "independentCharacterSource": false,
+              "overrideEffectKey": null,
+              "overrideOnEventPriority": false,
+              "onEventPriority": "DEFAULT",
+              "audioSignal": null,
+              "lifeTimeType": "INFINITY",
+              "takeSnapshotWhenExtend": false,
+              "durationKey": null,
+              "lifeTime": 0,
+              "triggerLifeType": "IMMEDIATELY",
+              "triggerCnt": 0,
+              "triggerInterval": -1,
+              "waitFirstTriggerInterval": true,
+              "firstTriggerInterval": -1,
+              "priority": -1,
+              "priorityBBKeys": [],
+              "stripBlackboardParamsWithBuffKey": false,
+              "blackboard": []
+            },
+            "_buffOwner": "BUFF_OWNER",
+            "_isDerivedBuff": true,
+            "_finishDerivedBuffIfParentFinish": true
+          }
+        ],
+        "ON_ABILITY_FINISH": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+FinishDerivedBuff, Assembly-CSharp",
+            "_updateOverrideMap": true
+          }
+        ]
+      }
+    },
+    "spuria_t_1[attack]": {
+      "templateKey": "spuria_t_1[attack]",
+      "effectKey": "",
+      "onEventPriority": "DEFAULT",
+      "eventToActions": {
+        "ON_BUFF_START": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+AdvancedApplyDamage, Assembly-CSharp",
+            "_targetType": "TARGET",
+            "_damageType": "PHYSICAL",
+            "_atkScaleVar": "atk_scale",
+            "_defaultAtkScale": 1,
+            "_applyWay": "RANGED",
+            "_baseOnHostAtk": false,
+            "_emitSourceOnCalculateDamage": false,
+            "_attackType": "NORMAL",
+            "_forceUseProjectileCachedAtk": false,
+            "_ignoreForSp": false,
+            "_ignoreMissFlag": "NONE",
+            "_ignoreCancelReasonMask": "NONE",
+            "_modifierKey": "",
+            "_assignRealDamageToBB": false,
+            "_skipModifierEvent": false
+          }
+        ]
+      }
+    },
+    "spuria_t_1": {
+      "templateKey": "spuria_t_1",
+      "effectKey": "",
+      "onEventPriority": "DEFAULT",
+      "eventToActions": {
+        "ON_BUFF_START": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+FinishBuffsById, Assembly-CSharp",
+            "_buffKey": "spuria_t_1[attack]",
+            "_loadFromBlackboard": false,
+            "_decCntIfStack": false,
+            "_updateOverrideMap": true,
+            "_targetType": "BUFF_SOURCE",
+            "_checkBuffSource": false,
+            "_sourceType": "BUFF_SOURCE",
+            "_alsoClearNullSource": false,
+            "_finishHostBuff": false
+          },
+          {
+            "$type": "Torappu.Battle.Action.Nodes+FinishBuffsById, Assembly-CSharp",
+            "_buffKey": "spuria_t_1[def_penetrate]",
+            "_loadFromBlackboard": false,
+            "_decCntIfStack": false,
+            "_updateOverrideMap": true,
+            "_targetType": "BUFF_SOURCE",
+            "_checkBuffSource": false,
+            "_sourceType": "BUFF_SOURCE",
+            "_alsoClearNullSource": false,
+            "_finishHostBuff": false
+          },
+          {
+            "$type": "Torappu.Battle.Action.Nodes+Dice, Assembly-CSharp",
+            "_probKey": "prob"
+          },
+          {
+            "$type": "Torappu.Battle.Action.Nodes+RandomCreateBuff, Assembly-CSharp",
+            "_datas": [
+              {
+                "buff": {
+                  "attributes": {
+                    "abnormalFlags": null,
+                    "abnormalImmunes": null,
+                    "abnormalAntis": null,
+                    "abnormalCombos": null,
+                    "abnormalComboImmunes": null,
+                    "attributeModifiers": null
+                  },
+                  "buffKey": "spuria_t_1[attack]",
+                  "loadFromDB": false,
+                  "isDurableBuff": false,
+                  "isDamageMissable": false,
+                  "isSilenceable": false,
+                  "isStunnable": false,
+                  "isFreezable": false,
+                  "isLevitatable": false,
+                  "statusResistable": "AUTOMATIC",
+                  "templateKey": "spuria_t_1[attack]",
+                  "disableOverride": false,
+                  "overrideKey": null,
+                  "overrideType": "DEFAULT",
+                  "maxStackCnt": 1,
+                  "refreshRemainingTimeWhenStackMax": false,
+                  "clearAllStackCntWhenTimeUp": false,
+                  "maxValidStackCnt": -1,
+                  "independentCharacterSource": false,
+                  "overrideEffectKey": null,
+                  "overrideOnEventPriority": false,
+                  "onEventPriority": "DEFAULT",
+                  "audioSignal": null,
+                  "lifeTimeType": "INFINITY",
+                  "takeSnapshotWhenExtend": false,
+                  "durationKey": null,
+                  "lifeTime": 0,
+                  "triggerLifeType": "IMMEDIATELY",
+                  "triggerCnt": 1,
+                  "triggerInterval": 0.10000000149011612,
+                  "waitFirstTriggerInterval": true,
+                  "firstTriggerInterval": -1,
+                  "priority": -1,
+                  "priorityBBKeys": [],
+                  "stripBlackboardParamsWithBuffKey": false,
+                  "blackboard": []
+                },
+                "buffOwner": "BUFF_OWNER",
+                "weight": 1,
+                "weightKey": null
+              },
+              {
+                "buff": {
+                  "attributes": {
+                    "abnormalFlags": null,
+                    "abnormalImmunes": null,
+                    "abnormalAntis": null,
+                    "abnormalCombos": null,
+                    "abnormalComboImmunes": null,
+                    "attributeModifiers": null
+                  },
+                  "buffKey": "stun",
+                  "loadFromDB": true,
+                  "isDurableBuff": false,
+                  "isDamageMissable": false,
+                  "isSilenceable": false,
+                  "isStunnable": false,
+                  "isFreezable": false,
+                  "isLevitatable": false,
+                  "statusResistable": "AUTOMATIC",
+                  "templateKey": "empty",
+                  "disableOverride": false,
+                  "overrideKey": null,
+                  "overrideType": "DEFAULT",
+                  "maxStackCnt": 1,
+                  "refreshRemainingTimeWhenStackMax": false,
+                  "clearAllStackCntWhenTimeUp": false,
+                  "maxValidStackCnt": -1,
+                  "independentCharacterSource": false,
+                  "overrideEffectKey": null,
+                  "overrideOnEventPriority": false,
+                  "onEventPriority": "DEFAULT",
+                  "audioSignal": null,
+                  "lifeTimeType": "LIMITED",
+                  "takeSnapshotWhenExtend": false,
+                  "durationKey": null,
+                  "lifeTime": 0,
+                  "triggerLifeType": "IMMEDIATELY",
+                  "triggerCnt": 0,
+                  "triggerInterval": -1,
+                  "waitFirstTriggerInterval": true,
+                  "firstTriggerInterval": -1,
+                  "priority": -1,
+                  "priorityBBKeys": [],
+                  "stripBlackboardParamsWithBuffKey": false,
+                  "blackboard": []
+                },
+                "buffOwner": "BUFF_OWNER",
+                "weight": 1,
+                "weightKey": null
+              },
+              {
+                "buff": {
+                  "attributes": {
+                    "abnormalFlags": [],
+                    "abnormalImmunes": [],
+                    "abnormalAntis": [],
+                    "abnormalCombos": [],
+                    "abnormalComboImmunes": [],
+                    "attributeModifiers": [
+                      {
+                        "attributeType": "DEF_PENETRATE",
+                        "formulaItem": "ADDITION",
+                        "value": 0,
+                        "loadFromBlackboard": true,
+                        "fetchBaseValueFromSourceEntity": false
+                      }
+                    ]
+                  },
+                  "buffKey": "spuria_t_1[def_penetrate]",
+                  "loadFromDB": false,
+                  "isDurableBuff": false,
+                  "isDamageMissable": false,
+                  "isSilenceable": false,
+                  "isStunnable": false,
+                  "isFreezable": false,
+                  "isLevitatable": false,
+                  "statusResistable": "AUTOMATIC",
+                  "templateKey": "empty",
+                  "disableOverride": false,
+                  "overrideKey": null,
+                  "overrideType": "DEFAULT",
+                  "maxStackCnt": 1,
+                  "refreshRemainingTimeWhenStackMax": false,
+                  "clearAllStackCntWhenTimeUp": false,
+                  "maxValidStackCnt": -1,
+                  "independentCharacterSource": false,
+                  "overrideEffectKey": null,
+                  "overrideOnEventPriority": false,
+                  "onEventPriority": "DEFAULT",
+                  "audioSignal": null,
+                  "lifeTimeType": "INFINITY",
+                  "takeSnapshotWhenExtend": false,
+                  "durationKey": null,
+                  "lifeTime": 0,
+                  "triggerLifeType": "IMMEDIATELY",
+                  "triggerCnt": 0,
+                  "triggerInterval": -1,
+                  "waitFirstTriggerInterval": true,
+                  "firstTriggerInterval": -1,
+                  "priority": -1,
+                  "priorityBBKeys": [],
+                  "stripBlackboardParamsWithBuffKey": false,
+                  "blackboard": []
+                },
+                "buffOwner": "BUFF_SOURCE",
+                "weight": 1,
+                "weightKey": null
+              }
+            ],
+            "_buffWithWeight": false,
+            "_isDerivedBuff": false,
+            "_finishDerivedBuffIfParentFinish": false
+          }
+        ]
+      }
+    },
+    "spuria_t_atk": {
+      "templateKey": "spuria_t_atk",
+      "effectKey": "",
+      "onEventPriority": "DEFAULT",
+      "eventToActions": {
+        "ON_CALCULATE_DAMAGE": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+AtkScaleUp, Assembly-CSharp",
+            "_filterApplyWay": false,
+            "_filterProjectileKey": "",
+            "_applyWay": "NONE",
+            "_defaultValue": 1,
+            "_filterNoneApplyWay": false,
+            "_cancelIfAtkScaleZero": false,
+            "_atkScaleKey": "atk_scale"
+          }
+        ]
+      }
+    },
+    "periodic_damage_by_hp_ratio[skip_modifier_fix][undeadable]": {
+      "templateKey": "periodic_damage_by_hp_ratio[skip_modifier_fix][undeadable]",
+      "effectKey": "",
+      "onEventPriority": "DEFAULT",
+      "eventToActions": {
+        "ON_BUFF_TRIGGER": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+DamageViaMaxHpRatio, Assembly-CSharp",
+            "_targetType": "TARGET",
+            "_getMaxHpFromTarget": false,
+            "_damageType": "PURE",
+            "_applyWay": "NONE",
+            "_ignoreForSp": true,
+            "_isUndeadable": true,
+            "_attackType": "NORMAL",
+            "_skipModifierEvent": true,
+            "_multiplyByKey": false,
+            "_multiplierKey": "cnt"
+          }
+        ]
+      }
+    },
+    "switch_mode_restart_fsm": {
+      "templateKey": "switch_mode_restart_fsm",
+      "effectKey": "",
+      "onEventPriority": "DEFAULT",
+      "eventToActions": {
+        "ON_BUFF_START": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+SwitchMode, Assembly-CSharp",
+            "_modeIndex": 1,
+            "_loadModeFromBlackboard": true,
+            "_restoreDefault": false,
+            "_restartFSM": true,
+            "_targetType": "TARGET"
+          }
+        ],
+        "ON_BUFF_FINISH": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+SwitchMode, Assembly-CSharp",
+            "_modeIndex": 0,
+            "_loadModeFromBlackboard": false,
+            "_restoreDefault": true,
+            "_restartFSM": true,
+            "_targetType": "TARGET"
+          }
+        ]
+      }
+    }
+  },
+  "models": {
+    "char_4015_spuria": {
+      "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+      "Front": {
+        "path": "spine/char_4015_spuria/char_4015_spuria/Front/char_4015_spuria.skel",
+        "sha256": "6b9ddecad7bb6795fe6ecb64e792a62b1a41a6833cef561c30df533bf58bf472",
+        "bytes": 498605,
+        "version": "3.8.99",
+        "animations": [
+          "Attack_Begin",
+          "Attack_Down_Begin",
+          "Attack_Down_End",
+          "Attack_Down_Loop",
+          "Attack_End",
+          "Attack_Loop",
+          "Default",
+          "Die",
+          "Idle",
+          "Skill_Begin",
+          "Skill_Down_Loop",
+          "Skill_End",
+          "Skill_Idle",
+          "Skill_Loop",
+          "Skill_Stun",
+          "Start"
+        ],
+        "durations": {
+          "Attack_Begin": 0.167,
+          "Attack_Down_Begin": 0.167,
+          "Attack_Down_End": 0.167,
+          "Attack_Down_Loop": 1.3,
+          "Attack_End": 0.167,
+          "Attack_Loop": 1.3,
+          "Default": 0,
+          "Die": 1,
+          "Idle": 6,
+          "Skill_Begin": 1,
+          "Skill_Down_Loop": 1.3,
+          "Skill_End": 0.333,
+          "Skill_Idle": 6,
+          "Skill_Loop": 1.3,
+          "Skill_Stun": 1,
+          "Start": 1
+        },
+        "events": [
+          "OnAttack",
+          "OnStart"
+        ],
+        "hits": {
+          "Attack_Down_Loop": [
+            0.033
+          ],
+          "Attack_Loop": [
+            0.033
+          ],
+          "Skill_Down_Loop": [
+            0.033
+          ],
+          "Skill_Loop": [
+            0.033
+          ]
+        },
+        "bounds": {
+          "x": -160.991,
+          "y": -2.615,
+          "width": 870.428,
+          "height": 535.509
+        },
+        "missingRegions": []
+      },
+      "Back": {
+        "path": "spine/char_4015_spuria/char_4015_spuria/Back/char_4015_spuria.skel",
+        "sha256": "dbaa6a6402d3c6bb274069ba8c947d35cee57670b08096d9bf9429b6a9c80ba1",
+        "bytes": 206429,
+        "version": "3.8.99",
+        "animations": [
+          "Attack_Begin",
+          "Attack_End",
+          "Attack_Loop",
+          "Default",
+          "Idle",
+          "Skill_Begin",
+          "Skill_End",
+          "Skill_Idle",
+          "Skill_Loop",
+          "Start"
+        ],
+        "durations": {
+          "Attack_Begin": 0.167,
+          "Attack_End": 0.167,
+          "Attack_Loop": 1.3,
+          "Default": 0,
+          "Idle": 6,
+          "Skill_Begin": 1,
+          "Skill_End": 0.333,
+          "Skill_Idle": 6,
+          "Skill_Loop": 1.3,
+          "Start": 1
+        },
+        "events": [
+          "OnAttack",
+          "OnStart"
+        ],
+        "hits": {
+          "Attack_Loop": [
+            0.033
+          ],
+          "Skill_Loop": [
+            0.033
+          ]
+        },
+        "bounds": {
+          "x": -160.991,
+          "y": -2.615,
+          "width": 870.428,
+          "height": 535.509
+        },
+        "missingRegions": []
+      }
+    }
+  },
+  "originalFacingBindings": {
+    "char_4015_spuria": {
+      "Front": {
+        "animatorPathId": "-9020162745082952527",
+        "skeletonAnimationPathId": "-2143868620701219663",
+        "skeletonDataAssetPathId": "-6545843887776378212",
+        "textAssetPathId": "-2982548055409709881",
+        "sha256": "6b9ddecad7bb6795fe6ecb64e792a62b1a41a6833cef561c30df533bf58bf472",
+        "byteLength": 498605
+      },
+      "Back": {
+        "animatorPathId": "-9020162745082952527",
+        "skeletonAnimationPathId": "1133518314567713969",
+        "skeletonDataAssetPathId": "-270522472248366449",
+        "textAssetPathId": "-1313009064395321026",
+        "sha256": "dbaa6a6402d3c6bb274069ba8c947d35cee57670b08096d9bf9429b6a9c80ba1",
+        "byteLength": 206429
+      }
+    }
+  },
+  "tables": {
+    "char_4015_spuria": {
+      "character": {
+        "name": "Spuria",
+        "description": "Continually loses HP over time",
+        "sortIndex": 788,
+        "canUseGeneralPotentialItem": true,
+        "canUseActivityPotentialItem": false,
+        "potentialItemId": "p_char_4015_spuria",
+        "activityPotentialItemId": null,
+        "classicPotentialItemId": null,
+        "nationId": "laterano",
+        "groupId": null,
+        "teamId": null,
+        "mainPower": {
+          "nationId": "laterano",
+          "groupId": null,
+          "teamId": null
+        },
+        "subPower": null,
+        "displayNumber": "LT12",
+        "appellation": " ",
+        "position": "RANGED",
+        "tagList": [
+          "Support",
+          "DPS"
+        ],
+        "itemUsage": "Specialist Operator Spuria, here to offer you help.",
+        "itemDesc": "'Huh? A field mission AGAIN?'",
+        "itemObtainApproach": "Recruitment & Headhunting",
+        "isNotObtainable": false,
+        "isSpChar": false,
+        "maxPotentialLevel": 5,
+        "rarity": "TIER_5",
+        "profession": "SPECIAL",
+        "subProfessionId": "geek",
+        "trait": {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_0",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "blackboard": [
+                {
+                  "key": "hp_ratio",
+                  "value": 0.01,
+                  "valueStr": null
+                }
+              ],
+              "overrideDescripton": null,
+              "prefabKey": null,
+              "rangeId": null
+            }
+          ]
+        },
+        "phases": [
+          {
+            "characterPrefabKey": "char_4015_spuria",
+            "rangeId": "3-1",
+            "maxLevel": 50,
+            "attributesKeyFrames": [
+              {
+                "level": 1,
+                "data": {
+                  "maxHp": 805,
+                  "atk": 233,
+                  "def": 53,
+                  "magicResistance": 10,
+                  "cost": 10,
+                  "blockCnt": 1,
+                  "moveSpeed": 1,
+                  "attackSpeed": 100,
+                  "baseAttackTime": 1.3,
+                  "respawnTime": 70,
+                  "hpRecoveryPerSec": 0,
+                  "spRecoveryPerSec": 1,
+                  "maxDeployCount": 1,
+                  "maxDeckStackCnt": 0,
+                  "tauntLevel": 0,
+                  "massLevel": 0,
+                  "baseForceLevel": 0,
+                  "stunImmune": false,
+                  "silenceImmune": false,
+                  "sleepImmune": false,
+                  "frozenImmune": false,
+                  "levitateImmune": false,
+                  "disarmedCombatImmune": false,
+                  "fearedImmune": false,
+                  "palsyImmune": false,
+                  "attractImmune": false
+                }
+              },
+              {
+                "level": 50,
+                "data": {
+                  "maxHp": 1150,
+                  "atk": 389,
+                  "def": 82,
+                  "magicResistance": 10,
+                  "cost": 10,
+                  "blockCnt": 1,
+                  "moveSpeed": 1,
+                  "attackSpeed": 100,
+                  "baseAttackTime": 1.3,
+                  "respawnTime": 70,
+                  "hpRecoveryPerSec": 0,
+                  "spRecoveryPerSec": 1,
+                  "maxDeployCount": 1,
+                  "maxDeckStackCnt": 0,
+                  "tauntLevel": 0,
+                  "massLevel": 0,
+                  "baseForceLevel": 0,
+                  "stunImmune": false,
+                  "silenceImmune": false,
+                  "sleepImmune": false,
+                  "frozenImmune": false,
+                  "levitateImmune": false,
+                  "disarmedCombatImmune": false,
+                  "fearedImmune": false,
+                  "palsyImmune": false,
+                  "attractImmune": false
+                }
+              }
+            ],
+            "evolveCost": null
+          },
+          {
+            "characterPrefabKey": "char_4015_spuria",
+            "rangeId": "3-3",
+            "maxLevel": 70,
+            "attributesKeyFrames": [
+              {
+                "level": 1,
+                "data": {
+                  "maxHp": 1150,
+                  "atk": 389,
+                  "def": 82,
+                  "magicResistance": 10,
+                  "cost": 12,
+                  "blockCnt": 1,
+                  "moveSpeed": 1,
+                  "attackSpeed": 100,
+                  "baseAttackTime": 1.3,
+                  "respawnTime": 70,
+                  "hpRecoveryPerSec": 0,
+                  "spRecoveryPerSec": 1,
+                  "maxDeployCount": 1,
+                  "maxDeckStackCnt": 0,
+                  "tauntLevel": 0,
+                  "massLevel": 0,
+                  "baseForceLevel": 0,
+                  "stunImmune": false,
+                  "silenceImmune": false,
+                  "sleepImmune": false,
+                  "frozenImmune": false,
+                  "levitateImmune": false,
+                  "disarmedCombatImmune": false,
+                  "fearedImmune": false,
+                  "palsyImmune": false,
+                  "attractImmune": false
+                }
+              },
+              {
+                "level": 70,
+                "data": {
+                  "maxHp": 1514,
+                  "atk": 549,
+                  "def": 110,
+                  "magicResistance": 10,
+                  "cost": 12,
+                  "blockCnt": 1,
+                  "moveSpeed": 1,
+                  "attackSpeed": 100,
+                  "baseAttackTime": 1.3,
+                  "respawnTime": 70,
+                  "hpRecoveryPerSec": 0,
+                  "spRecoveryPerSec": 1,
+                  "maxDeployCount": 1,
+                  "maxDeckStackCnt": 0,
+                  "tauntLevel": 0,
+                  "massLevel": 0,
+                  "baseForceLevel": 0,
+                  "stunImmune": false,
+                  "silenceImmune": false,
+                  "sleepImmune": false,
+                  "frozenImmune": false,
+                  "levitateImmune": false,
+                  "disarmedCombatImmune": false,
+                  "fearedImmune": false,
+                  "palsyImmune": false,
+                  "attractImmune": false
+                }
+              }
+            ],
+            "evolveCost": [
+              {
+                "id": "3281",
+                "count": 4,
+                "type": "MATERIAL"
+              },
+              {
+                "id": "30032",
+                "count": 5,
+                "type": "MATERIAL"
+              },
+              {
+                "id": "30052",
+                "count": 2,
+                "type": "MATERIAL"
+              }
+            ]
+          },
+          {
+            "characterPrefabKey": "char_4015_spuria",
+            "rangeId": "3-3",
+            "maxLevel": 80,
+            "attributesKeyFrames": [
+              {
+                "level": 1,
+                "data": {
+                  "maxHp": 1514,
+                  "atk": 549,
+                  "def": 110,
+                  "magicResistance": 10,
+                  "cost": 12,
+                  "blockCnt": 1,
+                  "moveSpeed": 1,
+                  "attackSpeed": 100,
+                  "baseAttackTime": 1.3,
+                  "respawnTime": 70,
+                  "hpRecoveryPerSec": 0,
+                  "spRecoveryPerSec": 1,
+                  "maxDeployCount": 1,
+                  "maxDeckStackCnt": 0,
+                  "tauntLevel": 0,
+                  "massLevel": 0,
+                  "baseForceLevel": 0,
+                  "stunImmune": false,
+                  "silenceImmune": false,
+                  "sleepImmune": false,
+                  "frozenImmune": false,
+                  "levitateImmune": false,
+                  "disarmedCombatImmune": false,
+                  "fearedImmune": false,
+                  "palsyImmune": false,
+                  "attractImmune": false
+                }
+              },
+              {
+                "level": 80,
+                "data": {
+                  "maxHp": 1893,
+                  "atk": 662,
+                  "def": 138,
+                  "magicResistance": 10,
+                  "cost": 12,
+                  "blockCnt": 1,
+                  "moveSpeed": 1,
+                  "attackSpeed": 100,
+                  "baseAttackTime": 1.3,
+                  "respawnTime": 70,
+                  "hpRecoveryPerSec": 0,
+                  "spRecoveryPerSec": 1,
+                  "maxDeployCount": 1,
+                  "maxDeckStackCnt": 0,
+                  "tauntLevel": 0,
+                  "massLevel": 0,
+                  "baseForceLevel": 0,
+                  "stunImmune": false,
+                  "silenceImmune": false,
+                  "sleepImmune": false,
+                  "frozenImmune": false,
+                  "levitateImmune": false,
+                  "disarmedCombatImmune": false,
+                  "fearedImmune": false,
+                  "palsyImmune": false,
+                  "attractImmune": false
+                }
+              }
+            ],
+            "evolveCost": [
+              {
+                "id": "3283",
+                "count": 3,
+                "type": "MATERIAL"
+              },
+              {
+                "id": "31034",
+                "count": 7,
+                "type": "MATERIAL"
+              },
+              {
+                "id": "31053",
+                "count": 9,
+                "type": "MATERIAL"
+              }
+            ]
+          }
+        ],
+        "skills": [
+          {
+            "skillId": "skchr_spuria_1",
+            "overridePrefabKey": null,
+            "overrideTokenKey": null,
+            "levelUpCostCond": [
+              {
+                "unlockCond": {
+                  "phase": "PHASE_2",
+                  "level": 1
+                },
+                "lvlUpTime": 28800,
+                "levelUpCost": [
+                  {
+                    "id": "3303",
+                    "count": 5,
+                    "type": "MATERIAL"
+                  },
+                  {
+                    "id": "30084",
+                    "count": 3,
+                    "type": "MATERIAL"
+                  },
+                  {
+                    "id": "31023",
+                    "count": 3,
+                    "type": "MATERIAL"
+                  }
+                ]
+              },
+              {
+                "unlockCond": {
+                  "phase": "PHASE_2",
+                  "level": 1
+                },
+                "lvlUpTime": 57600,
+                "levelUpCost": [
+                  {
+                    "id": "3303",
+                    "count": 6,
+                    "type": "MATERIAL"
+                  },
+                  {
+                    "id": "31024",
+                    "count": 3,
+                    "type": "MATERIAL"
+                  },
+                  {
+                    "id": "30094",
+                    "count": 5,
+                    "type": "MATERIAL"
+                  }
+                ]
+              },
+              {
+                "unlockCond": {
+                  "phase": "PHASE_2",
+                  "level": 1
+                },
+                "lvlUpTime": 86400,
+                "levelUpCost": [
+                  {
+                    "id": "3303",
+                    "count": 10,
+                    "type": "MATERIAL"
+                  },
+                  {
+                    "id": "30135",
+                    "count": 4,
+                    "type": "MATERIAL"
+                  },
+                  {
+                    "id": "30054",
+                    "count": 4,
+                    "type": "MATERIAL"
+                  }
+                ]
+              }
+            ],
+            "unlockCond": {
+              "phase": "PHASE_0",
+              "level": 1
+            }
+          },
+          {
+            "skillId": "skchr_spuria_2",
+            "overridePrefabKey": null,
+            "overrideTokenKey": null,
+            "levelUpCostCond": [
+              {
+                "unlockCond": {
+                  "phase": "PHASE_2",
+                  "level": 1
+                },
+                "lvlUpTime": 28800,
+                "levelUpCost": [
+                  {
+                    "id": "3303",
+                    "count": 5,
+                    "type": "MATERIAL"
+                  },
+                  {
+                    "id": "30064",
+                    "count": 2,
+                    "type": "MATERIAL"
+                  },
+                  {
+                    "id": "31013",
+                    "count": 3,
+                    "type": "MATERIAL"
+                  }
+                ]
+              },
+              {
+                "unlockCond": {
+                  "phase": "PHASE_2",
+                  "level": 1
+                },
+                "lvlUpTime": 57600,
+                "levelUpCost": [
+                  {
+                    "id": "3303",
+                    "count": 6,
+                    "type": "MATERIAL"
+                  },
+                  {
+                    "id": "31054",
+                    "count": 3,
+                    "type": "MATERIAL"
+                  },
+                  {
+                    "id": "31024",
+                    "count": 6,
+                    "type": "MATERIAL"
+                  }
+                ]
+              },
+              {
+                "unlockCond": {
+                  "phase": "PHASE_2",
+                  "level": 1
+                },
+                "lvlUpTime": 86400,
+                "levelUpCost": [
+                  {
+                    "id": "3303",
+                    "count": 10,
+                    "type": "MATERIAL"
+                  },
+                  {
+                    "id": "30145",
+                    "count": 4,
+                    "type": "MATERIAL"
+                  },
+                  {
+                    "id": "31044",
+                    "count": 3,
+                    "type": "MATERIAL"
+                  }
+                ]
+              }
+            ],
+            "unlockCond": {
+              "phase": "PHASE_1",
+              "level": 1
+            }
+          }
+        ],
+        "displayTokenDict": null,
+        "talents": [
+          {
+            "candidates": [
+              {
+                "unlockCondition": {
+                  "phase": "PHASE_0",
+                  "level": 1
+                },
+                "requiredPotentialRank": 0,
+                "prefabKey": "1",
+                "name": "Differential Reloading Experiment",
+                "description": "Each attack has a 30% chance to trigger one of the following effects: the attack instead hits twice; the target is <$ba.stun>Stunned</> for 0.5 seconds; the attack ignores 60% of the target's DEF",
+                "rangeId": null,
+                "blackboard": [
+                  {
+                    "key": "prob",
+                    "value": 0.3,
+                    "valueStr": null
+                  },
+                  {
+                    "key": "stun",
+                    "value": 0.5,
+                    "valueStr": null
+                  },
+                  {
+                    "key": "def_penetrate",
+                    "value": 0.6,
+                    "valueStr": null
+                  }
+                ],
+                "tokenKey": null,
+                "isHideTalent": false
+              },
+              {
+                "unlockCondition": {
+                  "phase": "PHASE_1",
+                  "level": 1
+                },
+                "requiredPotentialRank": 0,
+                "prefabKey": "1",
+                "name": "Differential Reloading Experiment",
+                "description": "Each attack has a 50% chance to trigger one of the following effects: the attack instead hits twice; the target is <$ba.stun>Stunned</> for 1 second; the attack ignores 60% of the target's DEF",
+                "rangeId": null,
+                "blackboard": [
+                  {
+                    "key": "prob",
+                    "value": 0.5,
+                    "valueStr": null
+                  },
+                  {
+                    "key": "stun",
+                    "value": 1,
+                    "valueStr": null
+                  },
+                  {
+                    "key": "def_penetrate",
+                    "value": 0.6,
+                    "valueStr": null
+                  }
+                ],
+                "tokenKey": null,
+                "isHideTalent": false
+              },
+              {
+                "unlockCondition": {
+                  "phase": "PHASE_2",
+                  "level": 1
+                },
+                "requiredPotentialRank": 0,
+                "prefabKey": "1",
+                "name": "Differential Reloading Experiment",
+                "description": "Each attack has a 70% chance to trigger one of the following effects: the attack instead hits twice; the target is <$ba.stun>Stunned</> for 1 second; the attack ignores 80% of the target's DEF",
+                "rangeId": null,
+                "blackboard": [
+                  {
+                    "key": "prob",
+                    "value": 0.7,
+                    "valueStr": null
+                  },
+                  {
+                    "key": "stun",
+                    "value": 1,
+                    "valueStr": null
+                  },
+                  {
+                    "key": "def_penetrate",
+                    "value": 0.8,
+                    "valueStr": null
+                  }
+                ],
+                "tokenKey": null,
+                "isHideTalent": false
+              }
+            ]
+          }
+        ],
+        "potentialRanks": [
+          {
+            "type": "BUFF",
+            "description": "DP Cost -1",
+            "buff": {
+              "attributes": {
+                "abnormalFlags": null,
+                "abnormalImmunes": null,
+                "abnormalAntis": null,
+                "abnormalCombos": null,
+                "abnormalComboImmunes": null,
+                "attributeModifiers": [
+                  {
+                    "attributeType": "COST",
+                    "formulaItem": "ADDITION",
+                    "value": -1,
+                    "loadFromBlackboard": false,
+                    "fetchBaseValueFromSourceEntity": false
+                  }
+                ]
+              }
+            },
+            "equivalentCost": null
+          },
+          {
+            "type": "BUFF",
+            "description": "Redeployment Time -4 sec",
+            "buff": {
+              "attributes": {
+                "abnormalFlags": null,
+                "abnormalImmunes": null,
+                "abnormalAntis": null,
+                "abnormalCombos": null,
+                "abnormalComboImmunes": null,
+                "attributeModifiers": [
+                  {
+                    "attributeType": "RESPAWN_TIME",
+                    "formulaItem": "ADDITION",
+                    "value": -4,
+                    "loadFromBlackboard": false,
+                    "fetchBaseValueFromSourceEntity": false
+                  }
+                ]
+              }
+            },
+            "equivalentCost": null
+          },
+          {
+            "type": "BUFF",
+            "description": "ATK +24",
+            "buff": {
+              "attributes": {
+                "abnormalFlags": null,
+                "abnormalImmunes": null,
+                "abnormalAntis": null,
+                "abnormalCombos": null,
+                "abnormalComboImmunes": null,
+                "attributeModifiers": [
+                  {
+                    "attributeType": "ATK",
+                    "formulaItem": "ADDITION",
+                    "value": 24,
+                    "loadFromBlackboard": false,
+                    "fetchBaseValueFromSourceEntity": false
+                  }
+                ]
+              }
+            },
+            "equivalentCost": null
+          },
+          {
+            "type": "BUFF",
+            "description": "Redeployment Time -6 sec",
+            "buff": {
+              "attributes": {
+                "abnormalFlags": null,
+                "abnormalImmunes": null,
+                "abnormalAntis": null,
+                "abnormalCombos": null,
+                "abnormalComboImmunes": null,
+                "attributeModifiers": [
+                  {
+                    "attributeType": "RESPAWN_TIME",
+                    "formulaItem": "ADDITION",
+                    "value": -6,
+                    "loadFromBlackboard": false,
+                    "fetchBaseValueFromSourceEntity": false
+                  }
+                ]
+              }
+            },
+            "equivalentCost": null
+          },
+          {
+            "type": "BUFF",
+            "description": "DP Cost -1",
+            "buff": {
+              "attributes": {
+                "abnormalFlags": null,
+                "abnormalImmunes": null,
+                "abnormalAntis": null,
+                "abnormalCombos": null,
+                "abnormalComboImmunes": null,
+                "attributeModifiers": [
+                  {
+                    "attributeType": "COST",
+                    "formulaItem": "ADDITION",
+                    "value": -1,
+                    "loadFromBlackboard": false,
+                    "fetchBaseValueFromSourceEntity": false
+                  }
+                ]
+              }
+            },
+            "equivalentCost": null
+          }
+        ],
+        "favorKeyFrames": [
+          {
+            "level": 0,
+            "data": {
+              "maxHp": 0,
+              "atk": 0,
+              "def": 0,
+              "magicResistance": 0,
+              "cost": 0,
+              "blockCnt": 0,
+              "moveSpeed": 0,
+              "attackSpeed": 0,
+              "baseAttackTime": 0,
+              "respawnTime": 0,
+              "hpRecoveryPerSec": 0,
+              "spRecoveryPerSec": 0,
+              "maxDeployCount": 0,
+              "maxDeckStackCnt": 0,
+              "tauntLevel": 0,
+              "massLevel": 0,
+              "baseForceLevel": 0,
+              "stunImmune": false,
+              "silenceImmune": false,
+              "sleepImmune": false,
+              "frozenImmune": false,
+              "levitateImmune": false,
+              "disarmedCombatImmune": false,
+              "fearedImmune": false,
+              "palsyImmune": false,
+              "attractImmune": false
+            }
+          },
+          {
+            "level": 50,
+            "data": {
+              "maxHp": 200,
+              "atk": 45,
+              "def": 0,
+              "magicResistance": 0,
+              "cost": 0,
+              "blockCnt": 0,
+              "moveSpeed": 0,
+              "attackSpeed": 0,
+              "baseAttackTime": 0,
+              "respawnTime": 0,
+              "hpRecoveryPerSec": 0,
+              "spRecoveryPerSec": 0,
+              "maxDeployCount": 0,
+              "maxDeckStackCnt": 0,
+              "tauntLevel": 0,
+              "massLevel": 0,
+              "baseForceLevel": 0,
+              "stunImmune": false,
+              "silenceImmune": false,
+              "sleepImmune": false,
+              "frozenImmune": false,
+              "levitateImmune": false,
+              "disarmedCombatImmune": false,
+              "fearedImmune": false,
+              "palsyImmune": false,
+              "attractImmune": false
+            }
+          }
+        ],
+        "allSkillLvlup": [
+          {
+            "unlockCond": {
+              "phase": "PHASE_0",
+              "level": 1
+            },
+            "lvlUpCost": [
+              {
+                "id": "3301",
+                "count": 4,
+                "type": "MATERIAL"
+              }
+            ]
+          },
+          {
+            "unlockCond": {
+              "phase": "PHASE_0",
+              "level": 1
+            },
+            "lvlUpCost": [
+              {
+                "id": "3301",
+                "count": 4,
+                "type": "MATERIAL"
+              },
+              {
+                "id": "30051",
+                "count": 5,
+                "type": "MATERIAL"
+              }
+            ]
+          },
+          {
+            "unlockCond": {
+              "phase": "PHASE_0",
+              "level": 1
+            },
+            "lvlUpCost": [
+              {
+                "id": "3302",
+                "count": 6,
+                "type": "MATERIAL"
+              },
+              {
+                "id": "30062",
+                "count": 2,
+                "type": "MATERIAL"
+              }
+            ]
+          },
+          {
+            "unlockCond": {
+              "phase": "PHASE_1",
+              "level": 1
+            },
+            "lvlUpCost": [
+              {
+                "id": "3302",
+                "count": 6,
+                "type": "MATERIAL"
+              },
+              {
+                "id": "30012",
+                "count": 8,
+                "type": "MATERIAL"
+              }
+            ]
+          },
+          {
+            "unlockCond": {
+              "phase": "PHASE_1",
+              "level": 1
+            },
+            "lvlUpCost": [
+              {
+                "id": "3302",
+                "count": 6,
+                "type": "MATERIAL"
+              },
+              {
+                "id": "30033",
+                "count": 5,
+                "type": "MATERIAL"
+              }
+            ]
+          },
+          {
+            "unlockCond": {
+              "phase": "PHASE_1",
+              "level": 1
+            },
+            "lvlUpCost": [
+              {
+                "id": "3303",
+                "count": 6,
+                "type": "MATERIAL"
+              },
+              {
+                "id": "30063",
+                "count": 3,
+                "type": "MATERIAL"
+              },
+              {
+                "id": "30023",
+                "count": 2,
+                "type": "MATERIAL"
+              }
+            ]
+          }
+        ]
+      },
+      "skills": {
+        "skchr_spuria_1": {
+          "skillId": "skchr_spuria_1",
+          "iconId": null,
+          "hidden": false,
+          "levels": [
+            {
+              "name": "Seize the Moment",
+              "rangeId": null,
+              "description": "After deployment, ASPD <@ba.vup>+{attack_speed}</>",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 0,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 0
+              },
+              "prefabId": "skchr_spuria_1",
+              "duration": 16,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 40,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Seize the Moment",
+              "rangeId": null,
+              "description": "After deployment, ASPD <@ba.vup>+{attack_speed}</>",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 0,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 0
+              },
+              "prefabId": "skchr_spuria_1",
+              "duration": 16,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 45,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Seize the Moment",
+              "rangeId": null,
+              "description": "After deployment, ASPD <@ba.vup>+{attack_speed}</>",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 0,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 0
+              },
+              "prefabId": "skchr_spuria_1",
+              "duration": 16,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 50,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Seize the Moment",
+              "rangeId": null,
+              "description": "After deployment, ASPD <@ba.vup>+{attack_speed}</>",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 0,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 0
+              },
+              "prefabId": "skchr_spuria_1",
+              "duration": 17,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 55,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Seize the Moment",
+              "rangeId": null,
+              "description": "After deployment, ASPD <@ba.vup>+{attack_speed}</>",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 0,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 0
+              },
+              "prefabId": "skchr_spuria_1",
+              "duration": 17,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 60,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Seize the Moment",
+              "rangeId": null,
+              "description": "After deployment, ASPD <@ba.vup>+{attack_speed}</>",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 0,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 0
+              },
+              "prefabId": "skchr_spuria_1",
+              "duration": 17,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 65,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Seize the Moment",
+              "rangeId": null,
+              "description": "After deployment, ASPD <@ba.vup>+{attack_speed}</>",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 0,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 0
+              },
+              "prefabId": "skchr_spuria_1",
+              "duration": 18,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 70,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Seize the Moment",
+              "rangeId": null,
+              "description": "After deployment, ASPD <@ba.vup>+{attack_speed}</>",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 0,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 0
+              },
+              "prefabId": "skchr_spuria_1",
+              "duration": 20,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 80,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Seize the Moment",
+              "rangeId": null,
+              "description": "After deployment, ASPD <@ba.vup>+{attack_speed}</>",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 0,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 0
+              },
+              "prefabId": "skchr_spuria_1",
+              "duration": 22,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 90,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Seize the Moment",
+              "rangeId": null,
+              "description": "After deployment, ASPD <@ba.vup>+{attack_speed}</>",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 0,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 0
+              },
+              "prefabId": "skchr_spuria_1",
+              "duration": 24,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": 100,
+                  "valueStr": null
+                }
+              ]
+            }
+          ]
+        },
+        "skchr_spuria_2": {
+          "skillId": "skchr_spuria_2",
+          "iconId": null,
+          "hidden": false,
+          "levels": [
+            {
+              "name": "On-the-Fly Weapon Modding",
+              "rangeId": null,
+              "description": "Grants ATK <@ba.vup>+{atk:0%}</> and ASPD <@ba.vup>+{attack_speed}</> to this unit and the closest <@ba.rem>Sniper</> Operator in front of this unit (prioritizes the tile directly in front); when attacking, this unit and the <@ba.rem>Sniper</> Operator have a <@ba.vup>{prob:0%}</> chance to <@ba.vdown><$ba.stun>Stun</> themselves for {stun_time:0.0} seconds</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 52,
+                "initSp": 25,
+                "increment": 1
+              },
+              "prefabId": "skchr_spuria_2",
+              "duration": 20,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack_speed",
+                  "value": 20,
+                  "valueStr": null
+                },
+                {
+                  "key": "stun_time",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob",
+                  "value": 0.35,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "On-the-Fly Weapon Modding",
+              "rangeId": null,
+              "description": "Grants ATK <@ba.vup>+{atk:0%}</> and ASPD <@ba.vup>+{attack_speed}</> to this unit and the closest <@ba.rem>Sniper</> Operator in front of this unit (prioritizes the tile directly in front); when attacking, this unit and the <@ba.rem>Sniper</> Operator have a <@ba.vup>{prob:0%}</> chance to <@ba.vdown><$ba.stun>Stun</> themselves for {stun_time:0.0} seconds</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 51,
+                "initSp": 25,
+                "increment": 1
+              },
+              "prefabId": "skchr_spuria_2",
+              "duration": 20,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack_speed",
+                  "value": 20,
+                  "valueStr": null
+                },
+                {
+                  "key": "stun_time",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob",
+                  "value": 0.35,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "On-the-Fly Weapon Modding",
+              "rangeId": null,
+              "description": "Grants ATK <@ba.vup>+{atk:0%}</> and ASPD <@ba.vup>+{attack_speed}</> to this unit and the closest <@ba.rem>Sniper</> Operator in front of this unit (prioritizes the tile directly in front); when attacking, this unit and the <@ba.rem>Sniper</> Operator have a <@ba.vup>{prob:0%}</> chance to <@ba.vdown><$ba.stun>Stun</> themselves for {stun_time:0.0} seconds</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 50,
+                "initSp": 25,
+                "increment": 1
+              },
+              "prefabId": "skchr_spuria_2",
+              "duration": 20,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack_speed",
+                  "value": 20,
+                  "valueStr": null
+                },
+                {
+                  "key": "stun_time",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob",
+                  "value": 0.35,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "On-the-Fly Weapon Modding",
+              "rangeId": null,
+              "description": "Grants ATK <@ba.vup>+{atk:0%}</> and ASPD <@ba.vup>+{attack_speed}</> to this unit and the closest <@ba.rem>Sniper</> Operator in front of this unit (prioritizes the tile directly in front); when attacking, this unit and the <@ba.rem>Sniper</> Operator have a <@ba.vup>{prob:0%}</> chance to <@ba.vdown><$ba.stun>Stun</> themselves for {stun_time:0.0} seconds</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 49,
+                "initSp": 26,
+                "increment": 1
+              },
+              "prefabId": "skchr_spuria_2",
+              "duration": 20,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.15,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack_speed",
+                  "value": 25,
+                  "valueStr": null
+                },
+                {
+                  "key": "stun_time",
+                  "value": 2.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob",
+                  "value": 0.3,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "On-the-Fly Weapon Modding",
+              "rangeId": null,
+              "description": "Grants ATK <@ba.vup>+{atk:0%}</> and ASPD <@ba.vup>+{attack_speed}</> to this unit and the closest <@ba.rem>Sniper</> Operator in front of this unit (prioritizes the tile directly in front); when attacking, this unit and the <@ba.rem>Sniper</> Operator have a <@ba.vup>{prob:0%}</> chance to <@ba.vdown><$ba.stun>Stun</> themselves for {stun_time:0.0} seconds</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 48,
+                "initSp": 26,
+                "increment": 1
+              },
+              "prefabId": "skchr_spuria_2",
+              "duration": 20,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.15,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack_speed",
+                  "value": 25,
+                  "valueStr": null
+                },
+                {
+                  "key": "stun_time",
+                  "value": 2.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob",
+                  "value": 0.3,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "On-the-Fly Weapon Modding",
+              "rangeId": null,
+              "description": "Grants ATK <@ba.vup>+{atk:0%}</> and ASPD <@ba.vup>+{attack_speed}</> to this unit and the closest <@ba.rem>Sniper</> Operator in front of this unit (prioritizes the tile directly in front); when attacking, this unit and the <@ba.rem>Sniper</> Operator have a <@ba.vup>{prob:0%}</> chance to <@ba.vdown><$ba.stun>Stun</> themselves for {stun_time:0.0} seconds</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 47,
+                "initSp": 26,
+                "increment": 1
+              },
+              "prefabId": "skchr_spuria_2",
+              "duration": 20,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.15,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack_speed",
+                  "value": 25,
+                  "valueStr": null
+                },
+                {
+                  "key": "stun_time",
+                  "value": 2.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob",
+                  "value": 0.3,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "On-the-Fly Weapon Modding",
+              "rangeId": null,
+              "description": "Grants ATK <@ba.vup>+{atk:0%}</> and ASPD <@ba.vup>+{attack_speed}</> to this unit and the closest <@ba.rem>Sniper</> Operator in front of this unit (prioritizes the tile directly in front); when attacking, this unit and the <@ba.rem>Sniper</> Operator have a <@ba.vup>{prob:0%}</> chance to <@ba.vdown><$ba.stun>Stun</> themselves for {stun_time:0.0} seconds</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 46,
+                "initSp": 27,
+                "increment": 1
+              },
+              "prefabId": "skchr_spuria_2",
+              "duration": 20,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack_speed",
+                  "value": 30,
+                  "valueStr": null
+                },
+                {
+                  "key": "stun_time",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob",
+                  "value": 0.25,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "On-the-Fly Weapon Modding",
+              "rangeId": null,
+              "description": "Grants ATK <@ba.vup>+{atk:0%}</> and ASPD <@ba.vup>+{attack_speed}</> to this unit and the closest <@ba.rem>Sniper</> Operator in front of this unit (prioritizes the tile directly in front); when attacking, this unit and the <@ba.rem>Sniper</> Operator have a <@ba.vup>{prob:0%}</> chance to <@ba.vdown><$ba.stun>Stun</> themselves for {stun_time:0.0} seconds</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 44,
+                "initSp": 28,
+                "increment": 1
+              },
+              "prefabId": "skchr_spuria_2",
+              "duration": 20,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack_speed",
+                  "value": 35,
+                  "valueStr": null
+                },
+                {
+                  "key": "stun_time",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob",
+                  "value": 0.25,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "On-the-Fly Weapon Modding",
+              "rangeId": null,
+              "description": "Grants ATK <@ba.vup>+{atk:0%}</> and ASPD <@ba.vup>+{attack_speed}</> to this unit and the closest <@ba.rem>Sniper</> Operator in front of this unit (prioritizes the tile directly in front); when attacking, this unit and the <@ba.rem>Sniper</> Operator have a <@ba.vup>{prob:0%}</> chance to <@ba.vdown><$ba.stun>Stun</> themselves for {stun_time:0.0} seconds</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 42,
+                "initSp": 29,
+                "increment": 1
+              },
+              "prefabId": "skchr_spuria_2",
+              "duration": 20,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack_speed",
+                  "value": 35,
+                  "valueStr": null
+                },
+                {
+                  "key": "stun_time",
+                  "value": 1.8,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob",
+                  "value": 0.25,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "On-the-Fly Weapon Modding",
+              "rangeId": null,
+              "description": "Grants ATK <@ba.vup>+{atk:0%}</> and ASPD <@ba.vup>+{attack_speed}</> to this unit and the closest <@ba.rem>Sniper</> Operator in front of this unit (prioritizes the tile directly in front); when attacking, this unit and the <@ba.rem>Sniper</> Operator have a <@ba.vup>{prob:0%}</> chance to <@ba.vdown><$ba.stun>Stun</> themselves for {stun_time:0.0} seconds</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 40,
+                "initSp": 30,
+                "increment": 1
+              },
+              "prefabId": "skchr_spuria_2",
+              "duration": 20,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack_speed",
+                  "value": 40,
+                  "valueStr": null
+                },
+                {
+                  "key": "stun_time",
+                  "value": 1.8,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob",
+                  "value": 0.2,
+                  "valueStr": null
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  },
+  "limitations": [
+    "Native output/ability-family dispatch is bounded to simulator hit receipts and attack IDs. Equal native random branch weights are mapped to independent seeded draws; nested event order is recorded and tested, not claimed frame-identical.",
+    "Native forward Sniper postfilter21 is mapped to the immediately-forward tile then nearest eligible Sniper in the source attack range, with deploy sequence as a deterministic tie break.",
+    "Native Sequence casts are mapped to immediate independent recipient/self buffs; the source beginning clip is presentation without additional damage, skill/SP holds or interrupts. The ending clip is retained as evidence but is not yet played.",
+    "No modules, original Unity particles or audio."
+  ]
+}

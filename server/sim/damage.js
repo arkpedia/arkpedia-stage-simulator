@@ -2,8 +2,9 @@
 //
 // dealDamage order: (element → gauge path) | invulnerable? / 对地规避 (a ground enemy's damage to an airborne 起飞 ally —
 //   targeting.js evadesGround; not `ignoreSelect` damage: no selection, e.g. a debuff's tick) → 'hit' hook (mutable DamageInfo, may set cancel)
-//   → dodge (phys/arts, canDodge) → mitigation (phys: DEF, arts: RES, true: none)
+//   → attacker hit rate → dodge (phys/arts, canDodge) → mitigation (phys: DEF, arts: RES, true: none)
 //   → × source dmgDealtMul (× phys/artsDealtMul) × target dmgTakenMul (not for 元素伤害) × type-taken mul × dmg.mul
+//   → optional 'damageFinal' hook (mutable final amount after mitigation and flat resistance)
 //   → 限伤 (leaders in boss / hidden battles: a hit of ceil(final) ≥ BOSS_HIT_LIMIT is cancelled, see leaderHitCancelled)
 //   → shields (hit-negating barriers first, then HP shields) → HP loss (boss pool routing) → 'damaged' hook
 //   → SP-on-hurt / TAKE_DAMAGE trigger → fatal/kill.
@@ -69,6 +70,7 @@ export function makeDamageInfo(d = {}) {
   return {
     _norm: true,
     amount: Number.isFinite(+d.amount) ? +d.amount : 0,
+    minimumAmount: Number.isFinite(d.minimumAmount) ? Math.max(0, d.minimumAmount) : 0,
     type,
     element: d.element ?? null,
     atkScale: d.atkScale ?? 1,
@@ -81,10 +83,18 @@ export function makeDamageInfo(d = {}) {
     isSkill: !!d.isSkill,
     isSplash: !!d.isSplash,
     isAttack: !!d.isAttack,
+    applyWay: ['melee', 'ranged'].includes(d.applyWay) ? d.applyWay : 'none',
     isProjectile: !!d.isProjectile,
+    // Source environment selectors use an explicit damage flag; sourceless or
+    // periodic damage alone does not establish that classification.
+    isEnvironment: !!d.isEnvironment,
+    isEnvironmentElement: !!d.isEnvironmentElement,
     tags: d.tags ?? [],
     cancel: false,
     noSp: !!d.noSp,
+    // A source-owned undeadable modifier for this receipt only (Saga).
+    // Applied after shields; it never protects unrelated damage or HP loss.
+    hpFloor: Number.isFinite(d.hpFloor) ? Math.max(0, d.hpFloor) : 0,
     ignoreSleep: !!d.ignoreSleep,
     // no selection 无法选择 effects stop (an ability that "无视无法选择" such as PRTS 【污染秽蚀】, a direct pick, a flying
     // unit's blast credited to a ground leader, the tick of a debuff already on the unit): reaches an airborne 起飞 ally
@@ -181,12 +191,15 @@ export function leaderHitCancelled(battle, target, amount) {
 }
 
 /** Absorb damage with shields on `target`. Returns the remaining amount. */
-export function absorbShields(battle, target, amount) {
+export function absorbShields(battle, target, amount, damageType = null, application = {}) {
   if (amount <= 0) return 0;
   let changed = false;
   let rest = amount;
   for (let i = 0; i < target.buffs.length && rest > 0; i++) {
     const b = target.buffs[i];
+    if (b.shieldTypes && !b.shieldTypes.includes(damageType)) continue;
+    if (b.shieldApplyWays && !b.shieldApplyWays.includes(application.applyWay ?? 'none')) continue;
+    if (b.shieldSourceSides && !b.shieldSourceSides.includes(application.source?.side)) continue;
     if (b.shieldHits > 0) {
       b.shieldHits--;
       rest = 0;
@@ -197,6 +210,9 @@ export function absorbShields(battle, target, amount) {
   }
   for (let i = 0; i < target.buffs.length && rest > 0; i++) {
     const b = target.buffs[i];
+    if (b.shieldTypes && !b.shieldTypes.includes(damageType)) continue;
+    if (b.shieldApplyWays && !b.shieldApplyWays.includes(application.applyWay ?? 'none')) continue;
+    if (b.shieldSourceSides && !b.shieldSourceSides.includes(application.source?.side)) continue;
     if (b.shield > 0) {
       const take = Math.min(b.shield, rest);
       b.shield -= take;
@@ -223,6 +239,10 @@ export function dealDamage(battle, source, target, dmgIn) {
   // tag, 伤害提升 items / bonds / modules, reflect, "受到来自…的伤害") can recognise it; `credit` names the unit that still
   // gets the stats and the kill (PRTS 伤害分类 无来源 ③)
   const hs = dmg.sourceless ? null : source;
+  // Opt-in output effects can count an issued HP-damage instance before the
+  // recipient prevents it. Existing modifier and damage-receipt hooks retain
+  // their order; elemental buildup uses its separate pipeline above.
+  if (battle._hooks.outputDamage) battle.emit('outputDamage', { source: hs, target, dmg, credit: source });
   let ts = target.s;
   if (ts.flags.invulnerable || sleepBlocks(target, hs, dmg) || liftoffEvades(target, hs, dmg)) return 0;
   if (battle._hooks.hit) {
@@ -233,6 +253,17 @@ export function dealDamage(battle, source, target, dmgIn) {
     if (ts.flags.invulnerable || sleepBlocks(target, hs, dmg)) return 0;
   }
   const type = dmg.type;
+  // Native DAMAGE_HITRATE attributes belong to the attacker. A failed hit
+  // precedes the recipient's independent evade roll and can miss any recipient.
+  // Non-missable, true/elemental and sourceless damage bypass this roll.
+  if (hs && dmg.canDodge && (type === 'phys' || type === 'arts')) {
+    const p = type === 'phys' ? hs.s.hitRatePhys : hs.s.hitRateArts;
+    if (p < 1 && (p <= 0 || battle.rng() >= p)) {
+      battle.fx('dodge', { x: target.x, y: target.y, id: target.id });
+      if (battle._hooks.hitFailed) battle.emit('hitFailed', { source: hs, target, dmg });
+      return 0;
+    }
+  }
   // dodge
   if (dmg.canDodge && (type === 'phys' || type === 'arts')) {
     const p = type === 'phys' ? ts.dodgePhys : ts.dodgeArts;
@@ -247,7 +278,10 @@ export function dealDamage(battle, source, target, dmgIn) {
   // recognise their own (tagged) damage — never re-create such a loss with a fresh loseHp.
   if (ts.flags.hitCount || ts.flags.hitCountArts) {
     const counts = !(ts.flags.hitCountArts && !ts.flags.hitCount && type === 'phys');
-    return applyHpLoss(battle, source, target, absorbShields(battle, target, counts ? 1 : 0), dmg);
+    if (battle._hooks.calculatedDamage) battle.emit('calculatedDamage',
+      { source: hs, target, dmg, credit: source, amount: counts ? 1 : 0 });
+    return applyHpLoss(battle, source, target, absorbShields(battle, target, counts ? 1 : 0, type,
+      { source: hs, applyWay: dmg.applyWay }), dmg);
   }
   // 无来源 damage (element bursts) takes nothing from its source's stats; the source still gets the credit below
   const ss = source && source.s && !dmg.sourceless ? source.s : null;
@@ -258,16 +292,43 @@ export function dealDamage(battle, source, target, dmgIn) {
     resIgnoreFlat: dmg.resIgnoreFlat + (ss ? ss.resIgnoreFlat : 0),
     elementalRes: type === 'elemental' ? (target.def?.epDamageResistance ?? 0) : 0,
   });
+  // An explicit EnsureDmgOrHeal floor (Aciddrop) follows DEF/RES mitigation,
+  // before outgoing/incoming multipliers. Ordinary attacks keep their usual floor.
+  if (Number.isFinite(dmg.minimumAmount) && dmg.minimumAmount > 0)
+    final = Math.max(final, dmg.minimumAmount);
   // 脆弱 / "受到的伤害±" (dmgTakenMul) scale 物理、法术、真实 only; 元素伤害 takes 元素脆弱 alone (header)
   let mul = dmg.mul * (type === 'elemental' ? 1 : ts.dmgTakenMul);
   if (ss) mul *= ss.dmgDealtMul * (type === 'phys' ? ss.physDealtMul : type === 'arts' ? ss.artsDealtMul : 1);
   mul *= type === 'phys' ? ts.physTakenMul : type === 'arts' ? ts.artsTakenMul : type === 'elemental' ? ts.elementalTakenMul : ts.trueTakenMul;
   final *= mul;
+  // Fixed damage resistance is a final HP-damage cut, before shields. It is
+  // opt-in (Friston-3); element gauge accumulation and HP loss bypass it.
+  final = Math.max(0, final - (ts.flatDamageResistance ?? 0));
   if (!(final > 0) || !Number.isFinite(final)) final = 0;
+  // Opt-in source modifiers such as Rose Salt defer a share of the fully
+  // mitigated Physical/Arts amount. HP loss and element gauges bypass this
+  // path; dodge and cancellation have already resolved, shields have not.
+  if (battle._hooks.damageFinal) {
+    const ctx = { source: hs, target, dmg, credit: source, amount: final };
+    battle.emit('damageFinal', ctx);
+    if (dmg.cancel || !target.alive || !target.deployed) return 0;
+    final = Number.isFinite(ctx.amount) ? Math.max(0, ctx.amount) : 0;
+  }
   // 限伤: a leader's hit of ≥ BOSS_HIT_LIMIT in a boss / hidden battle is cancelled before it reaches shields / HP — what
   // ran before it (the attack, its SP, `hit` hook effects, separate element 损伤) stays; nothing after it happens
   if (final > 0 && leaderHitCancelled(battle, target, final)) return 0;
-  final = absorbShields(battle, target, final);
+  // Opt-in calculated receipts retain the accepted, fully modified amount,
+  // independently of shields, HP floors and overkill. They cannot modify it.
+  if (battle._hooks.calculatedDamage) battle.emit('calculatedDamage',
+    { source: hs, target, dmg, credit: source, amount: final });
+  final = absorbShields(battle, target, final, type, { source: hs, applyWay: dmg.applyWay });
+  // Native damage-only HP floor (Blaze): limit the actual post-shield loss.
+  // This never raises already-low HP. Scripted kill and loseHp call their own
+  // paths and therefore bypass this modifier, unlike ordinary undeadable.
+  const floor = Math.max(target.s.maxHp * (target.s.damageHpFloorRatio ?? 0),
+    Number.isFinite(dmg.hpFloor) ? Math.max(0, dmg.hpFloor) : 0);
+  if (floor > 0 && !target.bossPool)
+    final = Math.min(final, Math.max(0, target.hp - floor));
   return applyHpLoss(battle, source, target, final, dmg);
 }
 
@@ -292,15 +353,29 @@ export function applyHpLoss(battle, source, target, amount, dmg) {
   } else {
     const before = target.hp;
     target.hp -= amount;
+    // Original UNDEADABLE affects fractional and fatal HP loss alike; it is
+    // neither damage immunity nor protection against scripted removal.
+    if (target.s.flags.undeadable)
+      target.hp = Math.max(Math.min(1, target.s.maxHp), target.hp);
+    let postFatal = null;
     if (target.hp <= 0) {
       target.hp = 0;
       if (battle._hooks.fatal) {
         const fctx = { unit: target, source: hs, credit: source, dmg, amount, prevented: false };
         battle.emit('fatal', fctx);
-        if (fctx.prevented && target.alive) { if (target.hp < 1) target.hp = Math.min(1, target.s.maxHp); }
+        if (fctx.prevented && target.alive) {
+          if (typeof fctx.afterHpLoss === 'function') postFatal = fctx.afterHpLoss;
+          else if (target.hp < 1) target.hp = Math.min(1, target.s.maxHp);
+        }
       }
     }
     dealt = Math.max(0, before - Math.max(0, target.hp));
+    // Opt-in native before/post fatal repair: account lost HP before healing.
+    // Existing fatal handlers retain their original immediate-repair semantics.
+    if (postFatal) {
+      postFatal();
+      if (target.alive && target.hp < 1) target.hp = Math.min(1, target.s.maxHp);
+    }
   }
   // damage dealt (unit stats, the results screen's 造成伤害) never counts a unit's own side — its own drain or 流失 (源石溶剂,
   // 史尔特尔 S3 …), friendly damage; `taken` and the kill credit do
@@ -314,7 +389,7 @@ export function applyHpLoss(battle, source, target, amount, dmg) {
     const shown = dmg.type === 'element' ? dmg.element : dmg.type === 'elemental' ? (dmg.element || 'true') : dmg.type;
     battle._ev(['dmg', target.id, Math.round(amount), shown]);
   }
-  if (battle._hooks.damaged) battle.emit('damaged', { source: hs, target, amount, type: dmg ? dmg.type : 'true', dmg, credit: source });
+  if (battle._hooks.damaged) battle.emit('damaged', { source: hs, target, amount, hpLoss: dealt, type: dmg ? dmg.type : 'true', dmg, credit: source });
   if (target.side === 'ally' && target.skill && dmg && !dmg.noSp && dmg.type !== 'element') battle._skills.onDamaged(target);
   const dead = target.bossPool ? target.bossPool.hp <= 0 : target.hp <= 0;
   if (dead && target.alive) battle.kill(target, source);
@@ -515,15 +590,21 @@ export function heal(battle, source, target, amount, opts = {}) {
   const self = source === target || !!opts.self;
   if (!self && (target.s.flags.noHeal || (target.profile && target.profile.noHeal))) return 0;
   if (target.s.flags.healFree && !opts.regen && !opts.ignoreHealFree) return 0;
-  let amt = amount * (source && source.s ? source.s.healingDealtMul : 1) * target.s.healingTakenMul;
+  // Native HealViaMaxHpRatio can explicitly skip modifier events. Keep
+  // heal-free checks, HP clamping, credit and presentation for that path.
+  let amt = opts.skipModifierEvent ? amount
+    : amount * (source && source.s ? source.s.healingDealtMul : 1) * target.s.healingTakenMul;
   if (!(amt > 0) || !Number.isFinite(amt)) return 0;
-  if (battle._hooks.heal) {
+  if (battle._hooks.heal && !opts.skipModifierEvent) {
     const ctx = { source, target, amount: amt, opts };
     battle.emit('heal', ctx);
     amt = Number.isFinite(ctx.amount) ? Math.max(0, ctx.amount) : 0;
     // a handler may have killed / retreated the target: healing a dead unit would leave it "dead with hp > 0"
     if (!target.alive || !target.deployed) return 0;
   }
+  if (battle._hooks.calculatedHeal && !opts.skipModifierEvent)
+    battle.emit('calculatedHeal', { source, target, amount: amt, opts });
+  if (!target.alive || !target.deployed) return 0;
   const max = target.s.maxHp;
   const actual = Math.max(0, Math.min(amt, max - target.hp));
   target.hp = Math.min(max, target.hp + actual);

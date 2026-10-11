@@ -1,0 +1,3705 @@
+{
+  "schemaVersion": 1,
+  "frameParity": false,
+  "moduleSupport": false,
+  "unityParticleSupport": false,
+  "sourceVersion": "26-09-23-17-49-43_b9cc4a",
+  "tableCommit": "57010cb5b2afea112cae57daa756b58676ba6850",
+  "sourceBundles": [
+    {
+      "path": "charpack/char_293_thorns.ab",
+      "size": 23506,
+      "md5": "e6b6aa9545b863ff85febbd045f5b932",
+      "sha256": "2502fc792a9a9353f657d302a231e1cbc98a7ff2b6ee007958433e1ae79817ea"
+    },
+    {
+      "path": "battle/prefabs/[uc]skills.ab",
+      "size": 1163240,
+      "md5": "ff06dc9bb5516d069c8c0017207653ca",
+      "sha256": "1c026938f054218f7e6bda9000162b2a6f30c9bd93e1ae9763d9d6df2270499c"
+    },
+    {
+      "path": "battle/prefabs/[uc]projectiles.ab",
+      "size": 1605622,
+      "md5": "0b1d64a8aba25913161f5fd7174cab34",
+      "sha256": "3d68c63bf7a7d658e65035a9c71dfc9a00e4804563b922185499d108dfb7f639"
+    },
+    {
+      "path": "config/buff_template_holder.ab",
+      "size": 1667266,
+      "md5": "59813e1a533561f969f525a2846815e0",
+      "sha256": "e092efe8b6479546a0641449c1e2ef81ba51b8bac67f7a5d1bbf3c3bbdd817ce"
+    },
+    {
+      "path": "chararts/char_293_thorns.ab",
+      "size": 3619988,
+      "md5": "9b7dc84a3eda450c119c138af944109b",
+      "sha256": "ec399a892bd3e75ba85d2e7cfa1fd0f2a4f6a3a06de2ffcdab55ee41b2069e21"
+    }
+  ],
+  "characters": {
+    "char_293_thorns": [
+      {
+        "object": "Default",
+        "pathId": "-8947305212118040699",
+        "components": [
+          {
+            "pathId": "-830941732531273851",
+            "m_Script": {
+              "m_FileID": 1,
+              "m_PathID": "5390319429299248724"
+            },
+            "_bodyTransform": {
+              "m_FileID": 0,
+              "m_PathID": "622439937846476677"
+            },
+            "_animatorHooker": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_overrideStartEffect": "",
+            "_overrideDeadEffect": "",
+            "_combat": {
+              "m_FileID": 0,
+              "m_PathID": "-2662778193842995323"
+            },
+            "_attack": {
+              "m_FileID": 0,
+              "m_PathID": "858388314945748869"
+            },
+            "_attackTrigger": {
+              "m_FileID": 0,
+              "m_PathID": "-3851898108106244219"
+            },
+            "_hideUIAttackRange": 0,
+            "_updateAttackRangeExtendByAttributeDirty": 0,
+            "_rangeToShow": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_extraRangesToShow": [],
+            "_generalAbilities": [],
+            "_addIndexToSignalId": 0,
+            "_includeIndexZero": 0,
+            "_alwaysHideHp": {
+              "isDefined": 0,
+              "value": 0
+            },
+            "_alwaysHideSp": {
+              "isDefined": 0,
+              "value": 0
+            }
+          }
+        ]
+      },
+      {
+        "object": "Trigger",
+        "pathId": "-5403502197838250107",
+        "components": [
+          {
+            "pathId": "-7603560027014561915",
+            "m_Script": {
+              "m_FileID": 1,
+              "m_PathID": "8607874384982393801"
+            },
+            "_keepTarget": 0,
+            "_minTargetNum": 1,
+            "_overrideSearchTargetTick": -1
+          },
+          {
+            "pathId": "7096747647619039109",
+            "m_Script": {
+              "m_FileID": 1,
+              "m_PathID": "-2891200616113119906"
+            },
+            "_extendable": 0
+          },
+          {
+            "pathId": "-3612459947644223611",
+            "m_Script": {
+              "m_FileID": 1,
+              "m_PathID": "7080728813803358465"
+            },
+            "_targetSide": 2,
+            "_targetMotion": 3,
+            "_targetCategory": 1,
+            "_postFilter": 4,
+            "_ignoreTargetFree": 0,
+            "_onlyIgnoreSomeOfTargetFreeCase": 0,
+            "_abnormalFlag": 29,
+            "_abnormalCombo": 2,
+            "_ignoreAllyTargetFree": 0,
+            "_ignoreHealFree": 0,
+            "_forceIgnoreCamouflage": 0,
+            "_needProfessionMask": 0,
+            "_professionMask": 0,
+            "_limitTargetNum": 1,
+            "_maxTargetKey": "max_target",
+            "_maxNum": 1,
+            "_excludeOwner": 0,
+            "_sortByTauntAtLast": 0,
+            "_ignoreHitRange": 0,
+            "_checkUnitType": 0,
+            "_unitTypeMask": 0,
+            "_abilityInputTargetAsSortSource": 0
+          }
+        ]
+      },
+      {
+        "object": "Attack",
+        "pathId": "-3786206180789256315",
+        "components": [
+          {
+            "pathId": "7581842682234863493",
+            "m_Script": {
+              "m_FileID": 1,
+              "m_PathID": "4156651312234227407"
+            },
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_metadata": {
+              "namedAsAlias": "",
+              "blackboardPrefix": ""
+            },
+            "_interruptAbilityOnDetach": 0,
+            "_attachPassiveBuffsOnDummy": 1,
+            "_ignoreIfOwnerDead": 0,
+            "_forceAsDmgOrHealAbility": 0,
+            "_waitForAttackEvent": 1,
+            "_interuptIfTargetDead": 0,
+            "_resetCdStrategy": 1,
+            "_selectTargetSource": 1,
+            "_selectTargetTiming": 0,
+            "_timeMode": 0,
+            "_alwaysIncludeTarget": 1,
+            "_allowNoTarget": 0,
+            "_animKey": "Skill_2",
+            "_endAnimKey": "Idle",
+            "_downAnimKey": "",
+            "_downEndAnimKey": "",
+            "_upAnimKey": "",
+            "_upEndAnimKey": "",
+            "_cooldown": 0,
+            "_cooldownKey": "duration",
+            "_preDelay": 0,
+            "_escapeTime": 0,
+            "_faceToTarget": 0,
+            "_faceToDefault": 0,
+            "_faceToFront": 1,
+            "_faceToFirstCastTarget": 0,
+            "_forceFaceToDirection": 0,
+            "_activeBuffs": [],
+            "_maxAnimScale": 1,
+            "_onlyPlayEndAnimWhenIsLastAbility": 0,
+            "_ignorePalsyInterrupt": 0,
+            "_atkScale": 1,
+            "_atkScaleKey": "atk_scale",
+            "_attackType": 1,
+            "_elementDamageType": 0,
+            "_epDamageRatio": 0,
+            "_useDynamicAttackType": 0,
+            "_deliveryParaWhenReplaceActionNode": 0,
+            "_projectileKey": "projectile_chr_thorns_s3",
+            "_mountPointType": 2,
+            "_useMountGroup": 0,
+            "_mountGroup": {
+              "loopType": 0,
+              "mountPoints": []
+            },
+            "_damageType": 1,
+            "_waitForProjectileInvalid": 0,
+            "_notClearProjectileWhenCastEnd": 0,
+            "_fireAttackFinishWhenProjectileInvalid": 0,
+            "_minPostDelayWhenProjectileInvalid": 0,
+            "_waitForAnimEndWhenProjectileInvalid": 0,
+            "_projectileDestination": 0,
+            "_extraDamageType": 0,
+            "_emitToInputPosWhenTargetIsInvalid": 0,
+            "_emitToInputRootTileWhenTargetIsInvalid": 0,
+            "_useCachedAtkOnly": 0,
+            "_transferSource": 0,
+            "_extraProjectileKeys": [],
+            "_fireCreateProjectileEvent": 0
+          },
+          {
+            "pathId": "4513437732484284293",
+            "m_Script": {
+              "m_FileID": 1,
+              "m_PathID": "-550693537895634864"
+            },
+            "_hitEffects": [],
+            "_castEffects": [
+              {
+                "_directionType": 0,
+                "_effects": [
+                  "thorns_skill_03_start",
+                  "",
+                  "",
+                  ""
+                ],
+                "_oneshot": 1,
+                "_startEvent": 2,
+                "_endEvent": 3,
+                "_onlyOnce": 0,
+                "_useFourDirectionalFace": 0,
+                "_delayIfFirstAttack": 0,
+                "_hookEffectAfterFirstAttack": ""
+              }
+            ],
+            "_attachEffects": [],
+            "_inputTargetEffects": [],
+            "_castTargetEffects": [],
+            "_convertCastEndToAttachFinish": 0,
+            "_recalculatePlaybackSpeed": 0,
+            "_preDelayFactor": 0
+          }
+        ]
+      },
+      {
+        "object": "Attack",
+        "pathId": "-3336647037941252219",
+        "components": [
+          {
+            "pathId": "6192807669408333701",
+            "m_Script": {
+              "m_FileID": 1,
+              "m_PathID": "4156651312234227407"
+            },
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_metadata": {
+              "namedAsAlias": "",
+              "blackboardPrefix": ""
+            },
+            "_interruptAbilityOnDetach": 0,
+            "_attachPassiveBuffsOnDummy": 1,
+            "_ignoreIfOwnerDead": 0,
+            "_forceAsDmgOrHealAbility": 0,
+            "_waitForAttackEvent": 1,
+            "_interuptIfTargetDead": 0,
+            "_resetCdStrategy": 1,
+            "_selectTargetSource": 1,
+            "_selectTargetTiming": 0,
+            "_timeMode": 0,
+            "_alwaysIncludeTarget": 1,
+            "_allowNoTarget": 0,
+            "_animKey": "",
+            "_endAnimKey": "",
+            "_downAnimKey": "",
+            "_downEndAnimKey": "",
+            "_upAnimKey": "",
+            "_upEndAnimKey": "",
+            "_cooldown": 0,
+            "_cooldownKey": "duration",
+            "_preDelay": 0,
+            "_escapeTime": 0,
+            "_faceToTarget": 1,
+            "_faceToDefault": 0,
+            "_faceToFront": 0,
+            "_faceToFirstCastTarget": 0,
+            "_forceFaceToDirection": 0,
+            "_activeBuffs": [],
+            "_maxAnimScale": 1,
+            "_onlyPlayEndAnimWhenIsLastAbility": 0,
+            "_ignorePalsyInterrupt": 0,
+            "_atkScale": 1,
+            "_atkScaleKey": "atk_scale",
+            "_attackType": 1,
+            "_elementDamageType": 0,
+            "_epDamageRatio": 0,
+            "_useDynamicAttackType": 0,
+            "_deliveryParaWhenReplaceActionNode": 0,
+            "_projectileKey": "projectile_chr_thorns",
+            "_mountPointType": 2,
+            "_useMountGroup": 0,
+            "_mountGroup": {
+              "loopType": 0,
+              "mountPoints": []
+            },
+            "_damageType": 1,
+            "_waitForProjectileInvalid": 0,
+            "_notClearProjectileWhenCastEnd": 0,
+            "_fireAttackFinishWhenProjectileInvalid": 0,
+            "_minPostDelayWhenProjectileInvalid": 0,
+            "_waitForAnimEndWhenProjectileInvalid": 0,
+            "_projectileDestination": 0,
+            "_extraDamageType": 0,
+            "_emitToInputPosWhenTargetIsInvalid": 0,
+            "_emitToInputRootTileWhenTargetIsInvalid": 0,
+            "_useCachedAtkOnly": 0,
+            "_transferSource": 0,
+            "_extraProjectileKeys": [],
+            "_fireCreateProjectileEvent": 0
+          },
+          {
+            "pathId": "7820852701705994117",
+            "m_Script": {
+              "m_FileID": 1,
+              "m_PathID": "-550693537895634864"
+            },
+            "_hitEffects": [],
+            "_castEffects": [
+              {
+                "_directionType": 0,
+                "_effects": [
+                  "whitew_skill_02_start",
+                  "",
+                  "",
+                  ""
+                ],
+                "_oneshot": 1,
+                "_startEvent": 2,
+                "_endEvent": 3,
+                "_onlyOnce": 0,
+                "_useFourDirectionalFace": 0,
+                "_delayIfFirstAttack": 0,
+                "_hookEffectAfterFirstAttack": ""
+              }
+            ],
+            "_attachEffects": [],
+            "_inputTargetEffects": [],
+            "_castTargetEffects": [],
+            "_convertCastEndToAttachFinish": 0,
+            "_recalculatePlaybackSpeed": 0,
+            "_preDelayFactor": 0
+          }
+        ]
+      },
+      {
+        "object": "Attack",
+        "pathId": "-862650144094027899",
+        "components": [
+          {
+            "pathId": "858388314945748869",
+            "m_Script": {
+              "m_FileID": 1,
+              "m_PathID": "4156651312234227407"
+            },
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_metadata": {
+              "namedAsAlias": "",
+              "blackboardPrefix": ""
+            },
+            "_interruptAbilityOnDetach": 0,
+            "_attachPassiveBuffsOnDummy": 1,
+            "_ignoreIfOwnerDead": 0,
+            "_forceAsDmgOrHealAbility": 0,
+            "_waitForAttackEvent": 1,
+            "_interuptIfTargetDead": 0,
+            "_resetCdStrategy": 1,
+            "_selectTargetSource": 1,
+            "_selectTargetTiming": 0,
+            "_timeMode": 0,
+            "_alwaysIncludeTarget": 1,
+            "_allowNoTarget": 0,
+            "_animKey": "Attack",
+            "_endAnimKey": "Idle",
+            "_downAnimKey": "",
+            "_downEndAnimKey": "",
+            "_upAnimKey": "",
+            "_upEndAnimKey": "",
+            "_cooldown": 0,
+            "_cooldownKey": "duration",
+            "_preDelay": 0,
+            "_escapeTime": 0,
+            "_faceToTarget": 1,
+            "_faceToDefault": 0,
+            "_faceToFront": 0,
+            "_faceToFirstCastTarget": 0,
+            "_forceFaceToDirection": 0,
+            "_activeBuffs": [],
+            "_maxAnimScale": 1,
+            "_onlyPlayEndAnimWhenIsLastAbility": 0,
+            "_ignorePalsyInterrupt": 0,
+            "_atkScale": 1,
+            "_atkScaleKey": "atk_scale",
+            "_attackType": 1,
+            "_elementDamageType": 0,
+            "_epDamageRatio": 0,
+            "_useDynamicAttackType": 0,
+            "_deliveryParaWhenReplaceActionNode": 0,
+            "_projectileKey": "projectile_chr_thorns",
+            "_mountPointType": 2,
+            "_useMountGroup": 0,
+            "_mountGroup": {
+              "loopType": 0,
+              "mountPoints": []
+            },
+            "_damageType": 1,
+            "_waitForProjectileInvalid": 0,
+            "_notClearProjectileWhenCastEnd": 0,
+            "_fireAttackFinishWhenProjectileInvalid": 0,
+            "_minPostDelayWhenProjectileInvalid": 0,
+            "_waitForAnimEndWhenProjectileInvalid": 0,
+            "_projectileDestination": 0,
+            "_extraDamageType": 0,
+            "_emitToInputPosWhenTargetIsInvalid": 0,
+            "_emitToInputRootTileWhenTargetIsInvalid": 0,
+            "_useCachedAtkOnly": 0,
+            "_transferSource": 0,
+            "_extraProjectileKeys": [],
+            "_fireCreateProjectileEvent": 0
+          },
+          {
+            "pathId": "-719965726920802427",
+            "m_Script": {
+              "m_FileID": 1,
+              "m_PathID": "7032611377428664948"
+            },
+            "_defaultValue": 0.800000011920929,
+            "_overwrite": 0
+          },
+          {
+            "pathId": "6308483046470254469",
+            "m_Script": {
+              "m_FileID": 1,
+              "m_PathID": "-550693537895634864"
+            },
+            "_hitEffects": [],
+            "_castEffects": [
+              {
+                "_directionType": 0,
+                "_effects": [
+                  "thorns_attack_02_start",
+                  "",
+                  "",
+                  ""
+                ],
+                "_oneshot": 1,
+                "_startEvent": 2,
+                "_endEvent": 3,
+                "_onlyOnce": 0,
+                "_useFourDirectionalFace": 0,
+                "_delayIfFirstAttack": 0,
+                "_hookEffectAfterFirstAttack": ""
+              }
+            ],
+            "_attachEffects": [],
+            "_inputTargetEffects": [],
+            "_castTargetEffects": [],
+            "_convertCastEndToAttachFinish": 0,
+            "_recalculatePlaybackSpeed": 0,
+            "_preDelayFactor": 0
+          }
+        ]
+      },
+      {
+        "object": "Shadow",
+        "pathId": "51450948714037125",
+        "components": [
+          {
+            "pathId": "-2406056576571408507",
+            "m_Script": {
+              "m_FileID": 1,
+              "m_PathID": "-2368896203154538901"
+            },
+            "_autoAttachToGround": 0,
+            "_attachOffset": 0.10000000149011612,
+            "_simplyUseTileHeight": 0,
+            "_enableAdvanced": 0,
+            "_alwaysUseSpineOffset": 0,
+            "_sprite": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_graphic": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_faceSwitcher": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_boneToFollow": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_specialInit": 0,
+            "_simpleFollow": 0,
+            "_easeType": 1
+          }
+        ]
+      },
+      {
+        "object": "2",
+        "pathId": "380792370233278341",
+        "components": [
+          {
+            "pathId": "5892285810356453253",
+            "m_Script": {
+              "m_FileID": 1,
+              "m_PathID": "-6339019266161532961"
+            },
+            "_isInitToggled": 0,
+            "_disableWhenAttack": 0,
+            "_disableWhenBlocked": 0,
+            "_disableWhenInAttackState": 1,
+            "_disableWhenInCombatState": 1,
+            "_disableWhenOutputHeal": 0,
+            "_disableWhenTakeDamage": 0,
+            "_disableWhenAppliedModifier": 0,
+            "_disableWhenAppliedDamageModifier": 0,
+            "_disableWhenMoving": 0,
+            "_restoreDelay": 2,
+            "_disableDuringReborn": 0
+          },
+          {
+            "pathId": "1202954358417915781",
+            "m_Script": {
+              "m_FileID": 1,
+              "m_PathID": "5578302910068743633"
+            },
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_metadata": {
+              "namedAsAlias": "",
+              "blackboardPrefix": ""
+            },
+            "_interruptAbilityOnDetach": 0,
+            "_attachPassiveBuffsOnDummy": 1,
+            "_ignoreIfOwnerDead": 0,
+            "_forceAsDmgOrHealAbility": 0,
+            "_buffs": [
+              {
+                "attributes": {
+                  "abnormalFlags": [],
+                  "abnormalImmunes": [],
+                  "abnormalAntis": [],
+                  "abnormalCombos": [],
+                  "abnormalComboImmunes": [],
+                  "attributeModifiers": [
+                    {
+                      "attributeType": 19,
+                      "formulaItem": 0,
+                      "value": 0,
+                      "loadFromBlackboard": 1,
+                      "fetchBaseValueFromSourceEntity": 0
+                    }
+                  ]
+                },
+                "buffKey": "thorns_t_2",
+                "loadFromDB": 0,
+                "isDurableBuff": 0,
+                "isDamageMissable": 0,
+                "isSilenceable": 0,
+                "isStunnable": 0,
+                "isFreezable": 0,
+                "isLevitatable": 0,
+                "statusResistable": 2,
+                "templateKey": "empty",
+                "disableOverride": 0,
+                "overrideKey": "",
+                "overrideType": 0,
+                "maxStackCnt": 1,
+                "refreshRemainingTimeWhenStackMax": 0,
+                "clearAllStackCntWhenTimeUp": 0,
+                "maxValidStackCnt": -1,
+                "independentCharacterSource": 0,
+                "overrideEffectKey": "",
+                "overrideOnEventPriority": 0,
+                "onEventPriority": 0,
+                "audioSignal": "",
+                "lifeTimeType": 2,
+                "takeSnapshotWhenExtend": 0,
+                "durationKey": "",
+                "lifeTime": 0,
+                "triggerLifeType": 0,
+                "triggerCnt": 0,
+                "triggerInterval": -1,
+                "waitFirstTriggerInterval": 1,
+                "firstTriggerInterval": -1,
+                "priority": -1,
+                "priorityBBKeys": [],
+                "stripBlackboardParamsWithBuffKey": 0,
+                "blackboard": [],
+                "enableInitDirectionFromSource": 0
+              }
+            ],
+            "_checker": {
+              "m_FileID": 0,
+              "m_PathID": "5892285810356453253"
+            },
+            "_unmanagedBuffsWhenToggleOn": [],
+            "_setToggleFalseOnDetached": 0,
+            "_isInverseToggle": 0
+          },
+          {
+            "pathId": "-567183072909000827",
+            "m_Script": {
+              "m_FileID": 1,
+              "m_PathID": "-2726233351382997147"
+            },
+            "_overwriteTalentKey": "",
+            "_overwriteParentRangeId": 0,
+            "_checkValidBySkillIndex": [],
+            "_attachInDummy": 0,
+            "_defaultModeIndex": -1,
+            "_attackBlackboardModeIndex": -1,
+            "_extraAttackBlackboardModeIndices": [],
+            "_overrideDefaultRangeId": 0,
+            "_applyTalentScale": 0,
+            "_influenceSkillBlackboard": 0,
+            "_applyTalentRange": 0,
+            "_applyBlackboardBySkill": 0,
+            "_applyStrBlackboardBySkill": 0,
+            "_writeRangeIdToProjectileBlackboard": 0,
+            "_affectWhenNotRootTalent": 0,
+            "_scaleCertainKeyFlag": 0,
+            "_scaleCertainKeyList": [],
+            "_scaleCertainMode": 0,
+            "_scaleModeIndices": []
+          }
+        ]
+      },
+      {
+        "object": "S3",
+        "pathId": "1418217384927625093",
+        "components": [
+          {
+            "pathId": "-263498086228295803",
+            "m_Script": {
+              "m_FileID": 1,
+              "m_PathID": "5390319429299248724"
+            },
+            "_bodyTransform": {
+              "m_FileID": 0,
+              "m_PathID": "-6781544207624306811"
+            },
+            "_animatorHooker": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_overrideStartEffect": "",
+            "_overrideDeadEffect": "",
+            "_combat": {
+              "m_FileID": 0,
+              "m_PathID": "4798970744693194629"
+            },
+            "_attack": {
+              "m_FileID": 0,
+              "m_PathID": "7581842682234863493"
+            },
+            "_attackTrigger": {
+              "m_FileID": 0,
+              "m_PathID": "-7603560027014561915"
+            },
+            "_hideUIAttackRange": 0,
+            "_updateAttackRangeExtendByAttributeDirty": 0,
+            "_rangeToShow": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_extraRangesToShow": [],
+            "_generalAbilities": [],
+            "_addIndexToSignalId": 1,
+            "_includeIndexZero": 0,
+            "_alwaysHideHp": {
+              "isDefined": 0,
+              "value": 0
+            },
+            "_alwaysHideSp": {
+              "isDefined": 0,
+              "value": 0
+            }
+          }
+        ]
+      },
+      {
+        "object": "1",
+        "pathId": "1788652646588546949",
+        "components": [
+          {
+            "pathId": "8714304176017702789",
+            "m_Script": {
+              "m_FileID": 1,
+              "m_PathID": "-2726233351382997147"
+            },
+            "_overwriteTalentKey": "",
+            "_overwriteParentRangeId": 0,
+            "_checkValidBySkillIndex": [],
+            "_attachInDummy": 0,
+            "_defaultModeIndex": -1,
+            "_attackBlackboardModeIndex": -1,
+            "_extraAttackBlackboardModeIndices": [],
+            "_overrideDefaultRangeId": 0,
+            "_applyTalentScale": 0,
+            "_influenceSkillBlackboard": 0,
+            "_applyTalentRange": 0,
+            "_applyBlackboardBySkill": 0,
+            "_applyStrBlackboardBySkill": 0,
+            "_writeRangeIdToProjectileBlackboard": 0,
+            "_affectWhenNotRootTalent": 0,
+            "_scaleCertainKeyFlag": 0,
+            "_scaleCertainKeyList": [],
+            "_scaleCertainMode": 0,
+            "_scaleModeIndices": []
+          },
+          {
+            "pathId": "4588277504796721029",
+            "m_Script": {
+              "m_FileID": 1,
+              "m_PathID": "-8004000125733044417"
+            },
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_metadata": {
+              "namedAsAlias": "",
+              "blackboardPrefix": ""
+            },
+            "_interruptAbilityOnDetach": 0,
+            "_attachPassiveBuffsOnDummy": 1,
+            "_ignoreIfOwnerDead": 0,
+            "_forceAsDmgOrHealAbility": 0,
+            "_buffs": [],
+            "_additiveActiveBuffs": [
+              {
+                "attributes": {
+                  "abnormalFlags": [],
+                  "abnormalImmunes": [],
+                  "abnormalAntis": [],
+                  "abnormalCombos": [],
+                  "abnormalComboImmunes": [],
+                  "attributeModifiers": []
+                },
+                "buffKey": "thorns_t_1",
+                "loadFromDB": 0,
+                "isDurableBuff": 0,
+                "isDamageMissable": 0,
+                "isSilenceable": 0,
+                "isStunnable": 0,
+                "isFreezable": 0,
+                "isLevitatable": 0,
+                "statusResistable": 2,
+                "templateKey": "thorns_t_1",
+                "disableOverride": 0,
+                "overrideKey": "",
+                "overrideType": 3,
+                "maxStackCnt": 1,
+                "refreshRemainingTimeWhenStackMax": 0,
+                "clearAllStackCntWhenTimeUp": 0,
+                "maxValidStackCnt": -1,
+                "independentCharacterSource": 1,
+                "overrideEffectKey": "thorns_buff_01_start",
+                "overrideOnEventPriority": 0,
+                "onEventPriority": 0,
+                "audioSignal": "",
+                "lifeTimeType": 1,
+                "takeSnapshotWhenExtend": 0,
+                "durationKey": "",
+                "lifeTime": 0,
+                "triggerLifeType": 2,
+                "triggerCnt": 0,
+                "triggerInterval": 1,
+                "waitFirstTriggerInterval": 1,
+                "firstTriggerInterval": -1,
+                "priority": -1,
+                "priorityBBKeys": [],
+                "stripBlackboardParamsWithBuffKey": 0,
+                "blackboard": [],
+                "enableInitDirectionFromSource": 0
+              }
+            ],
+            "_targetFamilyMask": 31,
+            "_targetValidator": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_probKey": ""
+          }
+        ]
+      },
+      {
+        "object": "Combat",
+        "pathId": "1893605159988035461",
+        "components": [
+          {
+            "pathId": "4798970744693194629",
+            "m_Script": {
+              "m_FileID": 1,
+              "m_PathID": "4381884627089348317"
+            },
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_metadata": {
+              "namedAsAlias": "",
+              "blackboardPrefix": ""
+            },
+            "_interruptAbilityOnDetach": 0,
+            "_attachPassiveBuffsOnDummy": 1,
+            "_ignoreIfOwnerDead": 0,
+            "_forceAsDmgOrHealAbility": 0,
+            "_waitForAttackEvent": 1,
+            "_interuptIfTargetDead": 0,
+            "_resetCdStrategy": 1,
+            "_selectTargetSource": 2,
+            "_selectTargetTiming": 0,
+            "_timeMode": 0,
+            "_alwaysIncludeTarget": 1,
+            "_allowNoTarget": 0,
+            "_animKey": "Skill_2",
+            "_endAnimKey": "Idle",
+            "_downAnimKey": "",
+            "_downEndAnimKey": "",
+            "_upAnimKey": "",
+            "_upEndAnimKey": "",
+            "_cooldown": 0,
+            "_cooldownKey": "duration",
+            "_preDelay": 0,
+            "_escapeTime": 0,
+            "_faceToTarget": 0,
+            "_faceToDefault": 0,
+            "_faceToFront": 1,
+            "_faceToFirstCastTarget": 0,
+            "_forceFaceToDirection": 0,
+            "_activeBuffs": [],
+            "_maxAnimScale": 1.100000023841858,
+            "_onlyPlayEndAnimWhenIsLastAbility": 0,
+            "_ignorePalsyInterrupt": 0,
+            "_atkScale": 1,
+            "_atkScaleKey": "atk_scale",
+            "_attackType": 1,
+            "_elementDamageType": 0,
+            "_epDamageRatio": 0,
+            "_useDynamicAttackType": 0,
+            "_deliveryParaWhenReplaceActionNode": 0,
+            "_damageType": 1,
+            "_extraDamageType": 0,
+            "_alwaysPutIncludeTargetFirst": 0
+          },
+          {
+            "pathId": "2068526672508354437",
+            "m_Script": {
+              "m_FileID": 1,
+              "m_PathID": "-550693537895634864"
+            },
+            "_hitEffects": [
+              {
+                "_directionType": 0,
+                "_effects": [
+                  "thorns_skill_03_hit",
+                  "",
+                  "",
+                  ""
+                ],
+                "_oneshot": 1,
+                "_endEvent": 3,
+                "_onlyOnce": 0,
+                "_useFourDirectionalFace": 0,
+                "_useOwnerToTargetDirection": 0,
+                "_playIfNotInputTarget": 0,
+                "_playOnlyIfInputTarget": 0
+              }
+            ],
+            "_castEffects": [
+              {
+                "_directionType": 0,
+                "_effects": [
+                  "thorns_skill_03_start",
+                  "",
+                  "",
+                  ""
+                ],
+                "_oneshot": 0,
+                "_startEvent": 2,
+                "_endEvent": 3,
+                "_onlyOnce": 0,
+                "_useFourDirectionalFace": 0,
+                "_delayIfFirstAttack": 0,
+                "_hookEffectAfterFirstAttack": ""
+              }
+            ],
+            "_attachEffects": [],
+            "_inputTargetEffects": [],
+            "_castTargetEffects": [],
+            "_convertCastEndToAttachFinish": 0,
+            "_recalculatePlaybackSpeed": 0,
+            "_preDelayFactor": 0
+          }
+        ]
+      },
+      {
+        "object": "Combat",
+        "pathId": "2736630483582517125",
+        "components": [
+          {
+            "pathId": "-2662778193842995323",
+            "m_Script": {
+              "m_FileID": 1,
+              "m_PathID": "4381884627089348317"
+            },
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_metadata": {
+              "namedAsAlias": "",
+              "blackboardPrefix": ""
+            },
+            "_interruptAbilityOnDetach": 0,
+            "_attachPassiveBuffsOnDummy": 1,
+            "_ignoreIfOwnerDead": 0,
+            "_forceAsDmgOrHealAbility": 0,
+            "_waitForAttackEvent": 1,
+            "_interuptIfTargetDead": 0,
+            "_resetCdStrategy": 1,
+            "_selectTargetSource": 2,
+            "_selectTargetTiming": 0,
+            "_timeMode": 0,
+            "_alwaysIncludeTarget": 1,
+            "_allowNoTarget": 0,
+            "_animKey": "Combat",
+            "_endAnimKey": "Idle",
+            "_downAnimKey": "",
+            "_downEndAnimKey": "",
+            "_upAnimKey": "",
+            "_upEndAnimKey": "",
+            "_cooldown": 0,
+            "_cooldownKey": "duration",
+            "_preDelay": 0,
+            "_escapeTime": 0,
+            "_faceToTarget": 1,
+            "_faceToDefault": 0,
+            "_faceToFront": 0,
+            "_faceToFirstCastTarget": 0,
+            "_forceFaceToDirection": 0,
+            "_activeBuffs": [],
+            "_maxAnimScale": 1.100000023841858,
+            "_onlyPlayEndAnimWhenIsLastAbility": 0,
+            "_ignorePalsyInterrupt": 0,
+            "_atkScale": 1,
+            "_atkScaleKey": "atk_scale",
+            "_attackType": 1,
+            "_elementDamageType": 0,
+            "_epDamageRatio": 0,
+            "_useDynamicAttackType": 0,
+            "_deliveryParaWhenReplaceActionNode": 0,
+            "_damageType": 1,
+            "_extraDamageType": 0,
+            "_alwaysPutIncludeTargetFirst": 0
+          },
+          {
+            "pathId": "4294702073385058181",
+            "m_Script": {
+              "m_FileID": 1,
+              "m_PathID": "-550693537895634864"
+            },
+            "_hitEffects": [
+              {
+                "_directionType": 0,
+                "_effects": [
+                  "thorns_attack_01_hit",
+                  "",
+                  "",
+                  ""
+                ],
+                "_oneshot": 1,
+                "_endEvent": 3,
+                "_onlyOnce": 0,
+                "_useFourDirectionalFace": 0,
+                "_useOwnerToTargetDirection": 0,
+                "_playIfNotInputTarget": 0,
+                "_playOnlyIfInputTarget": 0
+              }
+            ],
+            "_castEffects": [
+              {
+                "_directionType": 0,
+                "_effects": [
+                  "thorns_attack_01_start",
+                  "",
+                  "",
+                  ""
+                ],
+                "_oneshot": 0,
+                "_startEvent": 2,
+                "_endEvent": 3,
+                "_onlyOnce": 0,
+                "_useFourDirectionalFace": 0,
+                "_delayIfFirstAttack": 0,
+                "_hookEffectAfterFirstAttack": ""
+              }
+            ],
+            "_attachEffects": [],
+            "_inputTargetEffects": [],
+            "_castTargetEffects": [],
+            "_convertCastEndToAttachFinish": 0,
+            "_recalculatePlaybackSpeed": 0,
+            "_preDelayFactor": 0
+          }
+        ]
+      },
+      {
+        "object": "Trigger",
+        "pathId": "3615285967016230789",
+        "components": [
+          {
+            "pathId": "-5505875569426890875",
+            "m_Script": {
+              "m_FileID": 1,
+              "m_PathID": "248012603862317511"
+            }
+          }
+        ]
+      },
+      {
+        "object": "S2",
+        "pathId": "4997988071844609925",
+        "components": [
+          {
+            "pathId": "5671696166949158789",
+            "m_Script": {
+              "m_FileID": 1,
+              "m_PathID": "5390319429299248724"
+            },
+            "_bodyTransform": {
+              "m_FileID": 0,
+              "m_PathID": "160313025436450693"
+            },
+            "_animatorHooker": {
+              "m_FileID": 0,
+              "m_PathID": "8140017502815125381"
+            },
+            "_overrideStartEffect": "",
+            "_overrideDeadEffect": "",
+            "_combat": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_attack": {
+              "m_FileID": 0,
+              "m_PathID": "6192807669408333701"
+            },
+            "_attackTrigger": {
+              "m_FileID": 0,
+              "m_PathID": "-5505875569426890875"
+            },
+            "_hideUIAttackRange": 0,
+            "_updateAttackRangeExtendByAttributeDirty": 0,
+            "_rangeToShow": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_extraRangesToShow": [],
+            "_generalAbilities": [],
+            "_addIndexToSignalId": 1,
+            "_includeIndexZero": 0,
+            "_alwaysHideHp": {
+              "isDefined": 0,
+              "value": 0
+            },
+            "_alwaysHideSp": {
+              "isDefined": 0,
+              "value": 0
+            }
+          },
+          {
+            "pathId": "8140017502815125381",
+            "m_Script": {
+              "m_FileID": 1,
+              "m_PathID": "-2632969505105631840"
+            },
+            "_excludeAnimKeys": [
+              "Born",
+              "Idle"
+            ],
+            "_replaceAnimPairs": [],
+            "_disableSwitchSettings": []
+          }
+        ]
+      },
+      {
+        "object": "char_293_thorns",
+        "pathId": "5732506843944451973",
+        "components": [
+          {
+            "pathId": "-1831007503590359163",
+            "m_Script": {
+              "m_FileID": 1,
+              "m_PathID": "-1297314214590689040"
+            },
+            "_animator": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_modes": [
+              {
+                "m_FileID": 0,
+                "m_PathID": "-830941732531273851"
+              },
+              {
+                "m_FileID": 0,
+                "m_PathID": "5671696166949158789"
+              },
+              {
+                "m_FileID": 0,
+                "m_PathID": "-263498086228295803"
+              }
+            ],
+            "_commonAbilities": [],
+            "_uiMountPoint": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_effectTransform": {
+              "m_FileID": 0,
+              "m_PathID": "-46306870018048123"
+            },
+            "_shadow": {
+              "m_FileID": 0,
+              "m_PathID": "-2406056576571408507"
+            },
+            "_defaultBodyColor": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 1
+            },
+            "_hideShadowOnRecycle": 0,
+            "_overrideGraphicBound": -1,
+            "_hudPluginReplacePairs": [],
+            "_showDebugName": 0,
+            "_skinHolder": {
+              "m_FileID": 0,
+              "m_PathID": "-3749184356599201915"
+            },
+            "_motionMode": 0,
+            "_blockMode": 0,
+            "_ignoreBlockMode": 0,
+            "_isFixedRotation": 0,
+            "_occupiedRemainingCharacterCnt": 1,
+            "_useRealBornTimeFromAnim": 0,
+            "_buildCondition": {
+              "buildableType": 1,
+              "isTryingOverlapCharacater": 0,
+              "needSpecifyDirection": 1,
+              "limitByHostAttackRange": 0,
+              "limitByHostAbilityRange": 0,
+              "abilityName": "",
+              "tileKey": "",
+              "extraBuildConditionArray": {
+                "SerializedState": "null",
+                "SerializedObjectReferences": []
+              },
+              "advancedBuildableMask": 1,
+              "overlapOptions": {
+                "_verifySourceId": 0,
+                "_verifySourceIds": [],
+                "_verifySourceProfession": 0,
+                "_verifySourceProfessions": 0,
+                "_isAllConditionOR": 1,
+                "_overlapPriority": 0,
+                "_changeTargetGraphicColor": 0
+              },
+              "excludeNoTargetTile": 0,
+              "extraLocateRange": "",
+              "checkManuallyBuildableType": 0,
+              "manuallyBuildableType": 0,
+              "_excludeOccupiedByWalkEnemy": 0,
+              "allowWalkEnemyInHostRange": 0,
+              "_checkUpdateBuildable": 0
+            },
+            "_traitAbility": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_withdrawCostRecoverRatio": 0.5,
+            "_maxWithdrawCostRatioOfRawCost": 1,
+            "_directionTransform": {
+              "m_FileID": 0,
+              "m_PathID": "3048700687670509445"
+            },
+            "_directionIndicator": {
+              "m_FileID": 0,
+              "m_PathID": "-1220496099530506363"
+            },
+            "_startEffect": "",
+            "_deadEffect": "",
+            "_playStartVocal": 1,
+            "_showDeadTweenColor": 1,
+            "_useSpecificDeadAnim": 0,
+            "_onlyPlayStartEffectOnce": 0,
+            "_dontMoveCameraWhenFocus": 0,
+            "_disableCharInfoPanel": 0,
+            "_disableRotateWhenDead": 0,
+            "_disableSetDirectionWhenDummy": 0,
+            "_clearProjectileWhenDead": 0,
+            "_useIdForAudioSignalMask": 0,
+            "_preprocessData": 0,
+            "_disableClickCharacterInfo": 0,
+            "_skillUiFollowHeadPint": 0,
+            "m_overrideBornTime": -1
+          },
+          {
+            "pathId": "-8778231242223321211",
+            "m_Density": 1,
+            "m_Material": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "m_IsTrigger": true,
+            "m_UsedByEffector": false,
+            "m_UsedByComposite": false,
+            "m_Offset": {
+              "x": 0,
+              "y": 0
+            },
+            "m_Radius": 0.25
+          }
+        ]
+      },
+      {
+        "object": "Trigger",
+        "pathId": "6702267493196365701",
+        "components": [
+          {
+            "pathId": "-3851898108106244219",
+            "m_Script": {
+              "m_FileID": 1,
+              "m_PathID": "8607874384982393801"
+            },
+            "_keepTarget": 0,
+            "_minTargetNum": 1,
+            "_overrideSearchTargetTick": -1
+          },
+          {
+            "pathId": "-1807298361868025979",
+            "m_Script": {
+              "m_FileID": 1,
+              "m_PathID": "-2891200616113119906"
+            },
+            "_extendable": 0
+          },
+          {
+            "pathId": "-4346677090140356731",
+            "m_Script": {
+              "m_FileID": 1,
+              "m_PathID": "7080728813803358465"
+            },
+            "_targetSide": 2,
+            "_targetMotion": 3,
+            "_targetCategory": 1,
+            "_postFilter": 4,
+            "_ignoreTargetFree": 0,
+            "_onlyIgnoreSomeOfTargetFreeCase": 0,
+            "_abnormalFlag": 29,
+            "_abnormalCombo": 2,
+            "_ignoreAllyTargetFree": 0,
+            "_ignoreHealFree": 0,
+            "_forceIgnoreCamouflage": 0,
+            "_needProfessionMask": 0,
+            "_professionMask": 0,
+            "_limitTargetNum": 1,
+            "_maxTargetKey": "max_target",
+            "_maxNum": 1,
+            "_excludeOwner": 0,
+            "_sortByTauntAtLast": 0,
+            "_ignoreHitRange": 0,
+            "_checkUnitType": 0,
+            "_unitTypeMask": 0,
+            "_abilityInputTargetAsSortSource": 0
+          }
+        ]
+      }
+    ]
+  },
+  "skills": {
+    "skcom_atk_up": [
+      {
+        "object": "skcom_atk_up",
+        "pathId": "3415672303571633134",
+        "components": [
+          {
+            "pathId": "-8149467065939786770",
+            "m_Script": {
+              "m_FileID": 1,
+              "m_PathID": "-4234909118878081699"
+            },
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_metadata": {
+              "namedAsAlias": "",
+              "blackboardPrefix": ""
+            },
+            "_interruptAbilityOnDetach": 0,
+            "_attachPassiveBuffsOnDummy": 1,
+            "_ignoreIfOwnerDead": 0,
+            "_forceAsDmgOrHealAbility": 0,
+            "_waitForAttackEvent": 1,
+            "_interuptIfTargetDead": 0,
+            "_resetCdStrategy": 1,
+            "_buffs": [
+              {
+                "attributes": {
+                  "abnormalFlags": [],
+                  "abnormalImmunes": [],
+                  "abnormalAntis": [],
+                  "abnormalCombos": [],
+                  "abnormalComboImmunes": [],
+                  "attributeModifiers": [
+                    {
+                      "attributeType": 1,
+                      "formulaItem": 1,
+                      "value": 0,
+                      "loadFromBlackboard": 1,
+                      "fetchBaseValueFromSourceEntity": 0
+                    }
+                  ]
+                },
+                "buffKey": "multi_atk",
+                "loadFromDB": 0,
+                "isDurableBuff": 0,
+                "isDamageMissable": 0,
+                "isSilenceable": 0,
+                "isStunnable": 0,
+                "isFreezable": 0,
+                "isLevitatable": 0,
+                "statusResistable": 2,
+                "templateKey": "empty",
+                "disableOverride": 0,
+                "overrideKey": "",
+                "overrideType": 0,
+                "maxStackCnt": 1,
+                "refreshRemainingTimeWhenStackMax": 0,
+                "clearAllStackCntWhenTimeUp": 0,
+                "maxValidStackCnt": -1,
+                "independentCharacterSource": 0,
+                "overrideEffectKey": "common_ignite_attack",
+                "overrideOnEventPriority": 0,
+                "onEventPriority": 0,
+                "audioSignal": "",
+                "lifeTimeType": 1,
+                "takeSnapshotWhenExtend": 0,
+                "durationKey": "",
+                "lifeTime": 0,
+                "triggerLifeType": 0,
+                "triggerCnt": 0,
+                "triggerInterval": -1,
+                "waitFirstTriggerInterval": 1,
+                "firstTriggerInterval": -1,
+                "priority": -1,
+                "priorityBBKeys": [],
+                "stripBlackboardParamsWithBuffKey": 0,
+                "blackboard": [],
+                "enableInitDirectionFromSource": 0
+              }
+            ],
+            "_waitForCasting": 0,
+            "_updateLifetimeWhenSpellStart": 0,
+            "_preDelay": 0,
+            "_escapeTime": 0,
+            "_checkBuffEarlyFinish": 0,
+            "_passiveBuffs": [],
+            "_ignoreInfiniteBuffCooldown": 0,
+            "_enableUpdateCooldown": 0
+          },
+          {
+            "pathId": "-2253778771189300242",
+            "m_Script": {
+              "m_FileID": 1,
+              "m_PathID": "6851783972288338031"
+            },
+            "_maxTriggerTime": -1,
+            "_allowSpRecoveryWhenAffecting": 0,
+            "_limitGlobalTriggerTime": 0,
+            "_hidden": 0,
+            "_showSpBarEvenHidden": 0,
+            "_showSpAsBulletMode": 0,
+            "_showSpRatioAsProgress": 0,
+            "_playCharWordVoice": 1,
+            "_playCharWordWithPassiveType": 0,
+            "_canCastWithNoSp": 0,
+            "_canSilenced": 0,
+            "_canUseInAbnormalState": 0,
+            "_defaultModeIndex": -1,
+            "_attackBlackboardModeIndex": -1,
+            "_extraAttackBlackboardModeIndices": [],
+            "_rangeIdModeIndex": -1,
+            "_extraRangeIdModeIndices": [],
+            "_rangeIdUsageType": 7,
+            "_writeDurationToAttackBlackboard": 0,
+            "_attachSignalIds": 0,
+            "_extraAbilities": [],
+            "_useEscapeTime": 0,
+            "_earlySkillFinishAtAttackFinished": 0,
+            "_showProgressToNext": 0,
+            "_hideSkillStackCount": 0,
+            "_hideHudSkillStackCount": 0,
+            "_playSkillBeginAnim": 0,
+            "_beginAnim": "",
+            "_beginAnimDown": "",
+            "_beginEffect": [],
+            "_useFaceVector": 0,
+            "_beginAnimValidator": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_availableValidator": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_trigger": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_switchToState": 0,
+            "_uninterruptibleOnAbilityPredelay": 0,
+            "_canSwitchDuringBorn": 1,
+            "_canCastDuringBorn": 1,
+            "_checkHasTargetBeforeDoCast": 0,
+            "_useTriggerInManualMode": 0,
+            "_allowNoTarget": 1,
+            "_shouldCastLikeAttack": 0,
+            "_isRemoteControlled": 0,
+            "_hideRangeToShow": 0,
+            "_forceUseBaseShowRange": 0,
+            "_rangeToShow": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_recoverSpIfNoTarget": 0,
+            "_resetAbilityCooldownWhenCastEnd": 0,
+            "_onlyAvailableWhenTokenValid": 0,
+            "_hasUniStackColor": 0
+          }
+        ]
+      }
+    ],
+    "skchr_thorns_2": [
+      {
+        "object": "skchr_thorns_2",
+        "pathId": "-9103250559454773112",
+        "components": [
+          {
+            "pathId": "7276855626529931400",
+            "m_Script": {
+              "m_FileID": 1,
+              "m_PathID": "-4234909118878081699"
+            },
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "-5954132188610985848"
+            },
+            "_metadata": {
+              "namedAsAlias": "",
+              "blackboardPrefix": ""
+            },
+            "_interruptAbilityOnDetach": 0,
+            "_attachPassiveBuffsOnDummy": 1,
+            "_ignoreIfOwnerDead": 0,
+            "_forceAsDmgOrHealAbility": 0,
+            "_waitForAttackEvent": 0,
+            "_interuptIfTargetDead": 0,
+            "_resetCdStrategy": 1,
+            "_buffs": [
+              {
+                "attributes": {
+                  "abnormalFlags": [],
+                  "abnormalImmunes": [],
+                  "abnormalAntis": [],
+                  "abnormalCombos": [],
+                  "abnormalComboImmunes": [],
+                  "attributeModifiers": [
+                    {
+                      "attributeType": 1,
+                      "formulaItem": 1,
+                      "value": 0,
+                      "loadFromBlackboard": 1,
+                      "fetchBaseValueFromSourceEntity": 0
+                    },
+                    {
+                      "attributeType": 2,
+                      "formulaItem": 1,
+                      "value": 0,
+                      "loadFromBlackboard": 1,
+                      "fetchBaseValueFromSourceEntity": 0
+                    }
+                  ]
+                },
+                "buffKey": "thorns_s_2",
+                "loadFromDB": 0,
+                "isDurableBuff": 0,
+                "isDamageMissable": 0,
+                "isSilenceable": 0,
+                "isStunnable": 0,
+                "isFreezable": 0,
+                "isLevitatable": 0,
+                "statusResistable": 2,
+                "templateKey": "switch_mode_restart_fsm",
+                "disableOverride": 0,
+                "overrideKey": "",
+                "overrideType": 0,
+                "maxStackCnt": 1,
+                "refreshRemainingTimeWhenStackMax": 0,
+                "clearAllStackCntWhenTimeUp": 0,
+                "maxValidStackCnt": -1,
+                "independentCharacterSource": 0,
+                "overrideEffectKey": "thorns_skill_02_buff",
+                "overrideOnEventPriority": 0,
+                "onEventPriority": 0,
+                "audioSignal": "",
+                "lifeTimeType": 1,
+                "takeSnapshotWhenExtend": 0,
+                "durationKey": "",
+                "lifeTime": 0,
+                "triggerLifeType": 0,
+                "triggerCnt": 0,
+                "triggerInterval": -1,
+                "waitFirstTriggerInterval": 1,
+                "firstTriggerInterval": -1,
+                "priority": -1,
+                "priorityBBKeys": [],
+                "stripBlackboardParamsWithBuffKey": 0,
+                "blackboard": [
+                  {
+                    "key": "mode",
+                    "value": 1,
+                    "valueStr": ""
+                  }
+                ],
+                "enableInitDirectionFromSource": 0
+              },
+              {
+                "attributes": {
+                  "abnormalFlags": [],
+                  "abnormalImmunes": [],
+                  "abnormalAntis": [],
+                  "abnormalCombos": [],
+                  "abnormalComboImmunes": [],
+                  "attributeModifiers": []
+                },
+                "buffKey": "thorns_s_2[attack]",
+                "loadFromDB": 0,
+                "isDurableBuff": 0,
+                "isDamageMissable": 0,
+                "isSilenceable": 0,
+                "isStunnable": 0,
+                "isFreezable": 0,
+                "isLevitatable": 0,
+                "statusResistable": 2,
+                "templateKey": "thorns_s_2",
+                "disableOverride": 0,
+                "overrideKey": "",
+                "overrideType": 0,
+                "maxStackCnt": 1,
+                "refreshRemainingTimeWhenStackMax": 0,
+                "clearAllStackCntWhenTimeUp": 0,
+                "maxValidStackCnt": -1,
+                "independentCharacterSource": 0,
+                "overrideEffectKey": "",
+                "overrideOnEventPriority": 0,
+                "onEventPriority": 0,
+                "audioSignal": "",
+                "lifeTimeType": 1,
+                "takeSnapshotWhenExtend": 0,
+                "durationKey": "",
+                "lifeTime": 0,
+                "triggerLifeType": 0,
+                "triggerCnt": 0,
+                "triggerInterval": -1,
+                "waitFirstTriggerInterval": 1,
+                "firstTriggerInterval": -1,
+                "priority": -1,
+                "priorityBBKeys": [],
+                "stripBlackboardParamsWithBuffKey": 1,
+                "blackboard": [],
+                "enableInitDirectionFromSource": 0
+              }
+            ],
+            "_waitForCasting": 1,
+            "_updateLifetimeWhenSpellStart": 0,
+            "_preDelay": 0,
+            "_escapeTime": 0,
+            "_checkBuffEarlyFinish": 0,
+            "_passiveBuffs": [],
+            "_ignoreInfiniteBuffCooldown": 0,
+            "_enableUpdateCooldown": 0
+          },
+          {
+            "pathId": "5579399273823961224",
+            "m_Script": {
+              "m_FileID": 1,
+              "m_PathID": "6851783972288338031"
+            },
+            "_maxTriggerTime": -1,
+            "_allowSpRecoveryWhenAffecting": 0,
+            "_limitGlobalTriggerTime": 0,
+            "_hidden": 0,
+            "_showSpBarEvenHidden": 0,
+            "_showSpAsBulletMode": 0,
+            "_showSpRatioAsProgress": 0,
+            "_playCharWordVoice": 1,
+            "_playCharWordWithPassiveType": 0,
+            "_canCastWithNoSp": 0,
+            "_canSilenced": 0,
+            "_canUseInAbnormalState": 0,
+            "_defaultModeIndex": -1,
+            "_attackBlackboardModeIndex": -1,
+            "_extraAttackBlackboardModeIndices": [],
+            "_rangeIdModeIndex": -1,
+            "_extraRangeIdModeIndices": [],
+            "_rangeIdUsageType": 7,
+            "_writeDurationToAttackBlackboard": 0,
+            "_attachSignalIds": 0,
+            "_extraAbilities": [
+              {
+                "m_FileID": 0,
+                "m_PathID": "-2109432450500820856"
+              }
+            ],
+            "_useEscapeTime": 0,
+            "_earlySkillFinishAtAttackFinished": 0,
+            "_showProgressToNext": 0,
+            "_hideSkillStackCount": 0,
+            "_hideHudSkillStackCount": 0,
+            "_playSkillBeginAnim": 0,
+            "_beginAnim": "",
+            "_beginAnimDown": "",
+            "_beginEffect": [],
+            "_useFaceVector": 0,
+            "_beginAnimValidator": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_availableValidator": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_trigger": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_switchToState": 0,
+            "_uninterruptibleOnAbilityPredelay": 0,
+            "_canSwitchDuringBorn": 1,
+            "_canCastDuringBorn": 1,
+            "_checkHasTargetBeforeDoCast": 0,
+            "_useTriggerInManualMode": 0,
+            "_allowNoTarget": 1,
+            "_shouldCastLikeAttack": 0,
+            "_isRemoteControlled": 0,
+            "_hideRangeToShow": 0,
+            "_forceUseBaseShowRange": 0,
+            "_rangeToShow": {
+              "m_FileID": 0,
+              "m_PathID": "-5954132188610985848"
+            },
+            "_recoverSpIfNoTarget": 0,
+            "_resetAbilityCooldownWhenCastEnd": 0,
+            "_onlyAvailableWhenTokenValid": 0,
+            "_hasUniStackColor": 0
+          },
+          {
+            "pathId": "-7440461895127170936",
+            "m_Script": {
+              "m_FileID": 1,
+              "m_PathID": "680305599797508032"
+            },
+            "_default": {
+              "beginAnim": "Skill_1_Begin",
+              "loopAnim": "Skill_1_Loop",
+              "endAnim": "Skill_1_End"
+            },
+            "_overrideDownAnimation": 0,
+            "_down": {
+              "beginAnim": "",
+              "loopAnim": "",
+              "endAnim": ""
+            },
+            "_overrideUpAnimation": 0,
+            "_up": {
+              "beginAnim": "",
+              "loopAnim": "",
+              "endAnim": ""
+            },
+            "_faceToFront": 0,
+            "_faceToDefault": 0,
+            "_waitForAttachFinishEvent": 0,
+            "_earlyFinishEndIdleAnimation": 0,
+            "_fireAttackFinishEvent": 0,
+            "_delayToFireAttackSkillEvent": 0,
+            "_delaySecond": 0,
+            "_fireAnimEndEvent": 0,
+            "_dontPlayBeginAnimFromInterrupted": 0,
+            "_onlyPlayBeginAnimWhenFirstAttack": 0,
+            "_delayToAnimateEndAnimation": 0,
+            "_delayToAnimateEndAnimationTime": 0,
+            "_playIdleAnimInTheEnd": 0
+          }
+        ]
+      },
+      {
+        "object": "Trigger",
+        "pathId": "309235932614197384",
+        "components": [
+          {
+            "pathId": "-1567357719837048696",
+            "m_Script": {
+              "m_FileID": 1,
+              "m_PathID": "8607874384982393801"
+            },
+            "_keepTarget": 0,
+            "_minTargetNum": 1,
+            "_overrideSearchTargetTick": -1
+          },
+          {
+            "pathId": "-5795034038097772408",
+            "m_Script": {
+              "m_FileID": 1,
+              "m_PathID": "-2891200616113119906"
+            },
+            "_extendable": 0
+          },
+          {
+            "pathId": "-5954132188610985848",
+            "m_Script": {
+              "m_FileID": 1,
+              "m_PathID": "7080728813803358465"
+            },
+            "_targetSide": 2,
+            "_targetMotion": 3,
+            "_targetCategory": 1,
+            "_postFilter": 4,
+            "_ignoreTargetFree": 0,
+            "_onlyIgnoreSomeOfTargetFreeCase": 0,
+            "_abnormalFlag": 44,
+            "_abnormalCombo": 2,
+            "_ignoreAllyTargetFree": 0,
+            "_ignoreHealFree": 0,
+            "_forceIgnoreCamouflage": 0,
+            "_needProfessionMask": 0,
+            "_professionMask": 0,
+            "_limitTargetNum": 1,
+            "_maxTargetKey": "max_target",
+            "_maxNum": 1,
+            "_excludeOwner": 0,
+            "_sortByTauntAtLast": 0,
+            "_ignoreHitRange": 0,
+            "_checkUnitType": 0,
+            "_unitTypeMask": 0,
+            "_abilityInputTargetAsSortSource": 0
+          }
+        ]
+      },
+      {
+        "object": "Thorn",
+        "pathId": "790434641548443784",
+        "components": [
+          {
+            "pathId": "-2109432450500820856",
+            "m_Script": {
+              "m_FileID": 1,
+              "m_PathID": "4381884627089348317"
+            },
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "-5954132188610985848"
+            },
+            "_metadata": {
+              "namedAsAlias": "",
+              "blackboardPrefix": ""
+            },
+            "_interruptAbilityOnDetach": 0,
+            "_attachPassiveBuffsOnDummy": 1,
+            "_ignoreIfOwnerDead": 0,
+            "_forceAsDmgOrHealAbility": 0,
+            "_waitForAttackEvent": 0,
+            "_interuptIfTargetDead": 0,
+            "_resetCdStrategy": 1,
+            "_selectTargetSource": 1,
+            "_selectTargetTiming": 0,
+            "_timeMode": 3,
+            "_alwaysIncludeTarget": 0,
+            "_allowNoTarget": 0,
+            "_animKey": "",
+            "_endAnimKey": "",
+            "_downAnimKey": "",
+            "_downEndAnimKey": "",
+            "_upAnimKey": "",
+            "_upEndAnimKey": "",
+            "_cooldown": 0,
+            "_cooldownKey": "cooldown",
+            "_preDelay": 0.5,
+            "_escapeTime": 0,
+            "_faceToTarget": 1,
+            "_faceToDefault": 0,
+            "_faceToFront": 0,
+            "_faceToFirstCastTarget": 0,
+            "_forceFaceToDirection": 0,
+            "_activeBuffs": [],
+            "_maxAnimScale": -1,
+            "_onlyPlayEndAnimWhenIsLastAbility": 0,
+            "_ignorePalsyInterrupt": 0,
+            "_atkScale": 1,
+            "_atkScaleKey": "atk_scale",
+            "_attackType": 1,
+            "_elementDamageType": 0,
+            "_epDamageRatio": 0,
+            "_useDynamicAttackType": 0,
+            "_deliveryParaWhenReplaceActionNode": 0,
+            "_damageType": 1,
+            "_extraDamageType": 0,
+            "_alwaysPutIncludeTargetFirst": 0
+          },
+          {
+            "pathId": "-5750127901344956280",
+            "m_Script": {
+              "m_FileID": 1,
+              "m_PathID": "7032611377428664948"
+            },
+            "_defaultValue": 0.800000011920929,
+            "_overwrite": 0
+          },
+          {
+            "pathId": "7960253571054600328",
+            "m_Script": {
+              "m_FileID": 1,
+              "m_PathID": "-550693537895634864"
+            },
+            "_hitEffects": [],
+            "_castEffects": [
+              {
+                "_directionType": 0,
+                "_effects": [
+                  "thorns_skill_02_range",
+                  "",
+                  "",
+                  ""
+                ],
+                "_oneshot": 1,
+                "_startEvent": 2,
+                "_endEvent": 3,
+                "_onlyOnce": 0,
+                "_useFourDirectionalFace": 0,
+                "_delayIfFirstAttack": 0,
+                "_hookEffectAfterFirstAttack": ""
+              },
+              {
+                "_directionType": 0,
+                "_effects": [
+                  "thorns_skill_02_start",
+                  "",
+                  "",
+                  ""
+                ],
+                "_oneshot": 1,
+                "_startEvent": 2,
+                "_endEvent": 3,
+                "_onlyOnce": 0,
+                "_useFourDirectionalFace": 0,
+                "_delayIfFirstAttack": 0,
+                "_hookEffectAfterFirstAttack": ""
+              }
+            ],
+            "_attachEffects": [],
+            "_inputTargetEffects": [],
+            "_castTargetEffects": [],
+            "_convertCastEndToAttachFinish": 0,
+            "_recalculatePlaybackSpeed": 0,
+            "_preDelayFactor": 0
+          },
+          {
+            "pathId": "-2882764454726107000",
+            "m_Script": {
+              "m_FileID": 1,
+              "m_PathID": "6838209345780682387"
+            },
+            "_buffs": [
+              {
+                "attributes": {
+                  "abnormalFlags": [],
+                  "abnormalImmunes": [],
+                  "abnormalAntis": [],
+                  "abnormalCombos": [],
+                  "abnormalComboImmunes": [],
+                  "attributeModifiers": []
+                },
+                "buffKey": "thorns_s_2[audio]",
+                "loadFromDB": 0,
+                "isDurableBuff": 0,
+                "isDamageMissable": 0,
+                "isSilenceable": 0,
+                "isStunnable": 0,
+                "isFreezable": 0,
+                "isLevitatable": 0,
+                "statusResistable": 2,
+                "templateKey": "empty",
+                "disableOverride": 0,
+                "overrideKey": "",
+                "overrideType": 0,
+                "maxStackCnt": 1,
+                "refreshRemainingTimeWhenStackMax": 0,
+                "clearAllStackCntWhenTimeUp": 0,
+                "maxValidStackCnt": -1,
+                "independentCharacterSource": 0,
+                "overrideEffectKey": "",
+                "overrideOnEventPriority": 0,
+                "onEventPriority": 0,
+                "audioSignal": "thorns_s_2[audio]",
+                "lifeTimeType": 0,
+                "takeSnapshotWhenExtend": 0,
+                "durationKey": "",
+                "lifeTime": 0,
+                "triggerLifeType": 0,
+                "triggerCnt": 0,
+                "triggerInterval": -1,
+                "waitFirstTriggerInterval": 1,
+                "firstTriggerInterval": -1,
+                "priority": -1,
+                "priorityBBKeys": [],
+                "stripBlackboardParamsWithBuffKey": 0,
+                "blackboard": [],
+                "enableInitDirectionFromSource": 0
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "skchr_thorns_3": [
+      {
+        "object": "skchr_thorns_3",
+        "pathId": "1536023067032537754",
+        "components": [
+          {
+            "pathId": "8592978423916841626",
+            "m_Script": {
+              "m_FileID": 1,
+              "m_PathID": "6851783972288338031"
+            },
+            "_maxTriggerTime": -1,
+            "_allowSpRecoveryWhenAffecting": 0,
+            "_limitGlobalTriggerTime": 0,
+            "_hidden": 0,
+            "_showSpBarEvenHidden": 0,
+            "_showSpAsBulletMode": 0,
+            "_showSpRatioAsProgress": 0,
+            "_playCharWordVoice": 1,
+            "_playCharWordWithPassiveType": 0,
+            "_canCastWithNoSp": 0,
+            "_canSilenced": 0,
+            "_canUseInAbnormalState": 0,
+            "_defaultModeIndex": -1,
+            "_attackBlackboardModeIndex": -1,
+            "_extraAttackBlackboardModeIndices": [],
+            "_rangeIdModeIndex": 2,
+            "_extraRangeIdModeIndices": [],
+            "_rangeIdUsageType": 7,
+            "_writeDurationToAttackBlackboard": 0,
+            "_attachSignalIds": 0,
+            "_extraAbilities": [],
+            "_useEscapeTime": 0,
+            "_earlySkillFinishAtAttackFinished": 0,
+            "_showProgressToNext": 0,
+            "_hideSkillStackCount": 0,
+            "_hideHudSkillStackCount": 0,
+            "_playSkillBeginAnim": 0,
+            "_beginAnim": "",
+            "_beginAnimDown": "",
+            "_beginEffect": [],
+            "_useFaceVector": 0,
+            "_beginAnimValidator": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_availableValidator": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_trigger": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_switchToState": 1,
+            "_uninterruptibleOnAbilityPredelay": 0,
+            "_canSwitchDuringBorn": 1,
+            "_canCastDuringBorn": 1,
+            "_checkHasTargetBeforeDoCast": 0,
+            "_useTriggerInManualMode": 0,
+            "_allowNoTarget": 1,
+            "_shouldCastLikeAttack": 0,
+            "_isRemoteControlled": 0,
+            "_hideRangeToShow": 0,
+            "_forceUseBaseShowRange": 0,
+            "_rangeToShow": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_recoverSpIfNoTarget": 0,
+            "_resetAbilityCooldownWhenCastEnd": 0,
+            "_onlyAvailableWhenTokenValid": 0,
+            "_hasUniStackColor": 0
+          },
+          {
+            "pathId": "7317592448744409754",
+            "m_Script": {
+              "m_FileID": 1,
+              "m_PathID": "-2150564672341267870"
+            },
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_metadata": {
+              "namedAsAlias": "",
+              "blackboardPrefix": ""
+            },
+            "_interruptAbilityOnDetach": 0,
+            "_attachPassiveBuffsOnDummy": 1,
+            "_ignoreIfOwnerDead": 0,
+            "_forceAsDmgOrHealAbility": 0,
+            "_waitForAttackEvent": 1,
+            "_interuptIfTargetDead": 0,
+            "_resetCdStrategy": 1,
+            "_buffs": [
+              {
+                "attributes": {
+                  "abnormalFlags": [],
+                  "abnormalImmunes": [],
+                  "abnormalAntis": [],
+                  "abnormalCombos": [],
+                  "abnormalComboImmunes": [],
+                  "attributeModifiers": [
+                    {
+                      "attributeType": 1,
+                      "formulaItem": 1,
+                      "value": 0,
+                      "loadFromBlackboard": 1,
+                      "fetchBaseValueFromSourceEntity": 0
+                    },
+                    {
+                      "attributeType": 7,
+                      "formulaItem": 0,
+                      "value": 0,
+                      "loadFromBlackboard": 1,
+                      "fetchBaseValueFromSourceEntity": 0
+                    }
+                  ]
+                },
+                "buffKey": "thorns_s_3[a]",
+                "loadFromDB": 0,
+                "isDurableBuff": 0,
+                "isDamageMissable": 0,
+                "isSilenceable": 0,
+                "isStunnable": 0,
+                "isFreezable": 0,
+                "isLevitatable": 0,
+                "statusResistable": 2,
+                "templateKey": "switch_mode",
+                "disableOverride": 0,
+                "overrideKey": "",
+                "overrideType": 0,
+                "maxStackCnt": 1,
+                "refreshRemainingTimeWhenStackMax": 0,
+                "clearAllStackCntWhenTimeUp": 0,
+                "maxValidStackCnt": -1,
+                "independentCharacterSource": 0,
+                "overrideEffectKey": "thorns_skill_03_buff",
+                "overrideOnEventPriority": 0,
+                "onEventPriority": 0,
+                "audioSignal": "",
+                "lifeTimeType": 1,
+                "takeSnapshotWhenExtend": 0,
+                "durationKey": "",
+                "lifeTime": 0,
+                "triggerLifeType": 0,
+                "triggerCnt": 0,
+                "triggerInterval": -1,
+                "waitFirstTriggerInterval": 1,
+                "firstTriggerInterval": -1,
+                "priority": -1,
+                "priorityBBKeys": [],
+                "stripBlackboardParamsWithBuffKey": 0,
+                "blackboard": [
+                  {
+                    "key": "mode",
+                    "value": 2,
+                    "valueStr": ""
+                  }
+                ],
+                "enableInitDirectionFromSource": 0
+              },
+              {
+                "attributes": {
+                  "abnormalFlags": [],
+                  "abnormalImmunes": [],
+                  "abnormalAntis": [],
+                  "abnormalCombos": [],
+                  "abnormalComboImmunes": [],
+                  "attributeModifiers": []
+                },
+                "buffKey": "thorns_s_3[effect]",
+                "loadFromDB": 0,
+                "isDurableBuff": 0,
+                "isDamageMissable": 0,
+                "isSilenceable": 0,
+                "isStunnable": 0,
+                "isFreezable": 0,
+                "isLevitatable": 0,
+                "statusResistable": 2,
+                "templateKey": "empty",
+                "disableOverride": 0,
+                "overrideKey": "",
+                "overrideType": 0,
+                "maxStackCnt": 1,
+                "refreshRemainingTimeWhenStackMax": 0,
+                "clearAllStackCntWhenTimeUp": 0,
+                "maxValidStackCnt": -1,
+                "independentCharacterSource": 0,
+                "overrideEffectKey": "thorns_skill_03_buff_02",
+                "overrideOnEventPriority": 0,
+                "onEventPriority": 0,
+                "audioSignal": "",
+                "lifeTimeType": 1,
+                "takeSnapshotWhenExtend": 0,
+                "durationKey": "",
+                "lifeTime": 0,
+                "triggerLifeType": 0,
+                "triggerCnt": 0,
+                "triggerInterval": -1,
+                "waitFirstTriggerInterval": 1,
+                "firstTriggerInterval": -1,
+                "priority": -1,
+                "priorityBBKeys": [],
+                "stripBlackboardParamsWithBuffKey": 0,
+                "blackboard": [],
+                "enableInitDirectionFromSource": 0
+              }
+            ],
+            "_waitForCasting": 0,
+            "_updateLifetimeWhenSpellStart": 0,
+            "_preDelay": 0,
+            "_escapeTime": 0,
+            "_checkBuffEarlyFinish": 0,
+            "_passiveBuffs": [],
+            "_ignoreInfiniteBuffCooldown": 0,
+            "_enableUpdateCooldown": 0,
+            "_extraBuffs": [
+              {
+                "buffDatas": [
+                  {
+                    "attributes": {
+                      "abnormalFlags": [],
+                      "abnormalImmunes": [],
+                      "abnormalAntis": [],
+                      "abnormalCombos": [],
+                      "abnormalComboImmunes": [],
+                      "attributeModifiers": [
+                        {
+                          "attributeType": 1,
+                          "formulaItem": 1,
+                          "value": 0,
+                          "loadFromBlackboard": 1,
+                          "fetchBaseValueFromSourceEntity": 0
+                        },
+                        {
+                          "attributeType": 7,
+                          "formulaItem": 0,
+                          "value": 0,
+                          "loadFromBlackboard": 1,
+                          "fetchBaseValueFromSourceEntity": 0
+                        }
+                      ]
+                    },
+                    "buffKey": "thorns_s_3[b]",
+                    "loadFromDB": 0,
+                    "isDurableBuff": 0,
+                    "isDamageMissable": 0,
+                    "isSilenceable": 0,
+                    "isStunnable": 0,
+                    "isFreezable": 0,
+                    "isLevitatable": 0,
+                    "statusResistable": 2,
+                    "templateKey": "switch_mode",
+                    "disableOverride": 0,
+                    "overrideKey": "",
+                    "overrideType": 0,
+                    "maxStackCnt": 1,
+                    "refreshRemainingTimeWhenStackMax": 0,
+                    "clearAllStackCntWhenTimeUp": 0,
+                    "maxValidStackCnt": -1,
+                    "independentCharacterSource": 0,
+                    "overrideEffectKey": "thorns_skill_03_buff",
+                    "overrideOnEventPriority": 0,
+                    "onEventPriority": 0,
+                    "audioSignal": "",
+                    "lifeTimeType": 2,
+                    "takeSnapshotWhenExtend": 0,
+                    "durationKey": "",
+                    "lifeTime": 0,
+                    "triggerLifeType": 0,
+                    "triggerCnt": 0,
+                    "triggerInterval": -1,
+                    "waitFirstTriggerInterval": 1,
+                    "firstTriggerInterval": -1,
+                    "priority": -1,
+                    "priorityBBKeys": [],
+                    "stripBlackboardParamsWithBuffKey": 1,
+                    "blackboard": [
+                      {
+                        "key": "mode",
+                        "value": 2,
+                        "valueStr": ""
+                      }
+                    ],
+                    "enableInitDirectionFromSource": 0
+                  },
+                  {
+                    "attributes": {
+                      "abnormalFlags": [],
+                      "abnormalImmunes": [],
+                      "abnormalAntis": [],
+                      "abnormalCombos": [],
+                      "abnormalComboImmunes": [],
+                      "attributeModifiers": []
+                    },
+                    "buffKey": "thorns_s_3[b][effect]",
+                    "loadFromDB": 0,
+                    "isDurableBuff": 0,
+                    "isDamageMissable": 0,
+                    "isSilenceable": 0,
+                    "isStunnable": 0,
+                    "isFreezable": 0,
+                    "isLevitatable": 0,
+                    "statusResistable": 2,
+                    "templateKey": "empty",
+                    "disableOverride": 0,
+                    "overrideKey": "",
+                    "overrideType": 0,
+                    "maxStackCnt": 1,
+                    "refreshRemainingTimeWhenStackMax": 0,
+                    "clearAllStackCntWhenTimeUp": 0,
+                    "maxValidStackCnt": -1,
+                    "independentCharacterSource": 0,
+                    "overrideEffectKey": "thorns_skill_03_buff_02",
+                    "overrideOnEventPriority": 0,
+                    "onEventPriority": 0,
+                    "audioSignal": "",
+                    "lifeTimeType": 2,
+                    "takeSnapshotWhenExtend": 0,
+                    "durationKey": "",
+                    "lifeTime": 0,
+                    "triggerLifeType": 0,
+                    "triggerCnt": 0,
+                    "triggerInterval": -1,
+                    "waitFirstTriggerInterval": 1,
+                    "firstTriggerInterval": -1,
+                    "priority": -1,
+                    "priorityBBKeys": [],
+                    "stripBlackboardParamsWithBuffKey": 0,
+                    "blackboard": [],
+                    "enableInitDirectionFromSource": 0
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "projectiles": {
+    "projectile_chr_thorns_s3_graphic": [
+      {
+        "object": "projectile_chr_thorns_s3_graphic",
+        "pathId": "-7323009546324153181",
+        "components": [
+          {
+            "pathId": "-6660249674801746781",
+            "m_Script": {
+              "m_FileID": 1,
+              "m_PathID": "-8797129986015012478"
+            },
+            "_randomDelayToBorn": 0,
+            "_bodyTransform": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_keepAlreadyHitTime": -1,
+            "_mainEffect": "thorns_skill_03_trail",
+            "_clearMainEffectWhenReached": 0,
+            "_actionController": {
+              "_detachBuffsWhenTargetLeave": 0,
+              "_detachAllBuffsWhenStopped": 0,
+              "_onlyAddBuffsToTraceTarget": 0,
+              "_onlyAddBuffsToTargetOnce": 0,
+              "_dontAddBuffs": 0,
+              "_excludeAttachments": 0,
+              "_useSelfBlackboard": 0,
+              "_extraBuffsInTheEnd": [],
+              "_useExtraBuffsWhenStopHit": 0,
+              "_addExtraBuffsWhenReached": 0,
+              "_detachAllExtraBuffsWhenStopped": 0
+            },
+            "_fixDealHitTargetLeft": 0,
+            "_stopGraphicProjectileWhenClearMainEffect": 0,
+            "_overrideAudioSignal": "",
+            "_fireProjectileReachedEvent": 0,
+            "_eliminatableStatus": 0,
+            "_movementAdjustableStatus": 0,
+            "_managedBySource": 0,
+            "_projectileType": 0,
+            "_containsChildrenBehaviours": 0,
+            "_canHitSameTargetMultipleTimes": 0,
+            "_lifeTimeType": 1,
+            "_lifeTime": 10,
+            "_getLifeTimeFromBB": 0,
+            "_hitNumType": 1,
+            "_maxHitNum": 1,
+            "_getMaxHitNumFromBB": 0,
+            "_maxHitNumBBKey": "",
+            "_stopAfterMaxHit": 1,
+            "_stopAfterFirstHit": 0,
+            "_stopWhenSourceInvalid": 0,
+            "_alwaysHitTraceTargetInTheEnd": 1,
+            "_alwaysHitTraceTargetWhenReached": 0,
+            "_alwaysReachInTheEnd": 0,
+            "_limitedMaxHitNumToSourceBlockedCnt": 0,
+            "_allowZeroBlockCntLimit": 0
+          },
+          {
+            "pathId": "1526394806424038563",
+            "m_Script": {
+              "m_FileID": 1,
+              "m_PathID": "-1429203677512073985"
+            },
+            "_rotateToTarget": 1,
+            "_forceReachedWhenTimeup": 1,
+            "_useSourceDirection": 0,
+            "_useTargetDirection": 0,
+            "_useStartToTarget": 0,
+            "_awayFromSourceAsDirection": 0,
+            "_flyToTargetLocationOnly": 0,
+            "_useSourceDirectionRandomArcAngleStart": 0,
+            "_useSourceToTargetRandomArcAngleStart": 0,
+            "_useSourceDirectionArcAngleWithRatio": 0,
+            "_useSourceToTargetArcAngleWithRatio": 0,
+            "_sourceDirectionArcAngleRatio": 0,
+            "_flyToPredefinedLocation": 0,
+            "_predefinedLocation": 0,
+            "_freezeRotationZ": 1,
+            "_freezeRotationXY": 0,
+            "_exactMatchCameraForward": 0,
+            "_resetToTargetPosWhenReached": 0,
+            "_resetToTracetargetMapPosV3": 0,
+            "_handleWithIBuildableTarget": 0,
+            "_forceResetToTargetPosWhenReached": 0,
+            "_fixOnProjectileReached": 0,
+            "_onlyReachedInTime": 0,
+            "_moveType": 1,
+            "_moveTypeData": {
+              "data": []
+            },
+            "_speed": 10,
+            "_distance": 0,
+            "_comeBack": 0,
+            "_comeBackSpeedScale": 0.25,
+            "_delayToStart": 0,
+            "_delayAfterReached": 0,
+            "_delayToReachAfterHit": 0,
+            "_clearTraceTargetWhenReached": 1,
+            "_updateDelayTimeOnlyOnce": 0,
+            "_skipSmoothLerpDirection": 0,
+            "_addInertia": 0,
+            "_turnSpeed": 0,
+            "_useDynamicSpeed": 0,
+            "_deltaSpeedPerSec": 0,
+            "_finalSpeed": 0,
+            "_randomOffset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "_forceUseTargetMountPoint": 0
+          }
+        ]
+      }
+    ],
+    "projectile_chr_thorns_graphic": [
+      {
+        "object": "projectile_chr_thorns_graphic",
+        "pathId": "-5007559272819285375",
+        "components": [
+          {
+            "pathId": "907933614764302977",
+            "m_Script": {
+              "m_FileID": 1,
+              "m_PathID": "-8797129986015012478"
+            },
+            "_randomDelayToBorn": 0,
+            "_bodyTransform": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_keepAlreadyHitTime": -1,
+            "_mainEffect": "thorns_attack_02_trail",
+            "_clearMainEffectWhenReached": 0,
+            "_actionController": {
+              "_detachBuffsWhenTargetLeave": 0,
+              "_detachAllBuffsWhenStopped": 0,
+              "_onlyAddBuffsToTraceTarget": 0,
+              "_onlyAddBuffsToTargetOnce": 0,
+              "_dontAddBuffs": 0,
+              "_excludeAttachments": 0,
+              "_useSelfBlackboard": 0,
+              "_extraBuffsInTheEnd": [],
+              "_useExtraBuffsWhenStopHit": 0,
+              "_addExtraBuffsWhenReached": 0,
+              "_detachAllExtraBuffsWhenStopped": 0
+            },
+            "_fixDealHitTargetLeft": 0,
+            "_stopGraphicProjectileWhenClearMainEffect": 0,
+            "_overrideAudioSignal": "",
+            "_fireProjectileReachedEvent": 0,
+            "_eliminatableStatus": 0,
+            "_movementAdjustableStatus": 0,
+            "_managedBySource": 0,
+            "_projectileType": 0,
+            "_containsChildrenBehaviours": 0,
+            "_canHitSameTargetMultipleTimes": 0,
+            "_lifeTimeType": 1,
+            "_lifeTime": 10,
+            "_getLifeTimeFromBB": 0,
+            "_hitNumType": 1,
+            "_maxHitNum": 1,
+            "_getMaxHitNumFromBB": 0,
+            "_maxHitNumBBKey": "",
+            "_stopAfterMaxHit": 1,
+            "_stopAfterFirstHit": 0,
+            "_stopWhenSourceInvalid": 0,
+            "_alwaysHitTraceTargetInTheEnd": 1,
+            "_alwaysHitTraceTargetWhenReached": 0,
+            "_alwaysReachInTheEnd": 0,
+            "_limitedMaxHitNumToSourceBlockedCnt": 0,
+            "_allowZeroBlockCntLimit": 0
+          },
+          {
+            "pathId": "-4415208198387424639",
+            "m_Script": {
+              "m_FileID": 1,
+              "m_PathID": "-1429203677512073985"
+            },
+            "_rotateToTarget": 1,
+            "_forceReachedWhenTimeup": 1,
+            "_useSourceDirection": 0,
+            "_useTargetDirection": 0,
+            "_useStartToTarget": 0,
+            "_awayFromSourceAsDirection": 0,
+            "_flyToTargetLocationOnly": 0,
+            "_useSourceDirectionRandomArcAngleStart": 0,
+            "_useSourceToTargetRandomArcAngleStart": 0,
+            "_useSourceDirectionArcAngleWithRatio": 0,
+            "_useSourceToTargetArcAngleWithRatio": 0,
+            "_sourceDirectionArcAngleRatio": 0,
+            "_flyToPredefinedLocation": 0,
+            "_predefinedLocation": 0,
+            "_freezeRotationZ": 1,
+            "_freezeRotationXY": 0,
+            "_exactMatchCameraForward": 0,
+            "_resetToTargetPosWhenReached": 0,
+            "_resetToTracetargetMapPosV3": 0,
+            "_handleWithIBuildableTarget": 0,
+            "_forceResetToTargetPosWhenReached": 0,
+            "_fixOnProjectileReached": 0,
+            "_onlyReachedInTime": 0,
+            "_moveType": 1,
+            "_moveTypeData": {
+              "data": []
+            },
+            "_speed": 10,
+            "_distance": 0,
+            "_comeBack": 0,
+            "_comeBackSpeedScale": 0.25,
+            "_delayToStart": 0,
+            "_delayAfterReached": 0,
+            "_delayToReachAfterHit": 0,
+            "_clearTraceTargetWhenReached": 1,
+            "_updateDelayTimeOnlyOnce": 0,
+            "_skipSmoothLerpDirection": 0,
+            "_addInertia": 0,
+            "_turnSpeed": 0,
+            "_useDynamicSpeed": 0,
+            "_deltaSpeedPerSec": 0,
+            "_finalSpeed": 0,
+            "_randomOffset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "_forceUseTargetMountPoint": 0
+          }
+        ]
+      }
+    ],
+    "projectile_chr_thorns_s3_logic": [
+      {
+        "object": "projectile_chr_thorns_s3_logic",
+        "pathId": "-3770155988485825349",
+        "components": [
+          {
+            "pathId": "8005073075937057979",
+            "m_Script": {
+              "m_FileID": 1,
+              "m_PathID": "-8797129986015012478"
+            },
+            "_randomDelayToBorn": 0,
+            "_bodyTransform": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_keepAlreadyHitTime": -1,
+            "_mainEffect": "",
+            "_clearMainEffectWhenReached": 0,
+            "_actionController": {
+              "_detachBuffsWhenTargetLeave": 0,
+              "_detachAllBuffsWhenStopped": 0,
+              "_onlyAddBuffsToTraceTarget": 0,
+              "_onlyAddBuffsToTargetOnce": 0,
+              "_dontAddBuffs": 0,
+              "_excludeAttachments": 0,
+              "_useSelfBlackboard": 0,
+              "_extraBuffsInTheEnd": [],
+              "_useExtraBuffsWhenStopHit": 0,
+              "_addExtraBuffsWhenReached": 0,
+              "_detachAllExtraBuffsWhenStopped": 0
+            },
+            "_fixDealHitTargetLeft": 0,
+            "_stopGraphicProjectileWhenClearMainEffect": 0,
+            "_overrideAudioSignal": "",
+            "_fireProjectileReachedEvent": 0,
+            "_eliminatableStatus": 0,
+            "_movementAdjustableStatus": 0,
+            "_managedBySource": 0,
+            "_projectileType": 0,
+            "_containsChildrenBehaviours": 0,
+            "_canHitSameTargetMultipleTimes": 0,
+            "_lifeTimeType": 1,
+            "_lifeTime": 10,
+            "_getLifeTimeFromBB": 0,
+            "_hitNumType": 1,
+            "_maxHitNum": 1,
+            "_getMaxHitNumFromBB": 0,
+            "_maxHitNumBBKey": "",
+            "_stopAfterMaxHit": 1,
+            "_stopAfterFirstHit": 0,
+            "_stopWhenSourceInvalid": 0,
+            "_alwaysHitTraceTargetInTheEnd": 1,
+            "_alwaysHitTraceTargetWhenReached": 0,
+            "_alwaysReachInTheEnd": 0,
+            "_limitedMaxHitNumToSourceBlockedCnt": 0,
+            "_allowZeroBlockCntLimit": 0
+          },
+          {
+            "pathId": "-5433187633972470597",
+            "m_Script": {
+              "m_FileID": 1,
+              "m_PathID": "-1429203677512073985"
+            },
+            "_rotateToTarget": 1,
+            "_forceReachedWhenTimeup": 1,
+            "_useSourceDirection": 0,
+            "_useTargetDirection": 0,
+            "_useStartToTarget": 0,
+            "_awayFromSourceAsDirection": 0,
+            "_flyToTargetLocationOnly": 0,
+            "_useSourceDirectionRandomArcAngleStart": 0,
+            "_useSourceToTargetRandomArcAngleStart": 0,
+            "_useSourceDirectionArcAngleWithRatio": 0,
+            "_useSourceToTargetArcAngleWithRatio": 0,
+            "_sourceDirectionArcAngleRatio": 0,
+            "_flyToPredefinedLocation": 0,
+            "_predefinedLocation": 0,
+            "_freezeRotationZ": 1,
+            "_freezeRotationXY": 0,
+            "_exactMatchCameraForward": 0,
+            "_resetToTargetPosWhenReached": 0,
+            "_resetToTracetargetMapPosV3": 0,
+            "_handleWithIBuildableTarget": 0,
+            "_forceResetToTargetPosWhenReached": 0,
+            "_fixOnProjectileReached": 0,
+            "_onlyReachedInTime": 0,
+            "_moveType": 1,
+            "_moveTypeData": {
+              "data": []
+            },
+            "_speed": 10,
+            "_distance": 0,
+            "_comeBack": 0,
+            "_comeBackSpeedScale": 0.25,
+            "_delayToStart": 0,
+            "_delayAfterReached": 0,
+            "_delayToReachAfterHit": 0,
+            "_clearTraceTargetWhenReached": 1,
+            "_updateDelayTimeOnlyOnce": 0,
+            "_skipSmoothLerpDirection": 0,
+            "_addInertia": 0,
+            "_turnSpeed": 0,
+            "_useDynamicSpeed": 0,
+            "_deltaSpeedPerSec": 0,
+            "_finalSpeed": 0,
+            "_randomOffset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "_forceUseTargetMountPoint": 0
+          },
+          {
+            "pathId": "3048076740100267195",
+            "m_Script": {
+              "m_FileID": 1,
+              "m_PathID": "6834194400804168919"
+            },
+            "_effectsWhenStart": [],
+            "_effectsWhenReached": [],
+            "_effectsWhenHit": [
+              "thorns_skill_03_hit"
+            ],
+            "_effectsToTargetWhenStart": [],
+            "_effectsToTileWhenStart": [],
+            "_effectsWhenStop": [],
+            "_effectOnTrigger": [],
+            "_onlyPlayHitEffectOnTraceTarget": 0,
+            "_onlyPlayHitEffectOnNotTraceTarget": 0,
+            "_onlyPlayHitEffectOnce": 0,
+            "_clearHitEffectOnStop": 0,
+            "_clearPlayEffectOnStop": 0,
+            "_clearEffectsOnTileOnStop": 0,
+            "_clearReachedEffectWhenStop": 0,
+            "_alwaysPlayStartEffects": 0,
+            "_playStartEffectOnlyOnProjectile": 0,
+            "_useSourceFaceVector": 0,
+            "_useSourceFaceVectorOnHit": 0,
+            "_forceReachTargetGround": 0,
+            "_followTargetGround": 0,
+            "_replaceMainEffectWhenReach": 0,
+            "_mainEffectToReplace": "",
+            "_useTraceTargetWhenReach": 0,
+            "_setReachEffectOnProjectile": 0,
+            "_syncEffectScaleViaProjectile": 0
+          }
+        ]
+      }
+    ],
+    "projectile_chr_thorns": [
+      {
+        "object": "projectile_chr_thorns",
+        "pathId": "2525642086548481590",
+        "components": [
+          {
+            "pathId": "6408190646148507190",
+            "m_Script": {
+              "m_FileID": 1,
+              "m_PathID": "-8797129986015012478"
+            },
+            "_randomDelayToBorn": 0,
+            "_bodyTransform": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_keepAlreadyHitTime": -1,
+            "_mainEffect": "thorns_attack_02_trail",
+            "_clearMainEffectWhenReached": 0,
+            "_actionController": {
+              "_detachBuffsWhenTargetLeave": 0,
+              "_detachAllBuffsWhenStopped": 0,
+              "_onlyAddBuffsToTraceTarget": 0,
+              "_onlyAddBuffsToTargetOnce": 0,
+              "_dontAddBuffs": 0,
+              "_excludeAttachments": 0,
+              "_useSelfBlackboard": 0,
+              "_extraBuffsInTheEnd": [],
+              "_useExtraBuffsWhenStopHit": 0,
+              "_addExtraBuffsWhenReached": 0,
+              "_detachAllExtraBuffsWhenStopped": 0
+            },
+            "_fixDealHitTargetLeft": 0,
+            "_stopGraphicProjectileWhenClearMainEffect": 0,
+            "_overrideAudioSignal": "",
+            "_fireProjectileReachedEvent": 0,
+            "_eliminatableStatus": 0,
+            "_movementAdjustableStatus": 0,
+            "_managedBySource": 0,
+            "_projectileType": 0,
+            "_containsChildrenBehaviours": 0,
+            "_canHitSameTargetMultipleTimes": 0,
+            "_lifeTimeType": 1,
+            "_lifeTime": 10,
+            "_getLifeTimeFromBB": 0,
+            "_hitNumType": 1,
+            "_maxHitNum": 1,
+            "_getMaxHitNumFromBB": 0,
+            "_maxHitNumBBKey": "",
+            "_stopAfterMaxHit": 1,
+            "_stopAfterFirstHit": 0,
+            "_stopWhenSourceInvalid": 0,
+            "_alwaysHitTraceTargetInTheEnd": 1,
+            "_alwaysHitTraceTargetWhenReached": 0,
+            "_alwaysReachInTheEnd": 0,
+            "_limitedMaxHitNumToSourceBlockedCnt": 0,
+            "_allowZeroBlockCntLimit": 0
+          },
+          {
+            "pathId": "-7390737194172307914",
+            "m_Script": {
+              "m_FileID": 1,
+              "m_PathID": "-1429203677512073985"
+            },
+            "_rotateToTarget": 1,
+            "_forceReachedWhenTimeup": 1,
+            "_useSourceDirection": 0,
+            "_useTargetDirection": 0,
+            "_useStartToTarget": 0,
+            "_awayFromSourceAsDirection": 0,
+            "_flyToTargetLocationOnly": 0,
+            "_useSourceDirectionRandomArcAngleStart": 0,
+            "_useSourceToTargetRandomArcAngleStart": 0,
+            "_useSourceDirectionArcAngleWithRatio": 0,
+            "_useSourceToTargetArcAngleWithRatio": 0,
+            "_sourceDirectionArcAngleRatio": 0,
+            "_flyToPredefinedLocation": 0,
+            "_predefinedLocation": 0,
+            "_freezeRotationZ": 1,
+            "_freezeRotationXY": 0,
+            "_exactMatchCameraForward": 0,
+            "_resetToTargetPosWhenReached": 0,
+            "_resetToTracetargetMapPosV3": 0,
+            "_handleWithIBuildableTarget": 0,
+            "_forceResetToTargetPosWhenReached": 0,
+            "_fixOnProjectileReached": 0,
+            "_onlyReachedInTime": 0,
+            "_moveType": 1,
+            "_moveTypeData": {
+              "data": []
+            },
+            "_speed": 10,
+            "_distance": 0,
+            "_comeBack": 0,
+            "_comeBackSpeedScale": 0.25,
+            "_delayToStart": 0,
+            "_delayAfterReached": 0,
+            "_delayToReachAfterHit": 0,
+            "_clearTraceTargetWhenReached": 1,
+            "_updateDelayTimeOnlyOnce": 0,
+            "_skipSmoothLerpDirection": 0,
+            "_addInertia": 0,
+            "_turnSpeed": 0,
+            "_useDynamicSpeed": 0,
+            "_deltaSpeedPerSec": 0,
+            "_finalSpeed": 0,
+            "_randomOffset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "_forceUseTargetMountPoint": 0
+          },
+          {
+            "pathId": "-2120134763721546186",
+            "m_Script": {
+              "m_FileID": 1,
+              "m_PathID": "6834194400804168919"
+            },
+            "_effectsWhenStart": [],
+            "_effectsWhenReached": [],
+            "_effectsWhenHit": [
+              "thorns_attack_02_hit"
+            ],
+            "_effectsToTargetWhenStart": [],
+            "_effectsToTileWhenStart": [],
+            "_effectsWhenStop": [],
+            "_effectOnTrigger": [],
+            "_onlyPlayHitEffectOnTraceTarget": 0,
+            "_onlyPlayHitEffectOnNotTraceTarget": 0,
+            "_onlyPlayHitEffectOnce": 0,
+            "_clearHitEffectOnStop": 0,
+            "_clearPlayEffectOnStop": 0,
+            "_clearEffectsOnTileOnStop": 0,
+            "_clearReachedEffectWhenStop": 0,
+            "_alwaysPlayStartEffects": 0,
+            "_playStartEffectOnlyOnProjectile": 0,
+            "_useSourceFaceVector": 0,
+            "_useSourceFaceVectorOnHit": 0,
+            "_forceReachTargetGround": 0,
+            "_followTargetGround": 0,
+            "_replaceMainEffectWhenReach": 0,
+            "_mainEffectToReplace": "",
+            "_useTraceTargetWhenReach": 0,
+            "_setReachEffectOnProjectile": 0,
+            "_syncEffectScaleViaProjectile": 0
+          }
+        ]
+      }
+    ],
+    "projectile_chr_thorns_s3": [
+      {
+        "object": "projectile_chr_thorns_s3",
+        "pathId": "8719647704650249749",
+        "components": [
+          {
+            "pathId": "-7369593697284360683",
+            "m_Script": {
+              "m_FileID": 1,
+              "m_PathID": "-8797129986015012478"
+            },
+            "_randomDelayToBorn": 0,
+            "_bodyTransform": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_keepAlreadyHitTime": -1,
+            "_mainEffect": "thorns_skill_03_trail",
+            "_clearMainEffectWhenReached": 0,
+            "_actionController": {
+              "_detachBuffsWhenTargetLeave": 0,
+              "_detachAllBuffsWhenStopped": 0,
+              "_onlyAddBuffsToTraceTarget": 0,
+              "_onlyAddBuffsToTargetOnce": 0,
+              "_dontAddBuffs": 0,
+              "_excludeAttachments": 0,
+              "_useSelfBlackboard": 0,
+              "_extraBuffsInTheEnd": [],
+              "_useExtraBuffsWhenStopHit": 0,
+              "_addExtraBuffsWhenReached": 0,
+              "_detachAllExtraBuffsWhenStopped": 0
+            },
+            "_fixDealHitTargetLeft": 0,
+            "_stopGraphicProjectileWhenClearMainEffect": 0,
+            "_overrideAudioSignal": "",
+            "_fireProjectileReachedEvent": 0,
+            "_eliminatableStatus": 0,
+            "_movementAdjustableStatus": 0,
+            "_managedBySource": 0,
+            "_projectileType": 0,
+            "_containsChildrenBehaviours": 0,
+            "_canHitSameTargetMultipleTimes": 0,
+            "_lifeTimeType": 1,
+            "_lifeTime": 10,
+            "_getLifeTimeFromBB": 0,
+            "_hitNumType": 1,
+            "_maxHitNum": 1,
+            "_getMaxHitNumFromBB": 0,
+            "_maxHitNumBBKey": "",
+            "_stopAfterMaxHit": 1,
+            "_stopAfterFirstHit": 0,
+            "_stopWhenSourceInvalid": 0,
+            "_alwaysHitTraceTargetInTheEnd": 1,
+            "_alwaysHitTraceTargetWhenReached": 0,
+            "_alwaysReachInTheEnd": 0,
+            "_limitedMaxHitNumToSourceBlockedCnt": 0,
+            "_allowZeroBlockCntLimit": 0
+          },
+          {
+            "pathId": "-4210022810530318827",
+            "m_Script": {
+              "m_FileID": 1,
+              "m_PathID": "-1429203677512073985"
+            },
+            "_rotateToTarget": 1,
+            "_forceReachedWhenTimeup": 1,
+            "_useSourceDirection": 0,
+            "_useTargetDirection": 0,
+            "_useStartToTarget": 0,
+            "_awayFromSourceAsDirection": 0,
+            "_flyToTargetLocationOnly": 0,
+            "_useSourceDirectionRandomArcAngleStart": 0,
+            "_useSourceToTargetRandomArcAngleStart": 0,
+            "_useSourceDirectionArcAngleWithRatio": 0,
+            "_useSourceToTargetArcAngleWithRatio": 0,
+            "_sourceDirectionArcAngleRatio": 0,
+            "_flyToPredefinedLocation": 0,
+            "_predefinedLocation": 0,
+            "_freezeRotationZ": 1,
+            "_freezeRotationXY": 0,
+            "_exactMatchCameraForward": 0,
+            "_resetToTargetPosWhenReached": 0,
+            "_resetToTracetargetMapPosV3": 0,
+            "_handleWithIBuildableTarget": 0,
+            "_forceResetToTargetPosWhenReached": 0,
+            "_fixOnProjectileReached": 0,
+            "_onlyReachedInTime": 0,
+            "_moveType": 1,
+            "_moveTypeData": {
+              "data": []
+            },
+            "_speed": 10,
+            "_distance": 0,
+            "_comeBack": 0,
+            "_comeBackSpeedScale": 0.25,
+            "_delayToStart": 0,
+            "_delayAfterReached": 0,
+            "_delayToReachAfterHit": 0,
+            "_clearTraceTargetWhenReached": 1,
+            "_updateDelayTimeOnlyOnce": 0,
+            "_skipSmoothLerpDirection": 0,
+            "_addInertia": 0,
+            "_turnSpeed": 0,
+            "_useDynamicSpeed": 0,
+            "_deltaSpeedPerSec": 0,
+            "_finalSpeed": 0,
+            "_randomOffset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "_forceUseTargetMountPoint": 0
+          },
+          {
+            "pathId": "7130630654576326165",
+            "m_Script": {
+              "m_FileID": 1,
+              "m_PathID": "6834194400804168919"
+            },
+            "_effectsWhenStart": [],
+            "_effectsWhenReached": [],
+            "_effectsWhenHit": [
+              "thorns_skill_03_hit"
+            ],
+            "_effectsToTargetWhenStart": [],
+            "_effectsToTileWhenStart": [],
+            "_effectsWhenStop": [],
+            "_effectOnTrigger": [],
+            "_onlyPlayHitEffectOnTraceTarget": 0,
+            "_onlyPlayHitEffectOnNotTraceTarget": 0,
+            "_onlyPlayHitEffectOnce": 0,
+            "_clearHitEffectOnStop": 0,
+            "_clearPlayEffectOnStop": 0,
+            "_clearEffectsOnTileOnStop": 0,
+            "_clearReachedEffectWhenStop": 0,
+            "_alwaysPlayStartEffects": 0,
+            "_playStartEffectOnlyOnProjectile": 0,
+            "_useSourceFaceVector": 0,
+            "_useSourceFaceVectorOnHit": 0,
+            "_forceReachTargetGround": 0,
+            "_followTargetGround": 0,
+            "_replaceMainEffectWhenReach": 0,
+            "_mainEffectToReplace": "",
+            "_useTraceTargetWhenReach": 0,
+            "_setReachEffectOnProjectile": 0,
+            "_syncEffectScaleViaProjectile": 0
+          }
+        ]
+      }
+    ],
+    "projectile_chr_thorns_logic": [
+      {
+        "object": "projectile_chr_thorns_logic",
+        "pathId": "8804338367500641646",
+        "components": [
+          {
+            "pathId": "6384190029884482926",
+            "m_Script": {
+              "m_FileID": 1,
+              "m_PathID": "-8797129986015012478"
+            },
+            "_randomDelayToBorn": 0,
+            "_bodyTransform": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_keepAlreadyHitTime": -1,
+            "_mainEffect": "",
+            "_clearMainEffectWhenReached": 0,
+            "_actionController": {
+              "_detachBuffsWhenTargetLeave": 0,
+              "_detachAllBuffsWhenStopped": 0,
+              "_onlyAddBuffsToTraceTarget": 0,
+              "_onlyAddBuffsToTargetOnce": 0,
+              "_dontAddBuffs": 0,
+              "_excludeAttachments": 0,
+              "_useSelfBlackboard": 0,
+              "_extraBuffsInTheEnd": [],
+              "_useExtraBuffsWhenStopHit": 0,
+              "_addExtraBuffsWhenReached": 0,
+              "_detachAllExtraBuffsWhenStopped": 0
+            },
+            "_fixDealHitTargetLeft": 0,
+            "_stopGraphicProjectileWhenClearMainEffect": 0,
+            "_overrideAudioSignal": "",
+            "_fireProjectileReachedEvent": 0,
+            "_eliminatableStatus": 0,
+            "_movementAdjustableStatus": 0,
+            "_managedBySource": 0,
+            "_projectileType": 0,
+            "_containsChildrenBehaviours": 0,
+            "_canHitSameTargetMultipleTimes": 0,
+            "_lifeTimeType": 1,
+            "_lifeTime": 10,
+            "_getLifeTimeFromBB": 0,
+            "_hitNumType": 1,
+            "_maxHitNum": 1,
+            "_getMaxHitNumFromBB": 0,
+            "_maxHitNumBBKey": "",
+            "_stopAfterMaxHit": 1,
+            "_stopAfterFirstHit": 0,
+            "_stopWhenSourceInvalid": 0,
+            "_alwaysHitTraceTargetInTheEnd": 1,
+            "_alwaysHitTraceTargetWhenReached": 0,
+            "_alwaysReachInTheEnd": 0,
+            "_limitedMaxHitNumToSourceBlockedCnt": 0,
+            "_allowZeroBlockCntLimit": 0
+          },
+          {
+            "pathId": "7964527517067240814",
+            "m_Script": {
+              "m_FileID": 1,
+              "m_PathID": "-1429203677512073985"
+            },
+            "_rotateToTarget": 1,
+            "_forceReachedWhenTimeup": 1,
+            "_useSourceDirection": 0,
+            "_useTargetDirection": 0,
+            "_useStartToTarget": 0,
+            "_awayFromSourceAsDirection": 0,
+            "_flyToTargetLocationOnly": 0,
+            "_useSourceDirectionRandomArcAngleStart": 0,
+            "_useSourceToTargetRandomArcAngleStart": 0,
+            "_useSourceDirectionArcAngleWithRatio": 0,
+            "_useSourceToTargetArcAngleWithRatio": 0,
+            "_sourceDirectionArcAngleRatio": 0,
+            "_flyToPredefinedLocation": 0,
+            "_predefinedLocation": 0,
+            "_freezeRotationZ": 1,
+            "_freezeRotationXY": 0,
+            "_exactMatchCameraForward": 0,
+            "_resetToTargetPosWhenReached": 0,
+            "_resetToTracetargetMapPosV3": 0,
+            "_handleWithIBuildableTarget": 0,
+            "_forceResetToTargetPosWhenReached": 0,
+            "_fixOnProjectileReached": 0,
+            "_onlyReachedInTime": 0,
+            "_moveType": 1,
+            "_moveTypeData": {
+              "data": []
+            },
+            "_speed": 10,
+            "_distance": 0,
+            "_comeBack": 0,
+            "_comeBackSpeedScale": 0.25,
+            "_delayToStart": 0,
+            "_delayAfterReached": 0,
+            "_delayToReachAfterHit": 0,
+            "_clearTraceTargetWhenReached": 1,
+            "_updateDelayTimeOnlyOnce": 0,
+            "_skipSmoothLerpDirection": 0,
+            "_addInertia": 0,
+            "_turnSpeed": 0,
+            "_useDynamicSpeed": 0,
+            "_deltaSpeedPerSec": 0,
+            "_finalSpeed": 0,
+            "_randomOffset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "_forceUseTargetMountPoint": 0
+          },
+          {
+            "pathId": "1560394560355886446",
+            "m_Script": {
+              "m_FileID": 1,
+              "m_PathID": "6834194400804168919"
+            },
+            "_effectsWhenStart": [],
+            "_effectsWhenReached": [],
+            "_effectsWhenHit": [
+              "thorns_attack_02_hit"
+            ],
+            "_effectsToTargetWhenStart": [],
+            "_effectsToTileWhenStart": [],
+            "_effectsWhenStop": [],
+            "_effectOnTrigger": [],
+            "_onlyPlayHitEffectOnTraceTarget": 0,
+            "_onlyPlayHitEffectOnNotTraceTarget": 0,
+            "_onlyPlayHitEffectOnce": 0,
+            "_clearHitEffectOnStop": 0,
+            "_clearPlayEffectOnStop": 0,
+            "_clearEffectsOnTileOnStop": 0,
+            "_clearReachedEffectWhenStop": 0,
+            "_alwaysPlayStartEffects": 0,
+            "_playStartEffectOnlyOnProjectile": 0,
+            "_useSourceFaceVector": 0,
+            "_useSourceFaceVectorOnHit": 0,
+            "_forceReachTargetGround": 0,
+            "_followTargetGround": 0,
+            "_replaceMainEffectWhenReach": 0,
+            "_mainEffectToReplace": "",
+            "_useTraceTargetWhenReach": 0,
+            "_setReachEffectOnProjectile": 0,
+            "_syncEffectScaleViaProjectile": 0
+          }
+        ]
+      }
+    ]
+  },
+  "buffTemplates": {
+    "thorns_s_2": {
+      "templateKey": "thorns_s_2",
+      "effectKey": "",
+      "onEventPriority": "DEFAULT",
+      "eventToActions": {
+        "ON_TAKE_DAMAGE": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+IfDamageTargetSide, Assembly-CSharp",
+            "_sideMask": "ENEMY",
+            "_sourceType": "MODIFIER_SOURCE",
+            "_targetType": "MODIFIER_TARGET"
+          },
+          {
+            "$type": "Torappu.Battle.Action.Nodes+FilterDamageModifer, Assembly-CSharp",
+            "_filterAttackType": true,
+            "_attackTypeFilter": "NORMAL",
+            "_filterDamageType": false,
+            "_damageMask": "NONE",
+            "_filterSharedMask": false,
+            "_sharedFlag": "IS_CONTINUOUS",
+            "_filterModifierSource": false,
+            "_source": "BUFF_OWNER",
+            "_filterBySourceId": false,
+            "_sourceId": null,
+            "_checkHasScource": false,
+            "_isNoSource": false,
+            "_filterModifierCancelled": false
+          },
+          {
+            "$type": "Torappu.Battle.Action.Nodes+TriggerAbility, Assembly-CSharp",
+            "_ownerType": "BUFF_OWNER",
+            "_targetType": "BUFF_OWNER",
+            "_abilityName": "Thorn",
+            "_checkCanUseAblityFlag": false,
+            "_castDirectly": false,
+            "_useFirstActiveAbility": false,
+            "_useCastResult": false
+          }
+        ]
+      }
+    },
+    "thorns_t_1": {
+      "templateKey": "thorns_t_1",
+      "effectKey": "",
+      "onEventPriority": "DEFAULT",
+      "eventToActions": {
+        "ON_BUFF_TRIGGER": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+IfElse, Assembly-CSharp",
+            "_conditionNode": {
+              "$type": "Torappu.Battle.Action.Nodes+IfTarget, Assembly-CSharp",
+              "_targetType": "BUFF_OWNER",
+              "_motionMask": "ALL",
+              "_checkTargetAlive": false,
+              "_checkApplyWay": true,
+              "_checkTargetUnitType": false,
+              "_unitType": "ENEMY",
+              "_applyWay": "RANGED",
+              "_checkTargetFree": false
+            },
+            "_succeedNodes": [
+              {
+                "$type": "Torappu.Battle.Action.Nodes+FixedValueDamage, Assembly-CSharp",
+                "_damageType": "MAGICAL",
+                "_damageKey": "damage[ranged]",
+                "_ignoreForSp": false,
+                "_attackType": "BUFF",
+                "_skipModifierEvent": false,
+                "_considerUnhurtable": false,
+                "_noSourceDamage": false,
+                "_targetType": "TARGET",
+                "_assignRealDamageToBB": false,
+                "_multiplierByKey": false,
+                "_multiplierKey": "cnt",
+                "_damageTargetType": "TARGET",
+                "_triggerOnCalculateDamage": false,
+                "_isEnvDamage": false,
+                "_ignoreCancelReasonMask": "NONE",
+                "_forceDisplayDamageNum": false
+              }
+            ],
+            "_failNodes": [
+              {
+                "$type": "Torappu.Battle.Action.Nodes+FixedValueDamage, Assembly-CSharp",
+                "_damageType": "MAGICAL",
+                "_damageKey": "damage[normal]",
+                "_ignoreForSp": false,
+                "_attackType": "BUFF",
+                "_skipModifierEvent": false,
+                "_considerUnhurtable": false,
+                "_noSourceDamage": false,
+                "_targetType": "TARGET",
+                "_assignRealDamageToBB": false,
+                "_multiplierByKey": false,
+                "_multiplierKey": "cnt",
+                "_damageTargetType": "TARGET",
+                "_triggerOnCalculateDamage": false,
+                "_isEnvDamage": false,
+                "_ignoreCancelReasonMask": "NONE",
+                "_forceDisplayDamageNum": false
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "empty": {
+      "templateKey": "empty",
+      "effectKey": "",
+      "onEventPriority": "DEFAULT",
+      "eventToActions": {}
+    },
+    "switch_mode": {
+      "templateKey": "switch_mode",
+      "effectKey": "",
+      "onEventPriority": "DEFAULT",
+      "eventToActions": {
+        "ON_BUFF_START": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+SwitchMode, Assembly-CSharp",
+            "_modeIndex": 1,
+            "_loadModeFromBlackboard": true,
+            "_restoreDefault": false,
+            "_restartFSM": false,
+            "_targetType": "TARGET"
+          }
+        ],
+        "ON_BUFF_FINISH": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+SwitchMode, Assembly-CSharp",
+            "_modeIndex": 0,
+            "_loadModeFromBlackboard": false,
+            "_restoreDefault": true,
+            "_restartFSM": false,
+            "_targetType": "TARGET"
+          }
+        ]
+      }
+    },
+    "switch_mode_restart_fsm": {
+      "templateKey": "switch_mode_restart_fsm",
+      "effectKey": "",
+      "onEventPriority": "DEFAULT",
+      "eventToActions": {
+        "ON_BUFF_START": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+SwitchMode, Assembly-CSharp",
+            "_modeIndex": 1,
+            "_loadModeFromBlackboard": true,
+            "_restoreDefault": false,
+            "_restartFSM": true,
+            "_targetType": "TARGET"
+          }
+        ],
+        "ON_BUFF_FINISH": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+SwitchMode, Assembly-CSharp",
+            "_modeIndex": 0,
+            "_loadModeFromBlackboard": false,
+            "_restoreDefault": true,
+            "_restartFSM": true,
+            "_targetType": "TARGET"
+          }
+        ]
+      }
+    }
+  },
+  "originalBuffTemplates": {
+    "empty": {
+      "templateKey": "empty",
+      "effectKey": "",
+      "onEventPriority": 0,
+      "eventToActions": {
+        "_items": []
+      }
+    },
+    "switch_mode": {
+      "templateKey": "switch_mode",
+      "effectKey": "",
+      "onEventPriority": 0,
+      "eventToActions": {
+        "_items": [
+          {
+            "key": 0,
+            "value": {
+              "SerializedState": "[{\"_modeIndex\":1,\"_loadModeFromBlackboard\":true,\"_restoreDefault\":false,\"_restartFSM\":false,\"_targetType\":\"TARGET\",\"$type\":\"Torappu.Battle.Action.Nodes+SwitchMode\"}]",
+              "SerializedObjectReferences": []
+            }
+          },
+          {
+            "key": 1,
+            "value": {
+              "SerializedState": "[{\"_modeIndex\":0,\"_loadModeFromBlackboard\":false,\"_restoreDefault\":true,\"_restartFSM\":false,\"_targetType\":\"TARGET\",\"$type\":\"Torappu.Battle.Action.Nodes+SwitchMode\"}]",
+              "SerializedObjectReferences": []
+            }
+          }
+        ]
+      }
+    },
+    "switch_mode_restart_fsm": {
+      "templateKey": "switch_mode_restart_fsm",
+      "effectKey": "",
+      "onEventPriority": 0,
+      "eventToActions": {
+        "_items": [
+          {
+            "key": 0,
+            "value": {
+              "SerializedState": "[{\"_modeIndex\":1,\"_loadModeFromBlackboard\":true,\"_restoreDefault\":false,\"_restartFSM\":true,\"_targetType\":\"TARGET\",\"$type\":\"Torappu.Battle.Action.Nodes+SwitchMode\"}]",
+              "SerializedObjectReferences": []
+            }
+          },
+          {
+            "key": 1,
+            "value": {
+              "SerializedState": "[{\"_modeIndex\":0,\"_loadModeFromBlackboard\":false,\"_restoreDefault\":true,\"_restartFSM\":true,\"_targetType\":\"TARGET\",\"$type\":\"Torappu.Battle.Action.Nodes+SwitchMode\"}]",
+              "SerializedObjectReferences": []
+            }
+          }
+        ]
+      }
+    },
+    "thorns_s_2": {
+      "templateKey": "thorns_s_2",
+      "effectKey": "",
+      "onEventPriority": 0,
+      "eventToActions": {
+        "_items": [
+          {
+            "key": 10,
+            "value": {
+              "SerializedState": "[{\"_sideMask\":\"ENEMY\",\"_sourceType\":\"MODIFIER_SOURCE\",\"_targetType\":\"MODIFIER_TARGET\",\"$type\":\"Torappu.Battle.Action.Nodes+IfDamageTargetSide\"},{\"_filterAttackType\":true,\"_attackTypeFilter\":\"NORMAL\",\"_filterDamageType\":false,\"_damageMask\":\"NONE\",\"_filterSharedMask\":false,\"_sharedFlag\":\"IS_CONTINUOUS\",\"_filterModifierSource\":false,\"_source\":\"BUFF_OWNER\",\"_filterBySourceId\":false,\"_sourceId\":null,\"_checkHasScource\":false,\"_isNoSource\":false,\"_filterModifierCancelled\":false,\"_filterApplyWay\":false,\"_applyWay\":\"NONE\",\"$type\":\"Torappu.Battle.Action.Nodes+FilterDamageModifer\"},{\"_ownerType\":\"BUFF_OWNER\",\"_targetType\":\"BUFF_OWNER\",\"_abilityName\":\"Thorn\",\"_checkCanUseAblityFlag\":false,\"_castDirectly\":false,\"_useFirstActiveAbility\":false,\"_useCastResult\":false,\"_triggerHostAbility\":false,\"_notInterruptAbilityIfCasting\":false,\"$type\":\"Torappu.Battle.Action.Nodes+TriggerAbility\"}]",
+              "SerializedObjectReferences": []
+            }
+          }
+        ]
+      }
+    },
+    "thorns_t_1": {
+      "templateKey": "thorns_t_1",
+      "effectKey": "",
+      "onEventPriority": 0,
+      "eventToActions": {
+        "_items": [
+          {
+            "key": 2,
+            "value": {
+              "SerializedState": "[{\"_conditionNode\":{\"_targetType\":\"BUFF_OWNER\",\"_motionMask\":\"ALL\",\"_checkTargetAlive\":false,\"_checkApplyWay\":true,\"_checkTargetUnitType\":false,\"_unitType\":\"ENEMY\",\"_applyWay\":\"RANGED\",\"_checkTargetFree\":false,\"$type\":\"Torappu.Battle.Action.Nodes+IfTarget\"},\"_succeedNodes\":[{\"_damageType\":\"MAGICAL\",\"_damageKey\":\"damage[ranged]\",\"_ignoreForSp\":false,\"_attackType\":\"BUFF\",\"_skipModifierEvent\":false,\"_considerUnhurtable\":false,\"_noSourceDamage\":false,\"_targetType\":\"TARGET\",\"_assignRealDamageToBB\":false,\"_assignFinalDamageToBB\":false,\"_multiplierByKey\":false,\"_multiplierKey\":\"cnt\",\"_damageSourceType\":\"SOURCE\",\"_damageTargetType\":\"TARGET\",\"_triggerOnCalculateDamage\":false,\"_isEnvDamage\":false,\"_ignoreCancelReasonMask\":\"NONE\",\"_forceDisplayDamageNum\":false,\"_modifierKey\":\"\",\"_devideDamageFromAbilityCnt\":false,\"$type\":\"Torappu.Battle.Action.Nodes+FixedValueDamage\"}],\"_failNodes\":[{\"_damageType\":\"MAGICAL\",\"_damageKey\":\"damage[normal]\",\"_ignoreForSp\":false,\"_attackType\":\"BUFF\",\"_skipModifierEvent\":false,\"_considerUnhurtable\":false,\"_noSourceDamage\":false,\"_targetType\":\"TARGET\",\"_assignRealDamageToBB\":false,\"_assignFinalDamageToBB\":false,\"_multiplierByKey\":false,\"_multiplierKey\":\"cnt\",\"_damageSourceType\":\"SOURCE\",\"_damageTargetType\":\"TARGET\",\"_triggerOnCalculateDamage\":false,\"_isEnvDamage\":false,\"_ignoreCancelReasonMask\":\"NONE\",\"_forceDisplayDamageNum\":false,\"_modifierKey\":\"\",\"_devideDamageFromAbilityCnt\":false,\"$type\":\"Torappu.Battle.Action.Nodes+FixedValueDamage\"}],\"$type\":\"Torappu.Battle.Action.Nodes+IfElse\"}]",
+              "SerializedObjectReferences": []
+            }
+          }
+        ]
+      }
+    }
+  },
+  "ranges": {
+    "3-1": [
+      [
+        1,
+        0
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        2
+      ],
+      [
+        0,
+        3
+      ],
+      [
+        -1,
+        0
+      ],
+      [
+        -1,
+        1
+      ],
+      [
+        -1,
+        2
+      ]
+    ],
+    "3-3": [
+      [
+        1,
+        0
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        1,
+        3
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        2
+      ],
+      [
+        0,
+        3
+      ],
+      [
+        -1,
+        0
+      ],
+      [
+        -1,
+        1
+      ],
+      [
+        -1,
+        2
+      ],
+      [
+        -1,
+        3
+      ]
+    ]
+  },
+  "originalModels": {
+    "char_293_thorns": {
+      "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+      "Front": {
+        "path": "spine/char_293_thorns/char_293_thorns/Front/char_293_thorns.skel",
+        "sha256": "cae6abdacdc5a393160caa102e55b74b50f5dba434f592439e41be7b4df9af3b",
+        "bytes": 820307,
+        "durations": {
+          "Attack_1": 1.2,
+          "Attack_2": 1.2,
+          "Default": 0,
+          "Die": 0.867,
+          "Idle": 3.333,
+          "Skill1_1": 0.167,
+          "Skill1_2": 3.333,
+          "Skill1_3": 0.233,
+          "Skill2_1": 0.8,
+          "Skill2_2": 0.8,
+          "Start": 1
+        },
+        "hits": {
+          "Attack_1": [
+            0.5
+          ],
+          "Attack_2": [
+            0.5
+          ],
+          "Skill1_1": [
+            0.167
+          ],
+          "Skill2_1": [
+            0.3
+          ],
+          "Skill2_2": [
+            0.3
+          ]
+        }
+      },
+      "Back": {
+        "path": "spine/char_293_thorns/char_293_thorns/Back/char_293_thorns.skel",
+        "sha256": "bbf404e1d61d5f40153661968081ba9c80612111aa5d2b60160a99e3596093ef",
+        "bytes": 303784,
+        "durations": {
+          "Attack_1": 1.2,
+          "Attack_2": 1.2,
+          "Default": 0,
+          "Idle": 3.333,
+          "Skill1_1": 0.167,
+          "Skill1_2": 3.333,
+          "Skill1_3": 0.233,
+          "Skill2_1": 0.8,
+          "Start": 1
+        },
+        "hits": {
+          "Attack_1": [
+            0.5
+          ],
+          "Attack_2": [
+            0.5
+          ],
+          "Skill1_1": [
+            0.167
+          ],
+          "Skill2_1": [
+            0.3
+          ]
+        }
+      }
+    }
+  },
+  "originalAnimatorAliases": {
+    "char_293_thorns": {
+      "pathId": "-715709312874696500",
+      "animations": [
+        {
+          "animKey": "Idle",
+          "animName": "Idle",
+          "loop": 1,
+          "speed": 1,
+          "ignoreMissing": 0
+        },
+        {
+          "animKey": "Attack",
+          "animName": "Attack_2",
+          "loop": 0,
+          "speed": 1,
+          "ignoreMissing": 0
+        },
+        {
+          "animKey": "Die",
+          "animName": "Die",
+          "loop": 0,
+          "speed": 1,
+          "ignoreMissing": 0
+        },
+        {
+          "animKey": "Born",
+          "animName": "Start",
+          "loop": 0,
+          "speed": 1,
+          "ignoreMissing": 0
+        },
+        {
+          "animKey": "Default",
+          "animName": "Default",
+          "loop": 0,
+          "speed": 1,
+          "ignoreMissing": 0
+        },
+        {
+          "animKey": "Combat",
+          "animName": "Attack_1",
+          "loop": 0,
+          "speed": 1,
+          "ignoreMissing": 0
+        },
+        {
+          "animKey": "Skill_1_Begin",
+          "animName": "Skill1_1",
+          "loop": 0,
+          "speed": 1,
+          "ignoreMissing": 0
+        },
+        {
+          "animKey": "Skill_1_Loop",
+          "animName": "Skill1_2",
+          "loop": 1,
+          "speed": 1,
+          "ignoreMissing": 0
+        },
+        {
+          "animKey": "Skill_1_End",
+          "animName": "Skill1_3",
+          "loop": 0,
+          "speed": 1,
+          "ignoreMissing": 0
+        },
+        {
+          "animKey": "Skill_2",
+          "animName": "Skill2_2",
+          "loop": 0,
+          "speed": 1,
+          "ignoreMissing": 0
+        }
+      ]
+    }
+  },
+  "officialSkeletonBindings": {
+    "char_293_thorns": {
+      "Front": {
+        "animatorPathId": "-715709312874696500",
+        "skeletonAnimationPathId": "719187816834085068",
+        "skeletonDataAssetPathId": "-626009613040720818",
+        "textAssetPathId": "-7116439745102159265",
+        "sha256": "cae6abdacdc5a393160caa102e55b74b50f5dba434f592439e41be7b4df9af3b",
+        "byteLength": 820307
+      },
+      "Back": {
+        "animatorPathId": "-715709312874696500",
+        "skeletonAnimationPathId": "-736990662116626228",
+        "skeletonDataAssetPathId": "-2492368609708279325",
+        "textAssetPathId": "6245805073286820930",
+        "sha256": "bbf404e1d61d5f40153661968081ba9c80612111aa5d2b60160a99e3596093ef",
+        "byteLength": 303784
+      }
+    }
+  },
+  "independentCalculator": {
+    "repository": "xulai1001/akdata",
+    "commit": "266d341ca05cbcb64f05b19e38db28ba0bfec1ca",
+    "path": "resources/dps_actions.js",
+    "blob": "05e6f1c21ae08c0db954a43e937800f788acc65a",
+    "cacheSha256": "97fbd1d4cc2cec208ed8bb56ddd056cc6777d9e037b3d5a66d01c522f533e91c",
+    "reviewedLines": {
+      "S2": [
+        528,
+        536
+      ],
+      "talents": [
+        906,
+        929
+      ]
+    },
+    "use": "Independent primary calculator corroborates selected counter cooldown/no-ranged-penalty onlyS3/fixed poison/regen whileS2. Read-only review, no copied calculator code; it does not establish executable native FSM parity."
+  },
+  "runtimeMapping": {
+    "char_293_thorns": {
+      "normal": "Native Lord distinct Combat MELEE and RANGED attacks; CAST retarget, original Attack_1/2 .5 release. Ranged source defaultValue.8, speed10 unmanaged ten-second projectile, uncached ATK; blocking/own tile/front selects Combat full damage. Animation caps1 ranged/1.1 Combat.",
+      "talent1": "Native independent-character source poison overrideType3 interpreted as non-resetting duration extension. First one-second trigger, fixed Arts value based on actual native enemy applyWay RANGED, three-second life, named source/credit retained after fired projectile/source withdrawal.",
+      "talent2": "Exact ConditionalBuff _disableWhenInAttackState1/_disableWhenInCombatState1/_restoreDelay2/_isInitToggled0. Explicit mapped state starts on ordinary attack, holds through original sampled-rate clip end, then waits two seconds. Hostile approach without an actual attack does not itself reset. Control exits mapped state; counters do not enter it. Self ratio regeneration is not a HEAL output.",
+      "S1": "Original generic skcom_atk_up[3] all ranks selected ATK percentage/duration30; ordinary ranged/Combat modes unchanged.",
+      "S2": "Native switch_mode_restart_fsm mode1 and explicit Thorn extra MultiMeleeAttack -2109432450500820856; waitForAttackEvent0/timeMode3/preDelay.5, CAST selection, ALLmotion3/max_target4/source range3-1, source defaultValue.8. Enemy NORMAL receipts start one bounded reaction, selected cooldown independent of ASPD. No ordinary attacks. Source Start/Loop/End exactaliases; counter does not reset mapped ordinary attack/combat state. Explicit switch_mode_restart_fsm abandons any interrupted ordinary clip state at activation before the restore-delay gate.",
+      "S3": "Native source mode2 range3-3 and full ranged damage; exact Front-only Skill_2\u2192Skill2_2 .3 attack event; selected percentage ATK/flat ASPD. First duration30, next source _extraBuffs permanent lifetype2/prefixed double stats. Native _limitGlobalTriggerTime0/non-durable means each fresh deployed entity starts from first activation."
+    }
+  },
+  "verificationLimits": [
+    "Original source bundle size/MD5/SHA and both official facing skeleton byte identities are verified. Native C# executable dispatcher and recorded-client frame parity are not recovered.",
+    "The former Thorns deferral examined the inactive S2 mode attack6192807669408333701. The actual extra ability Thorn-2109432450500820856 is now retained; its explicit waitForAttackEvent0/preDelay.5 establishes a non-animation release contract. Numeric timeMode3/resetCdStrategy1 meanings and cooldown start/end dispatcher are not recovered. This adapter starts selected cooldown at accepted reaction start; source controlled clients could refine that boundary.",
+    "T2 exact attack/combat state gates and restoreDelay2 are preserved. The native restore timer phase cannot be proved from serialized fields alone. This adapter explicitly holds mapped state through sampled source animation end then waits two seconds, rather than treating lastAttackAt initiation as recovered native behavior. Control application exits that mapped state on the next simulation tick.",
+    "Native overrideType3 is preserved literally; its EXTEND enum label and activeBuff-before/after-primary-damage pipeline are not executable recovered. Poison lifetime extends while retaining one-second cadence; eligible living impact receives the non-damage-missable source additive buff even if the primary damage is shielded or dodged.",
+    "Source native applyWay enemy classification uses pinned source enemy data, never target distance. Dynamic enemy-form applyWay changes require their own reviewed adapter and are not inferred.",
+    "Native source attackTypeNORMAL is mapped to ordinary isAttack receipts, excluding element gauge/direct BUFF damage. Generic cancelled/dodged hit event delivery and abnormal-state reaction eligibility remain subject to the shared ordinary-stage damage pipeline; no reconstructed native callback ordering claim.",
+    "S3 _extraBuffs binding to subsequent non-global current trigger count and activation-time buff attachment is supported by selected descriptions/native lifetimes, but native BuffAbility waitForAttackEvent1/FSM application phase is not executable recovered.",
+    "Original Unity particles/materials/trails and exact camera/FX are not recreated; source animation names and independent projectile lifetime are preserved.",
+    "Local isSplash is geometric AoE metadata and is not a recovered native SPLASH enum. Current isAttack receipts map to accepted NORMAL attacks, including geometric splash; an explicitly source-annotated nativeAttackType can exclude SPLASH. Generic native attack-type dispatcher and future source-special attack annotations remain unrecovered, and no broad damage metadata migration is claimed."
+  ]
+}

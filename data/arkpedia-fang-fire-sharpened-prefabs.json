@@ -1,0 +1,3541 @@
+{
+  "schemaVersion": 1,
+  "status": "reviewed-regular-stage-adapter",
+  "operatorId": "char_1036_fang2",
+  "source": {
+    "clientVersion": "26-09-23-17-49-43_b9cc4a",
+    "tableCommit": "57010cb5b2afea112cae57daa756b58676ba6850",
+    "modelCommit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+    "tableSha256": {
+      "character_table.json": "cf86d1690bdae2bf02378081ef8ae61731da042902bb284d339b7c0d889e66a9",
+      "skill_table.json": "3f389ab49b038c3d701e059c2377a2b03e14276248c5ed42ebfc169578a4e809",
+      "range_table.json": "676cedce20d46f37c46e1099b2f94907d0c84ac62b674957355c245ce16f0856",
+      "buff_template_data.json": "79dce42d1ffa76196984b80678422e0323e406f6a044f1a25b1de75e0c5b9d27"
+    },
+    "bundles": [
+      {
+        "path": "charpack/char_1036_fang2.ab",
+        "size": 20851,
+        "md5": "e9f1a4ea9d2824dbde1684b8b263cb3b",
+        "sha256": "fa1c7c94f9739fb5ee627c4c8bbf196b779b48a38201e8612fd16bb902984839"
+      },
+      {
+        "path": "chararts/char_1036_fang2.ab",
+        "size": 2634985,
+        "md5": "cdb22b41bdd5ae4b8629b2033b673132",
+        "sha256": "48e4bf31dd8d1f50fc6f121072a3a2dc2f14e5d2e35094d9b569ae6eaa956f0e"
+      },
+      {
+        "path": "battle/prefabs/[uc]skills.ab",
+        "size": 1163240,
+        "md5": "ff06dc9bb5516d069c8c0017207653ca",
+        "sha256": "1c026938f054218f7e6bda9000162b2a6f30c9bd93e1ae9763d9d6df2270499c"
+      },
+      {
+        "path": "battle/prefabs/[uc]projectiles.ab",
+        "size": 1605622,
+        "md5": "0b1d64a8aba25913161f5fd7174cab34",
+        "sha256": "3d68c63bf7a7d658e65035a9c71dfc9a00e4804563b922185499d108dfb7f639"
+      },
+      {
+        "path": "config/buff_template_holder.ab",
+        "size": 1667266,
+        "md5": "59813e1a533561f969f525a2846815e0",
+        "sha256": "e092efe8b6479546a0641449c1e2ef81ba51b8bac67f7a5d1bbf3c3bbdd817ce"
+      }
+    ]
+  },
+  "reason": "Original kit enabled with documented first-spawn discount, shared next-successful-operator card lifetime, capped refund and explicit timing/dispatcher boundaries.",
+  "costFacts": [
+    "Global talent explicitly says Initial DP Cost -2 at E1/-3 at E2; after retreat next Operator DP Cost -1. Other runtime_cost talents explicitly say first deployment, so field name alone does not recover common first/base ordering.",
+    "Original Character component _withdrawCostRecoverRatio1 and _maxWithdrawCostRatioOfRawCost1; no recovered executable raw-cost/runtime-cost/refund order.",
+    "fang2_t_1 ON_OWNER_FINISH FilterDeathReason WITHDRAW -> CreateCardBuffToAllCard UNTIL_NEXT_SPAWN_DECK_TRIGGER_ONCE; exceptTokenAndTrap true, exceptOwner false, filterIsInHand false, isRatio false, selected value-1.",
+    "Source skill attacks and literal both-facing events are recovered, but complete operator remains unavailable until cost contract is corroborated."
+  ],
+  "attackFacts": [
+    "Normal INPUT source2/timing0 with block-count cap1, literal Attack event.333 and maxAnimScale1.",
+    "S1 MultiMelee INPUT source2/timing0, additionalTimes1, triggerDelta.25, waitAttackEventForAllAttacks0, refreshInputTargetOnCheckSpell0. Literal Skill_1 events.333/.5; first-event plus explicit.25 clock is source-field interpretation, not proof of unused second.5 dispatch. Exact recoverSpIfTargetDead1/allowSpRecoveryWhenAffecting0 retained.",
+    "S2 SELF source1/timing0, uncapped target selector limited to current block count, literal Skill_2_Loop event.5; Front Down_2_Loop event.5, Back no Down clip. Source direct ApplyBuff waitForCasting0/preDelay0 plus switch_mode_restart_fsm. Numeric selector phase/native finish ordering remain unrecovered."
+  ],
+  "frameParity": false,
+  "nativeDispatcherRecovered": false,
+  "tables": {
+    "character": {
+      "name": "Fang the Fire-Sharpened",
+      "description": "Obtain 1 DP after this unit defeats an enemy; Refunds the original DP Cost when retreated",
+      "sortIndex": 276,
+      "canUseGeneralPotentialItem": true,
+      "canUseActivityPotentialItem": false,
+      "potentialItemId": "p_char_1036_fang2",
+      "activityPotentialItemId": null,
+      "classicPotentialItemId": null,
+      "nationId": "rhodes",
+      "groupId": null,
+      "teamId": null,
+      "mainPower": {
+        "nationId": "rhodes",
+        "groupId": null,
+        "teamId": null
+      },
+      "subPower": [
+        {
+          "nationId": "kazimierz",
+          "groupId": null,
+          "teamId": null
+        }
+      ],
+      "displayNumber": "RF04",
+      "appellation": " ",
+      "position": "MELEE",
+      "tagList": [
+        "DP-Recovery",
+        "DPS"
+      ],
+      "itemUsage": "Rhodes Island Vanguard Operator Fang, ever scrambling to frontlines desperate for aid.",
+      "itemDesc": "Cool. Collected. Crisis handler.",
+      "itemObtainApproach": "Recruitment & Headhunting",
+      "isNotObtainable": false,
+      "isSpChar": true,
+      "maxPotentialLevel": 5,
+      "rarity": "TIER_5",
+      "profession": "PIONEER",
+      "subProfessionId": "charger",
+      "trait": {
+        "candidates": [
+          {
+            "unlockCondition": {
+              "phase": "PHASE_0",
+              "level": 1
+            },
+            "requiredPotentialRank": 0,
+            "blackboard": [
+              {
+                "key": "cost",
+                "value": 1.0,
+                "valueStr": null
+              }
+            ],
+            "overrideDescripton": null,
+            "prefabKey": null,
+            "rangeId": null
+          }
+        ]
+      },
+      "phases": [
+        {
+          "characterPrefabKey": "char_1036_fang2",
+          "rangeId": "1-1",
+          "maxLevel": 50,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 874,
+                "atk": 243,
+                "def": 163,
+                "magicResistance": 0.0,
+                "cost": 10,
+                "blockCnt": 1,
+                "moveSpeed": 1.0,
+                "attackSpeed": 100.0,
+                "baseAttackTime": 1.0,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0.0,
+                "spRecoveryPerSec": 1.0,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 50,
+              "data": {
+                "maxHp": 1215,
+                "atk": 358,
+                "def": 227,
+                "magicResistance": 0.0,
+                "cost": 10,
+                "blockCnt": 1,
+                "moveSpeed": 1.0,
+                "attackSpeed": 100.0,
+                "baseAttackTime": 1.0,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0.0,
+                "spRecoveryPerSec": 1.0,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "evolveCost": null
+        },
+        {
+          "characterPrefabKey": "char_1036_fang2",
+          "rangeId": "1-1",
+          "maxLevel": 70,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 1215,
+                "atk": 358,
+                "def": 227,
+                "magicResistance": 0.0,
+                "cost": 12,
+                "blockCnt": 1,
+                "moveSpeed": 1.0,
+                "attackSpeed": 100.0,
+                "baseAttackTime": 1.0,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0.0,
+                "spRecoveryPerSec": 1.0,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 70,
+              "data": {
+                "maxHp": 1558,
+                "atk": 478,
+                "def": 295,
+                "magicResistance": 0.0,
+                "cost": 12,
+                "blockCnt": 1,
+                "moveSpeed": 1.0,
+                "attackSpeed": 100.0,
+                "baseAttackTime": 1.0,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0.0,
+                "spRecoveryPerSec": 1.0,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "evolveCost": [
+            {
+              "id": "3211",
+              "count": 4,
+              "type": "MATERIAL"
+            },
+            {
+              "id": "30012",
+              "count": 7,
+              "type": "MATERIAL"
+            },
+            {
+              "id": "30062",
+              "count": 2,
+              "type": "MATERIAL"
+            }
+          ]
+        },
+        {
+          "characterPrefabKey": "char_1036_fang2",
+          "rangeId": "1-1",
+          "maxLevel": 80,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 1558,
+                "atk": 478,
+                "def": 295,
+                "magicResistance": 0.0,
+                "cost": 12,
+                "blockCnt": 1,
+                "moveSpeed": 1.0,
+                "attackSpeed": 100.0,
+                "baseAttackTime": 1.0,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0.0,
+                "spRecoveryPerSec": 1.0,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 80,
+              "data": {
+                "maxHp": 2226,
+                "atk": 570,
+                "def": 360,
+                "magicResistance": 0.0,
+                "cost": 12,
+                "blockCnt": 1,
+                "moveSpeed": 1.0,
+                "attackSpeed": 100.0,
+                "baseAttackTime": 1.0,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0.0,
+                "spRecoveryPerSec": 1.0,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "evolveCost": [
+            {
+              "id": "3213",
+              "count": 3,
+              "type": "MATERIAL"
+            },
+            {
+              "id": "30014",
+              "count": 6,
+              "type": "MATERIAL"
+            },
+            {
+              "id": "30103",
+              "count": 12,
+              "type": "MATERIAL"
+            }
+          ]
+        }
+      ],
+      "skills": [
+        {
+          "skillId": "skchr_fang2_1",
+          "overridePrefabKey": null,
+          "overrideTokenKey": null,
+          "levelUpCostCond": [
+            {
+              "unlockCond": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "lvlUpTime": 28800,
+              "levelUpCost": [
+                {
+                  "id": "3303",
+                  "count": 5,
+                  "type": "MATERIAL"
+                },
+                {
+                  "id": "30064",
+                  "count": 2,
+                  "type": "MATERIAL"
+                },
+                {
+                  "id": "31053",
+                  "count": 3,
+                  "type": "MATERIAL"
+                }
+              ]
+            },
+            {
+              "unlockCond": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "lvlUpTime": 57600,
+              "levelUpCost": [
+                {
+                  "id": "3303",
+                  "count": 6,
+                  "type": "MATERIAL"
+                },
+                {
+                  "id": "30044",
+                  "count": 3,
+                  "type": "MATERIAL"
+                },
+                {
+                  "id": "31014",
+                  "count": 5,
+                  "type": "MATERIAL"
+                }
+              ]
+            },
+            {
+              "unlockCond": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "lvlUpTime": 86400,
+              "levelUpCost": [
+                {
+                  "id": "3303",
+                  "count": 10,
+                  "type": "MATERIAL"
+                },
+                {
+                  "id": "30125",
+                  "count": 4,
+                  "type": "MATERIAL"
+                },
+                {
+                  "id": "31084",
+                  "count": 4,
+                  "type": "MATERIAL"
+                }
+              ]
+            }
+          ],
+          "unlockCond": {
+            "phase": "PHASE_0",
+            "level": 1
+          }
+        },
+        {
+          "skillId": "skchr_fang2_2",
+          "overridePrefabKey": null,
+          "overrideTokenKey": null,
+          "levelUpCostCond": [
+            {
+              "unlockCond": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "lvlUpTime": 28800,
+              "levelUpCost": [
+                {
+                  "id": "3303",
+                  "count": 5,
+                  "type": "MATERIAL"
+                },
+                {
+                  "id": "31064",
+                  "count": 3,
+                  "type": "MATERIAL"
+                },
+                {
+                  "id": "31013",
+                  "count": 2,
+                  "type": "MATERIAL"
+                }
+              ]
+            },
+            {
+              "unlockCond": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "lvlUpTime": 57600,
+              "levelUpCost": [
+                {
+                  "id": "3303",
+                  "count": 6,
+                  "type": "MATERIAL"
+                },
+                {
+                  "id": "31054",
+                  "count": 3,
+                  "type": "MATERIAL"
+                },
+                {
+                  "id": "31044",
+                  "count": 6,
+                  "type": "MATERIAL"
+                }
+              ]
+            },
+            {
+              "unlockCond": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "lvlUpTime": 86400,
+              "levelUpCost": [
+                {
+                  "id": "3303",
+                  "count": 10,
+                  "type": "MATERIAL"
+                },
+                {
+                  "id": "30145",
+                  "count": 4,
+                  "type": "MATERIAL"
+                },
+                {
+                  "id": "30084",
+                  "count": 3,
+                  "type": "MATERIAL"
+                }
+              ]
+            }
+          ],
+          "unlockCond": {
+            "phase": "PHASE_1",
+            "level": 1
+          }
+        }
+      ],
+      "displayTokenDict": null,
+      "talents": [
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Lightweight Gambit",
+              "description": "Initial DP Cost -2; after retreating, the next Operator has DP Cost -1.",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "runtime_cost",
+                  "value": -2.0,
+                  "valueStr": null
+                },
+                {
+                  "key": "value",
+                  "value": -1.0,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Lightweight Gambit",
+              "description": "Initial DP Cost -3; after retreating, the next Operator has DP Cost -1.",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "runtime_cost",
+                  "value": -3.0,
+                  "valueStr": null
+                },
+                {
+                  "key": "value",
+                  "value": -1.0,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            }
+          ]
+        }
+      ],
+      "potentialRanks": [
+        {
+          "type": "BUFF",
+          "description": "DP Cost -1",
+          "buff": {
+            "attributes": {
+              "abnormalFlags": null,
+              "abnormalImmunes": null,
+              "abnormalAntis": null,
+              "abnormalCombos": null,
+              "abnormalComboImmunes": null,
+              "attributeModifiers": [
+                {
+                  "attributeType": "COST",
+                  "formulaItem": "ADDITION",
+                  "value": -1.0,
+                  "loadFromBlackboard": false,
+                  "fetchBaseValueFromSourceEntity": false
+                }
+              ]
+            }
+          },
+          "equivalentCost": null
+        },
+        {
+          "type": "BUFF",
+          "description": "Redeployment Time -4 sec",
+          "buff": {
+            "attributes": {
+              "abnormalFlags": null,
+              "abnormalImmunes": null,
+              "abnormalAntis": null,
+              "abnormalCombos": null,
+              "abnormalComboImmunes": null,
+              "attributeModifiers": [
+                {
+                  "attributeType": "RESPAWN_TIME",
+                  "formulaItem": "ADDITION",
+                  "value": -4.0,
+                  "loadFromBlackboard": false,
+                  "fetchBaseValueFromSourceEntity": false
+                }
+              ]
+            }
+          },
+          "equivalentCost": null
+        },
+        {
+          "type": "BUFF",
+          "description": "ATK +25",
+          "buff": {
+            "attributes": {
+              "abnormalFlags": null,
+              "abnormalImmunes": null,
+              "abnormalAntis": null,
+              "abnormalCombos": null,
+              "abnormalComboImmunes": null,
+              "attributeModifiers": [
+                {
+                  "attributeType": "ATK",
+                  "formulaItem": "ADDITION",
+                  "value": 25.0,
+                  "loadFromBlackboard": false,
+                  "fetchBaseValueFromSourceEntity": false
+                }
+              ]
+            }
+          },
+          "equivalentCost": null
+        },
+        {
+          "type": "BUFF",
+          "description": "Redeployment Time -6 sec",
+          "buff": {
+            "attributes": {
+              "abnormalFlags": null,
+              "abnormalImmunes": null,
+              "abnormalAntis": null,
+              "abnormalCombos": null,
+              "abnormalComboImmunes": null,
+              "attributeModifiers": [
+                {
+                  "attributeType": "RESPAWN_TIME",
+                  "formulaItem": "ADDITION",
+                  "value": -6.0,
+                  "loadFromBlackboard": false,
+                  "fetchBaseValueFromSourceEntity": false
+                }
+              ]
+            }
+          },
+          "equivalentCost": null
+        },
+        {
+          "type": "BUFF",
+          "description": "DP Cost -1",
+          "buff": {
+            "attributes": {
+              "abnormalFlags": null,
+              "abnormalImmunes": null,
+              "abnormalAntis": null,
+              "abnormalCombos": null,
+              "abnormalComboImmunes": null,
+              "attributeModifiers": [
+                {
+                  "attributeType": "COST",
+                  "formulaItem": "ADDITION",
+                  "value": -1.0,
+                  "loadFromBlackboard": false,
+                  "fetchBaseValueFromSourceEntity": false
+                }
+              ]
+            }
+          },
+          "equivalentCost": null
+        }
+      ],
+      "favorKeyFrames": [
+        {
+          "level": 0,
+          "data": {
+            "maxHp": 0,
+            "atk": 0,
+            "def": 0,
+            "magicResistance": 0.0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0.0,
+            "attackSpeed": 0.0,
+            "baseAttackTime": 0.0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0.0,
+            "spRecoveryPerSec": 0.0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false
+          }
+        },
+        {
+          "level": 50,
+          "data": {
+            "maxHp": 0,
+            "atk": 70,
+            "def": 0,
+            "magicResistance": 0.0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0.0,
+            "attackSpeed": 0.0,
+            "baseAttackTime": 0.0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0.0,
+            "spRecoveryPerSec": 0.0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false
+          }
+        }
+      ],
+      "allSkillLvlup": [
+        {
+          "unlockCond": {
+            "phase": "PHASE_0",
+            "level": 1
+          },
+          "lvlUpCost": [
+            {
+              "id": "3301",
+              "count": 4,
+              "type": "MATERIAL"
+            }
+          ]
+        },
+        {
+          "unlockCond": {
+            "phase": "PHASE_0",
+            "level": 1
+          },
+          "lvlUpCost": [
+            {
+              "id": "3301",
+              "count": 4,
+              "type": "MATERIAL"
+            },
+            {
+              "id": "30031",
+              "count": 7,
+              "type": "MATERIAL"
+            }
+          ]
+        },
+        {
+          "unlockCond": {
+            "phase": "PHASE_0",
+            "level": 1
+          },
+          "lvlUpCost": [
+            {
+              "id": "3302",
+              "count": 6,
+              "type": "MATERIAL"
+            },
+            {
+              "id": "30042",
+              "count": 3,
+              "type": "MATERIAL"
+            }
+          ]
+        },
+        {
+          "unlockCond": {
+            "phase": "PHASE_1",
+            "level": 1
+          },
+          "lvlUpCost": [
+            {
+              "id": "3302",
+              "count": 6,
+              "type": "MATERIAL"
+            },
+            {
+              "id": "30052",
+              "count": 4,
+              "type": "MATERIAL"
+            }
+          ]
+        },
+        {
+          "unlockCond": {
+            "phase": "PHASE_1",
+            "level": 1
+          },
+          "lvlUpCost": [
+            {
+              "id": "3302",
+              "count": 6,
+              "type": "MATERIAL"
+            },
+            {
+              "id": "30103",
+              "count": 3,
+              "type": "MATERIAL"
+            }
+          ]
+        },
+        {
+          "unlockCond": {
+            "phase": "PHASE_1",
+            "level": 1
+          },
+          "lvlUpCost": [
+            {
+              "id": "3303",
+              "count": 6,
+              "type": "MATERIAL"
+            },
+            {
+              "id": "30063",
+              "count": 3,
+              "type": "MATERIAL"
+            },
+            {
+              "id": "30023",
+              "count": 2,
+              "type": "MATERIAL"
+            }
+          ]
+        }
+      ]
+    },
+    "skills": {
+      "skchr_fang2_1": {
+        "skillId": "skchr_fang2_1",
+        "iconId": null,
+        "hidden": false,
+        "levels": [
+          {
+            "name": "Impaler Lance",
+            "rangeId": null,
+            "description": "Next attack strikes twice with <@ba.vup>{atk_scale:0%}</> ATK. If it defeats an enemy, restore <@ba.vup>+{cost}</> DP.<@ba.rem>\nCan store up to {cnt} charges</>.",
+            "skillType": "AUTO",
+            "durationType": "NONE",
+            "spData": {
+              "spType": "INCREASE_WITH_TIME",
+              "levelUpCost": null,
+              "maxChargeTime": 1,
+              "spCost": 7,
+              "initSp": 0,
+              "increment": 1.0
+            },
+            "prefabId": "skchr_fang2_1",
+            "duration": 0.0,
+            "blackboard": [
+              {
+                "key": "atk_scale",
+                "value": 1.2,
+                "valueStr": null
+              },
+              {
+                "key": "cnt",
+                "value": 1.0,
+                "valueStr": null
+              },
+              {
+                "key": "cost",
+                "value": 1.0,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "name": "Impaler Lance",
+            "rangeId": null,
+            "description": "Next attack strikes twice with <@ba.vup>{atk_scale:0%}</> ATK. If it defeats an enemy, restore <@ba.vup>+{cost}</> DP.<@ba.rem>\nCan store up to {cnt} charges</>.",
+            "skillType": "AUTO",
+            "durationType": "NONE",
+            "spData": {
+              "spType": "INCREASE_WITH_TIME",
+              "levelUpCost": null,
+              "maxChargeTime": 1,
+              "spCost": 7,
+              "initSp": 0,
+              "increment": 1.0
+            },
+            "prefabId": "skchr_fang2_1",
+            "duration": 0.0,
+            "blackboard": [
+              {
+                "key": "atk_scale",
+                "value": 1.25,
+                "valueStr": null
+              },
+              {
+                "key": "cnt",
+                "value": 1.0,
+                "valueStr": null
+              },
+              {
+                "key": "cost",
+                "value": 1.0,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "name": "Impaler Lance",
+            "rangeId": null,
+            "description": "Next attack strikes twice with <@ba.vup>{atk_scale:0%}</> ATK. If it defeats an enemy, restore <@ba.vup>+{cost}</> DP.<@ba.rem>\nCan store up to {cnt} charges</>.",
+            "skillType": "AUTO",
+            "durationType": "NONE",
+            "spData": {
+              "spType": "INCREASE_WITH_TIME",
+              "levelUpCost": null,
+              "maxChargeTime": 1,
+              "spCost": 7,
+              "initSp": 0,
+              "increment": 1.0
+            },
+            "prefabId": "skchr_fang2_1",
+            "duration": 0.0,
+            "blackboard": [
+              {
+                "key": "atk_scale",
+                "value": 1.3,
+                "valueStr": null
+              },
+              {
+                "key": "cnt",
+                "value": 1.0,
+                "valueStr": null
+              },
+              {
+                "key": "cost",
+                "value": 1.0,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "name": "Impaler Lance",
+            "rangeId": null,
+            "description": "Next attack strikes twice with <@ba.vup>{atk_scale:0%}</> ATK. If it defeats an enemy, restore <@ba.vup>+{cost}</> DP.<@ba.rem>\nCan store up to {cnt} charges</>.",
+            "skillType": "AUTO",
+            "durationType": "NONE",
+            "spData": {
+              "spType": "INCREASE_WITH_TIME",
+              "levelUpCost": null,
+              "maxChargeTime": 1,
+              "spCost": 6,
+              "initSp": 0,
+              "increment": 1.0
+            },
+            "prefabId": "skchr_fang2_1",
+            "duration": 0.0,
+            "blackboard": [
+              {
+                "key": "atk_scale",
+                "value": 1.35,
+                "valueStr": null
+              },
+              {
+                "key": "cnt",
+                "value": 1.0,
+                "valueStr": null
+              },
+              {
+                "key": "cost",
+                "value": 1.0,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "name": "Impaler Lance",
+            "rangeId": null,
+            "description": "Next attack strikes twice with <@ba.vup>{atk_scale:0%}</> ATK. If it defeats an enemy, restore <@ba.vup>+{cost}</> DP.<@ba.rem>\nCan store up to {cnt} charges</>.",
+            "skillType": "AUTO",
+            "durationType": "NONE",
+            "spData": {
+              "spType": "INCREASE_WITH_TIME",
+              "levelUpCost": null,
+              "maxChargeTime": 1,
+              "spCost": 6,
+              "initSp": 0,
+              "increment": 1.0
+            },
+            "prefabId": "skchr_fang2_1",
+            "duration": 0.0,
+            "blackboard": [
+              {
+                "key": "atk_scale",
+                "value": 1.4,
+                "valueStr": null
+              },
+              {
+                "key": "cnt",
+                "value": 1.0,
+                "valueStr": null
+              },
+              {
+                "key": "cost",
+                "value": 1.0,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "name": "Impaler Lance",
+            "rangeId": null,
+            "description": "Next attack strikes twice with <@ba.vup>{atk_scale:0%}</> ATK. If it defeats an enemy, restore <@ba.vup>+{cost}</> DP.<@ba.rem>\nCan store up to {cnt} charges</>.",
+            "skillType": "AUTO",
+            "durationType": "NONE",
+            "spData": {
+              "spType": "INCREASE_WITH_TIME",
+              "levelUpCost": null,
+              "maxChargeTime": 1,
+              "spCost": 6,
+              "initSp": 0,
+              "increment": 1.0
+            },
+            "prefabId": "skchr_fang2_1",
+            "duration": 0.0,
+            "blackboard": [
+              {
+                "key": "atk_scale",
+                "value": 1.45,
+                "valueStr": null
+              },
+              {
+                "key": "cnt",
+                "value": 1.0,
+                "valueStr": null
+              },
+              {
+                "key": "cost",
+                "value": 1.0,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "name": "Impaler Lance",
+            "rangeId": null,
+            "description": "Next attack strikes twice with <@ba.vup>{atk_scale:0%}</> ATK. If it defeats an enemy, restore <@ba.vup>+{cost}</> DP.<@ba.rem>\nCan store up to {cnt} charges</>.",
+            "skillType": "AUTO",
+            "durationType": "NONE",
+            "spData": {
+              "spType": "INCREASE_WITH_TIME",
+              "levelUpCost": null,
+              "maxChargeTime": 2,
+              "spCost": 5,
+              "initSp": 0,
+              "increment": 1.0
+            },
+            "prefabId": "skchr_fang2_1",
+            "duration": 0.0,
+            "blackboard": [
+              {
+                "key": "atk_scale",
+                "value": 1.5,
+                "valueStr": null
+              },
+              {
+                "key": "cnt",
+                "value": 2.0,
+                "valueStr": null
+              },
+              {
+                "key": "cost",
+                "value": 1.0,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "name": "Impaler Lance",
+            "rangeId": null,
+            "description": "Next attack strikes twice with <@ba.vup>{atk_scale:0%}</> ATK. If it defeats an enemy, restore <@ba.vup>+{cost}</> DP.<@ba.rem>\nCan store up to {cnt} charges</>.",
+            "skillType": "AUTO",
+            "durationType": "NONE",
+            "spData": {
+              "spType": "INCREASE_WITH_TIME",
+              "levelUpCost": null,
+              "maxChargeTime": 2,
+              "spCost": 5,
+              "initSp": 0,
+              "increment": 1.0
+            },
+            "prefabId": "skchr_fang2_1",
+            "duration": 0.0,
+            "blackboard": [
+              {
+                "key": "atk_scale",
+                "value": 1.6,
+                "valueStr": null
+              },
+              {
+                "key": "cnt",
+                "value": 2.0,
+                "valueStr": null
+              },
+              {
+                "key": "cost",
+                "value": 1.0,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "name": "Impaler Lance",
+            "rangeId": null,
+            "description": "Next attack strikes twice with <@ba.vup>{atk_scale:0%}</> ATK. If it defeats an enemy, restore <@ba.vup>+{cost}</> DP.<@ba.rem>\nCan store up to {cnt} charges</>.",
+            "skillType": "AUTO",
+            "durationType": "NONE",
+            "spData": {
+              "spType": "INCREASE_WITH_TIME",
+              "levelUpCost": null,
+              "maxChargeTime": 2,
+              "spCost": 5,
+              "initSp": 0,
+              "increment": 1.0
+            },
+            "prefabId": "skchr_fang2_1",
+            "duration": 0.0,
+            "blackboard": [
+              {
+                "key": "atk_scale",
+                "value": 1.7,
+                "valueStr": null
+              },
+              {
+                "key": "cnt",
+                "value": 2.0,
+                "valueStr": null
+              },
+              {
+                "key": "cost",
+                "value": 1.0,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "name": "Impaler Lance",
+            "rangeId": null,
+            "description": "Next attack strikes twice with <@ba.vup>{atk_scale:0%}</> ATK. If it defeats an enemy, restore <@ba.vup>+{cost}</> DP.<@ba.rem>\nCan store up to {cnt} charges</>.",
+            "skillType": "AUTO",
+            "durationType": "NONE",
+            "spData": {
+              "spType": "INCREASE_WITH_TIME",
+              "levelUpCost": null,
+              "maxChargeTime": 3,
+              "spCost": 5,
+              "initSp": 0,
+              "increment": 1.0
+            },
+            "prefabId": "skchr_fang2_1",
+            "duration": 0.0,
+            "blackboard": [
+              {
+                "key": "atk_scale",
+                "value": 1.8,
+                "valueStr": null
+              },
+              {
+                "key": "cnt",
+                "value": 3.0,
+                "valueStr": null
+              },
+              {
+                "key": "cost",
+                "value": 1.0,
+                "valueStr": null
+              }
+            ]
+          }
+        ]
+      },
+      "skchr_fang2_2": {
+        "skillId": "skchr_fang2_2",
+        "iconId": null,
+        "hidden": false,
+        "levels": [
+          {
+            "name": "Stand Your Ground",
+            "rangeId": null,
+            "description": "ATK <@ba.vup>+{atk:0%}</>, DEF <@ba.vup>+{def:0%}</>, Blocked enemies <@ba.vup>+{block_cnt}</>, attack all blocked enemies",
+            "skillType": "PASSIVE",
+            "durationType": "NONE",
+            "spData": {
+              "spType": 8,
+              "levelUpCost": null,
+              "maxChargeTime": 0,
+              "spCost": 0,
+              "initSp": 0,
+              "increment": 0.0
+            },
+            "prefabId": "skchr_fang2_2",
+            "duration": 10.0,
+            "blackboard": [
+              {
+                "key": "atk",
+                "value": 0.7,
+                "valueStr": null
+              },
+              {
+                "key": "def",
+                "value": 0.2,
+                "valueStr": null
+              },
+              {
+                "key": "block_cnt",
+                "value": 1.0,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "name": "Stand Your Ground",
+            "rangeId": null,
+            "description": "ATK <@ba.vup>+{atk:0%}</>, DEF <@ba.vup>+{def:0%}</>, Blocked enemies <@ba.vup>+{block_cnt}</>, attack all blocked enemies",
+            "skillType": "PASSIVE",
+            "durationType": "NONE",
+            "spData": {
+              "spType": 8,
+              "levelUpCost": null,
+              "maxChargeTime": 0,
+              "spCost": 0,
+              "initSp": 0,
+              "increment": 0.0
+            },
+            "prefabId": "skchr_fang2_2",
+            "duration": 12.0,
+            "blackboard": [
+              {
+                "key": "atk",
+                "value": 0.75,
+                "valueStr": null
+              },
+              {
+                "key": "def",
+                "value": 0.2,
+                "valueStr": null
+              },
+              {
+                "key": "block_cnt",
+                "value": 1.0,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "name": "Stand Your Ground",
+            "rangeId": null,
+            "description": "ATK <@ba.vup>+{atk:0%}</>, DEF <@ba.vup>+{def:0%}</>, Blocked enemies <@ba.vup>+{block_cnt}</>, attack all blocked enemies",
+            "skillType": "PASSIVE",
+            "durationType": "NONE",
+            "spData": {
+              "spType": 8,
+              "levelUpCost": null,
+              "maxChargeTime": 0,
+              "spCost": 0,
+              "initSp": 0,
+              "increment": 0.0
+            },
+            "prefabId": "skchr_fang2_2",
+            "duration": 12.0,
+            "blackboard": [
+              {
+                "key": "atk",
+                "value": 0.8,
+                "valueStr": null
+              },
+              {
+                "key": "def",
+                "value": 0.25,
+                "valueStr": null
+              },
+              {
+                "key": "block_cnt",
+                "value": 1.0,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "name": "Stand Your Ground",
+            "rangeId": null,
+            "description": "ATK <@ba.vup>+{atk:0%}</>, DEF <@ba.vup>+{def:0%}</>, Blocked enemies <@ba.vup>+{block_cnt}</>, attack all blocked enemies",
+            "skillType": "PASSIVE",
+            "durationType": "NONE",
+            "spData": {
+              "spType": 8,
+              "levelUpCost": null,
+              "maxChargeTime": 0,
+              "spCost": 0,
+              "initSp": 0,
+              "increment": 0.0
+            },
+            "prefabId": "skchr_fang2_2",
+            "duration": 14.0,
+            "blackboard": [
+              {
+                "key": "atk",
+                "value": 0.85,
+                "valueStr": null
+              },
+              {
+                "key": "def",
+                "value": 0.25,
+                "valueStr": null
+              },
+              {
+                "key": "block_cnt",
+                "value": 1.0,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "name": "Stand Your Ground",
+            "rangeId": null,
+            "description": "ATK <@ba.vup>+{atk:0%}</>, DEF <@ba.vup>+{def:0%}</>, Blocked enemies <@ba.vup>+{block_cnt}</>, attack all blocked enemies",
+            "skillType": "PASSIVE",
+            "durationType": "NONE",
+            "spData": {
+              "spType": 8,
+              "levelUpCost": null,
+              "maxChargeTime": 0,
+              "spCost": 0,
+              "initSp": 0,
+              "increment": 0.0
+            },
+            "prefabId": "skchr_fang2_2",
+            "duration": 14.0,
+            "blackboard": [
+              {
+                "key": "atk",
+                "value": 0.85,
+                "valueStr": null
+              },
+              {
+                "key": "def",
+                "value": 0.3,
+                "valueStr": null
+              },
+              {
+                "key": "block_cnt",
+                "value": 1.0,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "name": "Stand Your Ground",
+            "rangeId": null,
+            "description": "ATK <@ba.vup>+{atk:0%}</>, DEF <@ba.vup>+{def:0%}</>, Blocked enemies <@ba.vup>+{block_cnt}</>, attack all blocked enemies",
+            "skillType": "PASSIVE",
+            "durationType": "NONE",
+            "spData": {
+              "spType": 8,
+              "levelUpCost": null,
+              "maxChargeTime": 0,
+              "spCost": 0,
+              "initSp": 0,
+              "increment": 0.0
+            },
+            "prefabId": "skchr_fang2_2",
+            "duration": 16.0,
+            "blackboard": [
+              {
+                "key": "atk",
+                "value": 0.9,
+                "valueStr": null
+              },
+              {
+                "key": "def",
+                "value": 0.3,
+                "valueStr": null
+              },
+              {
+                "key": "block_cnt",
+                "value": 1.0,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "name": "Stand Your Ground",
+            "rangeId": null,
+            "description": "ATK <@ba.vup>+{atk:0%}</>, DEF <@ba.vup>+{def:0%}</>, Blocked enemies <@ba.vup>+{block_cnt}</>, attack all blocked enemies",
+            "skillType": "PASSIVE",
+            "durationType": "NONE",
+            "spData": {
+              "spType": 8,
+              "levelUpCost": null,
+              "maxChargeTime": 0,
+              "spCost": 0,
+              "initSp": 0,
+              "increment": 0.0
+            },
+            "prefabId": "skchr_fang2_2",
+            "duration": 18.0,
+            "blackboard": [
+              {
+                "key": "atk",
+                "value": 0.95,
+                "valueStr": null
+              },
+              {
+                "key": "def",
+                "value": 0.3,
+                "valueStr": null
+              },
+              {
+                "key": "block_cnt",
+                "value": 1.0,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "name": "Stand Your Ground",
+            "rangeId": null,
+            "description": "ATK <@ba.vup>+{atk:0%}</>, DEF <@ba.vup>+{def:0%}</>, Blocked enemies <@ba.vup>+{block_cnt}</>, attack all blocked enemies",
+            "skillType": "PASSIVE",
+            "durationType": "NONE",
+            "spData": {
+              "spType": 8,
+              "levelUpCost": null,
+              "maxChargeTime": 0,
+              "spCost": 0,
+              "initSp": 0,
+              "increment": 0.0
+            },
+            "prefabId": "skchr_fang2_2",
+            "duration": 19.0,
+            "blackboard": [
+              {
+                "key": "atk",
+                "value": 1.0,
+                "valueStr": null
+              },
+              {
+                "key": "def",
+                "value": 0.4,
+                "valueStr": null
+              },
+              {
+                "key": "block_cnt",
+                "value": 1.0,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "name": "Stand Your Ground",
+            "rangeId": null,
+            "description": "ATK <@ba.vup>+{atk:0%}</>, DEF <@ba.vup>+{def:0%}</>, Blocked enemies <@ba.vup>+{block_cnt}</>, attack all blocked enemies",
+            "skillType": "PASSIVE",
+            "durationType": "NONE",
+            "spData": {
+              "spType": 8,
+              "levelUpCost": null,
+              "maxChargeTime": 0,
+              "spCost": 0,
+              "initSp": 0,
+              "increment": 0.0
+            },
+            "prefabId": "skchr_fang2_2",
+            "duration": 20.0,
+            "blackboard": [
+              {
+                "key": "atk",
+                "value": 1.1,
+                "valueStr": null
+              },
+              {
+                "key": "def",
+                "value": 0.4,
+                "valueStr": null
+              },
+              {
+                "key": "block_cnt",
+                "value": 1.0,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "name": "Stand Your Ground",
+            "rangeId": null,
+            "description": "ATK <@ba.vup>+{atk:0%}</>, DEF <@ba.vup>+{def:0%}</>, Blocked enemies <@ba.vup>+{block_cnt}</>, attack all blocked enemies",
+            "skillType": "PASSIVE",
+            "durationType": "NONE",
+            "spData": {
+              "spType": 8,
+              "levelUpCost": null,
+              "maxChargeTime": 0,
+              "spCost": 0,
+              "initSp": 0,
+              "increment": 0.0
+            },
+            "prefabId": "skchr_fang2_2",
+            "duration": 20.0,
+            "blackboard": [
+              {
+                "key": "atk",
+                "value": 1.2,
+                "valueStr": null
+              },
+              {
+                "key": "def",
+                "value": 0.4,
+                "valueStr": null
+              },
+              {
+                "key": "block_cnt",
+                "value": 1.0,
+                "valueStr": null
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "buffTemplates": {
+    "fang2_s_1": {
+      "templateKey": "fang2_s_1",
+      "effectKey": "",
+      "onEventPriority": "DEFAULT",
+      "eventToActions": {
+        "ON_TARGET_KILLED": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+ModifyCost, Assembly-CSharp",
+            "_sourceType": "BUFF_OWNER",
+            "_forceToDisplayNumber": false,
+            "_forceToDisplayNegativeNumber": false,
+            "_blackboardKey": "cost"
+          }
+        ]
+      }
+    },
+    "fang2_t_1": {
+      "templateKey": "fang2_t_1",
+      "effectKey": "",
+      "onEventPriority": "DEFAULT",
+      "eventToActions": {
+        "ON_OWNER_FINISH": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+FilterDeathReason, Assembly-CSharp",
+            "_source": "BUFF_OWNER",
+            "_finishReason": "WITHDRAW"
+          },
+          {
+            "$type": "Torappu.Battle.Action.Nodes+CreateCardBuffToAllCard, Assembly-CSharp",
+            "_exceptOwner": false,
+            "_exceptTokenAndTrap": true,
+            "_buffAsSource": false,
+            "_lifeType": "UNTIL_NEXT_SPAWN_DECK_TRIGGER_ONCE",
+            "_isRatio": false,
+            "_enableMaxStackCount": false,
+            "_filterIsInHand": false,
+            "_useCardBuffKey": false,
+            "_cardBuffKey": "fang2_t_1[card]"
+          }
+        ]
+      }
+    },
+    "kill_to_add_cost": {
+      "templateKey": "kill_to_add_cost",
+      "effectKey": "",
+      "onEventPriority": "DEFAULT",
+      "eventToActions": {
+        "ON_TARGET_KILLED": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+ModifyCost, Assembly-CSharp",
+            "_sourceType": "BUFF_OWNER",
+            "_forceToDisplayNumber": true,
+            "_forceToDisplayNegativeNumber": false,
+            "_blackboardKey": "cost"
+          }
+        ]
+      }
+    },
+    "switch_mode_restart_fsm": {
+      "templateKey": "switch_mode_restart_fsm",
+      "effectKey": "",
+      "onEventPriority": "DEFAULT",
+      "eventToActions": {
+        "ON_BUFF_START": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+SwitchMode, Assembly-CSharp",
+            "_modeIndex": 1,
+            "_loadModeFromBlackboard": true,
+            "_restoreDefault": false,
+            "_restartFSM": true,
+            "_targetType": "TARGET"
+          }
+        ],
+        "ON_BUFF_FINISH": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+SwitchMode, Assembly-CSharp",
+            "_modeIndex": 0,
+            "_loadModeFromBlackboard": false,
+            "_restoreDefault": true,
+            "_restartFSM": true,
+            "_targetType": "TARGET"
+          }
+        ]
+      }
+    }
+  },
+  "originalModels": {
+    "char_1036_fang2": {
+      "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+      "Front": {
+        "path": "spine/char_1036_fang2/char_1036_fang2/Front/char_1036_fang2.skel",
+        "sha256": "3fae92af030361e1f30d4facc7357bfe8347e5a1e69f2a1ce7bc237a4360563b",
+        "bytes": 242821,
+        "durations": {
+          "Attack": 1,
+          "Default": 0,
+          "Die": 1,
+          "Idle": 4.6,
+          "Skill_1": 1,
+          "Skill_2_End": 0.533,
+          "Skill_2_Idle": 4.6,
+          "Skill_2_Loop": 1,
+          "Skill_Down_2_Loop": 1,
+          "Start": 1,
+          "Start_2": 1
+        },
+        "hits": {
+          "Attack": [
+            0.333
+          ],
+          "Skill_1": [
+            0.333,
+            0.5
+          ],
+          "Skill_2_Loop": [
+            0.5
+          ],
+          "Skill_Down_2_Loop": [
+            0.5
+          ]
+        }
+      },
+      "Back": {
+        "path": "spine/char_1036_fang2/char_1036_fang2/Back/char_1036_fang2.skel",
+        "sha256": "e2e2c64ec899c2546755b7d155e323f5aedf432850ecfcc6c458955b06c16f96",
+        "bytes": 105117,
+        "durations": {
+          "Attack": 1,
+          "Default": 0,
+          "Idle": 1.533,
+          "Skill_1": 1,
+          "Skill_2_End": 0.533,
+          "Skill_2_Idle": 1.533,
+          "Skill_2_Loop": 1,
+          "Start": 1,
+          "Start_2": 1
+        },
+        "hits": {
+          "Attack": [
+            0.333
+          ],
+          "Skill_1": [
+            0.333,
+            0.5
+          ],
+          "Skill_2_Loop": [
+            0.5
+          ]
+        }
+      }
+    }
+  },
+  "officialFacingBindings": {
+    "char_1036_fang2": {
+      "Front": {
+        "animatorPathId": "-3491767894426987774",
+        "skeletonAnimationPathId": "-8149176088029506814",
+        "skeletonDataAssetPathId": "-5274089465773297412",
+        "textAssetPathId": "-8267754643530214895",
+        "sha256": "3fae92af030361e1f30d4facc7357bfe8347e5a1e69f2a1ce7bc237a4360563b",
+        "byteLength": 242821
+      },
+      "Back": {
+        "animatorPathId": "-3491767894426987774",
+        "skeletonAnimationPathId": "7298597353548337922",
+        "skeletonDataAssetPathId": "5110018354613766568",
+        "textAssetPathId": "-4132844418458255668",
+        "sha256": "e2e2c64ec899c2546755b7d155e323f5aedf432850ecfcc6c458955b06c16f96",
+        "byteLength": 105117
+      }
+    }
+  },
+  "graphs": {
+    "characters": {
+      "char_1036_fang2": [
+        {
+          "object": "S2",
+          "pathId": "-7730683576515759552",
+          "components": [
+            {
+              "pathId": "-7455584513321012672",
+              "data": {
+                "m_GameObject": {
+                  "m_FileID": 0,
+                  "m_PathID": "-7730683576515759552"
+                },
+                "m_Enabled": 1,
+                "m_Script": {
+                  "m_FileID": 1,
+                  "m_PathID": "-2632969505105631840"
+                },
+                "m_Name": "",
+                "_excludeAnimKeys": [
+                  "Start"
+                ],
+                "_replaceAnimPairs": [
+                  {
+                    "fromAnimKey": "Idle",
+                    "toAnimKey": "Skill_2_Idle"
+                  },
+                  {
+                    "fromAnimKey": "Born",
+                    "toAnimKey": "Start_2"
+                  }
+                ],
+                "_disableSwitchSettings": []
+              }
+            },
+            {
+              "pathId": "-4483406022755159488",
+              "data": {
+                "m_GameObject": {
+                  "m_FileID": 0,
+                  "m_PathID": "-7730683576515759552"
+                },
+                "m_Enabled": 1,
+                "m_Script": {
+                  "m_FileID": 1,
+                  "m_PathID": "5390319429299248724"
+                },
+                "m_Name": "",
+                "_bodyTransform": {
+                  "m_FileID": 0,
+                  "m_PathID": "-3590965889366035904"
+                },
+                "_animatorHooker": {
+                  "m_FileID": 0,
+                  "m_PathID": "-7455584513321012672"
+                },
+                "_overrideStartEffect": "",
+                "_overrideDeadEffect": "",
+                "_combat": {
+                  "m_FileID": 0,
+                  "m_PathID": "0"
+                },
+                "_attack": {
+                  "m_FileID": 0,
+                  "m_PathID": "-4545358622050618816"
+                },
+                "_attackTrigger": {
+                  "m_FileID": 0,
+                  "m_PathID": "-1265577519218888128"
+                },
+                "_hideUIAttackRange": 0,
+                "_updateAttackRangeExtendByAttributeDirty": 0,
+                "_rangeToShow": {
+                  "m_FileID": 0,
+                  "m_PathID": "0"
+                },
+                "_extraRangesToShow": [],
+                "_generalAbilities": [],
+                "_addIndexToSignalId": 1,
+                "_includeIndexZero": 1,
+                "_alwaysHideHp": {
+                  "isDefined": 0,
+                  "value": 0
+                },
+                "_alwaysHideSp": {
+                  "isDefined": 0,
+                  "value": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "object": "Attack",
+          "pathId": "-5696394216056163776",
+          "components": [
+            {
+              "pathId": "-5770577319551897024",
+              "data": {
+                "m_GameObject": {
+                  "m_FileID": 0,
+                  "m_PathID": "-5696394216056163776"
+                },
+                "m_Enabled": 1,
+                "m_Script": {
+                  "m_FileID": 1,
+                  "m_PathID": "4381884627089348317"
+                },
+                "m_Name": "",
+                "_selector": {
+                  "m_FileID": 0,
+                  "m_PathID": "1918902156658340416"
+                },
+                "_metadata": {
+                  "namedAsAlias": "",
+                  "blackboardPrefix": ""
+                },
+                "_interruptAbilityOnDetach": 1,
+                "_attachPassiveBuffsOnDummy": 1,
+                "_ignoreIfOwnerDead": 0,
+                "_forceAsDmgOrHealAbility": 0,
+                "_waitForAttackEvent": 1,
+                "_interuptIfTargetDead": 0,
+                "_resetCdStrategy": 1,
+                "_selectTargetSource": 2,
+                "_selectTargetTiming": 0,
+                "_timeMode": 0,
+                "_alwaysIncludeTarget": 1,
+                "_allowNoTarget": 0,
+                "_animKey": "Attack",
+                "_endAnimKey": "Idle",
+                "_downAnimKey": "",
+                "_downEndAnimKey": "",
+                "_upAnimKey": "",
+                "_upEndAnimKey": "",
+                "_cooldown": 0.0,
+                "_cooldownKey": "duration",
+                "_preDelay": 0.0,
+                "_escapeTime": 0.0,
+                "_faceToTarget": 1,
+                "_faceToDefault": 0,
+                "_faceToFront": 0,
+                "_faceToFirstCastTarget": 0,
+                "_forceFaceToDirection": 0,
+                "_activeBuffs": [],
+                "_maxAnimScale": 1.0,
+                "_onlyPlayEndAnimWhenIsLastAbility": 0,
+                "_ignorePalsyInterrupt": 0,
+                "_atkScale": 1.0,
+                "_atkScaleKey": "atk_scale",
+                "_attackType": 1,
+                "_elementDamageType": 0,
+                "_epDamageRatio": 0.0,
+                "_useDynamicAttackType": 0,
+                "_deliveryParaWhenReplaceActionNode": 0,
+                "_damageType": 1,
+                "_extraDamageType": 0,
+                "_alwaysPutIncludeTargetFirst": 0
+              }
+            },
+            {
+              "pathId": "-3521436255031594432",
+              "data": {
+                "m_GameObject": {
+                  "m_FileID": 0,
+                  "m_PathID": "-5696394216056163776"
+                },
+                "m_Enabled": 1,
+                "m_Script": {
+                  "m_FileID": 1,
+                  "m_PathID": "-550693537895634864"
+                },
+                "m_Name": "",
+                "_hitEffects": [
+                  {
+                    "_directionType": 0,
+                    "_effects": [
+                      "fang2_hit_01"
+                    ],
+                    "_oneshot": 1,
+                    "_endEvent": 3,
+                    "_onlyOnce": 0,
+                    "_useFourDirectionalFace": 0,
+                    "_useOwnerToTargetDirection": 0,
+                    "_playIfNotInputTarget": 0,
+                    "_playOnlyIfInputTarget": 0
+                  }
+                ],
+                "_castEffects": [
+                  {
+                    "_directionType": 0,
+                    "_effects": [
+                      "fang2_attack_01"
+                    ],
+                    "_oneshot": 1,
+                    "_startEvent": 2,
+                    "_endEvent": 3,
+                    "_onlyOnce": 0,
+                    "_useFourDirectionalFace": 0,
+                    "_delayIfFirstAttack": 0.0,
+                    "_hookEffectAfterFirstAttack": ""
+                  }
+                ],
+                "_attachEffects": [],
+                "_inputTargetEffects": [],
+                "_castTargetEffects": [],
+                "_convertCastEndToAttachFinish": 0,
+                "_recalculatePlaybackSpeed": 0,
+                "_preDelayFactor": 0.0
+              }
+            }
+          ]
+        },
+        {
+          "object": "Default",
+          "pathId": "-3706860669209087424",
+          "components": [
+            {
+              "pathId": "1289554490590687808",
+              "data": {
+                "m_GameObject": {
+                  "m_FileID": 0,
+                  "m_PathID": "-3706860669209087424"
+                },
+                "m_Enabled": 1,
+                "m_Script": {
+                  "m_FileID": 1,
+                  "m_PathID": "5390319429299248724"
+                },
+                "m_Name": "",
+                "_bodyTransform": {
+                  "m_FileID": 0,
+                  "m_PathID": "7583432682211504704"
+                },
+                "_animatorHooker": {
+                  "m_FileID": 0,
+                  "m_PathID": "0"
+                },
+                "_overrideStartEffect": "",
+                "_overrideDeadEffect": "",
+                "_combat": {
+                  "m_FileID": 0,
+                  "m_PathID": "0"
+                },
+                "_attack": {
+                  "m_FileID": 0,
+                  "m_PathID": "-5770577319551897024"
+                },
+                "_attackTrigger": {
+                  "m_FileID": 0,
+                  "m_PathID": "7107024254462980672"
+                },
+                "_hideUIAttackRange": 0,
+                "_updateAttackRangeExtendByAttributeDirty": 0,
+                "_rangeToShow": {
+                  "m_FileID": 0,
+                  "m_PathID": "0"
+                },
+                "_extraRangesToShow": [],
+                "_generalAbilities": [],
+                "_addIndexToSignalId": 1,
+                "_includeIndexZero": 1,
+                "_alwaysHideHp": {
+                  "isDefined": 0,
+                  "value": 0
+                },
+                "_alwaysHideSp": {
+                  "isDefined": 0,
+                  "value": 0
+                }
+              }
+            }
+          ]
+        },
+        {
+          "object": "Selector",
+          "pathId": "-3568886755966324160",
+          "components": [
+            {
+              "pathId": "-3326783467732209088",
+              "data": {
+                "m_GameObject": {
+                  "m_FileID": 0,
+                  "m_PathID": "-3568886755966324160"
+                },
+                "m_Enabled": 1,
+                "m_Script": {
+                  "m_FileID": 1,
+                  "m_PathID": "-2891200616113119906"
+                },
+                "m_Name": "",
+                "_extendable": 0
+              }
+            },
+            {
+              "pathId": "1918902156658340416",
+              "data": {
+                "m_GameObject": {
+                  "m_FileID": 0,
+                  "m_PathID": "-3568886755966324160"
+                },
+                "m_Enabled": 1,
+                "m_Script": {
+                  "m_FileID": 1,
+                  "m_PathID": "840206743537877183"
+                },
+                "m_Name": "",
+                "_targetSide": 2,
+                "_targetMotion": 1,
+                "_targetCategory": 1,
+                "_postFilter": 4,
+                "_ignoreTargetFree": 0,
+                "_onlyIgnoreSomeOfTargetFreeCase": 0,
+                "_abnormalFlag": 32,
+                "_abnormalCombo": 2,
+                "_ignoreAllyTargetFree": 0,
+                "_ignoreHealFree": 0,
+                "_forceIgnoreCamouflage": 0,
+                "_needProfessionMask": 0,
+                "_professionMask": 0,
+                "_limitTargetNum": 1,
+                "_maxTargetKey": "max_target",
+                "_maxNum": 1,
+                "_excludeOwner": 0,
+                "_sortByTauntAtLast": 0,
+                "_ignoreHitRange": 0,
+                "_checkUnitType": 0,
+                "_unitTypeMask": 0,
+                "_abilityInputTargetAsSortSource": 0,
+                "_limitedMaxTargetNumToBlockedCnt": 1,
+                "_allowZeroBlockCntLimit": 0
+              }
+            },
+            {
+              "pathId": "7107024254462980672",
+              "data": {
+                "m_GameObject": {
+                  "m_FileID": 0,
+                  "m_PathID": "-3568886755966324160"
+                },
+                "m_Enabled": 1,
+                "m_Script": {
+                  "m_FileID": 1,
+                  "m_PathID": "8607874384982393801"
+                },
+                "m_Name": "",
+                "_keepTarget": 0,
+                "_minTargetNum": 1,
+                "_overrideSearchTargetTick": -1
+              }
+            }
+          ]
+        },
+        {
+          "object": "char_1036_fang2",
+          "pathId": "-2352878132907937216",
+          "components": [
+            {
+              "pathId": "-7628341402667519424",
+              "data": {
+                "m_GameObject": {
+                  "m_FileID": 0,
+                  "m_PathID": "-2352878132907937216"
+                },
+                "m_Enabled": 1,
+                "m_Density": 1.0,
+                "m_Material": {
+                  "m_FileID": 0,
+                  "m_PathID": "0"
+                },
+                "m_IsTrigger": true,
+                "m_UsedByEffector": false,
+                "m_UsedByComposite": false,
+                "m_Offset": {
+                  "x": 0.0,
+                  "y": 0.0
+                },
+                "m_Radius": 0.25
+              }
+            },
+            {
+              "pathId": "6591632118000185920",
+              "data": {
+                "m_GameObject": {
+                  "m_FileID": 0,
+                  "m_PathID": "-2352878132907937216"
+                },
+                "m_Enabled": 1,
+                "m_Script": {
+                  "m_FileID": 1,
+                  "m_PathID": "-1297314214590689040"
+                },
+                "m_Name": "",
+                "_animator": {
+                  "m_FileID": 0,
+                  "m_PathID": "0"
+                },
+                "_modes": [
+                  {
+                    "m_FileID": 0,
+                    "m_PathID": "1289554490590687808"
+                  },
+                  {
+                    "m_FileID": 0,
+                    "m_PathID": "-4483406022755159488"
+                  }
+                ],
+                "_commonAbilities": [],
+                "_uiMountPoint": {
+                  "m_FileID": 0,
+                  "m_PathID": "0"
+                },
+                "_effectTransform": {
+                  "m_FileID": 0,
+                  "m_PathID": "-142829084274527680"
+                },
+                "_shadow": {
+                  "m_FileID": 0,
+                  "m_PathID": "-4503398588997438912"
+                },
+                "_defaultBodyColor": {
+                  "r": 1.0,
+                  "g": 1.0,
+                  "b": 1.0,
+                  "a": 1.0
+                },
+                "_hideShadowOnRecycle": 0,
+                "_overrideGraphicBound": -1.0,
+                "_hudPluginReplacePairs": [],
+                "_showDebugName": 0,
+                "_skinHolder": {
+                  "m_FileID": 0,
+                  "m_PathID": "-4795756199047925184"
+                },
+                "_motionMode": 0,
+                "_blockMode": 0,
+                "_ignoreBlockMode": 0,
+                "_isFixedRotation": 0,
+                "_occupiedRemainingCharacterCnt": 1,
+                "_useRealBornTimeFromAnim": 0,
+                "_buildCondition": {
+                  "buildableType": 1,
+                  "isTryingOverlapCharacater": 0,
+                  "needSpecifyDirection": 1,
+                  "limitByHostAttackRange": 0,
+                  "limitByHostAbilityRange": 0,
+                  "abilityName": "",
+                  "tileKey": "",
+                  "extraBuildConditionArray": {
+                    "SerializedState": "null",
+                    "SerializedObjectReferences": []
+                  },
+                  "advancedBuildableMask": 1,
+                  "overlapOptions": {
+                    "_verifySourceId": 0,
+                    "_verifySourceIds": [],
+                    "_verifySourceProfession": 0,
+                    "_verifySourceProfessions": 0,
+                    "_isAllConditionOR": 1,
+                    "_overlapPriority": 0,
+                    "_changeTargetGraphicColor": 0
+                  },
+                  "excludeNoTargetTile": 0,
+                  "extraLocateRange": "",
+                  "checkManuallyBuildableType": 0,
+                  "manuallyBuildableType": 0,
+                  "_excludeOccupiedByWalkEnemy": 0,
+                  "allowWalkEnemyInHostRange": 0,
+                  "_checkUpdateBuildable": 0
+                },
+                "_traitAbility": {
+                  "m_FileID": 0,
+                  "m_PathID": "-7107098971185810880"
+                },
+                "_withdrawCostRecoverRatio": 1.0,
+                "_maxWithdrawCostRatioOfRawCost": 1.0,
+                "_directionTransform": {
+                  "m_FileID": 0,
+                  "m_PathID": "-7269533227773398464"
+                },
+                "_directionIndicator": {
+                  "m_FileID": 0,
+                  "m_PathID": "-3272532629783121344"
+                },
+                "_startEffect": "",
+                "_deadEffect": "",
+                "_playStartVocal": 1,
+                "_showDeadTweenColor": 1,
+                "_useSpecificDeadAnim": 0,
+                "_onlyPlayStartEffectOnce": 0,
+                "_dontMoveCameraWhenFocus": 0,
+                "_disableCharInfoPanel": 0,
+                "_disableRotateWhenDead": 0,
+                "_disableSetDirectionWhenDummy": 0,
+                "_clearProjectileWhenDead": 0,
+                "_useIdForAudioSignalMask": 0,
+                "_preprocessData": 0,
+                "_disableClickCharacterInfo": 0,
+                "_skillUiFollowHeadPint": 0,
+                "m_overrideBornTime": -1.0
+              }
+            }
+          ]
+        },
+        {
+          "object": "Shadow",
+          "pathId": "-1738272119866133952",
+          "components": [
+            {
+              "pathId": "-4503398588997438912",
+              "data": {
+                "m_GameObject": {
+                  "m_FileID": 0,
+                  "m_PathID": "-1738272119866133952"
+                },
+                "m_Enabled": 1,
+                "m_Script": {
+                  "m_FileID": 1,
+                  "m_PathID": "-2368896203154538901"
+                },
+                "m_Name": "",
+                "_autoAttachToGround": 0,
+                "_attachOffset": 0.10000000149011612,
+                "_simplyUseTileHeight": 0,
+                "_enableAdvanced": 0,
+                "_alwaysUseSpineOffset": 0,
+                "_sprite": {
+                  "m_FileID": 0,
+                  "m_PathID": "0"
+                },
+                "_graphic": {
+                  "m_FileID": 0,
+                  "m_PathID": "0"
+                },
+                "_faceSwitcher": {
+                  "m_FileID": 0,
+                  "m_PathID": "0"
+                },
+                "_boneToFollow": {
+                  "m_FileID": 0,
+                  "m_PathID": "0"
+                },
+                "_specialInit": 0,
+                "_simpleFollow": 0,
+                "_easeType": 1
+              }
+            }
+          ]
+        },
+        {
+          "object": "Trait",
+          "pathId": "4884215549902189120",
+          "components": [
+            {
+              "pathId": "-7107098971185810880",
+              "data": {
+                "m_GameObject": {
+                  "m_FileID": 0,
+                  "m_PathID": "4884215549902189120"
+                },
+                "m_Enabled": 1,
+                "m_Script": {
+                  "m_FileID": 1,
+                  "m_PathID": "3800760148018415462"
+                },
+                "m_Name": "",
+                "_selector": {
+                  "m_FileID": 0,
+                  "m_PathID": "0"
+                },
+                "_metadata": {
+                  "namedAsAlias": "",
+                  "blackboardPrefix": ""
+                },
+                "_interruptAbilityOnDetach": 1,
+                "_attachPassiveBuffsOnDummy": 1,
+                "_ignoreIfOwnerDead": 0,
+                "_forceAsDmgOrHealAbility": 0,
+                "_buffs": [
+                  {
+                    "attributes": {
+                      "abnormalFlags": [],
+                      "abnormalImmunes": [],
+                      "abnormalAntis": [],
+                      "abnormalCombos": [],
+                      "abnormalComboImmunes": [],
+                      "attributeModifiers": []
+                    },
+                    "buffKey": "fang2_tr[kill]",
+                    "loadFromDB": 0,
+                    "isDurableBuff": 0,
+                    "isDamageMissable": 0,
+                    "isSilenceable": 0,
+                    "isStunnable": 0,
+                    "isFreezable": 0,
+                    "isLevitatable": 0,
+                    "statusResistable": 2,
+                    "templateKey": "kill_to_add_cost",
+                    "disableOverride": 0,
+                    "overrideKey": "",
+                    "overrideType": 0,
+                    "maxStackCnt": 1,
+                    "refreshRemainingTimeWhenStackMax": 0,
+                    "clearAllStackCntWhenTimeUp": 0,
+                    "maxValidStackCnt": -1,
+                    "independentCharacterSource": 0,
+                    "overrideEffectKey": "",
+                    "overrideOnEventPriority": 0,
+                    "onEventPriority": 0,
+                    "audioSignal": "",
+                    "lifeTimeType": 2,
+                    "takeSnapshotWhenExtend": 0,
+                    "durationKey": "duration",
+                    "lifeTime": 0.0,
+                    "triggerLifeType": 0,
+                    "triggerCnt": 0,
+                    "triggerInterval": -1.0,
+                    "waitFirstTriggerInterval": 1,
+                    "firstTriggerInterval": -1.0,
+                    "priority": -1,
+                    "priorityBBKeys": [],
+                    "stripBlackboardParamsWithBuffKey": 0,
+                    "blackboard": [],
+                    "enableInitDirectionFromSource": 0
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "object": "Selector",
+          "pathId": "4977839290170274368",
+          "components": [
+            {
+              "pathId": "-3439506991234289088",
+              "data": {
+                "m_GameObject": {
+                  "m_FileID": 0,
+                  "m_PathID": "4977839290170274368"
+                },
+                "m_Enabled": 1,
+                "m_Script": {
+                  "m_FileID": 1,
+                  "m_PathID": "840206743537877183"
+                },
+                "m_Name": "",
+                "_targetSide": 2,
+                "_targetMotion": 1,
+                "_targetCategory": 1,
+                "_postFilter": 4,
+                "_ignoreTargetFree": 0,
+                "_onlyIgnoreSomeOfTargetFreeCase": 0,
+                "_abnormalFlag": 32,
+                "_abnormalCombo": 2,
+                "_ignoreAllyTargetFree": 0,
+                "_ignoreHealFree": 0,
+                "_forceIgnoreCamouflage": 0,
+                "_needProfessionMask": 0,
+                "_professionMask": 0,
+                "_limitTargetNum": 0,
+                "_maxTargetKey": "max_target",
+                "_maxNum": 2,
+                "_excludeOwner": 0,
+                "_sortByTauntAtLast": 0,
+                "_ignoreHitRange": 0,
+                "_checkUnitType": 0,
+                "_unitTypeMask": 0,
+                "_abilityInputTargetAsSortSource": 0,
+                "_limitedMaxTargetNumToBlockedCnt": 1,
+                "_allowZeroBlockCntLimit": 0
+              }
+            },
+            {
+              "pathId": "-1265577519218888128",
+              "data": {
+                "m_GameObject": {
+                  "m_FileID": 0,
+                  "m_PathID": "4977839290170274368"
+                },
+                "m_Enabled": 1,
+                "m_Script": {
+                  "m_FileID": 1,
+                  "m_PathID": "8607874384982393801"
+                },
+                "m_Name": "",
+                "_keepTarget": 0,
+                "_minTargetNum": 1,
+                "_overrideSearchTargetTick": -1
+              }
+            },
+            {
+              "pathId": "7802451078809973312",
+              "data": {
+                "m_GameObject": {
+                  "m_FileID": 0,
+                  "m_PathID": "4977839290170274368"
+                },
+                "m_Enabled": 1,
+                "m_Script": {
+                  "m_FileID": 1,
+                  "m_PathID": "-2891200616113119906"
+                },
+                "m_Name": "",
+                "_extendable": 0
+              }
+            }
+          ]
+        },
+        {
+          "object": "Attack",
+          "pathId": "7577566997727539776",
+          "components": [
+            {
+              "pathId": "-4545358622050618816",
+              "data": {
+                "m_GameObject": {
+                  "m_FileID": 0,
+                  "m_PathID": "7577566997727539776"
+                },
+                "m_Enabled": 1,
+                "m_Script": {
+                  "m_FileID": 1,
+                  "m_PathID": "4381884627089348317"
+                },
+                "m_Name": "",
+                "_selector": {
+                  "m_FileID": 0,
+                  "m_PathID": "-3439506991234289088"
+                },
+                "_metadata": {
+                  "namedAsAlias": "",
+                  "blackboardPrefix": ""
+                },
+                "_interruptAbilityOnDetach": 1,
+                "_attachPassiveBuffsOnDummy": 1,
+                "_ignoreIfOwnerDead": 0,
+                "_forceAsDmgOrHealAbility": 0,
+                "_waitForAttackEvent": 1,
+                "_interuptIfTargetDead": 0,
+                "_resetCdStrategy": 1,
+                "_selectTargetSource": 1,
+                "_selectTargetTiming": 0,
+                "_timeMode": 0,
+                "_alwaysIncludeTarget": 1,
+                "_allowNoTarget": 0,
+                "_animKey": "Skill_2_Loop",
+                "_endAnimKey": "Idle",
+                "_downAnimKey": "Skill_Down_2_Loop",
+                "_downEndAnimKey": "",
+                "_upAnimKey": "",
+                "_upEndAnimKey": "",
+                "_cooldown": 0.0,
+                "_cooldownKey": "duration",
+                "_preDelay": 0.0,
+                "_escapeTime": 0.0,
+                "_faceToTarget": 1,
+                "_faceToDefault": 0,
+                "_faceToFront": 0,
+                "_faceToFirstCastTarget": 0,
+                "_forceFaceToDirection": 0,
+                "_activeBuffs": [],
+                "_maxAnimScale": 1.0,
+                "_onlyPlayEndAnimWhenIsLastAbility": 0,
+                "_ignorePalsyInterrupt": 0,
+                "_atkScale": 1.0,
+                "_atkScaleKey": "atk_scale",
+                "_attackType": 1,
+                "_elementDamageType": 0,
+                "_epDamageRatio": 0.0,
+                "_useDynamicAttackType": 0,
+                "_deliveryParaWhenReplaceActionNode": 0,
+                "_damageType": 1,
+                "_extraDamageType": 0,
+                "_alwaysPutIncludeTargetFirst": 0
+              }
+            },
+            {
+              "pathId": "444239875875271232",
+              "data": {
+                "m_GameObject": {
+                  "m_FileID": 0,
+                  "m_PathID": "7577566997727539776"
+                },
+                "m_Enabled": 1,
+                "m_Script": {
+                  "m_FileID": 1,
+                  "m_PathID": "-550693537895634864"
+                },
+                "m_Name": "",
+                "_hitEffects": [
+                  {
+                    "_directionType": 0,
+                    "_effects": [
+                      "fang2_skill2_hit_01"
+                    ],
+                    "_oneshot": 1,
+                    "_endEvent": 3,
+                    "_onlyOnce": 0,
+                    "_useFourDirectionalFace": 0,
+                    "_useOwnerToTargetDirection": 0,
+                    "_playIfNotInputTarget": 0,
+                    "_playOnlyIfInputTarget": 0
+                  }
+                ],
+                "_castEffects": [
+                  {
+                    "_directionType": 3,
+                    "_effects": [
+                      "fang2_skill2_attack_01_F",
+                      "fang2_skill2_attack_01_F",
+                      "fang2_skill2_attack_01_FD",
+                      "fang2_skill2_attack_01_F",
+                      "",
+                      ""
+                    ],
+                    "_oneshot": 0,
+                    "_startEvent": 2,
+                    "_endEvent": 3,
+                    "_onlyOnce": 0,
+                    "_useFourDirectionalFace": 0,
+                    "_delayIfFirstAttack": 0.0,
+                    "_hookEffectAfterFirstAttack": ""
+                  }
+                ],
+                "_attachEffects": [],
+                "_inputTargetEffects": [],
+                "_castTargetEffects": [],
+                "_convertCastEndToAttachFinish": 0,
+                "_recalculatePlaybackSpeed": 0,
+                "_preDelayFactor": 0.0
+              }
+            }
+          ]
+        },
+        {
+          "object": "1",
+          "pathId": "7863964547529044544",
+          "components": [
+            {
+              "pathId": "-6268552104545291712",
+              "data": {
+                "m_GameObject": {
+                  "m_FileID": 0,
+                  "m_PathID": "7863964547529044544"
+                },
+                "m_Enabled": 1,
+                "m_Script": {
+                  "m_FileID": 1,
+                  "m_PathID": "3800760148018415462"
+                },
+                "m_Name": "",
+                "_selector": {
+                  "m_FileID": 0,
+                  "m_PathID": "0"
+                },
+                "_metadata": {
+                  "namedAsAlias": "",
+                  "blackboardPrefix": ""
+                },
+                "_interruptAbilityOnDetach": 1,
+                "_attachPassiveBuffsOnDummy": 1,
+                "_ignoreIfOwnerDead": 0,
+                "_forceAsDmgOrHealAbility": 0,
+                "_buffs": [
+                  {
+                    "attributes": {
+                      "abnormalFlags": [],
+                      "abnormalImmunes": [],
+                      "abnormalAntis": [],
+                      "abnormalCombos": [],
+                      "abnormalComboImmunes": [],
+                      "attributeModifiers": []
+                    },
+                    "buffKey": "fang2_t_1",
+                    "loadFromDB": 0,
+                    "isDurableBuff": 0,
+                    "isDamageMissable": 0,
+                    "isSilenceable": 0,
+                    "isStunnable": 0,
+                    "isFreezable": 0,
+                    "isLevitatable": 0,
+                    "statusResistable": 2,
+                    "templateKey": "fang2_t_1",
+                    "disableOverride": 0,
+                    "overrideKey": "",
+                    "overrideType": 0,
+                    "maxStackCnt": 1,
+                    "refreshRemainingTimeWhenStackMax": 0,
+                    "clearAllStackCntWhenTimeUp": 0,
+                    "maxValidStackCnt": -1,
+                    "independentCharacterSource": 0,
+                    "overrideEffectKey": "",
+                    "overrideOnEventPriority": 0,
+                    "onEventPriority": 0,
+                    "audioSignal": "",
+                    "lifeTimeType": 2,
+                    "takeSnapshotWhenExtend": 0,
+                    "durationKey": "duration",
+                    "lifeTime": 0.0,
+                    "triggerLifeType": 0,
+                    "triggerCnt": 0,
+                    "triggerInterval": -1.0,
+                    "waitFirstTriggerInterval": 1,
+                    "firstTriggerInterval": -1.0,
+                    "priority": -1,
+                    "priorityBBKeys": [],
+                    "stripBlackboardParamsWithBuffKey": 0,
+                    "blackboard": [],
+                    "enableInitDirectionFromSource": 0
+                  }
+                ]
+              }
+            },
+            {
+              "pathId": "1346716162197942848",
+              "data": {
+                "m_GameObject": {
+                  "m_FileID": 0,
+                  "m_PathID": "7863964547529044544"
+                },
+                "m_Enabled": 1,
+                "m_Script": {
+                  "m_FileID": 1,
+                  "m_PathID": "-8270537163856899313"
+                },
+                "m_Name": "",
+                "_overwriteTalentKey": "",
+                "_overwriteParentRangeId": 0,
+                "_checkValidBySkillIndex": [],
+                "_options": {
+                  "selector": {
+                    "categoryMask": 0,
+                    "filterTag": "",
+                    "subprofessionTag": "",
+                    "onlySelectMe": 1,
+                    "excludeMe": 0,
+                    "mapTags": [],
+                    "enableOverride": 0,
+                    "excludeNotInHand": 0,
+                    "excludeNotShowInCardList": 0,
+                    "excludeHiddenByCardState": 0
+                  },
+                  "minCntToTrig": 0,
+                  "trackSourceCardInCardBuff": 1
+                },
+                "_runtimeCost": 0,
+                "_advancedCardBuildState": 0
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "skills": {
+      "skchr_fang2_1": [
+        {
+          "object": "skchr_fang2_1",
+          "pathId": "-2235386597776155210",
+          "components": [
+            {
+              "pathId": "-4099296283204575818",
+              "data": {
+                "m_GameObject": {
+                  "m_FileID": 0,
+                  "m_PathID": "-2235386597776155210"
+                },
+                "m_Enabled": 1,
+                "m_Script": {
+                  "m_FileID": 1,
+                  "m_PathID": "1339719624887862345"
+                },
+                "m_Name": "",
+                "_buffs": [
+                  {
+                    "attributes": {
+                      "abnormalFlags": [],
+                      "abnormalImmunes": [],
+                      "abnormalAntis": [],
+                      "abnormalCombos": [],
+                      "abnormalComboImmunes": [],
+                      "attributeModifiers": []
+                    },
+                    "buffKey": "fang2_s_1",
+                    "loadFromDB": 0,
+                    "isDurableBuff": 0,
+                    "isDamageMissable": 0,
+                    "isSilenceable": 0,
+                    "isStunnable": 0,
+                    "isFreezable": 0,
+                    "isLevitatable": 0,
+                    "statusResistable": 2,
+                    "templateKey": "fang2_s_1",
+                    "disableOverride": 0,
+                    "overrideKey": "",
+                    "overrideType": 0,
+                    "maxStackCnt": 1,
+                    "refreshRemainingTimeWhenStackMax": 0,
+                    "clearAllStackCntWhenTimeUp": 0,
+                    "maxValidStackCnt": -1,
+                    "independentCharacterSource": 0,
+                    "overrideEffectKey": "",
+                    "overrideOnEventPriority": 0,
+                    "onEventPriority": 0,
+                    "audioSignal": "",
+                    "lifeTimeType": 2,
+                    "takeSnapshotWhenExtend": 0,
+                    "durationKey": "duration",
+                    "lifeTime": 0.0,
+                    "triggerLifeType": 0,
+                    "triggerCnt": 0,
+                    "triggerInterval": -1.0,
+                    "waitFirstTriggerInterval": 1,
+                    "firstTriggerInterval": -1.0,
+                    "priority": -1,
+                    "priorityBBKeys": [],
+                    "stripBlackboardParamsWithBuffKey": 0,
+                    "blackboard": [],
+                    "enableInitDirectionFromSource": 0
+                  }
+                ]
+              }
+            },
+            {
+              "pathId": "-1883435565156196938",
+              "data": {
+                "m_GameObject": {
+                  "m_FileID": 0,
+                  "m_PathID": "-2235386597776155210"
+                },
+                "m_Enabled": 1,
+                "m_Script": {
+                  "m_FileID": 1,
+                  "m_PathID": "-550693537895634864"
+                },
+                "m_Name": "",
+                "_hitEffects": [
+                  {
+                    "_directionType": 0,
+                    "_effects": [
+                      "fang2_skill1_hit_01"
+                    ],
+                    "_oneshot": 1,
+                    "_endEvent": 3,
+                    "_onlyOnce": 1,
+                    "_useFourDirectionalFace": 0,
+                    "_useOwnerToTargetDirection": 0,
+                    "_playIfNotInputTarget": 0,
+                    "_playOnlyIfInputTarget": 0
+                  }
+                ],
+                "_castEffects": [
+                  {
+                    "_directionType": 0,
+                    "_effects": [
+                      "fang2_skill1_01"
+                    ],
+                    "_oneshot": 1,
+                    "_startEvent": 2,
+                    "_endEvent": 3,
+                    "_onlyOnce": 0,
+                    "_useFourDirectionalFace": 0,
+                    "_delayIfFirstAttack": 0.0,
+                    "_hookEffectAfterFirstAttack": ""
+                  }
+                ],
+                "_attachEffects": [],
+                "_inputTargetEffects": [],
+                "_castTargetEffects": [],
+                "_convertCastEndToAttachFinish": 0,
+                "_recalculatePlaybackSpeed": 0,
+                "_preDelayFactor": 0.0
+              }
+            },
+            {
+              "pathId": "1338734035650682294",
+              "data": {
+                "m_GameObject": {
+                  "m_FileID": 0,
+                  "m_PathID": "-2235386597776155210"
+                },
+                "m_Enabled": 1,
+                "m_Script": {
+                  "m_FileID": 1,
+                  "m_PathID": "-5349745400011864685"
+                },
+                "m_Name": "",
+                "_selector": {
+                  "m_FileID": 0,
+                  "m_PathID": "0"
+                },
+                "_metadata": {
+                  "namedAsAlias": "",
+                  "blackboardPrefix": ""
+                },
+                "_interruptAbilityOnDetach": 1,
+                "_attachPassiveBuffsOnDummy": 1,
+                "_ignoreIfOwnerDead": 0,
+                "_forceAsDmgOrHealAbility": 0,
+                "_waitForAttackEvent": 1,
+                "_interuptIfTargetDead": 0,
+                "_resetCdStrategy": 1,
+                "_selectTargetSource": 2,
+                "_selectTargetTiming": 0,
+                "_timeMode": 0,
+                "_alwaysIncludeTarget": 1,
+                "_allowNoTarget": 1,
+                "_animKey": "Skill_1",
+                "_endAnimKey": "Idle",
+                "_downAnimKey": "",
+                "_downEndAnimKey": "",
+                "_upAnimKey": "",
+                "_upEndAnimKey": "",
+                "_cooldown": 0.0,
+                "_cooldownKey": "duration",
+                "_preDelay": 0.0,
+                "_escapeTime": 0.0,
+                "_faceToTarget": 1,
+                "_faceToDefault": 0,
+                "_faceToFront": 0,
+                "_faceToFirstCastTarget": 0,
+                "_forceFaceToDirection": 0,
+                "_activeBuffs": [],
+                "_maxAnimScale": 1.0,
+                "_onlyPlayEndAnimWhenIsLastAbility": 0,
+                "_ignorePalsyInterrupt": 0,
+                "_atkScale": 1.0,
+                "_atkScaleKey": "atk_scale",
+                "_attackType": 1,
+                "_elementDamageType": 0,
+                "_epDamageRatio": 0.0,
+                "_useDynamicAttackType": 0,
+                "_deliveryParaWhenReplaceActionNode": 0,
+                "_damageType": 1,
+                "_extraDamageType": 0,
+                "_alwaysPutIncludeTargetFirst": 0,
+                "_additionalTimes": 1,
+                "_triggerDelta": 0.25,
+                "_waitAttackEventForAllAttacks": 0,
+                "_splitDamage": 0,
+                "_minPostDelay": 0.0,
+                "_onlyFeedActiveBuffToLastOne": 0,
+                "_onlyFeedActiveBuffToFirstOne": 0,
+                "_addSpellCntToAllSignalId": 0,
+                "_addSpellCntToLastSignalId": 0,
+                "_onlyTrigAudioSignalForFirstSpell": 0,
+                "_onlyTrigAudioSignalForFirstHit": 0,
+                "_addSpellCntToAllHitSignalId": 0,
+                "_refreshInputTargetOnCheckSpell": 0,
+                "_refreshInputTargetTrigger": {
+                  "m_FileID": 0,
+                  "m_PathID": "0"
+                },
+                "_refreshTimesOnCastStart": 0,
+                "_refreshTimesOnCheckAnotherSpell": 0
+              }
+            },
+            {
+              "pathId": "3663294210963479990",
+              "data": {
+                "m_GameObject": {
+                  "m_FileID": 0,
+                  "m_PathID": "-2235386597776155210"
+                },
+                "m_Enabled": 1,
+                "m_Script": {
+                  "m_FileID": 1,
+                  "m_PathID": "6354921792805821228"
+                },
+                "m_Name": "",
+                "_maxTriggerTime": -1,
+                "_allowSpRecoveryWhenAffecting": 0,
+                "_limitGlobalTriggerTime": 0,
+                "_hidden": 0,
+                "_showSpBarEvenHidden": 0,
+                "_showSpAsBulletMode": 0,
+                "_showSpRatioAsProgress": 0,
+                "_playCharWordVoice": 1,
+                "_playCharWordWithPassiveType": 0,
+                "_canCastWithNoSp": 0,
+                "_canSilenced": 0,
+                "_canUseInAbnormalState": 0,
+                "_defaultModeIndex": -1,
+                "_attackBlackboardModeIndex": -1,
+                "_extraAttackBlackboardModeIndices": [],
+                "_rangeIdModeIndex": -1,
+                "_extraRangeIdModeIndices": [],
+                "_rangeIdUsageType": 7,
+                "_writeDurationToAttackBlackboard": 0,
+                "_attachSignalIds": 0,
+                "_extraAbilities": [],
+                "_useEscapeTime": 0,
+                "_earlySkillFinishAtAttackFinished": 0,
+                "_showProgressToNext": 0,
+                "_hideSkillStackCount": 0,
+                "_hideHudSkillStackCount": 0,
+                "_playSkillBeginAnim": 0,
+                "_beginAnim": "",
+                "_beginAnimDown": "",
+                "_beginEffect": [],
+                "_useFaceVector": 0,
+                "_beginAnimValidator": {
+                  "m_FileID": 0,
+                  "m_PathID": "0"
+                },
+                "_availableValidator": {
+                  "m_FileID": 0,
+                  "m_PathID": "0"
+                },
+                "_trigger": {
+                  "m_FileID": 0,
+                  "m_PathID": "0"
+                },
+                "_cancelIfSearchTargetFailed": 0,
+                "_recoverSpIfTargetDead": 1,
+                "_rangeToShow": {
+                  "m_FileID": 0,
+                  "m_PathID": "0"
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "skchr_fang2_2": [
+        {
+          "object": "skchr_fang2_2",
+          "pathId": "-8298094043867159497",
+          "components": [
+            {
+              "pathId": "-6135702265769597897",
+              "data": {
+                "m_GameObject": {
+                  "m_FileID": 0,
+                  "m_PathID": "-8298094043867159497"
+                },
+                "m_Enabled": 1,
+                "m_Script": {
+                  "m_FileID": 1,
+                  "m_PathID": "2822254928132392630"
+                },
+                "m_Name": "",
+                "_maxTriggerTime": -1,
+                "_allowSpRecoveryWhenAffecting": 0,
+                "_limitGlobalTriggerTime": 0,
+                "_hidden": 0,
+                "_showSpBarEvenHidden": 0,
+                "_showSpAsBulletMode": 0,
+                "_showSpRatioAsProgress": 0,
+                "_playCharWordVoice": 1,
+                "_playCharWordWithPassiveType": 0,
+                "_canCastWithNoSp": 0,
+                "_canSilenced": 0,
+                "_canUseInAbnormalState": 0,
+                "_defaultModeIndex": 0,
+                "_attackBlackboardModeIndex": 1,
+                "_extraAttackBlackboardModeIndices": [],
+                "_rangeIdModeIndex": -1,
+                "_extraRangeIdModeIndices": [],
+                "_rangeIdUsageType": 7,
+                "_writeDurationToAttackBlackboard": 0,
+                "_attachSignalIds": 0,
+                "_extraAbilities": [],
+                "_useEscapeTime": 0,
+                "_earlySkillFinishAtAttackFinished": 0,
+                "_showProgressToNext": 0,
+                "_hideSkillStackCount": 0,
+                "_hideHudSkillStackCount": 0,
+                "_playSkillBeginAnim": 0,
+                "_beginAnim": "",
+                "_beginAnimDown": "",
+                "_beginEffect": [],
+                "_useFaceVector": 0,
+                "_beginAnimValidator": {
+                  "m_FileID": 0,
+                  "m_PathID": "0"
+                },
+                "_availableValidator": {
+                  "m_FileID": 0,
+                  "m_PathID": "0"
+                },
+                "_overrideStartEffect": "",
+                "_switchToState": 0,
+                "_castOnLocate": 0,
+                "_overrideAudioSignalId": 0
+              }
+            },
+            {
+              "pathId": "1135401656784872503",
+              "data": {
+                "m_GameObject": {
+                  "m_FileID": 0,
+                  "m_PathID": "-8298094043867159497"
+                },
+                "m_Enabled": 1,
+                "m_Script": {
+                  "m_FileID": 1,
+                  "m_PathID": "-4234909118878081699"
+                },
+                "m_Name": "",
+                "_selector": {
+                  "m_FileID": 0,
+                  "m_PathID": "0"
+                },
+                "_metadata": {
+                  "namedAsAlias": "",
+                  "blackboardPrefix": ""
+                },
+                "_interruptAbilityOnDetach": 1,
+                "_attachPassiveBuffsOnDummy": 1,
+                "_ignoreIfOwnerDead": 0,
+                "_forceAsDmgOrHealAbility": 0,
+                "_waitForAttackEvent": 1,
+                "_interuptIfTargetDead": 0,
+                "_resetCdStrategy": 1,
+                "_buffs": [
+                  {
+                    "attributes": {
+                      "abnormalFlags": [],
+                      "abnormalImmunes": [],
+                      "abnormalAntis": [],
+                      "abnormalCombos": [],
+                      "abnormalComboImmunes": [],
+                      "attributeModifiers": [
+                        {
+                          "attributeType": 1,
+                          "formulaItem": 1,
+                          "value": 0.0,
+                          "loadFromBlackboard": 1,
+                          "fetchBaseValueFromSourceEntity": 0
+                        },
+                        {
+                          "attributeType": 2,
+                          "formulaItem": 1,
+                          "value": 0.0,
+                          "loadFromBlackboard": 1,
+                          "fetchBaseValueFromSourceEntity": 0
+                        },
+                        {
+                          "attributeType": 5,
+                          "formulaItem": 0,
+                          "value": 0.0,
+                          "loadFromBlackboard": 1,
+                          "fetchBaseValueFromSourceEntity": 0
+                        }
+                      ]
+                    },
+                    "buffKey": "fang2_s_2",
+                    "loadFromDB": 0,
+                    "isDurableBuff": 0,
+                    "isDamageMissable": 0,
+                    "isSilenceable": 0,
+                    "isStunnable": 0,
+                    "isFreezable": 0,
+                    "isLevitatable": 0,
+                    "statusResistable": 2,
+                    "templateKey": "switch_mode_restart_fsm",
+                    "disableOverride": 0,
+                    "overrideKey": "",
+                    "overrideType": 0,
+                    "maxStackCnt": 1,
+                    "refreshRemainingTimeWhenStackMax": 0,
+                    "clearAllStackCntWhenTimeUp": 0,
+                    "maxValidStackCnt": -1,
+                    "independentCharacterSource": 0,
+                    "overrideEffectKey": "fang2_skill2_buff_01",
+                    "overrideOnEventPriority": 0,
+                    "onEventPriority": 0,
+                    "audioSignal": "",
+                    "lifeTimeType": 1,
+                    "takeSnapshotWhenExtend": 0,
+                    "durationKey": "duration",
+                    "lifeTime": 0.0,
+                    "triggerLifeType": 0,
+                    "triggerCnt": 0,
+                    "triggerInterval": -1.0,
+                    "waitFirstTriggerInterval": 1,
+                    "firstTriggerInterval": -1.0,
+                    "priority": -1,
+                    "priorityBBKeys": [],
+                    "stripBlackboardParamsWithBuffKey": 0,
+                    "blackboard": [],
+                    "enableInitDirectionFromSource": 0
+                  }
+                ],
+                "_waitForCasting": 0,
+                "_updateLifetimeWhenSpellStart": 0,
+                "_preDelay": 0.0,
+                "_escapeTime": 0.0,
+                "_checkBuffEarlyFinish": 0,
+                "_passiveBuffs": [],
+                "_ignoreInfiniteBuffCooldown": 0,
+                "_enableUpdateCooldown": 0
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "projectiles": {},
+    "chararts": {
+      "char_1036_fang2": [
+        {
+          "pathId": "-3491767894426987774",
+          "data": {
+            "m_GameObject": {
+              "m_FileID": 0,
+              "m_PathID": "-8211193668456361214"
+            },
+            "m_Enabled": 1,
+            "m_Script": {
+              "m_FileID": 1,
+              "m_PathID": "7647785617504526080"
+            },
+            "m_Name": "",
+            "_animations": [
+              {
+                "animKey": "Default",
+                "animName": "Default",
+                "loop": 0,
+                "speed": 1.0,
+                "ignoreMissing": 1
+              },
+              {
+                "animKey": "Born",
+                "animName": "Start",
+                "loop": 0,
+                "speed": 1.0,
+                "ignoreMissing": 1
+              },
+              {
+                "animKey": "Die",
+                "animName": "Die",
+                "loop": 0,
+                "speed": 1.0,
+                "ignoreMissing": 1
+              },
+              {
+                "animKey": "Idle",
+                "animName": "Idle",
+                "loop": 1,
+                "speed": 1.0,
+                "ignoreMissing": 1
+              },
+              {
+                "animKey": "Attack",
+                "animName": "Attack",
+                "loop": 0,
+                "speed": 1.0,
+                "ignoreMissing": 1
+              },
+              {
+                "animKey": "Skill_1",
+                "animName": "Skill_1",
+                "loop": 0,
+                "speed": 1.0,
+                "ignoreMissing": 1
+              },
+              {
+                "animKey": "Skill_2_End",
+                "animName": "Skill_2_End",
+                "loop": 0,
+                "speed": 1.0,
+                "ignoreMissing": 1
+              },
+              {
+                "animKey": "Skill_2_Idle",
+                "animName": "Skill_2_Idle",
+                "loop": 1,
+                "speed": 1.0,
+                "ignoreMissing": 1
+              },
+              {
+                "animKey": "Skill_2_Loop",
+                "animName": "Skill_2_Loop",
+                "loop": 0,
+                "speed": 1.0,
+                "ignoreMissing": 1
+              },
+              {
+                "animKey": "Skill_Down_2_Loop",
+                "animName": "Skill_Down_2_Loop",
+                "loop": 0,
+                "speed": 1.0,
+                "ignoreMissing": 1
+              },
+              {
+                "animKey": "Start_2",
+                "animName": "Start_2",
+                "loop": 0,
+                "speed": 1.0,
+                "ignoreMissing": 1
+              }
+            ],
+            "_spineSkins": [],
+            "_mixSettings": [
+              {
+                "sourceAnimName": "Skill_2_Idle",
+                "targetAnimName": "Idle",
+                "mixAnimName": "Skill_2_End",
+                "illegalSourceAnimName": "",
+                "illegalTargetAnimName": "",
+                "acceptAllSource": 0
+              },
+              {
+                "sourceAnimName": "Skill_2_Loop",
+                "targetAnimName": "Idle",
+                "mixAnimName": "Skill_2_End",
+                "illegalSourceAnimName": "",
+                "illegalTargetAnimName": "",
+                "acceptAllSource": 0
+              },
+              {
+                "sourceAnimName": "Skill_2_Loop",
+                "targetAnimName": "Idle",
+                "mixAnimName": "Skill_2_End",
+                "illegalSourceAnimName": "",
+                "illegalTargetAnimName": "",
+                "acceptAllSource": 0
+              },
+              {
+                "sourceAnimName": "Skill_Down_2_Loop",
+                "targetAnimName": "Idle",
+                "mixAnimName": "Skill_2_End",
+                "illegalSourceAnimName": "",
+                "illegalTargetAnimName": "",
+                "acceptAllSource": 0
+              }
+            ],
+            "_spineScale": 1.0,
+            "_enableShowDamageFlash": 1,
+            "_cacheBoundsCenter": 1,
+            "_resetSkinToInitial": 0,
+            "_faceSwitcher": {
+              "m_FileID": 0,
+              "m_PathID": "-5091185430257937662"
+            },
+            "_front": {
+              "skeleton": {
+                "m_FileID": 0,
+                "m_PathID": "-8149176088029506814"
+              },
+              "muzzlaTransform": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              },
+              "hitTransform": {
+                "m_FileID": 0,
+                "m_PathID": "-5858409674391956734"
+              },
+              "headTransform": {
+                "m_FileID": 0,
+                "m_PathID": "-4938170537952750846"
+              },
+              "shadowTransform": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              },
+              "specialPoint0": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              },
+              "specialPoint1": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              },
+              "specialPoint2": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              },
+              "specialPoint3": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              },
+              "specialPoint4": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              },
+              "specialPoint5": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              },
+              "specialPoint6": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              },
+              "specialPoint7": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              },
+              "specialPoint8": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              },
+              "specialPoint9": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              },
+              "specialPoint10": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              },
+              "specialPoint11": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              },
+              "specialPoint12": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              },
+              "specialPoint13": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              },
+              "specialPoint14": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              },
+              "specialPoint15": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              }
+            },
+            "_back": {
+              "skeleton": {
+                "m_FileID": 0,
+                "m_PathID": "7298597353548337922"
+              },
+              "muzzlaTransform": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              },
+              "hitTransform": {
+                "m_FileID": 0,
+                "m_PathID": "8206205746957570818"
+              },
+              "headTransform": {
+                "m_FileID": 0,
+                "m_PathID": "-4938170537952750846"
+              },
+              "shadowTransform": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              },
+              "specialPoint0": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              },
+              "specialPoint1": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              },
+              "specialPoint2": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              },
+              "specialPoint3": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              },
+              "specialPoint4": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              },
+              "specialPoint5": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              },
+              "specialPoint6": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              },
+              "specialPoint7": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              },
+              "specialPoint8": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              },
+              "specialPoint9": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              },
+              "specialPoint10": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              },
+              "specialPoint11": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              },
+              "specialPoint12": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              },
+              "specialPoint13": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              },
+              "specialPoint14": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              },
+              "specialPoint15": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              }
+            },
+            "_useNewSpineFormat": 0
+          }
+        }
+      ]
+    },
+    "sourceBundles": [
+      {
+        "path": "charpack/char_1036_fang2.ab",
+        "size": 20851,
+        "md5": "e9f1a4ea9d2824dbde1684b8b263cb3b",
+        "sha256": "fa1c7c94f9739fb5ee627c4c8bbf196b779b48a38201e8612fd16bb902984839"
+      },
+      {
+        "path": "chararts/char_1036_fang2.ab",
+        "size": 2634985,
+        "md5": "cdb22b41bdd5ae4b8629b2033b673132",
+        "sha256": "48e4bf31dd8d1f50fc6f121072a3a2dc2f14e5d2e35094d9b569ae6eaa956f0e"
+      },
+      {
+        "path": "battle/prefabs/[uc]skills.ab",
+        "size": 1163240,
+        "md5": "ff06dc9bb5516d069c8c0017207653ca",
+        "sha256": "1c026938f054218f7e6bda9000162b2a6f30c9bd93e1ae9763d9d6df2270499c"
+      },
+      {
+        "path": "battle/prefabs/[uc]projectiles.ab",
+        "size": 1605622,
+        "md5": "0b1d64a8aba25913161f5fd7174cab34",
+        "sha256": "3d68c63bf7a7d658e65035a9c71dfc9a00e4804563b922185499d108dfb7f639"
+      },
+      {
+        "path": "config/buff_template_holder.ab",
+        "size": 1667266,
+        "md5": "59813e1a533561f969f525a2846815e0",
+        "sha256": "e092efe8b6479546a0641449c1e2ef81ba51b8bac67f7a5d1bbf3c3bbdd817ce"
+      }
+    ]
+  },
+  "sourceInvestigations": {
+    "status": "whole-kit-deferred",
+    "reason": "Native runtime_cost first/base-card/redeploy and original-cost refund transfer are unrecovered; do not combine a guessed first-spawn-only flat discount with inherited raw base.cost Charger refund. Gameplay-critical cost law prevents whole-kit enablement.",
+    "costFacts": [
+      "Global talent explicitly says Initial DP Cost -2 at E1/-3 at E2; after retreat next Operator DP Cost -1. Other runtime_cost talents explicitly say first deployment, so field name alone does not recover common first/base ordering.",
+      "Original Character component _withdrawCostRecoverRatio1 and _maxWithdrawCostRatioOfRawCost1; no recovered executable raw-cost/runtime-cost/refund order.",
+      "fang2_t_1 ON_OWNER_FINISH FilterDeathReason WITHDRAW -> CreateCardBuffToAllCard UNTIL_NEXT_SPAWN_DECK_TRIGGER_ONCE; exceptTokenAndTrap true, exceptOwner false, filterIsInHand false, isRatio false, selected value-1.",
+      "Source skill attacks and literal both-facing events are recovered, but complete operator remains unavailable until cost contract is corroborated."
+    ],
+    "attackFacts": [
+      "Normal INPUT source2/timing0 with block-count cap1, literal Attack event.333 and maxAnimScale1.",
+      "S1 MultiMelee INPUT source2/timing0, additionalTimes1, triggerDelta.25, waitAttackEventForAllAttacks0, refreshInputTargetOnCheckSpell0. Literal Skill_1 events.333/.5; first-event plus explicit.25 clock is source-field interpretation, not proof of unused second.5 dispatch. Exact recoverSpIfTargetDead1/allowSpRecoveryWhenAffecting0 retained.",
+      "S2 SELF source1/timing0, uncapped target selector limited to current block count, literal Skill_2_Loop event.5; Front Down_2_Loop event.5, Back no Down clip. Source direct ApplyBuff waitForCasting0/preDelay0 plus switch_mode_restart_fsm. Numeric selector phase/native finish ordering remain unrecovered."
+    ]
+  },
+  "corroboration": [
+    {
+      "url": "https://prts.wiki/w/Fang_the_Fire-sharpened",
+      "checked": "2026-10-09",
+      "role": "Community gameplay corroboration, not native executable proof",
+      "facts": [
+        "Talent note: own discount expires after first successful deployment; retreat discount applies to all ordinary cards until any affected operator deploys, then expires globally.",
+        "Charger refund is capped by the smaller of actual deployment expenditure and original potential-adjusted cost; first-deploy reductions are excluded from the original cost."
+      ]
+    }
+  ],
+  "runtimeMapping": {
+    "cost": "Own runtime_cost only on first successful spawn; flat talent additions after the existing ordinary redeploy calculation; next-operator discount shared across ordinary cards and consumed atomically once. Tokens and cancelled/failed placements do not consume. Refund min(lastCost, raw potential-adjusted cost).",
+    "normal": "Original Attack event .333 at playback capped at1, one ground target, ordinary block priority.",
+    "s1": "Selected two physical hits, first original Skill_1 event .333 then explicit MultiMelee triggerDelta .25 divided by capped playback. No target replacement between hits. Extra DP only for the S1 hit which kills. Lost target before first strike refunds one charge; controls/owner departure cancel remaining strikes. SP blocked through this attack sequence.",
+    "s2": "Source passive selected duration/ATK/DEF/block+1 on each deployment. Original Start_2/Skill_2_Idle/Skill_2_Loop (Down variant only on Front)/Skill_2_End. Self selector maps to ordinary block-priority target selection limited by current block capacity; no splash, no extra targets outside this cap."
+  },
+  "verificationLimits": [
+    "Original tables, graphs, buff templates, facing byte hashes and all20skill-rank records retained. PRTS notes corroborate card/refund interpretation; the native C# dispatcher and integer composition are not recovered.",
+    "S1 explicit triggerDelta uses animation playback rate; second literal .5 event is not used because waitAttackEventForAllAttacks is false. Cast completion/target-dead refund and control ordering are reviewed simulator policies, not frame parity.",
+    "S2 numeric selector/mode/FSM dispatcher is mapped to ordinary source-supported block priority and target cap. Deployment-protection quirks and Unity particles are not reproduced.",
+    "No module is enabled by this kit."
+  ]
+}

@@ -1,0 +1,1016 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+import { StandardBattle } from "/sim/arkpedia.js";
+import {
+  catalogueFor,
+  defaultBuild,
+  recordFor,
+  availableSkills,
+  skillRankCap,
+} from "/shared/arkpedia/loadout.js";
+import { maxedSupport } from "/shared/arkpedia/squad.js";
+import { StageRenderer } from "./renderer.js";
+import { absoluteRangeKeys } from "/sim/targeting.js";
+import { classNames, skillIconFile, operatorAssetName, skillDescriptionText } from "/shared/arkpedia/battle-ui.js";
+import { swipeFacing } from "/shared/arkpedia/placement.js";
+import { skillHud, skillSourceFor, ammunitionHud } from "/shared/arkpedia/skill-hud.js";
+import { battleHud } from "/shared/arkpedia/battle-hud.js";
+import { requiresLandscape } from "/shared/arkpedia/viewport.js";
+import { summonUnitId } from "/shared/arkpedia/summons.js";
+import { regularSummonCards, selectedRegularSummon, summonPlacementError,
+  deployRegularSummon, retreatRegularSummon } from "/sim/content/arkpedia-summons.js";
+const escape = (s) =>
+  String(s).replace(
+    /[&<>"']/g,
+    (c) =>
+      ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[
+        c
+      ],
+  );
+const app = document.querySelector("#app");
+let renderer,
+  battle,
+  workspace,
+  selected,
+  pending,
+  paused = true,
+  speed = 1,
+  accumulator = 0,
+  last = performance.now(),
+  lastHud = 0;
+let loading = false,
+  viewport = "preview",
+  battleError = "",
+  selection,
+  dragging = null,
+  aimPointer = null,
+  showRoutes = false,
+  landscapeRequired = false;
+let operatorTab = "skill";
+const response = await fetch("/data/arkpedia-mvp.json");
+if (!response.ok) throw Error("Stage data unavailable");
+const data = await response.json();
+const catalogue = catalogueFor(data);
+const ops = Object.values(data.operators);
+const rarityFolder = (op) => ["one", "two", "three", "four", "five", "six"][op.rarity - 1];
+const icon = (op) =>
+  `https://raw.githubusercontent.com/arkpedia/arkpedia-image-assets/${data.sources["arkpedia/arkpedia-image-assets"]}/${rarityFolder(op)}-star-icons/${encodeURIComponent(operatorAssetName(op.name) + " - Base.webp")}`;
+const artwork = (op) =>
+  `https://raw.githubusercontent.com/arkpedia/arkpedia-skin-assets/${data.sources["arkpedia/arkpedia-skin-assets"]}/${rarityFolder(op)}-star-skins/${encodeURIComponent(operatorAssetName(op.name) + " - Base.webp")}`;
+const summonIcon = id => {
+  const avatar = data.tokens?.[id]?.avatar;
+  if (typeof avatar === 'string' && (avatar.startsWith('https://') ||
+    data.sd.localBase && avatar.startsWith(data.sd.localBase))) return avatar;
+  if (avatar?.path) return `https://raw.githubusercontent.com/${data.sd.repository}/${data.sd.commit}/${avatar.path}`;
+  throw Error('Missing original summon avatar: ' + id);
+};
+function selectedEntry(id = selected) {
+  const entry = battle?.bench[id];
+  if (entry) return { ...entry, kind: 'operator', id, record: battle.data.rawChess(id),
+    name: data.operators[id].name, icon: icon(data.operators[id]),
+    art: artwork(data.operators[id]), unit: entry.unit?.alive ? entry.unit : null };
+  const state = battle && selectedRegularSummon(battle, id);
+  return state ? { ...state, kind: state.unit ? 'token' : 'summon', id,
+    name: state.record.name, icon: summonIcon(state.tokenId), art: summonIcon(state.tokenId) } : null;
+}
+function placementError(id, row, col) {
+  return id?.startsWith('summon:') ? summonPlacementError(battle, id, row, col)
+    : battle.placementError(id, row, col);
+}
+const statIcon = (name) =>
+  `https://raw.githubusercontent.com/arkpedia/arkpedia-image-assets/${data.sources["arkpedia/arkpedia-image-assets"]}/stat-icons/${name}.webp`;
+const imageAsset = path => `https://raw.githubusercontent.com/arkpedia/arkpedia-image-assets/${data.sources["arkpedia/arkpedia-image-assets"]}/${path}`;
+const classIcon = record => classNames[record.profession] ? imageAsset(`class-icons/${classNames[record.profession]}.webp`) : null;
+const classImage = (record, css = '') => classIcon(record) ? `<img class="${css}" src="${classIcon(record)}" alt="">` : '';
+function skillIcon(build) {
+  const op = data.operators[build.id];
+  const level = op.skills.find(s => s.id === build.skillId)?.levels[build.skillRank - 1];
+  const file = skillIconFile(op.name, level?.name);
+  return file ? imageAsset(`skill-icons/${encodeURIComponent(file)}`) : null;
+}
+function battleReadouts() {
+  const digits = String(battle.total).length * 2 + 1;
+  return `<div class="battle-hud" aria-label="Battle status">
+    <div class="battle-status-plate">
+      <span class="battle-reading" id="enemy-reading" title="Enemies resolved"><img src="${statIcon("enemies")}" alt=""><span class="sr-only">Enemies resolved </span><strong id="enemy-count" style="min-width:${digits}ch"></strong></span>
+      <span class="battle-reading life-reading" title="Life points"><img src="${statIcon("life")}" alt=""><span class="sr-only">Life points </span><strong id="life-count" style="min-width:${String(battle.life).length}ch"></strong></span>
+    </div>
+    <div class="battle-resources">
+      <div class="dp-panel"><div class="dp-reading"><img src="${statIcon("cost")}" alt=""><span class="sr-only">DP </span><strong id="dp-count" style="min-width:${String(battle.flags.dpMax).length}ch"></strong></div>
+        <div class="dp-recovery" id="dp-recovery" role="meter" aria-label="DP recovery toward next point" aria-valuemin="0" aria-valuemax="100"><span></span></div>
+        <span class="dp-rate" id="dp-rate"></span>
+      </div>
+      <span class="deployment-limit" id="deployment-limit"></span>
+    </div>
+  </div>`;
+}
+function skillDescription(level) {
+  return escape(skillDescriptionText(level));
+}
+const builds = Object.fromEntries(ops.map((o) => [o.id, defaultBuild(o)]));
+const supportSkills = Object.fromEntries(ops.map((o) => [o.id, defaultBuild(o).skillId]));
+const rankLabel = (rank) => rank > 7 ? `M${rank - 7}` : `Rank ${rank}`;
+const chosen = new Set(ops.slice(0, 5).map((o) => o.id));
+let editing = ops[0].id,
+  supportId = "",
+  rosterQuery = "";
+const requested = new URLSearchParams(location.search).get("stage");
+if (requested && requested !== "0-1") {
+  app.innerHTML =
+    '<div class="frame"><h1>Stage not supported yet</h1><p class="notice">This MVP supports 0-1 Collapse. Additional stages need validated combat mechanics before they can be simulated.</p><a href="/arkpedia/">Open 0-1</a></div>';
+  throw Error("Unsupported stage selection");
+}
+function prep() {
+  app.innerHTML = `<div class="frame"><header class="topline"><div><p class="eyebrow">Arkpedia · prototype</p><h1>Stage simulator</h1></div><span class="muted">0-1 Collapse</span></header>
+ <div class="prep"><section class="preview"><div class="stage-title"><span class="stage-code">0-1</span><h2>Collapse</h2></div><p class="help">${escape(data.stage.description)}</p><div class="board" id="board"></div><div class="legend"><span class="spawn">Enemy entry</span><span class="goal">Defence objective</span><span>Raised tiles: ranged operators</span></div>
+ <div class="panel help"><h3>How to play</h3><p>Choose your squad, then open the battle workspace. On mobile, rotate to landscape for battle. Drag an operator onto a tile, then choose its facing on the map. You can also select the operator and click a tile. Select a deployed operator to activate a ready skill or retreat.</p></div>
+ <p class="notice">This first slice supports 0-1 and the ${ops.length} operators shown. Squad capacity is 12 + one distinct maxed support. Modules, other stages and the rest of the roster are still being built.</p></section>
+ <section class="panel"><h2>Prepare your squad</h2><p class="help">Select an operator to adjust their build.</p><label class="roster-search">Find an operator<input id="roster-search" type="search" placeholder="Name or class" value="${escape(rosterQuery)}" autocomplete="off" aria-controls="roster"></label><div class="roster" id="roster" aria-label="Available operators"><p class="roster-empty" hidden>No operators match this search.</p></div><div id="build"></div><label class="support">Support · optional, fully maxed<select id="support"><option value="">No support</option></select></label><div id="support-build"></div><div class="prepare-actions"><button class="primary" id="start">Open battle workspace</button></div><p class="error" id="prep-error" role="status" aria-live="polite"></p></section></div>
+ <footer>Built on Stronghold Protocol · GPL-3.0-or-later. Unofficial fan simulator; timings are not yet verified frame-for-frame against the game.<div class="links"><a href="https://github.com/arkpedia/arkpedia-stage-simulator" target="_blank" rel="noreferrer">Simulator source</a><a href="https://github.com/arkpedia/arkpedia-sd-assets" target="_blank" rel="noreferrer">Chibi assets & credits</a></div></footer></div>`;
+  renderer = new StageRenderer(
+    document.querySelector("#board"),
+    data,
+    () => {},
+  );
+  document
+    .querySelector("#support")
+    .addEventListener("change", (e) => { supportId = e.target.value; renderPrep(); });
+  document.querySelector("#start").addEventListener("click", start);
+  document.querySelector("#roster-search").addEventListener("input", (e) => {
+    rosterQuery = e.target.value;
+    filterRoster();
+  });
+  renderPrep();
+}
+function filterRoster() {
+  const query = rosterQuery.trim().toLocaleLowerCase();
+  const classes = { VANGUARD: 'Vanguard', GUARD: 'Guard', DEFENDER: 'Defender',
+    SNIPER: 'Sniper', CASTER: 'Caster', MEDIC: 'Medic', SUPPORT: 'Supporter', SPECIAL: 'Specialist' };
+  let matched = false;
+  for (const item of document.querySelectorAll('#roster .roster-item')) {
+    const op = data.operators[item.dataset.id];
+    item.hidden = !`${op.name} ${classes[op.profession] ?? op.profession}`.toLocaleLowerCase().includes(query);
+    matched ||= !item.hidden;
+  }
+  document.querySelector('#roster .roster-empty').hidden = matched;
+}
+function renderPrep() {
+  const active = document.activeElement;
+  const focusId = active?.id;
+  const focusOperator = active?.classList.contains("roster-item") ? active.dataset.id : null;
+  const op = data.operators[editing],
+    b = builds[editing],
+    available = availableSkills(op, b.elite, b.level),
+    skill = op.skills.find((entry) => entry.id === b.skillId)?.levels[b.skillRank - 1];
+  document.querySelector("#roster").innerHTML = ops
+    .map(
+      (o) =>
+        `<button class="roster-item ${chosen.has(o.id) ? "chosen" : ""} ${editing === o.id ? "editing" : ""}" data-id="${o.id}" aria-label="Edit ${o.name}, ${chosen.has(o.id) ? "in squad" : "not in squad"}" aria-pressed="${editing === o.id}"><img src="${icon(o)}" alt=""><span>${o.name}<br><small>${chosen.has(o.id) ? "In squad" : "Not selected"}</small></span></button>`,
+    )
+    .join("") + '<p class="roster-empty" hidden>No operators match this search.</p>';
+  document.querySelectorAll(".roster-item").forEach(
+    (el) =>
+      (el.onclick = () => {
+        editing = el.dataset.id;
+        renderPrep();
+      }),
+  );
+  filterRoster();
+  document.querySelector("#build").innerHTML =
+    `<div class="build-heading"><h3>${escape(op.name)}</h3><button id="toggle">${chosen.has(editing) ? "Remove from squad" : "Add to squad"}</button></div><div class="build-form">
+ <label>Elite<select id="elite" ${op.phases.length === 1 ? "disabled" : ""}>${op.phases.map((p, elite) => `<option value="${elite}" ${b.elite === elite ? "selected" : ""}>E${elite}</option>`).join("")}</select></label>
+ <label>Level<input id="level" type="number" min="1" max="${op.phases[b.elite].maxLevel}" value="${b.level}"></label>
+ <label>Skill<select id="skillId" ${available.length < 2 ? "disabled" : ""}>${available.length ? available.map((entry) => `<option value="${entry.id}" ${entry.id === b.skillId ? "selected" : ""}>S${op.skills.indexOf(entry) + 1} · ${escape(entry.levels[0].name)}</option>`).join("") : '<option value="">No skill</option>'}</select></label>
+ <label>Skill rank<select id="skillRank" ${skill ? "" : "disabled"}>${skill ? Array.from({ length: skillRankCap(op, b.skillId, b.elite) }, (_, i) => `<option value="${i + 1}" ${i + 1 === b.skillRank ? "selected" : ""}>${rankLabel(i + 1)}</option>`).join("") : '<option value="">No skill</option>'}</select></label>
+ <label>Potential<input id="potential" type="number" min="1" max="${catalogue[op.id].maxPotential}" value="${b.potential}"></label>
+ <label>Trust %<input id="trust" type="number" min="0" max="200" value="${b.trust}"></label></div><p class="help" style="margin-top:12px">${skill ? `${escape(skill.name)} · ${skill.skillType === "MANUAL" ? "Manual activation" : skill.skillType === "AUTO" ? "Auto activation" : "Passive"}` : "This operator has no skills."}</p>`;
+  document.querySelector("#toggle").onclick = () => {
+    chosen.has(editing) ? chosen.delete(editing) : chosen.add(editing);
+    if (chosen.has(supportId)) supportId = "";
+    renderPrep();
+  };
+  for (const field of ["elite", "level", "skillId", "skillRank", "potential", "trust"])
+    document.querySelector("#" + field).onchange = (e) => {
+      const previous = { ...b },
+        value = field === "skillId" ? e.target.value : Number(e.target.value);
+      b[field] = value;
+      if (field === "elite") {
+        b.level = Math.min(b.level, op.phases[value]?.maxLevel ?? 1);
+      }
+      if (["elite", "level", "skillId"].includes(field) && op.skills.length) {
+        const unlocked = availableSkills(op, b.elite, b.level);
+        if (!unlocked.some((entry) => entry.id === b.skillId)) b.skillId = unlocked[0]?.id ?? null;
+        b.skillRank = b.skillId ? Math.min(b.skillRank ?? 1, skillRankCap(op, b.skillId, b.elite)) : null;
+      }
+      try {
+        recordFor(b, data);
+        document.querySelector("#prep-error").textContent = "";
+      } catch (err) {
+        Object.assign(b, previous);
+        document.querySelector("#prep-error").textContent = err.message;
+      }
+      renderPrep();
+    };
+  const support = document.querySelector("#support");
+  support.innerHTML =
+    '<option value="">No support</option>' +
+    ops
+      .filter((o) => !chosen.has(o.id))
+      .map(
+        (o) => {
+          const supportBuild = maxedSupport({ id: o.id, skillId: supportSkills[o.id] }, catalogue);
+          const skillIndex = o.skills.findIndex((entry) => entry.id === supportBuild.skillId);
+          return `<option value="${o.id}" ${supportId === o.id ? "selected" : ""}>${escape(o.name)} · E${supportBuild.elite} Lv${supportBuild.level} / ${skillIndex >= 0 ? `S${skillIndex + 1} ${rankLabel(supportBuild.skillRank)}` : "No skill"} / Pot${supportBuild.potential} / trust ${supportBuild.trust}%</option>`;
+        },
+      )
+      .join("");
+  const supportBuildElement = document.querySelector("#support-build");
+  const supportOp = data.operators[supportId];
+  supportBuildElement.innerHTML = supportOp?.skills.length > 1
+    ? `<label class="support">Support skill<select id="support-skill">${supportOp.skills.map((entry, index) => `<option value="${entry.id}" ${entry.id === supportSkills[supportId] ? "selected" : ""}>S${index + 1} · ${escape(entry.levels[0].name)} · ${rankLabel(skillRankCap(supportOp, entry.id, supportOp.phases.length - 1))}</option>`).join("")}</select></label>` : "";
+  supportBuildElement.querySelector("#support-skill")?.addEventListener("change", (e) => {
+    supportSkills[supportId] = e.target.value;
+    renderPrep();
+  });
+  document.querySelector("#start").disabled = chosen.size === 0 || loading;
+  const restoredFocus = focusOperator
+    ? document.querySelector(`.roster-item[data-id="${focusOperator}"]`)
+    : focusId ? document.getElementById(focusId) : null;
+  restoredFocus?.focus({ preventScroll: true });
+}
+async function start() {
+  if (loading) return;
+  loading = true;
+  renderPrep();
+  const status = document.querySelector("#prep-error");
+  status.textContent = "Loading selected chibi animations…";
+  try {
+    await renderer.artReady;
+    selection = {
+      operators: [...chosen].map((id) => builds[id]),
+      support: supportId
+        ? { id: supportId, skillId: supportSkills[supportId] }
+        : null,
+    };
+    await renderer.preload(
+      [...chosen, ...(supportId ? [supportId] : [])],
+      (n, total) => {
+        status.textContent = `Loading chibi animations ${n}/${total}…`;
+      },
+    );
+    battle = new StandardBattle(data, selection, { seed: Date.now() });
+    speed = 1;
+    showRoutes = false;
+    workspace = document.createElement("section");
+    workspace.className = "workspace";
+    workspace.setAttribute("aria-label", "Battle workspace");
+    workspace.innerHTML = `<div class="battle-content"><div class="board battle-board" id="battle-board">
+      <header class="battle-header">
+        <button id="settings" aria-label="Battle settings" aria-expanded="false" aria-controls="battle-settings">⚙</button>
+        <div class="battle-settings" id="battle-settings" hidden><p>0-1 · Collapse <span id="battle-time" aria-label="Battle time"></span></p><button id="routes" aria-pressed="false">Paths</button><button id="restart">Restart</button><button id="exit">Back to squad</button></div>
+        <div class="battle-controls"><button id="speed" aria-label="Battle speed">1×</button><button id="pause" aria-label="Start"><span aria-hidden="true">▶</span></button></div>
+      </header>
+      ${battleReadouts()}<span class="simulation-label">Simulation · 0-1</span><span class="pause-label" id="paused-label" hidden>Paused</span>
+      <aside class="command" id="command" aria-label="Selected operator" hidden></aside>
+      <div class="field-command" id="field-command" aria-label="Operator actions" hidden></div>
+      <button class="facing-cancel" id="facing-cancel" hidden><span aria-hidden="true">×</span>Cancel</button>
+      <span class="aim-hint" id="aim-hint" hidden>Drag back to centre to cancel</span>
+      <div class="deployment-wrap"><button id="shelf-left" aria-label="Scroll operators left">‹</button><div class="deployment" id="deployment"></div><button id="shelf-right" aria-label="Scroll operators right">›</button><div class="shelf-track" aria-hidden="true"><span></span></div></div>
+      <p class="status-note" id="battle-message" role="status" aria-live="polite"></p>
+      </div></div><div class="orientation-gate" id="orientation-gate" role="dialog" aria-modal="true" aria-labelledby="orientation-title" aria-describedby="orientation-description" hidden><svg class="rotate-device" aria-hidden="true" viewBox="0 0 100 100"><rect x="33" y="22" width="34" height="56" rx="5"/><path d="M18 55A34 34 0 0 1 60 17M60 17l-13-3M60 17l-7 12M82 45A34 34 0 0 1 40 83M40 83l13 3M40 83l7-12"/></svg><h2 id="orientation-title">Rotate to landscape</h2><p id="orientation-description">Turn your device sideways to deploy and play.<br>Your battle is paused and your squad is saved.</p><button id="portrait-exit">Back to squad</button></div>`;
+    document.body.append(workspace);
+    const board = workspace.querySelector("#battle-board");
+    // Move canvases to a full-viewport battle container; preview has no deployment handler.
+    renderer.observer.unobserve(renderer.host);
+    renderer.host = board;
+    board.prepend(
+      renderer.three.domElement,
+      renderer.pixi.view,
+      renderer.controls,
+      renderer.artStatus,
+    );
+    renderer.observer.observe(board);
+    renderer.onPick = pick;
+    renderer.controls.inert = false;
+    const picker = document.createElement("div");
+    picker.className = "facing-picker";
+    picker.hidden = true;
+    picker.innerHTML = `<svg aria-hidden="true" viewBox="-100 -100 200 200"><path class="facing-frame" d="M0 -92L92 0L0 92L-92 0Z"/>${[
+      ["UP", "M0 -88L42 -42L0 -22L-42 -42Z"],
+      ["RIGHT", "M88 0L42 42L22 0L42 -42Z"],
+      ["DOWN", "M0 88L-42 42L0 22L42 42Z"],
+      ["LEFT", "M-88 0L-42 -42L-22 0L-42 42Z"],
+    ]
+      .map(([dir, path]) => `<path data-cone="${dir}" d="${path}"/>`)
+      .join("")}</svg>
+    ${[
+      ["UP", "↑"],
+      ["RIGHT", "→"],
+      ["DOWN", "↓"],
+      ["LEFT", "←"],
+    ]
+      .map(
+        ([dir, glyph]) =>
+          `<button data-facing="${dir}" aria-label="Deploy facing ${dir.toLowerCase()}">${glyph}</button>`,
+      )
+      .join("")}
+    <button class="facing-handle" aria-label="Drag from here to choose deployment direction"><span aria-hidden="true">◇</span></button>`;
+    board.append(picker);
+    for (const button of picker.querySelectorAll("[data-facing]")) {
+      button.onfocus = () => {
+        if (pending) {
+          pending.dir = button.dataset.facing;
+          drawHud();
+        }
+      };
+      button.onclick = () => confirmFacing(button.dataset.facing);
+    }
+    const handle = picker.querySelector(".facing-handle");
+    // The portrait drop only opens this picker. A NEW gesture from its centre
+    // previews facing, and only its release can confirm deployment.
+    handle.onpointerdown = (e) => {
+      if (!pending || e.button !== 0) return;
+      e.preventDefault();
+      e.stopPropagation();
+      aimPointer = { id: e.pointerId, x: e.clientX, y: e.clientY };
+      pending.dir = null;
+      handle.setPointerCapture(e.pointerId);
+      drawHud();
+    };
+    handle.onpointermove = (e) => {
+      if (!pending || aimPointer?.id !== e.pointerId) return;
+      const dir = swipeFacing({ x: e.clientX, y: e.clientY }, aimPointer);
+      if (pending.dir !== dir) {
+        pending.dir = dir;
+        drawHud();
+      }
+    };
+    handle.onpointerup = (e) => {
+      if (aimPointer?.id !== e.pointerId) return;
+      e.preventDefault();
+      e.stopPropagation();
+      const dir = swipeFacing({ x: e.clientX, y: e.clientY }, aimPointer);
+      aimPointer = null;
+      if (handle.hasPointerCapture(e.pointerId))
+        handle.releasePointerCapture(e.pointerId);
+      if (dir) confirmFacing(dir);
+      else {
+        if (pending) pending.dir = null;
+        drawHud();
+      }
+    };
+    const cancelAim = () => {
+      if (!aimPointer) return;
+      aimPointer = null;
+      if (pending) pending.dir = null;
+      drawHud();
+    };
+    handle.onpointercancel = handle.onlostpointercapture = cancelAim;
+    // Click placement remains available outside the picker; it never confirms facing.
+    board.onpointerup = (e) => {
+      if (pending || e.target.closest("button, .command, .battle-settings, .deployment-wrap")) return;
+      const tile = renderer.pickAt(e.clientX, e.clientY);
+      if (tile) pick(tile.row, tile.col);
+    };
+    renderer.onLayout = layoutFacing;
+    workspace.querySelector("#settings").onclick = e => {
+      const menu = workspace.querySelector("#battle-settings");
+      menu.hidden = !menu.hidden;
+      e.currentTarget.setAttribute("aria-expanded", String(!menu.hidden));
+    };
+    workspace.querySelector("#facing-cancel").onclick = () => { cancelPlacement(); drawHud(); };
+    workspace.querySelector("#deployment").addEventListener("scroll", updateShelfTrack);
+    workspace.querySelector("#routes").onclick = (e) => {
+      showRoutes = !showRoutes;
+      e.currentTarget.setAttribute("aria-pressed", String(showRoutes));
+      e.currentTarget.classList.toggle("active", showRoutes);
+      drawHud();
+    };
+    workspace.querySelector("#pause").onclick = () => {
+      if (landscapeRequired) return;
+      paused = !paused;
+      drawHud();
+    };
+    workspace.querySelector("#speed").onclick = () => {
+      speed = speed === 1 ? 2 : 1;
+      workspace.querySelector("#speed").textContent = speed + "×";
+    };
+    workspace.querySelector("#restart").onclick = restart;
+    workspace.querySelector("#exit").onclick = exit;
+    workspace.querySelector("#portrait-exit").onclick = exit;
+    workspace.querySelector("#shelf-left").onclick = () =>
+      workspace
+        .querySelector("#deployment")
+        .scrollBy({ left: -180, behavior: "smooth" });
+    workspace.querySelector("#shelf-right").onclick = () =>
+      workspace
+        .querySelector("#deployment")
+        .scrollBy({ left: 180, behavior: "smooth" });
+    viewport = "fullscreen-workspace";
+    battle.setViewport(landscapeRequired ? "preview" : viewport);
+    paused = true;
+    accumulator = 0;
+    app.inert = true;
+    app.hidden = true;
+    // Native fullscreen is optional; the viewport workspace remains the supported fallback (e.g. iOS).
+    try {
+      if (
+        window.matchMedia("(min-width: 761px)").matches &&
+        window.self === window.top
+      )
+        await workspace.requestFullscreen?.();
+      if (document.fullscreenElement === workspace)
+        viewport = "native-fullscreen";
+    } catch {}
+    battle.setViewport(landscapeRequired ? "preview" : viewport);
+    syncOrientation();
+    renderer.resize();
+    drawHud();
+    workspace
+      .querySelector(landscapeRequired ? "#portrait-exit" : "#pause")
+      .focus();
+  } catch (error) {
+    status.textContent = "Could not start: " + error.message;
+    console.error(error);
+  } finally {
+    loading = false;
+    if (!workspace) renderPrep();
+  }
+}
+function restart() {
+  workspace.querySelector("#deployment").innerHTML = "";
+  battle = new StandardBattle(data, selection, { seed: Date.now() });
+  battle.setViewport(landscapeRequired ? "preview" : viewport);
+  paused = true;
+  accumulator = 0;
+  cancelPlacement();
+  battleError = "";
+  renderer.clear();
+  workspace.querySelector(".result")?.remove();
+  drawHud();
+}
+async function exit() {
+  paused = true;
+  battle?.setViewport("preview");
+  viewport = "preview";
+  if (document.fullscreenElement)
+    await document.exitFullscreen().catch(() => {});
+  cancelPlacement();
+  renderer.destroy();
+  workspace.remove();
+  app.inert = false;
+  app.hidden = false;
+  workspace = null;
+  landscapeRequired = false;
+  battle = null;
+  selected = null;
+  pending = null;
+  prep();
+  document.querySelector("#start").focus();
+}
+function pick(row, col) {
+  if (!battle || battle.finished || landscapeRequired) return;
+  battleError = "";
+  const occupied = battle.allyUnits.find(
+    (u) => u.alive && u.deployed && u.tileR === row && u.tileC === col,
+  );
+  if (occupied) {
+    selected = occupied.kind === 'token' || occupied.kind === 'device' && occupied.mem.regularSummonCard
+      ? summonUnitId(occupied) : occupied.defId;
+    pending = null;
+    drawHud();
+    return;
+  }
+  const entry = selectedEntry();
+  if (entry && !entry.unit) {
+    const error = placementError(selected, row, col);
+    if (error) battleError = error;
+    else if (entry.kind === 'summon' && !entry.config.chooseFacing) {
+      try { selected = summonUnitId(deployRegularSummon(battle, selected, row, col)); }
+      catch (e) { battleError = e.message; }
+      pending = null;
+    } else pending = { row, col, dir: null };
+  } else {
+    const unit = battle.allyUnits.find(
+      (u) => u.alive && u.tileR === row && u.tileC === col,
+    );
+    selected = unit?.kind === 'token' || unit?.kind === 'device' && unit.mem.regularSummonCard
+      ? summonUnitId(unit) : unit?.defId ?? null;
+    pending = null;
+  }
+  drawHud();
+}
+function summonDetails(entry) {
+  const unit = entry.unit, raw = entry.record.stats, stats = unit?.s;
+  const ammunition = ammunitionHud(unit);
+  const lifetime = unit?.skill.spec?.formCountdown ? skillHud(unit.skill) : null;
+  const hp = unit?.hp ?? raw.maxHp, maxHp = stats?.maxHp ?? raw.maxHp;
+  const numbers = [['ATK', stats?.atk ?? raw.atk], ['DEF', stats?.def ?? raw.def],
+    ['RES', stats?.res ?? raw.magicResistance], ['Block', stats?.blockCnt ?? raw.blockCnt]];
+  const recovery = unit?.mem.crabMode && unit.mem.crabMode !== 'active'
+    ? `<p class="sp-readout">Reinforcement recovering · ${Math.max(0,Math.ceil(unit.mem.crabReadyAt-battle.time))}s</p>` : '';
+  return `<p class="operator-build">${escape(data.operators[entry.ownerId].name)} · E${entry.record.arkpedia.elite} · Lv ${entry.record.arkpedia.level}</p>
+    <dl class="operator-stats">${numbers.map(([label, value]) => `<div><dt>${label}</dt><dd>${Math.round(value)}</dd></div>`).join('')}</dl>
+    <div class="hp-readout"><span>HP</span><strong>${Math.min(Math.ceil(hp), Math.round(maxHp))} / ${Math.round(maxHp)}</strong></div>
+    <div class="meter hp"><span style="width:${Math.min(1, Math.max(0, hp / maxHp)) * 100}%"></span></div>
+    <p class="sp-readout">${entry.stock} remaining · ${raw.cost} DP · ${entry.config.deploymentSlotCost} deployment slot${entry.config.deploymentSlotCost === 1 ? '' : 's'}</p>
+    ${ammunition ? `<p class="sp-readout">${escape(ammunition.text)} collected</p>` : ''}${recovery}${lifetime ? `<p class="sp-readout">${escape(lifetime.text)}</p><div class="meter active"><span style="width:${lifetime.fraction * 100}%"></span></div>` : ''}<p class="skill-description">${entry.ownerId === 'char_003_kalts' ? 'Can be healed only by Kal’tsit. ' : entry.config.healFree ? 'Cannot receive ordinary healing. ' : ''}${entry.config.tacticalPoint ? 'Its tactical point stays in place while the reinforcement recovers. ' : ''}Leaves the field when its summoner is removed.</p>
+    ${unit && skillSourceFor(unit) !== unit
+      ? operatorSkillDetails(battle.bench[entry.ownerId].build, skillSourceFor(unit))
+      : unit && !unit.skill.noSkill && entry.record.skill ? operatorSkillDetails(battle.bench[entry.ownerId].build, unit,
+        data.tokens[entry.record.id].skills.find(s => s.id === entry.record.skill.skillId)
+          ?.levels[battle.bench[entry.ownerId].build.skillRank - 1]) : ''}`;
+}
+function operatorDetails(build, unit) {
+  const record = recordFor(build, data);
+  const ammunition = ammunitionHud(unit);
+  const stats = unit?.s;
+  const hp = unit?.hp ?? record.stats.maxHp;
+  const maxHp = stats?.maxHp ?? record.stats.maxHp;
+  const numbers = [
+    ["ATK", stats?.atk ?? record.stats.atk],
+    ["DEF", stats?.def ?? record.stats.def],
+    ["RES", stats?.res ?? record.stats.magicResistance],
+    ["Block", stats?.blockCnt ?? record.stats.blockCnt],
+  ];
+  return `<p class="operator-build">E${build.elite} · Lv ${build.level}${selection.support?.id === build.id ? " · Support" : ""}</p>
+    <dl class="operator-stats">${numbers.map(([label, value]) => `<div><dt>${label}</dt><dd>${Math.round(value)}</dd></div>`).join("")}</dl>
+    <div class="hp-readout"><span>HP</span><strong>${Math.min(Math.ceil(hp), Math.round(maxHp))} / ${Math.round(maxHp)}</strong></div>
+    <div class="meter hp"><span style="width:${Math.min(1, Math.max(0, hp / maxHp)) * 100}%"></span></div>
+    ${ammunition ? `<p class="sp-readout">${escape(ammunition.text)}</p>` : ''}${rangeDiagram(record.rangeGrid)}`;
+}
+function operatorSkillDetails(build, unit, tokenLevel = null) {
+  const hud = unit ? skillHud(unit.skill) : null;
+  const level = tokenLevel ?? data.operators[build.id].skills.find((entry) => entry.id === build.skillId)?.levels[build.skillRank - 1];
+  const recovery = {
+    INCREASE_WITH_TIME: "Auto recovery",
+    INCREASE_WHEN_ATTACK: "Offensive recovery",
+    INCREASE_WHEN_TAKEN_DAMAGE: "Defensive recovery",
+  }[level?.spData.spType] || "Passive";
+  return `${level ? `<section class="operator-skill"><img class="skill-icon" src="${skillIcon(build)}" alt=""><div class="skill-copy"><h3>${escape(level.name)} <small>${rankLabel(build.skillRank)}</small></h3>
+    <div class="skill-tags">${level.skillType !== "PASSIVE" ? `<span class="${level.spData.spType === "INCREASE_WITH_TIME" ? "auto" : "manual"}">${recovery}</span>` : ""}<span class="${level.skillType === "AUTO" ? "auto" : "manual"}">${level.skillType === "AUTO" ? "Auto activation" : level.skillType === "MANUAL" ? "Manual activation" : "Passive"}</span>${level.duration > 0 ? `<span>${level.duration}s</span>` : ""}</div>
+    ${hud || level.skillType !== "PASSIVE" ? `<p class="sp-readout">${hud?.text.replace(/ · (?:Auto|Manual) activation/g, "") || `${level.spData.initSp} / ${level.spData.spCost} SP on deployment`}</p>` : ""}
+    ${hud ? `<div class="meter ${hud.state}"><span style="width:${hud.fraction * 100}%"></span></div>` : ""}
+    <p class="skill-description">${skillDescription(level)}</p></div></section>` : ""}`;
+}
+function rangeDiagram(cells) {
+  const positions = [[0, 0], ...cells];
+  const rows = positions.map(p => p[0]), cols = positions.map(p => p[1]);
+  const minR = Math.min(...rows), maxR = Math.max(...rows), minC = Math.min(...cols), maxC = Math.max(...cols);
+  const keys = new Set(cells.map(p => p.join(',')));
+  let html = '';
+  for (let r = maxR; r >= minR; r--) for (let c = minC; c <= maxC; c++)
+    html += `<i class="${r === 0 && c === 0 ? 'origin' : keys.has(`${r},${c}`) ? 'in-range' : ''}"></i>`;
+  return `<div class="range-preview"><span class="range-grid" style="grid-template-columns:repeat(${maxC-minC+1},8px)" aria-hidden="true">${html}</span><small>Attack range</small></div>`;
+}
+function operatorTabContent(entry, unit) {
+  if (entry.kind !== 'operator') return summonDetails(entry);
+  const record = recordFor(entry.build, data);
+  if (operatorTab === 'skill') return operatorSkillDetails(entry.build, unit) || '<p>No active skill.</p>';
+  if (operatorTab === 'trait') return `<h3>${escape(classNames[record.profession] ?? record.profession)}</h3><p class="skill-description">${skillDescription({ ...record.trait, description: record.trait?.overrideDescripton || record.trait?.description || data.operators[entry.id].description })}</p>`;
+  return record.talents.filter(t => !t.isHideTalent).map(t => `<h3>${escape(t.name)}</h3><p class="skill-description">${skillDescription(t)}</p>`).join('') || '<p>No talent unlocked at this build.</p>';
+}
+function updateShelfTrack() {
+  const shelf = workspace?.querySelector('#deployment');
+  if (!shelf) return;
+  const track = workspace.querySelector('.shelf-track');
+  track.hidden = shelf.scrollWidth <= shelf.clientWidth;
+  const thumb = track.querySelector('span');
+  thumb.style.width = `${100 * shelf.clientWidth / shelf.scrollWidth}%`;
+  thumb.style.left = `${100 * shelf.scrollLeft / shelf.scrollWidth}%`;
+  workspace.querySelector('#shelf-left').disabled = shelf.scrollLeft <= 1;
+  workspace.querySelector('#shelf-right').disabled = shelf.scrollLeft + shelf.clientWidth >= shelf.scrollWidth - 1;
+}
+function drawHud() {
+  if (!workspace || !battle) return;
+  const reading = battleHud(battle, paused);
+  for (const [id, value] of Object.entries({
+    "enemy-count": reading.enemies,
+    "life-count": reading.life,
+    "dp-count": reading.dp,
+    "dp-rate": reading.recoveryText,
+    "battle-time": reading.time,
+    "deployment-limit": `Unit Limit: ${reading.slots}`,
+  })) workspace.querySelector("#" + id).textContent = value;
+  workspace.querySelector("#enemy-reading").title = `Enemies resolved: ${reading.enemies} · ${battle.killed} defeated, ${battle.leakedCount} escaped`;
+  workspace.querySelector("#deployment-limit").setAttribute("aria-label", `${reading.slots} deployment slots available of ${battle.unitLimit}; ${reading.deployed} deployed`);
+  const recovery = workspace.querySelector("#dp-recovery");
+  recovery.setAttribute("aria-valuenow", Math.round(reading.recoveryFraction * 100));
+  recovery.setAttribute("aria-valuetext", reading.recoveryText);
+  recovery.querySelector("span").style.transform = `scaleX(${reading.recoveryFraction})`;
+  const pause = workspace.querySelector('#pause');
+  const pauseLabel = paused ? battle.time === 0 ? 'Start' : 'Resume' : 'Pause';
+  pause.setAttribute('aria-label', pauseLabel);
+  pause.title = pauseLabel;
+  pause.querySelector('span').textContent = paused ? '▶' : 'Ⅱ';
+  workspace.querySelector("#paused-label").hidden = !paused || battle.finished;
+  const shelf = workspace.querySelector("#deployment");
+  const cardIds = [...Object.keys(battle.bench), ...regularSummonCards(battle).map(card => card.key)];
+  // Append new summon cards without rebuilding existing buttons or losing focus.
+  for (const id of cardIds) {
+    if ([...shelf.children].some(button => button.dataset.id === id)) continue;
+    const entry = selectedEntry(id), button = document.createElement('button');
+    button.dataset.id = id; button.setAttribute('aria-pressed', 'false');
+    button.innerHTML = `${id === supportId ? '<span class="support-marker" aria-hidden="true">SUP</span>' : ''}<img class="bench-portrait" src="${entry.icon}" alt="" draggable="false">${classImage(entry.record, 'bench-class')}<span class="bench-name sr-only">${escape(entry.name)}</span><span class="cost"></span>`;
+    shelf.append(button);
+      button.onclick = () => {
+        if (button.suppressClick) {
+          button.suppressClick = false;
+          return;
+        }
+        selected = button.dataset.id;
+        pending = null;
+        battleError = "";
+        drawHud();
+      };
+      button.onpointerdown = (e) => {
+        if (
+          e.button !== 0 ||
+          battle.finished ||
+          selectedEntry(button.dataset.id)?.unit?.alive
+        )
+          return;
+        e.preventDefault();
+        selected = button.dataset.id;
+        pending = null;
+        battleError = "";
+        dragging = {
+          button,
+          id: e.pointerId,
+          x: e.clientX,
+          y: e.clientY,
+          moved: false,
+          over: null,
+        };
+        button.setPointerCapture(e.pointerId);
+        drawHud();
+      };
+      button.onpointermove = (e) => {
+        if (dragging?.id !== e.pointerId) return;
+        dragging.moved ||=
+          Math.hypot(e.clientX - dragging.x, e.clientY - dragging.y) > 6;
+        if (!dragging.moved) return;
+        const tile = renderer.pickAt(e.clientX, e.clientY);
+        dragging.over =
+          tile && !placementError(selected, tile.row, tile.col)
+            ? tile
+            : null;
+        showDragGhost(e.clientX, e.clientY);
+        drawHud();
+      };
+      button.onpointerup = (e) => {
+        if (dragging?.id !== e.pointerId) return;
+        const moved = dragging.moved,
+          tile = renderer.pickAt(e.clientX, e.clientY);
+        dragging = null;
+        workspace.querySelector(".drag-ghost")?.remove();
+        button.suppressClick = moved;
+        if (moved && tile) pick(tile.row, tile.col);
+        else drawHud();
+      };
+      button.onlostpointercapture = (e) => {
+        if (dragging?.id === e.pointerId) {
+          cancelPlacement();
+          drawHud();
+        }
+      };
+      button.onpointercancel = () => {
+        cancelPlacement();
+        drawHud();
+      };
+  }
+  for (const button of shelf.querySelectorAll("button")) {
+    const id = button.dataset.id,
+      b = selectedEntry(id),
+      alive = b.unit?.alive,
+      cool = Math.max(0, Math.ceil(b.readyAt - battle.time));
+    const cost = b.kind === 'summon'
+      ? !b.owner.alive || !b.owner.deployed ? 'Summoner absent'
+        : b.stock <= 0 ? b.config.tacticalPoint ? 'Tactical point set' : 'None remaining'
+        : cool ? `${cool}s · ${b.stock} left` : `${b.record.stats.cost} DP · ${b.stock} left`
+      : alive
+      ? "Deployed"
+      : cool
+        ? cool + "s"
+        : battle.cost(id) + " DP";
+    button.classList.toggle("active", selected === id);
+    button.setAttribute("aria-pressed", String(selected === id));
+    button.setAttribute("aria-label", `${b.name}, ${cost}${id === supportId ? ', Support' : ''}`);
+    button.title = `${b.name}${id === supportId ? ' · Support' : ''}`;
+    button.querySelector(".cost").textContent = alive ? 'IN' : cool ? cool + 's' : b.kind === 'summon' ? b.record.stats.cost : battle.cost(id);
+    const rarity = b.kind === 'operator' ? data.operators[id].rarity : 1;
+    button.dataset.rarity = rarity;
+    button.classList.toggle('unavailable', !!alive || cool > 0 || (b.kind === 'summon' ? b.record.stats.cost : battle.cost(id)) > battle.dp || b.kind === 'summon' && (!b.owner.alive || b.stock <= 0));
+    button.classList.toggle('deployed', !!alive);
+  }
+  updateShelfTrack();
+  const b = selectedEntry(), unit = b?.unit;
+  let highlights = [];
+  const command = workspace.querySelector('#command'), field = workspace.querySelector('#field-command');
+  command.hidden = !b || battle.finished;
+  command.classList.toggle('placing', !!dragging || !!pending);
+  command.inert = !!dragging || !!pending;
+  workspace.querySelector('#battle-board').classList.toggle('aiming', !!pending);
+  if (unit) highlights = [...unit.rangeKeys];
+  else if (b) for (let r = 0; r < data.stage.geometry.rows; r++)
+    for (let c = 0; c < data.stage.geometry.cols; c++)
+      if (!placementError(selected, r, c)) highlights.push(r * 21 + c);
+  field.hidden = !unit || battle.finished;
+  if (b) {
+    const skillUnit = skillSourceFor(unit);
+    const hud = skillUnit ? skillHud(skillUnit.skill) : null;
+    const canActivate = !!((hud?.canActivate || hud?.canCancel)
+      && (skillUnit.canAct || skillUnit.skill?.spec.allowAbnormalCast) && !skillUnit.s.flags.silence);
+    if (command.dataset.selection !== selected || command.dataset.alive !== String(!!unit)) {
+      operatorTab = 'skill';
+      command.innerHTML = `<div class="operator-portrait"><img src="${b.art}" alt="${escape(b.name)} ${b.kind === 'operator' ? 'base artwork' : 'original avatar'}" draggable="false"></div>
+        <button class="inspector-close" aria-label="Close operator details">×</button>
+        <div class="operator-heading">${classImage(b.record)}<h2>${escape(b.name)}</h2></div>
+        <div class="command-stats"></div>
+        <div class="operator-tabs" role="tablist" aria-label="Operator information">${['skill','trait','talent'].map(tab => `<button role="tab" id="operator-tab-${tab}" aria-controls="operator-tabpanel" data-tab="${tab}" aria-selected="${tab === operatorTab}" tabindex="${tab === operatorTab ? 0 : -1}">${tab[0].toUpperCase()+tab.slice(1)}</button>`).join('')}</div>
+        <div class="command-copy" id="operator-tabpanel" role="tabpanel" aria-labelledby="operator-tab-skill" tabindex="0"></div>`;
+      command.dataset.selection = selected;
+      command.dataset.alive = String(!!unit);
+      command.querySelector('.inspector-close').onclick = () => { cancelPlacement(); drawHud(); };
+      command.querySelector('.operator-tabs').hidden = b.kind !== 'operator';
+      const selectTab = tab => {
+        operatorTab = tab.dataset.tab;
+        for (const button of command.querySelectorAll('[role="tab"]')) {
+          button.setAttribute('aria-selected', String(button === tab)); button.tabIndex = button === tab ? 0 : -1;
+        }
+        command.querySelector('.command-copy').setAttribute('aria-labelledby', tab.id);
+        command.querySelector('.command-copy').scrollTop = 0;
+        drawHud();
+      };
+      for (const tab of command.querySelectorAll('[role="tab"]')) {
+        tab.onclick = () => selectTab(tab);
+        tab.onkeydown = e => {
+          const tabs = [...command.querySelectorAll('[role="tab"]')];
+          const step = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+          if (!step && e.key !== 'Home' && e.key !== 'End') return;
+          e.preventDefault(); e.stopPropagation();
+          const next = e.key === 'Home' ? tabs[0] : e.key === 'End' ? tabs.at(-1) : tabs[(tabs.indexOf(tab)+step+tabs.length)%tabs.length];
+          selectTab(next); next.focus();
+        };
+      }
+      field.innerHTML = unit ? `<svg class="field-frame" aria-hidden="true" viewBox="-100 -100 200 200"><path d="M0 -95L95 0L0 95L-95 0Z"/></svg><button id="retreat" aria-label="Retreat ${escape(b.name)}" title="Retreat"><svg aria-hidden="true" viewBox="0 0 32 32"><circle cx="19" cy="5" r="3"/><path d="M7 12l6-3 5 3 5 3h6M18 12l-5 7 7 3 3 7M13 19l-5 9M4 5h7M4 5l3-3M4 5l3 3"/></svg></button>${!skillUnit.skill.noSkill && skillUnit.skill.kind !== "passive" ? `<button id="skill" aria-label="Activate skill"><img src="${skillIcon(b.kind === 'operator' ? b.build : battle.bench[b.ownerId].build)}" alt=""><span class="field-sp"></span></button>` : ''}` : '';
+      field.querySelector('#retreat')?.addEventListener('click', () => {
+        if (b.kind === 'token') retreatRegularSummon(battle, selected); else battle.retreatOperator(selected);
+        selected = null; drawHud();
+      });
+      field.querySelector('#skill')?.addEventListener('click', () => {
+        battle.activateOperator(skillUnit === unit && b.kind === 'token' ? summonUnitId(unit) : skillUnit.defId);
+        drawHud();
+      });
+    }
+    command.querySelector('.command-stats').innerHTML = b.kind === 'operator' ? operatorDetails(b.build, unit) : '';
+    const copy = operatorTabContent(b, skillUnit);
+    const panel = command.querySelector('.command-copy');
+    if (panel.innerHTML !== copy) {
+      const scroll = panel.scrollTop;
+      panel.innerHTML = copy;
+      panel.scrollTop = scroll;
+    }
+    const skillButton = field.querySelector('#skill');
+    if (skillButton) {
+      skillButton.disabled = !canActivate;
+      skillButton.classList.toggle('ready', !!hud?.canActivate);
+      const label = hud?.canCancel ? 'Stop skill' : hud?.canActivate ? 'Skill ready · Activate' : hud?.text ?? 'Skill unavailable';
+      skillButton.setAttribute('aria-label', label); skillButton.title = label;
+      skillButton.querySelector('.field-sp').textContent = hud?.canActivate ? 'READY' : hud?.text.match(/^\d+ \/ \d+ SP/)?.[0] ?? (hud?.state === 'overloaded' ? 'OVERLOAD' : hud?.state === 'active' ? 'ACTIVE' : 'PASSIVE');
+    }
+  }
+  const hover = dragging?.over ? { ...dragging.over, dir: "RIGHT" } : null;
+  const preview = pending || hover;
+  const range = unit
+    ? highlights
+    : preview?.dir
+      ? absoluteRangeKeys(
+          b.record.rangeGrid,
+          preview.row,
+          preview.col,
+          preview.dir,
+        )
+      : [];
+  renderer.highlight({
+    available: b && !unit && !pending ? highlights : [],
+    range,
+    chosen: preview,
+    operator: preview ? b.record.id ?? selected : null,
+    routes: showRoutes,
+  });
+  layoutFacing();
+  workspace.querySelector("#battle-message").textContent =
+    battleError ||
+    (pending ? "Drag from the direction picker's centre, then release to deploy · Escape: cancel"
+      : selected && !unit ? b?.kind === 'summon' && !b.config.chooseFacing
+        ? 'Drag the summon onto a valid tile, then release to deploy · Escape: cancel'
+        : "Drag onto a valid tile, or click a tile to choose facing · Escape: cancel"
+      : "Drag to deploy · Click an operator to inspect · Space: pause · Escape: cancel");
+  if (battle.finished && !workspace.querySelector(".result")) {
+    paused = true;
+    const result = document.createElement("div");
+    result.className = "result";
+    result.innerHTML = `<div class="panel"><p class="eyebrow">Operation ${battle.reason === "cleared" ? "complete" : "ended"}</p><h2>${battle.reason === "cleared" ? "Stage cleared" : battle.reason === "defeated" ? "Defence breached" : "Simulation stopped"}</h2><p class="help">${battle.killed} enemies defeated · ${battle.leakedCount} escaped</p><button class="primary" id="again">Try again</button><button id="back">Back to squad</button></div>`;
+    workspace.querySelector("#battle-board").append(result);
+    result.querySelector("#again").onclick = restart;
+    result.querySelector("#back").onclick = exit;
+  }
+}
+function cancelPlacement() {
+  const gesture = dragging;
+  dragging = null;
+  if (gesture?.button) {
+    gesture.button.suppressClick = true;
+    if (gesture.button.hasPointerCapture(gesture.id))
+      gesture.button.releasePointerCapture(gesture.id);
+  }
+  battleError = "";
+  const aim = aimPointer;
+  aimPointer = null;
+  const handle = workspace?.querySelector(".facing-handle");
+  if (aim && handle?.hasPointerCapture(aim.id))
+    handle.releasePointerCapture(aim.id);
+  selected = null;
+  pending = null;
+  workspace?.querySelector(".drag-ghost")?.remove();
+}
+function showDragGhost(x, y) {
+  let ghost = workspace.querySelector(".drag-ghost");
+  if (!ghost) {
+    ghost = document.createElement("div");
+    ghost.className = "drag-ghost";
+    const entry = selectedEntry();
+    ghost.innerHTML = `<img src="${entry.icon}" alt=""><span>${escape(entry.name)}</span>`;
+    workspace.append(ghost);
+  }
+  ghost.classList.toggle("valid", !!dragging.over);
+  ghost.style.left = `${x}px`;
+  ghost.style.top = `${y}px`;
+}
+function confirmFacing(dir) {
+  if (!pending || landscapeRequired) return;
+  try {
+    if (selectedEntry()?.kind === 'summon') selected = summonUnitId(deployRegularSummon(battle, selected, pending.row, pending.col, dir));
+    else battle.deployOperator(selected, pending.row, pending.col, dir);
+    pending = null;
+    battleError = "";
+  } catch (e) {
+    battleError = e.message;
+  }
+  drawHud();
+}
+function layoutFacing() {
+  if (!workspace || !battle) return;
+  updateShelfTrack();
+  const picker = workspace.querySelector('.facing-picker');
+  picker.hidden = !pending || battle.finished;
+  const cancel = workspace.querySelector('#facing-cancel'), hint = workspace.querySelector('#aim-hint');
+  cancel.hidden = !pending || battle.finished;
+  hint.hidden = !aimPointer;
+  const entry = selectedEntry(), unit = entry?.unit, board = renderer.host;
+  const locate = (row, col) => renderer.projection.project(col, row, renderer.heightAt(row, col));
+  const field = workspace.querySelector('#field-command');
+  if (unit && !field.hidden) {
+    const p = locate(unit.tileR, unit.tileC), size = Math.min(150, Math.max(85, p.s * 1.35));
+    field.style.left = `${p.x}px`; field.style.top = `${p.y}px`;
+    field.style.width = field.style.height = `${size*2}px`;
+    // Anchor actions to the unit, but keep their hit targets above the shelf and inside the board.
+    for (const [id, dx, dy] of [['retreat', -size*.55, -size*.55], ['skill', size*.5, size*.5]]) {
+      const button = field.querySelector('#'+id);
+      if (!button) continue;
+      const shelfTop = workspace.querySelector('.deployment-wrap').offsetTop;
+      button.style.left = `${Math.max(30, Math.min(board.clientWidth-40, p.x+dx))-p.x+size}px`;
+      button.style.top = `${Math.max(75, Math.min(shelfTop-42, p.y+dy))-p.y+size}px`;
+    }
+  }
+  if (!pending) return;
+  const p = locate(pending.row, pending.col);
+  const radius = Math.max(85, Math.min(210, board.clientHeight*.32, p.s*2.15));
+  picker.style.left = `${p.x}px`; picker.style.top = `${p.y}px`;
+  picker.style.width = picker.style.height = `${radius*2}px`;
+  const shelfTop = workspace.querySelector('.deployment-wrap').offsetTop;
+  for (const [dir, dx, dy] of [['UP', 0, -.68], ['RIGHT', .68, 0], ['DOWN', 0, .68], ['LEFT', -.68, 0]]) {
+    const button = picker.querySelector(`[data-facing="${dir}"]`);
+    button.style.left = `${Math.max(24,Math.min(board.clientWidth-24,p.x+radius*dx))-p.x+radius}px`;
+    button.style.top = `${Math.max(76,Math.min(shelfTop-26,p.y+radius*dy))-p.y+radius}px`;
+  }
+  cancel.style.left = `${Math.max(8, Math.min(board.clientWidth-72,p.x-radius*.8-60))}px`;
+  cancel.style.top = `${Math.max(80, Math.min(workspace.querySelector('.deployment-wrap').offsetTop-64,p.y-radius*.65-30))}px`;
+  hint.style.left = `${Math.max(8,Math.min(board.clientWidth-230,p.x-radius))}px`;
+  hint.style.top = `${Math.max(80,p.y-radius*.72)}px`;
+  for (const el of picker.querySelectorAll('[data-facing], [data-cone]')) {
+    const active = (el.dataset.facing || el.dataset.cone) === pending.dir;
+    el.classList.toggle('active', active);
+    if (el.tagName === 'BUTTON') el.setAttribute('aria-pressed', String(active));
+  }
+}
+function syncOrientation() {
+  if (!workspace || !battle) return;
+  const required = requiresLandscape({
+    width: window.innerWidth,
+    height: window.innerHeight,
+    coarsePointer: window.matchMedia("(any-pointer: coarse)").matches,
+  });
+  if (required === landscapeRequired) return;
+  landscapeRequired = required;
+  // Rotation never spends DP or catches up combat time. Resume is always explicit.
+  paused = true;
+  accumulator = 0;
+  cancelPlacement();
+  workspace.querySelector(".battle-content").inert = required;
+  workspace.querySelector("#orientation-gate").hidden = !required;
+  renderer.controls.inert = required;
+  battle.setViewport(required ? "preview" : viewport);
+  renderer.resize();
+  drawHud();
+  workspace.querySelector(required ? "#portrait-exit" : "#pause").focus();
+}
+window.addEventListener("resize", syncOrientation);
+window
+  .matchMedia("(any-pointer: coarse)")
+  .addEventListener("change", syncOrientation);
+document.addEventListener("fullscreenchange", () => {
+  if (
+    workspace &&
+    viewport === "native-fullscreen" &&
+    document.fullscreenElement !== workspace
+  ) {
+    viewport = "fullscreen-workspace";
+    battle.setViewport(landscapeRequired ? "preview" : viewport);
+    paused = true;
+    cancelPlacement();
+    drawHud();
+    renderer.resize();
+  }
+});
+document.addEventListener("visibilitychange", () => {
+  if (document.hidden && battle) {
+    paused = true;
+    accumulator = 0;
+    cancelPlacement();
+    drawHud();
+  }
+});
+document.addEventListener("keydown", (e) => {
+  if (
+    !workspace ||
+    landscapeRequired ||
+    ["INPUT", "SELECT", "TEXTAREA"].includes(e.target.tagName)
+  )
+    return;
+  if (e.code === "Space") {
+    e.preventDefault();
+    paused = !paused;
+    drawHud();
+  }
+  if (
+    pending &&
+    ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "Enter"].includes(e.key)
+  ) {
+    e.preventDefault();
+    if (e.key === "Enter") {
+      if (pending.dir) confirmFacing(pending.dir);
+    } else {
+      pending.dir = {
+        ArrowUp: "UP",
+        ArrowDown: "DOWN",
+        ArrowLeft: "LEFT",
+        ArrowRight: "RIGHT",
+      }[e.key];
+      drawHud();
+    }
+    return;
+  }
+  if (e.key === "Escape") {
+    cancelPlacement();
+    drawHud();
+  }
+});
+function tick(now) {
+  const real = Math.min(0.1, (now - last) / 1000);
+  last = now;
+  let dt = 0,
+    events = [];
+  if (battle && !paused && !landscapeRequired && !battle.finished) {
+    accumulator += real * speed;
+    while (accumulator >= battle.dt && !battle.finished) {
+      battle.step();
+      accumulator -= battle.dt;
+      dt += battle.dt;
+    }
+    events = battle.drainEvents();
+  }
+  renderer?.render(battle, dt, events, real);
+  if (now - lastHud > 180) {
+    drawHud();
+    lastHud = now;
+  }
+  requestAnimationFrame(tick);
+}
+try {
+  prep();
+  requestAnimationFrame(tick);
+} catch (e) {
+  app.innerHTML = `<div class="frame"><h1>Cannot open the stage viewer</h1><p class="notice">${escape(e.message)}. This preview requires WebGL.</p></div>`;
+  console.error(e);
+}

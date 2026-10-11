@@ -1,0 +1,292 @@
+import { test } from 'node:test';
+import assert from 'node:assert/strict';
+import data from '../data/arkpedia-mvp.json' with { type: 'json' };
+import { StandardBattle } from '../server/sim/arkpedia.js';
+import { defaultBuild, recordFor } from '../shared/arkpedia/loadout.js';
+import { acquireTargets, effectiveProfile } from '../server/sim/ai.js';
+
+const near=(a,b)=>assert.ok(Math.abs(a-b)<1e-6,`${a} != ${b}`);
+function make(id, { rank=7, potential=1, elite=1, level=elite?55:40, enemies=0 }={}) {
+  const source=structuredClone(data);
+  source.stage.geometry.waves[0].spawns=enemies ? [{enemy_id:'enemy_1007_slime',count:enemies,time:0,interval:0,route:1}] : [];
+  Object.assign(source.enemies.enemy_1007_slime.stats,{maxHp:100000,atk:0,moveSpeed:0});
+  const build={...defaultBuild(source.operators[id]),skillRank:rank,potential,elite,level};
+  const b=new StandardBattle(source,{operators:[build]});
+  b.autoFinish=false;b.setViewport('fullscreen-workspace');b.addDp('arkpedia',99);
+  return {b,build,source};
+}
+function advance(b,seconds) {
+  for(let i=0;i<Math.ceil(seconds/b.dt);i++)b.step();
+  assert.deepEqual(b.errors,[]);
+}
+
+test('Plume earns exactly one DP per credited kill, with no reward for someone else or a dead victim',()=>{
+  const {b}=make('char_192_falco',{enemies:3});
+  const u=b.deployOperator('char_192_falco',2,7,'RIGHT');
+  b.step();
+  const [first,other,last]=b.enemies;
+  b.getPlayer('arkpedia').dp=10;
+  first.hp=1;b.forceAttack(u,[first]);
+  near(b.dp,11);assert.equal(u.stats.kills,1);
+  b.kill(first,u);near(b.dp,11);
+  b.kill(other,null);near(b.dp,11);
+  last.hp=1;b.forceAttack(u,[last]);near(b.dp,12);
+  assert.equal(u.stats.kills,2);assert.deepEqual(b.errors,[]);
+});
+
+test('Plume refunds original potential-adjusted cost on retreat, including later deployments, but not death',()=>{
+  const {b}=make('char_192_falco',{potential:6});
+  const id='char_192_falco',original=b.cost(id);
+  const u=b.deployOperator(id,2,7,'RIGHT');
+  b.getPlayer('arkpedia').dp=0;b.retreatOperator(id);near(b.dp,original);
+  assert.throws(()=>b.retreatOperator(id),/not deployed/);near(b.dp,original);
+  advance(b,72);b.addDp('arkpedia',99);
+  assert.equal(b.cost(id),Math.floor(original*1.5));
+  b.deployOperator(id,2,7,'RIGHT');b.getPlayer('arkpedia').dp=0;
+  b.retreatOperator(id);near(b.dp,original);
+  advance(b,72);b.addDp('arkpedia',99);
+  assert.equal(b.cost(id),original*2);
+  const next=b.deployOperator(id,2,7,'RIGHT');b.getPlayer('arkpedia').dp=0;
+  b.kill(next);near(b.dp,0);assert.notEqual(next.id,u.id);
+});
+
+test('Plume has one block and source ATK/ASPD skill bonuses at all seven ranks',()=>{
+  const id='char_192_falco';
+  for(let rank=1;rank<=7;rank++) {
+    const {b,build,source}=make(id,{rank});
+    const u=b.deployOperator(id,2,7,'RIGHT');
+    const base=u.s.atk,aspd=u.s.aspd,skill=source.operators[id].skills[0].levels[rank-1];
+    const bb=Object.fromEntries(skill.blackboard.map(({key,value})=>[key,value]));
+    assert.equal(u.s.blockCnt,1);assert.equal(u.profile.canHitFly,false);
+    u.skill.gainSp(u.skill.spCost,'test');assert.equal(b.activateOperator(id),true);
+    near(u.s.atk-base,u.base.atk*bb.atk);near(u.s.aspd-aspd,bb.attack_speed);
+    advance(b,skill.duration+.1);near(u.s.atk,base);near(u.s.aspd,aspd);
+    assert.equal(u.skill.active,false);
+    assert.ok(recordFor(build,source).arkpedia.modifiers.atkPct>0);
+  }
+  const e0=recordFor({...defaultBuild(data.operators[id]),elite:0,level:40,skillRank:4},data);
+  assert.deepEqual(e0.arkpedia.modifiers,{});
+});
+
+test('Popukar hits two of three overlapping enemies per swing, both blocked and unblocked, before and during her skill',()=>{
+  const id='char_281_popka',{b}=make(id,{enemies:3});
+  const u=b.deployOperator(id,2,7,'RIGHT');u.atkCd=100;b.step();
+  const victims=[];
+  b.on('damaged',ctx=>{if(ctx.source===u)victims.push(ctx.target.id);});
+  for(const blocked of [false,true]) for(const active of [false,true]) {
+    for(const e of b.enemies) {e.x=8;e.y=2;e.blockedBy=null;}
+    u.blocking=blocked?b.enemies.slice(0,2):[];
+    for(const e of u.blocking)e.blockedBy=u;
+    if(active && !u.skill.active){u.skill.gainSp(u.skill.spCost,'test');assert.equal(b.activateOperator(id),true);}
+    const profile=effectiveProfile(u),targets=acquireTargets(b,u,profile);
+    assert.equal(targets.length,2);victims.length=0;b.forceAttack(u,targets);
+    assert.equal(victims.length,2);assert.equal(new Set(victims).size,2);
+    if(active)advance(b,20.1);
+  }
+  near(u.hp,u.s.maxHp);near(u.s.maxHp,u.base.maxHp*1.06);
+  const e0=recordFor({...defaultBuild(data.operators[id]),elite:0,level:40,skillRank:4},data);
+  assert.deepEqual(e0.arkpedia.modifiers,{});
+});
+
+test('Popukar uses source HP/ATK talents and her ATK buff at every rank, without creating splash damage',()=>{
+  const id='char_281_popka';
+  for(let rank=1;rank<=7;rank++) {
+    const {b,source}=make(id,{rank,potential:6});
+    const u=b.deployOperator(id,2,7,'RIGHT'),base=u.s.atk;
+    near(u.s.maxHp,u.base.maxHp*1.08);near(u.hp,u.s.maxHp);
+    assert.equal(u.profile.splashRadius,0);assert.equal(u.profile.canHitFly,false);
+    const level=source.operators[id].skills[0].levels[rank-1];
+    u.skill.gainSp(u.skill.spCost,'test');assert.equal(b.activateOperator(id),true);
+    near(u.s.atk-base,u.base.atk*level.blackboard.find(e=>e.key==='atk').value);
+    advance(b,level.duration+.1);near(u.s.atk,base);
+  }
+});
+
+test('Adnachiel gains ranged-enemy priority at E1; E0 retains his aerial priority',()=>{
+  const id='char_211_adnach';
+  for(const elite of [0,1]) {
+    const {b}=make(id,{elite,level:elite?1:40,rank:4,enemies:2});
+    const u=b.deployOperator(id,1,7,'UP');u.atkCd=100;b.step();
+    const [first,ranged]=b.enemies;
+    ranged.base.rangeRadius=2;ranged.def={...ranged.def,applyWay:'RANGED'};
+    assert.equal(u.profile.canHitFly,true);
+    assert.equal(acquireTargets(b,u,effectiveProfile(u))[0],elite?ranged:first);
+    near(u.s.aspd,elite?104:100);
+    assert.equal(u.profile.priority,elite?'ranged':'fly');
+  }
+  const {b}=make(id);const u=b.deployOperator(id,1,7,'DOWN');near(u.s.aspd,108);
+});
+
+test('Adnachiel uses source ATK skill values and expiry at every rank',()=>{
+  const id='char_211_adnach';
+  for(let rank=1;rank<=7;rank++) {
+    const {b,source}=make(id,{rank});const u=b.deployOperator(id,1,7,'DOWN'),base=u.s.atk;
+    const level=source.operators[id].skills[0].levels[rank-1];
+    u.skill.gainSp(u.skill.spCost,'test');assert.equal(b.activateOperator(id),true);
+    near(u.s.atk-base,u.base.atk*level.blackboard.find(e=>e.key==='atk').value);
+    advance(b,level.duration+.1);near(u.s.atk,base);
+    assert.equal(u.profile.splashRadius,0);
+  }
+});
+
+test('Lava receives her source SP talent once on each deployment, at both E1 talent thresholds and potentials',()=>{
+  const id='char_121_lava';
+  for(const [elite,level,potential,sp] of [[0,40,1,0],[1,1,1,15],[1,1,5,20],[1,55,1,30],[1,55,5,35]]) {
+    const {b}=make(id,{elite,level,potential,rank:4});
+    let u=b.deployOperator(id,1,7,'UP');near(u.skill.sp,sp);near(u.s.aspd,potential>=4?108:100);
+    b.retreatOperator(id);advance(b,72);b.addDp('arkpedia',99);
+    u=b.deployOperator(id,1,7,'UP');near(u.skill.sp,sp);
+    assert.equal(u.profile.dmgType,'arts');assert.ok(u.profile.splashRadius>0);
+  }
+});
+
+test('Lava keeps her normal splash targeting and gains source ASPD only while her skill is active, at all ranks',()=>{
+  const id='char_121_lava';
+  for(let rank=1;rank<=7;rank++) {
+    const {b,source}=make(id,{rank});const u=b.deployOperator(id,1,7,'UP'),aspd=u.s.aspd;
+    const level=source.operators[id].skills[0].levels[rank-1],radius=u.profile.splashRadius;
+    u.skill.gainSp(u.skill.spCost,'test');assert.equal(b.activateOperator(id),true);
+    near(u.s.aspd-aspd,level.blackboard.find(e=>e.key==='attack_speed').value);
+    near(effectiveProfile(u).splashRadius,radius);
+    advance(b,level.duration+.1);near(u.s.aspd,aspd);
+  }
+});
+
+test('Catapult expands only her blast area during the skill, using every source rank and restoring it on expiry',()=>{
+  const id='char_282_catap';
+  for(let rank=1;rank<=7;rank++) {
+    const {b,source}=make(id,{rank});const u=b.deployOperator(id,1,7,'UP');
+    const level=source.operators[id].skills[0].levels[rank-1],radius=u.profile.splashRadius,keys=[...u.rangeKeys];
+    assert.equal(u.profile.dmgType,'phys');assert.equal(u.profile.canHitFly,true);
+    assert.equal(recordFor(defaultBuild(source.operators[id]),source).stats.cost,u.base.cost);
+    u.skill.gainSp(u.skill.spCost,'test');assert.equal(b.activateOperator(id),true);
+    near(effectiveProfile(u).splashRadius,radius*level.blackboard.find(e=>e.key==='attack@range_scale').value);
+    assert.deepEqual([...u.rangeKeys],keys);
+    advance(b,level.duration+.1);near(effectiveProfile(u).splashRadius,radius);
+  }
+  const e0=recordFor({...defaultBuild(data.operators[id]),elite:0,level:40,skillRank:4},data);
+  const e1=recordFor({...defaultBuild(data.operators[id]),elite:1,level:1,skillRank:4},data);
+  assert.equal(e1.stats.cost,data.operators[id].phases[1].attributesKeyFrames[0].data.cost-1);
+});
+
+test('Catapult blast expansion actually damages a second enemy beyond the normal blast, without striking a farther enemy',()=>{
+  const id='char_282_catap',{b}=make(id,{enemies:3});
+  const u=b.deployOperator(id,1,7,'UP');u.atkCd=100;b.step();
+  const [primary,expandedOnly,farther]=b.enemies;
+  for(const e of b.enemies)b.addBuff(e,{key:'test:pin',persist:true,flags:{noMove:true}});
+  primary.x=5;expandedOnly.x=6.5;farther.x=8;b.step();
+  let before=b.enemies.map(e=>e.hp);
+  b.forceAttack(u,[primary]);advance(b,2);
+  assert.ok(primary.hp<before[0]);near(expandedOnly.hp,before[1]);near(farther.hp,before[2]);
+  u.skill.gainSp(u.skill.spCost,'test');assert.equal(b.activateOperator(id),true);
+  before=b.enemies.map(e=>e.hp);b.forceAttack(u,[primary]);advance(b,2);
+  assert.ok(primary.hp<before[0]);assert.ok(expandedOnly.hp<before[1]);near(farther.hp,before[2]);
+});
+
+test('Midnight combines his ranged penalty with the critical talent, converts attacks to Arts only during S1, and remains single-target',()=>{
+  const id='char_283_midn';
+  for(const critical of [false,true]) for(const melee of [false,true]) {
+    const {b}=make(id,{potential:5,enemies:2});const u=b.deployOperator(id,2,7,'RIGHT');u.atkCd=100;b.step();
+    const [target,other]=b.enemies;target.x=melee?8:5;target.base.def=0;target.base.res=0;
+    let rolled;b.rng.chance=p=>{rolled=p;return critical;};
+    let before=target.hp;b.forceAttack(u,[target]);
+    near(before-target.hp,u.s.atk*(melee?1:.8)*(critical?1.6:1));near(rolled,.2);near(other.hp,other.s.maxHp);
+    target.base.def=100000;target.base.res=0;
+    u.skill.gainSp(u.skill.spCost,'test');assert.equal(b.activateOperator(id),true);
+    assert.equal(effectiveProfile(u).dmgType,'arts');before=target.hp;b.forceAttack(u,[target]);
+    near(before-target.hp,u.s.atk*(melee?1:.8)*(critical?1.6:1));
+    assert.equal(effectiveProfile(u).maxTargets,1);
+    advance(b,40.1);assert.equal(effectiveProfile(u).dmgType,'phys');
+  }
+  const e0=recordFor({...defaultBuild(data.operators[id]),elite:0,level:40,skillRank:4},data);
+  assert.equal(e0.arkpedia.critical,undefined);
+});
+
+test('Midnight uses source ATK buffs at all skill ranks and preserves the lord targeting trait',()=>{
+  const id='char_283_midn';
+  for(let rank=1;rank<=7;rank++) {
+    const {b,source}=make(id,{rank});const u=b.deployOperator(id,2,7,'RIGHT'),base=u.s.atk;
+    const level=source.operators[id].skills[0].levels[rank-1];
+    assert.equal(u.profile.canHitFly,true);assert.equal(u.s.blockCnt,2);
+    u.skill.gainSp(u.skill.spCost,'test');b.activateOperator(id);
+    near(u.s.atk-base,u.base.atk*level.blackboard.find(e=>e.key==='atk').value);
+    advance(b,level.duration+.1);near(u.s.atk,base);
+  }
+});
+
+test('Ansel rolls his extra-heal talent once per healing attack and heals a distinct injured, healable ally in range',()=>{
+  const id='char_212_ansel';
+  for(const proc of [false,true]) for(const eligible of [false,true]) {
+    const source=structuredClone(data);source.stage.geometry.waves[0].spawns=[];
+    const builds=[id,'char_281_popka','char_192_falco','char_122_beagle'].map(id=>({...defaultBuild(source.operators[id]),potential:5}));
+    const b=new StandardBattle(source,{operators:builds});b.autoFinish=false;b.setViewport('fullscreen-workspace');b.addDp('arkpedia',99);
+    const u=b.deployOperator(id,1,7,'UP'),first=b.deployOperator('char_281_popka',2,7,'RIGHT'),second=b.deployOperator('char_192_falco',2,6,'RIGHT'),outside=b.deployOperator('char_122_beagle',2,3,'RIGHT');
+    first.hp=first.s.maxHp*.2;second.hp=second.s.maxHp*.3;outside.hp=1;
+    if(!eligible)b.addBuff(second,{key:'test:noHeal',flags:{noHeal:true}});
+    const hp=[first.hp,second.hp,outside.hp];let rolls=0;
+    b.rng.chance=p=>{near(p,.18);rolls++;return proc;};
+    const targets=acquireTargets(b,u,effectiveProfile(u));b.forceAttack(u,targets);
+    assert.equal(rolls,1);assert.ok(first.hp>hp[0]);assert.equal(second.hp>hp[1],proc&&eligible);near(outside.hp,hp[2]);
+    first.hp=first.s.maxHp;second.hp=second.s.maxHp;
+    const empty=acquireTargets(b,u,effectiveProfile(u));assert.equal(empty.length,0);b.forceAttack(u,empty);assert.equal(rolls,1);
+    assert.deepEqual(b.errors,[]);
+  }
+  const e0=recordFor({...defaultBuild(data.operators[id]),elite:0,level:40,skillRank:4},data);
+  assert.equal(e0.talents.length,0);
+});
+
+test('Ansel expands healing range by the source number of forward tiles and applies/restores his ATK buff at all ranks',()=>{
+  const id='char_212_ansel';
+  for(let rank=1;rank<=7;rank++) {
+    const {b,source}=make(id,{rank});const u=b.deployOperator(id,1,7,'UP'),base=u.s.atk,normal=[...u.rangeKeys];
+    const level=source.operators[id].skills[0].levels[rank-1],bb=Object.fromEntries(level.blackboard.map(e=>[e.key,e.value]));
+    u.skill.gainSp(u.skill.spCost,'test');b.activateOperator(id);
+    near(u.s.atk-base,u.base.atk*bb.atk);assert.ok(u.rangeKeys.length>normal.length);
+    assert.equal(u.skill.spec.targeting.rangeExtend,bb.ability_range_forward_extend);
+    advance(b,level.duration+.1);near(u.s.atk,base);assert.deepEqual([...u.rangeKeys],normal);
+  }
+});
+
+test('Spot switches from physical attacks to source-range healing without releasing blocked enemies, then restores his normal mode',()=>{
+  const id='char_284_spot';
+  for(let rank=1;rank<=7;rank++) {
+    const source=structuredClone(data);source.stage.geometry.waves[0].spawns=[{enemy_id:'enemy_1007_slime',count:1,time:0,interval:0,route:1}];
+    Object.assign(source.enemies.enemy_1007_slime.stats,{maxHp:100000,atk:0,moveSpeed:0});
+    const builds=[id,'char_281_popka'].map(id=>({...defaultBuild(source.operators[id]),potential:5,skillRank:rank}));
+    const b=new StandardBattle(source,{operators:builds});b.autoFinish=false;b.setViewport('fullscreen-workspace');b.addDp('arkpedia',99);
+    const u=b.deployOperator(id,2,7,'RIGHT'),ally=b.deployOperator('char_281_popka',2,6,'RIGHT');u.atkCd=100;ally.atkCd=100;b.step();
+    const enemy=b.enemies[0];u.blocking=[enemy];enemy.blockedBy=u;
+    const normal=[...u.rangeKeys],atk=u.s.atk,interval=u.s.interval;
+    const level=source.operators[id].skills[0].levels[rank-1],bb=Object.fromEntries(level.blackboard.map(e=>[e.key,e.value]));
+    ally.hp=1;assert.equal(effectiveProfile(u).dmgType,'phys');
+    u.skill.gainSp(u.skill.spCost,'test');assert.equal(b.activateOperator(id),true);
+    near(u.s.interval,(u.base.bat+bb.base_attack_time)*100/u.s.aspd);near(u.s.atk-atk,u.base.atk*bb.atk);
+    assert.equal(effectiveProfile(u).dmgType,'heal');assert.equal(u.s.blockCnt,3);assert.equal(enemy.blockedBy,u);
+    assert.equal(u.rangeKeys.length,9);assert.deepEqual(acquireTargets(b,u,effectiveProfile(u)),[ally]);
+    const hp=enemy.hp;b.forceAttack(u,acquireTargets(b,u,effectiveProfile(u)));assert.ok(ally.hp>1);near(enemy.hp,hp);
+    near(ally.s.dodgePhys,.25);near(ally.s.dodgeArts,0);assert.equal(recordFor(builds[0],source).arkpedia.critical,undefined);
+    advance(b,3.1);near(ally.s.dodgePhys,0);
+    advance(b,level.duration);assert.equal(effectiveProfile(u).dmgType,'phys');near(u.s.interval,interval);near(u.s.atk,atk);assert.deepEqual([...u.rangeKeys],normal);
+  }
+});
+
+test('Spot provides promotion/potential-dependent physical dodge, refreshes its duration without stacking, and has none at E0',()=>{
+  const id='char_284_spot';
+  for(const [elite,level,potential,dodge] of [[0,40,1,0],[1,1,1,.1],[1,1,5,.15],[1,55,1,.2],[1,55,5,.25]]) {
+    const {b}=make(id,{elite,level,potential,rank:4});const u=b.deployOperator(id,2,7,'RIGHT');u.atkCd=100;
+    u.skill.gainSp(u.skill.spCost,'test');b.activateOperator(id);u.hp=1;b.forceAttack(u,[u]);near(u.s.dodgePhys,dodge);
+    advance(b,2);u.hp=1;b.forceAttack(u,[u]);near(u.s.dodgePhys,dodge);
+    advance(b,2);near(u.s.dodgePhys,dodge);advance(b,1.1);near(u.s.dodgePhys,0);
+    near(u.s.dodgeArts,0);assert.deepEqual(b.errors,[]);
+  }
+});
+
+test('the larger catalogue still accepts exactly twelve squad members plus one distinct maxed support',()=>{
+  const ids=Object.keys(data.operators),source=structuredClone(data);source.stage.geometry.waves[0].spawns=[];
+  const operators=ids.slice(0,12).map(id=>defaultBuild(source.operators[id]));
+  const support={id:'char_284_spot',skillId:source.operators.char_284_spot.skills[0].id};
+  const b=new StandardBattle(source,{operators,support});
+  assert.equal(Object.keys(b.bench).length,13);
+  assert.equal(b.cost(support.id),15);
+  assert.throws(()=>new StandardBattle(source,{operators:ids.slice(0,13).map(id=>defaultBuild(source.operators[id]))}),/12/);
+});

@@ -14,6 +14,42 @@ export class ProjectileSystem {
     this.battle = battle;
     /** @type {object[]} */
     this.list = [];
+    this.speedAuras = new Set();
+    this.arriving = [];
+  }
+
+  /** Opt-in spatial slowdown of speed-driven projectiles. Fixed-time native
+   * movers keep their separate clock until that controller is recovered. */
+  registerSpeedAura({ owner, contains, scale }) {
+    if (!owner || typeof contains !== 'function' || !Number.isFinite(scale) || scale <= 0 || scale > 1)
+      throw new TypeError('Invalid projectile speed aura');
+    const aura = { owner, deploySeq: owner.deploySeq, contains, scale };
+    this.speedAuras.add(aura);
+    return { cancel: () => this.speedAuras.delete(aura) };
+  }
+
+  speedScale(projectile) {
+    let scale = 1;
+    for (const aura of this.speedAuras) {
+      const u = aura.owner;
+      if (!u.alive || !u.deployed || u.hidden || u.deploySeq !== aura.deploySeq) {
+        this.speedAuras.delete(aura); continue;
+      }
+      if (this.battle._safe(() => aura.contains(projectile), 'projectile.speedAura', u))
+        scale = Math.min(scale, aura.scale);
+    }
+    return scale;
+  }
+
+  /** Remove eligible existing projectiles without running their hit callback. */
+  remove(predicate) {
+    if (typeof predicate !== 'function') throw new TypeError('Projectile removal needs a predicate');
+    let removed = 0;
+    for (const p of [...this.list, ...this.arriving]) {
+      if (!p.removed && predicate(p)) { p.removed = true; removed++; }
+    }
+    this.list = this.list.filter(p => !p.removed);
+    return removed;
   }
 
   add(p) {
@@ -25,19 +61,26 @@ export class ProjectileSystem {
       id: ++seq,
       x: fx,
       y: fy,
+      fromX: fx,
+      fromY: fy,
       target,
       // the target "life" it was fired at: an op that dies and is redeployed mid-flight is a new target (fizzle)
       tseq: target ? target.deploySeq : 0,
       tx: fin(p.to ? p.to.x : (target ? target.x : fx), fx),
       ty: fin(p.to ? p.to.y : (target ? target.y : fy), fy),
       speed: p.speed > 0 ? p.speed : PROJECTILE_SPEED,
+      flightTime: Number.isFinite(p.flightTime) && p.flightTime > 0 ? p.flightTime : null,
       onHit: p.onHit ?? null,
+      // Opt-in moving colliders (piercing shots). Existing point impacts keep
+      // their original arrival behavior; finite colliders expire where they are.
+      onMove: p.onMove ?? null,
+      expireInPlace: !!p.expireInPlace,
       visual: p.visual ?? 'arrow',
       source: p.source ?? (p.from && p.from.id != null ? p.from : null),
       hitDead: !!p.hitDead,
       data: p.data ?? null,
       age: 0,
-      maxAge: p.maxAge > 0 ? p.maxAge : 10,
+      maxAge: p.maxAge > 0 ? p.maxAge : Math.max(10, fin(p.flightTime, 0)),
     };
     this.list.push(proj);
     return proj;
@@ -48,6 +91,7 @@ export class ProjectileSystem {
     const keep = [];
     const arrived = [];
     for (const p of this.list) {
+      const previous = { x: p.x, y: p.y, age: p.age };
       p.age += dt;
       if (p.target) {
         if (p.target.alive && !p.target.hidden && p.target.deploySeq === p.tseq) { p.tx = fin(p.target.x, p.tx); p.ty = fin(p.target.y, p.ty); }
@@ -56,23 +100,40 @@ export class ProjectileSystem {
       }
       const dx = p.tx - p.x, dy = p.ty - p.y;
       const d = Math.hypot(dx, dy);
-      const step = p.speed * dt;
-      if (d <= step || p.age >= p.maxAge) {
+      const motionDt = p.expireInPlace ? Math.min(dt, Math.max(0, p.maxAge - previous.age)) : dt;
+      const step = p.speed * this.speedScale(p) * motionDt;
+      // Some original Arts projectiles use a fixed travel duration instead of
+      // speed. Follow the live destination from the saved origin, even when the
+      // target crosses the projectile; only the duration boundary can impact.
+      if (p.flightTime !== null) {
+        const progress = Math.min(1, p.age / p.flightTime);
+        p.x = p.fromX + (p.tx - p.fromX) * progress;
+        p.y = p.fromY + (p.ty - p.fromY) * progress;
+        if (progress === 1 || p.age >= p.maxAge) arrived.push(p);
+        else keep.push(p);
+        continue;
+      }
+      if (d <= step || (!p.expireInPlace && p.age >= p.maxAge)) {
         p.x = p.tx; p.y = p.ty;
         arrived.push(p);
       } else {
         p.x += (dx / d) * step;
         p.y += (dy / d) * step;
-        keep.push(p);
+        if (p.expireInPlace && p.age >= p.maxAge - 1e-9) arrived.push(p);
+        else keep.push(p);
       }
+      if (p.onMove) this.battle._safe(() => p.onMove({ battle: this.battle,
+        projectile: p, previous, x: p.x, y: p.y }), 'projectile.onMove', p.source);
     }
-    this.list = keep;
+    this.list = keep.filter(p => !p.removed);
+    this.arriving = arrived;
     for (const p of arrived) {
-      if (!p.onHit) continue;
+      if (p.removed || !p.onHit) continue;
       const t = p.target && p.target.alive && p.target.deploySeq === p.tseq ? p.target : null;
       this.battle._safe(() => p.onHit({ battle: this.battle, projectile: p, target: t, x: p.x, y: p.y }), 'projectile.onHit', p.source);
     }
+    this.arriving = [];
   }
 
-  clear() { this.list = []; }
+  clear() { this.list = []; this.arriving = []; this.speedAuras.clear(); }
 }

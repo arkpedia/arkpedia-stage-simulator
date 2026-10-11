@@ -1,0 +1,5030 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "client": "Global Android",
+    "version": "26-09-23-17-49-43_b9cc4a",
+    "officialBase": "https://ark-us-static-online.yo-star.com/assetbundle/official/Android/assets/26-09-23-17-49-43_b9cc4a/",
+    "tableRepository": "Kengxxiao/ArknightsGameData_YoStar",
+    "tableCommit": "57010cb5b2afea112cae57daa756b58676ba6850",
+    "bundles": [
+      {
+        "path": "charpack/char_220_grani.ab",
+        "md5": "3f3f4d364b329188a13e2baa21edd101",
+        "size": 24477,
+        "sha256": "cfb0ce6589aac176f327fe4ecbf53093c9be6444a490ba78e02018a53eb0a4be"
+      },
+      {
+        "path": "charpack/char_401_elysm.ab",
+        "md5": "d9fb0e03e33219aef2298d70517d6543",
+        "size": 20454,
+        "sha256": "bd63158f7576aafb4db200574fbc854012e1326ac340105a6716cda103afd774"
+      },
+      {
+        "path": "charpack/char_496_wildmn.ab",
+        "md5": "28eef99512889245ff173ca617211ff0",
+        "size": 21500,
+        "sha256": "1c96487fefbd7cbe52755beadda929fe4cd77f9ff68125562193d208f4845aca"
+      },
+      {
+        "path": "charpack/char_1036_fang2.ab",
+        "md5": "e9f1a4ea9d2824dbde1684b8b263cb3b",
+        "size": 20851,
+        "sha256": "fa1c7c94f9739fb5ee627c4c8bbf196b779b48a38201e8612fd16bb902984839"
+      },
+      {
+        "path": "charpack/char_4023_rfalcn.ab",
+        "md5": "0a1a8d9bb3ccd0d27f5e2fb68fc2bff8",
+        "size": 22860,
+        "sha256": "7a9324b97806a66761837f24f505eb4b51b5829c9883a1a545eb61689fae380e"
+      },
+      {
+        "path": "battle/prefabs/[uc]skills.ab",
+        "md5": "ff06dc9bb5516d069c8c0017207653ca",
+        "size": 1163240,
+        "sha256": "1c026938f054218f7e6bda9000162b2a6f30c9bd93e1ae9763d9d6df2270499c"
+      },
+      {
+        "path": "battle/prefabs/[uc]projectiles.ab",
+        "size": 1605622,
+        "md5": "0b1d64a8aba25913161f5fd7174cab34",
+        "sha256": "3d68c63bf7a7d658e65035a9c71dfc9a00e4804563b922185499d108dfb7f639"
+      },
+      {
+        "path": "config/buff_template_holder.ab",
+        "size": 1667266,
+        "md5": "59813e1a533561f969f525a2846815e0",
+        "sha256": "e092efe8b6479546a0641449c1e2ef81ba51b8bac67f7a5d1bbf3c3bbdd817ce"
+      }
+    ],
+    "modelRepository": "fexli/ArknightsResource",
+    "modelCommit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+    "tables": {
+      "character_table.json": "cf86d1690bdae2bf02378081ef8ae61731da042902bb284d339b7c0d889e66a9",
+      "skill_table.json": "3f389ab49b038c3d701e059c2377a2b03e14276248c5ed42ebfc169578a4e809",
+      "range_table.json": "676cedce20d46f37c46e1099b2f94907d0c84ac62b674957355c245ce16f0856",
+      "buff_template_data.json": "79dce42d1ffa76196984b80678422e0323e406f6a044f1a25b1de75e0c5b9d27"
+    }
+  },
+  "characters": {
+    "char_220_grani": [
+      {
+        "object": "Trigger",
+        "pathId": "-7790582325171025562",
+        "components": [
+          {
+            "pathId": "6291163352587733350",
+            "_targetSide": 2,
+            "_targetMotion": 1,
+            "_targetCategory": 1,
+            "_postFilter": 4,
+            "_ignoreTargetFree": 0,
+            "_onlyIgnoreSomeOfTargetFreeCase": 0,
+            "_abnormalFlag": 29,
+            "_abnormalCombo": 2,
+            "_ignoreAllyTargetFree": 0,
+            "_ignoreHealFree": 0,
+            "_needProfessionMask": 0,
+            "_professionMask": 0,
+            "_limitTargetNum": 0,
+            "_maxTargetKey": "max_target",
+            "_maxNum": 1,
+            "_excludeOwner": 0,
+            "_limitedMaxTargetNumToBlockedCnt": 1,
+            "_allowZeroBlockCntLimit": 0
+          },
+          {
+            "pathId": "8390517974867872102",
+            "_extendable": 0
+          }
+        ]
+      },
+      {
+        "object": "Attack",
+        "pathId": "-3265118596905268890",
+        "components": [
+          {
+            "pathId": "-1394849840056268442",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "6291163352587733350"
+            },
+            "_metadata": {
+              "namedAsAlias": "",
+              "blackboardPrefix": ""
+            },
+            "_interruptAbilityOnDetach": 0,
+            "_waitForAttackEvent": 1,
+            "_selectTargetSource": 1,
+            "_selectTargetTiming": 0,
+            "_timeMode": 0,
+            "_alwaysIncludeTarget": 1,
+            "_allowNoTarget": 0,
+            "_animKey": "",
+            "_endAnimKey": "Skill_End",
+            "_downAnimKey": "",
+            "_downEndAnimKey": "",
+            "_upAnimKey": "",
+            "_upEndAnimKey": "",
+            "_cooldown": 0.0,
+            "_cooldownKey": "duration",
+            "_preDelay": 0.0,
+            "_escapeTime": 0.3330000042915344,
+            "_faceToTarget": 1,
+            "_faceToDefault": 0,
+            "_activeBuffs": [],
+            "_maxAnimScale": -1.0,
+            "_ignorePalsyInterrupt": 0,
+            "_atkScale": 1.0,
+            "_atkScaleKey": "atk_scale",
+            "_damageType": 1
+          },
+          {
+            "pathId": "2800682204650572134",
+            "_beginAnim": "Skill_Begin",
+            "_faceToTarget": 0,
+            "_maxAnimScale": -1.0
+          }
+        ]
+      },
+      {
+        "object": "Trait",
+        "pathId": "-2842383286472898202",
+        "components": [
+          {
+            "pathId": "6458661743665645926",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_metadata": {
+              "namedAsAlias": "",
+              "blackboardPrefix": ""
+            },
+            "_interruptAbilityOnDetach": 0,
+            "_buffs": [
+              {
+                "attributes": {
+                  "abnormalFlags": [],
+                  "abnormalImmunes": [],
+                  "abnormalAntis": [],
+                  "abnormalCombos": [],
+                  "abnormalComboImmunes": [],
+                  "attributeModifiers": []
+                },
+                "buffKey": "grani_tr_1",
+                "loadFromDB": 0,
+                "isDurableBuff": 0,
+                "isDamageMissable": 0,
+                "isSilenceable": 0,
+                "isStunnable": 0,
+                "isFreezable": 0,
+                "isLevitatable": 0,
+                "statusResistable": 2,
+                "templateKey": "kill_to_add_cost",
+                "disableOverride": 1,
+                "overrideKey": "",
+                "overrideType": 0,
+                "maxStackCnt": 1,
+                "refreshRemainingTimeWhenStackMax": 0,
+                "clearAllStackCntWhenTimeUp": 0,
+                "maxValidStackCnt": -1,
+                "independentCharacterSource": 0,
+                "overrideEffectKey": "",
+                "overrideOnEventPriority": 0,
+                "onEventPriority": 0,
+                "audioSignal": "",
+                "lifeTimeType": 2,
+                "takeSnapshotWhenExtend": 0,
+                "durationKey": "",
+                "lifeTime": 0.0,
+                "triggerLifeType": 0,
+                "triggerCnt": 0,
+                "triggerInterval": -1.0,
+                "waitFirstTriggerInterval": 1,
+                "firstTriggerInterval": -1.0,
+                "priority": -1,
+                "priorityBBKeys": [],
+                "stripBlackboardParamsWithBuffKey": 0,
+                "blackboard": [],
+                "enableInitDirectionFromSource": 0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "object": "1",
+        "pathId": "-2524392690204374682",
+        "components": [
+          {
+            "pathId": "-8009603603863008922",
+            "_defaultModeIndex": -1,
+            "_attackBlackboardModeIndex": -1
+          },
+          {
+            "pathId": "7005630235709770086",
+            "_targetOptions": {
+              "targetSide": 1,
+              "targetMotion": 3,
+              "targetCategory": 1,
+              "enableAdvancedOptions": 1,
+              "ignoreTargetFree": 1,
+              "ignoreAllyTargetFree": 0,
+              "ignoreHealFree": 1,
+              "ignoreTargetSide": 0,
+              "excludeSomeAbnormalFlags": 0,
+              "excludeAbnormalFlag": 0,
+              "purposeMask": 0,
+              "professionMask": 512,
+              "checkUnitType": 0,
+              "unitTypeMask": 0,
+              "onlyIgnoreSomeOfTargetFreeCase": 0,
+              "abnormalFlag": 0,
+              "abnormalCombo": 0
+            }
+          },
+          {
+            "pathId": "9013399960331520358",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_metadata": {
+              "namedAsAlias": "",
+              "blackboardPrefix": ""
+            },
+            "_interruptAbilityOnDetach": 0,
+            "_targetValidator": {
+              "m_FileID": 0,
+              "m_PathID": "7005630235709770086"
+            },
+            "_buffs": [
+              {
+                "attributes": {
+                  "abnormalFlags": [],
+                  "abnormalImmunes": [],
+                  "abnormalAntis": [],
+                  "abnormalCombos": [],
+                  "abnormalComboImmunes": [],
+                  "attributeModifiers": []
+                },
+                "buffKey": "grani_t_1",
+                "loadFromDB": 0,
+                "isDurableBuff": 0,
+                "isDamageMissable": 0,
+                "isSilenceable": 0,
+                "isStunnable": 0,
+                "isFreezable": 0,
+                "isLevitatable": 0,
+                "statusResistable": 2,
+                "templateKey": "evade_physical",
+                "disableOverride": 0,
+                "overrideKey": "",
+                "overrideType": 0,
+                "maxStackCnt": 1,
+                "refreshRemainingTimeWhenStackMax": 0,
+                "clearAllStackCntWhenTimeUp": 0,
+                "maxValidStackCnt": -1,
+                "independentCharacterSource": 0,
+                "overrideEffectKey": "",
+                "overrideOnEventPriority": 0,
+                "onEventPriority": 0,
+                "audioSignal": "",
+                "lifeTimeType": 2,
+                "takeSnapshotWhenExtend": 0,
+                "durationKey": "",
+                "lifeTime": 0.0,
+                "triggerLifeType": 0,
+                "triggerCnt": 0,
+                "triggerInterval": -1.0,
+                "waitFirstTriggerInterval": 1,
+                "firstTriggerInterval": -1.0,
+                "priority": -1,
+                "priorityBBKeys": [],
+                "stripBlackboardParamsWithBuffKey": 0,
+                "blackboard": [],
+                "enableInitDirectionFromSource": 0
+              }
+            ],
+            "_passiveBuffs": [],
+            "_selfOption": 0,
+            "_removeBuffWhenAbilityDetached": 1,
+            "_onlyDetactTargetWhenStarted": 0,
+            "_interval": 0.0
+          }
+        ]
+      },
+      {
+        "object": "S2",
+        "pathId": "-887588181715023514",
+        "components": [
+          {
+            "pathId": "-217789767410022042",
+            "_attack": {
+              "m_FileID": 0,
+              "m_PathID": "-1394849840056268442"
+            },
+            "_attackTrigger": {
+              "m_FileID": 0,
+              "m_PathID": "2804774822532450662"
+            },
+            "_rangeToShow": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_generalAbilities": []
+          }
+        ]
+      },
+      {
+        "object": "Attack",
+        "pathId": "-809446385074337434",
+        "components": [
+          {
+            "pathId": "1126711251073534310",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_metadata": {
+              "namedAsAlias": "",
+              "blackboardPrefix": ""
+            },
+            "_interruptAbilityOnDetach": 0,
+            "_waitForAttackEvent": 1,
+            "_selectTargetSource": 2,
+            "_selectTargetTiming": 0,
+            "_timeMode": 0,
+            "_alwaysIncludeTarget": 1,
+            "_allowNoTarget": 0,
+            "_animKey": "Attack",
+            "_endAnimKey": "Idle",
+            "_downAnimKey": "Attack_Down",
+            "_downEndAnimKey": "",
+            "_upAnimKey": "Attack_Up",
+            "_upEndAnimKey": "",
+            "_cooldown": 0.0,
+            "_cooldownKey": "duration",
+            "_preDelay": 0.0,
+            "_escapeTime": 0.0,
+            "_faceToTarget": 1,
+            "_faceToDefault": 0,
+            "_activeBuffs": [],
+            "_maxAnimScale": 2.0,
+            "_ignorePalsyInterrupt": 0,
+            "_atkScale": 1.0,
+            "_atkScaleKey": "atk_scale",
+            "_damageType": 1
+          }
+        ]
+      },
+      {
+        "object": "Default",
+        "pathId": "1405313037764626790",
+        "components": [
+          {
+            "pathId": "6829185576773781862",
+            "_attack": {
+              "m_FileID": 0,
+              "m_PathID": "1126711251073534310"
+            },
+            "_attackTrigger": {
+              "m_FileID": 0,
+              "m_PathID": "4884061226584541542"
+            },
+            "_rangeToShow": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_generalAbilities": []
+          }
+        ]
+      },
+      {
+        "object": "Trigger",
+        "pathId": "7363853418423617894",
+        "components": [
+          {
+            "pathId": "-8542517803091195546",
+            "_targetSide": 2,
+            "_targetMotion": 1,
+            "_targetCategory": 1,
+            "_postFilter": 4,
+            "_ignoreTargetFree": 0,
+            "_onlyIgnoreSomeOfTargetFreeCase": 0,
+            "_abnormalFlag": 29,
+            "_abnormalCombo": 2,
+            "_ignoreAllyTargetFree": 0,
+            "_ignoreHealFree": 0,
+            "_needProfessionMask": 0,
+            "_professionMask": 0,
+            "_limitTargetNum": 1,
+            "_maxTargetKey": "max_target",
+            "_maxNum": 1,
+            "_excludeOwner": 0,
+            "_limitedMaxTargetNumToBlockedCnt": 0,
+            "_allowZeroBlockCntLimit": 0
+          },
+          {
+            "pathId": "-3527649520007542426",
+            "_extendable": 0
+          }
+        ]
+      },
+      {
+        "object": "char_220_grani",
+        "pathId": "9212477500732049766",
+        "components": [
+          {
+            "pathId": "-409615991919703706",
+            "_modes": [
+              {
+                "m_FileID": 0,
+                "m_PathID": "6829185576773781862"
+              },
+              {
+                "m_FileID": 0,
+                "m_PathID": "-217789767410022042"
+              }
+            ],
+            "_traitAbility": {
+              "m_FileID": 0,
+              "m_PathID": "6458661743665645926"
+            },
+            "_withdrawCostRecoverRatio": 1.0,
+            "_maxWithdrawCostRatioOfRawCost": 1.0
+          }
+        ]
+      }
+    ],
+    "char_401_elysm": [
+      {
+        "object": "S1",
+        "pathId": "-8356929872945355786",
+        "components": [
+          {
+            "pathId": "1363307505643414518",
+            "_attack": {
+              "m_FileID": 0,
+              "m_PathID": "-1582516300777135114"
+            },
+            "_attackTrigger": {
+              "m_FileID": 0,
+              "m_PathID": "-1586071481752951818"
+            },
+            "_rangeToShow": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_generalAbilities": []
+          }
+        ]
+      },
+      {
+        "object": "1",
+        "pathId": "-8353936152856501258",
+        "components": [
+          {
+            "pathId": "-8008884187109137418",
+            "_defaultModeIndex": -1,
+            "_attackBlackboardModeIndex": -1
+          },
+          {
+            "pathId": "-6554001518155078666",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_metadata": {
+              "namedAsAlias": "",
+              "blackboardPrefix": ""
+            },
+            "_interruptAbilityOnDetach": 0,
+            "_buffs": [
+              {
+                "attributes": {
+                  "abnormalFlags": [],
+                  "abnormalImmunes": [],
+                  "abnormalAntis": [],
+                  "abnormalCombos": [],
+                  "abnormalComboImmunes": [],
+                  "attributeModifiers": []
+                },
+                "buffKey": "modify_deck_cost_for_sniper[elysm]",
+                "loadFromDB": 0,
+                "isDurableBuff": 0,
+                "isDamageMissable": 0,
+                "isSilenceable": 0,
+                "isStunnable": 0,
+                "isFreezable": 0,
+                "isLevitatable": 0,
+                "statusResistable": 2,
+                "templateKey": "modify_deck_cost_for_sniper",
+                "disableOverride": 0,
+                "overrideKey": "",
+                "overrideType": 0,
+                "maxStackCnt": 1,
+                "refreshRemainingTimeWhenStackMax": 0,
+                "clearAllStackCntWhenTimeUp": 0,
+                "maxValidStackCnt": -1,
+                "independentCharacterSource": 0,
+                "overrideEffectKey": "",
+                "overrideOnEventPriority": 0,
+                "onEventPriority": 0,
+                "audioSignal": "",
+                "lifeTimeType": 2,
+                "takeSnapshotWhenExtend": 0,
+                "durationKey": "",
+                "lifeTime": 0.0,
+                "triggerLifeType": 0,
+                "triggerCnt": 0,
+                "triggerInterval": -1.0,
+                "waitFirstTriggerInterval": 1,
+                "firstTriggerInterval": -1.0,
+                "priority": -1,
+                "priorityBBKeys": [],
+                "stripBlackboardParamsWithBuffKey": 0,
+                "blackboard": [],
+                "enableInitDirectionFromSource": 0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "object": "Default",
+        "pathId": "-7660095007684303882",
+        "components": [
+          {
+            "pathId": "4016602565779383286",
+            "_attack": {
+              "m_FileID": 0,
+              "m_PathID": "-1902635241684671498"
+            },
+            "_attackTrigger": {
+              "m_FileID": 0,
+              "m_PathID": "6501142858328368118"
+            },
+            "_rangeToShow": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_generalAbilities": []
+          }
+        ]
+      },
+      {
+        "object": "char_401_elysm",
+        "pathId": "-3644116829025541130",
+        "components": [
+          {
+            "pathId": "5803038397764002806",
+            "_modes": [
+              {
+                "m_FileID": 0,
+                "m_PathID": "4016602565779383286"
+              },
+              {
+                "m_FileID": 0,
+                "m_PathID": "1363307505643414518"
+              }
+            ],
+            "_traitAbility": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_withdrawCostRecoverRatio": 0.5,
+            "_maxWithdrawCostRatioOfRawCost": 1.0
+          }
+        ]
+      },
+      {
+        "object": "Attack",
+        "pathId": "-3342802003747871754",
+        "components": [
+          {
+            "pathId": "-1902635241684671498",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_metadata": {
+              "namedAsAlias": "",
+              "blackboardPrefix": ""
+            },
+            "_interruptAbilityOnDetach": 0,
+            "_waitForAttackEvent": 1,
+            "_selectTargetSource": 2,
+            "_selectTargetTiming": 0,
+            "_timeMode": 0,
+            "_alwaysIncludeTarget": 1,
+            "_allowNoTarget": 0,
+            "_animKey": "Attack",
+            "_endAnimKey": "Idle",
+            "_downAnimKey": "",
+            "_downEndAnimKey": "",
+            "_upAnimKey": "",
+            "_upEndAnimKey": "",
+            "_cooldown": 0.0,
+            "_cooldownKey": "duration",
+            "_preDelay": 0.0,
+            "_escapeTime": 0.0,
+            "_faceToTarget": 1,
+            "_faceToDefault": 0,
+            "_activeBuffs": [],
+            "_maxAnimScale": -1.0,
+            "_ignorePalsyInterrupt": 0,
+            "_atkScale": 1.0,
+            "_atkScaleKey": "atk_scale",
+            "_damageType": 1
+          }
+        ]
+      },
+      {
+        "object": "Trigger",
+        "pathId": "-2037584136761777162",
+        "components": [
+          {
+            "pathId": "-7453407515474533386",
+            "_targetSide": 2,
+            "_targetMotion": 1,
+            "_targetCategory": 1,
+            "_postFilter": 4,
+            "_ignoreTargetFree": 0,
+            "_onlyIgnoreSomeOfTargetFreeCase": 0,
+            "_abnormalFlag": 29,
+            "_abnormalCombo": 2,
+            "_ignoreAllyTargetFree": 0,
+            "_ignoreHealFree": 0,
+            "_needProfessionMask": 0,
+            "_professionMask": 0,
+            "_limitTargetNum": 1,
+            "_maxTargetKey": "max_target",
+            "_maxNum": 1,
+            "_excludeOwner": 0,
+            "_limitedMaxTargetNumToBlockedCnt": 0,
+            "_allowZeroBlockCntLimit": 0
+          },
+          {
+            "pathId": "-201514608117947402",
+            "_extendable": 0
+          }
+        ]
+      },
+      {
+        "object": "Attack",
+        "pathId": "119160810926892022",
+        "components": [
+          {
+            "pathId": "-1582516300777135114",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_metadata": {
+              "namedAsAlias": "",
+              "blackboardPrefix": ""
+            },
+            "_interruptAbilityOnDetach": 0,
+            "_waitForAttackEvent": 1,
+            "_selectTargetSource": 2,
+            "_selectTargetTiming": 0,
+            "_timeMode": 0,
+            "_alwaysIncludeTarget": 1,
+            "_allowNoTarget": 0,
+            "_animKey": "Attack",
+            "_endAnimKey": "Idle",
+            "_downAnimKey": "",
+            "_downEndAnimKey": "",
+            "_upAnimKey": "",
+            "_upEndAnimKey": "",
+            "_cooldown": 0.0,
+            "_cooldownKey": "duration",
+            "_preDelay": 0.0,
+            "_escapeTime": 0.0,
+            "_faceToTarget": 1,
+            "_faceToDefault": 0,
+            "_activeBuffs": [],
+            "_maxAnimScale": -1.0,
+            "_ignorePalsyInterrupt": 0,
+            "_atkScale": 1.0,
+            "_atkScaleKey": "atk_scale",
+            "_damageType": 1
+          }
+        ]
+      },
+      {
+        "object": "Trigger",
+        "pathId": "2267695981955245046",
+        "components": [
+          {
+            "pathId": "-6355241706625637386",
+            "_targetSide": 2,
+            "_targetMotion": 1,
+            "_targetCategory": 1,
+            "_postFilter": 4,
+            "_ignoreTargetFree": 0,
+            "_onlyIgnoreSomeOfTargetFreeCase": 0,
+            "_abnormalFlag": 29,
+            "_abnormalCombo": 2,
+            "_ignoreAllyTargetFree": 0,
+            "_ignoreHealFree": 0,
+            "_needProfessionMask": 0,
+            "_professionMask": 0,
+            "_limitTargetNum": 1,
+            "_maxTargetKey": "max_target",
+            "_maxNum": 1,
+            "_excludeOwner": 0,
+            "_limitedMaxTargetNumToBlockedCnt": 0,
+            "_allowZeroBlockCntLimit": 0
+          },
+          {
+            "pathId": "-619504187686132746",
+            "_extendable": 0
+          }
+        ]
+      }
+    ],
+    "char_496_wildmn": [
+      {
+        "object": "char_496_wildmn",
+        "pathId": "-7150329261211972049",
+        "components": [
+          {
+            "pathId": "2174730060211031599",
+            "_modes": [
+              {
+                "m_FileID": 0,
+                "m_PathID": "9212246656933695023"
+              },
+              {
+                "m_FileID": 0,
+                "m_PathID": "8905885025359957551"
+              },
+              {
+                "m_FileID": 0,
+                "m_PathID": "-7566270941940281809"
+              }
+            ],
+            "_traitAbility": {
+              "m_FileID": 0,
+              "m_PathID": "6675249941608730159"
+            },
+            "_withdrawCostRecoverRatio": 1.0,
+            "_maxWithdrawCostRatioOfRawCost": 1.0
+          }
+        ]
+      },
+      {
+        "object": "Selector",
+        "pathId": "-6667394027008422353",
+        "components": [
+          {
+            "pathId": "-7014687503626203601",
+            "_extendable": 0
+          },
+          {
+            "pathId": "4282883964531969583",
+            "_targetSide": 2,
+            "_targetMotion": 1,
+            "_targetCategory": 1,
+            "_postFilter": 4,
+            "_ignoreTargetFree": 0,
+            "_onlyIgnoreSomeOfTargetFreeCase": 0,
+            "_abnormalFlag": 23,
+            "_abnormalCombo": 2,
+            "_ignoreAllyTargetFree": 0,
+            "_ignoreHealFree": 0,
+            "_needProfessionMask": 0,
+            "_professionMask": 0,
+            "_limitTargetNum": 1,
+            "_maxTargetKey": "max_target",
+            "_maxNum": 1,
+            "_excludeOwner": 0,
+            "_limitedMaxTargetNumToBlockedCnt": 0,
+            "_allowZeroBlockCntLimit": 0
+          }
+        ]
+      },
+      {
+        "object": "Selector",
+        "pathId": "-4484699637354459601",
+        "components": [
+          {
+            "pathId": "5921741158054628911",
+            "_extendable": 0
+          },
+          {
+            "pathId": "8771951529412267567",
+            "_targetSide": 2,
+            "_targetMotion": 1,
+            "_targetCategory": 1,
+            "_postFilter": 4,
+            "_ignoreTargetFree": 0,
+            "_onlyIgnoreSomeOfTargetFreeCase": 0,
+            "_abnormalFlag": 23,
+            "_abnormalCombo": 2,
+            "_ignoreAllyTargetFree": 0,
+            "_ignoreHealFree": 0,
+            "_needProfessionMask": 0,
+            "_professionMask": 0,
+            "_limitTargetNum": 1,
+            "_maxTargetKey": "max_target",
+            "_maxNum": 1,
+            "_excludeOwner": 0,
+            "_limitedMaxTargetNumToBlockedCnt": 0,
+            "_allowZeroBlockCntLimit": 0
+          }
+        ]
+      },
+      {
+        "object": "S2",
+        "pathId": "-1713631524065636817",
+        "components": [
+          {
+            "pathId": "-7566270941940281809",
+            "_attack": {
+              "m_FileID": 0,
+              "m_PathID": "6837711063604137519"
+            },
+            "_attackTrigger": {
+              "m_FileID": 0,
+              "m_PathID": "234470134467595823"
+            },
+            "_rangeToShow": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_generalAbilities": []
+          }
+        ]
+      },
+      {
+        "object": "Trait",
+        "pathId": "-1669643241489625553",
+        "components": [
+          {
+            "pathId": "6675249941608730159",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_metadata": {
+              "namedAsAlias": "",
+              "blackboardPrefix": ""
+            },
+            "_interruptAbilityOnDetach": 0,
+            "_buffs": [
+              {
+                "attributes": {
+                  "abnormalFlags": [],
+                  "abnormalImmunes": [],
+                  "abnormalAntis": [],
+                  "abnormalCombos": [],
+                  "abnormalComboImmunes": [],
+                  "attributeModifiers": []
+                },
+                "buffKey": "wildmn_tr",
+                "loadFromDB": 0,
+                "isDurableBuff": 0,
+                "isDamageMissable": 0,
+                "isSilenceable": 0,
+                "isStunnable": 0,
+                "isFreezable": 0,
+                "isLevitatable": 0,
+                "statusResistable": 2,
+                "templateKey": "kill_to_add_cost",
+                "disableOverride": 0,
+                "overrideKey": "",
+                "overrideType": 0,
+                "maxStackCnt": 1,
+                "refreshRemainingTimeWhenStackMax": 0,
+                "clearAllStackCntWhenTimeUp": 0,
+                "maxValidStackCnt": -1,
+                "independentCharacterSource": 0,
+                "overrideEffectKey": "",
+                "overrideOnEventPriority": 0,
+                "onEventPriority": 0,
+                "audioSignal": "",
+                "lifeTimeType": 2,
+                "takeSnapshotWhenExtend": 0,
+                "durationKey": "duration",
+                "lifeTime": 0.0,
+                "triggerLifeType": 0,
+                "triggerCnt": 0,
+                "triggerInterval": -1.0,
+                "waitFirstTriggerInterval": 1,
+                "firstTriggerInterval": -1.0,
+                "priority": -1,
+                "priorityBBKeys": [],
+                "stripBlackboardParamsWithBuffKey": 0,
+                "blackboard": [],
+                "enableInitDirectionFromSource": 0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "object": "Selector",
+        "pathId": "-69876104792895953",
+        "components": [
+          {
+            "pathId": "-6831858713226179025",
+            "_extendable": 0
+          },
+          {
+            "pathId": "4785597385389575727",
+            "_targetSide": 2,
+            "_targetMotion": 1,
+            "_targetCategory": 1,
+            "_postFilter": 4,
+            "_ignoreTargetFree": 0,
+            "_onlyIgnoreSomeOfTargetFreeCase": 0,
+            "_abnormalFlag": 23,
+            "_abnormalCombo": 2,
+            "_ignoreAllyTargetFree": 0,
+            "_ignoreHealFree": 0,
+            "_needProfessionMask": 0,
+            "_professionMask": 0,
+            "_limitTargetNum": 1,
+            "_maxTargetKey": "max_target",
+            "_maxNum": 1,
+            "_excludeOwner": 0,
+            "_limitedMaxTargetNumToBlockedCnt": 0,
+            "_allowZeroBlockCntLimit": 0
+          }
+        ]
+      },
+      {
+        "object": "1",
+        "pathId": "4516118503032163887",
+        "components": [
+          {
+            "pathId": "-3488643510784291281",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_metadata": {
+              "namedAsAlias": "",
+              "blackboardPrefix": ""
+            },
+            "_interruptAbilityOnDetach": 0,
+            "_buffs": [
+              {
+                "attributes": {
+                  "abnormalFlags": [],
+                  "abnormalImmunes": [],
+                  "abnormalAntis": [],
+                  "abnormalCombos": [],
+                  "abnormalComboImmunes": [],
+                  "attributeModifiers": []
+                },
+                "buffKey": "wildmn_t_1",
+                "loadFromDB": 0,
+                "isDurableBuff": 0,
+                "isDamageMissable": 0,
+                "isSilenceable": 0,
+                "isStunnable": 0,
+                "isFreezable": 0,
+                "isLevitatable": 0,
+                "statusResistable": 2,
+                "templateKey": "wildmn_t_1",
+                "disableOverride": 0,
+                "overrideKey": "",
+                "overrideType": 0,
+                "maxStackCnt": 1,
+                "refreshRemainingTimeWhenStackMax": 0,
+                "clearAllStackCntWhenTimeUp": 0,
+                "maxValidStackCnt": -1,
+                "independentCharacterSource": 0,
+                "overrideEffectKey": "",
+                "overrideOnEventPriority": 0,
+                "onEventPriority": 0,
+                "audioSignal": "",
+                "lifeTimeType": 0,
+                "takeSnapshotWhenExtend": 0,
+                "durationKey": "duration",
+                "lifeTime": 0.0,
+                "triggerLifeType": 0,
+                "triggerCnt": 0,
+                "triggerInterval": -1.0,
+                "waitFirstTriggerInterval": 1,
+                "firstTriggerInterval": -1.0,
+                "priority": -1,
+                "priorityBBKeys": [],
+                "stripBlackboardParamsWithBuffKey": 0,
+                "blackboard": [],
+                "enableInitDirectionFromSource": 0
+              }
+            ]
+          },
+          {
+            "pathId": "-2117150977333391825",
+            "_defaultModeIndex": -1,
+            "_attackBlackboardModeIndex": -1
+          }
+        ]
+      },
+      {
+        "object": "Default",
+        "pathId": "5529333319449841199",
+        "components": [
+          {
+            "pathId": "9212246656933695023",
+            "_attack": {
+              "m_FileID": 0,
+              "m_PathID": "-1617888207054369233"
+            },
+            "_attackTrigger": {
+              "m_FileID": 0,
+              "m_PathID": "7445712003875278383"
+            },
+            "_rangeToShow": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_generalAbilities": []
+          }
+        ]
+      },
+      {
+        "object": "Attack",
+        "pathId": "5652993832084835887",
+        "components": [
+          {
+            "pathId": "-1617888207054369233",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_metadata": {
+              "namedAsAlias": "",
+              "blackboardPrefix": ""
+            },
+            "_interruptAbilityOnDetach": 0,
+            "_waitForAttackEvent": 1,
+            "_selectTargetSource": 2,
+            "_selectTargetTiming": 0,
+            "_timeMode": 0,
+            "_alwaysIncludeTarget": 1,
+            "_allowNoTarget": 0,
+            "_animKey": "Attack",
+            "_endAnimKey": "",
+            "_downAnimKey": "Attack_Down",
+            "_downEndAnimKey": "",
+            "_upAnimKey": "",
+            "_upEndAnimKey": "",
+            "_cooldown": 0.0,
+            "_cooldownKey": "duration",
+            "_preDelay": 0.0,
+            "_escapeTime": 0.0,
+            "_faceToTarget": 1,
+            "_faceToDefault": 0,
+            "_activeBuffs": [],
+            "_maxAnimScale": -1.0,
+            "_ignorePalsyInterrupt": 0,
+            "_atkScale": 1.0,
+            "_atkScaleKey": "atk_scale",
+            "_damageType": 1
+          }
+        ]
+      },
+      {
+        "object": "S1",
+        "pathId": "6275005183345954351",
+        "components": [
+          {
+            "pathId": "8905885025359957551",
+            "_attack": {
+              "m_FileID": 0,
+              "m_PathID": "3709613373917302319"
+            },
+            "_attackTrigger": {
+              "m_FileID": 0,
+              "m_PathID": "5327629220758490671"
+            },
+            "_rangeToShow": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_generalAbilities": []
+          }
+        ]
+      },
+      {
+        "object": "Attack",
+        "pathId": "6812053274084707887",
+        "components": [
+          {
+            "pathId": "6837711063604137519",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_metadata": {
+              "namedAsAlias": "",
+              "blackboardPrefix": ""
+            },
+            "_interruptAbilityOnDetach": 0,
+            "_waitForAttackEvent": 1,
+            "_selectTargetSource": 2,
+            "_selectTargetTiming": 0,
+            "_timeMode": 0,
+            "_alwaysIncludeTarget": 1,
+            "_allowNoTarget": 0,
+            "_animKey": "Skill_2",
+            "_endAnimKey": "",
+            "_downAnimKey": "Skill_2_Down",
+            "_downEndAnimKey": "",
+            "_upAnimKey": "",
+            "_upEndAnimKey": "",
+            "_cooldown": 0.0,
+            "_cooldownKey": "duration",
+            "_preDelay": 0.0,
+            "_escapeTime": 0.0,
+            "_faceToTarget": 0,
+            "_faceToDefault": 1,
+            "_activeBuffs": [
+              {
+                "attributes": {
+                  "abnormalFlags": [],
+                  "abnormalImmunes": [],
+                  "abnormalAntis": [],
+                  "abnormalCombos": [],
+                  "abnormalComboImmunes": [],
+                  "attributeModifiers": []
+                },
+                "buffKey": "wildmn_s_2[force]",
+                "loadFromDB": 0,
+                "isDurableBuff": 0,
+                "isDamageMissable": 0,
+                "isSilenceable": 0,
+                "isStunnable": 0,
+                "isFreezable": 0,
+                "isLevitatable": 0,
+                "statusResistable": 2,
+                "templateKey": "knockback[dir]",
+                "disableOverride": 0,
+                "overrideKey": "",
+                "overrideType": 0,
+                "maxStackCnt": 1,
+                "refreshRemainingTimeWhenStackMax": 0,
+                "clearAllStackCntWhenTimeUp": 0,
+                "maxValidStackCnt": -1,
+                "independentCharacterSource": 0,
+                "overrideEffectKey": "",
+                "overrideOnEventPriority": 0,
+                "onEventPriority": 0,
+                "audioSignal": "",
+                "lifeTimeType": 0,
+                "takeSnapshotWhenExtend": 0,
+                "durationKey": "duration",
+                "lifeTime": 0.0,
+                "triggerLifeType": 0,
+                "triggerCnt": 0,
+                "triggerInterval": -1.0,
+                "waitFirstTriggerInterval": 1,
+                "firstTriggerInterval": -1.0,
+                "priority": -1,
+                "priorityBBKeys": [],
+                "stripBlackboardParamsWithBuffKey": 0,
+                "blackboard": [],
+                "enableInitDirectionFromSource": 0
+              }
+            ],
+            "_maxAnimScale": -1.0,
+            "_ignorePalsyInterrupt": 0,
+            "_atkScale": 1.0,
+            "_atkScaleKey": "atk_scale",
+            "_damageType": 1
+          }
+        ]
+      },
+      {
+        "object": "Attack",
+        "pathId": "8814518248549191215",
+        "components": [
+          {
+            "pathId": "3709613373917302319",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_metadata": {
+              "namedAsAlias": "",
+              "blackboardPrefix": ""
+            },
+            "_interruptAbilityOnDetach": 0,
+            "_waitForAttackEvent": 1,
+            "_selectTargetSource": 2,
+            "_selectTargetTiming": 0,
+            "_timeMode": 0,
+            "_alwaysIncludeTarget": 1,
+            "_allowNoTarget": 0,
+            "_animKey": "Skill_1_Loop",
+            "_endAnimKey": "",
+            "_downAnimKey": "Skill_1_Loop_Down",
+            "_downEndAnimKey": "",
+            "_upAnimKey": "",
+            "_upEndAnimKey": "",
+            "_cooldown": 0.0,
+            "_cooldownKey": "duration",
+            "_preDelay": 0.0,
+            "_escapeTime": 0.0,
+            "_faceToTarget": 1,
+            "_faceToDefault": 0,
+            "_activeBuffs": [],
+            "_maxAnimScale": -1.0,
+            "_ignorePalsyInterrupt": 0,
+            "_atkScale": 1.0,
+            "_atkScaleKey": "atk_scale",
+            "_damageType": 1
+          }
+        ]
+      }
+    ],
+    "char_1036_fang2": [
+      {
+        "object": "S2",
+        "pathId": "-7730683576515759552",
+        "components": [
+          {
+            "pathId": "-4483406022755159488",
+            "_attack": {
+              "m_FileID": 0,
+              "m_PathID": "-4545358622050618816"
+            },
+            "_attackTrigger": {
+              "m_FileID": 0,
+              "m_PathID": "-1265577519218888128"
+            },
+            "_rangeToShow": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_generalAbilities": []
+          }
+        ]
+      },
+      {
+        "object": "Attack",
+        "pathId": "-5696394216056163776",
+        "components": [
+          {
+            "pathId": "-5770577319551897024",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "1918902156658340416"
+            },
+            "_metadata": {
+              "namedAsAlias": "",
+              "blackboardPrefix": ""
+            },
+            "_interruptAbilityOnDetach": 1,
+            "_waitForAttackEvent": 1,
+            "_selectTargetSource": 2,
+            "_selectTargetTiming": 0,
+            "_timeMode": 0,
+            "_alwaysIncludeTarget": 1,
+            "_allowNoTarget": 0,
+            "_animKey": "Attack",
+            "_endAnimKey": "Idle",
+            "_downAnimKey": "",
+            "_downEndAnimKey": "",
+            "_upAnimKey": "",
+            "_upEndAnimKey": "",
+            "_cooldown": 0.0,
+            "_cooldownKey": "duration",
+            "_preDelay": 0.0,
+            "_escapeTime": 0.0,
+            "_faceToTarget": 1,
+            "_faceToDefault": 0,
+            "_activeBuffs": [],
+            "_maxAnimScale": 1.0,
+            "_ignorePalsyInterrupt": 0,
+            "_atkScale": 1.0,
+            "_atkScaleKey": "atk_scale",
+            "_damageType": 1
+          }
+        ]
+      },
+      {
+        "object": "Default",
+        "pathId": "-3706860669209087424",
+        "components": [
+          {
+            "pathId": "1289554490590687808",
+            "_attack": {
+              "m_FileID": 0,
+              "m_PathID": "-5770577319551897024"
+            },
+            "_attackTrigger": {
+              "m_FileID": 0,
+              "m_PathID": "7107024254462980672"
+            },
+            "_rangeToShow": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_generalAbilities": []
+          }
+        ]
+      },
+      {
+        "object": "Selector",
+        "pathId": "-3568886755966324160",
+        "components": [
+          {
+            "pathId": "-3326783467732209088",
+            "_extendable": 0
+          },
+          {
+            "pathId": "1918902156658340416",
+            "_targetSide": 2,
+            "_targetMotion": 1,
+            "_targetCategory": 1,
+            "_postFilter": 4,
+            "_ignoreTargetFree": 0,
+            "_onlyIgnoreSomeOfTargetFreeCase": 0,
+            "_abnormalFlag": 32,
+            "_abnormalCombo": 2,
+            "_ignoreAllyTargetFree": 0,
+            "_ignoreHealFree": 0,
+            "_needProfessionMask": 0,
+            "_professionMask": 0,
+            "_limitTargetNum": 1,
+            "_maxTargetKey": "max_target",
+            "_maxNum": 1,
+            "_excludeOwner": 0,
+            "_limitedMaxTargetNumToBlockedCnt": 1,
+            "_allowZeroBlockCntLimit": 0
+          }
+        ]
+      },
+      {
+        "object": "char_1036_fang2",
+        "pathId": "-2352878132907937216",
+        "components": [
+          {
+            "pathId": "6591632118000185920",
+            "_modes": [
+              {
+                "m_FileID": 0,
+                "m_PathID": "1289554490590687808"
+              },
+              {
+                "m_FileID": 0,
+                "m_PathID": "-4483406022755159488"
+              }
+            ],
+            "_traitAbility": {
+              "m_FileID": 0,
+              "m_PathID": "-7107098971185810880"
+            },
+            "_withdrawCostRecoverRatio": 1.0,
+            "_maxWithdrawCostRatioOfRawCost": 1.0
+          }
+        ]
+      },
+      {
+        "object": "Trait",
+        "pathId": "4884215549902189120",
+        "components": [
+          {
+            "pathId": "-7107098971185810880",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_metadata": {
+              "namedAsAlias": "",
+              "blackboardPrefix": ""
+            },
+            "_interruptAbilityOnDetach": 1,
+            "_buffs": [
+              {
+                "attributes": {
+                  "abnormalFlags": [],
+                  "abnormalImmunes": [],
+                  "abnormalAntis": [],
+                  "abnormalCombos": [],
+                  "abnormalComboImmunes": [],
+                  "attributeModifiers": []
+                },
+                "buffKey": "fang2_tr[kill]",
+                "loadFromDB": 0,
+                "isDurableBuff": 0,
+                "isDamageMissable": 0,
+                "isSilenceable": 0,
+                "isStunnable": 0,
+                "isFreezable": 0,
+                "isLevitatable": 0,
+                "statusResistable": 2,
+                "templateKey": "kill_to_add_cost",
+                "disableOverride": 0,
+                "overrideKey": "",
+                "overrideType": 0,
+                "maxStackCnt": 1,
+                "refreshRemainingTimeWhenStackMax": 0,
+                "clearAllStackCntWhenTimeUp": 0,
+                "maxValidStackCnt": -1,
+                "independentCharacterSource": 0,
+                "overrideEffectKey": "",
+                "overrideOnEventPriority": 0,
+                "onEventPriority": 0,
+                "audioSignal": "",
+                "lifeTimeType": 2,
+                "takeSnapshotWhenExtend": 0,
+                "durationKey": "duration",
+                "lifeTime": 0.0,
+                "triggerLifeType": 0,
+                "triggerCnt": 0,
+                "triggerInterval": -1.0,
+                "waitFirstTriggerInterval": 1,
+                "firstTriggerInterval": -1.0,
+                "priority": -1,
+                "priorityBBKeys": [],
+                "stripBlackboardParamsWithBuffKey": 0,
+                "blackboard": [],
+                "enableInitDirectionFromSource": 0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "object": "Selector",
+        "pathId": "4977839290170274368",
+        "components": [
+          {
+            "pathId": "-3439506991234289088",
+            "_targetSide": 2,
+            "_targetMotion": 1,
+            "_targetCategory": 1,
+            "_postFilter": 4,
+            "_ignoreTargetFree": 0,
+            "_onlyIgnoreSomeOfTargetFreeCase": 0,
+            "_abnormalFlag": 32,
+            "_abnormalCombo": 2,
+            "_ignoreAllyTargetFree": 0,
+            "_ignoreHealFree": 0,
+            "_needProfessionMask": 0,
+            "_professionMask": 0,
+            "_limitTargetNum": 0,
+            "_maxTargetKey": "max_target",
+            "_maxNum": 2,
+            "_excludeOwner": 0,
+            "_limitedMaxTargetNumToBlockedCnt": 1,
+            "_allowZeroBlockCntLimit": 0
+          },
+          {
+            "pathId": "7802451078809973312",
+            "_extendable": 0
+          }
+        ]
+      },
+      {
+        "object": "Attack",
+        "pathId": "7577566997727539776",
+        "components": [
+          {
+            "pathId": "-4545358622050618816",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "-3439506991234289088"
+            },
+            "_metadata": {
+              "namedAsAlias": "",
+              "blackboardPrefix": ""
+            },
+            "_interruptAbilityOnDetach": 1,
+            "_waitForAttackEvent": 1,
+            "_selectTargetSource": 1,
+            "_selectTargetTiming": 0,
+            "_timeMode": 0,
+            "_alwaysIncludeTarget": 1,
+            "_allowNoTarget": 0,
+            "_animKey": "Skill_2_Loop",
+            "_endAnimKey": "Idle",
+            "_downAnimKey": "Skill_Down_2_Loop",
+            "_downEndAnimKey": "",
+            "_upAnimKey": "",
+            "_upEndAnimKey": "",
+            "_cooldown": 0.0,
+            "_cooldownKey": "duration",
+            "_preDelay": 0.0,
+            "_escapeTime": 0.0,
+            "_faceToTarget": 1,
+            "_faceToDefault": 0,
+            "_activeBuffs": [],
+            "_maxAnimScale": 1.0,
+            "_ignorePalsyInterrupt": 0,
+            "_atkScale": 1.0,
+            "_atkScaleKey": "atk_scale",
+            "_damageType": 1
+          }
+        ]
+      },
+      {
+        "object": "1",
+        "pathId": "7863964547529044544",
+        "components": [
+          {
+            "pathId": "-6268552104545291712",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_metadata": {
+              "namedAsAlias": "",
+              "blackboardPrefix": ""
+            },
+            "_interruptAbilityOnDetach": 1,
+            "_buffs": [
+              {
+                "attributes": {
+                  "abnormalFlags": [],
+                  "abnormalImmunes": [],
+                  "abnormalAntis": [],
+                  "abnormalCombos": [],
+                  "abnormalComboImmunes": [],
+                  "attributeModifiers": []
+                },
+                "buffKey": "fang2_t_1",
+                "loadFromDB": 0,
+                "isDurableBuff": 0,
+                "isDamageMissable": 0,
+                "isSilenceable": 0,
+                "isStunnable": 0,
+                "isFreezable": 0,
+                "isLevitatable": 0,
+                "statusResistable": 2,
+                "templateKey": "fang2_t_1",
+                "disableOverride": 0,
+                "overrideKey": "",
+                "overrideType": 0,
+                "maxStackCnt": 1,
+                "refreshRemainingTimeWhenStackMax": 0,
+                "clearAllStackCntWhenTimeUp": 0,
+                "maxValidStackCnt": -1,
+                "independentCharacterSource": 0,
+                "overrideEffectKey": "",
+                "overrideOnEventPriority": 0,
+                "onEventPriority": 0,
+                "audioSignal": "",
+                "lifeTimeType": 2,
+                "takeSnapshotWhenExtend": 0,
+                "durationKey": "duration",
+                "lifeTime": 0.0,
+                "triggerLifeType": 0,
+                "triggerCnt": 0,
+                "triggerInterval": -1.0,
+                "waitFirstTriggerInterval": 1,
+                "firstTriggerInterval": -1.0,
+                "priority": -1,
+                "priorityBBKeys": [],
+                "stripBlackboardParamsWithBuffKey": 0,
+                "blackboard": [],
+                "enableInitDirectionFromSource": 0
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "char_4023_rfalcn": [
+      {
+        "object": "Attack",
+        "pathId": "-9055567837119131494",
+        "components": [
+          {
+            "pathId": "5197935459650424986",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_metadata": {
+              "namedAsAlias": "",
+              "blackboardPrefix": ""
+            },
+            "_interruptAbilityOnDetach": 1,
+            "_waitForAttackEvent": 1,
+            "_selectTargetSource": 2,
+            "_selectTargetTiming": 0,
+            "_timeMode": 0,
+            "_alwaysIncludeTarget": 1,
+            "_allowNoTarget": 0,
+            "_animKey": "Skill_2_Loop",
+            "_endAnimKey": "Skill_2_Idle",
+            "_downAnimKey": "",
+            "_downEndAnimKey": "",
+            "_upAnimKey": "",
+            "_upEndAnimKey": "",
+            "_cooldown": 0.0,
+            "_cooldownKey": "duration",
+            "_preDelay": 0.0,
+            "_escapeTime": 0.0,
+            "_faceToTarget": 1,
+            "_faceToDefault": 0,
+            "_activeBuffs": [],
+            "_maxAnimScale": 1.0,
+            "_ignorePalsyInterrupt": 0,
+            "_atkScale": 1.0,
+            "_atkScaleKey": "atk_scale",
+            "_damageType": 1
+          }
+        ]
+      },
+      {
+        "object": "1",
+        "pathId": "1609708711836111002",
+        "components": [
+          {
+            "pathId": "-8193824990401212262",
+            "_defaultModeIndex": -1,
+            "_attackBlackboardModeIndex": -1
+          },
+          {
+            "pathId": "6259334258317643930",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_metadata": {
+              "namedAsAlias": "",
+              "blackboardPrefix": ""
+            },
+            "_interruptAbilityOnDetach": 1,
+            "_buffs": [
+              {
+                "attributes": {
+                  "abnormalFlags": [],
+                  "abnormalImmunes": [],
+                  "abnormalAntis": [],
+                  "abnormalCombos": [],
+                  "abnormalComboImmunes": [],
+                  "attributeModifiers": []
+                },
+                "buffKey": "rfalcn_t_1",
+                "loadFromDB": 0,
+                "isDurableBuff": 0,
+                "isDamageMissable": 0,
+                "isSilenceable": 0,
+                "isStunnable": 0,
+                "isFreezable": 0,
+                "isLevitatable": 0,
+                "statusResistable": 2,
+                "templateKey": "rfalcn_t_1",
+                "disableOverride": 0,
+                "overrideKey": "",
+                "overrideType": 0,
+                "maxStackCnt": 1,
+                "refreshRemainingTimeWhenStackMax": 0,
+                "clearAllStackCntWhenTimeUp": 0,
+                "maxValidStackCnt": -1,
+                "independentCharacterSource": 0,
+                "overrideEffectKey": "",
+                "overrideOnEventPriority": 0,
+                "onEventPriority": 0,
+                "audioSignal": "",
+                "lifeTimeType": 2,
+                "takeSnapshotWhenExtend": 0,
+                "durationKey": "duration",
+                "lifeTime": 0.0,
+                "triggerLifeType": 0,
+                "triggerCnt": 0,
+                "triggerInterval": -1.0,
+                "waitFirstTriggerInterval": 1,
+                "firstTriggerInterval": -1.0,
+                "priority": -1,
+                "priorityBBKeys": [],
+                "stripBlackboardParamsWithBuffKey": 0,
+                "blackboard": [],
+                "enableInitDirectionFromSource": 0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "object": "Selector",
+        "pathId": "2531165378695254170",
+        "components": [
+          {
+            "pathId": "2092600409956602010",
+            "_targetSide": 2,
+            "_targetMotion": 1,
+            "_targetCategory": 1,
+            "_postFilter": 4,
+            "_ignoreTargetFree": 0,
+            "_onlyIgnoreSomeOfTargetFreeCase": 0,
+            "_abnormalFlag": 32,
+            "_abnormalCombo": 2,
+            "_ignoreAllyTargetFree": 0,
+            "_ignoreHealFree": 0,
+            "_needProfessionMask": 0,
+            "_professionMask": 0,
+            "_limitTargetNum": 1,
+            "_maxTargetKey": "max_target",
+            "_maxNum": 1,
+            "_excludeOwner": 0,
+            "_limitedMaxTargetNumToBlockedCnt": 0,
+            "_allowZeroBlockCntLimit": 0
+          },
+          {
+            "pathId": "7450039803559727258",
+            "_extendable": 0
+          }
+        ]
+      },
+      {
+        "object": "2",
+        "pathId": "2673315198916612250",
+        "components": [
+          {
+            "pathId": "5163797468675231898",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_metadata": {
+              "namedAsAlias": "",
+              "blackboardPrefix": ""
+            },
+            "_interruptAbilityOnDetach": 1,
+            "_buffs": []
+          },
+          {
+            "pathId": "5639930920121323674",
+            "_defaultModeIndex": -1,
+            "_attackBlackboardModeIndex": -1
+          }
+        ]
+      },
+      {
+        "object": "Default",
+        "pathId": "3046002904359096474",
+        "components": [
+          {
+            "pathId": "-9170151998622019430",
+            "_attack": {
+              "m_FileID": 0,
+              "m_PathID": "2468808755653038234"
+            },
+            "_attackTrigger": {
+              "m_FileID": 0,
+              "m_PathID": "5727568645839311002"
+            },
+            "_rangeToShow": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_generalAbilities": []
+          }
+        ]
+      },
+      {
+        "object": "S2",
+        "pathId": "5194524375032451226",
+        "components": [
+          {
+            "pathId": "1320673672861962394",
+            "_attack": {
+              "m_FileID": 0,
+              "m_PathID": "5197935459650424986"
+            },
+            "_attackTrigger": {
+              "m_FileID": 0,
+              "m_PathID": "1418989435293192346"
+            },
+            "_rangeToShow": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_generalAbilities": []
+          }
+        ]
+      },
+      {
+        "object": "Attack",
+        "pathId": "6215342742887321754",
+        "components": [
+          {
+            "pathId": "2468808755653038234",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_metadata": {
+              "namedAsAlias": "",
+              "blackboardPrefix": ""
+            },
+            "_interruptAbilityOnDetach": 1,
+            "_waitForAttackEvent": 1,
+            "_selectTargetSource": 2,
+            "_selectTargetTiming": 0,
+            "_timeMode": 0,
+            "_alwaysIncludeTarget": 1,
+            "_allowNoTarget": 0,
+            "_animKey": "Attack",
+            "_endAnimKey": "Idle",
+            "_downAnimKey": "",
+            "_downEndAnimKey": "",
+            "_upAnimKey": "",
+            "_upEndAnimKey": "",
+            "_cooldown": 0.0,
+            "_cooldownKey": "duration",
+            "_preDelay": 0.0,
+            "_escapeTime": 0.0,
+            "_faceToTarget": 1,
+            "_faceToDefault": 0,
+            "_activeBuffs": [],
+            "_maxAnimScale": 1.0,
+            "_ignorePalsyInterrupt": 0,
+            "_atkScale": 1.0,
+            "_atkScaleKey": "atk_scale",
+            "_damageType": 1
+          }
+        ]
+      },
+      {
+        "object": "Selector",
+        "pathId": "6262990636652875930",
+        "components": [
+          {
+            "pathId": "-1129692393843404646",
+            "_targetSide": 2,
+            "_targetMotion": 1,
+            "_targetCategory": 1,
+            "_postFilter": 4,
+            "_ignoreTargetFree": 0,
+            "_onlyIgnoreSomeOfTargetFreeCase": 0,
+            "_abnormalFlag": 32,
+            "_abnormalCombo": 2,
+            "_ignoreAllyTargetFree": 0,
+            "_ignoreHealFree": 0,
+            "_needProfessionMask": 0,
+            "_professionMask": 0,
+            "_limitTargetNum": 1,
+            "_maxTargetKey": "max_target",
+            "_maxNum": 1,
+            "_excludeOwner": 0,
+            "_limitedMaxTargetNumToBlockedCnt": 0,
+            "_allowZeroBlockCntLimit": 0
+          },
+          {
+            "pathId": "3437605143945531546",
+            "_extendable": 0
+          }
+        ]
+      },
+      {
+        "object": "1",
+        "pathId": "6357579962593169562",
+        "components": [
+          {
+            "pathId": "-3274372231848865638",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_metadata": {
+              "namedAsAlias": "",
+              "blackboardPrefix": ""
+            },
+            "_interruptAbilityOnDetach": 1,
+            "_buffs": [
+              {
+                "attributes": {
+                  "abnormalFlags": [],
+                  "abnormalImmunes": [],
+                  "abnormalAntis": [],
+                  "abnormalCombos": [],
+                  "abnormalComboImmunes": [],
+                  "attributeModifiers": []
+                },
+                "buffKey": "rfalcn_t_1",
+                "loadFromDB": 0,
+                "isDurableBuff": 0,
+                "isDamageMissable": 0,
+                "isSilenceable": 0,
+                "isStunnable": 0,
+                "isFreezable": 0,
+                "isLevitatable": 0,
+                "statusResistable": 2,
+                "templateKey": "rfalcn_t_1",
+                "disableOverride": 0,
+                "overrideKey": "",
+                "overrideType": 0,
+                "maxStackCnt": 1,
+                "refreshRemainingTimeWhenStackMax": 0,
+                "clearAllStackCntWhenTimeUp": 0,
+                "maxValidStackCnt": -1,
+                "independentCharacterSource": 0,
+                "overrideEffectKey": "",
+                "overrideOnEventPriority": 0,
+                "onEventPriority": 0,
+                "audioSignal": "",
+                "lifeTimeType": 2,
+                "takeSnapshotWhenExtend": 0,
+                "durationKey": "duration",
+                "lifeTime": 0.0,
+                "triggerLifeType": 0,
+                "triggerCnt": 0,
+                "triggerInterval": -1.0,
+                "waitFirstTriggerInterval": 1,
+                "firstTriggerInterval": -1.0,
+                "priority": -1,
+                "priorityBBKeys": [],
+                "stripBlackboardParamsWithBuffKey": 0,
+                "blackboard": [],
+                "enableInitDirectionFromSource": 0
+              }
+            ]
+          },
+          {
+            "pathId": "-1267156110752427878",
+            "_defaultModeIndex": -1,
+            "_attackBlackboardModeIndex": -1
+          }
+        ]
+      },
+      {
+        "object": "char_4023_rfalcn",
+        "pathId": "6879453098008105114",
+        "components": [
+          {
+            "pathId": "6685243459719975066",
+            "_modes": [
+              {
+                "m_FileID": 0,
+                "m_PathID": "-9170151998622019430"
+              },
+              {
+                "m_FileID": 0,
+                "m_PathID": "1320673672861962394"
+              }
+            ],
+            "_traitAbility": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_withdrawCostRecoverRatio": 0.5,
+            "_maxWithdrawCostRatioOfRawCost": 1.0
+          }
+        ]
+      }
+    ]
+  },
+  "skills": {
+    "skcom_def_up": [
+      {
+        "object": "skcom_def_up",
+        "pathId": "-1843200597619493528",
+        "components": [
+          {
+            "pathId": "-8162559461588191896",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_metadata": {
+              "namedAsAlias": "",
+              "blackboardPrefix": ""
+            },
+            "_interruptAbilityOnDetach": 0,
+            "_waitForAttackEvent": 1,
+            "_buffs": [
+              {
+                "attributes": {
+                  "abnormalFlags": [],
+                  "abnormalImmunes": [],
+                  "abnormalAntis": [],
+                  "abnormalCombos": [],
+                  "abnormalComboImmunes": [],
+                  "attributeModifiers": [
+                    {
+                      "attributeType": 2,
+                      "formulaItem": 1,
+                      "value": 0.0,
+                      "loadFromBlackboard": 1,
+                      "fetchBaseValueFromSourceEntity": 0
+                    }
+                  ]
+                },
+                "buffKey": "multi_def",
+                "loadFromDB": 0,
+                "isDurableBuff": 0,
+                "isDamageMissable": 0,
+                "isSilenceable": 0,
+                "isStunnable": 0,
+                "isFreezable": 0,
+                "isLevitatable": 0,
+                "statusResistable": 2,
+                "templateKey": "empty",
+                "disableOverride": 0,
+                "overrideKey": "",
+                "overrideType": 0,
+                "maxStackCnt": 1,
+                "refreshRemainingTimeWhenStackMax": 0,
+                "clearAllStackCntWhenTimeUp": 0,
+                "maxValidStackCnt": -1,
+                "independentCharacterSource": 0,
+                "overrideEffectKey": "common_ignite_defense",
+                "overrideOnEventPriority": 0,
+                "onEventPriority": 0,
+                "audioSignal": "",
+                "lifeTimeType": 1,
+                "takeSnapshotWhenExtend": 0,
+                "durationKey": "",
+                "lifeTime": 0.0,
+                "triggerLifeType": 0,
+                "triggerCnt": 0,
+                "triggerInterval": -1.0,
+                "waitFirstTriggerInterval": 1,
+                "firstTriggerInterval": -1.0,
+                "priority": -1,
+                "priorityBBKeys": [],
+                "stripBlackboardParamsWithBuffKey": 0,
+                "blackboard": [],
+                "enableInitDirectionFromSource": 0
+              }
+            ],
+            "_waitForCasting": 0,
+            "_updateLifetimeWhenSpellStart": 0,
+            "_preDelay": 0.0,
+            "_escapeTime": 0.0,
+            "_checkBuffEarlyFinish": 0,
+            "_passiveBuffs": []
+          },
+          {
+            "pathId": "1261697522948126056",
+            "_maxTriggerTime": -1,
+            "_allowSpRecoveryWhenAffecting": 0,
+            "_canSilenced": 0,
+            "_canUseInAbnormalState": 0,
+            "_defaultModeIndex": -1,
+            "_attackBlackboardModeIndex": -1,
+            "_rangeIdModeIndex": -1,
+            "_extraAbilities": [],
+            "_earlySkillFinishAtAttackFinished": 0,
+            "_playSkillBeginAnim": 0,
+            "_beginAnim": "",
+            "_beginAnimDown": "",
+            "_trigger": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_switchToState": 0,
+            "_uninterruptibleOnAbilityPredelay": 0,
+            "_allowNoTarget": 1,
+            "_rangeToShow": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            }
+          }
+        ]
+      }
+    ],
+    "skchr_grani_2": [
+      {
+        "object": "skchr_grani_2",
+        "pathId": "4385228397208195792",
+        "components": [
+          {
+            "pathId": "-6274987903423884592",
+            "_maxTriggerTime": -1,
+            "_allowSpRecoveryWhenAffecting": 0,
+            "_canSilenced": 0,
+            "_canUseInAbnormalState": 0,
+            "_defaultModeIndex": -1,
+            "_attackBlackboardModeIndex": 1,
+            "_rangeIdModeIndex": 1,
+            "_extraAbilities": [],
+            "_earlySkillFinishAtAttackFinished": 0,
+            "_playSkillBeginAnim": 0,
+            "_beginAnim": "",
+            "_beginAnimDown": "",
+            "_trigger": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_switchToState": 1,
+            "_uninterruptibleOnAbilityPredelay": 0,
+            "_allowNoTarget": 1,
+            "_rangeToShow": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            }
+          },
+          {
+            "pathId": "1998811391502832336",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_metadata": {
+              "namedAsAlias": "",
+              "blackboardPrefix": ""
+            },
+            "_interruptAbilityOnDetach": 0,
+            "_waitForAttackEvent": 1,
+            "_buffs": [
+              {
+                "attributes": {
+                  "abnormalFlags": [],
+                  "abnormalImmunes": [],
+                  "abnormalAntis": [],
+                  "abnormalCombos": [],
+                  "abnormalComboImmunes": [],
+                  "attributeModifiers": [
+                    {
+                      "attributeType": 1,
+                      "formulaItem": 1,
+                      "value": 0.0,
+                      "loadFromBlackboard": 1,
+                      "fetchBaseValueFromSourceEntity": 0
+                    },
+                    {
+                      "attributeType": 2,
+                      "formulaItem": 1,
+                      "value": 0.0,
+                      "loadFromBlackboard": 1,
+                      "fetchBaseValueFromSourceEntity": 0
+                    },
+                    {
+                      "attributeType": 5,
+                      "formulaItem": 0,
+                      "value": 0.0,
+                      "loadFromBlackboard": 1,
+                      "fetchBaseValueFromSourceEntity": 0
+                    }
+                  ]
+                },
+                "buffKey": "grani_s_2",
+                "loadFromDB": 0,
+                "isDurableBuff": 0,
+                "isDamageMissable": 0,
+                "isSilenceable": 0,
+                "isStunnable": 0,
+                "isFreezable": 0,
+                "isLevitatable": 0,
+                "statusResistable": 2,
+                "templateKey": "switch_mode",
+                "disableOverride": 0,
+                "overrideKey": "",
+                "overrideType": 0,
+                "maxStackCnt": 1,
+                "refreshRemainingTimeWhenStackMax": 0,
+                "clearAllStackCntWhenTimeUp": 0,
+                "maxValidStackCnt": -1,
+                "independentCharacterSource": 0,
+                "overrideEffectKey": "grani_skill_02_buff",
+                "overrideOnEventPriority": 0,
+                "onEventPriority": 0,
+                "audioSignal": "",
+                "lifeTimeType": 1,
+                "takeSnapshotWhenExtend": 0,
+                "durationKey": "",
+                "lifeTime": 0.0,
+                "triggerLifeType": 0,
+                "triggerCnt": 0,
+                "triggerInterval": -1.0,
+                "waitFirstTriggerInterval": 1,
+                "firstTriggerInterval": -1.0,
+                "priority": -1,
+                "priorityBBKeys": [],
+                "stripBlackboardParamsWithBuffKey": 0,
+                "blackboard": [
+                  {
+                    "key": "mode",
+                    "value": 1.0,
+                    "valueStr": ""
+                  }
+                ],
+                "enableInitDirectionFromSource": 0
+              }
+            ],
+            "_waitForCasting": 0,
+            "_updateLifetimeWhenSpellStart": 0,
+            "_preDelay": 0.0,
+            "_escapeTime": 0.0,
+            "_checkBuffEarlyFinish": 0,
+            "_passiveBuffs": []
+          }
+        ]
+      }
+    ],
+    "skchr_elysm_1": [
+      {
+        "object": "1",
+        "pathId": "-3008530452168526716",
+        "components": [
+          {
+            "pathId": "6068042493062722692",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_metadata": {
+              "namedAsAlias": "",
+              "blackboardPrefix": ""
+            },
+            "_interruptAbilityOnDetach": 0,
+            "_targetValidator": {
+              "m_FileID": 0,
+              "m_PathID": "7696503135055950980"
+            },
+            "_buffs": [
+              {
+                "attributes": {
+                  "abnormalFlags": [],
+                  "abnormalImmunes": [],
+                  "abnormalAntis": [],
+                  "abnormalCombos": [],
+                  "abnormalComboImmunes": [],
+                  "attributeModifiers": [
+                    {
+                      "attributeType": 7,
+                      "formulaItem": 0,
+                      "value": 0.0,
+                      "loadFromBlackboard": 1,
+                      "fetchBaseValueFromSourceEntity": 0
+                    }
+                  ]
+                },
+                "buffKey": "elysm_t_1[atk_speed]",
+                "loadFromDB": 0,
+                "isDurableBuff": 0,
+                "isDamageMissable": 0,
+                "isSilenceable": 0,
+                "isStunnable": 0,
+                "isFreezable": 0,
+                "isLevitatable": 0,
+                "statusResistable": 2,
+                "templateKey": "empty",
+                "disableOverride": 0,
+                "overrideKey": "",
+                "overrideType": 0,
+                "maxStackCnt": 1,
+                "refreshRemainingTimeWhenStackMax": 0,
+                "clearAllStackCntWhenTimeUp": 0,
+                "maxValidStackCnt": -1,
+                "independentCharacterSource": 0,
+                "overrideEffectKey": "",
+                "overrideOnEventPriority": 0,
+                "onEventPriority": 0,
+                "audioSignal": "",
+                "lifeTimeType": 2,
+                "takeSnapshotWhenExtend": 0,
+                "durationKey": "",
+                "lifeTime": 0.0,
+                "triggerLifeType": 0,
+                "triggerCnt": 0,
+                "triggerInterval": -1.0,
+                "waitFirstTriggerInterval": 1,
+                "firstTriggerInterval": -1.0,
+                "priority": -1,
+                "priorityBBKeys": [],
+                "stripBlackboardParamsWithBuffKey": 0,
+                "blackboard": [],
+                "enableInitDirectionFromSource": 0
+              }
+            ],
+            "_passiveBuffs": [],
+            "_selfOption": 0,
+            "_removeBuffWhenAbilityDetached": 1,
+            "_onlyDetactTargetWhenStarted": 0,
+            "_interval": 0.0
+          },
+          {
+            "pathId": "7696503135055950980",
+            "_targetOptions": {
+              "targetSide": 1,
+              "targetMotion": 3,
+              "targetCategory": 1,
+              "enableAdvancedOptions": 1,
+              "ignoreTargetFree": 1,
+              "ignoreAllyTargetFree": 0,
+              "ignoreHealFree": 0,
+              "ignoreTargetSide": 0,
+              "excludeSomeAbnormalFlags": 0,
+              "excludeAbnormalFlag": 0,
+              "purposeMask": 0,
+              "professionMask": 2,
+              "checkUnitType": 0,
+              "unitTypeMask": 0,
+              "onlyIgnoreSomeOfTargetFreeCase": 0,
+              "abnormalFlag": 0,
+              "abnormalCombo": 0
+            }
+          },
+          {
+            "pathId": "8706577658052981892",
+            "_defaultModeIndex": -1,
+            "_attackBlackboardModeIndex": -1
+          }
+        ]
+      },
+      {
+        "object": "skchr_elysm_1",
+        "pathId": "-740824848443329404",
+        "components": [
+          {
+            "pathId": "-5539512432154921852",
+            "_default": {
+              "beginAnim": "Skill_1_Start",
+              "loopAnim": "Skill_1_Loop",
+              "endAnim": "Skill_1_End"
+            },
+            "_faceToDefault": 0
+          },
+          {
+            "pathId": "-3904214702449970044",
+            "_maxTriggerTime": -1,
+            "_allowSpRecoveryWhenAffecting": 0,
+            "_canSilenced": 0,
+            "_canUseInAbnormalState": 0,
+            "_defaultModeIndex": -1,
+            "_attackBlackboardModeIndex": -1,
+            "_rangeIdModeIndex": -1,
+            "_extraAbilities": [],
+            "_earlySkillFinishAtAttackFinished": 0,
+            "_playSkillBeginAnim": 0,
+            "_beginAnim": "",
+            "_beginAnimDown": "",
+            "_trigger": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_switchToState": 0,
+            "_uninterruptibleOnAbilityPredelay": 0,
+            "_allowNoTarget": 1,
+            "_rangeToShow": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            }
+          },
+          {
+            "pathId": "2962497498037007492",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_metadata": {
+              "namedAsAlias": "",
+              "blackboardPrefix": ""
+            },
+            "_interruptAbilityOnDetach": 0,
+            "_waitForAttackEvent": 0,
+            "_buffs": [
+              {
+                "attributes": {
+                  "abnormalFlags": [
+                    11
+                  ],
+                  "abnormalImmunes": [],
+                  "abnormalAntis": [],
+                  "abnormalCombos": [],
+                  "abnormalComboImmunes": [],
+                  "attributeModifiers": [
+                    {
+                      "attributeType": 5,
+                      "formulaItem": 3,
+                      "value": 0.0,
+                      "loadFromBlackboard": 0,
+                      "fetchBaseValueFromSourceEntity": 0
+                    }
+                  ]
+                },
+                "buffKey": "elysm_s_1[cost]",
+                "loadFromDB": 0,
+                "isDurableBuff": 0,
+                "isDamageMissable": 0,
+                "isSilenceable": 0,
+                "isStunnable": 0,
+                "isFreezable": 0,
+                "isLevitatable": 0,
+                "statusResistable": 2,
+                "templateKey": "periodic_cost",
+                "disableOverride": 1,
+                "overrideKey": "",
+                "overrideType": 0,
+                "maxStackCnt": 1,
+                "refreshRemainingTimeWhenStackMax": 0,
+                "clearAllStackCntWhenTimeUp": 0,
+                "maxValidStackCnt": -1,
+                "independentCharacterSource": 0,
+                "overrideEffectKey": "elysm_skill_01_buff",
+                "overrideOnEventPriority": 0,
+                "onEventPriority": 0,
+                "audioSignal": "",
+                "lifeTimeType": 1,
+                "takeSnapshotWhenExtend": 0,
+                "durationKey": "",
+                "lifeTime": 0.0,
+                "triggerLifeType": 2,
+                "triggerCnt": 0,
+                "triggerInterval": 1.0,
+                "waitFirstTriggerInterval": 1,
+                "firstTriggerInterval": -1.0,
+                "priority": -1,
+                "priorityBBKeys": [],
+                "stripBlackboardParamsWithBuffKey": 0,
+                "blackboard": [],
+                "enableInitDirectionFromSource": 0
+              },
+              {
+                "attributes": {
+                  "abnormalFlags": [],
+                  "abnormalImmunes": [],
+                  "abnormalAntis": [],
+                  "abnormalCombos": [],
+                  "abnormalComboImmunes": [],
+                  "attributeModifiers": []
+                },
+                "buffKey": "elysm_s_1[switch]",
+                "loadFromDB": 0,
+                "isDurableBuff": 0,
+                "isDamageMissable": 0,
+                "isSilenceable": 0,
+                "isStunnable": 0,
+                "isFreezable": 0,
+                "isLevitatable": 0,
+                "statusResistable": 2,
+                "templateKey": "switch_mode_restart_fsm",
+                "disableOverride": 0,
+                "overrideKey": "",
+                "overrideType": 0,
+                "maxStackCnt": 1,
+                "refreshRemainingTimeWhenStackMax": 0,
+                "clearAllStackCntWhenTimeUp": 0,
+                "maxValidStackCnt": -1,
+                "independentCharacterSource": 0,
+                "overrideEffectKey": "",
+                "overrideOnEventPriority": 0,
+                "onEventPriority": 0,
+                "audioSignal": "",
+                "lifeTimeType": 1,
+                "takeSnapshotWhenExtend": 0,
+                "durationKey": "",
+                "lifeTime": 0.0,
+                "triggerLifeType": 0,
+                "triggerCnt": 0,
+                "triggerInterval": -1.0,
+                "waitFirstTriggerInterval": 1,
+                "firstTriggerInterval": -1.0,
+                "priority": -1,
+                "priorityBBKeys": [],
+                "stripBlackboardParamsWithBuffKey": 0,
+                "blackboard": [
+                  {
+                    "key": "mode",
+                    "value": 1.0,
+                    "valueStr": ""
+                  }
+                ],
+                "enableInitDirectionFromSource": 0
+              }
+            ],
+            "_waitForCasting": 1,
+            "_updateLifetimeWhenSpellStart": 0,
+            "_preDelay": 0.0,
+            "_escapeTime": 0.0,
+            "_checkBuffEarlyFinish": 0,
+            "_passiveBuffs": []
+          }
+        ]
+      }
+    ],
+    "skchr_elysm_2": [
+      {
+        "object": "skchr_elysm_2",
+        "pathId": "-9055572159620122980",
+        "components": [
+          {
+            "pathId": "-4713644571339589988",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_metadata": {
+              "namedAsAlias": "",
+              "blackboardPrefix": ""
+            },
+            "_interruptAbilityOnDetach": 0,
+            "_abilities": [
+              {
+                "m_FileID": 0,
+                "m_PathID": "7210002431509919388"
+              },
+              {
+                "m_FileID": 0,
+                "m_PathID": "1329453518349530780"
+              }
+            ],
+            "_timeMode": 1
+          },
+          {
+            "pathId": "6021249190266599068",
+            "_maxTriggerTime": -1,
+            "_allowSpRecoveryWhenAffecting": 0,
+            "_canSilenced": 0,
+            "_canUseInAbnormalState": 0,
+            "_defaultModeIndex": -1,
+            "_attackBlackboardModeIndex": -1,
+            "_rangeIdModeIndex": -1,
+            "_extraAbilities": [],
+            "_earlySkillFinishAtAttackFinished": 0,
+            "_playSkillBeginAnim": 0,
+            "_beginAnim": "",
+            "_beginAnimDown": "",
+            "_trigger": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_switchToState": 1,
+            "_uninterruptibleOnAbilityPredelay": 0,
+            "_allowNoTarget": 1,
+            "_rangeToShow": {
+              "m_FileID": 0,
+              "m_PathID": "7049696127201179292"
+            }
+          }
+        ]
+      },
+      {
+        "object": "1",
+        "pathId": "-1786281300609534308",
+        "components": [
+          {
+            "pathId": "-2521381545196587364",
+            "_targetOptions": {
+              "targetSide": 1,
+              "targetMotion": 3,
+              "targetCategory": 1,
+              "enableAdvancedOptions": 1,
+              "ignoreTargetFree": 1,
+              "ignoreAllyTargetFree": 0,
+              "ignoreHealFree": 0,
+              "ignoreTargetSide": 0,
+              "excludeSomeAbnormalFlags": 0,
+              "excludeAbnormalFlag": 0,
+              "purposeMask": 0,
+              "professionMask": 2,
+              "checkUnitType": 0,
+              "unitTypeMask": 0,
+              "onlyIgnoreSomeOfTargetFreeCase": 0,
+              "abnormalFlag": 0,
+              "abnormalCombo": 0
+            }
+          },
+          {
+            "pathId": "1404434921622337180",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_metadata": {
+              "namedAsAlias": "",
+              "blackboardPrefix": ""
+            },
+            "_interruptAbilityOnDetach": 0,
+            "_targetValidator": {
+              "m_FileID": 0,
+              "m_PathID": "-2521381545196587364"
+            },
+            "_buffs": [
+              {
+                "attributes": {
+                  "abnormalFlags": [],
+                  "abnormalImmunes": [],
+                  "abnormalAntis": [],
+                  "abnormalCombos": [],
+                  "abnormalComboImmunes": [],
+                  "attributeModifiers": [
+                    {
+                      "attributeType": 7,
+                      "formulaItem": 0,
+                      "value": 0.0,
+                      "loadFromBlackboard": 1,
+                      "fetchBaseValueFromSourceEntity": 0
+                    }
+                  ]
+                },
+                "buffKey": "elysm_t_1[atk_speed]",
+                "loadFromDB": 0,
+                "isDurableBuff": 0,
+                "isDamageMissable": 0,
+                "isSilenceable": 0,
+                "isStunnable": 0,
+                "isFreezable": 0,
+                "isLevitatable": 0,
+                "statusResistable": 2,
+                "templateKey": "empty",
+                "disableOverride": 0,
+                "overrideKey": "",
+                "overrideType": 0,
+                "maxStackCnt": 1,
+                "refreshRemainingTimeWhenStackMax": 0,
+                "clearAllStackCntWhenTimeUp": 0,
+                "maxValidStackCnt": -1,
+                "independentCharacterSource": 1,
+                "overrideEffectKey": "",
+                "overrideOnEventPriority": 0,
+                "onEventPriority": 0,
+                "audioSignal": "",
+                "lifeTimeType": 2,
+                "takeSnapshotWhenExtend": 0,
+                "durationKey": "",
+                "lifeTime": 0.0,
+                "triggerLifeType": 0,
+                "triggerCnt": 0,
+                "triggerInterval": -1.0,
+                "waitFirstTriggerInterval": 1,
+                "firstTriggerInterval": -1.0,
+                "priority": -1,
+                "priorityBBKeys": [],
+                "stripBlackboardParamsWithBuffKey": 0,
+                "blackboard": [],
+                "enableInitDirectionFromSource": 0
+              }
+            ],
+            "_passiveBuffs": [],
+            "_selfOption": 0,
+            "_removeBuffWhenAbilityDetached": 1,
+            "_onlyDetactTargetWhenStarted": 0,
+            "_interval": 0.0
+          },
+          {
+            "pathId": "3683362204045342364",
+            "_defaultModeIndex": -1,
+            "_attackBlackboardModeIndex": -1
+          }
+        ]
+      },
+      {
+        "object": "Debuff",
+        "pathId": "-1678783926627731812",
+        "components": [
+          {
+            "pathId": "7210002431509919388",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "7049696127201179292"
+            },
+            "_metadata": {
+              "namedAsAlias": "",
+              "blackboardPrefix": ""
+            },
+            "_interruptAbilityOnDetach": 0,
+            "_waitForAttackEvent": 1,
+            "_selectTargetSource": 1,
+            "_selectTargetTiming": 0,
+            "_timeMode": 1,
+            "_alwaysIncludeTarget": 1,
+            "_allowNoTarget": 1,
+            "_animKey": "",
+            "_endAnimKey": "",
+            "_downAnimKey": "",
+            "_downEndAnimKey": "",
+            "_upAnimKey": "",
+            "_upEndAnimKey": "",
+            "_cooldown": 0.0,
+            "_cooldownKey": "duration",
+            "_preDelay": 0.0,
+            "_escapeTime": 0.0,
+            "_faceToTarget": 0,
+            "_faceToDefault": 1,
+            "_activeBuffs": [
+              {
+                "attributes": {
+                  "abnormalFlags": [],
+                  "abnormalImmunes": [
+                    9
+                  ],
+                  "abnormalAntis": [],
+                  "abnormalCombos": [],
+                  "abnormalComboImmunes": [],
+                  "attributeModifiers": [
+                    {
+                      "attributeType": 6,
+                      "formulaItem": 3,
+                      "value": 0.0,
+                      "loadFromBlackboard": 1,
+                      "fetchBaseValueFromSourceEntity": 0
+                    },
+                    {
+                      "attributeType": 2,
+                      "formulaItem": 3,
+                      "value": 0.0,
+                      "loadFromBlackboard": 1,
+                      "fetchBaseValueFromSourceEntity": 0
+                    }
+                  ]
+                },
+                "buffKey": "elysm_s_2[enemy]",
+                "loadFromDB": 0,
+                "isDurableBuff": 0,
+                "isDamageMissable": 0,
+                "isSilenceable": 0,
+                "isStunnable": 0,
+                "isFreezable": 0,
+                "isLevitatable": 0,
+                "statusResistable": 2,
+                "templateKey": "elysm_s_2",
+                "disableOverride": 0,
+                "overrideKey": "",
+                "overrideType": 0,
+                "maxStackCnt": 1,
+                "refreshRemainingTimeWhenStackMax": 0,
+                "clearAllStackCntWhenTimeUp": 0,
+                "maxValidStackCnt": -1,
+                "independentCharacterSource": 1,
+                "overrideEffectKey": "elysm_skill_02_buff_02",
+                "overrideOnEventPriority": 0,
+                "onEventPriority": 0,
+                "audioSignal": "",
+                "lifeTimeType": 1,
+                "takeSnapshotWhenExtend": 0,
+                "durationKey": "",
+                "lifeTime": 0.0,
+                "triggerLifeType": 2,
+                "triggerCnt": 0,
+                "triggerInterval": 0.25,
+                "waitFirstTriggerInterval": 0,
+                "firstTriggerInterval": -1.0,
+                "priority": -1,
+                "priorityBBKeys": [],
+                "stripBlackboardParamsWithBuffKey": 0,
+                "blackboard": [],
+                "enableInitDirectionFromSource": 0
+              }
+            ],
+            "_maxAnimScale": -1.0,
+            "_ignorePalsyInterrupt": 0
+          }
+        ]
+      },
+      {
+        "object": "Disarm",
+        "pathId": "3632827291253405340",
+        "components": [
+          {
+            "pathId": "-3488158052535044452",
+            "_default": {
+              "beginAnim": "Skill_2_Start",
+              "loopAnim": "Skill_2_Loop",
+              "endAnim": "Skill_2_End"
+            },
+            "_faceToDefault": 1
+          },
+          {
+            "pathId": "1329453518349530780",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_metadata": {
+              "namedAsAlias": "",
+              "blackboardPrefix": ""
+            },
+            "_interruptAbilityOnDetach": 0,
+            "_waitForAttackEvent": 0,
+            "_buffs": [
+              {
+                "attributes": {
+                  "abnormalFlags": [
+                    11
+                  ],
+                  "abnormalImmunes": [],
+                  "abnormalAntis": [],
+                  "abnormalCombos": [],
+                  "abnormalComboImmunes": [],
+                  "attributeModifiers": [
+                    {
+                      "attributeType": 5,
+                      "formulaItem": 3,
+                      "value": 0.0,
+                      "loadFromBlackboard": 0,
+                      "fetchBaseValueFromSourceEntity": 0
+                    }
+                  ]
+                },
+                "buffKey": "elysm_s_2[switch]",
+                "loadFromDB": 0,
+                "isDurableBuff": 0,
+                "isDamageMissable": 0,
+                "isSilenceable": 0,
+                "isStunnable": 0,
+                "isFreezable": 0,
+                "isLevitatable": 0,
+                "statusResistable": 2,
+                "templateKey": "switch_mode_restart_fsm",
+                "disableOverride": 0,
+                "overrideKey": "",
+                "overrideType": 0,
+                "maxStackCnt": 1,
+                "refreshRemainingTimeWhenStackMax": 0,
+                "clearAllStackCntWhenTimeUp": 0,
+                "maxValidStackCnt": -1,
+                "independentCharacterSource": 0,
+                "overrideEffectKey": "elysm_skill_02_buff",
+                "overrideOnEventPriority": 0,
+                "onEventPriority": 0,
+                "audioSignal": "",
+                "lifeTimeType": 1,
+                "takeSnapshotWhenExtend": 0,
+                "durationKey": "",
+                "lifeTime": 0.0,
+                "triggerLifeType": 0,
+                "triggerCnt": 0,
+                "triggerInterval": -1.0,
+                "waitFirstTriggerInterval": 1,
+                "firstTriggerInterval": -1.0,
+                "priority": -1,
+                "priorityBBKeys": [],
+                "stripBlackboardParamsWithBuffKey": 0,
+                "blackboard": [
+                  {
+                    "key": "mode",
+                    "value": 1.0,
+                    "valueStr": ""
+                  }
+                ],
+                "enableInitDirectionFromSource": 0
+              },
+              {
+                "attributes": {
+                  "abnormalFlags": [],
+                  "abnormalImmunes": [],
+                  "abnormalAntis": [],
+                  "abnormalCombos": [],
+                  "abnormalComboImmunes": [],
+                  "attributeModifiers": []
+                },
+                "buffKey": "elysm_s_2[cost]",
+                "loadFromDB": 0,
+                "isDurableBuff": 0,
+                "isDamageMissable": 0,
+                "isSilenceable": 0,
+                "isStunnable": 0,
+                "isFreezable": 0,
+                "isLevitatable": 0,
+                "statusResistable": 2,
+                "templateKey": "periodic_cost",
+                "disableOverride": 0,
+                "overrideKey": "",
+                "overrideType": 0,
+                "maxStackCnt": 1,
+                "refreshRemainingTimeWhenStackMax": 0,
+                "clearAllStackCntWhenTimeUp": 0,
+                "maxValidStackCnt": -1,
+                "independentCharacterSource": 0,
+                "overrideEffectKey": "elysm_skill_02_buff_01",
+                "overrideOnEventPriority": 0,
+                "onEventPriority": 0,
+                "audioSignal": "",
+                "lifeTimeType": 1,
+                "takeSnapshotWhenExtend": 0,
+                "durationKey": "",
+                "lifeTime": 0.0,
+                "triggerLifeType": 2,
+                "triggerCnt": 0,
+                "triggerInterval": 1.0,
+                "waitFirstTriggerInterval": 1,
+                "firstTriggerInterval": -1.0,
+                "priority": -1,
+                "priorityBBKeys": [],
+                "stripBlackboardParamsWithBuffKey": 0,
+                "blackboard": [],
+                "enableInitDirectionFromSource": 0
+              },
+              {
+                "attributes": {
+                  "abnormalFlags": [],
+                  "abnormalImmunes": [],
+                  "abnormalAntis": [],
+                  "abnormalCombos": [],
+                  "abnormalComboImmunes": [],
+                  "attributeModifiers": []
+                },
+                "buffKey": "elysm_s_2[effect]",
+                "loadFromDB": 0,
+                "isDurableBuff": 0,
+                "isDamageMissable": 0,
+                "isSilenceable": 0,
+                "isStunnable": 0,
+                "isFreezable": 0,
+                "isLevitatable": 0,
+                "statusResistable": 2,
+                "templateKey": "empty",
+                "disableOverride": 0,
+                "overrideKey": "",
+                "overrideType": 0,
+                "maxStackCnt": 1,
+                "refreshRemainingTimeWhenStackMax": 0,
+                "clearAllStackCntWhenTimeUp": 0,
+                "maxValidStackCnt": -1,
+                "independentCharacterSource": 0,
+                "overrideEffectKey": "elysm_skill_02_range",
+                "overrideOnEventPriority": 0,
+                "onEventPriority": 0,
+                "audioSignal": "",
+                "lifeTimeType": 1,
+                "takeSnapshotWhenExtend": 0,
+                "durationKey": "",
+                "lifeTime": 0.0,
+                "triggerLifeType": 0,
+                "triggerCnt": 0,
+                "triggerInterval": -1.0,
+                "waitFirstTriggerInterval": 1,
+                "firstTriggerInterval": -1.0,
+                "priority": -1,
+                "priorityBBKeys": [],
+                "stripBlackboardParamsWithBuffKey": 0,
+                "blackboard": [],
+                "enableInitDirectionFromSource": 0
+              }
+            ],
+            "_waitForCasting": 1,
+            "_updateLifetimeWhenSpellStart": 0,
+            "_preDelay": 0.0,
+            "_escapeTime": 0.0,
+            "_checkBuffEarlyFinish": 0,
+            "_passiveBuffs": []
+          }
+        ]
+      },
+      {
+        "object": "Selector",
+        "pathId": "6246143956481144476",
+        "components": [
+          {
+            "pathId": "-7299002043979336036",
+            "_extendable": 0
+          },
+          {
+            "pathId": "7049696127201179292",
+            "_targetSide": 2,
+            "_targetMotion": 3,
+            "_targetCategory": 1,
+            "_postFilter": 24,
+            "_ignoreTargetFree": 1,
+            "_onlyIgnoreSomeOfTargetFreeCase": 0,
+            "_abnormalFlag": 44,
+            "_abnormalCombo": 2,
+            "_ignoreAllyTargetFree": 0,
+            "_ignoreHealFree": 0,
+            "_needProfessionMask": 0,
+            "_professionMask": 0,
+            "_limitTargetNum": 1,
+            "_maxTargetKey": "max_target",
+            "_maxNum": 3,
+            "_excludeOwner": 0
+          }
+        ]
+      }
+    ],
+    "skchr_wildmn_1": [
+      {
+        "object": "skchr_wildmn_1",
+        "pathId": "-2213554229011132006",
+        "components": [
+          {
+            "pathId": "-4164338161426738790",
+            "_maxTriggerTime": -1,
+            "_allowSpRecoveryWhenAffecting": 0,
+            "_canSilenced": 0,
+            "_canUseInAbnormalState": 0,
+            "_defaultModeIndex": -1,
+            "_attackBlackboardModeIndex": -1,
+            "_rangeIdModeIndex": -1,
+            "_extraAbilities": [],
+            "_earlySkillFinishAtAttackFinished": 0,
+            "_playSkillBeginAnim": 0,
+            "_beginAnim": "",
+            "_beginAnimDown": "",
+            "_switchToState": 0,
+            "_castOnLocate": 1
+          },
+          {
+            "pathId": "8814728896130601370",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_metadata": {
+              "namedAsAlias": "",
+              "blackboardPrefix": ""
+            },
+            "_interruptAbilityOnDetach": 0,
+            "_waitForAttackEvent": 0,
+            "_buffs": [
+              {
+                "attributes": {
+                  "abnormalFlags": [],
+                  "abnormalImmunes": [],
+                  "abnormalAntis": [],
+                  "abnormalCombos": [],
+                  "abnormalComboImmunes": [],
+                  "attributeModifiers": [
+                    {
+                      "attributeType": 7,
+                      "formulaItem": 0,
+                      "value": 0.0,
+                      "loadFromBlackboard": 1,
+                      "fetchBaseValueFromSourceEntity": 0
+                    }
+                  ]
+                },
+                "buffKey": "wildmn_s_1",
+                "loadFromDB": 0,
+                "isDurableBuff": 0,
+                "isDamageMissable": 0,
+                "isSilenceable": 0,
+                "isStunnable": 0,
+                "isFreezable": 0,
+                "isLevitatable": 0,
+                "statusResistable": 2,
+                "templateKey": "switch_mode_restart_fsm",
+                "disableOverride": 0,
+                "overrideKey": "",
+                "overrideType": 0,
+                "maxStackCnt": 1,
+                "refreshRemainingTimeWhenStackMax": 0,
+                "clearAllStackCntWhenTimeUp": 0,
+                "maxValidStackCnt": -1,
+                "independentCharacterSource": 0,
+                "overrideEffectKey": "common_ignite_attack",
+                "overrideOnEventPriority": 0,
+                "onEventPriority": 0,
+                "audioSignal": "",
+                "lifeTimeType": 1,
+                "takeSnapshotWhenExtend": 0,
+                "durationKey": "duration",
+                "lifeTime": 0.0,
+                "triggerLifeType": 0,
+                "triggerCnt": 0,
+                "triggerInterval": -1.0,
+                "waitFirstTriggerInterval": 1,
+                "firstTriggerInterval": -1.0,
+                "priority": -1,
+                "priorityBBKeys": [],
+                "stripBlackboardParamsWithBuffKey": 0,
+                "blackboard": [
+                  {
+                    "key": "mode",
+                    "value": 1.0,
+                    "valueStr": ""
+                  }
+                ],
+                "enableInitDirectionFromSource": 0
+              }
+            ],
+            "_waitForCasting": 0,
+            "_updateLifetimeWhenSpellStart": 0,
+            "_preDelay": 0.0,
+            "_escapeTime": 0.0,
+            "_checkBuffEarlyFinish": 0,
+            "_passiveBuffs": []
+          }
+        ]
+      }
+    ],
+    "skchr_wildmn_2": [
+      {
+        "object": "skchr_wildmn_2",
+        "pathId": "-8709057179318070505",
+        "components": [
+          {
+            "pathId": "-3043820686195666153",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_metadata": {
+              "namedAsAlias": "",
+              "blackboardPrefix": ""
+            },
+            "_interruptAbilityOnDetach": 0,
+            "_waitForAttackEvent": 1,
+            "_buffs": [
+              {
+                "attributes": {
+                  "abnormalFlags": [],
+                  "abnormalImmunes": [],
+                  "abnormalAntis": [],
+                  "abnormalCombos": [],
+                  "abnormalComboImmunes": [],
+                  "attributeModifiers": [
+                    {
+                      "attributeType": 1,
+                      "formulaItem": 1,
+                      "value": 0.0,
+                      "loadFromBlackboard": 1,
+                      "fetchBaseValueFromSourceEntity": 0
+                    }
+                  ]
+                },
+                "buffKey": "wildmn_s_2",
+                "loadFromDB": 0,
+                "isDurableBuff": 0,
+                "isDamageMissable": 0,
+                "isSilenceable": 0,
+                "isStunnable": 0,
+                "isFreezable": 0,
+                "isLevitatable": 0,
+                "statusResistable": 2,
+                "templateKey": "switch_mode",
+                "disableOverride": 0,
+                "overrideKey": "",
+                "overrideType": 0,
+                "maxStackCnt": 1,
+                "refreshRemainingTimeWhenStackMax": 0,
+                "clearAllStackCntWhenTimeUp": 0,
+                "maxValidStackCnt": -1,
+                "independentCharacterSource": 0,
+                "overrideEffectKey": "wildmn_skill_02_buff",
+                "overrideOnEventPriority": 0,
+                "onEventPriority": 0,
+                "audioSignal": "",
+                "lifeTimeType": 1,
+                "takeSnapshotWhenExtend": 0,
+                "durationKey": "duration",
+                "lifeTime": 0.0,
+                "triggerLifeType": 0,
+                "triggerCnt": 0,
+                "triggerInterval": -1.0,
+                "waitFirstTriggerInterval": 1,
+                "firstTriggerInterval": -1.0,
+                "priority": -1,
+                "priorityBBKeys": [],
+                "stripBlackboardParamsWithBuffKey": 0,
+                "blackboard": [
+                  {
+                    "key": "mode",
+                    "value": 2.0,
+                    "valueStr": ""
+                  }
+                ],
+                "enableInitDirectionFromSource": 0
+              }
+            ],
+            "_waitForCasting": 0,
+            "_updateLifetimeWhenSpellStart": 0,
+            "_preDelay": 0.0,
+            "_escapeTime": 0.0,
+            "_checkBuffEarlyFinish": 0,
+            "_passiveBuffs": []
+          },
+          {
+            "pathId": "6414087762433561367",
+            "_maxTriggerTime": -1,
+            "_allowSpRecoveryWhenAffecting": 0,
+            "_canSilenced": 0,
+            "_canUseInAbnormalState": 0,
+            "_defaultModeIndex": -1,
+            "_attackBlackboardModeIndex": 2,
+            "_rangeIdModeIndex": 2,
+            "_extraAbilities": [],
+            "_earlySkillFinishAtAttackFinished": 0,
+            "_playSkillBeginAnim": 0,
+            "_beginAnim": "",
+            "_beginAnimDown": "",
+            "_trigger": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_switchToState": 0,
+            "_uninterruptibleOnAbilityPredelay": 0,
+            "_allowNoTarget": 1,
+            "_rangeToShow": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            }
+          }
+        ]
+      }
+    ],
+    "skchr_fang2_1": [
+      {
+        "object": "skchr_fang2_1",
+        "pathId": "-2235386597776155210",
+        "components": [
+          {
+            "pathId": "-4099296283204575818",
+            "_buffs": [
+              {
+                "attributes": {
+                  "abnormalFlags": [],
+                  "abnormalImmunes": [],
+                  "abnormalAntis": [],
+                  "abnormalCombos": [],
+                  "abnormalComboImmunes": [],
+                  "attributeModifiers": []
+                },
+                "buffKey": "fang2_s_1",
+                "loadFromDB": 0,
+                "isDurableBuff": 0,
+                "isDamageMissable": 0,
+                "isSilenceable": 0,
+                "isStunnable": 0,
+                "isFreezable": 0,
+                "isLevitatable": 0,
+                "statusResistable": 2,
+                "templateKey": "fang2_s_1",
+                "disableOverride": 0,
+                "overrideKey": "",
+                "overrideType": 0,
+                "maxStackCnt": 1,
+                "refreshRemainingTimeWhenStackMax": 0,
+                "clearAllStackCntWhenTimeUp": 0,
+                "maxValidStackCnt": -1,
+                "independentCharacterSource": 0,
+                "overrideEffectKey": "",
+                "overrideOnEventPriority": 0,
+                "onEventPriority": 0,
+                "audioSignal": "",
+                "lifeTimeType": 2,
+                "takeSnapshotWhenExtend": 0,
+                "durationKey": "duration",
+                "lifeTime": 0.0,
+                "triggerLifeType": 0,
+                "triggerCnt": 0,
+                "triggerInterval": -1.0,
+                "waitFirstTriggerInterval": 1,
+                "firstTriggerInterval": -1.0,
+                "priority": -1,
+                "priorityBBKeys": [],
+                "stripBlackboardParamsWithBuffKey": 0,
+                "blackboard": [],
+                "enableInitDirectionFromSource": 0
+              }
+            ]
+          },
+          {
+            "pathId": "1338734035650682294",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_metadata": {
+              "namedAsAlias": "",
+              "blackboardPrefix": ""
+            },
+            "_interruptAbilityOnDetach": 1,
+            "_waitForAttackEvent": 1,
+            "_selectTargetSource": 2,
+            "_selectTargetTiming": 0,
+            "_timeMode": 0,
+            "_alwaysIncludeTarget": 1,
+            "_allowNoTarget": 1,
+            "_animKey": "Skill_1",
+            "_endAnimKey": "Idle",
+            "_downAnimKey": "",
+            "_downEndAnimKey": "",
+            "_upAnimKey": "",
+            "_upEndAnimKey": "",
+            "_cooldown": 0.0,
+            "_cooldownKey": "duration",
+            "_preDelay": 0.0,
+            "_escapeTime": 0.0,
+            "_faceToTarget": 1,
+            "_faceToDefault": 0,
+            "_activeBuffs": [],
+            "_maxAnimScale": 1.0,
+            "_ignorePalsyInterrupt": 0,
+            "_atkScale": 1.0,
+            "_atkScaleKey": "atk_scale",
+            "_damageType": 1,
+            "_additionalTimes": 1,
+            "_triggerDelta": 0.25,
+            "_waitAttackEventForAllAttacks": 0,
+            "_splitDamage": 0
+          },
+          {
+            "pathId": "3663294210963479990",
+            "_maxTriggerTime": -1,
+            "_allowSpRecoveryWhenAffecting": 0,
+            "_canSilenced": 0,
+            "_canUseInAbnormalState": 0,
+            "_defaultModeIndex": -1,
+            "_attackBlackboardModeIndex": -1,
+            "_rangeIdModeIndex": -1,
+            "_extraAbilities": [],
+            "_earlySkillFinishAtAttackFinished": 0,
+            "_playSkillBeginAnim": 0,
+            "_beginAnim": "",
+            "_beginAnimDown": "",
+            "_trigger": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_rangeToShow": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            }
+          }
+        ]
+      }
+    ],
+    "skchr_fang2_2": [
+      {
+        "object": "skchr_fang2_2",
+        "pathId": "-8298094043867159497",
+        "components": [
+          {
+            "pathId": "-6135702265769597897",
+            "_maxTriggerTime": -1,
+            "_allowSpRecoveryWhenAffecting": 0,
+            "_canSilenced": 0,
+            "_canUseInAbnormalState": 0,
+            "_defaultModeIndex": 0,
+            "_attackBlackboardModeIndex": 1,
+            "_rangeIdModeIndex": -1,
+            "_extraAbilities": [],
+            "_earlySkillFinishAtAttackFinished": 0,
+            "_playSkillBeginAnim": 0,
+            "_beginAnim": "",
+            "_beginAnimDown": "",
+            "_switchToState": 0,
+            "_castOnLocate": 0
+          },
+          {
+            "pathId": "1135401656784872503",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_metadata": {
+              "namedAsAlias": "",
+              "blackboardPrefix": ""
+            },
+            "_interruptAbilityOnDetach": 1,
+            "_waitForAttackEvent": 1,
+            "_buffs": [
+              {
+                "attributes": {
+                  "abnormalFlags": [],
+                  "abnormalImmunes": [],
+                  "abnormalAntis": [],
+                  "abnormalCombos": [],
+                  "abnormalComboImmunes": [],
+                  "attributeModifiers": [
+                    {
+                      "attributeType": 1,
+                      "formulaItem": 1,
+                      "value": 0.0,
+                      "loadFromBlackboard": 1,
+                      "fetchBaseValueFromSourceEntity": 0
+                    },
+                    {
+                      "attributeType": 2,
+                      "formulaItem": 1,
+                      "value": 0.0,
+                      "loadFromBlackboard": 1,
+                      "fetchBaseValueFromSourceEntity": 0
+                    },
+                    {
+                      "attributeType": 5,
+                      "formulaItem": 0,
+                      "value": 0.0,
+                      "loadFromBlackboard": 1,
+                      "fetchBaseValueFromSourceEntity": 0
+                    }
+                  ]
+                },
+                "buffKey": "fang2_s_2",
+                "loadFromDB": 0,
+                "isDurableBuff": 0,
+                "isDamageMissable": 0,
+                "isSilenceable": 0,
+                "isStunnable": 0,
+                "isFreezable": 0,
+                "isLevitatable": 0,
+                "statusResistable": 2,
+                "templateKey": "switch_mode_restart_fsm",
+                "disableOverride": 0,
+                "overrideKey": "",
+                "overrideType": 0,
+                "maxStackCnt": 1,
+                "refreshRemainingTimeWhenStackMax": 0,
+                "clearAllStackCntWhenTimeUp": 0,
+                "maxValidStackCnt": -1,
+                "independentCharacterSource": 0,
+                "overrideEffectKey": "fang2_skill2_buff_01",
+                "overrideOnEventPriority": 0,
+                "onEventPriority": 0,
+                "audioSignal": "",
+                "lifeTimeType": 1,
+                "takeSnapshotWhenExtend": 0,
+                "durationKey": "duration",
+                "lifeTime": 0.0,
+                "triggerLifeType": 0,
+                "triggerCnt": 0,
+                "triggerInterval": -1.0,
+                "waitFirstTriggerInterval": 1,
+                "firstTriggerInterval": -1.0,
+                "priority": -1,
+                "priorityBBKeys": [],
+                "stripBlackboardParamsWithBuffKey": 0,
+                "blackboard": [],
+                "enableInitDirectionFromSource": 0
+              }
+            ],
+            "_waitForCasting": 0,
+            "_updateLifetimeWhenSpellStart": 0,
+            "_preDelay": 0.0,
+            "_escapeTime": 0.0,
+            "_checkBuffEarlyFinish": 0,
+            "_passiveBuffs": []
+          }
+        ]
+      }
+    ],
+    "skcom_charge_cost": [
+      {
+        "object": "skcom_charge_cost",
+        "pathId": "8146800619964951497",
+        "components": [
+          {
+            "pathId": "2059342473504713673",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_metadata": {
+              "namedAsAlias": "",
+              "blackboardPrefix": ""
+            },
+            "_interruptAbilityOnDetach": 0,
+            "_waitForAttackEvent": 1,
+            "_buffs": [
+              {
+                "attributes": {
+                  "abnormalFlags": [],
+                  "abnormalImmunes": [],
+                  "abnormalAntis": [],
+                  "abnormalCombos": [],
+                  "abnormalComboImmunes": [],
+                  "attributeModifiers": []
+                },
+                "buffKey": "charge_cost",
+                "loadFromDB": 0,
+                "isDurableBuff": 0,
+                "isDamageMissable": 0,
+                "isSilenceable": 0,
+                "isStunnable": 0,
+                "isFreezable": 0,
+                "isLevitatable": 0,
+                "statusResistable": 2,
+                "templateKey": "charge_cost",
+                "disableOverride": 0,
+                "overrideKey": "",
+                "overrideType": 0,
+                "maxStackCnt": 1,
+                "refreshRemainingTimeWhenStackMax": 0,
+                "clearAllStackCntWhenTimeUp": 0,
+                "maxValidStackCnt": -1,
+                "independentCharacterSource": 0,
+                "overrideEffectKey": "",
+                "overrideOnEventPriority": 0,
+                "onEventPriority": 0,
+                "audioSignal": "",
+                "lifeTimeType": 0,
+                "takeSnapshotWhenExtend": 0,
+                "durationKey": "",
+                "lifeTime": 0.0,
+                "triggerLifeType": 0,
+                "triggerCnt": 0,
+                "triggerInterval": -1.0,
+                "waitFirstTriggerInterval": 1,
+                "firstTriggerInterval": -1.0,
+                "priority": -1,
+                "priorityBBKeys": [],
+                "stripBlackboardParamsWithBuffKey": 0,
+                "blackboard": [],
+                "enableInitDirectionFromSource": 0
+              }
+            ],
+            "_waitForCasting": 0,
+            "_updateLifetimeWhenSpellStart": 0,
+            "_preDelay": 0.0,
+            "_escapeTime": 0.0,
+            "_checkBuffEarlyFinish": 0,
+            "_passiveBuffs": []
+          },
+          {
+            "pathId": "3979891889401195465",
+            "_maxTriggerTime": -1,
+            "_allowSpRecoveryWhenAffecting": 0,
+            "_canSilenced": 0,
+            "_canUseInAbnormalState": 0,
+            "_defaultModeIndex": -1,
+            "_attackBlackboardModeIndex": -1,
+            "_rangeIdModeIndex": -1,
+            "_extraAbilities": [],
+            "_earlySkillFinishAtAttackFinished": 0,
+            "_playSkillBeginAnim": 0,
+            "_beginAnim": "",
+            "_beginAnimDown": "",
+            "_trigger": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_switchToState": 0,
+            "_uninterruptibleOnAbilityPredelay": 0,
+            "_allowNoTarget": 1,
+            "_rangeToShow": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            }
+          }
+        ]
+      }
+    ],
+    "skchr_rfalcn_2": [
+      {
+        "object": "skchr_rfalcn_2",
+        "pathId": "8173282102148489376",
+        "components": [
+          {
+            "pathId": "-2967336161514332000",
+            "_maxTriggerTime": -1,
+            "_allowSpRecoveryWhenAffecting": 0,
+            "_canSilenced": 0,
+            "_canUseInAbnormalState": 0,
+            "_defaultModeIndex": 0,
+            "_attackBlackboardModeIndex": -1,
+            "_rangeIdModeIndex": -1,
+            "_extraAbilities": [],
+            "_earlySkillFinishAtAttackFinished": 0,
+            "_playSkillBeginAnim": 1,
+            "_beginAnim": "Skill_2_Begin",
+            "_beginAnimDown": "",
+            "_trigger": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_switchToState": 1,
+            "_uninterruptibleOnAbilityPredelay": 0,
+            "_allowNoTarget": 0,
+            "_rangeToShow": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            }
+          },
+          {
+            "pathId": "3946756884869374112",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_metadata": {
+              "namedAsAlias": "",
+              "blackboardPrefix": ""
+            },
+            "_interruptAbilityOnDetach": 1,
+            "_waitForAttackEvent": 1,
+            "_buffs": [
+              {
+                "attributes": {
+                  "abnormalFlags": [],
+                  "abnormalImmunes": [],
+                  "abnormalAntis": [],
+                  "abnormalCombos": [],
+                  "abnormalComboImmunes": [],
+                  "attributeModifiers": [
+                    {
+                      "attributeType": 1,
+                      "formulaItem": 1,
+                      "value": 0.0,
+                      "loadFromBlackboard": 1,
+                      "fetchBaseValueFromSourceEntity": 0
+                    },
+                    {
+                      "attributeType": 7,
+                      "formulaItem": 0,
+                      "value": 0.0,
+                      "loadFromBlackboard": 1,
+                      "fetchBaseValueFromSourceEntity": 0
+                    }
+                  ]
+                },
+                "buffKey": "rfalcn_s_2",
+                "loadFromDB": 0,
+                "isDurableBuff": 0,
+                "isDamageMissable": 0,
+                "isSilenceable": 0,
+                "isStunnable": 0,
+                "isFreezable": 0,
+                "isLevitatable": 0,
+                "statusResistable": 2,
+                "templateKey": "switch_mode_restart_fsm",
+                "disableOverride": 0,
+                "overrideKey": "",
+                "overrideType": 0,
+                "maxStackCnt": 1,
+                "refreshRemainingTimeWhenStackMax": 0,
+                "clearAllStackCntWhenTimeUp": 0,
+                "maxValidStackCnt": -1,
+                "independentCharacterSource": 0,
+                "overrideEffectKey": "rfalcn_skill_02_buff",
+                "overrideOnEventPriority": 0,
+                "onEventPriority": 0,
+                "audioSignal": "",
+                "lifeTimeType": 1,
+                "takeSnapshotWhenExtend": 0,
+                "durationKey": "duration",
+                "lifeTime": 0.0,
+                "triggerLifeType": 0,
+                "triggerCnt": 0,
+                "triggerInterval": -1.0,
+                "waitFirstTriggerInterval": 1,
+                "firstTriggerInterval": -1.0,
+                "priority": -1,
+                "priorityBBKeys": [],
+                "stripBlackboardParamsWithBuffKey": 0,
+                "blackboard": [
+                  {
+                    "key": "mode",
+                    "value": 1.0,
+                    "valueStr": ""
+                  }
+                ],
+                "enableInitDirectionFromSource": 0
+              },
+              {
+                "attributes": {
+                  "abnormalFlags": [],
+                  "abnormalImmunes": [],
+                  "abnormalAntis": [],
+                  "abnormalCombos": [],
+                  "abnormalComboImmunes": [],
+                  "attributeModifiers": []
+                },
+                "buffKey": "rfalcn_s_2[cost]",
+                "loadFromDB": 0,
+                "isDurableBuff": 0,
+                "isDamageMissable": 0,
+                "isSilenceable": 0,
+                "isStunnable": 0,
+                "isFreezable": 0,
+                "isLevitatable": 0,
+                "statusResistable": 2,
+                "templateKey": "periodic_cost",
+                "disableOverride": 0,
+                "overrideKey": "",
+                "overrideType": 0,
+                "maxStackCnt": 1,
+                "refreshRemainingTimeWhenStackMax": 0,
+                "clearAllStackCntWhenTimeUp": 0,
+                "maxValidStackCnt": -1,
+                "independentCharacterSource": 0,
+                "overrideEffectKey": "",
+                "overrideOnEventPriority": 0,
+                "onEventPriority": 0,
+                "audioSignal": "",
+                "lifeTimeType": 1,
+                "takeSnapshotWhenExtend": 0,
+                "durationKey": "duration",
+                "lifeTime": 0.0,
+                "triggerLifeType": 2,
+                "triggerCnt": 0,
+                "triggerInterval": 1.0,
+                "waitFirstTriggerInterval": 1,
+                "firstTriggerInterval": -1.0,
+                "priority": -1,
+                "priorityBBKeys": [],
+                "stripBlackboardParamsWithBuffKey": 1,
+                "blackboard": [],
+                "enableInitDirectionFromSource": 0
+              }
+            ],
+            "_waitForCasting": 0,
+            "_updateLifetimeWhenSpellStart": 0,
+            "_preDelay": 0.0,
+            "_escapeTime": 0.0,
+            "_checkBuffEarlyFinish": 0,
+            "_passiveBuffs": []
+          }
+        ]
+      }
+    ]
+  },
+  "templates": {
+    "charge_cost": {
+      "templateKey": "charge_cost",
+      "effectKey": "",
+      "onEventPriority": "DEFAULT",
+      "eventToActions": {
+        "ON_BUFF_START": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+ModifyCost, Assembly-CSharp",
+            "_sourceType": "SOURCE",
+            "_forceToDisplayNumber": false,
+            "_forceToDisplayNegativeNumber": false,
+            "_blackboardKey": "cost"
+          }
+        ]
+      }
+    },
+    "periodic_cost": {
+      "templateKey": "periodic_cost",
+      "effectKey": "",
+      "onEventPriority": "DEFAULT",
+      "eventToActions": {
+        "ON_BUFF_TRIGGER": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+ModifyCost, Assembly-CSharp",
+            "_sourceType": "SOURCE",
+            "_forceToDisplayNumber": false,
+            "_forceToDisplayNegativeNumber": false,
+            "_blackboardKey": "cost"
+          }
+        ]
+      }
+    },
+    "kill_to_add_cost": {
+      "templateKey": "kill_to_add_cost",
+      "effectKey": "",
+      "onEventPriority": "DEFAULT",
+      "eventToActions": {
+        "ON_TARGET_KILLED": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+ModifyCost, Assembly-CSharp",
+            "_sourceType": "BUFF_OWNER",
+            "_forceToDisplayNumber": true,
+            "_forceToDisplayNegativeNumber": false,
+            "_blackboardKey": "cost"
+          }
+        ]
+      }
+    },
+    "evade_physical": {
+      "templateKey": "evade_physical",
+      "effectKey": "",
+      "onEventPriority": "DEFAULT",
+      "eventToActions": {
+        "ON_TAKE_DAMAGE": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+Evade, Assembly-CSharp",
+            "_damageMask": "PHYSICAL",
+            "_applyWayFilter": "ALL"
+          }
+        ]
+      }
+    },
+    "modify_deck_cost_for_sniper": {
+      "templateKey": "modify_deck_cost_for_sniper",
+      "effectKey": "",
+      "onEventPriority": "DEFAULT",
+      "eventToActions": {
+        "ON_BUFF_START": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+CreateCardFilterByProfession, Assembly-CSharp",
+            "_profession": "SNIPER",
+            "_lifeType": "HOLD_BY_BUFF",
+            "_isRatio": false,
+            "_enableMaxStackCount": false,
+            "_filterIsInHand": false,
+            "_useCardBuffKey": false,
+            "_cardBuffKey": null
+          }
+        ],
+        "ON_BUFF_FINISH": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+FinishCardBuff, Assembly-CSharp"
+          }
+        ]
+      }
+    },
+    "elysm_s_2": {
+      "templateKey": "elysm_s_2",
+      "effectKey": "",
+      "onEventPriority": "DEFAULT",
+      "eventToActions": {
+        "ON_BUFF_TRIGGER": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+IfTarget, Assembly-CSharp",
+            "_targetType": "BUFF_SOURCE",
+            "_motionMask": "ALL",
+            "_checkTargetAlive": true,
+            "_checkApplyWay": false,
+            "_checkTargetUnitType": false,
+            "_unitType": "ENEMY",
+            "_applyWay": "NONE",
+            "_checkTargetFree": false
+          },
+          {
+            "$type": "Torappu.Battle.Action.Nodes+IfNot, Assembly-CSharp"
+          },
+          {
+            "$type": "Torappu.Battle.Action.Nodes+FinishBuff, Assembly-CSharp",
+            "_decCntIfStack": false,
+            "_updateOverrideMap": true
+          }
+        ]
+      }
+    },
+    "wildmn_t_1": {
+      "templateKey": "wildmn_t_1",
+      "effectKey": "",
+      "onEventPriority": "DEFAULT",
+      "eventToActions": {
+        "ON_BUFF_START": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+IfElse, Assembly-CSharp",
+            "_conditionNode": {
+              "$type": "Torappu.Battle.Action.Nodes+IsBlackboardZero, Assembly-CSharp",
+              "_var": "flag",
+              "_noVarShowWarning": true
+            },
+            "_succeedNodes": [
+              {
+                "$type": "Torappu.Battle.Action.Nodes+CheckBuildCnt, Assembly-CSharp",
+                "_checkBuildCnt": 1,
+                "_condType": "LE"
+              },
+              {
+                "$type": "Torappu.Battle.Action.Nodes+CreateCardFilterByProfession, Assembly-CSharp",
+                "_profession": "WARRIOR",
+                "_lifeType": "UNTIL_NEXT_SPAWN",
+                "_isRatio": false,
+                "_enableMaxStackCount": true,
+                "_filterIsInHand": true,
+                "_useCardBuffKey": false,
+                "_cardBuffKey": null
+              }
+            ],
+            "_failNodes": [
+              {
+                "$type": "Torappu.Battle.Action.Nodes+CreateCardFilterByProfession, Assembly-CSharp",
+                "_profession": "WARRIOR",
+                "_lifeType": "UNTIL_NEXT_SPAWN",
+                "_isRatio": false,
+                "_enableMaxStackCount": true,
+                "_filterIsInHand": true,
+                "_useCardBuffKey": false,
+                "_cardBuffKey": null
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "knockback[dir]": {
+      "templateKey": "knockback[dir]",
+      "effectKey": "",
+      "onEventPriority": "DEFAULT",
+      "eventToActions": {
+        "ON_BUFF_START": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+Knockback, Assembly-CSharp",
+            "_useSourceDirection": true,
+            "_decreaseForceLevelWhenNotInDirection": 2
+          }
+        ]
+      }
+    },
+    "rfalcn_t_1": {
+      "templateKey": "rfalcn_t_1",
+      "effectKey": "",
+      "onEventPriority": "DEFAULT",
+      "eventToActions": {
+        "ON_CALCULATE_DAMAGE": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+IfElse, Assembly-CSharp",
+            "_conditionNode": {
+              "$type": "Torappu.Battle.Action.Nodes+CheckContainsBuff, Assembly-CSharp",
+              "_targetType": "BUFF_OWNER",
+              "_buffKeys": [
+                "rfalcn_s_2"
+              ],
+              "isAND": true,
+              "_loadFromBlackboard": false,
+              "_checkBuffSource": false,
+              "_buffSourceType": "BUFF_SOURCE",
+              "_checkSourceHost": false
+            },
+            "_succeedNodes": [
+              {
+                "$type": "Torappu.Battle.Action.Nodes+CalculateBlackboardValueViaParams, Assembly-CSharp",
+                "_inputKey": "prob",
+                "_outputKey": "prob_s2",
+                "_multiplyParamKey": "prob_scaler",
+                "_dividedParamKey": null,
+                "_addParamKey": "",
+                "_minusParamKey": null,
+                "_minValueKey": "",
+                "_maxValueKey": "",
+                "_finalAbs": false,
+                "_finalCeil": false,
+                "_finalFloor": false,
+                "_finalRound": false,
+                "_useAbilityBlackboard": false,
+                "_abilityName": ""
+              },
+              {
+                "$type": "Torappu.Battle.Action.Nodes+Dice, Assembly-CSharp",
+                "_probKey": "prob_s2"
+              },
+              {
+                "$type": "Torappu.Battle.Action.Nodes+AtkScaleUp, Assembly-CSharp",
+                "_filterApplyWay": false,
+                "_filterProjectileKey": "",
+                "_applyWay": "NONE",
+                "_defaultValue": 1.0,
+                "_filterNoneApplyWay": false,
+                "_cancelIfAtkScaleZero": false,
+                "_atkScaleKey": "atk_scale"
+              },
+              {
+                "$type": "Torappu.Battle.Action.Nodes+CreateBuff, Assembly-CSharp",
+                "_buff": {
+                  "attributes": {
+                    "abnormalFlags": [],
+                    "abnormalImmunes": [],
+                    "abnormalAntis": [],
+                    "abnormalCombos": [],
+                    "abnormalComboImmunes": [],
+                    "attributeModifiers": []
+                  },
+                  "buffKey": "rfalcn_atk_boost",
+                  "loadFromDB": false,
+                  "isDurableBuff": false,
+                  "isDamageMissable": false,
+                  "isSilenceable": false,
+                  "isStunnable": false,
+                  "isFreezable": false,
+                  "isLevitatable": false,
+                  "statusResistable": "AUTOMATIC",
+                  "templateKey": "empty",
+                  "disableOverride": false,
+                  "overrideKey": null,
+                  "overrideType": "DEFAULT",
+                  "maxStackCnt": 1,
+                  "refreshRemainingTimeWhenStackMax": false,
+                  "clearAllStackCntWhenTimeUp": false,
+                  "maxValidStackCnt": -1,
+                  "independentCharacterSource": false,
+                  "overrideEffectKey": null,
+                  "overrideOnEventPriority": false,
+                  "onEventPriority": "DEFAULT",
+                  "audioSignal": null,
+                  "lifeTimeType": "LIMITED",
+                  "takeSnapshotWhenExtend": false,
+                  "durationKey": "boost_flag_duration",
+                  "lifeTime": 0.10000000149011612,
+                  "triggerLifeType": "IMMEDIATELY",
+                  "triggerCnt": 0,
+                  "triggerInterval": -1.0,
+                  "waitFirstTriggerInterval": true,
+                  "firstTriggerInterval": -1.0,
+                  "priority": -1,
+                  "priorityBBKeys": [],
+                  "stripBlackboardParamsWithBuffKey": false,
+                  "blackboard": []
+                },
+                "_buffOwner": "BUFF_OWNER",
+                "_isDerivedBuff": false,
+                "_finishDerivedBuffIfParentFinish": false
+              }
+            ],
+            "_failNodes": [
+              {
+                "$type": "Torappu.Battle.Action.Nodes+Dice, Assembly-CSharp",
+                "_probKey": "prob"
+              },
+              {
+                "$type": "Torappu.Battle.Action.Nodes+AtkScaleUp, Assembly-CSharp",
+                "_filterApplyWay": false,
+                "_filterProjectileKey": "",
+                "_applyWay": "NONE",
+                "_defaultValue": 1.0,
+                "_filterNoneApplyWay": false,
+                "_cancelIfAtkScaleZero": false,
+                "_atkScaleKey": "atk_scale"
+              },
+              {
+                "$type": "Torappu.Battle.Action.Nodes+CreateBuff, Assembly-CSharp",
+                "_buff": {
+                  "attributes": {
+                    "abnormalFlags": [],
+                    "abnormalImmunes": [],
+                    "abnormalAntis": [],
+                    "abnormalCombos": [],
+                    "abnormalComboImmunes": [],
+                    "attributeModifiers": []
+                  },
+                  "buffKey": "rfalcn_atk_boost",
+                  "loadFromDB": false,
+                  "isDurableBuff": false,
+                  "isDamageMissable": false,
+                  "isSilenceable": false,
+                  "isStunnable": false,
+                  "isFreezable": false,
+                  "isLevitatable": false,
+                  "statusResistable": "AUTOMATIC",
+                  "templateKey": "empty",
+                  "disableOverride": false,
+                  "overrideKey": null,
+                  "overrideType": "DEFAULT",
+                  "maxStackCnt": 1,
+                  "refreshRemainingTimeWhenStackMax": false,
+                  "clearAllStackCntWhenTimeUp": false,
+                  "maxValidStackCnt": -1,
+                  "independentCharacterSource": false,
+                  "overrideEffectKey": null,
+                  "overrideOnEventPriority": false,
+                  "onEventPriority": "DEFAULT",
+                  "audioSignal": null,
+                  "lifeTimeType": "LIMITED",
+                  "takeSnapshotWhenExtend": false,
+                  "durationKey": "boost_flag_duration",
+                  "lifeTime": 0.10000000149011612,
+                  "triggerLifeType": "IMMEDIATELY",
+                  "triggerCnt": 0,
+                  "triggerInterval": -1.0,
+                  "waitFirstTriggerInterval": true,
+                  "firstTriggerInterval": -1.0,
+                  "priority": -1,
+                  "priorityBBKeys": [],
+                  "stripBlackboardParamsWithBuffKey": false,
+                  "blackboard": []
+                },
+                "_buffOwner": "BUFF_OWNER",
+                "_isDerivedBuff": false,
+                "_finishDerivedBuffIfParentFinish": false
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "switch_mode": {
+      "templateKey": "switch_mode",
+      "effectKey": "",
+      "onEventPriority": "DEFAULT",
+      "eventToActions": {
+        "ON_BUFF_START": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+SwitchMode, Assembly-CSharp",
+            "_modeIndex": 1,
+            "_loadModeFromBlackboard": true,
+            "_restoreDefault": false,
+            "_restartFSM": false,
+            "_targetType": "TARGET"
+          }
+        ],
+        "ON_BUFF_FINISH": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+SwitchMode, Assembly-CSharp",
+            "_modeIndex": 0,
+            "_loadModeFromBlackboard": false,
+            "_restoreDefault": true,
+            "_restartFSM": false,
+            "_targetType": "TARGET"
+          }
+        ]
+      }
+    },
+    "switch_mode_restart_fsm": {
+      "templateKey": "switch_mode_restart_fsm",
+      "effectKey": "",
+      "onEventPriority": "DEFAULT",
+      "eventToActions": {
+        "ON_BUFF_START": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+SwitchMode, Assembly-CSharp",
+            "_modeIndex": 1,
+            "_loadModeFromBlackboard": true,
+            "_restoreDefault": false,
+            "_restartFSM": true,
+            "_targetType": "TARGET"
+          }
+        ],
+        "ON_BUFF_FINISH": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+SwitchMode, Assembly-CSharp",
+            "_modeIndex": 0,
+            "_loadModeFromBlackboard": false,
+            "_restoreDefault": true,
+            "_restartFSM": true,
+            "_targetType": "TARGET"
+          }
+        ]
+      }
+    },
+    "fang2_s_1": {
+      "templateKey": "fang2_s_1",
+      "effectKey": "",
+      "onEventPriority": "DEFAULT",
+      "eventToActions": {
+        "ON_TARGET_KILLED": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+ModifyCost, Assembly-CSharp",
+            "_sourceType": "BUFF_OWNER",
+            "_forceToDisplayNumber": false,
+            "_forceToDisplayNegativeNumber": false,
+            "_blackboardKey": "cost"
+          }
+        ]
+      }
+    },
+    "fang2_t_1": {
+      "templateKey": "fang2_t_1",
+      "effectKey": "",
+      "onEventPriority": "DEFAULT",
+      "eventToActions": {
+        "ON_OWNER_FINISH": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+FilterDeathReason, Assembly-CSharp",
+            "_source": "BUFF_OWNER",
+            "_finishReason": "WITHDRAW"
+          },
+          {
+            "$type": "Torappu.Battle.Action.Nodes+CreateCardBuffToAllCard, Assembly-CSharp",
+            "_exceptOwner": false,
+            "_exceptTokenAndTrap": true,
+            "_buffAsSource": false,
+            "_lifeType": "UNTIL_NEXT_SPAWN_DECK_TRIGGER_ONCE",
+            "_isRatio": false,
+            "_enableMaxStackCount": false,
+            "_filterIsInHand": false,
+            "_useCardBuffKey": false,
+            "_cardBuffKey": "fang2_t_1[card]"
+          }
+        ]
+      }
+    }
+  },
+  "models": {
+    "char_220_grani": {
+      "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+      "Front": {
+        "path": "spine/char_220_grani/char_220_grani/Front/char_220_grani.skel",
+        "sha256": "942d451da81a6ed4345a5aca7b4533c2ccbd2f2c322b7d2247481bf86c14d302",
+        "bytes": 132315,
+        "durations": {
+          "Attack": 0.833,
+          "Attack_Down": 0.833,
+          "Default": 0,
+          "Die": 1,
+          "Idle": 1,
+          "Skill_Begin": 0.333,
+          "Skill_End": 0.333,
+          "Skill_Loop": 0.833,
+          "Start": 1,
+          "Stun": 1
+        },
+        "hits": {
+          "Attack": [
+            0.3
+          ],
+          "Attack_Down": [
+            0.3
+          ],
+          "Skill_Loop": [
+            0.3
+          ]
+        }
+      },
+      "Back": {
+        "path": "spine/char_220_grani/char_220_grani/Back/char_220_grani.skel",
+        "sha256": "6e7af348d12ce9e2da5624927225f2647ddae5d44bd78aebdc3b0d1867ba896f",
+        "bytes": 89280,
+        "durations": {
+          "Attack_Up": 0.833,
+          "Default": 0,
+          "Idle": 1,
+          "Skill_Begin": 0.333,
+          "Skill_End": 0.333,
+          "Skill_Loop": 0.833,
+          "Start": 1
+        },
+        "hits": {
+          "Attack_Up": [
+            0.3
+          ],
+          "Skill_Loop": [
+            0.3
+          ]
+        }
+      }
+    },
+    "char_401_elysm": {
+      "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+      "Front": {
+        "path": "spine/char_401_elysm/char_401_elysm/Front/char_401_elysm.skel",
+        "sha256": "f0b9a85b3d0a7f42d79f7315a2c1917f8b474c2390e4ce9fe36b7b2ea4740b5d",
+        "bytes": 205342,
+        "durations": {
+          "Attack": 1.2,
+          "Default": 0,
+          "Die": 1,
+          "Idle": 2.4,
+          "Skill_1_End": 0.333,
+          "Skill_1_Loop": 1.2,
+          "Skill_1_Start": 0.667,
+          "Skill_2_End": 0.5,
+          "Skill_2_Loop": 1.5,
+          "Skill_2_Start": 1,
+          "Start": 1
+        },
+        "hits": {
+          "Attack": [
+            0.5
+          ]
+        }
+      },
+      "Back": {
+        "path": "spine/char_401_elysm/char_401_elysm/Back/char_401_elysm.skel",
+        "sha256": "10330a267c60b6b4529d3dd9b8121d6e7b7903150bfd98257f3a6cc7ccbb69c7",
+        "bytes": 124873,
+        "durations": {
+          "Attack": 1.2,
+          "Default": 0,
+          "Idle": 2.4,
+          "Skill_1_End": 0.333,
+          "Skill_1_Loop": 1.2,
+          "Skill_1_Start": 0.667,
+          "Skill_2_End": 0.5,
+          "Skill_2_Loop": 1.5,
+          "Skill_2_Start": 1,
+          "Start": 1
+        },
+        "hits": {
+          "Attack": [
+            0.5
+          ]
+        }
+      }
+    },
+    "char_496_wildmn": {
+      "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+      "Front": {
+        "path": "spine/char_496_wildmn/char_496_wildmn/Front/char_496_wildmn.skel",
+        "sha256": "ac3301ac31141befe0afc6c08ead5124de1bc3bcc4744650e97c955e2542f7fa",
+        "bytes": 600164,
+        "durations": {
+          "Attack": 1,
+          "Attack_Down": 1,
+          "Default": 0,
+          "Die": 1.267,
+          "Idle": 2,
+          "Skill_2": 1.2,
+          "Skill_1_Begin": 0.1,
+          "Skill_1_End": 0.1,
+          "Skill_1_Idle": 1,
+          "Skill_1_Loop": 1,
+          "Skill_1_Loop_Down": 1,
+          "Skill_2_Down": 1.2,
+          "Start": 1
+        },
+        "hits": {
+          "Attack": [
+            0.3
+          ],
+          "Attack_Down": [
+            0.3
+          ],
+          "Skill_2": [
+            0.5
+          ],
+          "Skill_1_Loop": [
+            0.3
+          ],
+          "Skill_1_Loop_Down": [
+            0.3
+          ],
+          "Skill_2_Down": [
+            0.5
+          ]
+        }
+      },
+      "Back": {
+        "path": "spine/char_496_wildmn/char_496_wildmn/Back/char_496_wildmn.skel",
+        "sha256": "c6a829120f4b5fe7e5c14dcf200f2b5fc3e27dde7f9ca78f2e616db4d6a7146a",
+        "bytes": 167816,
+        "durations": {
+          "Attack": 1,
+          "Default": 0,
+          "Idle": 1,
+          "Skill_2": 1.2,
+          "Skill_1_Begin": 0.1,
+          "Skill_1_End": 0.1,
+          "Skill_1_Idle": 1,
+          "Skill_1_Loop": 1,
+          "Start": 1
+        },
+        "hits": {
+          "Attack": [
+            0.3
+          ],
+          "Skill_2": [
+            0.5
+          ],
+          "Skill_1_Loop": [
+            0.3
+          ]
+        }
+      }
+    },
+    "char_1036_fang2": {
+      "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+      "Front": {
+        "path": "spine/char_1036_fang2/char_1036_fang2/Front/char_1036_fang2.skel",
+        "sha256": "3fae92af030361e1f30d4facc7357bfe8347e5a1e69f2a1ce7bc237a4360563b",
+        "bytes": 242821,
+        "durations": {
+          "Attack": 1,
+          "Default": 0,
+          "Die": 1,
+          "Idle": 4.6,
+          "Skill_1": 1,
+          "Skill_2_End": 0.533,
+          "Skill_2_Idle": 4.6,
+          "Skill_2_Loop": 1,
+          "Skill_Down_2_Loop": 1,
+          "Start": 1,
+          "Start_2": 1
+        },
+        "hits": {
+          "Attack": [
+            0.333
+          ],
+          "Skill_1": [
+            0.333,
+            0.5
+          ],
+          "Skill_2_Loop": [
+            0.5
+          ],
+          "Skill_Down_2_Loop": [
+            0.5
+          ]
+        }
+      },
+      "Back": {
+        "path": "spine/char_1036_fang2/char_1036_fang2/Back/char_1036_fang2.skel",
+        "sha256": "e2e2c64ec899c2546755b7d155e323f5aedf432850ecfcc6c458955b06c16f96",
+        "bytes": 105117,
+        "durations": {
+          "Attack": 1,
+          "Default": 0,
+          "Idle": 1.533,
+          "Skill_1": 1,
+          "Skill_2_End": 0.533,
+          "Skill_2_Idle": 1.533,
+          "Skill_2_Loop": 1,
+          "Start": 1,
+          "Start_2": 1
+        },
+        "hits": {
+          "Attack": [
+            0.333
+          ],
+          "Skill_1": [
+            0.333,
+            0.5
+          ],
+          "Skill_2_Loop": [
+            0.5
+          ]
+        }
+      }
+    },
+    "char_4023_rfalcn": {
+      "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+      "Front": {
+        "path": "spine/char_4023_rfalcn/char_4023_rfalcn/Front/char_4023_rfalcn.skel",
+        "sha256": "a7476961a0c44f0a2ce60b0b1a729dd0663433b45905f0db403ebb86f01c5ae0",
+        "bytes": 183395,
+        "durations": {
+          "Attack": 1.067,
+          "Default": 0,
+          "Die": 1,
+          "Idle": 4,
+          "Skill_2_Begin": 0.167,
+          "Skill_2_End": 0.167,
+          "Skill_2_Idle": 4,
+          "Skill_2_Loop": 1.067,
+          "Start": 1
+        },
+        "hits": {
+          "Attack": [
+            0.333
+          ],
+          "Skill_2_Loop": [
+            0.433
+          ]
+        }
+      },
+      "Back": {
+        "path": "spine/char_4023_rfalcn/char_4023_rfalcn/Back/char_4023_rfalcn.skel",
+        "sha256": "a86bde15531097cb70848e303280aa90070a2e251745ca9f7bceee13dc74160b",
+        "bytes": 97329,
+        "durations": {
+          "Attack": 1.067,
+          "Default": 0,
+          "Idle": 4,
+          "Skill_2_Begin": 0.167,
+          "Skill_2_End": 0.167,
+          "Skill_2_Idle": 4,
+          "Skill_2_Loop": 1.067,
+          "Start": 1
+        },
+        "hits": {
+          "Attack": [
+            0.333
+          ],
+          "Skill_2_Loop": [
+            0.433
+          ]
+        }
+      }
+    }
+  },
+  "ranges": {
+    "0-1": [
+      [
+        0,
+        0
+      ]
+    ],
+    "x-2": [
+      [
+        2,
+        -1
+      ],
+      [
+        2,
+        0
+      ],
+      [
+        2,
+        1
+      ],
+      [
+        1,
+        -2
+      ],
+      [
+        1,
+        -1
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        0,
+        -2
+      ],
+      [
+        0,
+        -1
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        2
+      ],
+      [
+        -1,
+        -2
+      ],
+      [
+        -1,
+        -1
+      ],
+      [
+        -1,
+        0
+      ],
+      [
+        -1,
+        1
+      ],
+      [
+        -1,
+        2
+      ],
+      [
+        -2,
+        -1
+      ],
+      [
+        -2,
+        0
+      ],
+      [
+        -2,
+        1
+      ]
+    ],
+    "2-2": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        2
+      ]
+    ],
+    "1-1": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        1
+      ]
+    ]
+  },
+  "tableTalents": {
+    "char_220_grani": [
+      {
+        "candidates": [
+          {
+            "unlockCondition": {
+              "phase": "PHASE_1",
+              "level": 1
+            },
+            "requiredPotentialRank": 0,
+            "prefabKey": "1",
+            "name": "Mounted Police",
+            "description": "All [Vanguard] Operators obtain 10% Physical Dodge when Grani is deployed",
+            "rangeId": null,
+            "blackboard": [
+              {
+                "key": "prob",
+                "value": 0.1,
+                "valueStr": null
+              }
+            ],
+            "tokenKey": null,
+            "isHideTalent": false
+          },
+          {
+            "unlockCondition": {
+              "phase": "PHASE_1",
+              "level": 1
+            },
+            "requiredPotentialRank": 4,
+            "prefabKey": "1",
+            "name": "Mounted Police",
+            "description": "All [Vanguard] Operators obtain 15% <@ba.talpu>(+5%)</> Physical Dodge when Grani is deployed",
+            "rangeId": null,
+            "blackboard": [
+              {
+                "key": "prob",
+                "value": 0.15,
+                "valueStr": null
+              }
+            ],
+            "tokenKey": null,
+            "isHideTalent": false
+          },
+          {
+            "unlockCondition": {
+              "phase": "PHASE_2",
+              "level": 1
+            },
+            "requiredPotentialRank": 0,
+            "prefabKey": "1",
+            "name": "Mounted Police",
+            "description": "All [Vanguard] Operators obtain 20% Physical Dodge when Grani is deployed",
+            "rangeId": null,
+            "blackboard": [
+              {
+                "key": "prob",
+                "value": 0.2,
+                "valueStr": null
+              }
+            ],
+            "tokenKey": null,
+            "isHideTalent": false
+          },
+          {
+            "unlockCondition": {
+              "phase": "PHASE_2",
+              "level": 1
+            },
+            "requiredPotentialRank": 4,
+            "prefabKey": "1",
+            "name": "Mounted Police",
+            "description": "All [Vanguard] Operators obtain 25% <@ba.talpu>(+5%)</> Physical Dodge when Grani is deployed",
+            "rangeId": null,
+            "blackboard": [
+              {
+                "key": "prob",
+                "value": 0.25,
+                "valueStr": null
+              }
+            ],
+            "tokenKey": null,
+            "isHideTalent": false
+          }
+        ]
+      }
+    ],
+    "char_401_elysm": [
+      {
+        "candidates": [
+          {
+            "unlockCondition": {
+              "phase": "PHASE_1",
+              "level": 1
+            },
+            "requiredPotentialRank": 0,
+            "prefabKey": "1",
+            "name": "Sniper Support",
+            "description": "When deployed, all [Sniper] Operators have -1 DP Cost and gain +10 ASPD when Elysium's skill is active",
+            "rangeId": null,
+            "blackboard": [
+              {
+                "key": "value",
+                "value": -1.0,
+                "valueStr": null
+              },
+              {
+                "key": "attack_speed",
+                "value": 10.0,
+                "valueStr": null
+              }
+            ],
+            "tokenKey": null,
+            "isHideTalent": false
+          },
+          {
+            "unlockCondition": {
+              "phase": "PHASE_1",
+              "level": 1
+            },
+            "requiredPotentialRank": 4,
+            "prefabKey": "1",
+            "name": "Sniper Support",
+            "description": "When deployed, all [Sniper] Operators have -1 DP Cost and gain +13 <@ba.talpu>(+3)</> ASPD when Elysium's skill is active",
+            "rangeId": null,
+            "blackboard": [
+              {
+                "key": "value",
+                "value": -1.0,
+                "valueStr": null
+              },
+              {
+                "key": "attack_speed",
+                "value": 13.0,
+                "valueStr": null
+              }
+            ],
+            "tokenKey": null,
+            "isHideTalent": false
+          },
+          {
+            "unlockCondition": {
+              "phase": "PHASE_2",
+              "level": 1
+            },
+            "requiredPotentialRank": 0,
+            "prefabKey": "1",
+            "name": "Sniper Support",
+            "description": "When deployed, all [Sniper] Operators have -2 DP Cost and gain +20 ASPD when Elysium's skill is active",
+            "rangeId": null,
+            "blackboard": [
+              {
+                "key": "value",
+                "value": -2.0,
+                "valueStr": null
+              },
+              {
+                "key": "attack_speed",
+                "value": 20.0,
+                "valueStr": null
+              }
+            ],
+            "tokenKey": null,
+            "isHideTalent": false
+          },
+          {
+            "unlockCondition": {
+              "phase": "PHASE_2",
+              "level": 1
+            },
+            "requiredPotentialRank": 4,
+            "prefabKey": "1",
+            "name": "Sniper Support",
+            "description": "When deployed, all [Sniper] Operators have -2 DP Cost and gain +23 <@ba.talpu>(+3)</> ASPD when Elysium's skill is active",
+            "rangeId": null,
+            "blackboard": [
+              {
+                "key": "value",
+                "value": -2.0,
+                "valueStr": null
+              },
+              {
+                "key": "attack_speed",
+                "value": 23.0,
+                "valueStr": null
+              }
+            ],
+            "tokenKey": null,
+            "isHideTalent": false
+          }
+        ]
+      }
+    ],
+    "char_496_wildmn": [
+      {
+        "candidates": [
+          {
+            "unlockCondition": {
+              "phase": "PHASE_1",
+              "level": 1
+            },
+            "requiredPotentialRank": 0,
+            "prefabKey": "1",
+            "name": "Forward March",
+            "description": "After the first deployment, all undeployed Guard Operators get DP Cost -1",
+            "rangeId": null,
+            "blackboard": [
+              {
+                "key": "flag",
+                "value": 0.0,
+                "valueStr": null
+              },
+              {
+                "key": "value",
+                "value": -1.0,
+                "valueStr": null
+              },
+              {
+                "key": "max_stack_cnt",
+                "value": 1.0,
+                "valueStr": null
+              }
+            ],
+            "tokenKey": null,
+            "isHideTalent": false
+          },
+          {
+            "unlockCondition": {
+              "phase": "PHASE_2",
+              "level": 1
+            },
+            "requiredPotentialRank": 0,
+            "prefabKey": "1",
+            "name": "Forward March",
+            "description": "After deployment, all undeployed Guard Operators get DP Cost -1 (each Operator can have a maximum of -5 DP Cost before each deployment)",
+            "rangeId": null,
+            "blackboard": [
+              {
+                "key": "flag",
+                "value": 1.0,
+                "valueStr": null
+              },
+              {
+                "key": "value",
+                "value": -1.0,
+                "valueStr": null
+              },
+              {
+                "key": "max_stack_cnt",
+                "value": 5.0,
+                "valueStr": null
+              }
+            ],
+            "tokenKey": null,
+            "isHideTalent": false
+          }
+        ]
+      }
+    ],
+    "char_1036_fang2": [
+      {
+        "candidates": [
+          {
+            "unlockCondition": {
+              "phase": "PHASE_1",
+              "level": 1
+            },
+            "requiredPotentialRank": 0,
+            "prefabKey": "1",
+            "name": "Lightweight Gambit",
+            "description": "Initial DP Cost -2; after retreating, the next Operator has DP Cost -1.",
+            "rangeId": null,
+            "blackboard": [
+              {
+                "key": "runtime_cost",
+                "value": -2.0,
+                "valueStr": null
+              },
+              {
+                "key": "value",
+                "value": -1.0,
+                "valueStr": null
+              }
+            ],
+            "tokenKey": null,
+            "isHideTalent": false
+          },
+          {
+            "unlockCondition": {
+              "phase": "PHASE_2",
+              "level": 1
+            },
+            "requiredPotentialRank": 0,
+            "prefabKey": "1",
+            "name": "Lightweight Gambit",
+            "description": "Initial DP Cost -3; after retreating, the next Operator has DP Cost -1.",
+            "rangeId": null,
+            "blackboard": [
+              {
+                "key": "runtime_cost",
+                "value": -3.0,
+                "valueStr": null
+              },
+              {
+                "key": "value",
+                "value": -1.0,
+                "valueStr": null
+              }
+            ],
+            "tokenKey": null,
+            "isHideTalent": false
+          }
+        ]
+      }
+    ],
+    "char_4023_rfalcn": [
+      {
+        "candidates": [
+          {
+            "unlockCondition": {
+              "phase": "PHASE_1",
+              "level": 1
+            },
+            "requiredPotentialRank": 0,
+            "prefabKey": "1",
+            "name": "Brutal Blows",
+            "description": "Has a 15% chance to increase ATK to 140%",
+            "rangeId": null,
+            "blackboard": [
+              {
+                "key": "prob",
+                "value": 0.15,
+                "valueStr": null
+              },
+              {
+                "key": "atk_scale",
+                "value": 1.4,
+                "valueStr": null
+              }
+            ],
+            "tokenKey": null,
+            "isHideTalent": false
+          },
+          {
+            "unlockCondition": {
+              "phase": "PHASE_1",
+              "level": 1
+            },
+            "requiredPotentialRank": 4,
+            "prefabKey": "1",
+            "name": "Brutal Blows",
+            "description": "Has a 17% <@ba.talpu>(+2%)</> chance to increase ATK to 140%",
+            "rangeId": null,
+            "blackboard": [
+              {
+                "key": "prob",
+                "value": 0.17,
+                "valueStr": null
+              },
+              {
+                "key": "atk_scale",
+                "value": 1.4,
+                "valueStr": null
+              }
+            ],
+            "tokenKey": null,
+            "isHideTalent": false
+          },
+          {
+            "unlockCondition": {
+              "phase": "PHASE_2",
+              "level": 1
+            },
+            "requiredPotentialRank": 0,
+            "prefabKey": "1",
+            "name": "Brutal Blows",
+            "description": "Has a 20% chance to increase ATK to 140%",
+            "rangeId": null,
+            "blackboard": [
+              {
+                "key": "prob",
+                "value": 0.2,
+                "valueStr": null
+              },
+              {
+                "key": "atk_scale",
+                "value": 1.4,
+                "valueStr": null
+              }
+            ],
+            "tokenKey": null,
+            "isHideTalent": false
+          },
+          {
+            "unlockCondition": {
+              "phase": "PHASE_2",
+              "level": 1
+            },
+            "requiredPotentialRank": 4,
+            "prefabKey": "1",
+            "name": "Brutal Blows",
+            "description": "Has a 22% <@ba.talpu>(+2%)</> chance to increase ATK to 140%",
+            "rangeId": null,
+            "blackboard": [
+              {
+                "key": "prob",
+                "value": 0.22,
+                "valueStr": null
+              },
+              {
+                "key": "atk_scale",
+                "value": 1.4,
+                "valueStr": null
+              }
+            ],
+            "tokenKey": null,
+            "isHideTalent": false
+          }
+        ]
+      },
+      {
+        "candidates": [
+          {
+            "unlockCondition": {
+              "phase": "PHASE_2",
+              "level": 1
+            },
+            "requiredPotentialRank": 0,
+            "prefabKey": "2",
+            "name": "A Matter of Habit",
+            "description": "In [Tales Within the Sand], whenever a skill is activated, all resources carried by this unit will be sent to the backpack",
+            "rangeId": null,
+            "blackboard": [],
+            "tokenKey": null,
+            "isHideTalent": false
+          }
+        ]
+      }
+    ]
+  },
+  "frameParity": false,
+  "deferredOperators": {
+    "char_1036_fang2": {
+      "reason": "Initial DP Cost runtime_cost is a generic card-level field with no original character/template binding to prove first-deployment versus redeployment ordering. Its native C# card dispatcher is unrecovered. Both exact skills, original models and withdraw-one-shot card talent are retained here for later resolution; operator is not enabled in the regular-stage registry.",
+      "skillIds": [
+        "skchr_fang2_1",
+        "skchr_fang2_2"
+      ]
+    }
+  },
+  "interpretations": [
+    "Both selected skills and promotion/potential talent candidates are implemented for Grani, Elysium, Wild Mane and Kestrel. Optional modules and Tales Within the Sand resource-backpack effects are not applied to ordinary stages. Fang the Fire-Sharpened is explicitly deferred instead of silently omitting her unresolved initial-cost talent.",
+    "Card templates prove profession/scope/lifetime and additive values: Elysium sniper HOLD_BY_BUFF; Wild Mane in-hand guards UNTIL_NEXT_SPAWN with per-card max1/5 and E1 CheckBuildCnt<=1. Runtime applies these card additions after the existing normal redeploy multiplier/floor. Native C# calculation/rounding order is not recovered; this composition is an explicit implementation interpretation. Wild Mane in-hand maps to an undeployed, redeploy-ready bench card; a cooling-down guard is excluded until it returns to hand.",
+    "Grani S2 attacks only source blocked enemies (selector postFilter4, limitedMaxTargetNumToBlockedCnt1), with all blocked targets receiving one physical hit. Original alternate Attack has empty animKey and Skill_End escapeTime.333; Skill_Loop OnAttack.3 is mapped to attack release while original Skill_Begin/Loop/End are cosmetic mode animation. Native FSM/start/loop dispatch remains unrecovered.",
+    "Elysium S1 uses exact character-table override skchr_elysm_1. Both channels apply native final block scaler0 and disarm, produce first DP after the selected full interval, and continue DP during ordinary control. Elysium S2 snapshot-selects the nearest selected max_target living non-disappeared enemies in source x-2, including air/stealth/target-free units per ALL/ignoreTargetFree1. Selector postFilter24 execution is unrecovered; nearest-distance then spawn-order ties and excluding physically hidden/disappeared units are explicit interpretations. Once locked, moving out of range does not remove DEF/MOVE_SPEED final scalers or reveal; source-owned buffs expire at skill end and original .25s source-alive poll cleans up after retreat.",
+    "Grani Physical Dodge and Elysium skill ASPD auras retain native purposeMask0 and recorded ignoreHealFree flags, include eligible unhealable recipients and own only their own effects. Continuous target-free/isolation eligibility follows each recorded validator. Elysium deck cost persists while deployed, independent of skill activity.",
+    "Wild Mane S1 is the source deploy-time finite-duration ASPD buff, resetting on each deployment. S2 normal attack is replaced by Skill_2 OnAttack.5 with uncapped animation scaling and source directional knockback. knockback[dir] source decreaseForceLevelWhenNotInDirection2 uses the shared directional primitive, which applies its existing off-axis/near-distance two-level correction exactly once. Original Unity continuous displacement remains unrecovered. Shared weight/wall/pit displacement is retained.",
+    "Kestrel crit Dice is bound to ON_CALCULATE_DAMAGE, rolled separately for each physical attack damage instance before DEF, and uses only selected S2 talent prob_scaler. Source ATK PERCENTAGE/ASPD ADDITION are separate. DP follows periodic_cost first-wait intervals for exactly floor(duration/interval) grants. Source Skill_2_Begin.167 is displayed cosmetically; exact native startup-versus-duration ordering is unrecovered and no extra combat delay is invented.",
+    "Normal releases use each original facing OnAttack (including Grani Back Attack_Up) plus native maxAnimScale: Grani cap2, Elysium/Wild Mane uncapped, Kestrel cap1. Original Unity particles, sounds, full native ability/FSM execution and recorded-client frame parity are not claimed."
+  ]
+}

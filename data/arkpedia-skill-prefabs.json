@@ -1,0 +1,147 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "provider": "official-global-android",
+    "version": "26-09-23-17-49-43_b9cc4a",
+    "bundles": [
+      {
+        "bundle": "config/buff_template_holder.ab",
+        "md5": "59813e1a533561f969f525a2846815e0",
+        "bytes": 1667266
+      },
+      {
+        "bundle": "battle/prefabs/[uc]skills.ab",
+        "md5": "ff06dc9bb5516d069c8c0017207653ca",
+        "bytes": 1163240
+      },
+      {
+        "bundle": "battle/prefabs/[uc]projectiles.ab",
+        "md5": "0b1d64a8aba25913161f5fd7174cab34",
+        "bytes": 1605622
+      },
+      {
+        "bundle": "battle/prefabs/effects/buff.ab",
+        "md5": "68a670319b98448f4d9969ec3568f9f1",
+        "bytes": 305491
+      },
+      {
+        "bundle": "battle/prefabs/effects/common.ab",
+        "md5": "f1af477e73980b7eeb6859a6b9e383b0",
+        "bytes": 2229198
+      }
+    ]
+  },
+  "templateTableSha256": "79dce42d1ffa76196984b80678422e0323e406f6a044f1a25b1de75e0c5b9d27",
+  "prefabs": {
+    "skchr_wyvern_1": {
+      "buffTemplates": [
+        "charge_cost"
+      ],
+      "nativeHeal": [],
+      "effectKeys": [
+        "common_charge_cost_start_01",
+        "common_ignite_attack"
+      ]
+    },
+    "skcom_charge_cost": {
+      "buffTemplates": [
+        "charge_cost"
+      ],
+      "nativeHeal": [],
+      "effectKeys": [
+        "common_charge_cost_start_01"
+      ]
+    },
+    "skcom_heal_self": {
+      "buffTemplates": [],
+      "nativeHeal": [
+        {
+          "_isHpRatio": 1,
+          "_isCont": 0,
+          "_ignoreHealFree": 0,
+          "_applyEPHeal": 0
+        }
+      ],
+      "effectKeys": [
+        "common_heal_hit_01"
+      ]
+    }
+  },
+  "effectsInventory": [
+    {
+      "bundle": "battle/prefabs/[uc]projectiles.ab",
+      "objectCounts": {
+        "AssetBundle": 1,
+        "BoxCollider": 2,
+        "BoxCollider2D": 81,
+        "CircleCollider2D": 631,
+        "GameObject": 5186,
+        "LineRenderer": 1,
+        "Material": 3,
+        "Mesh": 1,
+        "MeshFilter": 2,
+        "MeshRenderer": 2,
+        "MonoBehaviour": 9889,
+        "ParticleSystem": 4,
+        "ParticleSystemRenderer": 4,
+        "Rigidbody2D": 45,
+        "SpriteRenderer": 29,
+        "Texture2D": 1,
+        "TrailRenderer": 3,
+        "Transform": 5186
+      },
+      "referencedEffectRoots": [],
+      "browserRendererImplemented": false
+    },
+    {
+      "bundle": "battle/prefabs/effects/buff.ab",
+      "objectCounts": {
+        "AnimationClip": 13,
+        "Animator": 13,
+        "AnimatorController": 13,
+        "AssetBundle": 1,
+        "GameObject": 211,
+        "Material": 25,
+        "Mesh": 4,
+        "MeshFilter": 37,
+        "MeshRenderer": 37,
+        "MonoBehaviour": 61,
+        "ParticleSystem": 101,
+        "ParticleSystemRenderer": 101,
+        "Texture2D": 13,
+        "TrailRenderer": 2,
+        "Transform": 211
+      },
+      "referencedEffectRoots": [],
+      "browserRendererImplemented": false
+    },
+    {
+      "bundle": "battle/prefabs/effects/common.ab",
+      "objectCounts": {
+        "AnimationClip": 34,
+        "Animator": 93,
+        "AnimatorController": 34,
+        "AssetBundle": 1,
+        "GameObject": 2014,
+        "LineRenderer": 4,
+        "Material": 244,
+        "Mesh": 76,
+        "MeshCollider": 23,
+        "MeshFilter": 353,
+        "MeshRenderer": 350,
+        "MonoBehaviour": 332,
+        "ParticleSystem": 1102,
+        "ParticleSystemRenderer": 1102,
+        "Texture2D": 75,
+        "TrailRenderer": 27,
+        "Transform": 2014
+      },
+      "referencedEffectRoots": [
+        "common_charge_cost_start_01",
+        "common_heal_hit_01",
+        "common_ignite_attack"
+      ],
+      "browserRendererImplemented": false
+    }
+  ]
+}

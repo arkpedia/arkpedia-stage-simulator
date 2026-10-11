@@ -7,26 +7,20 @@
 // their own timers, at most maxStacks alive — the oldest is dropped), 'keep' (ignore when already present).
 // Additive mod keys scale with stacks (value × stacks); *Mul keys multiply (value ^ stacks).
 
-import { COLD_ASPD, COLD_FREEZE_DURATION, FREEZE_RES_DOWN, RESIST_DEFAULT, RESIST_PALSY_DECAY } from './constants.js';
-
-/** 抵抗: "麻痹等状态每5秒流失1层" — tick of the resist buff. */
-function resistPalsyDecay({ battle, unit }) {
-  const p = unit.findBuff('palsy');
-  if (!p) return;
-  if (--p.stacks <= 0) battle.removeBuff(unit, p); else unit.markDirty();
-}
+import { COLD_ASPD, COLD_FREEZE_DURATION, FREEZE_RES_DOWN, RESIST_DEFAULT } from './constants.js';
 
 /** Additive mod keys (summed; × stacks). */
 export const ADD_KEYS = Object.freeze([
-  'atkFlat', 'atkPct', 'defFlat', 'defPct', 'hpFlat', 'hpPct', 'resFlat', 'aspd', 'batPct', 'blockCnt',
+  'atkFlat', 'atkFinalFlat', 'atkPct', 'defFlat', 'defFinalFlat', 'defPct', 'hpFlat', 'hpFinalFlat', 'hpPct', 'resFlat', 'resPct', 'aspd', 'batFlat', 'batPct', 'blockCnt',
   'rangeExtend', 'defIgnoreFlat', 'defIgnorePct', 'resIgnoreFlat', 'resIgnorePct', 'dodgePhys', 'dodgeArts',
-  'spRecoveryFlat', 'maxTargets', 'taunt', 'hpRegen', 'hpRegenRatio', 'spCostFlat', 'moveFlat', 'massFlat',
+  'spRecoveryFlat', 'maxTargets', 'taunt', 'hpRegen', 'hpRegenRatio', 'spCostFlat', 'moveFlat', 'movePct', 'massFlat',
+  'flatDamageResistance', 'damageHpFloorRatio', 'hitRatePhys', 'hitRateArts',
 ]);
 /** Multiplicative mod keys (product; ^ stacks). */
 export const MUL_KEYS = Object.freeze([
   'atkMul', 'defMul', 'hpMul', 'resMul', 'moveMul', 'dmgDealtMul', 'dmgTakenMul', 'physTakenMul', 'artsTakenMul',
   'trueTakenMul', 'elemTakenMul', 'elementalTakenMul', 'healingDealtMul', 'healingTakenMul', 'spRecoveryMul', 'redeployMul',
-  'atkScaleMul', 'physDealtMul', 'artsDealtMul',
+  'atkScaleMul', 'physDealtMul', 'artsDealtMul', 'blockCntMul', 'batMul', 'hpRegenMul',
 ]);
 /**
  * Boolean flag keys (OR). `taunt` is also accepted as a numeric mod. `liftoff` = 起飞 of an ally (蒂比's skills): blocks
@@ -41,7 +35,7 @@ export const FLAG_KEYS = Object.freeze([
   'noBlock', 'tremble', 'hitCount', 'hitCountArts', 'attract', 'float', 'noDisplace', 'isolated', 'camou', 'liftoff',
   // 自缚 (the unit's own immobility: 守墓石像's 转换模式, the 自缚 leaders) beside its `noMove` — 束缚 sets noMove too, and
   // only 自缚 makes a unit "不视为可达目标" for 余 S2's teleport (PRTS 余 S2 备注)
-  'selfBound', 'healFree', 'stealthOff',
+  'selfBound', 'healFree', 'stealthOff', 'undeadable',
 ]);
 
 /**
@@ -69,6 +63,18 @@ export const STATUS = Object.freeze({
   fragile: { mods: (v) => ({ dmgTakenMul: 1 + (v ?? 0.3) }), valued: 0.3 },
   artsFragile: { mods: (v) => ({ artsTakenMul: 1 + (v ?? 0.3) }), valued: 0.3 },
   physFragile: { mods: (v) => ({ physTakenMul: 1 + (v ?? 0.3) }), valued: 0.3 },
+  // Source damage_resistance: PHYSICAL_AND_MAGICAL, isOneMinus and nonstacking.
+  // Owned instances choose the strongest value per damage type. True damage
+  // bypasses ordinary Sanctuary; includePure explicitly opts into that channel.
+  // Direct HP loss always bypasses it.
+  sanctuary: { mods: (v) => ({ physTakenMul: 1 - clamp01(v ?? 0.2),
+    artsTakenMul: 1 - clamp01(v ?? 0.2) }), valued: 0.2 },
+  // Source peak_performance / ba.strong: owned Vigor ATK percentages take
+  // the strongest active value and fall back when that source expires.
+  vigor: { mods: (v) => ({ atkPct: v ?? 0 }), valued: 0 },
+  // Source ba.weightless: named Weightless instances do not stack; unrelated
+  // mass modifiers remain additive for displacement/Levitate calculations.
+  weightless: { mods: (v) => ({ massFlat: -Math.max(0, v ?? 1) }), valued: 1 },
   // 元素脆弱 (ba.elementfragile "受到的元素伤害提升相应比例（同名效果取最高）"): 元素伤害 (the 'elemental' HP damage) only —
   // never the element gauge (元素损伤 has its own multiplier, `elemTakenMul`; damage.js)
   elemFragile: { mods: (v) => ({ elementalTakenMul: 1 + (v ?? 0.2) }), valued: 0.2 },
@@ -77,7 +83,7 @@ export const STATUS = Object.freeze({
   // source — fear.js, stamped by Battle.applyStatus)
   fear: { flags: { fear: true, unblockable: true }, immune: 'feared' },
   // 战栗: 被阻挡后无法进行普通攻击
-  tremble: { flags: { tremble: true }, immune: 'feared' },
+  tremble: { flags: { tremble: true }, immune: 'disarmedcombat' },
   disarm: { flags: { disarm: true } },
   // 隐匿 (ba.invisible): 不阻挡时不成为敌方攻击的目标 (an ally: only the enemy it blocks attacks it — targeting.js)
   stealth: { flags: { stealth: true } },
@@ -110,7 +116,7 @@ export const STATUS = Object.freeze({
   // 抵抗 (ba.buffres): the RESIST_STATUSES applied to the unit last (1 − value) as long, value default 0.5 (减半);
   // 同名效果不叠加 — several sources never compound (strongest value wins, a weaker one resumes if it outlasts it);
   // a resisting unit also loses one 麻痹 stack every RESIST_PALSY_DECAY s (Battle.applyStatus)
-  resist: { resist: true, mods: () => null, valued: RESIST_DEFAULT, buff: Object.freeze({ interval: RESIST_PALSY_DECAY, onTick: resistPalsyDecay }) },
+  resist: { resist: true, mods: () => null, valued: RESIST_DEFAULT },
   // element burst states (engine-managed; listed for immunity/visibility)
   burnBurst: { flags: { burstLock: true } },
   neuralBurst: { flags: { burstLock: true } },
@@ -155,8 +161,21 @@ export function makeBuff(b) {
     tags: b.tags ?? [],
     shield: b.shield ?? (b.mods && b.mods.shield) ?? 0,
     shieldHits: b.shieldHits ?? 0,
+    // Explicit source barriers can accept only certain HP-damage kinds. Empty
+    // or unknown type sets absorb nothing; absence preserves ordinary shields.
+    shieldTypes: b.shieldTypes == null ? null : [...new Set(b.shieldTypes.filter(type =>
+      ['phys', 'arts', 'true', 'elemental'].includes(type)))],
+    // Source barriers may distinguish melee/ranged applications and attacker
+    // side. These are independent filters; an omitted filter accepts all.
+    shieldApplyWays: b.shieldApplyWays == null ? null : [...new Set(b.shieldApplyWays.filter(way =>
+      ['melee', 'ranged', 'none'].includes(way)))],
+    shieldSourceSides: b.shieldSourceSides == null ? null : [...new Set(b.shieldSourceSides.filter(side =>
+      ['ally', 'enemy'].includes(side)))],
     persist: !!b.persist,
     status: b.status ?? null,
+    // Native buff-table YES/NO overrides are distinct from the broader legacy
+    // Resist catalogue. Absence means AUTOMATIC, interpreted by a reviewed kit.
+    sourceStatusResistable: b.sourceStatusResistable ?? null,
     visible: b.visible ?? false,
     data: b.data ?? {},
     seq: ++buffSeq,
@@ -174,18 +193,55 @@ export function aggregateMods(buffs) {
   const flags = Object.create(null);
   let shield = 0;
   let permRangeExtend = 0;
+  let sluggishMoveMul = 1;
   // dodge sources are independent rolls: total = 1 − Π(1 − p)^stacks (one single source keeps its exact value)
   const dodge = { dodgePhys: null, dodgeArts: null };
+  // Source-owned valued statuses can be removed independently. Only the
+  // strongest instance of a named status contributes its modifiers.
+  const strongest = new Map();
+  const sanctuary = Object.create(null);
+  // Reviewed Inspiration producers rank their source ratio, independently per
+  // attribute, then apply that producer's final addition. Keep weaker owned
+  // instances for expiry fallback; unrelated final additions still sum.
+  // Legacy hand-built instances without priority retain their numeric ordering.
+  const inspire = Object.create(null);
+  // Steal's victim penalties choose the strongest reduction per attribute.
+  // Owned gains are separate, untagged final additions. Keep weaker sources
+  // attached so they resume when the strongest source leaves.
+  const stolen = Object.create(null);
+  let pozemkaDefMul = 1;
+  for (const b of buffs) {
+    const tpl = STATUS[b.status];
+    if (tpl?.valued == null) continue;
+    if (b.status === 'sanctuary') continue;
+    const value = Math.abs(b.data?.value ?? tpl.valued);
+    const old = strongest.get(b.status);
+    if (!old || value > Math.abs(old.data?.value ?? tpl.valued)) strongest.set(b.status, b);
+  }
   for (let i = 0; i < buffs.length; i++) {
     const b = buffs[i];
     const st = b.stacks;
     const m = b.mods;
-    if (m) {
+    if (m && (!strongest.has(b.status) || strongest.get(b.status) === b)) {
       for (const k in m) {
         const v = m[k];
         if (typeof v !== 'number' || !Number.isFinite(v)) continue;
         if (k === 'shield') continue;
-        if (k.endsWith('Mul')) mul[k] = (mul[k] ?? 1) * (st === 1 ? v : Math.pow(v, st));
+        // Sluggish is one named status: overlapping zone/attack sources do
+        // not compound -80% movement into -96% or erase each other's timers.
+        if (b.status === 'sanctuary' && ['physTakenMul', 'artsTakenMul', 'trueTakenMul', 'elementalTakenMul'].includes(k))
+          sanctuary[k] = Math.min(sanctuary[k] ?? 1, v);
+        else if (b.tags?.includes('inspire') && ['atkFinalFlat', 'defFinalFlat', 'hpFinalFlat'].includes(k)) {
+          const rank = Number.isFinite(b.data?.inspirePriority?.[k]) ? b.data.inspirePriority[k] : v * st;
+          if (!inspire[k] || rank > inspire[k].rank) inspire[k] = { rank, value: v * st };
+        }
+        else if (b.tags?.includes('steal-victim') &&
+          ['atkFinalFlat', 'defFinalFlat', 'hpFinalFlat', 'aspd'].includes(k) && v < 0)
+          stolen[k] = Math.min(stolen[k] ?? 0, v * st);
+        else if (k === 'defMul' && b.tags?.includes('pozemka:def-priority')) pozemkaDefMul = Math.min(pozemkaDefMul, v);
+        else if (k === 'damageHpFloorRatio') add[k] = Math.max(add[k] ?? 0, v);
+        else if (k === 'moveMul' && b.status === 'sluggish') sluggishMoveMul = Math.min(sluggishMoveMul, v);
+        else if (k.endsWith('Mul')) mul[k] = (mul[k] ?? 1) * (st === 1 ? v : Math.pow(v, st));
         else if ((k === 'dodgePhys' || k === 'dodgeArts') && v > 0) {
           const p = Math.min(1, v);
           const d = dodge[k];
@@ -200,9 +256,16 @@ export function aggregateMods(buffs) {
     if (b.flags) for (const k in b.flags) if (b.flags[k]) flags[k] = true;
     if (b.shield > 0) shield += b.shield;
   }
+  // Apply after unrelated multipliers so Fragile composes independently of
+  // source insertion order. Weaker owned channels resume after removal/expiry.
+  for (const k of Object.keys(sanctuary)) mul[k] = (mul[k] ?? 1) * sanctuary[k];
+  for (const k of Object.keys(inspire)) add[k] = (add[k] ?? 0) + inspire[k].value;
+  for (const k of Object.keys(stolen)) add[k] = (add[k] ?? 0) + stolen[k];
+  if (pozemkaDefMul !== 1) mul.defMul = (mul.defMul ?? 1) * pozemkaDefMul;
   for (const k of ['dodgePhys', 'dodgeArts']) {
     const d = dodge[k];
     if (d) add[k] = (add[k] ?? 0) + (d.n === 1 ? d.p : 1 - d.miss);
   }
+  if (sluggishMoveMul !== 1) mul.moveMul = (mul.moveMul ?? 1) * sluggishMoveMul;
   return { add, mul, flags, shield, permRangeExtend };
 }
