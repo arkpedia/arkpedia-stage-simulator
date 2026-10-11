@@ -25,7 +25,7 @@ const approx = (a, b, msg = '', rel = 1e-6) => assert.ok(Math.abs(a - b) <= rel 
 const within = (a, b, tol = 0.05, msg = '') => assert.ok(Math.abs(a - b) <= tol, `${msg} ${a} ≈ ${b} ± ${tol}`);
 const dummy = (key, o = {}) => enemyRec({ key, hp: 1e7, speed: 0, ...o });
 const READY = { sp: 999 };
-const HOOKS = ['damaged', 'heal', 'hit', 'skillStart', 'skillEnd', 'statusApplied', 'ammoUsed', 'attack', 'death', 'deploy'];
+const HOOKS = ['damaged', 'heal', 'regenerated', 'hit', 'skillStart', 'skillEnd', 'statusApplied', 'ammoUsed', 'attack', 'death', 'deploy'];
 const run = (o) => makeBattle({ seed: 7, autoFinish: false, timeLimit: 400, hooks: HOOKS, captureNoisy: true, ...o });
 /** defs.chess: the chess without its 特质 (garrisons have their own tests) — isolates kit numbers. */
 const noGarrison = (...ids) => Object.fromEntries(ids.map((id) => [id, { ...raw(id), garrisonIds: [] }]));
@@ -40,7 +40,7 @@ function sel(h, id, skillId) {
   return u;
 }
 const dealt = (h, u, f = () => true) => h.hooksOf('damaged').filter((c) => c.source === u && f(c));
-const heals = (h, u, f = () => true) => h.hooksOf('heal').filter((c) => c.source === u && f(c));
+const heals = (h, u, f = () => true) => [...h.hooksOf('heal'), ...h.hooksOf('regenerated')].filter((c) => c.source === u && f(c));
 const attacks = (h, u, f = () => true) => h.hooksOf('attack').filter((c) => c.attacker === u && f(c));
 const statuses = (h, key, f = () => true) => h.hooksOf('statusApplied').filter((c) => c.status === key && f(c));
 const started = (h, u) => h.hooksOf('skillStart').filter((c) => c.unit === u);

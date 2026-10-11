@@ -105,8 +105,8 @@ test('axe, healing and active skills are not silenced', () => {
 });
 test('medical background applies ordinary multipliers but excludes HP regeneration', () => {
   const { b, u } = make(); u.hp = 1; b.addBuff(u, { key: 'test:heal', mods: { healingTakenMul: .5, healingDealtMul: .5 } });
-  b.heal(u, u, 100); near(u.hp, 36); b.heal(u, u, 100, { regen: true }); near(u.hp, 61);
-  b.addBuff(u, { key: 'test:refuse', flags: { healFree: true } }); b.heal(u, u, 100); near(u.hp, 61);
+  b.heal(u, u, 100); near(u.hp, 36); b.heal(u, u, 100, { regen: true }); near(u.hp, 136);
+  b.addBuff(u, { key: 'test:refuse', flags: { healFree: true } }); b.heal(u, u, 100); near(u.hp, 136);
 });
 for (const elite of [0, 1, 2]) test(`E${elite}: multi-target cap, retained input, air and zero-block minimum`, () => {
   const { b, u, receipts } = make({ elite }); const es = Array.from({ length: 6 }, () => enemy(b));

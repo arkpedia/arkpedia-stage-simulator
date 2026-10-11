@@ -66,7 +66,7 @@ function wound(b, u, e, bb) {
   if (!e.alive || e.findBuff('cripple')) return;
   let killHook, appearHook, timer;
   const mark = b.addBuff(e, { key: 'cripple', status: 'cripple', source: u,
-    flags: { unblockable: true, disarm: true, healFree: true },
+    flags: { unblockable: true, disarm: true, healFree: true, noHpRecovery: true },
     mods: { moveMul: 1 + bb.move_speed, blockCntMul: 0, hpRegenMul: 0 },
     onRemove: () => { b.off(killHook); b.off(appearHook); timer?.cancel(); } });
   b._unblock(e);

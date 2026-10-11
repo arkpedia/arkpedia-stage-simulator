@@ -19,7 +19,7 @@ function make({skill=0,rank=10,elite=2,potential=1,dir='RIGHT'}={}){
  const b=new StandardBattle(src,{operators:[build,...others]});b.autoFinish=false;b.setViewport('fullscreen-workspace');b.addDp('arkpedia',99);
  b.grid.tiles=b.grid.tiles.map(t=>({...t,height:'LOW',build:'ALL',pass:'ALL'}));
  const u=b.deployOperator(ID,5,5,dir);assert.ok(u);u.atkCd=1000;u.skill.rule='NEVER';
- const hits=[],heals=[];b.on('damaged',c=>hits.push({...c,time:b.time}));b.on('heal',c=>heals.push({...c,time:b.time}));
+ const hits=[],heals=[];b.on('damaged',c=>hits.push({...c,time:b.time}));b.on('heal',c=>heals.push({...c,time:b.time}));b.on('regenerated',c=>heals.push({...c,time:b.time}));
  return{b,u,hits,heals};
 }
 function ally(b,id=HUNG,r=6,c=5){b.addDp('arkpedia',99);const a=b.deployOperator(id,r,c,'RIGHT');assert.ok(a);a.atkCd=1000;a.skill.rule='NEVER';return a;}

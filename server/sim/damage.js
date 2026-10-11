@@ -590,22 +590,24 @@ export function reduceElement(target, amount, el = null) {
  */
 export function heal(battle, source, target, amount, opts = {}) {
   if (!target || !target.alive || target.removed || !target.deployed || target.bossPool) return 0;
+  if (opts.regen && target.s.flags.noHpRecovery) return 0;
   const self = source === target || !!opts.self;
-  if (!self && (target.s.flags.noHeal || (target.profile && target.profile.noHeal))) return 0;
+  if (!self && !opts.regen && (target.s.flags.noHeal || (target.profile && target.profile.noHeal))) return 0;
   if (target.s.flags.healFree && !opts.regen && !opts.ignoreHealFree) return 0;
   // Native HealViaMaxHpRatio can explicitly skip modifier events. Keep
   // heal-free checks, HP clamping, credit and presentation for that path.
-  let amt = opts.skipModifierEvent ? amount
+  const skipModifierEvent = !!opts.skipModifierEvent || !!opts.regen;
+  let amt = skipModifierEvent ? amount
     : amount * (source && source.s ? source.s.healingDealtMul : 1) * target.s.healingTakenMul;
   if (!(amt > 0) || !Number.isFinite(amt)) return 0;
-  if (battle._hooks.heal && !opts.skipModifierEvent) {
+  if (battle._hooks.heal && !skipModifierEvent) {
     const ctx = { source, target, amount: amt, opts };
     battle.emit('heal', ctx);
     amt = Number.isFinite(ctx.amount) ? Math.max(0, ctx.amount) : 0;
     // a handler may have killed / retreated the target: healing a dead unit would leave it "dead with hp > 0"
     if (!target.alive || !target.deployed) return 0;
   }
-  if (battle._hooks.calculatedHeal && !opts.skipModifierEvent)
+  if (battle._hooks.calculatedHeal && !skipModifierEvent)
     battle.emit('calculatedHeal', { source, target, amount: amt, opts });
   if (!target.alive || !target.deployed) return 0;
   const max = target.s.maxHp;
@@ -622,5 +624,9 @@ export function heal(battle, source, target, amount, opts = {}) {
     if (source.side === 'ally' && source.ownerId != null) { const pp = battle._pp(source.ownerId); if (pp) pp.healingDone += actual; }
   }
   if (actual >= 0.5 && !opts.silent) battle._ev(['heal', target.id, Math.round(actual)]);
+  // An observational receipt, after HP and credit settle; ordinary healing
+  // modifiers/listeners must not process regeneration or change its amount.
+  if (opts.regen && battle._hooks.regenerated)
+    battle.emit('regenerated', Object.freeze({ source, target, amount: amt, actual, opts }));
   return actual;
 }
