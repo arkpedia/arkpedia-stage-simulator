@@ -42,12 +42,19 @@ test('S2 cleanup distinguishes leaving a tile from finishing the skill',()=>{
 });
 test('S3 uses a delayed stop-only radius hit without borrowing an Attack event',()=>{
  const a=comp('-3061221568776543495');assert.equal(a._projectileKey,'projectile_chr_blaze2_s3');assert.equal(a._waitForAttackEvent,0);
+ assert.equal(a._animKey,'');assert.equal(a._useCachedAtkOnly,1);assert.equal(a._transferSource,1);assert.equal(a._emitToInputPosWhenTargetIsInvalid,1);
  const motion=comp('-4200255773684481920');near(motion._delayToStart,.3);assert.equal(motion._immediatelyReach,1);assert.equal(motion._followTarget,0);
  near(comp('-5100262976928956288').m_Radius,1.7);const hit=comp('4306318509201735808');assert.equal(hit._onlyCheckHitWhenStop,1);assert.equal(hit._ignoreCamouflage,1);assert.equal(hit._targetOptions.targetMotion,3);
+ const projectile=comp('1316773592360337536');near(projectile._lifeTime,.3);assert.equal(projectile._stopWhenSourceInvalid,0);assert.equal(projectile._alwaysHitTraceTargetInTheEnd,1);
+ const progress=comp('5926524619313734393');assert.equal(progress._expendPerTrigger,1);assert.equal(progress._resetImmediatelyWhenProgressEnd,0);
+ const drain=comp('-1878227673249955308')._buffs.find(v=>v.buffKey==='blaze2_s_3[lose_hp]');assert.equal(drain.waitFirstTriggerInterval,1);assert.equal(drain.blackboard.find(v=>v.key==='interval').value,1);
  const bonus=e.templates['blaze2_s_3[additional_damage]'].eventToActions.ON_BUFF_START;assert.equal(bonus[0]._recoveryType,'FIRE');assert.equal(bonus[1]._damageType,'ELEMENT');
 });
 test('FIRE-burst listener recovers ammunition before the burst and talent healing precedes its output',()=>{
  const ammo=e.templates['blaze2_s_3[listener]'].eventToActions.ON_BEFORE_EP_BREAK_START;assert.equal(ammo[0]._recoveryType,'FIRE');assert.equal(ammo[1]._recoverEventCount,true);assert.equal(ammo[1]._recoverCountBBKey,'ammo_recover');
+ const originals=e.originalTemplates['blaze2_s_3[listener]'].eventToActions;
+ const states=v=>!v||typeof v!=='object'?[]:[...(v.SerializedState?[JSON.parse(v.SerializedState)]:[]),...Object.values(v).flatMap(states)];
+ const recovered=states(originals).flatMap(nodes).find(n=>type(n)==='AmmoSkillCountModifier');assert.ok(recovered);assert.equal(recovered._recoverSkipLimitCheck,true);
  const t=e.templates.blaze2_t_1.eventToActions;assert.ok(nodes(t.ON_BEFORE_EP_BREAK_START).some(n=>type(n)==='HealViaMaxHpRatio'));assert.equal(t.ON_EP_BREAK_START[1]._damageType,'ELEMENT');assert.equal(t.ON_EP_BREAK_START[1]._atkScaleVar,'ep_damage_scale');
 });
 test('revival barrier excludes elemental damage and full HP returns through the original ability chain',()=>{

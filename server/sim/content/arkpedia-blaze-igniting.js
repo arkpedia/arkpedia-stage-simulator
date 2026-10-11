@@ -9,7 +9,8 @@ import {bodyInKeys,bodyInRadius} from '../body.js';
 import {makeDamageInfo} from '../damage.js';
 import {BlazeIgnitingS1Fields,BLAZE_IGNITING_S1_CONTRACT} from './arkpedia-blaze-igniting-s1.js';
 import {BlazeIgnitingS2Tiles,BLAZE_IGNITING_S2_CONTRACT} from './arkpedia-blaze-igniting-s2.js';
-export {BLAZE_IGNITING_S1_CONTRACT,BLAZE_IGNITING_S2_CONTRACT};
+import {BlazeIgnitingS3Barrage,BLAZE_IGNITING_S3_CONTRACT} from './arkpedia-blaze-igniting-s3.js';
+export {BLAZE_IGNITING_S1_CONTRACT,BLAZE_IGNITING_S2_CONTRACT,BLAZE_IGNITING_S3_CONTRACT};
 
 export const BLAZE_IGNITING_ID='char_1040_blaze2';
 export const BLAZE_IGNITING_CORE_CONTRACT=Object.freeze({
@@ -78,7 +79,7 @@ function validate(u,contract){
 }
 
 export class BlazeIgnitingCoreController{
-  constructor(b,u,record){this.b=b;this.u=u;this.record=record;this.seq=null;this.stopped=false;this.phase=null;this.handles=[];this.reborn=null;this.downState=null;this.s1=null;this.s2=null;}
+  constructor(b,u,record){this.b=b;this.u=u;this.record=record;this.seq=null;this.stopped=false;this.phase=null;this.handles=[];this.reborn=null;this.downState=null;this.s1=null;this.s2=null;this.s3=null;}
   valid(){return !this.stopped&&!this.b.finished&&live(this.u)&&this.seq===this.u.deploySeq;}
   eligible(t){return live(t)&&canTargetEnemy(this.u,t,air)&&(!t.s.flags.camou||!!t.blockedBy);}
   visual(clip,speed=1,loop=false){
@@ -91,6 +92,7 @@ export class BlazeIgnitingCoreController{
     sortEnemyTargets(this.b,u,targets);return targets;
   }
   burnBurst({target,element}){
+    this.s3?.recoverBurn({target,element});
     const {b,u,record:r}=this;
     if(!this.valid()||element!=='burn'||target.side!=='enemy'||!this.eligible(target)||!r.meltdown.ep_damage_scale)return;
     // Native ON_BEFORE_EP_BREAK_START heal precedes ON_EP_BREAK_START damage.
@@ -107,7 +109,7 @@ export class BlazeIgnitingCoreController{
     // Account fatal HP loss before repairing the one-HP runtime floor.
     ctx.afterHpLoss=()=>{
       if(!this.valid())return;
-      u.hp=Math.min(1,u.s.maxHp);this.phase=null;this.s1?.interrupt('downed');this.s2?.interrupt('downed');
+      u.hp=Math.min(1,u.s.maxHp);this.phase=null;this.s1?.interrupt('downed');this.s2?.interrupt('downed');this.s3?.beforeDown();
       // Native ClearAllBuffs excludes durable instances. Runtime persist is a
       // local durability bridge; own state is created after clearing modifiers.
       for(const buff of [...u.buffs])if(!buff.persist)b.removeBuff(u,buff);
@@ -132,6 +134,7 @@ export class BlazeIgnitingCoreController{
     b.emit('blazeIgnitingRevival',{owner:u,state:this.reborn});
   }
   release(t,info){
+    if(this.phase?.kind==='s3-attack')return this.s3?.release(t,info)??false;
     if(this.phase?.kind==='s2-attack')return this.s2?.release(t,info)??false;
     const p=this.phase,{u,b}=this;
     if(!this.valid()||this.reborn||!u.canAct||u.s.flags.disarm||!p||p.kind!=='attack'||p.accepted
@@ -164,6 +167,7 @@ export class BlazeIgnitingCoreController{
     }
     if(this.s1?.tick())return;
     if(this.s2?.tick())return;
+    if(this.s3?.tick())return;
     let p=this.phase;
     if(p?.kind==='entrance'){
       if(b.time+1e-9<p.readyAt)return;
@@ -201,7 +205,7 @@ export class BlazeIgnitingCoreController{
   }
   stop(){
     if(this.stopped)return;
-    this.stopped=true;this.s1?.ownerStop();this.s2?.ownerStop();this.phase=null;this.reborn=null;
+    this.stopped=true;this.s1?.ownerStop();this.s2?.ownerStop();this.s3?.ownerStop();this.phase=null;this.reborn=null;
     if(this.downState)this.b.removeBuff(this.u,this.downState);this.downState=null;
     this.b.removeBuff(this.u,'blaze2_back_to_default');
     // Ordinary shots survive removal, but not a finished battle.
@@ -255,5 +259,29 @@ export function prepareBlazeIgnitingS2(b,u,{contract}={}){
     targeting:{rangeGrid:grid(record.source.rangeId),maxTargets:record.bb['attack@max_target']},
     canActivate:()=>controller.s2.canCast(),onStart:()=>controller.s2.start(),
     onAttack:()=>controller.s2.selfCost(),onEnd:({reason})=>controller.s2.end(reason)};
+  return prepared;
+}
+
+/** Private eventless ammunition mode; source receipt remains independently held. */
+export function prepareBlazeIgnitingS3(b,u,{contract}={}){
+  if(contract!==BLAZE_IGNITING_S3_CONTRACT)throw Error('Blaze Igniting S3 requires the reviewed barrage contract');
+  const record=validate(u,BLAZE_IGNITING_CORE_CONTRACT);
+  if(record.index!==2)throw Error('Blaze Igniting S3 requires the selected third skill');
+  const a=component('-3061221568776543495'),p=component('1316773592360337536'),motion=component('-4200255773684481920');
+  const originalAmmo=evidence.originalTemplates['blaze2_s_3[listener]'].eventToActions._items
+    .flatMap(v=>JSON.parse(v.value.SerializedState)).find(v=>v.$type.endsWith('+AmmoSkillCountModifier'));
+  if(a._waitForAttackEvent!==0||a._animKey!==''||a._useCachedAtkOnly!==1||a._transferSource!==1
+    ||a._emitToInputPosWhenTargetIsInvalid!==1||Math.abs(motion._delayToStart-.3)>1e-6||motion._followTarget!==0
+    ||Math.abs(p._lifeTime-.3)>1e-6||p._stopWhenSourceInvalid!==0||p._alwaysHitTraceTargetInTheEnd!==1
+    ||component('4306318509201735808')._onlyCheckHitWhenStop!==1
+    ||component('-5100262976928956288').m_Radius!==1.7000000476837158||originalAmmo?._recoverSkipLimitCheck!==true)
+    throw Error('Unreviewed Blaze Igniting S3 native barrage');
+  const prepared=prepareBlazeIgnitingCore(b,u,{contract:BLAZE_IGNITING_CORE_CONTRACT});
+  const {controller,kit}=prepared;controller.s3=new BlazeIgnitingS3Barrage(controller);
+  kit.skill={kind:'ammo',ammo:record.bb['attack@trigger_time'],duration:0,trigger:{rule:'NEVER'},manualCancel:true,
+    mods:{atkPct:record.bb.atk,batFlat:record.bb.base_attack_time},
+    targeting:{rangeGrid:grid(record.source.rangeId),maxTargets:1},
+    attack:{acceptAttackInput:t=>controller.s3.accepts(t)},canActivate:()=>controller.s3.canCast(),
+    onStart:()=>controller.s3.start(),onEnd:({reason})=>controller.s3.end(reason)};
   return prepared;
 }
