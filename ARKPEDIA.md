@@ -2136,3 +2136,24 @@ node --test test/arkpedia-lappland-alter.test.js
 The component suite covers 123 cases including all thirty selected skill ranks, original facing/event clocks, shared and independent ramps, separate mitigation/live ATK, changed-life recipients, lethal target ordering, control/callback interruption, immunity/resistance, squad SP and cleanup. The related source/importer/Goldenglow/Wiš’adel suite passes **281 checks**, with zero failures or skips. The native-byte audit still verifies all 370 components, reproduces both outputs exactly and rejects all nine altered fixtures. The complete local suite passes **10,248 tests across 325 suites**, with nine skips and zero failures (10,257 total). The skipped opt-in browser/end-to-end cases are not counted as passing. Restart tests verify that old cleanup callbacks cannot erase a new cast’s field manager or resume retired drone iterations.
 
 The existing preview returns HTTP 200 and its served snapshot exactly matches the published MVP with the pinned local-asset rewrite. The snapshot still excludes Lappland and keeps SD revision `b15f375`. Additional original effects have been checksum-verified into the source cache only: `battle/prefabs/effects/whitw2.ab`, MD5 `6165c99875777928f2d61498543ce964`, 1,849,081 bytes. Its inventory includes 911 particle systems, nineteen animation clips, thirty-six meshes and forty-three textures. These effects have **not** been published or rendered; cache inventory is preparation for visual integration, not proof of effect support.
+
+### Lappland original effect inputs: private source export
+
+`data/arkpedia-lappland-effects.json` records the pinned original effect input export. It covers all **35 original prefab roots**, including all **33 effect names referenced by the native kit**. Skin variants are excluded by root identity. The four wolf roots are `whitw2_token_01`, `whitw2_token_02`, `whitw2_token_03` and `whitw2_skill_03_token_trail_01`; their artwork uses native mesh particles/materials rather than Spine skeletons.
+
+The closure preserves **2,478 objects**: 579 GameObjects and transforms each, 382 particle systems/renderers each, 83 mesh filters/renderers each, 27 trails, 113 materials, twenty decoded meshes, ninety textures, ten animation clips, ten animator controllers, 22 animators and 86 behavior components. Twelve original shader identities and raw object digests are retained. Particle modules, transform hierarchies, material properties, animation/behavior inputs and native reference bindings remain serialized source inputs. They are not replaced by a browser effect or interpreted as verified compiled behavior.
+
+The cache holds `effects/native-effects.bin` (gzip JSON), its manifest and ninety lossless WebP textures. The exporter records original RGBA pixel digests independently of WebP encoding. The pack uses original Unity coordinates and string object IDs; these have not been converted into a reviewed battle presentation. The raw pack and texture files remain in the private source cache and have **not** been published to SD assets.
+
+**Nine unresolved resources remain explicit**: the Unity builtin mesh at path ID `10210`, a foreign material and seven foreign texture references. Those nine resources account for 190 references, including references in shared native effects. No placeholder mesh/material/texture is supplied. Script bindings are preserved separately from artwork closure; shader execution, animated materials, particle/trail/animator dispatch and native geometry mapping still need implementation and browser review. The source manifest explicitly keeps `enabledOperators: []`, `rendererVerified: false` and `compiledFrameParity: false`.
+
+Rebuild and independently audit the source inputs with:
+
+```sh
+node tools/arkpedia/fetch-lappland-effects.mjs
+.cache/map-env/bin/python tools/arkpedia/extract-lappland-effects.py --manifest-out data/arkpedia-lappland-effects.json
+.cache/map-env/bin/python tools/arkpedia/audit-lappland-effects.py
+node --test test/arkpedia-lappland-effects-source.test.js test/arkpedia-lappland-alter-source.test.js test/arkpedia-operator-importer.test.js
+```
+
+The independent native audit compares every exported object against original client bytes, checks the complete reachable hierarchy, compares decoded geometry and RGBA pixels, and verifies reference membership. In the current extraction environment, all **93 output files reproduce identically**. All **thirteen semantic corruption fixtures are rejected**, including changes with recomputed pack/manifest digests. The focused manifest/source/importer suite passes sixteen checks. This validates source recovery, not public operator support or visual/game-frame fidelity. Public coverage remains **360/431 forms and 774 skills**; the local preview remains on the published roster and SD revision `b15f375`.

@@ -1,0 +1,1756 @@
+{
+  "counts": {
+    "AnimationClip": 10,
+    "Animator": 22,
+    "AnimatorController": 10,
+    "GameObject": 579,
+    "Material": 113,
+    "Mesh": 20,
+    "MeshFilter": 83,
+    "MeshRenderer": 83,
+    "MonoBehaviour": 86,
+    "ParticleSystem": 382,
+    "ParticleSystemRenderer": 382,
+    "Shader": 12,
+    "Texture2D": 90,
+    "TrailRenderer": 27,
+    "Transform": 579
+  },
+  "operator": "char_1038_whitw2",
+  "pack": {
+    "bytes": 1662461,
+    "decodedBytes": 17008248,
+    "decodedSha256": "245da23eec176f3e15a720c74d7b1e478ed1aca377d10acecb0f13d69a58328f",
+    "encoding": "gzip-json",
+    "path": "native-effects.bin",
+    "sha256": "f779d515e911c8fc87453f826af2e550f5d21824ec9c5e2d6c38768d3b468f3d"
+  },
+  "roots": {
+    "whitw2_attack_01_start": "battle/prefabs/effects/whitw2.ab:1101851372370512139",
+    "whitw2_attack_01_trail": "battle/prefabs/effects/whitw2.ab:-609581865524707470",
+    "whitw2_birth_01": "battle/prefabs/effects/whitw2.ab:1891977653144667212",
+    "whitw2_hit_01": "battle/prefabs/effects/whitw2.ab:-755429813693460380",
+    "whitw2_skill_01_buff_01": "battle/prefabs/effects/whitw2.ab:-6600021178728545448",
+    "whitw2_skill_01_start_01": "battle/prefabs/effects/whitw2.ab:-3178852189726547071",
+    "whitw2_skill_01_trail_01": "battle/prefabs/effects/whitw2.ab:-5678492277075617002",
+    "whitw2_skill_02_buff_01": "battle/prefabs/effects/whitw2.ab:4736468240486024294",
+    "whitw2_skill_02_range_01": "battle/prefabs/effects/whitw2.ab:-7805807276694602923",
+    "whitw2_skill_02_range_01_end": "battle/prefabs/effects/whitw2.ab:4084440820431678841",
+    "whitw2_skill_02_start_01": "battle/prefabs/effects/whitw2.ab:7804723013952915475",
+    "whitw2_skill_02_start_02": "battle/prefabs/effects/whitw2.ab:4013324249853453933",
+    "whitw2_skill_02_start_03": "battle/prefabs/effects/whitw2.ab:-6456660287533066698",
+    "whitw2_skill_02_trail_01": "battle/prefabs/effects/whitw2.ab:-7657183745948477861",
+    "whitw2_skill_03_buff_01": "battle/prefabs/effects/whitw2.ab:4369005147043611780",
+    "whitw2_skill_03_buff_start": "battle/prefabs/effects/whitw2.ab:-4945875026873641279",
+    "whitw2_skill_03_mark_01": "battle/prefabs/effects/whitw2.ab:-9200702922847728692",
+    "whitw2_skill_03_mark_02": "battle/prefabs/effects/whitw2.ab:-8305894220141593324",
+    "whitw2_skill_03_start_01": "battle/prefabs/effects/whitw2.ab:-2110950701085231492",
+    "whitw2_skill_03_token_hit_01": "battle/prefabs/effects/whitw2.ab:-1344575483676432354",
+    "whitw2_skill_03_token_trail_01": "battle/prefabs/effects/whitw2.ab:-7398351950217432359",
+    "whitw2_skill_03_trail_01": "battle/prefabs/effects/whitw2.ab:-6163399144224353154",
+    "whitw2_token_01": "battle/prefabs/effects/whitw2.ab:1350919009197863661",
+    "whitw2_token_02": "battle/prefabs/effects/whitw2.ab:4905136992279476415",
+    "whitw2_token_03": "battle/prefabs/effects/whitw2.ab:3757409277496129751",
+    "whitw2_token_end_01": "battle/prefabs/effects/whitw2.ab:8064236325162509825",
+    "whitw2_token_end_02": "battle/prefabs/effects/whitw2.ab:-8332820026792150337",
+    "whitw2_token_end_03": "battle/prefabs/effects/whitw2.ab:-5581823149684351040",
+    "whitw2_token_hit_01": "battle/prefabs/effects/whitw2.ab:-1773934419368530534",
+    "whitw2_token_hit_02": "battle/prefabs/effects/whitw2.ab:-4450799564747526072",
+    "whitw2_token_hit_03": "battle/prefabs/effects/whitw2.ab:6679006001914443425",
+    "whitw2_token_hit_04": "battle/prefabs/effects/whitw2.ab:2026476160333818598",
+    "whitw2_token_hit_05": "battle/prefabs/effects/whitw2.ab:3576294344283633626",
+    "whitw2_token_hit_06": "battle/prefabs/effects/whitw2.ab:-1503853670976426976",
+    "whitw2_token_skill_03_end": "battle/prefabs/effects/whitw2.ab:-331816998822868603"
+  },
+  "schemaVersion": 1,
+  "scope": {
+    "compiledFrameParity": false,
+    "enabledOperators": [],
+    "pending": [
+      "Resolve remaining foreign/builtin inputs",
+      "Implement original shaders, particle/trail and animator dispatch",
+      "Connect owner/projectile lifecycle and review all skills in browser"
+    ],
+    "rendererVerified": false,
+    "sourceInputsOnly": true
+  },
+  "sources": [
+    {
+      "bytes": 927045,
+      "md5": "bb6ef923f727530acbce13830f54500a",
+      "path": "[uc]shaders.ab",
+      "sha256": "594994853554ca5cd583ccfdf244d8863baedde8991aa89ddd9c8a673b45e977"
+    },
+    {
+      "bytes": 34333,
+      "md5": "0630f32e2e4f7b0b9198d56b4d817c32",
+      "path": "arts/[pack]common.ab",
+      "sha256": "50ec81067d4a2a0d6e1fbdf5dbe385cf9327d51420a58f56f9e39199c7dc4e9c"
+    },
+    {
+      "bytes": 708675,
+      "md5": "b0e5dabf91104c28cc92a0db7ecdc2f5",
+      "path": "battle/[pack]common.ab",
+      "sha256": "284fdc052933440bd969303b9023c9e4fa11c508e9a5ed4036c4e83641ae2c4a"
+    },
+    {
+      "bytes": 1849081,
+      "md5": "6165c99875777928f2d61498543ce964",
+      "path": "battle/prefabs/effects/whitw2.ab",
+      "sha256": "7e6eec5e36581a87e456ad065c5f1a2244c98d4a75b088bd738f1ae901036368"
+    },
+    {
+      "bytes": 58722,
+      "md5": "976a2150a196fc82b1ae64f8dee0e5aa",
+      "path": "refs/fx/material.ab",
+      "sha256": "8344e650f56eafce13521f5a4231c7f3ceac1d7e7db67af8be4ad41c3d10df99"
+    },
+    {
+      "bytes": 15862,
+      "md5": "d3f16af67413ee70ef5074ce43c4eb0b",
+      "path": "refs/fx/model/special.ab",
+      "sha256": "49466e217a5c735c6605c4648604ed5d361871090e15b438be093ca15ae8396e"
+    },
+    {
+      "bytes": 2580500,
+      "md5": "30da8800b79e71ae98aabe116c9de853",
+      "path": "refs/fx/sharedbattle.ab",
+      "sha256": "f2035df4925b8fba5480bf7de4334286bc7e944b17ca79201d8f695258ec48c1"
+    },
+    {
+      "bytes": 211716,
+      "md5": "32e34d771281e16c0be664ee783a3241",
+      "path": "refs/fx/texture/blood.ab",
+      "sha256": "f482e94594e0613fea45429c70e9b10484ba2e03a602ade1320b97a885530fd8"
+    },
+    {
+      "bytes": 1301719,
+      "md5": "147513acf0fc4af4e064993b7254c66b",
+      "path": "refs/fx/texture/color.ab",
+      "sha256": "f7f65e1bc66f8df83a69dd015bd3058dc2f614b144ab89290673e3876b4c6a1c"
+    },
+    {
+      "bytes": 1660957,
+      "md5": "a66c07415824d1d3269be52226268ca4",
+      "path": "refs/fx/texture/fire.ab",
+      "sha256": "4690f5de52035cf49d999f80086861d881c880bc1b922906fef4121d235ffcb7"
+    },
+    {
+      "bytes": 2222595,
+      "md5": "870299bc040bec673fdc1a0a24d59af4",
+      "path": "refs/fx/texture/flipbook.ab",
+      "sha256": "6aabde70174daa7e5f2463eeb2f6f0b61b747d15095c5a28d4f932611a3614c5"
+    },
+    {
+      "bytes": 10259142,
+      "md5": "939875b342ebd0a0530d24c92651145a",
+      "path": "refs/fx/texture/flow.ab",
+      "sha256": "4d491d8bde4a8818867b01f37fe88561a0318f23116314477e2d1eb4734834c2"
+    },
+    {
+      "bytes": 912436,
+      "md5": "64920c5f238a6926ec1df9ced491f8ef",
+      "path": "refs/fx/texture/lighting.ab",
+      "sha256": "1c9fe9de1316c01fa701779aaa700370b6d7fd4cc1fa899fa632a4785e7a351c"
+    },
+    {
+      "bytes": 3598944,
+      "md5": "abf8a7400e370152ae052d89797e270e",
+      "path": "refs/fx/texture/mask.ab",
+      "sha256": "d3eb9dbbdd4b09395d97f4f64379df6f1df8135c8963abbb0a856a81abe3bce4"
+    },
+    {
+      "bytes": 6801485,
+      "md5": "4416986440e558d057f9d791c5dc266e",
+      "path": "refs/fx/texture/object.ab",
+      "sha256": "0ca39a3c86964b02a39b969acaa1f6b46c080188e12de90e0a57d986c986163c"
+    },
+    {
+      "bytes": 238919,
+      "md5": "caf6331ee3ebe8b7898d73dce6e0b49e",
+      "path": "refs/fx/texture/pattern.ab",
+      "sha256": "4439b8e2e8791985e19585e32b63c182ac42cb37567690cb6b884613f264dc2c"
+    },
+    {
+      "bytes": 3456924,
+      "md5": "5801b3ed41b45ab81b4a4706d5ef6153",
+      "path": "refs/fx/texture/ray.ab",
+      "sha256": "c1ac541d9274d49056afd7ed69a88142d6962a0e023fe9ac6e72286ac3e1930c"
+    },
+    {
+      "bytes": 3076000,
+      "md5": "404a4669d102b36704c0586bc430a96a",
+      "path": "refs/fx/texture/smoke.ab",
+      "sha256": "938a9b80cf33bc5d09631f940a9a7a20b00a9699d327693f0d90d8d48c21ddd5"
+    },
+    {
+      "bytes": 4429358,
+      "md5": "d5ebf8a2dfd38987e9d24631c3c83520",
+      "path": "refs/fx/texture/star.ab",
+      "sha256": "c3f77727b36a82f6c8340591e47a57174111ad0c794a0ddec8e1004af00a1058"
+    },
+    {
+      "bytes": 8024643,
+      "md5": "bb9915cb4220427f954bf1de528bbb53",
+      "path": "refs/fx/texture/trail.ab",
+      "sha256": "fb4c9e878dbf4e4f26946680f02dfdf7f9f4d9d6e51d3863ae9afb5f41f2b704"
+    },
+    {
+      "bytes": 66434,
+      "md5": "de2edc6db924006fb54e69e5c4edf6c4",
+      "path": "refs/fx/texture/ui.ab",
+      "sha256": "a165728653cbcb4c1cb1f1eae08c49554dc2a302edea9238374c7452532609a5"
+    },
+    {
+      "bytes": 1754215,
+      "md5": "d997f1678c839aa4471fa1d5ed769202",
+      "path": "refs/fx/texture/vein.ab",
+      "sha256": "7840702ba212da4a62ce33bd21cef02ea6a5748c630fbd0e846b87be06a97c1f"
+    },
+    {
+      "bytes": 2185495,
+      "md5": "d166906673a18c8f940e9dd828b9c5da",
+      "path": "refs/fx/texture/water.ab",
+      "sha256": "dadd620f269ba8265b8bc49c65c2a39f9d1a3537cd42dc1019c3e3391c6bd310"
+    }
+  ],
+  "textures": {
+    "battle/prefabs/effects/whitw2.ab:-1220690431671575398": {
+      "bytes": 9394,
+      "height": 256,
+      "path": "textures/906fda3d45d647a196b92700.webp",
+      "pixelSha256": "0f9c0d02a4eff08456c4657a6046bbd03169dc97c4780a1ad6a86a81ecd6d1a1",
+      "sha256": "df747549a12ac2905e41a55c849388f892a261410e4e4da4188f19069120d872",
+      "width": 256
+    },
+    "battle/prefabs/effects/whitw2.ab:-2304553539013294394": {
+      "bytes": 28094,
+      "height": 256,
+      "path": "textures/aed7a56737236bc9eaabe34e.webp",
+      "pixelSha256": "861ad617f7552604bf76811420e118bf978ad697af4bd53cb9808fc0a163d842",
+      "sha256": "ec8995668f8ca5bdda8f1b04d4a350b7a64b0edd2295dbf9768be469a37f2fcc",
+      "width": 256
+    },
+    "battle/prefabs/effects/whitw2.ab:-3590905186397936433": {
+      "bytes": 2586,
+      "height": 256,
+      "path": "textures/0013bd4fd55a7dd5e0a3c14a.webp",
+      "pixelSha256": "bb733f605746eb5ed3bbcfe56ed392ed3bd6dc522e6188f4ee9574a824570e07",
+      "sha256": "3eaa2bf12187b81275f9815676a479ac3ce8c2dd719399f883bf32b400fa60cc",
+      "width": 256
+    },
+    "battle/prefabs/effects/whitw2.ab:-4372017654275214401": {
+      "bytes": 952,
+      "height": 256,
+      "path": "textures/424b562837ea84a538ca641a.webp",
+      "pixelSha256": "4372067723260e85badb2c9345068959208ef001c759941ca4b0cae82c5cabb9",
+      "sha256": "659885506b51de34e8bc3eb7d04d049f41cddcafb995ef5b2edb8c81e9aeb90e",
+      "width": 256
+    },
+    "battle/prefabs/effects/whitw2.ab:-5091806550660570163": {
+      "bytes": 17900,
+      "height": 256,
+      "path": "textures/8b8af859a62a2c252033cd05.webp",
+      "pixelSha256": "b6dc7d9a1b5074f14f41d21194b4c56f6061b7bbf77078a528551392a88d84ca",
+      "sha256": "b6fdf44bce00653048e3a995fbb46c12015c30dcc54cd412c5d249cd9b251a1f",
+      "width": 256
+    },
+    "battle/prefabs/effects/whitw2.ab:-7304015543619164215": {
+      "bytes": 890,
+      "height": 64,
+      "path": "textures/0568233612ca67f3d54d6933.webp",
+      "pixelSha256": "04d7bfabcfcaca55f6ed48c4f09a8a180ee0d033618f3aaf21fcdc2d50efd800",
+      "sha256": "7ed61d16b8dc08b7fda5ff972b666070dc276db34ef2315d98ac6759784c5016",
+      "width": 64
+    },
+    "battle/prefabs/effects/whitw2.ab:-7357093674897896501": {
+      "bytes": 5728,
+      "height": 128,
+      "path": "textures/01128b96eff88e691bf6333f.webp",
+      "pixelSha256": "3f2e2eeca60ab0683cb11d60b9ac7d55824414455d0634321ad97d52fd6d6f24",
+      "sha256": "87083885d2659560bea88325a828b5352e9e54b20f9b42abff83310a66c84290",
+      "width": 128
+    },
+    "battle/prefabs/effects/whitw2.ab:-7789141255503905942": {
+      "bytes": 1416,
+      "height": 64,
+      "path": "textures/cbf3e15b2310cc213829058b.webp",
+      "pixelSha256": "e0e8dad315c2fb19db1a2501d138fa1a61a56ca545a8bacc7bffc1407e54a382",
+      "sha256": "2b92c987611fbb011dca4757d5b129eeefe5d87d247d3392c097db45064eac97",
+      "width": 64
+    },
+    "battle/prefabs/effects/whitw2.ab:-8878755139567908302": {
+      "bytes": 940,
+      "height": 128,
+      "path": "textures/6f69f80998e845f31f892660.webp",
+      "pixelSha256": "4cb252d6fc6e7afb89c93b703afbf64468124d8af7a06553758526032e1f9527",
+      "sha256": "b07c9a5e86ecdc8473c8e8acf63e41191b4078d0d5eafe7a2a75b4830a093b99",
+      "width": 128
+    },
+    "battle/prefabs/effects/whitw2.ab:-8931298566206270919": {
+      "bytes": 5904,
+      "height": 128,
+      "path": "textures/c1b270859c27de1adbcbd8cb.webp",
+      "pixelSha256": "251929ee31cd8f1b5a8c3f465fecde8c7b0d52c0a22af86bdeded90b663dc359",
+      "sha256": "721e59d091543a7dab4cf6f5b33fe24631603dd3446e38afbed7d3c357169c30",
+      "width": 128
+    },
+    "battle/prefabs/effects/whitw2.ab:2578312300353522454": {
+      "bytes": 14834,
+      "height": 256,
+      "path": "textures/a54a08aa5856cc54c82668bb.webp",
+      "pixelSha256": "ea5968f5a3e5e1f3e9e856b9ed4dce4d570dd0f4738f34f4c5696ba5673c6134",
+      "sha256": "8b5998374c09822a4c5933132014b09aa7a66d557654b0526a614825be0cc00f",
+      "width": 256
+    },
+    "battle/prefabs/effects/whitw2.ab:4059694923355583052": {
+      "bytes": 2572,
+      "height": 128,
+      "path": "textures/01c222f0367b4b7e72460737.webp",
+      "pixelSha256": "1b5d3ce1eb7ea56e6f8c06d60ed561234fe7b0f8ff8767ec6d6a298cf270edc2",
+      "sha256": "edb95d754646371d43fd190daae37aee421e2a45a6ef16045c9a33e968ea60db",
+      "width": 128
+    },
+    "battle/prefabs/effects/whitw2.ab:4517210585376449399": {
+      "bytes": 6754,
+      "height": 128,
+      "path": "textures/25ae6e80fbc8f38d5116cd07.webp",
+      "pixelSha256": "096120880c1a3f56697644dccfa87d0ac9ed929dfcf28361bd2c0e9441ba82f5",
+      "sha256": "c94d27991909fc73104f2ee813fec3fd411624b4fe003cf7d1bfabd6f6fd3536",
+      "width": 128
+    },
+    "battle/prefabs/effects/whitw2.ab:4786453617668761962": {
+      "bytes": 38070,
+      "height": 512,
+      "path": "textures/fdbbc44958af31a018b94ff9.webp",
+      "pixelSha256": "0c485ad677a20eeb130916dcfcaa97bb2c21bae156b8e6e5183604fc4fcb2baa",
+      "sha256": "164cab6bb4c51ac9ad2bf40f28afdcc53a9952e3226b7eb9539a7e53f3dcec6a",
+      "width": 512
+    },
+    "battle/prefabs/effects/whitw2.ab:4819250548922188894": {
+      "bytes": 49288,
+      "height": 512,
+      "path": "textures/3eb42c8c7fa2f7c79372fd97.webp",
+      "pixelSha256": "f3833af23887e8b2dae6264e36779811010649e09b9941dbdef080ad598c2368",
+      "sha256": "42b444e7bc4070a020efd293eddf6de61e3b4f036655a5c9f0b94e5316a295eb",
+      "width": 512
+    },
+    "battle/prefabs/effects/whitw2.ab:5369246895144320634": {
+      "bytes": 4590,
+      "height": 128,
+      "path": "textures/91680f4e7cb20909aaffa813.webp",
+      "pixelSha256": "79bf6d91d6323e080463c325c95921a4bde32606f71ec147dce387cfc3afae55",
+      "sha256": "670e59372ca64364150033dda4d8a5c261388f16ff4293bf28c235511b18a00e",
+      "width": 128
+    },
+    "battle/prefabs/effects/whitw2.ab:5876457350858598720": {
+      "bytes": 13138,
+      "height": 512,
+      "path": "textures/b4479b2f2d4049999e8a274a.webp",
+      "pixelSha256": "a4bc7d559a6d73df7aeb66b7fb5a525254ed3c90f7f09175489e67c75ab65f15",
+      "sha256": "0f53cb8ae45b4b388f854ce4f6f233faf44c8fd535a72d651bbf26533c296fc6",
+      "width": 512
+    },
+    "battle/prefabs/effects/whitw2.ab:6010929545233185752": {
+      "bytes": 956,
+      "height": 64,
+      "path": "textures/f70bd78a417c992174021eeb.webp",
+      "pixelSha256": "febb6dbdcd42bdf6d1d9f26356eabde7d24352813b485ba27a55e6e21986a0b3",
+      "sha256": "93b0ab272d24d282bb8e4e287c6714cad4c17b2103988690fab686a4bc4945a2",
+      "width": 64
+    },
+    "battle/prefabs/effects/whitw2.ab:878155149831035646": {
+      "bytes": 8520,
+      "height": 128,
+      "path": "textures/7d9e48f29778effbd92733c4.webp",
+      "pixelSha256": "0cf6e33373719dd42981cec74e1489d4c27e11e0b9efa2689439ea02ab29fa60",
+      "sha256": "e443d043767b4185a4284d95be990b4407a89369ab9daab7b3656f3b8a079c50",
+      "width": 128
+    },
+    "refs/fx/sharedbattle.ab:-1711847450995856476": {
+      "bytes": 45482,
+      "height": 256,
+      "path": "textures/8d67b83925c40a894779cf7b.webp",
+      "pixelSha256": "a8543ff130c8273f4c80cac580925f525019bc68c4f7497e291cbdbde56a7520",
+      "sha256": "a2a33f7adbc8302fd697f3e5ed97a629081f18f717fa756043ad06eae1fb284f",
+      "width": 256
+    },
+    "refs/fx/sharedbattle.ab:-7304015543619164215": {
+      "bytes": 890,
+      "height": 64,
+      "path": "textures/d626562ae30d0bb0878bf59e.webp",
+      "pixelSha256": "04d7bfabcfcaca55f6ed48c4f09a8a180ee0d033618f3aaf21fcdc2d50efd800",
+      "sha256": "7ed61d16b8dc08b7fda5ff972b666070dc276db34ef2315d98ac6759784c5016",
+      "width": 64
+    },
+    "refs/fx/sharedbattle.ab:1524130482448742249": {
+      "bytes": 5256,
+      "height": 128,
+      "path": "textures/30c650e2dd0f7b025661c875.webp",
+      "pixelSha256": "5c151ba48ad39d17ef9ea063959c6d9662abfa2fff7896871d9d5e4473e62bb5",
+      "sha256": "c550855832e498fcca2e32aa35651224e0cfaeb5bfa3d323e3d807f0148fccd8",
+      "width": 128
+    },
+    "refs/fx/sharedbattle.ab:1756146406155572972": {
+      "bytes": 3702,
+      "height": 128,
+      "path": "textures/88f1a1c7b38a958ead6b5387.webp",
+      "pixelSha256": "5993b1d8deb60313730a796a00903d0b4d6b7def3d69077ad30f45c21148fab1",
+      "sha256": "ddb4902630068947e370c09be98448515e0d7b8f935c7f0e190bcf4cfac77eaa",
+      "width": 128
+    },
+    "refs/fx/sharedbattle.ab:1907311967904759682": {
+      "bytes": 16612,
+      "height": 128,
+      "path": "textures/25fca4f1894e01a873544be2.webp",
+      "pixelSha256": "9f16a0fa13f7b580a4f98a5f32bbc99d8c87866b63961e6f66a06c8b2a836aa2",
+      "sha256": "eab37871e1b3dcefce804e6cee4dd8f6842b4298090ccadddbe807c9f10e6c26",
+      "width": 128
+    },
+    "refs/fx/sharedbattle.ab:4786453617668761962": {
+      "bytes": 38070,
+      "height": 512,
+      "path": "textures/6b4a1af4e9f5404c04d995a6.webp",
+      "pixelSha256": "0c485ad677a20eeb130916dcfcaa97bb2c21bae156b8e6e5183604fc4fcb2baa",
+      "sha256": "164cab6bb4c51ac9ad2bf40f28afdcc53a9952e3226b7eb9539a7e53f3dcec6a",
+      "width": 512
+    },
+    "refs/fx/texture/flipbook.ab:9074470462412583802": {
+      "bytes": 6166,
+      "height": 128,
+      "path": "textures/ae06ba408599c0a26359a94e.webp",
+      "pixelSha256": "eeb8a2bb91d2ed4938b4146dd7ec15dd3d1c9a6d9f1bc15bd994d54a3ff776d2",
+      "sha256": "b331b0caea1ea4caa194dee7639a75566b372be2eb5080464de0aaadc28a8384",
+      "width": 128
+    },
+    "refs/fx/texture/flow.ab:-4064428261868403559": {
+      "bytes": 9070,
+      "height": 128,
+      "path": "textures/171eca3116bf889380ebb130.webp",
+      "pixelSha256": "98292634a06e808ff98c9101491c5a2d06e7f8191d28a828aa635a152562cffd",
+      "sha256": "c2ec01af3ca6f4ea12b9c12fb1cd755ae49891ee6d7dfea366927e2357f4b0c1",
+      "width": 128
+    },
+    "refs/fx/texture/flow.ab:-4160513625965706118": {
+      "bytes": 16342,
+      "height": 256,
+      "path": "textures/b823387e3da1a7e37b59f2e6.webp",
+      "pixelSha256": "1364eceb6c7c3e9ff7727a802dc801852677376b16a684ee972327e347185b81",
+      "sha256": "4b31819bc27c7b0915085b1151825bfda4159fb7d48d824b5efec1fd000b8dea",
+      "width": 256
+    },
+    "refs/fx/texture/flow.ab:-4487102536378500135": {
+      "bytes": 5584,
+      "height": 128,
+      "path": "textures/e334300fdd97f82b2d48ed03.webp",
+      "pixelSha256": "5140d71c5afce7097cf0c75a2909e31e0446ccfb4b65bad13c0259fd50c95322",
+      "sha256": "7e7b7a439afcaea523c1e4b1056e08208ce56b59246cc773a93811a4e23ac24b",
+      "width": 128
+    },
+    "refs/fx/texture/flow.ab:-4964363631302793203": {
+      "bytes": 39050,
+      "height": 256,
+      "path": "textures/6c69f8157f9aa2b70aa38093.webp",
+      "pixelSha256": "f2e043c50b4dd618722b7f4bcc9813a62a753e74390d92f6c76cde4dc19b9f92",
+      "sha256": "5c97c784ca2d0a8edc2aef5a5a249bea92b5a6f9de8476b99cfea1fd133cd384",
+      "width": 256
+    },
+    "refs/fx/texture/flow.ab:-524823049545208911": {
+      "bytes": 44750,
+      "height": 256,
+      "path": "textures/8c85af195ea669b50dda898f.webp",
+      "pixelSha256": "a661783f05d16c8245f4413374a2f69621ac7a48627b5b31cd7287fb083d0ada",
+      "sha256": "0037d3ba791929cdb84adb34cdc01db5908f5da97214a9774dba5f2292044644",
+      "width": 256
+    },
+    "refs/fx/texture/flow.ab:-5516450270875415884": {
+      "bytes": 14560,
+      "height": 128,
+      "path": "textures/cf24729349c001f36ff8a8bb.webp",
+      "pixelSha256": "c59a6b1412ab452a57d20b7122e262e00df90bd784c2a0aaf1c9e9effc9721d0",
+      "sha256": "2f9726dc11987513c9f7ecb5f25d8529544333cd1b2f3a3926b5ac25eccb9da2",
+      "width": 128
+    },
+    "refs/fx/texture/flow.ab:-6747969350794912708": {
+      "bytes": 5088,
+      "height": 128,
+      "path": "textures/0473d8b96b6df584926226ad.webp",
+      "pixelSha256": "10bd927fc532e64dee28dcde92d342b8c5cd66b4227efb65565c57047ebeb821",
+      "sha256": "14c4a221671318a890e67e082b9077eabd70c98f8c2a941a68e7efca0afd96c9",
+      "width": 128
+    },
+    "refs/fx/texture/flow.ab:-7523784609324966829": {
+      "bytes": 17728,
+      "height": 256,
+      "path": "textures/1869e25cfc926e37d4464cbb.webp",
+      "pixelSha256": "2efe2268952c9917213a02fe7e48f4e9de54bb72581fe5034f19aa4ec4e24c3a",
+      "sha256": "5e984c55d02b5123c6adb41deb4792fcacd2623d945c789cf5f3762af86b0dcf",
+      "width": 256
+    },
+    "refs/fx/texture/flow.ab:1719538508940828324": {
+      "bytes": 15116,
+      "height": 128,
+      "path": "textures/9a1809773eeffb95aac56770.webp",
+      "pixelSha256": "1e7506ecab8d1ea92f219faea2a8b50881c639162b1b4df22159a572421fd87d",
+      "sha256": "27256c0154fbfe00de0a767e0120e1610f477bf907f5c3727872de3a43f8268e",
+      "width": 128
+    },
+    "refs/fx/texture/flow.ab:3967822276397304150": {
+      "bytes": 8518,
+      "height": 128,
+      "path": "textures/bf31a1e425cb3f0c0b7b7871.webp",
+      "pixelSha256": "e8b6c0b3624e010fefc682f24963578388d82402bf99ca16f3ec9a89566ea775",
+      "sha256": "d9dc7b93e051a507737a0b711429a598c3e65d9b813e77f71ebd4d13bdf2b2c3",
+      "width": 128
+    },
+    "refs/fx/texture/flow.ab:4655186415060612455": {
+      "bytes": 13794,
+      "height": 128,
+      "path": "textures/991141ca2e04b2276181b662.webp",
+      "pixelSha256": "40697e3866f2cab1192f2f715a3d0f0d88f24ab61294819a17bbf2190ba6d50a",
+      "sha256": "66ad01b42f752045aff17e682a52db9ab5df7298785cb62223f2cd51324502dd",
+      "width": 128
+    },
+    "refs/fx/texture/flow.ab:4754006614183650870": {
+      "bytes": 8518,
+      "height": 128,
+      "path": "textures/67dadc70aac403f8cdc1afb4.webp",
+      "pixelSha256": "e8b6c0b3624e010fefc682f24963578388d82402bf99ca16f3ec9a89566ea775",
+      "sha256": "d9dc7b93e051a507737a0b711429a598c3e65d9b813e77f71ebd4d13bdf2b2c3",
+      "width": 128
+    },
+    "refs/fx/texture/flow.ab:5903463588716579371": {
+      "bytes": 19120,
+      "height": 128,
+      "path": "textures/13e00e396aeb5ec60adf1996.webp",
+      "pixelSha256": "1e193caf61ba8ad24d02ac82d70e16f8d6ccf686e57cadf8cee1d0f784b9bb8a",
+      "sha256": "963d70e99868cbfe7a026baf5f500277c0b987704b49e644409c62644036e729",
+      "width": 128
+    },
+    "refs/fx/texture/flow.ab:5989693971123367887": {
+      "bytes": 25080,
+      "height": 256,
+      "path": "textures/9273d9a3e0f1cf7395959cb3.webp",
+      "pixelSha256": "22961ca240523d6924f052322b6b6b6e3b813a65dc05a546d47cd0ef2acac420",
+      "sha256": "7131a958f5c4bad47e2f9381efc256fc6ccf2b5d4a7a740fad92b6893a01540d",
+      "width": 256
+    },
+    "refs/fx/texture/flow.ab:6441578876670715928": {
+      "bytes": 42528,
+      "height": 256,
+      "path": "textures/791f9c398da9490829fae604.webp",
+      "pixelSha256": "f1963a31932e863679c632accd00492e395b376eab0420155b6ff0d354bfd86f",
+      "sha256": "241e05ad5db29631ff1a74c6423f7516606d1375719f0f7de1fd43e962fc689e",
+      "width": 256
+    },
+    "refs/fx/texture/flow.ab:671620968111511470": {
+      "bytes": 5016,
+      "height": 128,
+      "path": "textures/7bfd823d28d28097a4ac16af.webp",
+      "pixelSha256": "d253e6bd2af4efc5dcaff62899fcbcf30b85af38689cbd0545b71ab7825906e9",
+      "sha256": "fa4c3ab37185fd1bc880d980eecf334a53731b352a3a7bfa4d9d687e1cb170e5",
+      "width": 128
+    },
+    "refs/fx/texture/flow.ab:7303517427033467722": {
+      "bytes": 5584,
+      "height": 128,
+      "path": "textures/1c7044b037ee561a8540fba4.webp",
+      "pixelSha256": "5140d71c5afce7097cf0c75a2909e31e0446ccfb4b65bad13c0259fd50c95322",
+      "sha256": "7e7b7a439afcaea523c1e4b1056e08208ce56b59246cc773a93811a4e23ac24b",
+      "width": 128
+    },
+    "refs/fx/texture/mask.ab:-1585071615835749923": {
+      "bytes": 5664,
+      "height": 128,
+      "path": "textures/16107ecb37fdfe704aa35c0d.webp",
+      "pixelSha256": "194a7c321d18cf8381ea641c5eefe76308797a610f493bf53d81c0b581659599",
+      "sha256": "66554a9d89d6b1256a5059e32697a3aaf5162f131de27192757f746e0f1631a1",
+      "width": 128
+    },
+    "refs/fx/texture/mask.ab:-1597841963640052759": {
+      "bytes": 1358,
+      "height": 64,
+      "path": "textures/9aca45412d730cebc6480d38.webp",
+      "pixelSha256": "2421b7efd549d588c87baa244fd1f105bf584283c51851e616f3ed9caee89952",
+      "sha256": "f41d5a2691cd08dca1825d725b82cb95554eeccb004feb97b3cd02b5da16d1d4",
+      "width": 64
+    },
+    "refs/fx/texture/mask.ab:-2368407900836383578": {
+      "bytes": 1090,
+      "height": 128,
+      "path": "textures/5a57c95fce050fa823d2fd2c.webp",
+      "pixelSha256": "847da61acadc5f822ee924b641962a76b5171816677b13be31e4a34bd4992ffd",
+      "sha256": "7063507f24ca7db1443303678a3a3ebcd7eead0eb1a77d5908e3d79ca432b4d2",
+      "width": 128
+    },
+    "refs/fx/texture/mask.ab:-3402821209099302592": {
+      "bytes": 1108,
+      "height": 64,
+      "path": "textures/3b7e3eca85fe376a56c6a2ea.webp",
+      "pixelSha256": "9267ab24e9b4a443178adcbd455651fdcfa32f659c1316d516e8d1fa1a507f89",
+      "sha256": "e0f4d04d38ebcf231d994c33feeece22d811069af4bb1343d56dbba183aab2a5",
+      "width": 64
+    },
+    "refs/fx/texture/mask.ab:-5422384788441988932": {
+      "bytes": 5932,
+      "height": 128,
+      "path": "textures/6ba4fa4bc4de75c026b1b533.webp",
+      "pixelSha256": "c146841c5777789ab24ef04c767f5158650a7afb5b1c232dfb5242e8e84f1fdd",
+      "sha256": "d6baedb4975228634c0b48ecc6b16818cad4d3f2a7d2f96a939650f0cfd31021",
+      "width": 128
+    },
+    "refs/fx/texture/mask.ab:-6129328892373894407": {
+      "bytes": 6172,
+      "height": 128,
+      "path": "textures/93a0e28668706417db4743a2.webp",
+      "pixelSha256": "7b2749f7b3f382d4fffeb178e39f0700ba3e5fbccec4d817d38ebacfc96f95d3",
+      "sha256": "9c8700c8ebccb7bfefe9e6304b00ecafaaaafd053aad77e399d459ce8f3ffeab",
+      "width": 128
+    },
+    "refs/fx/texture/mask.ab:-6141317099499778955": {
+      "bytes": 2840,
+      "height": 128,
+      "path": "textures/8a32073d33a98ca519117253.webp",
+      "pixelSha256": "7c97b9a3e5fb32be98edd6ea1b9e5c997720fc2d413e56b443e861bb112c8a5b",
+      "sha256": "5332b8d1e7dfd9662632368833deb93bbdd3d22cd792081c7f79a6690adbb8cb",
+      "width": 128
+    },
+    "refs/fx/texture/mask.ab:-8828175078512165837": {
+      "bytes": 2080,
+      "height": 128,
+      "path": "textures/3a90c06a659b09f309423280.webp",
+      "pixelSha256": "58a7d3b3c77b45c2bc944dbab4aceed6df2f335ae2bf4e506dcadcb054852d39",
+      "sha256": "8e01504cd8e485954495ab9e6d8f5c9622cedfbd50376012c5da2a6fbfae1986",
+      "width": 128
+    },
+    "refs/fx/texture/mask.ab:-9047848340541360941": {
+      "bytes": 244,
+      "height": 64,
+      "path": "textures/8cc221bd80c76f5dad5a4c85.webp",
+      "pixelSha256": "e53fcbef7fb4cb2f37c365210d4d1b9391cb9f968a43f32e2384e6e0ca584513",
+      "sha256": "d92543569f6c99604de807a42bd98bffb18f87c467637010454f70a0ff58f49a",
+      "width": 64
+    },
+    "refs/fx/texture/mask.ab:1475945865705079393": {
+      "bytes": 8400,
+      "height": 256,
+      "path": "textures/6cc0f4d87b192e7cdbf3fe39.webp",
+      "pixelSha256": "7ae7dcc3e31947ad6ad3b882753407be1400585044d83b723de7b803d2f7de02",
+      "sha256": "df01ab7d0a7e1cc0531604765279beb03a7d8ad6ce70ff83741c4df26d4f6298",
+      "width": 256
+    },
+    "refs/fx/texture/mask.ab:192251375261474454": {
+      "bytes": 5560,
+      "height": 128,
+      "path": "textures/66e035fd8a0df8973b845790.webp",
+      "pixelSha256": "7f7a702df3db65700e4d20cde947ebb02d1f8bd5447f169009d000468fad13ba",
+      "sha256": "9ffff2e821aa3a2691cf57e740c7bb0f778ec50465a7613ef77b9e2bc90cdab4",
+      "width": 128
+    },
+    "refs/fx/texture/mask.ab:5114277674818615262": {
+      "bytes": 930,
+      "height": 128,
+      "path": "textures/3a172271571f46eae0049573.webp",
+      "pixelSha256": "1c5395b265df9d02f45f445a65cb64edc7b0d36db3e0a6509472a88e7003a67d",
+      "sha256": "1283702b04c718651a2af7cd47cad4cf48bbd4fb8922bc69ed506fc954e0d524",
+      "width": 128
+    },
+    "refs/fx/texture/mask.ab:8227387382419806595": {
+      "bytes": 268,
+      "height": 64,
+      "path": "textures/df2a8591c1fafa77f67a0dc4.webp",
+      "pixelSha256": "7188e7aad4a733f2b65ff9929f9ac8a1390884ad45b320fbf18b4b28f8080098",
+      "sha256": "7f355dccab8cc56cfa610d5a7c847e5c4ffd2fe27a218f51e8ef9b741c71e65a",
+      "width": 64
+    },
+    "refs/fx/texture/object.ab:-5105966896895297828": {
+      "bytes": 60,
+      "height": 128,
+      "path": "textures/c6039ee8e8eb288d15b7613b.webp",
+      "pixelSha256": "ca4fffa7f76f2ad8864e97e1ea6d300c67a39320c4b46823ee083c04f6e3d212",
+      "sha256": "9659b41160e5a8ef62ec2a37d49a315efc4ecbef3cf3477515ee06b2979d59a7",
+      "width": 128
+    },
+    "refs/fx/texture/ray.ab:-1849931479051276081": {
+      "bytes": 28876,
+      "height": 256,
+      "path": "textures/07e72e478bec995876ff6dc1.webp",
+      "pixelSha256": "6d5d78cc366ddbc842243dd4571e287da4a0c68db93606287a5b482eac612c7c",
+      "sha256": "93b5a2da29333475268e51142f7403e8b96e14c20814ec8b3eee5851beac7811",
+      "width": 256
+    },
+    "refs/fx/texture/ray.ab:-3611658743994769654": {
+      "bytes": 4730,
+      "height": 128,
+      "path": "textures/ea8defa5043d70025604fd65.webp",
+      "pixelSha256": "8f8068bbebf1ccb623139a1010fb9b30dae4b433d796662baef0b15f31fe3a8c",
+      "sha256": "638f6c46e33db5b84476d9ca6cdcfb51f9fe3788be88c41ad46ae3e500ee10a8",
+      "width": 128
+    },
+    "refs/fx/texture/ray.ab:1909794225400084482": {
+      "bytes": 8798,
+      "height": 128,
+      "path": "textures/7952d7bbb8077672cb8d122b.webp",
+      "pixelSha256": "77c35c95e0e0b45416a5c62836a924991588068616471934354ee93f820091b6",
+      "sha256": "3735f592f4969f4e3d2ee0179316ac89ef0594f31fdad6ca3a63a206cb8784b2",
+      "width": 128
+    },
+    "refs/fx/texture/ray.ab:4401085805155442283": {
+      "bytes": 1880,
+      "height": 128,
+      "path": "textures/81dc74520cfedb98af466870.webp",
+      "pixelSha256": "e4906c5ad4d70760544f15755d646b2dfe640127cc2f5b002b6bd9a8479994ce",
+      "sha256": "f1f1164a64fe0844764d1bdc2a730f7f604eebeb3e4cf67982a4e30fc3ea2df4",
+      "width": 128
+    },
+    "refs/fx/texture/ray.ab:5204735751490804126": {
+      "bytes": 11044,
+      "height": 128,
+      "path": "textures/add29c668ca368ac5c464b20.webp",
+      "pixelSha256": "18338ea3440d835309baf304bd0f18396b62b3ab58e325b3a26176f2136d095f",
+      "sha256": "036a19807615b262e711073dbc7f67c96189bf04aa73f5ba254562e7a911c85e",
+      "width": 128
+    },
+    "refs/fx/texture/ray.ab:8644688253078464018": {
+      "bytes": 2334,
+      "height": 128,
+      "path": "textures/8358c8119ac7fb5165fcc044.webp",
+      "pixelSha256": "190aa64070eff88d40bc4b3f94971f07f055d6d897c23edc3faffa9b30b33eba",
+      "sha256": "cc3adefc8e701c8420f902886cf02ad993cc3322621987b22158b03d4fd5ec3e",
+      "width": 128
+    },
+    "refs/fx/texture/smoke.ab:-1524819491659925384": {
+      "bytes": 18412,
+      "height": 128,
+      "path": "textures/f63ac8ba370ba9eedb686617.webp",
+      "pixelSha256": "059d6de49c95aef52a15566469e40c4d8ff105eef8afff37535545237ceb1568",
+      "sha256": "aa1bafea93183afec5b457b1cb2c9c25a9ff5a078fef56064211543ccfb75c35",
+      "width": 128
+    },
+    "refs/fx/texture/smoke.ab:-1796219560924012663": {
+      "bytes": 5830,
+      "height": 128,
+      "path": "textures/fb06570160b8d17131e49761.webp",
+      "pixelSha256": "2fd71410bbe0dd30eca693afc05828a15a19ca743e71a03f971cef6cece9a16d",
+      "sha256": "35c50bf6b802faec7cd9f63a9637ee87137abe9d0493c20933bfdbdce9a463a8",
+      "width": 128
+    },
+    "refs/fx/texture/smoke.ab:2466398176992565060": {
+      "bytes": 104798,
+      "height": 512,
+      "path": "textures/0eac3a9aab0791aa4374c40b.webp",
+      "pixelSha256": "bc6734a0d6b02d9af73964cd1a07d7359f20ea0fe364946180c357fc496dc8c0",
+      "sha256": "62040770399e70047995b43250010d52d3a252a845f9d286f6daa328527ac1a9",
+      "width": 512
+    },
+    "refs/fx/texture/star.ab:-1074696917881622342": {
+      "bytes": 3702,
+      "height": 128,
+      "path": "textures/923eac76ca78d000e9aacdbd.webp",
+      "pixelSha256": "5993b1d8deb60313730a796a00903d0b4d6b7def3d69077ad30f45c21148fab1",
+      "sha256": "ddb4902630068947e370c09be98448515e0d7b8f935c7f0e190bcf4cfac77eaa",
+      "width": 128
+    },
+    "refs/fx/texture/star.ab:-2462001278280812032": {
+      "bytes": 8884,
+      "height": 256,
+      "path": "textures/cd07f2cce5527945c700073f.webp",
+      "pixelSha256": "ec4612fc5655cb2cb6183563b956cdfc1dc9d426fdf55b7989ba631644740ebe",
+      "sha256": "5558ec295ebb6f31347fc79becb4187b7c36796a4673e8f3dad7a71cf1b2917d",
+      "width": 256
+    },
+    "refs/fx/texture/star.ab:-5707519702506893543": {
+      "bytes": 11376,
+      "height": 256,
+      "path": "textures/1b9448401c91b14587a1d694.webp",
+      "pixelSha256": "fa9625ff7aa8d0df40001919210e347d6e03a73c936bf9dea880872bad7aabe6",
+      "sha256": "5ec27eb3a4170bd135b033a57f54e4c4b5490cb9184f5951dadbb22233478759",
+      "width": 256
+    },
+    "refs/fx/texture/star.ab:-6031550971575360200": {
+      "bytes": 24996,
+      "height": 256,
+      "path": "textures/9084393a8799f845e2bc5802.webp",
+      "pixelSha256": "438b2759df4a2e299e96d121f2b1423a5885229440c606e85fba91a743a5cec8",
+      "sha256": "7510f5477ed2d0bab8e1332b36dd0653c6529ab5cdb5e58de8ae44de2f0e4638",
+      "width": 256
+    },
+    "refs/fx/texture/star.ab:-7700247273027960271": {
+      "bytes": 3574,
+      "height": 128,
+      "path": "textures/fca6305ffb6311025f84b9ee.webp",
+      "pixelSha256": "c3b1df5e1071f5bc0e1ae0d1f2794e87bc27b187e81d7f1bbecafcfdcb408131",
+      "sha256": "42083104eb5644903d6b001931ec16463c991650a7742b846e8aa56de0612354",
+      "width": 128
+    },
+    "refs/fx/texture/star.ab:-7927671497564879769": {
+      "bytes": 3166,
+      "height": 64,
+      "path": "textures/aeef65008c9ebdce853f3913.webp",
+      "pixelSha256": "f3c3d3524d92f8727cf6178b804a10499bb2b23e4609d5dceda211cf8f0bf6a0",
+      "sha256": "a9cd7f87e0c643789999bb2c943ac86ac42446822cb03c4f6668a18f8d95e6ec",
+      "width": 128
+    },
+    "refs/fx/texture/star.ab:-86059038293641216": {
+      "bytes": 3912,
+      "height": 128,
+      "path": "textures/b91fc8499a2d36e0740b81c0.webp",
+      "pixelSha256": "b43d793b9be18c6182034a92c5a438e1f901463bfb2e6de8b190c1aabcd97a51",
+      "sha256": "bcb015193731b93f4d0f23984e74fa6d635e0a62a006aae4a483c71f9caa321a",
+      "width": 128
+    },
+    "refs/fx/texture/star.ab:2669473842536093860": {
+      "bytes": 10400,
+      "height": 256,
+      "path": "textures/a77fabfce51ce77c8b9612fb.webp",
+      "pixelSha256": "7df80866302ebd203240ce70750d096f14d00ff99b94aa8ddf17d5f0d4745587",
+      "sha256": "8f910f123d7caf01123ad4a6016137203a843079d9e9db63354fc26caa91a463",
+      "width": 256
+    },
+    "refs/fx/texture/star.ab:431483507948851189": {
+      "bytes": 2306,
+      "height": 128,
+      "path": "textures/609fb30057c1d0aa6b5bd83f.webp",
+      "pixelSha256": "e8e94ee95be6450939d65c1ee6679381e6ec1b552bd88b521f467a456f424d40",
+      "sha256": "e427587c29a07a819cf7d5e5c2b1383ec03edeea84da3f1704018b2825f982a8",
+      "width": 128
+    },
+    "refs/fx/texture/star.ab:6412710647379352720": {
+      "bytes": 5954,
+      "height": 128,
+      "path": "textures/3e6e6bca67e52a24a8680c4c.webp",
+      "pixelSha256": "4da04a6135cb6accdf7710dd6f16f0ae2f5198b3d20fad11a0ec879398a58b84",
+      "sha256": "928d467fd4c2a56fa1c42e363d374bc696b6bdcbcdb03769ce87b27286db718a",
+      "width": 128
+    },
+    "refs/fx/texture/star.ab:774886417499732795": {
+      "bytes": 3270,
+      "height": 256,
+      "path": "textures/d48c7e7af46a4dc08c989c76.webp",
+      "pixelSha256": "0a2c4bd0d056b06c22b706d1dcd1f4fc549b8c76c86bf4d64103ea437b766904",
+      "sha256": "b63c45fe3c988882a0d10a769dc8721ea813702f1c7b1f2520d2d385730b6e51",
+      "width": 256
+    },
+    "refs/fx/texture/star.ab:884704370342516595": {
+      "bytes": 2494,
+      "height": 128,
+      "path": "textures/175b71a882b3727d1e54bea0.webp",
+      "pixelSha256": "2aa828c8a49650b61e39a01c03dae1f8433140cff040fbe2e2f70187b4c4a4d4",
+      "sha256": "00f1a90fc177c5fb2e365aed2d797b1872da68f79de171b8fb7831f5886bd114",
+      "width": 128
+    },
+    "refs/fx/texture/trail.ab:-3089022317432739151": {
+      "bytes": 11066,
+      "height": 128,
+      "path": "textures/868904383d20f1e24696a2d7.webp",
+      "pixelSha256": "2d89303227977ffc27f9e3d239a14e1320520b18191fafaccb62f3769d540b0b",
+      "sha256": "ed1e33bd0790ae3429570056b129397f76213904f84f69f0e63feabd886bc6a5",
+      "width": 256
+    },
+    "refs/fx/texture/trail.ab:-3709140246607094672": {
+      "bytes": 5320,
+      "height": 128,
+      "path": "textures/e725984d5087d951516ba8ac.webp",
+      "pixelSha256": "d099a26b56e399d731f9dca78e39dffac284bd7e12d778623cbb1f631729a3cc",
+      "sha256": "3f989c3c7432d18f6616d4168566006f305c115480c8334ccb58e3e1658ccb98",
+      "width": 128
+    },
+    "refs/fx/texture/trail.ab:-4703933844413787715": {
+      "bytes": 15406,
+      "height": 128,
+      "path": "textures/7d0ffcf8472cba1607c48fef.webp",
+      "pixelSha256": "87bab5abf874bd2c29d94cd2fceb35fff78e2a12f78c00534129ded273c8372d",
+      "sha256": "f2a144b4d120fe96e0d88382aa52d021e0adc122931094ef4bb3f8881374d0d6",
+      "width": 256
+    },
+    "refs/fx/texture/trail.ab:-7052237991307956459": {
+      "bytes": 19606,
+      "height": 256,
+      "path": "textures/723e882c8861c467923e77cf.webp",
+      "pixelSha256": "76ab1ac1337ffa09730a206489df414a2864cfe385a371e0a83e26bf63070283",
+      "sha256": "7f3bcb61ddff0ae0810bc46ca2607af71586501bd59d07295f9efa92771201d7",
+      "width": 256
+    },
+    "refs/fx/texture/trail.ab:-7824191086867548184": {
+      "bytes": 288,
+      "height": 64,
+      "path": "textures/d3527b42d19fbcc8d60f406c.webp",
+      "pixelSha256": "1fd9f76b88e593155b787ec52de45cfcb96373a356bd489e5da630ea8790d0c9",
+      "sha256": "8e954cdf7cad5020814c3084c4cd671b71d78bd223570cfbe6aeff58141073bc",
+      "width": 64
+    },
+    "refs/fx/texture/trail.ab:-7887427954279609538": {
+      "bytes": 1616,
+      "height": 128,
+      "path": "textures/18f784a4df4b363826a4645f.webp",
+      "pixelSha256": "201c6e8830518174740af3364a936185768ce68173643655e9a994ad8d0e7030",
+      "sha256": "fe77df0dab80035251573d8eb6b7ac8453befad3cb242a3ebc0941d3844f6152",
+      "width": 128
+    },
+    "refs/fx/texture/trail.ab:1032420954794987772": {
+      "bytes": 4942,
+      "height": 256,
+      "path": "textures/5172ec26870770a95392c6c9.webp",
+      "pixelSha256": "f3ff8e19678e32141afee35ae7b389145dd59b98fd6de343f3c65ca8a70ac787",
+      "sha256": "c6e0a4e2783c7ac2f787f8868b259b826b6b499af0d26bd1aa4caf5213d99d0a",
+      "width": 256
+    },
+    "refs/fx/texture/trail.ab:2047205404168913789": {
+      "bytes": 10086,
+      "height": 128,
+      "path": "textures/d572d6f8ad3941e2ecb5b16f.webp",
+      "pixelSha256": "2828aed9d966673d596818f5ea8f71613cb200f1ddc549b14f37f266980b8595",
+      "sha256": "c69ab85ac603c1f1a01e52db6e00dfe78ef898404ca2e19dcefd31d7e9db695f",
+      "width": 128
+    },
+    "refs/fx/texture/trail.ab:2341028014632371043": {
+      "bytes": 9020,
+      "height": 256,
+      "path": "textures/1965b6dec57fde3cb0de31b0.webp",
+      "pixelSha256": "c2efc38da3c436f46edb55577819010accf4cd5bfd5d1c3f7cad937612d3c620",
+      "sha256": "69b0f7ced8c5cc66532825df26d52d67da99a121fc3692324e1bf5232eb48cab",
+      "width": 256
+    },
+    "refs/fx/texture/trail.ab:3677393226842125182": {
+      "bytes": 3690,
+      "height": 128,
+      "path": "textures/d72e500a3a4988103014daae.webp",
+      "pixelSha256": "331cf7abef2893a5ff027061bead7ccf90cbc5ad410c69e7b2a14bda01976563",
+      "sha256": "cbf9e27afe327b969595aa1e24fdbfb4d88b4de187810fe0311be71ff693ac0a",
+      "width": 128
+    },
+    "refs/fx/texture/trail.ab:7967959854090617808": {
+      "bytes": 10554,
+      "height": 256,
+      "path": "textures/e32198ac53f34642fe4ac337.webp",
+      "pixelSha256": "6203ada8f53a8a8cde08dc77e794ef2e8a2c93e2b8a3a24349edeed2612d8b5a",
+      "sha256": "6dc6233782965ce5cf79acb404c73dfd827eddfa3d254b1a294379f04c584b9c",
+      "width": 256
+    },
+    "refs/fx/texture/trail.ab:924512579219584108": {
+      "bytes": 42896,
+      "height": 512,
+      "path": "textures/c86f219b9046d2ac47eb2fad.webp",
+      "pixelSha256": "59eaacca51e1a7fd1759e558378abbf694aa55295ffe1b4535489aa0ef4b493c",
+      "sha256": "dbe846d937302ebc32e91d650a8ddf715bd31bc769c7e3117795f54d31edf691",
+      "width": 512
+    }
+  },
+  "unresolvedReferences": {
+    "Library/unity default resources:10210": {
+      "foreignFile": "Library/unity default resources",
+      "pathId": "10210",
+      "references": [
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:-3253040220751893127"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:5263382809522236793"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:5657869816955366777"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:-7877256556984242823"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:6254142937182989689"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:6137234855538555733"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:-1857636831661819051"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:2315389125289540437"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:7291916121003227989"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:-7132121505072579755"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:-9099288968849554600"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:-2047246730042899624"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:-3696358376458124456"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:3636291089659544708"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:5191163884537070724"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:-3550771198177819516"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:-7478118027698813820"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:-7210644163167042428"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:-3146524315522612092"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:-951548157833984922"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:-4533368246631742362"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:645855184931767398"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:-4795077627918695322"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:8944095303511098470"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:6471191105781548134"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:-1509223764193940103"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:-5990724441179853447"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:-3491700522964456071"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:2095540512074132857"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:-6428633296193043380"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:3409699963956773964"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:8110451173907121228"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:9033155211376687957"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:5873034057360702293"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:-6045731156396180651"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:-6830556434625692843"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:-3213718572195689524"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:-1773541507317150772"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:-461894059215788002"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:-1585040460113745890"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:4448224119776962590"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:8440815442920686724"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:-8419640146507316092"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:7035026291798852740"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:8077180727204463748"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:3146812807043957892"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:3337741854935827588"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:-6193229346543185820"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:1791869192901092865"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:7432405874419125196"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:-2408738906308326452"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:-4842472953962956097"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:4711273436651784581"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:3438340713068371904"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:1184990281176756296"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:-277092327426510776"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:4090463097709899848"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:8808511403697811528"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:-1169855196367310776"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:8626467932974657608"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:-8276262105734598584"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:-555814815212588984"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:-4595994522381898342"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:-521727864549921382"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:-2409344400151269990"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:-6844270128648999526"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:1469738862619405722"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:8564733559580208538"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:-7358436770210566758"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:-19726948998238822"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:-1136538954228025153"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:7117052533285861567"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:6957146220055014118"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:-8343214685201323290"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:-7402098879528785178"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:-8836676493995562266"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:-5168147550183249178"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:438545242236824294"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:4702634927732468454"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:-292928558011208986"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:866869488893209318"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:1372587527493298918"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:-2436915884084840486"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:-8050232493305055270"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:-3604261011860834342"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:1044113031067908058"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:1168803827193788378"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:2121231894758930394"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:514434921773905882"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:-3103031597919389734"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:7485521335747786714"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:2083423183436560346"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:-2520682461631219497"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:3359915506958792919"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:-3707462874770394387"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:5310123781645972205"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:1721807849384799264"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:-5099749331235148768"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:236252323886558240"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:-251274058648359904"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:-1719624559529071584"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:7751913393606454304"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:2152561282777574432"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:-7200686909275149280"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:-1021498652610005343"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:3354833143680333473"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:-2678908916729842015"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:-4647866909431433567"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:8126842230021748385"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:-9190188420234676575"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:2814428054056400545"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:-3736695791882668383"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:-4631923123551162296"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:-2725095442383523768"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:3233742746199338394"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:2175100866509745562"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:8897272184294960160"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:7666265560654703648"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:6027222457933690529"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/whitw2.ab:4933778815126795937"
+        }
+      ]
+    },
+    "archive:/CAB-6ec13136892538d87ef43388b363426f/CAB-6ec13136892538d87ef43388b363426f:-3536530899239843742": {
+      "foreignFile": "archive:/CAB-6ec13136892538d87ef43388b363426f/CAB-6ec13136892538d87ef43388b363426f",
+      "pathId": "-3536530899239843742",
+      "references": [
+        {
+          "field": "m_Texture",
+          "record": "refs/fx/sharedbattle.ab:7121489374669336830"
+        }
+      ]
+    },
+    "archive:/CAB-6ec13136892538d87ef43388b363426f/CAB-6ec13136892538d87ef43388b363426f:4174637125909019865": {
+      "foreignFile": "archive:/CAB-6ec13136892538d87ef43388b363426f/CAB-6ec13136892538d87ef43388b363426f",
+      "pathId": "4174637125909019865",
+      "references": [
+        {
+          "field": "m_Texture",
+          "record": "battle/prefabs/effects/whitw2.ab:-1748014317807586176"
+        }
+      ]
+    },
+    "archive:/CAB-6ec13136892538d87ef43388b363426f/CAB-6ec13136892538d87ef43388b363426f:4760806925896308363": {
+      "foreignFile": "archive:/CAB-6ec13136892538d87ef43388b363426f/CAB-6ec13136892538d87ef43388b363426f",
+      "pathId": "4760806925896308363",
+      "references": [
+        {
+          "field": "m_Texture",
+          "record": "battle/prefabs/effects/whitw2.ab:-8216462540251341102"
+        },
+        {
+          "field": "m_Texture",
+          "record": "battle/prefabs/effects/whitw2.ab:-3820545218498111988"
+        },
+        {
+          "field": "m_Texture",
+          "record": "battle/prefabs/effects/whitw2.ab:-1528430576144769432"
+        }
+      ]
+    },
+    "archive:/CAB-6ec13136892538d87ef43388b363426f/CAB-6ec13136892538d87ef43388b363426f:641099092197676914": {
+      "foreignFile": "archive:/CAB-6ec13136892538d87ef43388b363426f/CAB-6ec13136892538d87ef43388b363426f",
+      "pathId": "641099092197676914",
+      "references": [
+        {
+          "field": "m_Texture",
+          "record": "refs/fx/sharedbattle.ab:-472853212572636907"
+        }
+      ]
+    },
+    "archive:/CAB-6ec13136892538d87ef43388b363426f/CAB-6ec13136892538d87ef43388b363426f:7785990385110061965": {
+      "foreignFile": "archive:/CAB-6ec13136892538d87ef43388b363426f/CAB-6ec13136892538d87ef43388b363426f",
+      "pathId": "7785990385110061965",
+      "references": [
+        {
+          "field": "m_Texture",
+          "record": "battle/prefabs/effects/whitw2.ab:-3820545218498111988"
+        }
+      ]
+    },
+    "archive:/CAB-6ec13136892538d87ef43388b363426f/CAB-6ec13136892538d87ef43388b363426f:8849978762950829255": {
+      "foreignFile": "archive:/CAB-6ec13136892538d87ef43388b363426f/CAB-6ec13136892538d87ef43388b363426f",
+      "pathId": "8849978762950829255",
+      "references": [
+        {
+          "field": "m_Texture",
+          "record": "battle/prefabs/effects/whitw2.ab:-1528430576144769432"
+        }
+      ]
+    },
+    "archive:/CAB-6ec13136892538d87ef43388b363426f/CAB-6ec13136892538d87ef43388b363426f:9061081773087801775": {
+      "foreignFile": "archive:/CAB-6ec13136892538d87ef43388b363426f/CAB-6ec13136892538d87ef43388b363426f",
+      "pathId": "9061081773087801775",
+      "references": [
+        {
+          "field": "m_Texture",
+          "record": "battle/prefabs/effects/whitw2.ab:-8216462540251341102"
+        }
+      ]
+    },
+    "archive:/CAB-967586173c51ac60f86de17c3e4b1a32/CAB-967586173c51ac60f86de17c3e4b1a32:-1258035316725772468": {
+      "foreignFile": "archive:/CAB-967586173c51ac60f86de17c3e4b1a32/CAB-967586173c51ac60f86de17c3e4b1a32",
+      "pathId": "-1258035316725772468",
+      "references": [
+        {
+          "field": "m_Materials",
+          "record": "battle/prefabs/effects/whitw2.ab:6315688093932154233"
+        },
+        {
+          "field": "m_Materials",
+          "record": "battle/prefabs/effects/whitw2.ab:-5074597269027128491"
+        },
+        {
+          "field": "m_Materials",
+          "record": "battle/prefabs/effects/whitw2.ab:-6962699466522066088"
+        },
+        {
+          "field": "m_Materials",
+          "record": "battle/prefabs/effects/whitw2.ab:453112297994667140"
+        },
+        {
+          "field": "m_Materials",
+          "record": "battle/prefabs/effects/whitw2.ab:6573264914707367014"
+        },
+        {
+          "field": "m_Materials",
+          "record": "battle/prefabs/effects/whitw2.ab:3820719747967529032"
+        },
+        {
+          "field": "m_Materials",
+          "record": "battle/prefabs/effects/whitw2.ab:-3557268676056594165"
+        },
+        {
+          "field": "m_Materials",
+          "record": "battle/prefabs/effects/whitw2.ab:-8313875382814823014"
+        },
+        {
+          "field": "m_Materials",
+          "record": "battle/prefabs/effects/whitw2.ab:-5979327089226488319"
+        },
+        {
+          "field": "m_Materials",
+          "record": "battle/prefabs/effects/whitw2.ab:865108815772664908"
+        },
+        {
+          "field": "m_Materials",
+          "record": "battle/prefabs/effects/whitw2.ab:7804420221163568404"
+        },
+        {
+          "field": "m_Materials",
+          "record": "battle/prefabs/effects/whitw2.ab:8988497689745053238"
+        },
+        {
+          "field": "m_Materials",
+          "record": "battle/prefabs/effects/whitw2.ab:-8369330128412890394"
+        },
+        {
+          "field": "m_Materials",
+          "record": "battle/prefabs/effects/whitw2.ab:-8694788048048927796"
+        },
+        {
+          "field": "m_Materials",
+          "record": "battle/prefabs/effects/whitw2.ab:6408820483499864793"
+        },
+        {
+          "field": "m_Materials",
+          "record": "battle/prefabs/effects/whitw2.ab:5986189653196780249"
+        },
+        {
+          "field": "m_Materials",
+          "record": "battle/prefabs/effects/whitw2.ab:-3809249770155448290"
+        },
+        {
+          "field": "m_Materials",
+          "record": "battle/prefabs/effects/whitw2.ab:-3517953109822097446"
+        },
+        {
+          "field": "m_Materials",
+          "record": "battle/prefabs/effects/whitw2.ab:-2496013179848688961"
+        },
+        {
+          "field": "m_Materials",
+          "record": "battle/prefabs/effects/whitw2.ab:-5009108094242664348"
+        },
+        {
+          "field": "m_Materials",
+          "record": "battle/prefabs/effects/whitw2.ab:-394898105347274363"
+        },
+        {
+          "field": "m_Materials",
+          "record": "battle/prefabs/effects/whitw2.ab:1595998304707177504"
+        },
+        {
+          "field": "m_Materials",
+          "record": "battle/prefabs/effects/whitw2.ab:129382339952899745"
+        },
+        {
+          "field": "m_Materials",
+          "record": "battle/prefabs/effects/whitw2.ab:4338375953757894268"
+        },
+        {
+          "field": "m_Materials",
+          "record": "battle/prefabs/effects/whitw2.ab:-4253927225555279936"
+        },
+        {
+          "field": "m_Materials",
+          "record": "battle/prefabs/effects/whitw2.ab:-4895727476765321535"
+        },
+        {
+          "field": "m_Materials",
+          "record": "battle/prefabs/effects/whitw2.ab:6443305276792549448"
+        },
+        {
+          "field": "m_Materials",
+          "record": "battle/prefabs/effects/whitw2.ab:-7549549698124035829"
+        },
+        {
+          "field": "m_Materials",
+          "record": "battle/prefabs/effects/whitw2.ab:2015435071941717402"
+        },
+        {
+          "field": "m_Materials",
+          "record": "battle/prefabs/effects/whitw2.ab:-3693577391518783999"
+        },
+        {
+          "field": "m_Materials",
+          "record": "battle/prefabs/effects/whitw2.ab:-9080639483664964735"
+        },
+        {
+          "field": "m_Materials",
+          "record": "battle/prefabs/effects/whitw2.ab:-6095530753151554842"
+        },
+        {
+          "field": "m_Materials",
+          "record": "battle/prefabs/effects/whitw2.ab:-7491730972406269990"
+        },
+        {
+          "field": "m_Materials",
+          "record": "battle/prefabs/effects/whitw2.ab:-8476708338422777153"
+        },
+        {
+          "field": "m_Materials",
+          "record": "battle/prefabs/effects/whitw2.ab:-4512677269563062253"
+        },
+        {
+          "field": "m_Materials",
+          "record": "battle/prefabs/effects/whitw2.ab:774192324648569221"
+        },
+        {
+          "field": "m_Materials",
+          "record": "battle/prefabs/effects/whitw2.ab:-8430535636495899027"
+        },
+        {
+          "field": "m_Materials",
+          "record": "battle/prefabs/effects/whitw2.ab:8348261231444126752"
+        },
+        {
+          "field": "m_Materials",
+          "record": "battle/prefabs/effects/whitw2.ab:-4533838622043998559"
+        },
+        {
+          "field": "m_Materials",
+          "record": "battle/prefabs/effects/whitw2.ab:35436781773856704"
+        },
+        {
+          "field": "m_Materials",
+          "record": "battle/prefabs/effects/whitw2.ab:-5430877696430067640"
+        },
+        {
+          "field": "m_Materials",
+          "record": "battle/prefabs/effects/whitw2.ab:4975490465299345480"
+        },
+        {
+          "field": "m_Materials",
+          "record": "battle/prefabs/effects/whitw2.ab:-765419544436101048"
+        },
+        {
+          "field": "m_Materials",
+          "record": "battle/prefabs/effects/whitw2.ab:-8294667536672281190"
+        },
+        {
+          "field": "m_Materials",
+          "record": "battle/prefabs/effects/whitw2.ab:-3451478983663211110"
+        },
+        {
+          "field": "m_Materials",
+          "record": "battle/prefabs/effects/whitw2.ab:3002688407607913882"
+        },
+        {
+          "field": "m_Materials",
+          "record": "battle/prefabs/effects/whitw2.ab:-3466958554237880129"
+        },
+        {
+          "field": "m_Materials",
+          "record": "battle/prefabs/effects/whitw2.ab:2878957363637889766"
+        },
+        {
+          "field": "m_Materials",
+          "record": "battle/prefabs/effects/whitw2.ab:-8246364379808879898"
+        },
+        {
+          "field": "m_Materials",
+          "record": "battle/prefabs/effects/whitw2.ab:6948589573632207590"
+        },
+        {
+          "field": "m_Materials",
+          "record": "battle/prefabs/effects/whitw2.ab:3659816514431530970"
+        },
+        {
+          "field": "m_Materials",
+          "record": "battle/prefabs/effects/whitw2.ab:2125293294665250778"
+        },
+        {
+          "field": "m_Materials",
+          "record": "battle/prefabs/effects/whitw2.ab:-1503587490716076070"
+        },
+        {
+          "field": "m_Materials",
+          "record": "battle/prefabs/effects/whitw2.ab:2739699320764627159"
+        },
+        {
+          "field": "m_Materials",
+          "record": "battle/prefabs/effects/whitw2.ab:6414916525342634733"
+        },
+        {
+          "field": "m_Materials",
+          "record": "battle/prefabs/effects/whitw2.ab:-5940799578802000864"
+        },
+        {
+          "field": "m_Materials",
+          "record": "battle/prefabs/effects/whitw2.ab:-7615642307297055712"
+        },
+        {
+          "field": "m_Materials",
+          "record": "battle/prefabs/effects/whitw2.ab:-6989390145326715872"
+        },
+        {
+          "field": "m_Materials",
+          "record": "battle/prefabs/effects/whitw2.ab:-9139284832039340383"
+        },
+        {
+          "field": "m_Materials",
+          "record": "battle/prefabs/effects/whitw2.ab:3355806003599308449"
+        },
+        {
+          "field": "m_Materials",
+          "record": "battle/prefabs/effects/whitw2.ab:6112109222768670369"
+        }
+      ]
+    }
+  },
+  "version": "26-09-23-17-49-43_b9cc4a"
+}
