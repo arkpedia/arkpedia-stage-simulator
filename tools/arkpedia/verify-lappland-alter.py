@@ -160,9 +160,9 @@ assert hot['versionId'] == E['source']['nativeClient'] == '26-09-23-17-49-43_b9c
 for record in E['source']['bundles']:
     native = next(row for row in hot['abInfos'] if row['name'] == record['path'])
     assert (record['md5'], record['size']) == (native['md5'], native['abSize'])
-assert E['enabledOperators'] == [] and E['heldOperators'] == ['char_1038_whitw2']
-assert E['reviewStatus'] == 'Original no-module kit evidence; runtime adaptation remains required'
-assert len(E['holdReasons']) == 1 and len(E['recoveredFacts']) == 9
+assert E['enabledOperators'] == ['char_1038_whitw2'] and E['heldOperators'] == []
+assert E['reviewStatus'] == 'Source-reviewed no-module regular-stage adapter; effects/frame parity remain limited'
+assert E['holdReasons'] == [] and len(E['recoveredFacts']) == 9
 assert E['frameParity'] is False and E['moduleSupport'] is False and E['nativeParticleSupport'] is False
 assert set(E['tables']['skills']) == {'skchr_whitw2_1', 'skchr_whitw2_2', 'skchr_whitw2_3'}
 assert set(E['skills']) == set(E['tables']['skills'])

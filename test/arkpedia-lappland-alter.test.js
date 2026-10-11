@@ -47,9 +47,9 @@ function enemy(f,{row=5,col=6,hp=1e7,res=0,fly=false,taunt=0,flags={}}={}){
 }
 function active(f){f.u.skill.addCharge(1);assert.equal(f.controller.toggle(),true);}
 
-test('three-skill component remains private until the full Lappland kit is reviewed',()=>{
-  assert.equal(REGULAR_OPERATORS[ID],undefined);assert.equal(data.operators[ID],undefined);
-  assert.deepEqual(e.enabledOperators,[]);assert.equal(CONTRACT.frameParity,false);
+test('three-skill public adapter still requires the exact reviewed attack contract',()=>{
+  assert.equal(REGULAR_OPERATORS[ID].mechanic,'lappland-alter');assert.ok(data.operators[ID]);
+  assert.deepEqual(e.enabledOperators,[ID]);assert.equal(CONTRACT.frameParity,false);
   assert.throws(()=>make({contract:{...CONTRACT}}),/contract/);
   assert.ok(make({skill:3}).controller.s3);
 });

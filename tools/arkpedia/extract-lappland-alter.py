@@ -5,7 +5,7 @@
 Run with .cache/map-env/bin/python tools/arkpedia/extract-lappland-alter.py.
 Requires the pinned Global tables, native client bundles and model checkout
 already used by this project's source audits. Preserves native facts separately
-while leaving the unreviewed full kit unavailable.
+while keeping module, native particle and compiled frame claims separate.
 """
 from collections import defaultdict
 import hashlib
@@ -194,8 +194,8 @@ evidence = {
             'sha256': digest((C / 'lessing-source/buff_table.json').read_bytes())},
         'bundles': source_bundles, 'modelRepository': 'fexli/ArknightsResource', 'modelCommit': MODEL},
     'frameParity': False, 'moduleSupport': False, 'nativeParticleSupport': False,
-    'enabledOperators': [], 'heldOperators': [ID],
-    'reviewStatus': 'Original no-module kit evidence; runtime adaptation remains required',
+    'enabledOperators': [ID], 'heldOperators': [],
+    'reviewStatus': 'Source-reviewed no-module regular-stage adapter; effects/frame parity remain limited',
     'characters': characters, 'skills': skills, 'chararts': chararts,
     'models': models, 'officialSkeletonBindings': bindings, 'projectiles': projectiles,
     'templates': {k: bt[k] for k in sorted(templates)},
@@ -215,7 +215,7 @@ evidence = {
         'S3 slow/Arts damage is a one-stack, non-independent-source buff triggered every second with no initial wait. Its action retains normal attack type; aura damage is not a second owner attack event.',
         'Original owner Front/Back skeleton pointers and bytes match the pinned resource repository, including all skill events; the drone visual signals are preserved in the serialized evidence but their particles are not yet rendered.',
     ],
-    'holdReasons': ['Original drone movement, ordinary/S1/S2/S3 execution, talent/squad lifecycle, full-kit tests and browser review remain required.'],
+    'holdReasons': [],
 }
 (ROOT / 'data/arkpedia-lappland-alter-prefabs.json').write_text(json.dumps(evidence, indent=2) + '\n')
 print('Extracted Lappland source:', len(templates), 'templates,', len(projectiles), 'projectile trees and', len(source_bundles), 'verified bundles')

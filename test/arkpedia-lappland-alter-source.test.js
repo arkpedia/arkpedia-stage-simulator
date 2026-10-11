@@ -14,9 +14,9 @@ const ranks = n => e.tables.skills[`skchr_whitw2_${n}`].levels;
 const type = node => node.$type.split('+').at(-1).split(',')[0];
 const near = (a, b) => assert.ok(Math.abs(a - b) < 1e-6, `${a} != ${b}`);
 
-test('complete Lappland source stays held until all three skills and drone lifecycle work', () => {
-  assert.deepEqual(e.enabledOperators, []); assert.deepEqual(e.heldOperators, [ID]);
-  assert.equal(REGULAR_OPERATORS[ID], undefined); assert.equal(data.operators[ID], undefined);
+test('complete Lappland source enables the three-skill adapter while preserving fidelity limits', () => {
+  assert.deepEqual(e.enabledOperators, [ID]); assert.deepEqual(e.heldOperators, []);
+  assert.deepEqual(REGULAR_OPERATORS[ID].skillIds,data.operators[ID].skills.map(s=>s.id));
   assert.equal(e.frameParity, false); assert.equal(e.moduleSupport, false);
   assert.equal(e.nativeParticleSupport, false);
   assert.equal(e.source.commit, '57010cb5b2afea112cae57daa756b58676ba6850');
@@ -27,7 +27,7 @@ test('complete Lappland source stays held until all three skills and drone lifec
   assert.deepEqual(e.nativeTemplateGaps, []);
   assert.deepEqual(Object.keys(e.originalTemplates), Object.keys(e.templates));
   assert.deepEqual(Object.keys(e.buffDatabase), ['fear']);
-  assert.equal(e.recoveredFacts.length, 9); assert.equal(e.holdReasons.length, 1);
+  assert.equal(e.recoveredFacts.length, 9); assert.deepEqual(e.holdReasons, []);
 });
 test('ordinary Funnel ramp uses six increments and shared normal attack ability', () => {
   assert.deepEqual(bb(e.tables.character.trait.candidates[0].blackboard), {

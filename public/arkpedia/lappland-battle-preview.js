@@ -21,7 +21,7 @@ function draw(dt=0){
  stage.render(battle,dt,battle.drainEvents());document.querySelector('#clock').textContent=battle.time.toFixed(2)+'s';
  document.querySelector('#cast').disabled=!owner.alive||owner.skill.active;
  const phases=controller.s3.drones.map(d=>d.phase).join(', ')||'inactive';
- status.textContent=`Private S3 fixture on original 0-1 geometry; public factory and native frame parity remain unfinished. Enemies are pinned test targets. Cast adds one test charge.\nCruise phases: ${phases}. Original effects: ${pass.instanceCount}. Motion uses observed board coordinates at source height zero; native mount height, heading and FSM dispatch remain unverified.`;
+ status.textContent=`Controlled S3 effects fixture on original 0-1 geometry; public native effects and game-frame parity remain unfinished. Enemies are pinned test targets. Cast adds one test charge.\nCruise phases: ${phases}. Original effects: ${pass.instanceCount}. Motion uses observed board coordinates at source height zero; native mount height, heading and FSM dispatch remain unverified.`;
 }
 async function reset(){
  playing=false;last=undefined;accumulator=0;document.querySelector('#play').textContent='Play';

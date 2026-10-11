@@ -38,8 +38,8 @@ original = json.loads(SOURCE.read_text())
 
 def altered(name):
     e = json.loads(json.dumps(original))
-    if name == 'enabled-before-runtime':
-        e['enabledOperators'] = ['char_1038_whitw2']; e['heldOperators'] = []
+    if name == 'changed-release-scope':
+        e['enabledOperators'] = []; e['heldOperators'] = ['char_1038_whitw2']
     elif name == 'omitted-component':
         e['characters']['char_1038_whitw2'][0]['components'].pop()
     elif name == 'missing-drone-pair':
@@ -64,7 +64,7 @@ def altered(name):
     return e
 
 rejections = []
-for name in ['enabled-before-runtime', 'omitted-component', 'missing-drone-pair', 'changed-skill-rank',
+for name in ['changed-release-scope', 'omitted-component', 'missing-drone-pair', 'changed-skill-rank',
              'changed-original-event', 'changed-native-orbit', 'changed-talent-node',
              'changed-skeleton-binding', 'missing-template-dependency']:
     path = OUT / ('negative-' + name + '.json')
@@ -76,6 +76,6 @@ for name in ['enabled-before-runtime', 'omitted-component', 'missing-drone-pair'
 
 (OUT / 'review-audit.json').write_text(json.dumps({
     'baseline': baseline, 'reproducibleOutputs': before, 'negativeFixtures': rejections,
-    'heldOperator': 'char_1038_whitw2', 'frameParity': False,
+    'enabledOperator': 'char_1038_whitw2', 'frameParity': False,
 }, indent=2) + '\n')
 print('Native audit passed; two outputs reproduce exactly and nine altered records are rejected', flush=True)

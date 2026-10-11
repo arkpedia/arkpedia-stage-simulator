@@ -28,17 +28,17 @@ test('every native kit effect has an original prefab binding, including all ordi
   assert.equal(new Set(Object.values(art.roots)).size,35);
 });
 
-test('source artwork remains unavailable until renderer and complete public-kit review',()=>{
+test('native artwork keeps its own fidelity scope after public kit integration',()=>{
   assert.equal(art.operator,ID);
   assert.equal(art.scope.sourceInputsOnly,true);
   assert.equal(art.scope.rendererVerified,false);
   assert.equal(art.scope.compiledFrameParity,false);
   assert.deepEqual(art.scope.enabledOperators,[]);
   assert.equal(art.scope.pending.length,3);
-  assert.deepEqual(source.enabledOperators,[]);
-  assert.ok(source.heldOperators.includes(ID));
-  assert.equal(Object.hasOwn(REGULAR_OPERATORS,ID),false);
-  assert.equal(Object.hasOwn(mvp.operators,ID),false);
+  assert.deepEqual(source.enabledOperators,[ID]);
+  assert.deepEqual(source.heldOperators,[]);
+  assert.equal(REGULAR_OPERATORS[ID].mechanic,'lappland-alter');
+  assert.equal(Object.hasOwn(mvp.operators,ID),true);
 });
 
 test('source manifest preserves mesh, particle, trail and animation inputs with exact texture identities',()=>{

@@ -109,5 +109,5 @@ test('shader recovery does not prematurely enable battle support or claim frame 
   assert.equal(Object.keys(meta.shaders).length,12);
   assert.equal(Object.values(meta.shaders).reduce((n,s)=>n+Object.keys(s.programs).length,0),23);
   assert.deepEqual(meta.scope,{nativeSourceOnly:true,rendererVerified:false,compiledFrameParity:false,enabledOperators:[]});
-  assert.equal(Object.hasOwn(mvp.operators,'char_1038_whitw2'),false);
+  assert.equal(Object.hasOwn(mvp.operators,'char_1038_whitw2'),true);
 });

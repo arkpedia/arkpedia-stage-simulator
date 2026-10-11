@@ -123,12 +123,12 @@ for (const [name, mutate] of [
   const f=clone(token);mutate(f);assert.throws(()=>decodeEffectClip(f),/Native effect animation/);
 });
 
-test('non-finite clocks cannot enter sampling and reviewed battle coverage stays unchanged',()=>{
+test('non-finite clocks cannot enter sampling and effect evidence does not claim public native parity',()=>{
   const c=decodeEffectClip(token);
   for (const t of [Infinity,-Infinity,NaN]) assert.throws(()=>sampleEffectClip(c,t),/non-finite sample time/);
   assert.throws(()=>sampleEffectClip(c,0,{loop:1}),/invalid loop/);
   assert.equal(meta.scope.sourceChannelsOnly,true);assert.equal(meta.scope.rendererVerified,false);
   assert.equal(meta.scope.compiledFrameParity,false);assert.deepEqual(meta.scope.enabledOperators,[]);
-  assert.equal(Object.hasOwn(REGULAR_OPERATORS,'char_1038_whitw2'),false);
-  assert.equal(Object.hasOwn(mvp.operators,'char_1038_whitw2'),false);
+  assert.equal(REGULAR_OPERATORS.char_1038_whitw2.mechanic,'lappland-alter');
+  assert.equal(Object.hasOwn(mvp.operators,'char_1038_whitw2'),true);
 });

@@ -163,6 +163,7 @@ import { customizeJessicaKit, installJessica } from './content/arkpedia-jessica.
 import { customizeEntelechiaKit, installEntelechia } from './content/arkpedia-entelechia.js';
 import { customizeHoolheyakKit, installHoolheyak } from './content/arkpedia-hoolheyak.js';
 import { customizeGoldenglowKit, installGoldenglow } from './content/arkpedia-goldenglow.js';
+import { customizeLapplandKit, installLappland, installLapplandSquad } from './content/arkpedia-lappland-alter.js';
 import { customizeLeeKit, installLee } from './content/arkpedia-lee.js';
 import { customizeYatoAlterKit, installYatoAlter } from './content/arkpedia-yato-alter.js';
 import { customizeSpecterAlterKit, installSpecterAlter, prepareSpecterAlterSquad } from './content/arkpedia-specter-alter.js';
@@ -310,6 +311,7 @@ export class StandardBattle extends Battle {
     installGuardSixStarSquad({ battle: this, records: chess });
     installBagpipeSquad({ battle: this, records: chess });
     installRadiantKnightSquad({ battle: this, records: chess });
+    installLapplandSquad({ battle: this, records: chess });
     this.behaviors = behaviors;
     this.unitLimit = config.unit_limit;
     this.regularMapSize = Object.freeze({ rows: data.stage.geometry.rows, cols: data.stage.geometry.cols });
@@ -537,6 +539,7 @@ export class StandardBattle extends Battle {
     customizeYatoAlterKit({ battle: this, id, def, unit, kit });
     customizeLeeKit({ battle: this, id, def, unit, kit });
     customizeGoldenglowKit({ battle: this, id, def, unit, kit });
+    customizeLapplandKit({ battle: this, id, def, unit, kit });
     customizeHoolheyakKit({ battle: this, id, def, unit, kit });
     customizeEbenholzKit({ battle: this, id, def, unit, kit });
     customizeLinKit({ battle: this, id, def, unit, kit });
@@ -730,6 +733,7 @@ export class StandardBattle extends Battle {
     installYatoAlter({ battle: this, unit, def });
     installLee({ battle: this, unit, def });
     installGoldenglow({ battle: this, unit, def });
+    installLappland({ battle: this, unit, def });
     installHoolheyak({ battle: this, unit, def });
     installEbenholz({ battle: this, unit, def });
     installLin({ battle: this, unit, def });

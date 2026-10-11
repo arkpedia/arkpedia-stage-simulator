@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Private three-skill adapter. Public enablement still requires full-kit/asset review.
+// Source-selected three-skill adapter. Native effects/modules/frame parity remain limited.
 import evidence from '../../../data/arkpedia-lappland-alter-prefabs.json' with { type:'json' };
 import { sourceCandidate } from '../../../shared/arkpedia/summons.js';
 import { normalizeChess } from '../simdata.js';
@@ -10,7 +10,7 @@ import {LapplandS3Drones,validateLapplandS3} from './arkpedia-lappland-s3.js';
 
 export const LAPPLAND_ALTER_ID = 'char_1038_whitw2';
 export const LAPPLAND_ATTACK_CONTRACT = Object.freeze({
-  scope:'Source-selected no-module three-skill component; not public full-kit support',
+  scope:'Source-selected no-module three-skill regular-stage adapter',
   clocks:'Original facing entrance and owner attack clips/events; ordinary uncapped, active owner loops capped at one',
   ordinary:'Separate speed-ten caster and half-second drone receipts; normal drones share one target ramp per command',
   remote:'Independent whole-field stationary-target locks, immediate first receipt, live interval thereafter; moving or invalid targets release',
@@ -18,7 +18,7 @@ export const LAPPLAND_ATTACK_CONTRACT = Object.freeze({
   s3:'Three/four source-bound cruise/attach pairs; spread, inertial chase and 1.25-radius idle orbit; arrival Fear, independent attached ramps and one shared immediate/one-second area clock',
   talents:'Three deployment-age Alpha Wolf rewards then terminal branch; separately installed Siracusa squad born-event SP persists while the owner is in the deck',
   mapping:'Sampled root coordinates, stationary=moving false or blocked, regular-stage caster priority, independent uniform S2 draws with replacement, root receipts, post-damage status order and mode-local ramps are local execution mappings',
-  limits:'Full public factory integration, modules, original drone particles/audio and compiled Unity frame parity remain unverified. S3 source-selection ties, radial phase, angular-turn units, .04 root arrival tolerance, shared-owner handoff, damage attribution and begin-to-loop FSM dispatch are local mappings.',
+  limits:'Modules, original drone particles/audio and compiled Unity frame parity remain unverified. S3 source-selection ties, radial phase, angular-turn units, .04 root arrival tolerance, shared-owner handoff, damage attribution and begin-to-loop FSM dispatch are local mappings.',
   frameParity:false,
 });
 const ID=LAPPLAND_ALTER_ID, air={canHitFly:true};
@@ -34,6 +34,20 @@ const model=u=>evidence.models[ID][['UP','LEFT'].includes(u.dir)?'Back':'Front']
 const factions=[evidence.tables.character.nationId,evidence.tables.character.groupId,evidence.tables.character.teamId]
   .filter(v=>typeof v==='string'&&v);
 const honorDecks=new WeakMap();
+function installHonor(b,player,amount){
+  if(!amount)return false;
+  if(b.time!==0||b.finished)throw Error('Install Lappland squad talent before deployment/combat');
+  let decks=honorDecks.get(b);if(!decks){decks=new Map();honorDecks.set(b,decks);}
+  if(decks.has(player.id))throw Error('Duplicate Lappland in one squad');
+  const claims=new WeakMap();
+  const deploy=b.on('deploy',({unit:t,move})=>{
+    if(move||t.side!=='ally'||t.kind!=='op'||t.player!==player||!t.def.tags.includes('siracusa')
+      ||claims.get(t)===t.deploySeq||!live(t)||!t.skill)return;
+    claims.set(t,t.deploySeq);t.skill.gainSp(amount,'lappland-squad');
+  });
+  const finish=b.on('battleEnd',()=>{b.off(deploy);b.off(finish);decks.delete(player.id);});
+  decks.set(player.id,{deploy,finish});return true;
+}
 const ramp=()=>({target:null,seq:null,scale:0});
 const interpolate=(frames,level)=>{
   const lo=frames[0],hi=frames.at(-1),t=hi.level===lo.level?0:(level-lo.level)/(hi.level-lo.level);
@@ -117,7 +131,10 @@ export class LapplandAttackController {
   count(){return 1+(this.record.index===0?1:this.u.skill.active?this.record.bb['attack@cnt']:0)+(this.alphaStage>=3?1:0);}
   skillClip(suffix){return `Skill_${this.record.index+1}_${suffix}`;}
   locked(t){return this.record.index===0?this.stationary(t):this.eligible(t);}
-  visual(clip,speed=1,loop=false){this.u.mem.regularFormVisual={clip,speed,loop};}
+  visual(clip,speed=1,loop=false){
+    this.u.mem.regularVisualDirection=['UP','LEFT'].includes(this.u.dir)?'UP':'RIGHT';
+    this.u.mem.regularFormVisual={clip,speed,loop};
+  }
   targets(global=false){
     const selected=this.u.skill.active&&this.record.index===1?grid(this.record.source.rangeId):this.u.rangeGrid;
     const keys=new Set(absoluteRangeKeys(selected,this.u.tileR,this.u.tileC,this.u.dir));
@@ -234,20 +251,9 @@ export class LapplandAttackController {
   installSquad(){
     // The original effect is a deck buff. No owner-bound hook or living aura:
     // an undeployed or withdrawn Lappland still supplies the selected squad talent.
-    const b=this.b,u=this.u,amount=this.record.honor.sp;
-    if(!amount)return false;
-    if(u.deploySeq!==0||b.time!==0||b.finished)throw Error('Install Lappland squad talent before deployment/combat');
-    let decks=honorDecks.get(b);if(!decks){decks=new Map();honorDecks.set(b,decks);}
-    if(decks.has(u.player.id))throw Error('Duplicate Lappland in one squad');
-    const claims=new WeakMap();
-    const deploy=b.on('deploy',({unit:t,move})=>{
-      if(move||t.side!=='ally'||t.kind!=='op'||t.player!==u.player||!t.def.tags.includes('siracusa')
-        ||claims.get(t)===t.deploySeq||!live(t)||!t.skill)return;
-      claims.set(t,t.deploySeq);
-      t.skill.gainSp(amount,'lappland-squad');
-    });
-    const finish=b.on('battleEnd',()=>{b.off(deploy);b.off(finish);decks.delete(u.player.id);});
-    decks.set(u.player.id,{deploy,finish});return true;
+    const u=this.u;
+    if(this.record.honor.sp&&u.deploySeq!==0)throw Error('Install Lappland squad talent before deployment/combat');
+    return installHonor(this.b,u.player,this.record.honor.sp);
   }
   alpha(){
     const a=this.record.alpha;
@@ -317,6 +323,7 @@ export class LapplandAttackController {
     if(this.u.skill?.active)this.u.skill.end(this.b.finished?'battle-finish':'owner-finish');
     this.b.projectiles.remove(p=>p.data?.lapplandOwner===this&&p.data.lapplandKind==='drone');
     this.u.mem.regularFormVisual=null;
+    delete this.u.mem.regularVisualDirection;
     for(const h of this.handles)this.b.off(h);this.handles=[];
   }
 }
@@ -327,8 +334,22 @@ export function prepareLapplandAttacks(b,u,{contract}={}){
     hits:1,hitsFn:null,chain:null,splashRadius:0,heal:null,...air,install:null,onHit:null,onEachHit:null,
     requiresAcceptedLaunch:true,attackVisual:'none',launchAttack:(_b,_u,_p,t,info)=>controller.release(t,info)},
     skill:{kind:record.index===0?'toggle':'duration',trigger:{rule:'NEVER'},mods:{atkPct:record.bb.atk},attack:{},
+      ...(record.index===0?{manualCancel:true,onManualCancel:()=>controller.toggle()}:{}),
       ...(record.index===1?{targeting:{rangeGrid:grid(record.source.rangeId)}}:{}),
       canActivate:()=>controller.valid()&&u.canAct&&!u.s.flags.disarm,
       onStart:()=>controller.changeMode(true),onEnd:()=>controller.changeMode(false)},talents:[],install:null};
   return {record,controller,kit};
 }
+
+export function installLapplandSquad({battle:b,records}){
+  const def=records[ID];if(!def)return false;
+  const record=selectedLapplandBuild({...def.arkpedia,skillId:def.skill.skillId});
+  if(!same(def.talents.map(t=>t.bb),record.talents.map(t=>flat(t.blackboard))))throw Error('Changed Lappland squad source talents');
+  return installHonor(b,b.getPlayer('arkpedia'),record.honor.sp);
+}
+export function customizeLapplandKit({battle:b,id,unit:u,kit}){
+  if(id!==ID)return;
+  const prepared=prepareLapplandAttacks(b,u,{contract:LAPPLAND_ATTACK_CONTRACT});
+  Object.assign(kit,prepared.kit);u.mem.lapplandController=prepared.controller;
+}
+export function installLappland({unit:u}){u.mem.lapplandController?.install();}
