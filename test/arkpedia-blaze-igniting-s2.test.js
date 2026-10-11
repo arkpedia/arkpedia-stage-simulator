@@ -52,7 +52,7 @@ function field(f){until(f,()=>f.controller.s2.tiles.size>0);return [...f.control
 function move(t,row,col){t.x=col;t.y=row;t.tileR=row;t.tileC=col;}
 
 test('S2 validates selected source and contract before hooks; public Blaze remains held',()=>{
-  assert.equal(REGULAR_OPERATORS[ID],undefined);assert.equal(data.operators[ID],undefined);assert.deepEqual(e.enabledOperators,[]);
+  assert.equal(REGULAR_OPERATORS[ID].mechanic,'blaze-igniting');assert.ok(data.operators[ID]);assert.deepEqual(e.enabledOperators,[]);
   const f=make({defer:true,sourceS2:false});f.controller.stop();delete f.u.mem.blazeIgnitingController;
   assert.throws(()=>prepareBlazeIgnitingS2(f.b,f.u,{contract:{...S2_CONTRACT}}),/contract/);
   const z=make({defer:true,skill:1,sourceS2:false});z.controller.stop();delete z.u.mem.blazeIgnitingController;

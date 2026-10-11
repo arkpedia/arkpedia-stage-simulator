@@ -47,8 +47,8 @@ function enemy(f,{row=5,col=6,hp=1e7,res=0,fly=false,taunt=0,flags={}}={}){
 function burn(f,t){return f.b.dealDamage(null,t,{amount:t.gaugeMax,type:'element',element:'burn',canDodge:false});}
 function down(f){f.b.dealDamage(null,f.u,{amount:f.u.hp+1,type:'true',canDodge:false});assert.equal(f.controller.reborn?.kind,'downed');}
 
-test('Blaze foundation remains private and refuses activated skills',()=>{
-  assert.equal(REGULAR_OPERATORS[ID],undefined);assert.equal(data.operators[ID],undefined);
+test('ordinary-only diagnostic foundation refuses activated skills while public skills use separate contracts',()=>{
+  assert.equal(REGULAR_OPERATORS[ID].mechanic,'blaze-igniting');assert.ok(data.operators[ID]);
   assert.deepEqual(e.enabledOperators,[]);assert.equal(CONTRACT.frameParity,false);
   assert.throws(()=>make({contract:{...CONTRACT}}),/contract/);
   for(const skill of [1,2,3]){const f=make({skill});f.u.skill.addCharge(1);assert.equal(f.u.skill.activate(),false);}

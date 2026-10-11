@@ -6,7 +6,7 @@ import {applyHpLoss,makeDamageInfo} from '../damage.js';
 import {COLS} from '../constants.js';
 
 export const BLAZE_IGNITING_S2_CONTRACT=Object.freeze({
-  scope:'Private selected-source S2 three-target attacks and burning ground tiles; public integration remains held',
+  scope:'Selected-source S2 three-target attacks and burning ground tiles; public enablement has a separate runtime review',
   attack:'Natural manual SP, selected 35-second ATK/BAT/range mode, original capped Skill_2_Loop release, speed99 Arts shots and one 5%-Max-HP modifier-bypassing self hit per accepted attack command',
   field:'Ground tile recipients receive one nonstacking half-speed modifier, live-ATK Arts output and sourced FIRE injury derived from settled HP damage; leave, mode detach and battle end clear recipients',
   mapping:'The target root tile at projectile arrival maps DoTile selection; only low, ground-passable tiles under grounded inputs ignite. Fields last for the mode. Entry triggers immediately, then once per second; continuous occupancy across burning tiles retains one clock. Self cost follows all accepted births. Begin/End clips guard attacks, duration starts at activation, and downing ends this local mode.',

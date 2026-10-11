@@ -10,8 +10,8 @@ const nodes=v=>!v||typeof v!=='object'?[]:[...(v.$type?[v]:[]),...Object.values(
 const type=v=>v.$type.split('+').at(-1).split(',')[0];
 const bb=rows=>Object.fromEntries(rows.map(r=>[r.key,r.valueStr??r.value]));
 const near=(a,b)=>assert.ok(Math.abs(a-b)<1e-6,`${a} != ${b}`);
-test('Blaze native foundation is complete and held outside the playable registry',()=>{
- assert.deepEqual(e.enabledOperators,[]);assert.deepEqual(e.heldOperators,[ID]);assert.equal(REGULAR_OPERATORS[ID],undefined);assert.equal(data.operators[ID],undefined);
+test('native extraction stays historically held; separate runtime review enables public Blaze',()=>{
+ assert.deepEqual(e.enabledOperators,[]);assert.deepEqual(e.heldOperators,[ID]);assert.equal(REGULAR_OPERATORS[ID].mechanic,'blaze-igniting');assert.ok(data.operators[ID]);
  assert.equal(e.frameParity,false);assert.equal(e.moduleSupport,false);assert.equal(e.nativeParticleSupport,false);
  assert.equal(e.source.commit,'57010cb5b2afea112cae57daa756b58676ba6850');assert.equal(e.source.nativeClient,'26-09-23-17-49-43_b9cc4a');assert.equal(e.source.bundles.length,5);
  assert.equal(components.length,143);assert.equal(new Set(components.map(c=>c.pathId)).size,143);assert.equal(Object.keys(e.templates).length,22);assert.equal(Object.keys(e.projectiles).length,3);

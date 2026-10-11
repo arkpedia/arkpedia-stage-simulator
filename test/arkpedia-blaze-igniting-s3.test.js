@@ -50,8 +50,8 @@ function activate(f){until(f,()=>f.u.skill.ready,45);assert.ok(f.u.skill.activat
 function shot(f){until(f,()=>f.births.some(r=>r.projectile.data.blazeIgnitingKind==='s3'));return f.births.find(r=>r.projectile.data.blazeIgnitingKind==='s3');}
 function move(t,row,col){t.x=col;t.y=row;t.tileR=row;t.tileC=col;}
 
-test('S3 source build/contract are checked before hooks; complete private kit does not enable public Blaze',()=>{
-  assert.equal(REGULAR_OPERATORS[ID],undefined);assert.equal(data.operators[ID],undefined);assert.deepEqual(e.enabledOperators,[]);
+test('S3 source build/contract are checked before hooks; native receipt stays separate from the public kit',()=>{
+  assert.equal(REGULAR_OPERATORS[ID].mechanic,'blaze-igniting');assert.ok(data.operators[ID]);assert.deepEqual(e.enabledOperators,[]);
   const f=make({defer:true,sourceS3:false});f.controller.stop();delete f.u.mem.blazeIgnitingController;
   assert.throws(()=>prepareBlazeIgnitingS3(f.b,f.u,{contract:{...S3_CONTRACT}}),/contract/);
   const z=make({defer:true,skill:2,sourceS3:false});z.controller.stop();delete z.u.mem.blazeIgnitingController;

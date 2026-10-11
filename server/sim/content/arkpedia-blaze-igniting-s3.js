@@ -5,7 +5,7 @@ import {canTargetEnemy} from '../targeting.js';
 import {applyHpLoss,makeDamageInfo} from '../damage.js';
 
 export const BLAZE_IGNITING_S3_CONTRACT=Object.freeze({
-  scope:'Private selected-source S3 eventless ammunition barrage; public integration remains held',
+  scope:'Selected-source S3 eventless ammunition barrage; public enablement has a separate runtime review',
   attack:'Selected ATK/BAT/range and ammunition, manual stop, one fixed-point delayed radius1.7 stop hit plus the still-valid original trace target per accepted attack; original continuous Skill_3_Loop instead of an invented OnAttack event',
   output:'Cached Arts and separate Elemental HP damage for enemies already in FIRE recovery; bonus precedes Arts, air and camouflage can receive the stop-area hit, no new FIRE injury is manufactured',
   lifecycle:'One-second 3%-Max-HP modifier-bypassing self hits, global pre-burst two-ammo recovery without the starting-ammo cap, fatal/downed interruption, original Begin/End guards and emitted shots survive mode end/removal',

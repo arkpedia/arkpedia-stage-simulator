@@ -70,6 +70,15 @@ if (ids.includes('char_1039_thorn2')) {
     throw Error('Thorns public runtime review differs from the pinned native source');
 }
 const usesCN = ids.some(id => operatorChannel(id, REGULAR_OPERATORS[id]) === 'cn');
+if(ids.includes('char_1040_blaze2')){
+  const review=JSON.parse(await readFile(new URL('../../data/arkpedia-blaze-igniting-runtime-review.json',import.meta.url)));
+  const foundation=await readFile(new URL('../../data/arkpedia-blaze-igniting-prefabs.json',import.meta.url));
+  const evidence=JSON.parse(foundation);
+  if(!review.enabledOperators.includes('char_1040_blaze2')||review.frameParity!==false
+    ||review.sourceFoundationSha256!==createHash('sha256').update(foundation).digest('hex')
+    ||evidence.source.commit!==pins[paths.character_table[0]])
+    throw Error('Blaze Igniting public runtime review differs from the pinned native source');
+}
 const cnEvidence = usesCN ? JSON.parse(await readFile(new URL('../../data/arkpedia-cn-source.json', import.meta.url), 'utf8')) : null;
 if (cnEvidence) {
   const roster = JSON.parse(await readFile(new URL('../../data/arkpedia-roster-target.json', import.meta.url), 'utf8'));

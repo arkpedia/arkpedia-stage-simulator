@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Private selected-source foundation. No public registry entry until all three
-// skills, native lifecycle dependencies and public integration are reviewed.
+// Selected-source combat; public enablement has a separate runtime review.
 import evidence from '../../../data/arkpedia-blaze-igniting-prefabs.json' with {type:'json'};
 import {sourceCandidate} from '../../../shared/arkpedia/summons.js';
 import {normalizeChess,flattenBlackboard} from '../simdata.js';
@@ -14,11 +13,11 @@ export {BLAZE_IGNITING_S1_CONTRACT,BLAZE_IGNITING_S2_CONTRACT,BLAZE_IGNITING_S3_
 
 export const BLAZE_IGNITING_ID='char_1040_blaze2';
 export const BLAZE_IGNITING_CORE_CONTRACT=Object.freeze({
-  scope:'Private selected-source ordinary attack, global Burn burst talent and downed revival foundation; activated skills are held',
+  scope:'Selected-source ordinary attack, global Burn burst talent and downed revival foundation; skills and public enablement have separate reviews',
   attacks:'Original Front/Back Attack event and speed-one cap; one speed-ten Arts projectile; emitted shots survive owner removal',
   talents:'Selected elite/potential Burn burst bonus and ignore-heal-free self recovery; 6000 non-Elemental barrier, max-HP regeneration, full-HP revival and radius1.7 five-second stun',
   mapping:'Root/body targeting, one-HP fatal repair, tick-observed full-HP revival, source clip-end attack cadence, physical/Arts/true barrier mask and persistent-buff retention are local execution mappings',
-  limits:'The native inv_duration transition value, compiled numeric abnormal flags, callback/chain and aura detection clocks, skill interruption/ammo restoration, original particles/audio, modules and Unity frame parity remain unverified; this foundation is not publicly enabled',
+  limits:'The native inv_duration transition value, compiled numeric abnormal flags, callback/chain and aura detection clocks, skill interruption/ammo restoration, original particles/audio, modules and Unity frame parity remain unverified',
   frameParity:false,
 });
 const ID=BLAZE_IGNITING_ID,air={canHitFly:true};
@@ -223,7 +222,7 @@ export function prepareBlazeIgnitingCore(b,u,{contract}={}){
   return {record,controller,kit};
 }
 
-/** Private automatic field; source evidence stays separate from runtime review. */
+/** Reviewed automatic field; source evidence stays separate from runtime review. */
 export function prepareBlazeIgnitingS1(b,u,{contract}={}){
   if(contract!==BLAZE_IGNITING_S1_CONTRACT)throw Error('Blaze Igniting S1 requires the reviewed field contract');
   const record=validate(u,BLAZE_IGNITING_CORE_CONTRACT);
@@ -240,7 +239,7 @@ export function prepareBlazeIgnitingS1(b,u,{contract}={}){
   return prepared;
 }
 
-/** Private duration mode; public enablement waits for all three skills. */
+/** Reviewed duration mode; the native extraction receipt remains separate. */
 export function prepareBlazeIgnitingS2(b,u,{contract}={}){
   if(contract!==BLAZE_IGNITING_S2_CONTRACT)throw Error('Blaze Igniting S2 requires the reviewed tile contract');
   const record=validate(u,BLAZE_IGNITING_CORE_CONTRACT);
@@ -262,7 +261,7 @@ export function prepareBlazeIgnitingS2(b,u,{contract}={}){
   return prepared;
 }
 
-/** Private eventless ammunition mode; source receipt remains independently held. */
+/** Reviewed eventless ammunition mode; source receipt remains independently held. */
 export function prepareBlazeIgnitingS3(b,u,{contract}={}){
   if(contract!==BLAZE_IGNITING_S3_CONTRACT)throw Error('Blaze Igniting S3 requires the reviewed barrage contract');
   const record=validate(u,BLAZE_IGNITING_CORE_CONTRACT);
@@ -285,3 +284,12 @@ export function prepareBlazeIgnitingS3(b,u,{contract}={}){
     onStart:()=>controller.s3.start(),onEnd:({reason})=>controller.s3.end(reason)};
   return prepared;
 }
+
+export function customizeBlazeIgnitingKit({battle:b,id,unit:u,kit}){
+  if(id!==ID)return;
+  const index=selectedBlazeIgnitingBuild({...u.def.raw.arkpedia,skillId:u.def.skill.id}).index;
+  const prepared=[prepareBlazeIgnitingS1,prepareBlazeIgnitingS2,prepareBlazeIgnitingS3][index](b,u,
+    {contract:[BLAZE_IGNITING_S1_CONTRACT,BLAZE_IGNITING_S2_CONTRACT,BLAZE_IGNITING_S3_CONTRACT][index]});
+  Object.assign(kit,prepared.kit);u.mem.blazeIgnitingController=prepared.controller;
+}
+export function installBlazeIgniting({unit:u}){u.mem.blazeIgnitingController?.install();}
