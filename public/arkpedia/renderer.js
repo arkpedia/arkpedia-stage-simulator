@@ -459,6 +459,7 @@ export class StageRenderer {
           view = { actor, hp, key };
           this.views.set(u.id, view);
         }
+        view.unit = u;
         const point = this.projection.project(
           u.x,
           u.y,
@@ -556,13 +557,16 @@ export class StageRenderer {
       for (const [id, v] of this.views)
         if (!live.has(id)) {
           if (v.dying === undefined) {
-            v.dying = 0.6;
+            const death = v.unit?.mem?.regularDeathVisual;
+            if (death?.die) v.actor.setRegularVisual(death);
+            v.deathDuration = Number.isFinite(death?.duration) && death.duration > 0 ? death.duration : 0.6;
+            v.dying = v.deathDuration;
             v.actor.die();
             v.hp.clear();
           }
           v.dying -= dt || realDt;
           v.actor.update(dt || realDt);
-          v.actor.spine.alpha = Math.max(0, v.dying / 0.6);
+          v.actor.spine.alpha = Math.max(0, v.dying / v.deathDuration);
           if (v.dying > 0) continue;
           v.actor.destroy();
           v.hp.destroy();

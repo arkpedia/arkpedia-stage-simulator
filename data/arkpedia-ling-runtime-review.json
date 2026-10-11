@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "operatorId": "char_2023_ling",
+  "enabledOperators": [
+    "char_2023_ling"
+  ],
+  "sourceFoundation": "arkpedia-ling-prefabs.json",
+  "sourceFoundationSha256": "a6ea709bc740129046c81e35b3a760a9d2ab5ef212b62d82e0dc7bb948adf9c1",
+  "dragonArtworkSha256": "c74ff591f843eda3d01447916c0d443aad6cb938a374fc02579872c8489be06f",
+  "scope": "All three selected-source skills, owner/dragon ordinary attacks, stock/deployment/recycle lifecycle, higher-form fusion and public selected builds. Historical extraction and artwork receipts remain independently held.",
+  "frameParity": false,
+  "moduleSupport": false,
+  "nativeShaderParity": false,
+  "nativeParticleSupport": false,
+  "verification": [
+    "test/arkpedia-ling-public.test.js",
+    "test/arkpedia-ling.test.js",
+    "test/arkpedia-ling-source.test.js",
+    "test/arkpedia-ling-art.test.js",
+    "tools/arkpedia/verify-ling.py",
+    "tools/arkpedia/verify-ling-models.py",
+    "tools/arkpedia/review-ling-public.mjs"
+  ],
+  "limits": [
+    "Compiled selector ordering, animation/FSM dispatch, callback heal context, card recharge order and frame clocks remain explicit bounded mappings.",
+    "S2 cast/SP hold rounds up to the first simulation tick at the native delay; projectile arrival applies Bind.",
+    "S3 higher-form animation aliases exclude Born. Two consumed deployment slots belong to the surviving dragon.",
+    "Original default skeletons and split-alpha textures are published. Native shaders, particles, audio, modules and Unity frame parity remain unimplemented."
+  ]
+}

@@ -60,6 +60,18 @@ const [characters, skills, ranges, enemies, stage, geometry, buffTemplates, orig
 if (originalLevel.mapData.tags != null && (!Array.isArray(originalLevel.mapData.tags)
   || originalLevel.mapData.tags.some(tag => typeof tag !== 'string'))) throw Error('Unsupported source map tags');
 const ids = Object.keys(REGULAR_OPERATORS);
+if (ids.includes('char_2023_ling')) {
+  const review = JSON.parse(await readFile(new URL('../../data/arkpedia-ling-runtime-review.json', import.meta.url)));
+  const foundation = await readFile(new URL('../../data/arkpedia-ling-prefabs.json', import.meta.url));
+  const artwork = await readFile(new URL('../../data/arkpedia-ling-dragon-art.json', import.meta.url));
+  const evidence = JSON.parse(foundation), art = JSON.parse(artwork);
+  if (!review.enabledOperators.includes('char_2023_ling') || review.frameParity !== false
+    || review.sourceFoundationSha256 !== createHash('sha256').update(foundation).digest('hex')
+    || review.dragonArtworkSha256 !== createHash('sha256').update(artwork).digest('hex')
+    || art.foundation.sha256 !== review.sourceFoundationSha256
+    || evidence.source.commit !== pins[paths.character_table[0]])
+    throw Error('Ling public runtime review differs from its pinned native source/artwork');
+}
 if (ids.includes('char_248_mgllan')) {
   const review = JSON.parse(await readFile(new URL('../../data/arkpedia-magallan-runtime-review.json', import.meta.url)));
   const foundation = await readFile(new URL('../../data/arkpedia-magallan-prefabs.json', import.meta.url));
@@ -134,6 +146,7 @@ const operators = compileReviewedOperators({ registry: REGULAR_OPERATORS,
 for (const op of Object.values(operators)) assertRegularOperator(op);
 const tokenIds = ['token_10056_angel2_target', 'token_10035_wisdel_wward', 'token_10012_rosmon_shield', 'token_10031_swire2_gdtrap', 'token_10033_ela_grzmot', 'token_10034_ray_sndbst', 'token_10028_vigil_wolf', 'token_10026_bgsnow_subbow', 'token_10017_skadi2_dedant', 'token_10025_doroth_recttp', 'token_10036_lasher_mcbird', 'token_10032_jesca2_jckshd', 'token_10040_siege2_vlion', 'token_10009_weedy_cannon', 'token_10024_ebnhlz_rcube', 'token_10044_wulfen_mine', 'token_10042_tecno_puppet', 'token_10041_cathy_catsld', 'token_10022_kazema_shadow', 'token_10001_deepcl_tentac', 'token_10018_robrta_mach', 'token_10014_bstalk_crab', 'token_10011_beewax_oblisk', 'token_10006_vodfox_doll', 'token_10003_cgbird_bird', 'token_10000_silent_healrb', 'token_10015_dusk_drgn', 'token_10007_phatom_twin', 'token_10008_cqbw_box', 'token_10029_slent2_protrb', 'token_10019_nearl2_sword', 'token_10002_kalts_mon3tr', 'token_10010_folivo_car', 'token_10021_blkngt_hypnos', 'token_10023_windft_wrench', 'token_10045_alanna_crane', 'token_10013_robin_mine', 'token_10016_rfrost_mine', 'token_10004_otter_motter'];
 tokenIds.unshift('token_10005_mgllan_drone1', 'token_10005_mgllan_drone2', 'token_10005_mgllan_drone3');
+tokenIds.unshift('token_10020_ling_soul1', 'token_10020_ling_soul2', 'token_10020_ling_soul3');
 const tokens = Object.fromEntries(tokenIds.map(id => {
   const c = characters[id];
   if (!c) throw Error(`Missing original token: ${id}`);
@@ -238,6 +251,21 @@ const models = Object.fromEntries(
     return [k, sd.models[k]];
   }),
 );
+// Bind the published default dragon files to the independently audited artwork,
+// rather than approving whichever model happens to be at the latest asset HEAD.
+if (ids.includes('char_2023_ling')) {
+  const art = JSON.parse(await readFile(new URL('../../data/arkpedia-ling-dragon-art.json', import.meta.url)));
+  for (const [id, record] of Object.entries(art.models)) for (const facing of ['front', 'back']) {
+    const model = models[`operator/${id}/default/${facing}`];
+    const files = [model.skeleton, model.atlas, ...model.textures, model.avatar];
+    if (files.length !== Object.keys(record.files).length || files.some(file => {
+      const expected = record.files[file?.path?.split('/').at(-1)];
+      return !expected || file.sha256 !== expected.sha256 || file.bytes !== expected.bytes;
+    }) || JSON.stringify(model.source.originalPathIds) !== JSON.stringify(record.originalPathIds)
+      || JSON.stringify(model.animations) !== JSON.stringify(record.durations) || !model.premultipliedAlpha)
+      throw Error(`Ling published dragon differs from reviewed native artwork: ${id}/${facing}`);
+  }
+}
 for (const token of Object.values(tokens)) {
   if (token.id === 'token_10031_swire2_gdtrap') token.automaticOnly = true;
   const model = models[`operator/${token.id}/default/front`];

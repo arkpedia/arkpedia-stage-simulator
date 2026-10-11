@@ -103,7 +103,10 @@ class LingAttack {
     : evidence.tokenModels[this.u.defId]; }
   visual(clip, speed = 1, loop = false) {
     if (this.index < 0) this.u.mem.regularVisualDirection = ['UP', 'LEFT'].includes(this.u.dir) ? 'UP' : 'RIGHT';
-    this.u.mem.regularFormVisual = { clip, speed, loop };
+    const die = this.higher() ? 'Die_02' : 'Die';
+    this.u.mem.regularFormVisual = { clip, speed, loop, die, idle: this.idle() };
+    // Keep the final native form after its controller/token state is removed.
+    this.u.mem.regularDeathVisual = { clip: die, die, duration: this.model().durations[die] };
   }
   born() {
     this.seq = this.u.deploySeq;

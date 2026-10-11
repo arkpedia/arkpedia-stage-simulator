@@ -1,16 +1,16 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Private selected-source bridge. Public approval additionally requires original artwork.
+// Selected-source bridge. Public approval is separately source/artwork-bound.
 import { flattenBlackboard } from '../simdata.js';
 import { absoluteRangeKeys, areaSelectable } from '../targeting.js';
 import { bodyInKeys } from '../body.js';
 import { makeDamageInfo } from '../damage.js';
 import { enforceBlockCapacity } from '../ai.js';
-import { prepareLingCore, LING_CORE_CONTRACT, lingSourceComponent as comp } from './arkpedia-ling.js';
+import { LING_ID, prepareLingCore, LING_CORE_CONTRACT, lingSourceComponent as comp } from './arkpedia-ling.js';
 
 export const LING_SKILL_CONTRACT = Object.freeze({
-  scope: 'All selected Ling S1/S2/S3 ranks, independent dragon casts, delayed recycling, ground aura and two-way higher-form fusion; public selection remains held for artwork review',
+  scope: 'All selected Ling S1/S2/S3 ranks, independent dragon casts, delayed recycling, ground aura and two-way higher-form fusion; public approval is separately source/artwork-bound',
   mapping: 'S1 gains stock at start and changes melee damage to Arts. S2 uses original hit events and arrival Bind, casts without targets and recycles strictly below half HP after the serialized delay. S3 adds owner/token percentages, uses Ling ATK for ground-only cross pulses, gains stock at finish, transfers both deployment slots on fusion and resets survivor HP. Higher-mode changes briefly remove the passive block modifier; original Born is excluded from higher animation aliases.',
-  limits: 'Compiled selector ordering, animation/FSM/cast dispatch, callback heal context, card recharge cooldown and frame clocks are bounded local mappings, not certified Unity frame parity. S2 cast/SP hold is rounded up to the first simulation tick at the native delay. Modules, native artwork, particles/audio and public approval remain held.',
+  limits: 'Compiled selector ordering, animation/FSM/cast dispatch, callback heal context, card recharge cooldown and frame clocks are bounded local mappings, not certified Unity frame parity. S2 cast/SP hold is rounded up to the first simulation tick at the native delay. Modules, native particles/audio and shader parity remain unsupported; public approval is separately source/artwork-bound.',
   frameParity: false,
 });
 const present = u => u?.alive && u.deployed && !u._removing;
@@ -190,3 +190,14 @@ export function prepareLingSkills(b, u, { contract } = {}) {
     canActivate: () => bridge.canCast(), onStart: () => bridge.start(), onEnd: ({ reason }) => bridge.end(reason),
   } } };
 }
+
+// The historical extraction/artwork receipts remain independently held.
+// This adapter binds a public build to the complete selected-source bridge.
+export function customizeLingKit({ battle, id, unit, kit }) {
+  if (id !== LING_ID) return;
+  const prepared = prepareLingSkills(battle, unit, { contract: LING_SKILL_CONTRACT });
+  // Inspection context only: dragons keep their independent native stats.
+  prepared.record.token.arkpedia = { ...unit.def.raw.arkpedia };
+  Object.assign(kit, prepared.kit);
+}
+export function installLing({ unit }) { unit.mem.lingController?.install(); }

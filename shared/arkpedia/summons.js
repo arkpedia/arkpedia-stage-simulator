@@ -100,6 +100,8 @@ export const REGULAR_AUTOMATIC_TOKENS = Object.freeze({
   char_1041_angel2: Object.freeze(['token_10056_angel2_target']),
   // The selected-skill controller owns Magallan's deck and terrain rules.
   char_248_mgllan: Object.freeze([1, 2, 3].map(n => `token_10005_mgllan_drone${n}`)),
+  // Ling's selected-skill deck controls dragon stock, terrain and fusion.
+  char_2023_ling: Object.freeze([1, 2, 3].map(n => `token_10020_ling_soul${n}`)),
   char_391_rosmon: Object.freeze(['token_10012_rosmon_shield']),
   char_1035_wisdel: Object.freeze(['token_10035_wisdel_wward']),
   char_1033_swire2: Object.freeze(['token_10031_swire2_gdtrap']),

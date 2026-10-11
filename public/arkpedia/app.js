@@ -501,6 +501,7 @@ function pick(row, col) {
 }
 function summonDetails(entry) {
   const unit = entry.unit, raw = entry.record.stats, stats = unit?.s;
+  const slots = unit?.deploymentSlotCost ?? entry.config.deploymentSlotCost;
   const ammunition = ammunitionHud(unit);
   const lifetime = unit?.skill.spec?.formCountdown ? skillHud(unit.skill) : null;
   const hp = unit?.hp ?? raw.maxHp, maxHp = stats?.maxHp ?? raw.maxHp;
@@ -512,7 +513,7 @@ function summonDetails(entry) {
     <dl class="operator-stats">${numbers.map(([label, value]) => `<div><dt>${label}</dt><dd>${Math.round(value)}</dd></div>`).join('')}</dl>
     <div class="hp-readout"><span>HP</span><strong>${Math.min(Math.ceil(hp), Math.round(maxHp))} / ${Math.round(maxHp)}</strong></div>
     <div class="meter hp"><span style="width:${Math.min(1, Math.max(0, hp / maxHp)) * 100}%"></span></div>
-    <p class="sp-readout">${entry.stock} remaining · ${raw.cost} DP · ${entry.config.deploymentSlotCost} deployment slot${entry.config.deploymentSlotCost === 1 ? '' : 's'}</p>
+    <p class="sp-readout">${entry.stock} remaining · ${raw.cost} DP · ${slots} deployment slot${slots === 1 ? '' : 's'}</p>
     ${ammunition ? `<p class="sp-readout">${escape(ammunition.text)} collected</p>` : ''}${recovery}${lifetime ? `<p class="sp-readout">${escape(lifetime.text)}</p><div class="meter active"><span style="width:${lifetime.fraction * 100}%"></span></div>` : ''}<p class="skill-description">${entry.ownerId === 'char_003_kalts' ? 'Can be healed only by Kal’tsit. ' : entry.config.healFree ? 'Cannot receive ordinary healing. ' : ''}${entry.config.tacticalPoint ? 'Its tactical point stays in place while the reinforcement recovers. ' : ''}Leaves the field when its summoner is removed.</p>
     ${unit && skillSourceFor(unit) !== unit
       ? operatorSkillDetails(battle.bench[entry.ownerId].build, skillSourceFor(unit))
@@ -623,6 +624,9 @@ function drawHud() {
         drawHud();
       };
       button.onpointerdown = (e) => {
+        // A touch drag may prevent its compatibility click entirely. Clear
+        // that old suppression when a new gesture begins, including live ops.
+        button.suppressClick = false;
         if (
           e.button !== 0 ||
           battle.finished ||
