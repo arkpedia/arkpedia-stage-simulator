@@ -2656,3 +2656,20 @@ Native compiled listener dispatch, target-marker removal and selector comparator
 The core has **seventeen engine checks**, including actual public ammunition users, all four facings, control interruption, target replacement, withdrawal, temporary hidden state, aura cleanup, heal ordering and multi-bullet counts. Run `node --test test/arkpedia-exusiai-covenant.test.js`. The source and public roster gates remain separate; playable coverage is still **363/431**.
 
 Full regression for public Blaze: **10,889 passed, zero failures, nine existing skips** across 10,898 tests and 325 suites (`.cache/arkpedia/blaze-igniting-source/public-all-tests.log`). Rebuilding public data and coverage reproduces both files byte-for-byte (`public-rebuild-review.json`). The original native foundation bytes are unchanged. This increment can publish independently of the held app integration.
+
+### Exusiai selected-source S1
+
+The separate `prepareExusiaiCovenantS1` diagnostic now accepts only the exact `EXUSIAI_COVENANT_S1_CONTRACT` and a complete selected first skill. It does not change the core-only diagnostic or enable the public operator.
+
+- S1 activates automatically at the selected rank's natural SP threshold, grants eight rounds, and retains the source permission to activate without a target, while silenced or during Born. The native mode pre-delay is .30000001192092896 seconds.
+- Normal skill attacks prioritize aerial units, fire one physical projectile at the original OnAttack event, and consume one round through the shared ammunition runtime. Free rounds do not consume ammo or trigger ammunition talents. The normal clip rate is capped at one, as in the native ability.
+- Manual stop snapshots the remaining rounds before the generic runtime clears its holder. The original Skill_1_Close event spends those rounds once, supplies one per-bullet talent receipt, and starts a burst that reselects a random live in-range enemy for each projectile birth. One accepted burst attack supplies the shared attack hooks and attack ID; additional projectiles do not consume the ammo a second time.
+- Burst births are separated by .05000000074505806 seconds. The first projectile uses the ordinary speed of 30; additional close projectiles use the native speed of 10. Fired projectiles survive withdrawal; unborn rounds stop when their owner becomes invalid. Each impact uses current ATK and the selected rank's physical multiplier.
+- The local bridge holds SP recovery through the close clip and cancels unfinished burst state on control interruption, hidden state or removal. More than eight rounds supplied by other skills remain supported.
+
+`test/arkpedia-exusiai-covenant-s1.test.js` verifies all ten ranks, every facing, flight priority, native release events and speeds, speed caps, ordinary/free/burst ammunition receipts, per-bullet healing, separate random births, newly entered targets, natural exhaustion, current-ATK arrival, interruption and lifecycle cleanup. The source receipt remains unchanged and is independently compared against the pinned original client bundles.
+
+This is selected simulator behavior, not certified Unity frame parity. Compiled discard/progress callbacks, random selector comparison, rangeIdUsageType7, start/cancel ordering during Born, native timeMode conversion, original particles/audio and modules remain unverified. The promotion's attack range remains authoritative; an undocumented display-range flag is not treated as an attack-range extension. S2, S3 and coordinate delivery still need implementation and review. Public coverage stays **363/431 forms** and the Arkpedia dev release gate remains closed.
+
+
+Validation: **512 related checks passed, zero failures or skips**. The independent native verifier confirms all 287 component records, six bundles, twenty templates, sixty owner/token ranks, seven projectile trees and both original skeleton chains. The local preview responds with HTTP 200; this is availability evidence, not a browser playtest of the still-held operator.
