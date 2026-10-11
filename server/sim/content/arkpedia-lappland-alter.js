@@ -1,22 +1,24 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Private ordinary/S1/S2 adapter. Public enablement still requires S3 and full-kit review.
+// Private three-skill adapter. Public enablement still requires full-kit/asset review.
 import evidence from '../../../data/arkpedia-lappland-alter-prefabs.json' with { type:'json' };
 import { sourceCandidate } from '../../../shared/arkpedia/summons.js';
 import { normalizeChess } from '../simdata.js';
 import { absoluteRangeKeys, canTargetEnemy, sortEnemyTargets } from '../targeting.js';
 import { bodyInKeys } from '../body.js';
 import { makeDamageInfo } from '../damage.js';
+import {LapplandS3Drones,validateLapplandS3} from './arkpedia-lappland-s3.js';
 
 export const LAPPLAND_ALTER_ID = 'char_1038_whitw2';
 export const LAPPLAND_ATTACK_CONTRACT = Object.freeze({
-  scope:'Source-selected no-module ordinary/S1/S2 component; not public full-kit support',
-  clocks:'Original facing entrance, ordinary/S1/S2 event and clip; ordinary uncapped, remote owner loops capped at one',
+  scope:'Source-selected no-module three-skill component; not public full-kit support',
+  clocks:'Original facing entrance and owner attack clips/events; ordinary uncapped, active owner loops capped at one',
   ordinary:'Separate speed-ten caster and half-second drone receipts; normal drones share one target ramp per command',
   remote:'Independent whole-field stationary-target locks, immediate first receipt, live interval thereafter; moving or invalid targets release',
   s2:'Selected timed ATK/range; four drones plus Alpha upgrade, independent random range acquisitions and persistent moving-target locks; per-drone Fear Dice',
+  s3:'Three/four source-bound cruise/attach pairs; spread, inertial chase and 1.25-radius idle orbit; arrival Fear, independent attached ramps and one shared immediate/one-second area clock',
   talents:'Three deployment-age Alpha Wolf rewards then terminal branch; separately installed Siracusa squad born-event SP persists while the owner is in the deck',
   mapping:'Sampled root coordinates, stationary=moving false or blocked, regular-stage caster priority, independent uniform S2 draws with replacement, root receipts, post-damage status order and mode-local ramps are local execution mappings',
-  limits:'S3, full public factory integration, modules, original drone particles/audio and compiled Unity frame parity remain unverified',
+  limits:'Full public factory integration, modules, original drone particles/audio and compiled Unity frame parity remain unverified. S3 source-selection ties, radial phase, angular-turn units, .04 root arrival tolerance, shared-owner handoff, damage attribution and begin-to-loop FSM dispatch are local mappings.',
   frameParity:false,
 });
 const ID=LAPPLAND_ALTER_ID, air={canHitFly:true};
@@ -69,13 +71,13 @@ function validate(u,contract) {
   if(contract!==LAPPLAND_ATTACK_CONTRACT)throw Error('Lappland requires the reviewed attack contract');
   if(u.def.charId!==ID||u.deploySeq!==0||u.mem.lapplandController)throw Error('Lappland requires a fresh original owner');
   const build={...u.def.raw.arkpedia,skillId:u.def.skill?.id},r=selectedLapplandBuild(build),s=u.def.skill;
-  if(r.index>1||u.def.raw.arkpedia.skillId!=null&&u.def.raw.arkpedia.skillId!==build.skillId
+  if(u.def.raw.arkpedia.skillId!=null&&u.def.raw.arkpedia.skillId!==build.skillId
     ||s.skillType!==r.source.skillType||s.spType!=='time'||s.spCost!==r.source.spData.spCost
     ||s.initSp!==r.source.spData.initSp||s.maxCharges!==r.source.spData.maxChargeTime
     ||s.duration!==r.source.duration||!same(s.bb,r.bb)||!same(s.rangeGrid??[],grid(r.source.rangeId))
     ||!same(u.rangeGrid,r.rangeGrid)||!same(u.def.tags,factions)||!same(u.def.stats,normalizeChess({stats:r.stats}).stats)
     ||!same(u.def.talents.map(t=>t.bb),r.talents.map(t=>flat(t.blackboard))))
-    throw Error('Incomplete Lappland selected ordinary/S1/S2 source');
+    throw Error('Incomplete Lappland selected three-skill source');
   if(ordinary._waitForAttackEvent!==1||ordinary._maxAnimScale!==-1||remote._maxAnimScale!==1
     ||remote._alwaysUseFunnelSelector!==1||component('2014658073790792809')._delayTime!==.5
     ||component('-1523539542428573500')._waitFirstPeriod!==0
@@ -98,6 +100,7 @@ function validate(u,contract) {
         throw Error('Unreviewed Lappland S2 random selector');
     }
   }
+  if(r.index===2)validateLapplandS3();
   return r;
 }
 
@@ -106,6 +109,7 @@ export class LapplandAttackController {
     this.b=b;this.u=u;this.record=r;this.seq=null;this.stopped=false;this.phase=null;this.handles=[];
     this.modeEpoch=0;this.normalRamp=ramp();this.slots=Array.from({length:6},()=>({...ramp(),lock:null,lockSeq:null,nextAt:0}));
     this.alphaStage=0;this.capMultiplier=1;this.silence=false;this.bornAt=null;
+    this.s3=r.index===2?new LapplandS3Drones(this):null;
   }
   valid(){return !this.stopped&&!this.b.finished&&live(this.u)&&this.seq===this.u.deploySeq;}
   eligible(t){return live(t)&&canTargetEnemy(this.u,t,air);}
@@ -130,8 +134,8 @@ export class LapplandAttackController {
   receipt(t,scale,info,kind){
     if(!this.eligible(t))return;
     const b=this.b,u=this.u,seq=t.deploySeq,mode=this.modeEpoch;
-    const dmg=makeDamageInfo({amount:u.s.atk*u.s.atkScaleMul*scale,type:'arts',isAttack:true,
-      isSkill:!!info.isSkill,attackId:info.attackId??0,applyWay:'ranged',tags:[`lappland:${kind}`]});
+    const dmg=makeDamageInfo({amount:u.s.atk*u.s.atkScaleMul*scale,type:'arts',isAttack:info.isAttack??true,
+      isSkill:!!info.isSkill,attackId:info.attackId??0,applyWay:info.applyWay??'ranged',tags:[`lappland:${kind}`]});
     let accepted=false;
     const receipt=b.on('calculatedDamage',ctx=>{if(ctx.dmg===dmg)accepted=true;});
     try{b.dealDamage(u,t,dmg);}finally{b.off(receipt);}
@@ -174,7 +178,7 @@ export class LapplandAttackController {
     p.accepted=true;this.caster(t,info);
     if(!this.valid()||p.mode!==this.modeEpoch)return true;
     if(!u.skill.active)this.ordinaryDrones(t,info);
-    else this.acquireRemote(info);
+    else if(this.record.index<2)this.acquireRemote(info);
     return true;
   }
   acquireRemote(info={isSkill:true}){
@@ -210,7 +214,9 @@ export class LapplandAttackController {
       &&seq===t.deploySeq&&this.locked(t))this.receipt(t,scale,info,'remote-drone');
   }
   changeMode(active){
-    this.modeEpoch++;this.phase=null;this.u.atkCd=0;
+    const mode=++this.modeEpoch;this.phase=null;this.u.atkCd=0;
+    this.s3?.stop();
+    if(this.modeEpoch!==mode)return;
     for(const s of this.slots)s.lock=null;
     this.b.projectiles.remove(p=>p.data?.lapplandOwner===this&&p.data.lapplandKind==='drone');
     if(!this.valid())return;
@@ -218,6 +224,7 @@ export class LapplandAttackController {
     this.phase={kind:'transition',readyAt:Math.max(this.b.time+model(this.u).durations[clip],
       this.bornAt+model(this.u).durations.Start),mode:this.modeEpoch};
     this.visual(clip);
+    if(active)this.s3?.start();
   }
   toggle(){
     if(!this.valid()||!this.u.canAct||this.u.s.flags.disarm)return false;
@@ -258,7 +265,7 @@ export class LapplandAttackController {
     const u=this.u,b=this.b;this.alpha();
     if(!this.valid())return;
     // Already attached native remote projectiles keep ticking through owner control.
-    if(u.skill.active)this.remoteTicks();
+    if(u.skill.active){if(this.s3)this.s3.tick();else this.remoteTicks();}
     if(!this.valid())return;
     let p=this.phase;
     if(p?.kind==='entrance'||p?.kind==='transition'){
@@ -282,7 +289,7 @@ export class LapplandAttackController {
     }
     if(u.atkCd>1e-9)return;
     const target=this.targets()[0];
-    if(!target&&(!u.skill.active||!this.slots.slice(0,this.count()).some(s=>!s.lock)||!this.targets(true).length)){
+    if(!target&&(this.s3||!u.skill.active||!this.slots.slice(0,this.count()).some(s=>!s.lock)||!this.targets(true).length)){
       this.visual(u.skill.active?this.skillClip('Idle'):'Idle',1,true);return;
     }
     const clip=u.skill.active?this.skillClip('Loop'):'Attack';
@@ -305,6 +312,7 @@ export class LapplandAttackController {
   stop(){
     if(this.stopped)return;
     this.stopped=true;this.phase=null;this.modeEpoch++;
+    this.s3?.stop();
     for(const s of this.slots)s.lock=null;
     if(this.u.skill?.active)this.u.skill.end(this.b.finished?'battle-finish':'owner-finish');
     this.b.projectiles.remove(p=>p.data?.lapplandOwner===this&&p.data.lapplandKind==='drone');

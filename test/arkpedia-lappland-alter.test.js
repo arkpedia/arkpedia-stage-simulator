@@ -47,11 +47,11 @@ function enemy(f,{row=5,col=6,hp=1e7,res=0,fly=false,taunt=0,flags={}}={}){
 }
 function active(f){f.u.skill.addCharge(1);assert.equal(f.controller.toggle(),true);}
 
-test('ordinary/S1/S2 remains private until the full Lappland kit is reviewed',()=>{
+test('three-skill component remains private until the full Lappland kit is reviewed',()=>{
   assert.equal(REGULAR_OPERATORS[ID],undefined);assert.equal(data.operators[ID],undefined);
   assert.deepEqual(e.enabledOperators,[]);assert.equal(CONTRACT.frameParity,false);
   assert.throws(()=>make({contract:{...CONTRACT}}),/contract/);
-  assert.throws(()=>make({skill:3}),/Incomplete/);
+  assert.ok(make({skill:3}).controller.s3);
 });
 test('selected source combines exact promotion, trust, potential and unlocks',()=>{
   const b={elite:2,level:90,potential:1,trust:0,skillId:'skchr_whitw2_1',skillRank:10};
@@ -440,4 +440,239 @@ test('S2 damage callback changed target life cannot attach Fear to the replaceme
   }});
   active(f);until(f,()=>once);assert.equal(f.strikes.length,1);assert.equal(t.s.flags.fear,undefined);
   advance(f.b,.1);assert.ok(f.controller.slots.every(s=>!s.lock));
+});
+
+function s3Fixture(options={}){
+  const f=make({skill:3,...options}),droneHits=[],areaHits=[],attaches=[],traces=[],droneBirths=[],reappear=[];
+  f.b.on('lapplandS3DroneStrike',x=>{if(x.owner===f.u)droneHits.push({...x,time:f.b.time});});
+  f.b.on('lapplandS3AreaTick',x=>{if(x.owner===f.u)areaHits.push({...x,time:f.b.time});});
+  f.b.on('lapplandS3Attach',x=>{if(x.owner===f.u)attaches.push({...x,time:f.b.time});});
+  f.b.on('lapplandS3Trace',x=>{if(x.owner===f.u)traces.push({...x,time:f.b.time});});
+  f.b.on('lapplandS3DroneBirth',x=>{if(x.owner===f.u)droneBirths.push({...x,time:f.b.time});});
+  f.b.on('lapplandS3Reappear',x=>{if(x.owner===f.u)reappear.push({...x,x:x.drone.x,y:x.drone.y,time:f.b.time});});
+  return Object.assign(f,{droneHits,areaHits,attaches,traces,droneBirths,reappear,s3:f.controller.s3});
+}
+for(let rank=1;rank<=10;rank++)test(`S3 rank ${rank}: source SP, ATK, three cruise drones and forty-second cleanup`,()=>{
+  const f=s3Fixture({rank});near(f.u.skill.sp,38);assert.equal(f.u.skill.spCost,[75,73,71,69,67,65,63,60,57,54][rank-1]);
+  assert.equal(f.controller.count(),1);active(f);assert.equal(f.droneBirths.length,3);assert.equal(f.controller.count(),3);
+  near(f.u.s.atk,342*(1+[.3,.35,.4,.45,.5,.55,.6,.65,.7,.8][rank-1]));
+  assert.equal(f.controller.toggle(),false);near(f.u.skill.timeLeft,40);near(f.u.skill.sp,0);
+  assert.equal(f.u.skill.gainSp(30,'test'),0);
+  for(const d of f.s3.drones)near(Math.hypot(d.x-f.u.x,d.y-f.u.y),.5);
+  advance(f.b,40.1);assert.equal(f.u.skill.active,false);assert.equal(f.s3.running,false);
+  assert.equal(f.u.mem.lapplandS3Drones,null);assert.equal(f.s3.drones.length,0);near(f.u.s.atk,342);
+});
+for(const dir of ['RIGHT','LEFT','UP','DOWN'])test(`S3 ${dir}: initial radial facing, uncapped ordinary and separate original caster loop`,()=>{
+  const f=s3Fixture({dir}),[row,col]={RIGHT:[5,6],LEFT:[5,4],UP:[6,5],DOWN:[4,5]}[dir];
+  enemy(f,{row,col});active(f);const d=f.s3.drones[0];
+  near(d.x-f.u.x,.5*f.u.fwd[1]);near(d.y-f.u.y,.5*f.u.fwd[0]);
+  until(f,()=>f.births.length===1);assert.equal(f.births[0].kind,'caster');near(f.births[0].time,1.4,f.b.dt*2);
+  assert.equal(f.u.mem.regularFormVisual.clip,'Skill_3_Loop');assert.equal(f.births.filter(x=>x.kind==='normal-drone').length,0);
+  until(f,()=>f.hits.some(x=>x.dmg.tags.includes('lappland:caster')));
+  near(f.hits.find(x=>x.dmg.tags.includes('lappland:caster')).amount,615.6);
+});
+test('S3 source spread integrates acceleration then capped speed and uses original 1.25-radius orbit',()=>{
+  const f=s3Fixture();active(f);advance(f.b,1.3);const d=f.s3.drones[0];
+  near(d.x-f.u.x,2.0833333,1e-4);near(d.y,f.u.y);assert.equal(d.phase,'spread');
+  advance(f.b,f.b.dt);near(d.x-f.u.x,2.15,1e-4);assert.equal(d.phase,'orbit');
+  const center={...d.orbit};advance(f.b,1);near(Math.hypot(d.x-center.x,d.y-center.y),1.25);
+  near(d.speed,2);assert.equal(f.traces.length,0);
+});
+test('S3 every drone finds its nearest global enemy rather than the owner priority target',()=>{
+  const f=s3Fixture();const a=enemy(f,{col:12}),z=enemy(f,{row:3,col:2,taunt:100});
+  active(f);until(f,()=>f.traces.length===3);assert.equal(f.traces[0].target,a);
+  assert.ok(f.traces.slice(1).some(x=>x.target===z));assert.equal(f.attacks.length,0);
+});
+test('S3 chase preserves inertia and limits turns rather than snapping directly to a target',()=>{
+  const f=s3Fixture();active(f);const t=enemy(f,{col:12});until(f,()=>f.s3.drones[0].phase==='chase');
+  const d=f.s3.drones[0],heading=d.heading,x=d.x;t.x=d.x-3;t.y=d.y;
+  advance(f.b,f.b.dt);near(Math.abs(Math.atan2(Math.sin(d.heading-heading),Math.cos(d.heading-heading))),5*f.b.dt,1e-5);
+  assert.ok(d.x>x);assert.equal(d.phase,'chase');assert.ok(d.speed>2&&d.speed<=4);
+});
+test('S3 attachment applies arrival Fear and independent initial ramp once, then live attack intervals',()=>{
+  const f=s3Fixture(),t=enemy(f,{col:17});active(f);until(f,()=>f.droneHits.length>=3,15);
+  assert.equal(f.births.length,0);assert.equal(f.attacks.length,0);assert.ok(t.s.flags.fear);
+  near(t.findBuff('fear').duration,3);assert.equal(t.findBuff('fear').data.fear.sx,f.u.x);
+  for(const d of f.droneHits.filter((x,i,a)=>a.findIndex(z=>z.drone===x.drone)===i))near(d.scale,.2);
+  const first=f.droneHits[0];until(f,()=>f.droneHits.some(x=>x.drone===first.drone&&x.time>first.time));
+  const second=f.droneHits.find(x=>x.drone===first.drone&&x.time>first.time);near(second.time-first.time,1.3,f.b.dt*2);near(second.scale,.35);
+  assert.ok(f.hits.filter(x=>x.dmg.tags.includes('lappland:s3-drone')).every(x=>!x.dmg.isAttack&&!x.dmg.isSkill));
+});
+test('S3 area coverage immediately slows and hits once per second despite overlapping drones',()=>{
+  const f=s3Fixture(),t=enemy(f,{col:5});active(f);advance(f.b,f.b.dt);
+  assert.equal(f.areaHits.length,1);near(t.s.moveSpeed,0);near(t.findBuff('lappland:s3-area').mods.moveMul,.5);
+  near(f.hits.find(x=>x.dmg.tags.includes('lappland:s3-area')).amount,738.72);
+  // Keep every drone over this one recipient to exercise actual shared coverage.
+  f.b.on('tick',()=>{for(const d of f.s3.drones){d.x=t.x;d.y=t.y;d.phase='orbit';d.orbit=null;d.lastAt=f.b.time;}},{priority:100});
+  advance(f.b,2.1);assert.equal(f.areaHits.length,3);near(f.areaHits[1].time-f.areaHits[0].time,1,f.b.dt*2);
+  assert.equal(t.buffs.filter(x=>x.key==='lappland:s3-area').length,1);
+  assert.ok(f.hits.filter(x=>x.dmg.tags.includes('lappland:s3-area')).every(x=>!x.dmg.isAttack&&!x.dmg.isSkill));
+});
+test('S3 leaving the area immediately removes slow; reentry starts a fresh first receipt',()=>{
+  const f=s3Fixture(),t=enemy(f,{col:5});active(f);advance(f.b,f.b.dt);assert.ok(t.findBuff('lappland:s3-area'));
+  t.x=18;t.y=15;advance(f.b,f.b.dt);assert.equal(t.findBuff('lappland:s3-area'),null);
+  const d=f.s3.drones[0];t.x=d.x;t.y=d.y;advance(f.b,f.b.dt);assert.equal(f.areaHits.length,2);
+});
+test('S3 area damage reads live ATK and RES separately and does not advance the attached Funnel ramp',()=>{
+  const f=s3Fixture(),t=enemy(f,{col:5,res:50});active(f);advance(f.b,f.b.dt);
+  near(f.hits[0].amount,369.36);assert.ok(f.s3.drones.every(d=>d.ramp.scale===0));
+  f.b.addBuff(f.u,{key:'fixture:atk',mods:{atkPct:1}});
+  f.b.on('tick',()=>{for(const d of f.s3.drones){d.x=t.x;d.y=t.y;d.phase='orbit';d.orbit=null;d.lastAt=f.b.time;}},{priority:100});
+  advance(f.b,1.1);near(f.hits.filter(x=>x.dmg.tags.includes('lappland:s3-area'))[1].amount,574.56);
+});
+test('S3 arrival Fear bypasses damage evasion while honoring source immunity and resistance',()=>{
+  for(const state of ['evade','immune','resist']){
+    const f=s3Fixture(),t=enemy(f,{col:17});
+    if(state==='evade')f.b.addBuff(t,{key:'fixture:evade',mods:{dodgeArts:1}});
+    if(state==='immune')t.def.immune.add('feared');
+    if(state==='resist')f.b.applyStatus(t,'resist',{duration:100,value:.5});
+    active(f);until(f,()=>f.attaches.length>0,15);
+    if(state==='immune')assert.equal(t.s.flags.fear,undefined);else near(t.findBuff('fear').duration,state==='resist'?1.5:3);
+  }
+});
+test('S3 attached target death reappears at source square offsets and resets ramp on the next enemy',()=>{
+  const f=s3Fixture(),t=enemy(f,{col:12});active(f);until(f,()=>f.droneHits.length>0,15);
+  const d=f.droneHits[0].drone,x=d.lastTargetX,y=d.lastTargetY;f.b.kill(t,f.u);f.b.rng=()=>0;
+  const z=enemy(f,{row:8,col:15});until(f,()=>f.reappear.length>0);
+  const first=f.reappear.find(v=>v.drone===d);near(first.x,x-.75);near(first.y,y-.75);
+  until(f,()=>f.droneHits.some(v=>v.drone===d&&v.target===z),15);
+  near(f.droneHits.find(v=>v.drone===d&&v.target===z).scale,.2);
+});
+test('S3 changed-life targets never receive old attached damage or reappear at a replacement position',()=>{
+  const f=s3Fixture(),t=enemy(f,{col:12});active(f);until(f,()=>f.droneHits.length>0,15);
+  const d=f.droneHits[0].drone,x=d.lastTargetX,y=d.lastTargetY,old=f.droneHits.length;
+  t.deploySeq++;t.x=18;t.y=15;t.hidden=true;f.b.rng=()=>.99;advance(f.b,f.b.dt);
+  assert.equal(f.droneHits.length,old);const p=f.reappear.find(v=>v.drone===d);
+  near(p.x,x+.735);near(p.y,y+.735);assert.equal(t.findBuff('lappland:s3-attach'),null);
+});
+test('S3 autonomous drones and their area continue through owner control, while caster attacks stop',()=>{
+  const f=s3Fixture(),t=enemy(f,{col:17});active(f);until(f,()=>f.droneHits.length>=3,15);
+  const old=f.droneHits.length;f.b.applyStatus(f.u,'stun',{duration:5});f.b.applyStatus(f.u,'disarm',{duration:5});
+  advance(f.b,2);assert.ok(f.droneHits.length>old);assert.equal(f.attacks.length,0);assert.ok(t.findBuff('lappland:s3-area'));
+});
+test('S3 third Alpha Wolf upgrade releases one new drone, leaving existing drone positions and phases intact',()=>{
+  const f=s3Fixture({potential:6});advance(f.b,32.1);active(f);advance(f.b,15.8);
+  const before=f.s3.drones.slice();assert.equal(before.length,3);until(f,()=>f.s3.drones.length===4);
+  assert.deepEqual(f.s3.drones.slice(0,3),before);const last=f.s3.drones[3];assert.equal(last.phase,'spread');near(last.age,0);
+  assert.equal(f.droneBirths.length,4);
+});
+test('S3 owner withdrawal immediately removes cruise, attach, trace and area state',()=>{
+  const f=s3Fixture(),t=enemy(f,{col:12});active(f);until(f,()=>f.attaches.length>0,15);
+  assert.ok(t.findBuff('lappland:s3-attach'));assert.ok(t.findBuff('lappland:s3-area'));
+  f.b.retreat(f.u,{permanent:true});assert.equal(f.controller.stopped,true);assert.equal(f.s3.running,false);
+  for(const key of ['lappland:s3-trace','lappland:s3-attach','lappland:s3-area'])assert.equal(t.findBuff(key),null);
+  const old=f.hits.length;advance(f.b,2);assert.equal(f.hits.length,old);assert.equal(f.u.mem.lapplandS3Drones,null);
+});
+test('S3 birth and arrival callbacks cannot leave orphan drones, Fear or later receipts after removal',()=>{
+  const birth=s3Fixture();birth.b.on('lapplandS3DroneBirth',()=>birth.b.retreat(birth.u,{permanent:true}));active(birth);
+  assert.equal(birth.droneBirths.length,1);assert.equal(birth.s3.drones.length,0);assert.equal(birth.u.mem.lapplandS3Drones,null);
+  const f=s3Fixture(),t=enemy(f,{col:17});f.b.on('lapplandS3Attach',()=>f.b.retreat(f.u,{permanent:true}));
+  active(f);until(f,()=>f.controller.stopped,15);assert.equal(t.s.flags.fear,undefined);assert.equal(f.droneHits.length,0);
+});
+test('S3 area callback skill exit cancels its pending receipt and cleans slow in the same tick',()=>{
+  const f=s3Fixture(),t=enemy(f,{col:5});f.b.on('lapplandS3AreaTick',()=>f.u.skill.end('fixture'));
+  active(f);advance(f.b,f.b.dt);assert.equal(f.hits.length,0);assert.equal(t.findBuff('lappland:s3-area'),null);
+  assert.equal(f.s3.running,false);assert.equal(f.u.mem.lapplandS3Drones,null);
+});
+function secondS3(f){
+  const def=structuredClone(f.u.def),u=f.b._makeAlly(f.u.player,def,'op',8,5,{dir:'RIGHT'});
+  const prepared=prepareLapplandAttacks(f.b,u,{contract:CONTRACT});f.b._setupUnit(u,prepared.kit);prepared.controller.install();
+  assert.ok(f.b._deploy(u,{initial:false}));u.player.dp=99;u.skill.addCharge(1);assert.ok(prepared.controller.toggle());
+  return {u,...prepared,s3:prepared.controller.s3};
+}
+function pinS3(f,t,others=[]){
+  f.b.on('tick',()=>{for(const s3 of [f.s3,...others])if(s3.valid())for(const d of s3.drones){
+    d.x=t.x;d.y=t.y;d.phase='orbit';d.orbit=null;d.lastAt=f.b.time;
+  }},{priority:100});
+}
+test('S3 multiple owners share one area clock and handoff keeps its pending next tick',()=>{
+  const f=s3Fixture(),t=enemy(f,{col:10});active(f);const z=secondS3(f);pinS3(f,t,[z.s3]);
+  const receipts=[];f.b.on('damaged',x=>{if(x.dmg.tags.includes('lappland:s3-area'))receipts.push({...x,time:f.b.time});});
+  advance(f.b,1.1);assert.equal(receipts.length,2);assert.ok(receipts.every(x=>x.source===f.u));
+  f.b.retreat(f.u,{permanent:true});assert.equal(t.findBuff('lappland:s3-area').source,z.u);
+  advance(f.b,.5);assert.equal(receipts.length,2);advance(f.b,.6);assert.equal(receipts.length,3);
+  assert.equal(receipts[2].source,z.u);near(receipts[2].time-receipts[1].time,1,f.b.dt*2);
+  z.u.skill.end('fixture');assert.equal(t.findBuff('lappland:s3-area'),null);
+});
+test('S3 callback owner handoff cancels that pending receipt without resetting the shared clock',()=>{
+  const f=s3Fixture(),t=enemy(f,{col:10});active(f);const z=secondS3(f);pinS3(f,t,[z.s3]);
+  const receipts=[];f.b.on('damaged',x=>{if(x.dmg.tags.includes('lappland:s3-area'))receipts.push({...x,time:f.b.time});});
+  let fired=false;f.b.on('lapplandS3AreaTick',x=>{if(!fired&&x.owner===f.u){fired=true;f.u.skill.end('fixture');}});
+  advance(f.b,.5);assert.equal(receipts.length,0);advance(f.b,.6);assert.equal(receipts.length,1);
+  assert.equal(receipts[0].source,z.u);near(receipts[0].time,1,f.b.dt*2);
+});
+test('S3 cancelled area-buff creation never produces an area receipt; later acceptance starts normally',()=>{
+  const f=s3Fixture(),t=enemy(f,{col:5});active(f);pinS3(f,t);
+  const h=f.b.on('beforeBuff',x=>{if(x.buff.key==='lappland:s3-area')x.cancel=true;});
+  advance(f.b,.5);assert.equal(f.areaHits.length,0);assert.equal(t.findBuff('lappland:s3-area'),null);
+  f.b.off(h);advance(f.b,f.b.dt);assert.equal(f.areaHits.length,1);
+});
+test('S3 beforeBuff owner retirement cannot orphan area or shared target markers',()=>{
+  for(const key of ['lappland:s3-area','lappland:s3-trace','lappland:s3-attach']){
+    const f=s3Fixture(),t=enemy(f,{col:key.endsWith('area')?5:12});active(f);
+    f.b.on('beforeBuff',x=>{if(x.buff.key===key)f.b.retreat(f.u,{permanent:true});});
+    until(f,()=>f.controller.stopped,15);assert.equal(f.u.mem.lapplandS3Drones,null);
+    for(const k of ['lappland:s3-area','lappland:s3-trace','lappland:s3-attach'])assert.equal(t.findBuff(k),null);
+  }
+});
+test('S3 shared trace marker counts pursuing drones and decrements on individual attachment',()=>{
+  const f=s3Fixture(),t=enemy(f,{col:17});active(f);until(f,()=>f.traces.length===3);
+  assert.equal(t.findBuff('lappland:s3-trace').stacks,3);until(f,()=>f.attaches.length===1,15);
+  assert.equal(t.findBuff('lappland:s3-trace').stacks,2);assert.ok(t.findBuff('lappland:s3-attach'));
+  until(f,()=>f.attaches.length===3,15);assert.equal(t.findBuff('lappland:s3-trace'),null);
+  assert.equal(t.buffs.filter(x=>x.key==='lappland:s3-attach').length,1);
+});
+test('S3 battle finish erases all fields and hooks, preventing future autonomous damage',()=>{
+  const f=s3Fixture(),t=enemy(f,{col:12});active(f);until(f,()=>f.attaches.length>0,15);
+  f.b.forceEnd();assert.equal(f.s3.running,false);assert.equal(f.s3.manager,null);
+  assert.equal(f.controller.handles.length,0);assert.equal(t.findBuff('lappland:s3-area'),null);
+  const old=f.hits.length;advance(f.b,3);assert.equal(f.hits.length,old);
+});
+test('S3 reactivation creates fresh drones and ramps rather than reusing ended attachments',()=>{
+  const f=s3Fixture(),t=enemy(f,{col:12});active(f);until(f,()=>f.droneHits.length>3,15);
+  const original=f.s3.drones.slice();f.u.skill.end('fixture');active(f);
+  assert.ok(f.s3.drones.every(d=>!original.includes(d)&&d.ramp.scale===0));assert.equal(f.s3.drones.length,3);
+  const old=f.droneHits.length;until(f,()=>f.droneHits.length>old,15);near(f.droneHits[old].scale,.2);
+  assert.ok(t.alive);
+});
+test('S3 Alpha Wolf raises only attached drone caps and adds source silence after its second reward',()=>{
+  const f=s3Fixture();advance(f.b,20.1);const t=enemy(f,{col:17});active(f);
+  until(f,()=>f.droneHits.some(x=>x.scale>=1.21-1e-9),20);near(Math.max(...f.droneHits.map(x=>x.scale)),1.21);
+  until(f,()=>t.s.flags.silence,20);near(t.findBuff('silence').duration,2);
+  assert.equal(f.controller.alphaStage,2);assert.equal(f.s3.drones.length,3);
+  const area=f.hits.filter(x=>x.dmg.tags.includes('lappland:s3-area'));
+  assert.ok(area.length>2);for(const x of area)near(x.amount,738.72);
+});
+test('S3 live ASPD changes attached cadence while its shared area remains one second',()=>{
+  const f=s3Fixture();enemy(f,{col:17});f.b.addBuff(f.u,{key:'fixture:haste',mods:{aspd:100}});active(f);
+  until(f,()=>f.droneHits.length>3,15);const d=f.droneHits[0].drone,rows=f.droneHits.filter(x=>x.drone===d);
+  until(f,()=>f.droneHits.filter(x=>x.drone===d).length>1);const next=f.droneHits.filter(x=>x.drone===d)[1];
+  near(next.time-rows[0].time,.65,f.b.dt*2);
+  until(f,()=>f.areaHits.length>1);near(f.areaHits[1].time-f.areaHits[0].time,1,f.b.dt*2);
+});
+test('S3 cannot attach through a changed target life from an arrival callback',()=>{
+  const f=s3Fixture(),t=enemy(f,{col:17});let done=false;
+  f.b.on('lapplandS3Attach',()=>{if(!done){done=true;t.deploySeq++;t.hidden=true;}});
+  active(f);until(f,()=>done,15);assert.equal(t.s.flags.fear,undefined);assert.equal(f.droneHits.length,0);
+});
+test('S3 reentrant activation during old field removal keeps the new field and controller alive',()=>{
+  const f=s3Fixture(),t=enemy(f,{col:5});active(f);advance(f.b,f.b.dt);
+  let restarted=false;t.findBuff('lappland:s3-area').onRemove=()=>{
+    if(restarted)return;restarted=true;f.u.skill.addCharge(1);assert.equal(f.controller.toggle(),true);
+  };
+  f.u.skill.end('fixture');assert.equal(restarted,true);assert.equal(f.u.skill.active,true);
+  assert.ok(f.s3.manager&&!f.s3.manager.ended);assert.equal(f.s3.drones.length,3);
+  const old=f.areaHits.length;advance(f.b,f.b.dt);assert.equal(f.areaHits.length,old+1);
+  assert.ok(t.findBuff('lappland:s3-area'));f.u.skill.end('fixture');assert.equal(t.findBuff('lappland:s3-area'),null);
+});
+test('S3 restarted birth, arrival or strike callbacks cannot continue old drone iterations',()=>{
+  for(const event of ['lapplandS3DroneBirth','lapplandS3Attach','lapplandS3DroneStrike']){
+    const f=s3Fixture(),t=enemy(f,{col:17});let restarted=false;
+    f.b.on(event,()=>{if(!restarted){restarted=true;f.u.skill.end('fixture');f.u.skill.addCharge(1);assert.equal(f.controller.toggle(),true);}});
+    active(f);until(f,()=>restarted,15);assert.equal(f.s3.drones.length,3);
+    assert.equal(f.droneBirths.length,4+(event==='lapplandS3DroneBirth'?0:2));
+    assert.ok(f.s3.drones.every(d=>d.phase==='spread'&&d.epoch===f.controller.modeEpoch));
+    assert.equal(f.hits.filter(x=>x.dmg.tags.includes('lappland:s3-drone')).length,0);
+    if(event==='lapplandS3Attach')assert.equal(t.s.flags.fear,undefined);
+  }
 });
