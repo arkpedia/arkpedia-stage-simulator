@@ -2406,3 +2406,32 @@ Verification:
 Reproduce the public browser check with `ARKPEDIA_REVIEW_CHROME=/absolute/path/to/chromium node tools/arkpedia/review-lappland-public.mjs` while port 3182 is running. Evidence is under the ignored `.cache/arkpedia/lappland-alter-source/`: `public-factory-tests.log`, `public-all-tests.log`, `public-source-audit.log`, `public-browser-review.json`, `public-s3-{desktop,landscape,portrait}.png` and `public-private-stage-regression.log`.
 
 **Fidelity limits remain explicit.** This is source-reviewed no-module regular-stage gameplay, not compiled Unity frame parity. The controller contract records local targeting, receipt, orbit and FSM mappings. Original operator animation is enabled, but the native drone particles/audio are still confined to the separate source-effect review. Effect-asset publication and public native-effect wiring remain unfinished; effect manifests retain their independent unverified renderer/frame scope. Nine resources remain unresolved across the full source-effect collection. Native mount height, heading, Animator/FSM dispatch and retirement tails are not certified. Modules, additional stages and most enemy abilities remain outside this reviewed increment. The full remaining-operator goal is still active.
+
+### Thorns the Lodestar complete native source foundation
+
+`data/arkpedia-thorns-lodestar-prefabs.json` now retains the complete ordinary/talent/S1/S2/S3 source slice for `char_1039_thorn2`. Five original Global Android bundles are checked against client `26-09-23-17-49-43_b9cc4a`; the four datamine tables retain their independently pinned Git blob identities at Global commit `57010cb5b2afea112cae57daa756b58676ba6850`. Both original Front/Back skeleton pointer chains and bytes match resource commit `d0b5af0b004b044d322397ce5ae79632b6d9fcdd`.
+
+The durable record contains **148 unique components**, their complete reachable GameObjects (including activation and component membership), all **30 skill ranks**, **five projectile trees**, **thirteen native templates** with no missing template dependencies, the used ranges, talent candidates and original animation event payloads. Blackboard parameter names such as `projectile_time_origin` are distinguished by their serialized field from actual projectile asset references; unknown asset dependencies still fail extraction. Neither the character nor an incomplete skill is added to the public registry.
+
+Implementation constraints recovered from these originals:
+
+- Ordinary Arts attack release is at the original 0.5-second Attack event. The emitted speed-ten projectile has its own lifetime and does not stop merely because its source becomes invalid.
+- The first talent already exists at E0: its potential-dependent extension is 1/2 seconds at E0, 2/3 at E1 and 3/4 at E2. Native ability-start actions preserve the original delay in a memo, compute the capped ally-count extension, and update both Token and Mark blackboards.
+- S1 uses the 0.6-second Skill event and native ally selector. Its derived healing reads cached ATK. S2 has separate Mark/Token actions and a 0.567-second release; its moving field keeps the native extra-speed component separate from skill blackboard values. **S2 stores one charge at ranks 1–6 and two from rank 7**, rather than granting two at every rank.
+- S3 retains passive mode/range, native ally-anchor selection, polygon collision width/offset, arrival timing and immediate first periodic-hit configuration. Damage and ATK/DEF/RES reductions use separately preserved interval, increment and cap keys. Polygon-to-board execution and source-specific lifetimes still require implementation and testing; a circular splash is not a substitute for this source behavior.
+
+Verification: **19 source tests passed, zero failures/skips**, including nine new Thorns checks and ten existing Lappland source checks. The independent native audit reproduces both extraction outputs exactly and rejects **twelve** changed or incomplete fixtures: premature public enablement, object activation, component membership, missing polygon/template dependencies, skill rank, original event, movement, talent memo, skeleton binding, polygon width and first periodic-hit timing. Initial assertions missed E0 talent candidates and assumed two S2 charges at all ranks; they were corrected to the independently checked source progression. The GameObject activation field remains its original boolean type.
+
+Reproduce using the existing pinned table/shared-bundle cache and resource checkout:
+
+```sh
+node tools/arkpedia/fetch-thorns-lodestar.mjs
+node tools/arkpedia/inspect-thorns-lodestar.mjs
+.cache/map-env/bin/python tools/arkpedia/extract-thorns-lodestar.py
+.cache/map-env/bin/python tools/arkpedia/audit-thorns-lodestar.py
+node --test test/arkpedia-thorns-lodestar-source.test.js test/arkpedia-lappland-alter-source.test.js
+```
+
+Evidence is under ignored `.cache/arkpedia/thorns-lodestar-source/`: `extraction.log`, `verification.log`, `source-tests.log`, `source-audit.log` and `review-audit.json`. The fetcher and extractor reject changed cached bundles instead of silently trusting them.
+
+**Thorns remains unavailable pending ordinary/talent combat, all three skills, source-specific geometry/lifetimes and public lifecycle/browser review.** Modules, native particle/audio playback and compiled Unity frame parity remain unverified. The playable MVP, all previously supported operators, SD asset pin and local battle process are unchanged: **361/431 forms, 777 skills and 70 remaining forms**. The last full gameplay regression is the Lappland public integration above; these source checks are not a new full runtime or browser claim. The full remaining-roster objective stays active.
