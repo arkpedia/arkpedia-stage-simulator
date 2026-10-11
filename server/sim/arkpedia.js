@@ -166,6 +166,7 @@ import { customizeGoldenglowKit, installGoldenglow } from './content/arkpedia-go
 import { customizeLapplandKit, installLappland, installLapplandSquad } from './content/arkpedia-lappland-alter.js';
 import { captureThornsRoads, THORNS_LODESTAR_ID, customizeThornsLodestarKit, installThornsLodestar } from './content/arkpedia-thorns-lodestar.js';
 import { customizeBlazeIgnitingKit, installBlazeIgniting } from './content/arkpedia-blaze-igniting.js';
+import { customizeExusiaiCovenantKit, installExusiaiCovenant } from './content/arkpedia-exusiai-covenant.js';
 import { customizeLeeKit, installLee } from './content/arkpedia-lee.js';
 import { customizeYatoAlterKit, installYatoAlter } from './content/arkpedia-yato-alter.js';
 import { customizeSpecterAlterKit, installSpecterAlter, prepareSpecterAlterSquad } from './content/arkpedia-specter-alter.js';
@@ -557,6 +558,7 @@ export class StandardBattle extends Battle {
     customizeLapplandKit({ battle: this, id, def, unit, kit });
     customizeThornsLodestarKit({ battle: this, id, unit, kit });
     customizeBlazeIgnitingKit({ battle: this, id, unit, kit });
+    customizeExusiaiCovenantKit({ battle: this, id, unit, kit });
     customizeHoolheyakKit({ battle: this, id, def, unit, kit });
     customizeEbenholzKit({ battle: this, id, def, unit, kit });
     customizeLinKit({ battle: this, id, def, unit, kit });
@@ -753,6 +755,7 @@ export class StandardBattle extends Battle {
     installLappland({ battle: this, unit, def });
     installThornsLodestar({ unit });
     installBlazeIgniting({ unit });
+    installExusiaiCovenant({ unit });
     installHoolheyak({ battle: this, unit, def });
     installEbenholz({ battle: this, unit, def });
     installLin({ battle: this, unit, def });
@@ -865,7 +868,7 @@ export class StandardBattle extends Battle {
     const unit = typeof id === 'string' && id.startsWith('token:')
       ? selectedRegularSummon(this, id)?.unit : this.bench[id]?.unit;
     if (unit?.alive && unit.skill.active && unit.skill.spec.manualCancel) {
-      if (!unit.canAct || unit.s.flags.silence) return false;
+      if (!unit.canAct || unit.skill.silenceBlocked) return false;
       if (unit.skill.spec.canManualCancel?.() === false) return false;
       if (unit.skill.spec.onManualCancel) return !!unit.skill.spec.onManualCancel();
       unit.skill.end('manual');
@@ -873,7 +876,7 @@ export class StandardBattle extends Battle {
     }
     return !!(
       unit?.alive &&
-      (unit.canAct || unit.skill.spec.allowAbnormalCast) && !unit.s.flags.silence &&
+      (unit.canAct || unit.skill.spec.allowAbnormalCast) && !unit.skill.silenceBlocked &&
       !unit.skill.noSkill &&
       (unit.skill.manual || unit.skill.spec.manualActivation?.() === true) &&
       unit.skill.activate("manual")

@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import evidence from '../../../data/arkpedia-exusiai-covenant-prefabs.json' with { type: 'json' };
 import { canDeployInViewport } from '../../../shared/arkpedia/squad.js';
+import { summonCardId } from '../../../shared/arkpedia/summons.js';
 import { bodyInRadius } from '../body.js';
 import { canTargetEnemy } from '../targeting.js';
 import { makeDamageInfo } from '../damage.js';
@@ -28,10 +29,19 @@ export class ExusiaiCovenantCoordinates {
     const skillId = 'sktok_angel2_target_3', s = evidence.tables.tokenSkills[skillId].levels[this.record.build.skillRank - 1];
     this.def = { id: TOKEN, name: c.name, profession: c.profession, subProfessionId: c.subProfessionId,
       position: c.position, stats, rangeGrid: [[0,0]],
-      skill: { ...s, ...s.spData, skillId, trigger: { rule: 'NEVER' } } };
+      skill: { ...s, ...s.spData, skillId, trigger: { rule: 'NEVER' } },
+      arkpedia: { elite: this.record.build.elite, level: this.record.build.level,
+        potential: this.record.build.potential, skillRank: this.record.build.skillRank } };
   }
   install() {
     const { b, u } = this;
+    const deck = this, key = summonCardId(ID);
+    this.state = { key, ownerId: ID, owner: u, tokenId: TOKEN, record: this.def, deck,
+      config: Object.freeze({ deploymentSlotCost: 0, chooseFacing: true, noAttack: true,
+        healFree: false, refundRatio: 0, limitByHostAttackRange: true }), unit: null,
+      get stock() { return deck.stock; }, get readyAt() { return deck.readyAt; } };
+    if (!b.regularSummons) b.regularSummons = new Map();
+    b.regularSummons.set(key, this.state);
     this.handles = [b.on('deploy', ({ unit, move }) => {
       if (unit === u && !move && this.core.valid()) { this.stock = 1; this.readyAt = b.time; this.deliveries = 0; }
     }, { owner: u }), b.on('death', ({ unit }) => {
@@ -58,6 +68,8 @@ export class ExusiaiCovenantCoordinates {
     const token = this.b.spawnToken(this.u, TOKEN, row, col, { dir, def: this.def,
       kit: { skill: { kind: 'passive' }, trait: { noAttack: true }, talents: [], install: (b,t) => {
         t.deploymentSlotCost = 0;
+        t.mem.regularSummonCard = summonCardId(ID);
+        t.mem.regularHideHp = true;
         t.mem.exusiaiCovenantCoordinates = this;
         b.addBuff(t, { key: 'angel2:coordinate', source: this.u, persist: true, allowDead: true,
           flags: { invulnerable: true, untargetable: true } });

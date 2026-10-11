@@ -163,6 +163,7 @@ import { GOLDENGLOW_OPERATORS } from './goldenglow-operators.js';
 import { LAPPLAND_ALTER_OPERATORS } from './lappland-alter-operators.js';
 import { THORNS_LODESTAR_OPERATORS } from './thorns-lodestar-operators.js';
 import { BLAZE_IGNITING_OPERATORS } from './blaze-igniting-operators.js';
+import { EXUSIAI_COVENANT_OPERATORS } from './exusiai-covenant-operators.js';
 import { LEE_OPERATORS } from './lee-operators.js';
 import { YATO_ALTER_OPERATORS } from './yato-alter-operators.js';
 import { SPECTER_ALTER_OPERATORS } from './specter-alter-operators.js';
@@ -332,6 +333,7 @@ export const REGULAR_OPERATORS = Object.freeze({
   ...LAPPLAND_ALTER_OPERATORS,
   ...THORNS_LODESTAR_OPERATORS,
   ...BLAZE_IGNITING_OPERATORS,
+  ...EXUSIAI_COVENANT_OPERATORS,
   ...HOOLHEYAK_OPERATORS,
   ...EBENHOLZ_OPERATORS,
   ...LIN_OPERATORS,

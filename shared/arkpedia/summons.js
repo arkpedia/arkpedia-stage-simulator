@@ -96,6 +96,8 @@ export const REGULAR_SUMMONS = Object.freeze({
 // Automatic source spawns have no deployment-deck card, but their original
 // models must load with the owner before battle can draw the spawned unit.
 export const REGULAR_AUTOMATIC_TOKENS = Object.freeze({
+  // The dedicated coordinate controller owns its deck; preload the original art.
+  char_1041_angel2: Object.freeze(['token_10056_angel2_target']),
   char_391_rosmon: Object.freeze(['token_10012_rosmon_shield']),
   char_1035_wisdel: Object.freeze(['token_10035_wisdel_wward']),
   char_1033_swire2: Object.freeze(['token_10031_swire2_gdtrap']),

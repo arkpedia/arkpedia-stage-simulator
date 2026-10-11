@@ -51,10 +51,10 @@ function enemy(f,{row=5,col=6,hp=1e7,res=0,fly=false,taunt=0,flags={}}={}){
 function start(f){until(f,()=>f.u.skill.ready,15);assert.equal(f.u.skill.activate('manual'),true);until(f,()=>f.controller.phase?.kind!=='s3-start');}
 const shots=f=>f.hits.filter(h=>h.dmg.tags.includes('angel2:s3'));
 
-test('S3 requires its exact reviewed contract and selected third skill; public enablement and coordinates remain held',()=>{
+test('S3 requires its exact reviewed contract and selected third skill; historical volley-only scope remains separate from public coordinates',()=>{
   assert.throws(()=>make({contract:{...EXUSIAI_COVENANT_S3_CONTRACT}}),/contract/);
   assert.throws(()=>make({skill:2}),/third skill/);
-  assert.equal(data.operators[ID],undefined);assert.equal(REGULAR_OPERATORS[ID],undefined);assert.deepEqual(e.enabledOperators,[]);
+  assert.ok(data.operators[ID]);assert.equal(REGULAR_OPERATORS[ID].mechanic,'exusiai-covenant');assert.deepEqual(e.enabledOperators,[]);
   assert.match(EXUSIAI_COVENANT_S3_CONTRACT.scope,/Coordinates.*held/);
 });
 

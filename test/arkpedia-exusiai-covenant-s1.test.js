@@ -50,10 +50,10 @@ function enemy(f,{row=5,col=6,hp=1e7,res=0,fly=false,taunt=0,flags={}}={}){
 
 const start=f=>{until(f,()=>f.u.skill.active,15);until(f,()=>f.controller.phase?.kind!=='s1-start');};
 
-test('S1 requires its exact contract, complete source and selected skill; public enablement stays held',()=>{
+test('S1 requires its exact contract, complete source and selected skill; historical source enablement stays held',()=>{
   assert.throws(()=>make({contract:{...EXUSIAI_COVENANT_S1_CONTRACT}}),/contract/);
   assert.throws(()=>make({skill:2}),/first skill/);
-  assert.equal(data.operators[ID],undefined);assert.equal(REGULAR_OPERATORS[ID],undefined);
+  assert.ok(data.operators[ID]);assert.equal(REGULAR_OPERATORS[ID].mechanic,'exusiai-covenant');
   assert.deepEqual(e.enabledOperators,[]);
   const f=make({defer:true});assert.throws(()=>prepareExusiaiCovenantS1(f.b,f.u,{contract:EXUSIAI_COVENANT_S1_CONTRACT}),/fresh/);
 });

@@ -57,10 +57,10 @@ function ally(f,{row=5,col=6,hp=9000,aspd=100,kind='op',flags={}}={}){
 function start(f){until(f,()=>f.u.skill.ready,15);assert.equal(f.u.skill.activate('manual'),true);until(f,()=>f.controller.phase?.kind!=='s2-start');}
 const shield=a=>a.findBuff('angel2:s2-shield');
 
-test('S2 enforces its exact contract and selected second skill while the playable source stays held',()=>{
+test('S2 enforces its exact contract and selected second skill while the native receipt retains its historical hold',()=>{
   assert.throws(()=>make({contract:{...EXUSIAI_COVENANT_S2_CONTRACT}}),/contract/);
   assert.throws(()=>make({skill:1}),/second skill/);
-  assert.equal(data.operators[ID],undefined);assert.equal(REGULAR_OPERATORS[ID],undefined);assert.deepEqual(e.enabledOperators,[]);
+  assert.ok(data.operators[ID]);assert.equal(REGULAR_OPERATORS[ID].mechanic,'exusiai-covenant');assert.deepEqual(e.enabledOperators,[]);
 });
 
 test('all ten ranks require manual activation, grant thirty-five rounds and snapshot source self-shield capacity',()=>{

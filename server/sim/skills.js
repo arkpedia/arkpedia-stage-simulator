@@ -164,6 +164,7 @@ export class SkillRuntime {
   // full-SP ready indicator. Battle-wide use limits are distinct exhaustion.
   get castEligible() { return !this.exhausted && (typeof this.spec.canActivate !== 'function' || !!this.spec.canActivate()); }
   get ready() { return !this.noSkill && !this.exhausted && this.kind !== 'passive' && this.charges >= 1; }
+  get silenceBlocked() { return !!this.unit.s.flags.silence && this.spec.silenceable !== false; }
 
   get isTimed() { return this.kind === 'duration' || this.kind === 'ammo' || this.kind === 'toggle'; }
 
@@ -330,7 +331,7 @@ export class SkillRuntime {
       this.end('withdrawn');
       this.addCharge(1);
     }
-    if (!this.ready || u.s.flags.silence) return;
+    if (!this.ready || this.silenceBlocked) return;
     if (this.active && this.isTimed) return;
     // a cast "next attack" still waits for its attack: another charge now would be spent on the same attack
     if (this.pending || this._opCooling()) return;
@@ -426,7 +427,7 @@ export class SkillRuntime {
 
   /** Called by the attack loop right before a normal attack/heal. Returns true when the skill fired. */
   onAboutToAttack() {
-    if (!this.ready || this.unit.s.flags.silence) return false;
+    if (!this.ready || this.silenceBlocked) return false;
     if (this.active && this.isTimed) return false;
     if (this.rule === 'TAKE_DAMAGE' || this.rule === 'NEVER' || TICK_RULES.has(this.rule)) return false;
     if (this.pending || this._opCooling()) return false;
@@ -439,7 +440,7 @@ export class SkillRuntime {
   onDamaged() {
     if (this.noSkill) return;
     if (this.spType === 'hurt' && !(this.active && this.isTimed)) this.gainSp(1, 'hurt');
-    if (this.rule === 'TAKE_DAMAGE' && this.ready && !this.pending && !(this.active && this.isTimed) && this.unit.canAct && !this.unit.s.flags.silence && !this._opCooling()) {
+    if (this.rule === 'TAKE_DAMAGE' && this.ready && !this.pending && !(this.active && this.isTimed) && this.unit.canAct && !this.silenceBlocked && !this._opCooling()) {
       this.activate('TAKE_DAMAGE');
     }
   }

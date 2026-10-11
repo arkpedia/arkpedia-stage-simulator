@@ -58,10 +58,10 @@ function retired(f,id=GUARD,{col=2,ready=70}={}){
 function deliveries(f){const out=[];f.b.on('exusiaiCovenantDelivery',c=>{if(c.owner===f.u)out.push({...c,time:f.b.time});});return out;}
 function cannon(f){const out=[];f.b.on('exusiaiCovenantDeliveryProjectileBirth',c=>{if(c.owner===f.u)out.push({...c,time:f.b.time});});return out;}
 
-test('delivery requires its exact separate contract and selected S3 while all public source gates remain held',()=>{
+test('delivery requires its exact separate contract and selected S3 while historical native enablement stays held',()=>{
   assert.throws(()=>make({contract:{...EXUSIAI_COVENANT_COORDINATES_CONTRACT}}),/contract/);
   assert.throws(()=>make({skill:2}),/third skill/);
-  assert.equal(data.operators[ID],undefined);assert.equal(REGULAR_OPERATORS[ID],undefined);assert.deepEqual(e.enabledOperators,[]);
+  assert.ok(data.operators[ID]);assert.equal(REGULAR_OPERATORS[ID].mechanic,'exusiai-covenant');assert.deepEqual(e.enabledOperators,[]);
 });
 
 test('the original owner deployment grants one coordinate card; a fresh diagnostic cannot place it before deployment',()=>{
