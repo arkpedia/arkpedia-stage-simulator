@@ -165,7 +165,7 @@ test('S2 separates event-gated Arts shots from the active area selector', () => 
   assert.deepEqual(buff.attributes.attributeModifiers.map(v => [v.attributeType, v.formulaItem, v.loadFromBlackboard]), [[7, 0, 1]]);
 });
 
-test('S3 keeps physical moving-collision projectiles and its multiplicative ATK mode', () => {
+test('S3 checks physical splash on target arrival and retains its multiplicative ATK mode', () => {
   for (const [id, key] of [['-5737959017697408612', 'projectile_mgllan3_drone_3'], ['2695948267423631772', 'projectile_mgllan3_drone_3S']]) {
     const a = comp(id);
     assert.equal(a._projectileKey, key);
@@ -175,7 +175,11 @@ test('S3 keeps physical moving-collision projectiles and its multiplicative ATK 
   }
   assert.equal(comp('2142353987835622399').m_Radius, .75);
   assert.equal(comp('5620763496570893951').m_Radius, 1.25);
-  for (const id of ['-2511385534807378945', '1424472900917737087']) assert.equal(comp(id)._onlyCheckHitWhenStop, 0);
+  for (const id of ['-2511385534807378945', '1424472900917737087']) {
+    assert.equal(comp(id)._onlyCheckHitWhenStop, 0);
+    assert.equal(comp(id)._onlyCheckHitWhenReachTarget, 1);
+    assert.equal(comp(id)._ignoreCamouflage, 1);
+  }
   for (const id of ['-135968330856434689', '5996972107188811391']) assert.equal(comp(id)._speed, 12);
   const buff = comp('1633772105727872714')._buffs[0];
   assert.equal(buff.templateKey, 'switch_mode');
