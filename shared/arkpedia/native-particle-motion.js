@@ -9,7 +9,7 @@ import {createParticleNoise} from './native-particle-noise.js';
 export function createParticleMotion(source,{seed=1}={}){
   const clamp=source.ClampVelocityModule,noise=source.NoiseModule;
   if(!clamp?.enabled&&!noise?.enabled)return null;
-  if(source.moveWithTransform!==0||source.VelocityModule?.enabled)throw Error('Moving simulation/linear velocity with particle turbulence needs review');
+  if(![0,1].includes(source.moveWithTransform)||source.VelocityModule?.enabled)throw Error('Native simulation space/linear velocity with particle turbulence needs review');
   if(clamp?.enabled){
     if(clamp.separateAxis||clamp.drag?.minMaxState!==0||clamp.drag.scalar!==0)throw Error('Native axis limit/drag needs review');
     if(!Number.isFinite(clamp.dampen)||clamp.dampen<0||clamp.dampen>1)throw Error('Invalid native particle dampen');
@@ -39,6 +39,9 @@ export function createParticleMotion(source,{seed=1}={}){
     return result;
   }
   function sample(particle,origin,initialVelocity){
+    if(![origin,initialVelocity].every(v=>Array.isArray(v)&&v.length===3&&v.every(Number.isFinite))
+      ||!Number.isFinite(particle.born)||!Number.isFinite(particle.lifetime)||particle.lifetime<=0
+      ||!Number.isInteger(particle.id)||particle.id<0)throw Error('Invalid native particle motion frame');
     const position=origin.slice();let velocity=initialVelocity.slice(),elapsed=0;
     if(!Number.isFinite(particle.age)||particle.age<0||particle.age/step>10000)throw Error('Native motion review clock exceeds step budget');
     while(elapsed<particle.age-1e-12){

@@ -67,7 +67,7 @@ test('unimplemented noise and speed-limit controls fail explicitly',()=>{
  for(const change of [s=>s.NoiseModule.quality=1,s=>s.NoiseModule.remapEnabled=true,s=>s.NoiseModule.separateAxes=true,
   s=>s.NoiseModule.rotationAmount=constant(1),s=>s.NoiseModule.sizeAmount=constant(1),s=>s.NoiseModule.frequency=0,
   s=>s.NoiseModule.octaves=0,s=>s.NoiseModule.scrollSpeed.minMaxState=3,s=>s.ClampVelocityModule.separateAxis=true,
-  s=>s.ClampVelocityModule.drag=constant(1),s=>s.ClampVelocityModule.dampen=2,s=>s.VelocityModule.enabled=true,s=>s.moveWithTransform=1]){
+  s=>s.ClampVelocityModule.drag=constant(1),s=>s.ClampVelocityModule.dampen=2,s=>s.VelocityModule.enabled=true,s=>s.moveWithTransform=2]){
   const s=source();change(s);assert.throws(()=>createParticleMotion(s));
  }
 });

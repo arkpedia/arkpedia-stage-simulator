@@ -212,7 +212,7 @@ async function rebuildRoot(name){
   }finally{effect.disabled=clipSelect.disabled=time.disabled=play.disabled=false;}
 }
 function updateStatus(){
-  status.textContent=`${draws.length} original mesh/billboard/trail components inspected. ${blocked.length} components remain unplayed.\nSource-emitter/explicit-clip inspection: box/straight-cone emission, velocity, grid frames and local curl-noise/speed-limit replay. View-aligned stretch trails use original widths, gradients and materials. ${trajectory?'Recorded movement is loaded.':'Load movement JSON to inspect trails; static source poses do not invent a path.'} Other shapes, native script motion and Animator transitions remain unplayed. Trail joins/expiry/UV orientation, noise field, timing, native coordinates and color management are not verified against game frames.`;
+  status.textContent=`${draws.length} original mesh/billboard/trail components inspected. ${blocked.length} components remain unplayed.\nSource-emitter/explicit-clip inspection: box/straight-cone emission, velocity, grid frames and local curl-noise/speed-limit replay with explicit world birth frames. View-aligned stretch trails use original widths, gradients and materials. ${trajectory?'Recorded movement is loaded.':'Load movement JSON to inspect trails; static source poses do not invent a path.'} Other shapes, distance emission, native script motion and Animator transitions remain unplayed. Trail joins/expiry/UV orientation, noise field, timing, native coordinates and color management are not verified against game frames.`;
 }
 function samplePose(t){
   const state=pose.sample(t,clipSelect.value||null);
@@ -249,6 +249,12 @@ function particleFrame(transform,state){
   const scale=new T.Vector3(...[0,4,8].map((i,axis)=>Math.hypot(e[i],e[i+1],e[i+2])*(Math.sign(frame.scale.getComponent(axis))||1)));
   return {...frame,position,scale,localScale:new T.Vector3().fromArray(state.nodes.get(transform).scale)};
 }
+function particleMatrices(frame,mode){
+  const scale=mode===0?frame.scale:mode===1?frame.localScale:new T.Vector3(1,1,1);
+  const birth=new T.Matrix4().compose(frame.position,frame.rotation,mode===2?frame.scale:scale);
+  const movement=mode===2?new T.Matrix4().compose(frame.position,frame.rotation,new T.Vector3(1,1,1)):birth;
+  return {birth,movement,scale};
+}
 function draw(){
   if(!pose)return;
   const state=samplePose(clock);
@@ -272,11 +278,16 @@ function draw(){
       updateTrailGeometry(g,data);
     }
     if(emitter){
-      const particles=emitter.sample(clock);
       const current=particleFrame(transform,state);
-      const scale=particleSource.scalingMode===0?current.scale:particleSource.scalingMode===1?current.localScale:new T.Vector3(1,1,1);
-      const frame=current.matrix.clone();frame.compose(current.position,current.rotation,particleSource.scalingMode===2?current.scale:scale);
-      const movement=particleSource.scalingMode===2?new T.Matrix4().compose(current.position,current.rotation,new T.Vector3(1,1,1)):frame;
+      const {birth:frame,movement,scale}=particleMatrices(current,particleSource.scalingMode);
+      const frameAt=t=>{
+        // Prewarm predates the recorded path: retain the explicit start pose.
+        t=Math.max(0,t);if(!birthStates.has(t))birthStates.set(t,samplePose(t));
+        const matrices=particleMatrices(particleFrame(transform,birthStates.get(t)),particleSource.scalingMode);
+        return {birth:matrices.birth.elements,movement:matrices.movement.elements};
+      };
+      const particles=emitter.sample(clock,{frameAt});
+      entry.lastParticles=particles;
       const inverse=new T.Matrix4().copy(mesh.parent.matrixWorld).invert();
       while(pool.length<particles.length){const clone=mesh.clone();clone.geometry=mesh.geometry.clone();geometries.push(clone.geometry);clone.onBeforeRender=mesh.onBeforeRender;mesh.parent.add(clone);pool.push(clone);}
       pool.forEach((part,i)=>{
@@ -288,10 +299,7 @@ function draw(){
           if(particle.simulationSpace==='world'){
             // Prewarm precedes visible playback: hold the source start pose
             // before time zero rather than looping a clip into the past.
-            const t=Math.max(0,particle.birthTime);
-            if(!birthStates.has(t))birthStates.set(t,samplePose(t));
-            const b=particleFrame(transform,birthStates.get(t));
-            born=new T.Matrix4().compose(b.position,b.rotation,particleSource.scalingMode===0||particleSource.scalingMode===2?b.scale:b.localScale);
+            born=new T.Matrix4().fromArray(frameAt(particle.birthTime).birth);
           }
           position.fromArray(particleWorldPosition(particle,born.elements,frame.elements,movement.elements));
         }

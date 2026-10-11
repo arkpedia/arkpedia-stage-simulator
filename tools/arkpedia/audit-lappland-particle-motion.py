@@ -134,9 +134,8 @@ def verify(report, pack, digest):
     assert [r['record'] for r in report['components']] == expected and len(expected) == 35
     for row in report['components']:
         source = pack['records'][row['record']]['data']
-        if source['moveWithTransform'] != 0 or source['VelocityModule']['enabled']:
-            assert row['blocked'] == 'Moving simulation/linear velocity with particle turbulence needs review' and row['probes'] == []
-            continue
+        assert source['moveWithTransform'] in (0,1) and not source['VelocityModule']['enabled']
+        assert row['simulationSpace'] == ('world' if source['moveWithTransform']==1 else 'local')
         assert row['blocked'] is None
         assert [(p['seed'],p['particle']['age']) for p in row['probes']] == [(s,a) for s in (1,17) for a in (.05,.5)]
         for probe in row['probes']:
@@ -145,6 +144,19 @@ def verify(report, pack, digest):
             field = fields[probe['seed']]
             count += compare(probe['flow'],flow(source,field,probe['origin'],.2,probe['particle']['age']/2,7,probe['seed']))
             count += compare(probe['displacement'],trajectory(source,field,probe))
+        frames=[dict(birth=[1,0,0,0,0,1,0,0,0,0,1,0,1,2,3,1],movement=[1,0,0,0,0,1,0,0,0,0,1,0,1,2,3,1]),
+                dict(birth=[0,2,0,0,-3,0,0,0,0,0,4,0,1,2,3,1],movement=[1,0,0,0,0,1,0,0,0,0,1,0,1,2,3,1])]
+        expected_frames=[(s,a,f) for s in (1,17) for a in (.05,.5) for f in frames] if source['moveWithTransform']==1 else []
+        assert [(p['seed'],p['particle']['age'],p['frame']) for p in row['worldFrames']]==expected_frames
+        for probe in row['worldFrames']:
+            assert probe['particle']==dict(id=7,born=.2,lifetime=2,age=probe['particle']['age'])
+            assert probe['origin']==[.1,.2,.3] and probe['initialVelocity']==[-3,0,0]
+            m=probe['frame']['birth']; origin=[sum(m[k*4+i]*probe['origin'][k] for k in range(3))+m[12+i] for i in range(3)]
+            m=probe['frame']['movement']; velocity=[sum(m[k*4+i]*probe['initialVelocity'][k] for k in range(3)) for i in range(3)]
+            count+=compare(probe['worldOrigin'],origin);count+=compare(probe['worldVelocity'],velocity)
+            numerical={**probe,'origin':origin,'initialVelocity':velocity}
+            delta=trajectory(source,fields[probe['seed']],numerical)
+            count+=compare(probe['displacement'],delta);count+=compare(probe['position'],[a+b for a,b in zip(origin,delta)])
     return count
 
 
@@ -161,20 +173,24 @@ def main():
     before = OUT.read_bytes()
     subprocess.run(cmd,cwd=ROOT,check=True,capture_output=True)
     assert OUT.read_bytes() == before
-    for alteration in ('changed-perlin','changed-curl','changed-flow','changed-motion','missing-source','false-parity','false-support'):
+    alterations=('changed-perlin','changed-curl','changed-flow','changed-motion','missing-source','false-parity','changed-space','changed-world-origin','changed-world-velocity','changed-world-motion')
+    for alteration in alterations:
         changed = copy.deepcopy(report)
         if alteration == 'changed-perlin': changed['fields'][0]['probes'][0]['perlin'][0]['gradient'][0] += .1
         elif alteration == 'changed-curl': changed['fields'][0]['probes'][0]['curl'][0] += .1
         elif alteration == 'missing-source': changed['components'].pop()
         elif alteration == 'false-parity': changed['scope']['compiledFrameParity'] = True
-        elif alteration == 'false-support': next(c for c in changed['components'] if c['blocked'])['blocked'] = None
+        elif alteration == 'changed-space': changed['components'][0]['simulationSpace'] = 'wrong'
+        elif alteration.startswith('changed-world-'):
+            probe=next(c for c in changed['components'] if c['worldFrames'])['worldFrames'][0]
+            probe[{'changed-world-origin':'worldOrigin','changed-world-velocity':'worldVelocity','changed-world-motion':'displacement'}[alteration]][0]+=.1
         else:
             probe = next(c for c in changed['components'] if c['probes'])['probes'][0]
             probe['flow' if alteration=='changed-flow' else 'displacement'][0] += .1
         try: verify(changed,pack,digest)
         except AssertionError: continue
         raise AssertionError('Accepted changed particle motion mapping: '+alteration)
-    print(json.dumps(dict(sourceNoiseComponents=35,localReplayComponents=25,blocked=10,scalarValues=count,reproducedFiles=1,rejectedFixtures=7,compiledFrameParity=False)))
+    print(json.dumps(dict(sourceNoiseComponents=35,localSimulationComponents=25,worldSimulationComponents=10,replayControls=35,worldFrameProbes=80,blocked=0,scalarValues=count,reproducedFiles=1,rejectedFixtures=len(alterations),compiledFrameParity=False)))
 
 
 if __name__ == '__main__':

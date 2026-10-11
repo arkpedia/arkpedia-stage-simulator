@@ -2,6 +2,7 @@
 import {createParticleLifecycle,particleRandom} from './native-particle-lifecycle.js';
 import {sampleParticleCurve} from './native-particle-curves.js';
 import {createParticleMotion} from './native-particle-motion.js';
+import {particleBirthFrame} from './native-particle-render.js';
 
 // Original box/straight-cone emission, lifetime velocity and grid animation.
 // RNG, event boundaries, native frame phase and renderer coordinates remain
@@ -31,7 +32,9 @@ export function createMovingParticles(source,{seed=1}={}){
     if(![0,3].includes(uv.startFrame.minMaxState))throw Error('Native initial texture frame clock needs review');
     sampleParticleCurve(uv.frameOverTime,0);sampleParticleCurve(uv.frameOverTime,1);
   }
-  function sample(time){
+  const worldMotion=!!motion&&source.moveWithTransform===1;
+  function sample(time,{frameAt}={}){
+    if(worldMotion&&typeof frameAt!=='function')throw Error('World turbulence requires an explicit particle birth frame');
     return lifecycle.sample(time).map(p=>{
       const random=salt=>particleRandom(p.id,salt,seed),birthPhase=(p.born%source.lengthInSec)/source.lengthInSec;
       let origin=[0,0,0],direction=[0,0,1];
@@ -46,7 +49,14 @@ export function createMovingParticles(source,{seed=1}={}){
       }
       const t=p.age/p.lifetime;
       const speed=sampleParticleCurve(source.InitialModule.startSpeed,birthPhase,random(18)),initialVelocity=direction.map(v=>v*speed);
-      const displacement=motion?motion.sample(p,origin,initialVelocity):['x','y','z'].map((axis,i)=>initialVelocity[i]*p.age+(velocity?.enabled?p.lifetime*integrateParticleCurve(velocity[axis],0,t,random(13+i)):0));
+      const birthTime=time-p.age/source.simulationSpeed;
+      let displacement,worldPosition;
+      if(worldMotion){
+        const frame=frameAt(birthTime);
+        if(!frame?.birth||!frame?.movement)throw Error('World turbulence requires spawn and movement matrices');
+        const born=particleBirthFrame(origin,initialVelocity,frame.birth,frame.movement);
+        displacement=motion.sample(p,born.origin,born.velocity);worldPosition=born.origin.map((v,i)=>v+displacement[i]);
+      }else displacement=motion?motion.sample(p,origin,initialVelocity):['x','y','z'].map((axis,i)=>initialVelocity[i]*p.age+(velocity?.enabled?p.lifetime*integrateParticleCurve(velocity[axis],0,t,random(13+i)):0));
       let sheet=null;
       if(uv?.enabled){
         // Serialized native fields are normalized. Unity's editor remaps both
@@ -55,10 +65,11 @@ export function createMovingParticles(source,{seed=1}={}){
         const count=uv.tilesX*uv.tilesY,frame=Math.min(count-1,Math.floor(((phase%1+1)%1)*count));
         sheet={frame,scale:[1/uv.tilesX,1/uv.tilesY],offset:[(frame%uv.tilesX)/uv.tilesX,1-(Math.floor(frame/uv.tilesX)+1)/uv.tilesY],mask:uv.uvChannelMask};
       }
-      return {...p,origin,displacement,position:origin.map((v,i)=>v+displacement[i]),velocitySpace:velocity?.enabled&&velocity.inWorldSpace?'world':'local',simulationSpace:source.moveWithTransform===1?'world':'local',birthTime:time-p.age/source.simulationSpeed,sheet};
+      return {...p,origin,displacement,position:worldPosition??origin.map((v,i)=>v+displacement[i]),
+        ...(worldPosition?{worldPosition}:{}),velocitySpace:worldMotion||velocity?.enabled&&velocity.inWorldSpace?'world':'local',simulationSpace:source.moveWithTransform===1?'world':'local',birthTime,sheet};
     });
   }
-  return {sample};
+  return {sample,worldMotion};
 }
 
 function rotateShape([x,y,z],rotation){
