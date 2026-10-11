@@ -4,7 +4,7 @@ import {sampleParticleCurve,sampleParticleGradient} from './native-particle-curv
 // Shared source emission clocks, capacity and lifetime/color/size sampling.
 // Callers whitelist the active modules they actually implement. Event ordering
 // and the deterministic preview random stream are not Unity RNG/frame parity.
-export function createParticleLifecycle(source,{seed=1,modules=[],spaces=[0]}={}){
+export function createParticleLifecycle(source,{seed=1,modules=[],spaces=[0],allowInitialSpeed=false}={}){
   const initial=source.InitialModule,emission=source.EmissionModule;
   if(!initial?.enabled||!emission)throw new Error('Missing native particle initial/emission module');
   const supported=new Set(['InitialModule','EmissionModule','ColorModule','SizeModule',...modules]);
@@ -14,7 +14,8 @@ export function createParticleLifecycle(source,{seed=1,modules=[],spaces=[0]}={}
     return curve.scalar;
   };
   if(!spaces.includes(source.moveWithTransform)||source.ringBufferMode!==0)throw new Error('Nonlocal/ring-buffer particle lifecycle not playing');
-  if(![0,3].includes(initial.startSpeed.minMaxState)||sampleParticleCurve(initial.startSpeed,0,0)!==0||sampleParticleCurve(initial.startSpeed,0,1)!==0||constant(initial.gravityModifier,'gravity')!==0)throw new Error('Moving particle lifecycle not playing');
+  if((!allowInitialSpeed&&(![0,3].includes(initial.startSpeed.minMaxState)||sampleParticleCurve(initial.startSpeed,0,0)!==0||sampleParticleCurve(initial.startSpeed,0,1)!==0))||constant(initial.gravityModifier,'gravity')!==0)throw new Error('Moving particle lifecycle not playing');
+  if(allowInitialSpeed)for(const time of [0,1])for(const factor of [0,1])sampleParticleCurve(initial.startSpeed,time,factor);
   const delay=constant(source.startDelay,'start delay'),rate=constant(emission.rateOverTime,'emission rate');
   if(constant(emission.rateOverDistance,'distance rate')!==0)throw new Error('Distance emission not playing');
   const length=source.lengthInSec,speed=source.simulationSpeed,capacity=initial.maxNumParticles;

@@ -153,7 +153,7 @@ async function rebuildRoot(name){
         if(record.data.m_UseCustomVertexStreams||Object.values(record.data.m_Pivot).some(v=>v!==0)||Object.values(record.data.m_Flip).some(v=>v!==0))throw Error('Particle vertex streams/pivot/flip need review');
         const ps=(pack.records[r.gameObject].references??[]).map(r=>r.target).find(k=>pack.records[k]?.type==='ParticleSystem');
         particleSource=pack.records[ps].data;
-        const moving=['ShapeModule','VelocityModule','UVModule'].some(k=>particleSource[k]?.enabled)||particleSource.moveWithTransform===1;
+        const moving=['ShapeModule','VelocityModule','UVModule','ClampVelocityModule','NoiseModule'].some(k=>particleSource[k]?.enabled)||particleSource.moveWithTransform===1;
         emitter=moving?createMovingParticles(particleSource):createStationaryParticles(particleSource);
         if(![0,1,2].includes(particleSource.scalingMode))throw Error('Native particle scaling mode needs review');
         if(particleSource.moveWithTransform===1){
@@ -197,7 +197,7 @@ async function rebuildRoot(name){
   const extent=bounds.getSize(new T.Vector3()).length(),size=Number.isFinite(extent)?Math.max(extent,.5):.5;
   if(!centre.toArray().every(Number.isFinite))centre.set(0,0,0);
   camera.position.copy(centre).add(new T.Vector3(.2,.35,1).normalize().multiplyScalar(size*1.8));camera.lookAt(centre);draw();
-  status.textContent=`${draws.length} original mesh/billboard components inspected. ${blocked.length} components remain unplayed.\nSource-emitter/explicit-clip inspection: box emission, linear velocity and grid frames are playing. Other shapes, turbulence, trails, script motion and Animator transitions remain unplayed. Native coordinates, color management and camera mapping are not yet verified against a game frame.`;
+  status.textContent=`${draws.length} original mesh/billboard components inspected. ${blocked.length} components remain unplayed.\nSource-emitter/explicit-clip inspection: box/straight-cone emission, velocity, grid frames and a local curl-noise/speed-limit replay are playing. Other shapes, trails, script motion and Animator transitions remain unplayed. Noise field, timing, native coordinates and color management are not verified against game frames.`;
   globalThis.effectReview={compileResults,pose,draws,blocked,setTime(t){clock=t;time.value=String(t);draw();},setClip(id){clipSelect.value=id;draw();},
     async selectRoot(name){effect.value=name;await rebuild();}};
   }finally{effect.disabled=clipSelect.disabled=time.disabled=play.disabled=false;}

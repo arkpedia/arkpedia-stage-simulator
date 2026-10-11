@@ -1,15 +1,18 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import {createParticleLifecycle,particleRandom} from './native-particle-lifecycle.js';
 import {sampleParticleCurve} from './native-particle-curves.js';
+import {createParticleMotion} from './native-particle-motion.js';
 
-// Original box-volume emission, linear lifetime velocity and grid animation.
+// Original box/straight-cone emission, lifetime velocity and grid animation.
 // RNG, event boundaries, native frame phase and renderer coordinates remain
 // explicit local mappings until compared with compiled Unity/game frames.
 export function createMovingParticles(source,{seed=1}={}){
-  const lifecycle=createParticleLifecycle(source,{seed,modules:['ShapeModule','VelocityModule','UVModule'],spaces:[0,1]});
+  const lifecycle=createParticleLifecycle(source,{seed,modules:['ShapeModule','VelocityModule','UVModule','ClampVelocityModule','NoiseModule'],spaces:[0,1],allowInitialSpeed:true});
   const shape=source.ShapeModule,velocity=source.VelocityModule,uv=source.UVModule;
+  const motion=createParticleMotion(source,{seed});
   if(shape?.enabled){
-    if(shape.type!==5||shape.alignToDirection||shape.randomDirectionAmount!==0||shape.sphericalDirectionAmount!==0||shape.randomPositionAmount!==0)throw Error('Native particle shape/direction needs review');
+    if(![4,5].includes(shape.type)||shape.alignToDirection||shape.randomDirectionAmount!==0||shape.sphericalDirectionAmount!==0||shape.randomPositionAmount!==0)throw Error('Native particle shape/direction needs review');
+    if(shape.type===4&&(shape.angle!==0||shape.arc?.mode!==0||shape.arc.spread!==0||shape.arc.value!==360||shape.radius?.mode!==0||shape.radius.spread!==0||!Number.isFinite(shape.radius.value)||shape.radius.value<0||!Number.isFinite(shape.radiusThickness)||shape.radiusThickness<0||shape.radiusThickness>1))throw Error('Native angled cone/arc/radius mode needs review');
     for(const field of ['m_Texture','m_Mesh','m_MeshRenderer','m_SkinnedMeshRenderer','m_Sprite','m_SpriteRenderer'])if(shape[field]?.m_PathID!=='0')throw Error('Native shape resource needs review');
     for(const field of ['m_Position','m_Rotation','m_Scale'])for(const axis of ['x','y','z'])if(!Number.isFinite(shape[field]?.[axis]))throw Error('Invalid native shape transform');
   }
@@ -31,13 +34,19 @@ export function createMovingParticles(source,{seed=1}={}){
   function sample(time){
     return lifecycle.sample(time).map(p=>{
       const random=salt=>particleRandom(p.id,salt,seed),birthPhase=(p.born%source.lengthInSec)/source.lengthInSec;
-      let origin=[0,0,0];
+      let origin=[0,0,0],direction=[0,0,1];
       if(shape?.enabled){
-        origin=['x','y','z'].map((axis,i)=>(random(10+i)-.5)*shape.m_Scale[axis]);
+        if(shape.type===5)origin=['x','y','z'].map((axis,i)=>(random(10+i)-.5)*shape.m_Scale[axis]);
+        else{
+          const radius=shape.radius.value,inner=radius*(1-shape.radiusThickness),r=Math.sqrt(inner*inner+random(10)*(radius*radius-inner*inner)),angle=random(11)*Math.PI*2;
+          origin=[r*Math.cos(angle)*shape.m_Scale.x,r*Math.sin(angle)*shape.m_Scale.y,0];
+        }
         origin=rotateShape(origin,shape.m_Rotation).map((v,i)=>v+shape.m_Position[['x','y','z'][i]]);
+        direction=rotateShape(direction,shape.m_Rotation);
       }
       const t=p.age/p.lifetime;
-      const displacement=velocity?.enabled?['x','y','z'].map((axis,i)=>p.lifetime*integrateParticleCurve(velocity[axis],0,t,random(13+i))):[0,0,0];
+      const speed=sampleParticleCurve(source.InitialModule.startSpeed,birthPhase,random(18)),initialVelocity=direction.map(v=>v*speed);
+      const displacement=motion?motion.sample(p,origin,initialVelocity):['x','y','z'].map((axis,i)=>initialVelocity[i]*p.age+(velocity?.enabled?p.lifetime*integrateParticleCurve(velocity[axis],0,t,random(13+i)):0));
       let sheet=null;
       if(uv?.enabled){
         // Serialized native fields are normalized. Unity's editor remaps both
