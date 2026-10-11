@@ -161,6 +161,7 @@ import { ENTELECHIA_OPERATORS } from './entelechia-operators.js';
 import { HOOLHEYAK_OPERATORS } from './hoolheyak-operators.js';
 import { GOLDENGLOW_OPERATORS } from './goldenglow-operators.js';
 import { LAPPLAND_ALTER_OPERATORS } from './lappland-alter-operators.js';
+import { THORNS_LODESTAR_OPERATORS } from './thorns-lodestar-operators.js';
 import { LEE_OPERATORS } from './lee-operators.js';
 import { YATO_ALTER_OPERATORS } from './yato-alter-operators.js';
 import { SPECTER_ALTER_OPERATORS } from './specter-alter-operators.js';
@@ -328,6 +329,7 @@ export const REGULAR_OPERATORS = Object.freeze({
   ...LEE_OPERATORS,
   ...GOLDENGLOW_OPERATORS,
   ...LAPPLAND_ALTER_OPERATORS,
+  ...THORNS_LODESTAR_OPERATORS,
   ...HOOLHEYAK_OPERATORS,
   ...EBENHOLZ_OPERATORS,
   ...LIN_OPERATORS,

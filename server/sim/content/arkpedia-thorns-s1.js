@@ -4,7 +4,7 @@ import {absoluteRangeKeys} from '../targeting.js';
 import {bodyInKeys} from '../body.js';
 
 export const THORNS_S1_CONTRACT=Object.freeze({
-  scope:'Private selected-source S1 automatic field; S2/S3 and public lifecycle remain held',
+  scope:'Selected-source S1 automatic field with public and isolated combat checks',
   cast:'Natural selected SP; original capped Skill event/clip, ability-start duration extension, release-time cached ATK',
   field:'Speed-ten homing throw; stationary x-4 arrival field, continuous HP regeneration and flat DEF, recipient leave/expiry cleanup; emitted fields survive retreat',
   mapping:'Native postFilter39/professionMask767 is mapped to lowest HP ratio then latest deployment; clip completion ends the cast SP lock. Native disableOverride derived buffs stay independently parent-owned and stack. Root-rounded arrival tiles and duration starting at arrival are local mappings.',

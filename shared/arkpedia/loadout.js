@@ -2,7 +2,7 @@
 import { validateLoadout } from "./squad.js";
 import { assertRegularOperator } from "./operators.js";
 const bb = (rows) =>
-  Object.fromEntries((rows ?? []).map((r) => [r.key, r.value]));
+  Object.fromEntries((rows ?? []).map((r) => [r.key, r.valueStr ?? r.value]));
 const phaseNumber = (phase) => Number(String(phase).replace("PHASE_", ""));
 const rankCaps = [4, 7, 10];
 
@@ -189,7 +189,7 @@ export function recordFor(build, data) {
     // Source faction identifiers, distinct from descriptive gameplay tags.
     tags: [op.nationId, op.groupId, op.teamId].filter(value => typeof value === 'string' && value),
     stats,
-    rangeGrid: phase.rangeGrid,
+    rangeGrid: support.defaultSkillRangeIds?.includes(build.skillId) ? level.rangeGrid : phase.rangeGrid,
     dmgType:
       op.profession === "MEDIC"
         ? "heal"

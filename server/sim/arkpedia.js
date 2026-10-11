@@ -164,6 +164,7 @@ import { customizeEntelechiaKit, installEntelechia } from './content/arkpedia-en
 import { customizeHoolheyakKit, installHoolheyak } from './content/arkpedia-hoolheyak.js';
 import { customizeGoldenglowKit, installGoldenglow } from './content/arkpedia-goldenglow.js';
 import { customizeLapplandKit, installLappland, installLapplandSquad } from './content/arkpedia-lappland-alter.js';
+import { captureThornsRoads, THORNS_LODESTAR_ID, customizeThornsLodestarKit, installThornsLodestar } from './content/arkpedia-thorns-lodestar.js';
 import { customizeLeeKit, installLee } from './content/arkpedia-lee.js';
 import { customizeYatoAlterKit, installYatoAlter } from './content/arkpedia-yato-alter.js';
 import { customizeSpecterAlterKit, installSpecterAlter, prepareSpecterAlterSquad } from './content/arkpedia-specter-alter.js';
@@ -312,6 +313,8 @@ export class StandardBattle extends Battle {
     installBagpipeSquad({ battle: this, records: chess });
     installRadiantKnightSquad({ battle: this, records: chess });
     installLapplandSquad({ battle: this, records: chess });
+    // The road talent scans initial terrain even when Thorns deploys much later.
+    if (chess[THORNS_LODESTAR_ID]) captureThornsRoads(this);
     this.behaviors = behaviors;
     this.unitLimit = config.unit_limit;
     this.regularMapSize = Object.freeze({ rows: data.stage.geometry.rows, cols: data.stage.geometry.cols });
@@ -540,6 +543,7 @@ export class StandardBattle extends Battle {
     customizeLeeKit({ battle: this, id, def, unit, kit });
     customizeGoldenglowKit({ battle: this, id, def, unit, kit });
     customizeLapplandKit({ battle: this, id, def, unit, kit });
+    customizeThornsLodestarKit({ battle: this, id, unit, kit });
     customizeHoolheyakKit({ battle: this, id, def, unit, kit });
     customizeEbenholzKit({ battle: this, id, def, unit, kit });
     customizeLinKit({ battle: this, id, def, unit, kit });
@@ -734,6 +738,7 @@ export class StandardBattle extends Battle {
     installLee({ battle: this, unit, def });
     installGoldenglow({ battle: this, unit, def });
     installLappland({ battle: this, unit, def });
+    installThornsLodestar({ unit });
     installHoolheyak({ battle: this, unit, def });
     installEbenholz({ battle: this, unit, def });
     installLin({ battle: this, unit, def });

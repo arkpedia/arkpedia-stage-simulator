@@ -5,7 +5,7 @@ import {canTargetEnemy} from '../targeting.js';
 import {thornsPolygon,thornsPolygonContains} from './arkpedia-thorns-polygon.js';
 
 export const THORNS_S3_CONTRACT=Object.freeze({
-  scope:'Private S3 execution review; public lifecycle and original cast/region synchronization remain held',
+  scope:'Selected-source S3 polygon with public lifecycle checks; original cast/region synchronization remains unverified',
   cast:'Natural manual SP; lowest block count then latest deployed operator anchors in passive range; original capped Skill_3_Loop event',
   field:'Independent convex polygon/strip/point, immediate first periodic receipt on region readiness, cached ATK, sourceless Arts damage and strongest ATK-priority reduction with weaker-field fallback',
   mapping:'Anchors freeze at the release event. Region readiness uses the preserved half-second polygon delay after release; duration starts at readiness. Damage/debuff ramp samples whole source intervals after readiness. These are explicit local clock mappings requiring original-game comparison.',

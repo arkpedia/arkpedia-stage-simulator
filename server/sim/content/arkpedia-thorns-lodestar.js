@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Private combat foundation. No public kit registration until all three skills are reviewed.
+// Selected-source combat; native source extraction is kept separate from runtime review.
 import evidence from '../../../data/arkpedia-thorns-lodestar-prefabs.json' with {type:'json'};
 import {sourceCandidate} from '../../../shared/arkpedia/summons.js';
 import {normalizeChess,flattenBlackboard} from '../simdata.js';
@@ -14,12 +14,12 @@ export {THORNS_S1_CONTRACT,THORNS_S2_CONTRACT,THORNS_S3_CONTRACT};
 
 export const THORNS_LODESTAR_ID='char_1039_thorn2';
 export const THORNS_CORE_CONTRACT=Object.freeze({
-  scope:'Private selected-source ordinary attack and two-talent foundation; no activated skills',
+  scope:'Selected-source ordinary attack and two-talent foundation; activated fields require their separate contracts',
   attacks:'Original Front/Back Attack or passive S3 Skill_3_Loop events, speed capped at one; one Arts projectile per accepted command',
   lifetime:'Released speed-ten projectiles survive owner removal; target life and eligibility are rechecked at impact',
   talents:'Selected unconditional self ATK; ability-start duration extension from other in-range operators; global speed and extra speed on six-tile straight ground runs',
   mapping:'Root-position targeting, no-device unit categories, operator professionMask639, battle-start terrain-passability runs, strongest shared aura with fallback, tick-sampled aura membership and clip-end cadence are local execution mappings',
-  limits:'S1/S2/S3 activated fields, original particles/audio, modules, compiled target filters/override priorities and Unity frame parity remain unreviewed',
+  limits:'Original particles/audio, modules, compiled target filters/override priorities and Unity frame parity remain unverified; activated fields have separate fidelity limits',
   frameParity:false,
 });
 const ID=THORNS_LODESTAR_ID,air={canHitFly:true};
@@ -278,7 +278,7 @@ function prepareCore(b,u,record){
   return {record,controller,kit};
 }
 
-/** Private S1 gameplay review path. Public registration still requires the complete three-skill kit. */
+/** Selected-source S1; also used by isolated combat fixtures. */
 export function prepareThornsS1(b,u,{contract}={}){
   if(contract!==THORNS_S1_CONTRACT)throw Error('Thorns S1 requires the reviewed field contract');
   const record=validate(u,THORNS_CORE_CONTRACT);
@@ -291,7 +291,7 @@ export function prepareThornsS1(b,u,{contract}={}){
   return prepared;
 }
 
-/** Private S2 review. Full public enablement also requires S3 and browser lifecycle checks. */
+/** Selected-source S2; native dispatch and speed-conversion limits are explicit. */
 export function prepareThornsS2(b,u,{contract}={}){
   if(contract!==THORNS_S2_CONTRACT)throw Error('Thorns S2 requires the reviewed field contract');
   const record=validate(u,THORNS_CORE_CONTRACT);
@@ -313,7 +313,7 @@ export function prepareThornsS2(b,u,{contract}={}){
 }
 
 
-/** Private polygon execution; original creator/Token clocks are still held for comparison. */
+/** Polygon execution with bounded local timing; original creator/Token clocks remain unverified. */
 export function prepareThornsS3(b,u,{contract}={}){
   if(contract!==THORNS_S3_CONTRACT)throw Error('Thorns S3 requires the reviewed polygon contract');
   const record=validate(u,THORNS_CORE_CONTRACT);
@@ -327,3 +327,13 @@ export function prepareThornsS3(b,u,{contract}={}){
     canActivate:()=>controller.s3.canCast(),onStart:()=>controller.s3.start(),onEnd:()=>controller.s3.end()};
   return prepared;
 }
+
+export function customizeThornsLodestarKit({battle:b,id,unit:u,kit}){
+  if(id!==ID)return;
+  const index=selectedThornsBuild({...u.def.raw.arkpedia,skillId:u.def.skill.id}).index;
+  const prepare=[prepareThornsS1,prepareThornsS2,prepareThornsS3][index];
+  const contract=[THORNS_S1_CONTRACT,THORNS_S2_CONTRACT,THORNS_S3_CONTRACT][index];
+  const prepared=prepare(b,u,{contract});
+  Object.assign(kit,prepared.kit);u.mem.thornsController=prepared.controller;
+}
+export function installThornsLodestar({unit:u}){u.mem.thornsController?.install();}

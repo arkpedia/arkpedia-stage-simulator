@@ -60,6 +60,15 @@ const [characters, skills, ranges, enemies, stage, geometry, buffTemplates, orig
 if (originalLevel.mapData.tags != null && (!Array.isArray(originalLevel.mapData.tags)
   || originalLevel.mapData.tags.some(tag => typeof tag !== 'string'))) throw Error('Unsupported source map tags');
 const ids = Object.keys(REGULAR_OPERATORS);
+if (ids.includes('char_1039_thorn2')) {
+  const review = JSON.parse(await readFile(new URL('../../data/arkpedia-thorns-runtime-review.json', import.meta.url)));
+  const foundation = await readFile(new URL('../../data/arkpedia-thorns-lodestar-prefabs.json', import.meta.url));
+  const evidence = JSON.parse(foundation);
+  if (!review.enabledOperators.includes('char_1039_thorn2') || review.frameParity !== false
+    || review.sourceFoundationSha256 !== createHash('sha256').update(foundation).digest('hex')
+    || evidence.source.commit !== pins[paths.character_table[0]])
+    throw Error('Thorns public runtime review differs from the pinned native source');
+}
 const usesCN = ids.some(id => operatorChannel(id, REGULAR_OPERATORS[id]) === 'cn');
 const cnEvidence = usesCN ? JSON.parse(await readFile(new URL('../../data/arkpedia-cn-source.json', import.meta.url), 'utf8')) : null;
 if (cnEvidence) {

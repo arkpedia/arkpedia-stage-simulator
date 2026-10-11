@@ -4,6 +4,7 @@ import test from 'node:test';import assert from 'node:assert/strict';
 import e from '../data/arkpedia-thorns-lodestar-prefabs.json' with{type:'json'};
 import data from '../data/arkpedia-mvp.json' with{type:'json'};
 import {REGULAR_OPERATORS}from'../shared/arkpedia/operators.js';
+import runtime from '../data/arkpedia-thorns-runtime-review.json' with{type:'json'};
 const ID='char_1039_thorn2',components=Object.values({...e.characters,...e.skills,...e.projectiles}).flatMap(rs=>rs.flatMap(r=>r.components));
 const component=id=>{const c=components.find(c=>c.pathId===id);assert.ok(c,id);return c.data;};
 const bb=rows=>Object.fromEntries(rows.map(r=>[r.key,r.value]));
@@ -11,8 +12,9 @@ const ranks=n=>e.tables.skills[`skchr_thorn2_${n}`].levels;
 const type=n=>n.$type.split('+').at(-1).split(',')[0];
 const nodes=v=>!v||typeof v!=='object'?[]:[...(v.$type?[v]:[]),...Object.values(v).flatMap(nodes)];
 const near=(a,b)=>assert.ok(Math.abs(a-b)<1e-6,`${a} != ${b}`);
-test('complete native Thorns source stays held pending all three skills and public lifecycle review',()=>{
- assert.deepEqual(e.enabledOperators,[]);assert.deepEqual(e.heldOperators,[ID]);assert.equal(REGULAR_OPERATORS[ID],undefined);assert.equal(data.operators[ID],undefined);
+test('native extraction receipt remains separate from the bounded public runtime review',()=>{
+ assert.deepEqual(e.enabledOperators,[]);assert.deepEqual(e.heldOperators,[ID]);
+ assert.deepEqual(runtime.enabledOperators,[ID]);assert.ok(REGULAR_OPERATORS[ID]);assert.ok(data.operators[ID]);assert.equal(runtime.frameParity,false);
  assert.equal(e.frameParity,false);assert.equal(e.moduleSupport,false);assert.equal(e.nativeParticleSupport,false);
  assert.equal(e.source.commit,'57010cb5b2afea112cae57daa756b58676ba6850');assert.equal(e.source.nativeClient,'26-09-23-17-49-43_b9cc4a');
  assert.equal(e.source.bundles.length,5);assert.equal(components.length,148);assert.equal(new Set(components.map(c=>c.pathId)).size,148);

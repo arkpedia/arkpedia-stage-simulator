@@ -57,8 +57,8 @@ function terrain(f,coordinates){
   f.b.grid.tiles=f.b.grid.tiles.map((t,k)=>({...t,pass:set.has(k)?'ALL':'FLY'}));
 }
 
-test('private foundation stays absent from public data/registry; activated skills are held',()=>{
-  assert.equal(REGULAR_OPERATORS[ID],undefined);assert.equal(data.operators[ID],undefined);
+test('core-only fixture cannot activate skills even after the complete public kit is registered',()=>{
+  assert.ok(REGULAR_OPERATORS[ID]);assert.ok(data.operators[ID]);
   assert.deepEqual(e.enabledOperators,[]);assert.equal(CONTRACT.frameParity,false);
   assert.throws(()=>make({contract:{...CONTRACT}}),/contract/);
   for(const skill of [1,2,3]){const f=make({skill});f.u.skill.addCharge(1);assert.equal(f.u.skill.activate(),false);}

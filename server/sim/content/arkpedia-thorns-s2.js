@@ -6,7 +6,7 @@ import {toLocal} from '../dir.js';
 import {COLS} from '../constants.js';
 
 export const THORNS_S2_CONTRACT=Object.freeze({
-  scope:'Private selected-source S2 growing/drifting field; S3 and public lifecycle remain held',
+  scope:'Selected-source S2 growing/drifting field with public and isolated combat checks',
   cast:'Natural selected SP and charges, manual activation, capped original Skill_2 event; selected enemy root tile or farthest forward range tile',
   field:'Ground recipients; cached-ATK allied regeneration and sourceless Arts ticks, separate ordinary-healing event and HP-recovery attribute reductions; independent overlapping fields survive retreat',
   mapping:'PRTS observations complement native records: radius grows projectile_range*value per second and drifts projectile_move_speed away from deployment tile; both stop at remaining_time, independently of talent extension. Enemy selector ties use engine priority, fixed root-tile landing and arrival-based lifetime are local mappings.',
