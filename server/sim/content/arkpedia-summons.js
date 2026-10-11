@@ -45,6 +45,7 @@ export function regularSummonCards(battle) {
 
 export function summonPlacementError(battle, key, row, col) {
   const state = cardState(battle, key);
+  if (state?.deck?.placementError) return state.deck.placementError(row, col);
   if (!canDeployInViewport(battle.viewport)) return 'Open the fullscreen workspace to deploy.';
   if (battle.finished) return 'Battle has ended.';
   if (!state || !live(state.owner)) return 'Deploy the summoner first.';
@@ -80,7 +81,9 @@ export function deployRegularSummon(battle, key, row, col, dir = 'RIGHT') {
   const error = summonPlacementError(battle, key, row, col);
   if (error) throw Error(error);
   if (!['UP', 'DOWN', 'LEFT', 'RIGHT'].includes(dir)) throw Error('Choose a facing direction.');
-  const state = cardState(battle, key), source = evidence.tokens[state.record.id];
+  const state = cardState(battle, key);
+  if (state.deck?.place) return state.deck.place(row, col, dir);
+  const source = evidence.tokens[state.record.id];
   // Ela's source-fed deck owns its charge/cooldown transaction and lifecycle.
   if (state.ownerId === 'char_4123_ela') {
     const deck = state.owner.mem.elaController?.deck;

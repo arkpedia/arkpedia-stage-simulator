@@ -339,3 +339,17 @@ export function prepareExusiaiCovenantCoordinates(b, u, { contract } = {}) {
   prepared.controller.coordinates = new ExusiaiCovenantCoordinates(prepared.controller);
   return prepared;
 }
+
+/** Public selected kit; historical native extraction remains independently held. */
+export function customizeExusiaiCovenantKit({ battle: b, id, unit: u, kit }) {
+  if (id !== ID) return;
+  const index = selectedExusiaiCovenantBuild({ ...u.def.raw.arkpedia, skillId: u.def.skill.id }).index;
+  const holder = component(['-1823870851832874235', '4940864640131916061', '5276092084022503678'][index]);
+  if (holder._canSilenced !== 0 || holder._canCastDuringBorn !== 1 || holder._canSwitchDuringBorn !== 1)
+    throw Error('Unreviewed Exusiai Covenant public skill permissions');
+  const prepared = [prepareExusiaiCovenantS1, prepareExusiaiCovenantS2, prepareExusiaiCovenantCoordinates][index](b, u,
+    { contract: [EXUSIAI_COVENANT_S1_CONTRACT, EXUSIAI_COVENANT_S2_CONTRACT, EXUSIAI_COVENANT_COORDINATES_CONTRACT][index] });
+  prepared.kit.skill.silenceable = false;
+  Object.assign(kit, prepared.kit);
+}
+export function installExusiaiCovenant({ unit: u }) { u.mem.exusiaiCovenantController?.install(); }

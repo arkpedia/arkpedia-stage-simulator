@@ -20,11 +20,11 @@ const nodes = v => !v || typeof v !== 'object' ? [] :
 const type = v => v.$type.split('+').at(-1).split(',')[0];
 const bb = rows => Object.fromEntries(rows.map(r => [r.key, r.valueStr ?? r.value]));
 
-test('Exusiai source remains held until attacks, three skills, talents and coordinate lifecycle are verified', () => {
+test('historical Exusiai source hold stays separate from public runtime approval', () => {
   assert.deepEqual(e.enabledOperators, []);
   assert.deepEqual(e.heldOperators, [ID]);
-  assert.equal(REGULAR_OPERATORS[ID], undefined);
-  assert.equal(data.operators[ID], undefined);
+  assert.equal(REGULAR_OPERATORS[ID].mechanic, 'exusiai-covenant');
+  assert.ok(data.operators[ID]);
   assert.equal(e.frameParity, false);
   assert.equal(e.moduleSupport, false);
   assert.equal(e.nativeParticleSupport, false);

@@ -58,8 +58,8 @@ function ally(f, { ammo = true, laterano = false, row = 5, col = 7 } = {}) {
   a.player.dp = 99; assert.ok(f.b._deploy(a, { initial: false })); return a;
 }
 
-test('diagnostic core stays held and rejects unreviewed contracts and incomplete or locked selected builds', () => {
-  assert.equal(REGULAR_OPERATORS[ID], undefined); assert.equal(data.operators[ID], undefined);
+test('diagnostic core preserves its source hold and rejects unreviewed contracts and incomplete or locked selected builds', () => {
+  assert.equal(REGULAR_OPERATORS[ID].mechanic, 'exusiai-covenant'); assert.ok(data.operators[ID]);
   assert.deepEqual(e.enabledOperators, []); assert.equal(CONTRACT.frameParity, false);
   assert.throws(() => make({ contract: { ...CONTRACT } }), /contract/);
   for (const skill of [1, 2, 3]) { const f = make({ skill }); f.u.skill.addCharge(1); assert.equal(f.u.skill.activate(), false); }

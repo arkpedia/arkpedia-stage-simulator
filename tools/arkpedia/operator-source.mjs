@@ -81,6 +81,13 @@ export function compileReviewedOperators({ registry, global, cn }) {
       record.formUnlock = patch.unlockConds[id];
       return [id, record];
     }
-    return compileOperator(id, tables);
+    const [key, record] = compileOperator(id, tables);
+    if (support.secondaryFactions) {
+      const c = tables.characters[id];
+      record.factionTags = [...new Set([c, c.mainPower, ...(c.subPower ?? [])]
+        .filter(Boolean).flatMap(power => ['nationId', 'groupId', 'teamId'].map(k => power[k]))
+        .filter(value => typeof value === 'string' && value))];
+    }
+    return [key, record];
   }));
 }
