@@ -2157,3 +2157,19 @@ node --test test/arkpedia-lappland-effects-source.test.js test/arkpedia-lappland
 ```
 
 The independent native audit compares every exported object against original client bytes, checks the complete reachable hierarchy, compares decoded geometry and RGBA pixels, and verifies reference membership. In the current extraction environment, all **93 output files reproduce identically**. All **thirteen semantic corruption fixtures are rejected**, including changes with recomputed pack/manifest digests. The focused manifest/source/importer suite passes sixteen checks. This validates source recovery, not public operator support or visual/game-frame fidelity. Public coverage remains **360/431 forms and 774 skills**; the local preview remains on the published roster and SD revision `b15f375`.
+
+### Lappland original effect animation channels
+
+`shared/arkpedia/native-effect-animation.js` decodes the original stripped streamed/constant channels and samples their cubic coefficients in source seconds. It preserves each channel's sparse key clock, stepped segments, authored endpoints and explicit loop/clamp behavior. Unsupported dense, legacy, pointer, integer and script curves are rejected; the ten pinned effect clips use none of those formats. Sampling returns scalar source values rather than applying transforms, boolean properties or quaternion normalization to a renderer.
+
+`tools/arkpedia/decode-lappland-effect-animations.mjs` resolves animation paths from each original Animator hierarchy, checks path/component ambiguity and resolves material property hashes against the actual saved properties. Texture scale/offset channels resolve to their native `_ST` vectors. The export covers **ten clips, seventeen Animator/clip instances, 337 bindings, 375 scalar channels and 342 authored keys**. These include the ordinary wolf's two-second bob, skill-start position/rotation/scale tracks, object activation and material color/dissolve fades.
+
+The decoded channels and resolved bindings remain in the private source cache as `effects/native-animations.json`; `data/arkpedia-lappland-effect-animations.json` records their digest and explicit fidelity limits. `test/fixtures/arkpedia-lappland-effect-clips.json` preserves only the original clip fields consumed by the decoder, with each original object digest, so CI can exercise all ten clips without the native bundles. The native audit independently compares these fixture fields, all decoded channels and hierarchy/property bindings against audited source inputs. It checks **10,336 sample values**, including every authored key, quarter/mid/three-quarter segment probes and loop seams. All four output files reproduce exactly and all thirteen semantic corruption fixtures are rejected with recomputed artifact hashes. The focused decoder/source/importer suite passes **35 checks**, with no failures or skips.
+
+```sh
+node tools/arkpedia/decode-lappland-effect-animations.mjs
+.cache/map-env/bin/python tools/arkpedia/audit-lappland-effect-animations.py
+node --test test/arkpedia-native-effect-animation.test.js test/arkpedia-lappland-effects-source.test.js test/arkpedia-lappland-alter-source.test.js test/arkpedia-operator-importer.test.js
+```
+
+This is source-channel decoding and sampling, **not completed effect playback**. Animator state/transition dispatch, renderer property application, native particle/trail/shader execution, the nine unresolved resources and battle/browser review remain open. The sampling arithmetic uses JavaScript numbers and is not certified against Unity's compiled floating-point/frame behavior. No public operator, asset or coverage count is enabled by this export. Public support remains **360/431 forms and 774 skills**; all remaining forms stay within the original goal.
