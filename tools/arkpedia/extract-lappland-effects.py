@@ -146,6 +146,8 @@ def export(cache, out, manifest_out=None):
             h.process()
             meshes[key] = {'positions': exact(h.m_Vertices), 'uv': exact(h.m_UV0),
                            'normals': exact(h.m_Normals), 'tangents': exact(h.m_Tangents),
+                           'colors': exact(h.m_Colors),
+                           'uvChannels': [exact(getattr(h, f'm_UV{i}')) for i in range(8)],
                            'submeshTriangles': exact(h.get_triangles())}
             row['data'] = {'name': tree['m_Name'], 'bounds': exact(tree['m_LocalAABB'])}
             continue

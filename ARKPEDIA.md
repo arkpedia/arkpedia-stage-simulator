@@ -2173,3 +2173,29 @@ node --test test/arkpedia-native-effect-animation.test.js test/arkpedia-lappland
 ```
 
 This is source-channel decoding and sampling, **not completed effect playback**. Animator state/transition dispatch, renderer property application, native particle/trail/shader execution, the nine unresolved resources and battle/browser review remain open. The sampling arithmetic uses JavaScript numbers and is not certified against Unity's compiled floating-point/frame behavior. No public operator, asset or coverage count is enabled by this export. Public support remains **360/431 forms and 774 skills**; all remaining forms stay within the original goal.
+
+### Lappland original mesh/shader inspection
+
+The source export now retains authored mesh colors and all eight UV channels. `tools/arkpedia/extract-lappland-effect-shaders.py` follows the Unity 2021 GLES player-program links rather than legacy shader links. It preserves **23 original GLES programs across twelve shaders**, original keyword variants, property defaults, pass states and raw program trailers. Hardware-group links remain distinct. The shader equations are not recreated; `shared/arkpedia/native-effect-shader.js` changes only stage wrappers and WebGL binding qualifiers.
+
+`shared/arkpedia/native-effect-pose.js` applies an explicitly selected original clip to its resolved transform, activation and material properties. Renderer material instances are isolated, parent activation propagates, and every sample resets the baseline so backwards scrubbing cannot retain stale values. This is clip inspection rather than Animator transition execution.
+
+The isolated loopback inspection server checksum-checks a narrow allowlist of source-cache artifacts. Start it after rebuilding the pinned inputs:
+
+```sh
+.cache/map-env/bin/python tools/arkpedia/extract-lappland-effect-shaders.py
+.cache/map-env/bin/python tools/arkpedia/audit-lappland-effect-shaders.py
+node tools/arkpedia/preview-lappland-effects.mjs
+```
+
+Open `http://127.0.0.1:3183/`. The battle preview at port 3182 is independent. This page draws original mesh templates, including constant mesh-particle templates, and explicit clip poses using the recovered shader programs. It honors the supported original repeat/clamp/mirror sampler settings and bilinear filtering. Unsupported billboard particles, trails, varying particle templates and unresolved source references remain unplayed and are recorded in the diagnostic API. Mesh templates are **not particle lifecycle simulation**.
+
+The independent shader audit compares programs directly with native bundle bytes, actual player links, pass states and property defaults; both outputs reproduce identically and eight altered semantic records are rejected after artifact hashes are recomputed. The refreshed original animation audit still checks 10,336 scalar values, reproduces four files and rejects thirteen altered records. The original mesh audit compares the new colors/UV channels alongside all existing geometry and textures.
+
+```sh
+node --test test/arkpedia-native-effect-render.test.js test/arkpedia-native-effect-animation.test.js test/arkpedia-lappland-effects-source.test.js test/arkpedia-lappland-alter-source.test.js test/arkpedia-operator-importer.test.js
+```
+
+All **40 focused checks pass**. Local Chromium software WebGL2 compiles and links all 23 shader variants, loads all 35 roots and samples 208 static/explicit-clip frames without JavaScript or shader errors. Desktop and 390px mobile inspection controls were reviewed; this is software-renderer evidence, not physical GPU or game-frame parity.
+
+**Visual fidelity remains unverified.** Native camera/coordinate mapping, color-space interpretation, source UV/script dispatch, particle emission/lifetime/trails and Animator transitions still need implementation and comparison with game frames. The bright flow templates in the inspection page must not be treated as completed battle VFX. The nine unresolved source resources remain explicit. No source artwork has been published to SD assets, no Lappland public activation occurs, and all manifests retain `rendererVerified: false`, `compiledFrameParity: false` and `enabledOperators: []`. Public coverage remains **360/431 forms and 774 skills**.
