@@ -8,12 +8,12 @@ import {normalizeChess} from '../server/sim/simdata.js';
 import {defaultBuild} from '../shared/arkpedia/loadout.js';
 import {REGULAR_OPERATORS} from '../shared/arkpedia/operators.js';
 import {THORNS_LODESTAR_ID as ID,THORNS_CORE_CONTRACT as CONTRACT,selectedThornsBuild,
-  prepareThornsCore,prepareThornsS1,prepareThornsS2,THORNS_S1_CONTRACT,THORNS_S2_CONTRACT,thornsStraightTiles} from '../server/sim/content/arkpedia-thorns-lodestar.js';
+  prepareThornsCore,prepareThornsS1,prepareThornsS2,prepareThornsS3,THORNS_S1_CONTRACT,THORNS_S2_CONTRACT,THORNS_S3_CONTRACT,thornsStraightTiles} from '../server/sim/content/arkpedia-thorns-lodestar.js';
 const near=(a,z,eps=1e-5)=>assert.ok(Math.abs(a-z)<eps,`${a} != ${z}`);
 function advance(b,s){for(let i=0;i<Math.ceil(s/b.dt-1e-9);i++)b.step();assert.deepEqual(b.errors,[]);}
 function until(f,p,s=12){const end=f.b.time+s;while(!p()&&f.b.time<end)advance(f.b,f.b.dt);assert.ok(p(),`Expected condition at ${f.b.time}`);}
 function owner(b,{rank=10,elite=2,level=e.tables.character.phases[elite].maxLevel,potential=1,trust=0,
-  skill=1,dir='RIGHT',defer=false,row=5,col=5,contract=CONTRACT,sourceS1=false,sourceS2=false}={}){
+  skill=1,dir='RIGHT',defer=false,row=5,col=5,contract=CONTRACT,sourceS1=false,sourceS2=false,sourceS3=false}={}){
   const build={elite,level,potential,trust,skillId:`skchr_thorn2_${skill}`,skillRank:Math.min(rank,[4,7,10][elite])};
   const r=selectedThornsBuild(build),c=e.tables.character;
   const def=normalizeChess({chessId:ID,charId:ID,name:c.name,profession:c.profession,position:c.position,
@@ -22,7 +22,7 @@ function owner(b,{rank=10,elite=2,level=e.tables.character.phases[elite].maxLeve
     skill:{...r.source,...r.source.spData,skillId:build.skillId,
       rangeGrid:r.source.rangeId?e.tables.ranges[r.source.rangeId].grids.map(v=>[v.row,v.col]):[],trigger:{rule:'NEVER'}},arkpedia:build});
   const u=b._makeAlly(b.getPlayer('arkpedia'),def,'op',row,col,{dir});
-  const prepared=sourceS1?prepareThornsS1(b,u,{contract:THORNS_S1_CONTRACT}):sourceS2?prepareThornsS2(b,u,{contract:THORNS_S2_CONTRACT}):prepareThornsCore(b,u,{contract});b._setupUnit(u,prepared.kit);prepared.controller.install();
+  const prepared=sourceS1?prepareThornsS1(b,u,{contract:THORNS_S1_CONTRACT}):sourceS2?prepareThornsS2(b,u,{contract:THORNS_S2_CONTRACT}):sourceS3?prepareThornsS3(b,u,{contract:THORNS_S3_CONTRACT}):prepareThornsCore(b,u,{contract});b._setupUnit(u,prepared.kit);prepared.controller.install();
   const hits=[],attacks=[],births=[];
   b.on('damaged',ctx=>{if(ctx.source===u)hits.push({...ctx,time:b.time});});
   b.on('attack',ctx=>{if(ctx.attacker===u)attacks.push({...ctx,time:b.time});});
@@ -522,4 +522,114 @@ test('S2 healing modifier composes with other incoming heal modifiers without re
   startS2(f);until(f,()=>s2(f).fields.length===1);near(enemyHeal(f,t),160);
   f.b.removeBuff(t,'fixture:incoming-heal');near(enemyHeal(f,t),200);
   f.b.removeBuff(t,s2Buff(t));near(enemyHeal(f,t),400);
+});
+
+const s3=f=>f.controller.s3;
+const makeS3=opts=>make({...opts,skill:3,sourceS3:true});
+function startS3(f){until(f,()=>f.u.skill.ready&&s3(f).canCast(),80);assert.equal(f.u.skill.activate(),true);}
+function s3Hits(f){const hits=[];f.b.on('damaged',c=>{if(c.dmg?.tags?.includes('thorns:s3'))hits.push({...c,time:f.b.time});});return hits;}
+function anchorsS3(f){return [ally(f,{row:4,col:6}),ally(f,{row:6,col:6}),ally(f,{row:6,col:7}),ally(f,{row:4,col:7})];}
+for(let rank=1;rank<=10;rank++)test(`S3 rank ${rank}: natural manual SP, selected anchor count, cached Arts output and reduction ramps`,()=>{
+  const f=makeS3({rank}),anchors=anchorsS3(f),t=enemy(f,{row:5,col:6,res:50}),hits=s3Hits(f);
+  t.x=6.75;t.base.atk=100;t.base.def=100;t.markDirty();until(f,()=>f.u.skill.ready,80);assert.equal(f.u.skill.activations,0);
+  startS3(f);const start=f.b.time;until(f,()=>s3(f).fields.length===1);const field=s3(f).fields[0],bb=f.record.bb;
+  assert.equal(field.anchors.length,bb.max_target_token);assert.deepEqual(field.anchors,anchors.slice().reverse().slice(0,bb.max_target_token));
+  near(field.releasedAt-start,.7,f.b.dt*2);assert.equal(hits.length,0);until(f,()=>hits.length===1);
+  near(hits[0].time-field.releasedAt,.5,f.b.dt*2);near(hits[0].amount,field.cachedAtk*bb.atk_scale*(1-50*(1+bb.magic_resistance)/100));
+  near(t.s.atk,100*(1+bb.atk));near(t.s.def,100*(1+bb.def));near(t.s.res,50*(1+bb.magic_resistance));
+  assert.equal(hits[0].source,null);until(f,()=>hits.length===2);near(hits[1].time-hits[0].time,1,f.b.dt*2);
+  const value=s3(f).values(field);assert.equal(value.count,1);near(value.scale,bb.atk_scale+bb.atk_scale_per_interval);
+  until(f,()=>f.b.time>=field.readyAt+15,20);const max=s3(f).values(field);assert.equal(max.count,15);near(max.scale,bb.max_atk_scale);advance(f.b,f.b.dt);
+  near(t.s.atk,100*(1+bb.max_atk));near(t.s.def,100*(1+bb.max_def));near(t.s.res,50*(1+bb.max_magic_resistance));
+  assert.ok(field.active);until(f,()=>!field.active,12);near(t.s.atk,100);near(t.s.def,100);near(t.s.res,50);
+});
+for(const [dir,row,col]of [['RIGHT',5,6],['UP',6,5],['LEFT',5,4],['DOWN',4,5]])test(`S3 ${dir} uses the original facing and capped event while region remains independent`,()=>{
+  const f=makeS3({dir}),a=ally(f,{row,col}),t=enemy(f,{row,col}),hits=s3Hits(f);
+  f.b.addBuff(f.u,{key:'fixture:fast',mods:{aspd:100}});startS3(f);const start=f.b.time;until(f,()=>s3(f).fields.length===1);
+  const field=s3(f).fields[0];near(field.releasedAt-start,.7,f.b.dt*2);assert.equal(field.region.kind,'line');assert.ok(field.anchors.includes(a));
+  f.b.retreat(f.u);until(f,()=>hits.length===1);assert.ok(field.active);assert.ok(s3(f).handles.length);
+  f.b.forceEnd('fixture');assert.equal(field.active,false);assert.equal(s3(f).handles.length,0);assert.equal(t.findBuff('thorn2_s3_enemy_hit'),null);
+});
+test('S3 no other anchor still permits natural activation and creates a point at the owner tile',()=>{
+  const f=makeS3(),here=enemy(f,{row:5,col:5}),nearby=enemy(f,{row:5,col:6}),hits=s3Hits(f);startS3(f);
+  until(f,()=>hits.length>0);const field=s3(f).fields[0];assert.equal(field.region.kind,'point');assert.deepEqual(field.anchors,[f.u]);
+  assert.equal(hits[0].target,here);assert.equal(hits.some(v=>v.target===nearby),false);
+});
+test('S3 excludes token/device/isolated/heal-free and out-of-range anchors; lowest block precedes latest deployment',()=>{
+  const f=makeS3(),a=ally(f,{row:5,col:6}),z=ally(f,{row:5,col:7});a.base.blockCnt=0;a.markDirty();z.base.blockCnt=2;z.markDirty();
+  const excluded=[ally(f,{row:4,col:6,kind:'token'}),ally(f,{row:4,col:7,kind:'device'}),ally(f,{row:6,col:6,flags:{isolated:true}}),
+    ally(f,{row:6,col:7,flags:{healFree:true}}),ally(f,{row:10,col:10})];
+  startS3(f);until(f,()=>s3(f).fields.length);const field=s3(f).fields[0];assert.equal(field.anchors[0],a);
+  assert.deepEqual(field.anchors,[a,f.u,z]);for(const t of excluded)assert.equal(field.anchors.includes(t),false);
+});
+test('S3 anchor positions freeze at release; later retreat and movement do not reshape the region',()=>{
+  const f=makeS3(),a=ally(f,{row:5,col:7});startS3(f);a.x=6;until(f,()=>s3(f).fields.length===1);
+  const field=s3(f).fields[0],snapshot=structuredClone(field.region);a.x=15;a.y=15;f.b.retreat(a);advance(f.b,2);
+  assert.deepEqual(field.region,snapshot);assert.deepEqual(field.region.anchors,[{x:5,y:5},{x:6,y:5}]);
+});
+test('S3 collateral air/camouflage take sourceless damage while target-free/stealth/sleep are excluded',()=>{
+  const f=makeS3();anchorsS3(f);const air=enemy(f,{fly:true}),camou=enemy(f,{flags:{camou:true}}),hits=s3Hits(f);
+  const excluded=[enemy(f,{flags:{untargetable:true}}),enemy(f,{flags:{stealth:true}}),enemy(f,{flags:{sleep:true}})];
+  startS3(f);until(f,()=>hits.length>=2);assert.ok(hits.some(v=>v.target===air));assert.ok(hits.some(v=>v.target===camou));
+  for(const t of excluded)assert.equal(hits.some(v=>v.target===t),false);
+});
+test('S3 ally blockers in the region confer membership on enemies outside it; devices do not',()=>{
+  const f=makeS3(),a=ally(f,{row:5,col:7}),t=enemy(f,{row:5,col:10}),hits=s3Hits(f);
+  t.blockedBy=a;startS3(f);until(f,()=>hits.length===1);assert.equal(hits[0].target,t);
+  t.blockedBy=null;advance(f.b,.1);assert.equal(t.findBuff('thorn2_s3_enemy_hit'),null);
+  const device=ally(f,{row:5,col:6,kind:'device'});t.blockedBy=device;advance(f.b,1.2);assert.equal(hits.length,1);
+});
+test('S3 region ramps are global to the cast: a late entrant receives the current reduction, not a fresh ramp',()=>{
+  const f=makeS3();anchorsS3(f);const t=enemy(f,{row:10,col:10}),hits=s3Hits(f);t.base.atk=100;t.markDirty();startS3(f);
+  until(f,()=>s3(f).fields.length);const field=s3(f).fields[0];until(f,()=>f.b.time>=field.readyAt+10.2);
+  t.x=6;t.y=5;advance(f.b,.1);near(t.s.atk,75);assert.equal(hits.length,0);until(f,()=>hits.length===1);near(s3(f).values(field).scale,3.42);
+});
+test('S3 original target mitigation is applied after the source reduction and cached damage ignores owner multipliers',()=>{
+  const f=makeS3();anchorsS3(f);const t=enemy(f,{res:80}),hits=s3Hits(f);startS3(f);
+  f.b.addBuff(f.u,{key:'fixture:output',mods:{atkPct:1,dmgDealtMul:3,resIgnoreFlat:100}});until(f,()=>s3(f).fields.length);
+  const field=s3(f).fields[0];near(field.cachedAtk,501*2.1);f.b.removeBuff(f.u,'fixture:output');f.b.retreat(f.u);
+  until(f,()=>hits.length===1);near(hits[0].amount,field.cachedAtk*2.1*(1-80*.65/100));assert.equal(hits[0].source,null);
+});
+for(const flag of ['stun','freeze','sleep','disarm'])test(`S3 ${flag} interrupts an unborn region but preserves an already released one`,()=>{
+  const f=makeS3();startS3(f);f.b.addBuff(f.u,{key:'fixture:control',flags:{[flag]:true}});advance(f.b,1);assert.equal(s3(f).fields.length,0);
+  const z=makeS3();startS3(z);until(z,()=>s3(z).fields.length);const field=s3(z).fields[0];z.b.addBuff(z.u,{key:'fixture:control',flags:{[flag]:true}});
+  advance(z.b,2);assert.ok(field.active);assert.equal(z.u.skill.active,false);
+});
+test('S3 owner hiding and between-tick control cancel only unreleased casts',()=>{
+  for(const hiding of [false,true]){const f=makeS3();startS3(f);
+    if(hiding)f.u.hidden=true;else{f.b.addBuff(f.u,{key:'fixture:control',flags:{stun:true}});f.b.removeBuff(f.u,'fixture:control');}
+    advance(f.b,1);assert.equal(s3(f).fields.length,0);assert.equal(f.u.skill.active,false);}
+});
+test('S3 slowed source event/clip holds natural SP without auto-activation',()=>{
+  const f=makeS3({elite:2});f.b.addBuff(f.u,{key:'fixture:slow',mods:{aspd:-60}});startS3(f);const start=f.b.time;
+  until(f,()=>s3(f).fields.length);near(s3(f).fields[0].releasedAt-start,1.4,f.b.dt*2);const sp=f.u.skill.sp;
+  until(f,()=>!f.u.skill.active);near(f.b.time-start,3,f.b.dt*2);near(f.u.skill.sp,sp);advance(f.b,1);assert.ok(f.u.skill.sp>0);
+});
+test('S3 overlapping casts add damage but only the strongest ATK-priority debuff applies, with expiry fallback',()=>{
+  const f=makeS3({rank:1}),t=enemy(f,{res:50}),hits=s3Hits(f);t.x=6.75;t.base.atk=100;t.base.def=100;t.markDirty();anchorsS3(f);startS3(f);
+  until(f,()=>s3(f).fields.length);const old=s3(f).fields[0];holdSp(f);until(f,()=>f.b.time>=old.readyAt+6);
+  const z=owner(f.b,{skill:3,sourceS3:true,row:5,col:4});startS3(z);until(z,()=>s3(z).fields.length);holdSp(z);const newer=s3(z).fields[0];
+  until(f,()=>f.b.time>=newer.readyAt+f.b.dt);near(t.s.atk,83);near(t.s.def,63);near(t.s.res,31.5);
+  assert.equal(t.buffs.filter(v=>v.key==='thorn2_s3_enemy_hit').length,1);const count=hits.length;advance(f.b,1);assert.ok(hits.length>=count+2);
+  until(f,()=>!old.active);const v=s3(z).values(newer);near(t.s.atk,100*(1+v.atk));near(t.s.def,100*(1+v.def));
+  f.b.forceEnd('fixture');near(t.s.atk,100);near(t.s.res,50);assert.equal(s3(f).handles.length,0);assert.equal(s3(z).handles.length,0);
+});
+test('S3 lethal immediate periodic damage cleans the recipient without recursive ticks',()=>{
+  const f=makeS3();anchorsS3(f);const t=enemy(f),hits=s3Hits(f);startS3(f);until(f,()=>s3(f).fields.length);t.hp=1;
+  until(f,()=>!t.alive);assert.equal(hits.length,1);assert.equal(t.findBuff('thorn2_s3_enemy_hit'),null);assert.equal(s3(f).fields[0].recipients.has(t),false);
+});
+test('S3 preparation rejects copied contracts and wrong selected skills',()=>{
+  const f=make({skill:3,defer:true});assert.throws(()=>prepareThornsS3(f.b,f.u,{contract:{...THORNS_S3_CONTRACT}}),/contract/);
+  const z=make({skill:2,defer:true});z.controller.stop();delete z.u.mem.thornsController;
+  assert.throws(()=>prepareThornsS3(z.b,z.u,{contract:THORNS_S3_CONTRACT}),/third skill/);
+});
+
+
+test('S3 simultaneous unequal fields apply the strongest debuff before the weaker field first receipt',()=>{
+  const f=makeS3({rank:1}),z=owner(f.b,{skill:3,sourceS3:true,col:4});anchorsS3(f);
+  const t=enemy(f,{res:50}),hits=s3Hits(f);t.x=6.75;t.base.atk=100;t.base.def=100;t.markDirty();
+  startS3(f);startS3(z);until(f,()=>hits.length>=2);
+  near(t.s.atk,85);near(t.s.def,65);near(t.s.res,32.5);
+  const field=s3(f).fields[0];near(hits[0].amount,field.cachedAtk*.9*(1-50*.65/100));
+  assert.equal(t.buffs.filter(v=>v.key==='thorn2_s3_enemy_hit').length,1);
 });

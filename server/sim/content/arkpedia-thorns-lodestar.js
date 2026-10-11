@@ -9,7 +9,8 @@ import {makeDamageInfo} from '../damage.js';
 import {COLS} from '../constants.js';
 import {ThornsS1Fields,THORNS_S1_CONTRACT} from './arkpedia-thorns-s1.js';
 import {ThornsS2Fields,THORNS_S2_CONTRACT} from './arkpedia-thorns-s2.js';
-export {THORNS_S1_CONTRACT,THORNS_S2_CONTRACT};
+import {ThornsS3Fields,THORNS_S3_CONTRACT} from './arkpedia-thorns-s3.js';
+export {THORNS_S1_CONTRACT,THORNS_S2_CONTRACT,THORNS_S3_CONTRACT};
 
 export const THORNS_LODESTAR_ID='char_1039_thorn2';
 export const THORNS_CORE_CONTRACT=Object.freeze({
@@ -141,7 +142,7 @@ export function thornsStraightTiles(field,min=6,ignoreObstacles=false){
 }
 
 export class ThornsCoreController{
-  constructor(b,u,record){this.b=b;this.u=u;this.record=record;this.roads=captureThornsRoads(b);this.seq=null;this.stopped=false;this.phase=null;this.handles=[];this.auraClaims=new Map();this.atkBuff=null;this.s1=null;this.s2=null;}
+  constructor(b,u,record){this.b=b;this.u=u;this.record=record;this.roads=captureThornsRoads(b);this.seq=null;this.stopped=false;this.phase=null;this.handles=[];this.auraClaims=new Map();this.atkBuff=null;this.s1=null;this.s2=null;this.s3=null;}
   valid(){return !this.stopped&&!this.b.finished&&live(this.u)&&this.seq===this.u.deploySeq;}
   eligible(t){return live(t)&&canTargetEnemy(this.u,t,air)&&(!t.s.flags.camou||!!t.blockedBy);}
   visual(clip,speed=1,loop=false){
@@ -207,12 +208,12 @@ export class ThornsCoreController{
   tick(){
     if(!this.valid()){
       if(this.seq!==null&&this.u.alive&&this.u.deployed&&this.seq===this.u.deploySeq&&this.u.hidden){
-        this.clearTalents();this.s1?.interrupt('hidden');this.s2?.interrupt('hidden');this.phase=null;return;
+        this.clearTalents();this.s1?.interrupt('hidden');this.s2?.interrupt('hidden');this.s3?.interrupt('hidden');this.phase=null;return;
       }
       if(this.seq!==null)this.stop();return;
     }
     this.syncTalents();if(!this.valid())return;
-    if(this.s1?.tick()||this.s2?.tick())return;
+    if(this.s1?.tick()||this.s2?.tick()||this.s3?.tick())return;
     const {u,b}=this;let p=this.phase;
     if(p?.kind==='entrance'){
       if(b.time+1e-9<p.readyAt)return;
@@ -254,7 +255,7 @@ export class ThornsCoreController{
   }
   stop(){
     if(this.stopped)return;
-    this.stopped=true;this.s1?.ownerStop();this.s2?.ownerStop();this.phase=null;this.clearTalents();
+    this.stopped=true;this.s1?.ownerStop();this.s2?.ownerStop();this.s3?.ownerStop();this.phase=null;this.clearTalents();
     // Emitted ordinary shots survive owner removal, but never a finished battle.
     if(this.b.finished)this.b.projectiles.remove(p=>p.data?.thornsOwner===this);
     this.u.mem.regularFormVisual=null;delete this.u.mem.regularVisualDirection;
@@ -301,5 +302,21 @@ export function prepareThornsS2(b,u,{contract}={}){
   controller.s2=new ThornsS2Fields(controller);
   kit.skill={kind:'toggle',trigger:{rule:'NEVER'},manualCancel:false,
     canActivate:()=>controller.s2.canCast(),onStart:()=>controller.s2.start(),onEnd:()=>controller.s2.end()};
+  return prepared;
+}
+
+
+/** Private polygon execution; original creator/Token clocks are still held for comparison. */
+export function prepareThornsS3(b,u,{contract}={}){
+  if(contract!==THORNS_S3_CONTRACT)throw Error('Thorns S3 requires the reviewed polygon contract');
+  const prepared=prepareThornsCore(b,u,{contract:THORNS_CORE_CONTRACT});
+  if(prepared.record.index!==2)throw Error('Thorns S3 requires the selected third skill');
+  const a=component('6382547234017107355'),poly=component('-6779247284765065877'),hit=component('-1321748048543089301');
+  if(a._animKey!=='Skill_3_Loop'||a._maxAnimScale!==1||a._waitForAttackEvent!==1||a._atkScale!==0
+    ||poly._polygonLineColliderWide!==.32499998807907104||poly._polygonColliderOffset!==.32499998807907104
+    ||hit._waitFirstPeriod!==0||hit._intervalBbKey!=='interval')throw Error('Unreviewed Thorns S3 polygon source');
+  const {controller,kit}=prepared;controller.s3=new ThornsS3Fields(controller);
+  kit.skill={kind:'toggle',trigger:{rule:'NEVER'},manualCancel:false,
+    canActivate:()=>controller.s3.canCast(),onStart:()=>controller.s3.start(),onEnd:()=>controller.s3.end()};
   return prepared;
 }
