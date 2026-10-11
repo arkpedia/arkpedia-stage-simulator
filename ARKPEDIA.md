@@ -2435,3 +2435,24 @@ node --test test/arkpedia-thorns-lodestar-source.test.js test/arkpedia-lappland-
 Evidence is under ignored `.cache/arkpedia/thorns-lodestar-source/`: `extraction.log`, `verification.log`, `source-tests.log`, `source-audit.log` and `review-audit.json`. The fetcher and extractor reject changed cached bundles instead of silently trusting them.
 
 **Thorns remains unavailable pending ordinary/talent combat, all three skills, source-specific geometry/lifetimes and public lifecycle/browser review.** Modules, native particle/audio playback and compiled Unity frame parity remain unverified. The playable MVP, all previously supported operators, SD asset pin and local battle process are unchanged: **361/431 forms, 777 skills and 70 remaining forms**. The last full gameplay regression is the Lappland public integration above; these source checks are not a new full runtime or browser claim. The full remaining-roster objective stays active.
+
+### Thorns the Lodestar private combat and S1 review
+
+The private controller now executes both original ordinary attack modes, selected promotion/trust/potential stats, the first talent's unconditional self ATK and ability-start duration memo, and the E2 global/tile speed talent. S3's passive `3-9` range and original `Skill_3_Loop` attack event apply before activation. Ordinary commands emit one Arts projectile; capped animation speed, target-life checks, between-tick control, source removal and field/recipient cleanup have combat regressions.
+
+`prepareThornsS1` additionally runs the selected first skill with **natural SP**. Its capped original `Skill` event releases a speed-ten homing throw. The stationary nine-tile arrival field grants **continuous HP regeneration from cached release ATK and flat DEF**. Field lifetime snapshots the original duration plus the first talent's capped extension at cast start, without compounding previous casts. Released flights/fields survive owner retreat and retain their own expiry/recipient cleanup. A failed pre-release target life refunds the source SP cost. Owner hiding suspends owned talents/casts; the same deployment can resume after reappearance.
+
+The private test path exercises all thirty selected skill/rank records for ordinary combat, S1 at all ten ranks with natural charging, all four original facings, live ordinary damage versus cached field ATK, slowed/capped clocks, interrupted casts, source retreat/death, battlefield finish, recipient movement/reappearance, dynamic terrain/crates, six-tile rather than six-unit detection, and shared nonstacking aura/field fallback. **105 combat tests plus nine native source tests pass, zero failures/skips.** The independent native audit again reproduces both outputs exactly and rejects all twelve changed/incomplete fixtures.
+
+Reproduce these checks with:
+
+```sh
+node --test test/arkpedia-thorns-lodestar.test.js test/arkpedia-thorns-lodestar-source.test.js
+.cache/map-env/bin/python tools/arkpedia/audit-thorns-lodestar.py
+```
+
+Runtime contracts remain explicit in `server/sim/content/arkpedia-thorns-lodestar.js` and `server/sim/content/arkpedia-thorns-s1.js`. Unrecovered native filters are mapped to simulator unit categories and HP-ratio/deployment-order targeting. The six-tile detector uses existing ground passability; aura membership is sampled on battle ticks. Shared speed buffs choose the largest magnitude with fallback, while S1 fields retain the first active shared claimant with fallback. Cast completion holds SP through the original clip, and field duration starts at arrival. These are **local execution mappings**, not compiled Unity selector/override/clock parity. Particles/audio, native mount positions, modules and game-frame parity remain unverified.
+
+**S2's growing/drifting field and S3's ally-anchored polygon still require gameplay implementation and review.** Both prepared paths are private; Thorns remains absent from public data and the squad selector until the complete three-skill kit and public lifecycle/browser path are verified. Public coverage remains **361/431 forms, 777 skills, 70 forms remaining**. The existing local preview and SD asset pin remain unchanged. Logs are under ignored `.cache/arkpedia/thorns-lodestar-source/`: `core-tests.log`, `core-source-audit.log` and `core-all-tests.log`.
+
+Full runtime regression for this increment: **10,517 passed, zero failures, nine existing skips** across 10,526 tests. Public operator records are unchanged, and the running port-3182 preview returns the same 361 records. This is private Thorns combat evidence and a full runtime regression; it is not public Thorns/browser or native-effect verification.
