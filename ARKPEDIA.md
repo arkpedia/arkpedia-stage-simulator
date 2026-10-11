@@ -2615,4 +2615,30 @@ Public command coverage adds 42 checks: every skill at each of ten ranks, all fo
 
 The preview responds and its public operator records match the durable snapshot (`public-preview-check.json`). Coverage is **363/431 forms, 783 source skills, 68 forms remaining**. This confirms selected simulator behavior and UI integration; all contract limits above still apply. Modules, original particles/audio, compiled callback/revival routing and Unity frame parity are not certified. Arkpedia app dev remains behind the four-part release gate.
 
+## Exusiai the New Covenant: original source foundation
+
+`data/arkpedia-exusiai-covenant-prefabs.json` retains the pinned Global character and skill records, original operator and Delivery Coordinates prefab hierarchies, reachable projectiles and buff actions, and original Front/Back animation events. It contains **287 native component records, six checksum-verified bundles, twenty templates, seven projectile trees, thirty operator ranks and thirty token ranks**. Both operator skeleton pointer chains resolve to bytes identical to the pinned original SD source. Original particles, token rendering, compiled callbacks and Unity frame parity remain unverified.
+
+Source contracts needed by the regular-stage adapter:
+
+- Keep Exusiai's one-percent Max HP drain, one-second interval, nonlethal flag and SP/modifier exclusions. Do not inherit another Geek's drain percentage.
+- Preserve S1's automatic eight-ammo mode, aerial targeting and separate manual-end burst. The native burst snapshots remaining ammunition into `S1_Burst`; it is not an immediate aggregate ordinary attack.
+- Preserve S2's ASPD steal, source-dependent cleanup, five additional ammo and decaying barrier. The serialized shield capacity uses **BUFF_SOURCE Max HP**. Both S2 attack variants have `_waitForAttackEvent=0`; their visible animation events alone do not establish projectile birth timing.
+- Preserve S3's five original hit events, five-ammo command cost, separate delivery cannon, 1.8-radius stop-only projectile and token SP grant. Delivery Coordinates have their own native prefab and all three passive skill rank sets, require a ground tile inside the host range and occupy zero normal deployment slots. Their compiled deployment-selection callback still needs a documented regular-stage mapping.
+- Preserve the ammo-consumption count used by the first talent's healing loop and independent `Dice` rolls; its bombardment uses the consuming ally's attack range. The second talent explicitly checks an AMMO skill and doubles the derived ATK bonus for the Laterano group.
+
+Reproduce and audit the source foundation with:
+
+```sh
+node tools/arkpedia/fetch-exusiai-covenant.mjs
+node tools/arkpedia/inspect-exusiai-covenant.mjs
+.cache/map-env/bin/python tools/arkpedia/extract-exusiai-covenant.py
+.cache/map-env/bin/python tools/arkpedia/audit-exusiai-covenant.py
+node --test test/arkpedia-exusiai-covenant-source.test.js
+```
+
+These commands use the existing pinned tables, shared native bundle cache and original SD checkout. The independent verifier compares original bytes, complete supported component membership, recursive dependency closure, all sixty ranks and unrounded animation events. The audit reproduces two evidence outputs exactly and rejects fourteen altered records, including missing coordinates, missing token ranks, changed ammo costs, shield source and hit events.
+
+Exusiai remains outside the public roster until her ordinary attack, all three skills, both talents, coordinate deployment/redeployment and removal lifecycle pass engine and browser review. This source increment does not increase the **363/431** playable coverage or satisfy the Arkpedia dev release gate.
+
 Full regression for public Blaze: **10,889 passed, zero failures, nine existing skips** across 10,898 tests and 325 suites (`.cache/arkpedia/blaze-igniting-source/public-all-tests.log`). Rebuilding public data and coverage reproduces both files byte-for-byte (`public-rebuild-review.json`). The original native foundation bytes are unchanged. This increment can publish independently of the held app integration.
