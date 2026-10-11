@@ -110,13 +110,44 @@ class LingAttack {
     this.phase = { kind: 'born', readyAt: this.b.time + this.model().durations.Start };
     this.visual('Start');
   }
+  higher() { return !!this.core.skills?.tokens.get(this.u)?.higher; }
+  clip() { return this.index < 0 && this.core.record.index === 2 && this.core.skills?.active
+    ? 'Skill_03_Loop' : this.higher() ? 'Attack_02' : 'Attack'; }
+  idle() { return this.index < 0 && this.core.record.index === 2 && this.core.skills?.active
+    ? 'Skill_03_Idle' : this.higher() ? 'Idle_02' : 'Idle'; }
+  resetMode() { this.phase = null; this.u.atkCd = 0; this.visual(this.idle(), 1, true); }
+  cast({ scale, bind }) {
+    if (!this.valid()) return;
+    const { b, u } = this, clip = this.index < 0 ? 'Skill_02' : 'Skill';
+    const targets = this.targets(2);
+    this.phase = { kind: 'skill', targets: new Map(targets.map(t => [t, t.deploySeq])), epoch: u.attackControlEpoch,
+      releaseAt: b.time + this.model().eventPayloads[clip].find(e => e.name === 'OnAttack').time,
+      readyAt: b.time + (this.index < 0 ? 1.2000000476837158 : this.model().durations[clip]),
+      released: false, scale, bind };
+    u.atkCd = u.s.interval;
+    this.visual(clip);
+  }
   eligible(t) { return live(t) && canTargetEnemy(this.u, t, { canHitFly: this.index < 0 || this.index === 1 })
     && (!t.s.flags.camou || !!t.blockedBy); }
-  targets() {
+  targets(limit = this.index === 2 ? Math.max(0, Math.floor(this.u.s.blockCnt)) : 1) {
     const u = this.u, keys = u.rangeKeySet ?? new Set(absoluteRangeKeys(u.rangeGrid, u.tileR, u.tileC, u.dir, u.s.rangeExtend));
     const out = this.b.enemies.filter(t => this.eligible(t) && (bodyInKeys(t, keys) || t.blockedBy === u));
     sortEnemyTargets(this.b, u, out);
-    return out.slice(0, this.index === 2 ? Math.max(0, Math.floor(u.s.blockCnt)) : 1);
+    return out.slice(0, limit);
+  }
+  skillHit(t, p) {
+    const { b, u, index } = this, seq = t.deploySeq;
+    if (!this.valid() || !u.canAct || u.s.flags.disarm || p.epoch !== u.attackControlEpoch || !this.eligible(t)) return;
+    const projectile = b.addProjectile({ from: u, target: t, source: u, speed: 10, maxAge: 10, visual: 'bolt',
+      data: { arkpediaTrackedVisual: true, lingCore: this.core,
+        sourceKey: index < 0 ? 'projectile_chr_ling_s2' : 'projectile_chr_ling_soul2_2' },
+      onHit: ({ target }) => {
+        if (b.finished || target !== t || t.deploySeq !== seq || !this.eligible(t)) return;
+        b.dealDamage(u, t, makeDamageInfo({ amount: u.s.atk * u.s.atkScaleMul * p.scale,
+          type: 'arts', isAttack: true, isSkill: true, isSplash: false, applyWay: 'ranged', tags: ['ling:s2'] }));
+        if (live(t)) b.applyStatus(t, 'bind', { source: u, duration: p.bind });
+      } });
+    b.emit('lingProjectileBirth', { owner: this.core.u, unit: u, target: t, projectile, skill: true });
   }
   release(t, info) {
     const { b, u, index, phase: p } = this;
@@ -124,14 +155,16 @@ class LingAttack {
       || p.accepted.has(t) || !p.targets.has(t) || p.targets.get(t) !== t.deploySeq || p.epoch !== u.attackControlEpoch
       || !this.eligible(t) || !due(b, p.releaseAt)) return false;
     p.accepted.add(t);
-    const seq = t.deploySeq, ranged = index < 0 || index === 1, type = ranged ? 'arts' : 'phys';
+    const seq = t.deploySeq, ranged = index < 0 || index === 1;
+    const type = ranged || this.higher() || index === 0 && this.core.skills?.active ? 'arts' : 'phys';
     const damage = () => b.dealDamage(u, t, makeDamageInfo({ amount: u.s.atk * u.s.atkScaleMul,
       type, isAttack: true, isSkill: !!info.isSkill, isSplash: false, applyWay: ranged ? 'ranged' : 'melee',
       attackId: info.attackId ?? 0, tags: [`ling:${index < 0 ? 'owner' : `dragon${index + 1}`}:ordinary`] }));
     if (!ranged) { damage(); return true; }
     const projectile = b.addProjectile({ from: u, target: t, source: u, speed: 10, maxAge: 10, visual: 'bolt',
       data: { arkpediaTrackedVisual: true, lingCore: this.core,
-        sourceKey: index < 0 ? 'projectile_chr_ling' : 'projectile_chr_ling_soul2' },
+        sourceKey: index < 0 ? this.core.record.index === 2 && this.core.skills?.active
+          ? 'projectile_chr_ling_s3' : 'projectile_chr_ling' : 'projectile_chr_ling_soul2' },
       onHit: ({ target }) => { if (!b.finished && target === t && t.deploySeq === seq && this.eligible(t)) damage(); } });
     b.emit('lingProjectileBirth', { owner: this.core.u, unit: u, target: t, projectile });
     return true;
@@ -142,27 +175,33 @@ class LingAttack {
     let p = this.phase;
     if (p?.kind === 'born') { if (!due(b, p.readyAt)) return; this.phase = null; p = null; }
     if (!u.canAct || u.s.flags.disarm || p && p.epoch !== u.attackControlEpoch) {
-      this.phase = null; this.visual('Idle', 1, true); return;
+      this.phase = null; this.visual(this.idle(), 1, true); return;
     }
     if (p) {
       if (!p.released && due(b, p.releaseAt)) {
         p.released = true;
         const targets = [...p.targets].filter(([t, seq]) => this.eligible(t) && t.deploySeq === seq).map(([t]) => t);
-        this.accepting = true;
-        try { b.forceAttack(u, targets); } finally { this.accepting = false; }
+        if (p.kind === 'skill') for (const t of targets) this.skillHit(t, p);
+        else {
+          this.accepting = true;
+          try { b.forceAttack(u, targets); } finally { this.accepting = false; }
+        }
       }
       if (!this.valid() || this.phase !== p || !due(b, p.readyAt)) return;
       this.phase = null;
     }
+    if (this.core.record.index === 1 && this.core.skills?.casting) { this.visual(this.idle(), 1, true); return; }
     if (u.atkCd > 1e-9) return;
     const targets = this.targets();
-    if (!targets.length) { this.visual('Idle', 1, true); return; }
-    const m = this.model(), speed = Math.min(1, u.base.bat / u.s.interval);
+    if (!targets.length) { this.visual(this.idle(), 1, true); return; }
+    const m = this.model(), clip = this.clip();
+    const baseline = u.base.bat + (this.higher() ? this.core.skills.tokenBB['2.base_attack_time'] : 0);
+    const speed = Math.min(1, baseline / u.s.interval);
     if (this.index >= 0) u.mem.regularVisualDirection = targets[0].x < u.x ? 'LEFT' : 'RIGHT';
     this.phase = { kind: 'attack', targets: new Map(targets.map(t => [t, t.deploySeq])), epoch: u.attackControlEpoch,
-      releaseAt: b.time + m.eventPayloads.Attack.find(e => e.name === 'OnAttack').time / speed,
-      readyAt: b.time + Math.max(u.s.interval, m.durations.Attack / speed), released: false, accepted: new Set() };
-    this.visual('Attack', speed); u.atkCd = u.s.interval;
+      releaseAt: b.time + m.eventPayloads[clip].find(e => e.name === 'OnAttack').time / speed,
+      readyAt: b.time + Math.max(u.s.interval, m.durations[clip] / speed), released: false, accepted: new Set() };
+    this.visual(clip, speed); u.atkCd = u.s.interval;
   }
   stop() { this.phase = null; this.u.mem.regularFormVisual = null; delete this.u.mem.regularVisualDirection; }
 }
@@ -215,11 +254,13 @@ export class LingDragonDeck {
     this.attacks.set(t, attack); this.stock--;
     this.u.player.dp -= this.record.stats.cost;
     this.readyAt = b.time + this.record.stats.respawnTime;
+    core.skills?.placed(t);
     return t;
   }
   removed(t) {
     const attack = this.attacks.get(t); if (!attack) return;
     attack.stop(); this.attacks.delete(t);
+    this.core.skills?.removed(t);
     if (this.core.valid()) this.core.departed(t);
   }
   tick() { for (const attack of this.attacks.values()) attack.tick(); }
@@ -269,14 +310,14 @@ export class LingCoreController {
       if (unit === u && !move) { this.seq = u.deploySeq; this.attack.born(); this.deck.born(); }
     }, { owner: u }), b.on('tick', () => {
       if (this.stopped || b.finished || this.seq !== null && !this.valid()) { this.stop(); return; }
-      this.attack.tick(); this.deck.tick();
+      this.skills?.tick(); this.attack.tick(); this.deck.tick();
     }, { owner: u }), b.on('death', ({ unit }) => {
       if (unit === u) this.stop(); else this.deck.removed(unit);
     }, { owner: u }), b.on('battleEnd', () => this.stop())];
   }
   stop() {
     if (this.stopped) return;
-    this.stopped = true; this.attack.stop(); this.deck.stop(); this.b.removeBuff(this.u, 'ling:departures');
+    this.stopped = true; this.skills?.stop(); this.attack.stop(); this.deck.stop(); this.b.removeBuff(this.u, 'ling:departures');
     for (const award of this.spAwards) award.cancel(); this.spAwards.clear();
     if (this.b.finished) this.b.projectiles.remove(p => p.data?.lingCore === this);
     for (const h of this.handles) this.b.off(h); this.handles = [];
