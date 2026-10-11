@@ -1974,3 +1974,22 @@ node --test test/arkpedia-wisadel-attacks.test.js test/arkpedia-wisadel-source.t
 ```
 
 The exact contract is exported as `WISADEL_ATTACK_CONTRACT`; root/mount geometry, sampled homing, random clip selection, first-source mark claims, ordered receipts and same-tick status life snapshots are explicit local mappings. Compiled Unity frame parity, original particles/audio and modules remain unverified. **T2 Shadows, S2 overload, S3 ammunition, original asset publication, full-kit integration and browser review are next.** The public registry, MVP and SD pin remain unchanged: **359/431 forms, 771 skills, 72 remaining**. The existing local preview was confirmed listening and serving HTTP 200 without a restart; it does not expose this private adapter.
+
+### Wiš’adel: private S2 overload combat (2026-10-11)
+
+Added a separate unregistered S2 controller using the reviewed ordinary/afterimage subsystem. Preparation requires `WISADEL_S2_CONTRACT` and the exact selected source build. This does not register Wiš’adel as playable or certify her complete kit.
+
+- Preserve all ten ranks, manual activation, time SP, selected ATK and additive BAT reduction. Run the first source-duration phase for 25 seconds, then the 25-second overload phase; block SP during both and allow manual cancellation.
+- Select up to three current priority targets at the normal strike event. During overload, select a current ground target independently for each of four emissions, with replacement; a missing target skips that emission without inventing another attack/SP event.
+- Use the original facing Begin/Loop/End clips and captured OnAttack timing. Cap playback at one while keeping attack cooldown separate. Additional emissions follow the source .1-second spacing scaled by captured playback, so later ASPD changes cannot retime an accepted volley.
+- Preserve S2's distinct static projectile: a target-root mount alias captured at birth, .1-second start delay, main damage and a separate half-strength aftershock .15 seconds later. Each receipt reads current ATK/DEF; overload keeps its captured rank coefficient, while afterimage explosions use the independent talent coefficient.
+- Cancel unborn emissions on control, mode change, owner finish and manual/natural skill end. Already-born outputs can finish after cancellation or retreat; battle finish cancels every pending output. Preserve shared marks, changed-life guards, lethal aftershock explosions, airborne explosion victims and callback cleanup.
+
+**39 S2 engine checks and 85 focused controller/source checks pass, with zero failures or skips.** They cover all ranks/facings, phase boundaries, target changes, replacement sampling, immunity, transient control, timing changes, manual cancellation, parent removal, mitigation/dodge, shared afterimages, changed-life/reentrant callbacks and battle cleanup. The full runtime suite passes **10,021 tests, with nine skipped and zero failures**. The independent native audit verifies 224 components, six bundles, 13 templates, 40 owner/token ranks, eight projectile trees and three original skeleton chains. Eight altered fixtures are rejected and all ten evidence/artwork outputs reproduce exactly. Logs are `s2-final-focused.log`, `s2-runtime-regression.log` and `s2-native-audit.log` under `.cache/arkpedia/wisadel-source/`. Run:
+
+```sh
+node --test test/arkpedia-wisadel-attacks.test.js test/arkpedia-wisadel-s2.test.js test/arkpedia-wisadel-source.test.js
+.cache/map-env/bin/python tools/arkpedia/audit-wisadel.py
+```
+
+Selection dispatch/RNG order, root/mount aliases, sampled animation/event/cooldown/FSM clocks and receipt order remain explicit local mappings. Compiled Unity frame parity, modules and original effects/audio remain unverified. **T2 Shadows, S3 ammunition, original Shadow publication, full-kit/public lifecycle integration and browser review remain required.** Coverage stays **359/431 forms and 771 skills**, with **72 forms remaining**; the MVP and SD asset pin are unchanged. The existing preview process still listens on port 3182 and returns HTTP 200, but does not expose this private controller.

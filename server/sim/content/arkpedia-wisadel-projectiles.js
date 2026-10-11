@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Private ordinary/S1 subsystem. The controller owns accepted attack commands;
+// Private ordinary/S1/S2 subsystem. The controller owns accepted attack commands;
 // these outputs own their flight/delay clocks, not another attack or SP event.
 import evidence from '../../../data/arkpedia-wisadel-prefabs.json' with { type:'json' };
 import { canTargetEnemy } from '../targeting.js';
@@ -10,11 +10,12 @@ const ground = { groundOnly:true,canHitFly:false }, allMotion = { canHitFly:true
 // Shared across owners: the native explosion action explicitly does not require
 // a live centre target. Preserve its mark until a lethal shock's action resolves.
 const shockDepth = new WeakMap();
-const specs = Object.fromEntries(['default','s1','s1_shock','s1_shock2','s1_bomb'].map(key => {
+const specs = Object.fromEntries(['default','s1','s1_shock','s1_shock2','s1_bomb','s2'].map(key => {
   const rows=evidence.projectiles[`projectile_chr_wisdel_${key}`].flatMap(r=>r.components.map(c=>c.data));
   const mover=rows.find(c=>c._delayAfterReached!=null), root=rows.find(c=>c._lifeTime!=null);
   return [key,{ radius:rows.find(c=>c.m_Radius!=null).m_Radius,
-    delay:mover._delayAfterReached,speed:mover._speed,life:root._lifeTime }];
+    delay:key==='s2'?mover._delayTime:mover._delayAfterReached,
+    start:mover._delayToStart,speed:mover._speed,life:root._lifeTime,static:key==='s2' }];
 }));
 const trait=Object.fromEntries(evidence.tables.character.trait.candidates[0].blackboard.map(v=>[v.key,v.value]));
 
@@ -39,14 +40,21 @@ export class WisadelProjectiles {
         const mark=this.marks.get(unit);if(mark&&!shockDepth.get(unit))this.b.removeBuff(unit,mark);
       })];
   }
-  launch(target,info,isSkill) {
+  launch(target,info,isSkill,options=null) {
     const command={ target,targetSeq:target.deploySeq,ownerSeq:this.u.deploySeq,
       attackId:info.attackId,isSkill,x:this.u.x,y:this.u.y,lastX:target.x,lastY:target.y,
-      bornAt:this.b.time,cancelled:false,timers:[] };
-    const keys=isSkill?['s1','s1_shock','s1_shock2','s1_bomb']:['default'];
-    command.parts=keys.map(key=>({key,spec:specs[key],x:this.u.x,y:this.u.y,lastX:target.x,lastY:target.y,
+      bornAt:this.b.time,cancelled:false,timers:[],mode:options?.mode??(isSkill?'s1':'ordinary'),
+      scale:options?.scale??1,emission:options?.emission??0 };
+    const keys=command.mode==='s2'?['s2']:isSkill?['s1','s1_shock','s1_shock2','s1_bomb']:['default'];
+    command.parts=keys.map(key=>({key,spec:specs[key],x:specs[key].static?target.x:this.u.x,
+      y:specs[key].static?target.y:this.u.y,lastX:target.x,lastY:target.y,
       updatedAt:this.b.time,arrived:false,done:false,stunVictims:null}));
     this.outputs.add(command);
+    // Native S2 is mount-attached, immediate reach after its .1 start delay,
+    // without follow/keep-update. Root-at-birth is the explicit mount alias.
+    for(const part of command.parts)if(part.spec.static)command.timers.push(this.b.after(part.spec.start,()=>{
+      if(this.valid(command))this.arrive(command,part);
+    }));
     this.b.emit('wisadelProjectileBirth',{ owner:this.u,command });
     return command;
   }
@@ -55,7 +63,7 @@ export class WisadelProjectiles {
       if(!this.valid(command))continue;
       const reached=[];
       for(const part of command.parts) {
-        if(part.arrived)continue;
+        if(part.arrived||part.spec.static)continue;
         const {target}=command,{spec}=part;
         if(live(target)&&target.deploySeq===command.targetSeq) { part.lastX=target.x;part.lastY=target.y; }
         const dx=part.lastX-part.x,dy=part.lastY-part.y,d=Math.hypot(dx,dy);
@@ -76,7 +84,7 @@ export class WisadelProjectiles {
   arrive(command,part) {
     if(!this.valid(command)||part.arrived)return;
     part.arrived=true;
-    const main=part.key==='default'||part.key==='s1';
+    const main=part.key==='default'||part.key==='s1'||part.key==='s2';
     if(main){ command.x=part.x;command.y=part.y;command.arrived=true; }
     if(part.key==='s1_bomb'){
       for(const v of part.stunVictims) {
@@ -117,7 +125,7 @@ export class WisadelProjectiles {
       if(kind==='main'&&primary)this.attach(v.target,v.seq);
       if(!this.valid(command)||!this.sameLife(v,ground))continue;
       const mark=v.target.findBuff(WISADEL_AFTERIMAGE);
-      const scale=kind==='main'?1:command.isSkill?this.record.bb.append_atk_scale:trait['attack@append_atk_scale'];
+      const scale=command.scale*(kind==='main'?1:command.mode==='s1'?this.record.bb.append_atk_scale:trait['attack@append_atk_scale']);
       const shock=kind==='aftershock';
       if(shock)shockDepth.set(v.target,(shockDepth.get(v.target)??0)+1);
       try {

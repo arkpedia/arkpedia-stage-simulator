@@ -77,6 +77,11 @@ test('S2 overload uses additive BAT and three additional emissions with no singl
   const a=c('2275143083200507359');assert.equal(a._additionalTimes,3);near(a._triggerDelta,.1);
   assert.equal(a._limitToOneTargetAfterFirstRound,0);
   assert.equal(e.templates['wisdel_s_2[overload_start]'].eventToActions.ON_BUFF_START[0]._modeIndex,2);
+  const movement=c('5684319367411220528');assert.equal(movement._immediatelyReach,1);
+  assert.equal(movement._attachToMountPoint,1);assert.equal(movement._followTarget,0);assert.equal(movement._keepUpdate,0);
+  near(movement._delayToStart,.1);near(movement._delayTime,.15);
+  assert.equal(c('-1616557734077108769')._maxNum,3);assert.equal(c('-2173305061285597729')._maxNum,1);
+  assert.equal(c('-2173305061285597729')._postFilter,14);
   for(const s of ranks(2)){assert.equal(s.duration,25);assert.equal(s.skillType,'MANUAL');assert.equal(s.spData.initSp,15);}
 });
 test('S3 preserves six ammunition rounds and rank-dependent Shadow counts, costs and ATK',()=>{
