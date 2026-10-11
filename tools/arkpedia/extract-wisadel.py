@@ -230,5 +230,20 @@ evidence = {
         'Disabled Shadow ordinary-trigger binding, original Shadow publication, selected-loadout/public lifecycle tests and browser review remain open; serialized data does not establish compiled frame parity.'
     ],
 }
+evidence['enabledOperators'] = [ID]
+evidence['heldOperators'] = []
+evidence['holdReasons'] = []
+evidence['runtimeMapping'] = {ID: 'wisadel'}
+evidence['reviewStatus'] = 'Complete no-module ordinary kit with explicit local execution contracts'
+evidence['runtimeContracts'] = [
+    'All thirty selected owner ranks and ten paired Shadow ranks use exact promotion, level, trust and potential source data. Replace inherited Bombarder aftershocks and generic talent installers with one selected controller and one paired Shadow manager.',
+    'Ordinary/S1 keeps ground-only PRECAST life identity, independent homing roots and separate physical main/aftershock receipts. Original facing clocks, non-repeating random clip choice, S1 terminal stun, offensive SP and lost-input refund use documented local execution mappings.',
+    'S2 keeps source manual time SP, additive BAT, twenty-five-second normal and overload phases and current-target replacement sampling for four emissions. Captured capped playback scales the native additional emission spacing; born static-root outputs survive mode exit.',
+    'S3 keeps all-motion selectors, the separate two-second selection mark, six rounds and cached birth ATK/probability. Original OnAttackFinished locally ends final ammunition; main and half shock remain distinct, while talent explosions use live owner ATK.',
+    'E2 deployment creates one legal nearest Shadow; S3 creates one/two fresh Shadows up to three, without DP/slot charges. The new-token action gives three non-forced SP only to the first successful fresh token and consumes the host marker. Shadows persist after skill expiry.',
+    'Shadow host-only Camouflage is a derived claim captured on spawn. Ground host-range priority, original OnAttack and custom cast clocks, Arts/Slow, parent afterimages, fractional forced SP refill and numeric HEAL_FREE map to explicit local lifecycle/geometry semantics.',
+    'The native Shadow ordinary trigger references script 248012603862317511 with no configurable fields, matching reviewed non-attacking Skadi Seaborn and Rosmontis Equipment bindings. Locally suppress ordinary attacks while preserving the automatic skill. This is a binding-based mapping, not recovered compiled class execution; original notShowInDeck=false is retained as source data while spawns have no manual deck card.',
+    'Original owner and Shadow skeleton/texture pointers are preserved and the published SD revision is pinned independently. Callback life guards, first-source shared marks, foreign replacements, born/unborn cancellation and public reset/retreat transactions are tested locally. Modules, original particles/audio and compiled Unity frame parity remain unverified.',
+]
 (ROOT / 'data/arkpedia-wisadel-prefabs.json').write_text(json.dumps(evidence, indent=2) + '\n')
 print('Extracted Wisadel source:', len(templates), 'templates,', len(projectiles), 'projectile trees and', len(source_bundles), 'verified bundles')

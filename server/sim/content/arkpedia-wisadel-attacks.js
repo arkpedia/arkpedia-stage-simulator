@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Unregistered ordinary/S1 adapter. S2 has a separate private adapter; full-kit
-// Shadows/S3 and public enablement remain separate gates.
+// Source-selected ordinary/S1 component; selected S2/S3 share its lifecycle.
 import { WisadelProjectiles } from './arkpedia-wisadel-projectiles.js';
 import evidence from '../../../data/arkpedia-wisadel-prefabs.json' with { type: 'json' };
 import { sourceCandidate } from '../../../shared/arkpedia/summons.js';
@@ -17,7 +16,7 @@ export const WISADEL_ATTACK_CONTRACT = Object.freeze({
   marks:'nonstacking shared afterimage ID; first accepted source owns parent cleanup; successful detonation consumes mark',
   sp:'one offensive SP per accepted command; S1 holds SP through the full captured attack clip',
   invalid:'dead/changed-life input before birth refunds S1; control cancels unborn output without refund',
-  limits:'Private ordinary/S1 implementation only; S2 has a separate private adapter. T2 Shadows, S3, public enablement, modules, original effects/audio and compiled Unity frame parity are pending. Root geometry/mount aliases, ordered post-damage explosion checks including lethal original-life centres, first-source mark claims, sampled homing, same-tick stun life snapshots, random clip choice/clocks and lifecycle are explicit local mappings.',
+  limits:'Source-selected ordinary/S1 component of the full no-module kit. Modules, original effects/audio and compiled Unity frame parity remain unverified. Root geometry/mount aliases, ordered post-damage explosion checks including lethal original-life centres, first-source mark claims, sampled homing, same-tick stun life snapshots, random clip choice/clocks and lifecycle are explicit local mappings.',
   frameParity:false,
 });
 const flat = rows => Object.fromEntries(rows.map(v => [v.key, v.value]));
@@ -183,10 +182,14 @@ export class WisadelAttackController {
         if(unit===u)this.stop();
       },{ owner:u })];
     this.handles.push(b.on('battleEnd',()=>this.stop()));
+    this.shadows?.install();
   }
   stop() {
+    this.shadows?.stop(this.b.finished);
     if (this.stopped) return;
-    this.stopped=true; this.cancelPhase('owner-finish'); this.projectiles.finishOwner();
+    this.stopped=true;
+    if(this.u.skill.active)this.u.skill.end(this.b.finished?'battle-finish':'owner-finish');
+    this.cancelPhase('owner-finish'); this.projectiles.finishOwner();
     this.u.mem.regularFormVisual=null;
     for (const h of this.handles) this.b.off(h); this.handles=[];
   }

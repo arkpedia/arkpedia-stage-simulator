@@ -46,9 +46,9 @@ function enemy(f,{row=5,col=6,def=0,res=0,hp=1e7,fly=false,taunt=0,flags={}}={})
 }
 const ready=f=>f.u.skill.addCharge(1);
 
-test('private Wisadel ordinary/S1 remains outside public coverage and requires exact contract',()=>{
-  assert.equal(REGULAR_OPERATORS[ID],undefined);assert.equal(data.operators[ID],undefined);
-  assert.deepEqual(e.enabledOperators,[]);assert.deepEqual(e.heldOperators,[ID]);
+test('Wisadel ordinary/S1 component requires an exact contract under the public factory',()=>{
+  assert.equal(REGULAR_OPERATORS[ID].mechanic,'wisadel');assert.ok(data.operators[ID]);
+  assert.deepEqual(e.enabledOperators,[ID]);assert.deepEqual(e.heldOperators,[]);
   assert.equal(CONTRACT.frameParity,false);
   assert.throws(()=>make({contract:{...CONTRACT}}),/contract/);
   assert.throws(()=>make({skill:2}),/Incomplete/);assert.throws(()=>make({skill:3}),/Incomplete/);

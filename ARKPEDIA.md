@@ -2047,3 +2047,27 @@ node --test test/arkpedia-wisadel-attacks.test.js test/arkpedia-wisadel-s2.test.
 Original Shadow artwork is published to the SD feature branch at `b15f375ef1a8c7ec4816eaefd7578354ec76963b`. Asset validation passes for **831 complete records**, all nineteen asset tests pass, and the prior 829 manifest records remain identical. Both logical facings retain the original skeleton/texture bytes and native pointers. The simulator remains on its existing SD pin until public integration.
 
 Coverage remains **359/431 forms and 771 skills**, with **72 forms remaining**. The public registry, MVP and SD pin are unchanged. The existing local preview process still serves HTTP 200 on port 3182; it does not expose this unregistered adapter.
+
+### Wiš’adel: playable selected kit (2026-10-11)
+
+Wiš’adel is now selectable with all three skills and all thirty source ranks. This supersedes the private-controller holds above. Coverage is **360/431 operator forms and 774 skills**, with **71 forms remaining**, including 55 outside the pinned Global catalogue. The Global table contributes 358/374 playable operators; the two additional Amiya forms remain separate. The MVP contains **798 original models and 38 token records**.
+
+- Dispatch the selected skill to one ordinary/S1, S2 or S3 controller, paired with one Shadow manager. Replace inherited Bombarder aftershocks and generic talent installers to prevent duplicate damage and talents.
+- Use selected promotion, level, trust, potential and rank data. Reject locked skills, unavailable mastery and unreviewed modules before deployment.
+- Load original owner/Shadow artwork before battle. Pin the published SD commit `b15f375ef1a8c7ec4816eaefd7578354ec76963b`; its 831 records and nineteen asset tests pass. Earlier model bytes, operator/enemy records, stage geometry and battle rules remain unchanged; existing asset URLs point to the new pin.
+- Keep automatic Shadows outside the manual deck without inventing a portrait. Preserve the original `_notShowInDeck=0` as source evidence. Suppress ordinary attacks using the native script binding shared with the reviewed non-attacking Seaborn/Equipment components; retain the original automatic Arts/Slow skill. This binding-based local mapping does not recover the compiled native class.
+- Clear active S1/S2 state at owner or battle finish, in addition to tokens, derived marks, hooks and pending outputs. Born projectiles retain their documented owner-finish rules; battle finish cancels them.
+
+**179 focused checks pass**, including fourteen new public selected-build/deployment/lifecycle tests. They cover all thirty ranks, original artwork hashes, promotion/trust/potential, skill locks, DP/slot/facing transactions, automatic Shadows, all three skill HUDs, separate main/aftershock/talent receipts, airborne S3 targeting, token SP, empty placement, death, retreat, redeployment and battle finish. The full runtime suite passes **10,115 tests, with nine skipped and zero failures (10,124 total)**. The independent native audit still verifies 224 components, six bundles, thirteen templates, forty owner/token ranks, eight projectile trees and three original skeleton chains. Eight altered fixtures are rejected and all ten evidence/artwork outputs reproduce exactly.
+
+Browser review on the existing `http://localhost:3182/arkpedia/` process covers S1 deployment, original Shadow art, HP/SP, offensive readiness and combat; S2 readiness, activation, overload gauge and manual cancellation; and S3 readiness, six-round HUD, three original Shadows, first-new-token SP, manual cancellation and retreat cleanup. S3 cancellation keeps all three Shadows, while retreat removes them and restores the deployment slot. A separate S3 battle clears all eleven enemies. Those low-HP enemies were killed before a born S3 shot consumed ammunition, so browser ammunition consumption is **not** certified by that run; the public engine tests verify it. No browser warnings/errors were recorded during this review. Captures and logs are under `.cache/arkpedia/wisadel-source/`: `public-s2-overload.jpg`, `public-s3-active.jpg`, `public-focused.log`, `public-runtime-regression.log` and `public-native-audit.log`.
+
+Run:
+
+```sh
+node --test test/arkpedia-wisadel.test.js test/arkpedia-wisadel-attacks.test.js test/arkpedia-wisadel-s2.test.js test/arkpedia-wisadel-s3.test.js test/arkpedia-wisadel-shadows.test.js test/arkpedia-wisadel-source.test.js
+.cache/map-env/bin/python tools/arkpedia/audit-wisadel.py
+npm run coverage:arkpedia
+```
+
+Source facts and the eight public runtime contracts remain distinct from local geometry, selection, clock, callback and lifecycle execution. **Modules, original particles/audio, mobile touch gestures and compiled Unity frame parity remain unverified.** This is a simulator feature-branch change with a usable local preview; no Arkpedia app development or production branch is promoted.

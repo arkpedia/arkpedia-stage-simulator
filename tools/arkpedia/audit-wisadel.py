@@ -46,7 +46,7 @@ def altered(name):
     # Every fixture starts from the independently verified, unmodified record.
     e = json.loads(json.dumps(original))
     if name == 'missing-runtime-gate':
-        e['enabledOperators'] = ['char_1035_wisdel']; e['heldOperators'] = []
+        e['enabledOperators'] = []; e['heldOperators'] = ['char_1035_wisdel']
     elif name == 'omitted-component':
         e['characters']['char_1035_wisdel'][0]['components'].pop()
     elif name == 'missing-projectile':
@@ -76,6 +76,6 @@ for name in ['missing-runtime-gate','omitted-component','missing-projectile','ch
     print('Rejected ' + name, flush=True)
 
 report = {'baseline': baseline, 'reproducibleOutputs': before, 'negativeFixtures': rejections,
-          'publicRuntimeMapping': None, 'heldOperator': 'char_1035_wisdel', 'frameParity': False}
+          'publicRuntimeMapping': original['runtimeMapping'], 'heldOperator': None, 'frameParity': False}
 (OUT/'review-audit.json').write_text(json.dumps(report, indent=2) + '\n')
 print(f'Native audit passed; {len(before)} outputs reproduce exactly and {len(rejections)} modified records are rejected', flush=True)

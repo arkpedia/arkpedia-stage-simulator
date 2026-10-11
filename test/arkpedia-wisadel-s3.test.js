@@ -52,9 +52,9 @@ const shots=f=>f.births.filter(v=>v.command.mode==='s3');
 const receipts=f=>f.hits.filter(v=>v.dmg?.isSkill&&!v.dmg.tags?.includes('afterimage'));
 const tokens=f=>[...f.shadows.tokens.keys()];
 const noTerrain=f=>{for(const t of f.b.grid.tiles)t.build='NONE';};
-test('private S3 requires the exact fresh selected source and contract while public coverage remains held',()=>{
-  assert.equal(REGULAR_OPERATORS[ID],undefined);assert.equal(data.operators[ID],undefined);
-  assert.equal(CONTRACT.frameParity,false);assert.deepEqual(e.enabledOperators,[]);
+test('S3 requires the exact fresh selected source and contract under the public factory',()=>{
+  assert.equal(REGULAR_OPERATORS[ID].mechanic,'wisadel');assert.ok(data.operators[ID]);
+  assert.equal(CONTRACT.frameParity,false);assert.deepEqual(e.enabledOperators,[ID]);
   assert.throws(()=>make({skill:1}),/Incomplete/);assert.throws(()=>make({skill:2}),/Incomplete/);
   assert.throws(()=>make({contract:{...CONTRACT}}),/contract/);
   const f=make({defer:true});

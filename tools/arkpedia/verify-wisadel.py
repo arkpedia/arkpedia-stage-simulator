@@ -161,10 +161,10 @@ assert hot['versionId'] == E['source']['nativeClient'] == '26-09-23-17-49-43_b9c
 for record in E['source']['bundles']:
     native = next(row for row in hot['abInfos'] if row['name'] == record['path'])
     assert (record['md5'], record['size']) == (native['md5'], native['abSize'])
-assert E['enabledOperators'] == [] and E['heldOperators'] == ['char_1035_wisdel']
-assert E['reviewStatus'] == 'Private ordinary/S1/S2/S3 and Shadow components checked separately; full kit remains unavailable pending public integration'
-assert len(E['holdReasons']) == 3 and len(E['recoveredFacts']) == 10
-assert 'runtimeMapping' not in E and 'runtimeContracts' not in E
+assert E['enabledOperators'] == ['char_1035_wisdel'] and E['heldOperators'] == []
+assert E['reviewStatus'] == 'Complete no-module ordinary kit with explicit local execution contracts'
+assert E['holdReasons'] == [] and len(E['recoveredFacts']) == 10
+assert E['runtimeMapping'] == {'char_1035_wisdel': 'wisadel'} and len(E['runtimeContracts']) == 8
 assert E['frameParity'] is False and E['moduleSupport'] is False and E['nativeParticleSupport'] is False
 assert set(E['tables']['skills']) == {'skchr_wisdel_1', 'skchr_wisdel_2', 'skchr_wisdel_3'}
 assert set(E['tables']['tokenSkills']) == {'sktok_wisdel_wward'}
@@ -239,4 +239,4 @@ for face,model in E['tokenModels'][TOKEN].items():
     assert model['sha256'] == record['sha256'] and model['bytes'] == record['bytes']
 # Both facing aliases intentionally point at the same original skeleton.
 assert art['models'][TOKEN]['facings']['front']['files'] == art['models'][TOKEN]['facings']['back']['files']
-print(f'Verified {count} native components, {len(bundles)} bundles, {len(E["templates"])} templates, 30 owner plus 10 token ranks, {len(E["projectiles"])} projectile trees and three original skeleton chains; complete held source foundation; combat, asset publication and compiled frame parity remain unverified')
+print(f'Verified {count} native components, {len(bundles)} bundles, {len(E["templates"])} templates, 30 owner plus 10 token ranks, {len(E["projectiles"])} projectile trees and three original skeleton chains; source facts independently checked; public combat tests/browser review and compiled frame parity are separate evidence')

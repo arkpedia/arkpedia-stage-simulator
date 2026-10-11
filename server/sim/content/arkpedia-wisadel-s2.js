@@ -10,7 +10,7 @@ export const WISADEL_S2_CONTRACT=Object.freeze({
   projectile:'mount-to-root birth alias; .1 start delay then separate main/half-strength splash after .15; live ATK with captured emission coefficient',
   interruption:'control, mode exit and owner finish cancel unborn emissions; already-born projectiles survive; battle finish cancels all outputs',
   sp:'time SP; no automatic activation or SP recovery during either active phase; one attack event per accepted volley',
-  limits:'Private S2 only; T2 Shadows, S3, public lifecycle/browser review, modules and original effects/audio remain pending. Selection dispatch, uniform RNG ordering, mount geometry, animation/event/cooldown/FSM clocks and receipt order are local mappings; compiled Unity frame parity is unverified.',
+  limits:'Source-selected S2 component of the full no-module kit. Modules and original effects/audio remain unverified. Selection dispatch, uniform RNG ordering, mount geometry, animation/event/cooldown/FSM clocks and receipt order are local mappings; compiled Unity frame parity is unverified.',
   frameParity:false,
 });
 const components=Object.values({...evidence.characters,...evidence.skills,...evidence.projectiles})

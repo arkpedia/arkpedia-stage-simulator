@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Unregistered source-selected S3; publication and public lifecycle are separate gates.
+// Source-selected S3 ammunition, targeting and paired Shadow lifecycle.
 import evidence from '../../../data/arkpedia-wisadel-prefabs.json' with {type:'json'};
 import { WisadelAttackController,validateWisadelSelection } from './arkpedia-wisadel-attacks.js';
 import { WisadelShadows,WISADEL_SHADOW_CONTRACT } from './arkpedia-wisadel-shadows.js';
@@ -13,7 +13,7 @@ export const WISADEL_S3_CONTRACT=Object.freeze({
   clocks:'original Begin/Loop/End clips and capped captured playback; additive BAT, independent cooldown with finished-event floor; mode exit cancels unborn output, born shots survive',
   shadows:'source one/two new Shadows up to three; owner token_mark grants three non-forced SP to the first successful new Shadow then is consumed; existing Shadows receive no fabricated gift and remain on skill expiry',
   projectile:'speed-ten five-second root homing, 2.5-tile ALL-motion main and separate .15 half-strength aftershock; cached ATK and captured rank/probability, live mitigation and independent live-source talent explosion',
-  limits:'Unregistered full S3 component. Selection/mark dispatch, root/mount geometry, sampled homing, cached-ATK and probability transfer, Begin/End/FSM/event/cooldown and ammo-holder timing, spawn callback order and non-forced SP setter semantics are local mappings. Original Shadow publication, full selected-loadout/public lifecycle, browser, modules and original effects/audio remain gates; compiled Unity frame parity is unverified.',
+  limits:'Source-selected S3 component of the full no-module kit. Selection/mark dispatch, root/mount geometry, sampled homing, cached-ATK and probability transfer, Begin/End/FSM/event/cooldown and ammo-holder timing, spawn callback order and non-forced SP setter semantics are local mappings. Modules and original effects/audio remain unverified; compiled Unity frame parity is unverified.',
   frameParity:false,
 });
 const components=Object.values({...evidence.characters,...evidence.skills,...evidence.projectiles})
@@ -46,7 +46,6 @@ function reviewed(u,contract){
 }
 export class WisadelS3Controller extends WisadelAttackController {
   constructor(b,u,r){super(b,u,r);this.mode=false;this.tokenMark=null;this.selectionMarks=new Map();this.shadows=null;}
-  install(){super.install();this.shadows.install();}
   transition(clip,until=0){
     this.phase={kind:'s3-transition',readyAt:Math.max(this.b.time+model(this.u).durations[clip],until)};
     this.visual(clip);
@@ -158,7 +157,7 @@ export class WisadelS3Controller extends WisadelAttackController {
   stop(){
     if(this.b.finished&&this.u.skill.active)this.u.skill.end('battle-finish');
     this.mode=false;const flag=this.tokenMark;this.tokenMark=null;if(flag)this.b.removeBuff(this.u,flag);
-    this.selectionMarks.clear();this.shadows?.stop(this.b.finished);super.stop();
+    this.selectionMarks.clear();super.stop();
   }
 }
 export function prepareWisadelS3(b,u,{contract}={}){

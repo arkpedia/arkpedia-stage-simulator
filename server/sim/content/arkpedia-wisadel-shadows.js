@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Private native-selected Shadow lifecycle. Public registration is a separate gate.
+// Native-selected Shadow lifecycle paired with every selected owner skill.
 import evidence from '../../../data/arkpedia-wisadel-prefabs.json' with {type:'json'};
 import { WisadelAttackController,selectedWisadelBuild,WISADEL_ID } from './arkpedia-wisadel-attacks.js';
 import { WISADEL_AFTERIMAGE } from './arkpedia-wisadel-projectiles.js';
@@ -16,13 +16,14 @@ export const WISADEL_SHADOW_CONTRACT=Object.freeze({
   selection:'current host-range ground targets, without the shared afterimage preferred; priority ties; PRECAST identity retained through original OnAttack',
   clocks:'source .2 custom cast window with original .033 OnAttack at one playback; no SP during cast; source convertToInt=false maps to uniform fractional [0,3) forced refill on normal end',
   projectile:'captured root coordinates, speed15 and two-second timeout; retained trace identity, live token ATK, Arts/Slow and owner-derived shared afterimage; born output survives token/host finish',
-  limits:'Unregistered Shadow helper. Native filter27/tile-sort geometry, castOnLocate/FSM/event dispatch, fixed-root mount/line travel, fractional RNG/forced SP callback semantics, HEAL_FREE numeric7 alias, host-range sorting and derived-claim arbitration are local mappings. Disabled ordinary-trigger binding, S3 integration, original asset publication, public lifecycle/browser, modules and effects/audio remain gates; compiled frame parity is unverified.',
+  limits:'Source-selected Shadow helper. Native filter27/tile-sort geometry, castOnLocate/FSM/event dispatch, fixed-root mount/line travel, fractional RNG/forced SP callback semantics, HEAL_FREE numeric7 alias, host-range sorting and derived-claim arbitration are local mappings. Ordinary-trigger suppression uses the reviewed native non-attacking binding; modules and effects/audio remain unverified; compiled frame parity is unverified.',
   frameParity:false,
 });
 const all=Object.values({...evidence.characters,...evidence.tokens,...evidence.skills,...evidence.projectiles})
   .flatMap(rows=>rows.flatMap(r=>r.components));
 const c=id=>all.find(r=>r.pathId===id)?.data;
 const root=c('7531983340995195566'),selector=c('7286542822435797647');
+const ordinaryMode=c('-8943598384253717842'),ordinaryTrigger=c('-7805427546132139346');
 const cast=c('-7386112727074260337'),metadata=c('-7660758978228700529');
 const tileSelector=c('8470049151863188959'),spawn=c('886641082240560607');
 const mover=c('-4142004031650792695'),bolt=c('8036233635240344329');
@@ -47,6 +48,9 @@ function reviewed(controller,contract){
   const source=evidence.tables.tokenSkills.sktok_wisdel_wward.levels[r.build.skillRank-1];
   if(root._occupiedRemainingCharacterCnt!==0||root._notShowInDeck!==0||root._clearProjectileWhenDead!==0
     ||root._isFixedRotation!==1||root._buildCondition.limitByHostAttackRange!==1
+    ||ordinaryMode._attackTrigger.m_PathID!=='-7805427546132139346'
+    ||ordinaryTrigger.m_Script.m_PathID!=='248012603862317511'
+    ||Object.keys(ordinaryTrigger).some(k=>!['m_GameObject','m_Enabled','m_Script','m_Name'].includes(k))
     ||spawn._checkTokenMaxDeployCnt!==1||tileSelector._filterType!==27||tileSelector._maxNum!==1
     ||cast._waitForAttackEvent!==1||cast._timeMode!==2||cast._selectTargetSource!==2
     ||selector._fetchHost!==1||selector._withoutThisBuff!==1||selector._buffKey!==WISADEL_AFTERIMAGE

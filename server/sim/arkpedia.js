@@ -104,6 +104,7 @@ import { customizeNarantKit, installNarant } from './content/arkpedia-narant.js'
 import { customizeElaKit, installEla } from './content/arkpedia-ela.js';
 import { customizeFuzeKit, installFuze } from './content/arkpedia-fuze.js';
 import { customizeRosmontisKit, installRosmontis } from './content/arkpedia-rosmontis.js';
+import { customizeWisadelKit, installWisadel } from './content/arkpedia-wisadel.js';
 import { customizeSwireAlterKit, installSwireAlter } from './content/arkpedia-swire-alter.js';
 import { customizeBlacknightKit, installBlacknight } from './content/arkpedia-blacknight.js';
 import { customizeChristineKit, installChristine } from './content/arkpedia-christine.js';
@@ -495,6 +496,7 @@ export class StandardBattle extends Battle {
     customizeElaKit({ battle: this, id, def, unit, kit });
     customizeFuzeKit({ battle: this, id, def, unit, kit });
     customizeRosmontisKit({ battle: this, id, def, unit, kit });
+    customizeWisadelKit({ battle: this, id, def, unit, kit });
     customizeSwireAlterKit({ battle: this, id, def, unit, kit });
     customizeChristineKit({ battle: this, id, def, unit, kit });
     customizeExecutorReaperKit({ battle: this, id, def, unit, kit });
@@ -687,6 +689,7 @@ export class StandardBattle extends Battle {
     installEla({ battle: this, unit, def });
     installFuze({ battle: this, unit, def });
     installRosmontis({ battle: this, unit, def });
+    installWisadel({ battle: this, unit, def });
     installSwireAlter({ battle: this, unit, def });
     installChristine({ battle: this, unit, def });
     installExecutorReaper({ battle: this, unit, def });

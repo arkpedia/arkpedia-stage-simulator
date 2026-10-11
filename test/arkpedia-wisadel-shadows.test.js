@@ -56,8 +56,8 @@ const ready=f=>f.u.skill.addCharge(1);
 const first=f=>[...f.shadows.tokens.keys()][0];
 const entry=(f,t=first(f))=>f.shadows.tokens.get(t);
 const charge=(f,t=first(f))=>t.skill.addCharge(1);
-test('private Shadow helper requires exact selected fresh owner and contract without changing coverage',()=>{
-  const f=make();assert.equal(REGULAR_OPERATORS[ID],undefined);assert.equal(data.operators[ID],undefined);
+test('Shadow helper requires exact selected fresh owner and contract under the public factory',()=>{
+  const f=make();assert.equal(REGULAR_OPERATORS[ID].mechanic,'wisadel');assert.ok(data.operators[ID]);
   assert.equal(WISADEL_SHADOW_CONTRACT.frameParity,false);
   assert.throws(()=>make({shadowContract:{...WISADEL_SHADOW_CONTRACT}}),/contract/);
   assert.throws(()=>new WisadelShadows(f.controller,{contract:WISADEL_SHADOW_CONTRACT}),/fresh/);

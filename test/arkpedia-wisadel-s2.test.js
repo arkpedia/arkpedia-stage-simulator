@@ -51,9 +51,9 @@ const s2Births=f=>f.births.filter(v=>v.command.mode==='s2');
 const s2Hits=f=>f.hits.filter(v=>v.dmg?.isSkill);
 const overload=f=>{advance(f.b,25.25);assert.equal(f.controller.mode,2);};
 
-test('private S2 retains exact source/contract gates and does not increase playable coverage',()=>{
-  assert.equal(REGULAR_OPERATORS[ID],undefined);assert.equal(data.operators[ID],undefined);
-  assert.deepEqual(e.enabledOperators,[]);assert.equal(CONTRACT.frameParity,false);
+test('S2 retains exact source/contract gates under the public factory',()=>{
+  assert.equal(REGULAR_OPERATORS[ID].mechanic,'wisadel');assert.ok(data.operators[ID]);
+  assert.deepEqual(e.enabledOperators,[ID]);assert.equal(CONTRACT.frameParity,false);
   assert.throws(()=>make({skill:1}),/Incomplete/);assert.throws(()=>make({skill:3}),/Incomplete/);
   assert.throws(()=>make({contract:{...CONTRACT}}),/contract/);
   const f=make({defer:true});

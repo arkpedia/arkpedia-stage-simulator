@@ -13,9 +13,9 @@ const bb=rows=>Object.fromEntries(rows.map(v=>[v.key,v.value]));
 const ranks=n=>e.tables.skills[`skchr_wisdel_${n}`].levels;
 const type=n=>n.$type.split('+').at(-1).split(',')[0];
 const near=(a,b)=>assert.ok(Math.abs(a-b)<1e-6,`${a} != ${b}`);
-test('Wisadel evidence preserves a held full kit without increasing playable coverage',()=>{
-  assert.deepEqual(e.enabledOperators,[]);assert.deepEqual(e.heldOperators,[ID]);
-  assert.equal(REGULAR_OPERATORS[ID],undefined);assert.equal(data.operators[ID],undefined);
+test('Wisadel public source mapping preserves fidelity limits and complete native evidence',()=>{
+  assert.deepEqual(e.enabledOperators,[ID]);assert.deepEqual(e.heldOperators,[]);
+  assert.equal(REGULAR_OPERATORS[ID].mechanic,'wisadel');assert.ok(data.operators[ID]);
   assert.equal(e.frameParity,false);assert.equal(e.moduleSupport,false);assert.equal(e.nativeParticleSupport,false);
   assert.equal(e.source.commit,'57010cb5b2afea112cae57daa756b58676ba6850');
   assert.equal(e.source.nativeClient,'26-09-23-17-49-43_b9cc4a');
@@ -23,7 +23,7 @@ test('Wisadel evidence preserves a held full kit without increasing playable cov
   assert.equal(Object.keys(e.templates).length,13);assert.equal(Object.keys(e.projectiles).length,8);
   assert.deepEqual(e.nativeTemplateGaps,[]);assert.deepEqual(Object.keys(e.originalTemplates),Object.keys(e.templates));
   assert.deepEqual(Object.keys(e.buffDatabase),['sluggish','stun']);
-  assert.equal(e.recoveredFacts.length,10);assert.equal(e.holdReasons.length,3);
+  assert.equal(e.recoveredFacts.length,10);assert.equal(e.holdReasons.length,0);assert.equal(e.runtimeContracts.length,8);
 });
 test('ordinary selector prevents immediate repeats without inventing a strict three-animation cycle',()=>{
   const a=c('-3919129585840132641');

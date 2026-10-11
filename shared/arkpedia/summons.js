@@ -97,6 +97,7 @@ export const REGULAR_SUMMONS = Object.freeze({
 // models must load with the owner before battle can draw the spawned unit.
 export const REGULAR_AUTOMATIC_TOKENS = Object.freeze({
   char_391_rosmon: Object.freeze(['token_10012_rosmon_shield']),
+  char_1035_wisdel: Object.freeze(['token_10035_wisdel_wward']),
   char_1033_swire2: Object.freeze(['token_10031_swire2_gdtrap']),
   char_1019_siege2: Object.freeze(['token_10040_siege2_vlion']),
   char_4046_ebnhlz: Object.freeze(['token_10024_ebnhlz_rcube']),
