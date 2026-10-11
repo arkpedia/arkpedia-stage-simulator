@@ -306,4 +306,3 @@ test('the same Shadow class never owns a foreign host mark or erases a foreign c
   const camou=f.b.addBuff(f.u,{key:WISADEL_CAMOUFLAGE,source:foreign,flags:{camou:true}});
   f.b.retreat(t,{permanent:true});assert.equal(a.findBuff(MARK),mark);assert.equal(f.u.findBuff(WISADEL_CAMOUFLAGE),camou);
 });
-
