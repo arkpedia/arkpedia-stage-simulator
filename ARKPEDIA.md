@@ -2062,6 +2062,7 @@ Wiš’adel is now selectable with all three skills and all thirty source ranks.
 
 Browser review on the existing `http://localhost:3182/arkpedia/` process covers S1 deployment, original Shadow art, HP/SP, offensive readiness and combat; S2 readiness, activation, overload gauge and manual cancellation; and S3 readiness, six-round HUD, three original Shadows, first-new-token SP, manual cancellation and retreat cleanup. S3 cancellation keeps all three Shadows, while retreat removes them and restores the deployment slot. A separate S3 battle clears all eleven enemies. Those low-HP enemies were killed before a born S3 shot consumed ammunition, so browser ammunition consumption is **not** certified by that run; the public engine tests verify it. No browser warnings/errors were recorded during this review. Captures and logs are under `.cache/arkpedia/wisadel-source/`: `public-s2-overload.jpg`, `public-s3-active.jpg`, `public-focused.log`, `public-runtime-regression.log` and `public-native-audit.log`.
 
+
 Run:
 
 ```sh
@@ -2071,3 +2072,29 @@ npm run coverage:arkpedia
 ```
 
 Source facts and the eight public runtime contracts remain distinct from local geometry, selection, clock, callback and lifecycle execution. **Modules, original particles/audio, mobile touch gestures and compiled Unity frame parity remain unverified.** This is a simulator feature-branch change with a usable local preview; no Arkpedia app development or production branch is promoted.
+
+### Lappland the Decadenza: complete native source foundation
+
+Lappland's ordinary trait, talents and all thirty skill ranks now have reproducible evidence in `data/arkpedia-lappland-alter-prefabs.json`. She remains unavailable while the regular-stage controller is implemented. Coverage stays **360/431 forms and 774 skills**, with **71 forms remaining**. The pinned Global tables, playable MVP, SD revision and earlier controllers are unchanged.
+
+The evidence uses Global commit `57010cb5b2afea112cae57daa756b58676ba6850`, Android client `26-09-23-17-49-43_b9cc4a` and resource commit `d0b5af0b004b044d322397ce5ae79632b6d9fcdd`. Five checksum-verified native bundles supply **370 complete components, twelve buff templates and twenty-four projectile trees**. Original Front/Back animator-to-skeleton pointer chains match the resource bytes and retain unrounded event payloads. Audio signal names are retained as audio evidence, not mistaken for missing projectile prefabs.
+
+- Ordinary Funnel scaling retains initial 0.2, increments of 0.15, maximum 1.1 and six stacks. The native ordinary ability has three available drone action slots; the trait explicitly shares its ordinary ability.
+- Alpha Wolf's native branches grant a damage-cap multiplier, a silence mark, then one additional drone in all four named modes. Its terminal branch finishes the timer. Promotion/potential interval, cap and silence values remain source data rather than a recurring drone-growth assumption.
+- Honor of Siracusa uses the squad/deck Siracusa filter and a born-event SP action. Base E2 grants five initial SP; potential rank two grants six. Its no-module attack-speed blackboard is zero.
+- S1's extra-drone passive affects ordinary and S1 modes. The skill toggles between modes one and zero; each remote drone has an all-motion selector with native post-filter 58. Its owner attack event is at 1/6 second rather than the ordinary 0.4 second. Translating the selector's non-mobile condition into regular-stage execution is still required.
+- S2 retains six independent drone selectors/projectiles and every rank's duration, ATK, time SP and probabilistic Fear action. It must preserve separate drone locks and attacks rather than multiply one generic caster hit.
+- S3 retains four cruise/attachment pairs, four drone damage abilities, initial radius 0.5 and detach cleanup. Native spread accelerates from 0.1 to two at approximately 1.9 per second; chase accelerates from two to four at one per second, with turn speed five and inertia enabled. The idle orbit has **radius 1.25**, unlike the inherited mode's 0.9. Reappearance offsets remain the original ±0.75 square.
+- S3's movement slow and Arts damage use one shared, non-independent-source buff: one-second normal-damage ticks without an initial wait. The 0.9 damage-area radius is distinct from the 1.25 idle orbit.
+
+**Ten source-contract checks pass**, with zero failures or skips. An independent native-byte audit verifies complete hierarchy/component membership, recursive projectile/template/database/range dependencies, all thirty ranks and both skeleton chains. Two outputs reproduce exactly; nine modified fixtures are rejected, including missing drone pairs, incomplete components, changed skill ranks/events/orbit/talent actions, missing template dependencies, altered skeleton pointers and premature public enablement. Run:
+
+```sh
+node tools/arkpedia/fetch-lappland-alter.mjs
+node tools/arkpedia/inspect-lappland-alter.mjs
+.cache/map-env/bin/python tools/arkpedia/extract-lappland-alter.py
+.cache/map-env/bin/python tools/arkpedia/audit-lappland-alter.py
+node --test test/arkpedia-lappland-alter-source.test.js
+```
+
+Logs are `.cache/arkpedia/lappland-alter-source/source-tests.log` and `native-audit.log`. **Ordinary/S1/S2/S3 execution, drone targeting/movement/attack lifecycle, squad SP, full selected-loadout tests and browser review remain required.** Compiled Unity frame parity, modules and original particles/audio are unverified. Source recovery is not a claim of playable combat; the existing preview still serves the last verified public kit.
