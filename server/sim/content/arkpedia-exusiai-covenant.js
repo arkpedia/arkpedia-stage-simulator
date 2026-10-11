@@ -9,6 +9,7 @@ import { applyHpLoss, makeDamageInfo } from '../damage.js';
 import { EXUSIAI_COVENANT_S1_CONTRACT, ExusiaiCovenantS1 } from './arkpedia-exusiai-covenant-s1.js';
 import { EXUSIAI_COVENANT_S2_CONTRACT, ExusiaiCovenantS2 } from './arkpedia-exusiai-covenant-s2.js';
 import { EXUSIAI_COVENANT_S3_CONTRACT, ExusiaiCovenantS3 } from './arkpedia-exusiai-covenant-s3.js';
+import { EXUSIAI_COVENANT_COORDINATES_CONTRACT, ExusiaiCovenantCoordinates } from './arkpedia-exusiai-covenant-coordinates.js';
 
 export const EXUSIAI_COVENANT_ID = 'char_1041_angel2';
 export const EXUSIAI_COVENANT_CORE_CONTRACT = Object.freeze({
@@ -221,10 +222,11 @@ export class ExusiaiCovenantCoreController {
     b.on('removed', ({ unit }) => { if (unit === u) this.stop(); else this.syncAura(); }, { owner: u }),
     b.on('death', ({ unit }) => { if (unit === u) this.stop(); else this.syncAura(); }, { owner: u }),
     b.on('battleEnd', () => this.stop())];
+    this.coordinates?.install();
   }
   stop() {
     if (this.stopped) return;
-    this.stopped = true; this.s1?.ownerStop(); this.s2?.ownerStop(); this.phase = null; this.syncAura();
+    this.stopped = true; this.coordinates?.stop(); this.s1?.ownerStop(); this.s2?.ownerStop(); this.phase = null; this.syncAura();
     if (this.b.finished) this.b.projectiles.remove(p => p.data?.exusiaiCovenantOwner === this);
     this.u.mem.regularFormVisual = null; delete this.u.mem.regularVisualDirection;
     for (const h of this.handles) this.b.off(h); this.handles = [];
@@ -314,5 +316,26 @@ export function prepareExusiaiCovenantS3(b, u, { contract } = {}) {
     trigger: { rule: 'NEVER' }, manualCancel: true, attack: {}, mods: { atkPct: record.bb.atk },
     canActivate: () => controller.s3.canCast(), onStart: () => controller.s3.start(),
     onAttack: ctx => controller.s3.consume(ctx), onEnd: ctx => controller.s3.end(ctx.reason) };
+  return prepared;
+}
+
+export function prepareExusiaiCovenantCoordinates(b, u, { contract } = {}) {
+  if (contract !== EXUSIAI_COVENANT_COORDINATES_CONTRACT) throw Error('Exusiai Coordinates requires the reviewed delivery contract');
+  const token = component('5469880532721077243'), cannon = component('1043593523196519663');
+  const actions = JSON.parse(cannon._actions.SerializedState), sp = evidence.templates['angel2_s_3[sp]'].eventToActions.ON_BUFF_START[0];
+  if (token._occupiedRemainingCharacterCnt !== 0 || token._buildCondition.buildableType !== 1
+    || token._buildCondition.needSpecifyDirection !== 1 || token._buildCondition.limitByHostAttackRange !== 1
+    || cannon._animKey !== 'Skill_3_Skill' || cannon._waitForAttackEvent !== 1 || cannon._maxAnimScale !== -1
+    || component('7299706011241545312')._speed !== 10 || component('9077714383366848096')._stopWhenSourceInvalid !== 1
+    || component('4112073188336795232').m_Radius !== 1.7999999523162842
+    || component('-4694220270147994016')._onlyCheckHitWhenStop !== 1
+    || actions.length !== 5 || actions[0]._blackboardKey !== 'direction' || actions[0]._isReverse !== false
+    || actions[2]._withdrawSource !== false || actions[2]._force !== true
+    || actions[3]._onlyRecordDoNotRefreshRespawnTime !== true || actions[3]._keyToStore !== 'card_id'
+    || !actions[4].$type.endsWith('+Angel2DeployCharacterOnTileBySelector')
+    || sp._forceFlag !== false || sp._spMask !== 'ALL' || sp._spString !== 'sp')
+    throw Error('Unreviewed Exusiai coordinate and cannon source');
+  const prepared = prepareExusiaiCovenantS3(b,u,{contract:EXUSIAI_COVENANT_S3_CONTRACT});
+  prepared.controller.coordinates = new ExusiaiCovenantCoordinates(prepared.controller);
   return prepared;
 }
