@@ -37,6 +37,7 @@ import { bodyKeys, bodyInKeys, bodyInRadius } from './body.js';
 import { normDir, mirrorDir, localOrder, localBefore } from './dir.js';
 import { ProjectileSystem } from './projectiles.js';
 import { stampFear } from './fear.js';
+import { observeEnemyMove } from './movement-observer.js';
 import { SkillRuntime } from './skills.js';
 import { updateAlly, updateEnemy, compileRoute, remainingDistance, effectiveProfile, performAttack, acquireTargets } from './ai.js';
 import { resolveProfile } from './professions.js';
@@ -2193,7 +2194,9 @@ export class Battle {
       }
       const ok = e.motion === 'FLY' ? this.grid.inRect(r, c) : this.grid.groundPassable(r, c);
       if (!ok) break;
+      const previous = this.hasHook('enemyMoved') ? { x: e.x, y: e.y } : null;
       e.x = nx; e.y = ny; moved += s;
+      if (observeEnemyMove(this, e, previous, 'displace')) break;
     }
     if (moved > 0) {
       this._unblock(e);
@@ -2397,6 +2400,7 @@ export class Battle {
     if (e.hidden === on) return;
     e.hidden = on;
     if (on) this._unblock(e);
+    if (this.hasHook('enemyHidden')) this.emit('enemyHidden', { enemy: e, hidden: on });
     this.fx(on ? 'disappear' : 'appear', { x: e.x, y: e.y, id: e.id });
   }
 

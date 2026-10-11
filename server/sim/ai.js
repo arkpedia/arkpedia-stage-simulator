@@ -30,6 +30,7 @@ import { sortEnemyTargets, sortAllyTargets, canTargetEnemy, canTargetAlly, tileK
 import { reduceElement } from './damage.js';
 import { straightClear } from './grid.js';
 import { moveFeared, endFear } from './fear.js';
+import { observeEnemyMove } from './movement-observer.js';
 
 // ---------------------------------------------------------------------------------------------------------------
 // profiles
@@ -633,10 +634,12 @@ function moveAttracted(b, e, dt) {
   let dist = e.s.moveSpeed * (b.flags.moveScale ?? MOVE_SCALE) * dt;
   let moved = false;
   while (dist > 1e-9 && A.i < A.pts.length) {
+    const from = b.hasHook('enemyMoved') ? { x: e.x, y: e.y } : null;
     const p = A.pts[A.i];
     const dx = p.x - e.x, dy = p.y - e.y, d = Math.hypot(dx, dy);
     if (d <= dist) { e.x = p.x; e.y = p.y; dist -= d; A.i++; } else { e.x += (dx / d) * dist; e.y += (dy / d) * dist; dist = 0; }
     moved = true;
+    if (observeEnemyMove(b, e, from, 'attract')) { A.pts = null; e.moving = false; return; }
   }
   A.px = e.x; A.py = e.y;
   e.moving = moved;
@@ -688,6 +691,7 @@ function advanceRoute(b, e, dt, R, standing = false) {
       if (!R.pts || R.version !== b.grid.version) planLeg(b, e, leg);
       if (R.ptIdx >= R.pts.length) break;
       const p = R.pts[R.ptIdx];
+      const from = b.hasHook('enemyMoved') ? { x: e.x, y: e.y } : null;
       const dx = p.x - e.x, dy = p.y - e.y;
       const d = Math.hypot(dx, dy);
       if (d <= dist) {
@@ -699,6 +703,7 @@ function advanceRoute(b, e, dt, R, standing = false) {
         e.y += (dy / d) * dist;
         dist = 0;
       }
+      if (observeEnemyMove(b, e, from)) { e.moving = false; return; }
       if (b._checkBlock(e)) return;
     }
     budget = dist / speed;

@@ -27,6 +27,7 @@
 
 import { MOVE_SCALE, COLS } from './constants.js';
 import { straightClear } from './grid.js';
+import { observeEnemyMove } from './movement-observer.js';
 
 /** 半径10格 — the fan's radius (tiles). */
 export const FEAR_RADIUS = 10;
@@ -219,9 +220,11 @@ export function moveFeared(b, e, dt) {
     for (let guard = 8; dist > 1e-9 && guard > 0; guard--) {
       if (!m.pts || m.i >= m.pts.length) pickCheckpoint(b, e, m);
       const p = m.pts[m.i];
+      const from = b.hasHook('enemyMoved') ? { x: e.x, y: e.y } : null;
       const dx = p.x - e.x, dy = p.y - e.y, d = Math.hypot(dx, dy);
       if (d <= dist) { e.x = p.x; e.y = p.y; dist -= d; m.i++; } else { e.x += (dx / d) * dist; e.y += (dy / d) * dist; dist = 0; }
       moved = moved || d > 1e-9;
+      if (observeEnemyMove(b, e, from, 'fear')) { m.pts = null; e.moving = false; return; }
     }
   }
   m.px = e.x; m.py = e.y;

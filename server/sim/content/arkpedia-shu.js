@@ -147,6 +147,7 @@ export class ShuCoreController {
     sortEnemyTargets(b, u, out); return out.slice(0, limit);
   }
   release(t, info) {
+    if (this.phase?.kind === 'skill-attack') return this.skills?.releaseAttack(t, info) ?? false;
     const { b, u, phase: p } = this;
     if (!this.accepting || !this.valid() || !u.canAct || u.s.flags.disarm || !p || p.kind !== 'attack'
       || p.epoch !== u.attackControlEpoch || p.target !== t || p.targetSeq !== t.deploySeq || p.accepted
@@ -157,6 +158,7 @@ export class ShuCoreController {
     return true;
   }
   tickAttack() {
+    if (this.skills?.tickAttack()) return;
     const { b, u } = this;
     if (!this.valid()) { this.phase = null; return; }
     let p = this.phase;
@@ -192,7 +194,8 @@ export class ShuCoreController {
       const tile = this.b.grid.tile(r, c);
       if (tile.build !== 'NONE' || tile.pass === 'ALL') this.tiles.add(this.b.grid.key(r, c));
     }
-    this.syncSowing(); this.b.emit('shuSowing', { owner: this.u, target, tiles: [...this.tiles] });
+    this.syncSowing(); this.skills?.syncEnemies(); this.skills?.syncAura();
+    this.b.emit('shuSowing', { owner: this.u, target, tiles: [...this.tiles] });
   }
   syncSowing() {
     const { b, u, record } = this, regen = `shu:sowing:regen:${u.id}`, sanctuary = `shu:sowing:sanctuary:${u.id}`;
@@ -201,10 +204,15 @@ export class ShuCoreController {
       // HEAL_FREE do not reject it. A direct skill heal still does.
       const eligible = this.valid() && live(a) && a.kind !== 'device'
         && b.allySelectable(a, u) && this.tiles.has(b.grid.key(a.tileR, a.tileC));
-      mods(b, a, regen, eligible ? { hpRegen: record.sowing.hp_recovery_per_sec } : null, u);
+      const scale = this.skills?.sowingScale ?? 1;
+      mods(b, a, regen, eligible ? { hpRegen: record.sowing.hp_recovery_per_sec * scale } : null, u);
       if (!eligible) { b.removeBuff(a, sanctuary); this.recipients.delete(a); }
       else {
-        if (!a.findBuff(sanctuary)) b.applyStatus(a, 'sanctuary', { key: sanctuary, source: u, value: record.sowing.damage_resistance });
+        const value = record.sowing.damage_resistance * scale;
+        if (a.findBuff(sanctuary)?.data?.value !== value) {
+          b.removeBuff(a, sanctuary);
+          b.applyStatus(a, 'sanctuary', { key: sanctuary, source: u, value });
+        }
         this.recipients.add(a);
       }
     }
