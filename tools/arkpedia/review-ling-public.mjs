@@ -74,6 +74,12 @@ try {
   assert.equal(await page.$eval('#skillId', e => e.options.length), 3);
   await page.select('#skillId', `skchr_ling_${skill}`); await page.click('#start');
   await page.waitForFunction(() => window.publicLingReview?.battle && document.querySelector('#deployment button'), { timeout: 60000 });
+  async function press(selector) {
+    if (!mobile) return page.click(selector);
+    const element=await page.$(selector);assert.ok(element,selector);
+    await element.evaluate(e=>e.scrollIntoView({block:'nearest',inline:'nearest'}));
+    const box=await element.boundingBox();await page.touchscreen.tap(box.x+box.width/2,box.y+box.height/2);
+  }
   await page.evaluate(skill => publicLingReview.targets(skill), skill);
   await page.evaluate(() => {
     const e=document.createElement('div');e.textContent='CONTROLLED QA · natural SP / pinned targets / 99 DP';
@@ -135,7 +141,7 @@ try {
     assert.equal(extra.count,1);assert.equal(extra.slots,2);assert.equal(extra.totalSlots,3);
     assert.ok(['Idle_02','Attack_02'].includes(extra.clip));assert.equal(extra.die,'Die_02');
   }
-  await page.click(`#deployment [data-id="${ID}"]`);
+  await press(`#deployment [data-id="${ID}"]`);
   await page.evaluate(() => publicLingReview.silence());
   await page.evaluate(id => {
     const u=publicLingReview.battle.bench[id].unit;
@@ -143,7 +149,7 @@ try {
   },ID);
   assert.equal(await page.$eval('#skill',e=>e.disabled),false);
   await page.screenshot({path:dir+`public-${label}-ready.png`});
-  await page.click('#skill');
+  await press('#skill');
   await page.evaluate(() => publicLingReview.advance(.6));
   const active=await page.evaluate(id=>{
     const b=publicLingReview.battle,u=b.bench[id].unit,c=u.mem.lingController;
@@ -175,14 +181,14 @@ try {
   assert.equal(await page.evaluate(()=>publicLingReview.selection.selected),`token:${remaining}`);
   if(skill===3) assert.match(await page.$eval('.command-copy',e=>e.textContent),/2 deployment slots/);
   await page.screenshot({path:dir+`public-${label}-focused.png`});
-  await page.click('#retreat');
+  await press('#retreat');
   if(skill===3) await page.waitForFunction(id=>publicLingReview.renderer.views.get(id)?.actor.current==='Die_02',{},remaining);
   const removed=await page.evaluate(id=>{const b=publicLingReview.battle,t=b.units.find(t=>t.id===id),v=publicLingReview.renderer.views.get(id);
     return {alive:t.alive,slots:b.deployedSlots(),death:t.mem.regularDeathVisual,clip:v?.actor.current,duration:v?.deathDuration};},remaining);
   assert.equal(removed.alive,false);assert.equal(removed.slots,1);
   if(skill===3){assert.equal(removed.clip,'Die_02');assert.equal(removed.duration,1);}
   const snapshots={label,skill,mobile,extra,active,removed};reports.push(snapshots);
-  await page.click(`#deployment [data-id="${ID}"]`); await page.click('#retreat');
+  await press(`#deployment [data-id="${ID}"]`); await press('#retreat');
   assert.equal(await page.evaluate(id=>publicLingReview.battle.bench[id].unit.mem.lingController.stopped,ID),true);
   await page.close();
  }
