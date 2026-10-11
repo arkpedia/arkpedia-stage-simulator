@@ -1,0 +1,880 @@
+{
+  "sourceVersion": "26-09-23-17-49-43_b9cc4a",
+  "tableCommit": "57010cb5b2afea112cae57daa756b58676ba6850",
+  "sourceBundles": [
+    {
+      "path": "charpack/char_118_yuki.ab",
+      "md5": "1dc5a9b86b0a874903992370db5dd240",
+      "size": 19179,
+      "sha256": "f438231354ddf4c248e460a1267e5143da71b91fa2e26d860e9a3825c8a01219"
+    },
+    {
+      "path": "charpack/char_440_pinecn.ab",
+      "md5": "88a923e419e164aad970b9782b6b1587",
+      "size": 21130,
+      "sha256": "149b73aa7f1307b816a196a6316a6c0772fe6f57cff49be94fd17c5ebb13e690"
+    },
+    {
+      "path": "charpack/char_302_glaze.ab",
+      "md5": "26b7244223d54feb870491ad2f9c8972",
+      "size": 21242,
+      "sha256": "ad8fcff3355d3953c30c15f9a4e2ead182661aae9b1b945837482fe2847c5d1a"
+    },
+    {
+      "path": "charpack/char_4062_totter.ab",
+      "md5": "e8dc5382be9120eb6839312901a8aeef",
+      "size": 25222,
+      "sha256": "e513bf015bcb27c61d13f4e390768c25dde2a1ca3f898eba35c27ee7c70e0672"
+    },
+    {
+      "path": "battle/prefabs/[uc]skills.ab",
+      "md5": "ff06dc9bb5516d069c8c0017207653ca",
+      "size": 1163240,
+      "sha256": "1c026938f054218f7e6bda9000162b2a6f30c9bd93e1ae9763d9d6df2270499c"
+    },
+    {
+      "path": "battle/prefabs/[uc]projectiles.ab",
+      "md5": "0b1d64a8aba25913161f5fd7174cab34",
+      "size": 1605622,
+      "sha256": "3d68c63bf7a7d658e65035a9c71dfc9a00e4804563b922185499d108dfb7f639"
+    }
+  ],
+  "shirayuki": {
+    "id": "char_118_yuki",
+    "traitDescription": "Deals <@ba.kw>AOE Physical damage</>",
+    "hits": {
+      "Attack": [
+        0.467
+      ]
+    },
+    "animationSource": {
+      "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+      "front": {
+        "path": "models/operator/char_118_yuki/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_118_yuki.skel",
+        "bytes": 44446,
+        "sha256": "7ac1d3434a6d92b4ba932d81a7fc6e9be70565a47a1520c3c7b660f0e22d8b60"
+      },
+      "back": {
+        "path": "models/operator/char_118_yuki/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_118_yuki.skel",
+        "bytes": 29168,
+        "sha256": "3c9ec16cc28994de99b10c1c722b876bcb6c0ed4afdbea3c3954be0339874720"
+      }
+    },
+    "backHits": {
+      "Attack": [
+        0.467
+      ]
+    },
+    "talentBuffs": [
+      {
+        "pathId": "-8420545107596178888",
+        "buffs": [
+          {
+            "buffKey": "slow_down",
+            "templateKey": "empty",
+            "attributeModifiers": [
+              {
+                "attributeType": 6,
+                "formulaItem": 3,
+                "value": 0.0,
+                "loadFromBlackboard": 1,
+                "fetchBaseValueFromSourceEntity": 0
+              }
+            ],
+            "lifeTimeType": 1,
+            "durationKey": "",
+            "triggerInterval": -1.0,
+            "blackboard": []
+          }
+        ]
+      },
+      {
+        "pathId": "-5201721225877091784",
+        "buffs": [
+          {
+            "buffKey": "yuki_t_1",
+            "templateKey": "empty",
+            "attributeModifiers": [
+              {
+                "attributeType": 8,
+                "formulaItem": 0,
+                "value": 0.0,
+                "loadFromBlackboard": 1,
+                "fetchBaseValueFromSourceEntity": 0
+              },
+              {
+                "attributeType": 1,
+                "formulaItem": 1,
+                "value": 0.0,
+                "loadFromBlackboard": 1,
+                "fetchBaseValueFromSourceEntity": 0
+              }
+            ],
+            "lifeTimeType": 2,
+            "durationKey": "",
+            "triggerInterval": -1.0,
+            "blackboard": []
+          }
+        ]
+      }
+    ],
+    "skills": {
+      "skchr_yuki_1": [
+        {
+          "pathId": "5440593292488927769",
+          "buffs": [
+            {
+              "buffKey": "yuki_s_1",
+              "templateKey": "empty",
+              "attributeModifiers": [
+                {
+                  "attributeType": 15,
+                  "formulaItem": 0,
+                  "value": 0.0,
+                  "loadFromBlackboard": 1,
+                  "fetchBaseValueFromSourceEntity": 0
+                }
+              ],
+              "lifeTimeType": 1,
+              "durationKey": "",
+              "triggerInterval": -1.0,
+              "blackboard": []
+            }
+          ]
+        }
+      ],
+      "skchr_yuki_2": [
+        {
+          "pathId": "-484469659938231857",
+          "buffs": [
+            {
+              "buffKey": "yuki_s_2",
+              "templateKey": "switch_mode",
+              "attributeModifiers": [],
+              "lifeTimeType": 1,
+              "durationKey": "",
+              "triggerInterval": -1.0,
+              "blackboard": [
+                {
+                  "key": "mode",
+                  "value": 1.0,
+                  "valueStr": ""
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "projectile": {
+      "speed": 8.0,
+      "dwell": 2.0,
+      "hitCooldown": 1.0,
+      "lifeTime": 10.0,
+      "stopWhenSourceInvalid": 0,
+      "clearTraceTargetWhenReached": 1,
+      "radius": 0.75,
+      "offset": {
+        "x": -0.029999999329447746,
+        "y": 0.019999999552965164
+      }
+    }
+  },
+  "pinecone": {
+    "id": "char_440_pinecn",
+    "traitDescription": "Attacks <@ba.kw>all enemies</> within range, and deals 150% damage to enemies in the row directly in front of this unit.",
+    "hits": {
+      "Attack": [
+        0.4
+      ],
+      "Attack_Down": [
+        0.4
+      ],
+      "Skill_1": [
+        0.467
+      ],
+      "Skill_2": [
+        0.467
+      ],
+      "Skill_1_Down": [
+        0.467
+      ],
+      "Skill_2_Down": [
+        0.467
+      ]
+    },
+    "animationSource": {
+      "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+      "front": {
+        "path": "models/operator/char_440_pinecn/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_440_pinecn.skel",
+        "bytes": 226508,
+        "sha256": "0f5e563a35b85f44fa36b1d133ff725442acbdb6ceecad2353a623404a21b3a6"
+      },
+      "back": {
+        "path": "models/operator/char_440_pinecn/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_440_pinecn.skel",
+        "bytes": 113094,
+        "sha256": "f79f52339582d171d51de779ae93e8299989a7debf42b43568d458894b0e3050"
+      }
+    },
+    "backHits": {
+      "Attack": [
+        0.4
+      ],
+      "Skill_1": [
+        0.467
+      ],
+      "Skill_2": [
+        0.467
+      ],
+      "Skill_1_Up": [
+        0.467
+      ],
+      "Skill_2_Up": [
+        0.467
+      ]
+    },
+    "talentBuffs": [
+      {
+        "pathId": "2639000100659762009",
+        "buffs": [
+          {
+            "buffKey": "pinecn_spRecover",
+            "templateKey": "empty",
+            "attributeModifiers": [
+              {
+                "attributeType": 14,
+                "formulaItem": 0,
+                "value": 0.0,
+                "loadFromBlackboard": 1,
+                "fetchBaseValueFromSourceEntity": 0
+              }
+            ],
+            "lifeTimeType": 1,
+            "durationKey": "",
+            "triggerInterval": -1.0,
+            "blackboard": []
+          }
+        ]
+      },
+      {
+        "pathId": "5542222952970097497",
+        "buffs": [
+          {
+            "buffKey": "pinecn_tr[mark]",
+            "templateKey": "empty",
+            "attributeModifiers": [],
+            "lifeTimeType": 2,
+            "durationKey": "",
+            "triggerInterval": -1.0,
+            "blackboard": []
+          }
+        ]
+      }
+    ],
+    "skills": {
+      "skchr_pinecn_1": [
+        {
+          "pathId": "5273609396462033418",
+          "buffs": [
+            {
+              "buffKey": "pinecn_s_1",
+              "templateKey": "empty",
+              "attributeModifiers": [
+                {
+                  "attributeType": 25,
+                  "formulaItem": 0,
+                  "value": 0.0,
+                  "loadFromBlackboard": 1,
+                  "fetchBaseValueFromSourceEntity": 0
+                }
+              ],
+              "lifeTimeType": 2,
+              "durationKey": "",
+              "triggerInterval": -1.0,
+              "blackboard": []
+            }
+          ]
+        }
+      ],
+      "skchr_pinecn_2": [
+        {
+          "pathId": "-8458120482756869424",
+          "buffs": [
+            {
+              "buffKey": "pinecn_s_2[a]",
+              "templateKey": "switch_mode_restart_fsm",
+              "attributeModifiers": [
+                {
+                  "attributeType": 1,
+                  "formulaItem": 1,
+                  "value": 0.0,
+                  "loadFromBlackboard": 1,
+                  "fetchBaseValueFromSourceEntity": 0
+                }
+              ],
+              "lifeTimeType": 1,
+              "durationKey": "",
+              "triggerInterval": -1.0,
+              "blackboard": [
+                {
+                  "key": "mode",
+                  "value": 1.0,
+                  "valueStr": ""
+                }
+              ]
+            },
+            {
+              "buffKey": "pinecn_s_2[b]",
+              "templateKey": "switch_mode_restart_fsm",
+              "attributeModifiers": [
+                {
+                  "attributeType": 1,
+                  "formulaItem": 1,
+                  "value": 0.0,
+                  "loadFromBlackboard": 1,
+                  "fetchBaseValueFromSourceEntity": 0
+                }
+              ],
+              "lifeTimeType": 1,
+              "durationKey": "",
+              "triggerInterval": -1.0,
+              "blackboard": [
+                {
+                  "key": "mode",
+                  "value": 1.0,
+                  "valueStr": ""
+                }
+              ]
+            },
+            {
+              "buffKey": "pinecn_s_2[c]",
+              "templateKey": "switch_mode_restart_fsm",
+              "attributeModifiers": [
+                {
+                  "attributeType": 1,
+                  "formulaItem": 1,
+                  "value": 0.0,
+                  "loadFromBlackboard": 1,
+                  "fetchBaseValueFromSourceEntity": 0
+                }
+              ],
+              "lifeTimeType": 1,
+              "durationKey": "",
+              "triggerInterval": -1.0,
+              "blackboard": [
+                {
+                  "key": "mode",
+                  "value": 1.0,
+                  "valueStr": ""
+                }
+              ]
+            },
+            {
+              "buffKey": "pinecn_s_2[d]",
+              "templateKey": "switch_mode_restart_fsm",
+              "attributeModifiers": [
+                {
+                  "attributeType": 1,
+                  "formulaItem": 1,
+                  "value": 0.0,
+                  "loadFromBlackboard": 1,
+                  "fetchBaseValueFromSourceEntity": 0
+                }
+              ],
+              "lifeTimeType": 1,
+              "durationKey": "",
+              "triggerInterval": -1.0,
+              "blackboard": [
+                {
+                  "key": "mode",
+                  "value": 1.0,
+                  "valueStr": ""
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "preDelay": 0.5329999923706055,
+    "castAbility": [
+      {
+        "pathId": "-4638801474567136758",
+        "_switchToState": 1
+      },
+      {
+        "pathId": "7956506274491472394",
+        "_selectTargetTiming": 0,
+        "_timeMode": 1,
+        "_preDelay": 0.5329999923706055
+      }
+    ],
+    "frontRange": {
+      "rangeId": "1-3",
+      "grid": [
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          -1,
+          1
+        ]
+      ]
+    },
+    "traitTemplate": {
+      "templateKey": "pinecn_tr",
+      "effectKey": "",
+      "onEventPriority": "DEFAULT",
+      "eventToActions": {
+        "ON_CALCULATE_DAMAGE": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+CheckContainsBuff, Assembly-CSharp",
+            "_targetType": "TARGET",
+            "_buffKeys": [
+              "pinecn_tr[mark]"
+            ],
+            "isAND": true,
+            "_loadFromBlackboard": false,
+            "_checkBuffSource": false,
+            "_buffSourceType": "BUFF_SOURCE",
+            "_checkSourceHost": false
+          },
+          {
+            "$type": "Torappu.Battle.Action.Nodes+AtkScaleUp, Assembly-CSharp",
+            "_filterApplyWay": false,
+            "_filterProjectileKey": "",
+            "_applyWay": "NONE",
+            "_defaultValue": 1.0,
+            "_filterNoneApplyWay": false,
+            "_cancelIfAtkScaleZero": false,
+            "_atkScaleKey": "atk_scale"
+          }
+        ]
+      }
+    },
+    "s2BuffSelection": [
+      {
+        "pathId": "-8458120482756869424",
+        "_selectMethod": 2
+      }
+    ]
+  },
+  "ambriel": {
+    "id": "char_302_glaze",
+    "traitDescription": "Prioritizes attacking the enemy with <@ba.kw>lowest DEF</> within range first",
+    "hits": {
+      "Attack": [
+        0.6
+      ],
+      "Attack_Down": [
+        0.6
+      ],
+      "Skill": [
+        0.9
+      ],
+      "Skill_Down": [
+        0.9
+      ]
+    },
+    "animationSource": {
+      "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+      "front": {
+        "path": "models/operator/char_302_glaze/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_302_glaze.skel",
+        "bytes": 174957,
+        "sha256": "c46ae934a32c8bb9e83bb1a3ecaecc1c2b876ae39b5dfa9e7e5839f2f27bfa42"
+      },
+      "back": {
+        "path": "models/operator/char_302_glaze/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_302_glaze.skel",
+        "bytes": 125027,
+        "sha256": "b8e8b05ff54bbb36d86c440a5779be4e5a3fb680efaacd00124f0ca0870b728c"
+      }
+    },
+    "backHits": {
+      "Attack": [
+        0.6
+      ],
+      "Attack_Up": [
+        0.6
+      ],
+      "Skill": [
+        0.9
+      ],
+      "Skill_Up": [
+        0.9
+      ]
+    },
+    "talentBuffs": [
+      {
+        "pathId": "-988005566742371773",
+        "buffs": [
+          {
+            "buffKey": "sluggish",
+            "templateKey": "empty",
+            "attributeModifiers": [],
+            "lifeTimeType": 1,
+            "durationKey": "",
+            "triggerInterval": -1.0,
+            "blackboard": []
+          }
+        ]
+      }
+    ],
+    "skills": {
+      "skchr_glaze_1": [
+        {
+          "pathId": "-6932642938002433216",
+          "buffs": [
+            {
+              "buffKey": "glaze_s_1",
+              "templateKey": "switch_mode",
+              "attributeModifiers": [
+                {
+                  "attributeType": 15,
+                  "formulaItem": 0,
+                  "value": 0.0,
+                  "loadFromBlackboard": 1,
+                  "fetchBaseValueFromSourceEntity": 0
+                }
+              ],
+              "lifeTimeType": 1,
+              "durationKey": "",
+              "triggerInterval": -1.0,
+              "blackboard": [
+                {
+                  "key": "mode",
+                  "value": 1.0,
+                  "valueStr": ""
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "skchr_glaze_2": [
+        {
+          "pathId": "-6630701875845501629",
+          "buffs": [
+            {
+              "buffKey": "glaze_s_2",
+              "templateKey": "switch_mode",
+              "attributeModifiers": [
+                {
+                  "attributeType": 1,
+                  "formulaItem": 1,
+                  "value": 0.0,
+                  "loadFromBlackboard": 1,
+                  "fetchBaseValueFromSourceEntity": 0
+                },
+                {
+                  "attributeType": 8,
+                  "formulaItem": 0,
+                  "value": 0.0,
+                  "loadFromBlackboard": 1,
+                  "fetchBaseValueFromSourceEntity": 0
+                }
+              ],
+              "lifeTimeType": 1,
+              "durationKey": "",
+              "triggerInterval": -1.0,
+              "blackboard": [
+                {
+                  "key": "mode",
+                  "value": 2.0,
+                  "valueStr": ""
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "s2AttackModes": [
+      {
+        "pathId": "-2699220975166594493",
+        "_selectTargetTiming": 0,
+        "_animKey": "Attack",
+        "_preDelay": 0.0,
+        "_maxAnimScale": 1.0,
+        "_projectileKey": "projectile_glaze"
+      },
+      {
+        "pathId": "-2647055154141961661",
+        "_selectTargetTiming": 0,
+        "_animKey": "Attack",
+        "_preDelay": 0.0,
+        "_maxAnimScale": 1.0,
+        "_projectileKey": "projectile_glaze"
+      },
+      {
+        "pathId": "-1569273352018894269",
+        "_selectTargetTiming": 0,
+        "_animKey": "Skill",
+        "_preDelay": 0.0,
+        "_maxAnimScale": 1.0
+      },
+      {
+        "pathId": "-988005566742371773",
+        "_selectTargetTiming": 0,
+        "_animKey": "Attack",
+        "_preDelay": 0.0,
+        "_maxAnimScale": 1.0,
+        "_projectileKey": "projectile_glaze"
+      }
+    ]
+  },
+  "totter": {
+    "id": "char_4062_totter",
+    "traitDescription": "Attacks the heaviest enemy first",
+    "hits": {
+      "Attack": [
+        0.167
+      ],
+      "Start": [
+        0.167
+      ]
+    },
+    "animationSource": {
+      "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+      "front": {
+        "path": "models/operator/char_4062_totter/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4062_totter.skel",
+        "bytes": 136984,
+        "sha256": "dab4a925d844ad3a0cc1a25de975f66763f158098dd76715a207594537736fbe"
+      },
+      "back": {
+        "path": "models/operator/char_4062_totter/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4062_totter.skel",
+        "bytes": 81098,
+        "sha256": "71d05893c8e6c9c5554fa7a01de18fd5d92a20a9d2ebb6d6b4573affd36a9eef"
+      }
+    },
+    "backHits": {
+      "Attack": [
+        0.167
+      ],
+      "Start": [
+        0.167
+      ]
+    },
+    "talentBuffs": [
+      {
+        "pathId": "5510822865713001066",
+        "buffs": [
+          {
+            "buffKey": "totter_t_1",
+            "templateKey": "totter_t_1",
+            "attributeModifiers": [],
+            "lifeTimeType": 2,
+            "durationKey": "duration",
+            "triggerInterval": 0.10000000149011612,
+            "blackboard": []
+          }
+        ]
+      }
+    ],
+    "skills": {
+      "skchr_totter_1": [],
+      "skchr_totter_2": [
+        {
+          "pathId": "-2748445160526446188",
+          "buffs": [
+            {
+              "buffKey": "totter_s_2",
+              "templateKey": "totter_s_2",
+              "attributeModifiers": [
+                {
+                  "attributeType": 7,
+                  "formulaItem": 0,
+                  "value": 0.0,
+                  "loadFromBlackboard": 1,
+                  "fetchBaseValueFromSourceEntity": 0
+                }
+              ],
+              "lifeTimeType": 1,
+              "durationKey": "duration",
+              "triggerInterval": -1.0,
+              "blackboard": []
+            }
+          ]
+        }
+      ]
+    },
+    "selectors": [
+      {
+        "pathId": "-7738468984759225750",
+        "_postFilter": 27,
+        "_ignoreTargetFree": 1,
+        "_onlyIgnoreSomeOfTargetFreeCase": 1,
+        "_abnormalFlag": 9,
+        "_maxNum": 3
+      },
+      {
+        "pathId": "-7092144381619637654",
+        "_postFilter": 27,
+        "_ignoreTargetFree": 1,
+        "_onlyIgnoreSomeOfTargetFreeCase": 1,
+        "_abnormalFlag": 9,
+        "_maxNum": 1
+      },
+      {
+        "pathId": "4519110550563287658",
+        "_postFilter": 27,
+        "_ignoreTargetFree": 1,
+        "_onlyIgnoreSomeOfTargetFreeCase": 1,
+        "_abnormalFlag": 9,
+        "_maxNum": 1
+      }
+    ],
+    "triggers": [
+      {
+        "pathId": "-2976478360910859670",
+        "_minTargetNum": 1
+      },
+      {
+        "pathId": "-862082190838173078",
+        "_minTargetNum": 2
+      },
+      {
+        "pathId": "2055480166374142570",
+        "_minTargetNum": 1
+      }
+    ],
+    "talentTemplate": {
+      "templateKey": "totter_t_1",
+      "effectKey": "",
+      "onEventPriority": "DEFAULT",
+      "eventToActions": {
+        "ON_BUFF_FINISH": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+FinishDerivedBuff, Assembly-CSharp",
+            "_updateOverrideMap": true
+          }
+        ],
+        "ON_BUFF_TRIGGER": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+CheckAbnormalFlag, Assembly-CSharp",
+            "_abnormalFlag": "INVISIBLE",
+            "_targetType": "BUFF_OWNER",
+            "_isUnset": false
+          },
+          {
+            "$type": "Torappu.Battle.Action.Nodes+CheckContainsBuff, Assembly-CSharp",
+            "_targetType": "BUFF_SOURCE",
+            "_buffKeys": [
+              "totter_t_1[derived]"
+            ],
+            "isAND": true,
+            "_loadFromBlackboard": false,
+            "_checkBuffSource": false,
+            "_buffSourceType": "BUFF_SOURCE",
+            "_checkSourceHost": false
+          },
+          {
+            "$type": "Torappu.Battle.Action.Nodes+IfNot, Assembly-CSharp"
+          },
+          {
+            "$type": "Torappu.Battle.Action.Nodes+CreateBuff, Assembly-CSharp",
+            "_buff": {
+              "attributes": {
+                "abnormalFlags": [],
+                "abnormalImmunes": [],
+                "abnormalAntis": [],
+                "abnormalCombos": [],
+                "abnormalComboImmunes": [],
+                "attributeModifiers": [
+                  {
+                    "attributeType": "ATK",
+                    "formulaItem": "MULTIPLIER",
+                    "value": 0.15000000596046448,
+                    "loadFromBlackboard": true,
+                    "fetchBaseValueFromSourceEntity": false
+                  }
+                ]
+              },
+              "buffKey": "totter_t_1[derived]",
+              "loadFromDB": false,
+              "isDurableBuff": false,
+              "isDamageMissable": false,
+              "isSilenceable": false,
+              "isStunnable": false,
+              "isFreezable": false,
+              "isLevitatable": false,
+              "statusResistable": "AUTOMATIC",
+              "templateKey": "empty",
+              "disableOverride": false,
+              "overrideKey": null,
+              "overrideType": "DEFAULT",
+              "maxStackCnt": 1,
+              "refreshRemainingTimeWhenStackMax": false,
+              "clearAllStackCntWhenTimeUp": false,
+              "maxValidStackCnt": -1,
+              "independentCharacterSource": false,
+              "overrideEffectKey": "totter_attack_01_weapon_01",
+              "overrideOnEventPriority": false,
+              "onEventPriority": "DEFAULT",
+              "audioSignal": null,
+              "lifeTimeType": "INFINITY",
+              "takeSnapshotWhenExtend": false,
+              "durationKey": null,
+              "lifeTime": 0.0,
+              "triggerLifeType": "IMMEDIATELY",
+              "triggerCnt": 0,
+              "triggerInterval": -1.0,
+              "waitFirstTriggerInterval": true,
+              "firstTriggerInterval": -1.0,
+              "priority": -1,
+              "priorityBBKeys": [],
+              "stripBlackboardParamsWithBuffKey": false,
+              "blackboard": []
+            },
+            "_buffOwner": "BUFF_SOURCE",
+            "_isDerivedBuff": true,
+            "_finishDerivedBuffIfParentFinish": true
+          }
+        ],
+        "ON_ABNORMAL_FLAG_DIRTY": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+FinishDerivedBuff, Assembly-CSharp",
+            "_updateOverrideMap": true
+          }
+        ]
+      }
+    },
+    "s2Template": {
+      "templateKey": "totter_s_2",
+      "effectKey": "",
+      "onEventPriority": "DEFAULT",
+      "eventToActions": {
+        "ON_BUFF_START": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+SwitchMode, Assembly-CSharp",
+            "_modeIndex": 1,
+            "_loadModeFromBlackboard": true,
+            "_restoreDefault": false,
+            "_restartFSM": true,
+            "_targetType": "TARGET"
+          }
+        ],
+        "ON_BUFF_FINISH": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+SwitchMode, Assembly-CSharp",
+            "_modeIndex": 0,
+            "_loadModeFromBlackboard": false,
+            "_restoreDefault": true,
+            "_restartFSM": true,
+            "_targetType": "TARGET"
+          }
+        ]
+      }
+    },
+    "talentInterval": 0.10000000149011612,
+    "projectileSpeed": 10.0
+  }
+}

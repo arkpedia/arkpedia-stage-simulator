@@ -78,8 +78,13 @@ export function enemyStealthed(e) {
 export function canTargetEnemy(attacker, e, profile) {
   if (!e.alive || e.hidden || !e.deployed) return false;
   const f = e.s.flags;
-  if (f.untargetable || (f.sleep && !(profile && profile.hitSleep))) return false;
-  if (f.stealth && enemyStealthed(e)) return false;
+  // Reviewed native selectors may ignore TargetFree for an explicit recipient
+  // (Entelechia S3 Heart Candles). No general invulnerability/stealth bypass.
+  const ignoreTargetFree = typeof profile?.ignoreTargetFree === 'function'
+    && profile.ignoreTargetFree(attacker, e) === true;
+  if ((f.untargetable && !ignoreTargetFree) || (f.sleep && !(profile && profile.hitSleep))) return false;
+  if (f.stealth && enemyStealthed(e) && !profile?.ignoreStealth) return false;
+  if (typeof profile?.canTarget === 'function' && !profile.canTarget(attacker, e)) return false;
   if (e.isFlying && !(profile && profile.canHitFly)) return false;
   if (profile && profile.groundOnly && e.isFlying) return false;
   return true;
@@ -168,6 +173,7 @@ export function evadesGround(src, a) {
 
 const PRIORITY_FNS = {
   fly: (e) => (e.isFlying ? 0 : 1),
+  drone: (e) => (e.tags?.has('drone') ? 0 : 1),
   lowDef: (e) => e.s.def,
   highDef: (e) => -e.s.def,
   ranged: (e) => (e.base.rangeRadius > 0 && e.def?.applyWay !== 'MELEE' ? 0 : 1),
@@ -175,6 +181,7 @@ const PRIORITY_FNS = {
   highestHp: (e) => -e.hp,
   lowestHpRatio: (e) => e.hpRatio,
   highestAtk: (e) => -e.s.atk,
+  heaviest: (e) => -e.weight,
   boss: (e) => (e.isBoss ? 0 : 1),
   notBurst: (e) => (e.s.flags.burstLock ? 1 : 0),
   ground: (e) => (e.isFlying ? 1 : 0),

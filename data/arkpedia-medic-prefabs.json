@@ -1,0 +1,99 @@
+{
+  "source": {
+    "resourceVersion": "26-09-23-17-49-43_b9cc4a",
+    "bundles": {
+      "char_117_myrrh": {
+        "bundle": "charpack/char_117_myrrh.ab",
+        "md5": "60e2a5595b1e1ba5e04f78df6c7e5466",
+        "sha256": "f5220cb71e84326e73afafb75687233baf82f84e8a901635de4c6c8ef7042019"
+      },
+      "char_187_ccheal": {
+        "bundle": "charpack/char_187_ccheal.ab",
+        "md5": "8a65ea0a4aac693d28577ef2f2464785",
+        "sha256": "09c84684b0cc2dcdcec2d832c66b664cbd64af2ca4935915e6f1076f3a37e658"
+      },
+      "char_181_flower": {
+        "bundle": "charpack/char_181_flower.ab",
+        "md5": "23f7a464538ea2f640712531ce27f174",
+        "sha256": "9d4b1dd00ddf31e935a2f8aa8f7c2845e0cb06410ab628f4787585b95a6b0db6"
+      },
+      "char_298_susuro": {
+        "bundle": "charpack/char_298_susuro.ab",
+        "md5": "6d1d1c682faab2a7221750be0855080d",
+        "sha256": "4d39816c57de39ce5fc1ad64bdd7271eb6627b81b120cb5937c8779d5fa52ca7"
+      }
+    },
+    "skillBundle": {
+      "bundle": "battle/prefabs/[uc]skills.ab",
+      "sha256": "1c026938f054218f7e6bda9000162b2a6f30c9bd93e1ae9763d9d6df2270499c"
+    }
+  },
+  "reviewed": {
+    "myrrh": {
+      "talent": {
+        "unlimitedTargets": true,
+        "excludeOwner": false,
+        "range": "global"
+      },
+      "S1": {
+        "maxTargets": 2,
+        "waitForAttackEvent": true
+      },
+      "S2": {
+        "templateKey": "switch_mode",
+        "mode": 1,
+        "normalTargetCount": 1,
+        "skillTargetCount": 2
+      }
+    },
+    "gavial": {
+      "talent": {
+        "onlyDetectCurrentUnitsAtStart": true,
+        "professionMask": 8,
+        "atkFormula": "MUL_BASE",
+        "defFormula": "ADDITION",
+        "removeBuffWhenDetached": false
+      },
+      "restoration": {
+        "templateKey": "ccheal_s_heal",
+        "attributeSnapshot": "ATK",
+        "durationKey": "duration",
+        "triggerInterval": "blackboard.interval",
+        "waitFirstTriggerInterval": true,
+        "scaleUpIfUnderHpRatio": true,
+        "S1": "normal healing plus target regeneration buff",
+        "S2": "one buff application to all allies within range"
+      }
+    },
+    "perfumer": {
+      "talent": {
+        "templateKey": "atk_to_hp_recovery",
+        "getAtkFromTarget": false,
+        "getAtkTargetType": "SOURCE",
+        "triggerInterval": 1,
+        "waitFirstTriggerInterval": false,
+        "ignoreHealFree": true,
+        "ignoreTargetFree": true,
+        "removeBuffWhenDetached": true
+      },
+      "S2": {
+        "atkFormula": "MUL_BASE",
+        "aspdFormula": "ADDITION"
+      }
+    },
+    "sussurro": {
+      "talent": {
+        "kind": "deckBuff",
+        "templateKey": "heal_scale",
+        "selector": "selected operators with cost <= blackboard.cost",
+        "modifier": "healing only, not natural regeneration"
+      },
+      "S2": {
+        "maxTriggerTime": 2,
+        "limitGlobalTriggerTime": true,
+        "atkFormula": "MUL_BASE",
+        "aspdFormula": "ADDITION"
+      }
+    }
+  }
+}

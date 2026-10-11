@@ -557,7 +557,7 @@ function seaborn(bb, raw, def) {
           if (inspire > 0) {
             for (const a of battle.alliesInGrid(unit)) {
               if (a === unit || a === o) continue; // 自身不受鼓舞影响
-              battle.addBuff(a, { key: `inspire:${o.id}`, duration: 1.25, refresh: 'replace', mods: { atkFlat: atk * inspire }, source: unit });
+              battle.addBuff(a, { key: `inspire:${o.id}`, status: 'inspire', duration: 1.25, refresh: 'replace', mods: { atkFlat: atk * inspire }, source: unit });
             }
           }
         } else if (healRatio > 0) {

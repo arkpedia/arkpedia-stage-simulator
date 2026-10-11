@@ -1,0 +1,400 @@
+{
+  "sourceVersion": "26-09-23-17-49-43_b9cc4a",
+  "tableCommit": "57010cb5b2afea112cae57daa756b58676ba6850",
+  "sourceBundles": [
+    {
+      "path": "charpack/char_183_skgoat.ab",
+      "md5": "484245de3c16d902c33c70224887ef88",
+      "size": 21896,
+      "sha256": "5994169f0509ab8ad1e0a6c27972b402df0f0ea070236c6c1b731f09704e5d47"
+    },
+    {
+      "path": "charpack/char_258_podego.ab",
+      "md5": "6b903fc64a3d80ea2352280b705b41e4",
+      "size": 24020,
+      "sha256": "b5bcb5e8487fdd801215b72d779d6fbc3102a86ac30272c24cbc078d06f08415"
+    },
+    {
+      "path": "charpack/char_484_robrta.ab",
+      "md5": "d4d0c9b1dd12bf81aa7d67433a2da010",
+      "size": 20692,
+      "sha256": "c57d60b43b1d5cdaa1daa3c744a96daac60aac5eae7c90d29eafc64f334c2fcf"
+    },
+    {
+      "path": "battle/prefabs/[uc]skills.ab",
+      "md5": "ff06dc9bb5516d069c8c0017207653ca",
+      "size": 1163240,
+      "sha256": "1c026938f054218f7e6bda9000162b2a6f30c9bd93e1ae9763d9d6df2270499c"
+    },
+    {
+      "path": "battle/prefabs/[uc]projectiles.ab",
+      "md5": "0b1d64a8aba25913161f5fd7174cab34",
+      "size": 1605622,
+      "sha256": "3d68c63bf7a7d658e65035a9c71dfc9a00e4804563b922185499d108dfb7f639"
+    }
+  ],
+  "earthspirit": {
+    "normalTraitSluggish": 0.8,
+    "talentBlackboardModifierPathId": "-4599223766849381426",
+    "talentBlackboardModifier": {
+      "_influenceSkillBlackboard": 0,
+      "_modifiers": [
+        {
+          "type": 0,
+          "key": "sluggish"
+        }
+      ]
+    },
+    "s2AuraPathId": "7778901382254833085",
+    "s2Aura": {
+      "_buffs": [
+        {
+          "attributes": {
+            "abnormalFlags": [],
+            "abnormalImmunes": [],
+            "abnormalAntis": [],
+            "abnormalCombos": [],
+            "abnormalComboImmunes": [],
+            "attributeModifiers": []
+          },
+          "buffKey": "slow3_s_2[aura]",
+          "loadFromDB": 0,
+          "isDurableBuff": 0,
+          "isDamageMissable": 0,
+          "isSilenceable": 0,
+          "isStunnable": 0,
+          "isFreezable": 0,
+          "isLevitatable": 0,
+          "statusResistable": 2,
+          "templateKey": "slow3_s_2",
+          "disableOverride": 0,
+          "overrideKey": "",
+          "overrideType": 0,
+          "maxStackCnt": 1,
+          "refreshRemainingTimeWhenStackMax": 0,
+          "clearAllStackCntWhenTimeUp": 0,
+          "maxValidStackCnt": -1,
+          "independentCharacterSource": 0,
+          "overrideEffectKey": "",
+          "overrideOnEventPriority": 0,
+          "onEventPriority": 0,
+          "audioSignal": "",
+          "lifeTimeType": 2,
+          "takeSnapshotWhenExtend": 0,
+          "durationKey": "",
+          "lifeTime": 0.0,
+          "triggerLifeType": 2,
+          "triggerCnt": 0,
+          "triggerInterval": -1.0,
+          "waitFirstTriggerInterval": 0,
+          "firstTriggerInterval": -1.0,
+          "priority": -1,
+          "priorityBBKeys": [],
+          "stripBlackboardParamsWithBuffKey": 0,
+          "blackboard": [],
+          "enableInitDirectionFromSource": 0
+        }
+      ],
+      "_passiveBuffs": [
+        {
+          "attributes": {
+            "abnormalFlags": [
+              11
+            ],
+            "abnormalImmunes": [],
+            "abnormalAntis": [],
+            "abnormalCombos": [],
+            "abnormalComboImmunes": [],
+            "attributeModifiers": []
+          },
+          "buffKey": "slow3_s_2[self]",
+          "loadFromDB": 0,
+          "isDurableBuff": 0,
+          "isDamageMissable": 0,
+          "isSilenceable": 0,
+          "isStunnable": 0,
+          "isFreezable": 0,
+          "isLevitatable": 0,
+          "statusResistable": 2,
+          "templateKey": "switch_mode_restart_fsm",
+          "disableOverride": 1,
+          "overrideKey": "",
+          "overrideType": 0,
+          "maxStackCnt": 1,
+          "refreshRemainingTimeWhenStackMax": 0,
+          "clearAllStackCntWhenTimeUp": 0,
+          "maxValidStackCnt": -1,
+          "independentCharacterSource": 0,
+          "overrideEffectKey": "skgoat_skill_02_range",
+          "overrideOnEventPriority": 0,
+          "onEventPriority": 0,
+          "audioSignal": "",
+          "lifeTimeType": 2,
+          "takeSnapshotWhenExtend": 0,
+          "durationKey": "",
+          "lifeTime": 0.0,
+          "triggerLifeType": 0,
+          "triggerCnt": 0,
+          "triggerInterval": -1.0,
+          "waitFirstTriggerInterval": 1,
+          "firstTriggerInterval": -1.0,
+          "priority": -1,
+          "priorityBBKeys": [],
+          "stripBlackboardParamsWithBuffKey": 0,
+          "blackboard": [
+            {
+              "key": "mode",
+              "value": 1.0,
+              "valueStr": ""
+            }
+          ],
+          "enableInitDirectionFromSource": 0
+        }
+      ],
+      "_removeBuffWhenTargetLeave": 1,
+      "_removeBuffWhenAbilityDetached": 1
+    },
+    "s2Template": {
+      "templateKey": "slow3_s_2",
+      "effectKey": "",
+      "onEventPriority": "DEFAULT",
+      "eventToActions": {
+        "ON_BUFF_TRIGGER": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+CreateBuffById, Assembly-CSharp",
+            "_buffKey": "sluggish",
+            "_buffOwner": "BUFF_OWNER",
+            "_isDerivedBuff": false,
+            "_loadFromBlackboard": false,
+            "_finishDerivedBuffIfParentFinish": false
+          }
+        ]
+      }
+    }
+  },
+  "podenco": {
+    "s1Buffs": [
+      {
+        "buffKey": "podego_s_1",
+        "templateKey": "switch_mode",
+        "attributes": {
+          "abnormalFlags": [],
+          "abnormalImmunes": [],
+          "abnormalAntis": [],
+          "abnormalCombos": [],
+          "abnormalComboImmunes": [],
+          "attributeModifiers": [
+            {
+              "attributeType": 1,
+              "formulaItem": 1,
+              "value": 0.0,
+              "loadFromBlackboard": 1,
+              "fetchBaseValueFromSourceEntity": 0
+            }
+          ]
+        },
+        "waitFirstTriggerInterval": 1,
+        "triggerInterval": -1.0
+      }
+    ],
+    "talentAuraPathId": "-6827883799533183953",
+    "talentAura": {
+      "_removeBuffWhenAbilityDetached": 1,
+      "_onlyDetactTargetWhenStarted": 0,
+      "_interval": 0.0,
+      "_clearBuffsWhenDisappear": 0
+    },
+    "talentValidator": {
+      "targetSide": 1,
+      "targetMotion": 3,
+      "targetCategory": 1,
+      "enableAdvancedOptions": 1,
+      "ignoreTargetFree": 0,
+      "ignoreAllyTargetFree": 0,
+      "ignoreHealFree": 0,
+      "ignoreTargetSide": 0,
+      "excludeSomeAbnormalFlags": 0,
+      "excludeAbnormalFlag": 0,
+      "purposeMask": 0,
+      "professionMask": 16,
+      "checkUnitType": 0,
+      "unitTypeMask": 0,
+      "onlyIgnoreSomeOfTargetFreeCase": 0,
+      "abnormalFlag": 0,
+      "abnormalCombo": 0
+    },
+    "s2Skill": {
+      "_useTriggerInManualMode": 1,
+      "_allowNoTarget": 0,
+      "_recoverSpIfNoTarget": 1
+    },
+    "projectileSelector": {
+      "_targetOptions": {
+        "targetSide": 2,
+        "targetMotion": 3,
+        "targetCategory": 1,
+        "enableAdvancedOptions": 1,
+        "ignoreTargetFree": 0,
+        "ignoreAllyTargetFree": 0,
+        "ignoreHealFree": 0,
+        "ignoreTargetSide": 0,
+        "excludeSomeAbnormalFlags": 0,
+        "excludeAbnormalFlag": 0,
+        "purposeMask": 0,
+        "professionMask": 0,
+        "checkUnitType": 0,
+        "unitTypeMask": 0,
+        "onlyIgnoreSomeOfTargetFreeCase": 0,
+        "abnormalFlag": 0,
+        "abnormalCombo": 0
+      },
+      "_hitAfterReached": 1,
+      "_ignoreCamouflage": 1
+    },
+    "projectileController": {
+      "_keepAlreadyHitTime": 1.0,
+      "_actionController": {
+        "_detachBuffsWhenTargetLeave": 1,
+        "_detachAllBuffsWhenStopped": 1,
+        "_onlyAddBuffsToTraceTarget": 0,
+        "_onlyAddBuffsToTargetOnce": 0,
+        "_dontAddBuffs": 0,
+        "_excludeAttachments": 0,
+        "_useSelfBlackboard": 0,
+        "_extraBuffsInTheEnd": [],
+        "_useExtraBuffsWhenStopHit": 0,
+        "_addExtraBuffsWhenReached": 0,
+        "_detachAllExtraBuffsWhenStopped": 0
+      },
+      "_managedBySource": 0,
+      "_stopWhenSourceInvalid": 0
+    },
+    "projectileMovement": {
+      "_speed": 10.0,
+      "_delayAfterReached": 1,
+      "_updateDelayTimeOnlyOnce": 0
+    },
+    "projectileCollider": {
+      "m_Radius": 0.8999999761581421,
+      "m_Offset": {
+        "x": -0.029999999329447746,
+        "y": 0.019999999552965164
+      }
+    },
+    "skillDamage": {
+      "_attackType": 4,
+      "_damageType": 2,
+      "_useCachedAtkOnly": 0,
+      "_activeBuffs": [
+        {
+          "attributes": {
+            "abnormalFlags": [
+              12
+            ],
+            "abnormalImmunes": [],
+            "abnormalAntis": [],
+            "abnormalCombos": [],
+            "abnormalComboImmunes": [],
+            "attributeModifiers": []
+          },
+          "buffKey": "podego_silence",
+          "loadFromDB": 0,
+          "isDurableBuff": 0,
+          "isDamageMissable": 0,
+          "isSilenceable": 0,
+          "isStunnable": 0,
+          "isFreezable": 0,
+          "isLevitatable": 0,
+          "statusResistable": 2,
+          "templateKey": "empty",
+          "disableOverride": 0,
+          "overrideKey": "",
+          "overrideType": 0,
+          "maxStackCnt": 1,
+          "refreshRemainingTimeWhenStackMax": 0,
+          "clearAllStackCntWhenTimeUp": 0,
+          "maxValidStackCnt": -1,
+          "independentCharacterSource": 0,
+          "overrideEffectKey": "buff_silence",
+          "overrideOnEventPriority": 0,
+          "onEventPriority": 0,
+          "audioSignal": "",
+          "lifeTimeType": 2,
+          "takeSnapshotWhenExtend": 0,
+          "durationKey": "",
+          "lifeTime": 0.0,
+          "triggerLifeType": 0,
+          "triggerCnt": 0,
+          "triggerInterval": -1.0,
+          "waitFirstTriggerInterval": 1,
+          "firstTriggerInterval": -1.0,
+          "priority": -1,
+          "priorityBBKeys": [],
+          "stripBlackboardParamsWithBuffKey": 0,
+          "blackboard": [],
+          "enableInitDirectionFromSource": 0
+        },
+        {
+          "attributes": {
+            "abnormalFlags": [],
+            "abnormalImmunes": [],
+            "abnormalAntis": [],
+            "abnormalCombos": [],
+            "abnormalComboImmunes": [],
+            "attributeModifiers": []
+          },
+          "buffKey": "sluggish",
+          "loadFromDB": 1,
+          "isDurableBuff": 0,
+          "isDamageMissable": 0,
+          "isSilenceable": 0,
+          "isStunnable": 0,
+          "isFreezable": 0,
+          "isLevitatable": 0,
+          "statusResistable": 2,
+          "templateKey": "empty",
+          "disableOverride": 0,
+          "overrideKey": "",
+          "overrideType": 0,
+          "maxStackCnt": 1,
+          "refreshRemainingTimeWhenStackMax": 0,
+          "clearAllStackCntWhenTimeUp": 0,
+          "maxValidStackCnt": -1,
+          "independentCharacterSource": 0,
+          "overrideEffectKey": "",
+          "overrideOnEventPriority": 0,
+          "onEventPriority": 0,
+          "audioSignal": "",
+          "lifeTimeType": 2,
+          "takeSnapshotWhenExtend": 0,
+          "durationKey": "",
+          "lifeTime": 0.0,
+          "triggerLifeType": 0,
+          "triggerCnt": 0,
+          "triggerInterval": -1.0,
+          "waitFirstTriggerInterval": 1,
+          "firstTriggerInterval": -1.0,
+          "priority": -1,
+          "priorityBBKeys": [],
+          "stripBlackboardParamsWithBuffKey": 0,
+          "blackboard": [
+            {
+              "key": "sluggish",
+              "value": 1.0,
+              "valueStr": ""
+            }
+          ],
+          "enableInitDirectionFromSource": 0
+        }
+      ]
+    }
+  },
+  "unsupported": {
+    "char_484_robrta": {
+      "reason": "Complete Modeler inventory, token snapshot and player-directed device deployment are required; neither skill is enabled as a partial kit.",
+      "tokenKey": "token_10018_robrta_mach",
+      "inventoryTemplate": "charge_token[refresh]",
+      "deathTemplate": "die_to_kill_token"
+    }
+  }
+}

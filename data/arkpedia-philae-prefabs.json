@@ -1,0 +1,3978 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "client": "Global Android",
+    "version": "26-09-23-17-49-43_b9cc4a",
+    "tableRepository": "Kengxxiao/ArknightsGameData_YoStar",
+    "tableCommit": "57010cb5b2afea112cae57daa756b58676ba6850",
+    "modelRepository": "fexli/ArknightsResource",
+    "modelCommit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+    "tables": {
+      "character_table.json": "cf86d1690bdae2bf02378081ef8ae61731da042902bb284d339b7c0d889e66a9",
+      "skill_table.json": "3f389ab49b038c3d701e059c2377a2b03e14276248c5ed42ebfc169578a4e809",
+      "range_table.json": "676cedce20d46f37c46e1099b2f94907d0c84ac62b674957355c245ce16f0856",
+      "buff_template_data.json": "79dce42d1ffa76196984b80678422e0323e406f6a044f1a25b1de75e0c5b9d27"
+    },
+    "bundles": [
+      {
+        "path": "charpack/char_4148_philae.ab",
+        "size": 21102,
+        "md5": "016624c73d8955a34b15b145e5a736bf",
+        "sha256": "cf1f37490229e2ae71c3e61093350978e2659ed464cdbefadae1f4fba3b94989"
+      },
+      {
+        "path": "battle/prefabs/[uc]skills.ab",
+        "size": 1163240,
+        "md5": "ff06dc9bb5516d069c8c0017207653ca",
+        "sha256": "1c026938f054218f7e6bda9000162b2a6f30c9bd93e1ae9763d9d6df2270499c"
+      },
+      {
+        "path": "battle/prefabs/[uc]projectiles.ab",
+        "size": 1605622,
+        "md5": "0b1d64a8aba25913161f5fd7174cab34",
+        "sha256": "3d68c63bf7a7d658e65035a9c71dfc9a00e4804563b922185499d108dfb7f639"
+      },
+      {
+        "path": "chararts/char_4148_philae.ab",
+        "md5": "bc1345e42a833ac2fe16c49d63caf8e9",
+        "size": 4405179,
+        "sha256": "c84d9db8af8b62d53562ce5bbb4b3f92d88a17adda8ca6e1e094c2bb6b4bdf84"
+      },
+      {
+        "path": "config/buff_template_holder.ab",
+        "size": 1667266,
+        "md5": "59813e1a533561f969f525a2846815e0",
+        "sha256": "e092efe8b6479546a0641449c1e2ef81ba51b8bac67f7a5d1bbf3c3bbdd817ce"
+      }
+    ]
+  },
+  "frameParity": false,
+  "enabledOperators": [
+    "char_4148_philae"
+  ],
+  "moduleSupport": false,
+  "unityParticleSupport": false,
+  "characters": {
+    "char_4148_philae": [
+      {
+        "object": "Selector",
+        "pathId": "-2531867184175390245",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "2851052778402734555"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-2891200616113119906"
+          },
+          "m_Name": "",
+          "_extendable": 0
+        }
+      },
+      {
+        "object": "Selector",
+        "pathId": "-7217677636581596709",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "2851052778402734555"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "840206743537877183"
+          },
+          "m_Name": "",
+          "_targetSide": 2,
+          "_targetMotion": 1,
+          "_targetCategory": 1,
+          "_postFilter": 4,
+          "_ignoreTargetFree": 0,
+          "_onlyIgnoreSomeOfTargetFreeCase": 0,
+          "_abnormalFlag": 33,
+          "_abnormalCombo": 2,
+          "_ignoreAllyTargetFree": 0,
+          "_ignoreHealFree": 0,
+          "_forceIgnoreCamouflage": 0,
+          "_needProfessionMask": 0,
+          "_professionMask": 0,
+          "_limitTargetNum": 1,
+          "_maxTargetKey": "max_target",
+          "_maxNum": 1,
+          "_excludeOwner": 0,
+          "_sortByTauntAtLast": 0,
+          "_ignoreHitRange": 0,
+          "_checkUnitType": 0,
+          "_unitTypeMask": 0,
+          "_abilityInputTargetAsSortSource": 0,
+          "_limitedMaxTargetNumToBlockedCnt": 0,
+          "_allowZeroBlockCntLimit": 0
+        }
+      },
+      {
+        "object": "Selector",
+        "pathId": "-8659093761100422693",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "2851052778402734555"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "8607874384982393801"
+          },
+          "m_Name": "",
+          "_keepTarget": 0,
+          "_minTargetNum": 1,
+          "_overrideSearchTargetTick": -1
+        }
+      },
+      {
+        "object": "Attack",
+        "pathId": "2017952068095304155",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "1670718078505705947"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "4381884627089348317"
+          },
+          "m_Name": "",
+          "_selector": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_metadata": {
+            "namedAsAlias": "",
+            "blackboardPrefix": ""
+          },
+          "_interruptAbilityOnDetach": 1,
+          "_attachPassiveBuffsOnDummy": 1,
+          "_ignoreIfOwnerDead": 0,
+          "_forceAsDmgOrHealAbility": 0,
+          "_waitForAttackEvent": 1,
+          "_interuptIfTargetDead": 0,
+          "_resetCdStrategy": 1,
+          "_selectTargetSource": 2,
+          "_selectTargetTiming": 0,
+          "_timeMode": 0,
+          "_alwaysIncludeTarget": 1,
+          "_allowNoTarget": 0,
+          "_animKey": "Attack",
+          "_endAnimKey": "Idle",
+          "_downAnimKey": "",
+          "_downEndAnimKey": "",
+          "_upAnimKey": "",
+          "_upEndAnimKey": "",
+          "_cooldown": 0.0,
+          "_cooldownKey": "duration",
+          "_preDelay": 0.0,
+          "_escapeTime": 0.0,
+          "_faceToTarget": 1,
+          "_faceToDefault": 0,
+          "_faceToFront": 0,
+          "_faceToFirstCastTarget": 0,
+          "_forceFaceToDirection": 0,
+          "_activeBuffs": [],
+          "_maxAnimScale": 1.0,
+          "_onlyPlayEndAnimWhenIsLastAbility": 0,
+          "_ignorePalsyInterrupt": 0,
+          "_atkScale": 1.0,
+          "_atkScaleKey": "atk_scale",
+          "_attackType": 1,
+          "_elementDamageType": 0,
+          "_epDamageRatio": 0.0,
+          "_useDynamicAttackType": 0,
+          "_deliveryParaWhenReplaceActionNode": 0,
+          "_damageType": 1,
+          "_extraDamageType": 0,
+          "_alwaysPutIncludeTargetFirst": 0
+        }
+      },
+      {
+        "object": "Attack",
+        "pathId": "8119093541388083675",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "1670718078505705947"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-550693537895634864"
+          },
+          "m_Name": "",
+          "_hitEffects": [
+            {
+              "_directionType": 0,
+              "_effects": [
+                "philae_attack_hit"
+              ],
+              "_oneshot": 1,
+              "_endEvent": 3,
+              "_onlyOnce": 0,
+              "_useFourDirectionalFace": 0,
+              "_useOwnerToTargetDirection": 0,
+              "_playIfNotInputTarget": 0,
+              "_playOnlyIfInputTarget": 0
+            }
+          ],
+          "_castEffects": [
+            {
+              "_directionType": 0,
+              "_effects": [
+                "philae_attack_start"
+              ],
+              "_oneshot": 0,
+              "_startEvent": 2,
+              "_endEvent": 3,
+              "_onlyOnce": 0,
+              "_useFourDirectionalFace": 0,
+              "_delayIfFirstAttack": 0.0,
+              "_hookEffectAfterFirstAttack": ""
+            }
+          ],
+          "_attachEffects": [],
+          "_inputTargetEffects": [],
+          "_castTargetEffects": [],
+          "_convertCastEndToAttachFinish": 0,
+          "_recalculatePlaybackSpeed": 0,
+          "_preDelayFactor": 0.0
+        }
+      },
+      {
+        "object": "1",
+        "pathId": "1971965075703259611",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-1656859495118478885"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-2726233351382997147"
+          },
+          "m_Name": "",
+          "_overwriteTalentKey": "",
+          "_overwriteParentRangeId": 0,
+          "_checkValidBySkillIndex": [],
+          "_attachInDummy": 0,
+          "_defaultModeIndex": -1,
+          "_attackBlackboardModeIndex": -1,
+          "_extraAttackBlackboardModeIndices": [],
+          "_overrideDefaultRangeId": 0,
+          "_applyTalentScale": 0,
+          "_influenceSkillBlackboard": 0,
+          "_applyTalentRange": 0,
+          "_applyBlackboardBySkill": 0,
+          "_applyStrBlackboardBySkill": 0,
+          "_writeRangeIdToProjectileBlackboard": 0,
+          "_affectWhenNotRootTalent": 0,
+          "_scaleCertainKeyFlag": 0,
+          "_scaleCertainKeyList": [],
+          "_scaleCertainMode": 0,
+          "_scaleModeIndices": []
+        }
+      },
+      {
+        "object": "1",
+        "pathId": "-1069816149529665061",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-1656859495118478885"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "3800760148018415462"
+          },
+          "m_Name": "",
+          "_selector": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_metadata": {
+            "namedAsAlias": "",
+            "blackboardPrefix": ""
+          },
+          "_interruptAbilityOnDetach": 1,
+          "_attachPassiveBuffsOnDummy": 1,
+          "_ignoreIfOwnerDead": 0,
+          "_forceAsDmgOrHealAbility": 0,
+          "_buffs": [
+            {
+              "attributes": {
+                "abnormalFlags": [],
+                "abnormalImmunes": [],
+                "abnormalAntis": [],
+                "abnormalCombos": [],
+                "abnormalComboImmunes": [],
+                "attributeModifiers": []
+              },
+              "buffKey": "philae_t_1",
+              "loadFromDB": 0,
+              "isDurableBuff": 0,
+              "isDamageMissable": 0,
+              "isSilenceable": 0,
+              "isStunnable": 0,
+              "isFreezable": 0,
+              "isLevitatable": 0,
+              "statusResistable": 2,
+              "templateKey": "philae_t_1",
+              "disableOverride": 0,
+              "overrideKey": "",
+              "overrideType": 0,
+              "maxStackCnt": 1,
+              "refreshRemainingTimeWhenStackMax": 0,
+              "clearAllStackCntWhenTimeUp": 0,
+              "maxValidStackCnt": -1,
+              "independentCharacterSource": 0,
+              "overrideEffectKey": "",
+              "overrideOnEventPriority": 0,
+              "onEventPriority": 0,
+              "audioSignal": "",
+              "lifeTimeType": 2,
+              "takeSnapshotWhenExtend": 0,
+              "durationKey": "duration",
+              "lifeTime": 0.0,
+              "triggerLifeType": 0,
+              "triggerCnt": 0,
+              "triggerInterval": -1.0,
+              "waitFirstTriggerInterval": 1,
+              "firstTriggerInterval": -1.0,
+              "priority": -1,
+              "priorityBBKeys": [],
+              "stripBlackboardParamsWithBuffKey": 0,
+              "blackboard": [],
+              "enableInitDirectionFromSource": 0
+            }
+          ]
+        }
+      },
+      {
+        "object": "Shadow",
+        "pathId": "847041716004708827",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-291470119453597221"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-2368896203154538901"
+          },
+          "m_Name": "",
+          "_autoAttachToGround": 0,
+          "_attachOffset": 0.10000000149011612,
+          "_simplyUseTileHeight": 0,
+          "_enableAdvanced": 0,
+          "_alwaysUseSpineOffset": 0,
+          "_sprite": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_graphic": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_faceSwitcher": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_boneToFollow": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_specialInit": 0,
+          "_simpleFollow": 0,
+          "_easeType": 1
+        }
+      },
+      {
+        "object": "Selector",
+        "pathId": "4955663063690699227",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "2682696204649751003"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-2891200616113119906"
+          },
+          "m_Name": "",
+          "_extendable": 0
+        }
+      },
+      {
+        "object": "Selector",
+        "pathId": "2139975015924621787",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "2682696204649751003"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "840206743537877183"
+          },
+          "m_Name": "",
+          "_targetSide": 2,
+          "_targetMotion": 1,
+          "_targetCategory": 1,
+          "_postFilter": 4,
+          "_ignoreTargetFree": 0,
+          "_onlyIgnoreSomeOfTargetFreeCase": 0,
+          "_abnormalFlag": 33,
+          "_abnormalCombo": 2,
+          "_ignoreAllyTargetFree": 0,
+          "_ignoreHealFree": 0,
+          "_forceIgnoreCamouflage": 0,
+          "_needProfessionMask": 0,
+          "_professionMask": 0,
+          "_limitTargetNum": 1,
+          "_maxTargetKey": "max_target",
+          "_maxNum": 1,
+          "_excludeOwner": 0,
+          "_sortByTauntAtLast": 0,
+          "_ignoreHitRange": 0,
+          "_checkUnitType": 0,
+          "_unitTypeMask": 0,
+          "_abilityInputTargetAsSortSource": 0,
+          "_limitedMaxTargetNumToBlockedCnt": 0,
+          "_allowZeroBlockCntLimit": 0
+        }
+      },
+      {
+        "object": "Selector",
+        "pathId": "5211290579410084315",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "2682696204649751003"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "8607874384982393801"
+          },
+          "m_Name": "",
+          "_keepTarget": 0,
+          "_minTargetNum": 1,
+          "_overrideSearchTargetTick": -1
+        }
+      },
+      {
+        "object": "Attack",
+        "pathId": "4023513823620555227",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "8625125203358638555"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "4381884627089348317"
+          },
+          "m_Name": "",
+          "_selector": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_metadata": {
+            "namedAsAlias": "",
+            "blackboardPrefix": ""
+          },
+          "_interruptAbilityOnDetach": 1,
+          "_attachPassiveBuffsOnDummy": 1,
+          "_ignoreIfOwnerDead": 0,
+          "_forceAsDmgOrHealAbility": 0,
+          "_waitForAttackEvent": 1,
+          "_interuptIfTargetDead": 0,
+          "_resetCdStrategy": 1,
+          "_selectTargetSource": 2,
+          "_selectTargetTiming": 0,
+          "_timeMode": 0,
+          "_alwaysIncludeTarget": 1,
+          "_allowNoTarget": 0,
+          "_animKey": "",
+          "_endAnimKey": "",
+          "_downAnimKey": "",
+          "_downEndAnimKey": "",
+          "_upAnimKey": "",
+          "_upEndAnimKey": "",
+          "_cooldown": 0.0,
+          "_cooldownKey": "duration",
+          "_preDelay": 0.0,
+          "_escapeTime": 0.0,
+          "_faceToTarget": 1,
+          "_faceToDefault": 0,
+          "_faceToFront": 0,
+          "_faceToFirstCastTarget": 0,
+          "_forceFaceToDirection": 0,
+          "_activeBuffs": [],
+          "_maxAnimScale": -1.0,
+          "_onlyPlayEndAnimWhenIsLastAbility": 0,
+          "_ignorePalsyInterrupt": 0,
+          "_atkScale": 1.0,
+          "_atkScaleKey": "atk_scale",
+          "_attackType": 1,
+          "_elementDamageType": 0,
+          "_epDamageRatio": 0.0,
+          "_useDynamicAttackType": 0,
+          "_deliveryParaWhenReplaceActionNode": 0,
+          "_damageType": 1,
+          "_extraDamageType": 0,
+          "_alwaysPutIncludeTargetFirst": 0
+        }
+      },
+      {
+        "object": "S2",
+        "pathId": "7537658845144932827",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-5585240192457055781"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "5390319429299248724"
+          },
+          "m_Name": "",
+          "_bodyTransform": {
+            "m_FileID": 0,
+            "m_PathID": "3198237277626360283"
+          },
+          "_animatorHooker": {
+            "m_FileID": 0,
+            "m_PathID": "8223217070590058971"
+          },
+          "_overrideStartEffect": "",
+          "_overrideDeadEffect": "",
+          "_combat": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_attack": {
+            "m_FileID": 0,
+            "m_PathID": "4023513823620555227"
+          },
+          "_attackTrigger": {
+            "m_FileID": 0,
+            "m_PathID": "5211290579410084315"
+          },
+          "_hideUIAttackRange": 0,
+          "_updateAttackRangeExtendByAttributeDirty": 0,
+          "_rangeToShow": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_extraRangesToShow": [],
+          "_generalAbilities": [],
+          "_addIndexToSignalId": 1,
+          "_includeIndexZero": 1,
+          "_alwaysHideHp": {
+            "isDefined": 0,
+            "value": 0
+          },
+          "_alwaysHideSp": {
+            "isDefined": 0,
+            "value": 0
+          }
+        }
+      },
+      {
+        "object": "S2",
+        "pathId": "8223217070590058971",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-5585240192457055781"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-2632969505105631840"
+          },
+          "m_Name": "",
+          "_excludeAnimKeys": [
+            "Born",
+            "Idle"
+          ],
+          "_replaceAnimPairs": [],
+          "_disableSwitchSettings": []
+        }
+      },
+      {
+        "object": "Selector",
+        "pathId": "-4248251739708857893",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-4218373732061945381"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-2891200616113119906"
+          },
+          "m_Name": "",
+          "_extendable": 0
+        }
+      },
+      {
+        "object": "Selector",
+        "pathId": "7446933467237376475",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-4218373732061945381"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "840206743537877183"
+          },
+          "m_Name": "",
+          "_targetSide": 2,
+          "_targetMotion": 1,
+          "_targetCategory": 1,
+          "_postFilter": 4,
+          "_ignoreTargetFree": 0,
+          "_onlyIgnoreSomeOfTargetFreeCase": 0,
+          "_abnormalFlag": 33,
+          "_abnormalCombo": 2,
+          "_ignoreAllyTargetFree": 0,
+          "_ignoreHealFree": 0,
+          "_forceIgnoreCamouflage": 0,
+          "_needProfessionMask": 0,
+          "_professionMask": 0,
+          "_limitTargetNum": 1,
+          "_maxTargetKey": "max_target",
+          "_maxNum": 1,
+          "_excludeOwner": 0,
+          "_sortByTauntAtLast": 0,
+          "_ignoreHitRange": 0,
+          "_checkUnitType": 0,
+          "_unitTypeMask": 0,
+          "_abilityInputTargetAsSortSource": 0,
+          "_limitedMaxTargetNumToBlockedCnt": 0,
+          "_allowZeroBlockCntLimit": 0
+        }
+      },
+      {
+        "object": "Selector",
+        "pathId": "8966079371305607643",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-4218373732061945381"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "8607874384982393801"
+          },
+          "m_Name": "",
+          "_keepTarget": 0,
+          "_minTargetNum": 1,
+          "_overrideSearchTargetTick": -1
+        }
+      },
+      {
+        "object": "Default",
+        "pathId": "-6759524955696209445",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-2006941116733595173"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "5390319429299248724"
+          },
+          "m_Name": "",
+          "_bodyTransform": {
+            "m_FileID": 0,
+            "m_PathID": "-6085208662098124325"
+          },
+          "_animatorHooker": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_overrideStartEffect": "",
+          "_overrideDeadEffect": "",
+          "_combat": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_attack": {
+            "m_FileID": 0,
+            "m_PathID": "2017952068095304155"
+          },
+          "_attackTrigger": {
+            "m_FileID": 0,
+            "m_PathID": "-8659093761100422693"
+          },
+          "_hideUIAttackRange": 0,
+          "_updateAttackRangeExtendByAttributeDirty": 0,
+          "_rangeToShow": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_extraRangesToShow": [],
+          "_generalAbilities": [],
+          "_addIndexToSignalId": 1,
+          "_includeIndexZero": 1,
+          "_alwaysHideHp": {
+            "isDefined": 0,
+            "value": 0
+          },
+          "_alwaysHideSp": {
+            "isDefined": 0,
+            "value": 0
+          }
+        }
+      },
+      {
+        "object": "Attack",
+        "pathId": "-949102337301356069",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "5808972531619848667"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "4381884627089348317"
+          },
+          "m_Name": "",
+          "_selector": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_metadata": {
+            "namedAsAlias": "",
+            "blackboardPrefix": ""
+          },
+          "_interruptAbilityOnDetach": 1,
+          "_attachPassiveBuffsOnDummy": 1,
+          "_ignoreIfOwnerDead": 0,
+          "_forceAsDmgOrHealAbility": 0,
+          "_waitForAttackEvent": 1,
+          "_interuptIfTargetDead": 0,
+          "_resetCdStrategy": 1,
+          "_selectTargetSource": 2,
+          "_selectTargetTiming": 0,
+          "_timeMode": 0,
+          "_alwaysIncludeTarget": 1,
+          "_allowNoTarget": 0,
+          "_animKey": "Attack",
+          "_endAnimKey": "Idle",
+          "_downAnimKey": "",
+          "_downEndAnimKey": "",
+          "_upAnimKey": "",
+          "_upEndAnimKey": "",
+          "_cooldown": 0.0,
+          "_cooldownKey": "duration",
+          "_preDelay": 0.0,
+          "_escapeTime": 0.0,
+          "_faceToTarget": 1,
+          "_faceToDefault": 0,
+          "_faceToFront": 0,
+          "_faceToFirstCastTarget": 0,
+          "_forceFaceToDirection": 0,
+          "_activeBuffs": [],
+          "_maxAnimScale": 1.0,
+          "_onlyPlayEndAnimWhenIsLastAbility": 0,
+          "_ignorePalsyInterrupt": 0,
+          "_atkScale": 1.0,
+          "_atkScaleKey": "atk_scale",
+          "_attackType": 1,
+          "_elementDamageType": 0,
+          "_epDamageRatio": 0.0,
+          "_useDynamicAttackType": 0,
+          "_deliveryParaWhenReplaceActionNode": 0,
+          "_damageType": 1,
+          "_extraDamageType": 0,
+          "_alwaysPutIncludeTargetFirst": 0
+        }
+      },
+      {
+        "object": "Attack",
+        "pathId": "-5197252284856933925",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "5808972531619848667"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-550693537895634864"
+          },
+          "m_Name": "",
+          "_hitEffects": [
+            {
+              "_directionType": 0,
+              "_effects": [
+                "philae_attack_hit"
+              ],
+              "_oneshot": 1,
+              "_endEvent": 3,
+              "_onlyOnce": 0,
+              "_useFourDirectionalFace": 0,
+              "_useOwnerToTargetDirection": 0,
+              "_playIfNotInputTarget": 0,
+              "_playOnlyIfInputTarget": 0
+            }
+          ],
+          "_castEffects": [
+            {
+              "_directionType": 0,
+              "_effects": [
+                "philae_attack_start"
+              ],
+              "_oneshot": 0,
+              "_startEvent": 2,
+              "_endEvent": 3,
+              "_onlyOnce": 0,
+              "_useFourDirectionalFace": 0,
+              "_delayIfFirstAttack": 0.0,
+              "_hookEffectAfterFirstAttack": ""
+            }
+          ],
+          "_attachEffects": [],
+          "_inputTargetEffects": [],
+          "_castTargetEffects": [],
+          "_convertCastEndToAttachFinish": 0,
+          "_recalculatePlaybackSpeed": 0,
+          "_preDelayFactor": 0.0
+        }
+      },
+      {
+        "object": "S1",
+        "pathId": "-6390972702236614181",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "5069865947057545691"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "5390319429299248724"
+          },
+          "m_Name": "",
+          "_bodyTransform": {
+            "m_FileID": 0,
+            "m_PathID": "-2425223552254156325"
+          },
+          "_animatorHooker": {
+            "m_FileID": 0,
+            "m_PathID": "5604492230698656219"
+          },
+          "_overrideStartEffect": "",
+          "_overrideDeadEffect": "",
+          "_combat": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_attack": {
+            "m_FileID": 0,
+            "m_PathID": "-949102337301356069"
+          },
+          "_attackTrigger": {
+            "m_FileID": 0,
+            "m_PathID": "8966079371305607643"
+          },
+          "_hideUIAttackRange": 0,
+          "_updateAttackRangeExtendByAttributeDirty": 0,
+          "_rangeToShow": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_extraRangesToShow": [],
+          "_generalAbilities": [],
+          "_addIndexToSignalId": 1,
+          "_includeIndexZero": 1,
+          "_alwaysHideHp": {
+            "isDefined": 0,
+            "value": 0
+          },
+          "_alwaysHideSp": {
+            "isDefined": 0,
+            "value": 0
+          }
+        }
+      },
+      {
+        "object": "S1",
+        "pathId": "5604492230698656219",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "5069865947057545691"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-2632969505105631840"
+          },
+          "m_Name": "",
+          "_excludeAnimKeys": [
+            "Born"
+          ],
+          "_replaceAnimPairs": [],
+          "_disableSwitchSettings": []
+        }
+      },
+      {
+        "object": "char_4148_philae",
+        "pathId": "-4840271918879743525",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "6569388174375444955"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-1297314214590689040"
+          },
+          "m_Name": "",
+          "_animator": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_modes": [
+            {
+              "m_FileID": 0,
+              "m_PathID": "-6759524955696209445"
+            },
+            {
+              "m_FileID": 0,
+              "m_PathID": "-6390972702236614181"
+            },
+            {
+              "m_FileID": 0,
+              "m_PathID": "7537658845144932827"
+            }
+          ],
+          "_commonAbilities": [],
+          "_uiMountPoint": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_effectTransform": {
+            "m_FileID": 0,
+            "m_PathID": "-6877087980075556389"
+          },
+          "_shadow": {
+            "m_FileID": 0,
+            "m_PathID": "847041716004708827"
+          },
+          "_defaultBodyColor": {
+            "r": 1.0,
+            "g": 1.0,
+            "b": 1.0,
+            "a": 1.0
+          },
+          "_hideShadowOnRecycle": 0,
+          "_overrideGraphicBound": -1.0,
+          "_hudPluginReplacePairs": [],
+          "_showDebugName": 0,
+          "_skinHolder": {
+            "m_FileID": 0,
+            "m_PathID": "7488177430903906779"
+          },
+          "_motionMode": 0,
+          "_blockMode": 0,
+          "_ignoreBlockMode": 0,
+          "_isFixedRotation": 0,
+          "_occupiedRemainingCharacterCnt": 1,
+          "_useRealBornTimeFromAnim": 0,
+          "_buildCondition": {
+            "buildableType": 1,
+            "isTryingOverlapCharacater": 0,
+            "needSpecifyDirection": 1,
+            "limitByHostAttackRange": 0,
+            "limitByHostAbilityRange": 0,
+            "abilityName": "",
+            "tileKey": "",
+            "extraBuildConditionArray": {
+              "SerializedState": "null",
+              "SerializedObjectReferences": []
+            },
+            "advancedBuildableMask": 1,
+            "overlapOptions": {
+              "_verifySourceId": 0,
+              "_verifySourceIds": [],
+              "_verifySourceProfession": 0,
+              "_verifySourceProfessions": 0,
+              "_isAllConditionOR": 1,
+              "_overlapPriority": 0,
+              "_changeTargetGraphicColor": 0
+            },
+            "excludeNoTargetTile": 0,
+            "extraLocateRange": "",
+            "checkManuallyBuildableType": 0,
+            "manuallyBuildableType": 0,
+            "_excludeOccupiedByWalkEnemy": 0,
+            "allowWalkEnemyInHostRange": 0,
+            "_checkUpdateBuildable": 0
+          },
+          "_traitAbility": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_withdrawCostRecoverRatio": 0.5,
+          "_maxWithdrawCostRatioOfRawCost": 1.0,
+          "_directionTransform": {
+            "m_FileID": 0,
+            "m_PathID": "-7551728946760654373"
+          },
+          "_directionIndicator": {
+            "m_FileID": 0,
+            "m_PathID": "-9162180760817835557"
+          },
+          "_startEffect": "",
+          "_deadEffect": "",
+          "_playStartVocal": 1,
+          "_showDeadTweenColor": 1,
+          "_useSpecificDeadAnim": 0,
+          "_onlyPlayStartEffectOnce": 0,
+          "_dontMoveCameraWhenFocus": 0,
+          "_disableCharInfoPanel": 0,
+          "_disableRotateWhenDead": 0,
+          "_disableSetDirectionWhenDummy": 0,
+          "_clearProjectileWhenDead": 0,
+          "_useIdForAudioSignalMask": 0,
+          "_preprocessData": 0,
+          "_disableClickCharacterInfo": 0,
+          "_skillUiFollowHeadPint": 0,
+          "m_overrideBornTime": -1.0
+        }
+      },
+      {
+        "object": "char_4148_philae",
+        "pathId": "320702259583705563",
+        "type": "CircleCollider2D",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "6569388174375444955"
+          },
+          "m_Enabled": 1,
+          "m_Density": 1.0,
+          "m_Material": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "m_IsTrigger": true,
+          "m_UsedByEffector": false,
+          "m_UsedByComposite": false,
+          "m_Offset": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "m_Radius": 0.25
+        }
+      }
+    ]
+  },
+  "skills": {
+    "skchr_philae_2": [
+      {
+        "object": "skchr_philae_2",
+        "pathId": "5563581795803511613",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-571104452439000259"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "6851783972288338031"
+          },
+          "m_Name": "",
+          "_maxTriggerTime": -1,
+          "_allowSpRecoveryWhenAffecting": 0,
+          "_limitGlobalTriggerTime": 0,
+          "_hidden": 0,
+          "_showSpBarEvenHidden": 0,
+          "_showSpAsBulletMode": 0,
+          "_showSpRatioAsProgress": 0,
+          "_playCharWordVoice": 1,
+          "_playCharWordWithPassiveType": 0,
+          "_canCastWithNoSp": 0,
+          "_canSilenced": 0,
+          "_canUseInAbnormalState": 0,
+          "_defaultModeIndex": 0,
+          "_attackBlackboardModeIndex": 1,
+          "_extraAttackBlackboardModeIndices": [],
+          "_rangeIdModeIndex": -1,
+          "_extraRangeIdModeIndices": [],
+          "_rangeIdUsageType": 7,
+          "_writeDurationToAttackBlackboard": 0,
+          "_attachSignalIds": 0,
+          "_extraAbilities": [],
+          "_useEscapeTime": 0,
+          "_earlySkillFinishAtAttackFinished": 0,
+          "_showProgressToNext": 0,
+          "_hideSkillStackCount": 0,
+          "_hideHudSkillStackCount": 0,
+          "_playSkillBeginAnim": 0,
+          "_beginAnim": "",
+          "_beginAnimDown": "",
+          "_beginEffect": [],
+          "_useFaceVector": 0,
+          "_beginAnimValidator": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_availableValidator": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_trigger": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_switchToState": 0,
+          "_uninterruptibleOnAbilityPredelay": 0,
+          "_canSwitchDuringBorn": 1,
+          "_canCastDuringBorn": 1,
+          "_checkHasTargetBeforeDoCast": 0,
+          "_useTriggerInManualMode": 0,
+          "_allowNoTarget": 1,
+          "_shouldCastLikeAttack": 0,
+          "_isRemoteControlled": 0,
+          "_hideRangeToShow": 0,
+          "_forceUseBaseShowRange": 0,
+          "_rangeToShow": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_recoverSpIfNoTarget": 0,
+          "_resetAbilityCooldownWhenCastEnd": 0,
+          "_onlyAvailableWhenTokenValid": 0,
+          "_hasUniStackColor": 0
+        }
+      },
+      {
+        "object": "skchr_philae_2",
+        "pathId": "3388098405148834621",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-571104452439000259"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-4234909118878081699"
+          },
+          "m_Name": "",
+          "_selector": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_metadata": {
+            "namedAsAlias": "",
+            "blackboardPrefix": ""
+          },
+          "_interruptAbilityOnDetach": 1,
+          "_attachPassiveBuffsOnDummy": 1,
+          "_ignoreIfOwnerDead": 0,
+          "_forceAsDmgOrHealAbility": 0,
+          "_waitForAttackEvent": 0,
+          "_interuptIfTargetDead": 0,
+          "_resetCdStrategy": 1,
+          "_buffs": [
+            {
+              "attributes": {
+                "abnormalFlags": [
+                  11
+                ],
+                "abnormalImmunes": [],
+                "abnormalAntis": [],
+                "abnormalCombos": [],
+                "abnormalComboImmunes": [],
+                "attributeModifiers": [
+                  {
+                    "attributeType": 0,
+                    "formulaItem": 1,
+                    "value": 0.0,
+                    "loadFromBlackboard": 1,
+                    "fetchBaseValueFromSourceEntity": 0
+                  }
+                ]
+              },
+              "buffKey": "philae_s_2",
+              "loadFromDB": 0,
+              "isDurableBuff": 0,
+              "isDamageMissable": 0,
+              "isSilenceable": 0,
+              "isStunnable": 0,
+              "isFreezable": 0,
+              "isLevitatable": 0,
+              "statusResistable": 2,
+              "templateKey": "philae_s_2",
+              "disableOverride": 0,
+              "overrideKey": "",
+              "overrideType": 0,
+              "maxStackCnt": 1,
+              "refreshRemainingTimeWhenStackMax": 0,
+              "clearAllStackCntWhenTimeUp": 0,
+              "maxValidStackCnt": -1,
+              "independentCharacterSource": 0,
+              "overrideEffectKey": "philae_skill_02_buff_01",
+              "overrideOnEventPriority": 0,
+              "onEventPriority": 0,
+              "audioSignal": "",
+              "lifeTimeType": 1,
+              "takeSnapshotWhenExtend": 0,
+              "durationKey": "duration",
+              "lifeTime": 0.0,
+              "triggerLifeType": 0,
+              "triggerCnt": 0,
+              "triggerInterval": -1.0,
+              "waitFirstTriggerInterval": 1,
+              "firstTriggerInterval": -1.0,
+              "priority": -1,
+              "priorityBBKeys": [],
+              "stripBlackboardParamsWithBuffKey": 0,
+              "blackboard": [],
+              "enableInitDirectionFromSource": 0
+            }
+          ],
+          "_waitForCasting": 1,
+          "_updateLifetimeWhenSpellStart": 0,
+          "_preDelay": 0.0,
+          "_escapeTime": 0.0,
+          "_checkBuffEarlyFinish": 0,
+          "_passiveBuffs": [],
+          "_ignoreInfiniteBuffCooldown": 0,
+          "_enableUpdateCooldown": 0
+        }
+      },
+      {
+        "object": "skchr_philae_2",
+        "pathId": "-857979418311345347",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-571104452439000259"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "680305599797508032"
+          },
+          "m_Name": "",
+          "_default": {
+            "beginAnim": "Skill_2_Begin",
+            "loopAnim": "Skill_2_Loop",
+            "endAnim": "Skill_2_End"
+          },
+          "_overrideDownAnimation": 0,
+          "_down": {
+            "beginAnim": "",
+            "loopAnim": "",
+            "endAnim": ""
+          },
+          "_overrideUpAnimation": 0,
+          "_up": {
+            "beginAnim": "",
+            "loopAnim": "",
+            "endAnim": ""
+          },
+          "_faceToFront": 0,
+          "_faceToDefault": 0,
+          "_waitForAttachFinishEvent": 0,
+          "_earlyFinishEndIdleAnimation": 0,
+          "_fireAttackFinishEvent": 0,
+          "_delayToFireAttackSkillEvent": 0,
+          "_delaySecond": 0.0,
+          "_fireAnimEndEvent": 0,
+          "_dontPlayBeginAnimFromInterrupted": 0,
+          "_onlyPlayBeginAnimWhenFirstAttack": 0,
+          "_delayToAnimateEndAnimation": 0,
+          "_delayToAnimateEndAnimationTime": 0.0,
+          "_playIdleAnimInTheEnd": 0
+        }
+      }
+    ],
+    "skchr_philae_1": [
+      {
+        "object": "Selector",
+        "pathId": "-6627041907135458984",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-2497896482314890920"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "8735719249224227112"
+          },
+          "m_Name": ""
+        }
+      },
+      {
+        "object": "SkillAnimation",
+        "pathId": "-1665003705110146728",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "1707083960879108440"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "8145049199648393782"
+          },
+          "m_Name": "",
+          "_selector": {
+            "m_FileID": 0,
+            "m_PathID": "-6627041907135458984"
+          },
+          "_metadata": {
+            "namedAsAlias": "SkillAnimation",
+            "blackboardPrefix": ""
+          },
+          "_interruptAbilityOnDetach": 1,
+          "_attachPassiveBuffsOnDummy": 1,
+          "_ignoreIfOwnerDead": 0,
+          "_forceAsDmgOrHealAbility": 0,
+          "_waitForAttackEvent": 1,
+          "_interuptIfTargetDead": 0,
+          "_resetCdStrategy": 1,
+          "_selectTargetSource": 1,
+          "_selectTargetTiming": 0,
+          "_timeMode": 1,
+          "_alwaysIncludeTarget": 1,
+          "_allowNoTarget": 0,
+          "_animKey": "Skill_1",
+          "_endAnimKey": "Idle",
+          "_downAnimKey": "",
+          "_downEndAnimKey": "",
+          "_upAnimKey": "",
+          "_upEndAnimKey": "",
+          "_cooldown": 0.0,
+          "_cooldownKey": "duration",
+          "_preDelay": 0.0,
+          "_escapeTime": 0.0,
+          "_faceToTarget": 1,
+          "_faceToDefault": 0,
+          "_faceToFront": 0,
+          "_faceToFirstCastTarget": 0,
+          "_forceFaceToDirection": 0,
+          "_activeBuffs": [],
+          "_maxAnimScale": 1.0,
+          "_onlyPlayEndAnimWhenIsLastAbility": 0,
+          "_ignorePalsyInterrupt": 0
+        }
+      },
+      {
+        "object": "SkillAnimation",
+        "pathId": "4087800161673236824",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "1707083960879108440"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-550693537895634864"
+          },
+          "m_Name": "",
+          "_hitEffects": [],
+          "_castEffects": [
+            {
+              "_directionType": 0,
+              "_effects": [
+                "philae_skill_01_start_02"
+              ],
+              "_oneshot": 1,
+              "_startEvent": 2,
+              "_endEvent": 3,
+              "_onlyOnce": 0,
+              "_useFourDirectionalFace": 0,
+              "_delayIfFirstAttack": 0.0,
+              "_hookEffectAfterFirstAttack": ""
+            }
+          ],
+          "_attachEffects": [],
+          "_inputTargetEffects": [],
+          "_castTargetEffects": [],
+          "_convertCastEndToAttachFinish": 0,
+          "_recalculatePlaybackSpeed": 0,
+          "_preDelayFactor": 0.0
+        }
+      },
+      {
+        "object": "SkillAnimation",
+        "pathId": "7056416736096178520",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "1707083960879108440"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "1339719624887862345"
+          },
+          "m_Name": "",
+          "_buffs": [
+            {
+              "attributes": {
+                "abnormalFlags": [
+                  18
+                ],
+                "abnormalImmunes": [],
+                "abnormalAntis": [],
+                "abnormalCombos": [],
+                "abnormalComboImmunes": [],
+                "attributeModifiers": []
+              },
+              "buffKey": "philae_s_1[animation]",
+              "loadFromDB": 0,
+              "isDurableBuff": 0,
+              "isDamageMissable": 0,
+              "isSilenceable": 0,
+              "isStunnable": 0,
+              "isFreezable": 0,
+              "isLevitatable": 0,
+              "statusResistable": 2,
+              "templateKey": "empty",
+              "disableOverride": 0,
+              "overrideKey": "",
+              "overrideType": 0,
+              "maxStackCnt": 1,
+              "refreshRemainingTimeWhenStackMax": 0,
+              "clearAllStackCntWhenTimeUp": 0,
+              "maxValidStackCnt": -1,
+              "independentCharacterSource": 0,
+              "overrideEffectKey": "",
+              "overrideOnEventPriority": 0,
+              "onEventPriority": 0,
+              "audioSignal": "",
+              "lifeTimeType": 2,
+              "takeSnapshotWhenExtend": 0,
+              "durationKey": "duration",
+              "lifeTime": 0.0,
+              "triggerLifeType": 0,
+              "triggerCnt": 0,
+              "triggerInterval": -1.0,
+              "waitFirstTriggerInterval": 1,
+              "firstTriggerInterval": -1.0,
+              "priority": -1,
+              "priorityBBKeys": [],
+              "stripBlackboardParamsWithBuffKey": 0,
+              "blackboard": [],
+              "enableInitDirectionFromSource": 0
+            }
+          ]
+        }
+      },
+      {
+        "object": "skchr_philae_1",
+        "pathId": "7177640111926038872",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "2542628905866514776"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "6851783972288338031"
+          },
+          "m_Name": "",
+          "_maxTriggerTime": -1,
+          "_allowSpRecoveryWhenAffecting": 0,
+          "_limitGlobalTriggerTime": 0,
+          "_hidden": 0,
+          "_showSpBarEvenHidden": 0,
+          "_showSpAsBulletMode": 0,
+          "_showSpRatioAsProgress": 0,
+          "_playCharWordVoice": 1,
+          "_playCharWordWithPassiveType": 0,
+          "_canCastWithNoSp": 0,
+          "_canSilenced": 0,
+          "_canUseInAbnormalState": 0,
+          "_defaultModeIndex": 0,
+          "_attackBlackboardModeIndex": -1,
+          "_extraAttackBlackboardModeIndices": [],
+          "_rangeIdModeIndex": -1,
+          "_extraRangeIdModeIndices": [],
+          "_rangeIdUsageType": 7,
+          "_writeDurationToAttackBlackboard": 0,
+          "_attachSignalIds": 1,
+          "_extraAbilities": [
+            {
+              "m_FileID": 0,
+              "m_PathID": "-1665003705110146728"
+            }
+          ],
+          "_useEscapeTime": 0,
+          "_earlySkillFinishAtAttackFinished": 0,
+          "_showProgressToNext": 0,
+          "_hideSkillStackCount": 0,
+          "_hideHudSkillStackCount": 0,
+          "_playSkillBeginAnim": 0,
+          "_beginAnim": "",
+          "_beginAnimDown": "",
+          "_beginEffect": [],
+          "_useFaceVector": 0,
+          "_beginAnimValidator": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_availableValidator": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_trigger": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_switchToState": 1,
+          "_uninterruptibleOnAbilityPredelay": 0,
+          "_canSwitchDuringBorn": 1,
+          "_canCastDuringBorn": 1,
+          "_checkHasTargetBeforeDoCast": 0,
+          "_useTriggerInManualMode": 0,
+          "_allowNoTarget": 1,
+          "_shouldCastLikeAttack": 0,
+          "_isRemoteControlled": 0,
+          "_hideRangeToShow": 0,
+          "_forceUseBaseShowRange": 0,
+          "_rangeToShow": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_recoverSpIfNoTarget": 0,
+          "_resetAbilityCooldownWhenCastEnd": 0,
+          "_onlyAvailableWhenTokenValid": 0,
+          "_hasUniStackColor": 0
+        }
+      },
+      {
+        "object": "skchr_philae_1",
+        "pathId": "2779809433982751064",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "2542628905866514776"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-4234909118878081699"
+          },
+          "m_Name": "",
+          "_selector": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_metadata": {
+            "namedAsAlias": "",
+            "blackboardPrefix": ""
+          },
+          "_interruptAbilityOnDetach": 1,
+          "_attachPassiveBuffsOnDummy": 1,
+          "_ignoreIfOwnerDead": 0,
+          "_forceAsDmgOrHealAbility": 0,
+          "_waitForAttackEvent": 1,
+          "_interuptIfTargetDead": 0,
+          "_resetCdStrategy": 1,
+          "_buffs": [
+            {
+              "attributes": {
+                "abnormalFlags": [],
+                "abnormalImmunes": [],
+                "abnormalAntis": [],
+                "abnormalCombos": [],
+                "abnormalComboImmunes": [],
+                "attributeModifiers": [
+                  {
+                    "attributeType": 0,
+                    "formulaItem": 1,
+                    "value": 0.0,
+                    "loadFromBlackboard": 1,
+                    "fetchBaseValueFromSourceEntity": 0
+                  }
+                ]
+              },
+              "buffKey": "philae_s_1",
+              "loadFromDB": 0,
+              "isDurableBuff": 0,
+              "isDamageMissable": 0,
+              "isSilenceable": 0,
+              "isStunnable": 0,
+              "isFreezable": 0,
+              "isLevitatable": 0,
+              "statusResistable": 2,
+              "templateKey": "philae_s_1",
+              "disableOverride": 0,
+              "overrideKey": "",
+              "overrideType": 0,
+              "maxStackCnt": 1,
+              "refreshRemainingTimeWhenStackMax": 0,
+              "clearAllStackCntWhenTimeUp": 0,
+              "maxValidStackCnt": -1,
+              "independentCharacterSource": 0,
+              "overrideEffectKey": "philae_skill_01_start_01",
+              "overrideOnEventPriority": 0,
+              "onEventPriority": 0,
+              "audioSignal": "",
+              "lifeTimeType": 1,
+              "takeSnapshotWhenExtend": 0,
+              "durationKey": "duration",
+              "lifeTime": 0.0,
+              "triggerLifeType": 0,
+              "triggerCnt": 0,
+              "triggerInterval": -1.0,
+              "waitFirstTriggerInterval": 1,
+              "firstTriggerInterval": -1.0,
+              "priority": -1,
+              "priorityBBKeys": [],
+              "stripBlackboardParamsWithBuffKey": 0,
+              "blackboard": [],
+              "enableInitDirectionFromSource": 0
+            }
+          ],
+          "_waitForCasting": 0,
+          "_updateLifetimeWhenSpellStart": 0,
+          "_preDelay": 0.0,
+          "_escapeTime": 0.0,
+          "_checkBuffEarlyFinish": 0,
+          "_passiveBuffs": [],
+          "_ignoreInfiniteBuffCooldown": 0,
+          "_enableUpdateCooldown": 0
+        }
+      }
+    ]
+  },
+  "projectiles": {},
+  "animators": {
+    "char_4148_philae": [
+      {
+        "pathId": "2696828573007187559",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-5868326301877694873"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "7647785617504526080"
+          },
+          "m_Name": "",
+          "_animations": [
+            {
+              "animKey": "Default",
+              "animName": "Default",
+              "loop": 0,
+              "speed": 1.0,
+              "ignoreMissing": 1
+            },
+            {
+              "animKey": "Born",
+              "animName": "Start",
+              "loop": 0,
+              "speed": 1.0,
+              "ignoreMissing": 1
+            },
+            {
+              "animKey": "Die",
+              "animName": "Die",
+              "loop": 0,
+              "speed": 1.0,
+              "ignoreMissing": 1
+            },
+            {
+              "animKey": "Idle",
+              "animName": "Idle",
+              "loop": 1,
+              "speed": 1.0,
+              "ignoreMissing": 1
+            },
+            {
+              "animKey": "Attack",
+              "animName": "Attack",
+              "loop": 0,
+              "speed": 1.0,
+              "ignoreMissing": 1
+            },
+            {
+              "animKey": "Skill_1",
+              "animName": "Skill_1",
+              "loop": 0,
+              "speed": 1.0,
+              "ignoreMissing": 1
+            },
+            {
+              "animKey": "Skill_2_Begin",
+              "animName": "Skill_2_Begin",
+              "loop": 0,
+              "speed": 1.0,
+              "ignoreMissing": 1
+            },
+            {
+              "animKey": "Skill_2_End",
+              "animName": "Skill_2_End",
+              "loop": 0,
+              "speed": 1.0,
+              "ignoreMissing": 1
+            },
+            {
+              "animKey": "Skill_2_Loop",
+              "animName": "Skill_2_Loop",
+              "loop": 1,
+              "speed": 1.0,
+              "ignoreMissing": 1
+            }
+          ],
+          "_spineSkins": [],
+          "_mixSettings": [],
+          "_spineScale": 1.0,
+          "_enableShowDamageFlash": 1,
+          "_cacheBoundsCenter": 1,
+          "_resetSkinToInitial": 0,
+          "_faceSwitcher": {
+            "m_FileID": 0,
+            "m_PathID": "4222636342145617511"
+          },
+          "_front": {
+            "skeleton": {
+              "m_FileID": 0,
+              "m_PathID": "-3230241515514524057"
+            },
+            "muzzlaTransform": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "hitTransform": {
+              "m_FileID": 0,
+              "m_PathID": "1910381868173790823"
+            },
+            "headTransform": {
+              "m_FileID": 0,
+              "m_PathID": "-1025148460504478105"
+            },
+            "shadowTransform": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint0": {
+              "m_FileID": 0,
+              "m_PathID": "-2200287244517929369"
+            },
+            "specialPoint1": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint2": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint3": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint4": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint5": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint6": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint7": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint8": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint9": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint10": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint11": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint12": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint13": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint14": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint15": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            }
+          },
+          "_back": {
+            "skeleton": {
+              "m_FileID": 0,
+              "m_PathID": "4369265526836137575"
+            },
+            "muzzlaTransform": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "hitTransform": {
+              "m_FileID": 0,
+              "m_PathID": "-5224638965153821081"
+            },
+            "headTransform": {
+              "m_FileID": 0,
+              "m_PathID": "-1025148460504478105"
+            },
+            "shadowTransform": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint0": {
+              "m_FileID": 0,
+              "m_PathID": "8085440668761296487"
+            },
+            "specialPoint1": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint2": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint3": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint4": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint5": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint6": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint7": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint8": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint9": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint10": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint11": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint12": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint13": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint14": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint15": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            }
+          },
+          "_useNewSpineFormat": 0
+        }
+      }
+    ]
+  },
+  "models": {
+    "char_4148_philae": {
+      "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+      "Front": {
+        "path": "spine/char_4148_philae/char_4148_philae/Front/char_4148_philae.skel",
+        "sha256": "20506f29744a7e9d112248655477867694b0cd49682de1129247e5f419433280",
+        "bytes": 265965,
+        "durations": {
+          "Attack": 1.6,
+          "Default": 0,
+          "Die": 1,
+          "Idle": 2,
+          "Skill_1": 1.667,
+          "Skill_2_Begin": 0.333,
+          "Skill_2_End": 0.9,
+          "Skill_2_Loop": 2,
+          "Start": 1
+        },
+        "hits": {
+          "Attack": [
+            0.767
+          ],
+          "Skill_1": [
+            0.433
+          ]
+        }
+      },
+      "Back": {
+        "path": "spine/char_4148_philae/char_4148_philae/Back/char_4148_philae.skel",
+        "sha256": "a805f5562dbcb07a6d5602061142d3a7d0e246d617cab22c08517ee3559a9874",
+        "bytes": 177071,
+        "durations": {
+          "Attack": 1.6,
+          "Default": 0,
+          "Idle": 2,
+          "Skill_1": 1.667,
+          "Skill_2_End": 0.9,
+          "Skill_2_Loop": 2,
+          "Skill_2_Start": 0.333,
+          "Start": 1
+        },
+        "hits": {
+          "Attack": [
+            0.767
+          ],
+          "Skill_1": [
+            0.433
+          ]
+        }
+      }
+    }
+  },
+  "originalFacingBindings": {
+    "char_4148_philae": {
+      "Front": {
+        "animatorPathId": "2696828573007187559",
+        "skeletonAnimationPathId": "-3230241515514524057",
+        "skeletonDataAssetPathId": "-7723330236288723375",
+        "textAssetPathId": "6851139066144671507",
+        "sha256": "20506f29744a7e9d112248655477867694b0cd49682de1129247e5f419433280",
+        "byteLength": 265965
+      },
+      "Back": {
+        "animatorPathId": "2696828573007187559",
+        "skeletonAnimationPathId": "4369265526836137575",
+        "skeletonDataAssetPathId": "-8428095070696420083",
+        "textAssetPathId": "3500953790103261619",
+        "sha256": "a805f5562dbcb07a6d5602061142d3a7d0e246d617cab22c08517ee3559a9874",
+        "byteLength": 177071
+      }
+    }
+  },
+  "tables": {
+    "char_4148_philae": {
+      "name": "Philae",
+      "profession": "TANK",
+      "subProfessionId": "primprotector",
+      "position": "MELEE",
+      "rarity": "TIER_5",
+      "phases": [
+        {
+          "characterPrefabKey": "char_4148_philae",
+          "rangeId": "0-1",
+          "maxLevel": 50,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 1289,
+                "atk": 252,
+                "def": 218,
+                "magicResistance": 10.0,
+                "cost": 21,
+                "blockCnt": 3,
+                "moveSpeed": 1.0,
+                "attackSpeed": 100.0,
+                "baseAttackTime": 1.6,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0.0,
+                "spRecoveryPerSec": 1.0,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 50,
+              "data": {
+                "maxHp": 1742,
+                "atk": 361,
+                "def": 321,
+                "magicResistance": 10.0,
+                "cost": 21,
+                "blockCnt": 3,
+                "moveSpeed": 1.0,
+                "attackSpeed": 100.0,
+                "baseAttackTime": 1.6,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0.0,
+                "spRecoveryPerSec": 1.0,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "evolveCost": null
+        },
+        {
+          "characterPrefabKey": "char_4148_philae",
+          "rangeId": "0-1",
+          "maxLevel": 70,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 1742,
+                "atk": 361,
+                "def": 321,
+                "magicResistance": 10.0,
+                "cost": 23,
+                "blockCnt": 3,
+                "moveSpeed": 1.0,
+                "attackSpeed": 100.0,
+                "baseAttackTime": 1.6,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0.0,
+                "spRecoveryPerSec": 1.0,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 70,
+              "data": {
+                "maxHp": 2323,
+                "atk": 482,
+                "def": 435,
+                "magicResistance": 10.0,
+                "cost": 23,
+                "blockCnt": 3,
+                "moveSpeed": 1.0,
+                "attackSpeed": 100.0,
+                "baseAttackTime": 1.6,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0.0,
+                "spRecoveryPerSec": 1.0,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "evolveCost": [
+            {
+              "id": "3231",
+              "count": 4,
+              "type": "MATERIAL"
+            },
+            {
+              "id": "30022",
+              "count": 5,
+              "type": "MATERIAL"
+            },
+            {
+              "id": "30062",
+              "count": 2,
+              "type": "MATERIAL"
+            }
+          ]
+        },
+        {
+          "characterPrefabKey": "char_4148_philae",
+          "rangeId": "0-1",
+          "maxLevel": 80,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 2323,
+                "atk": 482,
+                "def": 435,
+                "magicResistance": 10.0,
+                "cost": 25,
+                "blockCnt": 3,
+                "moveSpeed": 1.0,
+                "attackSpeed": 100.0,
+                "baseAttackTime": 1.6,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0.0,
+                "spRecoveryPerSec": 1.0,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 80,
+              "data": {
+                "maxHp": 3227,
+                "atk": 603,
+                "def": 544,
+                "magicResistance": 10.0,
+                "cost": 25,
+                "blockCnt": 3,
+                "moveSpeed": 1.0,
+                "attackSpeed": 100.0,
+                "baseAttackTime": 1.6,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0.0,
+                "spRecoveryPerSec": 1.0,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "evolveCost": [
+            {
+              "id": "3233",
+              "count": 3,
+              "type": "MATERIAL"
+            },
+            {
+              "id": "30104",
+              "count": 6,
+              "type": "MATERIAL"
+            },
+            {
+              "id": "30053",
+              "count": 16,
+              "type": "MATERIAL"
+            }
+          ]
+        }
+      ],
+      "skills": [
+        {
+          "skillId": "skchr_philae_1",
+          "overridePrefabKey": null,
+          "overrideTokenKey": null,
+          "levelUpCostCond": [
+            {
+              "unlockCond": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "lvlUpTime": 28800,
+              "levelUpCost": [
+                {
+                  "id": "3303",
+                  "count": 5,
+                  "type": "MATERIAL"
+                },
+                {
+                  "id": "31024",
+                  "count": 3,
+                  "type": "MATERIAL"
+                },
+                {
+                  "id": "31083",
+                  "count": 3,
+                  "type": "MATERIAL"
+                }
+              ]
+            },
+            {
+              "unlockCond": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "lvlUpTime": 57600,
+              "levelUpCost": [
+                {
+                  "id": "3303",
+                  "count": 6,
+                  "type": "MATERIAL"
+                },
+                {
+                  "id": "31014",
+                  "count": 3,
+                  "type": "MATERIAL"
+                },
+                {
+                  "id": "31034",
+                  "count": 5,
+                  "type": "MATERIAL"
+                }
+              ]
+            },
+            {
+              "unlockCond": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "lvlUpTime": 86400,
+              "levelUpCost": [
+                {
+                  "id": "3303",
+                  "count": 10,
+                  "type": "MATERIAL"
+                },
+                {
+                  "id": "30155",
+                  "count": 4,
+                  "type": "MATERIAL"
+                },
+                {
+                  "id": "30084",
+                  "count": 1,
+                  "type": "MATERIAL"
+                }
+              ]
+            }
+          ],
+          "unlockCond": {
+            "phase": "PHASE_0",
+            "level": 1
+          }
+        },
+        {
+          "skillId": "skchr_philae_2",
+          "overridePrefabKey": null,
+          "overrideTokenKey": null,
+          "levelUpCostCond": [
+            {
+              "unlockCond": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "lvlUpTime": 28800,
+              "levelUpCost": [
+                {
+                  "id": "3303",
+                  "count": 5,
+                  "type": "MATERIAL"
+                },
+                {
+                  "id": "30054",
+                  "count": 3,
+                  "type": "MATERIAL"
+                },
+                {
+                  "id": "30083",
+                  "count": 2,
+                  "type": "MATERIAL"
+                }
+              ]
+            },
+            {
+              "unlockCond": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "lvlUpTime": 57600,
+              "levelUpCost": [
+                {
+                  "id": "3303",
+                  "count": 6,
+                  "type": "MATERIAL"
+                },
+                {
+                  "id": "30014",
+                  "count": 3,
+                  "type": "MATERIAL"
+                },
+                {
+                  "id": "30084",
+                  "count": 6,
+                  "type": "MATERIAL"
+                }
+              ]
+            },
+            {
+              "unlockCond": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "lvlUpTime": 86400,
+              "levelUpCost": [
+                {
+                  "id": "3303",
+                  "count": 10,
+                  "type": "MATERIAL"
+                },
+                {
+                  "id": "30145",
+                  "count": 4,
+                  "type": "MATERIAL"
+                },
+                {
+                  "id": "31084",
+                  "count": 1,
+                  "type": "MATERIAL"
+                }
+              ]
+            }
+          ],
+          "unlockCond": {
+            "phase": "PHASE_1",
+            "level": 1
+          }
+        }
+      ],
+      "talents": [
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Herald of the Divine River",
+              "description": "Receives -5% Elemental Injury, and recovers 1 SP when receiving Necrosis damage",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "damage_resistance",
+                  "value": 0.05,
+                  "valueStr": null
+                },
+                {
+                  "key": "sp",
+                  "value": 1.0,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 1
+              },
+              "requiredPotentialRank": 4,
+              "prefabKey": "1",
+              "name": "Herald of the Divine River",
+              "description": "Receives -7% <@ba.talpu>(+2%)</> Elemental Injury, and recovers 1 SP when receiving Necrosis damage",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "damage_resistance",
+                  "value": 0.07,
+                  "valueStr": null
+                },
+                {
+                  "key": "sp",
+                  "value": 1.0,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Herald of the Divine River",
+              "description": "Receives -10% Elemental Injury, and recovers 2 SP when receiving Necrosis damage",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "damage_resistance",
+                  "value": 0.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "sp",
+                  "value": 2.0,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 4,
+              "prefabKey": "1",
+              "name": "Herald of the Divine River",
+              "description": "Receives -12% <@ba.talpu>(+2%)</> Elemental Injury, and recovers 2 SP when receiving Necrosis damage",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "damage_resistance",
+                  "value": 0.12,
+                  "valueStr": null
+                },
+                {
+                  "key": "sp",
+                  "value": 2.0,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            }
+          ]
+        }
+      ],
+      "trait": null,
+      "nationId": "sargon",
+      "groupId": null,
+      "teamId": null,
+      "skillLevels": {
+        "skchr_philae_1": [
+          {
+            "name": "Blessing of the River of Life",
+            "rangeId": null,
+            "description": "Max HP <@ba.vup>+{max_hp:0%}</>, clears all <$ba.dt.element>Elemental Injury</> on self and gains a <$ba.epbarrier>Protective Barrier</> that absorbs up to <@ba.vup>{shield_value}</> Elemental Injury",
+            "skillType": "MANUAL",
+            "durationType": "NONE",
+            "spData": {
+              "spType": "INCREASE_WITH_TIME",
+              "levelUpCost": null,
+              "maxChargeTime": 1,
+              "spCost": 28,
+              "initSp": 0,
+              "increment": 1.0
+            },
+            "prefabId": "skchr_philae_1",
+            "duration": 15.0,
+            "blackboard": [
+              {
+                "key": "max_hp",
+                "value": 0.3,
+                "valueStr": null
+              },
+              {
+                "key": "shield_value",
+                "value": 600.0,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "name": "Blessing of the River of Life",
+            "rangeId": null,
+            "description": "Max HP <@ba.vup>+{max_hp:0%}</>, clears all <$ba.dt.element>Elemental Injury</> on self and gains a <$ba.epbarrier>Protective Barrier</> that absorbs up to <@ba.vup>{shield_value}</> Elemental Injury",
+            "skillType": "MANUAL",
+            "durationType": "NONE",
+            "spData": {
+              "spType": "INCREASE_WITH_TIME",
+              "levelUpCost": null,
+              "maxChargeTime": 1,
+              "spCost": 27,
+              "initSp": 0,
+              "increment": 1.0
+            },
+            "prefabId": "skchr_philae_1",
+            "duration": 15.0,
+            "blackboard": [
+              {
+                "key": "max_hp",
+                "value": 0.35,
+                "valueStr": null
+              },
+              {
+                "key": "shield_value",
+                "value": 700.0,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "name": "Blessing of the River of Life",
+            "rangeId": null,
+            "description": "Max HP <@ba.vup>+{max_hp:0%}</>, clears all <$ba.dt.element>Elemental Injury</> on self and gains a <$ba.epbarrier>Protective Barrier</> that absorbs up to <@ba.vup>{shield_value}</> Elemental Injury",
+            "skillType": "MANUAL",
+            "durationType": "NONE",
+            "spData": {
+              "spType": "INCREASE_WITH_TIME",
+              "levelUpCost": null,
+              "maxChargeTime": 1,
+              "spCost": 26,
+              "initSp": 0,
+              "increment": 1.0
+            },
+            "prefabId": "skchr_philae_1",
+            "duration": 15.0,
+            "blackboard": [
+              {
+                "key": "max_hp",
+                "value": 0.4,
+                "valueStr": null
+              },
+              {
+                "key": "shield_value",
+                "value": 800.0,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "name": "Blessing of the River of Life",
+            "rangeId": null,
+            "description": "Max HP <@ba.vup>+{max_hp:0%}</>, clears all <$ba.dt.element>Elemental Injury</> on self and gains a <$ba.epbarrier>Protective Barrier</> that absorbs up to <@ba.vup>{shield_value}</> Elemental Injury",
+            "skillType": "MANUAL",
+            "durationType": "NONE",
+            "spData": {
+              "spType": "INCREASE_WITH_TIME",
+              "levelUpCost": null,
+              "maxChargeTime": 1,
+              "spCost": 25,
+              "initSp": 5,
+              "increment": 1.0
+            },
+            "prefabId": "skchr_philae_1",
+            "duration": 15.0,
+            "blackboard": [
+              {
+                "key": "max_hp",
+                "value": 0.45,
+                "valueStr": null
+              },
+              {
+                "key": "shield_value",
+                "value": 900.0,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "name": "Blessing of the River of Life",
+            "rangeId": null,
+            "description": "Max HP <@ba.vup>+{max_hp:0%}</>, clears all <$ba.dt.element>Elemental Injury</> on self and gains a <$ba.epbarrier>Protective Barrier</> that absorbs up to <@ba.vup>{shield_value}</> Elemental Injury",
+            "skillType": "MANUAL",
+            "durationType": "NONE",
+            "spData": {
+              "spType": "INCREASE_WITH_TIME",
+              "levelUpCost": null,
+              "maxChargeTime": 1,
+              "spCost": 24,
+              "initSp": 5,
+              "increment": 1.0
+            },
+            "prefabId": "skchr_philae_1",
+            "duration": 15.0,
+            "blackboard": [
+              {
+                "key": "max_hp",
+                "value": 0.5,
+                "valueStr": null
+              },
+              {
+                "key": "shield_value",
+                "value": 1000.0,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "name": "Blessing of the River of Life",
+            "rangeId": null,
+            "description": "Max HP <@ba.vup>+{max_hp:0%}</>, clears all <$ba.dt.element>Elemental Injury</> on self and gains a <$ba.epbarrier>Protective Barrier</> that absorbs up to <@ba.vup>{shield_value}</> Elemental Injury",
+            "skillType": "MANUAL",
+            "durationType": "NONE",
+            "spData": {
+              "spType": "INCREASE_WITH_TIME",
+              "levelUpCost": null,
+              "maxChargeTime": 1,
+              "spCost": 23,
+              "initSp": 5,
+              "increment": 1.0
+            },
+            "prefabId": "skchr_philae_1",
+            "duration": 15.0,
+            "blackboard": [
+              {
+                "key": "max_hp",
+                "value": 0.55,
+                "valueStr": null
+              },
+              {
+                "key": "shield_value",
+                "value": 1100.0,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "name": "Blessing of the River of Life",
+            "rangeId": null,
+            "description": "Max HP <@ba.vup>+{max_hp:0%}</>, clears all <$ba.dt.element>Elemental Injury</> on self and gains a <$ba.epbarrier>Protective Barrier</> that absorbs up to <@ba.vup>{shield_value}</> Elemental Injury",
+            "skillType": "MANUAL",
+            "durationType": "NONE",
+            "spData": {
+              "spType": "INCREASE_WITH_TIME",
+              "levelUpCost": null,
+              "maxChargeTime": 1,
+              "spCost": 22,
+              "initSp": 5,
+              "increment": 1.0
+            },
+            "prefabId": "skchr_philae_1",
+            "duration": 15.0,
+            "blackboard": [
+              {
+                "key": "max_hp",
+                "value": 0.6,
+                "valueStr": null
+              },
+              {
+                "key": "shield_value",
+                "value": 1200.0,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "name": "Blessing of the River of Life",
+            "rangeId": null,
+            "description": "Max HP <@ba.vup>+{max_hp:0%}</>, clears all <$ba.dt.element>Elemental Injury</> on self and gains a <$ba.epbarrier>Protective Barrier</> that absorbs up to <@ba.vup>{shield_value}</> Elemental Injury",
+            "skillType": "MANUAL",
+            "durationType": "NONE",
+            "spData": {
+              "spType": "INCREASE_WITH_TIME",
+              "levelUpCost": null,
+              "maxChargeTime": 1,
+              "spCost": 21,
+              "initSp": 10,
+              "increment": 1.0
+            },
+            "prefabId": "skchr_philae_1",
+            "duration": 15.0,
+            "blackboard": [
+              {
+                "key": "max_hp",
+                "value": 0.7,
+                "valueStr": null
+              },
+              {
+                "key": "shield_value",
+                "value": 1400.0,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "name": "Blessing of the River of Life",
+            "rangeId": null,
+            "description": "Max HP <@ba.vup>+{max_hp:0%}</>, clears all <$ba.dt.element>Elemental Injury</> on self and gains a <$ba.epbarrier>Protective Barrier</> that absorbs up to <@ba.vup>{shield_value}</> Elemental Injury",
+            "skillType": "MANUAL",
+            "durationType": "NONE",
+            "spData": {
+              "spType": "INCREASE_WITH_TIME",
+              "levelUpCost": null,
+              "maxChargeTime": 1,
+              "spCost": 20,
+              "initSp": 10,
+              "increment": 1.0
+            },
+            "prefabId": "skchr_philae_1",
+            "duration": 15.0,
+            "blackboard": [
+              {
+                "key": "max_hp",
+                "value": 0.8,
+                "valueStr": null
+              },
+              {
+                "key": "shield_value",
+                "value": 1600.0,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "name": "Blessing of the River of Life",
+            "rangeId": null,
+            "description": "Max HP <@ba.vup>+{max_hp:0%}</>, clears all <$ba.dt.element>Elemental Injury</> on self and gains a <$ba.epbarrier>Protective Barrier</> that absorbs up to <@ba.vup>{shield_value}</> Elemental Injury",
+            "skillType": "MANUAL",
+            "durationType": "NONE",
+            "spData": {
+              "spType": "INCREASE_WITH_TIME",
+              "levelUpCost": null,
+              "maxChargeTime": 1,
+              "spCost": 18,
+              "initSp": 10,
+              "increment": 1.0
+            },
+            "prefabId": "skchr_philae_1",
+            "duration": 15.0,
+            "blackboard": [
+              {
+                "key": "max_hp",
+                "value": 0.9,
+                "valueStr": null
+              },
+              {
+                "key": "shield_value",
+                "value": 1800.0,
+                "valueStr": null
+              }
+            ]
+          }
+        ],
+        "skchr_philae_2": [
+          {
+            "name": "Curse of the River of Death",
+            "rangeId": null,
+            "description": "Stops attacking, Max HP <@ba.vup>+{max_hp:0%}</>; when attacked, deals <@ba.vup>{atk_scale:0%}</> ATK as Arts damage to surrounding ground enemies and an additional <@ba.vup>{ep_damage_ratio:0%}</> ATK as <$ba.dt.apoptosis2>Necrosis Damage</> (can only trigger once every <@ba.vup>{aoe_cd}</>s); if Elemental Injury is received while skill is active, ATK <@ba.vup>+{atk:0%}</> until this skill ends",
+            "skillType": "MANUAL",
+            "durationType": "NONE",
+            "spData": {
+              "spType": "INCREASE_WITH_TIME",
+              "levelUpCost": null,
+              "maxChargeTime": 1,
+              "spCost": 60,
+              "initSp": 10,
+              "increment": 1.0
+            },
+            "prefabId": "skchr_philae_2",
+            "duration": 40.0,
+            "blackboard": [
+              {
+                "key": "atk_scale",
+                "value": 0.8,
+                "valueStr": null
+              },
+              {
+                "key": "ep_damage_ratio",
+                "value": 0.25,
+                "valueStr": null
+              },
+              {
+                "key": "atk",
+                "value": 0.6,
+                "valueStr": null
+              },
+              {
+                "key": "aoe_cd",
+                "value": 2.0,
+                "valueStr": null
+              },
+              {
+                "key": "max_hp",
+                "value": 0.3,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "name": "Curse of the River of Death",
+            "rangeId": null,
+            "description": "Stops attacking, Max HP <@ba.vup>+{max_hp:0%}</>; when attacked, deals <@ba.vup>{atk_scale:0%}</> ATK as Arts damage to surrounding ground enemies and an additional <@ba.vup>{ep_damage_ratio:0%}</> ATK as <$ba.dt.apoptosis2>Necrosis Damage</> (can only trigger once every <@ba.vup>{aoe_cd}</>s); if Elemental Injury is received while skill is active, ATK <@ba.vup>+{atk:0%}</> until this skill ends",
+            "skillType": "MANUAL",
+            "durationType": "NONE",
+            "spData": {
+              "spType": "INCREASE_WITH_TIME",
+              "levelUpCost": null,
+              "maxChargeTime": 1,
+              "spCost": 58,
+              "initSp": 11,
+              "increment": 1.0
+            },
+            "prefabId": "skchr_philae_2",
+            "duration": 40.0,
+            "blackboard": [
+              {
+                "key": "atk_scale",
+                "value": 0.9,
+                "valueStr": null
+              },
+              {
+                "key": "ep_damage_ratio",
+                "value": 0.25,
+                "valueStr": null
+              },
+              {
+                "key": "atk",
+                "value": 0.6,
+                "valueStr": null
+              },
+              {
+                "key": "aoe_cd",
+                "value": 2.0,
+                "valueStr": null
+              },
+              {
+                "key": "max_hp",
+                "value": 0.33,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "name": "Curse of the River of Death",
+            "rangeId": null,
+            "description": "Stops attacking, Max HP <@ba.vup>+{max_hp:0%}</>; when attacked, deals <@ba.vup>{atk_scale:0%}</> ATK as Arts damage to surrounding ground enemies and an additional <@ba.vup>{ep_damage_ratio:0%}</> ATK as <$ba.dt.apoptosis2>Necrosis Damage</> (can only trigger once every <@ba.vup>{aoe_cd}</>s); if Elemental Injury is received while skill is active, ATK <@ba.vup>+{atk:0%}</> until this skill ends",
+            "skillType": "MANUAL",
+            "durationType": "NONE",
+            "spData": {
+              "spType": "INCREASE_WITH_TIME",
+              "levelUpCost": null,
+              "maxChargeTime": 1,
+              "spCost": 57,
+              "initSp": 12,
+              "increment": 1.0
+            },
+            "prefabId": "skchr_philae_2",
+            "duration": 40.0,
+            "blackboard": [
+              {
+                "key": "atk_scale",
+                "value": 1.0,
+                "valueStr": null
+              },
+              {
+                "key": "ep_damage_ratio",
+                "value": 0.25,
+                "valueStr": null
+              },
+              {
+                "key": "atk",
+                "value": 0.6,
+                "valueStr": null
+              },
+              {
+                "key": "aoe_cd",
+                "value": 2.0,
+                "valueStr": null
+              },
+              {
+                "key": "max_hp",
+                "value": 0.36,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "name": "Curse of the River of Death",
+            "rangeId": null,
+            "description": "Stops attacking, Max HP <@ba.vup>+{max_hp:0%}</>; when attacked, deals <@ba.vup>{atk_scale:0%}</> ATK as Arts damage to surrounding ground enemies and an additional <@ba.vup>{ep_damage_ratio:0%}</> ATK as <$ba.dt.apoptosis2>Necrosis Damage</> (can only trigger once every <@ba.vup>{aoe_cd}</>s); if Elemental Injury is received while skill is active, ATK <@ba.vup>+{atk:0%}</> until this skill ends",
+            "skillType": "MANUAL",
+            "durationType": "NONE",
+            "spData": {
+              "spType": "INCREASE_WITH_TIME",
+              "levelUpCost": null,
+              "maxChargeTime": 1,
+              "spCost": 55,
+              "initSp": 13,
+              "increment": 1.0
+            },
+            "prefabId": "skchr_philae_2",
+            "duration": 40.0,
+            "blackboard": [
+              {
+                "key": "atk_scale",
+                "value": 1.1,
+                "valueStr": null
+              },
+              {
+                "key": "ep_damage_ratio",
+                "value": 0.25,
+                "valueStr": null
+              },
+              {
+                "key": "atk",
+                "value": 0.7,
+                "valueStr": null
+              },
+              {
+                "key": "aoe_cd",
+                "value": 2.0,
+                "valueStr": null
+              },
+              {
+                "key": "max_hp",
+                "value": 0.4,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "name": "Curse of the River of Death",
+            "rangeId": null,
+            "description": "Stops attacking, Max HP <@ba.vup>+{max_hp:0%}</>; when attacked, deals <@ba.vup>{atk_scale:0%}</> ATK as Arts damage to surrounding ground enemies and an additional <@ba.vup>{ep_damage_ratio:0%}</> ATK as <$ba.dt.apoptosis2>Necrosis Damage</> (can only trigger once every <@ba.vup>{aoe_cd}</>s); if Elemental Injury is received while skill is active, ATK <@ba.vup>+{atk:0%}</> until this skill ends",
+            "skillType": "MANUAL",
+            "durationType": "NONE",
+            "spData": {
+              "spType": "INCREASE_WITH_TIME",
+              "levelUpCost": null,
+              "maxChargeTime": 1,
+              "spCost": 53,
+              "initSp": 14,
+              "increment": 1.0
+            },
+            "prefabId": "skchr_philae_2",
+            "duration": 40.0,
+            "blackboard": [
+              {
+                "key": "atk_scale",
+                "value": 1.2,
+                "valueStr": null
+              },
+              {
+                "key": "ep_damage_ratio",
+                "value": 0.25,
+                "valueStr": null
+              },
+              {
+                "key": "atk",
+                "value": 0.7,
+                "valueStr": null
+              },
+              {
+                "key": "aoe_cd",
+                "value": 2.0,
+                "valueStr": null
+              },
+              {
+                "key": "max_hp",
+                "value": 0.43,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "name": "Curse of the River of Death",
+            "rangeId": null,
+            "description": "Stops attacking, Max HP <@ba.vup>+{max_hp:0%}</>; when attacked, deals <@ba.vup>{atk_scale:0%}</> ATK as Arts damage to surrounding ground enemies and an additional <@ba.vup>{ep_damage_ratio:0%}</> ATK as <$ba.dt.apoptosis2>Necrosis Damage</> (can only trigger once every <@ba.vup>{aoe_cd}</>s); if Elemental Injury is received while skill is active, ATK <@ba.vup>+{atk:0%}</> until this skill ends",
+            "skillType": "MANUAL",
+            "durationType": "NONE",
+            "spData": {
+              "spType": "INCREASE_WITH_TIME",
+              "levelUpCost": null,
+              "maxChargeTime": 1,
+              "spCost": 52,
+              "initSp": 15,
+              "increment": 1.0
+            },
+            "prefabId": "skchr_philae_2",
+            "duration": 40.0,
+            "blackboard": [
+              {
+                "key": "atk_scale",
+                "value": 1.3,
+                "valueStr": null
+              },
+              {
+                "key": "ep_damage_ratio",
+                "value": 0.25,
+                "valueStr": null
+              },
+              {
+                "key": "atk",
+                "value": 0.7,
+                "valueStr": null
+              },
+              {
+                "key": "aoe_cd",
+                "value": 2.0,
+                "valueStr": null
+              },
+              {
+                "key": "max_hp",
+                "value": 0.46,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "name": "Curse of the River of Death",
+            "rangeId": null,
+            "description": "Stops attacking, Max HP <@ba.vup>+{max_hp:0%}</>; when attacked, deals <@ba.vup>{atk_scale:0%}</> ATK as Arts damage to surrounding ground enemies and an additional <@ba.vup>{ep_damage_ratio:0%}</> ATK as <$ba.dt.apoptosis2>Necrosis Damage</> (can only trigger once every <@ba.vup>{aoe_cd}</>s); if Elemental Injury is received while skill is active, ATK <@ba.vup>+{atk:0%}</> until this skill ends",
+            "skillType": "MANUAL",
+            "durationType": "NONE",
+            "spData": {
+              "spType": "INCREASE_WITH_TIME",
+              "levelUpCost": null,
+              "maxChargeTime": 1,
+              "spCost": 50,
+              "initSp": 17,
+              "increment": 1.0
+            },
+            "prefabId": "skchr_philae_2",
+            "duration": 40.0,
+            "blackboard": [
+              {
+                "key": "atk_scale",
+                "value": 1.4,
+                "valueStr": null
+              },
+              {
+                "key": "ep_damage_ratio",
+                "value": 0.25,
+                "valueStr": null
+              },
+              {
+                "key": "atk",
+                "value": 0.8,
+                "valueStr": null
+              },
+              {
+                "key": "aoe_cd",
+                "value": 2.0,
+                "valueStr": null
+              },
+              {
+                "key": "max_hp",
+                "value": 0.5,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "name": "Curse of the River of Death",
+            "rangeId": null,
+            "description": "Stops attacking, Max HP <@ba.vup>+{max_hp:0%}</>; when attacked, deals <@ba.vup>{atk_scale:0%}</> ATK as Arts damage to surrounding ground enemies and an additional <@ba.vup>{ep_damage_ratio:0%}</> ATK as <$ba.dt.apoptosis2>Necrosis Damage</> (can only trigger once every <@ba.vup>{aoe_cd}</>s); if Elemental Injury is received while skill is active, ATK <@ba.vup>+{atk:0%}</> until this skill ends",
+            "skillType": "MANUAL",
+            "durationType": "NONE",
+            "spData": {
+              "spType": "INCREASE_WITH_TIME",
+              "levelUpCost": null,
+              "maxChargeTime": 1,
+              "spCost": 49,
+              "initSp": 18,
+              "increment": 1.0
+            },
+            "prefabId": "skchr_philae_2",
+            "duration": 40.0,
+            "blackboard": [
+              {
+                "key": "atk_scale",
+                "value": 1.6,
+                "valueStr": null
+              },
+              {
+                "key": "ep_damage_ratio",
+                "value": 0.25,
+                "valueStr": null
+              },
+              {
+                "key": "atk",
+                "value": 0.85,
+                "valueStr": null
+              },
+              {
+                "key": "aoe_cd",
+                "value": 2.0,
+                "valueStr": null
+              },
+              {
+                "key": "max_hp",
+                "value": 0.5,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "name": "Curse of the River of Death",
+            "rangeId": null,
+            "description": "Stops attacking, Max HP <@ba.vup>+{max_hp:0%}</>; when attacked, deals <@ba.vup>{atk_scale:0%}</> ATK as Arts damage to surrounding ground enemies and an additional <@ba.vup>{ep_damage_ratio:0%}</> ATK as <$ba.dt.apoptosis2>Necrosis Damage</> (can only trigger once every <@ba.vup>{aoe_cd}</>s); if Elemental Injury is received while skill is active, ATK <@ba.vup>+{atk:0%}</> until this skill ends",
+            "skillType": "MANUAL",
+            "durationType": "NONE",
+            "spData": {
+              "spType": "INCREASE_WITH_TIME",
+              "levelUpCost": null,
+              "maxChargeTime": 1,
+              "spCost": 47,
+              "initSp": 19,
+              "increment": 1.0
+            },
+            "prefabId": "skchr_philae_2",
+            "duration": 40.0,
+            "blackboard": [
+              {
+                "key": "atk_scale",
+                "value": 1.8,
+                "valueStr": null
+              },
+              {
+                "key": "ep_damage_ratio",
+                "value": 0.25,
+                "valueStr": null
+              },
+              {
+                "key": "atk",
+                "value": 0.9,
+                "valueStr": null
+              },
+              {
+                "key": "aoe_cd",
+                "value": 2.0,
+                "valueStr": null
+              },
+              {
+                "key": "max_hp",
+                "value": 0.5,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "name": "Curse of the River of Death",
+            "rangeId": null,
+            "description": "Stops attacking, Max HP <@ba.vup>+{max_hp:0%}</>; when attacked, deals <@ba.vup>{atk_scale:0%}</> ATK as Arts damage to surrounding ground enemies and an additional <@ba.vup>{ep_damage_ratio:0%}</> ATK as <$ba.dt.apoptosis2>Necrosis Damage</> (can only trigger once every <@ba.vup>{aoe_cd}</>s); if Elemental Injury is received while skill is active, ATK <@ba.vup>+{atk:0%}</> until this skill ends",
+            "skillType": "MANUAL",
+            "durationType": "NONE",
+            "spData": {
+              "spType": "INCREASE_WITH_TIME",
+              "levelUpCost": null,
+              "maxChargeTime": 1,
+              "spCost": 45,
+              "initSp": 20,
+              "increment": 1.0
+            },
+            "prefabId": "skchr_philae_2",
+            "duration": 40.0,
+            "blackboard": [
+              {
+                "key": "atk_scale",
+                "value": 2.0,
+                "valueStr": null
+              },
+              {
+                "key": "ep_damage_ratio",
+                "value": 0.25,
+                "valueStr": null
+              },
+              {
+                "key": "atk",
+                "value": 1.0,
+                "valueStr": null
+              },
+              {
+                "key": "aoe_cd",
+                "value": 2.0,
+                "valueStr": null
+              },
+              {
+                "key": "max_hp",
+                "value": 0.5,
+                "valueStr": null
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "ranges": {
+    "x-4": {
+      "id": "x-4",
+      "direction": 1,
+      "grids": [
+        {
+          "row": 1,
+          "col": -1
+        },
+        {
+          "row": 1,
+          "col": 0
+        },
+        {
+          "row": 1,
+          "col": 1
+        },
+        {
+          "row": 0,
+          "col": -1
+        },
+        {
+          "row": 0,
+          "col": 0
+        },
+        {
+          "row": 0,
+          "col": 1
+        },
+        {
+          "row": -1,
+          "col": -1
+        },
+        {
+          "row": -1,
+          "col": 0
+        },
+        {
+          "row": -1,
+          "col": 1
+        }
+      ]
+    },
+    "0-1": {
+      "id": "0-1",
+      "direction": 1,
+      "grids": [
+        {
+          "row": 0,
+          "col": 0
+        }
+      ]
+    }
+  },
+  "buffTemplates": {
+    "empty": {
+      "templateKey": "empty",
+      "effectKey": "",
+      "onEventPriority": "DEFAULT",
+      "eventToActions": {}
+    },
+    "philae_t_1": {
+      "templateKey": "philae_t_1",
+      "effectKey": "",
+      "onEventPriority": "DEFAULT",
+      "eventToActions": {
+        "ON_APPLYING_MODIFIER": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+IsElementDamage, Assembly-CSharp"
+          },
+          {
+            "$type": "Torappu.Battle.Action.Nodes+DamageScale, Assembly-CSharp",
+            "_filterDamageType": false,
+            "_damageMask": "NONE",
+            "_filterApplyWay": false,
+            "_applyWayFilter": "NONE",
+            "_isOneMinus": true,
+            "_isStackable": false,
+            "_isValidStackCnt": false,
+            "_cachedDeltaValueToBBKey": "",
+            "_customKey": ""
+          },
+          {
+            "$type": "Torappu.Battle.Action.Nodes+FilterElementDamageModifer, Assembly-CSharp",
+            "_filterEPType": true,
+            "_epType": "DARK"
+          },
+          {
+            "$type": "Torappu.Battle.Action.Nodes+ModifySp, Assembly-CSharp",
+            "_targetType": "BUFF_OWNER",
+            "_modifyByRatio": false,
+            "_modifyRatio": 0.0,
+            "_modifyByRatioBasedOnCurSP": false,
+            "_dontCheckSpType": false,
+            "_spMask": "ALL",
+            "_forceFlag": false,
+            "_dontShowSpUI": false,
+            "_modifyValue": 0,
+            "_spString": "sp",
+            "_isMinis": false
+          }
+        ]
+      }
+    },
+    "philae_s_2": {
+      "templateKey": "philae_s_2",
+      "effectKey": "",
+      "onEventPriority": "DEFAULT",
+      "eventToActions": {
+        "ON_BUFF_START": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+SwitchMode, Assembly-CSharp",
+            "_modeIndex": 2,
+            "_loadModeFromBlackboard": false,
+            "_restoreDefault": false,
+            "_restartFSM": true,
+            "_targetType": "TARGET"
+          }
+        ],
+        "ON_BUFF_FINISH": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+SwitchMode, Assembly-CSharp",
+            "_modeIndex": 0,
+            "_loadModeFromBlackboard": false,
+            "_restoreDefault": false,
+            "_restartFSM": true,
+            "_targetType": "TARGET"
+          }
+        ],
+        "ON_TAKE_DAMAGE": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+CheckContainsBuff, Assembly-CSharp",
+            "_targetType": "BUFF_OWNER",
+            "_buffKeys": [
+              "philae_s_2[cd]"
+            ],
+            "isAND": true,
+            "_loadFromBlackboard": false,
+            "_checkBuffSource": false,
+            "_buffSourceType": "BUFF_SOURCE",
+            "_checkSourceHost": false
+          },
+          {
+            "$type": "Torappu.Battle.Action.Nodes+IfNot, Assembly-CSharp"
+          },
+          {
+            "$type": "Torappu.Battle.Action.Nodes+CreateBuffInRange, Assembly-CSharp",
+            "_sourceType": "BUFF_SOURCE",
+            "_targetType": "BUFF_OWNER",
+            "_targetOptions": {
+              "targetSide": "ENEMY",
+              "targetMotion": "WALK_ONLY",
+              "targetCategory": "DEFAULT",
+              "enableAdvancedOptions": true,
+              "ignoreTargetFree": false,
+              "ignoreAllyTargetFree": false,
+              "ignoreHealFree": false,
+              "ignoreTargetSide": false,
+              "excludeSomeAbnormalFlags": false,
+              "excludeAbnormalFlag": "STUNNED",
+              "purposeMask": "NONE",
+              "professionMask": "NONE",
+              "onlyIgnoreSomeOfTargetFreeCase": false,
+              "abnormalFlag": "STUNNED",
+              "abnormalCombo": "SLEEPING"
+            },
+            "_excludeTarget": true,
+            "_excludeCurAtkTarget": false,
+            "_alwaysIncudeCurAtkTarget": false,
+            "_randomTarget": false,
+            "_limitMaxTarget": false,
+            "_useAttackRange": false,
+            "_useCurrentModeRange": false,
+            "_useRangeToShow": false,
+            "_useTargetRangeInsteadOfSource": false,
+            "_rangeId": "x-4",
+            "_useRadius": false,
+            "_useGlobalRange": false,
+            "_radius": 0.0,
+            "_filterByBuildableType": false,
+            "_allowedBuildableType": "NONE",
+            "_buffs": [
+              {
+                "attributes": {
+                  "abnormalFlags": [],
+                  "abnormalImmunes": [],
+                  "abnormalAntis": [],
+                  "abnormalCombos": [],
+                  "abnormalComboImmunes": [],
+                  "attributeModifiers": []
+                },
+                "buffKey": "philae_s_2[ep]",
+                "loadFromDB": false,
+                "isDurableBuff": false,
+                "isDamageMissable": false,
+                "isSilenceable": false,
+                "isStunnable": false,
+                "isFreezable": false,
+                "isLevitatable": false,
+                "statusResistable": "AUTOMATIC",
+                "templateKey": "philae_s_2[ep]",
+                "disableOverride": true,
+                "overrideKey": null,
+                "overrideType": "DEFAULT",
+                "maxStackCnt": 1,
+                "refreshRemainingTimeWhenStackMax": false,
+                "clearAllStackCntWhenTimeUp": false,
+                "maxValidStackCnt": -1,
+                "independentCharacterSource": false,
+                "overrideEffectKey": null,
+                "overrideOnEventPriority": false,
+                "onEventPriority": "DEFAULT",
+                "audioSignal": "philae_aoe_hit",
+                "lifeTimeType": "LIMITED",
+                "takeSnapshotWhenExtend": false,
+                "durationKey": null,
+                "lifeTime": 0.06669999659061432,
+                "triggerLifeType": "LIMITED",
+                "triggerCnt": 1,
+                "triggerInterval": 0.033399999141693115,
+                "waitFirstTriggerInterval": true,
+                "firstTriggerInterval": -1.0,
+                "priority": -1,
+                "priorityBBKeys": [],
+                "stripBlackboardParamsWithBuffKey": false,
+                "blackboard": []
+              }
+            ],
+            "_isDerivedBuff": false,
+            "_finishDerivedBuffIfParentFinish": false
+          },
+          {
+            "$type": "Torappu.Battle.Action.Nodes+CreateBuff, Assembly-CSharp",
+            "_buff": {
+              "attributes": {
+                "abnormalFlags": [],
+                "abnormalImmunes": [],
+                "abnormalAntis": [],
+                "abnormalCombos": [],
+                "abnormalComboImmunes": [],
+                "attributeModifiers": []
+              },
+              "buffKey": "philae_s_2[cd]",
+              "loadFromDB": false,
+              "isDurableBuff": false,
+              "isDamageMissable": false,
+              "isSilenceable": false,
+              "isStunnable": false,
+              "isFreezable": false,
+              "isLevitatable": false,
+              "statusResistable": "AUTOMATIC",
+              "templateKey": "empty",
+              "disableOverride": false,
+              "overrideKey": null,
+              "overrideType": "DEFAULT",
+              "maxStackCnt": 1,
+              "refreshRemainingTimeWhenStackMax": false,
+              "clearAllStackCntWhenTimeUp": false,
+              "maxValidStackCnt": -1,
+              "independentCharacterSource": false,
+              "overrideEffectKey": null,
+              "overrideOnEventPriority": false,
+              "onEventPriority": "DEFAULT",
+              "audioSignal": "philae_aoe",
+              "lifeTimeType": "LIMITED",
+              "takeSnapshotWhenExtend": false,
+              "durationKey": "aoe_cd",
+              "lifeTime": 0.800000011920929,
+              "triggerLifeType": "IMMEDIATELY",
+              "triggerCnt": 0,
+              "triggerInterval": -1.0,
+              "waitFirstTriggerInterval": true,
+              "firstTriggerInterval": -1.0,
+              "priority": -1,
+              "priorityBBKeys": [],
+              "stripBlackboardParamsWithBuffKey": false,
+              "blackboard": []
+            },
+            "_buffOwner": "BUFF_OWNER",
+            "_isDerivedBuff": true,
+            "_finishDerivedBuffIfParentFinish": true
+          },
+          {
+            "$type": "Torappu.Battle.Action.Nodes+CreateEffect, Assembly-CSharp",
+            "_targetType": "BUFF_OWNER",
+            "_sourceType": "SOURCE",
+            "_effectKey": "philae_skill_02_start_01",
+            "_useSourceFaceVactor": false,
+            "_useSourceToTargetDirection": false,
+            "_useAttackPlaybackSpeed": false
+          }
+        ],
+        "ON_APPLYING_MODIFIER": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+IfElse, Assembly-CSharp",
+            "_conditionNode": {
+              "$type": "Torappu.Battle.Action.Nodes+IsElementDamage, Assembly-CSharp"
+            },
+            "_succeedNodes": [
+              {
+                "$type": "Torappu.Battle.Action.Nodes+CheckContainsBuff, Assembly-CSharp",
+                "_targetType": "BUFF_OWNER",
+                "_buffKeys": [
+                  "philae_s_2[atk]"
+                ],
+                "isAND": true,
+                "_loadFromBlackboard": false,
+                "_checkBuffSource": false,
+                "_buffSourceType": "BUFF_SOURCE",
+                "_checkSourceHost": false
+              },
+              {
+                "$type": "Torappu.Battle.Action.Nodes+IfNot, Assembly-CSharp"
+              },
+              {
+                "$type": "Torappu.Battle.Action.Nodes+CreateBuff, Assembly-CSharp",
+                "_buff": {
+                  "attributes": {
+                    "abnormalFlags": [],
+                    "abnormalImmunes": [],
+                    "abnormalAntis": [],
+                    "abnormalCombos": [],
+                    "abnormalComboImmunes": [],
+                    "attributeModifiers": [
+                      {
+                        "attributeType": "ATK",
+                        "formulaItem": "MULTIPLIER",
+                        "value": 0.0,
+                        "loadFromBlackboard": true,
+                        "fetchBaseValueFromSourceEntity": false
+                      }
+                    ]
+                  },
+                  "buffKey": "philae_s_2[atk]",
+                  "loadFromDB": false,
+                  "isDurableBuff": false,
+                  "isDamageMissable": false,
+                  "isSilenceable": false,
+                  "isStunnable": false,
+                  "isFreezable": false,
+                  "isLevitatable": false,
+                  "statusResistable": "AUTOMATIC",
+                  "templateKey": "empty",
+                  "disableOverride": false,
+                  "overrideKey": null,
+                  "overrideType": "UNIQUE",
+                  "maxStackCnt": 1,
+                  "refreshRemainingTimeWhenStackMax": false,
+                  "clearAllStackCntWhenTimeUp": false,
+                  "maxValidStackCnt": -1,
+                  "independentCharacterSource": false,
+                  "overrideEffectKey": "philae_skill_02_buff_02",
+                  "overrideOnEventPriority": false,
+                  "onEventPriority": "DEFAULT",
+                  "audioSignal": null,
+                  "lifeTimeType": "INFINITY",
+                  "takeSnapshotWhenExtend": false,
+                  "durationKey": null,
+                  "lifeTime": 0.0,
+                  "triggerLifeType": "IMMEDIATELY",
+                  "triggerCnt": 0,
+                  "triggerInterval": -1.0,
+                  "waitFirstTriggerInterval": true,
+                  "firstTriggerInterval": -1.0,
+                  "priority": -1,
+                  "priorityBBKeys": [],
+                  "stripBlackboardParamsWithBuffKey": false,
+                  "blackboard": []
+                },
+                "_buffOwner": "BUFF_OWNER",
+                "_isDerivedBuff": true,
+                "_finishDerivedBuffIfParentFinish": true
+              },
+              {
+                "$type": "Torappu.Battle.Action.Nodes+CreateEffect, Assembly-CSharp",
+                "_targetType": "BUFF_OWNER",
+                "_sourceType": "SOURCE",
+                "_effectKey": "philae_skill_02_start_02",
+                "_useSourceFaceVactor": false,
+                "_useSourceToTargetDirection": false,
+                "_useAttackPlaybackSpeed": false
+              }
+            ],
+            "_failNodes": null
+          }
+        ]
+      }
+    },
+    "philae_s_1": {
+      "templateKey": "philae_s_1",
+      "effectKey": "",
+      "onEventPriority": "DEFAULT",
+      "eventToActions": {
+        "ON_BUFF_START": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+SwitchMode, Assembly-CSharp",
+            "_modeIndex": 1,
+            "_loadModeFromBlackboard": false,
+            "_restoreDefault": false,
+            "_restartFSM": true,
+            "_targetType": "TARGET"
+          },
+          {
+            "$type": "Torappu.Battle.Action.Nodes+TriggerAbility, Assembly-CSharp",
+            "_ownerType": "BUFF_OWNER",
+            "_targetType": "BUFF_OWNER",
+            "_abilityName": "SkillAnimation",
+            "_checkCanUseAblityFlag": false,
+            "_castDirectly": false,
+            "_useFirstActiveAbility": false,
+            "_useCastResult": false
+          },
+          {
+            "$type": "Torappu.Battle.Action.Nodes+ApplyElementHeal, Assembly-CSharp",
+            "_isCont": false,
+            "_healTarget": "BUFF_OWNER",
+            "_maxEpHeal": true
+          }
+        ],
+        "ON_APPLYING_MODIFIER": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+IsElementDamage, Assembly-CSharp"
+          },
+          {
+            "$type": "Torappu.Battle.Action.Nodes+BlockElementDamage, Assembly-CSharp",
+            "_shieldByAnotherSource": false,
+            "_sourceBuffKey": "buff_name",
+            "_shieldSource": "TARGET",
+            "_shieldBlackboardKey": "shield_value"
+          }
+        ],
+        "ON_BUFF_FINISH": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+SwitchMode, Assembly-CSharp",
+            "_modeIndex": 0,
+            "_loadModeFromBlackboard": false,
+            "_restoreDefault": false,
+            "_restartFSM": true,
+            "_targetType": "TARGET"
+          }
+        ]
+      }
+    },
+    "philae_s_2[ep]": {
+      "templateKey": "philae_s_2[ep]",
+      "effectKey": "",
+      "onEventPriority": "DEFAULT",
+      "eventToActions": {
+        "ON_BUFF_TRIGGER": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+AdvancedApplyDamage, Assembly-CSharp",
+            "_targetType": "TARGET",
+            "_damageType": "MAGICAL",
+            "_atkScaleVar": "atk_scale",
+            "_defaultAtkScale": 1.0,
+            "_applyWay": "NONE",
+            "_baseOnHostAtk": false,
+            "_emitSourceOnCalculateDamage": false,
+            "_attackType": "NORMAL",
+            "_forceUseProjectileCachedAtk": false,
+            "_ignoreForSp": false,
+            "_ignoreMissFlag": "NONE",
+            "_ignoreCancelReasonMask": "NONE",
+            "_modifierKey": "",
+            "_assignRealDamageToBB": false,
+            "_skipModifierEvent": false
+          },
+          {
+            "$type": "Torappu.Battle.Action.Nodes+ApplyElementDamage, Assembly-CSharp",
+            "_elementDamageType": "DARK",
+            "_sourceType": "SOURCE",
+            "_isFixedEpDamage": false,
+            "_baseOnHostAtk": false,
+            "_baseOnEnemyHostAtk": false,
+            "_fixedEpDamageKey": null,
+            "_fixedEpDamage": 0.0,
+            "_noSource": false,
+            "_forceUseProjectileCachedAtk": false,
+            "_multiplyWithBuffValidStackCnt": false,
+            "_buffKey": null,
+            "_buffSourceType": "BUFF_OWNER",
+            "_targetType": "BUFF_OWNER",
+            "_isEnvElementDamage": false,
+            "_loadElementTypeFromBb": false,
+            "_fixedEpDamageScale": "",
+            "_epDamageScale": "ep_damage_ratio"
+          },
+          {
+            "$type": "Torappu.Battle.Action.Nodes+IfElse, Assembly-CSharp",
+            "_conditionNode": {
+              "$type": "Torappu.Battle.Action.Nodes+CheckContainsBuff, Assembly-CSharp",
+              "_targetType": "BUFF_SOURCE",
+              "_buffKeys": [
+                "philae_s_2[atk]"
+              ],
+              "isAND": true,
+              "_loadFromBlackboard": false,
+              "_checkBuffSource": false,
+              "_buffSourceType": "BUFF_SOURCE",
+              "_checkSourceHost": false
+            },
+            "_succeedNodes": [
+              {
+                "$type": "Torappu.Battle.Action.Nodes+CreateEffect, Assembly-CSharp",
+                "_targetType": "BUFF_OWNER",
+                "_sourceType": "SOURCE",
+                "_effectKey": "philae_skill_02_hit_02",
+                "_useSourceFaceVactor": false,
+                "_useSourceToTargetDirection": false,
+                "_useAttackPlaybackSpeed": false
+              }
+            ],
+            "_failNodes": [
+              {
+                "$type": "Torappu.Battle.Action.Nodes+CreateEffect, Assembly-CSharp",
+                "_targetType": "BUFF_OWNER",
+                "_sourceType": "SOURCE",
+                "_effectKey": "philae_skill_02_hit_01",
+                "_useSourceFaceVactor": false,
+                "_useSourceToTargetDirection": false,
+                "_useAttackPlaybackSpeed": false
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "originalBuffTemplates": {
+    "empty": {
+      "templateKey": "empty",
+      "effectKey": "",
+      "onEventPriority": 0,
+      "eventToActions": {
+        "_items": []
+      }
+    },
+    "philae_s_2[ep]": {
+      "templateKey": "philae_s_2[ep]",
+      "effectKey": "",
+      "onEventPriority": 0,
+      "eventToActions": {
+        "_items": [
+          {
+            "key": 2,
+            "value": {
+              "SerializedState": "[{\"_sourceType\":\"SOURCE\",\"_targetType\":\"TARGET\",\"_damageType\":\"MAGICAL\",\"_atkScaleVar\":\"atk_scale\",\"_defaultAtkScale\":1.0,\"_applyWay\":\"NONE\",\"_baseOnHostAtk\":false,\"_emitSourceOnCalculateDamage\":false,\"_attackType\":\"NORMAL\",\"_forceUseProjectileCachedAtk\":false,\"_ignoreForSp\":false,\"_ignoreMissFlag\":\"NONE\",\"_ignoreCancelReasonMask\":\"NONE\",\"_modifierKey\":\"\",\"_assignRealDamageToBB\":false,\"_assignFinalDamageToBB\":false,\"_skipModifierEvent\":false,\"_noSource\":false,\"_onlyUseSourceOnCalculateDamage\":false,\"_getCachedAtkFromBlackboard\":false,\"_cachedAtkKey\":\"atk\",\"_setSharedFlag\":false,\"_sharedFlagIndex\":\"IS_CONTINUOUS\",\"$type\":\"Torappu.Battle.Action.Nodes+AdvancedApplyDamage\"},{\"_elementDamageType\":\"DARK\",\"_sourceType\":\"SOURCE\",\"_isFixedEpDamage\":false,\"_baseOnHostAtk\":false,\"_baseOnEnemyHostAtk\":false,\"_fixedEpDamageKey\":null,\"_fixedEpDamage\":0.0,\"_noSource\":false,\"_forceUseProjectileCachedAtk\":false,\"_multiplyWithBuffValidStackCnt\":false,\"_buffKey\":null,\"_buffSourceType\":\"BUFF_OWNER\",\"_targetType\":\"BUFF_OWNER\",\"_isEnvElementDamage\":false,\"_loadElementTypeFromBb\":false,\"_fixedEpDamageScale\":\"\",\"_epDamageScale\":\"ep_damage_ratio\",\"$type\":\"Torappu.Battle.Action.Nodes+ApplyElementDamage\"},{\"_conditionNode\":{\"_targetType\":\"BUFF_SOURCE\",\"_buffKeys\":[\"philae_s_2[atk]\"],\"isAND\":true,\"_loadFromBlackboard\":false,\"_checkBuffSource\":false,\"_buffSourceType\":\"BUFF_SOURCE\",\"_checkSourceHost\":false,\"$type\":\"Torappu.Battle.Action.Nodes+CheckContainsBuff\"},\"_succeedNodes\":[{\"_targetType\":\"BUFF_OWNER\",\"_sourceType\":\"SOURCE\",\"_effectKey\":\"philae_skill_02_hit_02\",\"_useSourceFaceVactor\":false,\"_useSourceToTargetDirection\":false,\"_useConstDirection\":false,\"_constDirection\":\"UP\",\"_createEffectHoldBySource\":false,\"_useAttackPlaybackSpeed\":false,\"_manualSetPlaybackSpeed\":false,\"_blackboardKey\":\"\",\"_playbackSpeed\":1.0,\"$type\":\"Torappu.Battle.Action.Nodes+CreateEffect\"}],\"_failNodes\":[{\"_targetType\":\"BUFF_OWNER\",\"_sourceType\":\"SOURCE\",\"_effectKey\":\"philae_skill_02_hit_01\",\"_useSourceFaceVactor\":false,\"_useSourceToTargetDirection\":false,\"_useConstDirection\":false,\"_constDirection\":\"UP\",\"_createEffectHoldBySource\":false,\"_useAttackPlaybackSpeed\":false,\"_manualSetPlaybackSpeed\":false,\"_blackboardKey\":\"\",\"_playbackSpeed\":1.0,\"$type\":\"Torappu.Battle.Action.Nodes+CreateEffect\"}],\"$type\":\"Torappu.Battle.Action.Nodes+IfElse\"}]",
+              "SerializedObjectReferences": []
+            }
+          }
+        ]
+      }
+    },
+    "philae_s_2": {
+      "templateKey": "philae_s_2",
+      "effectKey": "",
+      "onEventPriority": 0,
+      "eventToActions": {
+        "_items": [
+          {
+            "key": 0,
+            "value": {
+              "SerializedState": "[{\"_modeIndex\":2,\"_loadModeFromBlackboard\":false,\"_restoreDefault\":false,\"_restartFSM\":true,\"_targetType\":\"TARGET\",\"$type\":\"Torappu.Battle.Action.Nodes+SwitchMode\"}]",
+              "SerializedObjectReferences": []
+            }
+          },
+          {
+            "key": 1,
+            "value": {
+              "SerializedState": "[{\"_modeIndex\":0,\"_loadModeFromBlackboard\":false,\"_restoreDefault\":false,\"_restartFSM\":true,\"_targetType\":\"TARGET\",\"$type\":\"Torappu.Battle.Action.Nodes+SwitchMode\"}]",
+              "SerializedObjectReferences": []
+            }
+          },
+          {
+            "key": 10,
+            "value": {
+              "SerializedState": "[{\"_targetType\":\"BUFF_OWNER\",\"_buffKeys\":[\"philae_s_2[cd]\"],\"isAND\":true,\"_loadFromBlackboard\":false,\"_checkBuffSource\":false,\"_buffSourceType\":\"BUFF_SOURCE\",\"_checkSourceHost\":false,\"$type\":\"Torappu.Battle.Action.Nodes+CheckContainsBuff\"},{\"$type\":\"Torappu.Battle.Action.Nodes+IfNot\"},{\"_sourceType\":\"BUFF_SOURCE\",\"_targetType\":\"BUFF_OWNER\",\"_targetOptions\":{\"targetSide\":\"ENEMY\",\"targetMotion\":\"WALK_ONLY\",\"targetCategory\":\"NONE,DEFAULT\",\"enableAdvancedOptions\":true,\"ignoreTargetFree\":false,\"ignoreAllyTargetFree\":false,\"ignoreHealFree\":false,\"ignoreTargetSide\":false,\"excludeSomeAbnormalFlags\":false,\"excludeAbnormalFlag\":\"STUNNED\",\"purposeMask\":\"NONE\",\"professionMask\":\"NONE\",\"checkUnitType\":false,\"unitTypeMask\":\"NONE\",\"onlyIgnoreSomeOfTargetFreeCase\":false,\"abnormalFlag\":\"STUNNED\",\"abnormalCombo\":\"SLEEPING\"},\"_useHostAsSource\":false,\"_excludeTarget\":true,\"_excludeCurAtkTarget\":false,\"_alwaysIncudeCurAtkTarget\":false,\"_alwaysIncludeSourceBlocker\":false,\"_randomTarget\":false,\"_limitMaxTarget\":false,\"_useAttackRange\":false,\"_useCurrentModeRange\":false,\"_useRangeToShow\":false,\"_rangeTargetSideType\":\"ALLY\",\"_rangeModeIndex\":-1,\"_useTargetRangeInsteadOfSource\":false,\"_rangeId\":\"x-4\",\"_useRadius\":false,\"_useGlobalRange\":false,\"_radius\":0.0,\"_filterByBuildableType\":false,\"_allowedBuildableType\":\"NONE\",\"_checkGiantTrapAllLocateTiles\":false,\"_buffs\":[{\"attributes\":{\"abnormalFlags\":[],\"abnormalImmunes\":[],\"abnormalAntis\":[],\"abnormalCombos\":[],\"abnormalComboImmunes\":[],\"attributeModifiers\":[]},\"buffKey\":\"philae_s_2[ep]\",\"loadFromDB\":false,\"isDurableBuff\":false,\"isDamageMissable\":false,\"isSilenceable\":false,\"isStunnable\":false,\"isFreezable\":false,\"isLevitatable\":false,\"statusResistable\":\"AUTOMATIC\",\"templateKey\":\"philae_s_2[ep]\",\"disableOverride\":true,\"overrideKey\":null,\"overrideType\":\"DEFAULT\",\"maxStackCnt\":1,\"refreshRemainingTimeWhenStackMax\":false,\"clearAllStackCntWhenTimeUp\":false,\"maxValidStackCnt\":-1,\"independentCharacterSource\":false,\"overrideEffectKey\":null,\"overrideOnEventPriority\":false,\"onEventPriority\":\"DEFAULT\",\"audioSignal\":\"philae_aoe_hit\",\"lifeTimeType\":\"LIMITED\",\"takeSnapshotWhenExtend\":false,\"durationKey\":null,\"lifeTime\":0.0667,\"triggerLifeType\":\"LIMITED\",\"triggerCnt\":1,\"triggerInterval\":0.0334,\"waitFirstTriggerInterval\":true,\"firstTriggerInterval\":-1.0,\"priority\":-1,\"priorityBBKeys\":[],\"stripBlackboardParamsWithBuffKey\":false,\"blackboard\":[],\"enableInitDirectionFromSource\":false}],\"_isDerivedBuff\":false,\"_finishDerivedBuffIfParentFinish\":false,\"_removeExcludeTargetBeforeShrink\":false,\"_filterTargets\":false,\"_filterType\":\"ALL\",\"_maxTargetKey\":\"max_target\",\"$type\":\"Torappu.Battle.Action.Nodes+CreateBuffInRange\"},{\"_buff\":{\"attributes\":{\"abnormalFlags\":[],\"abnormalImmunes\":[],\"abnormalAntis\":[],\"abnormalCombos\":[],\"abnormalComboImmunes\":[],\"attributeModifiers\":[]},\"buffKey\":\"philae_s_2[cd]\",\"loadFromDB\":false,\"isDurableBuff\":false,\"isDamageMissable\":false,\"isSilenceable\":false,\"isStunnable\":false,\"isFreezable\":false,\"isLevitatable\":false,\"statusResistable\":\"AUTOMATIC\",\"templateKey\":\"empty\",\"disableOverride\":false,\"overrideKey\":null,\"overrideType\":\"DEFAULT\",\"maxStackCnt\":1,\"refreshRemainingTimeWhenStackMax\":false,\"clearAllStackCntWhenTimeUp\":false,\"maxValidStackCnt\":-1,\"independentCharacterSource\":false,\"overrideEffectKey\":null,\"overrideOnEventPriority\":false,\"onEventPriority\":\"DEFAULT\",\"audioSignal\":\"philae_aoe\",\"lifeTimeType\":\"LIMITED\",\"takeSnapshotWhenExtend\":false,\"durationKey\":\"aoe_cd\",\"lifeTime\":0.8,\"triggerLifeType\":\"IMMEDIATELY\",\"triggerCnt\":0,\"triggerInterval\":-1.0,\"waitFirstTriggerInterval\":true,\"firstTriggerInterval\":-1.0,\"priority\":-1,\"priorityBBKeys\":[],\"stripBlackboardParamsWithBuffKey\":false,\"blackboard\":[],\"enableInitDirectionFromSource\":false},\"_buffOwner\":\"BUFF_OWNER\",\"_useSpecialBuffSource\":false,\"_specialBuffSource\":\"BUFF_SOURCE\",\"_isDerivedBuff\":true,\"_finishDerivedBuffIfParentFinish\":true,\"_inherateSourceProjectileFromParentBuff\":false,\"_hookEffectKeyFromSourceProjectile\":false,\"$type\":\"Torappu.Battle.Action.Nodes+CreateBuff\"},{\"_targetType\":\"BUFF_OWNER\",\"_sourceType\":\"SOURCE\",\"_effectKey\":\"philae_skill_02_start_01\",\"_useSourceFaceVactor\":false,\"_useSourceToTargetDirection\":false,\"_useConstDirection\":false,\"_constDirection\":\"UP\",\"_createEffectHoldBySource\":false,\"_useAttackPlaybackSpeed\":false,\"_manualSetPlaybackSpeed\":false,\"_blackboardKey\":\"\",\"_playbackSpeed\":1.0,\"$type\":\"Torappu.Battle.Action.Nodes+CreateEffect\"}]",
+              "SerializedObjectReferences": []
+            }
+          },
+          {
+            "key": 6,
+            "value": {
+              "SerializedState": "[{\"_conditionNode\":{\"$type\":\"Torappu.Battle.Action.Nodes+IsElementDamage\"},\"_succeedNodes\":[{\"_targetType\":\"BUFF_OWNER\",\"_buffKeys\":[\"philae_s_2[atk]\"],\"isAND\":true,\"_loadFromBlackboard\":false,\"_checkBuffSource\":false,\"_buffSourceType\":\"BUFF_SOURCE\",\"_checkSourceHost\":false,\"$type\":\"Torappu.Battle.Action.Nodes+CheckContainsBuff\"},{\"$type\":\"Torappu.Battle.Action.Nodes+IfNot\"},{\"_buff\":{\"attributes\":{\"abnormalFlags\":[],\"abnormalImmunes\":[],\"abnormalAntis\":[],\"abnormalCombos\":[],\"abnormalComboImmunes\":[],\"attributeModifiers\":[{\"attributeType\":\"ATK\",\"formulaItem\":\"MULTIPLIER\",\"value\":0.0,\"loadFromBlackboard\":true,\"fetchBaseValueFromSourceEntity\":false}]},\"buffKey\":\"philae_s_2[atk]\",\"loadFromDB\":false,\"isDurableBuff\":false,\"isDamageMissable\":false,\"isSilenceable\":false,\"isStunnable\":false,\"isFreezable\":false,\"isLevitatable\":false,\"statusResistable\":\"AUTOMATIC\",\"templateKey\":\"empty\",\"disableOverride\":false,\"overrideKey\":null,\"overrideType\":\"UNIQUE\",\"maxStackCnt\":1,\"refreshRemainingTimeWhenStackMax\":false,\"clearAllStackCntWhenTimeUp\":false,\"maxValidStackCnt\":-1,\"independentCharacterSource\":false,\"overrideEffectKey\":\"philae_skill_02_buff_02\",\"overrideOnEventPriority\":false,\"onEventPriority\":\"DEFAULT\",\"audioSignal\":null,\"lifeTimeType\":\"INFINITY\",\"takeSnapshotWhenExtend\":false,\"durationKey\":null,\"lifeTime\":0.0,\"triggerLifeType\":\"IMMEDIATELY\",\"triggerCnt\":0,\"triggerInterval\":-1.0,\"waitFirstTriggerInterval\":true,\"firstTriggerInterval\":-1.0,\"priority\":-1,\"priorityBBKeys\":[],\"stripBlackboardParamsWithBuffKey\":false,\"blackboard\":[],\"enableInitDirectionFromSource\":false},\"_buffOwner\":\"BUFF_OWNER\",\"_useSpecialBuffSource\":false,\"_specialBuffSource\":\"BUFF_SOURCE\",\"_isDerivedBuff\":true,\"_finishDerivedBuffIfParentFinish\":true,\"_inherateSourceProjectileFromParentBuff\":false,\"_hookEffectKeyFromSourceProjectile\":false,\"$type\":\"Torappu.Battle.Action.Nodes+CreateBuff\"},{\"_targetType\":\"BUFF_OWNER\",\"_sourceType\":\"SOURCE\",\"_effectKey\":\"philae_skill_02_start_02\",\"_useSourceFaceVactor\":false,\"_useSourceToTargetDirection\":false,\"_useConstDirection\":false,\"_constDirection\":\"UP\",\"_createEffectHoldBySource\":false,\"_useAttackPlaybackSpeed\":false,\"_manualSetPlaybackSpeed\":false,\"_blackboardKey\":\"\",\"_playbackSpeed\":1.0,\"$type\":\"Torappu.Battle.Action.Nodes+CreateEffect\"}],\"_failNodes\":null,\"$type\":\"Torappu.Battle.Action.Nodes+IfElse\"}]",
+              "SerializedObjectReferences": []
+            }
+          }
+        ]
+      }
+    },
+    "philae_s_1": {
+      "templateKey": "philae_s_1",
+      "effectKey": "",
+      "onEventPriority": 0,
+      "eventToActions": {
+        "_items": [
+          {
+            "key": 0,
+            "value": {
+              "SerializedState": "[{\"_modeIndex\":1,\"_loadModeFromBlackboard\":false,\"_restoreDefault\":false,\"_restartFSM\":true,\"_targetType\":\"TARGET\",\"$type\":\"Torappu.Battle.Action.Nodes+SwitchMode\"},{\"_ownerType\":\"BUFF_OWNER\",\"_targetType\":\"BUFF_OWNER\",\"_abilityName\":\"SkillAnimation\",\"_checkCanUseAblityFlag\":false,\"_castDirectly\":false,\"_useFirstActiveAbility\":false,\"_useCastResult\":false,\"_triggerHostAbility\":false,\"_notInterruptAbilityIfCasting\":false,\"$type\":\"Torappu.Battle.Action.Nodes+TriggerAbility\"},{\"_isCont\":false,\"_healTarget\":\"BUFF_OWNER\",\"_maxEpHeal\":true,\"$type\":\"Torappu.Battle.Action.Nodes+ApplyElementHeal\"}]",
+              "SerializedObjectReferences": []
+            }
+          },
+          {
+            "key": 6,
+            "value": {
+              "SerializedState": "[{\"$type\":\"Torappu.Battle.Action.Nodes+IsElementDamage\"},{\"_shieldByAnotherSource\":false,\"_sourceBuffKey\":\"buff_name\",\"_shieldSource\":\"TARGET\",\"_shieldBlackboardKey\":\"shield_value\",\"$type\":\"Torappu.Battle.Action.Nodes+BlockElementDamage\"}]",
+              "SerializedObjectReferences": []
+            }
+          },
+          {
+            "key": 1,
+            "value": {
+              "SerializedState": "[{\"_modeIndex\":0,\"_loadModeFromBlackboard\":false,\"_restoreDefault\":false,\"_restartFSM\":true,\"_targetType\":\"TARGET\",\"$type\":\"Torappu.Battle.Action.Nodes+SwitchMode\"}]",
+              "SerializedObjectReferences": []
+            }
+          }
+        ]
+      }
+    },
+    "philae_t_1": {
+      "templateKey": "philae_t_1",
+      "effectKey": "",
+      "onEventPriority": 0,
+      "eventToActions": {
+        "_items": [
+          {
+            "key": 6,
+            "value": {
+              "SerializedState": "[{\"$type\":\"Torappu.Battle.Action.Nodes+IsElementDamage\"},{\"_filterDamageType\":false,\"_damageMask\":\"NONE\",\"_filterApplyWay\":false,\"_applyWayFilter\":\"NONE\",\"_filterModifierKey\":false,\"_modifierKey\":\"\",\"_isOneMinus\":true,\"_isStackable\":false,\"_isValidStackCnt\":false,\"_cachedDeltaValueToBBKey\":\"\",\"_customKey\":\"\",\"$type\":\"Torappu.Battle.Action.Nodes+DamageScale\"},{\"_filterEPType\":true,\"_epType\":\"DARK\",\"$type\":\"Torappu.Battle.Action.Nodes+FilterElementDamageModifer\"},{\"_targetType\":\"BUFF_OWNER\",\"_modifyByRatio\":false,\"_modifyRatio\":0.0,\"_modifyByRatioBasedOnCurSP\":false,\"_modifyBySpCost\":false,\"_dontCheckSpType\":false,\"_spMask\":\"ALL\",\"_forceFlag\":false,\"_dontShowSpUI\":false,\"_modifyValue\":0,\"_spString\":\"sp\",\"_isMinis\":false,\"_customModifierKey\":\"\",\"$type\":\"Torappu.Battle.Action.Nodes+ModifySp\"}]",
+              "SerializedObjectReferences": []
+            }
+          }
+        ]
+      }
+    }
+  },
+  "runtimeMapping": {
+    "normal": "Original NORMAL PHYSICAL MultiMeleeAttack source2/timing0 bounded CAST, one WALK victim from original range or own block, Attack .767 both actual facings/cap1. No generic Primprotector injury is invented when original ability epDamageRatio0 has no attached injury buff.",
+    "talent": "Exact selected E1 .05/.07pot5 or E2 .1/.12pot5 nonstacking incoming elemental-injury reduction, plus DARK gauge typed modifier SP1/E1 or2/E2. Source ON_APPLYING_MODIFIER IsElementDamage and FilterElementDamageModifier DARK has no IsAttack or amount gate. Existing elementHit receives the typed event before gauge zero/shield computation; skill/noSp/active restrictions are respected through gainSp, and no SP comes from ordinary HP damage or HP Elemental damage.",
+    "s1": "All10 exact ranks selected HP%.3..9 and selected EP pool600..1800 for15s. Native ApplyBuff waitForCasting0/inheritedwaitEvent1 and ON_START SwitchMode1/TriggerAbility SkillAnimation/maxEPheal are represented by immediate selected mode/HP-percent/max-EP-heal/pool attachment with a separate actual literal Skill_1 .433 event/full1.667 clip disarm/SP lock. The event produces no fabricated attack or HP heal. Accepted brief control cancels the remaining animation lock, never retroactively removes an attached15s independent barrier.",
+    "s1shield": "One local source-owned EP shield_value pool is used for all gauge types. Native BlockElementDamage uses target source buff shield_value, no break-on-empty/removal node. Existing elementIntake previews post incoming multiplier/resistance; pool absorbs that accepted gauge quantity and leaves remaining gauge amount. Talent reduction comes through elemTakenMul before pool arithmetic; same-template/native inter-modifier order is explicitly bounded. Exact empty barrier persists to selected duration; maxElementHeal clears unlocked gauges but does not erase active burst lock.",
+    "s2": "Selected40s HP%.3..5/disarm/no-normal-attack mode2. Original literal Begin/Loop/End are visual only. Accepted incoming HP modifier receipt triggers only without derived selected aoe_cd2s; no invented IsAttack or positive-HP-loss filter, but native cancellation/dodge receipt dispatcher remains unrecovered. x-4 purposeNONE WALK bounded selection includes invisible but rejects hidden/explicit free and air; emitted target buff is nonderived life.0667/triggerDelta.0334/waitFirst1/cnt1, so one later current-source ATK Arts attack + independent ATK*.25 DARK injury occurs. Original nonmissable buff accepts ordinary damage immunity only at output through core; gauges do not route to the HP receipt counter.",
+    "s2atk": "ON_APPLYING_MODIFIER IsElementDamage creates a single UNIQUE derived ATK%.6..1 until selected parent end. No positive-gauge threshold or arbitrary element subtype is added. Shielded/zero typed event ordering remains explicitly bounded. Counter live source ATK is sampled at its delayed output; emitted nonderived child persists after owner retreat/death/skill end, but ordinary source cleanup changes retired-source modifiers.",
+    "lifecycle": "Skill end removes only derived cooldown and ATK, parent HP-percent/disarm follows selected skill lifetime. Already attached counter child keeps its independent short life and recipient identity. New owner deployment uses a distinct Unit, not an inherited pending counter. Scripted removal prevents future receipt handling; actual borrowed source/current-ATK after retirement is documented.",
+    "animation": "Normal Attack and S1 Skill_1 are actual source .767/.433 events in both facings. Original native requests Skill_2_Begin, while Back has only Skill_2_Start and no alias; explicit literal Back Start substitution is a presentation approximation. End .9 is visual only and cannot invent an ordinary/SP lock after native mode0 restoration."
+  },
+  "verificationLimits": [
+    "All exact original bundle size/MD5/SHA, scoped source graphs/templates, all20 selected ranks, native Animator PPtr chains and both original model bytes are retained. No native executable C# dispatcher/frame parity, modules, Unity particles or audio rendering is claimed.",
+    "Inherited ApplyBuff waitEvent1/waitForCasting0 on S1 and TriggerAbility SkillAnimation ordering are not executable. Immediate ON_BUFF_START effects and separate literal full-clip lock are a bounded interpretation; .433 OnAttack produces no additional damage/heal. Control cancels only unfinished presentation/animation lock and does not erase already attached independent source buffs.",
+    "Source ON_TAKE_DAMAGE has no IsAttack/IsDamage/positive-amount/cancelled filter. Local accepted damaged receipt maps typed HP modifiers after dodge/cancellation/shields and admits shielded/floored zero HP-loss outputs, while rejecting cancellation/dodge/invulnerability callbacks that never emit; HP-loss/gauges stay outside this family. Native event-family/cancel/dodge/receipt timing is not recovered; absent predicates do not prove rejected modifiers dispatch this event, and this is not a universal ON_TAKE_DAMAGE contract. Incoming attack credit is irrelevant to the x-4 counter recipients.",
+    "Source ON_APPLYING_MODIFIER IsElementDamage is bound to existing gauge elementHit; native modifier context includes zero/absorbed typed input without encoded positive threshold. No SP/derived ATK trigger comes from ordinary HP damage, HP Elemental damage, HP loss, element context already cancelled at own hook or a currently locked/invulnerable gauge that never emits the hook. Native event versus shield/floor/invulnerability ordering is not recovered.",
+    "Native BlockElementDamage versus talent DamageScale/inter-source EP protection priority is not executable. Local pool previews existing final elementIntake after all incoming multiplier/resistance; factor0 absorbs nothing. Pool clamps to0 and keeps until15s. Tests document overlaps, precise depletion and prior-hook-cancelled/locked/typedzero boundaries without asserting native law.",
+    "PurposeNONE x-4 CreateBuffInRange uses default target-free restrictions. It is not an ATTACK selector: local invisible enemy may receive its buff, while hidden/explicit free/air are excluded; selected Sleep receives no damage through ordinary immunity. Numeric abnormalFlag/STUNNED/SLEEPING mapping and native enum/order remain bounded. Victim selection is once at receipt; short emitted nonderived child preserves recipient identity, not a new later CAST or broad retarget.",
+    "Nonderived .0667 limited child with triggerCnt1/triggerInterval.0334/waitFirst1 is represented by one owned-recipient buff pulse. Fixed-step callback phase and source passive dummy/current-source ATK versus snapshot inheritance are unverified; child born before source removal survives and samples retired source stats. The exact dual Arts-versus-injury order follows retained original node order, but native modifier/kill boundary is not claimed.",
+    "S2 main ApplyBuff waitForCasting1/preDelay0 has no literal attack event. Its selected parent lifetime begins at activation as a bounded source-duration mapping. Animation Begin is presentation only, and End.9 does not extend mode2/SP lock after ON_BUFF_FINISH SwitchMode0; native casting/FSM exit phase is not recovered.",
+    "Native Back requests Skill_2_Begin but actual Back contains only Skill_2_Start and no source alias. Literal Start is a documented visual approximation, not a recovered alias. No missing clips or original effects are fabricated.",
+    "Typed element cancellation is sampled at the own modifier hook. If another later hook cancels the same mutable context, already executed source SP/derived-ATK/pool effects are not transactionally rolled back. Tests distinguish prior-hook cancellation from this explicitly bounded later-hook ordering; native inter-buff event priorities/rollback semantics are not recovered."
+  ]
+}

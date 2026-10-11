@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "operator": "char_4138_narant",
+  "source": {
+    "site": "PRTS",
+    "title": "娜仁图亚",
+    "revision": 435081,
+    "timestamp": "2026-10-05T08:08:01Z",
+    "url": "https://prts.wiki/index.php?title=%E5%A8%9C%E4%BB%81%E5%9B%BE%E4%BA%9A&oldid=435081",
+    "contentSha256": "cedb30a20058f04c1947128c7bd52fafcc51604724e0aa312a2b339de13097af"
+  },
+  "nativeFrameParity": false,
+  "referenceNotes": [
+    "Attack availability depends on recovering the thrown blades.",
+    "Outgoing speed is 15; return speed is 3.75.",
+    "S1 bounce radius is 1.7; prefer untouched targets, then nearest targets. Bounce travel speed is 6."
+  ],
+  "webMappingLimits": [
+    "S1 times is mapped to additional bounce transitions after the primary hit. Repeat fallback clears the local recent-hit memory; native callback ordering is unverified.",
+    "S2 forward motion uses the native moveAheadSpeed in tile units for the selected duration. Outbound damage is trace-only; return collision uses a swept radius-0.5 circle and one hit per victim. Native phase/trajectory dispatch is unverified.",
+    "S3 counts three born projectiles in a volley; the last successful hand arrival checks the current source deployment and active S3 before the selected capped tile AoE. Native all-return dispatch, curved trajectories, VFX and exact frame ordering are unverified.",
+    "Projectile lifetime ends owned work and gating. Native final trace hits apply only to previously unhit original victim lives. Expiry is not a successful hand return.",
+    "Talent1 uses the local pre-mitigation hit hook, before hit-rate/dodge/shields. Native event priority and cancellation ordering remain unverified. Talent2 uses a shared one-stack hit-rate area with independent source ownership; the closed native validator remains a bounded local mapping."
+  ],
+  "statTheftSource": {
+    "site": "PRTS",
+    "title": "术语释义",
+    "revision": 440223,
+    "timestamp": "2026-10-09T22:09:14Z",
+    "url": "https://prts.wiki/index.php?title=%E6%9C%AF%E8%AF%AD%E9%87%8A%E4%B9%89&oldid=440223#ba_steal",
+    "contentSha256": "8c93d09a2649941bae5990893729b06b2273062ac6c308214f4ddf4e24e6f148"
+  },
+  "statTheftNotes": [
+    "Owner gains and victim penalties use final additions outside percentage and multiplicative modifiers.",
+    "Each victim and the owner have independent caps. Multiple sources retain only the strongest reduction for each victim attribute.",
+    "Available victim stats do not limit the gain."
+  ]
+}

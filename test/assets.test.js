@@ -20,7 +20,7 @@ import { assetToPath, pickUnitSfx, indexAudio } from '../tools/assets/audio.mjs'
 import { mirrorUrl, safeName, encodePath } from '../tools/assets/sources.mjs';
 import { collectEnemyIds, skillIndicesByChar, buildPlan, GUIDE_PAGES, UI_EXTRAS } from '../tools/assets/plan.mjs';
 import { resolveTemplate, collectLeaves } from '../tools/assets/manifest.mjs';
-import { spineEntry } from '../public/js/assets.js';
+import { spineEntry, validSpine } from '../public/js/assets.js';
 import { EMOTE_CATALOG, emoteArtGroup } from '../shared/constants.js';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -28,6 +28,18 @@ const PUBLIC = join(ROOT, 'public');
 const ASSETS = join(PUBLIC, 'assets');
 const MANIFEST = join(ROOT, 'data', 'assets.json');
 const readJson = (rel) => JSON.parse(readFileSync(join(ROOT, rel), 'utf8'));
+
+test('Spine loading allows local paths and immutable SD revisions only', () => {
+  const entry = (skel) => ({ skel, atlas: '/model.atlas', anims: {} });
+  const pinned = 'https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/' + 'a'.repeat(40) + '/models/op/Front/model.skel';
+  assert.equal(validSpine(entry('/assets/characters/model.skel')), true);
+  assert.equal(validSpine(entry(pinned)), true);
+  for (const url of [
+    '//example.com/model.skel', 'https://example.com/model.skel',
+    pinned.replace('a'.repeat(40), 'main'), pinned.replace('arkpedia-sd-assets', 'other-repo'),
+    pinned + '?revision=latest', pinned.replace('/models/op/', '/models/../'),
+  ]) assert.equal(validSpine(entry(url)), false, url);
+});
 
 // ---------------------------------------------------------------------------
 describe('animation-role resolver (research 07 §5.4)', () => {

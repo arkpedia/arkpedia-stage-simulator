@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "operator": "char_4126_fuze",
+  "source": {
+    "kind": "authored-gameplay-observations",
+    "url": "https://prts.wiki/index.php?title=%E5%AF%BC%E7%81%AB%E7%B4%A2&oldid=434903",
+    "revision": 434903,
+    "snapshot": "rendered-html",
+    "sha256": "b813c56aa473d6bb1456ef9570742bba162b57affd89b4259de2805809c0011f",
+    "retrievedAt": "2026-10-10T19:52:53.545141+00:00"
+  },
+  "observations": [
+    "The adjacent front tile must be native/rewritten high ground or a blocking object; the next front tile must pass ground units.",
+    "Measure the central landing tile and its left/right passable neighbours, within three cells. Place five grenades from the right edge toward the left, separated by one quarter of the available width and half a second between emissions.",
+    "Each grenade explodes after roughly two seconds, within radius 1.2, and cannot hit airborne enemies. Owner departure preserves only already placed grenades.",
+    "The shield blocks Physical damage from sources whose enemy attack classification includes ranged."
+  ],
+  "limits": [
+    "These authored observations corroborate geometry and lifecycle, not compiled Unity execution.",
+    "Native delayAfterReached is about 1.8 seconds; flight origin, movement, stop dispatch and current-source statistics need explicit local execution contracts.",
+    "Exact boundary placement, dynamic obstacle classification, animation callback priority, modules and original VFX/audio remain unverified."
+  ]
+}

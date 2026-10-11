@@ -99,12 +99,46 @@ export function enforceBlockCapacity(b, u) {
   while (used > cap && u.blocking.length) {
     const e = u.blocking.pop();
     if (e.blockedBy === u) { e.blockedBy = null; b._stealthSwitch(e); }   // a released 隐匿 enemy hides again later
+    if (b._hooks.unblocked) b.emit('unblocked', { blocker: u, enemy: e });
     used -= e.blockWeight ?? 1;
   }
 }
 
 /** Collect targets for an ally with profile `prof`. */
 export function acquireTargets(b, u, prof) {
+  // Source-reviewed mixed heal/attack selectors can opt in without replacing
+  // the ordinary attack loop. Null/invalid results retain default selection.
+  if (typeof prof.acquireTargets === 'function') {
+    const targets = prof.acquireTargets(b, u, prof);
+    if (Array.isArray(targets)) {
+      const seen = new Set();
+      return targets.filter(t => {
+        // Reviewed tile abilities attack a location even without occupants.
+        // Only an explicit tile profile admits a centre inside this stage;
+        // ordinary unit selectors must not accept fabricated live entities.
+        if (prof.tileTargets && t?.kind === 'tile' && t.side === 'tile') {
+          const { tileR: r, tileC: c } = t;
+          if (!Number.isInteger(r) || !Number.isInteger(c) || !b.grid.inRect(r, c)
+            || t.x !== c || t.y !== r || !t.alive || !t.deployed) return false;
+          const key = `tile:${r},${c}`;
+          if (seen.has(key)) return false;
+          seen.add(key); return true;
+        }
+        if (!t || seen.has(t) || !t.alive || !t.deployed || t.hidden) return false;
+        seen.add(t);
+        if (t.side === 'enemy') return canTargetEnemy(u, t, prof);
+        if (t.side !== 'ally' || t.kind === 'device') return false;
+        const flags = t.s.flags;
+        // A reviewed healing ability may select its own heal-free summon.
+        // This recipient predicate never relaxes isolation or other no-heal
+        // rules, and ordinary selectors keep their existing restrictions.
+        const ignoreHealFree = typeof prof.heal?.ignoreHealFree === 'function'
+          && prof.heal.ignoreHealFree(b, u, t) === true;
+        return !flags.untargetable && (!flags.healFree || ignoreHealFree)
+          && (t === u || !(flags.noHeal || t.profile?.noHeal || flags.isolated));
+      });
+    }
+  }
   // a heal attack (医师 / 群愈师 / 疗养师 / 链愈师 / 行医, a skill attack turned into a heal) selects injured allies only,
   // never the enemies its unit blocks — a blocking healer keeps healing: PRTS 卫戍协议/帮助 "对于医疗干员（咒愈师分支除外），
   // 攻击目标为需要治疗的单位" (the blocked-first rule below is for attackers of enemies; community feedback after 0.1.0, E2)
@@ -113,6 +147,7 @@ export function acquireTargets(b, u, prof) {
     // a heal restricted to allies at or below an HP ratio (塞雷娅 S1 急救 "血量小于等于一半")
     if (prof.heal.hpAtMost > 0) cands = cands.filter((a) => a.hpRatio <= prof.heal.hpAtMost + 1e-9);
     if (!cands.length) return cands;
+    if (prof.heal.priority === 'random') b.rng.shuffle(cands);
     let n = prof.heal.mode === 'multi' ? Math.max(1, prof.heal.count || 3) : 1;
     if (prof.maxTargets > n) n = Math.floor(prof.maxTargets);   // skill targeting override (e.g. heal 2 targets)
     return cands.slice(0, n + Math.max(0, Math.floor(u.s.maxTargets)));
@@ -137,7 +172,9 @@ export function acquireTargets(b, u, prof) {
   if (u.blocking.length) for (const e of b.blockedTargets(u, prof)) if (!cands.includes(e)) cands.push(e);
   if (!cands.length) return cands;
   if (prof.allInRange) return cands;
-  const n = Math.max(1, Math.floor((prof.maxTargets || 1) + u.s.maxTargets));
+  const n = prof.maxTargetsByBlock
+    ? Math.max(prof.allowZeroBlockTargetLimit ? 0 : 1, Math.floor(u.s.blockCnt))
+    : Math.max(1, Math.floor((prof.maxTargets || 1) + u.s.maxTargets));
   sortEnemyTargets(b, u, cands, prof.priority);
   return n >= cands.length ? cands : cands.slice(0, n);
 }
@@ -148,12 +185,18 @@ export function performAttack(b, u, prof, targets, opts = null) {
   if (b._hooks.beforeAttack) {
     const ctx = { attacker: u, targets, isSkill, profile: prof };
     b.emit('beforeAttack', ctx);
-    targets = (ctx.targets || []).filter((t) => t && t.alive);
+    // A reviewed source ability may retain its previously captured input
+    // position after that unit dies. The predicate cannot restore a target
+    // explicitly removed by a beforeAttack hook; ordinary attacks still
+    // discard dead inputs.
+    targets = (ctx.targets || []).filter((t) => t && (typeof prof.acceptAttackInput === 'function'
+      ? prof.acceptAttackInput(t) : t.alive));
     if (!targets.length || !u.alive) return;
   }
   u.lastAttackAt = b.time;
   u.stats.attacks++;
   const attackId = ++b._attackSeq; // every damage instance of this attack (all targets, splash, chain) carries it
+  const inputTargets = targets.slice();
   const isHeal = !!(prof.heal && prof.dmgType === 'heal');
   // 首次接敌 (official voice type ENCOUNTER_ENEMY, ≥ 3 s between two such lines): one event the first time a unit
   // attacks an enemy, whatever the attack is — the client answers with that operator's 行动开始 line (audio.js voice).
@@ -163,25 +206,83 @@ export function performAttack(b, u, prof, targets, opts = null) {
   }
   const ranged = !prof._fortressMelee && prof.attack === 'ranged' && prof.projectile && prof.projectile !== 'none' && prof.projectile !== 'beam';
   const vis = prof._fortressMelee ? 'none' : (prof.projectile || 'none');
-  for (let i = 0; i < targets.length; i++) {
-    const t = targets[i];
-    b._ev(['atk', u.id, t.id, vis]);
-    if (isHeal) { doHeal(b, u, prof, t); continue; }
-    const info = { isSkill, index: i, attackId };
-    if (ranged && t.side === 'enemy' && prof.projectile === 'boomerang') {
-      throwBoomerang(b, u, prof, t, info);
-    } else if (ranged && t.side === 'enemy') {
-      const speed = PROJECTILE_SPEEDS[prof.projectile] ?? PROJECTILE_SPEED;
-      // projectiles land even if the shooter died meanwhile (damage is credited to it)
-      b.addProjectile({ from: u, target: t, speed, visual: prof.projectile, source: u, hitDead: prof.splashRadius > 0,
-        onHit: (c) => resolveHit(b, u, prof, c.target, info, c.x, c.y) });
-    } else {
-      resolveHit(b, u, prof, t, info, t.x, t.y);
+  const windup = typeof prof.windup === 'function' ? prof.windup(b, u, targets) : prof.windup;
+  const attackVisual = typeof prof.attackVisual === 'function' ? prof.attackVisual(b, u, targets) : prof.attackVisual;
+  const timed = windup > 0 && Number.isFinite(windup);
+  // The original four fields stay compatible with existing event consumers.
+  // Source-timed attacks may describe their windup and per-shot animation; their
+  // projectile presentation follows simulation coordinates instead of a fake flight.
+  const visual = timed || attackVisual ? {
+    ...(timed ? { windup } : {}),
+    ...(attackVisual ? { animation: attackVisual } : {}),
+    projectile: prof.launchAttack || ranged ? 'tracked' : 'none',
+  } : null;
+  for (const t of targets) b._ev(visual ? ['atk', u.id, t.id, vis, visual] : ['atk', u.id, t.id, vis]);
+  const release = () => {
+    let acceptedLaunches = 0;
+    // A source ability whose selectTargetTiming is CAST selects at the strike,
+    // so enemies entering or leaving its range during windup are handled then.
+    if (prof.retargetOnRelease) targets = acquireTargets(b, u, prof);
+    for (let i = 0; i < targets.length; i++) {
+      const t = targets[i];
+      if (isHeal) {
+        if (t.alive && prof.healProjectileSpeed > 0) b.addProjectile({
+          from: u, target: t, speed: prof.healProjectileSpeed, source: u, visual: 'orb',
+          data: { arkpediaTrackedVisual: true },
+          onHit: ({ target }) => { if (target?.alive) doHeal(b, u, prof, target); },
+        });
+        else if (t.alive) doHeal(b, u, prof, t);
+        continue;
+      }
+      const info = { isSkill, index: i, attackId };
+      // A source projectile can implement its own flight/collision/dwell behaviour
+      // while keeping attack hooks, IDs and SP consumption on the ordinary path.
+      if (prof.launchAttack) {
+        b._safe(() => {
+          const accepted = prof.launchAttack(b, u, prof, t, info);
+          if (accepted === true) acceptedLaunches++;
+        }, 'profile.launchAttack', u);
+      } else if (ranged && t.side === 'enemy' && prof.projectile === 'boomerang') {
+        throwBoomerang(b, u, prof, t, info);
+      } else if (ranged && t.side === 'enemy') {
+        const speed = prof.projectileSpeed ?? PROJECTILE_SPEEDS[prof.projectile] ?? PROJECTILE_SPEED;
+        // projectiles land even if the shooter died meanwhile (damage is credited to it)
+        b.addProjectile({ from: u, target: t, speed, visual: prof.projectile, source: u, hitDead: prof.splashRadius > 0,
+          data: visual ? { arkpediaTrackedVisual: true } : null,
+          onHit: (c) => resolveHit(b, u, prof, c.target, info, c.x, c.y) });
+      } else if (t.alive) {
+        resolveHit(b, u, prof, t, info, t.x, t.y);
+      }
     }
-  }
-  if (b._hooks.attack) b.emit('attack', { attacker: u, targets, isSkill });
-  if (u.skill) u.skill.onAttackPerformed(targets, isSkill, !!(opts && opts.noAmmo));
-  if (prof.afterAttack) b._safe(() => prof.afterAttack(b, u, targets), 'profile.afterAttack', u);
+    // Opt-in source controllers spend ammunition and recover attack SP only
+    // after a legal projectile birth. Existing profiles keep their old path.
+    if (prof.requiresAcceptedLaunch && acceptedLaunches === 0) return;
+    if (b._hooks.attack) b.emit('attack', { attacker: u, targets, isSkill });
+    if (u.skill) u.skill.onAttackPerformed(targets, isSkill, !!(opts && opts.noAmmo));
+    if (prof.afterAttack) b._safe(() => prof.afterAttack(b, u, targets, { inputTargets, attackId }), 'profile.afterAttack', u);
+  };
+  if (!timed) { release(); return; }
+  // Only explicit source kits opt in. Existing profiles retain immediate release.
+  // Control effects interrupt an unfired attack; a fired projectile keeps flying.
+  const deployment = u.deploySeq;
+  const activation = u.skill?.activations, activeSkill = u.skill?.active;
+  const attackEpoch = typeof prof.attackEpoch === 'function' ? prof.attackEpoch(b, u) : null;
+  const controlEpoch = u.attackControlEpoch;
+  const valid = () => u.alive && u.deployed && u.deploySeq === deployment && u.canAct && !u.s.flags.disarm
+    && u.attackControlEpoch === controlEpoch
+    && (typeof prof.attackEpoch !== 'function' || prof.attackEpoch(b, u) === attackEpoch)
+    && (!prof.interruptOnSkillChange || u.skill?.activations === activation && u.skill?.active === activeSkill);
+  u.atkCd = Math.max(u.atkCd, windup);
+  let pending = true;
+  const monitor = b.every(b.dt, () => {
+    if (pending && !valid()) { pending = false; delayed.cancel(); monitor.cancel(); }
+  }, { owner: u });
+  const delayed = b.after(windup, () => {
+    monitor.cancel();
+    if (!pending || !valid()) return;
+    pending = false;
+    release();
+  }, { owner: u });
 }
 
 /**
@@ -215,6 +316,8 @@ export function resolveHit(b, u, prof, target, info, x, y) {
   const baseType = prof.dmgType === 'heal' || prof.dmgType === 'none' ? 'phys' : prof.dmgType;
   const skillMul = prof.skillDmgMul ?? 1;
   const attackId = info.attackId ?? 0;
+  const applyWay = prof.applyWay ?? (prof._fortressMelee || prof.attack === 'melee' ? 'melee'
+    : prof.attack === 'ranged' ? 'ranged' : 'none');
   // per-victim callbacks (main target, every splash / chain victim): profile `onEachHit(b, u, victim, hctx)` and
   // SkillSpec `attack.onEachHit(ctx)` — `attack.onHit` stays once per attack with the main target
   const each = prof.onEachHit || prof.skillOnEachHit ? (victim, dealt, kind) => {
@@ -229,9 +332,16 @@ export function resolveHit(b, u, prof, target, info, x, y) {
     let mulT = skillMul;
     if (prof.dmgMul) { const m = typeof prof.dmgMul === 'function' ? prof.dmgMul(b, u, target) : prof.dmgMul; if (Number.isFinite(m)) mulT *= m; }
     const hits = prof.hitsFn ? prof.hitsFn(b, u) : Math.max(1, prof.hits || 1);
+    // A split attack mitigates the original full ATK for each damage event,
+    // then divides the resulting damage (including its 5% minimum). Ordinary
+    // multihit attacks retain a full-strength event for every hit.
+    const hitDamageScale = Number.isFinite(prof.hitDamageScale) && prof.hitDamageScale >= 0
+      ? prof.hitDamageScale : 1;
     let dealtMain = 0;
     for (let h = 0; h < hits && target.alive; h++) {
-      dealtMain += b.dealDamage(u, target, { amount: atk * scale * mulT, type: baseType, isAttack: true, isSkill: info.isSkill, tags: prof.tags || [], attackId });
+      dealtMain += b.dealDamage(u, target, { amount: atk * scale * mulT, type: baseType,
+        mul: hitDamageScale, noSp: !!prof.onlyFirstHitGainsSp && h > 0,
+        isAttack: true, isSkill: info.isSkill, tags: prof.tags || [], attackId, applyWay });
     }
     dealtTotal += dealtMain;
     if (prof.onHitStatus && target.alive) b.applyStatus(target, prof.onHitStatus.key, { duration: prof.onHitStatus.duration, source: u, value: prof.onHitStatus.value });
@@ -247,7 +357,7 @@ export function resolveHit(b, u, prof, target, info, x, y) {
       if (prof.groundOnly && e.isFlying) continue;
       if (!prof.canHitFly && e.isFlying && !prof.splashHitsFly) continue;
       if (e.s.flags.untargetable) continue;
-      const d = b.dealDamage(u, e, { amount: atk * scale * sc * skillMul, type: baseType, isAttack: true, isSplash: true, isSkill: info.isSkill, attackId });
+      const d = b.dealDamage(u, e, { amount: atk * scale * sc * skillMul, type: baseType, isAttack: true, isSplash: true, isSkill: info.isSkill, attackId, applyWay });
       dealtTotal += d;
       if (each) each(e, d, 'splash');
     }
@@ -267,7 +377,7 @@ export function resolveHit(b, u, prof, target, info, x, y) {
       if (!best) break;
       hit.add(best.id);
       b._ev(['atk', prev.id, best.id, 'chain']);
-      const d = b.dealDamage(u, best, { amount: atk * scale * skillMul * Math.pow(1 - (prof.chain.falloff ?? 0.15), k), type: baseType, isAttack: true, isSkill: info.isSkill, tags: ['chain'], attackId });
+      const d = b.dealDamage(u, best, { amount: atk * scale * skillMul * Math.pow(1 - (prof.chain.falloff ?? 0.15), k), type: baseType, isAttack: true, isSkill: info.isSkill, tags: ['chain'], attackId, applyWay });
       dealtTotal += d;
       if (prof.chain.sluggish && best.alive) b.applyStatus(best, 'sluggish', { duration: prof.chain.sluggish, source: u });
       if (each) each(best, d, 'chain');
@@ -292,9 +402,15 @@ function doHeal(b, u, prof, t) {
   const scale = (prof.atkScale ?? 1) * (prof.healScale ?? 1) * u.s.atkScaleMul;
   const h = prof.heal || { mode: 'single' };
   let amount = atk * scale;
+  if (typeof h.scaleForTarget === 'function') amount *= h.scaleForTarget(b, u, t);
   if (h.farMul && Math.max(Math.abs(t.tileR - u.tileR), Math.abs(t.tileC - u.tileC)) > (h.nearDist ?? 2)) amount *= h.farMul;
-  if (h.elementHealRatio) reduceElement(t, atk * h.elementHealRatio);
-  b.heal(u, t, amount);
+  const elementRatio = typeof h.elementHealRatio === 'function'
+    ? h.elementHealRatio(b, u, t) : h.elementHealRatio;
+  if (elementRatio) reduceElement(t, atk * elementRatio);
+  const ignoreHealFree = typeof h.ignoreHealFree === 'function'
+    && h.ignoreHealFree(b, u, t) === true;
+  const restored = b.heal(u, t, amount, { ignoreHealFree });
+  if (prof.afterHeal) b._safe(() => prof.afterHeal(b, u, t, { amount, restored }), 'profile.afterHeal', u);
   if (h.mode === 'chain') {
     const seen = new Set([t.id]);
     let prev = t;
@@ -514,7 +630,7 @@ function moveAttracted(b, e, dt) {
     A.i = 0;
     A.ver = b.grid.version;
   }
-  let dist = e.s.moveSpeed * MOVE_SCALE * dt;
+  let dist = e.s.moveSpeed * (b.flags.moveScale ?? MOVE_SCALE) * dt;
   let moved = false;
   while (dist > 1e-9 && A.i < A.pts.length) {
     const p = A.pts[A.i];
@@ -554,6 +670,8 @@ function advanceRoute(b, e, dt, R, standing = false) {
     }
     if (leg.t === 'appear') {
       e.x = leg.c; e.y = leg.r;
+      if (b.hasHook('enemyBeforeAppear')) b.emit('enemyBeforeAppear', { enemy: e });
+      if (!e.alive) return;
       b._setHidden(e, false);
       R.legIdx++; R.pts = null;
       continue;
@@ -561,7 +679,7 @@ function advanceRoute(b, e, dt, R, standing = false) {
     // move
     if (standing) { e.moving = false; return; }   // the walking waits for the attack clip
     if (!R.pts || R.version !== b.grid.version) planLeg(b, e, leg);
-    const speed = e.s.moveSpeed * MOVE_SCALE;
+    const speed = e.s.moveSpeed * (b.flags.moveScale ?? MOVE_SCALE);
     if (speed <= 0) { e.moving = false; return; }
     let dist = speed * budget;
     e.moving = true;
@@ -665,11 +783,15 @@ function enemyAttack(b, e) {
   // 麻痹 (ba.palsy): each stack interrupts one normal attack
   const palsy = e.buffs.length ? e.findBuff('palsy') : null;
   if (palsy) {
+    const triggerSource = palsy.source ?? null;
     if (--palsy.stacks <= 0) b.removeBuff(e, palsy); else e.markDirty();
     e.atkCd = e.s.interval;
     // the interrupted attack ends its clip: the old short stand after it (PRTS 异常效果 麻痹: 0.5 s 麻痹震颤 — not modelled)
     if (!e.blockedBy && radius > 0 && !(e.profile?.attackMoves ?? def.attackMoves)) e.atkStandUntil = b.time + ATTACK_PAUSE;
     b.fx('palsy', { x: e.x, y: e.y, id: e.id });
+    // A consumed stack interrupts an eligible attack. Granting/decaying stacks
+    // does not model the native PALSYING edge and must not trigger this bridge.
+    if (b._hooks.palsyTriggered) b.emit('palsyTriggered', { unit: e, source: triggerSource });
     return false;
   }
   const n = Math.max(1, Math.floor(e.profile?.maxTargets ?? 1) + Math.floor(e.s.maxTargets));
@@ -694,7 +816,8 @@ function enemyAttack(b, e) {
     if (deferred) continue;
     const hit = (tt) => {
       if (!tt || !tt.alive || !e.alive && !rangedShot) return;
-      b.dealDamage(e, tt, { amount: e.s.atk * (e.profile?.atkScale ?? 1), type, isAttack: true, attackId });
+      b.dealDamage(e, tt, { amount: e.s.atk * (e.profile?.atkScale ?? 1), type, isAttack: true, attackId,
+        applyWay: melee ? 'melee' : 'ranged' });
     };
     if (rangedShot && Math.hypot(t.x - e.x, t.y - e.y) > 0.75) {
       b.addProjectile({ from: e, target: t, speed: PROJECTILE_SPEEDS.enemy, visual: 'enemy', source: e, onHit: (c) => hit(c.target) });

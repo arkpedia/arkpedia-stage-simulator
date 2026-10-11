@@ -1,0 +1,47 @@
+{
+  "source": {
+    "resourceVersion": "26-09-23-17-49-43_b9cc4a",
+    "bundle": "battle/prefabs/[uc]skills.ab",
+    "sha256": "1c026938f054218f7e6bda9000162b2a6f30c9bd93e1ae9763d9d6df2270499c",
+    "gameObject": "skchr_spot_1"
+  },
+  "buff": {
+    "buffKey": "spot_s_1",
+    "templateKey": "switch_mode",
+    "attributes": {
+      "abnormalFlags": [],
+      "abnormalImmunes": [],
+      "abnormalAntis": [],
+      "abnormalCombos": [],
+      "abnormalComboImmunes": [],
+      "attributeModifiers": [
+        {
+          "attributeType": 1,
+          "formulaItem": 1,
+          "value": 0.0,
+          "loadFromBlackboard": 1,
+          "fetchBaseValueFromSourceEntity": 0
+        },
+        {
+          "attributeType": 8,
+          "formulaItem": 0,
+          "value": 0.0,
+          "loadFromBlackboard": 1,
+          "fetchBaseValueFromSourceEntity": 0
+        }
+      ]
+    },
+    "blackboard": [
+      {
+        "key": "mode",
+        "value": 1.0,
+        "valueStr": ""
+      }
+    ]
+  },
+  "interpretation": {
+    "attributeType8": "BASE_ATTACK_TIME",
+    "formulaItem0": "ADDITION",
+    "runtime": "baseAttackTime + skill.blackboard.base_attack_time"
+  }
+}

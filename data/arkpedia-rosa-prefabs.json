@@ -1,0 +1,4318 @@
+{
+  "frameParity": false,
+  "source": {
+    "tables": {
+      "repository": "Kengxxiao/ArknightsGameData_YoStar",
+      "commit": "57010cb5b2afea112cae57daa756b58676ba6850"
+    },
+    "clientVersion": "26-09-23-17-49-43_b9cc4a",
+    "models": {
+      "repository": "fexli/ArknightsResource",
+      "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd"
+    }
+  },
+  "sourceBundles": [
+    {
+      "path": "charpack/char_197_poca.ab",
+      "size": 23411,
+      "md5": "4ecacfe95b5457090c64b7640a431c93",
+      "sha256": "c6c0fbdf4c46f72b1d9e90347104934e523b8aff0d869fe45a155bfb2bd14225"
+    },
+    {
+      "path": "chararts/char_197_poca.ab",
+      "size": 3475547,
+      "md5": "7ee12a6303a2c8e87fbbde15309e9553",
+      "sha256": "768419ac9d5bd74edb1c20e1d479953cf8728162aeabddea3455fa0c09bc3db5"
+    },
+    {
+      "path": "battle/prefabs/[uc]skills.ab",
+      "size": 1163240,
+      "md5": "ff06dc9bb5516d069c8c0017207653ca",
+      "sha256": "1c026938f054218f7e6bda9000162b2a6f30c9bd93e1ae9763d9d6df2270499c"
+    },
+    {
+      "path": "battle/prefabs/[uc]projectiles.ab",
+      "size": 1605622,
+      "md5": "0b1d64a8aba25913161f5fd7174cab34",
+      "sha256": "3d68c63bf7a7d658e65035a9c71dfc9a00e4804563b922185499d108dfb7f639"
+    },
+    {
+      "path": "config/buff_template_holder.ab",
+      "size": 1667266,
+      "md5": "59813e1a533561f969f525a2846815e0",
+      "sha256": "e092efe8b6479546a0641449c1e2ef81ba51b8bac67f7a5d1bbf3c3bbdd817ce"
+    }
+  ],
+  "characters": {
+    "char_197_poca": [
+      {
+        "object": "Attack",
+        "pathId": "-8626077670534538327",
+        "components": [
+          {
+            "pathId": "910312164437990313",
+            "data": {
+              "m_GameObject": {
+                "m_FileID": 0,
+                "m_PathID": "-8626077670534538327"
+              },
+              "m_Enabled": 1,
+              "m_Script": {
+                "m_FileID": 1,
+                "m_PathID": "-550693537895634864"
+              },
+              "m_Name": "",
+              "_hitEffects": [],
+              "_castEffects": [
+                {
+                  "_directionType": 0,
+                  "_effects": [
+                    "poca_skill_02_start",
+                    "",
+                    "",
+                    ""
+                  ],
+                  "_oneshot": 1,
+                  "_startEvent": 2,
+                  "_endEvent": 3,
+                  "_onlyOnce": 0,
+                  "_useFourDirectionalFace": 0,
+                  "_delayIfFirstAttack": 0.0,
+                  "_hookEffectAfterFirstAttack": ""
+                },
+                {
+                  "_directionType": 0,
+                  "_effects": [
+                    "poca_skill_02_start_02",
+                    "",
+                    "",
+                    ""
+                  ],
+                  "_oneshot": 1,
+                  "_startEvent": 2,
+                  "_endEvent": 3,
+                  "_onlyOnce": 0,
+                  "_useFourDirectionalFace": 0,
+                  "_delayIfFirstAttack": 0.0,
+                  "_hookEffectAfterFirstAttack": ""
+                }
+              ],
+              "_attachEffects": [],
+              "_inputTargetEffects": [],
+              "_castTargetEffects": [],
+              "_convertCastEndToAttachFinish": 0,
+              "_recalculatePlaybackSpeed": 0,
+              "_preDelayFactor": 0.0
+            }
+          },
+          {
+            "pathId": "3519006998206159785",
+            "data": {
+              "m_GameObject": {
+                "m_FileID": 0,
+                "m_PathID": "-8626077670534538327"
+              },
+              "m_Enabled": 1,
+              "m_Script": {
+                "m_FileID": 1,
+                "m_PathID": "4156651312234227407"
+              },
+              "m_Name": "",
+              "_selector": {
+                "m_FileID": 0,
+                "m_PathID": "-5488100947100820567"
+              },
+              "_metadata": {
+                "namedAsAlias": "",
+                "blackboardPrefix": ""
+              },
+              "_interruptAbilityOnDetach": 0,
+              "_attachPassiveBuffsOnDummy": 1,
+              "_ignoreIfOwnerDead": 0,
+              "_forceAsDmgOrHealAbility": 0,
+              "_waitForAttackEvent": 1,
+              "_interuptIfTargetDead": 0,
+              "_resetCdStrategy": 1,
+              "_selectTargetSource": 1,
+              "_selectTargetTiming": 0,
+              "_timeMode": 0,
+              "_alwaysIncludeTarget": 1,
+              "_allowNoTarget": 0,
+              "_animKey": "Attack",
+              "_endAnimKey": "Idle",
+              "_downAnimKey": "",
+              "_downEndAnimKey": "",
+              "_upAnimKey": "",
+              "_upEndAnimKey": "",
+              "_cooldown": 0.0,
+              "_cooldownKey": "duration",
+              "_preDelay": 0.0,
+              "_escapeTime": 0.0,
+              "_faceToTarget": 1,
+              "_faceToDefault": 0,
+              "_faceToFront": 0,
+              "_faceToFirstCastTarget": 0,
+              "_forceFaceToDirection": 0,
+              "_activeBuffs": [],
+              "_maxAnimScale": 1.0,
+              "_onlyPlayEndAnimWhenIsLastAbility": 0,
+              "_ignorePalsyInterrupt": 0,
+              "_atkScale": 1.0,
+              "_atkScaleKey": "atk_scale",
+              "_attackType": 1,
+              "_elementDamageType": 0,
+              "_epDamageRatio": 0.0,
+              "_useDynamicAttackType": 0,
+              "_deliveryParaWhenReplaceActionNode": 0,
+              "_projectileKey": "projectile_chr_poca_s2",
+              "_mountPointType": 2,
+              "_useMountGroup": 0,
+              "_mountGroup": {
+                "loopType": 0,
+                "mountPoints": []
+              },
+              "_damageType": 1,
+              "_waitForProjectileInvalid": 1,
+              "_notClearProjectileWhenCastEnd": 0,
+              "_fireAttackFinishWhenProjectileInvalid": 0,
+              "_minPostDelayWhenProjectileInvalid": 0.0,
+              "_waitForAnimEndWhenProjectileInvalid": 0,
+              "_projectileDestination": 0,
+              "_extraDamageType": 0,
+              "_emitToInputPosWhenTargetIsInvalid": 0,
+              "_emitToInputRootTileWhenTargetIsInvalid": 0,
+              "_useCachedAtkOnly": 0,
+              "_transferSource": 0,
+              "_extraProjectileKeys": [],
+              "_fireCreateProjectileEvent": 0
+            }
+          }
+        ]
+      },
+      {
+        "object": "char_197_poca",
+        "pathId": "-7314074024520180823",
+        "components": [
+          {
+            "pathId": "6897844967652137897",
+            "data": {
+              "m_GameObject": {
+                "m_FileID": 0,
+                "m_PathID": "-7314074024520180823"
+              },
+              "m_Enabled": 1,
+              "m_Script": {
+                "m_FileID": 1,
+                "m_PathID": "-1297314214590689040"
+              },
+              "m_Name": "",
+              "_animator": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              },
+              "_modes": [
+                {
+                  "m_FileID": 0,
+                  "m_PathID": "-7361875350493848663"
+                },
+                {
+                  "m_FileID": 0,
+                  "m_PathID": "2736878323082992553"
+                }
+              ],
+              "_commonAbilities": [],
+              "_uiMountPoint": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              },
+              "_effectTransform": {
+                "m_FileID": 0,
+                "m_PathID": "726797811510680489"
+              },
+              "_shadow": {
+                "m_FileID": 0,
+                "m_PathID": "1930660508156173225"
+              },
+              "_defaultBodyColor": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+              },
+              "_hideShadowOnRecycle": 0,
+              "_overrideGraphicBound": -1.0,
+              "_hudPluginReplacePairs": [],
+              "_showDebugName": 0,
+              "_skinHolder": {
+                "m_FileID": 0,
+                "m_PathID": "6084108598375685033"
+              },
+              "_motionMode": 0,
+              "_blockMode": 0,
+              "_ignoreBlockMode": 0,
+              "_isFixedRotation": 0,
+              "_occupiedRemainingCharacterCnt": 1,
+              "_useRealBornTimeFromAnim": 0,
+              "_buildCondition": {
+                "buildableType": 2,
+                "isTryingOverlapCharacater": 0,
+                "needSpecifyDirection": 1,
+                "limitByHostAttackRange": 0,
+                "limitByHostAbilityRange": 0,
+                "abilityName": "",
+                "tileKey": "",
+                "extraBuildConditionArray": {
+                  "SerializedState": "null",
+                  "SerializedObjectReferences": []
+                },
+                "advancedBuildableMask": 1,
+                "overlapOptions": {
+                  "_verifySourceId": 0,
+                  "_verifySourceIds": [],
+                  "_verifySourceProfession": 0,
+                  "_verifySourceProfessions": 0,
+                  "_isAllConditionOR": 1,
+                  "_overlapPriority": 0,
+                  "_changeTargetGraphicColor": 0
+                },
+                "excludeNoTargetTile": 0,
+                "extraLocateRange": "",
+                "checkManuallyBuildableType": 0,
+                "manuallyBuildableType": 0,
+                "_excludeOccupiedByWalkEnemy": 0,
+                "allowWalkEnemyInHostRange": 0,
+                "_checkUpdateBuildable": 0
+              },
+              "_traitAbility": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              },
+              "_withdrawCostRecoverRatio": 0.5,
+              "_maxWithdrawCostRatioOfRawCost": 1.0,
+              "_directionTransform": {
+                "m_FileID": 0,
+                "m_PathID": "-3979394488038188119"
+              },
+              "_directionIndicator": {
+                "m_FileID": 0,
+                "m_PathID": "-453555416962688087"
+              },
+              "_startEffect": "",
+              "_deadEffect": "",
+              "_playStartVocal": 1,
+              "_showDeadTweenColor": 1,
+              "_useSpecificDeadAnim": 0,
+              "_onlyPlayStartEffectOnce": 0,
+              "_dontMoveCameraWhenFocus": 0,
+              "_disableCharInfoPanel": 0,
+              "_disableRotateWhenDead": 0,
+              "_disableSetDirectionWhenDummy": 0,
+              "_clearProjectileWhenDead": 0,
+              "_useIdForAudioSignalMask": 0,
+              "_preprocessData": 0,
+              "_disableClickCharacterInfo": 0,
+              "_skillUiFollowHeadPint": 0,
+              "m_overrideBornTime": -1.0
+            }
+          },
+          {
+            "pathId": "7705124271137954729",
+            "data": {
+              "m_GameObject": {
+                "m_FileID": 0,
+                "m_PathID": "-7314074024520180823"
+              },
+              "m_Enabled": 1,
+              "m_Density": 1.0,
+              "m_Material": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              },
+              "m_IsTrigger": true,
+              "m_UsedByEffector": false,
+              "m_UsedByComposite": false,
+              "m_Offset": {
+                "x": 0.0,
+                "y": 0.0
+              },
+              "m_Radius": 0.25
+            }
+          }
+        ]
+      },
+      {
+        "object": "Default",
+        "pathId": "-6671245636068435031",
+        "components": [
+          {
+            "pathId": "-7361875350493848663",
+            "data": {
+              "m_GameObject": {
+                "m_FileID": 0,
+                "m_PathID": "-6671245636068435031"
+              },
+              "m_Enabled": 1,
+              "m_Script": {
+                "m_FileID": 1,
+                "m_PathID": "5390319429299248724"
+              },
+              "m_Name": "",
+              "_bodyTransform": {
+                "m_FileID": 0,
+                "m_PathID": "-8154149229239460951"
+              },
+              "_animatorHooker": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              },
+              "_overrideStartEffect": "",
+              "_overrideDeadEffect": "",
+              "_combat": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              },
+              "_attack": {
+                "m_FileID": 0,
+                "m_PathID": "5895976387117390761"
+              },
+              "_attackTrigger": {
+                "m_FileID": 0,
+                "m_PathID": "2164316205474061225"
+              },
+              "_hideUIAttackRange": 0,
+              "_updateAttackRangeExtendByAttributeDirty": 0,
+              "_rangeToShow": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              },
+              "_extraRangesToShow": [],
+              "_generalAbilities": [],
+              "_addIndexToSignalId": 0,
+              "_includeIndexZero": 0,
+              "_alwaysHideHp": {
+                "isDefined": 0,
+                "value": 0
+              },
+              "_alwaysHideSp": {
+                "isDefined": 0,
+                "value": 0
+              }
+            }
+          }
+        ]
+      },
+      {
+        "object": "2",
+        "pathId": "-6590645298670527575",
+        "components": [
+          {
+            "pathId": "-4866044586470925399",
+            "data": {
+              "m_GameObject": {
+                "m_FileID": 0,
+                "m_PathID": "-6590645298670527575"
+              },
+              "m_Enabled": 1,
+              "m_Script": {
+                "m_FileID": 1,
+                "m_PathID": "4865767822664548221"
+              },
+              "m_Name": "",
+              "_selector": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              },
+              "_metadata": {
+                "namedAsAlias": "",
+                "blackboardPrefix": ""
+              },
+              "_interruptAbilityOnDetach": 0,
+              "_attachPassiveBuffsOnDummy": 1,
+              "_ignoreIfOwnerDead": 0,
+              "_forceAsDmgOrHealAbility": 0
+            }
+          },
+          {
+            "pathId": "-1872354702861984855",
+            "data": {
+              "m_GameObject": {
+                "m_FileID": 0,
+                "m_PathID": "-6590645298670527575"
+              },
+              "m_Enabled": 1,
+              "m_Script": {
+                "m_FileID": 1,
+                "m_PathID": "-278880736274685586"
+              },
+              "m_Name": "",
+              "_overwriteTalentKey": "",
+              "_overwriteParentRangeId": 0,
+              "_checkValidBySkillIndex": [],
+              "_options": {
+                "selector": {
+                  "categoryMask": 1023,
+                  "filterTag": "student",
+                  "subprofessionTag": "",
+                  "onlySelectMe": 0,
+                  "excludeMe": 0,
+                  "mapTags": [],
+                  "enableOverride": 0,
+                  "excludeNotInHand": 0,
+                  "excludeNotShowInCardList": 0,
+                  "excludeHiddenByCardState": 0
+                },
+                "minCntToTrig": 0,
+                "useOtherSelectorWhenGetBuff": 0,
+                "selectorWhenGetBuff": {
+                  "categoryMask": 0,
+                  "filterTag": "",
+                  "subprofessionTag": "",
+                  "onlySelectMe": 0,
+                  "excludeMe": 0,
+                  "mapTags": [],
+                  "enableOverride": 0,
+                  "excludeNotInHand": 0,
+                  "excludeNotShowInCardList": 0,
+                  "excludeHiddenByCardState": 0
+                }
+              },
+              "_deckBuffs": [
+                {
+                  "cardEffectType": 0,
+                  "lifeType": 0,
+                  "affectInHand": 0,
+                  "affectOutOfHand": 0,
+                  "wontSpawnWhenRallyPointSwitch": 0,
+                  "showToastWhenAffect": 0,
+                  "cardAnimWhenDeckbuffAdd": "",
+                  "ignoreSpecialBuild": 0,
+                  "buff": {
+                    "attributes": {
+                      "abnormalFlags": [],
+                      "abnormalImmunes": [],
+                      "abnormalAntis": [],
+                      "abnormalCombos": [],
+                      "abnormalComboImmunes": [],
+                      "attributeModifiers": [
+                        {
+                          "attributeType": 1,
+                          "formulaItem": 1,
+                          "value": 0.0,
+                          "loadFromBlackboard": 1,
+                          "fetchBaseValueFromSourceEntity": 0
+                        }
+                      ]
+                    },
+                    "buffKey": "poca_t_2",
+                    "loadFromDB": 0,
+                    "isDurableBuff": 0,
+                    "isDamageMissable": 0,
+                    "isSilenceable": 0,
+                    "isStunnable": 0,
+                    "isFreezable": 0,
+                    "isLevitatable": 0,
+                    "statusResistable": 2,
+                    "templateKey": "empty",
+                    "disableOverride": 0,
+                    "overrideKey": "",
+                    "overrideType": 0,
+                    "maxStackCnt": 1,
+                    "refreshRemainingTimeWhenStackMax": 0,
+                    "clearAllStackCntWhenTimeUp": 0,
+                    "maxValidStackCnt": -1,
+                    "independentCharacterSource": 0,
+                    "overrideEffectKey": "",
+                    "overrideOnEventPriority": 0,
+                    "onEventPriority": 0,
+                    "audioSignal": "",
+                    "lifeTimeType": 2,
+                    "takeSnapshotWhenExtend": 0,
+                    "durationKey": "",
+                    "lifeTime": 0.0,
+                    "triggerLifeType": 0,
+                    "triggerCnt": 0,
+                    "triggerInterval": -1.0,
+                    "waitFirstTriggerInterval": 1,
+                    "firstTriggerInterval": -1.0,
+                    "priority": -1,
+                    "priorityBBKeys": [
+                      "atk"
+                    ],
+                    "stripBlackboardParamsWithBuffKey": 0,
+                    "blackboard": [],
+                    "enableInitDirectionFromSource": 0
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "object": "Shadow",
+        "pathId": "-6054721616094815319",
+        "components": [
+          {
+            "pathId": "1930660508156173225",
+            "data": {
+              "m_GameObject": {
+                "m_FileID": 0,
+                "m_PathID": "-6054721616094815319"
+              },
+              "m_Enabled": 1,
+              "m_Script": {
+                "m_FileID": 1,
+                "m_PathID": "-2368896203154538901"
+              },
+              "m_Name": "",
+              "_autoAttachToGround": 0,
+              "_attachOffset": 0.10000000149011612,
+              "_simplyUseTileHeight": 0,
+              "_enableAdvanced": 0,
+              "_alwaysUseSpineOffset": 0,
+              "_sprite": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              },
+              "_graphic": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              },
+              "_faceSwitcher": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              },
+              "_boneToFollow": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              },
+              "_specialInit": 0,
+              "_simpleFollow": 0,
+              "_easeType": 1
+            }
+          }
+        ]
+      },
+      {
+        "object": "S2",
+        "pathId": "-4496890710028510295",
+        "components": [
+          {
+            "pathId": "2736878323082992553",
+            "data": {
+              "m_GameObject": {
+                "m_FileID": 0,
+                "m_PathID": "-4496890710028510295"
+              },
+              "m_Enabled": 1,
+              "m_Script": {
+                "m_FileID": 1,
+                "m_PathID": "5390319429299248724"
+              },
+              "m_Name": "",
+              "_bodyTransform": {
+                "m_FileID": 0,
+                "m_PathID": "1639913664115514281"
+              },
+              "_animatorHooker": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              },
+              "_overrideStartEffect": "",
+              "_overrideDeadEffect": "",
+              "_combat": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              },
+              "_attack": {
+                "m_FileID": 0,
+                "m_PathID": "3519006998206159785"
+              },
+              "_attackTrigger": {
+                "m_FileID": 0,
+                "m_PathID": "-9128492921757754455"
+              },
+              "_hideUIAttackRange": 0,
+              "_updateAttackRangeExtendByAttributeDirty": 0,
+              "_rangeToShow": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              },
+              "_extraRangesToShow": [],
+              "_generalAbilities": [],
+              "_addIndexToSignalId": 1,
+              "_includeIndexZero": 0,
+              "_alwaysHideHp": {
+                "isDefined": 0,
+                "value": 0
+              },
+              "_alwaysHideSp": {
+                "isDefined": 0,
+                "value": 0
+              }
+            }
+          }
+        ]
+      },
+      {
+        "object": "Attack",
+        "pathId": "677089969951218601",
+        "components": [
+          {
+            "pathId": "5895976387117390761",
+            "data": {
+              "m_GameObject": {
+                "m_FileID": 0,
+                "m_PathID": "677089969951218601"
+              },
+              "m_Enabled": 1,
+              "m_Script": {
+                "m_FileID": 1,
+                "m_PathID": "4156651312234227407"
+              },
+              "m_Name": "",
+              "_selector": {
+                "m_FileID": 0,
+                "m_PathID": "7570502429138557865"
+              },
+              "_metadata": {
+                "namedAsAlias": "",
+                "blackboardPrefix": ""
+              },
+              "_interruptAbilityOnDetach": 0,
+              "_attachPassiveBuffsOnDummy": 1,
+              "_ignoreIfOwnerDead": 0,
+              "_forceAsDmgOrHealAbility": 0,
+              "_waitForAttackEvent": 1,
+              "_interuptIfTargetDead": 0,
+              "_resetCdStrategy": 1,
+              "_selectTargetSource": 1,
+              "_selectTargetTiming": 0,
+              "_timeMode": 0,
+              "_alwaysIncludeTarget": 1,
+              "_allowNoTarget": 0,
+              "_animKey": "Attack",
+              "_endAnimKey": "Idle",
+              "_downAnimKey": "",
+              "_downEndAnimKey": "",
+              "_upAnimKey": "",
+              "_upEndAnimKey": "",
+              "_cooldown": 0.0,
+              "_cooldownKey": "duration",
+              "_preDelay": 0.0,
+              "_escapeTime": 0.0,
+              "_faceToTarget": 1,
+              "_faceToDefault": 0,
+              "_faceToFront": 0,
+              "_faceToFirstCastTarget": 0,
+              "_forceFaceToDirection": 0,
+              "_activeBuffs": [],
+              "_maxAnimScale": 1.0,
+              "_onlyPlayEndAnimWhenIsLastAbility": 0,
+              "_ignorePalsyInterrupt": 0,
+              "_atkScale": 1.0,
+              "_atkScaleKey": "atk_scale",
+              "_attackType": 1,
+              "_elementDamageType": 0,
+              "_epDamageRatio": 0.0,
+              "_useDynamicAttackType": 0,
+              "_deliveryParaWhenReplaceActionNode": 0,
+              "_projectileKey": "projectile_chr_poca",
+              "_mountPointType": 2,
+              "_useMountGroup": 0,
+              "_mountGroup": {
+                "loopType": 0,
+                "mountPoints": []
+              },
+              "_damageType": 1,
+              "_waitForProjectileInvalid": 1,
+              "_notClearProjectileWhenCastEnd": 0,
+              "_fireAttackFinishWhenProjectileInvalid": 0,
+              "_minPostDelayWhenProjectileInvalid": 0.0,
+              "_waitForAnimEndWhenProjectileInvalid": 0,
+              "_projectileDestination": 0,
+              "_extraDamageType": 0,
+              "_emitToInputPosWhenTargetIsInvalid": 0,
+              "_emitToInputRootTileWhenTargetIsInvalid": 0,
+              "_useCachedAtkOnly": 0,
+              "_transferSource": 0,
+              "_extraProjectileKeys": [],
+              "_fireCreateProjectileEvent": 0
+            }
+          },
+          {
+            "pathId": "8525635779544357801",
+            "data": {
+              "m_GameObject": {
+                "m_FileID": 0,
+                "m_PathID": "677089969951218601"
+              },
+              "m_Enabled": 1,
+              "m_Script": {
+                "m_FileID": 1,
+                "m_PathID": "-550693537895634864"
+              },
+              "m_Name": "",
+              "_hitEffects": [],
+              "_castEffects": [
+                {
+                  "_directionType": 0,
+                  "_effects": [
+                    "poca_attack_01_start",
+                    "",
+                    "",
+                    ""
+                  ],
+                  "_oneshot": 1,
+                  "_startEvent": 2,
+                  "_endEvent": 3,
+                  "_onlyOnce": 0,
+                  "_useFourDirectionalFace": 0,
+                  "_delayIfFirstAttack": 0.0,
+                  "_hookEffectAfterFirstAttack": ""
+                },
+                {
+                  "_directionType": 0,
+                  "_effects": [
+                    "poca_attack_01_start_02",
+                    "",
+                    "",
+                    ""
+                  ],
+                  "_oneshot": 1,
+                  "_startEvent": 2,
+                  "_endEvent": 3,
+                  "_onlyOnce": 0,
+                  "_useFourDirectionalFace": 0,
+                  "_delayIfFirstAttack": 0.0,
+                  "_hookEffectAfterFirstAttack": ""
+                }
+              ],
+              "_attachEffects": [],
+              "_inputTargetEffects": [],
+              "_castTargetEffects": [],
+              "_convertCastEndToAttachFinish": 0,
+              "_recalculatePlaybackSpeed": 0,
+              "_preDelayFactor": 0.0
+            }
+          }
+        ]
+      },
+      {
+        "object": "Trigger",
+        "pathId": "2766188347076385705",
+        "components": [
+          {
+            "pathId": "2164316205474061225",
+            "data": {
+              "m_GameObject": {
+                "m_FileID": 0,
+                "m_PathID": "2766188347076385705"
+              },
+              "m_Enabled": 1,
+              "m_Script": {
+                "m_FileID": 1,
+                "m_PathID": "8607874384982393801"
+              },
+              "m_Name": "",
+              "_keepTarget": 0,
+              "_minTargetNum": 1,
+              "_overrideSearchTargetTick": -1
+            }
+          },
+          {
+            "pathId": "5398550968484895657",
+            "data": {
+              "m_GameObject": {
+                "m_FileID": 0,
+                "m_PathID": "2766188347076385705"
+              },
+              "m_Enabled": 1,
+              "m_Script": {
+                "m_FileID": 1,
+                "m_PathID": "-2891200616113119906"
+              },
+              "m_Name": "",
+              "_extendable": 0
+            }
+          },
+          {
+            "pathId": "7570502429138557865",
+            "data": {
+              "m_GameObject": {
+                "m_FileID": 0,
+                "m_PathID": "2766188347076385705"
+              },
+              "m_Enabled": 1,
+              "m_Script": {
+                "m_FileID": 1,
+                "m_PathID": "7080728813803358465"
+              },
+              "m_Name": "",
+              "_targetSide": 2,
+              "_targetMotion": 3,
+              "_targetCategory": 1,
+              "_postFilter": 27,
+              "_ignoreTargetFree": 0,
+              "_onlyIgnoreSomeOfTargetFreeCase": 0,
+              "_abnormalFlag": 29,
+              "_abnormalCombo": 2,
+              "_ignoreAllyTargetFree": 0,
+              "_ignoreHealFree": 0,
+              "_forceIgnoreCamouflage": 0,
+              "_needProfessionMask": 0,
+              "_professionMask": 0,
+              "_limitTargetNum": 1,
+              "_maxTargetKey": "max_target",
+              "_maxNum": 1,
+              "_excludeOwner": 0,
+              "_sortByTauntAtLast": 0,
+              "_ignoreHitRange": 0,
+              "_checkUnitType": 0,
+              "_unitTypeMask": 0,
+              "_abilityInputTargetAsSortSource": 0
+            }
+          }
+        ]
+      },
+      {
+        "object": "1",
+        "pathId": "4453824529643019177",
+        "components": [
+          {
+            "pathId": "-7239682315922760791",
+            "data": {
+              "m_GameObject": {
+                "m_FileID": 0,
+                "m_PathID": "4453824529643019177"
+              },
+              "m_Enabled": 1,
+              "m_Script": {
+                "m_FileID": 1,
+                "m_PathID": "-2726233351382997147"
+              },
+              "m_Name": "",
+              "_overwriteTalentKey": "",
+              "_overwriteParentRangeId": 0,
+              "_checkValidBySkillIndex": [],
+              "_attachInDummy": 0,
+              "_defaultModeIndex": -1,
+              "_attackBlackboardModeIndex": -1,
+              "_extraAttackBlackboardModeIndices": [],
+              "_overrideDefaultRangeId": 0,
+              "_applyTalentScale": 0,
+              "_influenceSkillBlackboard": 0,
+              "_applyTalentRange": 0,
+              "_applyBlackboardBySkill": 0,
+              "_applyStrBlackboardBySkill": 0,
+              "_writeRangeIdToProjectileBlackboard": 0,
+              "_affectWhenNotRootTalent": 0,
+              "_scaleCertainKeyFlag": 0,
+              "_scaleCertainKeyList": [],
+              "_scaleCertainMode": 0,
+              "_scaleModeIndices": []
+            }
+          },
+          {
+            "pathId": "3525911671135148969",
+            "data": {
+              "m_GameObject": {
+                "m_FileID": 0,
+                "m_PathID": "4453824529643019177"
+              },
+              "m_Enabled": 1,
+              "m_Script": {
+                "m_FileID": 1,
+                "m_PathID": "3800760148018415462"
+              },
+              "m_Name": "",
+              "_selector": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              },
+              "_metadata": {
+                "namedAsAlias": "",
+                "blackboardPrefix": ""
+              },
+              "_interruptAbilityOnDetach": 0,
+              "_attachPassiveBuffsOnDummy": 1,
+              "_ignoreIfOwnerDead": 0,
+              "_forceAsDmgOrHealAbility": 0,
+              "_buffs": [
+                {
+                  "attributes": {
+                    "abnormalFlags": [],
+                    "abnormalImmunes": [],
+                    "abnormalAntis": [],
+                    "abnormalCombos": [],
+                    "abnormalComboImmunes": [],
+                    "attributeModifiers": []
+                  },
+                  "buffKey": "poca_t_1",
+                  "loadFromDB": 0,
+                  "isDurableBuff": 0,
+                  "isDamageMissable": 0,
+                  "isSilenceable": 0,
+                  "isStunnable": 0,
+                  "isFreezable": 0,
+                  "isLevitatable": 0,
+                  "statusResistable": 2,
+                  "templateKey": "poca_t_1",
+                  "disableOverride": 0,
+                  "overrideKey": "",
+                  "overrideType": 0,
+                  "maxStackCnt": 1,
+                  "refreshRemainingTimeWhenStackMax": 0,
+                  "clearAllStackCntWhenTimeUp": 0,
+                  "maxValidStackCnt": -1,
+                  "independentCharacterSource": 0,
+                  "overrideEffectKey": "",
+                  "overrideOnEventPriority": 0,
+                  "onEventPriority": 0,
+                  "audioSignal": "",
+                  "lifeTimeType": 2,
+                  "takeSnapshotWhenExtend": 0,
+                  "durationKey": "",
+                  "lifeTime": 0.0,
+                  "triggerLifeType": 0,
+                  "triggerCnt": 0,
+                  "triggerInterval": -1.0,
+                  "waitFirstTriggerInterval": 1,
+                  "firstTriggerInterval": -1.0,
+                  "priority": -1,
+                  "priorityBBKeys": [],
+                  "stripBlackboardParamsWithBuffKey": 0,
+                  "blackboard": [],
+                  "enableInitDirectionFromSource": 0
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "object": "Trigger",
+        "pathId": "5736973549330832297",
+        "components": [
+          {
+            "pathId": "-9128492921757754455",
+            "data": {
+              "m_GameObject": {
+                "m_FileID": 0,
+                "m_PathID": "5736973549330832297"
+              },
+              "m_Enabled": 1,
+              "m_Script": {
+                "m_FileID": 1,
+                "m_PathID": "8607874384982393801"
+              },
+              "m_Name": "",
+              "_keepTarget": 0,
+              "_minTargetNum": 1,
+              "_overrideSearchTargetTick": -1
+            }
+          },
+          {
+            "pathId": "-5488100947100820567",
+            "data": {
+              "m_GameObject": {
+                "m_FileID": 0,
+                "m_PathID": "5736973549330832297"
+              },
+              "m_Enabled": 1,
+              "m_Script": {
+                "m_FileID": 1,
+                "m_PathID": "7080728813803358465"
+              },
+              "m_Name": "",
+              "_targetSide": 2,
+              "_targetMotion": 3,
+              "_targetCategory": 1,
+              "_postFilter": 27,
+              "_ignoreTargetFree": 0,
+              "_onlyIgnoreSomeOfTargetFreeCase": 0,
+              "_abnormalFlag": 29,
+              "_abnormalCombo": 2,
+              "_ignoreAllyTargetFree": 0,
+              "_ignoreHealFree": 0,
+              "_forceIgnoreCamouflage": 0,
+              "_needProfessionMask": 0,
+              "_professionMask": 0,
+              "_limitTargetNum": 1,
+              "_maxTargetKey": "max_target",
+              "_maxNum": 1,
+              "_excludeOwner": 0,
+              "_sortByTauntAtLast": 0,
+              "_ignoreHitRange": 0,
+              "_checkUnitType": 0,
+              "_unitTypeMask": 0,
+              "_abilityInputTargetAsSortSource": 0
+            }
+          },
+          {
+            "pathId": "4074498795499756457",
+            "data": {
+              "m_GameObject": {
+                "m_FileID": 0,
+                "m_PathID": "5736973549330832297"
+              },
+              "m_Enabled": 1,
+              "m_Script": {
+                "m_FileID": 1,
+                "m_PathID": "-2891200616113119906"
+              },
+              "m_Name": "",
+              "_extendable": 0
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "skills": {
+    "skcom_atk_up": [
+      {
+        "object": "skcom_atk_up",
+        "pathId": "3415672303571633134",
+        "components": [
+          {
+            "pathId": "-8149467065939786770",
+            "data": {
+              "m_GameObject": {
+                "m_FileID": 0,
+                "m_PathID": "3415672303571633134"
+              },
+              "m_Enabled": 1,
+              "m_Script": {
+                "m_FileID": 1,
+                "m_PathID": "-4234909118878081699"
+              },
+              "m_Name": "",
+              "_selector": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              },
+              "_metadata": {
+                "namedAsAlias": "",
+                "blackboardPrefix": ""
+              },
+              "_interruptAbilityOnDetach": 0,
+              "_attachPassiveBuffsOnDummy": 1,
+              "_ignoreIfOwnerDead": 0,
+              "_forceAsDmgOrHealAbility": 0,
+              "_waitForAttackEvent": 1,
+              "_interuptIfTargetDead": 0,
+              "_resetCdStrategy": 1,
+              "_buffs": [
+                {
+                  "attributes": {
+                    "abnormalFlags": [],
+                    "abnormalImmunes": [],
+                    "abnormalAntis": [],
+                    "abnormalCombos": [],
+                    "abnormalComboImmunes": [],
+                    "attributeModifiers": [
+                      {
+                        "attributeType": 1,
+                        "formulaItem": 1,
+                        "value": 0.0,
+                        "loadFromBlackboard": 1,
+                        "fetchBaseValueFromSourceEntity": 0
+                      }
+                    ]
+                  },
+                  "buffKey": "multi_atk",
+                  "loadFromDB": 0,
+                  "isDurableBuff": 0,
+                  "isDamageMissable": 0,
+                  "isSilenceable": 0,
+                  "isStunnable": 0,
+                  "isFreezable": 0,
+                  "isLevitatable": 0,
+                  "statusResistable": 2,
+                  "templateKey": "empty",
+                  "disableOverride": 0,
+                  "overrideKey": "",
+                  "overrideType": 0,
+                  "maxStackCnt": 1,
+                  "refreshRemainingTimeWhenStackMax": 0,
+                  "clearAllStackCntWhenTimeUp": 0,
+                  "maxValidStackCnt": -1,
+                  "independentCharacterSource": 0,
+                  "overrideEffectKey": "common_ignite_attack",
+                  "overrideOnEventPriority": 0,
+                  "onEventPriority": 0,
+                  "audioSignal": "",
+                  "lifeTimeType": 1,
+                  "takeSnapshotWhenExtend": 0,
+                  "durationKey": "",
+                  "lifeTime": 0.0,
+                  "triggerLifeType": 0,
+                  "triggerCnt": 0,
+                  "triggerInterval": -1.0,
+                  "waitFirstTriggerInterval": 1,
+                  "firstTriggerInterval": -1.0,
+                  "priority": -1,
+                  "priorityBBKeys": [],
+                  "stripBlackboardParamsWithBuffKey": 0,
+                  "blackboard": [],
+                  "enableInitDirectionFromSource": 0
+                }
+              ],
+              "_waitForCasting": 0,
+              "_updateLifetimeWhenSpellStart": 0,
+              "_preDelay": 0.0,
+              "_escapeTime": 0.0,
+              "_checkBuffEarlyFinish": 0,
+              "_passiveBuffs": [],
+              "_ignoreInfiniteBuffCooldown": 0,
+              "_enableUpdateCooldown": 0
+            }
+          },
+          {
+            "pathId": "-2253778771189300242",
+            "data": {
+              "m_GameObject": {
+                "m_FileID": 0,
+                "m_PathID": "3415672303571633134"
+              },
+              "m_Enabled": 1,
+              "m_Script": {
+                "m_FileID": 1,
+                "m_PathID": "6851783972288338031"
+              },
+              "m_Name": "",
+              "_maxTriggerTime": -1,
+              "_allowSpRecoveryWhenAffecting": 0,
+              "_limitGlobalTriggerTime": 0,
+              "_hidden": 0,
+              "_showSpBarEvenHidden": 0,
+              "_showSpAsBulletMode": 0,
+              "_showSpRatioAsProgress": 0,
+              "_playCharWordVoice": 1,
+              "_playCharWordWithPassiveType": 0,
+              "_canCastWithNoSp": 0,
+              "_canSilenced": 0,
+              "_canUseInAbnormalState": 0,
+              "_defaultModeIndex": -1,
+              "_attackBlackboardModeIndex": -1,
+              "_extraAttackBlackboardModeIndices": [],
+              "_rangeIdModeIndex": -1,
+              "_extraRangeIdModeIndices": [],
+              "_rangeIdUsageType": 7,
+              "_writeDurationToAttackBlackboard": 0,
+              "_attachSignalIds": 0,
+              "_extraAbilities": [],
+              "_useEscapeTime": 0,
+              "_earlySkillFinishAtAttackFinished": 0,
+              "_showProgressToNext": 0,
+              "_hideSkillStackCount": 0,
+              "_hideHudSkillStackCount": 0,
+              "_playSkillBeginAnim": 0,
+              "_beginAnim": "",
+              "_beginAnimDown": "",
+              "_beginEffect": [],
+              "_useFaceVector": 0,
+              "_beginAnimValidator": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              },
+              "_availableValidator": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              },
+              "_trigger": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              },
+              "_switchToState": 0,
+              "_uninterruptibleOnAbilityPredelay": 0,
+              "_canSwitchDuringBorn": 1,
+              "_canCastDuringBorn": 1,
+              "_checkHasTargetBeforeDoCast": 0,
+              "_useTriggerInManualMode": 0,
+              "_allowNoTarget": 1,
+              "_shouldCastLikeAttack": 0,
+              "_isRemoteControlled": 0,
+              "_hideRangeToShow": 0,
+              "_forceUseBaseShowRange": 0,
+              "_rangeToShow": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              },
+              "_recoverSpIfNoTarget": 0,
+              "_resetAbilityCooldownWhenCastEnd": 0,
+              "_onlyAvailableWhenTokenValid": 0,
+              "_hasUniStackColor": 0
+            }
+          }
+        ]
+      }
+    ],
+    "skchr_poca_2": [
+      {
+        "object": "skchr_poca_2",
+        "pathId": "-521911833691059228",
+        "components": [
+          {
+            "pathId": "1576832469988183012",
+            "data": {
+              "m_GameObject": {
+                "m_FileID": 0,
+                "m_PathID": "-521911833691059228"
+              },
+              "m_Enabled": 1,
+              "m_Script": {
+                "m_FileID": 1,
+                "m_PathID": "-4234909118878081699"
+              },
+              "m_Name": "",
+              "_selector": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              },
+              "_metadata": {
+                "namedAsAlias": "",
+                "blackboardPrefix": ""
+              },
+              "_interruptAbilityOnDetach": 0,
+              "_attachPassiveBuffsOnDummy": 1,
+              "_ignoreIfOwnerDead": 0,
+              "_forceAsDmgOrHealAbility": 0,
+              "_waitForAttackEvent": 1,
+              "_interuptIfTargetDead": 0,
+              "_resetCdStrategy": 1,
+              "_buffs": [
+                {
+                  "attributes": {
+                    "abnormalFlags": [],
+                    "abnormalImmunes": [],
+                    "abnormalAntis": [],
+                    "abnormalCombos": [],
+                    "abnormalComboImmunes": [],
+                    "attributeModifiers": [
+                      {
+                        "attributeType": 1,
+                        "formulaItem": 1,
+                        "value": 0.0,
+                        "loadFromBlackboard": 1,
+                        "fetchBaseValueFromSourceEntity": 0
+                      }
+                    ]
+                  },
+                  "buffKey": "poca_s_2",
+                  "loadFromDB": 0,
+                  "isDurableBuff": 0,
+                  "isDamageMissable": 0,
+                  "isSilenceable": 0,
+                  "isStunnable": 0,
+                  "isFreezable": 0,
+                  "isLevitatable": 0,
+                  "statusResistable": 2,
+                  "templateKey": "switch_mode",
+                  "disableOverride": 0,
+                  "overrideKey": "",
+                  "overrideType": 0,
+                  "maxStackCnt": 1,
+                  "refreshRemainingTimeWhenStackMax": 0,
+                  "clearAllStackCntWhenTimeUp": 0,
+                  "maxValidStackCnt": -1,
+                  "independentCharacterSource": 0,
+                  "overrideEffectKey": "poca_skill_02_buff",
+                  "overrideOnEventPriority": 0,
+                  "onEventPriority": 0,
+                  "audioSignal": "",
+                  "lifeTimeType": 1,
+                  "takeSnapshotWhenExtend": 0,
+                  "durationKey": "",
+                  "lifeTime": 0.0,
+                  "triggerLifeType": 0,
+                  "triggerCnt": 0,
+                  "triggerInterval": -1.0,
+                  "waitFirstTriggerInterval": 1,
+                  "firstTriggerInterval": -1.0,
+                  "priority": -1,
+                  "priorityBBKeys": [],
+                  "stripBlackboardParamsWithBuffKey": 0,
+                  "blackboard": [
+                    {
+                      "key": "mode",
+                      "value": 1.0,
+                      "valueStr": ""
+                    }
+                  ],
+                  "enableInitDirectionFromSource": 0
+                },
+                {
+                  "attributes": {
+                    "abnormalFlags": [],
+                    "abnormalImmunes": [],
+                    "abnormalAntis": [],
+                    "abnormalCombos": [],
+                    "abnormalComboImmunes": [],
+                    "attributeModifiers": []
+                  },
+                  "buffKey": "poca_s_2[effect]",
+                  "loadFromDB": 0,
+                  "isDurableBuff": 0,
+                  "isDamageMissable": 0,
+                  "isSilenceable": 0,
+                  "isStunnable": 0,
+                  "isFreezable": 0,
+                  "isLevitatable": 0,
+                  "statusResistable": 2,
+                  "templateKey": "empty",
+                  "disableOverride": 0,
+                  "overrideKey": "",
+                  "overrideType": 0,
+                  "maxStackCnt": 1,
+                  "refreshRemainingTimeWhenStackMax": 0,
+                  "clearAllStackCntWhenTimeUp": 0,
+                  "maxValidStackCnt": -1,
+                  "independentCharacterSource": 0,
+                  "overrideEffectKey": "poca_skill_02_buff_02",
+                  "overrideOnEventPriority": 0,
+                  "onEventPriority": 0,
+                  "audioSignal": "",
+                  "lifeTimeType": 1,
+                  "takeSnapshotWhenExtend": 0,
+                  "durationKey": "",
+                  "lifeTime": 0.0,
+                  "triggerLifeType": 0,
+                  "triggerCnt": 0,
+                  "triggerInterval": -1.0,
+                  "waitFirstTriggerInterval": 1,
+                  "firstTriggerInterval": -1.0,
+                  "priority": -1,
+                  "priorityBBKeys": [],
+                  "stripBlackboardParamsWithBuffKey": 0,
+                  "blackboard": [],
+                  "enableInitDirectionFromSource": 0
+                }
+              ],
+              "_waitForCasting": 0,
+              "_updateLifetimeWhenSpellStart": 0,
+              "_preDelay": 0.0,
+              "_escapeTime": 0.0,
+              "_checkBuffEarlyFinish": 0,
+              "_passiveBuffs": [],
+              "_ignoreInfiniteBuffCooldown": 0,
+              "_enableUpdateCooldown": 0
+            }
+          },
+          {
+            "pathId": "2042890584027663332",
+            "data": {
+              "m_GameObject": {
+                "m_FileID": 0,
+                "m_PathID": "-521911833691059228"
+              },
+              "m_Enabled": 1,
+              "m_Script": {
+                "m_FileID": 1,
+                "m_PathID": "6851783972288338031"
+              },
+              "m_Name": "",
+              "_maxTriggerTime": -1,
+              "_allowSpRecoveryWhenAffecting": 0,
+              "_limitGlobalTriggerTime": 0,
+              "_hidden": 0,
+              "_showSpBarEvenHidden": 0,
+              "_showSpAsBulletMode": 0,
+              "_showSpRatioAsProgress": 0,
+              "_playCharWordVoice": 1,
+              "_playCharWordWithPassiveType": 0,
+              "_canCastWithNoSp": 0,
+              "_canSilenced": 0,
+              "_canUseInAbnormalState": 0,
+              "_defaultModeIndex": -1,
+              "_attackBlackboardModeIndex": 1,
+              "_extraAttackBlackboardModeIndices": [],
+              "_rangeIdModeIndex": -1,
+              "_extraRangeIdModeIndices": [],
+              "_rangeIdUsageType": 7,
+              "_writeDurationToAttackBlackboard": 0,
+              "_attachSignalIds": 0,
+              "_extraAbilities": [],
+              "_useEscapeTime": 0,
+              "_earlySkillFinishAtAttackFinished": 0,
+              "_showProgressToNext": 0,
+              "_hideSkillStackCount": 0,
+              "_hideHudSkillStackCount": 0,
+              "_playSkillBeginAnim": 0,
+              "_beginAnim": "",
+              "_beginAnimDown": "",
+              "_beginEffect": [],
+              "_useFaceVector": 0,
+              "_beginAnimValidator": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              },
+              "_availableValidator": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              },
+              "_trigger": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              },
+              "_switchToState": 1,
+              "_uninterruptibleOnAbilityPredelay": 0,
+              "_canSwitchDuringBorn": 1,
+              "_canCastDuringBorn": 1,
+              "_checkHasTargetBeforeDoCast": 0,
+              "_useTriggerInManualMode": 0,
+              "_allowNoTarget": 1,
+              "_shouldCastLikeAttack": 0,
+              "_isRemoteControlled": 0,
+              "_hideRangeToShow": 0,
+              "_forceUseBaseShowRange": 0,
+              "_rangeToShow": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              },
+              "_recoverSpIfNoTarget": 0,
+              "_resetAbilityCooldownWhenCastEnd": 0,
+              "_onlyAvailableWhenTokenValid": 0,
+              "_hasUniStackColor": 0
+            }
+          }
+        ]
+      }
+    ],
+    "skchr_poca_3": [
+      {
+        "object": "skchr_poca_3",
+        "pathId": "5520239100396824080",
+        "components": [
+          {
+            "pathId": "-9209906963622926832",
+            "data": {
+              "m_GameObject": {
+                "m_FileID": 0,
+                "m_PathID": "5520239100396824080"
+              },
+              "m_Enabled": 1,
+              "m_Script": {
+                "m_FileID": 1,
+                "m_PathID": "4156651312234227407"
+              },
+              "m_Name": "",
+              "_selector": {
+                "m_FileID": 0,
+                "m_PathID": "944239039756232208"
+              },
+              "_metadata": {
+                "namedAsAlias": "",
+                "blackboardPrefix": ""
+              },
+              "_interruptAbilityOnDetach": 0,
+              "_attachPassiveBuffsOnDummy": 1,
+              "_ignoreIfOwnerDead": 0,
+              "_forceAsDmgOrHealAbility": 0,
+              "_waitForAttackEvent": 0,
+              "_interuptIfTargetDead": 0,
+              "_resetCdStrategy": 1,
+              "_selectTargetSource": 1,
+              "_selectTargetTiming": 0,
+              "_timeMode": 3,
+              "_alwaysIncludeTarget": 1,
+              "_allowNoTarget": 0,
+              "_animKey": "",
+              "_endAnimKey": "Idle",
+              "_downAnimKey": "",
+              "_downEndAnimKey": "",
+              "_upAnimKey": "",
+              "_upEndAnimKey": "",
+              "_cooldown": 0.0,
+              "_cooldownKey": "duration",
+              "_preDelay": 0.5659999847412109,
+              "_escapeTime": 0.0,
+              "_faceToTarget": 1,
+              "_faceToDefault": 0,
+              "_faceToFront": 0,
+              "_faceToFirstCastTarget": 0,
+              "_forceFaceToDirection": 0,
+              "_activeBuffs": [
+                {
+                  "attributes": {
+                    "abnormalFlags": [
+                      13
+                    ],
+                    "abnormalImmunes": [],
+                    "abnormalAntis": [],
+                    "abnormalCombos": [],
+                    "abnormalComboImmunes": [],
+                    "attributeModifiers": []
+                  },
+                  "buffKey": "poca_s_3",
+                  "loadFromDB": 0,
+                  "isDurableBuff": 0,
+                  "isDamageMissable": 0,
+                  "isSilenceable": 0,
+                  "isStunnable": 0,
+                  "isFreezable": 0,
+                  "isLevitatable": 0,
+                  "statusResistable": 2,
+                  "templateKey": "empty",
+                  "disableOverride": 0,
+                  "overrideKey": "",
+                  "overrideType": 0,
+                  "maxStackCnt": 1,
+                  "refreshRemainingTimeWhenStackMax": 0,
+                  "clearAllStackCntWhenTimeUp": 0,
+                  "maxValidStackCnt": -1,
+                  "independentCharacterSource": 0,
+                  "overrideEffectKey": "poca_skill_03_buff",
+                  "overrideOnEventPriority": 0,
+                  "onEventPriority": 0,
+                  "audioSignal": "",
+                  "lifeTimeType": 2,
+                  "takeSnapshotWhenExtend": 0,
+                  "durationKey": "",
+                  "lifeTime": 0.0,
+                  "triggerLifeType": 0,
+                  "triggerCnt": 0,
+                  "triggerInterval": -1.0,
+                  "waitFirstTriggerInterval": 1,
+                  "firstTriggerInterval": -1.0,
+                  "priority": -1,
+                  "priorityBBKeys": [],
+                  "stripBlackboardParamsWithBuffKey": 0,
+                  "blackboard": [],
+                  "enableInitDirectionFromSource": 0
+                }
+              ],
+              "_maxAnimScale": 1.0,
+              "_onlyPlayEndAnimWhenIsLastAbility": 0,
+              "_ignorePalsyInterrupt": 0,
+              "_atkScale": 1.0,
+              "_atkScaleKey": "atk_scale",
+              "_attackType": 1,
+              "_elementDamageType": 0,
+              "_epDamageRatio": 0.0,
+              "_useDynamicAttackType": 0,
+              "_deliveryParaWhenReplaceActionNode": 0,
+              "_projectileKey": "projectile_chr_poca_s3",
+              "_mountPointType": 2,
+              "_useMountGroup": 0,
+              "_mountGroup": {
+                "loopType": 0,
+                "mountPoints": []
+              },
+              "_damageType": 1,
+              "_waitForProjectileInvalid": 1,
+              "_notClearProjectileWhenCastEnd": 0,
+              "_fireAttackFinishWhenProjectileInvalid": 1,
+              "_minPostDelayWhenProjectileInvalid": 0.9330000281333923,
+              "_waitForAnimEndWhenProjectileInvalid": 1,
+              "_projectileDestination": 0,
+              "_extraDamageType": 0,
+              "_emitToInputPosWhenTargetIsInvalid": 0,
+              "_emitToInputRootTileWhenTargetIsInvalid": 0,
+              "_useCachedAtkOnly": 0,
+              "_transferSource": 0,
+              "_extraProjectileKeys": [],
+              "_fireCreateProjectileEvent": 0
+            }
+          },
+          {
+            "pathId": "-6317753193338837488",
+            "data": {
+              "m_GameObject": {
+                "m_FileID": 0,
+                "m_PathID": "5520239100396824080"
+              },
+              "m_Enabled": 1,
+              "m_Script": {
+                "m_FileID": 1,
+                "m_PathID": "-7755558598337543512"
+              },
+              "m_Name": "",
+              "_startEvent": 2,
+              "_endEvent": 6,
+              "_buffs": [
+                {
+                  "attributes": {
+                    "abnormalFlags": [],
+                    "abnormalImmunes": [],
+                    "abnormalAntis": [],
+                    "abnormalCombos": [],
+                    "abnormalComboImmunes": [],
+                    "attributeModifiers": []
+                  },
+                  "buffKey": "poca_skill_03_weapon_buff",
+                  "loadFromDB": 0,
+                  "isDurableBuff": 0,
+                  "isDamageMissable": 0,
+                  "isSilenceable": 0,
+                  "isStunnable": 0,
+                  "isFreezable": 0,
+                  "isLevitatable": 0,
+                  "statusResistable": 2,
+                  "templateKey": "empty",
+                  "disableOverride": 0,
+                  "overrideKey": "",
+                  "overrideType": 0,
+                  "maxStackCnt": 1,
+                  "refreshRemainingTimeWhenStackMax": 0,
+                  "clearAllStackCntWhenTimeUp": 0,
+                  "maxValidStackCnt": -1,
+                  "independentCharacterSource": 0,
+                  "overrideEffectKey": "poca_skill_03_weapon_buff",
+                  "overrideOnEventPriority": 0,
+                  "onEventPriority": 0,
+                  "audioSignal": "",
+                  "lifeTimeType": 2,
+                  "takeSnapshotWhenExtend": 0,
+                  "durationKey": "",
+                  "lifeTime": 0.0,
+                  "triggerLifeType": 0,
+                  "triggerCnt": 0,
+                  "triggerInterval": -1.0,
+                  "waitFirstTriggerInterval": 1,
+                  "firstTriggerInterval": -1.0,
+                  "priority": -1,
+                  "priorityBBKeys": [],
+                  "stripBlackboardParamsWithBuffKey": 0,
+                  "blackboard": [],
+                  "enableInitDirectionFromSource": 0
+                }
+              ],
+              "_forceFinishBuffOnCastEnd": 0
+            }
+          },
+          {
+            "pathId": "556408988851627536",
+            "data": {
+              "m_GameObject": {
+                "m_FileID": 0,
+                "m_PathID": "5520239100396824080"
+              },
+              "m_Enabled": 1,
+              "m_Script": {
+                "m_FileID": 1,
+                "m_PathID": "6851783972288338031"
+              },
+              "m_Name": "",
+              "_maxTriggerTime": -1,
+              "_allowSpRecoveryWhenAffecting": 0,
+              "_limitGlobalTriggerTime": 0,
+              "_hidden": 0,
+              "_showSpBarEvenHidden": 0,
+              "_showSpAsBulletMode": 0,
+              "_showSpRatioAsProgress": 0,
+              "_playCharWordVoice": 1,
+              "_playCharWordWithPassiveType": 0,
+              "_canCastWithNoSp": 0,
+              "_canSilenced": 0,
+              "_canUseInAbnormalState": 0,
+              "_defaultModeIndex": -1,
+              "_attackBlackboardModeIndex": -1,
+              "_extraAttackBlackboardModeIndices": [],
+              "_rangeIdModeIndex": -1,
+              "_extraRangeIdModeIndices": [],
+              "_rangeIdUsageType": 7,
+              "_writeDurationToAttackBlackboard": 0,
+              "_attachSignalIds": 0,
+              "_extraAbilities": [],
+              "_useEscapeTime": 1,
+              "_earlySkillFinishAtAttackFinished": 1,
+              "_showProgressToNext": 0,
+              "_hideSkillStackCount": 0,
+              "_hideHudSkillStackCount": 0,
+              "_playSkillBeginAnim": 0,
+              "_beginAnim": "",
+              "_beginAnimDown": "",
+              "_beginEffect": [],
+              "_useFaceVector": 0,
+              "_beginAnimValidator": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              },
+              "_availableValidator": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              },
+              "_trigger": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              },
+              "_switchToState": 1,
+              "_uninterruptibleOnAbilityPredelay": 0,
+              "_canSwitchDuringBorn": 1,
+              "_canCastDuringBorn": 1,
+              "_checkHasTargetBeforeDoCast": 0,
+              "_useTriggerInManualMode": 0,
+              "_allowNoTarget": 1,
+              "_shouldCastLikeAttack": 0,
+              "_isRemoteControlled": 0,
+              "_hideRangeToShow": 0,
+              "_forceUseBaseShowRange": 0,
+              "_rangeToShow": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              },
+              "_recoverSpIfNoTarget": 0,
+              "_resetAbilityCooldownWhenCastEnd": 1,
+              "_onlyAvailableWhenTokenValid": 0,
+              "_hasUniStackColor": 0
+            }
+          },
+          {
+            "pathId": "625618522665379344",
+            "data": {
+              "m_GameObject": {
+                "m_FileID": 0,
+                "m_PathID": "5520239100396824080"
+              },
+              "m_Enabled": 1,
+              "m_Script": {
+                "m_FileID": 1,
+                "m_PathID": "680305599797508032"
+              },
+              "m_Name": "",
+              "_default": {
+                "beginAnim": "Skill_Begin",
+                "loopAnim": "Skill_Loop",
+                "endAnim": "Skill_End"
+              },
+              "_overrideDownAnimation": 0,
+              "_down": {
+                "beginAnim": "",
+                "loopAnim": "",
+                "endAnim": ""
+              },
+              "_overrideUpAnimation": 0,
+              "_up": {
+                "beginAnim": "",
+                "loopAnim": "",
+                "endAnim": ""
+              },
+              "_faceToFront": 0,
+              "_faceToDefault": 0,
+              "_waitForAttachFinishEvent": 1,
+              "_earlyFinishEndIdleAnimation": 0,
+              "_fireAttackFinishEvent": 1,
+              "_delayToFireAttackSkillEvent": 0,
+              "_delaySecond": 0.0,
+              "_fireAnimEndEvent": 1,
+              "_dontPlayBeginAnimFromInterrupted": 0,
+              "_onlyPlayBeginAnimWhenFirstAttack": 0,
+              "_delayToAnimateEndAnimation": 0,
+              "_delayToAnimateEndAnimationTime": 0.0,
+              "_playIdleAnimInTheEnd": 0
+            }
+          },
+          {
+            "pathId": "5571026133491443216",
+            "data": {
+              "m_GameObject": {
+                "m_FileID": 0,
+                "m_PathID": "5520239100396824080"
+              },
+              "m_Enabled": 1,
+              "m_Script": {
+                "m_FileID": 1,
+                "m_PathID": "7943132833301030580"
+              },
+              "m_Name": "",
+              "_buffs": [
+                {
+                  "attributes": {
+                    "abnormalFlags": [],
+                    "abnormalImmunes": [],
+                    "abnormalAntis": [],
+                    "abnormalCombos": [],
+                    "abnormalComboImmunes": [],
+                    "attributeModifiers": [
+                      {
+                        "attributeType": 1,
+                        "formulaItem": 1,
+                        "value": 0.0,
+                        "loadFromBlackboard": 1,
+                        "fetchBaseValueFromSourceEntity": 0
+                      }
+                    ]
+                  },
+                  "buffKey": "poca_s_3[atk]",
+                  "loadFromDB": 0,
+                  "isDurableBuff": 0,
+                  "isDamageMissable": 0,
+                  "isSilenceable": 0,
+                  "isStunnable": 0,
+                  "isFreezable": 0,
+                  "isLevitatable": 0,
+                  "statusResistable": 2,
+                  "templateKey": "empty",
+                  "disableOverride": 0,
+                  "overrideKey": "",
+                  "overrideType": 0,
+                  "maxStackCnt": 1,
+                  "refreshRemainingTimeWhenStackMax": 0,
+                  "clearAllStackCntWhenTimeUp": 0,
+                  "maxValidStackCnt": -1,
+                  "independentCharacterSource": 0,
+                  "overrideEffectKey": "",
+                  "overrideOnEventPriority": 0,
+                  "onEventPriority": 0,
+                  "audioSignal": "",
+                  "lifeTimeType": 2,
+                  "takeSnapshotWhenExtend": 0,
+                  "durationKey": "",
+                  "lifeTime": 0.0,
+                  "triggerLifeType": 0,
+                  "triggerCnt": 0,
+                  "triggerInterval": -1.0,
+                  "waitFirstTriggerInterval": 1,
+                  "firstTriggerInterval": -1.0,
+                  "priority": -1,
+                  "priorityBBKeys": [],
+                  "stripBlackboardParamsWithBuffKey": 0,
+                  "blackboard": [],
+                  "enableInitDirectionFromSource": 0
+                }
+              ]
+            }
+          },
+          {
+            "pathId": "6917767619476645392",
+            "data": {
+              "m_GameObject": {
+                "m_FileID": 0,
+                "m_PathID": "5520239100396824080"
+              },
+              "m_Enabled": 1,
+              "m_Script": {
+                "m_FileID": 1,
+                "m_PathID": "-550693537895634864"
+              },
+              "m_Name": "",
+              "_hitEffects": [],
+              "_castEffects": [
+                {
+                  "_directionType": 0,
+                  "_effects": [
+                    "poca_skill_03_start_03",
+                    "",
+                    "",
+                    ""
+                  ],
+                  "_oneshot": 0,
+                  "_startEvent": 2,
+                  "_endEvent": 6,
+                  "_onlyOnce": 1,
+                  "_useFourDirectionalFace": 0,
+                  "_delayIfFirstAttack": 0.0,
+                  "_hookEffectAfterFirstAttack": ""
+                },
+                {
+                  "_directionType": 0,
+                  "_effects": [
+                    "poca_skill_03_start_02",
+                    "",
+                    "",
+                    ""
+                  ],
+                  "_oneshot": 0,
+                  "_startEvent": 2,
+                  "_endEvent": 6,
+                  "_onlyOnce": 0,
+                  "_useFourDirectionalFace": 0,
+                  "_delayIfFirstAttack": 0.0,
+                  "_hookEffectAfterFirstAttack": ""
+                },
+                {
+                  "_directionType": 0,
+                  "_effects": [
+                    "poca_skill_03_start",
+                    "",
+                    "",
+                    ""
+                  ],
+                  "_oneshot": 0,
+                  "_startEvent": 2,
+                  "_endEvent": 6,
+                  "_onlyOnce": 0,
+                  "_useFourDirectionalFace": 0,
+                  "_delayIfFirstAttack": 0.0,
+                  "_hookEffectAfterFirstAttack": ""
+                }
+              ],
+              "_attachEffects": [],
+              "_inputTargetEffects": [],
+              "_castTargetEffects": [],
+              "_convertCastEndToAttachFinish": 0,
+              "_recalculatePlaybackSpeed": 0,
+              "_preDelayFactor": 0.0
+            }
+          }
+        ]
+      },
+      {
+        "object": "Trigger",
+        "pathId": "6395454077918701072",
+        "components": [
+          {
+            "pathId": "-2322404345879534064",
+            "data": {
+              "m_GameObject": {
+                "m_FileID": 0,
+                "m_PathID": "6395454077918701072"
+              },
+              "m_Enabled": 1,
+              "m_Script": {
+                "m_FileID": 1,
+                "m_PathID": "-2891200616113119906"
+              },
+              "m_Name": "",
+              "_extendable": 0
+            }
+          },
+          {
+            "pathId": "944239039756232208",
+            "data": {
+              "m_GameObject": {
+                "m_FileID": 0,
+                "m_PathID": "6395454077918701072"
+              },
+              "m_Enabled": 1,
+              "m_Script": {
+                "m_FileID": 1,
+                "m_PathID": "7080728813803358465"
+              },
+              "m_Name": "",
+              "_targetSide": 2,
+              "_targetMotion": 3,
+              "_targetCategory": 1,
+              "_postFilter": 27,
+              "_ignoreTargetFree": 0,
+              "_onlyIgnoreSomeOfTargetFreeCase": 0,
+              "_abnormalFlag": 44,
+              "_abnormalCombo": 2,
+              "_ignoreAllyTargetFree": 0,
+              "_ignoreHealFree": 0,
+              "_forceIgnoreCamouflage": 0,
+              "_needProfessionMask": 0,
+              "_professionMask": 0,
+              "_limitTargetNum": 1,
+              "_maxTargetKey": "max_target",
+              "_maxNum": 1,
+              "_excludeOwner": 0,
+              "_sortByTauntAtLast": 0,
+              "_ignoreHitRange": 0,
+              "_checkUnitType": 0,
+              "_unitTypeMask": 0,
+              "_abilityInputTargetAsSortSource": 0
+            }
+          },
+          {
+            "pathId": "2645303433866503696",
+            "data": {
+              "m_GameObject": {
+                "m_FileID": 0,
+                "m_PathID": "6395454077918701072"
+              },
+              "m_Enabled": 1,
+              "m_Script": {
+                "m_FileID": 1,
+                "m_PathID": "8607874384982393801"
+              },
+              "m_Name": "",
+              "_keepTarget": 0,
+              "_minTargetNum": 1,
+              "_overrideSearchTargetTick": -1
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "projectiles": {
+    "projectile_chr_poca": [
+      {
+        "object": "projectile_chr_poca",
+        "pathId": "-6024492158808279277",
+        "components": [
+          {
+            "pathId": "-3274547076737517805",
+            "data": {
+              "m_GameObject": {
+                "m_FileID": 0,
+                "m_PathID": "-6024492158808279277"
+              },
+              "m_Enabled": 1,
+              "m_Script": {
+                "m_FileID": 1,
+                "m_PathID": "-1429203677512073985"
+              },
+              "m_Name": "",
+              "_rotateToTarget": 1,
+              "_forceReachedWhenTimeup": 1,
+              "_useSourceDirection": 0,
+              "_useTargetDirection": 0,
+              "_useStartToTarget": 0,
+              "_awayFromSourceAsDirection": 0,
+              "_flyToTargetLocationOnly": 0,
+              "_useSourceDirectionRandomArcAngleStart": 0,
+              "_useSourceToTargetRandomArcAngleStart": 0,
+              "_useSourceDirectionArcAngleWithRatio": 0,
+              "_useSourceToTargetArcAngleWithRatio": 0,
+              "_sourceDirectionArcAngleRatio": 0.0,
+              "_flyToPredefinedLocation": 0,
+              "_predefinedLocation": 0,
+              "_freezeRotationZ": 0,
+              "_freezeRotationXY": 0,
+              "_exactMatchCameraForward": 0,
+              "_resetToTargetPosWhenReached": 0,
+              "_resetToTracetargetMapPosV3": 0,
+              "_handleWithIBuildableTarget": 0,
+              "_forceResetToTargetPosWhenReached": 0,
+              "_fixOnProjectileReached": 0,
+              "_onlyReachedInTime": 0.0,
+              "_moveType": 1,
+              "_moveTypeData": {
+                "data": []
+              },
+              "_speed": 15.0,
+              "_distance": 0.0,
+              "_comeBack": 0,
+              "_comeBackSpeedScale": 0.25,
+              "_delayToStart": 0.0,
+              "_delayAfterReached": 0.0,
+              "_delayToReachAfterHit": 0.0,
+              "_clearTraceTargetWhenReached": 1,
+              "_updateDelayTimeOnlyOnce": 0,
+              "_skipSmoothLerpDirection": 0,
+              "_addInertia": 0,
+              "_turnSpeed": 0.0,
+              "_useDynamicSpeed": 0,
+              "_deltaSpeedPerSec": 0.0,
+              "_finalSpeed": 0.0,
+              "_randomOffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+              },
+              "_forceUseTargetMountPoint": 0
+            }
+          },
+          {
+            "pathId": "1977794868950808339",
+            "data": {
+              "m_GameObject": {
+                "m_FileID": 0,
+                "m_PathID": "-6024492158808279277"
+              },
+              "m_Enabled": 1,
+              "m_Script": {
+                "m_FileID": 1,
+                "m_PathID": "6834194400804168919"
+              },
+              "m_Name": "",
+              "_effectsWhenStart": [],
+              "_effectsWhenReached": [],
+              "_effectsWhenHit": [
+                "poca_attack_01_hit_01",
+                "poca_attack_01_hit_02"
+              ],
+              "_effectsToTargetWhenStart": [],
+              "_effectsToTileWhenStart": [],
+              "_effectsWhenStop": [],
+              "_effectOnTrigger": [],
+              "_onlyPlayHitEffectOnTraceTarget": 0,
+              "_onlyPlayHitEffectOnNotTraceTarget": 0,
+              "_onlyPlayHitEffectOnce": 0,
+              "_clearHitEffectOnStop": 0,
+              "_clearPlayEffectOnStop": 0,
+              "_clearEffectsOnTileOnStop": 0,
+              "_clearReachedEffectWhenStop": 0,
+              "_alwaysPlayStartEffects": 0,
+              "_playStartEffectOnlyOnProjectile": 0,
+              "_useSourceFaceVector": 0,
+              "_useSourceFaceVectorOnHit": 0,
+              "_forceReachTargetGround": 0,
+              "_followTargetGround": 0,
+              "_replaceMainEffectWhenReach": 0,
+              "_mainEffectToReplace": "",
+              "_useTraceTargetWhenReach": 0,
+              "_setReachEffectOnProjectile": 0,
+              "_syncEffectScaleViaProjectile": 0
+            }
+          },
+          {
+            "pathId": "4022328860334569235",
+            "data": {
+              "m_GameObject": {
+                "m_FileID": 0,
+                "m_PathID": "-6024492158808279277"
+              },
+              "m_Enabled": 1,
+              "m_Script": {
+                "m_FileID": 1,
+                "m_PathID": "-8797129986015012478"
+              },
+              "m_Name": "",
+              "_randomDelayToBorn": 0.0,
+              "_bodyTransform": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              },
+              "_keepAlreadyHitTime": -1.0,
+              "_mainEffect": "poca_attack_01_trail",
+              "_clearMainEffectWhenReached": 1,
+              "_actionController": {
+                "_detachBuffsWhenTargetLeave": 0,
+                "_detachAllBuffsWhenStopped": 0,
+                "_onlyAddBuffsToTraceTarget": 0,
+                "_onlyAddBuffsToTargetOnce": 0,
+                "_dontAddBuffs": 0,
+                "_excludeAttachments": 0,
+                "_useSelfBlackboard": 0,
+                "_extraBuffsInTheEnd": [],
+                "_useExtraBuffsWhenStopHit": 0,
+                "_addExtraBuffsWhenReached": 0,
+                "_detachAllExtraBuffsWhenStopped": 0
+              },
+              "_fixDealHitTargetLeft": 0,
+              "_stopGraphicProjectileWhenClearMainEffect": 0,
+              "_overrideAudioSignal": "",
+              "_fireProjectileReachedEvent": 0,
+              "_eliminatableStatus": 0,
+              "_movementAdjustableStatus": 0,
+              "_managedBySource": 0,
+              "_projectileType": 0,
+              "_containsChildrenBehaviours": 0,
+              "_canHitSameTargetMultipleTimes": 0,
+              "_lifeTimeType": 1,
+              "_lifeTime": 10.0,
+              "_getLifeTimeFromBB": 0,
+              "_hitNumType": 1,
+              "_maxHitNum": 1,
+              "_getMaxHitNumFromBB": 0,
+              "_maxHitNumBBKey": "",
+              "_stopAfterMaxHit": 1,
+              "_stopAfterFirstHit": 0,
+              "_stopWhenSourceInvalid": 0,
+              "_alwaysHitTraceTargetInTheEnd": 1,
+              "_alwaysHitTraceTargetWhenReached": 0,
+              "_alwaysReachInTheEnd": 0,
+              "_limitedMaxHitNumToSourceBlockedCnt": 0,
+              "_allowZeroBlockCntLimit": 0
+            }
+          }
+        ]
+      }
+    ],
+    "projectile_chr_poca_s2": [
+      {
+        "object": "projectile_chr_poca_s2",
+        "pathId": "-2752183628262752895",
+        "components": [
+          {
+            "pathId": "-7008167350466331263",
+            "data": {
+              "m_GameObject": {
+                "m_FileID": 0,
+                "m_PathID": "-2752183628262752895"
+              },
+              "m_Enabled": 1,
+              "m_Script": {
+                "m_FileID": 1,
+                "m_PathID": "-8797129986015012478"
+              },
+              "m_Name": "",
+              "_randomDelayToBorn": 0.0,
+              "_bodyTransform": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              },
+              "_keepAlreadyHitTime": -1.0,
+              "_mainEffect": "poca_skill_02_trail",
+              "_clearMainEffectWhenReached": 1,
+              "_actionController": {
+                "_detachBuffsWhenTargetLeave": 0,
+                "_detachAllBuffsWhenStopped": 0,
+                "_onlyAddBuffsToTraceTarget": 0,
+                "_onlyAddBuffsToTargetOnce": 0,
+                "_dontAddBuffs": 0,
+                "_excludeAttachments": 0,
+                "_useSelfBlackboard": 0,
+                "_extraBuffsInTheEnd": [],
+                "_useExtraBuffsWhenStopHit": 0,
+                "_addExtraBuffsWhenReached": 0,
+                "_detachAllExtraBuffsWhenStopped": 0
+              },
+              "_fixDealHitTargetLeft": 0,
+              "_stopGraphicProjectileWhenClearMainEffect": 0,
+              "_overrideAudioSignal": "",
+              "_fireProjectileReachedEvent": 0,
+              "_eliminatableStatus": 0,
+              "_movementAdjustableStatus": 0,
+              "_managedBySource": 0,
+              "_projectileType": 0,
+              "_containsChildrenBehaviours": 0,
+              "_canHitSameTargetMultipleTimes": 0,
+              "_lifeTimeType": 1,
+              "_lifeTime": 10.0,
+              "_getLifeTimeFromBB": 0,
+              "_hitNumType": 1,
+              "_maxHitNum": 1,
+              "_getMaxHitNumFromBB": 0,
+              "_maxHitNumBBKey": "",
+              "_stopAfterMaxHit": 1,
+              "_stopAfterFirstHit": 0,
+              "_stopWhenSourceInvalid": 0,
+              "_alwaysHitTraceTargetInTheEnd": 1,
+              "_alwaysHitTraceTargetWhenReached": 0,
+              "_alwaysReachInTheEnd": 0,
+              "_limitedMaxHitNumToSourceBlockedCnt": 0,
+              "_allowZeroBlockCntLimit": 0
+            }
+          },
+          {
+            "pathId": "5745524657035656577",
+            "data": {
+              "m_GameObject": {
+                "m_FileID": 0,
+                "m_PathID": "-2752183628262752895"
+              },
+              "m_Enabled": 1,
+              "m_Script": {
+                "m_FileID": 1,
+                "m_PathID": "6834194400804168919"
+              },
+              "m_Name": "",
+              "_effectsWhenStart": [],
+              "_effectsWhenReached": [],
+              "_effectsWhenHit": [
+                "poca_skill_02_hit_01",
+                "poca_skill_02_hit_02"
+              ],
+              "_effectsToTargetWhenStart": [],
+              "_effectsToTileWhenStart": [],
+              "_effectsWhenStop": [],
+              "_effectOnTrigger": [],
+              "_onlyPlayHitEffectOnTraceTarget": 0,
+              "_onlyPlayHitEffectOnNotTraceTarget": 0,
+              "_onlyPlayHitEffectOnce": 0,
+              "_clearHitEffectOnStop": 0,
+              "_clearPlayEffectOnStop": 0,
+              "_clearEffectsOnTileOnStop": 0,
+              "_clearReachedEffectWhenStop": 0,
+              "_alwaysPlayStartEffects": 0,
+              "_playStartEffectOnlyOnProjectile": 0,
+              "_useSourceFaceVector": 0,
+              "_useSourceFaceVectorOnHit": 0,
+              "_forceReachTargetGround": 0,
+              "_followTargetGround": 0,
+              "_replaceMainEffectWhenReach": 0,
+              "_mainEffectToReplace": "",
+              "_useTraceTargetWhenReach": 0,
+              "_setReachEffectOnProjectile": 0,
+              "_syncEffectScaleViaProjectile": 0
+            }
+          },
+          {
+            "pathId": "8014845886232247681",
+            "data": {
+              "m_GameObject": {
+                "m_FileID": 0,
+                "m_PathID": "-2752183628262752895"
+              },
+              "m_Enabled": 1,
+              "m_Script": {
+                "m_FileID": 1,
+                "m_PathID": "-1429203677512073985"
+              },
+              "m_Name": "",
+              "_rotateToTarget": 1,
+              "_forceReachedWhenTimeup": 1,
+              "_useSourceDirection": 0,
+              "_useTargetDirection": 0,
+              "_useStartToTarget": 0,
+              "_awayFromSourceAsDirection": 0,
+              "_flyToTargetLocationOnly": 0,
+              "_useSourceDirectionRandomArcAngleStart": 0,
+              "_useSourceToTargetRandomArcAngleStart": 0,
+              "_useSourceDirectionArcAngleWithRatio": 0,
+              "_useSourceToTargetArcAngleWithRatio": 0,
+              "_sourceDirectionArcAngleRatio": 0.0,
+              "_flyToPredefinedLocation": 0,
+              "_predefinedLocation": 0,
+              "_freezeRotationZ": 0,
+              "_freezeRotationXY": 0,
+              "_exactMatchCameraForward": 0,
+              "_resetToTargetPosWhenReached": 0,
+              "_resetToTracetargetMapPosV3": 0,
+              "_handleWithIBuildableTarget": 0,
+              "_forceResetToTargetPosWhenReached": 0,
+              "_fixOnProjectileReached": 0,
+              "_onlyReachedInTime": 0.0,
+              "_moveType": 1,
+              "_moveTypeData": {
+                "data": []
+              },
+              "_speed": 15.0,
+              "_distance": 0.0,
+              "_comeBack": 0,
+              "_comeBackSpeedScale": 0.25,
+              "_delayToStart": 0.0,
+              "_delayAfterReached": 0.0,
+              "_delayToReachAfterHit": 0.0,
+              "_clearTraceTargetWhenReached": 1,
+              "_updateDelayTimeOnlyOnce": 0,
+              "_skipSmoothLerpDirection": 0,
+              "_addInertia": 0,
+              "_turnSpeed": 0.0,
+              "_useDynamicSpeed": 0,
+              "_deltaSpeedPerSec": 0.0,
+              "_finalSpeed": 0.0,
+              "_randomOffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+              },
+              "_forceUseTargetMountPoint": 0
+            }
+          }
+        ]
+      }
+    ],
+    "projectile_chr_poca_s3": [
+      {
+        "object": "projectile_chr_poca_s3",
+        "pathId": "-1822880961989373578",
+        "components": [
+          {
+            "pathId": "-6498173318960443018",
+            "data": {
+              "m_GameObject": {
+                "m_FileID": 0,
+                "m_PathID": "-1822880961989373578"
+              },
+              "m_Enabled": 1,
+              "m_Script": {
+                "m_FileID": 1,
+                "m_PathID": "6834194400804168919"
+              },
+              "m_Name": "",
+              "_effectsWhenStart": [],
+              "_effectsWhenReached": [],
+              "_effectsWhenHit": [
+                "poca_skill_03_hit",
+                "poca_skill_03_hit_02"
+              ],
+              "_effectsToTargetWhenStart": [],
+              "_effectsToTileWhenStart": [],
+              "_effectsWhenStop": [],
+              "_effectOnTrigger": [],
+              "_onlyPlayHitEffectOnTraceTarget": 0,
+              "_onlyPlayHitEffectOnNotTraceTarget": 0,
+              "_onlyPlayHitEffectOnce": 0,
+              "_clearHitEffectOnStop": 1,
+              "_clearPlayEffectOnStop": 0,
+              "_clearEffectsOnTileOnStop": 0,
+              "_clearReachedEffectWhenStop": 0,
+              "_alwaysPlayStartEffects": 0,
+              "_playStartEffectOnlyOnProjectile": 0,
+              "_useSourceFaceVector": 0,
+              "_useSourceFaceVectorOnHit": 0,
+              "_forceReachTargetGround": 0,
+              "_followTargetGround": 0,
+              "_replaceMainEffectWhenReach": 0,
+              "_mainEffectToReplace": "",
+              "_useTraceTargetWhenReach": 0,
+              "_setReachEffectOnProjectile": 0,
+              "_syncEffectScaleViaProjectile": 0
+            }
+          },
+          {
+            "pathId": "-3400144360150199946",
+            "data": {
+              "m_GameObject": {
+                "m_FileID": 0,
+                "m_PathID": "-1822880961989373578"
+              },
+              "m_Enabled": 1,
+              "m_Script": {
+                "m_FileID": 1,
+                "m_PathID": "292750316640791491"
+              },
+              "m_Name": "",
+              "_mainEffect": "poca_skill_03_line",
+              "_throwEffect": 0,
+              "_includeInactive": 0,
+              "_useEndPointAsStartPos": 0,
+              "_hookStartPoint": 0,
+              "_hookedStartPointType": 0,
+              "_finishOnMountPointInvalid": 0,
+              "_spawnOnSource": 1,
+              "_independentUpdateAfterReached": 0,
+              "_useHitAsEndPoint": 0,
+              "_followProjectile": 0,
+              "_onlyUpdateEnd": 0,
+              "_useOffsetByProjectileDirection": 0
+            }
+          },
+          {
+            "pathId": "3032504581148250486",
+            "data": {
+              "m_GameObject": {
+                "m_FileID": 0,
+                "m_PathID": "-1822880961989373578"
+              },
+              "m_Enabled": 1,
+              "m_Script": {
+                "m_FileID": 1,
+                "m_PathID": "-2810680889638837876"
+              },
+              "m_Name": "",
+              "_rotateToTarget": 1,
+              "_forceReachedWhenTimeup": 1,
+              "_useSourceDirection": 0,
+              "_useTargetDirection": 0,
+              "_useStartToTarget": 0,
+              "_awayFromSourceAsDirection": 0,
+              "_flyToTargetLocationOnly": 0,
+              "_useSourceDirectionRandomArcAngleStart": 0,
+              "_useSourceToTargetRandomArcAngleStart": 0,
+              "_useSourceDirectionArcAngleWithRatio": 0,
+              "_useSourceToTargetArcAngleWithRatio": 0,
+              "_sourceDirectionArcAngleRatio": 0.0,
+              "_flyToPredefinedLocation": 0,
+              "_predefinedLocation": 0,
+              "_freezeRotationZ": 0,
+              "_freezeRotationXY": 0,
+              "_exactMatchCameraForward": 0,
+              "_resetToTargetPosWhenReached": 0,
+              "_resetToTracetargetMapPosV3": 0,
+              "_handleWithIBuildableTarget": 0,
+              "_forceResetToTargetPosWhenReached": 0,
+              "_fixOnProjectileReached": 0,
+              "_onlyReachedInTime": 0.0,
+              "_speed": 10.0,
+              "_acceleration": 0.0,
+              "_stayWhenReached": 0,
+              "_keepUpdateDirection": 0,
+              "_keepUpdateTargetpos": 0,
+              "_independentUpdateAfterReached": 0,
+              "_extendToLenth": 0,
+              "_extendLenth": 15.0
+            }
+          },
+          {
+            "pathId": "8085565624672981366",
+            "data": {
+              "m_GameObject": {
+                "m_FileID": 0,
+                "m_PathID": "-1822880961989373578"
+              },
+              "m_Enabled": 1,
+              "m_Script": {
+                "m_FileID": 1,
+                "m_PathID": "-1571035685851700140"
+              },
+              "m_Name": "",
+              "_randomDelayToBorn": 0.0,
+              "_bodyTransform": {
+                "m_FileID": 0,
+                "m_PathID": "5570269526771962230"
+              },
+              "_keepAlreadyHitTime": 1.0,
+              "_mainEffect": "poca_skill_03_trail",
+              "_clearMainEffectWhenReached": 1,
+              "_actionController": {
+                "_detachBuffsWhenTargetLeave": 0,
+                "_detachAllBuffsWhenStopped": 1,
+                "_onlyAddBuffsToTraceTarget": 0,
+                "_onlyAddBuffsToTargetOnce": 0,
+                "_dontAddBuffs": 0,
+                "_excludeAttachments": 0,
+                "_useSelfBlackboard": 0,
+                "_extraBuffsInTheEnd": [],
+                "_useExtraBuffsWhenStopHit": 0,
+                "_addExtraBuffsWhenReached": 0,
+                "_detachAllExtraBuffsWhenStopped": 0
+              },
+              "_fixDealHitTargetLeft": 0,
+              "_stopGraphicProjectileWhenClearMainEffect": 0,
+              "_overrideAudioSignal": "",
+              "_fireProjectileReachedEvent": 0,
+              "_eliminatableStatus": 0,
+              "_movementAdjustableStatus": 0,
+              "_managedBySource": 0,
+              "_projectileType": 0,
+              "_containsChildrenBehaviours": 0,
+              "_canHitSameTargetMultipleTimes": 0,
+              "_lifeTimeType": 2,
+              "_lifeTime": 5.0,
+              "_getLifeTimeFromBB": 0,
+              "_linkDuration": 10.0,
+              "_isSilenceable": 1,
+              "_keepHitTarget": 1,
+              "_splitDamage": 0,
+              "_dontHitInvincibleTarget": 0,
+              "_maxHitTimes": -1,
+              "_keepWhenRallyPointLikeSwitch": 0
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "chararts": {
+    "char_197_poca": [
+      {
+        "pathId": "-7449979248396392997",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "3240580915436856795"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "7647785617504526080"
+          },
+          "m_Name": "",
+          "_animations": [
+            {
+              "animKey": "Idle",
+              "animName": "Idle",
+              "loop": 1,
+              "speed": 1.0,
+              "ignoreMissing": 0
+            },
+            {
+              "animKey": "Die",
+              "animName": "Die",
+              "loop": 0,
+              "speed": 1.0,
+              "ignoreMissing": 0
+            },
+            {
+              "animKey": "Born",
+              "animName": "Start",
+              "loop": 0,
+              "speed": 1.0,
+              "ignoreMissing": 0
+            },
+            {
+              "animKey": "Default",
+              "animName": "Default",
+              "loop": 0,
+              "speed": 1.0,
+              "ignoreMissing": 0
+            },
+            {
+              "animKey": "Attack",
+              "animName": "Attack",
+              "loop": 0,
+              "speed": 1.0,
+              "ignoreMissing": 0
+            },
+            {
+              "animKey": "Skill_Begin",
+              "animName": "Skill_Begin",
+              "loop": 0,
+              "speed": 1.0,
+              "ignoreMissing": 0
+            },
+            {
+              "animKey": "Skill_Loop",
+              "animName": "Skill_Loop",
+              "loop": 1,
+              "speed": 1.0,
+              "ignoreMissing": 0
+            },
+            {
+              "animKey": "Skill_End",
+              "animName": "Skill_End",
+              "loop": 0,
+              "speed": 1.0,
+              "ignoreMissing": 0
+            }
+          ],
+          "_spineSkins": [],
+          "_mixSettings": [],
+          "_spineScale": 1.0,
+          "_enableShowDamageFlash": 1,
+          "_cacheBoundsCenter": 1,
+          "_resetSkinToInitial": 0,
+          "_faceSwitcher": {
+            "m_FileID": 0,
+            "m_PathID": "4815011777295558107"
+          },
+          "_front": {
+            "skeleton": {
+              "m_FileID": 0,
+              "m_PathID": "-9003565494592002597"
+            },
+            "muzzlaTransform": {
+              "m_FileID": 0,
+              "m_PathID": "-7971909566121040421"
+            },
+            "hitTransform": {
+              "m_FileID": 0,
+              "m_PathID": "-6531203721901103653"
+            },
+            "headTransform": {
+              "m_FileID": 0,
+              "m_PathID": "3936896434178172379"
+            },
+            "shadowTransform": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint0": {
+              "m_FileID": 0,
+              "m_PathID": "-3272197524466817573"
+            },
+            "specialPoint1": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint2": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint3": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint4": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint5": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint6": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint7": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint8": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint9": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint10": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint11": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint12": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint13": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint14": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint15": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            }
+          },
+          "_back": {
+            "skeleton": {
+              "m_FileID": 0,
+              "m_PathID": "-7764484637984610853"
+            },
+            "muzzlaTransform": {
+              "m_FileID": 0,
+              "m_PathID": "-7830735119683541541"
+            },
+            "hitTransform": {
+              "m_FileID": 0,
+              "m_PathID": "-3580177050629626405"
+            },
+            "headTransform": {
+              "m_FileID": 0,
+              "m_PathID": "3936896434178172379"
+            },
+            "shadowTransform": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint0": {
+              "m_FileID": 0,
+              "m_PathID": "1511294927251842523"
+            },
+            "specialPoint1": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint2": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint3": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint4": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint5": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint6": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint7": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint8": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint9": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint10": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint11": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint12": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint13": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint14": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint15": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            }
+          },
+          "_useNewSpineFormat": 0
+        }
+      }
+    ]
+  },
+  "models": {
+    "char_197_poca": {
+      "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+      "Front": {
+        "path": "spine/char_197_poca/char_197_poca/Front/char_197_poca.skel",
+        "sha256": "de7c35eeb2761afd816147e4dd218159bca2c16b9095109ac2795acaa7725c7d",
+        "bytes": 145012,
+        "durations": {
+          "Attack": 2.667,
+          "Default": 0,
+          "Die": 1,
+          "Idle": 3,
+          "Skill_Begin": 0.767,
+          "Skill_End": 0.933,
+          "Skill_Loop": 0.667,
+          "Start": 1
+        },
+        "hits": {
+          "Attack": [
+            0.533
+          ],
+          "Skill_Begin": [
+            0.567
+          ]
+        }
+      },
+      "Back": {
+        "path": "spine/char_197_poca/char_197_poca/Back/char_197_poca.skel",
+        "sha256": "c4a365470f1078cab7807dc4229fa1e53315165b4678a703d30d84a9675078f1",
+        "bytes": 74931,
+        "durations": {
+          "Attack": 2.667,
+          "Default": 0,
+          "Idle": 3,
+          "Skill_Begin": 0.767,
+          "Skill_End": 0.933,
+          "Skill_Loop": 0.667,
+          "Start": 1
+        },
+        "hits": {
+          "Attack": [
+            0.533
+          ],
+          "Skill_Begin": [
+            0.567
+          ]
+        }
+      }
+    }
+  },
+  "officialSkeletonBindings": {
+    "char_197_poca": {
+      "Front": {
+        "animatorPathId": "-7449979248396392997",
+        "skeletonAnimationPathId": "-9003565494592002597",
+        "skeletonDataAssetPathId": "-8208769884768453035",
+        "textAssetPathId": "5375427072314513490",
+        "sha256": "de7c35eeb2761afd816147e4dd218159bca2c16b9095109ac2795acaa7725c7d",
+        "byteLength": 145012,
+        "originalPath": "spine/char_197_poca/char_197_poca/Front/char_197_poca.skel"
+      },
+      "Back": {
+        "animatorPathId": "-7449979248396392997",
+        "skeletonAnimationPathId": "-7764484637984610853",
+        "skeletonDataAssetPathId": "-5825700617409145857",
+        "textAssetPathId": "-3874316810572496243",
+        "sha256": "c4a365470f1078cab7807dc4229fa1e53315165b4678a703d30d84a9675078f1",
+        "byteLength": 74931,
+        "originalPath": "spine/char_197_poca/char_197_poca/Back/char_197_poca.skel"
+      }
+    }
+  },
+  "templates": {
+    "poca_t_1": {
+      "templateKey": "poca_t_1",
+      "effectKey": "",
+      "onEventPriority": "DEFAULT",
+      "eventToActions": {
+        "ON_CALCULATE_DAMAGE": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+FilterByTargetMassLevel, Assembly-CSharp",
+            "_target": "TARGET",
+            "_condType": "GE"
+          },
+          {
+            "$type": "Torappu.Battle.Action.Nodes+CreateBuff, Assembly-CSharp",
+            "_buff": {
+              "attributes": {
+                "abnormalFlags": [],
+                "abnormalImmunes": [],
+                "abnormalAntis": null,
+                "abnormalCombos": [],
+                "abnormalComboImmunes": [],
+                "attributeModifiers": [
+                  {
+                    "attributeType": "DEF_PENETRATE",
+                    "formulaItem": "ADDITION",
+                    "value": 0.0,
+                    "loadFromBlackboard": true,
+                    "fetchBaseValueFromSourceEntity": false
+                  }
+                ]
+              },
+              "buffKey": "poca_t[core]",
+              "loadFromDB": false,
+              "isDurableBuff": false,
+              "isDamageMissable": false,
+              "isSilenceable": false,
+              "isStunnable": false,
+              "isFreezable": false,
+              "isLevitatable": false,
+              "statusResistable": "AUTOMATIC",
+              "templateKey": "empty",
+              "disableOverride": false,
+              "overrideKey": null,
+              "overrideType": "DEFAULT",
+              "maxStackCnt": 1,
+              "refreshRemainingTimeWhenStackMax": false,
+              "clearAllStackCntWhenTimeUp": false,
+              "maxValidStackCnt": -1,
+              "independentCharacterSource": false,
+              "overrideEffectKey": null,
+              "overrideOnEventPriority": false,
+              "onEventPriority": "DEFAULT",
+              "audioSignal": null,
+              "lifeTimeType": "INFINITY",
+              "takeSnapshotWhenExtend": false,
+              "durationKey": null,
+              "lifeTime": 0.0,
+              "triggerLifeType": "IMMEDIATELY",
+              "triggerCnt": 0,
+              "triggerInterval": -1.0,
+              "waitFirstTriggerInterval": true,
+              "firstTriggerInterval": -1.0,
+              "priority": -1,
+              "priorityBBKeys": [],
+              "stripBlackboardParamsWithBuffKey": false,
+              "blackboard": []
+            },
+            "_buffOwner": "BUFF_OWNER",
+            "_isDerivedBuff": false,
+            "_finishDerivedBuffIfParentFinish": false
+          }
+        ],
+        "ON_AFTER_OUTPUT_DAMAGE": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+FinishBuffsById, Assembly-CSharp",
+            "_buffKey": "poca_t[core]",
+            "_loadFromBlackboard": false,
+            "_decCntIfStack": false,
+            "_updateOverrideMap": true,
+            "_targetType": "BUFF_OWNER",
+            "_checkBuffSource": false,
+            "_sourceType": "BUFF_SOURCE",
+            "_alsoClearNullSource": false,
+            "_finishHostBuff": false
+          }
+        ],
+        "ON_BUFF_FINISH": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+FinishBuffsById, Assembly-CSharp",
+            "_buffKey": "poca_t[core]",
+            "_loadFromBlackboard": false,
+            "_decCntIfStack": false,
+            "_updateOverrideMap": true,
+            "_targetType": "BUFF_OWNER",
+            "_checkBuffSource": false,
+            "_sourceType": "BUFF_SOURCE",
+            "_alsoClearNullSource": false,
+            "_finishHostBuff": false
+          }
+        ]
+      }
+    }
+  },
+  "tableContracts": {
+    "char_197_poca": {
+      "teamId": "student",
+      "skillTableIds": [
+        "skcom_atk_up[3]",
+        "skchr_poca_2",
+        "skchr_poca_3"
+      ],
+      "skills": {
+        "skcom_atk_up[3]": {
+          "skillId": "skcom_atk_up[3]",
+          "iconId": null,
+          "hidden": false,
+          "levels": [
+            {
+              "name": "ATK Up \u03b3",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 40,
+                "initSp": 0,
+                "increment": 1.0
+              },
+              "prefabId": "skcom_atk_up",
+              "duration": 30.0,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.3,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "ATK Up \u03b3",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 40,
+                "initSp": 0,
+                "increment": 1.0
+              },
+              "prefabId": "skcom_atk_up",
+              "duration": 30.0,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.35,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "ATK Up \u03b3",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 40,
+                "initSp": 0,
+                "increment": 1.0
+              },
+              "prefabId": "skcom_atk_up",
+              "duration": 30.0,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.4,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "ATK Up \u03b3",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 37,
+                "initSp": 5,
+                "increment": 1.0
+              },
+              "prefabId": "skcom_atk_up",
+              "duration": 30.0,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.45,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "ATK Up \u03b3",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 37,
+                "initSp": 5,
+                "increment": 1.0
+              },
+              "prefabId": "skcom_atk_up",
+              "duration": 30.0,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.5,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "ATK Up \u03b3",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 37,
+                "initSp": 5,
+                "increment": 1.0
+              },
+              "prefabId": "skcom_atk_up",
+              "duration": 30.0,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.55,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "ATK Up \u03b3",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 35,
+                "initSp": 10,
+                "increment": 1.0
+              },
+              "prefabId": "skcom_atk_up",
+              "duration": 30.0,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.6,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "ATK Up \u03b3",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 34,
+                "initSp": 10,
+                "increment": 1.0
+              },
+              "prefabId": "skcom_atk_up",
+              "duration": 30.0,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.75,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "ATK Up \u03b3",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 33,
+                "initSp": 10,
+                "increment": 1.0
+              },
+              "prefabId": "skcom_atk_up",
+              "duration": 30.0,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.9,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "ATK Up \u03b3",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 30,
+                "initSp": 15,
+                "increment": 1.0
+              },
+              "prefabId": "skcom_atk_up",
+              "duration": 30.0,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 1.0,
+                  "valueStr": null
+                }
+              ]
+            }
+          ]
+        },
+        "skchr_poca_2": {
+          "skillId": "skchr_poca_2",
+          "iconId": null,
+          "hidden": false,
+          "levels": [
+            {
+              "name": "Split Shot",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>, and attacks hit <@ba.vup>one</> additional enemy",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 80,
+                "initSp": 39,
+                "increment": 1.0
+              },
+              "prefabId": "skchr_poca_2",
+              "duration": 60.0,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_target",
+                  "value": 2.0,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Split Shot",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>, and attacks hit <@ba.vup>one</> additional enemy",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 80,
+                "initSp": 40,
+                "increment": 1.0
+              },
+              "prefabId": "skchr_poca_2",
+              "duration": 60.0,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.35,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_target",
+                  "value": 2.0,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Split Shot",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>, and attacks hit <@ba.vup>one</> additional enemy",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 80,
+                "initSp": 41,
+                "increment": 1.0
+              },
+              "prefabId": "skchr_poca_2",
+              "duration": 60.0,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_target",
+                  "value": 2.0,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Split Shot",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>, and attacks hit <@ba.vup>one</> additional enemy",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 80,
+                "initSp": 42,
+                "increment": 1.0
+              },
+              "prefabId": "skchr_poca_2",
+              "duration": 60.0,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.45,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_target",
+                  "value": 2.0,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Split Shot",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>, and attacks hit <@ba.vup>one</> additional enemy",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 80,
+                "initSp": 43,
+                "increment": 1.0
+              },
+              "prefabId": "skchr_poca_2",
+              "duration": 60.0,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_target",
+                  "value": 2.0,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Split Shot",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>, and attacks hit <@ba.vup>one</> additional enemy",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 80,
+                "initSp": 44,
+                "increment": 1.0
+              },
+              "prefabId": "skchr_poca_2",
+              "duration": 60.0,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.55,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_target",
+                  "value": 2.0,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Split Shot",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>, and attacks hit <@ba.vup>one</> additional enemy",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 80,
+                "initSp": 45,
+                "increment": 1.0
+              },
+              "prefabId": "skchr_poca_2",
+              "duration": 60.0,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_target",
+                  "value": 2.0,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Split Shot",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>, and attacks hit <@ba.vup>one</> additional enemy",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 75,
+                "initSp": 45,
+                "increment": 1.0
+              },
+              "prefabId": "skchr_poca_2",
+              "duration": 60.0,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.7,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_target",
+                  "value": 2.0,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Split Shot",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>, and attacks hit <@ba.vup>one</> additional enemy",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 70,
+                "initSp": 45,
+                "increment": 1.0
+              },
+              "prefabId": "skchr_poca_2",
+              "duration": 60.0,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.8,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_target",
+                  "value": 2.0,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Split Shot",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>, and attacks hit <@ba.vup>one</> additional enemy",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 65,
+                "initSp": 45,
+                "increment": 1.0
+              },
+              "prefabId": "skchr_poca_2",
+              "duration": 60.0,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.9,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_target",
+                  "value": 2.0,
+                  "valueStr": null
+                }
+              ]
+            }
+          ]
+        },
+        "skchr_poca_3": {
+          "skillId": "skchr_poca_3",
+          "iconId": null,
+          "hidden": false,
+          "levels": [
+            {
+              "name": "Avalanche Breaker",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>. Immediately fires harpoons at the <@ba.vup>{max_target}</> heaviest enemies within range, <$ba.root><@ba.vup>Binding</></> them and attacking them once every second for the duration of this skill",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 40,
+                "initSp": 10,
+                "increment": 1.0
+              },
+              "prefabId": "skchr_poca_3",
+              "duration": 6.0,
+              "blackboard": [
+                {
+                  "key": "max_target",
+                  "value": 3.0,
+                  "valueStr": null
+                },
+                {
+                  "key": "hit_interval",
+                  "value": 1.0,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "hit_duration",
+                  "value": 6.0,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Avalanche Breaker",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>. Immediately fires harpoons at the <@ba.vup>{max_target}</> heaviest enemies within range, <$ba.root><@ba.vup>Binding</></> them and attacking them once every second for the duration of this skill",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 39,
+                "initSp": 10,
+                "increment": 1.0
+              },
+              "prefabId": "skchr_poca_3",
+              "duration": 6.0,
+              "blackboard": [
+                {
+                  "key": "max_target",
+                  "value": 3.0,
+                  "valueStr": null
+                },
+                {
+                  "key": "hit_interval",
+                  "value": 1.0,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "hit_duration",
+                  "value": 6.0,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Avalanche Breaker",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>. Immediately fires harpoons at the <@ba.vup>{max_target}</> heaviest enemies within range, <$ba.root><@ba.vup>Binding</></> them and attacking them once every second for the duration of this skill",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 38,
+                "initSp": 10,
+                "increment": 1.0
+              },
+              "prefabId": "skchr_poca_3",
+              "duration": 6.0,
+              "blackboard": [
+                {
+                  "key": "max_target",
+                  "value": 3.0,
+                  "valueStr": null
+                },
+                {
+                  "key": "hit_interval",
+                  "value": 1.0,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "hit_duration",
+                  "value": 6.0,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Avalanche Breaker",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>. Immediately fires harpoons at the <@ba.vup>{max_target}</> heaviest enemies within range, <$ba.root><@ba.vup>Binding</></> them and attacking them once every second for the duration of this skill",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 37,
+                "initSp": 11,
+                "increment": 1.0
+              },
+              "prefabId": "skchr_poca_3",
+              "duration": 6.0,
+              "blackboard": [
+                {
+                  "key": "max_target",
+                  "value": 3.0,
+                  "valueStr": null
+                },
+                {
+                  "key": "hit_interval",
+                  "value": 1.0,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "hit_duration",
+                  "value": 6.0,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Avalanche Breaker",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>. Immediately fires harpoons at the <@ba.vup>{max_target}</> heaviest enemies within range, <$ba.root><@ba.vup>Binding</></> them and attacking them once every second for the duration of this skill",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 36,
+                "initSp": 11,
+                "increment": 1.0
+              },
+              "prefabId": "skchr_poca_3",
+              "duration": 6.0,
+              "blackboard": [
+                {
+                  "key": "max_target",
+                  "value": 3.0,
+                  "valueStr": null
+                },
+                {
+                  "key": "hit_interval",
+                  "value": 1.0,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "hit_duration",
+                  "value": 6.0,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Avalanche Breaker",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>. Immediately fires harpoons at the <@ba.vup>{max_target}</> heaviest enemies within range, <$ba.root><@ba.vup>Binding</></> them and attacking them once every second for the duration of this skill",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 35,
+                "initSp": 11,
+                "increment": 1.0
+              },
+              "prefabId": "skchr_poca_3",
+              "duration": 6.0,
+              "blackboard": [
+                {
+                  "key": "max_target",
+                  "value": 3.0,
+                  "valueStr": null
+                },
+                {
+                  "key": "hit_interval",
+                  "value": 1.0,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "hit_duration",
+                  "value": 6.0,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Avalanche Breaker",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>. Immediately fires harpoons at the <@ba.vup>{max_target}</> heaviest enemies within range, <$ba.root><@ba.vup>Binding</></> them and attacking them once every second for the duration of this skill",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 34,
+                "initSp": 12,
+                "increment": 1.0
+              },
+              "prefabId": "skchr_poca_3",
+              "duration": 7.0,
+              "blackboard": [
+                {
+                  "key": "max_target",
+                  "value": 3.0,
+                  "valueStr": null
+                },
+                {
+                  "key": "hit_interval",
+                  "value": 1.0,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "hit_duration",
+                  "value": 7.0,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Avalanche Breaker",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>. Immediately fires harpoons at the <@ba.vup>{max_target}</> heaviest enemies within range, <$ba.root><@ba.vup>Binding</></> them and attacking them once every second for the duration of this skill",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 33,
+                "initSp": 13,
+                "increment": 1.0
+              },
+              "prefabId": "skchr_poca_3",
+              "duration": 7.0,
+              "blackboard": [
+                {
+                  "key": "max_target",
+                  "value": 3.0,
+                  "valueStr": null
+                },
+                {
+                  "key": "hit_interval",
+                  "value": 1.0,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.15,
+                  "valueStr": null
+                },
+                {
+                  "key": "hit_duration",
+                  "value": 7.0,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Avalanche Breaker",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>. Immediately fires harpoons at the <@ba.vup>{max_target}</> heaviest enemies within range, <$ba.root><@ba.vup>Binding</></> them and attacking them once every second for the duration of this skill",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 32,
+                "initSp": 14,
+                "increment": 1.0
+              },
+              "prefabId": "skchr_poca_3",
+              "duration": 7.0,
+              "blackboard": [
+                {
+                  "key": "max_target",
+                  "value": 4.0,
+                  "valueStr": null
+                },
+                {
+                  "key": "hit_interval",
+                  "value": 1.0,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "hit_duration",
+                  "value": 7.0,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Avalanche Breaker",
+              "rangeId": null,
+              "description": "ATK <@ba.vup>+{atk:0%}</>. Immediately fires harpoons at the <@ba.vup>{max_target}</> heaviest enemies within range, <$ba.root><@ba.vup>Binding</></> them and attacking them once every second for the duration of this skill",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 30,
+                "initSp": 15,
+                "increment": 1.0
+              },
+              "prefabId": "skchr_poca_3",
+              "duration": 8.0,
+              "blackboard": [
+                {
+                  "key": "max_target",
+                  "value": 4.0,
+                  "valueStr": null
+                },
+                {
+                  "key": "hit_interval",
+                  "value": 1.0,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "hit_duration",
+                  "value": 8.0,
+                  "valueStr": null
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "talents": [
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Bone Piercer",
+              "description": "When attacking a heavy enemy, ignores 40% of its DEF (enemies with 3 weight or higher count for this effect)",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "value",
+                  "value": 3.0,
+                  "valueStr": null
+                },
+                {
+                  "key": "def_penetrate",
+                  "value": 0.4,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Bone Piercer",
+              "description": "When attacking a heavy enemy, ignores 60% of its DEF (enemies with 3 weight or higher count for this effect)",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "value",
+                  "value": 3.0,
+                  "valueStr": null
+                },
+                {
+                  "key": "def_penetrate",
+                  "value": 0.6,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            }
+          ]
+        },
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "2",
+              "name": "Ideal Student",
+              "description": "When this unit is in the squad, all [Ursus Student Self-Governing Group] Operators gain +8% ATK",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.08,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 4,
+              "prefabKey": "2",
+              "name": "Ideal Student",
+              "description": "When this unit is in the squad, all [Ursus Student Self-Governing Group] Operators gain +10% ATK <@ba.talpu>(+2%)</>",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.1,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            }
+          ]
+        }
+      ],
+      "phases": [
+        {
+          "characterPrefabKey": "char_197_poca",
+          "rangeId": "4-4",
+          "maxLevel": 50,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 800,
+                "atk": 492,
+                "def": 60,
+                "magicResistance": 0.0,
+                "cost": 22,
+                "blockCnt": 1,
+                "moveSpeed": 1.0,
+                "attackSpeed": 100.0,
+                "baseAttackTime": 2.4,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0.0,
+                "spRecoveryPerSec": 1.0,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 50,
+              "data": {
+                "maxHp": 1067,
+                "atk": 684,
+                "def": 80,
+                "magicResistance": 0.0,
+                "cost": 22,
+                "blockCnt": 1,
+                "moveSpeed": 1.0,
+                "attackSpeed": 100.0,
+                "baseAttackTime": 2.4,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0.0,
+                "spRecoveryPerSec": 1.0,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "evolveCost": null
+        },
+        {
+          "characterPrefabKey": "char_197_poca",
+          "rangeId": "4-3",
+          "maxLevel": 80,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 1067,
+                "atk": 684,
+                "def": 80,
+                "magicResistance": 0.0,
+                "cost": 24,
+                "blockCnt": 1,
+                "moveSpeed": 1.0,
+                "attackSpeed": 100.0,
+                "baseAttackTime": 2.4,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0.0,
+                "spRecoveryPerSec": 1.0,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 80,
+              "data": {
+                "maxHp": 1351,
+                "atk": 856,
+                "def": 100,
+                "magicResistance": 0.0,
+                "cost": 24,
+                "blockCnt": 1,
+                "moveSpeed": 1.0,
+                "attackSpeed": 100.0,
+                "baseAttackTime": 2.4,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0.0,
+                "spRecoveryPerSec": 1.0,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "evolveCost": [
+            {
+              "id": "3241",
+              "count": 5,
+              "type": "MATERIAL"
+            },
+            {
+              "id": "30022",
+              "count": 8,
+              "type": "MATERIAL"
+            },
+            {
+              "id": "30032",
+              "count": 5,
+              "type": "MATERIAL"
+            }
+          ]
+        },
+        {
+          "characterPrefabKey": "char_197_poca",
+          "rangeId": "4-3",
+          "maxLevel": 90,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 1351,
+                "atk": 856,
+                "def": 100,
+                "magicResistance": 0.0,
+                "cost": 24,
+                "blockCnt": 1,
+                "moveSpeed": 1.0,
+                "attackSpeed": 100.0,
+                "baseAttackTime": 2.4,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0.0,
+                "spRecoveryPerSec": 1.0,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 90,
+              "data": {
+                "maxHp": 1755,
+                "atk": 1032,
+                "def": 122,
+                "magicResistance": 0.0,
+                "cost": 24,
+                "blockCnt": 1,
+                "moveSpeed": 1.0,
+                "attackSpeed": 100.0,
+                "baseAttackTime": 2.4,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0.0,
+                "spRecoveryPerSec": 1.0,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "evolveCost": [
+            {
+              "id": "3243",
+              "count": 4,
+              "type": "MATERIAL"
+            },
+            {
+              "id": "30125",
+              "count": 4,
+              "type": "MATERIAL"
+            },
+            {
+              "id": "30064",
+              "count": 6,
+              "type": "MATERIAL"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "runtimeMapping": {
+    "normalRelease": 0.533,
+    "normalSpeed": 15,
+    "normalLifetime": 10,
+    "normalAttackType": "NORMAL/RANGED",
+    "selectorPostFilter": 27,
+    "selectorMeaning": "Global trait establishes highest weight first; native numeric dispatcher is not recovered.",
+    "s3PreDelay": 0.5659999847412109,
+    "s3LinkSpeed": 10,
+    "s3Pulse": "Selected hit_interval once per second, immediate first impact, retained sole victim.",
+    "s3Duration": "Selected hit_duration from impact per link, then source .933 full Skill_End after every link expires, dies or fizzles.",
+    "s3Bind": "Source infinity active bind remains owned by its link, with detachAllBuffsWhenStopped1.",
+    "squadTalent": "Native predeck category1023/filterTag student, no excludeNotInHand or excludeOwner; strongest named ATK percentage composes with ordinary percentage bucket."
+  },
+  "limitations": [
+    "Native C# timing/blackboard loader and frame playback are unrecovered. The selected S3 description/blackboard bridge linkDuration10 and keepAlreadyHitTime1 to rank hit_duration6-8/hit_interval1; native first pulse, per-flight start and full-end ordering remain explicit interpretations.",
+    "S3 waitProjectileInvalid1 and minPostDelay .933 are represented by waiting for each actual flight/link followed by the original full .933 Skill_End. Native escapeTime/duration clock ordering is not recovered; no premature SP is accepted in this bounded cast window.",
+    "Born unmanaged links retain their original victim across temporary disappearance, skip unavailable hit receipts, and expire on the original bounded timer. They do not retarget. Source link _isSilenceable1 and native dummy attachment/ATK inheritance are unrecovered; current source ATK is used because useCachedAtkOnly0 does not establish a captured ATK. No retained skill-ATK snapshot after withdrawal is claimed.",
+    "Native predeck priority, support duplicate resolution and modifier ordering are unrecovered; named strongest talent and an idempotent additive ATK contribution preserve selected faction, promotion and potential semantics.",
+    "Source current mass threshold is evaluated per hit with a temporary source/victim/attackId DEF-ignore hook. The exact native dynamic buff cloning/removal order remains unrecovered.",
+    "Visual generic arrows and original literal form clips do not reproduce Unity trail/particle/link FX or native animation mixing."
+  ]
+}

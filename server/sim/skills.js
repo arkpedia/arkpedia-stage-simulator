@@ -36,7 +36,8 @@
 //   mods, flags, targeting {maxTargets, rangeGrid, priority, allInRange, rangeExtend, noRangeExtend (the range ignores
 //   the unit's 攻击距离), showOwnRange (rangeGrid only selects targets: the detail card keeps the unit's own range)},
 //   attack {dmgType, atkScale, splashRadius, splashScale, hits, projectile, maxTargets, dmgMul, onHit, heal…},
-//   heal (bool: heal-type skill for the trigger rule), onStart(ctx), onEnd(ctx), onHit(ctx), onAttack(ctx), onTick(ctx).
+//   heal (bool: heal-type skill for the trigger rule), canActivate() (temporary cast eligibility),
+//   isExhausted() (no uses remain), onStart(ctx), onEnd(ctx), onHit(ctx), onAttack(ctx), onTick(ctx).
 // ctx passed to spec callbacks: { battle, unit, skill, bb, target?, dealt?, targets?, dt?, reason? }; onAttack's ctx
 //   also carries `noAmmo` (set it to true: this attack spends no ammo). onEnd runs while the skill's mods / range are
 //   still applied (`active` is already false); they are removed right after it (unless onEnd re-activated the skill).
@@ -157,7 +158,12 @@ export class SkillRuntime {
     if (this.unit) this._normalize();
   }
 
-  get ready() { return !this.noSkill && this.kind !== 'passive' && this.charges >= 1; }
+  get remainingUses() { return typeof this.spec.remainingUses === 'function' ? this.spec.remainingUses() : null; }
+  get exhausted() { return typeof this.spec.isExhausted === 'function' && !!this.spec.isExhausted(); }
+  // A target condition can prevent a cast without consuming SP or hiding the
+  // full-SP ready indicator. Battle-wide use limits are distinct exhaustion.
+  get castEligible() { return !this.exhausted && (typeof this.spec.canActivate !== 'function' || !!this.spec.canActivate()); }
+  get ready() { return !this.noSkill && !this.exhausted && this.kind !== 'passive' && this.charges >= 1; }
 
   get isTimed() { return this.kind === 'duration' || this.kind === 'ammo' || this.kind === 'toggle'; }
 
@@ -400,6 +406,12 @@ export class SkillRuntime {
   _defaultCondition() {
     const b = this.battle;
     const u = this.unit;
+    // Explicit source selectors may include targets that need no HP healing
+    // (for example, elemental injury). Other kits retain the legacy condition.
+    if (typeof this.spec.defaultCondition === 'function') {
+      const result = this.spec.defaultCondition(b, u);
+      if (typeof result === 'boolean') return result;
+    }
     if (b.rangeChanged(u)) b._refreshRange(u);
     const keys = u.baseRangeKeys || u.rangeKeys;
     if (keys) {
@@ -434,7 +446,7 @@ export class SkillRuntime {
 
   /** Activate now (consumes one charge). Returns true on success. */
   activate(reason = 'manual', { free = false } = {}) {
-    if (this.noSkill || this.kind === 'passive') return false;
+    if (this.noSkill || !this.castEligible || this.kind === 'passive') return false;
     if (!free && !this.ready) return false;
     if (this.active && this.isTimed) return false;
     const u = this.unit;
@@ -482,6 +494,12 @@ export class SkillRuntime {
     // AK: attacks made by the skill (the "next attack" of an instant/charge skill, every attack of a running timed
     // skill — including the one that ends it) never recover attack-type SP ⇒ a cost-N skill fires every N+1 attacks.
     const skillAttack = this.active && (this.isTimed || (!!usedOverride && this.pending));
+    if (this.active && this.kind === 'ammo' && !noAmmo && b._hooks.beforeAmmoUse) {
+      const ctx = { unit: this.unit, skill: this, spareShotProb: 0 };
+      b.emit('beforeAmmoUse', ctx);
+      // Highest source chance wins; an already free extra shot draws no RNG.
+      if (ctx.spareShotProb > 0 && b.rng() < Math.min(1, ctx.spareShotProb)) noAmmo = true;
+    }
     if (this.active && typeof this.spec.onAttack === 'function') {
       const fn = this.spec.onAttack;
       const ctx = this._ctx({ targets, noAmmo: !!noAmmo });

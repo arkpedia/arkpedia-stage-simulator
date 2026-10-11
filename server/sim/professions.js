@@ -414,6 +414,8 @@ export const SUB = Object.freeze({
   fastshot: P({ priority: 'fly', dmgMul: (b, u, t) => (t.isFlying ? (u.profile.flyScale ?? 1) : 1) }),
   closerange: P({}),
   longrange: P({ priority: 'lowDef' }),
+  // Besiegers use the client selector's weight-first ordering (Totter postFilter 27).
+  siegesniper: P({ priority: 'heaviest' }),
   aoesniper: P({ splashRadius: 1.1, projectile: 'bomb' }),
   // PRTS 溅射半径一览 (特性): 投掷手 0.9, 扩散术师 1.1 (格雷伊 1.0, TUNE below), 链术师 1.7 jumps; 炮手 1.0 (none in the pool)
   bombarder: P({ splashRadius: 0.9, projectile: 'bomb', groundOnly: true, canHitFly: false,

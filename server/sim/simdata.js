@@ -177,6 +177,7 @@ export function normalizeChess(rec) {
     subProf: rec.subProfessionId ?? rec.subProfession ?? rec.subProf ?? null,
     position: String(rec.position ?? 'MELEE').toUpperCase(),
     bonds: [...(rec.bondIds ?? rec.bonds ?? [])],
+    tags: Array.isArray(rec.tags) ? rec.tags.filter(tag => typeof tag === 'string' && tag) : [],
     stats: normStats(rec.stats),
     rangeGrid: toArrayOfPairs(rec.rangeGrid ?? rec.range?.grid) ?? [[0, 0], [0, 1]],
     dmgType: rec.dmgType ? normDmgType(rec.dmgType) : null,

@@ -1,11 +1,11 @@
 // server/sim/units.js — Unit model (operators, tokens, enemies, devices) and stat aggregation (DESIGN §5.2).
 //
 // Aggregation (recomputed lazily whenever buffs change — `unit.markDirty()`):
-//   ATK/DEF/maxHp = (base + Σflat) × (1 + Σpct) × Πmul
-//   res           = clamp((base + Σflat) × Πmul, 0, 100)
+//   ATK/DEF/maxHp = (base + Σflat) × (1 + Σpct) × Πmul + final additions
+//   res           = clamp((base + Σflat) × (1 + Σpct) × Πmul, 0, 100)
 //   aspd          = clamp(base + Σaspd, 20, 600)          (base is 100 for almost everyone; floor 20 = PRTS 数值范围)
-//   interval      = bat × (1 + ΣbatPct) × 100 / aspd      (ΣbatPct floored at −0.9)
-//   moveSpeed     = (base + ΣmoveFlat) × ΠmoveMul          (tiles/s = moveSpeed × MOVE_SCALE)
+//   interval      = (bat + ΣbatFlat) × (1 + ΣbatPct) × ΠbatMul × 100 / aspd      (ΣbatPct floored at −0.9)
+//   moveSpeed     = (base + ΣmoveFlat) × max(0, 1 + ΣmovePct) × ΠmoveMul (tiles/s = moveSpeed × MOVE_SCALE)
 //   massLevel     = max(0, base + ΣmassFlat)                (重量: displacement, 浮空 halving; 失重 = massFlat −1)
 // Changing maxHp keeps the HP ratio. The sim keeps floats; rounding happens only in snapshots.
 
@@ -70,6 +70,7 @@ export class Unit {
     this.kit = null;
     this.atkCd = 0;
     this.lastAttackAt = -Infinity;
+    this.attackControlEpoch = 0; // accepted action-stopping effects, including those expiring between ticks
     this.lastHitAt = -Infinity;
     this.deployedAt = -Infinity;
     this.deathAt = -Infinity;
@@ -117,18 +118,20 @@ export class Unit {
     const m = (k) => mul[k] ?? 1;
     const b = this.base;
     const bHp = fin(b.maxHp, 1) > 0 ? fin(b.maxHp, 1) : 1;
-    const maxHp = Math.max(1, fin((bHp + a('hpFlat')) * Math.max(0, 1 + a('hpPct')) * m('hpMul'), bHp));
-    const atk = Math.max(0, fin((b.atk + a('atkFlat')) * Math.max(0, 1 + a('atkPct')) * m('atkMul'), fin(b.atk, 0)));
-    const def = Math.max(0, fin((b.def + a('defFlat')) * Math.max(0, 1 + a('defPct')) * m('defMul'), fin(b.def, 0)));
-    const res = clamp(fin((b.res + a('resFlat')) * m('resMul'), fin(b.res, 0)), 0, 100);
+    const maxHp = Math.max(1, fin((bHp + a('hpFlat')) * Math.max(0, 1 + a('hpPct')) * m('hpMul') + a('hpFinalFlat'), bHp));
+    const atk = Math.max(0, fin((b.atk + a('atkFlat')) * Math.max(0, 1 + a('atkPct')) * m('atkMul') + a('atkFinalFlat'), fin(b.atk, 0)));
+    const def = Math.max(0, fin((b.def + a('defFlat')) * Math.max(0, 1 + a('defPct')) * m('defMul') + a('defFinalFlat'), fin(b.def, 0)));
+    const res = clamp(fin((b.res + a('resFlat')) * Math.max(0, 1 + a('resPct')) * m('resMul'), fin(b.res, 0)), 0, 100);
     const aspd = clamp(fin(b.aspd + a('aspd'), 100), ASPD_MIN, ASPD_MAX);
     const bBat = fin(b.bat, 1) > 0 ? fin(b.bat, 1) : 1;
-    const bat = fin(bBat * Math.max(0.1, 1 + a('batPct')), bBat);
+    // Source FINAL_SCALER attack-time modifiers apply after additive/percentage
+    // attack-time changes (Jackie S2 and Purestream S2), before ASPD.
+    const bat = fin(Math.max(.001, bBat + a('batFlat')) * Math.max(0.1, 1 + a('batPct')) * m('batMul'), bBat);
     const s = {
       maxHp, atk, def, res, aspd, bat,
       interval: (bat * 100) / aspd,
-      blockCnt: Math.max(0, fin(Math.round(b.blockCnt + a('blockCnt')), 0)),
-      moveSpeed: Math.max(0, fin((b.moveSpeed + a('moveFlat')) * m('moveMul'), fin(b.moveSpeed, 0))),
+      blockCnt: Math.max(0, fin(Math.round((b.blockCnt + a('blockCnt')) * m('blockCntMul')), 0)),
+      moveSpeed: Math.max(0, fin((b.moveSpeed + a('moveFlat')) * Math.max(0, 1 + a('movePct')) * m('moveMul'), fin(b.moveSpeed, 0))),
       rangeExtend: Math.max(0, Math.round(a('rangeExtend'))),
       baseRangeExtend: Math.max(0, fin(Math.round(permRangeExtend), 0)),   // permanent part (initial range)
       massLevel: Math.max(0, fin(fin(b.massLevel, 0) + a('massFlat'), 0)),
@@ -137,6 +140,8 @@ export class Unit {
       taunt: (Number.isFinite(b.tauntLevel) ? b.tauntLevel : 0) + a('taunt') + (flags.taunt === true ? 1 : 0),
       dodgePhys: clamp(a('dodgePhys'), 0, 1),
       dodgeArts: clamp(a('dodgeArts'), 0, 1),
+      hitRatePhys: clamp(1 + a('hitRatePhys'), 0, 1),
+      hitRateArts: clamp(1 + a('hitRateArts'), 0, 1),
       defIgnoreFlat: a('defIgnoreFlat'),
       defIgnorePct: clamp(a('defIgnorePct'), 0, 1),
       resIgnoreFlat: a('resIgnoreFlat'),
@@ -145,6 +150,8 @@ export class Unit {
       physDealtMul: m('physDealtMul'),
       artsDealtMul: m('artsDealtMul'),
       dmgTakenMul: m('dmgTakenMul'),
+      flatDamageResistance: Math.max(0, a('flatDamageResistance')),
+      damageHpFloorRatio: clamp(a('damageHpFloorRatio'), 0, 1),
       physTakenMul: m('physTakenMul'),
       artsTakenMul: m('artsTakenMul'),
       trueTakenMul: m('trueTakenMul'),
@@ -156,7 +163,7 @@ export class Unit {
       spRecovery: Math.max(0, fin((b.spRecovery + a('spRecoveryFlat')) * m('spRecoveryMul'), 0)),
       spCostFlat: a('spCostFlat'),
       redeployMul: m('redeployMul'),
-      hpRegen: fin(b.hpRecoveryPerSec + a('hpRegen') + a('hpRegenRatio') * maxHp, 0),
+      hpRegen: fin((b.hpRecoveryPerSec + a('hpRegen') + a('hpRegenRatio') * maxHp) * m('hpRegenMul'), 0),
       shield,
       flags: flags || EMPTY,
     };

@@ -116,7 +116,7 @@ function inspire(battle, target, val, src, stat = 'atk') {
   const { add, mul } = aggregateMods(target.buffs.filter((b) => b.key !== key));
   const f = stat === 'hp' ? Math.max(0, 1 + (add.hpPct ?? 0)) * (mul.hpMul ?? 1) : Math.max(0, 1 + (add.atkPct ?? 0)) * (mul.atkMul ?? 1);
   const flat = f > 1e-6 ? val / f : val;
-  battle.addBuff(target, { key, mods: stat === 'hp' ? { hpFlat: flat } : { atkFlat: flat }, duration: AURA_DUR, source: src, visible: true, data: { src: src.id, val } });
+  battle.addBuff(target, { key, status: 'inspire', mods: stat === 'hp' ? { hpFlat: flat } : { atkFlat: flat }, duration: AURA_DUR, source: src, visible: true, data: { src: src.id, val } });
 }
 /** Reveal stealthed enemies on the given tiles. */
 /** RES cut mods for a blackboard magic_resistance value (battle.applyStrongest): |v| < 1 = ×(1 + v), else flat v. */

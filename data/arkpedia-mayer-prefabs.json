@@ -1,0 +1,5844 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "client": "Global Android",
+    "version": "26-09-23-17-49-43_b9cc4a",
+    "officialBase": "https://ark-us-static-online.yo-star.com/assetbundle/official/Android/assets/26-09-23-17-49-43_b9cc4a/",
+    "tableRepository": "Kengxxiao/ArknightsGameData_YoStar",
+    "tableCommit": "57010cb5b2afea112cae57daa756b58676ba6850",
+    "modelRepository": "fexli/ArknightsResource",
+    "modelCommit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+    "tables": {
+      "character_table.json": "cf86d1690bdae2bf02378081ef8ae61731da042902bb284d339b7c0d889e66a9",
+      "skill_table.json": "3f389ab49b038c3d701e059c2377a2b03e14276248c5ed42ebfc169578a4e809",
+      "range_table.json": "676cedce20d46f37c46e1099b2f94907d0c84ac62b674957355c245ce16f0856",
+      "buff_template_data.json": "79dce42d1ffa76196984b80678422e0323e406f6a044f1a25b1de75e0c5b9d27"
+    },
+    "bundles": [
+      {
+        "path": "charpack/char_242_otter.ab",
+        "size": 20210,
+        "md5": "3f0ef1cf58c46878840492dd53a2470d",
+        "sha256": "c9e433279baaebedb040f082f2f37cecc93a321e8d560e5570dd970a93ffa3b1"
+      },
+      {
+        "path": "battle/prefabs/[uc]skills.ab",
+        "size": 1163240,
+        "md5": "ff06dc9bb5516d069c8c0017207653ca",
+        "sha256": "1c026938f054218f7e6bda9000162b2a6f30c9bd93e1ae9763d9d6df2270499c"
+      },
+      {
+        "path": "battle/prefabs/[uc]projectiles.ab",
+        "size": 1605622,
+        "md5": "0b1d64a8aba25913161f5fd7174cab34",
+        "sha256": "3d68c63bf7a7d658e65035a9c71dfc9a00e4804563b922185499d108dfb7f639"
+      },
+      {
+        "path": "pkgrps/btl_pfb_tokens_0.ab",
+        "size": 5060143,
+        "md5": "5ab8526b9e59e97cc7e94ed6a248013d",
+        "sha256": "eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f"
+      },
+      {
+        "path": "chararts/char_242_otter.ab",
+        "md5": "6678f3e51835095e8a9c6d163b221161",
+        "size": 2007329,
+        "sha256": "c5680c1daacf568273e23e655edcccf5663a25ddb91a9790c466c1a2b5260760"
+      },
+      {
+        "path": "config/buff_template_holder.ab",
+        "size": 1667266,
+        "md5": "59813e1a533561f969f525a2846815e0",
+        "sha256": "e092efe8b6479546a0641449c1e2ef81ba51b8bac67f7a5d1bbf3c3bbdd817ce"
+      }
+    ]
+  },
+  "frameParity": false,
+  "enabledOperators": [
+    "char_242_otter"
+  ],
+  "moduleSupport": false,
+  "unityParticleSupport": false,
+  "characters": {
+    "char_242_otter": [
+      {
+        "object": "Shadow",
+        "pathId": "3218365140289747299",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-5107839476691011229"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-2368896203154538901"
+          },
+          "m_Name": "",
+          "_autoAttachToGround": 0,
+          "_attachOffset": 0.10000000149011612,
+          "_simplyUseTileHeight": 0,
+          "_enableAdvanced": 0,
+          "_alwaysUseSpineOffset": 0,
+          "_sprite": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_graphic": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_faceSwitcher": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_boneToFollow": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_specialInit": 0,
+          "_simpleFollow": 0,
+          "_easeType": 1
+        }
+      },
+      {
+        "object": "KillTokens",
+        "pathId": "-188473813032732317",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "908019882303977827"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "3800760148018415462"
+          },
+          "m_Name": "",
+          "_selector": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_metadata": {
+            "namedAsAlias": "",
+            "blackboardPrefix": ""
+          },
+          "_interruptAbilityOnDetach": 0,
+          "_attachPassiveBuffsOnDummy": 1,
+          "_ignoreIfOwnerDead": 0,
+          "_forceAsDmgOrHealAbility": 0,
+          "_buffs": [
+            {
+              "attributes": {
+                "abnormalFlags": [],
+                "abnormalImmunes": [],
+                "abnormalAntis": [],
+                "abnormalCombos": [],
+                "abnormalComboImmunes": [],
+                "attributeModifiers": []
+              },
+              "buffKey": "otter_c_killtok",
+              "loadFromDB": 0,
+              "isDurableBuff": 0,
+              "isDamageMissable": 0,
+              "isSilenceable": 0,
+              "isStunnable": 0,
+              "isFreezable": 0,
+              "isLevitatable": 0,
+              "statusResistable": 2,
+              "templateKey": "die_to_kill_token",
+              "disableOverride": 1,
+              "overrideKey": "",
+              "overrideType": 0,
+              "maxStackCnt": 1,
+              "refreshRemainingTimeWhenStackMax": 0,
+              "clearAllStackCntWhenTimeUp": 0,
+              "maxValidStackCnt": -1,
+              "independentCharacterSource": 0,
+              "overrideEffectKey": "",
+              "overrideOnEventPriority": 0,
+              "onEventPriority": 0,
+              "audioSignal": "",
+              "lifeTimeType": 2,
+              "takeSnapshotWhenExtend": 0,
+              "durationKey": "",
+              "lifeTime": 0.0,
+              "triggerLifeType": 0,
+              "triggerCnt": 0,
+              "triggerInterval": -1.0,
+              "waitFirstTriggerInterval": 1,
+              "firstTriggerInterval": -1.0,
+              "priority": -1,
+              "priorityBBKeys": [],
+              "stripBlackboardParamsWithBuffKey": 0,
+              "blackboard": [],
+              "enableInitDirectionFromSource": 0
+            }
+          ]
+        }
+      },
+      {
+        "object": "1",
+        "pathId": "-1782094473532114589",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-5537314184333919901"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "3800760148018415462"
+          },
+          "m_Name": "",
+          "_selector": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_metadata": {
+            "namedAsAlias": "",
+            "blackboardPrefix": ""
+          },
+          "_interruptAbilityOnDetach": 0,
+          "_attachPassiveBuffsOnDummy": 1,
+          "_ignoreIfOwnerDead": 0,
+          "_forceAsDmgOrHealAbility": 0,
+          "_buffs": [
+            {
+              "attributes": {
+                "abnormalFlags": [],
+                "abnormalImmunes": [],
+                "abnormalAntis": [],
+                "abnormalCombos": [],
+                "abnormalComboImmunes": [],
+                "attributeModifiers": []
+              },
+              "buffKey": "otter_t_1",
+              "loadFromDB": 0,
+              "isDurableBuff": 0,
+              "isDamageMissable": 0,
+              "isSilenceable": 0,
+              "isStunnable": 0,
+              "isFreezable": 0,
+              "isLevitatable": 0,
+              "statusResistable": 2,
+              "templateKey": "charge_token[born]",
+              "disableOverride": 1,
+              "overrideKey": "",
+              "overrideType": 0,
+              "maxStackCnt": 1,
+              "refreshRemainingTimeWhenStackMax": 0,
+              "clearAllStackCntWhenTimeUp": 0,
+              "maxValidStackCnt": -1,
+              "independentCharacterSource": 0,
+              "overrideEffectKey": "",
+              "overrideOnEventPriority": 0,
+              "onEventPriority": 0,
+              "audioSignal": "",
+              "lifeTimeType": 0,
+              "takeSnapshotWhenExtend": 0,
+              "durationKey": "",
+              "lifeTime": 0.0,
+              "triggerLifeType": 0,
+              "triggerCnt": 0,
+              "triggerInterval": -1.0,
+              "waitFirstTriggerInterval": 1,
+              "firstTriggerInterval": -1.0,
+              "priority": -1,
+              "priorityBBKeys": [],
+              "stripBlackboardParamsWithBuffKey": 0,
+              "blackboard": [],
+              "enableInitDirectionFromSource": 0
+            }
+          ]
+        }
+      },
+      {
+        "object": "1",
+        "pathId": "129278992126146915",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-5537314184333919901"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-2726233351382997147"
+          },
+          "m_Name": "",
+          "_overwriteTalentKey": "",
+          "_overwriteParentRangeId": 0,
+          "_checkValidBySkillIndex": [],
+          "_attachInDummy": 0,
+          "_defaultModeIndex": -1,
+          "_attackBlackboardModeIndex": -1,
+          "_extraAttackBlackboardModeIndices": [],
+          "_overrideDefaultRangeId": 0,
+          "_applyTalentScale": 0,
+          "_influenceSkillBlackboard": 0,
+          "_applyTalentRange": 0,
+          "_applyBlackboardBySkill": 0,
+          "_applyStrBlackboardBySkill": 0,
+          "_writeRangeIdToProjectileBlackboard": 0,
+          "_affectWhenNotRootTalent": 0,
+          "_scaleCertainKeyFlag": 0,
+          "_scaleCertainKeyList": [],
+          "_scaleCertainMode": 0,
+          "_scaleModeIndices": []
+        }
+      },
+      {
+        "object": "Trigger",
+        "pathId": "-8586067640869619357",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "1238920872601090403"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "8607874384982393801"
+          },
+          "m_Name": "",
+          "_keepTarget": 0,
+          "_minTargetNum": 1,
+          "_overrideSearchTargetTick": -1
+        }
+      },
+      {
+        "object": "Trigger",
+        "pathId": "-4924719102726538909",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "1238920872601090403"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-2891200616113119906"
+          },
+          "m_Name": "",
+          "_extendable": 0
+        }
+      },
+      {
+        "object": "Trigger",
+        "pathId": "-1405480593699276445",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "1238920872601090403"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "7080728813803358465"
+          },
+          "m_Name": "",
+          "_targetSide": 2,
+          "_targetMotion": 3,
+          "_targetCategory": 1,
+          "_postFilter": 4,
+          "_ignoreTargetFree": 0,
+          "_onlyIgnoreSomeOfTargetFreeCase": 0,
+          "_abnormalFlag": 29,
+          "_abnormalCombo": 2,
+          "_ignoreAllyTargetFree": 0,
+          "_ignoreHealFree": 0,
+          "_forceIgnoreCamouflage": 0,
+          "_needProfessionMask": 0,
+          "_professionMask": 0,
+          "_limitTargetNum": 1,
+          "_maxTargetKey": "max_target",
+          "_maxNum": 1,
+          "_excludeOwner": 0,
+          "_sortByTauntAtLast": 0,
+          "_ignoreHitRange": 0,
+          "_checkUnitType": 0,
+          "_unitTypeMask": 0,
+          "_abilityInputTargetAsSortSource": 0
+        }
+      },
+      {
+        "object": "Attack",
+        "pathId": "8625121545440819555",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-3660312150656779933"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "4156651312234227407"
+          },
+          "m_Name": "",
+          "_selector": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_metadata": {
+            "namedAsAlias": "",
+            "blackboardPrefix": ""
+          },
+          "_interruptAbilityOnDetach": 0,
+          "_attachPassiveBuffsOnDummy": 1,
+          "_ignoreIfOwnerDead": 0,
+          "_forceAsDmgOrHealAbility": 0,
+          "_waitForAttackEvent": 1,
+          "_interuptIfTargetDead": 0,
+          "_resetCdStrategy": 1,
+          "_selectTargetSource": 2,
+          "_selectTargetTiming": 0,
+          "_timeMode": 0,
+          "_alwaysIncludeTarget": 1,
+          "_allowNoTarget": 0,
+          "_animKey": "Attack",
+          "_endAnimKey": "Idle",
+          "_downAnimKey": "",
+          "_downEndAnimKey": "",
+          "_upAnimKey": "",
+          "_upEndAnimKey": "",
+          "_cooldown": 0.0,
+          "_cooldownKey": "duration",
+          "_preDelay": 0.0,
+          "_escapeTime": 0.0,
+          "_faceToTarget": 1,
+          "_faceToDefault": 0,
+          "_faceToFront": 0,
+          "_faceToFirstCastTarget": 0,
+          "_forceFaceToDirection": 0,
+          "_activeBuffs": [],
+          "_maxAnimScale": 1.0,
+          "_onlyPlayEndAnimWhenIsLastAbility": 0,
+          "_ignorePalsyInterrupt": 0,
+          "_atkScale": 1.0,
+          "_atkScaleKey": "atk_scale",
+          "_attackType": 1,
+          "_elementDamageType": 0,
+          "_epDamageRatio": 0.0,
+          "_useDynamicAttackType": 0,
+          "_deliveryParaWhenReplaceActionNode": 0,
+          "_projectileKey": "projectile_otter",
+          "_mountPointType": 2,
+          "_useMountGroup": 0,
+          "_mountGroup": {
+            "loopType": 0,
+            "mountPoints": []
+          },
+          "_damageType": 2,
+          "_waitForProjectileInvalid": 0,
+          "_notClearProjectileWhenCastEnd": 0,
+          "_fireAttackFinishWhenProjectileInvalid": 0,
+          "_minPostDelayWhenProjectileInvalid": 0.0,
+          "_waitForAnimEndWhenProjectileInvalid": 0,
+          "_projectileDestination": 0,
+          "_extraDamageType": 0,
+          "_emitToInputPosWhenTargetIsInvalid": 0,
+          "_emitToInputRootTileWhenTargetIsInvalid": 0,
+          "_useCachedAtkOnly": 0,
+          "_transferSource": 0,
+          "_extraProjectileKeys": [],
+          "_fireCreateProjectileEvent": 0
+        }
+      },
+      {
+        "object": "Attack",
+        "pathId": "5229379315300530531",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-3660312150656779933"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-550693537895634864"
+          },
+          "m_Name": "",
+          "_hitEffects": [],
+          "_castEffects": [
+            {
+              "_directionType": 0,
+              "_effects": [
+                "otter_attack_01_start",
+                "",
+                "",
+                ""
+              ],
+              "_oneshot": 1,
+              "_startEvent": 4,
+              "_endEvent": 3,
+              "_onlyOnce": 0,
+              "_useFourDirectionalFace": 0,
+              "_delayIfFirstAttack": 0.0,
+              "_hookEffectAfterFirstAttack": ""
+            }
+          ],
+          "_attachEffects": [],
+          "_inputTargetEffects": [],
+          "_castTargetEffects": [],
+          "_convertCastEndToAttachFinish": 0,
+          "_recalculatePlaybackSpeed": 0,
+          "_preDelayFactor": 0.0
+        }
+      },
+      {
+        "object": "Default",
+        "pathId": "-2292650027111319197",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "2331543405513046371"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "5390319429299248724"
+          },
+          "m_Name": "",
+          "_bodyTransform": {
+            "m_FileID": 0,
+            "m_PathID": "5332563075657922915"
+          },
+          "_animatorHooker": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_overrideStartEffect": "",
+          "_overrideDeadEffect": "",
+          "_combat": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_attack": {
+            "m_FileID": 0,
+            "m_PathID": "8625121545440819555"
+          },
+          "_attackTrigger": {
+            "m_FileID": 0,
+            "m_PathID": "-8586067640869619357"
+          },
+          "_hideUIAttackRange": 0,
+          "_updateAttackRangeExtendByAttributeDirty": 0,
+          "_rangeToShow": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_extraRangesToShow": [],
+          "_generalAbilities": [],
+          "_addIndexToSignalId": 0,
+          "_includeIndexZero": 0,
+          "_alwaysHideHp": {
+            "isDefined": 0,
+            "value": 0
+          },
+          "_alwaysHideSp": {
+            "isDefined": 0,
+            "value": 0
+          }
+        }
+      },
+      {
+        "object": "char_242_otter",
+        "pathId": "-7903723405135480477",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "1525456067256088931"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-1297314214590689040"
+          },
+          "m_Name": "",
+          "_animator": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_modes": [
+            {
+              "m_FileID": 0,
+              "m_PathID": "-2292650027111319197"
+            }
+          ],
+          "_commonAbilities": [
+            {
+              "m_FileID": 0,
+              "m_PathID": "-188473813032732317"
+            }
+          ],
+          "_uiMountPoint": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_effectTransform": {
+            "m_FileID": 0,
+            "m_PathID": "2689076810737744227"
+          },
+          "_shadow": {
+            "m_FileID": 0,
+            "m_PathID": "3218365140289747299"
+          },
+          "_defaultBodyColor": {
+            "r": 1.0,
+            "g": 1.0,
+            "b": 1.0,
+            "a": 1.0
+          },
+          "_hideShadowOnRecycle": 0,
+          "_overrideGraphicBound": -1.0,
+          "_hudPluginReplacePairs": [],
+          "_showDebugName": 0,
+          "_skinHolder": {
+            "m_FileID": 0,
+            "m_PathID": "-8289049444471768733"
+          },
+          "_motionMode": 0,
+          "_blockMode": 0,
+          "_ignoreBlockMode": 0,
+          "_isFixedRotation": 0,
+          "_occupiedRemainingCharacterCnt": 1,
+          "_useRealBornTimeFromAnim": 0,
+          "_buildCondition": {
+            "buildableType": 2,
+            "isTryingOverlapCharacater": 0,
+            "needSpecifyDirection": 1,
+            "limitByHostAttackRange": 0,
+            "limitByHostAbilityRange": 0,
+            "abilityName": "",
+            "tileKey": "",
+            "extraBuildConditionArray": {
+              "SerializedState": "null",
+              "SerializedObjectReferences": []
+            },
+            "advancedBuildableMask": 1,
+            "overlapOptions": {
+              "_verifySourceId": 0,
+              "_verifySourceIds": [],
+              "_verifySourceProfession": 0,
+              "_verifySourceProfessions": 0,
+              "_isAllConditionOR": 1,
+              "_overlapPriority": 0,
+              "_changeTargetGraphicColor": 0
+            },
+            "excludeNoTargetTile": 0,
+            "extraLocateRange": "",
+            "checkManuallyBuildableType": 0,
+            "manuallyBuildableType": 0,
+            "_excludeOccupiedByWalkEnemy": 0,
+            "allowWalkEnemyInHostRange": 0,
+            "_checkUpdateBuildable": 0
+          },
+          "_traitAbility": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_withdrawCostRecoverRatio": 0.5,
+          "_maxWithdrawCostRatioOfRawCost": 1.0,
+          "_directionTransform": {
+            "m_FileID": 0,
+            "m_PathID": "221679193522600291"
+          },
+          "_directionIndicator": {
+            "m_FileID": 0,
+            "m_PathID": "648218976856275299"
+          },
+          "_startEffect": "",
+          "_deadEffect": "",
+          "_playStartVocal": 1,
+          "_showDeadTweenColor": 1,
+          "_useSpecificDeadAnim": 0,
+          "_onlyPlayStartEffectOnce": 0,
+          "_dontMoveCameraWhenFocus": 0,
+          "_disableCharInfoPanel": 0,
+          "_disableRotateWhenDead": 0,
+          "_disableSetDirectionWhenDummy": 0,
+          "_clearProjectileWhenDead": 0,
+          "_useIdForAudioSignalMask": 0,
+          "_preprocessData": 0,
+          "_disableClickCharacterInfo": 0,
+          "_skillUiFollowHeadPint": 0,
+          "m_overrideBornTime": -1.0
+        }
+      },
+      {
+        "object": "char_242_otter",
+        "pathId": "2070877273718356323",
+        "type": "CircleCollider2D",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "1525456067256088931"
+          },
+          "m_Enabled": 1,
+          "m_Density": 1.0,
+          "m_Material": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "m_IsTrigger": true,
+          "m_UsedByEffector": false,
+          "m_UsedByComposite": false,
+          "m_Offset": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "m_Radius": 0.25
+        }
+      }
+    ]
+  },
+  "skills": {
+    "sktok_motter_1": [
+      {
+        "object": "sktok_motter_1",
+        "pathId": "-7935820882955935753",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-7364268608826712073"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "9073738633337710967"
+          },
+          "m_Name": "",
+          "_selector": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_metadata": {
+            "namedAsAlias": "",
+            "blackboardPrefix": ""
+          },
+          "_interruptAbilityOnDetach": 0,
+          "_attachPassiveBuffsOnDummy": 1,
+          "_ignoreIfOwnerDead": 0,
+          "_forceAsDmgOrHealAbility": 0,
+          "_buffs": [
+            {
+              "attributes": {
+                "abnormalFlags": [],
+                "abnormalImmunes": [],
+                "abnormalAntis": [],
+                "abnormalCombos": [],
+                "abnormalComboImmunes": [],
+                "attributeModifiers": []
+              },
+              "buffKey": "motter_s_1",
+              "loadFromDB": 0,
+              "isDurableBuff": 0,
+              "isDamageMissable": 0,
+              "isSilenceable": 0,
+              "isStunnable": 0,
+              "isFreezable": 0,
+              "isLevitatable": 0,
+              "statusResistable": 2,
+              "templateKey": "evade",
+              "disableOverride": 0,
+              "overrideKey": "",
+              "overrideType": 0,
+              "maxStackCnt": 1,
+              "refreshRemainingTimeWhenStackMax": 0,
+              "clearAllStackCntWhenTimeUp": 0,
+              "maxValidStackCnt": -1,
+              "independentCharacterSource": 0,
+              "overrideEffectKey": "token_otter_skill_01_buff",
+              "overrideOnEventPriority": 0,
+              "onEventPriority": 0,
+              "audioSignal": "",
+              "lifeTimeType": 2,
+              "takeSnapshotWhenExtend": 0,
+              "durationKey": "",
+              "lifeTime": 0.0,
+              "triggerLifeType": 0,
+              "triggerCnt": 0,
+              "triggerInterval": -1.0,
+              "waitFirstTriggerInterval": 1,
+              "firstTriggerInterval": -1.0,
+              "priority": -1,
+              "priorityBBKeys": [],
+              "stripBlackboardParamsWithBuffKey": 0,
+              "blackboard": [],
+              "enableInitDirectionFromSource": 0
+            }
+          ],
+          "_passiveBuffs": [],
+          "_selfOption": 1,
+          "_removeBuffWhenTargetLeave": 1,
+          "_removeBuffWhenAbilityDetached": 1,
+          "_onlyAddBuffOnceForEachTarget": 0,
+          "_effects": [],
+          "_targetValidator": {
+            "m_FileID": 0,
+            "m_PathID": "7678002217567313911"
+          },
+          "_ignoreOwnerFakeDeath": 0
+        }
+      },
+      {
+        "object": "sktok_motter_1",
+        "pathId": "5243146843644354551",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-7364268608826712073"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-2816356044270894278"
+          },
+          "m_Name": "",
+          "_maxTriggerTime": -1,
+          "_allowSpRecoveryWhenAffecting": 0,
+          "_limitGlobalTriggerTime": 0,
+          "_hidden": 0,
+          "_showSpBarEvenHidden": 0,
+          "_showSpAsBulletMode": 0,
+          "_showSpRatioAsProgress": 0,
+          "_playCharWordVoice": 1,
+          "_playCharWordWithPassiveType": 0,
+          "_canCastWithNoSp": 0,
+          "_canSilenced": 0,
+          "_canUseInAbnormalState": 0,
+          "_defaultModeIndex": -1,
+          "_attackBlackboardModeIndex": -1,
+          "_extraAttackBlackboardModeIndices": [],
+          "_rangeIdModeIndex": -1,
+          "_extraRangeIdModeIndices": [],
+          "_rangeIdUsageType": 7,
+          "_writeDurationToAttackBlackboard": 0,
+          "_attachSignalIds": 0,
+          "_extraAbilities": [],
+          "_useEscapeTime": 0,
+          "_earlySkillFinishAtAttackFinished": 0,
+          "_showProgressToNext": 0,
+          "_hideSkillStackCount": 0,
+          "_hideHudSkillStackCount": 0,
+          "_playSkillBeginAnim": 0,
+          "_beginAnim": "",
+          "_beginAnimDown": "",
+          "_beginEffect": [],
+          "_useFaceVector": 0,
+          "_beginAnimValidator": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_availableValidator": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_attachInDummy": 1
+        }
+      },
+      {
+        "object": "sktok_motter_1",
+        "pathId": "2937595174027255799",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-7364268608826712073"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-2891200616113119906"
+          },
+          "m_Name": "",
+          "_extendable": 0
+        }
+      },
+      {
+        "object": "sktok_motter_1",
+        "pathId": "7678002217567313911",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-7364268608826712073"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-3637692038217913187"
+          },
+          "m_Name": "",
+          "_targetOptions": {
+            "targetSide": 1,
+            "targetMotion": 3,
+            "targetCategory": 1,
+            "enableAdvancedOptions": 1,
+            "ignoreTargetFree": 0,
+            "ignoreAllyTargetFree": 0,
+            "ignoreHealFree": 0,
+            "ignoreTargetSide": 0,
+            "excludeSomeAbnormalFlags": 0,
+            "excludeAbnormalFlag": 0,
+            "purposeMask": 0,
+            "professionMask": 0,
+            "checkUnitType": 0,
+            "unitTypeMask": 0,
+            "onlyIgnoreSomeOfTargetFreeCase": 0,
+            "abnormalFlag": 0,
+            "abnormalCombo": 0
+          }
+        }
+      }
+    ],
+    "skchr_otter_2": [
+      {
+        "object": "skchr_otter_2",
+        "pathId": "-7216071449917235046",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "5544756545163255962"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "6851783972288338031"
+          },
+          "m_Name": "",
+          "_maxTriggerTime": -1,
+          "_allowSpRecoveryWhenAffecting": 0,
+          "_limitGlobalTriggerTime": 0,
+          "_hidden": 0,
+          "_showSpBarEvenHidden": 0,
+          "_showSpAsBulletMode": 0,
+          "_showSpRatioAsProgress": 0,
+          "_playCharWordVoice": 1,
+          "_playCharWordWithPassiveType": 0,
+          "_canCastWithNoSp": 0,
+          "_canSilenced": 0,
+          "_canUseInAbnormalState": 0,
+          "_defaultModeIndex": -1,
+          "_attackBlackboardModeIndex": -1,
+          "_extraAttackBlackboardModeIndices": [],
+          "_rangeIdModeIndex": -1,
+          "_extraRangeIdModeIndices": [],
+          "_rangeIdUsageType": 7,
+          "_writeDurationToAttackBlackboard": 0,
+          "_attachSignalIds": 0,
+          "_extraAbilities": [],
+          "_useEscapeTime": 0,
+          "_earlySkillFinishAtAttackFinished": 0,
+          "_showProgressToNext": 0,
+          "_hideSkillStackCount": 0,
+          "_hideHudSkillStackCount": 0,
+          "_playSkillBeginAnim": 0,
+          "_beginAnim": "",
+          "_beginAnimDown": "",
+          "_beginEffect": [],
+          "_useFaceVector": 0,
+          "_beginAnimValidator": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_availableValidator": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_trigger": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_switchToState": 1,
+          "_uninterruptibleOnAbilityPredelay": 0,
+          "_canSwitchDuringBorn": 1,
+          "_canCastDuringBorn": 1,
+          "_checkHasTargetBeforeDoCast": 0,
+          "_useTriggerInManualMode": 0,
+          "_allowNoTarget": 1,
+          "_shouldCastLikeAttack": 0,
+          "_isRemoteControlled": 0,
+          "_hideRangeToShow": 0,
+          "_forceUseBaseShowRange": 0,
+          "_rangeToShow": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_recoverSpIfNoTarget": 0,
+          "_resetAbilityCooldownWhenCastEnd": 0,
+          "_onlyAvailableWhenTokenValid": 0,
+          "_hasUniStackColor": 0
+        }
+      },
+      {
+        "object": "skchr_otter_2",
+        "pathId": "4220335704287109274",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "5544756545163255962"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "2165892974539515790"
+          },
+          "m_Name": "",
+          "_selector": {
+            "m_FileID": 0,
+            "m_PathID": "-4895705507422969702"
+          },
+          "_metadata": {
+            "namedAsAlias": "",
+            "blackboardPrefix": ""
+          },
+          "_interruptAbilityOnDetach": 0,
+          "_attachPassiveBuffsOnDummy": 1,
+          "_ignoreIfOwnerDead": 0,
+          "_forceAsDmgOrHealAbility": 0,
+          "_waitForAttackEvent": 1,
+          "_interuptIfTargetDead": 0,
+          "_resetCdStrategy": 1,
+          "_selectTargetSource": 1,
+          "_selectTargetTiming": 0,
+          "_timeMode": 0,
+          "_alwaysIncludeTarget": 0,
+          "_allowNoTarget": 0,
+          "_animKey": "Skill",
+          "_endAnimKey": "Idle",
+          "_downAnimKey": "",
+          "_downEndAnimKey": "",
+          "_upAnimKey": "",
+          "_upEndAnimKey": "",
+          "_cooldown": 0.0,
+          "_cooldownKey": "duration",
+          "_preDelay": 0.0,
+          "_escapeTime": 0.0,
+          "_faceToTarget": 0,
+          "_faceToDefault": 0,
+          "_faceToFront": 0,
+          "_faceToFirstCastTarget": 0,
+          "_forceFaceToDirection": 0,
+          "_activeBuffs": [
+            {
+              "attributes": {
+                "abnormalFlags": [],
+                "abnormalImmunes": [],
+                "abnormalAntis": [],
+                "abnormalCombos": [],
+                "abnormalComboImmunes": [],
+                "attributeModifiers": []
+              },
+              "buffKey": "otter_s_2",
+              "loadFromDB": 0,
+              "isDurableBuff": 0,
+              "isDamageMissable": 0,
+              "isSilenceable": 0,
+              "isStunnable": 0,
+              "isFreezable": 0,
+              "isLevitatable": 0,
+              "statusResistable": 2,
+              "templateKey": "trig_skill",
+              "disableOverride": 1,
+              "overrideKey": "",
+              "overrideType": 0,
+              "maxStackCnt": 1,
+              "refreshRemainingTimeWhenStackMax": 0,
+              "clearAllStackCntWhenTimeUp": 0,
+              "maxValidStackCnt": -1,
+              "independentCharacterSource": 0,
+              "overrideEffectKey": "",
+              "overrideOnEventPriority": 0,
+              "onEventPriority": 0,
+              "audioSignal": "",
+              "lifeTimeType": 0,
+              "takeSnapshotWhenExtend": 0,
+              "durationKey": "",
+              "lifeTime": 0.0,
+              "triggerLifeType": 0,
+              "triggerCnt": 0,
+              "triggerInterval": -1.0,
+              "waitFirstTriggerInterval": 1,
+              "firstTriggerInterval": -1.0,
+              "priority": -1,
+              "priorityBBKeys": [],
+              "stripBlackboardParamsWithBuffKey": 0,
+              "blackboard": [],
+              "enableInitDirectionFromSource": 0
+            }
+          ],
+          "_maxAnimScale": 1.0,
+          "_onlyPlayEndAnimWhenIsLastAbility": 0,
+          "_ignorePalsyInterrupt": 0,
+          "_actions": {
+            "SerializedState": "[]",
+            "SerializedObjectReferences": []
+          },
+          "_attackType": 1,
+          "_useDynamicAttackType": 0
+        }
+      },
+      {
+        "object": "skchr_otter_2",
+        "pathId": "-4895705507422969702",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "5544756545163255962"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-371780685978819012"
+          },
+          "m_Name": "",
+          "_maxTargetNum": -1,
+          "_checkBuff": 0,
+          "_buffKey": "",
+          "_isExcluded": 0
+        }
+      },
+      {
+        "object": "skchr_otter_2",
+        "pathId": "4719971731037053082",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "5544756545163255962"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-550693537895634864"
+          },
+          "m_Name": "",
+          "_hitEffects": [],
+          "_castEffects": [
+            {
+              "_directionType": 0,
+              "_effects": [
+                "otter_skill_02_start",
+                "",
+                "",
+                ""
+              ],
+              "_oneshot": 1,
+              "_startEvent": 2,
+              "_endEvent": 3,
+              "_onlyOnce": 0,
+              "_useFourDirectionalFace": 0,
+              "_delayIfFirstAttack": 0.0,
+              "_hookEffectAfterFirstAttack": ""
+            }
+          ],
+          "_attachEffects": [],
+          "_inputTargetEffects": [],
+          "_castTargetEffects": [],
+          "_convertCastEndToAttachFinish": 0,
+          "_recalculatePlaybackSpeed": 0,
+          "_preDelayFactor": 0.0
+        }
+      }
+    ],
+    "sktok_motter_2": [
+      {
+        "object": "Selector",
+        "pathId": "-5383567120748893207",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "7469235640036633577"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-2891200616113119906"
+          },
+          "m_Name": "",
+          "_extendable": 0
+        }
+      },
+      {
+        "object": "Selector",
+        "pathId": "-6519186416849310743",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "7469235640036633577"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "7080728813803358465"
+          },
+          "m_Name": "",
+          "_targetSide": 2,
+          "_targetMotion": 3,
+          "_targetCategory": 1,
+          "_postFilter": 0,
+          "_ignoreTargetFree": 0,
+          "_onlyIgnoreSomeOfTargetFreeCase": 0,
+          "_abnormalFlag": 44,
+          "_abnormalCombo": 2,
+          "_ignoreAllyTargetFree": 0,
+          "_ignoreHealFree": 0,
+          "_forceIgnoreCamouflage": 0,
+          "_needProfessionMask": 0,
+          "_professionMask": 0,
+          "_limitTargetNum": 0,
+          "_maxTargetKey": "max_target",
+          "_maxNum": 1,
+          "_excludeOwner": 0,
+          "_sortByTauntAtLast": 0,
+          "_ignoreHitRange": 0,
+          "_checkUnitType": 0,
+          "_unitTypeMask": 0,
+          "_abilityInputTargetAsSortSource": 0
+        }
+      },
+      {
+        "object": "sktok_motter_2",
+        "pathId": "725293505551739881",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "7523918185962810345"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "4381884627089348317"
+          },
+          "m_Name": "",
+          "_selector": {
+            "m_FileID": 0,
+            "m_PathID": "-6519186416849310743"
+          },
+          "_metadata": {
+            "namedAsAlias": "",
+            "blackboardPrefix": ""
+          },
+          "_interruptAbilityOnDetach": 0,
+          "_attachPassiveBuffsOnDummy": 1,
+          "_ignoreIfOwnerDead": 0,
+          "_forceAsDmgOrHealAbility": 0,
+          "_waitForAttackEvent": 1,
+          "_interuptIfTargetDead": 0,
+          "_resetCdStrategy": 1,
+          "_selectTargetSource": 1,
+          "_selectTargetTiming": 0,
+          "_timeMode": 1,
+          "_alwaysIncludeTarget": 0,
+          "_allowNoTarget": 1,
+          "_animKey": "Blast",
+          "_endAnimKey": "",
+          "_downAnimKey": "",
+          "_downEndAnimKey": "",
+          "_upAnimKey": "",
+          "_upEndAnimKey": "",
+          "_cooldown": 0.0,
+          "_cooldownKey": "duration",
+          "_preDelay": 0.0,
+          "_escapeTime": 0.0,
+          "_faceToTarget": 1,
+          "_faceToDefault": 0,
+          "_faceToFront": 0,
+          "_faceToFirstCastTarget": 0,
+          "_forceFaceToDirection": 0,
+          "_activeBuffs": [
+            {
+              "attributes": {
+                "abnormalFlags": [
+                  0
+                ],
+                "abnormalImmunes": [],
+                "abnormalAntis": [],
+                "abnormalCombos": [],
+                "abnormalComboImmunes": [],
+                "attributeModifiers": []
+              },
+              "buffKey": "stun",
+              "loadFromDB": 0,
+              "isDurableBuff": 0,
+              "isDamageMissable": 0,
+              "isSilenceable": 0,
+              "isStunnable": 0,
+              "isFreezable": 0,
+              "isLevitatable": 0,
+              "statusResistable": 2,
+              "templateKey": "empty",
+              "disableOverride": 0,
+              "overrideKey": "",
+              "overrideType": 0,
+              "maxStackCnt": 1,
+              "refreshRemainingTimeWhenStackMax": 0,
+              "clearAllStackCntWhenTimeUp": 0,
+              "maxValidStackCnt": -1,
+              "independentCharacterSource": 0,
+              "overrideEffectKey": "buff_stun",
+              "overrideOnEventPriority": 0,
+              "onEventPriority": 0,
+              "audioSignal": "",
+              "lifeTimeType": 1,
+              "takeSnapshotWhenExtend": 0,
+              "durationKey": "stun",
+              "lifeTime": 0.0,
+              "triggerLifeType": 0,
+              "triggerCnt": 0,
+              "triggerInterval": -1.0,
+              "waitFirstTriggerInterval": 1,
+              "firstTriggerInterval": -1.0,
+              "priority": -1,
+              "priorityBBKeys": [],
+              "stripBlackboardParamsWithBuffKey": 0,
+              "blackboard": [],
+              "enableInitDirectionFromSource": 0
+            }
+          ],
+          "_maxAnimScale": -1.0,
+          "_onlyPlayEndAnimWhenIsLastAbility": 0,
+          "_ignorePalsyInterrupt": 0,
+          "_atkScale": 1.0,
+          "_atkScaleKey": "atk_scale",
+          "_attackType": 1,
+          "_elementDamageType": 0,
+          "_epDamageRatio": 0.0,
+          "_useDynamicAttackType": 0,
+          "_deliveryParaWhenReplaceActionNode": 0,
+          "_damageType": 2,
+          "_extraDamageType": 0,
+          "_alwaysPutIncludeTargetFirst": 0
+        }
+      },
+      {
+        "object": "sktok_motter_2",
+        "pathId": "-8723449010902914071",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "7523918185962810345"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "6851783972288338031"
+          },
+          "m_Name": "",
+          "_maxTriggerTime": 1,
+          "_allowSpRecoveryWhenAffecting": 0,
+          "_limitGlobalTriggerTime": 0,
+          "_hidden": 0,
+          "_showSpBarEvenHidden": 0,
+          "_showSpAsBulletMode": 0,
+          "_showSpRatioAsProgress": 0,
+          "_playCharWordVoice": 1,
+          "_playCharWordWithPassiveType": 0,
+          "_canCastWithNoSp": 0,
+          "_canSilenced": 0,
+          "_canUseInAbnormalState": 0,
+          "_defaultModeIndex": -1,
+          "_attackBlackboardModeIndex": -1,
+          "_extraAttackBlackboardModeIndices": [],
+          "_rangeIdModeIndex": -1,
+          "_extraRangeIdModeIndices": [],
+          "_rangeIdUsageType": 7,
+          "_writeDurationToAttackBlackboard": 0,
+          "_attachSignalIds": 0,
+          "_extraAbilities": [],
+          "_useEscapeTime": 0,
+          "_earlySkillFinishAtAttackFinished": 0,
+          "_showProgressToNext": 0,
+          "_hideSkillStackCount": 0,
+          "_hideHudSkillStackCount": 0,
+          "_playSkillBeginAnim": 0,
+          "_beginAnim": "",
+          "_beginAnimDown": "",
+          "_beginEffect": [],
+          "_useFaceVector": 0,
+          "_beginAnimValidator": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_availableValidator": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_trigger": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_switchToState": 1,
+          "_uninterruptibleOnAbilityPredelay": 0,
+          "_canSwitchDuringBorn": 1,
+          "_canCastDuringBorn": 1,
+          "_checkHasTargetBeforeDoCast": 0,
+          "_useTriggerInManualMode": 0,
+          "_allowNoTarget": 1,
+          "_shouldCastLikeAttack": 0,
+          "_isRemoteControlled": 1,
+          "_hideRangeToShow": 0,
+          "_forceUseBaseShowRange": 0,
+          "_rangeToShow": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_recoverSpIfNoTarget": 0,
+          "_resetAbilityCooldownWhenCastEnd": 0,
+          "_onlyAvailableWhenTokenValid": 0,
+          "_hasUniStackColor": 0
+        }
+      },
+      {
+        "object": "sktok_motter_2",
+        "pathId": "-7183103180124967959",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "7523918185962810345"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "961310672457649535"
+          },
+          "m_Name": ""
+        }
+      },
+      {
+        "object": "sktok_motter_2",
+        "pathId": "3622110920521690089",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "7523918185962810345"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-550693537895634864"
+          },
+          "m_Name": "",
+          "_hitEffects": [],
+          "_castEffects": [
+            {
+              "_directionType": 0,
+              "_effects": [
+                "token_otter_skill_02_hit",
+                "",
+                "",
+                ""
+              ],
+              "_oneshot": 1,
+              "_startEvent": 4,
+              "_endEvent": 3,
+              "_onlyOnce": 0,
+              "_useFourDirectionalFace": 0,
+              "_delayIfFirstAttack": 0.0,
+              "_hookEffectAfterFirstAttack": ""
+            },
+            {
+              "_directionType": 0,
+              "_effects": [
+                "token_otter_skill_02_start",
+                "",
+                "",
+                ""
+              ],
+              "_oneshot": 1,
+              "_startEvent": 2,
+              "_endEvent": 3,
+              "_onlyOnce": 0,
+              "_useFourDirectionalFace": 0,
+              "_delayIfFirstAttack": 0.0,
+              "_hookEffectAfterFirstAttack": ""
+            }
+          ],
+          "_attachEffects": [],
+          "_inputTargetEffects": [],
+          "_castTargetEffects": [],
+          "_convertCastEndToAttachFinish": 0,
+          "_recalculatePlaybackSpeed": 0,
+          "_preDelayFactor": 0.0
+        }
+      },
+      {
+        "object": "sktok_motter_2",
+        "pathId": "-3663327707657720855",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "7523918185962810345"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "1339719624887862345"
+          },
+          "m_Name": "",
+          "_buffs": [
+            {
+              "attributes": {
+                "abnormalFlags": [],
+                "abnormalImmunes": [],
+                "abnormalAntis": [],
+                "abnormalCombos": [],
+                "abnormalComboImmunes": [],
+                "attributeModifiers": []
+              },
+              "buffKey": "motter_s_2",
+              "loadFromDB": 0,
+              "isDurableBuff": 0,
+              "isDamageMissable": 0,
+              "isSilenceable": 0,
+              "isStunnable": 0,
+              "isFreezable": 0,
+              "isLevitatable": 0,
+              "statusResistable": 2,
+              "templateKey": "motter_s_2_fixed",
+              "disableOverride": 1,
+              "overrideKey": "",
+              "overrideType": 0,
+              "maxStackCnt": 1,
+              "refreshRemainingTimeWhenStackMax": 0,
+              "clearAllStackCntWhenTimeUp": 0,
+              "maxValidStackCnt": -1,
+              "independentCharacterSource": 0,
+              "overrideEffectKey": "",
+              "overrideOnEventPriority": 0,
+              "onEventPriority": 0,
+              "audioSignal": "",
+              "lifeTimeType": 2,
+              "takeSnapshotWhenExtend": 0,
+              "durationKey": "",
+              "lifeTime": 0.0,
+              "triggerLifeType": 0,
+              "triggerCnt": 0,
+              "triggerInterval": -1.0,
+              "waitFirstTriggerInterval": 1,
+              "firstTriggerInterval": -1.0,
+              "priority": -1,
+              "priorityBBKeys": [],
+              "stripBlackboardParamsWithBuffKey": 0,
+              "blackboard": [],
+              "enableInitDirectionFromSource": 0
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "projectiles": {
+    "projectile_otter": [
+      {
+        "object": "projectile_otter",
+        "pathId": "7606645616802670624",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-8604542652845905888"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-8797129986015012478"
+          },
+          "m_Name": "",
+          "_randomDelayToBorn": 0.0,
+          "_bodyTransform": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_keepAlreadyHitTime": -1.0,
+          "_mainEffect": "otter_attack_01_trail",
+          "_clearMainEffectWhenReached": 0,
+          "_actionController": {
+            "_detachBuffsWhenTargetLeave": 0,
+            "_detachAllBuffsWhenStopped": 0,
+            "_onlyAddBuffsToTraceTarget": 0,
+            "_onlyAddBuffsToTargetOnce": 0,
+            "_dontAddBuffs": 0,
+            "_excludeAttachments": 0,
+            "_useSelfBlackboard": 0,
+            "_extraBuffsInTheEnd": [],
+            "_useExtraBuffsWhenStopHit": 0,
+            "_addExtraBuffsWhenReached": 0,
+            "_detachAllExtraBuffsWhenStopped": 0
+          },
+          "_fixDealHitTargetLeft": 0,
+          "_stopGraphicProjectileWhenClearMainEffect": 0,
+          "_overrideAudioSignal": "",
+          "_fireProjectileReachedEvent": 0,
+          "_eliminatableStatus": 0,
+          "_movementAdjustableStatus": 0,
+          "_managedBySource": 0,
+          "_projectileType": 0,
+          "_containsChildrenBehaviours": 0,
+          "_canHitSameTargetMultipleTimes": 0,
+          "_lifeTimeType": 1,
+          "_lifeTime": 10.0,
+          "_getLifeTimeFromBB": 0,
+          "_hitNumType": 1,
+          "_maxHitNum": 1,
+          "_getMaxHitNumFromBB": 0,
+          "_maxHitNumBBKey": "",
+          "_stopAfterMaxHit": 1,
+          "_stopAfterFirstHit": 0,
+          "_stopWhenSourceInvalid": 0,
+          "_alwaysHitTraceTargetInTheEnd": 1,
+          "_alwaysHitTraceTargetWhenReached": 0,
+          "_alwaysReachInTheEnd": 0,
+          "_limitedMaxHitNumToSourceBlockedCnt": 0,
+          "_allowZeroBlockCntLimit": 0
+        }
+      },
+      {
+        "object": "projectile_otter",
+        "pathId": "6021743959912556576",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-8604542652845905888"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-1429203677512073985"
+          },
+          "m_Name": "",
+          "_rotateToTarget": 0,
+          "_forceReachedWhenTimeup": 1,
+          "_useSourceDirection": 0,
+          "_useTargetDirection": 0,
+          "_useStartToTarget": 0,
+          "_awayFromSourceAsDirection": 0,
+          "_flyToTargetLocationOnly": 0,
+          "_useSourceDirectionRandomArcAngleStart": 0,
+          "_useSourceToTargetRandomArcAngleStart": 0,
+          "_useSourceDirectionArcAngleWithRatio": 0,
+          "_useSourceToTargetArcAngleWithRatio": 0,
+          "_sourceDirectionArcAngleRatio": 0.0,
+          "_flyToPredefinedLocation": 0,
+          "_predefinedLocation": 0,
+          "_freezeRotationZ": 0,
+          "_freezeRotationXY": 0,
+          "_exactMatchCameraForward": 0,
+          "_resetToTargetPosWhenReached": 0,
+          "_resetToTracetargetMapPosV3": 0,
+          "_handleWithIBuildableTarget": 0,
+          "_forceResetToTargetPosWhenReached": 0,
+          "_fixOnProjectileReached": 0,
+          "_onlyReachedInTime": 0.0,
+          "_moveType": 1,
+          "_moveTypeData": {
+            "data": []
+          },
+          "_speed": 10.0,
+          "_distance": 0.0,
+          "_comeBack": 0,
+          "_comeBackSpeedScale": 0.25,
+          "_delayToStart": 0.0,
+          "_delayAfterReached": 0.0,
+          "_delayToReachAfterHit": 0.0,
+          "_clearTraceTargetWhenReached": 1,
+          "_updateDelayTimeOnlyOnce": 0,
+          "_skipSmoothLerpDirection": 0,
+          "_addInertia": 0,
+          "_turnSpeed": 0.0,
+          "_useDynamicSpeed": 0,
+          "_deltaSpeedPerSec": 0.0,
+          "_finalSpeed": 0.0,
+          "_randomOffset": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "_forceUseTargetMountPoint": 0
+        }
+      },
+      {
+        "object": "projectile_otter",
+        "pathId": "-6492233153028806624",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-8604542652845905888"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "6834194400804168919"
+          },
+          "m_Name": "",
+          "_effectsWhenStart": [],
+          "_effectsWhenReached": [],
+          "_effectsWhenHit": [
+            "otter_attack_01_hit"
+          ],
+          "_effectsToTargetWhenStart": [],
+          "_effectsToTileWhenStart": [],
+          "_effectsWhenStop": [],
+          "_effectOnTrigger": [],
+          "_onlyPlayHitEffectOnTraceTarget": 0,
+          "_onlyPlayHitEffectOnNotTraceTarget": 0,
+          "_onlyPlayHitEffectOnce": 0,
+          "_clearHitEffectOnStop": 0,
+          "_clearPlayEffectOnStop": 0,
+          "_clearEffectsOnTileOnStop": 0,
+          "_clearReachedEffectWhenStop": 0,
+          "_alwaysPlayStartEffects": 0,
+          "_playStartEffectOnlyOnProjectile": 0,
+          "_useSourceFaceVector": 0,
+          "_useSourceFaceVectorOnHit": 0,
+          "_forceReachTargetGround": 0,
+          "_followTargetGround": 0,
+          "_replaceMainEffectWhenReach": 0,
+          "_mainEffectToReplace": "",
+          "_useTraceTargetWhenReach": 0,
+          "_setReachEffectOnProjectile": 0,
+          "_syncEffectScaleViaProjectile": 0
+        }
+      }
+    ],
+    "projectile_otter_graphic": [
+      {
+        "object": "projectile_otter_graphic",
+        "pathId": "132381602128403460",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "432210447769082884"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-8797129986015012478"
+          },
+          "m_Name": "",
+          "_randomDelayToBorn": 0.0,
+          "_bodyTransform": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_keepAlreadyHitTime": -1.0,
+          "_mainEffect": "otter_attack_01_trail",
+          "_clearMainEffectWhenReached": 0,
+          "_actionController": {
+            "_detachBuffsWhenTargetLeave": 0,
+            "_detachAllBuffsWhenStopped": 0,
+            "_onlyAddBuffsToTraceTarget": 0,
+            "_onlyAddBuffsToTargetOnce": 0,
+            "_dontAddBuffs": 0,
+            "_excludeAttachments": 0,
+            "_useSelfBlackboard": 0,
+            "_extraBuffsInTheEnd": [],
+            "_useExtraBuffsWhenStopHit": 0,
+            "_addExtraBuffsWhenReached": 0,
+            "_detachAllExtraBuffsWhenStopped": 0
+          },
+          "_fixDealHitTargetLeft": 0,
+          "_stopGraphicProjectileWhenClearMainEffect": 0,
+          "_overrideAudioSignal": "",
+          "_fireProjectileReachedEvent": 0,
+          "_eliminatableStatus": 0,
+          "_movementAdjustableStatus": 0,
+          "_managedBySource": 0,
+          "_projectileType": 0,
+          "_containsChildrenBehaviours": 0,
+          "_canHitSameTargetMultipleTimes": 0,
+          "_lifeTimeType": 1,
+          "_lifeTime": 10.0,
+          "_getLifeTimeFromBB": 0,
+          "_hitNumType": 1,
+          "_maxHitNum": 1,
+          "_getMaxHitNumFromBB": 0,
+          "_maxHitNumBBKey": "",
+          "_stopAfterMaxHit": 1,
+          "_stopAfterFirstHit": 0,
+          "_stopWhenSourceInvalid": 0,
+          "_alwaysHitTraceTargetInTheEnd": 1,
+          "_alwaysHitTraceTargetWhenReached": 0,
+          "_alwaysReachInTheEnd": 0,
+          "_limitedMaxHitNumToSourceBlockedCnt": 0,
+          "_allowZeroBlockCntLimit": 0
+        }
+      },
+      {
+        "object": "projectile_otter_graphic",
+        "pathId": "-2360845723850630140",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "432210447769082884"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-1429203677512073985"
+          },
+          "m_Name": "",
+          "_rotateToTarget": 0,
+          "_forceReachedWhenTimeup": 1,
+          "_useSourceDirection": 0,
+          "_useTargetDirection": 0,
+          "_useStartToTarget": 0,
+          "_awayFromSourceAsDirection": 0,
+          "_flyToTargetLocationOnly": 0,
+          "_useSourceDirectionRandomArcAngleStart": 0,
+          "_useSourceToTargetRandomArcAngleStart": 0,
+          "_useSourceDirectionArcAngleWithRatio": 0,
+          "_useSourceToTargetArcAngleWithRatio": 0,
+          "_sourceDirectionArcAngleRatio": 0.0,
+          "_flyToPredefinedLocation": 0,
+          "_predefinedLocation": 0,
+          "_freezeRotationZ": 0,
+          "_freezeRotationXY": 0,
+          "_exactMatchCameraForward": 0,
+          "_resetToTargetPosWhenReached": 0,
+          "_resetToTracetargetMapPosV3": 0,
+          "_handleWithIBuildableTarget": 0,
+          "_forceResetToTargetPosWhenReached": 0,
+          "_fixOnProjectileReached": 0,
+          "_onlyReachedInTime": 0.0,
+          "_moveType": 1,
+          "_moveTypeData": {
+            "data": []
+          },
+          "_speed": 10.0,
+          "_distance": 0.0,
+          "_comeBack": 0,
+          "_comeBackSpeedScale": 0.25,
+          "_delayToStart": 0.0,
+          "_delayAfterReached": 0.0,
+          "_delayToReachAfterHit": 0.0,
+          "_clearTraceTargetWhenReached": 1,
+          "_updateDelayTimeOnlyOnce": 0,
+          "_skipSmoothLerpDirection": 0,
+          "_addInertia": 0,
+          "_turnSpeed": 0.0,
+          "_useDynamicSpeed": 0,
+          "_deltaSpeedPerSec": 0.0,
+          "_finalSpeed": 0.0,
+          "_randomOffset": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "_forceUseTargetMountPoint": 0
+        }
+      }
+    ],
+    "projectile_otter_logic": [
+      {
+        "object": "projectile_otter_logic",
+        "pathId": "-2086751553966652623",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "6511175201077117745"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-8797129986015012478"
+          },
+          "m_Name": "",
+          "_randomDelayToBorn": 0.0,
+          "_bodyTransform": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_keepAlreadyHitTime": -1.0,
+          "_mainEffect": "",
+          "_clearMainEffectWhenReached": 0,
+          "_actionController": {
+            "_detachBuffsWhenTargetLeave": 0,
+            "_detachAllBuffsWhenStopped": 0,
+            "_onlyAddBuffsToTraceTarget": 0,
+            "_onlyAddBuffsToTargetOnce": 0,
+            "_dontAddBuffs": 0,
+            "_excludeAttachments": 0,
+            "_useSelfBlackboard": 0,
+            "_extraBuffsInTheEnd": [],
+            "_useExtraBuffsWhenStopHit": 0,
+            "_addExtraBuffsWhenReached": 0,
+            "_detachAllExtraBuffsWhenStopped": 0
+          },
+          "_fixDealHitTargetLeft": 0,
+          "_stopGraphicProjectileWhenClearMainEffect": 0,
+          "_overrideAudioSignal": "",
+          "_fireProjectileReachedEvent": 0,
+          "_eliminatableStatus": 0,
+          "_movementAdjustableStatus": 0,
+          "_managedBySource": 0,
+          "_projectileType": 0,
+          "_containsChildrenBehaviours": 0,
+          "_canHitSameTargetMultipleTimes": 0,
+          "_lifeTimeType": 1,
+          "_lifeTime": 10.0,
+          "_getLifeTimeFromBB": 0,
+          "_hitNumType": 1,
+          "_maxHitNum": 1,
+          "_getMaxHitNumFromBB": 0,
+          "_maxHitNumBBKey": "",
+          "_stopAfterMaxHit": 1,
+          "_stopAfterFirstHit": 0,
+          "_stopWhenSourceInvalid": 0,
+          "_alwaysHitTraceTargetInTheEnd": 1,
+          "_alwaysHitTraceTargetWhenReached": 0,
+          "_alwaysReachInTheEnd": 0,
+          "_limitedMaxHitNumToSourceBlockedCnt": 0,
+          "_allowZeroBlockCntLimit": 0
+        }
+      },
+      {
+        "object": "projectile_otter_logic",
+        "pathId": "6233565148016067377",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "6511175201077117745"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-1429203677512073985"
+          },
+          "m_Name": "",
+          "_rotateToTarget": 0,
+          "_forceReachedWhenTimeup": 1,
+          "_useSourceDirection": 0,
+          "_useTargetDirection": 0,
+          "_useStartToTarget": 0,
+          "_awayFromSourceAsDirection": 0,
+          "_flyToTargetLocationOnly": 0,
+          "_useSourceDirectionRandomArcAngleStart": 0,
+          "_useSourceToTargetRandomArcAngleStart": 0,
+          "_useSourceDirectionArcAngleWithRatio": 0,
+          "_useSourceToTargetArcAngleWithRatio": 0,
+          "_sourceDirectionArcAngleRatio": 0.0,
+          "_flyToPredefinedLocation": 0,
+          "_predefinedLocation": 0,
+          "_freezeRotationZ": 0,
+          "_freezeRotationXY": 0,
+          "_exactMatchCameraForward": 0,
+          "_resetToTargetPosWhenReached": 0,
+          "_resetToTracetargetMapPosV3": 0,
+          "_handleWithIBuildableTarget": 0,
+          "_forceResetToTargetPosWhenReached": 0,
+          "_fixOnProjectileReached": 0,
+          "_onlyReachedInTime": 0.0,
+          "_moveType": 1,
+          "_moveTypeData": {
+            "data": []
+          },
+          "_speed": 10.0,
+          "_distance": 0.0,
+          "_comeBack": 0,
+          "_comeBackSpeedScale": 0.25,
+          "_delayToStart": 0.0,
+          "_delayAfterReached": 0.0,
+          "_delayToReachAfterHit": 0.0,
+          "_clearTraceTargetWhenReached": 1,
+          "_updateDelayTimeOnlyOnce": 0,
+          "_skipSmoothLerpDirection": 0,
+          "_addInertia": 0,
+          "_turnSpeed": 0.0,
+          "_useDynamicSpeed": 0,
+          "_deltaSpeedPerSec": 0.0,
+          "_finalSpeed": 0.0,
+          "_randomOffset": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "_forceUseTargetMountPoint": 0
+        }
+      },
+      {
+        "object": "projectile_otter_logic",
+        "pathId": "-7771472221673569487",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "6511175201077117745"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "6834194400804168919"
+          },
+          "m_Name": "",
+          "_effectsWhenStart": [],
+          "_effectsWhenReached": [],
+          "_effectsWhenHit": [
+            "otter_attack_01_hit"
+          ],
+          "_effectsToTargetWhenStart": [],
+          "_effectsToTileWhenStart": [],
+          "_effectsWhenStop": [],
+          "_effectOnTrigger": [],
+          "_onlyPlayHitEffectOnTraceTarget": 0,
+          "_onlyPlayHitEffectOnNotTraceTarget": 0,
+          "_onlyPlayHitEffectOnce": 0,
+          "_clearHitEffectOnStop": 0,
+          "_clearPlayEffectOnStop": 0,
+          "_clearEffectsOnTileOnStop": 0,
+          "_clearReachedEffectWhenStop": 0,
+          "_alwaysPlayStartEffects": 0,
+          "_playStartEffectOnlyOnProjectile": 0,
+          "_useSourceFaceVector": 0,
+          "_useSourceFaceVectorOnHit": 0,
+          "_forceReachTargetGround": 0,
+          "_followTargetGround": 0,
+          "_replaceMainEffectWhenReach": 0,
+          "_mainEffectToReplace": "",
+          "_useTraceTargetWhenReach": 0,
+          "_setReachEffectOnProjectile": 0,
+          "_syncEffectScaleViaProjectile": 0
+        }
+      }
+    ]
+  },
+  "tokens": {
+    "token_10004_otter_motter": [
+      {
+        "object": "Spine",
+        "pathId": "8658979005857167189",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-2440723707288193195"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "175525945580115722"
+          },
+          "m_Name": "",
+          "skeletonDataAsset": {
+            "m_FileID": 0,
+            "m_PathID": "-7804698400530632284"
+          },
+          "initialSkinName": "default",
+          "initialFlipX": 0,
+          "initialFlipY": 0,
+          "updateWhenInvisible": 3,
+          "separatorSlotNames": [],
+          "zSpacing": 0.0,
+          "useClipping": 1,
+          "immutableTriangles": 0,
+          "pmaVertexColors": 1,
+          "clearStateOnDisable": 0,
+          "tintBlack": 0,
+          "singleSubmesh": 0,
+          "fixDrawOrder": 0,
+          "addNormals": 0,
+          "calculateTangents": 0,
+          "maskInteraction": 0,
+          "maskMaterials": {
+            "materialsMaskDisabled": [],
+            "materialsInsideMask": [],
+            "materialsOutsideMask": []
+          },
+          "disableRenderingOnOverride": 1,
+          "_animationName": "Default",
+          "loop": 0,
+          "timeScale": 1.0
+        }
+      },
+      {
+        "object": "FaceSwitcher",
+        "pathId": "-8084227712590842027",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-386421057260587179"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-8154061065964361586"
+          },
+          "m_Name": "",
+          "_switchTime": 0.15000000596046448,
+          "_defaultLOrR": 3
+        }
+      },
+      {
+        "object": "Graphic",
+        "pathId": "-3920418328285841579",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-8604126650163759275"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "6360585277869116281"
+          },
+          "m_Name": "",
+          "_animations": [
+            {
+              "animKey": "Idle",
+              "animName": "Idle",
+              "loop": 1,
+              "speed": 1.0,
+              "ignoreMissing": 0
+            },
+            {
+              "animKey": "Attack",
+              "animName": "Attack",
+              "loop": 0,
+              "speed": 1.0,
+              "ignoreMissing": 0
+            },
+            {
+              "animKey": "Die",
+              "animName": "Die",
+              "loop": 0,
+              "speed": 1.0,
+              "ignoreMissing": 0
+            },
+            {
+              "animKey": "Default",
+              "animName": "Default",
+              "loop": 0,
+              "speed": 1.0,
+              "ignoreMissing": 0
+            },
+            {
+              "animKey": "Blast",
+              "animName": "Blast",
+              "loop": 0,
+              "speed": 1.0,
+              "ignoreMissing": 0
+            }
+          ],
+          "_spineSkins": [],
+          "_mixSettings": [],
+          "_spineScale": 1.0,
+          "_enableShowDamageFlash": 1,
+          "_cacheBoundsCenter": 1,
+          "_resetSkinToInitial": 0,
+          "_skeleton": {
+            "m_FileID": 0,
+            "m_PathID": "8658979005857167189"
+          },
+          "_faceSwitcher": {
+            "m_FileID": 0,
+            "m_PathID": "-8084227712590842027"
+          },
+          "_muzzleTransform": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_hitTransform": {
+            "m_FileID": 0,
+            "m_PathID": "-5716283609959205035"
+          },
+          "_headTransform": {
+            "m_FileID": 0,
+            "m_PathID": "-7340457097358051499"
+          },
+          "_specialPoint0": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_specialPoint1": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_specialPoint2": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_specialPoint3": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_specialPoint4": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_specialPoint5": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_specialPoint6": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_specialPoint7": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_specialPoint8": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_specialPoint9": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_specialPoint10": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_specialPoint11": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_specialPoint12": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_specialPoint13": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_specialPoint14": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_specialPoint15": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          }
+        }
+      },
+      {
+        "object": "Trigger",
+        "pathId": "-116966646137325739",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-5246108167258933419"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "8607874384982393801"
+          },
+          "m_Name": "",
+          "_keepTarget": 0,
+          "_minTargetNum": 1,
+          "_overrideSearchTargetTick": -1
+        }
+      },
+      {
+        "object": "Trigger",
+        "pathId": "-7709344762733037739",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-5246108167258933419"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-2891200616113119906"
+          },
+          "m_Name": "",
+          "_extendable": 0
+        }
+      },
+      {
+        "object": "Trigger",
+        "pathId": "-948199162707675307",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-5246108167258933419"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "840206743537877183"
+          },
+          "m_Name": "",
+          "_targetSide": 2,
+          "_targetMotion": 1,
+          "_targetCategory": 1,
+          "_postFilter": 4,
+          "_ignoreTargetFree": 0,
+          "_onlyIgnoreSomeOfTargetFreeCase": 0,
+          "_abnormalFlag": 20,
+          "_abnormalCombo": 1,
+          "_ignoreAllyTargetFree": 0,
+          "_ignoreHealFree": 0,
+          "_forceIgnoreCamouflage": 0,
+          "_needProfessionMask": 0,
+          "_professionMask": 0,
+          "_limitTargetNum": 1,
+          "_maxTargetKey": "max_target",
+          "_maxNum": 1,
+          "_excludeOwner": 0,
+          "_sortByTauntAtLast": 0,
+          "_ignoreHitRange": 0,
+          "_checkUnitType": 0,
+          "_unitTypeMask": 0,
+          "_abilityInputTargetAsSortSource": 0,
+          "_limitedMaxTargetNumToBlockedCnt": 0,
+          "_allowZeroBlockCntLimit": 0
+        }
+      },
+      {
+        "object": "Attack",
+        "pathId": "6990159575580833621",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "1309295190259496789"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "4381884627089348317"
+          },
+          "m_Name": "",
+          "_selector": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_metadata": {
+            "namedAsAlias": "",
+            "blackboardPrefix": ""
+          },
+          "_interruptAbilityOnDetach": 0,
+          "_attachPassiveBuffsOnDummy": 1,
+          "_ignoreIfOwnerDead": 0,
+          "_forceAsDmgOrHealAbility": 0,
+          "_waitForAttackEvent": 1,
+          "_interuptIfTargetDead": 0,
+          "_resetCdStrategy": 1,
+          "_selectTargetSource": 2,
+          "_selectTargetTiming": 0,
+          "_timeMode": 0,
+          "_alwaysIncludeTarget": 1,
+          "_allowNoTarget": 0,
+          "_animKey": "Attack",
+          "_endAnimKey": "Idle",
+          "_downAnimKey": "",
+          "_downEndAnimKey": "",
+          "_upAnimKey": "",
+          "_upEndAnimKey": "",
+          "_cooldown": 0.0,
+          "_cooldownKey": "duration",
+          "_preDelay": 0.0,
+          "_escapeTime": 0.0,
+          "_faceToTarget": 1,
+          "_faceToDefault": 0,
+          "_faceToFront": 0,
+          "_faceToFirstCastTarget": 0,
+          "_forceFaceToDirection": 0,
+          "_activeBuffs": [],
+          "_maxAnimScale": 1.0,
+          "_onlyPlayEndAnimWhenIsLastAbility": 0,
+          "_ignorePalsyInterrupt": 0,
+          "_atkScale": 1.0,
+          "_atkScaleKey": "atk_scale",
+          "_attackType": 1,
+          "_elementDamageType": 0,
+          "_epDamageRatio": 0.0,
+          "_useDynamicAttackType": 0,
+          "_deliveryParaWhenReplaceActionNode": 0,
+          "_damageType": 1,
+          "_extraDamageType": 0,
+          "_alwaysPutIncludeTargetFirst": 0
+        }
+      },
+      {
+        "object": "Attack",
+        "pathId": "-7623768956266121387",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "1309295190259496789"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-550693537895634864"
+          },
+          "m_Name": "",
+          "_hitEffects": [
+            {
+              "_directionType": 0,
+              "_effects": [
+                "common_hit_01",
+                "",
+                "",
+                ""
+              ],
+              "_oneshot": 1,
+              "_endEvent": 3,
+              "_onlyOnce": 0,
+              "_useFourDirectionalFace": 1,
+              "_useOwnerToTargetDirection": 0,
+              "_playIfNotInputTarget": 0,
+              "_playOnlyIfInputTarget": 0
+            }
+          ],
+          "_castEffects": [],
+          "_attachEffects": [],
+          "_inputTargetEffects": [],
+          "_castTargetEffects": [],
+          "_convertCastEndToAttachFinish": 0,
+          "_recalculatePlaybackSpeed": 0,
+          "_preDelayFactor": 0.0
+        }
+      },
+      {
+        "object": "Passive",
+        "pathId": "-138020835718564011",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "5942672865645983573"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "3800760148018415462"
+          },
+          "m_Name": "",
+          "_selector": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_metadata": {
+            "namedAsAlias": "",
+            "blackboardPrefix": ""
+          },
+          "_interruptAbilityOnDetach": 0,
+          "_attachPassiveBuffsOnDummy": 1,
+          "_ignoreIfOwnerDead": 0,
+          "_forceAsDmgOrHealAbility": 0,
+          "_buffs": [
+            {
+              "attributes": {
+                "abnormalFlags": [
+                  7
+                ],
+                "abnormalImmunes": [],
+                "abnormalAntis": [],
+                "abnormalCombos": [],
+                "abnormalComboImmunes": [],
+                "attributeModifiers": []
+              },
+              "buffKey": "healfree",
+              "loadFromDB": 0,
+              "isDurableBuff": 0,
+              "isDamageMissable": 0,
+              "isSilenceable": 0,
+              "isStunnable": 0,
+              "isFreezable": 0,
+              "isLevitatable": 0,
+              "statusResistable": 2,
+              "templateKey": "empty",
+              "disableOverride": 1,
+              "overrideKey": "",
+              "overrideType": 0,
+              "maxStackCnt": 1,
+              "refreshRemainingTimeWhenStackMax": 0,
+              "clearAllStackCntWhenTimeUp": 0,
+              "maxValidStackCnt": -1,
+              "independentCharacterSource": 0,
+              "overrideEffectKey": "",
+              "overrideOnEventPriority": 0,
+              "onEventPriority": 0,
+              "audioSignal": "",
+              "lifeTimeType": 2,
+              "takeSnapshotWhenExtend": 0,
+              "durationKey": "",
+              "lifeTime": 0.0,
+              "triggerLifeType": 0,
+              "triggerCnt": 0,
+              "triggerInterval": -1.0,
+              "waitFirstTriggerInterval": 1,
+              "firstTriggerInterval": -1.0,
+              "priority": -1,
+              "priorityBBKeys": [],
+              "stripBlackboardParamsWithBuffKey": 0,
+              "blackboard": [],
+              "enableInitDirectionFromSource": 0
+            }
+          ]
+        }
+      },
+      {
+        "object": "Default",
+        "pathId": "6729816809150248789",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "3196949671319467861"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "5390319429299248724"
+          },
+          "m_Name": "",
+          "_bodyTransform": {
+            "m_FileID": 0,
+            "m_PathID": "2317522121687136085"
+          },
+          "_animatorHooker": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_overrideStartEffect": "",
+          "_overrideDeadEffect": "",
+          "_combat": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_attack": {
+            "m_FileID": 0,
+            "m_PathID": "6990159575580833621"
+          },
+          "_attackTrigger": {
+            "m_FileID": 0,
+            "m_PathID": "-116966646137325739"
+          },
+          "_hideUIAttackRange": 0,
+          "_updateAttackRangeExtendByAttributeDirty": 0,
+          "_rangeToShow": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_extraRangesToShow": [],
+          "_generalAbilities": [
+            {
+              "m_FileID": 0,
+              "m_PathID": "-138020835718564011"
+            }
+          ],
+          "_addIndexToSignalId": 0,
+          "_includeIndexZero": 0,
+          "_alwaysHideHp": {
+            "isDefined": 0,
+            "value": 0
+          },
+          "_alwaysHideSp": {
+            "isDefined": 0,
+            "value": 0
+          }
+        }
+      },
+      {
+        "object": "1",
+        "pathId": "7878817974386980693",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-5350189585167124651"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-4412927117579039591"
+          },
+          "m_Name": "",
+          "_blockMinCnt": 1,
+          "_blockMaxCnt": -1,
+          "_useBlockAsMin": 1,
+          "_buffsToBlockee": [
+            {
+              "attributes": {
+                "abnormalFlags": [],
+                "abnormalImmunes": [],
+                "abnormalAntis": [],
+                "abnormalCombos": [],
+                "abnormalComboImmunes": [],
+                "attributeModifiers": [
+                  {
+                    "attributeType": 7,
+                    "formulaItem": 0,
+                    "value": 0.0,
+                    "loadFromBlackboard": 1,
+                    "fetchBaseValueFromSourceEntity": 0
+                  }
+                ]
+              },
+              "buffKey": "motter_t_1[block]",
+              "loadFromDB": 0,
+              "isDurableBuff": 0,
+              "isDamageMissable": 0,
+              "isSilenceable": 0,
+              "isStunnable": 0,
+              "isFreezable": 0,
+              "isLevitatable": 0,
+              "statusResistable": 2,
+              "templateKey": "empty",
+              "disableOverride": 0,
+              "overrideKey": "",
+              "overrideType": 0,
+              "maxStackCnt": 1,
+              "refreshRemainingTimeWhenStackMax": 0,
+              "clearAllStackCntWhenTimeUp": 0,
+              "maxValidStackCnt": -1,
+              "independentCharacterSource": 0,
+              "overrideEffectKey": "buff_weak",
+              "overrideOnEventPriority": 0,
+              "onEventPriority": 0,
+              "audioSignal": "",
+              "lifeTimeType": 2,
+              "takeSnapshotWhenExtend": 0,
+              "durationKey": "",
+              "lifeTime": 0.0,
+              "triggerLifeType": 0,
+              "triggerCnt": 0,
+              "triggerInterval": -1.0,
+              "waitFirstTriggerInterval": 1,
+              "firstTriggerInterval": -1.0,
+              "priority": -1,
+              "priorityBBKeys": [],
+              "stripBlackboardParamsWithBuffKey": 0,
+              "blackboard": [],
+              "enableInitDirectionFromSource": 0
+            }
+          ]
+        }
+      },
+      {
+        "object": "1",
+        "pathId": "996290677130491733",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-5350189585167124651"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "5578302910068743633"
+          },
+          "m_Name": "",
+          "_selector": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_metadata": {
+            "namedAsAlias": "",
+            "blackboardPrefix": ""
+          },
+          "_interruptAbilityOnDetach": 0,
+          "_attachPassiveBuffsOnDummy": 1,
+          "_ignoreIfOwnerDead": 0,
+          "_forceAsDmgOrHealAbility": 0,
+          "_buffs": [],
+          "_checker": {
+            "m_FileID": 0,
+            "m_PathID": "7878817974386980693"
+          },
+          "_unmanagedBuffsWhenToggleOn": [],
+          "_setToggleFalseOnDetached": 0,
+          "_isInverseToggle": 0
+        }
+      },
+      {
+        "object": "1",
+        "pathId": "-4101785060706715819",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-5350189585167124651"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-2726233351382997147"
+          },
+          "m_Name": "",
+          "_overwriteTalentKey": "",
+          "_overwriteParentRangeId": 0,
+          "_checkValidBySkillIndex": [],
+          "_attachInDummy": 0,
+          "_defaultModeIndex": -1,
+          "_attackBlackboardModeIndex": -1,
+          "_extraAttackBlackboardModeIndices": [],
+          "_overrideDefaultRangeId": 0,
+          "_applyTalentScale": 0,
+          "_influenceSkillBlackboard": 0,
+          "_applyTalentRange": 0,
+          "_applyBlackboardBySkill": 0,
+          "_applyStrBlackboardBySkill": 0,
+          "_writeRangeIdToProjectileBlackboard": 0,
+          "_affectWhenNotRootTalent": 0,
+          "_scaleCertainKeyFlag": 0,
+          "_scaleCertainKeyList": [],
+          "_scaleCertainMode": 0,
+          "_scaleModeIndices": []
+        }
+      },
+      {
+        "object": "1",
+        "pathId": "8411912011098257237",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-316207680803473579"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-2726233351382997147"
+          },
+          "m_Name": "",
+          "_overwriteTalentKey": "",
+          "_overwriteParentRangeId": 0,
+          "_checkValidBySkillIndex": [],
+          "_attachInDummy": 1,
+          "_defaultModeIndex": -1,
+          "_attackBlackboardModeIndex": -1,
+          "_extraAttackBlackboardModeIndices": [],
+          "_overrideDefaultRangeId": 0,
+          "_applyTalentScale": 0,
+          "_influenceSkillBlackboard": 0,
+          "_applyTalentRange": 0,
+          "_applyBlackboardBySkill": 0,
+          "_applyStrBlackboardBySkill": 0,
+          "_writeRangeIdToProjectileBlackboard": 0,
+          "_affectWhenNotRootTalent": 0,
+          "_scaleCertainKeyFlag": 0,
+          "_scaleCertainKeyList": [],
+          "_scaleCertainMode": 0,
+          "_scaleModeIndices": []
+        }
+      },
+      {
+        "object": "1",
+        "pathId": "8938638046075582293",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-316207680803473579"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "3800760148018415462"
+          },
+          "m_Name": "",
+          "_selector": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_metadata": {
+            "namedAsAlias": "",
+            "blackboardPrefix": ""
+          },
+          "_interruptAbilityOnDetach": 0,
+          "_attachPassiveBuffsOnDummy": 1,
+          "_ignoreIfOwnerDead": 0,
+          "_forceAsDmgOrHealAbility": 0,
+          "_buffs": [
+            {
+              "attributes": {
+                "abnormalFlags": [],
+                "abnormalImmunes": [],
+                "abnormalAntis": [],
+                "abnormalCombos": [],
+                "abnormalComboImmunes": [],
+                "attributeModifiers": [
+                  {
+                    "attributeType": 16,
+                    "formulaItem": 0,
+                    "value": 0.0,
+                    "loadFromBlackboard": 1,
+                    "fetchBaseValueFromSourceEntity": 0
+                  }
+                ]
+              },
+              "buffKey": "motter_t_1[own]",
+              "loadFromDB": 0,
+              "isDurableBuff": 0,
+              "isDamageMissable": 0,
+              "isSilenceable": 0,
+              "isStunnable": 0,
+              "isFreezable": 0,
+              "isLevitatable": 0,
+              "statusResistable": 2,
+              "templateKey": "empty",
+              "disableOverride": 1,
+              "overrideKey": "",
+              "overrideType": 0,
+              "maxStackCnt": 1,
+              "refreshRemainingTimeWhenStackMax": 0,
+              "clearAllStackCntWhenTimeUp": 0,
+              "maxValidStackCnt": -1,
+              "independentCharacterSource": 0,
+              "overrideEffectKey": "",
+              "overrideOnEventPriority": 0,
+              "onEventPriority": 0,
+              "audioSignal": "",
+              "lifeTimeType": 2,
+              "takeSnapshotWhenExtend": 0,
+              "durationKey": "",
+              "lifeTime": 0.0,
+              "triggerLifeType": 0,
+              "triggerCnt": 0,
+              "triggerInterval": -1.0,
+              "waitFirstTriggerInterval": 1,
+              "firstTriggerInterval": -1.0,
+              "priority": -1,
+              "priorityBBKeys": [],
+              "stripBlackboardParamsWithBuffKey": 0,
+              "blackboard": [],
+              "enableInitDirectionFromSource": 0
+            }
+          ]
+        }
+      },
+      {
+        "object": "Shadow",
+        "pathId": "-5868976526935361707",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "1494839453901748053"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-2368896203154538901"
+          },
+          "m_Name": "",
+          "_autoAttachToGround": 0,
+          "_attachOffset": 0.10000000149011612,
+          "_simplyUseTileHeight": 0,
+          "_enableAdvanced": 0,
+          "_alwaysUseSpineOffset": 0,
+          "_sprite": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_graphic": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_faceSwitcher": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_boneToFollow": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_specialInit": 0,
+          "_simpleFollow": 0,
+          "_easeType": 1
+        }
+      },
+      {
+        "object": "token_10004_otter_motter",
+        "pathId": "2310244028632758101",
+        "type": "MonoBehaviour",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-781794681846794411"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "-1297314214590689040"
+          },
+          "m_Name": "",
+          "_animator": {
+            "m_FileID": 0,
+            "m_PathID": "-3920418328285841579"
+          },
+          "_modes": [
+            {
+              "m_FileID": 0,
+              "m_PathID": "6729816809150248789"
+            }
+          ],
+          "_commonAbilities": [],
+          "_uiMountPoint": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_effectTransform": {
+            "m_FileID": 0,
+            "m_PathID": "-7625396169755822251"
+          },
+          "_shadow": {
+            "m_FileID": 0,
+            "m_PathID": "-5868976526935361707"
+          },
+          "_defaultBodyColor": {
+            "r": 1.0,
+            "g": 1.0,
+            "b": 1.0,
+            "a": 1.0
+          },
+          "_hideShadowOnRecycle": 0,
+          "_overrideGraphicBound": -1.0,
+          "_hudPluginReplacePairs": [],
+          "_showDebugName": 0,
+          "_skinHolder": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_motionMode": 0,
+          "_blockMode": 0,
+          "_ignoreBlockMode": 0,
+          "_isFixedRotation": 0,
+          "_occupiedRemainingCharacterCnt": 1,
+          "_useRealBornTimeFromAnim": 0,
+          "_buildCondition": {
+            "buildableType": 1,
+            "isTryingOverlapCharacater": 0,
+            "needSpecifyDirection": 0,
+            "limitByHostAttackRange": 0,
+            "limitByHostAbilityRange": 0,
+            "abilityName": "",
+            "tileKey": "",
+            "extraBuildConditionArray": {
+              "SerializedState": "null",
+              "SerializedObjectReferences": []
+            },
+            "advancedBuildableMask": 1,
+            "overlapOptions": {
+              "_verifySourceId": 0,
+              "_verifySourceIds": [],
+              "_verifySourceProfession": 0,
+              "_verifySourceProfessions": 0,
+              "_isAllConditionOR": 1,
+              "_overlapPriority": 0,
+              "_changeTargetGraphicColor": 0
+            },
+            "excludeNoTargetTile": 0,
+            "extraLocateRange": "",
+            "checkManuallyBuildableType": 0,
+            "manuallyBuildableType": 0,
+            "_excludeOccupiedByWalkEnemy": 0,
+            "allowWalkEnemyInHostRange": 0,
+            "_checkUpdateBuildable": 0
+          },
+          "_traitAbility": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_withdrawCostRecoverRatio": 0.5,
+          "_maxWithdrawCostRatioOfRawCost": 1.0,
+          "_directionTransform": {
+            "m_FileID": 0,
+            "m_PathID": "-1067247127781738667"
+          },
+          "_directionIndicator": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "_startEffect": "",
+          "_deadEffect": "",
+          "_playStartVocal": 1,
+          "_showDeadTweenColor": 1,
+          "_useSpecificDeadAnim": 0,
+          "_onlyPlayStartEffectOnce": 0,
+          "_dontMoveCameraWhenFocus": 0,
+          "_disableCharInfoPanel": 0,
+          "_disableRotateWhenDead": 0,
+          "_disableSetDirectionWhenDummy": 0,
+          "_clearProjectileWhenDead": 0,
+          "_useIdForAudioSignalMask": 0,
+          "_preprocessData": 0,
+          "_disableClickCharacterInfo": 0,
+          "_skillUiFollowHeadPint": 0,
+          "m_overrideBornTime": -1.0
+        }
+      },
+      {
+        "object": "token_10004_otter_motter",
+        "pathId": "-4802982446100220075",
+        "type": "CircleCollider2D",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-781794681846794411"
+          },
+          "m_Enabled": 1,
+          "m_Density": 1.0,
+          "m_Material": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "m_IsTrigger": true,
+          "m_UsedByEffector": false,
+          "m_UsedByComposite": false,
+          "m_Offset": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "m_Radius": 0.25
+        }
+      }
+    ]
+  },
+  "animators": {
+    "char_242_otter": [
+      {
+        "pathId": "-2827782524303040609",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-9220038245413609569"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "7647785617504526080"
+          },
+          "m_Name": "",
+          "_animations": [
+            {
+              "animKey": "Idle",
+              "animName": "Idle",
+              "loop": 1,
+              "speed": 1.0,
+              "ignoreMissing": 0
+            },
+            {
+              "animKey": "Attack",
+              "animName": "Attack",
+              "loop": 0,
+              "speed": 1.0,
+              "ignoreMissing": 0
+            },
+            {
+              "animKey": "Die",
+              "animName": "Die",
+              "loop": 0,
+              "speed": 1.0,
+              "ignoreMissing": 0
+            },
+            {
+              "animKey": "Born",
+              "animName": "Start",
+              "loop": 0,
+              "speed": 1.0,
+              "ignoreMissing": 0
+            },
+            {
+              "animKey": "Default",
+              "animName": "Default",
+              "loop": 0,
+              "speed": 1.0,
+              "ignoreMissing": 0
+            },
+            {
+              "animKey": "Skill",
+              "animName": "Skill",
+              "loop": 0,
+              "speed": 1.0,
+              "ignoreMissing": 0
+            }
+          ],
+          "_spineSkins": [],
+          "_mixSettings": [],
+          "_spineScale": 1.0,
+          "_enableShowDamageFlash": 1,
+          "_cacheBoundsCenter": 1,
+          "_resetSkinToInitial": 0,
+          "_faceSwitcher": {
+            "m_FileID": 0,
+            "m_PathID": "4834138768543653791"
+          },
+          "_front": {
+            "skeleton": {
+              "m_FileID": 0,
+              "m_PathID": "-276206405242511457"
+            },
+            "muzzlaTransform": {
+              "m_FileID": 0,
+              "m_PathID": "-1513482531849429089"
+            },
+            "hitTransform": {
+              "m_FileID": 0,
+              "m_PathID": "-3888824880077463649"
+            },
+            "headTransform": {
+              "m_FileID": 0,
+              "m_PathID": "-5810053648215564385"
+            },
+            "shadowTransform": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint0": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint1": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint2": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint3": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint4": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint5": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint6": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint7": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint8": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint9": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint10": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint11": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint12": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint13": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint14": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint15": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            }
+          },
+          "_back": {
+            "skeleton": {
+              "m_FileID": 0,
+              "m_PathID": "604040897337434015"
+            },
+            "muzzlaTransform": {
+              "m_FileID": 0,
+              "m_PathID": "6660933403421515679"
+            },
+            "hitTransform": {
+              "m_FileID": 0,
+              "m_PathID": "-3888824880077463649"
+            },
+            "headTransform": {
+              "m_FileID": 0,
+              "m_PathID": "-5810053648215564385"
+            },
+            "shadowTransform": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint0": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint1": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint2": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint3": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint4": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint5": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint6": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint7": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint8": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint9": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint10": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint11": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint12": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint13": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint14": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint15": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            }
+          },
+          "_useNewSpineFormat": 0
+        }
+      }
+    ]
+  },
+  "models": {
+    "char_242_otter": {
+      "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+      "Front": {
+        "path": "spine/char_242_otter/char_242_otter/Front/char_242_otter.skel",
+        "sha256": "c82ea1692716cdb2f765191d3a447b0ed9eef907e0b9b1d31ce8e77f3e220b12",
+        "bytes": 143762,
+        "durations": {
+          "Attack": 1.167,
+          "Default": 0,
+          "Die": 1,
+          "Idle": 2,
+          "Skill": 1,
+          "Start": 0.833
+        },
+        "hits": {
+          "Attack": [
+            0.433
+          ],
+          "Skill": [
+            0.5
+          ]
+        }
+      },
+      "Back": {
+        "path": "spine/char_242_otter/char_242_otter/Back/char_242_otter.skel",
+        "sha256": "9167b49946645393156d37dafb8f0cf545059a3b7b78e54239c71069150dfe0f",
+        "bytes": 52446,
+        "durations": {
+          "Attack": 1.167,
+          "Default": 0,
+          "Idle": 2,
+          "Start": 0.833
+        },
+        "hits": {
+          "Attack": [
+            0.433
+          ]
+        }
+      }
+    },
+    "token_10004_otter_motter": {
+      "Original": {
+        "directory": "token_10004_otter_motter",
+        "files": {
+          "token_10004_otter_motter.skel": {
+            "bytes": 25896,
+            "sha256": "73c5c42e4fa204ccb9d9976277e161c51698dc235a1b1c87225efdd111c26df0"
+          },
+          "token_10004_otter_motter.atlas": {
+            "bytes": 1522,
+            "sha256": "23bb2651eb966cb811ef38de67e9e5b6e061a1a4bc911aee48d0facdb51a4482"
+          },
+          "token_10004_otter_motter.png": {
+            "bytes": 18182,
+            "sha256": "d10727dbb7754602d752770ec164115a6d38b4504b9d86c5f39f6c3353e5de68"
+          },
+          "avatar.png": {
+            "bytes": 40924,
+            "sha256": "e79041d6920beb47b8089dc2dd3182f7395f2b2dfad1096e0ebc69db01226dae"
+          }
+        },
+        "textureDimensions": [
+          256,
+          256
+        ],
+        "originalPathIds": {
+          "animator": "-3920418328285841579",
+          "skeletonAnimation": "8658979005857167189",
+          "skeletonDataAsset": "-7804698400530632284",
+          "skeletonTextAsset": "-8329399060901279385",
+          "atlasAsset": "8327542848854417705",
+          "atlasTextAsset": "-3132699303058569012",
+          "material": "2086426649267797133",
+          "rgbTexture": "4188421153416084315",
+          "alphaTexture": "1446504430123753357"
+        },
+        "spineVersion": "3.8.99",
+        "durations": {
+          "Attack": 1,
+          "Blast": 1.333,
+          "Default": 0,
+          "Die": 1,
+          "Idle": 2
+        },
+        "hits": {
+          "Attack": [
+            0.4
+          ],
+          "Blast": [
+            0.567
+          ]
+        },
+        "bounds": {
+          "x": -190.214,
+          "y": -3.407,
+          "width": 321.499,
+          "height": 184.049
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "attack": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null
+          },
+          "deploy": null,
+          "die": "Die",
+          "skill": null
+        },
+        "noBasicAttack": false
+      }
+    }
+  },
+  "originalFacingBindings": {
+    "char_242_otter": {
+      "Front": {
+        "animatorPathId": "-2827782524303040609",
+        "skeletonAnimationPathId": "-276206405242511457",
+        "skeletonDataAssetPathId": "-413682163048797385",
+        "textAssetPathId": "-554788066211749476",
+        "sha256": "c82ea1692716cdb2f765191d3a447b0ed9eef907e0b9b1d31ce8e77f3e220b12",
+        "byteLength": 143762
+      },
+      "Back": {
+        "animatorPathId": "-2827782524303040609",
+        "skeletonAnimationPathId": "604040897337434015",
+        "skeletonDataAssetPathId": "-8683695239385010085",
+        "textAssetPathId": "-1212730756140851595",
+        "sha256": "9167b49946645393156d37dafb8f0cf545059a3b7b78e54239c71069150dfe0f",
+        "byteLength": 52446
+      }
+    }
+  },
+  "originalTokenModels": {
+    "sourceBundle": {
+      "path": "pkgrps/btl_pfb_tokens_0.ab",
+      "bytes": 5060143,
+      "md5": "5ab8526b9e59e97cc7e94ed6a248013d",
+      "sha256": "eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f",
+      "resourceVersion": "26-09-23-17-49-43_b9cc4a",
+      "url": "https://ark-us-static-online.yo-star.com/assetbundle/official/Android/assets/26-09-23-17-49-43_b9cc4a/pkgrps_btl_pfb_tokens_0.dat",
+      "transforms": [
+        "RGB plus separated Alpha texture merge",
+        "atlas texture dimensions normalized and pma: true recorded"
+      ]
+    },
+    "avatarSource": {
+      "repository": "fexli/ArknightsResource",
+      "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+      "directory": "avatar/ASSISTANT"
+    },
+    "models": {
+      "token_10004_otter_motter": {
+        "directory": "token_10004_otter_motter",
+        "files": {
+          "token_10004_otter_motter.skel": {
+            "bytes": 25896,
+            "sha256": "73c5c42e4fa204ccb9d9976277e161c51698dc235a1b1c87225efdd111c26df0"
+          },
+          "token_10004_otter_motter.atlas": {
+            "bytes": 1522,
+            "sha256": "23bb2651eb966cb811ef38de67e9e5b6e061a1a4bc911aee48d0facdb51a4482"
+          },
+          "token_10004_otter_motter.png": {
+            "bytes": 18182,
+            "sha256": "d10727dbb7754602d752770ec164115a6d38b4504b9d86c5f39f6c3353e5de68"
+          },
+          "avatar.png": {
+            "bytes": 40924,
+            "sha256": "e79041d6920beb47b8089dc2dd3182f7395f2b2dfad1096e0ebc69db01226dae"
+          }
+        },
+        "textureDimensions": [
+          256,
+          256
+        ],
+        "originalPathIds": {
+          "animator": "-3920418328285841579",
+          "skeletonAnimation": "8658979005857167189",
+          "skeletonDataAsset": "-7804698400530632284",
+          "skeletonTextAsset": "-8329399060901279385",
+          "atlasAsset": "8327542848854417705",
+          "atlasTextAsset": "-3132699303058569012",
+          "material": "2086426649267797133",
+          "rgbTexture": "4188421153416084315",
+          "alphaTexture": "1446504430123753357"
+        },
+        "spineVersion": "3.8.99",
+        "durations": {
+          "Attack": 1,
+          "Blast": 1.333,
+          "Default": 0,
+          "Die": 1,
+          "Idle": 2
+        },
+        "hits": {
+          "Attack": [
+            0.4
+          ],
+          "Blast": [
+            0.567
+          ]
+        },
+        "bounds": {
+          "x": -190.214,
+          "y": -3.407,
+          "width": 321.499,
+          "height": 184.049
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "attack": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null
+          },
+          "deploy": null,
+          "die": "Die",
+          "skill": null
+        },
+        "noBasicAttack": false
+      }
+    }
+  },
+  "originalTokenBindings": {
+    "original": {
+      "animator": "-3920418328285841579",
+      "skeletonAnimation": "8658979005857167189",
+      "skeletonDataAsset": "-7804698400530632284",
+      "skeletonTextAsset": "-8329399060901279385",
+      "atlasAsset": "8327542848854417705",
+      "atlasTextAsset": "-3132699303058569012",
+      "material": "2086426649267797133",
+      "rgbTexture": "4188421153416084315",
+      "alphaTexture": "1446504430123753357"
+    }
+  },
+  "tables": {
+    "char_242_otter": {
+      "name": "Mayer",
+      "profession": "SUPPORT",
+      "subProfessionId": "summoner",
+      "position": "RANGED",
+      "rarity": "TIER_5",
+      "phases": [
+        {
+          "characterPrefabKey": "char_242_otter",
+          "rangeId": "3-6",
+          "maxLevel": 50,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 480,
+                "atk": 199,
+                "def": 56,
+                "magicResistance": 15.0,
+                "cost": 9,
+                "blockCnt": 1,
+                "moveSpeed": 1.0,
+                "attackSpeed": 100.0,
+                "baseAttackTime": 1.6,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0.0,
+                "spRecoveryPerSec": 1.0,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 50,
+              "data": {
+                "maxHp": 649,
+                "atk": 285,
+                "def": 80,
+                "magicResistance": 15.0,
+                "cost": 9,
+                "blockCnt": 1,
+                "moveSpeed": 1.0,
+                "attackSpeed": 100.0,
+                "baseAttackTime": 1.6,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0.0,
+                "spRecoveryPerSec": 1.0,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "evolveCost": null
+        },
+        {
+          "characterPrefabKey": "char_242_otter",
+          "rangeId": "3-1",
+          "maxLevel": 70,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 649,
+                "atk": 285,
+                "def": 80,
+                "magicResistance": 20.0,
+                "cost": 11,
+                "blockCnt": 1,
+                "moveSpeed": 1.0,
+                "attackSpeed": 100.0,
+                "baseAttackTime": 1.6,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0.0,
+                "spRecoveryPerSec": 1.0,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 70,
+              "data": {
+                "maxHp": 843,
+                "atk": 380,
+                "def": 107,
+                "magicResistance": 20.0,
+                "cost": 11,
+                "blockCnt": 1,
+                "moveSpeed": 1.0,
+                "attackSpeed": 100.0,
+                "baseAttackTime": 1.6,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0.0,
+                "spRecoveryPerSec": 1.0,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "evolveCost": [
+            {
+              "id": "3271",
+              "count": 4,
+              "type": "MATERIAL"
+            },
+            {
+              "id": "30032",
+              "count": 5,
+              "type": "MATERIAL"
+            },
+            {
+              "id": "30062",
+              "count": 2,
+              "type": "MATERIAL"
+            }
+          ]
+        },
+        {
+          "characterPrefabKey": "char_242_otter",
+          "rangeId": "3-1",
+          "maxLevel": 80,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 843,
+                "atk": 380,
+                "def": 107,
+                "magicResistance": 20.0,
+                "cost": 11,
+                "blockCnt": 1,
+                "moveSpeed": 1.0,
+                "attackSpeed": 100.0,
+                "baseAttackTime": 1.6,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0.0,
+                "spRecoveryPerSec": 1.0,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 80,
+              "data": {
+                "maxHp": 1068,
+                "atk": 443,
+                "def": 130,
+                "magicResistance": 20.0,
+                "cost": 11,
+                "blockCnt": 1,
+                "moveSpeed": 1.0,
+                "attackSpeed": 100.0,
+                "baseAttackTime": 1.6,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0.0,
+                "spRecoveryPerSec": 1.0,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "evolveCost": [
+            {
+              "id": "3273",
+              "count": 3,
+              "type": "MATERIAL"
+            },
+            {
+              "id": "30044",
+              "count": 6,
+              "type": "MATERIAL"
+            },
+            {
+              "id": "30103",
+              "count": 11,
+              "type": "MATERIAL"
+            }
+          ]
+        }
+      ],
+      "skills": [
+        {
+          "skillId": "skchr_otter_1",
+          "overridePrefabKey": null,
+          "overrideTokenKey": null,
+          "levelUpCostCond": [
+            {
+              "unlockCond": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "lvlUpTime": 28800,
+              "levelUpCost": [
+                {
+                  "id": "3303",
+                  "count": 5,
+                  "type": "MATERIAL"
+                },
+                {
+                  "id": "30104",
+                  "count": 3,
+                  "type": "MATERIAL"
+                },
+                {
+                  "id": "30083",
+                  "count": 2,
+                  "type": "MATERIAL"
+                }
+              ]
+            },
+            {
+              "unlockCond": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "lvlUpTime": 57600,
+              "levelUpCost": [
+                {
+                  "id": "3303",
+                  "count": 6,
+                  "type": "MATERIAL"
+                },
+                {
+                  "id": "30024",
+                  "count": 3,
+                  "type": "MATERIAL"
+                },
+                {
+                  "id": "30104",
+                  "count": 5,
+                  "type": "MATERIAL"
+                }
+              ]
+            },
+            {
+              "unlockCond": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "lvlUpTime": 86400,
+              "levelUpCost": [
+                {
+                  "id": "3303",
+                  "count": 10,
+                  "type": "MATERIAL"
+                },
+                {
+                  "id": "30135",
+                  "count": 4,
+                  "type": "MATERIAL"
+                },
+                {
+                  "id": "30044",
+                  "count": 3,
+                  "type": "MATERIAL"
+                }
+              ]
+            }
+          ],
+          "unlockCond": {
+            "phase": "PHASE_0",
+            "level": 1
+          }
+        },
+        {
+          "skillId": "skchr_otter_2",
+          "overridePrefabKey": null,
+          "overrideTokenKey": null,
+          "levelUpCostCond": [
+            {
+              "unlockCond": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "lvlUpTime": 28800,
+              "levelUpCost": [
+                {
+                  "id": "3303",
+                  "count": 5,
+                  "type": "MATERIAL"
+                },
+                {
+                  "id": "30014",
+                  "count": 3,
+                  "type": "MATERIAL"
+                },
+                {
+                  "id": "30093",
+                  "count": 4,
+                  "type": "MATERIAL"
+                }
+              ]
+            },
+            {
+              "unlockCond": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "lvlUpTime": 57600,
+              "levelUpCost": [
+                {
+                  "id": "3303",
+                  "count": 6,
+                  "type": "MATERIAL"
+                },
+                {
+                  "id": "30034",
+                  "count": 3,
+                  "type": "MATERIAL"
+                },
+                {
+                  "id": "30014",
+                  "count": 6,
+                  "type": "MATERIAL"
+                }
+              ]
+            },
+            {
+              "unlockCond": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "lvlUpTime": 86400,
+              "levelUpCost": [
+                {
+                  "id": "3303",
+                  "count": 10,
+                  "type": "MATERIAL"
+                },
+                {
+                  "id": "30115",
+                  "count": 4,
+                  "type": "MATERIAL"
+                },
+                {
+                  "id": "30084",
+                  "count": 4,
+                  "type": "MATERIAL"
+                }
+              ]
+            }
+          ],
+          "unlockCond": {
+            "phase": "PHASE_1",
+            "level": 1
+          }
+        }
+      ],
+      "talents": [
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_0",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Robotter",
+              "description": "Can summon 3 Robotters; Enemies have -10 ASPD when blocked by Robotters",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "cnt",
+                  "value": 3.0,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": "token_10004_otter_motter",
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Robotter",
+              "description": "Can summon 4 Robotters; Enemies have -25 ASPD when blocked by Robotters",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "cnt",
+                  "value": 4.0,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": "token_10004_otter_motter",
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Robotter",
+              "description": "Can summon 5 Robotters; Enemies have -25 ASPD when blocked by Robotters",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "cnt",
+                  "value": 5.0,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": "token_10004_otter_motter",
+              "isHideTalent": false
+            }
+          ]
+        }
+      ],
+      "trait": null,
+      "nationId": "columbia",
+      "groupId": "rhine",
+      "teamId": null,
+      "skillLevels": {
+        "skchr_otter_1": [
+          {
+            "name": "Bionic Device",
+            "rangeId": "0-1",
+            "description": "All Robotters gain <@ba.vup>{prob:0%}</> <@ba.vup>Physical</> and <@ba.vup>Arts Dodge</>",
+            "skillType": "PASSIVE",
+            "durationType": "NONE",
+            "spData": {
+              "spType": 8,
+              "levelUpCost": null,
+              "maxChargeTime": 0,
+              "spCost": 0,
+              "initSp": 0,
+              "increment": 0.0
+            },
+            "prefabId": null,
+            "duration": 0.0,
+            "blackboard": [
+              {
+                "key": "prob",
+                "value": 0.1,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "name": "Bionic Device",
+            "rangeId": "0-1",
+            "description": "All Robotters gain <@ba.vup>{prob:0%}</> <@ba.vup>Physical</> and <@ba.vup>Arts Dodge</>",
+            "skillType": "PASSIVE",
+            "durationType": "NONE",
+            "spData": {
+              "spType": 8,
+              "levelUpCost": null,
+              "maxChargeTime": 0,
+              "spCost": 0,
+              "initSp": 0,
+              "increment": 0.0
+            },
+            "prefabId": null,
+            "duration": 0.0,
+            "blackboard": [
+              {
+                "key": "prob",
+                "value": 0.13,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "name": "Bionic Device",
+            "rangeId": "0-1",
+            "description": "All Robotters gain <@ba.vup>{prob:0%}</> <@ba.vup>Physical</> and <@ba.vup>Arts Dodge</>",
+            "skillType": "PASSIVE",
+            "durationType": "NONE",
+            "spData": {
+              "spType": 8,
+              "levelUpCost": null,
+              "maxChargeTime": 0,
+              "spCost": 0,
+              "initSp": 0,
+              "increment": 0.0
+            },
+            "prefabId": null,
+            "duration": 0.0,
+            "blackboard": [
+              {
+                "key": "prob",
+                "value": 0.15,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "name": "Bionic Device",
+            "rangeId": "0-1",
+            "description": "All Robotters gain <@ba.vup>{prob:0%}</> <@ba.vup>Physical</> and <@ba.vup>Arts Dodge</>",
+            "skillType": "PASSIVE",
+            "durationType": "NONE",
+            "spData": {
+              "spType": 8,
+              "levelUpCost": null,
+              "maxChargeTime": 0,
+              "spCost": 0,
+              "initSp": 0,
+              "increment": 0.0
+            },
+            "prefabId": null,
+            "duration": 0.0,
+            "blackboard": [
+              {
+                "key": "prob",
+                "value": 0.18,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "name": "Bionic Device",
+            "rangeId": "0-1",
+            "description": "All Robotters gain <@ba.vup>{prob:0%}</> <@ba.vup>Physical</> and <@ba.vup>Arts Dodge</>",
+            "skillType": "PASSIVE",
+            "durationType": "NONE",
+            "spData": {
+              "spType": 8,
+              "levelUpCost": null,
+              "maxChargeTime": 0,
+              "spCost": 0,
+              "initSp": 0,
+              "increment": 0.0
+            },
+            "prefabId": null,
+            "duration": 0.0,
+            "blackboard": [
+              {
+                "key": "prob",
+                "value": 0.2,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "name": "Bionic Device",
+            "rangeId": "0-1",
+            "description": "All Robotters gain <@ba.vup>{prob:0%}</> <@ba.vup>Physical</> and <@ba.vup>Arts Dodge</>",
+            "skillType": "PASSIVE",
+            "durationType": "NONE",
+            "spData": {
+              "spType": 8,
+              "levelUpCost": null,
+              "maxChargeTime": 0,
+              "spCost": 0,
+              "initSp": 0,
+              "increment": 0.0
+            },
+            "prefabId": null,
+            "duration": 0.0,
+            "blackboard": [
+              {
+                "key": "prob",
+                "value": 0.22,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "name": "Bionic Device",
+            "rangeId": "0-1",
+            "description": "All Robotters gain <@ba.vup>{prob:0%}</> <@ba.vup>Physical</> and <@ba.vup>Arts Dodge</>",
+            "skillType": "PASSIVE",
+            "durationType": "NONE",
+            "spData": {
+              "spType": 8,
+              "levelUpCost": null,
+              "maxChargeTime": 0,
+              "spCost": 0,
+              "initSp": 0,
+              "increment": 0.0
+            },
+            "prefabId": null,
+            "duration": 0.0,
+            "blackboard": [
+              {
+                "key": "prob",
+                "value": 0.25,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "name": "Bionic Device",
+            "rangeId": "x-5",
+            "description": "All Robotters gain <@ba.vup>{prob:0%}</> <@ba.vup>Physical</> and <@ba.vup>Arts Dodge</>\nAllies on Robotters' four adjacent tiles also gain the same buff",
+            "skillType": "PASSIVE",
+            "durationType": "NONE",
+            "spData": {
+              "spType": 8,
+              "levelUpCost": null,
+              "maxChargeTime": 0,
+              "spCost": 0,
+              "initSp": 0,
+              "increment": 0.0
+            },
+            "prefabId": null,
+            "duration": 0.0,
+            "blackboard": [
+              {
+                "key": "prob",
+                "value": 0.25,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "name": "Bionic Device",
+            "rangeId": "x-5",
+            "description": "All Robotters gain <@ba.vup>{prob:0%}</> <@ba.vup>Physical</> and <@ba.vup>Arts Dodge</>\nAllies on Robotters' four adjacent tiles also gain the same buff",
+            "skillType": "PASSIVE",
+            "durationType": "NONE",
+            "spData": {
+              "spType": 8,
+              "levelUpCost": null,
+              "maxChargeTime": 0,
+              "spCost": 0,
+              "initSp": 0,
+              "increment": 0.0
+            },
+            "prefabId": null,
+            "duration": 0.0,
+            "blackboard": [
+              {
+                "key": "prob",
+                "value": 0.3,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "name": "Bionic Device",
+            "rangeId": "x-5",
+            "description": "All Robotters gain <@ba.vup>{prob:0%}</> <@ba.vup>Physical</> and <@ba.vup>Arts Dodge</>\nAllies on Robotters' four adjacent tiles also gain the same buff",
+            "skillType": "PASSIVE",
+            "durationType": "NONE",
+            "spData": {
+              "spType": 8,
+              "levelUpCost": null,
+              "maxChargeTime": 0,
+              "spCost": 0,
+              "initSp": 0,
+              "increment": 0.0
+            },
+            "prefabId": null,
+            "duration": 0.0,
+            "blackboard": [
+              {
+                "key": "prob",
+                "value": 0.35,
+                "valueStr": null
+              }
+            ]
+          }
+        ],
+        "skchr_otter_2": [
+          {
+            "name": "Detonate and Recycle",
+            "rangeId": "x-4",
+            "description": "Detonates all Robotters immediately, dealing <@ba.vup>{atk_scale:0%}</> of Mayer's ATK as Arts damage to nearby enemies and <$ba.stun>Stunning</> all hits targets for <@ba.vup>{stun}</> second(s)\n<@ba.rem>The exploded Robotters will be recycled</>",
+            "skillType": "MANUAL",
+            "durationType": "NONE",
+            "spData": {
+              "spType": "INCREASE_WITH_TIME",
+              "levelUpCost": null,
+              "maxChargeTime": 1,
+              "spCost": 40,
+              "initSp": 0,
+              "increment": 1.0
+            },
+            "prefabId": "skchr_otter_2",
+            "duration": 0.0,
+            "blackboard": [
+              {
+                "key": "atk_scale",
+                "value": 3.0,
+                "valueStr": null
+              },
+              {
+                "key": "stun",
+                "value": 1.0,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "name": "Detonate and Recycle",
+            "rangeId": "x-4",
+            "description": "Detonates all Robotters immediately, dealing <@ba.vup>{atk_scale:0%}</> of Mayer's ATK as Arts damage to nearby enemies and <$ba.stun>Stunning</> all hits targets for <@ba.vup>{stun}</> second(s)\n<@ba.rem>The exploded Robotters will be recycled</>",
+            "skillType": "MANUAL",
+            "durationType": "NONE",
+            "spData": {
+              "spType": "INCREASE_WITH_TIME",
+              "levelUpCost": null,
+              "maxChargeTime": 1,
+              "spCost": 39,
+              "initSp": 0,
+              "increment": 1.0
+            },
+            "prefabId": "skchr_otter_2",
+            "duration": 0.0,
+            "blackboard": [
+              {
+                "key": "atk_scale",
+                "value": 3.2,
+                "valueStr": null
+              },
+              {
+                "key": "stun",
+                "value": 1.0,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "name": "Detonate and Recycle",
+            "rangeId": "x-4",
+            "description": "Detonates all Robotters immediately, dealing <@ba.vup>{atk_scale:0%}</> of Mayer's ATK as Arts damage to nearby enemies and <$ba.stun>Stunning</> all hits targets for <@ba.vup>{stun}</> second(s)\n<@ba.rem>The exploded Robotters will be recycled</>",
+            "skillType": "MANUAL",
+            "durationType": "NONE",
+            "spData": {
+              "spType": "INCREASE_WITH_TIME",
+              "levelUpCost": null,
+              "maxChargeTime": 1,
+              "spCost": 38,
+              "initSp": 0,
+              "increment": 1.0
+            },
+            "prefabId": "skchr_otter_2",
+            "duration": 0.0,
+            "blackboard": [
+              {
+                "key": "atk_scale",
+                "value": 3.5,
+                "valueStr": null
+              },
+              {
+                "key": "stun",
+                "value": 1.0,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "name": "Detonate and Recycle",
+            "rangeId": "x-4",
+            "description": "Detonates all Robotters immediately, dealing <@ba.vup>{atk_scale:0%}</> of Mayer's ATK as Arts damage to nearby enemies and <$ba.stun>Stunning</> all hits targets for <@ba.vup>{stun}</> second(s)\n<@ba.rem>The exploded Robotters will be recycled</>",
+            "skillType": "MANUAL",
+            "durationType": "NONE",
+            "spData": {
+              "spType": "INCREASE_WITH_TIME",
+              "levelUpCost": null,
+              "maxChargeTime": 1,
+              "spCost": 37,
+              "initSp": 0,
+              "increment": 1.0
+            },
+            "prefabId": "skchr_otter_2",
+            "duration": 0.0,
+            "blackboard": [
+              {
+                "key": "atk_scale",
+                "value": 3.8,
+                "valueStr": null
+              },
+              {
+                "key": "stun",
+                "value": 1.0,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "name": "Detonate and Recycle",
+            "rangeId": "x-4",
+            "description": "Detonates all Robotters immediately, dealing <@ba.vup>{atk_scale:0%}</> of Mayer's ATK as Arts damage to nearby enemies and <$ba.stun>Stunning</> all hits targets for <@ba.vup>{stun}</> second(s)\n<@ba.rem>The exploded Robotters will be recycled</>",
+            "skillType": "MANUAL",
+            "durationType": "NONE",
+            "spData": {
+              "spType": "INCREASE_WITH_TIME",
+              "levelUpCost": null,
+              "maxChargeTime": 1,
+              "spCost": 36,
+              "initSp": 0,
+              "increment": 1.0
+            },
+            "prefabId": "skchr_otter_2",
+            "duration": 0.0,
+            "blackboard": [
+              {
+                "key": "atk_scale",
+                "value": 4.0,
+                "valueStr": null
+              },
+              {
+                "key": "stun",
+                "value": 1.0,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "name": "Detonate and Recycle",
+            "rangeId": "x-4",
+            "description": "Detonates all Robotters immediately, dealing <@ba.vup>{atk_scale:0%}</> of Mayer's ATK as Arts damage to nearby enemies and <$ba.stun>Stunning</> all hits targets for <@ba.vup>{stun}</> second(s)\n<@ba.rem>The exploded Robotters will be recycled</>",
+            "skillType": "MANUAL",
+            "durationType": "NONE",
+            "spData": {
+              "spType": "INCREASE_WITH_TIME",
+              "levelUpCost": null,
+              "maxChargeTime": 1,
+              "spCost": 35,
+              "initSp": 0,
+              "increment": 1.0
+            },
+            "prefabId": "skchr_otter_2",
+            "duration": 0.0,
+            "blackboard": [
+              {
+                "key": "atk_scale",
+                "value": 4.2,
+                "valueStr": null
+              },
+              {
+                "key": "stun",
+                "value": 1.0,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "name": "Detonate and Recycle",
+            "rangeId": "x-4",
+            "description": "Detonates all Robotters immediately, dealing <@ba.vup>{atk_scale:0%}</> of Mayer's ATK as Arts damage to nearby enemies and <$ba.stun>Stunning</> all hits targets for <@ba.vup>{stun}</> second(s)\n<@ba.rem>The exploded Robotters will be recycled</>",
+            "skillType": "MANUAL",
+            "durationType": "NONE",
+            "spData": {
+              "spType": "INCREASE_WITH_TIME",
+              "levelUpCost": null,
+              "maxChargeTime": 1,
+              "spCost": 34,
+              "initSp": 0,
+              "increment": 1.0
+            },
+            "prefabId": "skchr_otter_2",
+            "duration": 0.0,
+            "blackboard": [
+              {
+                "key": "atk_scale",
+                "value": 4.5,
+                "valueStr": null
+              },
+              {
+                "key": "stun",
+                "value": 1.0,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "name": "Detonate and Recycle",
+            "rangeId": "x-4",
+            "description": "Detonates all Robotters immediately, dealing <@ba.vup>{atk_scale:0%}</> of Mayer's ATK as Arts damage to nearby enemies and <$ba.stun>Stunning</> all hits targets for <@ba.vup>{stun}</> second(s)\n<@ba.rem>The exploded Robotters will be recycled</>",
+            "skillType": "MANUAL",
+            "durationType": "NONE",
+            "spData": {
+              "spType": "INCREASE_WITH_TIME",
+              "levelUpCost": null,
+              "maxChargeTime": 1,
+              "spCost": 33,
+              "initSp": 0,
+              "increment": 1.0
+            },
+            "prefabId": "skchr_otter_2",
+            "duration": 0.0,
+            "blackboard": [
+              {
+                "key": "atk_scale",
+                "value": 5.0,
+                "valueStr": null
+              },
+              {
+                "key": "stun",
+                "value": 1.5,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "name": "Detonate and Recycle",
+            "rangeId": "x-4",
+            "description": "Detonates all Robotters immediately, dealing <@ba.vup>{atk_scale:0%}</> of Mayer's ATK as Arts damage to nearby enemies and <$ba.stun>Stunning</> all hits targets for <@ba.vup>{stun}</> second(s)\n<@ba.rem>The exploded Robotters will be recycled</>",
+            "skillType": "MANUAL",
+            "durationType": "NONE",
+            "spData": {
+              "spType": "INCREASE_WITH_TIME",
+              "levelUpCost": null,
+              "maxChargeTime": 1,
+              "spCost": 32,
+              "initSp": 0,
+              "increment": 1.0
+            },
+            "prefabId": "skchr_otter_2",
+            "duration": 0.0,
+            "blackboard": [
+              {
+                "key": "atk_scale",
+                "value": 5.5,
+                "valueStr": null
+              },
+              {
+                "key": "stun",
+                "value": 1.5,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "name": "Detonate and Recycle",
+            "rangeId": "x-4",
+            "description": "Detonates all Robotters immediately, dealing <@ba.vup>{atk_scale:0%}</> of Mayer's ATK as Arts damage to nearby enemies and <$ba.stun>Stunning</> all hits targets for <@ba.vup>{stun}</> second(s)\n<@ba.rem>The exploded Robotters will be recycled</>",
+            "skillType": "MANUAL",
+            "durationType": "NONE",
+            "spData": {
+              "spType": "INCREASE_WITH_TIME",
+              "levelUpCost": null,
+              "maxChargeTime": 1,
+              "spCost": 30,
+              "initSp": 0,
+              "increment": 1.0
+            },
+            "prefabId": "skchr_otter_2",
+            "duration": 0.0,
+            "blackboard": [
+              {
+                "key": "atk_scale",
+                "value": 6.0,
+                "valueStr": null
+              },
+              {
+                "key": "stun",
+                "value": 2.0,
+                "valueStr": null
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "token_10004_otter_motter": {
+      "name": "Robotter",
+      "profession": "TOKEN",
+      "subProfessionId": "notchar1",
+      "position": "MELEE",
+      "rarity": "TIER_5",
+      "phases": [
+        {
+          "characterPrefabKey": "token_10004_otter_motter",
+          "rangeId": "0-1",
+          "maxLevel": 50,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 975,
+                "atk": 185,
+                "def": 175,
+                "magicResistance": 0.0,
+                "cost": 5,
+                "blockCnt": 1,
+                "moveSpeed": 1.0,
+                "attackSpeed": 100.0,
+                "baseAttackTime": 1.25,
+                "respawnTime": 10,
+                "hpRecoveryPerSec": 0.0,
+                "spRecoveryPerSec": 1.0,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 50,
+              "data": {
+                "maxHp": 1150,
+                "atk": 263,
+                "def": 280,
+                "magicResistance": 0.0,
+                "cost": 5,
+                "blockCnt": 1,
+                "moveSpeed": 1.0,
+                "attackSpeed": 100.0,
+                "baseAttackTime": 1.25,
+                "respawnTime": 10,
+                "hpRecoveryPerSec": 0.0,
+                "spRecoveryPerSec": 1.0,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "evolveCost": null
+        },
+        {
+          "characterPrefabKey": "token_10004_otter_motter",
+          "rangeId": "0-1",
+          "maxLevel": 70,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 1250,
+                "atk": 280,
+                "def": 290,
+                "magicResistance": 0.0,
+                "cost": 5,
+                "blockCnt": 1,
+                "moveSpeed": 1.0,
+                "attackSpeed": 100.0,
+                "baseAttackTime": 1.25,
+                "respawnTime": 10,
+                "hpRecoveryPerSec": 0.0,
+                "spRecoveryPerSec": 1.0,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 70,
+              "data": {
+                "maxHp": 1480,
+                "atk": 350,
+                "def": 350,
+                "magicResistance": 0.0,
+                "cost": 5,
+                "blockCnt": 1,
+                "moveSpeed": 1.0,
+                "attackSpeed": 100.0,
+                "baseAttackTime": 1.25,
+                "respawnTime": 10,
+                "hpRecoveryPerSec": 0.0,
+                "spRecoveryPerSec": 1.0,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "evolveCost": null
+        },
+        {
+          "characterPrefabKey": "token_10004_otter_motter",
+          "rangeId": "0-1",
+          "maxLevel": 80,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 1530,
+                "atk": 370,
+                "def": 360,
+                "magicResistance": 0.0,
+                "cost": 5,
+                "blockCnt": 1,
+                "moveSpeed": 1.0,
+                "attackSpeed": 100.0,
+                "baseAttackTime": 1.25,
+                "respawnTime": 10,
+                "hpRecoveryPerSec": 0.0,
+                "spRecoveryPerSec": 1.0,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 80,
+              "data": {
+                "maxHp": 1950,
+                "atk": 444,
+                "def": 415,
+                "magicResistance": 0.0,
+                "cost": 5,
+                "blockCnt": 1,
+                "moveSpeed": 1.0,
+                "attackSpeed": 100.0,
+                "baseAttackTime": 1.25,
+                "respawnTime": 10,
+                "hpRecoveryPerSec": 0.0,
+                "spRecoveryPerSec": 1.0,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "evolveCost": null
+        }
+      ],
+      "skills": [
+        {
+          "skillId": "sktok_motter_1",
+          "overridePrefabKey": null,
+          "overrideTokenKey": null,
+          "levelUpCostCond": [
+            {
+              "unlockCond": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "lvlUpTime": 0,
+              "levelUpCost": null
+            },
+            {
+              "unlockCond": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "lvlUpTime": 0,
+              "levelUpCost": null
+            },
+            {
+              "unlockCond": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "lvlUpTime": 0,
+              "levelUpCost": null
+            }
+          ],
+          "unlockCond": {
+            "phase": "PHASE_0",
+            "level": 1
+          }
+        },
+        {
+          "skillId": "sktok_motter_2",
+          "overridePrefabKey": null,
+          "overrideTokenKey": null,
+          "levelUpCostCond": [
+            {
+              "unlockCond": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "lvlUpTime": 0,
+              "levelUpCost": null
+            },
+            {
+              "unlockCond": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "lvlUpTime": 0,
+              "levelUpCost": null
+            },
+            {
+              "unlockCond": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "lvlUpTime": 0,
+              "levelUpCost": null
+            }
+          ],
+          "unlockCond": {
+            "phase": "PHASE_1",
+            "level": 1
+          }
+        }
+      ],
+      "talents": [
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_0",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Robotter",
+              "description": "Reduces the ASPD of enemies blocked by this unit by -10",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": -10.0,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_deploy_count",
+                  "value": 3.0,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Robotter",
+              "description": "Reduces the ASPD of enemies blocked by this unit by -25",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": -25.0,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_deploy_count",
+                  "value": 4.0,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Robotter",
+              "description": "Reduces the ASPD of enemies blocked by this unit by -25",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "attack_speed",
+                  "value": -25.0,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_deploy_count",
+                  "value": 5.0,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            }
+          ]
+        }
+      ],
+      "trait": null,
+      "nationId": null,
+      "groupId": null,
+      "teamId": null,
+      "skillLevels": {
+        "sktok_motter_1": [
+          {
+            "name": "Bionic Device",
+            "rangeId": "0-1",
+            "description": "All Robotters gain <@ba.vup>{prob:0%}</> <@ba.vup>Physical</> and <@ba.vup>Arts Dodge</>",
+            "skillType": "PASSIVE",
+            "durationType": "NONE",
+            "spData": {
+              "spType": 8,
+              "levelUpCost": null,
+              "maxChargeTime": 0,
+              "spCost": 0,
+              "initSp": 0,
+              "increment": 0.0
+            },
+            "prefabId": "sktok_motter_1",
+            "duration": 0.0,
+            "blackboard": [
+              {
+                "key": "prob",
+                "value": 0.1,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "name": "Bionic Device",
+            "rangeId": "0-1",
+            "description": "All Robotters gain <@ba.vup>{prob:0%}</> <@ba.vup>Physical</> and <@ba.vup>Arts Dodge</>",
+            "skillType": "PASSIVE",
+            "durationType": "NONE",
+            "spData": {
+              "spType": 8,
+              "levelUpCost": null,
+              "maxChargeTime": 0,
+              "spCost": 0,
+              "initSp": 0,
+              "increment": 0.0
+            },
+            "prefabId": "sktok_motter_1",
+            "duration": 0.0,
+            "blackboard": [
+              {
+                "key": "prob",
+                "value": 0.13,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "name": "Bionic Device",
+            "rangeId": "0-1",
+            "description": "All Robotters gain <@ba.vup>{prob:0%}</> <@ba.vup>Physical</> and <@ba.vup>Arts Dodge</>",
+            "skillType": "PASSIVE",
+            "durationType": "NONE",
+            "spData": {
+              "spType": 8,
+              "levelUpCost": null,
+              "maxChargeTime": 0,
+              "spCost": 0,
+              "initSp": 0,
+              "increment": 0.0
+            },
+            "prefabId": "sktok_motter_1",
+            "duration": 0.0,
+            "blackboard": [
+              {
+                "key": "prob",
+                "value": 0.15,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "name": "Bionic Device",
+            "rangeId": "0-1",
+            "description": "All Robotters gain <@ba.vup>{prob:0%}</> <@ba.vup>Physical</> and <@ba.vup>Arts Dodge</>",
+            "skillType": "PASSIVE",
+            "durationType": "NONE",
+            "spData": {
+              "spType": 8,
+              "levelUpCost": null,
+              "maxChargeTime": 0,
+              "spCost": 0,
+              "initSp": 0,
+              "increment": 0.0
+            },
+            "prefabId": "sktok_motter_1",
+            "duration": 0.0,
+            "blackboard": [
+              {
+                "key": "prob",
+                "value": 0.18,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "name": "Bionic Device",
+            "rangeId": "0-1",
+            "description": "All Robotters gain <@ba.vup>{prob:0%}</> <@ba.vup>Physical</> and <@ba.vup>Arts Dodge</>",
+            "skillType": "PASSIVE",
+            "durationType": "NONE",
+            "spData": {
+              "spType": 8,
+              "levelUpCost": null,
+              "maxChargeTime": 0,
+              "spCost": 0,
+              "initSp": 0,
+              "increment": 0.0
+            },
+            "prefabId": "sktok_motter_1",
+            "duration": 0.0,
+            "blackboard": [
+              {
+                "key": "prob",
+                "value": 0.2,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "name": "Bionic Device",
+            "rangeId": "0-1",
+            "description": "All Robotters gain <@ba.vup>{prob:0%}</> <@ba.vup>Physical</> and <@ba.vup>Arts Dodge</>",
+            "skillType": "PASSIVE",
+            "durationType": "NONE",
+            "spData": {
+              "spType": 8,
+              "levelUpCost": null,
+              "maxChargeTime": 0,
+              "spCost": 0,
+              "initSp": 0,
+              "increment": 0.0
+            },
+            "prefabId": "sktok_motter_1",
+            "duration": 0.0,
+            "blackboard": [
+              {
+                "key": "prob",
+                "value": 0.22,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "name": "Bionic Device",
+            "rangeId": "0-1",
+            "description": "All Robotters gain <@ba.vup>{prob:0%}</> <@ba.vup>Physical</> and <@ba.vup>Arts Dodge</>",
+            "skillType": "PASSIVE",
+            "durationType": "NONE",
+            "spData": {
+              "spType": 8,
+              "levelUpCost": null,
+              "maxChargeTime": 0,
+              "spCost": 0,
+              "initSp": 0,
+              "increment": 0.0
+            },
+            "prefabId": "sktok_motter_1",
+            "duration": 0.0,
+            "blackboard": [
+              {
+                "key": "prob",
+                "value": 0.25,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "name": "Bionic Device",
+            "rangeId": "x-5",
+            "description": "All Robotters gain <@ba.vup>{prob:0%}</> <@ba.vup>Physical</> and <@ba.vup>Arts Dodge</>\nAllies on Robotters' four adjacent tiles also gain the same buff",
+            "skillType": "PASSIVE",
+            "durationType": "NONE",
+            "spData": {
+              "spType": 8,
+              "levelUpCost": null,
+              "maxChargeTime": 0,
+              "spCost": 0,
+              "initSp": 0,
+              "increment": 0.0
+            },
+            "prefabId": "sktok_motter_1",
+            "duration": 0.0,
+            "blackboard": [
+              {
+                "key": "prob",
+                "value": 0.25,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "name": "Bionic Device",
+            "rangeId": "x-5",
+            "description": "All Robotters gain <@ba.vup>{prob:0%}</> <@ba.vup>Physical</> and <@ba.vup>Arts Dodge</>\nAllies on Robotters' four adjacent tiles also gain the same buff",
+            "skillType": "PASSIVE",
+            "durationType": "NONE",
+            "spData": {
+              "spType": 8,
+              "levelUpCost": null,
+              "maxChargeTime": 0,
+              "spCost": 0,
+              "initSp": 0,
+              "increment": 0.0
+            },
+            "prefabId": "sktok_motter_1",
+            "duration": 0.0,
+            "blackboard": [
+              {
+                "key": "prob",
+                "value": 0.3,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "name": "Bionic Device",
+            "rangeId": "x-5",
+            "description": "All Robotters gain <@ba.vup>{prob:0%}</> <@ba.vup>Physical</> and <@ba.vup>Arts Dodge</>\nAllies on Robotters' four adjacent tiles also gain the same buff",
+            "skillType": "PASSIVE",
+            "durationType": "NONE",
+            "spData": {
+              "spType": 8,
+              "levelUpCost": null,
+              "maxChargeTime": 0,
+              "spCost": 0,
+              "initSp": 0,
+              "increment": 0.0
+            },
+            "prefabId": "sktok_motter_1",
+            "duration": 0.0,
+            "blackboard": [
+              {
+                "key": "prob",
+                "value": 0.35,
+                "valueStr": null
+              }
+            ]
+          }
+        ],
+        "sktok_motter_2": [
+          {
+            "name": "Detonate and Recycle",
+            "rangeId": "x-4",
+            "description": "Detonates all deployed Robotters, dealing <@ba.vup>{atk_scale:0%}</> of Mayer's ATK as Arts damage to nearby enemies and <$ba.stun>Stunning</> them for <@ba.vup>{stun}</> seconds\n<@ba.rem>The exploded Robotters will be recycled</>",
+            "skillType": "MANUAL",
+            "durationType": "NONE",
+            "spData": {
+              "spType": "INCREASE_WITH_TIME",
+              "levelUpCost": null,
+              "maxChargeTime": 1,
+              "spCost": 0,
+              "initSp": 0,
+              "increment": 1.0
+            },
+            "prefabId": "sktok_motter_2",
+            "duration": 0.0,
+            "blackboard": [
+              {
+                "key": "atk_scale",
+                "value": 3.0,
+                "valueStr": null
+              },
+              {
+                "key": "stun",
+                "value": 1.0,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "name": "Detonate and Recycle",
+            "rangeId": "x-4",
+            "description": "Detonates all deployed Robotters, dealing <@ba.vup>{atk_scale:0%}</> of Mayer's ATK as Arts damage to nearby enemies and <$ba.stun>Stunning</> them for <@ba.vup>{stun}</> seconds\n<@ba.rem>The exploded Robotters will be recycled</>",
+            "skillType": "MANUAL",
+            "durationType": "NONE",
+            "spData": {
+              "spType": "INCREASE_WITH_TIME",
+              "levelUpCost": null,
+              "maxChargeTime": 1,
+              "spCost": 0,
+              "initSp": 0,
+              "increment": 1.0
+            },
+            "prefabId": "sktok_motter_2",
+            "duration": 0.0,
+            "blackboard": [
+              {
+                "key": "atk_scale",
+                "value": 3.2,
+                "valueStr": null
+              },
+              {
+                "key": "stun",
+                "value": 1.0,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "name": "Detonate and Recycle",
+            "rangeId": "x-4",
+            "description": "Detonates all deployed Robotters, dealing <@ba.vup>{atk_scale:0%}</> of Mayer's ATK as Arts damage to nearby enemies and <$ba.stun>Stunning</> them for <@ba.vup>{stun}</> seconds\n<@ba.rem>The exploded Robotters will be recycled</>",
+            "skillType": "MANUAL",
+            "durationType": "NONE",
+            "spData": {
+              "spType": "INCREASE_WITH_TIME",
+              "levelUpCost": null,
+              "maxChargeTime": 1,
+              "spCost": 0,
+              "initSp": 0,
+              "increment": 1.0
+            },
+            "prefabId": "sktok_motter_2",
+            "duration": 0.0,
+            "blackboard": [
+              {
+                "key": "atk_scale",
+                "value": 3.5,
+                "valueStr": null
+              },
+              {
+                "key": "stun",
+                "value": 1.0,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "name": "Detonate and Recycle",
+            "rangeId": "x-4",
+            "description": "Detonates all deployed Robotters, dealing <@ba.vup>{atk_scale:0%}</> of Mayer's ATK as Arts damage to nearby enemies and <$ba.stun>Stunning</> them for <@ba.vup>{stun}</> seconds\n<@ba.rem>The exploded Robotters will be recycled</>",
+            "skillType": "MANUAL",
+            "durationType": "NONE",
+            "spData": {
+              "spType": "INCREASE_WITH_TIME",
+              "levelUpCost": null,
+              "maxChargeTime": 1,
+              "spCost": 0,
+              "initSp": 0,
+              "increment": 1.0
+            },
+            "prefabId": "sktok_motter_2",
+            "duration": 0.0,
+            "blackboard": [
+              {
+                "key": "atk_scale",
+                "value": 3.8,
+                "valueStr": null
+              },
+              {
+                "key": "stun",
+                "value": 1.0,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "name": "Detonate and Recycle",
+            "rangeId": "x-4",
+            "description": "Detonates all deployed Robotters, dealing <@ba.vup>{atk_scale:0%}</> of Mayer's ATK as Arts damage to nearby enemies and <$ba.stun>Stunning</> them for <@ba.vup>{stun}</> seconds\n<@ba.rem>The exploded Robotters will be recycled</>",
+            "skillType": "MANUAL",
+            "durationType": "NONE",
+            "spData": {
+              "spType": "INCREASE_WITH_TIME",
+              "levelUpCost": null,
+              "maxChargeTime": 1,
+              "spCost": 0,
+              "initSp": 0,
+              "increment": 1.0
+            },
+            "prefabId": "sktok_motter_2",
+            "duration": 0.0,
+            "blackboard": [
+              {
+                "key": "atk_scale",
+                "value": 4.0,
+                "valueStr": null
+              },
+              {
+                "key": "stun",
+                "value": 1.0,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "name": "Detonate and Recycle",
+            "rangeId": "x-4",
+            "description": "Detonates all deployed Robotters, dealing <@ba.vup>{atk_scale:0%}</> of Mayer's ATK as Arts damage to nearby enemies and <$ba.stun>Stunning</> them for <@ba.vup>{stun}</> seconds\n<@ba.rem>The exploded Robotters will be recycled</>",
+            "skillType": "MANUAL",
+            "durationType": "NONE",
+            "spData": {
+              "spType": "INCREASE_WITH_TIME",
+              "levelUpCost": null,
+              "maxChargeTime": 1,
+              "spCost": 0,
+              "initSp": 0,
+              "increment": 1.0
+            },
+            "prefabId": "sktok_motter_2",
+            "duration": 0.0,
+            "blackboard": [
+              {
+                "key": "atk_scale",
+                "value": 4.2,
+                "valueStr": null
+              },
+              {
+                "key": "stun",
+                "value": 1.0,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "name": "Detonate and Recycle",
+            "rangeId": "x-4",
+            "description": "Detonates all deployed Robotters, dealing <@ba.vup>{atk_scale:0%}</> of Mayer's ATK as Arts damage to nearby enemies and <$ba.stun>Stunning</> them for <@ba.vup>{stun}</> seconds\n<@ba.rem>The exploded Robotters will be recycled</>",
+            "skillType": "MANUAL",
+            "durationType": "NONE",
+            "spData": {
+              "spType": "INCREASE_WITH_TIME",
+              "levelUpCost": null,
+              "maxChargeTime": 1,
+              "spCost": 0,
+              "initSp": 0,
+              "increment": 1.0
+            },
+            "prefabId": "sktok_motter_2",
+            "duration": 0.0,
+            "blackboard": [
+              {
+                "key": "atk_scale",
+                "value": 4.5,
+                "valueStr": null
+              },
+              {
+                "key": "stun",
+                "value": 1.0,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "name": "Detonate and Recycle",
+            "rangeId": "x-4",
+            "description": "Detonates all deployed Robotters, dealing <@ba.vup>{atk_scale:0%}</> of Mayer's ATK as Arts damage to nearby enemies and <$ba.stun>Stunning</> them for <@ba.vup>{stun}</> seconds\n<@ba.rem>The exploded Robotters will be recycled</>",
+            "skillType": "MANUAL",
+            "durationType": "NONE",
+            "spData": {
+              "spType": "INCREASE_WITH_TIME",
+              "levelUpCost": null,
+              "maxChargeTime": 1,
+              "spCost": 0,
+              "initSp": 0,
+              "increment": 1.0
+            },
+            "prefabId": "sktok_motter_2",
+            "duration": 0.0,
+            "blackboard": [
+              {
+                "key": "atk_scale",
+                "value": 5.0,
+                "valueStr": null
+              },
+              {
+                "key": "stun",
+                "value": 1.5,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "name": "Detonate and Recycle",
+            "rangeId": "x-4",
+            "description": "Detonates all deployed Robotters, dealing <@ba.vup>{atk_scale:0%}</> of Mayer's ATK as Arts damage to nearby enemies and <$ba.stun>Stunning</> them for <@ba.vup>{stun}</> seconds\n<@ba.rem>The exploded Robotters will be recycled</>",
+            "skillType": "MANUAL",
+            "durationType": "NONE",
+            "spData": {
+              "spType": "INCREASE_WITH_TIME",
+              "levelUpCost": null,
+              "maxChargeTime": 1,
+              "spCost": 0,
+              "initSp": 0,
+              "increment": 1.0
+            },
+            "prefabId": "sktok_motter_2",
+            "duration": 0.0,
+            "blackboard": [
+              {
+                "key": "atk_scale",
+                "value": 5.5,
+                "valueStr": null
+              },
+              {
+                "key": "stun",
+                "value": 1.5,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "name": "Detonate and Recycle",
+            "rangeId": "x-4",
+            "description": "Detonates all deployed Robotters, dealing <@ba.vup>{atk_scale:0%}</> of Mayer's ATK as Arts damage to nearby enemies and <$ba.stun>Stunning</> them for <@ba.vup>{stun}</> seconds\n<@ba.rem>The exploded Robotters will be recycled</>",
+            "skillType": "MANUAL",
+            "durationType": "NONE",
+            "spData": {
+              "spType": "INCREASE_WITH_TIME",
+              "levelUpCost": null,
+              "maxChargeTime": 1,
+              "spCost": 0,
+              "initSp": 0,
+              "increment": 1.0
+            },
+            "prefabId": "sktok_motter_2",
+            "duration": 0.0,
+            "blackboard": [
+              {
+                "key": "atk_scale",
+                "value": 6.0,
+                "valueStr": null
+              },
+              {
+                "key": "stun",
+                "value": 2.0,
+                "valueStr": null
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "rangeTable": {
+    "x-4": {
+      "id": "x-4",
+      "direction": 1,
+      "grids": [
+        {
+          "row": 1,
+          "col": -1
+        },
+        {
+          "row": 1,
+          "col": 0
+        },
+        {
+          "row": 1,
+          "col": 1
+        },
+        {
+          "row": 0,
+          "col": -1
+        },
+        {
+          "row": 0,
+          "col": 0
+        },
+        {
+          "row": 0,
+          "col": 1
+        },
+        {
+          "row": -1,
+          "col": -1
+        },
+        {
+          "row": -1,
+          "col": 0
+        },
+        {
+          "row": -1,
+          "col": 1
+        }
+      ]
+    },
+    "0-1": {
+      "id": "0-1",
+      "direction": 1,
+      "grids": [
+        {
+          "row": 0,
+          "col": 0
+        }
+      ]
+    },
+    "x-5": {
+      "id": "x-5",
+      "direction": 1,
+      "grids": [
+        {
+          "row": 1,
+          "col": 0
+        },
+        {
+          "row": 0,
+          "col": -1
+        },
+        {
+          "row": 0,
+          "col": 0
+        },
+        {
+          "row": 0,
+          "col": 1
+        },
+        {
+          "row": -1,
+          "col": 0
+        }
+      ]
+    },
+    "3-1": {
+      "id": "3-1",
+      "direction": 1,
+      "grids": [
+        {
+          "row": 1,
+          "col": 0
+        },
+        {
+          "row": 1,
+          "col": 1
+        },
+        {
+          "row": 1,
+          "col": 2
+        },
+        {
+          "row": 0,
+          "col": 0
+        },
+        {
+          "row": 0,
+          "col": 1
+        },
+        {
+          "row": 0,
+          "col": 2
+        },
+        {
+          "row": 0,
+          "col": 3
+        },
+        {
+          "row": -1,
+          "col": 0
+        },
+        {
+          "row": -1,
+          "col": 1
+        },
+        {
+          "row": -1,
+          "col": 2
+        }
+      ]
+    },
+    "3-6": {
+      "id": "3-6",
+      "direction": 1,
+      "grids": [
+        {
+          "row": 1,
+          "col": 0
+        },
+        {
+          "row": 1,
+          "col": 1
+        },
+        {
+          "row": 1,
+          "col": 2
+        },
+        {
+          "row": 0,
+          "col": 0
+        },
+        {
+          "row": 0,
+          "col": 1
+        },
+        {
+          "row": 0,
+          "col": 2
+        },
+        {
+          "row": -1,
+          "col": 0
+        },
+        {
+          "row": -1,
+          "col": 1
+        },
+        {
+          "row": -1,
+          "col": 2
+        }
+      ]
+    }
+  },
+  "buffTemplates": {
+    "evade": {
+      "templateKey": "evade",
+      "effectKey": "",
+      "onEventPriority": "DEFAULT",
+      "eventToActions": {
+        "ON_TAKE_DAMAGE": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+Evade, Assembly-CSharp",
+            "_damageMask": "PHYSICAL_AND_MAGICAL",
+            "_applyWayFilter": "ALL"
+          }
+        ]
+      }
+    },
+    "charge_token[born]": {
+      "templateKey": "charge_token[born]",
+      "effectKey": "",
+      "onEventPriority": "DEFAULT",
+      "eventToActions": {
+        "ON_OWNER_BORN": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+RechargeToken, Assembly-CSharp",
+            "_rechargeTiming": "NORMAL",
+            "_refreshRemainingCnt": false
+          }
+        ]
+      }
+    },
+    "trig_skill": {
+      "templateKey": "trig_skill",
+      "effectKey": "",
+      "onEventPriority": "DEFAULT",
+      "eventToActions": {
+        "ON_BUFF_START": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+TriggerSkill, Assembly-CSharp",
+            "_targetType": "BUFF_OWNER",
+            "_checkBeforeTrigger": false
+          }
+        ]
+      }
+    },
+    "motter_s_2_fixed": {
+      "templateKey": "motter_s_2_fixed",
+      "effectKey": "",
+      "onEventPriority": "DEFAULT",
+      "eventToActions": {
+        "ON_BUFF_FINISH": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+RechargeToken, Assembly-CSharp",
+            "_rechargeTiming": "NORMAL",
+            "_refreshRemainingCnt": false
+          },
+          {
+            "$type": "Torappu.Battle.Action.Nodes+AlwaysNext, Assembly-CSharp"
+          },
+          {
+            "$type": "Torappu.Battle.Action.Nodes+Withdraw, Assembly-CSharp",
+            "_withdrawSource": true,
+            "_switchToDeadState": false,
+            "_force": false,
+            "_needLog": false
+          }
+        ]
+      }
+    },
+    "die_to_kill_token": {
+      "templateKey": "die_to_kill_token",
+      "effectKey": "",
+      "onEventPriority": "DEFAULT",
+      "eventToActions": {
+        "ON_OWNER_FINISH": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+KillTokens, Assembly-CSharp",
+            "_checkContainsBuff": false,
+            "_buffKey": ""
+          }
+        ]
+      }
+    }
+  },
+  "originalBuffTemplates": {
+    "charge_token[born]": {
+      "templateKey": "charge_token[born]",
+      "effectKey": "",
+      "onEventPriority": 0,
+      "eventToActions": {
+        "_items": [
+          {
+            "key": 12,
+            "value": {
+              "SerializedState": "[{\"_cntKey\":\"cnt\",\"_rechargeTiming\":\"NORMAL\",\"_refreshRemainingCnt\":false,\"$type\":\"Torappu.Battle.Action.Nodes+RechargeToken\"}]",
+              "SerializedObjectReferences": []
+            }
+          }
+        ]
+      }
+    },
+    "die_to_kill_token": {
+      "templateKey": "die_to_kill_token",
+      "effectKey": "",
+      "onEventPriority": 0,
+      "eventToActions": {
+        "_items": [
+          {
+            "key": 4,
+            "value": {
+              "SerializedState": "[{\"_checkContainsBuff\":false,\"_buffKey\":\"\",\"_checkModes\":false,\"_modes\":[],\"_snapshotSourceAsTarget\":false,\"$type\":\"Torappu.Battle.Action.Nodes+KillTokens\"}]",
+              "SerializedObjectReferences": []
+            }
+          }
+        ]
+      }
+    },
+    "evade": {
+      "templateKey": "evade",
+      "effectKey": "",
+      "onEventPriority": 0,
+      "eventToActions": {
+        "_items": [
+          {
+            "key": 10,
+            "value": {
+              "SerializedState": "[{\"_damageMask\":\"PHYSICAL_AND_MAGICAL\",\"_applyWayFilter\":\"ALL\",\"$type\":\"Torappu.Battle.Action.Nodes+Evade\"}]",
+              "SerializedObjectReferences": []
+            }
+          }
+        ]
+      }
+    },
+    "trig_skill": {
+      "templateKey": "trig_skill",
+      "effectKey": "",
+      "onEventPriority": 0,
+      "eventToActions": {
+        "_items": [
+          {
+            "key": 0,
+            "value": {
+              "SerializedState": "[{\"_targetType\":\"BUFF_OWNER\",\"_checkBeforeTrigger\":false,\"$type\":\"Torappu.Battle.Action.Nodes+TriggerSkill\"}]",
+              "SerializedObjectReferences": []
+            }
+          }
+        ]
+      }
+    },
+    "motter_s_2_fixed": {
+      "templateKey": "motter_s_2_fixed",
+      "effectKey": "",
+      "onEventPriority": 0,
+      "eventToActions": {
+        "_items": [
+          {
+            "key": 1,
+            "value": {
+              "SerializedState": "[{\"_cntKey\":\"cnt\",\"_rechargeTiming\":\"NORMAL\",\"_refreshRemainingCnt\":false,\"$type\":\"Torappu.Battle.Action.Nodes+RechargeToken\"},{\"$type\":\"Torappu.Battle.Action.Nodes+AlwaysNext\"},{\"_withdrawSource\":true,\"_switchToDeadState\":false,\"_force\":false,\"_needLog\":false,\"$type\":\"Torappu.Battle.Action.Nodes+Withdraw\"}]",
+              "SerializedObjectReferences": []
+            }
+          }
+        ]
+      }
+    }
+  },
+  "runtimeMapping": {
+    "ownerNormal": "Single Arts projectile, original .433 Attack event, speed10; rate capped1.",
+    "robotterNormal": "Own level-scaled stats, .4 Attack event, physical melee single ground target; no healing, slot1, DP5/cooldown10/no facing picker.",
+    "S1": "All20 owner/token ranks matched; selected 0-1 self or mastery x-5 adjacent dodge; one shared evade key, no stacking between Robotters, unrelated evade sources remain independent.",
+    "blockTalent": "Selected -10/-25 ASPD on enemies blocked by each owned Robotter, removed when no longer blocked.",
+    "S2": "Manual source SP. Capture current owned Robotters at cast start; Front Skill .5 clock for all directions, then original Robotter Blast .567 impact/1.333 finish at native uncapped attack animation rate. Live owner ATK \u00d7 selected multiplier. Source x-4 area hits eligible ground/air enemies and applies selected stun. Recycle one per completed blast; no DP refund.",
+    "stock": "Preserve raw maxDeployCount4/5/6 and maxDeckStackCnt0; bounded total supply uses source born count3/4/5. Retain additive born action, clamp redeployment supply to born budget; deaths/manual retreats consume stock, successful recycle returns one atomically before withdrawal."
+  },
+  "verificationLimits": [
+    "No native C# or frame parity claimed. SourceInvestigations retains four exact unrecovered contracts and their source paths; bounded gameplay mappings below are tested, not native executable proof.",
+    "Owner Back lacks Skill. Use literal Front .5 hit/1s finish clock for command in every direction with capped animation rate; Back stays on original Idle. Do not invent a Back Skill or silently select the manifest generic Attack fallback.",
+    "Source missing RechargeToken cnt and lifetime dispatch are unrecovered. Completed Blast returns exactly one current owned Robotter at clip finish, recharge before atomic withdrawal. New control epochs cancel unreleased action/recycle and leave surviving token; forced trigger bypasses pre-existing control check, as checkBeforeTriggerfalse. Exact interrupted native ON_BUFF_FINISH phase remains unverified.",
+    "Raw stock/cap attributes remain unchanged. Simulator budget is source born3/4/5, additive redeployment recharge clamped to that budget, rather than claiming recovered native maxDeckStackCnt0 or base1+talent cap4/5/6 semantics.",
+    "Official description names owner ATK. Use live Mayer ATK and ATK scale at Blast impact; exact transfer/cache phase remains unrecovered. Token ordinary attack uses its own ATK.",
+    "Source SELF timing0 selectors are mapped to initial command tokens and initial Blast targets; invalid targets are excluded at hit, without replacement. Blast ignores camouflage as area damage; hidden, Sleep, Invisible and untargetable follow shared eligibility. Native target-free/abnormal mask44 combo2 dispatch remains bounded.",
+    "S1 shared evade key maxStack1/independentSource0 maps overlapping Robotters to one dodge roll; unrelated evade sources remain independent. Exact native replacement winner is bounded to current first eligible token; all current owned tokens share selected rank.",
+    "No passive deathburst, shield or healing fabricated. Modules, original Unity particles/audio, physical projectile trajectory and native same-frame callback order remain unsupported."
+  ],
+  "deferredOperators": [],
+  "sourceInvestigations": [
+    {
+      "key": "recycle-count-and-removal-order",
+      "paths": [
+        "skills/sktok_motter_2/-3663327707657720855",
+        "originalBuffTemplates/motter_s_2_fixed"
+      ],
+      "reason": "ON_END native RechargeToken reads cnt, but selected owner S2 and token S2 blackboards have only atk_scale/stun, token talent lacks cnt, and attached buff blackboard is empty. Missing-count default or inherited owner/remote count transfer is not recovered. Recharge-before-Withdraw is serialized but native buff lifetime/skill-end dispatch and failure ordering are not executable proof."
+    },
+    {
+      "key": "owner-s2-front-clock",
+      "paths": [
+        "skills/skchr_otter_2/4220335704287109274",
+        "models/char_242_otter/Back",
+        "animators/char_242_otter/-2827782524303040609"
+      ],
+      "reason": "Native root waitEvent1 requests Skill; actual Front Skill OnAttack.5 exists, Back has no Skill or equivalent event. Source faceToFront/forceDirection0 does not recover a Front fallback. Cannot assert a .5s release for all facings without exact native side dispatch."
+    },
+    {
+      "key": "token-cap-and-stock-limit",
+      "paths": [
+        "tables/token_10004_otter_motter/phases",
+        "tables/token_10004_otter_motter/talents",
+        "tokens/token_10004_otter_motter/8938638046075582293"
+      ],
+      "reason": "Raw base maxDeployCount1 plus native ADDITION talent max_deploy_count3/4/5 corresponds to4/5/6 under existing attribute law, while born stock3/4/5 and description are3/4/5. Source base maxDeckStackCnt0 has no max_deck_stack_cnt talent. Native stock clamp/cap law is not recovered; do not silently replace raw values with description."
+    },
+    {
+      "key": "token-blast-owner-atk",
+      "paths": [
+        "skills/sktok_motter_2/-7183103180124967959",
+        "skills/sktok_motter_2/725293505551739881",
+        "tables/char_242_otter/skillLevels/skchr_otter_2"
+      ],
+      "reason": "Official selected description names Mayer ATK. Native attack exists on Robotter; empty script961310672457649535 also exists in W mine but its exact owner-attribute/cached/current dispatch is unrecovered. Native token own ATK does not itself prove owner transfer/sampling clock; any description bridge must be declared explicitly."
+    }
+  ]
+}

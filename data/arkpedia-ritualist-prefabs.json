@@ -1,0 +1,4090 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "client": "Global Android",
+    "version": "26-09-23-17-49-43_b9cc4a",
+    "officialBase": "https://ark-us-static-online.yo-star.com/assetbundle/official/Android/assets/26-09-23-17-49-43_b9cc4a/",
+    "tableRepository": "Kengxxiao/ArknightsGameData_YoStar",
+    "tableCommit": "57010cb5b2afea112cae57daa756b58676ba6850",
+    "modelRepository": "fexli/ArknightsResource",
+    "modelCommit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+    "tables": {
+      "character_table.json": "cf86d1690bdae2bf02378081ef8ae61731da042902bb284d339b7c0d889e66a9",
+      "skill_table.json": "3f389ab49b038c3d701e059c2377a2b03e14276248c5ed42ebfc169578a4e809",
+      "range_table.json": "676cedce20d46f37c46e1099b2f94907d0c84ac62b674957355c245ce16f0856",
+      "buff_template_data.json": "79dce42d1ffa76196984b80678422e0323e406f6a044f1a25b1de75e0c5b9d27"
+    },
+    "bundles": [
+      {
+        "path": "charpack/char_4102_threye.ab",
+        "size": 22790,
+        "md5": "8ddef690729379ffe5a1fcae0a8f1301",
+        "sha256": "04a539e39623a47fe62b9c131e664d83c83d9a40d0670b7ad995f1badb949cfe"
+      },
+      {
+        "path": "battle/prefabs/[uc]skills.ab",
+        "md5": "ff06dc9bb5516d069c8c0017207653ca",
+        "size": 1163240,
+        "sha256": "1c026938f054218f7e6bda9000162b2a6f30c9bd93e1ae9763d9d6df2270499c"
+      },
+      {
+        "path": "battle/prefabs/[uc]projectiles.ab",
+        "size": 1605622,
+        "md5": "0b1d64a8aba25913161f5fd7174cab34",
+        "sha256": "3d68c63bf7a7d658e65035a9c71dfc9a00e4804563b922185499d108dfb7f639"
+      },
+      {
+        "path": "chararts/char_4102_threye.ab",
+        "md5": "79deb5b4c214b97e980d496ff798bfa1",
+        "size": 3466352,
+        "sha256": "19ee923cefa69bb38e92bef8bc844aacc414260a4b2b5d6dfb2263d3fea6e949"
+      }
+    ]
+  },
+  "frameParity": false,
+  "moduleSupport": false,
+  "unityParticleSupport": false,
+  "characters": {
+    "char_4102_threye": [
+      {
+        "object": "Selector",
+        "pathId": "-5839180685480273760",
+        "components": [
+          {
+            "pathId": "-3419110814540670816",
+            "_keepTarget": 0,
+            "_minTargetNum": 1,
+            "_overrideSearchTargetTick": -1
+          },
+          {
+            "pathId": "-3373798657872668512",
+            "_targetSide": 2,
+            "_targetMotion": 3,
+            "_targetCategory": 1,
+            "_postFilter": 4,
+            "_ignoreTargetFree": 0,
+            "_onlyIgnoreSomeOfTargetFreeCase": 0,
+            "_abnormalFlag": 29,
+            "_abnormalCombo": 2,
+            "_ignoreAllyTargetFree": 0,
+            "_ignoreHealFree": 0,
+            "_forceIgnoreCamouflage": 0,
+            "_needProfessionMask": 0,
+            "_professionMask": 0,
+            "_limitTargetNum": 1,
+            "_maxTargetKey": "max_target",
+            "_maxNum": 2,
+            "_excludeOwner": 0,
+            "_sortByTauntAtLast": 0,
+            "_ignoreHitRange": 0,
+            "_checkUnitType": 0,
+            "_unitTypeMask": 0,
+            "_abilityInputTargetAsSortSource": 0
+          },
+          {
+            "pathId": "4267341096531024032",
+            "_extendable": 0
+          }
+        ]
+      },
+      {
+        "object": "Shadow",
+        "pathId": "-4317184014567384928",
+        "components": [
+          {
+            "pathId": "-6172874794751862624",
+            "_autoAttachToGround": 0,
+            "_attachOffset": 0.10000000149011612,
+            "_simplyUseTileHeight": 0,
+            "_enableAdvanced": 0,
+            "_alwaysUseSpineOffset": 0,
+            "_sprite": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_graphic": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_faceSwitcher": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_boneToFollow": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_specialInit": 0,
+            "_simpleFollow": 0,
+            "_easeType": 1
+          }
+        ]
+      },
+      {
+        "object": "Attack",
+        "pathId": "-4085293191302784864",
+        "components": [
+          {
+            "pathId": "-8569459767251543904",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "-3373798657872668512"
+            },
+            "_metadata": {
+              "namedAsAlias": "",
+              "blackboardPrefix": ""
+            },
+            "_interruptAbilityOnDetach": 0,
+            "_attachPassiveBuffsOnDummy": 1,
+            "_ignoreIfOwnerDead": 0,
+            "_forceAsDmgOrHealAbility": 0,
+            "_waitForAttackEvent": 1,
+            "_interuptIfTargetDead": 0,
+            "_resetCdStrategy": 1,
+            "_selectTargetSource": 1,
+            "_selectTargetTiming": 0,
+            "_timeMode": 0,
+            "_alwaysIncludeTarget": 1,
+            "_allowNoTarget": 0,
+            "_animKey": "Skill_2",
+            "_endAnimKey": "Idle",
+            "_downAnimKey": "",
+            "_downEndAnimKey": "",
+            "_upAnimKey": "",
+            "_upEndAnimKey": "",
+            "_cooldown": 0,
+            "_cooldownKey": "duration",
+            "_preDelay": 0,
+            "_escapeTime": 0,
+            "_faceToTarget": 1,
+            "_faceToDefault": 0,
+            "_faceToFront": 0,
+            "_faceToFirstCastTarget": 0,
+            "_forceFaceToDirection": 0,
+            "_activeBuffs": [],
+            "_maxAnimScale": 1,
+            "_onlyPlayEndAnimWhenIsLastAbility": 0,
+            "_ignorePalsyInterrupt": 0,
+            "_atkScale": 1,
+            "_atkScaleKey": "atk_scale",
+            "_attackType": 1,
+            "_elementDamageType": 4,
+            "_epDamageRatio": 0,
+            "_useDynamicAttackType": 0,
+            "_deliveryParaWhenReplaceActionNode": 0,
+            "_projectileKey": "projectile_chr_threye_s2",
+            "_mountPointType": 2,
+            "_useMountGroup": 0,
+            "_mountGroup": {
+              "loopType": 0,
+              "mountPoints": []
+            },
+            "_damageType": 2,
+            "_waitForProjectileInvalid": 0,
+            "_notClearProjectileWhenCastEnd": 0,
+            "_fireAttackFinishWhenProjectileInvalid": 0,
+            "_minPostDelayWhenProjectileInvalid": 0,
+            "_waitForAnimEndWhenProjectileInvalid": 0,
+            "_projectileDestination": 0,
+            "_extraDamageType": 0,
+            "_emitToInputPosWhenTargetIsInvalid": 0,
+            "_emitToInputRootTileWhenTargetIsInvalid": 0,
+            "_useCachedAtkOnly": 0,
+            "_transferSource": 0,
+            "_extraProjectileKeys": [],
+            "_fireCreateProjectileEvent": 0
+          },
+          {
+            "pathId": "2995951338320517280",
+            "_hitEffects": [],
+            "_castEffects": [
+              {
+                "_directionType": 0,
+                "_effects": [
+                  "threye_skill_02_start"
+                ],
+                "_oneshot": 0,
+                "_startEvent": 2,
+                "_endEvent": 3,
+                "_onlyOnce": 0,
+                "_useFourDirectionalFace": 0,
+                "_delayIfFirstAttack": 0,
+                "_hookEffectAfterFirstAttack": ""
+              }
+            ],
+            "_attachEffects": [],
+            "_inputTargetEffects": [],
+            "_castTargetEffects": [],
+            "_convertCastEndToAttachFinish": 0,
+            "_recalculatePlaybackSpeed": 0,
+            "_preDelayFactor": 0
+          }
+        ]
+      },
+      {
+        "object": "2",
+        "pathId": "-1086880354015029088",
+        "components": [
+          {
+            "pathId": "-7491268214881757024",
+            "_overwriteTalentKey": "",
+            "_overwriteParentRangeId": 0,
+            "_checkValidBySkillIndex": [],
+            "_attachInDummy": 0,
+            "_defaultModeIndex": -1,
+            "_attackBlackboardModeIndex": -1,
+            "_extraAttackBlackboardModeIndices": [],
+            "_overrideDefaultRangeId": 0,
+            "_applyTalentScale": 0,
+            "_influenceSkillBlackboard": 0,
+            "_applyTalentRange": 0,
+            "_applyBlackboardBySkill": 0,
+            "_applyStrBlackboardBySkill": 0,
+            "_writeRangeIdToProjectileBlackboard": 0,
+            "_affectWhenNotRootTalent": 0,
+            "_scaleCertainKeyFlag": 0,
+            "_scaleCertainKeyList": [],
+            "_scaleCertainMode": 0,
+            "_scaleModeIndices": []
+          },
+          {
+            "pathId": "-5533616312052524896",
+            "_oneOfTags": [
+              "rogue_sami"
+            ]
+          },
+          {
+            "pathId": "1199038549375342752",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_metadata": {
+              "namedAsAlias": "",
+              "blackboardPrefix": ""
+            },
+            "_interruptAbilityOnDetach": 0,
+            "_attachPassiveBuffsOnDummy": 1,
+            "_ignoreIfOwnerDead": 0,
+            "_forceAsDmgOrHealAbility": 0,
+            "_buffs": [],
+            "_checker": {
+              "m_FileID": 0,
+              "m_PathID": "-5533616312052524896"
+            },
+            "_unmanagedBuffsWhenToggleOn": [
+              {
+                "attributes": {
+                  "abnormalFlags": [],
+                  "abnormalImmunes": [],
+                  "abnormalAntis": [],
+                  "abnormalCombos": [],
+                  "abnormalComboImmunes": [],
+                  "attributeModifiers": []
+                },
+                "buffKey": "threye_t_2",
+                "loadFromDB": 0,
+                "isDurableBuff": 0,
+                "isDamageMissable": 0,
+                "isSilenceable": 0,
+                "isStunnable": 0,
+                "isFreezable": 0,
+                "isLevitatable": 0,
+                "statusResistable": 2,
+                "templateKey": "threye_t_2",
+                "disableOverride": 0,
+                "overrideKey": "",
+                "overrideType": 0,
+                "maxStackCnt": 1,
+                "refreshRemainingTimeWhenStackMax": 0,
+                "clearAllStackCntWhenTimeUp": 0,
+                "maxValidStackCnt": -1,
+                "independentCharacterSource": 0,
+                "overrideEffectKey": "",
+                "overrideOnEventPriority": 0,
+                "onEventPriority": 0,
+                "audioSignal": "",
+                "lifeTimeType": 2,
+                "takeSnapshotWhenExtend": 0,
+                "durationKey": "duration",
+                "lifeTime": 0,
+                "triggerLifeType": 0,
+                "triggerCnt": 0,
+                "triggerInterval": -1,
+                "waitFirstTriggerInterval": 1,
+                "firstTriggerInterval": -1,
+                "priority": -1,
+                "priorityBBKeys": [],
+                "stripBlackboardParamsWithBuffKey": 0,
+                "blackboard": [],
+                "enableInitDirectionFromSource": 0
+              }
+            ],
+            "_setToggleFalseOnDetached": 0,
+            "_isInverseToggle": 0
+          }
+        ]
+      },
+      {
+        "object": "S2",
+        "pathId": "-411337283908249440",
+        "components": [
+          {
+            "pathId": "5429130495224207520",
+            "_bodyTransform": {
+              "m_FileID": 0,
+              "m_PathID": "-3866115820518352736"
+            },
+            "_animatorHooker": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_overrideStartEffect": "",
+            "_overrideDeadEffect": "",
+            "_combat": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_attack": {
+              "m_FileID": 0,
+              "m_PathID": "-8569459767251543904"
+            },
+            "_attackTrigger": {
+              "m_FileID": 0,
+              "m_PathID": "-3419110814540670816"
+            },
+            "_hideUIAttackRange": 0,
+            "_updateAttackRangeExtendByAttributeDirty": 0,
+            "_rangeToShow": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_extraRangesToShow": [],
+            "_generalAbilities": [],
+            "_addIndexToSignalId": 1,
+            "_includeIndexZero": 1,
+            "_alwaysHideHp": {
+              "isDefined": 0,
+              "value": 0
+            },
+            "_alwaysHideSp": {
+              "isDefined": 0,
+              "value": 0
+            }
+          }
+        ]
+      },
+      {
+        "object": "char_4102_threye",
+        "pathId": "4100317057481005216",
+        "components": [
+          {
+            "pathId": "-8979707205909260128",
+            "_animator": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_modes": [
+              {
+                "m_FileID": 0,
+                "m_PathID": "-2331778717829801824"
+              },
+              {
+                "m_FileID": 0,
+                "m_PathID": "5429130495224207520"
+              }
+            ],
+            "_commonAbilities": [],
+            "_uiMountPoint": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_effectTransform": {
+              "m_FileID": 0,
+              "m_PathID": "8091276148605933728"
+            },
+            "_shadow": {
+              "m_FileID": 0,
+              "m_PathID": "-6172874794751862624"
+            },
+            "_defaultBodyColor": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 1
+            },
+            "_hideShadowOnRecycle": 0,
+            "_overrideGraphicBound": -1,
+            "_hudPluginReplacePairs": [],
+            "_showDebugName": 0,
+            "_skinHolder": {
+              "m_FileID": 0,
+              "m_PathID": "-4594746458553558880"
+            },
+            "_motionMode": 0,
+            "_blockMode": 0,
+            "_ignoreBlockMode": 0,
+            "_isFixedRotation": 0,
+            "_occupiedRemainingCharacterCnt": 1,
+            "_useRealBornTimeFromAnim": 0,
+            "_buildCondition": {
+              "buildableType": 2,
+              "isTryingOverlapCharacater": 0,
+              "needSpecifyDirection": 1,
+              "limitByHostAttackRange": 0,
+              "limitByHostAbilityRange": 0,
+              "abilityName": "",
+              "tileKey": "",
+              "extraBuildConditionArray": {
+                "SerializedState": "null",
+                "SerializedObjectReferences": []
+              },
+              "advancedBuildableMask": 1,
+              "overlapOptions": {
+                "_verifySourceId": 0,
+                "_verifySourceIds": [],
+                "_verifySourceProfession": 0,
+                "_verifySourceProfessions": 0,
+                "_isAllConditionOR": 1,
+                "_overlapPriority": 0,
+                "_changeTargetGraphicColor": 0
+              },
+              "excludeNoTargetTile": 0,
+              "extraLocateRange": "",
+              "checkManuallyBuildableType": 0,
+              "manuallyBuildableType": 0,
+              "_excludeOccupiedByWalkEnemy": 0,
+              "allowWalkEnemyInHostRange": 0,
+              "_checkUpdateBuildable": 0
+            },
+            "_traitAbility": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_withdrawCostRecoverRatio": 0.5,
+            "_maxWithdrawCostRatioOfRawCost": 1,
+            "_directionTransform": {
+              "m_FileID": 0,
+              "m_PathID": "-3430736887652984672"
+            },
+            "_directionIndicator": {
+              "m_FileID": 0,
+              "m_PathID": "-8103141659203446624"
+            },
+            "_startEffect": "",
+            "_deadEffect": "",
+            "_playStartVocal": 1,
+            "_showDeadTweenColor": 1,
+            "_useSpecificDeadAnim": 0,
+            "_onlyPlayStartEffectOnce": 0,
+            "_dontMoveCameraWhenFocus": 0,
+            "_disableCharInfoPanel": 0,
+            "_disableRotateWhenDead": 0,
+            "_disableSetDirectionWhenDummy": 0,
+            "_clearProjectileWhenDead": 0,
+            "_useIdForAudioSignalMask": 0,
+            "_preprocessData": 0,
+            "_disableClickCharacterInfo": 0,
+            "_skillUiFollowHeadPint": 0
+          },
+          {
+            "pathId": "249611037526743200",
+            "m_Offset": {
+              "x": 0,
+              "y": 0
+            },
+            "m_Radius": 0.25
+          }
+        ]
+      },
+      {
+        "object": "Selector",
+        "pathId": "4154827971907049632",
+        "components": [
+          {
+            "pathId": "1816247073918179488",
+            "_extendable": 0
+          },
+          {
+            "pathId": "2097373287360845984",
+            "_targetSide": 2,
+            "_targetMotion": 3,
+            "_targetCategory": 1,
+            "_postFilter": 4,
+            "_ignoreTargetFree": 0,
+            "_onlyIgnoreSomeOfTargetFreeCase": 0,
+            "_abnormalFlag": 29,
+            "_abnormalCombo": 2,
+            "_ignoreAllyTargetFree": 0,
+            "_ignoreHealFree": 0,
+            "_forceIgnoreCamouflage": 0,
+            "_needProfessionMask": 0,
+            "_professionMask": 0,
+            "_limitTargetNum": 1,
+            "_maxTargetKey": "max_target",
+            "_maxNum": 1,
+            "_excludeOwner": 0,
+            "_sortByTauntAtLast": 0,
+            "_ignoreHitRange": 0,
+            "_checkUnitType": 0,
+            "_unitTypeMask": 0,
+            "_abilityInputTargetAsSortSource": 0
+          },
+          {
+            "pathId": "5178229547388459168",
+            "_keepTarget": 0,
+            "_minTargetNum": 1,
+            "_overrideSearchTargetTick": -1
+          }
+        ]
+      },
+      {
+        "object": "Default",
+        "pathId": "4258509543894177952",
+        "components": [
+          {
+            "pathId": "-2331778717829801824",
+            "_bodyTransform": {
+              "m_FileID": 0,
+              "m_PathID": "5098406703880165536"
+            },
+            "_animatorHooker": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_overrideStartEffect": "",
+            "_overrideDeadEffect": "",
+            "_combat": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_attack": {
+              "m_FileID": 0,
+              "m_PathID": "-91578562249860960"
+            },
+            "_attackTrigger": {
+              "m_FileID": 0,
+              "m_PathID": "5178229547388459168"
+            },
+            "_hideUIAttackRange": 0,
+            "_updateAttackRangeExtendByAttributeDirty": 0,
+            "_rangeToShow": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_extraRangesToShow": [],
+            "_generalAbilities": [],
+            "_addIndexToSignalId": 1,
+            "_includeIndexZero": 1,
+            "_alwaysHideHp": {
+              "isDefined": 0,
+              "value": 0
+            },
+            "_alwaysHideSp": {
+              "isDefined": 0,
+              "value": 0
+            }
+          }
+        ]
+      },
+      {
+        "object": "1",
+        "pathId": "6777295358976415904",
+        "components": [
+          {
+            "pathId": "-3023912483000854368",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_metadata": {
+              "namedAsAlias": "",
+              "blackboardPrefix": ""
+            },
+            "_interruptAbilityOnDetach": 0,
+            "_attachPassiveBuffsOnDummy": 1,
+            "_ignoreIfOwnerDead": 0,
+            "_forceAsDmgOrHealAbility": 0,
+            "_buffs": [
+              {
+                "attributes": {
+                  "abnormalFlags": [],
+                  "abnormalImmunes": [],
+                  "abnormalAntis": [],
+                  "abnormalCombos": [],
+                  "abnormalComboImmunes": [],
+                  "attributeModifiers": [
+                    {
+                      "attributeType": 1,
+                      "formulaItem": 1,
+                      "value": 0,
+                      "loadFromBlackboard": 1,
+                      "fetchBaseValueFromSourceEntity": 0
+                    },
+                    {
+                      "attributeType": 7,
+                      "formulaItem": 0,
+                      "value": 0,
+                      "loadFromBlackboard": 1,
+                      "fetchBaseValueFromSourceEntity": 0
+                    }
+                  ]
+                },
+                "buffKey": "threye_t_1",
+                "loadFromDB": 0,
+                "isDurableBuff": 0,
+                "isDamageMissable": 0,
+                "isSilenceable": 0,
+                "isStunnable": 0,
+                "isFreezable": 0,
+                "isLevitatable": 0,
+                "statusResistable": 2,
+                "templateKey": "empty",
+                "disableOverride": 0,
+                "overrideKey": "",
+                "overrideType": 0,
+                "maxStackCnt": 1,
+                "refreshRemainingTimeWhenStackMax": 0,
+                "clearAllStackCntWhenTimeUp": 0,
+                "maxValidStackCnt": -1,
+                "independentCharacterSource": 0,
+                "overrideEffectKey": "",
+                "overrideOnEventPriority": 0,
+                "onEventPriority": 0,
+                "audioSignal": "",
+                "lifeTimeType": 2,
+                "takeSnapshotWhenExtend": 0,
+                "durationKey": "duration",
+                "lifeTime": 0,
+                "triggerLifeType": 0,
+                "triggerCnt": 0,
+                "triggerInterval": -1,
+                "waitFirstTriggerInterval": 1,
+                "firstTriggerInterval": -1,
+                "priority": -1,
+                "priorityBBKeys": [],
+                "stripBlackboardParamsWithBuffKey": 0,
+                "blackboard": [],
+                "enableInitDirectionFromSource": 0
+              }
+            ]
+          },
+          {
+            "pathId": "-131721770589857632",
+            "_overwriteTalentKey": "",
+            "_overwriteParentRangeId": 0,
+            "_checkValidBySkillIndex": [],
+            "_attachInDummy": 1,
+            "_defaultModeIndex": -1,
+            "_attackBlackboardModeIndex": -1,
+            "_extraAttackBlackboardModeIndices": [],
+            "_overrideDefaultRangeId": 0,
+            "_applyTalentScale": 0,
+            "_influenceSkillBlackboard": 0,
+            "_applyTalentRange": 0,
+            "_applyBlackboardBySkill": 0,
+            "_applyStrBlackboardBySkill": 0,
+            "_writeRangeIdToProjectileBlackboard": 0,
+            "_affectWhenNotRootTalent": 0,
+            "_scaleCertainKeyFlag": 0,
+            "_scaleCertainKeyList": [],
+            "_scaleCertainMode": 0,
+            "_scaleModeIndices": []
+          }
+        ]
+      },
+      {
+        "object": "Attack",
+        "pathId": "9053705690789533856",
+        "components": [
+          {
+            "pathId": "-91578562249860960",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_metadata": {
+              "namedAsAlias": "",
+              "blackboardPrefix": ""
+            },
+            "_interruptAbilityOnDetach": 0,
+            "_attachPassiveBuffsOnDummy": 1,
+            "_ignoreIfOwnerDead": 0,
+            "_forceAsDmgOrHealAbility": 0,
+            "_waitForAttackEvent": 1,
+            "_interuptIfTargetDead": 0,
+            "_resetCdStrategy": 1,
+            "_selectTargetSource": 2,
+            "_selectTargetTiming": 0,
+            "_timeMode": 0,
+            "_alwaysIncludeTarget": 1,
+            "_allowNoTarget": 0,
+            "_animKey": "Attack",
+            "_endAnimKey": "Idle",
+            "_downAnimKey": "",
+            "_downEndAnimKey": "",
+            "_upAnimKey": "",
+            "_upEndAnimKey": "",
+            "_cooldown": 0,
+            "_cooldownKey": "duration",
+            "_preDelay": 0,
+            "_escapeTime": 0,
+            "_faceToTarget": 1,
+            "_faceToDefault": 0,
+            "_faceToFront": 0,
+            "_faceToFirstCastTarget": 0,
+            "_forceFaceToDirection": 0,
+            "_activeBuffs": [],
+            "_maxAnimScale": 1,
+            "_onlyPlayEndAnimWhenIsLastAbility": 0,
+            "_ignorePalsyInterrupt": 0,
+            "_atkScale": 1,
+            "_atkScaleKey": "atk_scale",
+            "_attackType": 1,
+            "_elementDamageType": 0,
+            "_epDamageRatio": 0,
+            "_useDynamicAttackType": 0,
+            "_deliveryParaWhenReplaceActionNode": 0,
+            "_projectileKey": "projectile_chr_threye",
+            "_mountPointType": 2,
+            "_useMountGroup": 0,
+            "_mountGroup": {
+              "loopType": 0,
+              "mountPoints": []
+            },
+            "_damageType": 2,
+            "_waitForProjectileInvalid": 0,
+            "_notClearProjectileWhenCastEnd": 0,
+            "_fireAttackFinishWhenProjectileInvalid": 0,
+            "_minPostDelayWhenProjectileInvalid": 0,
+            "_waitForAnimEndWhenProjectileInvalid": 0,
+            "_projectileDestination": 0,
+            "_extraDamageType": 0,
+            "_emitToInputPosWhenTargetIsInvalid": 0,
+            "_emitToInputRootTileWhenTargetIsInvalid": 0,
+            "_useCachedAtkOnly": 0,
+            "_transferSource": 0,
+            "_extraProjectileKeys": [],
+            "_fireCreateProjectileEvent": 0
+          },
+          {
+            "pathId": "4851242258063382688",
+            "_hitEffects": [],
+            "_castEffects": [
+              {
+                "_directionType": 0,
+                "_effects": [
+                  "threye_attack_01_start"
+                ],
+                "_oneshot": 0,
+                "_startEvent": 2,
+                "_endEvent": 3,
+                "_onlyOnce": 0,
+                "_useFourDirectionalFace": 0,
+                "_delayIfFirstAttack": 0,
+                "_hookEffectAfterFirstAttack": ""
+              }
+            ],
+            "_attachEffects": [],
+            "_inputTargetEffects": [],
+            "_castTargetEffects": [],
+            "_convertCastEndToAttachFinish": 0,
+            "_recalculatePlaybackSpeed": 0,
+            "_preDelayFactor": 0
+          }
+        ]
+      }
+    ]
+  },
+  "skills": {
+    "skchr_threye_2": [
+      {
+        "object": "skchr_threye_2",
+        "pathId": "-8187897015532194646",
+        "components": [
+          {
+            "pathId": "-5491281679344667478",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_metadata": {
+              "namedAsAlias": "",
+              "blackboardPrefix": ""
+            },
+            "_interruptAbilityOnDetach": 0,
+            "_attachPassiveBuffsOnDummy": 1,
+            "_ignoreIfOwnerDead": 0,
+            "_forceAsDmgOrHealAbility": 0,
+            "_waitForAttackEvent": 1,
+            "_interuptIfTargetDead": 0,
+            "_resetCdStrategy": 1,
+            "_buffs": [
+              {
+                "attributes": {
+                  "abnormalFlags": [],
+                  "abnormalImmunes": [],
+                  "abnormalAntis": [],
+                  "abnormalCombos": [],
+                  "abnormalComboImmunes": [],
+                  "attributeModifiers": [
+                    {
+                      "attributeType": 7,
+                      "formulaItem": 0,
+                      "value": 0,
+                      "loadFromBlackboard": 1,
+                      "fetchBaseValueFromSourceEntity": 0
+                    }
+                  ]
+                },
+                "buffKey": "threye_s_2",
+                "loadFromDB": 0,
+                "isDurableBuff": 0,
+                "isDamageMissable": 0,
+                "isSilenceable": 0,
+                "isStunnable": 0,
+                "isFreezable": 0,
+                "isLevitatable": 0,
+                "statusResistable": 2,
+                "templateKey": "switch_mode_restart_fsm",
+                "disableOverride": 0,
+                "overrideKey": "",
+                "overrideType": 0,
+                "maxStackCnt": 1,
+                "refreshRemainingTimeWhenStackMax": 0,
+                "clearAllStackCntWhenTimeUp": 0,
+                "maxValidStackCnt": -1,
+                "independentCharacterSource": 0,
+                "overrideEffectKey": "threye_skill_02_buff_01",
+                "overrideOnEventPriority": 0,
+                "onEventPriority": 0,
+                "audioSignal": "",
+                "lifeTimeType": 1,
+                "takeSnapshotWhenExtend": 0,
+                "durationKey": "duration",
+                "lifeTime": 0,
+                "triggerLifeType": 0,
+                "triggerCnt": 0,
+                "triggerInterval": -1,
+                "waitFirstTriggerInterval": 1,
+                "firstTriggerInterval": -1,
+                "priority": -1,
+                "priorityBBKeys": [],
+                "stripBlackboardParamsWithBuffKey": 0,
+                "blackboard": [
+                  {
+                    "key": "mode",
+                    "value": 1,
+                    "valueStr": ""
+                  }
+                ],
+                "enableInitDirectionFromSource": 0
+              }
+            ],
+            "_waitForCasting": 0,
+            "_updateLifetimeWhenSpellStart": 0,
+            "_preDelay": 0,
+            "_escapeTime": 0,
+            "_checkBuffEarlyFinish": 0,
+            "_passiveBuffs": [],
+            "_ignoreInfiniteBuffCooldown": 0,
+            "_enableUpdateCooldown": 0
+          },
+          {
+            "pathId": "-1681917462662089558",
+            "_maxTriggerTime": -1,
+            "_allowSpRecoveryWhenAffecting": 0,
+            "_limitGlobalTriggerTime": 0,
+            "_hidden": 0,
+            "_showSpBarEvenHidden": 0,
+            "_showSpAsBulletMode": 0,
+            "_showSpRatioAsProgress": 0,
+            "_playCharWordVoice": 1,
+            "_playCharWordWithPassiveType": 0,
+            "_canCastWithNoSp": 0,
+            "_canSilenced": 0,
+            "_canUseInAbnormalState": 0,
+            "_defaultModeIndex": -1,
+            "_attackBlackboardModeIndex": -1,
+            "_extraAttackBlackboardModeIndices": [],
+            "_rangeIdModeIndex": -1,
+            "_extraRangeIdModeIndices": [],
+            "_rangeIdUsageType": 7,
+            "_writeDurationToAttackBlackboard": 0,
+            "_attachSignalIds": 0,
+            "_extraAbilities": [],
+            "_useEscapeTime": 0,
+            "_earlySkillFinishAtAttackFinished": 0,
+            "_showProgressToNext": 0,
+            "_hideSkillStackCount": 0,
+            "_hideHudSkillStackCount": 0,
+            "_playSkillBeginAnim": 0,
+            "_beginAnim": "",
+            "_beginAnimDown": "",
+            "_beginEffect": [],
+            "_useFaceVector": 0,
+            "_beginAnimValidator": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_availableValidator": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_trigger": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_switchToState": 1,
+            "_uninterruptibleOnAbilityPredelay": 0,
+            "_canSwitchDuringBorn": 1,
+            "_canCastDuringBorn": 1,
+            "_checkHasTargetBeforeDoCast": 0,
+            "_useTriggerInManualMode": 0,
+            "_allowNoTarget": 1,
+            "_shouldCastLikeAttack": 0,
+            "_isRemoteControlled": 0,
+            "_hideRangeToShow": 0,
+            "_forceUseBaseShowRange": 0,
+            "_rangeToShow": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_recoverSpIfNoTarget": 0,
+            "_resetAbilityCooldownWhenCastEnd": 0,
+            "_onlyAvailableWhenTokenValid": 0,
+            "_hasUniStackColor": 0
+          }
+        ]
+      }
+    ],
+    "skchr_threye_1": [
+      {
+        "object": "skchr_threye_1",
+        "pathId": "-8873380055553112170",
+        "components": [
+          {
+            "pathId": "-8196520179396147306",
+            "_maxTriggerTime": -1,
+            "_allowSpRecoveryWhenAffecting": 0,
+            "_limitGlobalTriggerTime": 0,
+            "_hidden": 0,
+            "_showSpBarEvenHidden": 0,
+            "_showSpAsBulletMode": 0,
+            "_showSpRatioAsProgress": 0,
+            "_playCharWordVoice": 1,
+            "_playCharWordWithPassiveType": 0,
+            "_canCastWithNoSp": 0,
+            "_canSilenced": 0,
+            "_canUseInAbnormalState": 0,
+            "_defaultModeIndex": -1,
+            "_attackBlackboardModeIndex": -1,
+            "_extraAttackBlackboardModeIndices": [],
+            "_rangeIdModeIndex": -1,
+            "_extraRangeIdModeIndices": [],
+            "_rangeIdUsageType": 7,
+            "_writeDurationToAttackBlackboard": 0,
+            "_attachSignalIds": 0,
+            "_extraAbilities": [],
+            "_useEscapeTime": 0,
+            "_earlySkillFinishAtAttackFinished": 0,
+            "_showProgressToNext": 0,
+            "_hideSkillStackCount": 0,
+            "_hideHudSkillStackCount": 0,
+            "_playSkillBeginAnim": 0,
+            "_beginAnim": "",
+            "_beginAnimDown": "",
+            "_beginEffect": [],
+            "_useFaceVector": 0,
+            "_beginAnimValidator": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_availableValidator": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_trigger": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_cancelIfSearchTargetFailed": 0,
+            "_recoverSpIfTargetDead": 1,
+            "_rangeToShow": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            }
+          },
+          {
+            "pathId": "-7515813723454404714",
+            "_hitEffects": [],
+            "_castEffects": [
+              {
+                "_directionType": 0,
+                "_effects": [
+                  "threye_skill_01_start"
+                ],
+                "_oneshot": 0,
+                "_startEvent": 2,
+                "_endEvent": 3,
+                "_onlyOnce": 0,
+                "_useFourDirectionalFace": 0,
+                "_delayIfFirstAttack": 0,
+                "_hookEffectAfterFirstAttack": ""
+              }
+            ],
+            "_attachEffects": [],
+            "_inputTargetEffects": [],
+            "_castTargetEffects": [],
+            "_convertCastEndToAttachFinish": 0,
+            "_recalculatePlaybackSpeed": 0,
+            "_preDelayFactor": 0
+          },
+          {
+            "pathId": "-3421842402162604138",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_metadata": {
+              "namedAsAlias": "",
+              "blackboardPrefix": ""
+            },
+            "_interruptAbilityOnDetach": 0,
+            "_attachPassiveBuffsOnDummy": 1,
+            "_ignoreIfOwnerDead": 0,
+            "_forceAsDmgOrHealAbility": 0,
+            "_waitForAttackEvent": 1,
+            "_interuptIfTargetDead": 0,
+            "_resetCdStrategy": 1,
+            "_selectTargetSource": 2,
+            "_selectTargetTiming": 0,
+            "_timeMode": 0,
+            "_alwaysIncludeTarget": 1,
+            "_allowNoTarget": 0,
+            "_animKey": "Skill_2",
+            "_endAnimKey": "Idle",
+            "_downAnimKey": "",
+            "_downEndAnimKey": "",
+            "_upAnimKey": "",
+            "_upEndAnimKey": "",
+            "_cooldown": 0,
+            "_cooldownKey": "duration",
+            "_preDelay": 0,
+            "_escapeTime": 0,
+            "_faceToTarget": 1,
+            "_faceToDefault": 0,
+            "_faceToFront": 0,
+            "_faceToFirstCastTarget": 0,
+            "_forceFaceToDirection": 0,
+            "_activeBuffs": [],
+            "_maxAnimScale": 1,
+            "_onlyPlayEndAnimWhenIsLastAbility": 0,
+            "_ignorePalsyInterrupt": 0,
+            "_atkScale": 1,
+            "_atkScaleKey": "atk_scale",
+            "_attackType": 1,
+            "_elementDamageType": 4,
+            "_epDamageRatio": 0,
+            "_useDynamicAttackType": 0,
+            "_deliveryParaWhenReplaceActionNode": 0,
+            "_projectileKey": "projectile_chr_threye_s1",
+            "_mountPointType": 2,
+            "_useMountGroup": 0,
+            "_mountGroup": {
+              "loopType": 0,
+              "mountPoints": []
+            },
+            "_damageType": 2,
+            "_waitForProjectileInvalid": 0,
+            "_notClearProjectileWhenCastEnd": 0,
+            "_fireAttackFinishWhenProjectileInvalid": 0,
+            "_minPostDelayWhenProjectileInvalid": 0,
+            "_waitForAnimEndWhenProjectileInvalid": 0,
+            "_projectileDestination": 0,
+            "_extraDamageType": 0,
+            "_emitToInputPosWhenTargetIsInvalid": 0,
+            "_emitToInputRootTileWhenTargetIsInvalid": 0,
+            "_useCachedAtkOnly": 0,
+            "_transferSource": 0,
+            "_extraProjectileKeys": [],
+            "_fireCreateProjectileEvent": 0
+          }
+        ]
+      }
+    ]
+  },
+  "projectiles": {
+    "projectile_chr_threye_graphic": [
+      {
+        "object": "projectile_chr_threye_graphic",
+        "pathId": "-5126215076506375189",
+        "components": [
+          {
+            "pathId": "-6044545135597523989",
+            "_rotateToTarget": 0,
+            "_forceReachedWhenTimeup": 1,
+            "_useSourceDirection": 0,
+            "_useTargetDirection": 0,
+            "_useStartToTarget": 0,
+            "_awayFromSourceAsDirection": 0,
+            "_flyToTargetLocationOnly": 0,
+            "_useSourceDirectionRandomArcAngleStart": 0,
+            "_useSourceToTargetRandomArcAngleStart": 0,
+            "_useSourceDirectionArcAngleWithRatio": 0,
+            "_useSourceToTargetArcAngleWithRatio": 0,
+            "_sourceDirectionArcAngleRatio": 0,
+            "_flyToPredefinedLocation": 0,
+            "_predefinedLocation": 0,
+            "_freezeRotationZ": 0,
+            "_freezeRotationXY": 0,
+            "_exactMatchCameraForward": 0,
+            "_resetToTargetPosWhenReached": 0,
+            "_resetToTracetargetMapPosV3": 0,
+            "_handleWithIBuildableTarget": 0,
+            "_forceResetToTargetPosWhenReached": 0,
+            "_fixOnProjectileReached": 0,
+            "_onlyReachedInTime": 0,
+            "_moveType": 1,
+            "_moveTypeData": {
+              "data": []
+            },
+            "_speed": 8,
+            "_distance": 0,
+            "_comeBack": 0,
+            "_comeBackSpeedScale": 0.25,
+            "_delayToStart": 0,
+            "_delayAfterReached": 0,
+            "_delayToReachAfterHit": 0,
+            "_clearTraceTargetWhenReached": 1,
+            "_updateDelayTimeOnlyOnce": 0,
+            "_skipSmoothLerpDirection": 0,
+            "_addInertia": 0,
+            "_turnSpeed": 0,
+            "_useDynamicSpeed": 0,
+            "_deltaSpeedPerSec": 0,
+            "_finalSpeed": 0,
+            "_randomOffset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "_forceUseTargetMountPoint": 0
+          },
+          {
+            "pathId": "5727127963199073259",
+            "_randomDelayToBorn": 0,
+            "_bodyTransform": {
+              "m_FileID": 0,
+              "m_PathID": "-1478384311153136661"
+            },
+            "_keepAlreadyHitTime": -1,
+            "_mainEffect": "threye_attack_01_trail",
+            "_clearMainEffectWhenReached": 1,
+            "_actionController": {
+              "_detachBuffsWhenTargetLeave": 0,
+              "_detachAllBuffsWhenStopped": 0,
+              "_onlyAddBuffsToTraceTarget": 0,
+              "_onlyAddBuffsToTargetOnce": 0,
+              "_dontAddBuffs": 0,
+              "_excludeAttachments": 0,
+              "_useSelfBlackboard": 0,
+              "_extraBuffsInTheEnd": [],
+              "_useExtraBuffsWhenStopHit": 0,
+              "_addExtraBuffsWhenReached": 0,
+              "_detachAllExtraBuffsWhenStopped": 0
+            },
+            "_fixDealHitTargetLeft": 1,
+            "_stopGraphicProjectileWhenClearMainEffect": 0,
+            "_overrideAudioSignal": "",
+            "_fireProjectileReachedEvent": 0,
+            "_eliminatableStatus": 0,
+            "_movementAdjustableStatus": 0,
+            "_managedBySource": 0,
+            "_projectileType": 0,
+            "_containsChildrenBehaviours": 0,
+            "_canHitSameTargetMultipleTimes": 0,
+            "_lifeTimeType": 1,
+            "_lifeTime": 10,
+            "_getLifeTimeFromBB": 0,
+            "_hitNumType": 1,
+            "_maxHitNum": 1,
+            "_getMaxHitNumFromBB": 0,
+            "_maxHitNumBBKey": "",
+            "_stopAfterMaxHit": 1,
+            "_stopAfterFirstHit": 0,
+            "_stopWhenSourceInvalid": 0,
+            "_alwaysHitTraceTargetInTheEnd": 1,
+            "_alwaysHitTraceTargetWhenReached": 0,
+            "_alwaysReachInTheEnd": 0,
+            "_limitedMaxHitNumToSourceBlockedCnt": 0,
+            "_allowZeroBlockCntLimit": 0
+          }
+        ]
+      }
+    ],
+    "projectile_chr_threye_s1_graphic": [
+      {
+        "object": "projectile_chr_threye_s1_graphic",
+        "pathId": "3583802685536727120",
+        "components": [
+          {
+            "pathId": "-8456615137081495472",
+            "_randomDelayToBorn": 0,
+            "_bodyTransform": {
+              "m_FileID": 0,
+              "m_PathID": "-4911960151587753904"
+            },
+            "_keepAlreadyHitTime": -1,
+            "_mainEffect": "threye_skill_01_trail",
+            "_clearMainEffectWhenReached": 1,
+            "_actionController": {
+              "_detachBuffsWhenTargetLeave": 0,
+              "_detachAllBuffsWhenStopped": 0,
+              "_onlyAddBuffsToTraceTarget": 0,
+              "_onlyAddBuffsToTargetOnce": 0,
+              "_dontAddBuffs": 0,
+              "_excludeAttachments": 0,
+              "_useSelfBlackboard": 0,
+              "_extraBuffsInTheEnd": [],
+              "_useExtraBuffsWhenStopHit": 0,
+              "_addExtraBuffsWhenReached": 0,
+              "_detachAllExtraBuffsWhenStopped": 0
+            },
+            "_fixDealHitTargetLeft": 1,
+            "_stopGraphicProjectileWhenClearMainEffect": 0,
+            "_overrideAudioSignal": "",
+            "_fireProjectileReachedEvent": 0,
+            "_eliminatableStatus": 0,
+            "_movementAdjustableStatus": 0,
+            "_managedBySource": 0,
+            "_projectileType": 0,
+            "_containsChildrenBehaviours": 0,
+            "_canHitSameTargetMultipleTimes": 0,
+            "_lifeTimeType": 1,
+            "_lifeTime": 10,
+            "_getLifeTimeFromBB": 0,
+            "_hitNumType": 1,
+            "_maxHitNum": 1,
+            "_getMaxHitNumFromBB": 0,
+            "_maxHitNumBBKey": "",
+            "_stopAfterMaxHit": 1,
+            "_stopAfterFirstHit": 0,
+            "_stopWhenSourceInvalid": 0,
+            "_alwaysHitTraceTargetInTheEnd": 1,
+            "_alwaysHitTraceTargetWhenReached": 0,
+            "_alwaysReachInTheEnd": 0,
+            "_limitedMaxHitNumToSourceBlockedCnt": 0,
+            "_allowZeroBlockCntLimit": 0
+          },
+          {
+            "pathId": "3475258700229963856",
+            "_rotateToTarget": 1,
+            "_forceReachedWhenTimeup": 1,
+            "_useSourceDirection": 0,
+            "_useTargetDirection": 0,
+            "_useStartToTarget": 0,
+            "_awayFromSourceAsDirection": 0,
+            "_flyToTargetLocationOnly": 0,
+            "_useSourceDirectionRandomArcAngleStart": 0,
+            "_useSourceToTargetRandomArcAngleStart": 0,
+            "_useSourceDirectionArcAngleWithRatio": 0,
+            "_useSourceToTargetArcAngleWithRatio": 0,
+            "_sourceDirectionArcAngleRatio": 0,
+            "_flyToPredefinedLocation": 0,
+            "_predefinedLocation": 0,
+            "_freezeRotationZ": 0,
+            "_freezeRotationXY": 0,
+            "_exactMatchCameraForward": 0,
+            "_resetToTargetPosWhenReached": 0,
+            "_resetToTracetargetMapPosV3": 0,
+            "_handleWithIBuildableTarget": 0,
+            "_forceResetToTargetPosWhenReached": 0,
+            "_fixOnProjectileReached": 0,
+            "_onlyReachedInTime": 0,
+            "_moveType": 1,
+            "_moveTypeData": {
+              "data": []
+            },
+            "_speed": 8,
+            "_distance": 0,
+            "_comeBack": 0,
+            "_comeBackSpeedScale": 0.25,
+            "_delayToStart": 0,
+            "_delayAfterReached": 0,
+            "_delayToReachAfterHit": 0,
+            "_clearTraceTargetWhenReached": 1,
+            "_updateDelayTimeOnlyOnce": 0,
+            "_skipSmoothLerpDirection": 0,
+            "_addInertia": 0,
+            "_turnSpeed": 0,
+            "_useDynamicSpeed": 0,
+            "_deltaSpeedPerSec": 0,
+            "_finalSpeed": 0,
+            "_randomOffset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "_forceUseTargetMountPoint": 0
+          }
+        ]
+      }
+    ],
+    "projectile_chr_threye_s1": [
+      {
+        "object": "projectile_chr_threye_s1",
+        "pathId": "6750006443287909082",
+        "components": [
+          {
+            "pathId": "-8145696952483507494",
+            "_effectsWhenStart": [],
+            "_effectsWhenReached": [],
+            "_effectsWhenHit": [
+              "threye_skill_01_hit"
+            ],
+            "_effectsToTargetWhenStart": [],
+            "_effectsToTileWhenStart": [],
+            "_effectsWhenStop": [],
+            "_effectOnTrigger": [],
+            "_onlyPlayHitEffectOnTraceTarget": 0,
+            "_onlyPlayHitEffectOnNotTraceTarget": 0,
+            "_onlyPlayHitEffectOnce": 0,
+            "_clearHitEffectOnStop": 0,
+            "_clearPlayEffectOnStop": 0,
+            "_clearEffectsOnTileOnStop": 0,
+            "_clearReachedEffectWhenStop": 0,
+            "_alwaysPlayStartEffects": 0,
+            "_playStartEffectOnlyOnProjectile": 0,
+            "_useSourceFaceVector": 0,
+            "_useSourceFaceVectorOnHit": 0,
+            "_forceReachTargetGround": 0,
+            "_followTargetGround": 0,
+            "_replaceMainEffectWhenReach": 0,
+            "_mainEffectToReplace": "",
+            "_useTraceTargetWhenReach": 0,
+            "_setReachEffectOnProjectile": 0,
+            "_syncEffectScaleViaProjectile": 0
+          },
+          {
+            "pathId": "-6450014092685339942",
+            "_rotateToTarget": 1,
+            "_forceReachedWhenTimeup": 1,
+            "_useSourceDirection": 0,
+            "_useTargetDirection": 0,
+            "_useStartToTarget": 0,
+            "_awayFromSourceAsDirection": 0,
+            "_flyToTargetLocationOnly": 0,
+            "_useSourceDirectionRandomArcAngleStart": 0,
+            "_useSourceToTargetRandomArcAngleStart": 0,
+            "_useSourceDirectionArcAngleWithRatio": 0,
+            "_useSourceToTargetArcAngleWithRatio": 0,
+            "_sourceDirectionArcAngleRatio": 0,
+            "_flyToPredefinedLocation": 0,
+            "_predefinedLocation": 0,
+            "_freezeRotationZ": 0,
+            "_freezeRotationXY": 0,
+            "_exactMatchCameraForward": 0,
+            "_resetToTargetPosWhenReached": 0,
+            "_resetToTracetargetMapPosV3": 0,
+            "_handleWithIBuildableTarget": 0,
+            "_forceResetToTargetPosWhenReached": 0,
+            "_fixOnProjectileReached": 0,
+            "_onlyReachedInTime": 0,
+            "_moveType": 1,
+            "_moveTypeData": {
+              "data": []
+            },
+            "_speed": 8,
+            "_distance": 0,
+            "_comeBack": 0,
+            "_comeBackSpeedScale": 0.25,
+            "_delayToStart": 0,
+            "_delayAfterReached": 0,
+            "_delayToReachAfterHit": 0,
+            "_clearTraceTargetWhenReached": 1,
+            "_updateDelayTimeOnlyOnce": 0,
+            "_skipSmoothLerpDirection": 0,
+            "_addInertia": 0,
+            "_turnSpeed": 0,
+            "_useDynamicSpeed": 0,
+            "_deltaSpeedPerSec": 0,
+            "_finalSpeed": 0,
+            "_randomOffset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "_forceUseTargetMountPoint": 0
+          },
+          {
+            "pathId": "4129068020986221274",
+            "_randomDelayToBorn": 0,
+            "_bodyTransform": {
+              "m_FileID": 0,
+              "m_PathID": "6018141521279062746"
+            },
+            "_keepAlreadyHitTime": -1,
+            "_mainEffect": "threye_skill_01_trail",
+            "_clearMainEffectWhenReached": 1,
+            "_actionController": {
+              "_detachBuffsWhenTargetLeave": 0,
+              "_detachAllBuffsWhenStopped": 0,
+              "_onlyAddBuffsToTraceTarget": 0,
+              "_onlyAddBuffsToTargetOnce": 0,
+              "_dontAddBuffs": 0,
+              "_excludeAttachments": 0,
+              "_useSelfBlackboard": 0,
+              "_extraBuffsInTheEnd": [],
+              "_useExtraBuffsWhenStopHit": 0,
+              "_addExtraBuffsWhenReached": 0,
+              "_detachAllExtraBuffsWhenStopped": 0
+            },
+            "_fixDealHitTargetLeft": 1,
+            "_stopGraphicProjectileWhenClearMainEffect": 0,
+            "_overrideAudioSignal": "",
+            "_fireProjectileReachedEvent": 0,
+            "_eliminatableStatus": 0,
+            "_movementAdjustableStatus": 0,
+            "_managedBySource": 0,
+            "_projectileType": 0,
+            "_containsChildrenBehaviours": 0,
+            "_canHitSameTargetMultipleTimes": 0,
+            "_lifeTimeType": 1,
+            "_lifeTime": 10,
+            "_getLifeTimeFromBB": 0,
+            "_hitNumType": 1,
+            "_maxHitNum": 1,
+            "_getMaxHitNumFromBB": 0,
+            "_maxHitNumBBKey": "",
+            "_stopAfterMaxHit": 1,
+            "_stopAfterFirstHit": 0,
+            "_stopWhenSourceInvalid": 0,
+            "_alwaysHitTraceTargetInTheEnd": 1,
+            "_alwaysHitTraceTargetWhenReached": 0,
+            "_alwaysReachInTheEnd": 0,
+            "_limitedMaxHitNumToSourceBlockedCnt": 0,
+            "_allowZeroBlockCntLimit": 0
+          }
+        ]
+      }
+    ],
+    "projectile_chr_threye_s2_graphic": [
+      {
+        "object": "projectile_chr_threye_s2_graphic",
+        "pathId": "8618527963302127761",
+        "components": [
+          {
+            "pathId": "1566421478979004561",
+            "_randomDelayToBorn": 0,
+            "_bodyTransform": {
+              "m_FileID": 0,
+              "m_PathID": "3882708740170639505"
+            },
+            "_keepAlreadyHitTime": -1,
+            "_mainEffect": "threye_skill_02_trail",
+            "_clearMainEffectWhenReached": 1,
+            "_actionController": {
+              "_detachBuffsWhenTargetLeave": 0,
+              "_detachAllBuffsWhenStopped": 0,
+              "_onlyAddBuffsToTraceTarget": 0,
+              "_onlyAddBuffsToTargetOnce": 0,
+              "_dontAddBuffs": 0,
+              "_excludeAttachments": 0,
+              "_useSelfBlackboard": 0,
+              "_extraBuffsInTheEnd": [],
+              "_useExtraBuffsWhenStopHit": 0,
+              "_addExtraBuffsWhenReached": 0,
+              "_detachAllExtraBuffsWhenStopped": 0
+            },
+            "_fixDealHitTargetLeft": 1,
+            "_stopGraphicProjectileWhenClearMainEffect": 0,
+            "_overrideAudioSignal": "",
+            "_fireProjectileReachedEvent": 0,
+            "_eliminatableStatus": 0,
+            "_movementAdjustableStatus": 0,
+            "_managedBySource": 0,
+            "_projectileType": 0,
+            "_containsChildrenBehaviours": 0,
+            "_canHitSameTargetMultipleTimes": 0,
+            "_lifeTimeType": 1,
+            "_lifeTime": 10,
+            "_getLifeTimeFromBB": 0,
+            "_hitNumType": 1,
+            "_maxHitNum": 1,
+            "_getMaxHitNumFromBB": 0,
+            "_maxHitNumBBKey": "",
+            "_stopAfterMaxHit": 1,
+            "_stopAfterFirstHit": 0,
+            "_stopWhenSourceInvalid": 0,
+            "_alwaysHitTraceTargetInTheEnd": 1,
+            "_alwaysHitTraceTargetWhenReached": 0,
+            "_alwaysReachInTheEnd": 0,
+            "_limitedMaxHitNumToSourceBlockedCnt": 0,
+            "_allowZeroBlockCntLimit": 0
+          },
+          {
+            "pathId": "6117837901818882193",
+            "_rotateToTarget": 1,
+            "_forceReachedWhenTimeup": 1,
+            "_useSourceDirection": 0,
+            "_useTargetDirection": 0,
+            "_useStartToTarget": 0,
+            "_awayFromSourceAsDirection": 0,
+            "_flyToTargetLocationOnly": 0,
+            "_useSourceDirectionRandomArcAngleStart": 0,
+            "_useSourceToTargetRandomArcAngleStart": 0,
+            "_useSourceDirectionArcAngleWithRatio": 0,
+            "_useSourceToTargetArcAngleWithRatio": 0,
+            "_sourceDirectionArcAngleRatio": 0,
+            "_flyToPredefinedLocation": 0,
+            "_predefinedLocation": 0,
+            "_freezeRotationZ": 0,
+            "_freezeRotationXY": 0,
+            "_exactMatchCameraForward": 0,
+            "_resetToTargetPosWhenReached": 0,
+            "_resetToTracetargetMapPosV3": 0,
+            "_handleWithIBuildableTarget": 0,
+            "_forceResetToTargetPosWhenReached": 0,
+            "_fixOnProjectileReached": 0,
+            "_onlyReachedInTime": 0,
+            "_moveType": 1,
+            "_moveTypeData": {
+              "data": []
+            },
+            "_speed": 8,
+            "_distance": 0,
+            "_comeBack": 0,
+            "_comeBackSpeedScale": 0.25,
+            "_delayToStart": 0,
+            "_delayAfterReached": 0,
+            "_delayToReachAfterHit": 0,
+            "_clearTraceTargetWhenReached": 1,
+            "_updateDelayTimeOnlyOnce": 0,
+            "_skipSmoothLerpDirection": 0,
+            "_addInertia": 0,
+            "_turnSpeed": 0,
+            "_useDynamicSpeed": 0,
+            "_deltaSpeedPerSec": 0,
+            "_finalSpeed": 0,
+            "_randomOffset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "_forceUseTargetMountPoint": 0
+          }
+        ]
+      }
+    ],
+    "projectile_chr_threye_s2": [
+      {
+        "object": "projectile_chr_threye_s2",
+        "pathId": "5921800585077978070",
+        "components": [
+          {
+            "pathId": "-1021135690740010026",
+            "_effectsWhenStart": [],
+            "_effectsWhenReached": [],
+            "_effectsWhenHit": [
+              "threye_skill_02_hit"
+            ],
+            "_effectsToTargetWhenStart": [],
+            "_effectsToTileWhenStart": [],
+            "_effectsWhenStop": [],
+            "_effectOnTrigger": [],
+            "_onlyPlayHitEffectOnTraceTarget": 0,
+            "_onlyPlayHitEffectOnNotTraceTarget": 0,
+            "_onlyPlayHitEffectOnce": 0,
+            "_clearHitEffectOnStop": 0,
+            "_clearPlayEffectOnStop": 0,
+            "_clearEffectsOnTileOnStop": 0,
+            "_clearReachedEffectWhenStop": 0,
+            "_alwaysPlayStartEffects": 0,
+            "_playStartEffectOnlyOnProjectile": 0,
+            "_useSourceFaceVector": 0,
+            "_useSourceFaceVectorOnHit": 0,
+            "_forceReachTargetGround": 0,
+            "_followTargetGround": 0,
+            "_replaceMainEffectWhenReach": 0,
+            "_mainEffectToReplace": "",
+            "_useTraceTargetWhenReach": 0,
+            "_setReachEffectOnProjectile": 0,
+            "_syncEffectScaleViaProjectile": 0
+          },
+          {
+            "pathId": "5199043601087591382",
+            "_randomDelayToBorn": 0,
+            "_bodyTransform": {
+              "m_FileID": 0,
+              "m_PathID": "1425200140720796630"
+            },
+            "_keepAlreadyHitTime": -1,
+            "_mainEffect": "threye_skill_02_trail",
+            "_clearMainEffectWhenReached": 1,
+            "_actionController": {
+              "_detachBuffsWhenTargetLeave": 0,
+              "_detachAllBuffsWhenStopped": 0,
+              "_onlyAddBuffsToTraceTarget": 0,
+              "_onlyAddBuffsToTargetOnce": 0,
+              "_dontAddBuffs": 0,
+              "_excludeAttachments": 0,
+              "_useSelfBlackboard": 0,
+              "_extraBuffsInTheEnd": [],
+              "_useExtraBuffsWhenStopHit": 0,
+              "_addExtraBuffsWhenReached": 0,
+              "_detachAllExtraBuffsWhenStopped": 0
+            },
+            "_fixDealHitTargetLeft": 1,
+            "_stopGraphicProjectileWhenClearMainEffect": 0,
+            "_overrideAudioSignal": "",
+            "_fireProjectileReachedEvent": 0,
+            "_eliminatableStatus": 0,
+            "_movementAdjustableStatus": 0,
+            "_managedBySource": 0,
+            "_projectileType": 0,
+            "_containsChildrenBehaviours": 0,
+            "_canHitSameTargetMultipleTimes": 0,
+            "_lifeTimeType": 1,
+            "_lifeTime": 10,
+            "_getLifeTimeFromBB": 0,
+            "_hitNumType": 1,
+            "_maxHitNum": 1,
+            "_getMaxHitNumFromBB": 0,
+            "_maxHitNumBBKey": "",
+            "_stopAfterMaxHit": 1,
+            "_stopAfterFirstHit": 0,
+            "_stopWhenSourceInvalid": 0,
+            "_alwaysHitTraceTargetInTheEnd": 1,
+            "_alwaysHitTraceTargetWhenReached": 0,
+            "_alwaysReachInTheEnd": 0,
+            "_limitedMaxHitNumToSourceBlockedCnt": 0,
+            "_allowZeroBlockCntLimit": 0
+          },
+          {
+            "pathId": "7721993655152866262",
+            "_rotateToTarget": 1,
+            "_forceReachedWhenTimeup": 1,
+            "_useSourceDirection": 0,
+            "_useTargetDirection": 0,
+            "_useStartToTarget": 0,
+            "_awayFromSourceAsDirection": 0,
+            "_flyToTargetLocationOnly": 0,
+            "_useSourceDirectionRandomArcAngleStart": 0,
+            "_useSourceToTargetRandomArcAngleStart": 0,
+            "_useSourceDirectionArcAngleWithRatio": 0,
+            "_useSourceToTargetArcAngleWithRatio": 0,
+            "_sourceDirectionArcAngleRatio": 0,
+            "_flyToPredefinedLocation": 0,
+            "_predefinedLocation": 0,
+            "_freezeRotationZ": 0,
+            "_freezeRotationXY": 0,
+            "_exactMatchCameraForward": 0,
+            "_resetToTargetPosWhenReached": 0,
+            "_resetToTracetargetMapPosV3": 0,
+            "_handleWithIBuildableTarget": 0,
+            "_forceResetToTargetPosWhenReached": 0,
+            "_fixOnProjectileReached": 0,
+            "_onlyReachedInTime": 0,
+            "_moveType": 1,
+            "_moveTypeData": {
+              "data": []
+            },
+            "_speed": 8,
+            "_distance": 0,
+            "_comeBack": 0,
+            "_comeBackSpeedScale": 0.25,
+            "_delayToStart": 0,
+            "_delayAfterReached": 0,
+            "_delayToReachAfterHit": 0,
+            "_clearTraceTargetWhenReached": 1,
+            "_updateDelayTimeOnlyOnce": 0,
+            "_skipSmoothLerpDirection": 0,
+            "_addInertia": 0,
+            "_turnSpeed": 0,
+            "_useDynamicSpeed": 0,
+            "_deltaSpeedPerSec": 0,
+            "_finalSpeed": 0,
+            "_randomOffset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "_forceUseTargetMountPoint": 0
+          }
+        ]
+      }
+    ],
+    "projectile_chr_threye_s2_logic": [
+      {
+        "object": "projectile_chr_threye_s2_logic",
+        "pathId": "-2197333816149714687",
+        "components": [
+          {
+            "pathId": "-6769046953147016959",
+            "_effectsWhenStart": [],
+            "_effectsWhenReached": [],
+            "_effectsWhenHit": [
+              "threye_skill_02_hit"
+            ],
+            "_effectsToTargetWhenStart": [],
+            "_effectsToTileWhenStart": [],
+            "_effectsWhenStop": [],
+            "_effectOnTrigger": [],
+            "_onlyPlayHitEffectOnTraceTarget": 0,
+            "_onlyPlayHitEffectOnNotTraceTarget": 0,
+            "_onlyPlayHitEffectOnce": 0,
+            "_clearHitEffectOnStop": 0,
+            "_clearPlayEffectOnStop": 0,
+            "_clearEffectsOnTileOnStop": 0,
+            "_clearReachedEffectWhenStop": 0,
+            "_alwaysPlayStartEffects": 0,
+            "_playStartEffectOnlyOnProjectile": 0,
+            "_useSourceFaceVector": 0,
+            "_useSourceFaceVectorOnHit": 0,
+            "_forceReachTargetGround": 0,
+            "_followTargetGround": 0,
+            "_replaceMainEffectWhenReach": 0,
+            "_mainEffectToReplace": "",
+            "_useTraceTargetWhenReach": 0,
+            "_setReachEffectOnProjectile": 0,
+            "_syncEffectScaleViaProjectile": 0
+          },
+          {
+            "pathId": "-6343833615940298495",
+            "_rotateToTarget": 1,
+            "_forceReachedWhenTimeup": 1,
+            "_useSourceDirection": 0,
+            "_useTargetDirection": 0,
+            "_useStartToTarget": 0,
+            "_awayFromSourceAsDirection": 0,
+            "_flyToTargetLocationOnly": 0,
+            "_useSourceDirectionRandomArcAngleStart": 0,
+            "_useSourceToTargetRandomArcAngleStart": 0,
+            "_useSourceDirectionArcAngleWithRatio": 0,
+            "_useSourceToTargetArcAngleWithRatio": 0,
+            "_sourceDirectionArcAngleRatio": 0,
+            "_flyToPredefinedLocation": 0,
+            "_predefinedLocation": 0,
+            "_freezeRotationZ": 0,
+            "_freezeRotationXY": 0,
+            "_exactMatchCameraForward": 0,
+            "_resetToTargetPosWhenReached": 0,
+            "_resetToTracetargetMapPosV3": 0,
+            "_handleWithIBuildableTarget": 0,
+            "_forceResetToTargetPosWhenReached": 0,
+            "_fixOnProjectileReached": 0,
+            "_onlyReachedInTime": 0,
+            "_moveType": 1,
+            "_moveTypeData": {
+              "data": []
+            },
+            "_speed": 8,
+            "_distance": 0,
+            "_comeBack": 0,
+            "_comeBackSpeedScale": 0.25,
+            "_delayToStart": 0,
+            "_delayAfterReached": 0,
+            "_delayToReachAfterHit": 0,
+            "_clearTraceTargetWhenReached": 1,
+            "_updateDelayTimeOnlyOnce": 0,
+            "_skipSmoothLerpDirection": 0,
+            "_addInertia": 0,
+            "_turnSpeed": 0,
+            "_useDynamicSpeed": 0,
+            "_deltaSpeedPerSec": 0,
+            "_finalSpeed": 0,
+            "_randomOffset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "_forceUseTargetMountPoint": 0
+          },
+          {
+            "pathId": "-3188320200847828735",
+            "_randomDelayToBorn": 0,
+            "_bodyTransform": {
+              "m_FileID": 0,
+              "m_PathID": "-8800198184173610751"
+            },
+            "_keepAlreadyHitTime": -1,
+            "_mainEffect": "threye_skill_02_trail",
+            "_clearMainEffectWhenReached": 1,
+            "_actionController": {
+              "_detachBuffsWhenTargetLeave": 0,
+              "_detachAllBuffsWhenStopped": 0,
+              "_onlyAddBuffsToTraceTarget": 0,
+              "_onlyAddBuffsToTargetOnce": 0,
+              "_dontAddBuffs": 0,
+              "_excludeAttachments": 0,
+              "_useSelfBlackboard": 0,
+              "_extraBuffsInTheEnd": [],
+              "_useExtraBuffsWhenStopHit": 0,
+              "_addExtraBuffsWhenReached": 0,
+              "_detachAllExtraBuffsWhenStopped": 0
+            },
+            "_fixDealHitTargetLeft": 1,
+            "_stopGraphicProjectileWhenClearMainEffect": 0,
+            "_overrideAudioSignal": "",
+            "_fireProjectileReachedEvent": 0,
+            "_eliminatableStatus": 0,
+            "_movementAdjustableStatus": 0,
+            "_managedBySource": 0,
+            "_projectileType": 0,
+            "_containsChildrenBehaviours": 0,
+            "_canHitSameTargetMultipleTimes": 0,
+            "_lifeTimeType": 1,
+            "_lifeTime": 10,
+            "_getLifeTimeFromBB": 0,
+            "_hitNumType": 1,
+            "_maxHitNum": 1,
+            "_getMaxHitNumFromBB": 0,
+            "_maxHitNumBBKey": "",
+            "_stopAfterMaxHit": 1,
+            "_stopAfterFirstHit": 0,
+            "_stopWhenSourceInvalid": 0,
+            "_alwaysHitTraceTargetInTheEnd": 1,
+            "_alwaysHitTraceTargetWhenReached": 0,
+            "_alwaysReachInTheEnd": 0,
+            "_limitedMaxHitNumToSourceBlockedCnt": 0,
+            "_allowZeroBlockCntLimit": 0
+          }
+        ]
+      }
+    ],
+    "projectile_chr_threye_s1_logic": [
+      {
+        "object": "projectile_chr_threye_s1_logic",
+        "pathId": "4235091538737575509",
+        "components": [
+          {
+            "pathId": "-4913802858109127083",
+            "_rotateToTarget": 1,
+            "_forceReachedWhenTimeup": 1,
+            "_useSourceDirection": 0,
+            "_useTargetDirection": 0,
+            "_useStartToTarget": 0,
+            "_awayFromSourceAsDirection": 0,
+            "_flyToTargetLocationOnly": 0,
+            "_useSourceDirectionRandomArcAngleStart": 0,
+            "_useSourceToTargetRandomArcAngleStart": 0,
+            "_useSourceDirectionArcAngleWithRatio": 0,
+            "_useSourceToTargetArcAngleWithRatio": 0,
+            "_sourceDirectionArcAngleRatio": 0,
+            "_flyToPredefinedLocation": 0,
+            "_predefinedLocation": 0,
+            "_freezeRotationZ": 0,
+            "_freezeRotationXY": 0,
+            "_exactMatchCameraForward": 0,
+            "_resetToTargetPosWhenReached": 0,
+            "_resetToTracetargetMapPosV3": 0,
+            "_handleWithIBuildableTarget": 0,
+            "_forceResetToTargetPosWhenReached": 0,
+            "_fixOnProjectileReached": 0,
+            "_onlyReachedInTime": 0,
+            "_moveType": 1,
+            "_moveTypeData": {
+              "data": []
+            },
+            "_speed": 8,
+            "_distance": 0,
+            "_comeBack": 0,
+            "_comeBackSpeedScale": 0.25,
+            "_delayToStart": 0,
+            "_delayAfterReached": 0,
+            "_delayToReachAfterHit": 0,
+            "_clearTraceTargetWhenReached": 1,
+            "_updateDelayTimeOnlyOnce": 0,
+            "_skipSmoothLerpDirection": 0,
+            "_addInertia": 0,
+            "_turnSpeed": 0,
+            "_useDynamicSpeed": 0,
+            "_deltaSpeedPerSec": 0,
+            "_finalSpeed": 0,
+            "_randomOffset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "_forceUseTargetMountPoint": 0
+          },
+          {
+            "pathId": "4378803342838937173",
+            "_effectsWhenStart": [],
+            "_effectsWhenReached": [],
+            "_effectsWhenHit": [
+              "threye_skill_01_hit"
+            ],
+            "_effectsToTargetWhenStart": [],
+            "_effectsToTileWhenStart": [],
+            "_effectsWhenStop": [],
+            "_effectOnTrigger": [],
+            "_onlyPlayHitEffectOnTraceTarget": 0,
+            "_onlyPlayHitEffectOnNotTraceTarget": 0,
+            "_onlyPlayHitEffectOnce": 0,
+            "_clearHitEffectOnStop": 0,
+            "_clearPlayEffectOnStop": 0,
+            "_clearEffectsOnTileOnStop": 0,
+            "_clearReachedEffectWhenStop": 0,
+            "_alwaysPlayStartEffects": 0,
+            "_playStartEffectOnlyOnProjectile": 0,
+            "_useSourceFaceVector": 0,
+            "_useSourceFaceVectorOnHit": 0,
+            "_forceReachTargetGround": 0,
+            "_followTargetGround": 0,
+            "_replaceMainEffectWhenReach": 0,
+            "_mainEffectToReplace": "",
+            "_useTraceTargetWhenReach": 0,
+            "_setReachEffectOnProjectile": 0,
+            "_syncEffectScaleViaProjectile": 0
+          },
+          {
+            "pathId": "6741753365684041301",
+            "_randomDelayToBorn": 0,
+            "_bodyTransform": {
+              "m_FileID": 0,
+              "m_PathID": "-5846923141378263467"
+            },
+            "_keepAlreadyHitTime": -1,
+            "_mainEffect": "",
+            "_clearMainEffectWhenReached": 1,
+            "_actionController": {
+              "_detachBuffsWhenTargetLeave": 0,
+              "_detachAllBuffsWhenStopped": 0,
+              "_onlyAddBuffsToTraceTarget": 0,
+              "_onlyAddBuffsToTargetOnce": 0,
+              "_dontAddBuffs": 0,
+              "_excludeAttachments": 0,
+              "_useSelfBlackboard": 0,
+              "_extraBuffsInTheEnd": [],
+              "_useExtraBuffsWhenStopHit": 0,
+              "_addExtraBuffsWhenReached": 0,
+              "_detachAllExtraBuffsWhenStopped": 0
+            },
+            "_fixDealHitTargetLeft": 1,
+            "_stopGraphicProjectileWhenClearMainEffect": 0,
+            "_overrideAudioSignal": "",
+            "_fireProjectileReachedEvent": 0,
+            "_eliminatableStatus": 0,
+            "_movementAdjustableStatus": 0,
+            "_managedBySource": 0,
+            "_projectileType": 0,
+            "_containsChildrenBehaviours": 0,
+            "_canHitSameTargetMultipleTimes": 0,
+            "_lifeTimeType": 1,
+            "_lifeTime": 10,
+            "_getLifeTimeFromBB": 0,
+            "_hitNumType": 1,
+            "_maxHitNum": 1,
+            "_getMaxHitNumFromBB": 0,
+            "_maxHitNumBBKey": "",
+            "_stopAfterMaxHit": 1,
+            "_stopAfterFirstHit": 0,
+            "_stopWhenSourceInvalid": 0,
+            "_alwaysHitTraceTargetInTheEnd": 1,
+            "_alwaysHitTraceTargetWhenReached": 0,
+            "_alwaysReachInTheEnd": 0,
+            "_limitedMaxHitNumToSourceBlockedCnt": 0,
+            "_allowZeroBlockCntLimit": 0
+          }
+        ]
+      }
+    ],
+    "projectile_chr_threye": [
+      {
+        "object": "projectile_chr_threye",
+        "pathId": "-8536981953272523158",
+        "components": [
+          {
+            "pathId": "-3415673262245718422",
+            "_randomDelayToBorn": 0,
+            "_bodyTransform": {
+              "m_FileID": 0,
+              "m_PathID": "-2371101108153461142"
+            },
+            "_keepAlreadyHitTime": -1,
+            "_mainEffect": "threye_attack_01_trail",
+            "_clearMainEffectWhenReached": 1,
+            "_actionController": {
+              "_detachBuffsWhenTargetLeave": 0,
+              "_detachAllBuffsWhenStopped": 0,
+              "_onlyAddBuffsToTraceTarget": 0,
+              "_onlyAddBuffsToTargetOnce": 0,
+              "_dontAddBuffs": 0,
+              "_excludeAttachments": 0,
+              "_useSelfBlackboard": 0,
+              "_extraBuffsInTheEnd": [],
+              "_useExtraBuffsWhenStopHit": 0,
+              "_addExtraBuffsWhenReached": 0,
+              "_detachAllExtraBuffsWhenStopped": 0
+            },
+            "_fixDealHitTargetLeft": 1,
+            "_stopGraphicProjectileWhenClearMainEffect": 0,
+            "_overrideAudioSignal": "",
+            "_fireProjectileReachedEvent": 0,
+            "_eliminatableStatus": 0,
+            "_movementAdjustableStatus": 0,
+            "_managedBySource": 0,
+            "_projectileType": 0,
+            "_containsChildrenBehaviours": 0,
+            "_canHitSameTargetMultipleTimes": 0,
+            "_lifeTimeType": 1,
+            "_lifeTime": 10,
+            "_getLifeTimeFromBB": 0,
+            "_hitNumType": 1,
+            "_maxHitNum": 1,
+            "_getMaxHitNumFromBB": 0,
+            "_maxHitNumBBKey": "",
+            "_stopAfterMaxHit": 1,
+            "_stopAfterFirstHit": 0,
+            "_stopWhenSourceInvalid": 0,
+            "_alwaysHitTraceTargetInTheEnd": 1,
+            "_alwaysHitTraceTargetWhenReached": 0,
+            "_alwaysReachInTheEnd": 0,
+            "_limitedMaxHitNumToSourceBlockedCnt": 0,
+            "_allowZeroBlockCntLimit": 0
+          },
+          {
+            "pathId": "3511683887357253226",
+            "_effectsWhenStart": [],
+            "_effectsWhenReached": [],
+            "_effectsWhenHit": [
+              "threye_attack_01_hit"
+            ],
+            "_effectsToTargetWhenStart": [],
+            "_effectsToTileWhenStart": [],
+            "_effectsWhenStop": [],
+            "_effectOnTrigger": [],
+            "_onlyPlayHitEffectOnTraceTarget": 0,
+            "_onlyPlayHitEffectOnNotTraceTarget": 0,
+            "_onlyPlayHitEffectOnce": 0,
+            "_clearHitEffectOnStop": 0,
+            "_clearPlayEffectOnStop": 0,
+            "_clearEffectsOnTileOnStop": 0,
+            "_clearReachedEffectWhenStop": 0,
+            "_alwaysPlayStartEffects": 0,
+            "_playStartEffectOnlyOnProjectile": 0,
+            "_useSourceFaceVector": 0,
+            "_useSourceFaceVectorOnHit": 0,
+            "_forceReachTargetGround": 0,
+            "_followTargetGround": 0,
+            "_replaceMainEffectWhenReach": 0,
+            "_mainEffectToReplace": "",
+            "_useTraceTargetWhenReach": 0,
+            "_setReachEffectOnProjectile": 0,
+            "_syncEffectScaleViaProjectile": 0
+          },
+          {
+            "pathId": "6001196937135216234",
+            "_rotateToTarget": 1,
+            "_forceReachedWhenTimeup": 1,
+            "_useSourceDirection": 0,
+            "_useTargetDirection": 0,
+            "_useStartToTarget": 0,
+            "_awayFromSourceAsDirection": 0,
+            "_flyToTargetLocationOnly": 0,
+            "_useSourceDirectionRandomArcAngleStart": 0,
+            "_useSourceToTargetRandomArcAngleStart": 0,
+            "_useSourceDirectionArcAngleWithRatio": 0,
+            "_useSourceToTargetArcAngleWithRatio": 0,
+            "_sourceDirectionArcAngleRatio": 0,
+            "_flyToPredefinedLocation": 0,
+            "_predefinedLocation": 0,
+            "_freezeRotationZ": 0,
+            "_freezeRotationXY": 0,
+            "_exactMatchCameraForward": 0,
+            "_resetToTargetPosWhenReached": 0,
+            "_resetToTracetargetMapPosV3": 0,
+            "_handleWithIBuildableTarget": 0,
+            "_forceResetToTargetPosWhenReached": 0,
+            "_fixOnProjectileReached": 0,
+            "_onlyReachedInTime": 0,
+            "_moveType": 1,
+            "_moveTypeData": {
+              "data": []
+            },
+            "_speed": 8,
+            "_distance": 0,
+            "_comeBack": 0,
+            "_comeBackSpeedScale": 0.25,
+            "_delayToStart": 0,
+            "_delayAfterReached": 0,
+            "_delayToReachAfterHit": 0,
+            "_clearTraceTargetWhenReached": 1,
+            "_updateDelayTimeOnlyOnce": 0,
+            "_skipSmoothLerpDirection": 0,
+            "_addInertia": 0,
+            "_turnSpeed": 0,
+            "_useDynamicSpeed": 0,
+            "_deltaSpeedPerSec": 0,
+            "_finalSpeed": 0,
+            "_randomOffset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "_forceUseTargetMountPoint": 0
+          }
+        ]
+      }
+    ],
+    "projectile_chr_threye_logic": [
+      {
+        "object": "projectile_chr_threye_logic",
+        "pathId": "5683107790083485645",
+        "components": [
+          {
+            "pathId": "-6927089920164663347",
+            "_effectsWhenStart": [],
+            "_effectsWhenReached": [],
+            "_effectsWhenHit": [
+              "threye_attack_01_hit"
+            ],
+            "_effectsToTargetWhenStart": [],
+            "_effectsToTileWhenStart": [],
+            "_effectsWhenStop": [],
+            "_effectOnTrigger": [],
+            "_onlyPlayHitEffectOnTraceTarget": 0,
+            "_onlyPlayHitEffectOnNotTraceTarget": 0,
+            "_onlyPlayHitEffectOnce": 0,
+            "_clearHitEffectOnStop": 0,
+            "_clearPlayEffectOnStop": 0,
+            "_clearEffectsOnTileOnStop": 0,
+            "_clearReachedEffectWhenStop": 0,
+            "_alwaysPlayStartEffects": 0,
+            "_playStartEffectOnlyOnProjectile": 0,
+            "_useSourceFaceVector": 0,
+            "_useSourceFaceVectorOnHit": 0,
+            "_forceReachTargetGround": 0,
+            "_followTargetGround": 0,
+            "_replaceMainEffectWhenReach": 0,
+            "_mainEffectToReplace": "",
+            "_useTraceTargetWhenReach": 0,
+            "_setReachEffectOnProjectile": 0,
+            "_syncEffectScaleViaProjectile": 0
+          },
+          {
+            "pathId": "-4630763339782000691",
+            "_randomDelayToBorn": 0,
+            "_bodyTransform": {
+              "m_FileID": 0,
+              "m_PathID": "912352000178876365"
+            },
+            "_keepAlreadyHitTime": -1,
+            "_mainEffect": "",
+            "_clearMainEffectWhenReached": 1,
+            "_actionController": {
+              "_detachBuffsWhenTargetLeave": 0,
+              "_detachAllBuffsWhenStopped": 0,
+              "_onlyAddBuffsToTraceTarget": 0,
+              "_onlyAddBuffsToTargetOnce": 0,
+              "_dontAddBuffs": 0,
+              "_excludeAttachments": 0,
+              "_useSelfBlackboard": 0,
+              "_extraBuffsInTheEnd": [],
+              "_useExtraBuffsWhenStopHit": 0,
+              "_addExtraBuffsWhenReached": 0,
+              "_detachAllExtraBuffsWhenStopped": 0
+            },
+            "_fixDealHitTargetLeft": 1,
+            "_stopGraphicProjectileWhenClearMainEffect": 0,
+            "_overrideAudioSignal": "",
+            "_fireProjectileReachedEvent": 0,
+            "_eliminatableStatus": 0,
+            "_movementAdjustableStatus": 0,
+            "_managedBySource": 0,
+            "_projectileType": 0,
+            "_containsChildrenBehaviours": 0,
+            "_canHitSameTargetMultipleTimes": 0,
+            "_lifeTimeType": 1,
+            "_lifeTime": 10,
+            "_getLifeTimeFromBB": 0,
+            "_hitNumType": 1,
+            "_maxHitNum": 1,
+            "_getMaxHitNumFromBB": 0,
+            "_maxHitNumBBKey": "",
+            "_stopAfterMaxHit": 1,
+            "_stopAfterFirstHit": 0,
+            "_stopWhenSourceInvalid": 0,
+            "_alwaysHitTraceTargetInTheEnd": 1,
+            "_alwaysHitTraceTargetWhenReached": 0,
+            "_alwaysReachInTheEnd": 0,
+            "_limitedMaxHitNumToSourceBlockedCnt": 0,
+            "_allowZeroBlockCntLimit": 0
+          },
+          {
+            "pathId": "-297547685506355251",
+            "_rotateToTarget": 0,
+            "_forceReachedWhenTimeup": 1,
+            "_useSourceDirection": 0,
+            "_useTargetDirection": 0,
+            "_useStartToTarget": 0,
+            "_awayFromSourceAsDirection": 0,
+            "_flyToTargetLocationOnly": 0,
+            "_useSourceDirectionRandomArcAngleStart": 0,
+            "_useSourceToTargetRandomArcAngleStart": 0,
+            "_useSourceDirectionArcAngleWithRatio": 0,
+            "_useSourceToTargetArcAngleWithRatio": 0,
+            "_sourceDirectionArcAngleRatio": 0,
+            "_flyToPredefinedLocation": 0,
+            "_predefinedLocation": 0,
+            "_freezeRotationZ": 0,
+            "_freezeRotationXY": 0,
+            "_exactMatchCameraForward": 0,
+            "_resetToTargetPosWhenReached": 0,
+            "_resetToTracetargetMapPosV3": 0,
+            "_handleWithIBuildableTarget": 0,
+            "_forceResetToTargetPosWhenReached": 0,
+            "_fixOnProjectileReached": 0,
+            "_onlyReachedInTime": 0,
+            "_moveType": 1,
+            "_moveTypeData": {
+              "data": []
+            },
+            "_speed": 8,
+            "_distance": 0,
+            "_comeBack": 0,
+            "_comeBackSpeedScale": 0.25,
+            "_delayToStart": 0,
+            "_delayAfterReached": 0,
+            "_delayToReachAfterHit": 0,
+            "_clearTraceTargetWhenReached": 1,
+            "_updateDelayTimeOnlyOnce": 0,
+            "_skipSmoothLerpDirection": 0,
+            "_addInertia": 0,
+            "_turnSpeed": 0,
+            "_useDynamicSpeed": 0,
+            "_deltaSpeedPerSec": 0,
+            "_finalSpeed": 0,
+            "_randomOffset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "_forceUseTargetMountPoint": 0
+          }
+        ]
+      }
+    ]
+  },
+  "buffTemplates": {
+    "threye_t_2": {
+      "templateKey": "threye_t_2",
+      "effectKey": "",
+      "onEventPriority": "DEFAULT",
+      "eventToActions": {
+        "ON_OUTPUT_DAMAGE": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+ApplyElementDamage, Assembly-CSharp",
+            "_elementDamageType": "DARK",
+            "_sourceType": "BUFF_OWNER",
+            "_isFixedEpDamage": false,
+            "_baseOnHostAtk": false,
+            "_baseOnEnemyHostAtk": false,
+            "_fixedEpDamageKey": null,
+            "_fixedEpDamage": 0,
+            "_noSource": false,
+            "_forceUseProjectileCachedAtk": false,
+            "_multiplyWithBuffValidStackCnt": false,
+            "_buffKey": null,
+            "_buffSourceType": "BUFF_OWNER",
+            "_targetType": "MODIFIER_TARGET",
+            "_isEnvElementDamage": false,
+            "_loadElementTypeFromBb": false,
+            "_fixedEpDamageScale": "",
+            "_epDamageScale": "ep_damage_ratio"
+          }
+        ]
+      }
+    }
+  },
+  "characterTable": {
+    "char_4102_threye": {
+      "name": "Valarqvin",
+      "description": "Attacks deal <@ba.kw>Arts damage</>, and can inflict <@ba.kw>Elemental Injury</>",
+      "sortIndex": 891,
+      "canUseGeneralPotentialItem": true,
+      "canUseActivityPotentialItem": false,
+      "potentialItemId": "p_char_4102_threye",
+      "activityPotentialItemId": null,
+      "classicPotentialItemId": null,
+      "nationId": "sami",
+      "groupId": null,
+      "teamId": null,
+      "mainPower": {
+        "nationId": "sami",
+        "groupId": null,
+        "teamId": null
+      },
+      "subPower": null,
+      "displayNumber": "SI06",
+      "appellation": " ",
+      "position": "RANGED",
+      "tagList": [
+        "Elemental"
+      ],
+      "itemUsage": "Sarkaz Cyclope Valarqvin, out from frozen caverns.",
+      "itemDesc": "She sees the outcome, and searches for the cause.",
+      "itemObtainApproach": "Obtained from Integrated Strategies",
+      "isNotObtainable": false,
+      "isSpChar": false,
+      "maxPotentialLevel": 5,
+      "rarity": "TIER_5",
+      "profession": "SUPPORT",
+      "subProfessionId": "ritualist",
+      "trait": null,
+      "phases": [
+        {
+          "characterPrefabKey": "char_4102_threye",
+          "rangeId": "y-2",
+          "maxLevel": 50,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 429,
+                "atk": 202,
+                "def": 46,
+                "magicResistance": 5,
+                "cost": 13,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.6,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 50,
+              "data": {
+                "maxHp": 632,
+                "atk": 289,
+                "def": 67,
+                "magicResistance": 5,
+                "cost": 13,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.6,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "evolveCost": null
+        },
+        {
+          "characterPrefabKey": "char_4102_threye",
+          "rangeId": "y-2",
+          "maxLevel": 70,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 632,
+                "atk": 289,
+                "def": 67,
+                "magicResistance": 10,
+                "cost": 15,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.6,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 70,
+              "data": {
+                "maxHp": 855,
+                "atk": 371,
+                "def": 88,
+                "magicResistance": 10,
+                "cost": 15,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.6,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "evolveCost": [
+            {
+              "id": "3271",
+              "count": 4,
+              "type": "MATERIAL"
+            },
+            {
+              "id": "30062",
+              "count": 3,
+              "type": "MATERIAL"
+            },
+            {
+              "id": "30022",
+              "count": 3,
+              "type": "MATERIAL"
+            }
+          ]
+        },
+        {
+          "characterPrefabKey": "char_4102_threye",
+          "rangeId": "y-2",
+          "maxLevel": 80,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 855,
+                "atk": 371,
+                "def": 88,
+                "magicResistance": 15,
+                "cost": 15,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.6,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 80,
+              "data": {
+                "maxHp": 1097,
+                "atk": 447,
+                "def": 101,
+                "magicResistance": 15,
+                "cost": 15,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.6,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "evolveCost": [
+            {
+              "id": "3273",
+              "count": 3,
+              "type": "MATERIAL"
+            },
+            {
+              "id": "30014",
+              "count": 10,
+              "type": "MATERIAL"
+            },
+            {
+              "id": "30063",
+              "count": 7,
+              "type": "MATERIAL"
+            }
+          ]
+        }
+      ],
+      "skills": [
+        {
+          "skillId": "skchr_threye_1",
+          "overridePrefabKey": null,
+          "overrideTokenKey": null,
+          "levelUpCostCond": [
+            {
+              "unlockCond": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "lvlUpTime": 28800,
+              "levelUpCost": [
+                {
+                  "id": "3303",
+                  "count": 5,
+                  "type": "MATERIAL"
+                },
+                {
+                  "id": "30074",
+                  "count": 3,
+                  "type": "MATERIAL"
+                },
+                {
+                  "id": "30093",
+                  "count": 4,
+                  "type": "MATERIAL"
+                }
+              ]
+            },
+            {
+              "unlockCond": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "lvlUpTime": 57600,
+              "levelUpCost": [
+                {
+                  "id": "3303",
+                  "count": 6,
+                  "type": "MATERIAL"
+                },
+                {
+                  "id": "30054",
+                  "count": 3,
+                  "type": "MATERIAL"
+                },
+                {
+                  "id": "30064",
+                  "count": 4,
+                  "type": "MATERIAL"
+                }
+              ]
+            },
+            {
+              "unlockCond": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "lvlUpTime": 86400,
+              "levelUpCost": [
+                {
+                  "id": "3303",
+                  "count": 10,
+                  "type": "MATERIAL"
+                },
+                {
+                  "id": "30145",
+                  "count": 4,
+                  "type": "MATERIAL"
+                },
+                {
+                  "id": "31054",
+                  "count": 3,
+                  "type": "MATERIAL"
+                }
+              ]
+            }
+          ],
+          "unlockCond": {
+            "phase": "PHASE_0",
+            "level": 1
+          }
+        },
+        {
+          "skillId": "skchr_threye_2",
+          "overridePrefabKey": null,
+          "overrideTokenKey": null,
+          "levelUpCostCond": [
+            {
+              "unlockCond": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "lvlUpTime": 28800,
+              "levelUpCost": [
+                {
+                  "id": "3303",
+                  "count": 5,
+                  "type": "MATERIAL"
+                },
+                {
+                  "id": "30054",
+                  "count": 3,
+                  "type": "MATERIAL"
+                },
+                {
+                  "id": "30013",
+                  "count": 3,
+                  "type": "MATERIAL"
+                }
+              ]
+            },
+            {
+              "unlockCond": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "lvlUpTime": 57600,
+              "levelUpCost": [
+                {
+                  "id": "3303",
+                  "count": 6,
+                  "type": "MATERIAL"
+                },
+                {
+                  "id": "30084",
+                  "count": 3,
+                  "type": "MATERIAL"
+                },
+                {
+                  "id": "30094",
+                  "count": 5,
+                  "type": "MATERIAL"
+                }
+              ]
+            },
+            {
+              "unlockCond": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "lvlUpTime": 86400,
+              "levelUpCost": [
+                {
+                  "id": "3303",
+                  "count": 10,
+                  "type": "MATERIAL"
+                },
+                {
+                  "id": "30155",
+                  "count": 4,
+                  "type": "MATERIAL"
+                },
+                {
+                  "id": "31024",
+                  "count": 3,
+                  "type": "MATERIAL"
+                }
+              ]
+            }
+          ],
+          "unlockCond": {
+            "phase": "PHASE_1",
+            "level": 1
+          }
+        }
+      ],
+      "displayTokenDict": null,
+      "talents": [
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "2",
+              "name": "The One Who Reveals",
+              "description": "During [Expeditioner's Jǫklumarkar], attacks deal an additional 15% of ATK as <$ba.dt.apoptosis2>Necrosis damage</>",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "ep_damage_ratio",
+                  "value": 0.15,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "2",
+              "name": "The One Who Reveals",
+              "description": "During [Expeditioner's Jǫklumarkar], attacks deal an additional 30% of ATK as <$ba.dt.apoptosis2>Necrosis damage</>",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "ep_damage_ratio",
+                  "value": 0.3,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            }
+          ]
+        },
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "The Reclusive One",
+              "description": "ATK +6%, ASPD +6",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.06,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack_speed",
+                  "value": 6,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 4,
+              "prefabKey": "1",
+              "name": "The Reclusive One",
+              "description": "ATK +7% <@ba.talpu>(+1%)</>, ASPD +7 <@ba.talpu>(+1)</>",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.07,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack_speed",
+                  "value": 7,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            }
+          ]
+        }
+      ],
+      "potentialRanks": [
+        {
+          "type": "BUFF",
+          "description": "DP Cost -1",
+          "buff": {
+            "attributes": {
+              "abnormalFlags": null,
+              "abnormalImmunes": null,
+              "abnormalAntis": null,
+              "abnormalCombos": null,
+              "abnormalComboImmunes": null,
+              "attributeModifiers": [
+                {
+                  "attributeType": "COST",
+                  "formulaItem": "ADDITION",
+                  "value": -1,
+                  "loadFromBlackboard": false,
+                  "fetchBaseValueFromSourceEntity": false
+                }
+              ]
+            }
+          },
+          "equivalentCost": null
+        },
+        {
+          "type": "BUFF",
+          "description": "Redeployment Time -10 sec",
+          "buff": {
+            "attributes": {
+              "abnormalFlags": null,
+              "abnormalImmunes": null,
+              "abnormalAntis": null,
+              "abnormalCombos": null,
+              "abnormalComboImmunes": null,
+              "attributeModifiers": [
+                {
+                  "attributeType": "RESPAWN_TIME",
+                  "formulaItem": "ADDITION",
+                  "value": -10,
+                  "loadFromBlackboard": false,
+                  "fetchBaseValueFromSourceEntity": false
+                }
+              ]
+            }
+          },
+          "equivalentCost": null
+        },
+        {
+          "type": "BUFF",
+          "description": "DP Cost -1",
+          "buff": {
+            "attributes": {
+              "abnormalFlags": null,
+              "abnormalImmunes": null,
+              "abnormalAntis": null,
+              "abnormalCombos": null,
+              "abnormalComboImmunes": null,
+              "attributeModifiers": [
+                {
+                  "attributeType": "COST",
+                  "formulaItem": "ADDITION",
+                  "value": -1,
+                  "loadFromBlackboard": false,
+                  "fetchBaseValueFromSourceEntity": false
+                }
+              ]
+            }
+          },
+          "equivalentCost": null
+        },
+        {
+          "type": "CUSTOM",
+          "description": "Improves Second Talent",
+          "buff": null,
+          "equivalentCost": null
+        },
+        {
+          "type": "BUFF",
+          "description": "DP Cost -1",
+          "buff": {
+            "attributes": {
+              "abnormalFlags": null,
+              "abnormalImmunes": null,
+              "abnormalAntis": null,
+              "abnormalCombos": null,
+              "abnormalComboImmunes": null,
+              "attributeModifiers": [
+                {
+                  "attributeType": "COST",
+                  "formulaItem": "ADDITION",
+                  "value": -1,
+                  "loadFromBlackboard": false,
+                  "fetchBaseValueFromSourceEntity": false
+                }
+              ]
+            }
+          },
+          "equivalentCost": null
+        }
+      ],
+      "favorKeyFrames": [
+        {
+          "level": 0,
+          "data": {
+            "maxHp": 0,
+            "atk": 0,
+            "def": 0,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false
+          }
+        },
+        {
+          "level": 50,
+          "data": {
+            "maxHp": 250,
+            "atk": 30,
+            "def": 0,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false
+          }
+        }
+      ],
+      "allSkillLvlup": [
+        {
+          "unlockCond": {
+            "phase": "PHASE_0",
+            "level": 1
+          },
+          "lvlUpCost": [
+            {
+              "id": "3301",
+              "count": 4,
+              "type": "MATERIAL"
+            }
+          ]
+        },
+        {
+          "unlockCond": {
+            "phase": "PHASE_0",
+            "level": 1
+          },
+          "lvlUpCost": [
+            {
+              "id": "3301",
+              "count": 4,
+              "type": "MATERIAL"
+            },
+            {
+              "id": "30021",
+              "count": 7,
+              "type": "MATERIAL"
+            }
+          ]
+        },
+        {
+          "unlockCond": {
+            "phase": "PHASE_0",
+            "level": 1
+          },
+          "lvlUpCost": [
+            {
+              "id": "3302",
+              "count": 6,
+              "type": "MATERIAL"
+            },
+            {
+              "id": "30032",
+              "count": 3,
+              "type": "MATERIAL"
+            }
+          ]
+        },
+        {
+          "unlockCond": {
+            "phase": "PHASE_1",
+            "level": 1
+          },
+          "lvlUpCost": [
+            {
+              "id": "3302",
+              "count": 6,
+              "type": "MATERIAL"
+            },
+            {
+              "id": "30042",
+              "count": 4,
+              "type": "MATERIAL"
+            }
+          ]
+        },
+        {
+          "unlockCond": {
+            "phase": "PHASE_1",
+            "level": 1
+          },
+          "lvlUpCost": [
+            {
+              "id": "3302",
+              "count": 6,
+              "type": "MATERIAL"
+            },
+            {
+              "id": "30013",
+              "count": 5,
+              "type": "MATERIAL"
+            }
+          ]
+        },
+        {
+          "unlockCond": {
+            "phase": "PHASE_1",
+            "level": 1
+          },
+          "lvlUpCost": [
+            {
+              "id": "3303",
+              "count": 6,
+              "type": "MATERIAL"
+            },
+            {
+              "id": "31043",
+              "count": 3,
+              "type": "MATERIAL"
+            },
+            {
+              "id": "30033",
+              "count": 3,
+              "type": "MATERIAL"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "skillTable": {
+    "skchr_threye_1": {
+      "skillId": "skchr_threye_1",
+      "iconId": null,
+      "hidden": false,
+      "levels": [
+        {
+          "name": "Before All I See Collapses",
+          "rangeId": null,
+          "description": "The next attack deals <@ba.vup>{atk_scale:0%}</> of ATK as Arts damage and <@ba.vup>{ep_damage_ratio:0%}</> of ATK as <$ba.dt.apoptosis2>Necrosis damage</>\n<@ba.rem>Can store {cnt} charges</>",
+          "skillType": "AUTO",
+          "durationType": "NONE",
+          "spData": {
+            "spType": "INCREASE_WITH_TIME",
+            "levelUpCost": null,
+            "maxChargeTime": 1,
+            "spCost": 17,
+            "initSp": 0,
+            "increment": 1
+          },
+          "prefabId": "skchr_threye_1",
+          "duration": -1,
+          "blackboard": [
+            {
+              "key": "atk_scale",
+              "value": 0.4,
+              "valueStr": null
+            },
+            {
+              "key": "ep_damage_ratio",
+              "value": 0.3,
+              "valueStr": null
+            },
+            {
+              "key": "cnt",
+              "value": 1,
+              "valueStr": null
+            }
+          ]
+        },
+        {
+          "name": "Before All I See Collapses",
+          "rangeId": null,
+          "description": "The next attack deals <@ba.vup>{atk_scale:0%}</> of ATK as Arts damage and <@ba.vup>{ep_damage_ratio:0%}</> of ATK as <$ba.dt.apoptosis2>Necrosis damage</>\n<@ba.rem>Can store {cnt} charges</>",
+          "skillType": "AUTO",
+          "durationType": "NONE",
+          "spData": {
+            "spType": "INCREASE_WITH_TIME",
+            "levelUpCost": null,
+            "maxChargeTime": 1,
+            "spCost": 16,
+            "initSp": 0,
+            "increment": 1
+          },
+          "prefabId": "skchr_threye_1",
+          "duration": -1,
+          "blackboard": [
+            {
+              "key": "atk_scale",
+              "value": 0.5,
+              "valueStr": null
+            },
+            {
+              "key": "ep_damage_ratio",
+              "value": 0.3,
+              "valueStr": null
+            },
+            {
+              "key": "cnt",
+              "value": 1,
+              "valueStr": null
+            }
+          ]
+        },
+        {
+          "name": "Before All I See Collapses",
+          "rangeId": null,
+          "description": "The next attack deals <@ba.vup>{atk_scale:0%}</> of ATK as Arts damage and <@ba.vup>{ep_damage_ratio:0%}</> of ATK as <$ba.dt.apoptosis2>Necrosis damage</>\n<@ba.rem>Can store {cnt} charges</>",
+          "skillType": "AUTO",
+          "durationType": "NONE",
+          "spData": {
+            "spType": "INCREASE_WITH_TIME",
+            "levelUpCost": null,
+            "maxChargeTime": 1,
+            "spCost": 15,
+            "initSp": 0,
+            "increment": 1
+          },
+          "prefabId": "skchr_threye_1",
+          "duration": -1,
+          "blackboard": [
+            {
+              "key": "atk_scale",
+              "value": 0.6,
+              "valueStr": null
+            },
+            {
+              "key": "ep_damage_ratio",
+              "value": 0.3,
+              "valueStr": null
+            },
+            {
+              "key": "cnt",
+              "value": 1,
+              "valueStr": null
+            }
+          ]
+        },
+        {
+          "name": "Before All I See Collapses",
+          "rangeId": null,
+          "description": "The next attack deals <@ba.vup>{atk_scale:0%}</> of ATK as Arts damage and <@ba.vup>{ep_damage_ratio:0%}</> of ATK as <$ba.dt.apoptosis2>Necrosis damage</>\n<@ba.rem>Can store {cnt} charges</>",
+          "skillType": "AUTO",
+          "durationType": "NONE",
+          "spData": {
+            "spType": "INCREASE_WITH_TIME",
+            "levelUpCost": null,
+            "maxChargeTime": 2,
+            "spCost": 14,
+            "initSp": 0,
+            "increment": 1
+          },
+          "prefabId": "skchr_threye_1",
+          "duration": -1,
+          "blackboard": [
+            {
+              "key": "atk_scale",
+              "value": 0.7,
+              "valueStr": null
+            },
+            {
+              "key": "ep_damage_ratio",
+              "value": 0.4,
+              "valueStr": null
+            },
+            {
+              "key": "cnt",
+              "value": 2,
+              "valueStr": null
+            }
+          ]
+        },
+        {
+          "name": "Before All I See Collapses",
+          "rangeId": null,
+          "description": "The next attack deals <@ba.vup>{atk_scale:0%}</> of ATK as Arts damage and <@ba.vup>{ep_damage_ratio:0%}</> of ATK as <$ba.dt.apoptosis2>Necrosis damage</>\n<@ba.rem>Can store {cnt} charges</>",
+          "skillType": "AUTO",
+          "durationType": "NONE",
+          "spData": {
+            "spType": "INCREASE_WITH_TIME",
+            "levelUpCost": null,
+            "maxChargeTime": 2,
+            "spCost": 13,
+            "initSp": 0,
+            "increment": 1
+          },
+          "prefabId": "skchr_threye_1",
+          "duration": -1,
+          "blackboard": [
+            {
+              "key": "atk_scale",
+              "value": 0.8,
+              "valueStr": null
+            },
+            {
+              "key": "ep_damage_ratio",
+              "value": 0.4,
+              "valueStr": null
+            },
+            {
+              "key": "cnt",
+              "value": 2,
+              "valueStr": null
+            }
+          ]
+        },
+        {
+          "name": "Before All I See Collapses",
+          "rangeId": null,
+          "description": "The next attack deals <@ba.vup>{atk_scale:0%}</> of ATK as Arts damage and <@ba.vup>{ep_damage_ratio:0%}</> of ATK as <$ba.dt.apoptosis2>Necrosis damage</>\n<@ba.rem>Can store {cnt} charges</>",
+          "skillType": "AUTO",
+          "durationType": "NONE",
+          "spData": {
+            "spType": "INCREASE_WITH_TIME",
+            "levelUpCost": null,
+            "maxChargeTime": 2,
+            "spCost": 12,
+            "initSp": 0,
+            "increment": 1
+          },
+          "prefabId": "skchr_threye_1",
+          "duration": -1,
+          "blackboard": [
+            {
+              "key": "atk_scale",
+              "value": 0.9,
+              "valueStr": null
+            },
+            {
+              "key": "ep_damage_ratio",
+              "value": 0.4,
+              "valueStr": null
+            },
+            {
+              "key": "cnt",
+              "value": 2,
+              "valueStr": null
+            }
+          ]
+        },
+        {
+          "name": "Before All I See Collapses",
+          "rangeId": null,
+          "description": "The next attack deals <@ba.vup>{atk_scale:0%}</> of ATK as Arts damage and <@ba.vup>{ep_damage_ratio:0%}</> of ATK as <$ba.dt.apoptosis2>Necrosis damage</>\n<@ba.rem>Can store {cnt} charges</>",
+          "skillType": "AUTO",
+          "durationType": "NONE",
+          "spData": {
+            "spType": "INCREASE_WITH_TIME",
+            "levelUpCost": null,
+            "maxChargeTime": 2,
+            "spCost": 10,
+            "initSp": 0,
+            "increment": 1
+          },
+          "prefabId": "skchr_threye_1",
+          "duration": -1,
+          "blackboard": [
+            {
+              "key": "atk_scale",
+              "value": 1,
+              "valueStr": null
+            },
+            {
+              "key": "ep_damage_ratio",
+              "value": 0.5,
+              "valueStr": null
+            },
+            {
+              "key": "cnt",
+              "value": 2,
+              "valueStr": null
+            }
+          ]
+        },
+        {
+          "name": "Before All I See Collapses",
+          "rangeId": null,
+          "description": "The next attack deals <@ba.vup>{atk_scale:0%}</> of ATK as Arts damage and <@ba.vup>{ep_damage_ratio:0%}</> of ATK as <$ba.dt.apoptosis2>Necrosis damage</>\n<@ba.rem>Can store {cnt} charges</>",
+          "skillType": "AUTO",
+          "durationType": "NONE",
+          "spData": {
+            "spType": "INCREASE_WITH_TIME",
+            "levelUpCost": null,
+            "maxChargeTime": 2,
+            "spCost": 9,
+            "initSp": 0,
+            "increment": 1
+          },
+          "prefabId": "skchr_threye_1",
+          "duration": -1,
+          "blackboard": [
+            {
+              "key": "atk_scale",
+              "value": 1.1,
+              "valueStr": null
+            },
+            {
+              "key": "ep_damage_ratio",
+              "value": 0.6,
+              "valueStr": null
+            },
+            {
+              "key": "cnt",
+              "value": 2,
+              "valueStr": null
+            }
+          ]
+        },
+        {
+          "name": "Before All I See Collapses",
+          "rangeId": null,
+          "description": "The next attack deals <@ba.vup>{atk_scale:0%}</> of ATK as Arts damage and <@ba.vup>{ep_damage_ratio:0%}</> of ATK as <$ba.dt.apoptosis2>Necrosis damage</>\n<@ba.rem>Can store {cnt} charges</>",
+          "skillType": "AUTO",
+          "durationType": "NONE",
+          "spData": {
+            "spType": "INCREASE_WITH_TIME",
+            "levelUpCost": null,
+            "maxChargeTime": 2,
+            "spCost": 8,
+            "initSp": 0,
+            "increment": 1
+          },
+          "prefabId": "skchr_threye_1",
+          "duration": -1,
+          "blackboard": [
+            {
+              "key": "atk_scale",
+              "value": 1.2,
+              "valueStr": null
+            },
+            {
+              "key": "ep_damage_ratio",
+              "value": 0.7,
+              "valueStr": null
+            },
+            {
+              "key": "cnt",
+              "value": 2,
+              "valueStr": null
+            }
+          ]
+        },
+        {
+          "name": "Before All I See Collapses",
+          "rangeId": null,
+          "description": "The next attack deals <@ba.vup>{atk_scale:0%}</> of ATK as Arts damage and <@ba.vup>{ep_damage_ratio:0%}</> of ATK as <$ba.dt.apoptosis2>Necrosis damage</>\n<@ba.rem>Can store {cnt} charges</>",
+          "skillType": "AUTO",
+          "durationType": "NONE",
+          "spData": {
+            "spType": "INCREASE_WITH_TIME",
+            "levelUpCost": null,
+            "maxChargeTime": 2,
+            "spCost": 7,
+            "initSp": 0,
+            "increment": 1
+          },
+          "prefabId": "skchr_threye_1",
+          "duration": -1,
+          "blackboard": [
+            {
+              "key": "atk_scale",
+              "value": 1.3,
+              "valueStr": null
+            },
+            {
+              "key": "ep_damage_ratio",
+              "value": 0.8,
+              "valueStr": null
+            },
+            {
+              "key": "cnt",
+              "value": 2,
+              "valueStr": null
+            }
+          ]
+        }
+      ]
+    },
+    "skchr_threye_2": {
+      "skillId": "skchr_threye_2",
+      "iconId": null,
+      "hidden": false,
+      "levels": [
+        {
+          "name": "After All I See Has Withered",
+          "rangeId": null,
+          "description": "ASPD <@ba.vup>+{attack_speed}</>, attacks hit 1 additional target, and each attack additionally deals <@ba.vup>{attack@ep_damage_ratio:0%}</> of ATK as <$ba.dt.apoptosis2>Necrosis damage</>",
+          "skillType": "MANUAL",
+          "durationType": "NONE",
+          "spData": {
+            "spType": "INCREASE_WITH_TIME",
+            "levelUpCost": null,
+            "maxChargeTime": 1,
+            "spCost": 40,
+            "initSp": 5,
+            "increment": 1
+          },
+          "prefabId": "skchr_threye_2",
+          "duration": 20,
+          "blackboard": [
+            {
+              "key": "attack_speed",
+              "value": 10,
+              "valueStr": null
+            },
+            {
+              "key": "attack@ep_damage_ratio",
+              "value": 0.15,
+              "valueStr": null
+            }
+          ]
+        },
+        {
+          "name": "After All I See Has Withered",
+          "rangeId": null,
+          "description": "ASPD <@ba.vup>+{attack_speed}</>, attacks hit 1 additional target, and each attack additionally deals <@ba.vup>{attack@ep_damage_ratio:0%}</> of ATK as <$ba.dt.apoptosis2>Necrosis damage</>",
+          "skillType": "MANUAL",
+          "durationType": "NONE",
+          "spData": {
+            "spType": "INCREASE_WITH_TIME",
+            "levelUpCost": null,
+            "maxChargeTime": 1,
+            "spCost": 40,
+            "initSp": 5,
+            "increment": 1
+          },
+          "prefabId": "skchr_threye_2",
+          "duration": 20,
+          "blackboard": [
+            {
+              "key": "attack_speed",
+              "value": 14,
+              "valueStr": null
+            },
+            {
+              "key": "attack@ep_damage_ratio",
+              "value": 0.15,
+              "valueStr": null
+            }
+          ]
+        },
+        {
+          "name": "After All I See Has Withered",
+          "rangeId": null,
+          "description": "ASPD <@ba.vup>+{attack_speed}</>, attacks hit 1 additional target, and each attack additionally deals <@ba.vup>{attack@ep_damage_ratio:0%}</> of ATK as <$ba.dt.apoptosis2>Necrosis damage</>",
+          "skillType": "MANUAL",
+          "durationType": "NONE",
+          "spData": {
+            "spType": "INCREASE_WITH_TIME",
+            "levelUpCost": null,
+            "maxChargeTime": 1,
+            "spCost": 40,
+            "initSp": 5,
+            "increment": 1
+          },
+          "prefabId": "skchr_threye_2",
+          "duration": 20,
+          "blackboard": [
+            {
+              "key": "attack_speed",
+              "value": 18,
+              "valueStr": null
+            },
+            {
+              "key": "attack@ep_damage_ratio",
+              "value": 0.15,
+              "valueStr": null
+            }
+          ]
+        },
+        {
+          "name": "After All I See Has Withered",
+          "rangeId": null,
+          "description": "ASPD <@ba.vup>+{attack_speed}</>, attacks hit 1 additional target, and each attack additionally deals <@ba.vup>{attack@ep_damage_ratio:0%}</> of ATK as <$ba.dt.apoptosis2>Necrosis damage</>",
+          "skillType": "MANUAL",
+          "durationType": "NONE",
+          "spData": {
+            "spType": "INCREASE_WITH_TIME",
+            "levelUpCost": null,
+            "maxChargeTime": 1,
+            "spCost": 37,
+            "initSp": 10,
+            "increment": 1
+          },
+          "prefabId": "skchr_threye_2",
+          "duration": 20,
+          "blackboard": [
+            {
+              "key": "attack_speed",
+              "value": 22,
+              "valueStr": null
+            },
+            {
+              "key": "attack@ep_damage_ratio",
+              "value": 0.2,
+              "valueStr": null
+            }
+          ]
+        },
+        {
+          "name": "After All I See Has Withered",
+          "rangeId": null,
+          "description": "ASPD <@ba.vup>+{attack_speed}</>, attacks hit 1 additional target, and each attack additionally deals <@ba.vup>{attack@ep_damage_ratio:0%}</> of ATK as <$ba.dt.apoptosis2>Necrosis damage</>",
+          "skillType": "MANUAL",
+          "durationType": "NONE",
+          "spData": {
+            "spType": "INCREASE_WITH_TIME",
+            "levelUpCost": null,
+            "maxChargeTime": 1,
+            "spCost": 37,
+            "initSp": 10,
+            "increment": 1
+          },
+          "prefabId": "skchr_threye_2",
+          "duration": 20,
+          "blackboard": [
+            {
+              "key": "attack_speed",
+              "value": 26,
+              "valueStr": null
+            },
+            {
+              "key": "attack@ep_damage_ratio",
+              "value": 0.2,
+              "valueStr": null
+            }
+          ]
+        },
+        {
+          "name": "After All I See Has Withered",
+          "rangeId": null,
+          "description": "ASPD <@ba.vup>+{attack_speed}</>, attacks hit 1 additional target, and each attack additionally deals <@ba.vup>{attack@ep_damage_ratio:0%}</> of ATK as <$ba.dt.apoptosis2>Necrosis damage</>",
+          "skillType": "MANUAL",
+          "durationType": "NONE",
+          "spData": {
+            "spType": "INCREASE_WITH_TIME",
+            "levelUpCost": null,
+            "maxChargeTime": 1,
+            "spCost": 37,
+            "initSp": 10,
+            "increment": 1
+          },
+          "prefabId": "skchr_threye_2",
+          "duration": 20,
+          "blackboard": [
+            {
+              "key": "attack_speed",
+              "value": 30,
+              "valueStr": null
+            },
+            {
+              "key": "attack@ep_damage_ratio",
+              "value": 0.2,
+              "valueStr": null
+            }
+          ]
+        },
+        {
+          "name": "After All I See Has Withered",
+          "rangeId": null,
+          "description": "ASPD <@ba.vup>+{attack_speed}</>, attacks hit 1 additional target, and each attack additionally deals <@ba.vup>{attack@ep_damage_ratio:0%}</> of ATK as <$ba.dt.apoptosis2>Necrosis damage</>",
+          "skillType": "MANUAL",
+          "durationType": "NONE",
+          "spData": {
+            "spType": "INCREASE_WITH_TIME",
+            "levelUpCost": null,
+            "maxChargeTime": 1,
+            "spCost": 34,
+            "initSp": 15,
+            "increment": 1
+          },
+          "prefabId": "skchr_threye_2",
+          "duration": 20,
+          "blackboard": [
+            {
+              "key": "attack_speed",
+              "value": 35,
+              "valueStr": null
+            },
+            {
+              "key": "attack@ep_damage_ratio",
+              "value": 0.25,
+              "valueStr": null
+            }
+          ]
+        },
+        {
+          "name": "After All I See Has Withered",
+          "rangeId": null,
+          "description": "ASPD <@ba.vup>+{attack_speed}</>, attacks hit 1 additional target, and each attack additionally deals <@ba.vup>{attack@ep_damage_ratio:0%}</> of ATK as <$ba.dt.apoptosis2>Necrosis damage</>",
+          "skillType": "MANUAL",
+          "durationType": "NONE",
+          "spData": {
+            "spType": "INCREASE_WITH_TIME",
+            "levelUpCost": null,
+            "maxChargeTime": 1,
+            "spCost": 33,
+            "initSp": 15,
+            "increment": 1
+          },
+          "prefabId": "skchr_threye_2",
+          "duration": 20,
+          "blackboard": [
+            {
+              "key": "attack_speed",
+              "value": 40,
+              "valueStr": null
+            },
+            {
+              "key": "attack@ep_damage_ratio",
+              "value": 0.3,
+              "valueStr": null
+            }
+          ]
+        },
+        {
+          "name": "After All I See Has Withered",
+          "rangeId": null,
+          "description": "ASPD <@ba.vup>+{attack_speed}</>, attacks hit 1 additional target, and each attack additionally deals <@ba.vup>{attack@ep_damage_ratio:0%}</> of ATK as <$ba.dt.apoptosis2>Necrosis damage</>",
+          "skillType": "MANUAL",
+          "durationType": "NONE",
+          "spData": {
+            "spType": "INCREASE_WITH_TIME",
+            "levelUpCost": null,
+            "maxChargeTime": 1,
+            "spCost": 32,
+            "initSp": 15,
+            "increment": 1
+          },
+          "prefabId": "skchr_threye_2",
+          "duration": 20,
+          "blackboard": [
+            {
+              "key": "attack_speed",
+              "value": 45,
+              "valueStr": null
+            },
+            {
+              "key": "attack@ep_damage_ratio",
+              "value": 0.3,
+              "valueStr": null
+            }
+          ]
+        },
+        {
+          "name": "After All I See Has Withered",
+          "rangeId": null,
+          "description": "ASPD <@ba.vup>+{attack_speed}</>, attacks hit 1 additional target, and each attack additionally deals <@ba.vup>{attack@ep_damage_ratio:0%}</> of ATK as <$ba.dt.apoptosis2>Necrosis damage</>",
+          "skillType": "MANUAL",
+          "durationType": "NONE",
+          "spData": {
+            "spType": "INCREASE_WITH_TIME",
+            "levelUpCost": null,
+            "maxChargeTime": 1,
+            "spCost": 30,
+            "initSp": 15,
+            "increment": 1
+          },
+          "prefabId": "skchr_threye_2",
+          "duration": 20,
+          "blackboard": [
+            {
+              "key": "attack_speed",
+              "value": 50,
+              "valueStr": null
+            },
+            {
+              "key": "attack@ep_damage_ratio",
+              "value": 0.35,
+              "valueStr": null
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "chararts": {
+    "char_4102_threye": [
+      {
+        "pathId": "679622246940523848",
+        "data": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-4514601538723267256"
+          },
+          "m_Enabled": 1,
+          "m_Script": {
+            "m_FileID": 1,
+            "m_PathID": "7647785617504526080"
+          },
+          "m_Name": "",
+          "_animations": [
+            {
+              "animKey": "Default",
+              "animName": "Default",
+              "loop": 0,
+              "speed": 1,
+              "ignoreMissing": 1
+            },
+            {
+              "animKey": "Born",
+              "animName": "Start",
+              "loop": 0,
+              "speed": 1,
+              "ignoreMissing": 1
+            },
+            {
+              "animKey": "Die",
+              "animName": "Die",
+              "loop": 0,
+              "speed": 1,
+              "ignoreMissing": 1
+            },
+            {
+              "animKey": "Idle",
+              "animName": "Idle",
+              "loop": 1,
+              "speed": 1,
+              "ignoreMissing": 1
+            },
+            {
+              "animKey": "Attack",
+              "animName": "Attack",
+              "loop": 0,
+              "speed": 1,
+              "ignoreMissing": 1
+            },
+            {
+              "animKey": "Skill_2",
+              "animName": "Skill_2",
+              "loop": 0,
+              "speed": 1,
+              "ignoreMissing": 1
+            }
+          ],
+          "_spineSkins": [],
+          "_mixSettings": [],
+          "_spineScale": 1,
+          "_enableShowDamageFlash": 1,
+          "_cacheBoundsCenter": 1,
+          "_resetSkinToInitial": 0,
+          "_faceSwitcher": {
+            "m_FileID": 0,
+            "m_PathID": "2321500473040747848"
+          },
+          "_front": {
+            "skeleton": {
+              "m_FileID": 0,
+              "m_PathID": "6211857739161451848"
+            },
+            "muzzlaTransform": {
+              "m_FileID": 0,
+              "m_PathID": "-5098379106350023352"
+            },
+            "hitTransform": {
+              "m_FileID": 0,
+              "m_PathID": "-7613860348928541368"
+            },
+            "headTransform": {
+              "m_FileID": 0,
+              "m_PathID": "6982884980066139464"
+            },
+            "shadowTransform": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint0": {
+              "m_FileID": 0,
+              "m_PathID": "-5632339521020314296"
+            },
+            "specialPoint1": {
+              "m_FileID": 0,
+              "m_PathID": "-6176892743072826040"
+            },
+            "specialPoint2": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint3": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint4": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint5": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint6": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint7": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint8": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint9": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint10": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint11": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint12": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint13": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint14": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint15": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            }
+          },
+          "_back": {
+            "skeleton": {
+              "m_FileID": 0,
+              "m_PathID": "3154933326430715208"
+            },
+            "muzzlaTransform": {
+              "m_FileID": 0,
+              "m_PathID": "5859794226536955208"
+            },
+            "hitTransform": {
+              "m_FileID": 0,
+              "m_PathID": "1071944078290697544"
+            },
+            "headTransform": {
+              "m_FileID": 0,
+              "m_PathID": "6982884980066139464"
+            },
+            "shadowTransform": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint0": {
+              "m_FileID": 0,
+              "m_PathID": "2709916913633246536"
+            },
+            "specialPoint1": {
+              "m_FileID": 0,
+              "m_PathID": "873788731332345160"
+            },
+            "specialPoint2": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint3": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint4": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint5": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint6": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint7": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint8": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint9": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint10": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint11": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint12": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint13": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint14": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "specialPoint15": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            }
+          },
+          "_useNewSpineFormat": 0
+        }
+      }
+    ]
+  },
+  "models": {
+    "char_4102_threye": {
+      "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+      "Front": {
+        "path": "spine/char_4102_threye/char_4102_threye/Front/char_4102_threye.skel",
+        "sha256": "9ccb3c6966b5e80cbdac72b24afe5411cec60055f5a90ea9ffecccd995a92c85",
+        "bytes": 176356,
+        "durations": {
+          "Attack": 1.5,
+          "Default": 0,
+          "Die": 1,
+          "Idle": 4,
+          "Skill_2": 1.5,
+          "Start": 1
+        },
+        "hits": {
+          "Attack": [
+            0.633
+          ],
+          "Skill_2": [
+            0.633
+          ]
+        }
+      },
+      "Back": {
+        "path": "spine/char_4102_threye/char_4102_threye/Back/char_4102_threye.skel",
+        "sha256": "1cef58b45f9f4f36ef792a57849534893ea7d907af096b9cb5ea1a244aefa70e",
+        "bytes": 73089,
+        "durations": {
+          "Attack": 1.5,
+          "Default": 0,
+          "Idle": 4,
+          "Skill_2": 1.5,
+          "Start": 1
+        },
+        "hits": {
+          "Attack": [
+            0.633
+          ],
+          "Skill_2": [
+            0.633
+          ]
+        }
+      }
+    }
+  },
+  "officialSkeletonBindings": {
+    "char_4102_threye": {
+      "Front": {
+        "animatorPathId": "679622246940523848",
+        "skeletonAnimationPathId": "6211857739161451848",
+        "skeletonDataAssetPathId": "-648364655912727657",
+        "textAssetPathId": "6449224770341549253",
+        "sha256": "9ccb3c6966b5e80cbdac72b24afe5411cec60055f5a90ea9ffecccd995a92c85",
+        "byteLength": 176356
+      },
+      "Back": {
+        "animatorPathId": "679622246940523848",
+        "skeletonAnimationPathId": "3154933326430715208",
+        "skeletonDataAssetPathId": "6184178701158833444",
+        "textAssetPathId": "3714009113237160944",
+        "sha256": "1cef58b45f9f4f36ef792a57849534893ea7d907af096b9cb5ea1a244aefa70e",
+        "byteLength": 73089
+      }
+    }
+  },
+  "limitations": [
+    "All original skill ranks and selected promotion/potential talents are used; modules are unavailable.",
+    "Valarqvin's IS4-only The One Who Reveals talent requires the original rogue_sami map tag and is excluded from this regular-stage prototype.",
+    "Necrosis injury is based on current ATK independently from Arts mitigation and the primary attack scale. Prototype injury follows accepted Arts output, including fully absorbed output; exact native cancellation/dodge/shield ordering and same-hit burst ordering are unrecovered.",
+    "Source default Front/Back bytes, native attack events and projectile speed8 are verified; native frame replay and Unity particle effects are not implemented."
+  ]
+}

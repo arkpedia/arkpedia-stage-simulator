@@ -1,0 +1,2403 @@
+{
+  "sourceVersion": "26-09-23-17-49-43_b9cc4a",
+  "tableCommit": "57010cb5b2afea112cae57daa756b58676ba6850",
+  "sourceBundles": [
+    {
+      "path": "charpack/char_237_gravel.ab",
+      "size": 23078,
+      "md5": "d68895c98b92de854bd1b93d66e91060",
+      "sha256": "a950621c56c856817d5ff202c556082109c0b9564154955077dbe8e7c4e1c6a5"
+    },
+    {
+      "path": "charpack/char_236_rope.ab",
+      "size": 18377,
+      "md5": "f162ecac44c9421c3e041e9ea479ce1c",
+      "sha256": "9c54d650a2a5c0048539368fff882eac5c6f7dfaa831c0cb027a6bc69b468f39"
+    },
+    {
+      "path": "charpack/char_355_ethan.ab",
+      "size": 23523,
+      "md5": "663eba7c567ecf999727cbb688ee00d5",
+      "sha256": "fd50a23bd84b41dfa9d55404b0c09b3093e1547dc81715f51a40f08d5d09c6b6"
+    },
+    {
+      "path": "charpack/char_277_sqrrel.ab",
+      "size": 19996,
+      "md5": "347d5fd8bb796d40a766c4cca5a85e89",
+      "sha256": "962376c771079522022f0a88be0c744f013c2d277acc9724b8844fb040dccc0f"
+    },
+    {
+      "path": "battle/prefabs/[uc]skills.ab",
+      "size": 1163240,
+      "md5": "ff06dc9bb5516d069c8c0017207653ca",
+      "sha256": "1c026938f054218f7e6bda9000162b2a6f30c9bd93e1ae9763d9d6df2270499c"
+    },
+    {
+      "path": "battle/prefabs/[uc]projectiles.ab",
+      "size": 1605622,
+      "md5": "0b1d64a8aba25913161f5fd7174cab34",
+      "sha256": "3d68c63bf7a7d658e65035a9c71dfc9a00e4804563b922185499d108dfb7f639"
+    }
+  ],
+  "reviewedMechanics": {
+    "gravel": "Original normal Attack has additionalTimes=1 and splitDamage=1. Post-mitigation split interpretation is corroborated by the independent akdata calculator and secondary gameplay notes, not an extracted executable game formula: two half-output Physical damage events, target hurt-SP on the first only. Skills def_atten/shield_atten use one-second triggers and source duration. def_atten action enum MULTIPLIER is interpreted as the direct percentage bucket, distinct from FINAL_SCALER. E2 aura applies DEF PERCENTAGE to deployed allies with base cost <=10; remove on owner detach. Cost talent remains own stat.",
+    "ethan": "Ground-only all-target selectors in every mode. Trait evade 50% Physical/Arts and lower target priority. Talent additive active Bind with independent prob per target, source frozen_duration, S2 scales only prob. S1 poison source NoSourceDamage MAGICAL, no delay-free first trigger, interval1s; single source-independent buff (maxStack1) with serialized overrideType3.",
+    "shaw": "Normal/S1 target count limited to current block count. S1/S2 Physical projectiles travel10tiles/sec and apply damage/push on impact. Active buff knockback[dir] uses source direction and subtracts2 force levels off-direction; S2 selector unbounded on source two frontal tiles. Trait can deploy high ground. Talent RES ADDITION. Shared displacement currently instantaneous; original continuous movement and projectile collision collateral remain presentation/mechanics scope limitations.",
+    "rope": "Normal/S1/S2 Physical hook projectiles travel10tiles/sec; skill hook pullSourceOffset=.5. Skill cast waits for every hook impact/fizzle, source linkDuration1 then minPostDelay1, blocking attacks/SP until done. S2 targets at most max_target2 in extended range. Talent Physical dodge and dual-tile deployment. Shared pull currently instantaneous, with actual hook visual deferred."
+  },
+  "characters": {
+    "char_237_gravel": [
+      {
+        "object": "Default",
+        "pathId": "-8021194070684757098",
+        "components": [
+          {
+            "pathId": "8456123294784459670",
+            "_attack": {
+              "m_FileID": 0,
+              "m_PathID": "7064167771302892438"
+            },
+            "_attackTrigger": {
+              "m_FileID": 0,
+              "m_PathID": "559059850541568918"
+            }
+          }
+        ]
+      },
+      {
+        "object": "1",
+        "pathId": "-6700119686148222058",
+        "components": [
+          {
+            "pathId": "-4809858849487809642",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            }
+          },
+          {
+            "pathId": "-447957402708831338",
+            "_selector": {
+              "categoryMask": 0,
+              "filterTag": "",
+              "subprofessionTag": "",
+              "onlySelectMe": 1,
+              "excludeMe": 0,
+              "mapTags": [],
+              "enableOverride": 0,
+              "excludeNotInHand": 0,
+              "excludeNotShowInCardList": 0,
+              "excludeHiddenByCardState": 0
+            }
+          }
+        ]
+      },
+      {
+        "object": "Attack",
+        "pathId": "-4577478302203800682",
+        "components": [
+          {
+            "pathId": "7064167771302892438",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_selectTargetSource": 2,
+            "_preDelay": 0.0,
+            "_activeBuffs": [],
+            "_atkScale": 1.0,
+            "_atkScaleKey": "atk_scale",
+            "_damageType": 1,
+            "_additionalTimes": 1,
+            "_splitDamage": 1
+          }
+        ]
+      },
+      {
+        "object": "char_237_gravel",
+        "pathId": "-4364449984758967402",
+        "components": [
+          {
+            "pathId": "1039191086177686422",
+            "_modes": [
+              {
+                "m_FileID": 0,
+                "m_PathID": "8456123294784459670"
+              }
+            ],
+            "_buildCondition": {
+              "buildableType": 1,
+              "isTryingOverlapCharacater": 0,
+              "needSpecifyDirection": 1,
+              "limitByHostAttackRange": 0,
+              "limitByHostAbilityRange": 0,
+              "abilityName": "",
+              "tileKey": "",
+              "extraBuildConditionArray": {
+                "SerializedState": "null",
+                "SerializedObjectReferences": []
+              },
+              "advancedBuildableMask": 1,
+              "overlapOptions": {
+                "_verifySourceId": 0,
+                "_verifySourceIds": [],
+                "_verifySourceProfession": 0,
+                "_verifySourceProfessions": 0,
+                "_isAllConditionOR": 1,
+                "_overlapPriority": 0,
+                "_changeTargetGraphicColor": 0
+              },
+              "excludeNoTargetTile": 0,
+              "extraLocateRange": "",
+              "checkManuallyBuildableType": 0,
+              "manuallyBuildableType": 0,
+              "_excludeOccupiedByWalkEnemy": 0,
+              "allowWalkEnemyInHostRange": 0,
+              "_checkUpdateBuildable": 0
+            }
+          }
+        ]
+      },
+      {
+        "object": "Trigger",
+        "pathId": "-943790808326630506",
+        "components": [
+          {
+            "pathId": "559059850541568918",
+            "_keepTarget": 0,
+            "_minTargetNum": 1
+          },
+          {
+            "pathId": "6644848678450860950",
+            "_targetSide": 2,
+            "_targetMotion": 1,
+            "_targetCategory": 1,
+            "_postFilter": 4,
+            "_limitTargetNum": 1,
+            "_maxNum": 1,
+            "_excludeOwner": 0,
+            "_limitedMaxTargetNumToBlockedCnt": 0
+          }
+        ]
+      },
+      {
+        "object": "1+",
+        "pathId": "-428960795336010858",
+        "components": [
+          {
+            "pathId": "25499000141812630",
+            "_selector": {
+              "categoryMask": 0,
+              "filterTag": "",
+              "subprofessionTag": "",
+              "onlySelectMe": 1,
+              "excludeMe": 0,
+              "mapTags": [],
+              "enableOverride": 0,
+              "excludeNotInHand": 0,
+              "excludeNotShowInCardList": 0,
+              "excludeHiddenByCardState": 0
+            }
+          },
+          {
+            "pathId": "7310808473209181078",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            }
+          }
+        ]
+      },
+      {
+        "object": "1+",
+        "pathId": "188428658603430806",
+        "components": [
+          {
+            "pathId": "249893766212850582",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_targetValidator": {
+              "m_FileID": 0,
+              "m_PathID": "4246716142692963222"
+            },
+            "_buffs": [
+              {
+                "attributes": {
+                  "abnormalFlags": [],
+                  "abnormalImmunes": [],
+                  "abnormalAntis": [],
+                  "abnormalCombos": [],
+                  "abnormalComboImmunes": [],
+                  "attributeModifiers": [
+                    {
+                      "attributeType": 2,
+                      "formulaItem": 1,
+                      "value": 0.0,
+                      "loadFromBlackboard": 1,
+                      "fetchBaseValueFromSourceEntity": 0
+                    }
+                  ]
+                },
+                "buffKey": "gravel_t_1[aura]",
+                "loadFromDB": 0,
+                "isDurableBuff": 0,
+                "isDamageMissable": 0,
+                "isSilenceable": 0,
+                "isStunnable": 0,
+                "isFreezable": 0,
+                "isLevitatable": 0,
+                "statusResistable": 2,
+                "templateKey": "empty",
+                "disableOverride": 0,
+                "overrideKey": "",
+                "overrideType": 0,
+                "maxStackCnt": 1,
+                "refreshRemainingTimeWhenStackMax": 0,
+                "clearAllStackCntWhenTimeUp": 0,
+                "maxValidStackCnt": -1,
+                "independentCharacterSource": 0,
+                "overrideEffectKey": "",
+                "overrideOnEventPriority": 0,
+                "onEventPriority": 0,
+                "audioSignal": "",
+                "lifeTimeType": 2,
+                "takeSnapshotWhenExtend": 0,
+                "durationKey": "",
+                "lifeTime": 0.0,
+                "triggerLifeType": 0,
+                "triggerCnt": 0,
+                "triggerInterval": -1.0,
+                "waitFirstTriggerInterval": 1,
+                "firstTriggerInterval": -1.0,
+                "priority": -1,
+                "priorityBBKeys": [],
+                "stripBlackboardParamsWithBuffKey": 0,
+                "blackboard": [],
+                "enableInitDirectionFromSource": 0
+              }
+            ],
+            "_removeBuffWhenAbilityDetached": 1,
+            "_onlyDetactTargetWhenStarted": 0,
+            "_interval": 0.0
+          },
+          {
+            "pathId": "-1343741220013632618",
+            "_attachInDummy": 0,
+            "_defaultModeIndex": -1,
+            "_attackBlackboardModeIndex": -1,
+            "_applyTalentScale": 0,
+            "_scaleCertainKeyFlag": 0,
+            "_scaleCertainKeyList": []
+          },
+          {
+            "pathId": "4246716142692963222",
+            "_targetOptions": {
+              "targetSide": 1,
+              "targetMotion": 3,
+              "targetCategory": 1,
+              "enableAdvancedOptions": 1,
+              "ignoreTargetFree": 1,
+              "ignoreAllyTargetFree": 0,
+              "ignoreHealFree": 1,
+              "ignoreTargetSide": 0,
+              "excludeSomeAbnormalFlags": 0,
+              "excludeAbnormalFlag": 0,
+              "purposeMask": 0,
+              "professionMask": 0,
+              "checkUnitType": 0,
+              "unitTypeMask": 0,
+              "onlyIgnoreSomeOfTargetFreeCase": 0,
+              "abnormalFlag": 0,
+              "abnormalCombo": 0
+            },
+            "_blackboardPrefix": "cond.",
+            "_compareType": 1
+          }
+        ]
+      }
+    ],
+    "char_236_rope": [
+      {
+        "object": "Default",
+        "pathId": "-2000902492661313306",
+        "components": [
+          {
+            "pathId": "-8515342814627852058",
+            "_attack": {
+              "m_FileID": 0,
+              "m_PathID": "4440774015270949094"
+            },
+            "_attackTrigger": {
+              "m_FileID": 0,
+              "m_PathID": "-5842854475433799450"
+            }
+          }
+        ]
+      },
+      {
+        "object": "Trigger",
+        "pathId": "-1207722605764505370",
+        "components": [
+          {
+            "pathId": "-5842854475433799450",
+            "_keepTarget": 0,
+            "_minTargetNum": 1
+          },
+          {
+            "pathId": "-8901098303656783642",
+            "_targetSide": 2,
+            "_targetMotion": 3,
+            "_targetCategory": 1,
+            "_postFilter": 4,
+            "_limitTargetNum": 1,
+            "_maxNum": 1,
+            "_excludeOwner": 0,
+            "_limitedMaxTargetNumToBlockedCnt": 0
+          }
+        ]
+      },
+      {
+        "object": "char_236_rope",
+        "pathId": "218172398385729766",
+        "components": [
+          {
+            "pathId": "-7041340303222337306",
+            "_modes": [
+              {
+                "m_FileID": 0,
+                "m_PathID": "-8515342814627852058"
+              }
+            ],
+            "_buildCondition": {
+              "buildableType": 3,
+              "isTryingOverlapCharacater": 0,
+              "needSpecifyDirection": 1,
+              "limitByHostAttackRange": 0,
+              "limitByHostAbilityRange": 0,
+              "abilityName": "",
+              "tileKey": "",
+              "extraBuildConditionArray": {
+                "SerializedState": "null",
+                "SerializedObjectReferences": []
+              },
+              "advancedBuildableMask": 1,
+              "overlapOptions": {
+                "_verifySourceId": 0,
+                "_verifySourceIds": [],
+                "_verifySourceProfession": 0,
+                "_verifySourceProfessions": 0,
+                "_isAllConditionOR": 1,
+                "_overlapPriority": 0,
+                "_changeTargetGraphicColor": 0
+              },
+              "excludeNoTargetTile": 0,
+              "extraLocateRange": "",
+              "checkManuallyBuildableType": 0,
+              "manuallyBuildableType": 0,
+              "_excludeOccupiedByWalkEnemy": 0,
+              "allowWalkEnemyInHostRange": 0,
+              "_checkUpdateBuildable": 0
+            }
+          }
+        ]
+      },
+      {
+        "object": "1",
+        "pathId": "7004615122731831526",
+        "components": [
+          {
+            "pathId": "3820649003579838694",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_buffs": [
+              {
+                "attributes": {
+                  "abnormalFlags": [],
+                  "abnormalImmunes": [],
+                  "abnormalAntis": [],
+                  "abnormalCombos": [],
+                  "abnormalComboImmunes": [],
+                  "attributeModifiers": []
+                },
+                "buffKey": "rope_t_1",
+                "loadFromDB": 0,
+                "isDurableBuff": 0,
+                "isDamageMissable": 0,
+                "isSilenceable": 0,
+                "isStunnable": 0,
+                "isFreezable": 0,
+                "isLevitatable": 0,
+                "statusResistable": 2,
+                "templateKey": "evade_physical",
+                "disableOverride": 1,
+                "overrideKey": "",
+                "overrideType": 0,
+                "maxStackCnt": 1,
+                "refreshRemainingTimeWhenStackMax": 0,
+                "clearAllStackCntWhenTimeUp": 0,
+                "maxValidStackCnt": -1,
+                "independentCharacterSource": 0,
+                "overrideEffectKey": "",
+                "overrideOnEventPriority": 0,
+                "onEventPriority": 0,
+                "audioSignal": "",
+                "lifeTimeType": 2,
+                "takeSnapshotWhenExtend": 0,
+                "durationKey": "",
+                "lifeTime": 0.0,
+                "triggerLifeType": 0,
+                "triggerCnt": 0,
+                "triggerInterval": -1.0,
+                "waitFirstTriggerInterval": 1,
+                "firstTriggerInterval": -1.0,
+                "priority": -1,
+                "priorityBBKeys": [],
+                "stripBlackboardParamsWithBuffKey": 0,
+                "blackboard": [],
+                "enableInitDirectionFromSource": 0
+              }
+            ]
+          },
+          {
+            "pathId": "5514996922572312806",
+            "_attachInDummy": 0,
+            "_defaultModeIndex": -1,
+            "_attackBlackboardModeIndex": -1,
+            "_applyTalentScale": 0,
+            "_scaleCertainKeyFlag": 0,
+            "_scaleCertainKeyList": []
+          }
+        ]
+      },
+      {
+        "object": "Attack",
+        "pathId": "9177879532565074150",
+        "components": [
+          {
+            "pathId": "4440774015270949094",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_selectTargetSource": 2,
+            "_preDelay": 0.0,
+            "_activeBuffs": [],
+            "_atkScale": 1.0,
+            "_atkScaleKey": "atk_scale",
+            "_projectileKey": "projectile_rope",
+            "_damageType": 1,
+            "_waitForProjectileInvalid": 0,
+            "_notClearProjectileWhenCastEnd": 0,
+            "_minPostDelayWhenProjectileInvalid": 0.0
+          }
+        ]
+      }
+    ],
+    "char_355_ethan": [
+      {
+        "object": "Trigger",
+        "pathId": "-5685071743974423941",
+        "components": [
+          {
+            "pathId": "-3974930977098284421",
+            "_keepTarget": 0,
+            "_minTargetNum": 1
+          },
+          {
+            "pathId": "266595518824399483",
+            "_targetSide": 2,
+            "_targetMotion": 1,
+            "_targetCategory": 1,
+            "_postFilter": 0,
+            "_limitTargetNum": 0,
+            "_maxNum": 1,
+            "_excludeOwner": 0
+          }
+        ]
+      },
+      {
+        "object": "1",
+        "pathId": "-4977964120334253445",
+        "components": [
+          {
+            "pathId": "29146310984548987",
+            "_attachInDummy": 0,
+            "_defaultModeIndex": -1,
+            "_attackBlackboardModeIndex": -1,
+            "_applyTalentScale": 0,
+            "_scaleCertainKeyFlag": 0,
+            "_scaleCertainKeyList": []
+          },
+          {
+            "pathId": "-5945199266007465349",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_buffs": [],
+            "_additiveActiveBuffs": [
+              {
+                "attributes": {
+                  "abnormalFlags": [
+                    13
+                  ],
+                  "abnormalImmunes": [],
+                  "abnormalAntis": [],
+                  "abnormalCombos": [],
+                  "abnormalComboImmunes": [],
+                  "attributeModifiers": []
+                },
+                "buffKey": "ethan_t_1",
+                "loadFromDB": 0,
+                "isDurableBuff": 0,
+                "isDamageMissable": 0,
+                "isSilenceable": 0,
+                "isStunnable": 0,
+                "isFreezable": 0,
+                "isLevitatable": 0,
+                "statusResistable": 2,
+                "templateKey": "empty",
+                "disableOverride": 0,
+                "overrideKey": "",
+                "overrideType": 0,
+                "maxStackCnt": 1,
+                "refreshRemainingTimeWhenStackMax": 0,
+                "clearAllStackCntWhenTimeUp": 0,
+                "maxValidStackCnt": -1,
+                "independentCharacterSource": 0,
+                "overrideEffectKey": "ethan_attack_01_buff",
+                "overrideOnEventPriority": 0,
+                "onEventPriority": 0,
+                "audioSignal": "",
+                "lifeTimeType": 1,
+                "takeSnapshotWhenExtend": 0,
+                "durationKey": "frozen_duration",
+                "lifeTime": 0.0,
+                "triggerLifeType": 0,
+                "triggerCnt": 0,
+                "triggerInterval": -1.0,
+                "waitFirstTriggerInterval": 1,
+                "firstTriggerInterval": -1.0,
+                "priority": -1,
+                "priorityBBKeys": [],
+                "stripBlackboardParamsWithBuffKey": 0,
+                "blackboard": [],
+                "enableInitDirectionFromSource": 0
+              }
+            ],
+            "_targetValidator": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_probKey": "prob"
+          }
+        ]
+      },
+      {
+        "object": "Trigger",
+        "pathId": "-4263571738503265669",
+        "components": [
+          {
+            "pathId": "1887011647362318971",
+            "_keepTarget": 0,
+            "_minTargetNum": 1
+          },
+          {
+            "pathId": "7075616739882779259",
+            "_targetSide": 2,
+            "_targetMotion": 1,
+            "_targetCategory": 1,
+            "_postFilter": 0,
+            "_limitTargetNum": 0,
+            "_maxNum": 1,
+            "_excludeOwner": 0
+          }
+        ]
+      },
+      {
+        "object": "1",
+        "pathId": "-3771270926403812741",
+        "components": [
+          {
+            "pathId": "-93111758475607429",
+            "_attachInDummy": 0,
+            "_defaultModeIndex": -1,
+            "_attackBlackboardModeIndex": -1,
+            "_applyTalentScale": 0,
+            "_scaleCertainKeyFlag": 0,
+            "_scaleCertainKeyList": []
+          },
+          {
+            "pathId": "-6645734749197876613",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_buffs": [],
+            "_additiveActiveBuffs": [
+              {
+                "attributes": {
+                  "abnormalFlags": [
+                    13
+                  ],
+                  "abnormalImmunes": [],
+                  "abnormalAntis": [],
+                  "abnormalCombos": [],
+                  "abnormalComboImmunes": [],
+                  "attributeModifiers": []
+                },
+                "buffKey": "ethan_t_1",
+                "loadFromDB": 0,
+                "isDurableBuff": 0,
+                "isDamageMissable": 0,
+                "isSilenceable": 0,
+                "isStunnable": 0,
+                "isFreezable": 0,
+                "isLevitatable": 0,
+                "statusResistable": 2,
+                "templateKey": "empty",
+                "disableOverride": 0,
+                "overrideKey": "",
+                "overrideType": 0,
+                "maxStackCnt": 1,
+                "refreshRemainingTimeWhenStackMax": 0,
+                "clearAllStackCntWhenTimeUp": 0,
+                "maxValidStackCnt": -1,
+                "independentCharacterSource": 0,
+                "overrideEffectKey": "ethan_attack_01_buff",
+                "overrideOnEventPriority": 0,
+                "onEventPriority": 0,
+                "audioSignal": "",
+                "lifeTimeType": 1,
+                "takeSnapshotWhenExtend": 0,
+                "durationKey": "frozen_duration",
+                "lifeTime": 0.0,
+                "triggerLifeType": 0,
+                "triggerCnt": 0,
+                "triggerInterval": -1.0,
+                "waitFirstTriggerInterval": 1,
+                "firstTriggerInterval": -1.0,
+                "priority": -1,
+                "priorityBBKeys": [],
+                "stripBlackboardParamsWithBuffKey": 0,
+                "blackboard": [],
+                "enableInitDirectionFromSource": 0
+              }
+            ],
+            "_targetValidator": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_probKey": "prob"
+          }
+        ]
+      },
+      {
+        "object": "Attack",
+        "pathId": "-3241551616131513733",
+        "components": [
+          {
+            "pathId": "139111030835135099",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "7075616739882779259"
+            },
+            "_selectTargetSource": 1,
+            "_preDelay": 0.0,
+            "_activeBuffs": [],
+            "_atkScale": 1.0,
+            "_atkScaleKey": "atk_scale",
+            "_damageType": 1
+          }
+        ]
+      },
+      {
+        "object": "Attack",
+        "pathId": "-2717631040189611397",
+        "components": [
+          {
+            "pathId": "-7691980519043284357",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "266595518824399483"
+            },
+            "_selectTargetSource": 1,
+            "_preDelay": 0.0,
+            "_activeBuffs": [],
+            "_atkScale": 1.0,
+            "_atkScaleKey": "atk_scale",
+            "_damageType": 1
+          }
+        ]
+      },
+      {
+        "object": "Trigger",
+        "pathId": "-2574833894995115397",
+        "components": [
+          {
+            "pathId": "-3571625608930770309",
+            "_keepTarget": 0,
+            "_minTargetNum": 1
+          },
+          {
+            "pathId": "-3520871807171345797",
+            "_targetSide": 2,
+            "_targetMotion": 1,
+            "_targetCategory": 1,
+            "_postFilter": 0,
+            "_limitTargetNum": 0,
+            "_maxNum": 1,
+            "_excludeOwner": 0
+          }
+        ]
+      },
+      {
+        "object": "S1",
+        "pathId": "-1860565263641329029",
+        "components": [
+          {
+            "pathId": "-5589121383493451141",
+            "_attack": {
+              "m_FileID": 0,
+              "m_PathID": "-1696963733778644357"
+            },
+            "_attackTrigger": {
+              "m_FileID": 0,
+              "m_PathID": "-3571625608930770309"
+            }
+          }
+        ]
+      },
+      {
+        "object": "S2",
+        "pathId": "624511674814710395",
+        "components": [
+          {
+            "pathId": "978833127762248315",
+            "_attack": {
+              "m_FileID": 0,
+              "m_PathID": "-7691980519043284357"
+            },
+            "_attackTrigger": {
+              "m_FileID": 0,
+              "m_PathID": "-3974930977098284421"
+            }
+          }
+        ]
+      },
+      {
+        "object": "char_355_ethan",
+        "pathId": "901787710017913467",
+        "components": [
+          {
+            "pathId": "2965809260762382971",
+            "_modes": [
+              {
+                "m_FileID": 0,
+                "m_PathID": "-6179942862849293701"
+              },
+              {
+                "m_FileID": 0,
+                "m_PathID": "-5589121383493451141"
+              },
+              {
+                "m_FileID": 0,
+                "m_PathID": "978833127762248315"
+              }
+            ],
+            "_buildCondition": {
+              "buildableType": 1,
+              "isTryingOverlapCharacater": 0,
+              "needSpecifyDirection": 1,
+              "limitByHostAttackRange": 0,
+              "limitByHostAbilityRange": 0,
+              "abilityName": "",
+              "tileKey": "",
+              "extraBuildConditionArray": {
+                "SerializedState": "null",
+                "SerializedObjectReferences": []
+              },
+              "advancedBuildableMask": 1,
+              "overlapOptions": {
+                "_verifySourceId": 0,
+                "_verifySourceIds": [],
+                "_verifySourceProfession": 0,
+                "_verifySourceProfessions": 0,
+                "_isAllConditionOR": 1,
+                "_overlapPriority": 0,
+                "_changeTargetGraphicColor": 0
+              },
+              "excludeNoTargetTile": 0,
+              "extraLocateRange": "",
+              "checkManuallyBuildableType": 0,
+              "manuallyBuildableType": 0,
+              "_excludeOccupiedByWalkEnemy": 0,
+              "allowWalkEnemyInHostRange": 0,
+              "_checkUpdateBuildable": 0
+            }
+          }
+        ]
+      },
+      {
+        "object": "Attack",
+        "pathId": "1038797047096951419",
+        "components": [
+          {
+            "pathId": "-1696963733778644357",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "-3520871807171345797"
+            },
+            "_selectTargetSource": 1,
+            "_preDelay": 0.0,
+            "_activeBuffs": [
+              {
+                "attributes": {
+                  "abnormalFlags": [],
+                  "abnormalImmunes": [],
+                  "abnormalAntis": [],
+                  "abnormalCombos": [],
+                  "abnormalComboImmunes": [],
+                  "attributeModifiers": []
+                },
+                "buffKey": "ethan_s_1",
+                "loadFromDB": 0,
+                "isDurableBuff": 0,
+                "isDamageMissable": 0,
+                "isSilenceable": 0,
+                "isStunnable": 0,
+                "isFreezable": 0,
+                "isLevitatable": 0,
+                "statusResistable": 2,
+                "templateKey": "poison",
+                "disableOverride": 0,
+                "overrideKey": "",
+                "overrideType": 3,
+                "maxStackCnt": 1,
+                "refreshRemainingTimeWhenStackMax": 0,
+                "clearAllStackCntWhenTimeUp": 0,
+                "maxValidStackCnt": -1,
+                "independentCharacterSource": 0,
+                "overrideEffectKey": "ethan_skill_01_buff",
+                "overrideOnEventPriority": 0,
+                "onEventPriority": 0,
+                "audioSignal": "",
+                "lifeTimeType": 1,
+                "takeSnapshotWhenExtend": 0,
+                "durationKey": "",
+                "lifeTime": 0.0,
+                "triggerLifeType": 2,
+                "triggerCnt": 0,
+                "triggerInterval": 1.0,
+                "waitFirstTriggerInterval": 1,
+                "firstTriggerInterval": -1.0,
+                "priority": -1,
+                "priorityBBKeys": [],
+                "stripBlackboardParamsWithBuffKey": 0,
+                "blackboard": [],
+                "enableInitDirectionFromSource": 0
+              }
+            ],
+            "_atkScale": 1.0,
+            "_atkScaleKey": "atk_scale",
+            "_damageType": 1
+          }
+        ]
+      },
+      {
+        "object": "Default",
+        "pathId": "4174579973398872699",
+        "components": [
+          {
+            "pathId": "-6179942862849293701",
+            "_attack": {
+              "m_FileID": 0,
+              "m_PathID": "139111030835135099"
+            },
+            "_attackTrigger": {
+              "m_FileID": 0,
+              "m_PathID": "1887011647362318971"
+            }
+          }
+        ]
+      },
+      {
+        "object": "1",
+        "pathId": "5977272453176509051",
+        "components": [
+          {
+            "pathId": "1074985300900856443",
+            "_attachInDummy": 0,
+            "_defaultModeIndex": -1,
+            "_attackBlackboardModeIndex": -1,
+            "_applyTalentScale": 1,
+            "_scaleCertainKeyFlag": 1,
+            "_scaleCertainKeyList": [
+              "prob"
+            ]
+          },
+          {
+            "pathId": "7979887139920298619",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_buffs": [],
+            "_additiveActiveBuffs": [
+              {
+                "attributes": {
+                  "abnormalFlags": [
+                    13
+                  ],
+                  "abnormalImmunes": [],
+                  "abnormalAntis": [],
+                  "abnormalCombos": [],
+                  "abnormalComboImmunes": [],
+                  "attributeModifiers": []
+                },
+                "buffKey": "ethan_t_1",
+                "loadFromDB": 0,
+                "isDurableBuff": 0,
+                "isDamageMissable": 0,
+                "isSilenceable": 0,
+                "isStunnable": 0,
+                "isFreezable": 0,
+                "isLevitatable": 0,
+                "statusResistable": 2,
+                "templateKey": "empty",
+                "disableOverride": 0,
+                "overrideKey": "",
+                "overrideType": 0,
+                "maxStackCnt": 1,
+                "refreshRemainingTimeWhenStackMax": 0,
+                "clearAllStackCntWhenTimeUp": 0,
+                "maxValidStackCnt": -1,
+                "independentCharacterSource": 0,
+                "overrideEffectKey": "ethan_attack_01_buff",
+                "overrideOnEventPriority": 0,
+                "onEventPriority": 0,
+                "audioSignal": "",
+                "lifeTimeType": 1,
+                "takeSnapshotWhenExtend": 0,
+                "durationKey": "frozen_duration",
+                "lifeTime": 0.0,
+                "triggerLifeType": 0,
+                "triggerCnt": 0,
+                "triggerInterval": -1.0,
+                "waitFirstTriggerInterval": 1,
+                "firstTriggerInterval": -1.0,
+                "priority": -1,
+                "priorityBBKeys": [],
+                "stripBlackboardParamsWithBuffKey": 0,
+                "blackboard": [],
+                "enableInitDirectionFromSource": 0
+              }
+            ],
+            "_targetValidator": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_probKey": "prob"
+          }
+        ]
+      },
+      {
+        "object": "Trait",
+        "pathId": "6141181581810287227",
+        "components": [
+          {
+            "pathId": "-2572939659190386053",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_buffs": [
+              {
+                "attributes": {
+                  "abnormalFlags": [],
+                  "abnormalImmunes": [],
+                  "abnormalAntis": [],
+                  "abnormalCombos": [],
+                  "abnormalComboImmunes": [],
+                  "attributeModifiers": []
+                },
+                "buffKey": "ethan_tr",
+                "loadFromDB": 0,
+                "isDurableBuff": 0,
+                "isDamageMissable": 0,
+                "isSilenceable": 0,
+                "isStunnable": 0,
+                "isFreezable": 0,
+                "isLevitatable": 0,
+                "statusResistable": 2,
+                "templateKey": "evade",
+                "disableOverride": 1,
+                "overrideKey": "",
+                "overrideType": 0,
+                "maxStackCnt": 1,
+                "refreshRemainingTimeWhenStackMax": 0,
+                "clearAllStackCntWhenTimeUp": 0,
+                "maxValidStackCnt": -1,
+                "independentCharacterSource": 0,
+                "overrideEffectKey": "",
+                "overrideOnEventPriority": 0,
+                "onEventPriority": 0,
+                "audioSignal": "",
+                "lifeTimeType": 2,
+                "takeSnapshotWhenExtend": 0,
+                "durationKey": "",
+                "lifeTime": 0.0,
+                "triggerLifeType": 0,
+                "triggerCnt": 0,
+                "triggerInterval": -1.0,
+                "waitFirstTriggerInterval": 1,
+                "firstTriggerInterval": -1.0,
+                "priority": -1,
+                "priorityBBKeys": [],
+                "stripBlackboardParamsWithBuffKey": 0,
+                "blackboard": [],
+                "enableInitDirectionFromSource": 0
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "char_277_sqrrel": [
+      {
+        "object": "Trigger",
+        "pathId": "-5026423613994875420",
+        "components": [
+          {
+            "pathId": "-1570878152612362780",
+            "_keepTarget": 0,
+            "_minTargetNum": 1
+          },
+          {
+            "pathId": "8714812065951598052",
+            "_targetSide": 2,
+            "_targetMotion": 1,
+            "_targetCategory": 1,
+            "_postFilter": 4,
+            "_limitTargetNum": 0,
+            "_maxNum": -1,
+            "_excludeOwner": 0,
+            "_limitedMaxTargetNumToBlockedCnt": 1
+          }
+        ]
+      },
+      {
+        "object": "Attack",
+        "pathId": "-3145767138869819932",
+        "components": [
+          {
+            "pathId": "-2737567965511334428",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "8714812065951598052"
+            },
+            "_selectTargetSource": 1,
+            "_preDelay": 0.0,
+            "_activeBuffs": [],
+            "_atkScale": 1.0,
+            "_atkScaleKey": "atk_scale",
+            "_damageType": 1
+          }
+        ]
+      },
+      {
+        "object": "1",
+        "pathId": "-3058770655805553180",
+        "components": [
+          {
+            "pathId": "148562194000332260",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_buffs": [
+              {
+                "attributes": {
+                  "abnormalFlags": [],
+                  "abnormalImmunes": [],
+                  "abnormalAntis": [],
+                  "abnormalCombos": [],
+                  "abnormalComboImmunes": [],
+                  "attributeModifiers": [
+                    {
+                      "attributeType": 3,
+                      "formulaItem": 0,
+                      "value": 0.0,
+                      "loadFromBlackboard": 1,
+                      "fetchBaseValueFromSourceEntity": 0
+                    }
+                  ]
+                },
+                "buffKey": "sqrrel_t_1",
+                "loadFromDB": 0,
+                "isDurableBuff": 0,
+                "isDamageMissable": 0,
+                "isSilenceable": 0,
+                "isStunnable": 0,
+                "isFreezable": 0,
+                "isLevitatable": 0,
+                "statusResistable": 2,
+                "templateKey": "empty",
+                "disableOverride": 1,
+                "overrideKey": "",
+                "overrideType": 0,
+                "maxStackCnt": 1,
+                "refreshRemainingTimeWhenStackMax": 0,
+                "clearAllStackCntWhenTimeUp": 0,
+                "maxValidStackCnt": -1,
+                "independentCharacterSource": 0,
+                "overrideEffectKey": "",
+                "overrideOnEventPriority": 0,
+                "onEventPriority": 0,
+                "audioSignal": "",
+                "lifeTimeType": 2,
+                "takeSnapshotWhenExtend": 0,
+                "durationKey": "",
+                "lifeTime": 0.0,
+                "triggerLifeType": 0,
+                "triggerCnt": 0,
+                "triggerInterval": -1.0,
+                "waitFirstTriggerInterval": 1,
+                "firstTriggerInterval": -1.0,
+                "priority": -1,
+                "priorityBBKeys": [],
+                "stripBlackboardParamsWithBuffKey": 0,
+                "blackboard": [],
+                "enableInitDirectionFromSource": 0
+              }
+            ]
+          },
+          {
+            "pathId": "6367067661979502052",
+            "_attachInDummy": 0,
+            "_defaultModeIndex": -1,
+            "_attackBlackboardModeIndex": -1,
+            "_applyTalentScale": 0,
+            "_scaleCertainKeyFlag": 0,
+            "_scaleCertainKeyList": []
+          }
+        ]
+      },
+      {
+        "object": "Default",
+        "pathId": "4273042695180469732",
+        "components": [
+          {
+            "pathId": "5350900249547523556",
+            "_attack": {
+              "m_FileID": 0,
+              "m_PathID": "-2737567965511334428"
+            },
+            "_attackTrigger": {
+              "m_FileID": 0,
+              "m_PathID": "-1570878152612362780"
+            }
+          }
+        ]
+      },
+      {
+        "object": "char_277_sqrrel",
+        "pathId": "4542145009137436132",
+        "components": [
+          {
+            "pathId": "-8650215490454469148",
+            "_modes": [
+              {
+                "m_FileID": 0,
+                "m_PathID": "5350900249547523556"
+              }
+            ],
+            "_buildCondition": {
+              "buildableType": 3,
+              "isTryingOverlapCharacater": 0,
+              "needSpecifyDirection": 1,
+              "limitByHostAttackRange": 0,
+              "limitByHostAbilityRange": 0,
+              "abilityName": "",
+              "tileKey": "",
+              "extraBuildConditionArray": {
+                "SerializedState": "null",
+                "SerializedObjectReferences": []
+              },
+              "advancedBuildableMask": 1,
+              "overlapOptions": {
+                "_verifySourceId": 0,
+                "_verifySourceIds": [],
+                "_verifySourceProfession": 0,
+                "_verifySourceProfessions": 0,
+                "_isAllConditionOR": 1,
+                "_overlapPriority": 0,
+                "_changeTargetGraphicColor": 0
+              },
+              "excludeNoTargetTile": 0,
+              "extraLocateRange": "",
+              "checkManuallyBuildableType": 0,
+              "manuallyBuildableType": 0,
+              "_excludeOccupiedByWalkEnemy": 0,
+              "allowWalkEnemyInHostRange": 0,
+              "_checkUpdateBuildable": 0
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "skills": {
+    "skchr_gravel_1": [
+      {
+        "object": "skchr_gravel_1",
+        "pathId": "-5754530408342875747",
+        "components": [
+          {
+            "pathId": "4339346020550054301",
+            "_defaultModeIndex": -1,
+            "_attackBlackboardModeIndex": -1,
+            "_rangeIdUsageType": 7
+          },
+          {
+            "pathId": "-3447525517632663139",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_buffs": [
+              {
+                "attributes": {
+                  "abnormalFlags": [],
+                  "abnormalImmunes": [],
+                  "abnormalAntis": [],
+                  "abnormalCombos": [],
+                  "abnormalComboImmunes": [],
+                  "attributeModifiers": []
+                },
+                "buffKey": "gravel_s_1",
+                "loadFromDB": 0,
+                "isDurableBuff": 0,
+                "isDamageMissable": 0,
+                "isSilenceable": 0,
+                "isStunnable": 0,
+                "isFreezable": 0,
+                "isLevitatable": 0,
+                "statusResistable": 2,
+                "templateKey": "def_atten",
+                "disableOverride": 0,
+                "overrideKey": "",
+                "overrideType": 0,
+                "maxStackCnt": 1,
+                "refreshRemainingTimeWhenStackMax": 0,
+                "clearAllStackCntWhenTimeUp": 0,
+                "maxValidStackCnt": -1,
+                "independentCharacterSource": 0,
+                "overrideEffectKey": "gravel_skill_01_buff",
+                "overrideOnEventPriority": 0,
+                "onEventPriority": 0,
+                "audioSignal": "",
+                "lifeTimeType": 1,
+                "takeSnapshotWhenExtend": 0,
+                "durationKey": "",
+                "lifeTime": 0.0,
+                "triggerLifeType": 2,
+                "triggerCnt": 0,
+                "triggerInterval": 1.0,
+                "waitFirstTriggerInterval": 0,
+                "firstTriggerInterval": -1.0,
+                "priority": -1,
+                "priorityBBKeys": [],
+                "stripBlackboardParamsWithBuffKey": 0,
+                "blackboard": [],
+                "enableInitDirectionFromSource": 0
+              }
+            ],
+            "_waitForCasting": 0,
+            "_preDelay": 0.0
+          }
+        ]
+      }
+    ],
+    "skchr_rope_2": [
+      {
+        "object": "skchr_rope_2",
+        "pathId": "-4601288866368265216",
+        "components": [
+          {
+            "pathId": "-1370793769566608384",
+            "_defaultModeIndex": -1,
+            "_attackBlackboardModeIndex": -1,
+            "_rangeIdUsageType": 7
+          },
+          {
+            "pathId": "-6690356152633072640",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "-88442289347173376"
+            },
+            "_selectTargetSource": 1,
+            "_preDelay": 0.0,
+            "_activeBuffs": [],
+            "_atkScale": 1.0,
+            "_atkScaleKey": "atk_scale",
+            "_projectileKey": "projectile_rope_s2",
+            "_damageType": 1,
+            "_waitForProjectileInvalid": 1,
+            "_notClearProjectileWhenCastEnd": 0,
+            "_minPostDelayWhenProjectileInvalid": 1.0
+          }
+        ]
+      }
+    ],
+    "skchr_ethan_2": [
+      {
+        "object": "skchr_ethan_2",
+        "pathId": "-2797957126577195594",
+        "components": [
+          {
+            "pathId": "2860749049998996918",
+            "_defaultModeIndex": -1,
+            "_attackBlackboardModeIndex": -1,
+            "_rangeIdUsageType": 7
+          },
+          {
+            "pathId": "3612094569261168054",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_buffs": [
+              {
+                "attributes": {
+                  "abnormalFlags": [],
+                  "abnormalImmunes": [],
+                  "abnormalAntis": [],
+                  "abnormalCombos": [],
+                  "abnormalComboImmunes": [],
+                  "attributeModifiers": [
+                    {
+                      "attributeType": 1,
+                      "formulaItem": 1,
+                      "value": 0.0,
+                      "loadFromBlackboard": 1,
+                      "fetchBaseValueFromSourceEntity": 0
+                    }
+                  ]
+                },
+                "buffKey": "ethan_s_2",
+                "loadFromDB": 0,
+                "isDurableBuff": 0,
+                "isDamageMissable": 0,
+                "isSilenceable": 0,
+                "isStunnable": 0,
+                "isFreezable": 0,
+                "isLevitatable": 0,
+                "statusResistable": 2,
+                "templateKey": "switch_mode",
+                "disableOverride": 0,
+                "overrideKey": "",
+                "overrideType": 0,
+                "maxStackCnt": 1,
+                "refreshRemainingTimeWhenStackMax": 0,
+                "clearAllStackCntWhenTimeUp": 0,
+                "maxValidStackCnt": -1,
+                "independentCharacterSource": 0,
+                "overrideEffectKey": "ethan_skill_02_buff",
+                "overrideOnEventPriority": 0,
+                "onEventPriority": 0,
+                "audioSignal": "",
+                "lifeTimeType": 1,
+                "takeSnapshotWhenExtend": 0,
+                "durationKey": "",
+                "lifeTime": 0.0,
+                "triggerLifeType": 0,
+                "triggerCnt": 0,
+                "triggerInterval": -1.0,
+                "waitFirstTriggerInterval": 1,
+                "firstTriggerInterval": -1.0,
+                "priority": -1,
+                "priorityBBKeys": [],
+                "stripBlackboardParamsWithBuffKey": 0,
+                "blackboard": [
+                  {
+                    "key": "mode",
+                    "value": 2.0,
+                    "valueStr": ""
+                  }
+                ],
+                "enableInitDirectionFromSource": 0
+              }
+            ],
+            "_waitForCasting": 0,
+            "_preDelay": 0.0
+          }
+        ]
+      }
+    ],
+    "skchr_sqrrel_2": [
+      {
+        "object": "skchr_sqrrel_2",
+        "pathId": "721712314591039059",
+        "components": [
+          {
+            "pathId": "-6771264393562534317",
+            "_defaultModeIndex": -1,
+            "_attackBlackboardModeIndex": -1,
+            "_rangeIdUsageType": 7
+          },
+          {
+            "pathId": "-902521805270987181",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "6249938879466982995"
+            },
+            "_selectTargetSource": 1,
+            "_preDelay": 0.0,
+            "_activeBuffs": [
+              {
+                "attributes": {
+                  "abnormalFlags": [],
+                  "abnormalImmunes": [],
+                  "abnormalAntis": [],
+                  "abnormalCombos": [],
+                  "abnormalComboImmunes": [],
+                  "attributeModifiers": []
+                },
+                "buffKey": "sqrrel_s_2",
+                "loadFromDB": 0,
+                "isDurableBuff": 0,
+                "isDamageMissable": 0,
+                "isSilenceable": 0,
+                "isStunnable": 0,
+                "isFreezable": 0,
+                "isLevitatable": 0,
+                "statusResistable": 2,
+                "templateKey": "knockback[dir]",
+                "disableOverride": 0,
+                "overrideKey": "",
+                "overrideType": 0,
+                "maxStackCnt": 1,
+                "refreshRemainingTimeWhenStackMax": 0,
+                "clearAllStackCntWhenTimeUp": 0,
+                "maxValidStackCnt": -1,
+                "independentCharacterSource": 0,
+                "overrideEffectKey": "",
+                "overrideOnEventPriority": 0,
+                "onEventPriority": 0,
+                "audioSignal": "",
+                "lifeTimeType": 0,
+                "takeSnapshotWhenExtend": 0,
+                "durationKey": "",
+                "lifeTime": 0.0,
+                "triggerLifeType": 0,
+                "triggerCnt": 0,
+                "triggerInterval": -1.0,
+                "waitFirstTriggerInterval": 1,
+                "firstTriggerInterval": -1.0,
+                "priority": -1,
+                "priorityBBKeys": [],
+                "stripBlackboardParamsWithBuffKey": 0,
+                "blackboard": [],
+                "enableInitDirectionFromSource": 0
+              }
+            ],
+            "_atkScale": 1.0,
+            "_atkScaleKey": "atk_scale",
+            "_projectileKey": "projectile_sqrrel_s2",
+            "_damageType": 1,
+            "_waitForProjectileInvalid": 0,
+            "_notClearProjectileWhenCastEnd": 0,
+            "_minPostDelayWhenProjectileInvalid": 0.0
+          }
+        ]
+      }
+    ],
+    "skchr_gravel_2": [
+      {
+        "object": "skchr_gravel_2",
+        "pathId": "3810094165890177116",
+        "components": [
+          {
+            "pathId": "-8143264867513198500",
+            "_defaultModeIndex": -1,
+            "_attackBlackboardModeIndex": -1,
+            "_rangeIdUsageType": 7
+          },
+          {
+            "pathId": "-8092369471119681444",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "_buffs": [
+              {
+                "attributes": {
+                  "abnormalFlags": [],
+                  "abnormalImmunes": [],
+                  "abnormalAntis": [],
+                  "abnormalCombos": [],
+                  "abnormalComboImmunes": [],
+                  "attributeModifiers": []
+                },
+                "buffKey": "gravel_s_1",
+                "loadFromDB": 0,
+                "isDurableBuff": 0,
+                "isDamageMissable": 0,
+                "isSilenceable": 0,
+                "isStunnable": 0,
+                "isFreezable": 0,
+                "isLevitatable": 0,
+                "statusResistable": 2,
+                "templateKey": "shield_atten",
+                "disableOverride": 0,
+                "overrideKey": "",
+                "overrideType": 0,
+                "maxStackCnt": 1,
+                "refreshRemainingTimeWhenStackMax": 0,
+                "clearAllStackCntWhenTimeUp": 0,
+                "maxValidStackCnt": -1,
+                "independentCharacterSource": 0,
+                "overrideEffectKey": "gravel_skill_02_buff",
+                "overrideOnEventPriority": 0,
+                "onEventPriority": 0,
+                "audioSignal": "",
+                "lifeTimeType": 1,
+                "takeSnapshotWhenExtend": 0,
+                "durationKey": "",
+                "lifeTime": 0.0,
+                "triggerLifeType": 2,
+                "triggerCnt": 0,
+                "triggerInterval": 1.0,
+                "waitFirstTriggerInterval": 0,
+                "firstTriggerInterval": -1.0,
+                "priority": -1,
+                "priorityBBKeys": [],
+                "stripBlackboardParamsWithBuffKey": 0,
+                "blackboard": [],
+                "enableInitDirectionFromSource": 0
+              }
+            ],
+            "_waitForCasting": 0,
+            "_preDelay": 0.0
+          },
+          {
+            "pathId": "-6114483171824691108",
+            "_durationKey": "duration"
+          }
+        ]
+      }
+    ],
+    "skchr_sqrrel_1": [
+      {
+        "object": "skchr_sqrrel_1",
+        "pathId": "3964664273630038868",
+        "components": [
+          {
+            "pathId": "-7165635876458886316",
+            "_defaultModeIndex": -1,
+            "_attackBlackboardModeIndex": -1,
+            "_rangeIdUsageType": 7
+          },
+          {
+            "pathId": "7615745582376717140",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "8607126165197523796"
+            },
+            "_selectTargetSource": 1,
+            "_preDelay": 0.0,
+            "_activeBuffs": [
+              {
+                "attributes": {
+                  "abnormalFlags": [],
+                  "abnormalImmunes": [],
+                  "abnormalAntis": [],
+                  "abnormalCombos": [],
+                  "abnormalComboImmunes": [],
+                  "attributeModifiers": []
+                },
+                "buffKey": "sqrrel_s_1",
+                "loadFromDB": 0,
+                "isDurableBuff": 0,
+                "isDamageMissable": 0,
+                "isSilenceable": 0,
+                "isStunnable": 0,
+                "isFreezable": 0,
+                "isLevitatable": 0,
+                "statusResistable": 2,
+                "templateKey": "knockback[dir]",
+                "disableOverride": 0,
+                "overrideKey": "",
+                "overrideType": 0,
+                "maxStackCnt": 1,
+                "refreshRemainingTimeWhenStackMax": 0,
+                "clearAllStackCntWhenTimeUp": 0,
+                "maxValidStackCnt": -1,
+                "independentCharacterSource": 0,
+                "overrideEffectKey": "",
+                "overrideOnEventPriority": 0,
+                "onEventPriority": 0,
+                "audioSignal": "",
+                "lifeTimeType": 0,
+                "takeSnapshotWhenExtend": 0,
+                "durationKey": "",
+                "lifeTime": 0.0,
+                "triggerLifeType": 0,
+                "triggerCnt": 0,
+                "triggerInterval": -1.0,
+                "waitFirstTriggerInterval": 1,
+                "firstTriggerInterval": -1.0,
+                "priority": -1,
+                "priorityBBKeys": [],
+                "stripBlackboardParamsWithBuffKey": 0,
+                "blackboard": [],
+                "enableInitDirectionFromSource": 0
+              }
+            ],
+            "_atkScale": 1.0,
+            "_atkScaleKey": "atk_scale",
+            "_projectileKey": "projectile_sqrrel_s1",
+            "_damageType": 1,
+            "_waitForProjectileInvalid": 0,
+            "_notClearProjectileWhenCastEnd": 0,
+            "_minPostDelayWhenProjectileInvalid": 0.0
+          }
+        ]
+      }
+    ],
+    "skchr_rope_1": [
+      {
+        "object": "skchr_rope_1",
+        "pathId": "4887627118638021000",
+        "components": [
+          {
+            "pathId": "2822519598499772808",
+            "_defaultModeIndex": -1,
+            "_attackBlackboardModeIndex": -1,
+            "_rangeIdUsageType": 7
+          },
+          {
+            "pathId": "-1130966464347162232",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "-4641982299944502904"
+            },
+            "_selectTargetSource": 1,
+            "_preDelay": 0.0,
+            "_activeBuffs": [],
+            "_atkScale": 1.0,
+            "_atkScaleKey": "atk_scale",
+            "_projectileKey": "projectile_rope_s1",
+            "_damageType": 1,
+            "_waitForProjectileInvalid": 1,
+            "_notClearProjectileWhenCastEnd": 0,
+            "_minPostDelayWhenProjectileInvalid": 1.0
+          }
+        ]
+      }
+    ],
+    "skchr_ethan_1": [
+      {
+        "object": "skchr_ethan_1",
+        "pathId": "5909638124732428133",
+        "components": [
+          {
+            "pathId": "-3275121558905933979",
+            "_defaultModeIndex": 1,
+            "_attackBlackboardModeIndex": 1,
+            "_rangeIdUsageType": 7,
+            "_attachInDummy": 0
+          },
+          {
+            "pathId": "8502773687562547045",
+            "_selector": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "projectiles": {
+    "projectile_rope_s2": [
+      {
+        "object": "projectile_rope_s2",
+        "pathId": "-6552763583050361485",
+        "components": [
+          {
+            "pathId": "6039307596800054643",
+            "_managedBySource": 0,
+            "_linkDuration": 1.0,
+            "_splitDamage": 0,
+            "_pullForceLevel": 0,
+            "_pullSourceOffset": 0.5,
+            "_ignoreTargetMess": 0,
+            "_stopWhenCollideWithHighLand": 0,
+            "_notInfluencedByBlock": 0
+          },
+          {
+            "pathId": "-4117566853527841421",
+            "_speed": 10.0
+          }
+        ]
+      }
+    ],
+    "projectile_rope_s2_graphic": [
+      {
+        "object": "projectile_rope_s2_graphic",
+        "pathId": "-6416272152954200520",
+        "components": [
+          {
+            "pathId": "-1930745960340382152",
+            "_managedBySource": 0,
+            "_linkDuration": 1.0,
+            "_splitDamage": 0,
+            "_pullForceLevel": 0,
+            "_pullSourceOffset": 0.5,
+            "_ignoreTargetMess": 0,
+            "_stopWhenCollideWithHighLand": 0,
+            "_notInfluencedByBlock": 0
+          },
+          {
+            "pathId": "-1886812262989423048",
+            "_speed": 10.0
+          }
+        ]
+      }
+    ],
+    "projectile_act33side_rope_hit_line": [
+      {
+        "object": "projectile_act33side_rope_hit_line",
+        "pathId": "-6060486994099613900",
+        "components": [
+          {
+            "pathId": "3411594463112089396",
+            "_managedBySource": 0
+          },
+          {
+            "pathId": "-6840887963484532940",
+            "_targetOptions": {
+              "targetSide": 2,
+              "targetMotion": 3,
+              "targetCategory": 1,
+              "enableAdvancedOptions": 1,
+              "ignoreTargetFree": 1,
+              "ignoreAllyTargetFree": 0,
+              "ignoreHealFree": 0,
+              "ignoreTargetSide": 0,
+              "excludeSomeAbnormalFlags": 0,
+              "excludeAbnormalFlag": 0,
+              "purposeMask": 0,
+              "professionMask": 0,
+              "checkUnitType": 0,
+              "unitTypeMask": 0,
+              "onlyIgnoreSomeOfTargetFreeCase": 0,
+              "abnormalFlag": 0,
+              "abnormalCombo": 0
+            },
+            "_exceptTraceTarget": 0
+          },
+          {
+            "pathId": "-4772424453981253836",
+            "_speed": 15.0
+          }
+        ]
+      }
+    ],
+    "projectile_sqrrel_s2": [
+      {
+        "object": "projectile_sqrrel_s2",
+        "pathId": "-5027676129347713223",
+        "components": [
+          {
+            "pathId": "-6586049919282723015",
+            "_managedBySource": 0
+          },
+          {
+            "pathId": "4144454723516942137",
+            "_speed": 10.0
+          },
+          {
+            "pathId": "-2363545481162340551",
+            "_targetOptions": {
+              "targetSide": 2,
+              "targetMotion": 3,
+              "targetCategory": 1,
+              "enableAdvancedOptions": 1,
+              "ignoreTargetFree": 0,
+              "ignoreAllyTargetFree": 0,
+              "ignoreHealFree": 0,
+              "ignoreTargetSide": 0,
+              "excludeSomeAbnormalFlags": 0,
+              "excludeAbnormalFlag": 0,
+              "purposeMask": 0,
+              "professionMask": 0,
+              "checkUnitType": 0,
+              "unitTypeMask": 0,
+              "onlyIgnoreSomeOfTargetFreeCase": 0,
+              "abnormalFlag": 0,
+              "abnormalCombo": 0
+            },
+            "_exceptTraceTarget": 0
+          }
+        ]
+      }
+    ],
+    "projectile_sqrrel_s2_graphic": [
+      {
+        "object": "projectile_sqrrel_s2_graphic",
+        "pathId": "-4753128074810746844",
+        "components": [
+          {
+            "pathId": "-308096611071027164",
+            "_managedBySource": 0
+          },
+          {
+            "pathId": "-2389114277116372956",
+            "_speed": 10.0
+          }
+        ]
+      }
+    ],
+    "projectile_act33side_rope_hit_line_gamecity": [
+      {
+        "object": "projectile_act33side_rope_hit_line_gamecity",
+        "pathId": "-4334076839326247037",
+        "components": [
+          {
+            "pathId": "7576360519334958979",
+            "_managedBySource": 0
+          },
+          {
+            "pathId": "2107376413277165443",
+            "_targetOptions": {
+              "targetSide": 2,
+              "targetMotion": 3,
+              "targetCategory": 1,
+              "enableAdvancedOptions": 1,
+              "ignoreTargetFree": 1,
+              "ignoreAllyTargetFree": 0,
+              "ignoreHealFree": 0,
+              "ignoreTargetSide": 0,
+              "excludeSomeAbnormalFlags": 0,
+              "excludeAbnormalFlag": 0,
+              "purposeMask": 0,
+              "professionMask": 0,
+              "checkUnitType": 0,
+              "unitTypeMask": 0,
+              "onlyIgnoreSomeOfTargetFreeCase": 0,
+              "abnormalFlag": 0,
+              "abnormalCombo": 0
+            },
+            "_exceptTraceTarget": 0
+          },
+          {
+            "pathId": "8265160496698234755",
+            "_speed": 15.0
+          }
+        ]
+      }
+    ],
+    "projectile_rope_s2_logic": [
+      {
+        "object": "projectile_rope_s2_logic",
+        "pathId": "-3434167244943992492",
+        "components": [
+          {
+            "pathId": "-8262687393199105708",
+            "_managedBySource": 0,
+            "_linkDuration": 1.0,
+            "_splitDamage": 0,
+            "_pullForceLevel": 0,
+            "_pullSourceOffset": 0.5,
+            "_ignoreTargetMess": 0,
+            "_stopWhenCollideWithHighLand": 0,
+            "_notInfluencedByBlock": 0
+          },
+          {
+            "pathId": "-4107044324282738348",
+            "_speed": 10.0
+          }
+        ]
+      }
+    ],
+    "projectile_act33side_rope_line_dummy": [
+      {
+        "object": "projectile_act33side_rope_line_dummy",
+        "pathId": "-2413915530954998901",
+        "components": [
+          {
+            "pathId": "8645232933449497483",
+            "_managedBySource": 0,
+            "_linkDuration": 3600.0,
+            "_splitDamage": 0
+          },
+          {
+            "pathId": "-8377151601831904373",
+            "_speed": 30.0
+          }
+        ]
+      }
+    ],
+    "projectile_act33side_rope_line": [
+      {
+        "object": "projectile_act33side_rope_line",
+        "pathId": "-1382334985884680124",
+        "components": [
+          {
+            "pathId": "8885420158322458692",
+            "_managedBySource": 0,
+            "_linkDuration": 3600.0,
+            "_splitDamage": 0
+          },
+          {
+            "pathId": "-1762096249980927932",
+            "_speed": 2.0
+          }
+        ]
+      }
+    ],
+    "projectile_rope": [
+      {
+        "object": "projectile_rope",
+        "pathId": "-1083094727673140508",
+        "components": [
+          {
+            "pathId": "8201996173022046948",
+            "_managedBySource": 0
+          },
+          {
+            "pathId": "-2534989895237195036",
+            "_speed": 10.0
+          }
+        ]
+      }
+    ],
+    "projectile_sqrrel_s1_logic": [
+      {
+        "object": "projectile_sqrrel_s1_logic",
+        "pathId": "568024396446499831",
+        "components": [
+          {
+            "pathId": "-3015834025154313225",
+            "_managedBySource": 0
+          },
+          {
+            "pathId": "3848124305000629239",
+            "_speed": 10.0
+          },
+          {
+            "pathId": "-8368983074934225929",
+            "_targetOptions": {
+              "targetSide": 2,
+              "targetMotion": 3,
+              "targetCategory": 1,
+              "enableAdvancedOptions": 1,
+              "ignoreTargetFree": 0,
+              "ignoreAllyTargetFree": 0,
+              "ignoreHealFree": 0,
+              "ignoreTargetSide": 0,
+              "excludeSomeAbnormalFlags": 0,
+              "excludeAbnormalFlag": 0,
+              "purposeMask": 0,
+              "professionMask": 0,
+              "checkUnitType": 0,
+              "unitTypeMask": 0,
+              "onlyIgnoreSomeOfTargetFreeCase": 0,
+              "abnormalFlag": 0,
+              "abnormalCombo": 0
+            },
+            "_exceptTraceTarget": 1
+          }
+        ]
+      }
+    ],
+    "projectile_stun_rope": [
+      {
+        "object": "projectile_stun_rope",
+        "pathId": "674489313385873453",
+        "components": [
+          {
+            "pathId": "-2497478128854007763",
+            "_managedBySource": 0,
+            "_linkDuration": 1.0,
+            "_splitDamage": 0,
+            "_pullForceLevel": 0,
+            "_pullSourceOffset": 0.5,
+            "_ignoreTargetMess": 0,
+            "_stopWhenCollideWithHighLand": 0,
+            "_notInfluencedByBlock": 0
+          },
+          {
+            "pathId": "-4121982788123918291",
+            "_speed": 10.0
+          }
+        ]
+      }
+    ],
+    "projectile_rope_graphic": [
+      {
+        "object": "projectile_rope_graphic",
+        "pathId": "1513848548584719520",
+        "components": [
+          {
+            "pathId": "1333989870212678816",
+            "_managedBySource": 0
+          },
+          {
+            "pathId": "8762749762986837152",
+            "_speed": 10.0
+          }
+        ]
+      }
+    ],
+    "projectile_rope_s1_graphic": [
+      {
+        "object": "projectile_rope_s1_graphic",
+        "pathId": "1965920321387726309",
+        "components": [
+          {
+            "pathId": "-3351142269338090011",
+            "_managedBySource": 0,
+            "_linkDuration": 1.0,
+            "_splitDamage": 0,
+            "_pullForceLevel": 0,
+            "_pullSourceOffset": 0.5,
+            "_ignoreTargetMess": 0,
+            "_stopWhenCollideWithHighLand": 0,
+            "_notInfluencedByBlock": 0
+          },
+          {
+            "pathId": "3116607056378627557",
+            "_speed": 10.0
+          }
+        ]
+      }
+    ],
+    "projectile_rope_s1": [
+      {
+        "object": "projectile_rope_s1",
+        "pathId": "3627770275640317109",
+        "components": [
+          {
+            "pathId": "5812484224509088949",
+            "_managedBySource": 0,
+            "_linkDuration": 1.0,
+            "_splitDamage": 0,
+            "_pullForceLevel": 0,
+            "_pullSourceOffset": 0.5,
+            "_ignoreTargetMess": 0,
+            "_stopWhenCollideWithHighLand": 0,
+            "_notInfluencedByBlock": 0
+          },
+          {
+            "pathId": "-4264513172855974731",
+            "_speed": 10.0
+          }
+        ]
+      }
+    ],
+    "projectile_rope_logic": [
+      {
+        "object": "projectile_rope_logic",
+        "pathId": "3795087915616722876",
+        "components": [
+          {
+            "pathId": "5676740528042631100",
+            "_managedBySource": 0
+          },
+          {
+            "pathId": "4424163218447884220",
+            "_speed": 10.0
+          }
+        ]
+      }
+    ],
+    "projectile_rope_s1_logic": [
+      {
+        "object": "projectile_rope_s1_logic",
+        "pathId": "3879912898138228234",
+        "components": [
+          {
+            "pathId": "-6398049183091636726",
+            "_managedBySource": 0,
+            "_linkDuration": 1.0,
+            "_splitDamage": 0,
+            "_pullForceLevel": 0,
+            "_pullSourceOffset": 0.5,
+            "_ignoreTargetMess": 0,
+            "_stopWhenCollideWithHighLand": 0,
+            "_notInfluencedByBlock": 0
+          },
+          {
+            "pathId": "8951896940441650698",
+            "_speed": 10.0
+          }
+        ]
+      }
+    ],
+    "projectile_sqrrel_s2_logic": [
+      {
+        "object": "projectile_sqrrel_s2_logic",
+        "pathId": "6680757825796010213",
+        "components": [
+          {
+            "pathId": "-7949946972863762203",
+            "_managedBySource": 0
+          },
+          {
+            "pathId": "7849323512475971813",
+            "_speed": 10.0
+          },
+          {
+            "pathId": "7680040128112193765",
+            "_targetOptions": {
+              "targetSide": 2,
+              "targetMotion": 3,
+              "targetCategory": 1,
+              "enableAdvancedOptions": 1,
+              "ignoreTargetFree": 0,
+              "ignoreAllyTargetFree": 0,
+              "ignoreHealFree": 0,
+              "ignoreTargetSide": 0,
+              "excludeSomeAbnormalFlags": 0,
+              "excludeAbnormalFlag": 0,
+              "purposeMask": 0,
+              "professionMask": 0,
+              "checkUnitType": 0,
+              "unitTypeMask": 0,
+              "onlyIgnoreSomeOfTargetFreeCase": 0,
+              "abnormalFlag": 0,
+              "abnormalCombo": 0
+            },
+            "_exceptTraceTarget": 0
+          }
+        ]
+      }
+    ],
+    "projectile_sqrrel_s1_graphic": [
+      {
+        "object": "projectile_sqrrel_s1_graphic",
+        "pathId": "7098175200173871603",
+        "components": [
+          {
+            "pathId": "7234577891430093299",
+            "_managedBySource": 0
+          },
+          {
+            "pathId": "-3951618106000879117",
+            "_speed": 10.0
+          }
+        ]
+      }
+    ],
+    "projectile_sqrrel_s1": [
+      {
+        "object": "projectile_sqrrel_s1",
+        "pathId": "8759819627591340540",
+        "components": [
+          {
+            "pathId": "-7205195863681494532",
+            "_managedBySource": 0
+          },
+          {
+            "pathId": "3434461094005150204",
+            "_speed": 10.0
+          },
+          {
+            "pathId": "-5035320930250944004",
+            "_targetOptions": {
+              "targetSide": 2,
+              "targetMotion": 3,
+              "targetCategory": 1,
+              "enableAdvancedOptions": 1,
+              "ignoreTargetFree": 0,
+              "ignoreAllyTargetFree": 0,
+              "ignoreHealFree": 0,
+              "ignoreTargetSide": 0,
+              "excludeSomeAbnormalFlags": 0,
+              "excludeAbnormalFlag": 0,
+              "purposeMask": 0,
+              "professionMask": 0,
+              "checkUnitType": 0,
+              "unitTypeMask": 0,
+              "onlyIgnoreSomeOfTargetFreeCase": 0,
+              "abnormalFlag": 0,
+              "abnormalCombo": 0
+            },
+            "_exceptTraceTarget": 1
+          }
+        ]
+      }
+    ]
+  },
+  "templates": {
+    "def_atten": {
+      "templateKey": "def_atten",
+      "effectKey": "",
+      "onEventPriority": "DEFAULT",
+      "eventToActions": {
+        "ON_BUFF_TRIGGER": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+RemainingRatioToAttributeModifier, Assembly-CSharp",
+            "_attributeType": "DEF",
+            "_formulaType": "MULTIPLIER",
+            "_isInversed": false,
+            "_endTime": 0.0
+          }
+        ]
+      }
+    },
+    "shield_atten": {
+      "templateKey": "shield_atten",
+      "effectKey": "",
+      "onEventPriority": "DEFAULT",
+      "eventToActions": {
+        "ON_TAKE_DAMAGE": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+BlockDamage, Assembly-CSharp",
+            "_filterDamageType": false,
+            "_damageMask": "NONE",
+            "_useDynamicVar": true,
+            "_allowNegativeDynamicVar": false,
+            "_useFixedValue": false,
+            "_showDamageNumber": false,
+            "_specifyBlockEffect": null,
+            "_useSource": true,
+            "_sourceType": "SOURCE",
+            "_filterApplyWay": false,
+            "_applyWayFilter": "NONE",
+            "_showShieldUI": true
+          },
+          {
+            "$type": "Torappu.Battle.Action.Nodes+IsBlackboardZero, Assembly-CSharp",
+            "_var": "dynamic",
+            "_noVarShowWarning": true
+          },
+          {
+            "$type": "Torappu.Battle.Action.Nodes+FinishBuff, Assembly-CSharp",
+            "_decCntIfStack": false,
+            "_updateOverrideMap": true
+          }
+        ],
+        "ON_BUFF_TRIGGER": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+ModifyDynamicVar, Assembly-CSharp"
+          },
+          {
+            "$type": "Torappu.Battle.Action.Nodes+IsBlackboardZero, Assembly-CSharp",
+            "_var": "dynamic",
+            "_noVarShowWarning": true
+          },
+          {
+            "$type": "Torappu.Battle.Action.Nodes+FinishBuff, Assembly-CSharp",
+            "_decCntIfStack": false,
+            "_updateOverrideMap": true
+          }
+        ]
+      }
+    },
+    "poison": {
+      "templateKey": "poison",
+      "effectKey": "",
+      "onEventPriority": "DEFAULT",
+      "eventToActions": {
+        "ON_BUFF_TRIGGER": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+NoSourceDamage, Assembly-CSharp",
+            "_damageType": "MAGICAL",
+            "_damageKey": "poison_damage",
+            "_ignoreForSp": false,
+            "_damageWithoutModify": false,
+            "_attackType": "BUFF",
+            "_isEnvDamage": false,
+            "_isUndeadable": false,
+            "_ignoreCancelReasonMask": "NONE",
+            "_instantKillLikeDamage": false,
+            "_isNotChangeableValue": false,
+            "_multiplierByKey": false,
+            "_multiplierKey": "cnt"
+          }
+        ]
+      }
+    },
+    "knockback[dir]": {
+      "templateKey": "knockback[dir]",
+      "effectKey": "",
+      "onEventPriority": "DEFAULT",
+      "eventToActions": {
+        "ON_BUFF_START": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+Knockback, Assembly-CSharp",
+            "_useSourceDirection": true,
+            "_decreaseForceLevelWhenNotInDirection": 2
+          }
+        ]
+      }
+    },
+    "evade": {
+      "templateKey": "evade",
+      "effectKey": "",
+      "onEventPriority": "DEFAULT",
+      "eventToActions": {
+        "ON_TAKE_DAMAGE": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+Evade, Assembly-CSharp",
+            "_damageMask": "PHYSICAL_AND_MAGICAL",
+            "_applyWayFilter": "ALL"
+          }
+        ]
+      }
+    },
+    "evade_physical": {
+      "templateKey": "evade_physical",
+      "effectKey": "",
+      "onEventPriority": "DEFAULT",
+      "eventToActions": {
+        "ON_TAKE_DAMAGE": [
+          {
+            "$type": "Torappu.Battle.Action.Nodes+Evade, Assembly-CSharp",
+            "_damageMask": "PHYSICAL",
+            "_applyWayFilter": "ALL"
+          }
+        ]
+      }
+    }
+  },
+  "interpretationEvidence": {
+    "gravelSplitDamage": {
+      "originalPrefabFields": {
+        "_additionalTimes": 1,
+        "_splitDamage": 1
+      },
+      "independentCalculator": {
+        "repository": "xulai1001/akdata",
+        "commit": "266d341ca05cbcb64f05b19e38db28ba0bfec1ca",
+        "damageFormulaPath": "resources/dpsv2.js",
+        "damageFormulaLines": "346-360",
+        "characterOverrides": [
+          "resources/customdata/dps_specialtags_v2.json",
+          "resources/customdata/dps_specialtags.json"
+        ],
+        "observation": "calcHitDamage mitigates full ATK before damage_scale; neither override file contains a Gravel times/atk_scale override, so total baseline damage is one full-ATK mitigated result. Read for corroboration; no source code copied."
+      },
+      "secondaryGameplayNotes": "https://arknights.wiki.gg/wiki/Gravel/Trivia",
+      "verificationLimit": "No original executable formula or recorded in-game damage comparison was recovered. Combat regression verifies this documented interpretation, not full game parity."
+    },
+    "ethanOverride": {
+      "originalPrefabField": "overrideType=3",
+      "interpretation": "Single nonstacking poison buff refresh preserves one-second tick cadence. Numeric enum3 mapping to EXTEND is inferred and not independently recovered from game code."
+    },
+    "gravelDefAttenuation": {
+      "originalTemplate": "def_atten",
+      "originalActionFormula": "MULTIPLIER",
+      "interpretation": "Action-node enum uses MULTIPLIER while attribute modifiers use PERCENTAGE. Both interpreted as direct percentage bucket, before distinct FINAL_SCALER; outside DEF buff stacking regression retained."
+    }
+  }
+}

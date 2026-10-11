@@ -313,7 +313,7 @@ function inspire(battle, target, val, src, stat = 'atk') {
     ? Math.max(0, 1 + (add.defPct ?? 0)) * (mul.defMul ?? 1)
     : Math.max(0, 1 + (add.atkPct ?? 0)) * (mul.atkMul ?? 1);
   const flat = f > 1e-6 ? val / f : val;
-  battle.addBuff(target, { key, mods: stat === 'def' ? { defFlat: flat } : { atkFlat: flat }, duration: 0.75, refresh: 'replace', source: src, visible: true, data: { src: src.id, val } });
+  battle.addBuff(target, { key, status: 'inspire', mods: stat === 'def' ? { defFlat: flat } : { atkFlat: flat }, duration: 0.75, refresh: 'replace', source: src, visible: true, data: { src: src.id, val } });
 }
 
 /** Deploy-order tracker: last op deployed per owner (read before the update by priority-0 deploy handlers). */
