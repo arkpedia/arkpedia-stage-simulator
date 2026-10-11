@@ -175,3 +175,26 @@ test('Robin trap transitions retain their literal variant withdrawal and restore
   a.setRegularVisual(null);assert.equal(a.roles.die,'Retreat_01');
   a.die();assert.equal(a.current,'Retreat_01');a.destroy();
 });
+
+// Original Ling mode aliases exclude Born; the higher death role survives cleanup.
+test('Ling higher-form death uses its original clip after an attack or controller removal', () => {
+  const entry = { anims: { idle: 'Idle', die: 'Die', attack: { loop: 'Attack' } },
+    animations: { Idle: 1.333, Attack: 1, Die: 1, Idle_02: 2, Attack_02: 1.667, Die_02: 1 } };
+  const skeleton = { animations: Object.keys(entry.animations).map(name => ({ name })) };
+  for (const clip of ['Idle_02', 'Attack_02']) {
+    const a = new BattleActor(skeleton, entry);
+    a.setRegularVisual({ clip, loop: clip === 'Idle_02', die: 'Die_02' });
+    a.setRegularVisual({ clip: 'Die_02', die: 'Die_02', duration: 1 });
+    a.die(); assert.equal(a.current, 'Die_02'); assert.equal(a.dur(a.current), 1); a.destroy();
+  }
+});
+
+test('a Ling higher attack settles into its original higher idle without replaying Born or a lower pose', () => {
+  const entry = { anims: { idle: 'Idle', die: 'Die', attack: { loop: 'Attack' } },
+    animations: { Idle: 1.333, Attack: 1, Die: 1, Start_02: .667, Idle_02: 2, Attack_02: 1.667, Die_02: 1 } };
+  const skeleton = { animations: Object.keys(entry.animations).map(name => ({ name })) };
+  const a = new BattleActor(skeleton, entry);
+  a.setRegularVisual({ clip: 'Attack_02', idle: 'Idle_02', die: 'Die_02' });
+  assert.equal(a.current, 'Attack_02'); a.update(2); assert.equal(a.current, 'Idle_02');
+  assert.equal(a.roles.die, 'Die_02'); a.destroy();
+});

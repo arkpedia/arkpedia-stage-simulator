@@ -41,7 +41,7 @@ export class BattleActor extends SpineActor {
 
   setRegularVisual(visual) {
     const speed = Number.isFinite(visual?.speed) && visual.speed > 0 ? visual.speed : 1;
-    const key = visual ? `${visual.clip}|${!!visual.loop}|${visual.attack || ''}|${visual.die || ''}|${speed}` : null;
+    const key = visual ? `${visual.clip}|${!!visual.loop}|${visual.idle || ''}|${visual.attack || ''}|${visual.die || ''}|${speed}` : null;
     if (key === this.regularVisualKey) return;
     this.regularVisualKey = key;
     this.regularVisualClip = visual?.clip ?? null;
@@ -55,6 +55,7 @@ export class BattleActor extends SpineActor {
       ...(this.has(visual.die) ? { die: visual.die } : {}),
       skill: null,
     } : {
+      ...(this.has(visual.idle) ? { idle: visual.idle } : {}),
       ...(this.has(visual.die) ? { die: visual.die } : {}),
       skill: null,
     };

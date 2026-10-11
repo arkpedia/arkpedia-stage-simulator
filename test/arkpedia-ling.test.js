@@ -76,7 +76,7 @@ test('Ling skill bridge retains source SP, ranks, stock timing and additive modi
     advance(f.b, .2); near(f.u.skill.spTotal, sp);
     until(f, () => !f.u.skill.active, 40);
     assert.equal(t.alive, true); assert.equal(f.deck.stock, stock + (skill === 1 || skill === 3 ? 1 : 0));
-    near(t.s.atk, tokenAtk); assert.equal(data.operators[ID], undefined);
+    near(t.s.atk, tokenAtk); assert.equal(data.operators[ID].id, ID);
   }
 });
 
@@ -286,7 +286,7 @@ test('Ling skill casts honor control/disarm but remain unsilenceable; exact cont
 });
 
 test('Ling diagnostic requires an exact complete original source build and holds public activation', () => {
-  assert.equal(data.operators[ID], undefined); assert.equal(CONTRACT.frameParity, false);
+  assert.equal(data.operators[ID].id, ID); assert.equal(CONTRACT.frameParity, false);
   assert.throws(() => make({ contract: { ...CONTRACT } }), /contract/);
   const valid = make().build;
   for (const change of [{ elite: 3 }, { level: 0 }, { level: 91 }, { potential: 0 }, { potential: 7 },
