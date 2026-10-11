@@ -105,6 +105,12 @@ test('Shadow ownership, Camouflage and deck flags retain the original distinctio
   assert.equal(type(e.templates.die_to_kill_token.eventToActions.ON_OWNER_FINISH[0]),'KillTokens');
   const tokenRanks=e.tables.tokenSkills.sktok_wisdel_wward.levels;assert.equal(tokenRanks.length,10);
   for(const s of tokenRanks){assert.equal(s.spData.spCost,5);assert.equal(bb(s.blackboard).sp_min,0);assert.equal(bb(s.blackboard).sp_max,3);}
+  const end=JSON.parse(e.originalTemplates.token_wisdel_skill_end.eventToActions._items[0].value.SerializedState);
+  assert.equal(end[0]._convertToInt,false);assert.equal(end[1]._forceFlag,true);
+  assert.deepEqual(c('6826492958112658094')._buffs[0].attributes.abnormalFlags,[7]);
+  assert.equal(root._clearProjectileWhenDead,0);assert.equal(root._isFixedRotation,1);
+  const mover=c('-4142004031650792695');assert.equal(mover._speed,15);assert.equal(mover._keepUpdateTargetpos,0);
+  assert.equal(c('8036233635240344329')._lifeTime,2);
 });
 test('Shadow art aliases preserve the native facing switcher and embedded RGBA texture',()=>{
   const faces=e.tokenArtwork.models[TOKEN].facings;

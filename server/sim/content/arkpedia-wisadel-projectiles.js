@@ -102,17 +102,18 @@ export class WisadelProjectiles {
     }));
     if(main)this.hit(command,'main',part);
   }
-  attach(target,seq) {
+  attach(target,seq,source=this.u) {
+    if(source!==this.u&&source?.ownerUnit!==this.u)return;
     if(!this.talentActive() || target.deploySeq!==seq || !live(target))return;
     // Shared native key, no independent-character stack. First accepted source
     // claims parent cleanup; another owner's shock may still consume that mark.
-    const buff=this.b.addBuff(target,{key:WISADEL_AFTERIMAGE,source:this.u,refresh:'keep',
+    const buff=this.b.addBuff(target,{key:WISADEL_AFTERIMAGE,source,refresh:'keep',
       data:{ wisadelLife:seq },onRemove:({buff})=>{
         if(this.marks.get(target)===buff)this.marks.delete(target);
       }});
-    if(buff?.source===this.u && buff.data.wisadelLife===seq)this.marks.set(target,buff);
+    if(buff?.source===source && buff.data.wisadelLife===seq)this.marks.set(target,buff);
     // beforeBuff may withdraw the parent or replace the victim life.
-    if(buff?.source===this.u && (!this.talentActive() || target.deploySeq!==seq || !live(target)))
+    if(buff?.source===source && (!this.talentActive() || target.deploySeq!==seq || !live(target)))
       this.b.removeBuff(target,buff);
   }
   hit(command,kind,part) {

@@ -202,7 +202,7 @@ evidence = {
         'bundles': source_bundles, 'modelRepository': 'fexli/ArknightsResource', 'modelCommit': MODEL},
     'frameParity': False, 'moduleSupport': False, 'nativeParticleSupport': False,
     'enabledOperators': [], 'heldOperators': [ID],
-    'reviewStatus': 'Private ordinary/S1/S2 combat checked separately; full kit remains unavailable pending Shadows and S3 integration',
+    'reviewStatus': 'Private ordinary/S1/S2 and Shadow components checked separately; full kit remains unavailable pending S3 and public integration',
     'characters': characters, 'tokens': tokens, 'skills': skills, 'chararts': chararts,
     'models': models, 'tokenArtwork': token_artwork, 'tokenModels': token_models, 'officialSkeletonBindings': bindings, 'projectiles': projectiles,
     'templates': {k: bt[k] for k in sorted(templates)},
@@ -225,9 +225,9 @@ evidence = {
         'The original Shadow uses one skeleton with a left/right switcher and embedded 216x216 RGBA texture; front/back import aliases preserve those same source bytes.'
     ],
     'holdReasons': [
-        'Ordinary/S1/S2 controllers are private; full selected-loadout/public lifecycle integration and browser review remain required.',
-        'S3 ammunition and persistent Shadow placement/ownership require full runtime review; private S2 checks do not establish public full-kit support.',
-        'Original Shadow publication, selected-loadout/public lifecycle tests and browser review remain open; serialized data does not establish compiled frame parity.'
+        'Ordinary/S1/S2 controllers and the Shadow helper are private; full selected-loadout/public lifecycle integration and browser review remain required.',
+        'S3 ammunition, marked-Shadow SP and integration of persistent Shadows require full runtime review; private component checks do not establish public full-kit support.',
+        'Disabled Shadow ordinary-trigger binding, original Shadow publication, selected-loadout/public lifecycle tests and browser review remain open; serialized data does not establish compiled frame parity.'
     ],
 }
 (ROOT / 'data/arkpedia-wisadel-prefabs.json').write_text(json.dumps(evidence, indent=2) + '\n')

@@ -1993,3 +1993,29 @@ node --test test/arkpedia-wisadel-attacks.test.js test/arkpedia-wisadel-s2.test.
 ```
 
 Selection dispatch/RNG order, root/mount aliases, sampled animation/event/cooldown/FSM clocks and receipt order remain explicit local mappings. Compiled Unity frame parity, modules and original effects/audio remain unverified. **T2 Shadows, S3 ammunition, original Shadow publication, full-kit/public lifecycle integration and browser review remain required.** Coverage stays **359/431 forms and 771 skills**, with **72 forms remaining**; the MVP and SD asset pin are unchanged. The existing preview process still listens on port 3182 and returns HTTP 200, but does not expose this private controller.
+
+### Wiš’adel: private Revenant’s Shadow lifecycle (2026-10-11)
+
+Added an unregistered Shadow helper using the reviewed ordinary/S1/S2 owner and source-selected token records. It is an engine component, **not playable full-kit support**.
+
+- Map E2 `castOnLocate` to one deployment-time spawn. Choose the nearest legal empty buildable tile in current host range with seeded ties; retain the three-Shadow cap, zero DP/slot occupation, source ALL build condition and native false `notShowInDeck` flag. Do not invent automatic replacement after an initial failure or token death.
+- Capture the original x-5 host-only Camouflage claim when a Shadow is created. End claims with their token, retain another eligible parent when available, and preserve foreign replacements. Do not give nearby allies Camouflage or invent a periodic aura.
+- Select current host-range ground targets, preferring those without the shared afterimage. Retain target-life identity through the original .033-second OnAttack event and the separate .2-second custom cast window. Block SP while casting, refund a lost unborn input, and cancel unborn output on control or removal.
+- Preserve the original RandomSetter's explicit `convertToInt=false` and forced ModifySp: the local refill is fractional in [0,3), rather than deriving integer execution from the displayed “0–2” wording. Guard refill callbacks and skill-end removal before drawing RNG or changing token SP.
+- Emit one retained-trace Arts projectile with captured root coordinates, speed 15 and a two-second timeout. Read live token ATK, respect mitigation/dodge and status cancellation, apply Slow without Resist shortening, and derive the shared afterimage from the owner's talent. Already-born output can finish after token or host removal; battle finish cancels it.
+- Map the native numeric-7 HEAL_FREE flag to healing prohibition without adding isolation or regeneration suppression. Keep original Start/Attack clips and full visual tails separate from the custom cast clock. Manual activation cannot bypass the automatic controller.
+
+**38 Shadow checks and 123 focused controller/source checks pass, with zero failures or skips.** They include all ten ranks, source stats without owner trust/potential bonuses, high-ground placement, limits/occupancy, host-only and shared Camouflage claims, targeting, fractional/forced SP, control/refund boundaries, born/unborn output, changed lives, mitigation/dodge, lethal kill credit, foreign marks, reentrant removal and battle cleanup.
+
+The full runtime suite passes **10,059 tests, with nine skipped and zero failures (10,068 total)**. The independent native audit verifies 224 components, six bundles, thirteen templates, forty owner/token ranks, eight projectile trees and three original skeleton chains. Eight altered fixtures are rejected, and ten source/artwork outputs reproduce exactly. Logs: `shadow-final-focused.log`, `shadow-runtime-regression.log` and `shadow-native-audit.log` under `.cache/arkpedia/wisadel-source/`.
+
+Run:
+
+```sh
+node --test test/arkpedia-wisadel-attacks.test.js test/arkpedia-wisadel-s2.test.js test/arkpedia-wisadel-shadows.test.js test/arkpedia-wisadel-source.test.js
+.cache/map-env/bin/python tools/arkpedia/audit-wisadel.py
+```
+
+`WISADEL_SHADOW_CONTRACT` records the local mappings: native tile-filter/sort geometry and tie order, deployment-time castOnLocate/FSM dispatch, fixed-root mount/line travel, fractional RNG and forced-SP callback semantics, numeric flag aliases, host-range sorting and derived-claim arbitration. The disabled ordinary-trigger binding still needs integration review. **S3 ammunition/marked-Shadow SP, original Shadow publication, full selected-loadout/public lifecycle integration and browser review remain required.** Compiled Unity frame parity, modules and original effects/audio remain unverified.
+
+Coverage stays **359/431 forms and 771 skills**, with **72 forms remaining**. The MVP and SD asset pin are unchanged. The existing local process still listens on port 3182 and serves HTTP 200; the browser does not expose this private helper.

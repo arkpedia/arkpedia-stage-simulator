@@ -162,7 +162,7 @@ for record in E['source']['bundles']:
     native = next(row for row in hot['abInfos'] if row['name'] == record['path'])
     assert (record['md5'], record['size']) == (native['md5'], native['abSize'])
 assert E['enabledOperators'] == [] and E['heldOperators'] == ['char_1035_wisdel']
-assert E['reviewStatus'] == 'Private ordinary/S1/S2 combat checked separately; full kit remains unavailable pending Shadows and S3 integration'
+assert E['reviewStatus'] == 'Private ordinary/S1/S2 and Shadow components checked separately; full kit remains unavailable pending S3 and public integration'
 assert len(E['holdReasons']) == 3 and len(E['recoveredFacts']) == 10
 assert 'runtimeMapping' not in E and 'runtimeContracts' not in E
 assert E['frameParity'] is False and E['moduleSupport'] is False and E['nativeParticleSupport'] is False
