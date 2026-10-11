@@ -1,10 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import {sampleParticleCurve,sampleParticleGradient} from './native-particle-curves.js';
+import {createEffectTrajectory} from './native-effect-trail.js';
 
 // Shared source emission clocks, capacity and lifetime/color/size sampling.
 // Callers whitelist the active modules they actually implement. Event ordering
 // and the deterministic preview random stream are not Unity RNG/frame parity.
-export function createParticleLifecycle(source,{seed=1,modules=[],spaces=[0],allowInitialSpeed=false}={}){
+export function createParticleLifecycle(source,{seed=1,modules=[],spaces=[0],allowInitialSpeed=false,allowDistanceEmission=false}={}){
   const initial=source.InitialModule,emission=source.EmissionModule;
   if(!initial?.enabled||!emission)throw new Error('Missing native particle initial/emission module');
   const supported=new Set(['InitialModule','EmissionModule','ColorModule','SizeModule',...modules]);
@@ -17,9 +18,10 @@ export function createParticleLifecycle(source,{seed=1,modules=[],spaces=[0],all
   if((!allowInitialSpeed&&(![0,3].includes(initial.startSpeed.minMaxState)||sampleParticleCurve(initial.startSpeed,0,0)!==0||sampleParticleCurve(initial.startSpeed,0,1)!==0))||constant(initial.gravityModifier,'gravity')!==0)throw new Error('Moving particle lifecycle not playing');
   if(allowInitialSpeed)for(const time of [0,1])for(const factor of [0,1])sampleParticleCurve(initial.startSpeed,time,factor);
   const delay=constant(source.startDelay,'start delay'),rate=constant(emission.rateOverTime,'emission rate');
-  if(constant(emission.rateOverDistance,'distance rate')!==0)throw new Error('Distance emission not playing');
+  const distanceRate=constant(emission.rateOverDistance,'distance rate');
+  if(distanceRate!==0&&(!allowDistanceEmission||source.moveWithTransform!==1))throw new Error('Distance emission requires world-position history');
   const length=source.lengthInSec,speed=source.simulationSpeed,capacity=initial.maxNumParticles;
-  if(!Number.isFinite(delay)||delay<0||!Number.isFinite(length)||length<=0||!Number.isFinite(speed)||speed<=0||!Number.isInteger(capacity)||capacity<1||rate<0||!Number.isSafeInteger(seed))throw new Error('Invalid native particle clocks/capacity');
+  if(!Number.isFinite(delay)||delay<0||!Number.isFinite(length)||length<=0||!Number.isFinite(speed)||speed<=0||!Number.isInteger(capacity)||capacity<1||rate<0||distanceRate<0||!Number.isSafeInteger(seed))throw new Error('Invalid native particle clocks/capacity');
   if(![0,2].includes(initial.startColor.minMaxState))throw new Error('Initial gradient clock needs review');
   if(initial.rotation3D||initial.randomizeRotationDirection!==0)throw new Error('3D/randomized rotation not playing');
   if(emission.m_BurstCount!==emission.m_Bursts.length)throw new Error('Incomplete native particle bursts');
@@ -27,8 +29,12 @@ export function createParticleLifecycle(source,{seed=1,modules=[],spaces=[0],all
     if(!Number.isFinite(burst.time)||burst.time<0||burst.time>=length||!Number.isInteger(burst.cycleCount)||burst.cycleCount<1||!Number.isFinite(burst.repeatInterval)||burst.repeatInterval<=0||burst.probability!==1)throw new Error('Native probabilistic/indefinite burst needs review');
   }
   const random=(id,salt)=>particleRandom(id,salt,seed);
-  function sample(time){
+  function sample(time,{history}={}){
     if(!Number.isFinite(time))throw new Error('Invalid native particle sample clock');
+    // Physical world-position samples are explicit inputs. Prewarm has no
+    // invented movement before time zero; time emission still prewarms normally.
+    if(distanceRate>0&&!history)throw new Error('Distance emission requires world-position history');
+    const trajectory=distanceRate>0?createEffectTrajectory(history):null;
     const sinceStart=time*speed-delay;
     if(sinceStart<0||!emission.enabled||!source.playOnAwake)return [];
     const elapsed=sinceStart+(source.prewarm&&source.looping?length:0);
@@ -36,7 +42,7 @@ export function createParticleLifecycle(source,{seed=1,modules=[],spaces=[0],all
     if(rate>0){
       const count=Math.floor(end*rate+1e-10);
       if(!Number.isSafeInteger(count))throw new Error('Particle review clock exceeds integer precision');
-      if(capacity===1&&emission.m_BurstCount===0&&initial.startLifetime.minMaxState===0){
+      if(distanceRate===0&&capacity===1&&emission.m_BurstCount===0&&initial.startLifetime.minMaxState===0){
         // The native head emits at 1000/s but can hold only one five-second
         // particle. Skip rejected emission attempts arithmetically; retain the
         // same birth tick and preview random identity as the general scheduler.
@@ -48,6 +54,24 @@ export function createParticleLifecycle(source,{seed=1,modules=[],spaces=[0],all
       }else{
         if(count>100000)throw new Error('Particle review clock exceeds event budget');
         for(let i=1;i<=count;i++){const born=i/rate;if(source.looping||born<length)events.push({born,count:1});}
+      }
+    }
+    if(trajectory){
+      const prewarm=source.prewarm&&source.looping?length:0,start=delay/speed;
+      const stop=source.looping?time:Math.min(time,(length+delay)/speed);
+      const times=trajectory.times(stop).filter(t=>t>start);times.unshift(start);
+      let travelled=0,next=1;
+      for(let i=1;i<times.length;i++){
+        const a=times[i-1],b=times[i],from=trajectory.sample(a),to=trajectory.sample(b);
+        const span=Math.hypot(...to.map((v,k)=>v-from[k]));
+        const count=Math.floor((travelled+span)*distanceRate+1e-10);
+        if(count>100000)throw new Error('Particle review clock exceeds distance event budget');
+        for(;next<=count;next++){
+          const u=Math.max(0,Math.min(1,(next/distanceRate-travelled)/span));
+          const born=(a+(b-a)*u)*speed-delay+prewarm;
+          if(source.looping||born<length)events.push({born,count:1});
+        }
+        travelled+=span;
       }
     }
     const loops=source.looping?Math.floor(elapsed/length)+1:1;

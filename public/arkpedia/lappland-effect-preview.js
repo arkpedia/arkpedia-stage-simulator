@@ -18,6 +18,7 @@ const scene=new T.Scene();scene.background=new T.Color('#142027');
 const camera=new T.PerspectiveCamera(35,1,.001,100);camera.up.set(0,1,0);
 let pack,animations,shaders,pose,group,playing=false,clock=0,timeWindow=3,last,draws=[],blocked=[],geometries=[],materials=[];
 let trajectory=null;
+let inspectionBounds=null;
 const textures=new Map(),defaults=new Map(),nodeObjects=new Map();
 const sha=async bytes=>[...new Uint8Array(await crypto.subtle.digest('SHA-256',bytes))].map(b=>b.toString(16).padStart(2,'0')).join('');
 async function bytes(entry){
@@ -201,18 +202,33 @@ async function rebuildRoot(name){
     .map(r=>pack.records[r.target]).filter(r=>r?.type==='ParticleSystem').map(r=>r.data.lengthInSec*2));
   timeWindow=Math.max(3,...periods,...pose.instances.map(i=>animations.clips[i.clip].stop));time.max=String(timeWindow);
   clock=0;time.value='0';draw();
-  group.updateMatrixWorld(true);const bounds=new T.Box3().setFromObject(group),centre=bounds.getCenter(new T.Vector3());
-  const extent=bounds.getSize(new T.Vector3()).length(),size=Number.isFinite(extent)?Math.max(extent,.5):.5;
-  if(!centre.toArray().every(Number.isFinite))centre.set(0,0,0);
-  camera.position.copy(centre).add(new T.Vector3(.2,.35,1).normalize().multiplyScalar(size*1.8));camera.lookAt(centre);draw();
+  group.updateMatrixWorld(true);inspectionBounds=new T.Box3().setFromObject(group);
+  if(inspectionBounds.isEmpty())inspectionBounds.set(new T.Vector3(-.25,-.25,-.25),new T.Vector3(.25,.25,.25));
+  if(trajectory)inspectionBounds.translate(new T.Vector3().fromArray(trajectory.sample(0)).negate());
+  fitCamera();draw();
   updateStatus();
   globalThis.effectReview={compileResults,pose,draws,blocked,setTime(t){clock=t;time.value=String(t);draw();},setClip(id){clipSelect.value=id;draw();},
     async selectRoot(name){effect.value=name;await rebuild();},
-    setTrajectory(samples){const next=samples===null?null:createEffectTrajectory(samples);trajectory=next;draw();updateStatus();}};
+    setTrajectory(samples){const next=samples===null?null:createEffectTrajectory(samples);trajectory=next;fitCamera();draw();updateStatus();}};
   }finally{effect.disabled=clipSelect.disabled=time.disabled=play.disabled=false;}
 }
+function fitCamera(){
+  if(!inspectionBounds)return;
+  const bounds=inspectionBounds.clone();
+  if(trajectory){
+    const movement=new T.Box3();
+    for(const t of trajectory.times(timeWindow))movement.expandByPoint(new T.Vector3().fromArray(trajectory.sample(t)));
+    bounds.min.add(movement.min);bounds.max.add(movement.max);
+  }
+  const centre=bounds.getCenter(new T.Vector3()),extent=bounds.getSize(new T.Vector3()).length();
+  const size=Number.isFinite(extent)?Math.max(extent,.5):.5;
+  if(!centre.toArray().every(Number.isFinite))centre.set(0,0,0);
+  const distance=size*1.8/Math.min(1,camera.aspect);
+  camera.far=Math.max(100,distance*4);camera.position.copy(centre).add(new T.Vector3(.2,.35,1).normalize().multiplyScalar(distance));
+  camera.lookAt(centre);camera.updateProjectionMatrix();
+}
 function updateStatus(){
-  status.textContent=`${draws.length} original mesh/billboard/trail components inspected. ${blocked.length} components remain unplayed.\nSource-emitter/explicit-clip inspection: box/straight-cone emission, velocity, grid frames and local curl-noise/speed-limit replay with explicit world birth frames. View-aligned stretch trails use original widths, gradients and materials. ${trajectory?'Recorded movement is loaded.':'Load movement JSON to inspect trails; static source poses do not invent a path.'} Other shapes, distance emission, native script motion and Animator transitions remain unplayed. Trail joins/expiry/UV orientation, noise field, timing, native coordinates and color management are not verified against game frames.`;
+  status.textContent=`${draws.length} original mesh/billboard/trail components inspected. ${blocked.length} components remain unplayed.\nSource-emitter/explicit-clip inspection: sphere/box/straight-cone emission, recorded-distance births, velocity, grid frames and local curl-noise/speed-limit replay with explicit world birth frames. View-aligned stretch trails use original widths, gradients and materials. ${trajectory?'Recorded movement is loaded.':'Load movement JSON to inspect trails; static source poses do not invent a path.'} Other shapes, native script motion and Animator transitions remain unplayed. Distance births interpolate recorded world-position segments; prewarm holds the start pose. Shape RNG/event phases, trail joins/expiry/UV orientation, noise field, timing, native coordinates and color management are not verified against game frames.`;
 }
 function samplePose(t){
   const state=pose.sample(t,clipSelect.value||null);
@@ -286,7 +302,11 @@ function draw(){
         const matrices=particleMatrices(particleFrame(transform,birthStates.get(t)),particleSource.scalingMode);
         return {birth:matrices.birth.elements,movement:matrices.movement.elements};
       };
-      const particles=emitter.sample(clock,{frameAt});
+      const history=(trajectory?trajectory.times(Math.max(0,clock)):[0]).map(t=>{
+        if(!birthStates.has(t))birthStates.set(t,samplePose(t));
+        return {time:t,position:particleFrame(transform,birthStates.get(t)).position.toArray()};
+      });
+      const particles=emitter.sample(clock,{frameAt,history});
       entry.lastParticles=particles;
       const inverse=new T.Matrix4().copy(mesh.parent.matrixWorld).invert();
       while(pool.length<particles.length){const clone=mesh.clone();clone.geometry=mesh.geometry.clone();geometries.push(clone.geometry);clone.onBeforeRender=mesh.onBeforeRender;mesh.parent.add(clone);pool.push(clone);}
@@ -327,7 +347,7 @@ function draw(){
   }
   renderer.render(scene,camera);document.querySelector('#clock').textContent=clock.toFixed(2)+'s';
 }
-const observer=new ResizeObserver(()=>{renderer.setSize(host.clientWidth,host.clientHeight);camera.aspect=host.clientWidth/Math.max(1,host.clientHeight);camera.updateProjectionMatrix();draw();});observer.observe(host);
+const observer=new ResizeObserver(()=>{renderer.setSize(host.clientWidth,host.clientHeight);camera.aspect=host.clientWidth/Math.max(1,host.clientHeight);fitCamera();camera.updateProjectionMatrix();draw();});observer.observe(host);
 let compileResults;
 try{
   const r=await fetch('/review-assets/manifest.json');if(!r.ok)throw Error('Start tools/arkpedia/preview-lappland-effects.mjs to inspect the cached original assets.');

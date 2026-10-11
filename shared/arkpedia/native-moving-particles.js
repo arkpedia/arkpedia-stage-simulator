@@ -4,16 +4,17 @@ import {sampleParticleCurve} from './native-particle-curves.js';
 import {createParticleMotion} from './native-particle-motion.js';
 import {particleBirthFrame} from './native-particle-render.js';
 
-// Original box/straight-cone emission, lifetime velocity and grid animation.
+// Original sphere/box/straight-cone emission, lifetime velocity and grid animation.
 // RNG, event boundaries, native frame phase and renderer coordinates remain
 // explicit local mappings until compared with compiled Unity/game frames.
 export function createMovingParticles(source,{seed=1}={}){
-  const lifecycle=createParticleLifecycle(source,{seed,modules:['ShapeModule','VelocityModule','UVModule','ClampVelocityModule','NoiseModule'],spaces:[0,1],allowInitialSpeed:true});
+  const lifecycle=createParticleLifecycle(source,{seed,modules:['ShapeModule','VelocityModule','UVModule','ClampVelocityModule','NoiseModule'],spaces:[0,1],allowInitialSpeed:true,allowDistanceEmission:true});
   const shape=source.ShapeModule,velocity=source.VelocityModule,uv=source.UVModule;
   const motion=createParticleMotion(source,{seed});
   if(shape?.enabled){
-    if(![4,5].includes(shape.type)||shape.alignToDirection||shape.randomDirectionAmount!==0||shape.sphericalDirectionAmount!==0||shape.randomPositionAmount!==0)throw Error('Native particle shape/direction needs review');
-    if(shape.type===4&&(shape.angle!==0||shape.arc?.mode!==0||shape.arc.spread!==0||shape.arc.value!==360||shape.radius?.mode!==0||shape.radius.spread!==0||!Number.isFinite(shape.radius.value)||shape.radius.value<0||!Number.isFinite(shape.radiusThickness)||shape.radiusThickness<0||shape.radiusThickness>1))throw Error('Native angled cone/arc/radius mode needs review');
+    if(![0,4,5].includes(shape.type)||shape.alignToDirection||shape.randomDirectionAmount!==0||shape.sphericalDirectionAmount!==0||shape.randomPositionAmount!==0)throw Error('Native particle shape/direction needs review');
+    if(shape.type===4&&(shape.angle!==0||shape.arc?.mode!==0||shape.arc.spread!==0||shape.arc.value!==360))throw Error('Native angled cone/arc/radius mode needs review');
+    if(shape.type!==5&&(shape.radius?.mode!==0||shape.radius.spread!==0||!Number.isFinite(shape.radius.value)||shape.radius.value<0||!Number.isFinite(shape.radiusThickness)||shape.radiusThickness<0||shape.radiusThickness>1))throw Error('Native shape radius mode needs review');
     for(const field of ['m_Texture','m_Mesh','m_MeshRenderer','m_SkinnedMeshRenderer','m_Sprite','m_SpriteRenderer'])if(shape[field]?.m_PathID!=='0')throw Error('Native shape resource needs review');
     for(const field of ['m_Position','m_Rotation','m_Scale'])for(const axis of ['x','y','z'])if(!Number.isFinite(shape[field]?.[axis]))throw Error('Invalid native shape transform');
   }
@@ -33,14 +34,20 @@ export function createMovingParticles(source,{seed=1}={}){
     sampleParticleCurve(uv.frameOverTime,0);sampleParticleCurve(uv.frameOverTime,1);
   }
   const worldMotion=!!motion&&source.moveWithTransform===1;
-  function sample(time,{frameAt}={}){
+  function sample(time,{frameAt,history}={}){
     if(worldMotion&&typeof frameAt!=='function')throw Error('World turbulence requires an explicit particle birth frame');
-    return lifecycle.sample(time).map(p=>{
+    return lifecycle.sample(time,{history}).map(p=>{
       const random=salt=>particleRandom(p.id,salt,seed),birthPhase=(p.born%source.lengthInSec)/source.lengthInSec;
       let origin=[0,0,0],direction=[0,0,1];
       if(shape?.enabled){
         if(shape.type===5)origin=['x','y','z'].map((axis,i)=>(random(10+i)-.5)*shape.m_Scale[axis]);
-        else{
+        else if(shape.type===0){
+          const z=2*random(10)-1,angle=random(11)*Math.PI*2,xy=Math.sqrt(Math.max(0,1-z*z));
+          direction=[xy*Math.cos(angle),xy*Math.sin(angle),z];
+          const radius=shape.radius.value,inner=radius*(1-shape.radiusThickness);
+          const r=Math.cbrt(inner**3+random(12)*(radius**3-inner**3));
+          origin=direction.map((v,i)=>v*r*shape.m_Scale[['x','y','z'][i]]);
+        }else{
           const radius=shape.radius.value,inner=radius*(1-shape.radiusThickness),r=Math.sqrt(inner*inner+random(10)*(radius*radius-inner*inner)),angle=random(11)*Math.PI*2;
           origin=[r*Math.cos(angle)*shape.m_Scale.x,r*Math.sin(angle)*shape.m_Scale.y,0];
         }
