@@ -75,6 +75,7 @@ export class ExusiaiCovenantS3 {
       else core.visual(u.dir === 'DOWN' ? 'Skill_Down_3_Idle' : 'Skill_3_Idle', 1, true);
       return true;
     }
+    if (core.coordinates?.tick()) return true;
     if (p?.kind === 's3-attack') {
       if (!p.released && due(b, p.releaseAt)) {
         p.released = true;
@@ -92,6 +93,7 @@ export class ExusiaiCovenantS3 {
       core.phase = null;
       if (u.skill.ammoLeft <= 0) { u.skill.end('ammo'); return true; }
     }
+    if (core.coordinates?.tick()) return true;
     if (u.atkCd > 1e-9) return true;
     const target = core.targets()[0];
     if (!target) { core.visual(u.dir === 'DOWN' ? 'Skill_Down_3_Idle' : 'Skill_3_Idle', 1, true); return true; }

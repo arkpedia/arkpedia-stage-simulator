@@ -362,12 +362,15 @@ export class StandardBattle extends Battle {
     return adjustInesCost(this, id, adjustAshCost(this, id, adjustFangFireSharpenedCost(this, id, adjustSaileachCost(this, id, adjustJieyunCost(this, id, vanguard)))));
   }
   placementError(id, row, col) {
+    return this._placementError(id, row, col);
+  }
+  _placementError(id, row, col, { fromSkill = false } = {}) {
     const entry = this.bench[id];
-    if (!canDeployInViewport(this.viewport))
+    if (!fromSkill && !canDeployInViewport(this.viewport))
       return "Open the fullscreen workspace to deploy.";
     if (this.finished) return "Battle has ended.";
     if (!entry || entry.unit?.alive) return "Operator is unavailable.";
-    if (entry.readyAt > this.time) return "Operator is still redeploying.";
+    if (!fromSkill && entry.readyAt > this.time) return "Operator is still redeploying.";
     if (this.deployedSlots() + this.deploymentSlotCost(id) > this.unitLimit)
       return "Deployment limit reached.";
     if (
@@ -391,11 +394,19 @@ export class StandardBattle extends Battle {
     )
       return "Tile is occupied.";
     if (this.tileReservation(row, col)) return "Tile is reserved for an operator's return.";
-    if (this.dp < this.cost(id)) return "Not enough DP.";
+    if (!fromSkill && this.dp < this.cost(id)) return "Not enough DP.";
     return null;
   }
   deployOperator(id, row, col, dir) {
-    const error = this.placementError(id, row, col);
+    return this._deployOperator(id, row, col, dir);
+  }
+  // Engine-owned delivery: reuse selected builds, kits and deployment hooks;
+  // bypass card cooldown/payment, but retain tile and unit-limit validation.
+  redeployOperatorFromSkill(id, row, col, dir) {
+    return this._deployOperator(id, row, col, dir, { fromSkill: true });
+  }
+  _deployOperator(id, row, col, dir, { fromSkill = false } = {}) {
+    const error = this._placementError(id, row, col, { fromSkill });
     if (error) throw new Error(error);
     if (!["UP", "DOWN", "LEFT", "RIGHT"].includes(dir))
       throw new Error("Choose a facing direction.");
@@ -824,13 +835,14 @@ export class StandardBattle extends Battle {
         enumerable: true, get: () => Math.max(1, unit.s.blockCnt),
       });
     }
-    entry.lastCost = this.cost(id);
+    entry.lastCost = fromSkill ? 0 : this.cost(id);
     ps.dp -= entry.lastCost;
     this._deploy(unit, { tile: [row, col] });
     if (mechanic === "starting-sp")
       unit.skill.gainSp(def.talents.reduce((sum, talent) => sum + (talent.bb.sp ?? 0), 0), "talent");
     entry.deployments++;
     entry.unit = unit;
+    if (fromSkill) entry.readyAt = this.time;
     consumeFiveStarVanguardSecondCard(this, id);
     consumeSaileachCard(this, id);
     consumeFangFireSharpenedCard(this, id);
