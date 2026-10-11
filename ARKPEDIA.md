@@ -2097,4 +2097,30 @@ node tools/arkpedia/inspect-lappland-alter.mjs
 node --test test/arkpedia-lappland-alter-source.test.js
 ```
 
-Logs are `.cache/arkpedia/lappland-alter-source/source-tests.log` and `native-audit.log`. **Ordinary/S1/S2/S3 execution, drone targeting/movement/attack lifecycle, squad SP, full selected-loadout tests and browser review remain required.** Compiled Unity frame parity, modules and original particles/audio are unverified. Source recovery is not a claim of playable combat; the existing preview still serves the last verified public kit.
+Logs are `.cache/arkpedia/lappland-alter-source/source-tests.log` and `native-audit.log`. The ordinary/S1 runtime component below builds on this foundation. **S2/S3 execution, full-kit integration, selected-loadout browser review and original drone presentation remain required.** Compiled Unity frame parity, modules and original particles/audio are unverified. Source recovery is not a claim of playable combat; the existing preview still serves the last verified public kit.
+
+### Lappland ordinary attacks, S1 and squad talent: private runtime component
+
+`server/sim/content/arkpedia-lappland-alter.js` now implements the source-selected ordinary/S1 component and a separately installed Honor of Siracusa squad effect. Lappland remains held out of the public registry and MVP until **all three skills**, their complete lifecycle and original presentation have been reviewed. Coverage remains **360/431 forms and 774 skills**; the complete roster goal is unchanged.
+
+Native facts used by this component:
+
+- S1's extra-drone passive is present before activation. Ordinary attacks issue one caster shot and two drone receipts, increasing to three drones after Alpha Wolf's third reward. The native trait shares the ordinary Funnel ability; each command advances one shared target ramp rather than advancing it once per drone.
+- The caster projectile uses speed ten and survives source invalidation. Ordinary drone movers retain their half-second reached delay and source-invalid cleanup. Damage reads live ATK separately for each receipt and applies Arts mitigation separately.
+- Original Front/Back `Start`, `Attack`, `Skill_1_Begin`, `Skill_1_End` and `Skill_1_Loop` clocks are retained. Ordinary attacks use the 0.4-second event with uncapped animation scaling; S1 uses its original 1/6-second event and maximum animation scale one. Fixed simulation ticks independently sample each boundary.
+- S1 keeps its rank-specific ATK bonus, toggle state and SP hold. Each released drone has its own stationary-target lock and damage ramp. Drones drop moving, dead, hidden or changed-life recipients. Already attached remote drones continue through owner control; new acquisitions wait until the owner can act. Switching modes detaches drone output while preserving already born caster shots.
+- Alpha Wolf uses deployment age and the selected promotion/potential interval. It grants the cap multiplier, then silence, then one additional drone; the following branch terminates the timer. It does not grow drones indefinitely. Silence uses the normal immunity/resistance pipeline and does not attach to caster-only damage.
+- `installSquad()` installs Honor of Siracusa once before deployment/combat advancement. It gives selected E2 five/six SP to allied Siracusa operators, including the owner, on each new body's born event. It works while Lappland is undeployed or withdrawn, respects blocked SP, and excludes other factions, players, tokens, repeated born events and movement. It is not a living deployment aura.
+- Selected promotion, level, trust, potentials, all source ranks, base range, factions and talent blackboards must match before hooks are installed. S2/S3 selections, modules, altered records and arbitrary contract objects fail closed in this partial adapter.
+
+Execution mappings remain separate from the native serialized evidence: sampled root coordinates and homing, ordinary half-second target receipts, mode-local ramp state, regular-stage target priority, sequential same-event drone acquisition and `moving === false` or blocked as the stationary predicate. A remote target can be across the field without inventing an out-of-range caster shot. Increasing the maximum Funnel scale uses the native multiplier; the exact compiled Unity stack/FSM implementation has not been executed. These are explicit local mappings, **not certified game-frame parity**.
+
+The full no-module operator is still unfinished: S2's six drone slots and Fear, S3's cruise/attachment movement and shared area effects, the public squad/factory hookup, original drone visuals and browser checks are next. No production promotion is included.
+
+Run the component checks with:
+
+```sh
+node --test test/arkpedia-lappland-alter.test.js
+```
+
+The component suite covers 50 cases including all ten S1 ranks, original facing/event clocks, shared and independent ramps, separate mitigation/live ATK, changed-life recipients, lethal target ordering, control/callback interruption, immunity/resistance, squad SP and cleanup. The related source/importer/Goldenglow/Wiš’adel suite passes **208 checks**, with zero failures or skips. The native-byte audit still verifies all 370 components, reproduces both outputs exactly and rejects all nine altered fixtures. Logs are `.cache/arkpedia/lappland-alter-source/runtime-related-tests.log` and `runtime-native-audit.log`. The last full suite remains the Wiš’adel milestone; this component does not replace that validation claim or increase public playable coverage.

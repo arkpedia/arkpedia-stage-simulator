@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Rebuild Lappland the Decadenza's complete source foundation from checksum-verified original bytes.
 
-Run with .cache/map-env/bin/python tools/arkpedia/extract-wisadel.py.
+Run with .cache/map-env/bin/python tools/arkpedia/extract-lappland-alter.py.
 Requires the pinned Global tables, native client bundles and model checkout
 already used by this project's source audits. Preserves native facts separately
 while leaving the unreviewed full kit unavailable.
