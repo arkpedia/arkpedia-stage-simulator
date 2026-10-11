@@ -1,9 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Inspect original meshes, supported stationary emitters and explicit clips.
+// Inspect original meshes, supported source emitters and explicit clips.
 // This is not a completed particle/trail lifecycle or reviewed battle renderer.
 import * as T from '/vendor/three.module.js';
 import {webglEffectProgram,selectEffectProgram,effectUniformDeclarations} from '/shared/arkpedia/native-effect-shader.js';
 import {createStationaryParticles} from '/shared/arkpedia/native-stationary-particles.js';
+import {createMovingParticles} from '/shared/arkpedia/native-moving-particles.js';
+import {particleWorldPosition,particleSheetUV} from '/shared/arkpedia/native-particle-render.js';
 import {sampleParticleCurve} from '/shared/arkpedia/native-particle-curves.js';
 import {effectMeshColors} from '/shared/arkpedia/native-effect-mesh.js';
 import {createEffectPose} from '/shared/arkpedia/native-effect-pose.js';
@@ -147,22 +149,34 @@ async function rebuildRoot(name){
         const go=pack.records[r.gameObject];const filter=(go.references??[]).map(r=>r.target).find(k=>pack.records[k]?.type==='MeshFilter');
         meshId=target(filter,'m_Mesh');
       }else if(record.type==='ParticleSystemRenderer'){
-        if(![0,4].includes(record.data.m_RenderMode)||record.data.m_RenderAlignment!==2)throw Error('Particle alignment/render mode not playing');
+        if(![0,4].includes(record.data.m_RenderMode)||![0,2].includes(record.data.m_RenderAlignment)||record.data.m_RenderMode===4&&record.data.m_RenderAlignment!==2)throw Error('Particle alignment/render mode not playing');
         if(record.data.m_UseCustomVertexStreams||Object.values(record.data.m_Pivot).some(v=>v!==0)||Object.values(record.data.m_Flip).some(v=>v!==0))throw Error('Particle vertex streams/pivot/flip need review');
         const ps=(pack.records[r.gameObject].references??[]).map(r=>r.target).find(k=>pack.records[k]?.type==='ParticleSystem');
-        particleSource=pack.records[ps].data;emitter=createStationaryParticles(particleSource);
+        particleSource=pack.records[ps].data;
+        const moving=['ShapeModule','VelocityModule','UVModule'].some(k=>particleSource[k]?.enabled)||particleSource.moveWithTransform===1;
+        emitter=moving?createMovingParticles(particleSource):createStationaryParticles(particleSource);
+        if(![0,1,2].includes(particleSource.scalingMode))throw Error('Native particle scaling mode needs review');
+        if(particleSource.moveWithTransform===1){
+          const ancestors=new Set();let n=r.transform;while(n){const d=pose.nodes.get(n);ancestors.add(d.gameObject);n=d.parent;}
+          if(pose.instances.some(i=>i.bindings.some(b=>ancestors.has(b.gameObject)&&['m_LocalRotation','localEulerAnglesRaw','m_LocalScale'].includes(b.property))))throw Error('Animated world particle velocity frame needs integration');
+        }
         billboard=record.data.m_RenderMode===0;
         if(!billboard)meshId=target(component,'m_Mesh');
       }else throw Error('Trail lifecycle not playing');
       const mat=r.materials[0];if(!mat)throw Error('Unresolved original material');
       const material=await makeMaterial(component,mat.id),g=billboard?billboardGeometry():geometry(meshId);
+      if(particleSource?.UVModule?.enabled&&Array.from({length:8},(_,i)=>g.getAttribute('in_TEXCOORD'+i)).some(a=>a&&a.itemSize!==2))throw Error('Native multidimensional particle UV stream needs review');
       const mesh=new T.Mesh(g,material);
       if(particleSource){const d=particleSource.InitialModule,x=sampleParticleCurve(d.startSize,0);
         mesh.scale.fromArray(d.size3D?[x,sampleParticleCurve(d.startSizeY,0),sampleParticleCurve(d.startSizeZ,0)]:[x,x,x]);}
 
-      nodeObjects.get(r.transform).add(mesh);draws.push({component,mesh,emitter,pool:emitter?[mesh]:null,baseColors:emitter?g.getAttribute('in_COLOR0').array.slice():null});
+      nodeObjects.get(r.transform).add(mesh);draws.push({component,transform:r.transform,particleSource,alignment:record.data.m_RenderAlignment,mesh,emitter,pool:emitter?[mesh]:null,
+        baseColors:emitter?g.getAttribute('in_COLOR0').array.slice():null,
+        baseUVs:emitter?Array.from({length:8},(_,i)=>g.getAttribute('in_TEXCOORD'+i)?.array.slice()??null):null});
       mesh.onBeforeRender=function(){
         const u=material.uniforms,matrix=this.matrixWorld;
+        if(!matrix.elements.every(Number.isFinite))throw Error('Invalid source particle matrix '+component);
+        if(!camera.matrixWorldInverse.elements.every(Number.isFinite))throw Error('Invalid effect inspection camera');
         if(u.hlslcc_mtx4x4unity_ObjectToWorld)u.hlslcc_mtx4x4unity_ObjectToWorld.value.set(matrix.elements);
         if(u.hlslcc_mtx4x4unity_WorldToObject)u.hlslcc_mtx4x4unity_WorldToObject.value.set(new T.Matrix4().copy(matrix).invert().elements);
         if(u.hlslcc_mtx4x4unity_MatrixVP)u.hlslcc_mtx4x4unity_MatrixVP.value.set(new T.Matrix4().multiplyMatrices(camera.projectionMatrix,camera.matrixWorldInverse).elements);
@@ -180,11 +194,29 @@ async function rebuildRoot(name){
   timeWindow=Math.max(3,...periods,...pose.instances.map(i=>animations.clips[i.clip].stop));time.max=String(timeWindow);
   clock=0;time.value='0';draw();
   group.updateMatrixWorld(true);const bounds=new T.Box3().setFromObject(group),centre=bounds.getCenter(new T.Vector3());
-  const size=Math.max(bounds.getSize(new T.Vector3()).length(),.5);camera.position.copy(centre).add(new T.Vector3(.2,.35,1).normalize().multiplyScalar(size*1.8));camera.lookAt(centre);draw();
-  status.textContent=`${draws.length} original mesh/billboard components inspected. ${blocked.length} components remain unplayed.\nStationary emitter/explicit-clip inspection: moving/shape particles, trails, script motion and Animator transitions are not playing. Native coordinates, color management and camera mapping are not yet verified against a game frame.`;
+  const extent=bounds.getSize(new T.Vector3()).length(),size=Number.isFinite(extent)?Math.max(extent,.5):.5;
+  if(!centre.toArray().every(Number.isFinite))centre.set(0,0,0);
+  camera.position.copy(centre).add(new T.Vector3(.2,.35,1).normalize().multiplyScalar(size*1.8));camera.lookAt(centre);draw();
+  status.textContent=`${draws.length} original mesh/billboard components inspected. ${blocked.length} components remain unplayed.\nSource-emitter/explicit-clip inspection: box emission, linear velocity and grid frames are playing. Other shapes, turbulence, trails, script motion and Animator transitions remain unplayed. Native coordinates, color management and camera mapping are not yet verified against a game frame.`;
   globalThis.effectReview={compileResults,pose,draws,blocked,setTime(t){clock=t;time.value=String(t);draw();},setClip(id){clipSelect.value=id;draw();},
     async selectRoot(name){effect.value=name;await rebuild();}};
   }finally{effect.disabled=clipSelect.disabled=time.disabled=play.disabled=false;}
+}
+function particleFrame(transform,state){
+  const worlds=new Map();
+  function world(id){
+    if(worlds.has(id))return worlds.get(id);
+    const n=state.nodes.get(id),q=n.euler?new T.Quaternion().setFromEuler(new T.Euler(...n.euler.map(v=>v*Math.PI/180),'ZXY')):new T.Quaternion().fromArray(n.rotation);
+    const scale=new T.Vector3().fromArray(n.scale),m=new T.Matrix4().compose(new T.Vector3().fromArray(n.position),q,scale);
+    if(n.parent){const parent=world(n.parent);m.premultiply(parent.matrix);q.premultiply(parent.rotation);scale.multiply(parent.scale);}
+    const result={matrix:m,rotation:q,scale};worlds.set(id,result);return result;
+  }
+  // Read rotation from the original quaternion chain, not matrix decomposition:
+  // source clips may scale to zero, and decomposing that matrix produces NaNs.
+  const frame=world(transform),position=new T.Vector3().setFromMatrixPosition(frame.matrix);
+  const e=frame.matrix.elements;
+  const scale=new T.Vector3(...[0,4,8].map((i,axis)=>Math.hypot(e[i],e[i+1],e[i+2])*(Math.sign(frame.scale.getComponent(axis))||1)));
+  return {...frame,position,scale,localScale:new T.Vector3().fromArray(state.nodes.get(transform).scale)};
 }
 function draw(){
   if(!pose)return;
@@ -193,18 +225,46 @@ function draw(){
     if(n.euler)o.quaternion.setFromEuler(new T.Euler(...n.euler.map(v=>v*Math.PI/180),'ZXY'));else o.quaternion.fromArray(n.rotation);
     o.visible=n.visible;
   }
+  group.updateMatrixWorld(true);camera.updateMatrixWorld(true);
+  const birthStates=new Map();
   for(const entry of draws){
-    const {component,mesh,emitter,pool,baseColors}=entry;
+    const {component,mesh,emitter,pool,baseColors,baseUVs,transform,particleSource,alignment}=entry;
     if(emitter){
       const particles=emitter.sample(clock);
+      const current=particleFrame(transform,state);
+      const scale=particleSource.scalingMode===0?current.scale:particleSource.scalingMode===1?current.localScale:new T.Vector3(1,1,1);
+      const frame=current.matrix.clone();frame.compose(current.position,current.rotation,particleSource.scalingMode===2?current.scale:scale);
+      const movement=particleSource.scalingMode===2?new T.Matrix4().compose(current.position,current.rotation,new T.Vector3(1,1,1)):frame;
+      const inverse=new T.Matrix4().copy(mesh.parent.matrixWorld).invert();
       while(pool.length<particles.length){const clone=mesh.clone();clone.geometry=mesh.geometry.clone();geometries.push(clone.geometry);clone.onBeforeRender=mesh.onBeforeRender;mesh.parent.add(clone);pool.push(clone);}
       pool.forEach((part,i)=>{
-        const particle=particles[i];part.visible=!!particle;
+        const particle=particles[i];part.visible=!!particle&&mesh.parent.matrixWorld.determinant()!==0;
         if(!particle)return;
-        part.scale.fromArray(particle.size);part.rotation.z=particle.rotation;
+        let position=current.position.clone();
+        if(particle.position){
+          let born=frame;
+          if(particle.simulationSpace==='world'){
+            // Prewarm precedes visible playback: hold the source start pose
+            // before time zero rather than looping a clip into the past.
+            const t=Math.max(0,particle.birthTime);
+            if(!birthStates.has(t))birthStates.set(t,pose.sample(t,clipSelect.value||null));
+            const b=particleFrame(transform,birthStates.get(t));
+            born=new T.Matrix4().compose(b.position,b.rotation,particleSource.scalingMode===0||particleSource.scalingMode===2?b.scale:b.localScale);
+          }
+          position.fromArray(particleWorldPosition(particle,born.elements,frame.elements,movement.elements));
+        }
+        const rotation=alignment===0?camera.quaternion.clone():current.rotation.clone();
+        rotation.multiply(new T.Quaternion().setFromAxisAngle(new T.Vector3(0,0,1),particle.rotation));
+        const matrix=new T.Matrix4().compose(position,rotation,new T.Vector3().fromArray(particle.size).multiply(scale));
+        part.matrixAutoUpdate=false;part.matrix.copy(inverse).multiply(matrix);part.matrixWorldNeedsUpdate=true;
         const colors=part.geometry.getAttribute('in_COLOR0');
         for(let j=0;j<baseColors.length;j++)colors.array[j]=baseColors[j]*particle.color[j%4];
         colors.needsUpdate=true;
+        baseUVs.forEach((values,channel)=>{
+          if(!values)return;
+          const uv=part.geometry.getAttribute('in_TEXCOORD'+channel);
+          uv.array.set(particle.sheet&&(particle.sheet.mask&(1<<channel))?particleSheetUV(values,particle.sheet):values);uv.needsUpdate=true;
+        });
       });
     }
     const p=state.renderers.get(component).materials[0].properties,u=mesh.material.uniforms;
