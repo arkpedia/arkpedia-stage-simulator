@@ -31,12 +31,13 @@ const models = createAssets({
   },
 });
 export class StageRenderer {
-  constructor(host, data, onPick) {
+  constructor(host, data, onPick, {nativeEffects = null} = {}) {
     this.host = host;
     this.data = data;
     this.views = new Map();
     this.preloaded = new Map();
     this.effects = [];
+    this.nativeEffects = nativeEffects;
     this.scene = new THREE.Scene();
     this.scene.background = new THREE.Color("#10191d");
     this.camera = new THREE.PerspectiveCamera();
@@ -407,8 +408,10 @@ export class StageRenderer {
     this.views.clear();
     this.effects = [];
     this.skillParticles?.clear();
+    this.nativeEffects?.clear();
   }
   render(battle, dt, events, realDt = 0) {
+    this.nativeEffects?.update(battle);
     this.drawSurface();
     this.drawPreview();
     this.onLayout?.();
@@ -637,6 +640,7 @@ export class StageRenderer {
     this.gates?.update(battle?.time ?? 0);
     this.skillParticles?.render(battle?.time ?? 0, this.projection, this.heightAt);
     this.three.render(this.scene, this.camera);
+    this.nativeEffects?.render(this.three, this.camera);
     this.pixi.renderer.render(this.pixi.stage);
   }
   destroy() {
@@ -648,6 +652,7 @@ export class StageRenderer {
     this.artStatus.remove();
     this.observer.disconnect();
     this.clear();
+    this.nativeEffects?.dispose();
     this.skillParticles?.dispose();
     for (const v of this.preloaded.values()) models.spine.release(v.entry);
     this.preloaded.clear();

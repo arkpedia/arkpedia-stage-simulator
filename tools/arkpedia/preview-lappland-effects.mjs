@@ -7,6 +7,8 @@ import {fileURLToPath} from 'node:url';
 import {readFile} from 'node:fs/promises';
 import {createStaticHandler} from '../../server/index.js';
 import {createHash} from 'node:crypto';
+import {createLocalAssets} from '../../scripts/arkpedia-local-assets.mjs';
+import {lapplandStageReviewData} from './lappland-stage-review-data.mjs';
 const root=fileURLToPath(new URL('../../',import.meta.url));
 const cache=path.join(root,'.cache/arkpedia/lappland-alter-source/effects');
 const manifests=await Promise.all(['arkpedia-lappland-effects','arkpedia-lappland-effect-animations',
@@ -15,11 +17,17 @@ const [effects,animations,shaders]=manifests;
 const files=new Map([['native-effects.bin',effects.pack], ['native-animations.json',animations.artifact],
   ['native-shaders.json',shaders.artifact], ...Object.values(effects.textures).map(t=>[t.path,t])]);
 const serve=createStaticHandler({publicDir:path.join(root,'public'),dataDir:path.join(root,'data'),sharedDir:path.join(root,'shared')});
+const localAssets=createLocalAssets(path.resolve(root,'../arkpedia-sd-assets'));
 const server=http.createServer(async(req,res)=>{
   const url=new URL(req.url,'http://127.0.0.1');
   res.setHeader('X-Content-Type-Options','nosniff');res.setHeader('Cache-Control','no-store');
   try{
     if(url.pathname==='/'){res.writeHead(302,{Location:'/arkpedia/lappland-effect-preview.html'});res.end();return;}
+    if(url.pathname==='/review-stage-data.json'&&['GET','HEAD'].includes(req.method)){
+      const data=await localAssets.snapshot(await lapplandStageReviewData(path.resolve(root,'../arkpedia-sd-assets')));
+      res.writeHead(200,{'Content-Type':'application/json'});res.end(req.method==='HEAD'?undefined:JSON.stringify(data));return;
+    }
+    if(await localAssets.handle(req,res,url))return;
     if(url.pathname.startsWith('/review-assets/')){
       if(!['GET','HEAD'].includes(req.method)){res.writeHead(405);res.end();return;}
       const name=url.pathname.slice('/review-assets/'.length);

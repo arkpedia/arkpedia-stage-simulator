@@ -258,9 +258,12 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false}={}){
             }
             position.fromArray(particleWorldPosition(particle,born.elements,frame.elements,movement.elements));
           }
-          const rotation=alignment===0?camera.quaternion.clone():current.rotation.clone();
-          rotation.multiply(new T.Quaternion().setFromAxisAngle(new T.Vector3(0,0,1),particle.rotation));
-          const matrix=new T.Matrix4().compose(position,rotation,new T.Vector3().fromArray(particle.size).multiply(scale));
+          // A stage camera bridge can contain the Y/Z reflection. A quaternion
+          // cannot represent that basis; retain its columns for view quads.
+          const rotation=new T.Matrix4().makeRotationZ(particle.rotation);
+          const matrix=alignment===0?new T.Matrix4().copy(camera.matrixWorld)
+            :new T.Matrix4().makeRotationFromQuaternion(current.rotation);
+          matrix.setPosition(position).multiply(rotation).scale(new T.Vector3().fromArray(particle.size).multiply(scale));
           part.matrixAutoUpdate=false;part.matrix.copy(inverse).multiply(matrix);part.matrixWorldNeedsUpdate=true;
           const colors=part.geometry.getAttribute('in_COLOR0');
           for(let j=0;j<baseColors.length;j++)colors.array[j]=baseColors[j]*particle.color[j%4];
@@ -343,6 +346,7 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false}={}){
         nodeObjects.get(r.transform).add(mesh);draws.push({component,transform:r.transform,particleSource,trail,alignment:record.data.m_RenderAlignment,mesh,emitter,pool:emitter?[mesh]:null,
           baseColors:emitter?g.getAttribute('in_COLOR0').array.slice():null,
           baseUVs:emitter?Array.from({length:8},(_,i)=>g.getAttribute('in_TEXCOORD'+i)?.array.slice()??null):null});
+        const sourceSide=material.side;
         mesh.onBeforeRender=function(_renderer,_scene,camera){
           const u=material.uniforms,matrix=this.matrixWorld;
           if(!matrix.elements.every(Number.isFinite))throw Error('Invalid source particle matrix '+component);
@@ -350,6 +354,10 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false}={}){
           if(u.hlslcc_mtx4x4unity_ObjectToWorld)u.hlslcc_mtx4x4unity_ObjectToWorld.value.set(matrix.elements);
           if(u.hlslcc_mtx4x4unity_WorldToObject)u.hlslcc_mtx4x4unity_WorldToObject.value.set(new T.Matrix4().copy(matrix).invert().elements);
           if(u.hlslcc_mtx4x4unity_MatrixVP)u.hlslcc_mtx4x4unity_MatrixVP.value.set(new T.Matrix4().multiplyMatrices(camera.projectionMatrix,camera.matrixWorldInverse).elements);
+          // Three accounts for reflected objects, but not a reflected camera.
+          // Keep the source face test when the board/source camera swaps Y/Z.
+          material.side=camera.matrixWorld.determinant()<0&&sourceSide!==T.DoubleSide
+            ?sourceSide===T.FrontSide?T.BackSide:T.FrontSide:sourceSide;
           u._WorldSpaceCameraPos?.value.copy(camera.position);material.uniformsNeedUpdate=true;
         };
       }catch(e){

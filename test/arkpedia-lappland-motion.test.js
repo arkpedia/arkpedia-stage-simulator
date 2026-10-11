@@ -83,3 +83,10 @@ test('sample-budget overflow is explicit rather than silently exporting a trunca
   {id:'1',effect:LAPPLAND_S3_TRAIL_ROOT,owner:'fixture',deploySeq:1,generation:1,slot:0,start:0,end:null,reason:null,samples:Array.from({length:20001},(_,i)=>({time:i/30,position:[0,0,0]}))}]};
  assert.throws(()=>readLapplandMotionInput(raw,SHA),/history/);
 });
+test('live snapshots retain only current cruise segments and remain detached from controller history',()=>{
+ const f=setup();f.enemy();assert.equal(f.recorder.activeSnapshot().tracks.length,0);f.activate();
+ const initial=f.recorder.activeSnapshot();assert.equal(initial.tracks.length,3);initial.tracks[0].samples[0].position[0]=999;
+ assert.notEqual(f.recorder.activeSnapshot().tracks[0].samples[0].position[0],999);
+ f.advance(6);assert.equal(f.recorder.activeSnapshot().tracks.length,0);assert.equal(f.recorder.snapshot().tracks.length,3);
+ f.recorder.dispose();assert.equal(f.recorder.activeSnapshot().tracks.length,0);
+});

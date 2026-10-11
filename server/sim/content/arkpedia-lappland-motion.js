@@ -62,6 +62,8 @@ export function recordLapplandS3Motion(battle){
  return {
   snapshot(){return structuredClone({schemaVersion:1,kind:'lappland-s3-battle-motion',sourcePackSha256:effects.pack.sha256,
    scope:{simulationMotion:true,compiledFrameParity:false,enabledOperators:[]},tracks});},
+  activeSnapshot(){return structuredClone({schemaVersion:1,kind:'lappland-s3-battle-motion',sourcePackSha256:effects.pack.sha256,
+   scope:{simulationMotion:true,compiledFrameParity:false,enabledOperators:[]},tracks:[...active.values()].map(entry=>entry.track)});},
   dispose,
  };
 }
