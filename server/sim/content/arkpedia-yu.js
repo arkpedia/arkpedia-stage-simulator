@@ -10,7 +10,7 @@ import { makeDamageInfo } from '../damage.js';
 export const YU_ID = 'char_2026_yu';
 export const YU_CORE_CONTRACT = Object.freeze({
   scope: 'Selected source build, ordinary Physical attack, blocked-target Burn/Arts, Sanctuary, passive S1 taunt and HP/elemental recovery',
-  mapping: 'One original ground input, uncapped native hit clock, per-blocked-life half-second first pulse then selected interval, independent HP and EP attributes. Selected table count includes friendly operators and the owner; serialized checker five remains an unresolved compiled boundary.',
+  mapping: 'One original ground input or explicitly self-blocked flying input, uncapped native hit clock, per-blocked-life half-second first pulse then selected interval, independent HP and EP attributes. Selected table count includes friendly operators and the owner; serialized checker five remains an unresolved compiled boundary.',
   limits: 'Active skills and public enablement remain held. Compiled checker count loading, selector/FSM/action dispatch, source-on-calculate filtering, block/control/talent callback order and frame parity are not certified. Modules and native particles/shaders/audio are unsupported.',
   frameParity: false,
 });
@@ -102,21 +102,23 @@ export class YuCoreController {
   targets(limit = 1) {
     const { b, u } = this;
     const keys = u.rangeKeySet ?? new Set(absoluteRangeKeys(u.rangeGrid, u.tileR, u.tileC, u.dir, u.s.rangeExtend));
-    const out = b.enemies.filter(t => live(t) && canTargetEnemy(u, t, { canHitFly: false })
+    const out = b.enemies.filter(t => live(t) && canTargetEnemy(u, t, { canHitFly: t.blockedBy === u })
       && (!t.s.flags.camou || !!t.blockedBy) && (bodyInKeys(t, keys) || t.blockedBy === u));
     sortEnemyTargets(b, u, out); return out.slice(0, limit);
   }
   release(t, info) {
+    if (this.skills?.handlesRelease()) return this.skills.releaseAttack(t, info);
     const { b, u, phase: p } = this;
     if (!this.accepting || !this.valid() || !u.canAct || u.s.flags.disarm || !p || p.kind !== 'attack'
       || p.epoch !== u.attackControlEpoch || p.target !== t || p.targetSeq !== t.deploySeq || p.accepted
-      || !live(t) || !due(b, p.releaseAt) || !canTargetEnemy(u, t, { canHitFly: false })) return false;
+      || !live(t) || !due(b, p.releaseAt) || !canTargetEnemy(u, t, { canHitFly: t.blockedBy === u })) return false;
     p.accepted = true;
     b.dealDamage(u, t, makeDamageInfo({ amount: u.s.atk * u.s.atkScaleMul, type: 'phys', isAttack: true,
       isSkill: false, isSplash: false, applyWay: 'melee', attackId: info.attackId ?? 0, tags: ['yu:ordinary'] }));
     return true;
   }
   tickAttack() {
+    if (this.skills?.tickAttack()) return;
     const { b, u } = this;
     if (!this.valid()) { this.phase = null; return; }
     let p = this.phase;
@@ -185,7 +187,7 @@ export class YuCoreController {
     // Explicit table-bound interpretation: friendly operator count includes Yu.
     // The original prefab checker five is preserved, not silently rewritten.
     const enabled = this.valid() && r.market.cnt > 0 && operators.length >= r.market.cnt;
-    const recipients = new Set(enabled ? [u] : []);
+    const recipients = new Set(enabled ? (this.skills?.recoveryRecipients(operators) ?? [u]) : []);
     const interval = yuSourceComponent('-1850537544557547990')._buffs[0].triggerInterval;
     for (const a of new Set([...this.recovery.keys(), ...recipients])) {
       if (!recipients.has(a)) {
@@ -214,7 +216,7 @@ export class YuCoreController {
     }, { owner: u }), b.on('blocked', () => this.syncBlocks(), { owner: u }),
     b.on('unblocked', () => this.syncBlocks(), { owner: u }), b.on('tick', () => {
       if (this.stopped || b.finished) { this.stop(); return; }
-      this.syncBlocks(); this.syncRecovery(); this.tickBlocked(); this.tickAttack();
+      this.skills?.tick(); this.syncBlocks(); this.syncRecovery(); this.tickBlocked(); this.tickAttack();
     }, { owner: u }), b.on('death', ({ unit }) => {
       if (unit === u) this.stop(); else { this.syncBlocks(); this.syncRecovery(); }
     }, { owner: u }), b.on('battleEnd', () => this.stop())];
@@ -222,6 +224,7 @@ export class YuCoreController {
   stop() {
     if (this.stopped) return;
     this.stopped = true; this.phase = null;
+    this.skills?.stop();
     this.syncBlocks(); this.syncRecovery(); this.blocked.clear(); this.recovery.clear();
     mods(this.b, this.u, `yu:passive:taunt:${this.u.id}`, null, this.u);
     this.u.mem.regularFormVisual = null; delete this.u.mem.regularVisualDirection;

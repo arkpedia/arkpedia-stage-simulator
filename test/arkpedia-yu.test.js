@@ -269,3 +269,11 @@ test('owner retreat and battle end clear blocked recipients, recovery, visuals a
     advance(f.b, 1); assert.equal(periodic(f).length, 0);
   }
 });
+
+test('an explicitly blocked air input remains an ordinary melee target without granting unblocked anti-air selection', () => {
+  const f = make(); f.b.addBuff(f.u, { key: 'fixture:air-block', flags: { blockFly: true } });
+  const t = enemy(f, { fly: true }); assert.equal(t.blockedBy, f.u);
+  until(f, () => ordinary(f).length > 0); assert.equal(ordinary(f)[0].target, t);
+  f.b._unblock(t); f.b.addBuff(t, { key: 'fixture:unblockable', flags: { unblockable: true } });
+  const n = ordinary(f).length; advance(f.b, 2); assert.equal(ordinary(f).length, n);
+});
