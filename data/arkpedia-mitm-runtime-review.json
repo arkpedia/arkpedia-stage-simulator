@@ -1,0 +1,436 @@
+{
+  "schemaVersion": 1,
+  "operatorId": "char_4147_mitm",
+  "enabledOperators": [
+    "char_4147_mitm"
+  ],
+  "sourceFoundation": "arkpedia-mitm-prefabs.json",
+  "sourceFoundationSha256": "a88e78b5f356eeec2f181018f666680f12ae0c9aa240067d13f6c5747bbb3783",
+  "deviceArtwork": "arkpedia-mitm-device-art.json",
+  "deviceArtworkSha256": "211969af57bf4af837ce01f100705507092716336dfd7cbdb79e3aa305a3de28",
+  "assetCommit": "5f58569d050e7444bb7b33646554b9f99249b7be",
+  "originalArtwork": {
+    "operator/char_4147_mitm/default/front": {
+      "kind": "operator",
+      "id": "char_4147_mitm",
+      "variant": "default",
+      "facing": "front",
+      "spineVersion": "3.8.99",
+      "source": {
+        "key": "operators",
+        "repository": "fexli/ArknightsResource",
+        "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+        "directory": "spine/char_4147_mitm/char_4147_mitm/Front"
+      },
+      "skeleton": {
+        "path": "models/operator/char_4147_mitm/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4147_mitm.skel",
+        "bytes": 281040,
+        "sha256": "38904af450e9319a554b85997ac10ca786f3141d99b47f65ab940e3bcdf788f6"
+      },
+      "atlas": {
+        "path": "models/operator/char_4147_mitm/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4147_mitm.atlas",
+        "bytes": 10033,
+        "sha256": "88a08f4005d72a0625e9686d559e623cc93dfdad17d9429c19e835782fe4ee9e"
+      },
+      "textures": [
+        {
+          "path": "models/operator/char_4147_mitm/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4147_mitm.png",
+          "bytes": 156546,
+          "sha256": "efdcff9c4e298f832caf6ca02a2ddc5adcbd250ec577e6c6acdf2340c83cd515"
+        }
+      ],
+      "premultipliedAlpha": true,
+      "animations": {
+        "Attack": 1,
+        "Default": 0,
+        "Die": 1,
+        "Idle": 3.6,
+        "Skill_1": 1,
+        "Skill_2_Begin": 0.167,
+        "Skill_2_End": 0.167,
+        "Skill_2_Idle": 1.2,
+        "Skill_2_Loop": 1,
+        "Start": 1
+      },
+      "animationRoles": {
+        "idle": "Idle",
+        "deploy": "Start",
+        "attack": {
+          "begin": null,
+          "loop": "Attack",
+          "end": null
+        },
+        "attackDown": null,
+        "skill": {
+          "begin": null,
+          "loop": "Skill_1",
+          "end": null,
+          "index": 0,
+          "idle": null
+        },
+        "die": "Die",
+        "move": null,
+        "stun": null,
+        "skills": {
+          "0": {
+            "begin": null,
+            "loop": "Skill_1",
+            "end": null,
+            "index": 0,
+            "idle": null
+          },
+          "1": {
+            "begin": "Skill_2_Begin",
+            "loop": "Skill_2_Loop",
+            "end": "Skill_2_End",
+            "index": 1,
+            "idle": "Skill_2_Idle"
+          }
+        }
+      },
+      "hits": {
+        "Attack": [
+          0.367
+        ],
+        "Skill_1": [
+          0.367
+        ],
+        "Skill_2_Loop": [
+          0.4
+        ],
+        "Start": [
+          0.133
+        ]
+      },
+      "bounds": {
+        "x": -276.229,
+        "y": -2.25,
+        "width": 500.505,
+        "height": 389.987
+      }
+    },
+    "operator/char_4147_mitm/default/back": {
+      "kind": "operator",
+      "id": "char_4147_mitm",
+      "variant": "default",
+      "facing": "back",
+      "spineVersion": "3.8.99",
+      "source": {
+        "key": "operators",
+        "repository": "fexli/ArknightsResource",
+        "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+        "directory": "spine/char_4147_mitm/char_4147_mitm/Back"
+      },
+      "skeleton": {
+        "path": "models/operator/char_4147_mitm/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4147_mitm.skel",
+        "bytes": 174547,
+        "sha256": "d1e5ffcefed09e18d7ff8cc4e9e0478481975dba0c45d811da7c0fb4449269e0"
+      },
+      "atlas": {
+        "path": "models/operator/char_4147_mitm/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4147_mitm.atlas",
+        "bytes": 5435,
+        "sha256": "97aed53cf2e81fa89f967a6f799cbba293ba1dcd47b5e242afa544b8853873d0"
+      },
+      "textures": [
+        {
+          "path": "models/operator/char_4147_mitm/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4147_mitm.png",
+          "bytes": 129566,
+          "sha256": "7bd27e828e2a1a3ac79898a33c675ed67f9513694e0e7d024bd12d9e6fd6b47d"
+        }
+      ],
+      "premultipliedAlpha": true,
+      "animations": {
+        "Attack": 1,
+        "Default": 0,
+        "Idle": 1.2,
+        "Skill_1": 1,
+        "Skill_2_Begin": 0.167,
+        "Skill_2_End": 0.167,
+        "Skill_2_Idle": 1.2,
+        "Skill_2_Loop": 1,
+        "Start": 1
+      },
+      "animationRoles": {
+        "idle": "Idle",
+        "deploy": "Start",
+        "attack": {
+          "begin": null,
+          "loop": "Attack",
+          "end": null
+        },
+        "attackDown": null,
+        "skill": {
+          "begin": null,
+          "loop": "Skill_1",
+          "end": null,
+          "index": 0,
+          "idle": null
+        },
+        "die": null,
+        "move": null,
+        "stun": null,
+        "skills": {
+          "0": {
+            "begin": null,
+            "loop": "Skill_1",
+            "end": null,
+            "index": 0,
+            "idle": null
+          },
+          "1": {
+            "begin": "Skill_2_Begin",
+            "loop": "Skill_2_Loop",
+            "end": "Skill_2_End",
+            "index": 1,
+            "idle": "Skill_2_Idle"
+          }
+        }
+      },
+      "hits": {
+        "Attack": [
+          0.367
+        ],
+        "Skill_1": [
+          0.367
+        ],
+        "Skill_2_Loop": [
+          0.4
+        ],
+        "Start": [
+          0.133
+        ]
+      },
+      "bounds": {
+        "x": -244.564,
+        "y": 0.1,
+        "width": 468.005,
+        "height": 386.103
+      }
+    },
+    "operator/token_10037_mitm_trshrb/default/front": {
+      "kind": "operator",
+      "id": "token_10037_mitm_trshrb",
+      "variant": "default",
+      "facing": "front",
+      "source": {
+        "key": "global-client",
+        "kind": "assetbundle",
+        "bundle": {
+          "path": "pkgrps/btl_pfb_tokens_0.ab",
+          "bytes": 5060143,
+          "md5": "5ab8526b9e59e97cc7e94ed6a248013d",
+          "sha256": "eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f",
+          "resourceVersion": "26-09-23-17-49-43_b9cc4a",
+          "url": "https://ark-us-static-online.yo-star.com/assetbundle/official/Android/assets/26-09-23-17-49-43_b9cc4a/pkgrps_btl_pfb_tokens_0.dat",
+          "transforms": [
+            "Original embedded-alpha RGBA page decoded to PNG without pixel changes; no split alpha texture",
+            "Atlas page dimensions normalized and pma: true recorded; native regions unchanged",
+            "Cherry-3 front/back aliases share its native single skeleton; literal static Waste and Idle_2 clips retained"
+          ]
+        },
+        "directory": "pkgrps/btl_pfb_tokens_0.ab",
+        "extractedSkeleton": "token_10037_mitm_trshrb.skel",
+        "facingAlias": "single-original-model",
+        "originalPathIds": {
+          "rootPathId": "-5025496332813830201",
+          "controllerPathId": "-3708278567375571001",
+          "animatorPathId": "7275110594963929031",
+          "faceSwitcherPathId": "-3626012598514190393",
+          "skeletonAnimationPathId": "5378261545833297863",
+          "skeletonDataAssetPathId": "5711818996121565540",
+          "textAssetPathId": "5937099011106347295",
+          "atlasAssetPathId": "1044180660098249092",
+          "atlasTextAssetPathId": "4394415808848240045",
+          "materialPathId": "-8743880024613573945",
+          "rgbTexturePathId": "2194246625555547790",
+          "alphaTexturePathId": "0"
+        },
+        "transforms": [
+          "Original embedded-alpha RGBA page decoded to PNG without pixel changes; no split alpha texture",
+          "Atlas page dimensions normalized and pma: true recorded; native regions unchanged",
+          "Cherry-3 front/back aliases share its native single skeleton; literal static Waste and Idle_2 clips retained"
+        ]
+      },
+      "spineVersion": "3.8.99",
+      "skeleton": {
+        "path": "models/operator/token_10037_mitm_trshrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/token_10037_mitm_trshrb.skel",
+        "bytes": 58089,
+        "sha256": "1ff78d0ad6122b8eb7815909fba960da903c7c1ce888aa4a0507f6e02e2c72b1"
+      },
+      "atlas": {
+        "path": "models/operator/token_10037_mitm_trshrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/token_10037_mitm_trshrb.atlas",
+        "bytes": 3248,
+        "sha256": "da23f32e8e305b474ae520393ba78d3de8197b7c169ee1eb794e9b1a1d033d56"
+      },
+      "textures": [
+        {
+          "path": "models/operator/token_10037_mitm_trshrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/token_10037_mitm_trshrb.png",
+          "bytes": 78035,
+          "sha256": "bfad9e358c7a74cd8eebf5e09ff62baa6d5c446e102969d6be8c56282874a63e"
+        }
+      ],
+      "premultipliedAlpha": true,
+      "animations": {
+        "Attack": 1,
+        "Default": 0,
+        "Die": 1,
+        "Idle_1": 0.667,
+        "Idle_2": 0,
+        "Skill_Begin": 0.167,
+        "Skill_End": 0.167,
+        "Skill_Loop": 1,
+        "Start": 1,
+        "Stun_1": 0.667,
+        "Stun_2": 0,
+        "Stun_3": 0,
+        "Waste": 0
+      },
+      "animationRoles": {
+        "idle": "Idle_1",
+        "deploy": "Start",
+        "die": "Die",
+        "attack": "Attack",
+        "skill": "Skill_Loop"
+      },
+      "hits": {
+        "Attack": [
+          0.467
+        ]
+      },
+      "bounds": null,
+      "avatar": {
+        "path": "models/operator/token_10037_mitm_trshrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png",
+        "bytes": 38137,
+        "sha256": "5ce17f3513335d5cccfa2206c0d462781e5f40175c942b334599d8117d3de194",
+        "source": {
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "avatar/ASSISTANT"
+        }
+      }
+    },
+    "operator/token_10037_mitm_trshrb/default/back": {
+      "kind": "operator",
+      "id": "token_10037_mitm_trshrb",
+      "variant": "default",
+      "facing": "back",
+      "source": {
+        "key": "global-client",
+        "kind": "assetbundle",
+        "bundle": {
+          "path": "pkgrps/btl_pfb_tokens_0.ab",
+          "bytes": 5060143,
+          "md5": "5ab8526b9e59e97cc7e94ed6a248013d",
+          "sha256": "eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f",
+          "resourceVersion": "26-09-23-17-49-43_b9cc4a",
+          "url": "https://ark-us-static-online.yo-star.com/assetbundle/official/Android/assets/26-09-23-17-49-43_b9cc4a/pkgrps_btl_pfb_tokens_0.dat",
+          "transforms": [
+            "Original embedded-alpha RGBA page decoded to PNG without pixel changes; no split alpha texture",
+            "Atlas page dimensions normalized and pma: true recorded; native regions unchanged",
+            "Cherry-3 front/back aliases share its native single skeleton; literal static Waste and Idle_2 clips retained"
+          ]
+        },
+        "directory": "pkgrps/btl_pfb_tokens_0.ab",
+        "extractedSkeleton": "token_10037_mitm_trshrb.skel",
+        "facingAlias": "single-original-model",
+        "originalPathIds": {
+          "rootPathId": "-5025496332813830201",
+          "controllerPathId": "-3708278567375571001",
+          "animatorPathId": "7275110594963929031",
+          "faceSwitcherPathId": "-3626012598514190393",
+          "skeletonAnimationPathId": "5378261545833297863",
+          "skeletonDataAssetPathId": "5711818996121565540",
+          "textAssetPathId": "5937099011106347295",
+          "atlasAssetPathId": "1044180660098249092",
+          "atlasTextAssetPathId": "4394415808848240045",
+          "materialPathId": "-8743880024613573945",
+          "rgbTexturePathId": "2194246625555547790",
+          "alphaTexturePathId": "0"
+        },
+        "transforms": [
+          "Original embedded-alpha RGBA page decoded to PNG without pixel changes; no split alpha texture",
+          "Atlas page dimensions normalized and pma: true recorded; native regions unchanged",
+          "Cherry-3 front/back aliases share its native single skeleton; literal static Waste and Idle_2 clips retained"
+        ]
+      },
+      "spineVersion": "3.8.99",
+      "skeleton": {
+        "path": "models/operator/token_10037_mitm_trshrb/default/back/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/token_10037_mitm_trshrb.skel",
+        "bytes": 58089,
+        "sha256": "1ff78d0ad6122b8eb7815909fba960da903c7c1ce888aa4a0507f6e02e2c72b1"
+      },
+      "atlas": {
+        "path": "models/operator/token_10037_mitm_trshrb/default/back/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/token_10037_mitm_trshrb.atlas",
+        "bytes": 3248,
+        "sha256": "da23f32e8e305b474ae520393ba78d3de8197b7c169ee1eb794e9b1a1d033d56"
+      },
+      "textures": [
+        {
+          "path": "models/operator/token_10037_mitm_trshrb/default/back/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/token_10037_mitm_trshrb.png",
+          "bytes": 78035,
+          "sha256": "bfad9e358c7a74cd8eebf5e09ff62baa6d5c446e102969d6be8c56282874a63e"
+        }
+      ],
+      "premultipliedAlpha": true,
+      "animations": {
+        "Attack": 1,
+        "Default": 0,
+        "Die": 1,
+        "Idle_1": 0.667,
+        "Idle_2": 0,
+        "Skill_Begin": 0.167,
+        "Skill_End": 0.167,
+        "Skill_Loop": 1,
+        "Start": 1,
+        "Stun_1": 0.667,
+        "Stun_2": 0,
+        "Stun_3": 0,
+        "Waste": 0
+      },
+      "animationRoles": {
+        "idle": "Idle_1",
+        "deploy": "Start",
+        "die": "Die",
+        "attack": "Attack",
+        "skill": "Skill_Loop"
+      },
+      "hits": {
+        "Attack": [
+          0.467
+        ]
+      },
+      "bounds": null,
+      "avatar": {
+        "path": "models/operator/token_10037_mitm_trshrb/default/back/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png",
+        "bytes": 38137,
+        "sha256": "5ce17f3513335d5cccfa2206c0d462781e5f40175c942b334599d8117d3de194",
+        "source": {
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "avatar/ASSISTANT"
+        }
+      }
+    }
+  },
+  "scope": "Selected source owner builds, both natural-SP skills, zero-slot tactical point, independent wreckage, accepted-fatal recovery, source attack events and owned-token blocking trait. Public integration is separate from the held immutable native and artwork receipts.",
+  "frameParity": false,
+  "moduleSupport": false,
+  "nativeShaderParity": false,
+  "nativeParticleSupport": false,
+  "verification": [
+    "test/arkpedia-mitm-public.test.js",
+    "test/arkpedia-mitm.test.js",
+    "test/arkpedia-mitm-devices.test.js",
+    "test/arkpedia-mitm-skills.test.js",
+    "test/arkpedia-mitm-art.test.js",
+    "tools/arkpedia/verify-mitm.py",
+    "tools/arkpedia/verify-mitm-models.py",
+    "tools/arkpedia/review-mitm-public.mjs"
+  ],
+  "limits": [
+    "Compiled RallyPoint withdrawal, retained parent attachments, mode/FSM/action dispatch, numeric aliases and SP/cancel ordering remain explicit local mappings.",
+    "Skill-driven withdrawal maps to recovery without inventing an accepted-fatal SpawnTrash call absent from its decoded action chain; compiled event dispatch is not certified.",
+    "Native target-selection, begin/end/instant-affecting, recovery/first-tick and projectile retirement clocks do not establish Unity frame parity.",
+    "Original skeletons, texture pixels, atlas regions and aliases are source-verified; native particle/shader/audio behavior and modules remain unsupported."
+  ]
+}

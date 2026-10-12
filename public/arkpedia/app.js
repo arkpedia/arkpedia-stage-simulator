@@ -510,7 +510,9 @@ function summonDetails(entry) {
   const numbers = [['ATK', stats?.atk ?? raw.atk], ['DEF', stats?.def ?? raw.def],
     ['RES', stats?.res ?? raw.magicResistance], ['Block', stats?.blockCnt ?? raw.blockCnt]];
   const recovery = unit?.mem.crabMode && unit.mem.crabMode !== 'active'
-    ? `<p class="sp-readout">Reinforcement recovering · ${Math.max(0,Math.ceil(unit.mem.crabReadyAt-battle.time))}s</p>` : '';
+    ? `<p class="sp-readout">Reinforcement recovering · ${Math.max(0,Math.ceil(unit.mem.crabReadyAt-battle.time))}s</p>`
+    : unit && [0, 'warming'].includes(unit.mem.mitmMode)
+      ? `<p class="sp-readout">Cherry-3 recovering · ${Math.max(0,Math.ceil(unit.mem.mitmReadyAt-battle.time))}s</p>` : '';
   return `<p class="operator-build">${escape(data.operators[entry.ownerId].name)} · E${entry.record.arkpedia.elite} · Lv ${entry.record.arkpedia.level}</p>
     <dl class="operator-stats">${numbers.map(([label, value]) => `<div><dt>${label}</dt><dd>${Math.round(value)}</dd></div>`).join('')}</dl>
     <div class="hp-readout"><span>HP</span><strong>${Math.min(Math.ceil(hp), Math.round(maxHp))} / ${Math.round(maxHp)}</strong></div>
