@@ -1,0 +1,289 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import data from '../data/arkpedia-mvp.json' with { type: 'json' };
+import e from '../data/arkpedia-muelsyse-prefabs.json' with { type: 'json' };
+import { StandardBattle } from '../server/sim/arkpedia.js';
+import { normalizeChess } from '../server/sim/simdata.js';
+import { defaultBuild } from '../shared/arkpedia/loadout.js';
+import { MUELSYSE_ID as ID, MUELSYSE_CORE_CONTRACT as CONTRACT, selectedMuelsyseBuild, prepareMuelsyseCore } from '../server/sim/content/arkpedia-muelsyse.js';
+
+const near = (a, z, eps = 1e-5) => assert.ok(Math.abs(a - z) < eps, `${a} != ${z}`);
+function advance(b, seconds) {
+  for (let n = 0; n < Math.ceil(seconds / b.dt - 1e-9); n++) b.step();
+  assert.deepEqual(b.errors, []);
+}
+function until(f, condition, seconds = 12) {
+  const end = f.b.time + seconds;
+  while (!condition() && f.b.time < end) advance(f.b, f.b.dt);
+  assert.ok(condition(), `Condition missing at ${f.b.time}`);
+}
+function make({ skill = 1, elite = 2, rank = 10, level = e.tables.character.phases[elite].maxLevel,
+  potential = 1, trust = 0, dir = 'RIGHT', defer = false, contract = CONTRACT, mutate } = {}) {
+  const d = structuredClone(data); d.stage.geometry.waves[0].spawns = []; d.stage.battle.dp_per_second = 0;
+  d.stage.geometry.rows = 19; d.stage.geometry.cols = 21;
+  d.stage.geometry.tileGrid = Array.from({ length: 19 }, () => Array(21).fill(2));
+  const b = new StandardBattle(d, { operators: [defaultBuild(d.operators.char_289_gyuki)] });
+  b.autoFinish = false; b.recordEvents = true; b.setViewport('fullscreen-workspace');
+  b.grid.tiles = b.grid.tiles.map(t => ({ ...t, height: 'LOW', build: 'ALL', pass: 'ALL' }));
+  const build = { elite, level, potential, trust, skillRank: Math.min(rank, [4, 7, 10][elite]), skillId: `skchr_mlyss_${skill}` };
+  const r = selectedMuelsyseBuild(build), c = e.tables.character;
+  const def = normalizeChess({ chessId: ID, charId: ID, name: c.name, profession: c.profession, position: c.position,
+    subProfessionId: c.subProfessionId, stats: r.stats, rangeGrid: r.rangeGrid, tags: r.tags, talents: r.talents,
+    skill: { ...r.source, ...r.source.spData, skillId: build.skillId,
+      rangeGrid: r.source.rangeId ? e.tables.ranges[r.source.rangeId].grids.map(g => [g.row, g.col]) : [],
+      trigger: { rule: 'NEVER' } }, arkpedia: build });
+  mutate?.(def);
+  const u = b._makeAlly(b.getPlayer('arkpedia'), def, 'op', 5, 5, { dir });
+  const prepared = prepareMuelsyseCore(b, u, { contract });
+  b._setupUnit(u, prepared.kit); prepared.controller.install();
+  const hits = [], attacks = [];
+  b.on('damaged', ctx => { if (ctx.source === u) hits.push({ ...ctx, time: b.time }); });
+  b.on('attack', ctx => { if (ctx.attacker === u) attacks.push({ ...ctx, time: b.time }); });
+  const deploy = () => { u.player.dp = 99; assert.ok(b._deploy(u, { initial: false })); };
+  if (!defer) deploy();
+  return { b, u, d, build, deploy, hits, attacks, ...prepared };
+}
+function enemy(f, { row = 5, col = 6, hp = 1e7, def = 0, fly = false, flags = {} } = {}) {
+  const t = f.b.spawnEnemy('enemy_1007_slime', { pos: [row, col] });
+  Object.assign(t.base, { maxHp: hp, atk: 0, def, res: 0, moveSpeed: 0 });
+  t.markDirty(); void t.s; t.hp = hp; if (fly) t.motion = 'FLY';
+  f.b.addBuff(t, { key: 'fixture:pin', flags: { noMove: true, disarm: true, unblockable: true, ...flags } });
+  f.b._buildEnemyIndex(); return t;
+}
+const validBuild = { elite: 2, level: 90, potential: 1, trust: 0, skillRank: 10, skillId: 'skchr_mlyss_1' };
+
+test('selected promotions preserve uncopied Flowing Shape stats and manual copy skills', () => {
+  for (let elite = 0; elite <= 2; elite++) {
+    const f = make({ elite, skill: elite === 0 ? 1 : 2 });
+    const t = e.tables.tokens.token_10030_mlyss_wtrman, max = t.phases[elite].attributesKeyFrames.at(-1).data;
+    assert.equal(f.record.token.id, 'token_10030_mlyss_wtrman');
+    near(f.record.token.stats.maxHp, max.maxHp); near(f.record.token.stats.atk, max.atk);
+    near(f.record.token.stats.def, max.def); assert.equal(f.record.token.stats.blockCnt, 0);
+    assert.equal(f.record.token.native.deploymentSlotCost, 0);
+    assert.equal(f.record.token.native.limitByHostAttackRange, true);
+    assert.equal(f.record.token.native.chooseFacing, false);
+    assert.equal(f.record.token.skill.skillType, 'MANUAL');
+    assert.equal(f.record.token.skill.prefabId, `sktok_mlyss_wtrman_${elite === 0 ? 1 : 2}`);
+    assert.equal(f.record.token.talents[0].blackboard.find(b => b.key === 'interval').value, [30, 28, 25][elite]);
+    assert.equal(f.record.summonBb.cnt, 1);
+  }
+  const a = make(), z = make({ trust: 100, potential: 6 }), zz = make({ trust: 200, potential: 6 });
+  near(z.u.base.atk - a.u.base.atk, 65);
+  near(z.u.base.def - a.u.base.def, 40);
+  near(z.u.base.cost - a.u.base.cost, -2);
+  near(z.u.base.respawnTime - a.u.base.respawnTime, -4);
+  near(z.record.stats.attackSpeed - a.record.stats.attackSpeed, 0);
+  assert.deepEqual(a.record.token.stats, z.record.token.stats);
+  assert.deepEqual(z.record.stats, zz.record.stats);
+});
+
+test('locked, malformed and module builds fail before the owner is installed', () => {
+  for (const change of [{ elite: -1 }, { elite: 3 }, { level: 0 }, { level: 91 }, { potential: 0 }, { potential: 7 },
+    { trust: -1 }, { trust: 201 }, { trust: 2.5 }, { skillRank: 0 }, { skillRank: 11 }, { skillId: 'unknown' },
+    { elite: 0, level: 50, skillRank: 5 }, { elite: 1, level: 80, skillRank: 8 },
+    { elite: 0, level: 50, skillRank: 4, skillId: 'skchr_mlyss_2' },
+    { elite: 1, level: 80, skillRank: 7, skillId: 'skchr_mlyss_3' }, { module: 'TAC-X' }])
+    assert.throws(() => selectedMuelsyseBuild({ ...validBuild, ...change }), /Muelsyse/);
+  assert.throws(() => make({ contract: { ...CONTRACT } }), /reviewed core contract/);
+  for (const mutate of [d => d.stats.atk++, d => d.skill.bb.cost = 999, d => d.skill.spCost++,
+    d => d.skill.initSp++, d => d.skill.duration++, d => d.skill.spType = 'hurt',
+    d => d.tags.push('fictional'), d => d.rangeGrid = [[0, 99]], d => d.talents[0].bb.cnt = 99])
+    assert.throws(() => make({ mutate }), /Incomplete Muelsyse/);
+  const f = make({ defer: true });
+  assert.throws(() => prepareMuelsyseCore(f.b, f.u, { contract: CONTRACT }), /fresh original owner/);
+});
+
+test('all thirty owner rank selections retain natural SP without activating unfinished skills', () => {
+  for (let skill = 1; skill <= 3; skill++) for (let rank = 1; rank <= 10; rank++) {
+    const f = make({ skill, rank }), s = f.record.source.spData;
+    assert.equal(f.u.skill.sp, s.initSp);
+    advance(f.b, Math.max(0, s.spCost - s.initSp) + 1);
+    near(f.u.skill.sp, s.spCost);
+    assert.equal(f.u.skill.activate('manual'), false); assert.equal(f.u.skill.active, false);
+    assert.equal(f.b.regularSummons?.has(`summon:${ID}`) ?? false, false);
+    assert.equal(f.record.token.skill.skillType, 'MANUAL');
+  }
+});
+
+test('ordinary attack launches at the native event and hits one retained target after flight', () => {
+  const f = make(), a = enemy(f, { def: 50 }), z = enemy(f, { col: 5.8 });
+  until(f, () => f.controller.phase?.kind === 'attack');
+  const p = f.controller.phase, target = p.target;
+  near(p.releaseAt - p.startedAt, .4000000059604645);
+  until(f, () => f.b.projectiles.list.length === 1);
+  const proj = f.b.projectiles.list[0];
+  assert.equal(proj.speed, 7); assert.equal(proj.maxAge, 10); assert.equal(proj.target, target);
+  assert.equal(f.hits.length, 0);
+  f.b.addBuff(f.u, { key: 'fixture:atk', mods: { atkPct: .5 } });
+  until(f, () => f.hits.length === 1);
+  near(f.hits[0].hpLoss, f.u.s.atk - target.s.def);
+  assert.equal(f.hits[0].target, target); assert.equal(f.hits[0].dmg.applyWay, 'ranged');
+  assert.equal(f.hits[0].dmg.isSkill, false); assert.equal(f.hits[0].dmg.isSplash, false);
+  assert.equal(f.hits.some(h => h.target === (target === a ? z : a)), false);
+  assert.equal(f.controller.release(target, {}), false);
+});
+
+test('ground and flying inputs are eligible but sleeping, stealth and camouflage are excluded', () => {
+  for (const fly of [false, true]) {
+    const f = make(), t = enemy(f, { fly });
+    until(f, () => f.hits.length === 1); assert.equal(f.hits[0].target, t);
+  }
+  const f = make(); enemy(f, { flags: { stealth: true } }); enemy(f, { flags: { camou: true } });
+  const sleeping = enemy(f); f.b.applyStatus(sleeping, 'sleep', { duration: 99 });
+  advance(f.b, 4); assert.equal(f.hits.length, 0);
+});
+
+test('four facings retain native model clips and rotated attack range', () => {
+  for (const [dir, row, col, face] of [['RIGHT', 5, 6, 'Front'], ['UP', 6, 5, 'Back'],
+    ['LEFT', 5, 4, 'Back'], ['DOWN', 4, 5, 'Front']]) {
+    const f = make({ dir }), t = enemy(f, { row, col });
+    until(f, () => f.hits.length === 1);
+    assert.equal(f.hits[0].target, t); assert.equal(f.controller.model(), e.models[ID][face]);
+    assert.equal(f.u.mem.regularVisualDirection, face === 'Front' ? 'RIGHT' : 'UP');
+    assert.equal(f.u.mem.regularDeathVisual?.clip, face === 'Front' ? 'Die' : undefined);
+  }
+});
+
+test('fast and slowed owner clocks respect the original animation speed cap', () => {
+  for (const [aspd, speed] of [[200, 1], [-50, .5]]) {
+    const f = make(); enemy(f);
+    f.b.addBuff(f.u, { key: 'fixture:speed', mods: { aspd } });
+    until(f, () => f.controller.phase?.kind === 'attack');
+    const p = f.controller.phase;
+    near(f.u.mem.regularFormVisual.speed, speed);
+    near(p.releaseAt - p.startedAt, .4000000059604645 / speed);
+    assert.ok(p.readyAt - p.startedAt >= 1 / speed - 1e-9);
+    until(f, () => f.hits.length === 1);
+  }
+});
+
+test('trait evaluates the current own-token blocker at impact, without pretending copied-token lifecycle is implemented', () => {
+  for (const kind of ['own', 'otherOwner', 'wrongId', 'gone', 'none']) {
+    const f = make(), t = enemy(f);
+    until(f, () => f.b.projectiles.list.length === 1);
+    // A source-selected token fixture isolates the owner's blocking predicate;
+    // it does not implement or approve the Flowing Shape copy/split/recovery lifecycle.
+    const token = f.b.spawnToken(f.u, 'token_10030_mlyss_wtrman', 5, 6,
+      { def: f.record.token, stats: { blockCnt: 1 }, kit: { trait: { noAttack: true }, skill: null } });
+    assert.ok(token); token.deploymentSlotCost = 0;
+    if (kind === 'otherOwner') token.ownerUnit = f.b.allyUnits.find(u => u !== f.u && u !== token);
+    if (kind === 'wrongId') token.defId = 'unrelated';
+    if (kind === 'gone') token.deployed = false;
+    if (kind !== 'none') {
+      f.b.removeBuff(t, 'fixture:pin');
+      f.b.addBuff(t, { key: 'fixture:pin', flags: { noMove: true, disarm: true } });
+    }
+    until(f, () => f.hits.length === 1);
+    near(f.hits[0].hpLoss, f.u.s.atk * (kind === 'own' ? 1.5 : 1));
+  }
+});
+
+test('born projectile survives owner retreat using its final source life, not a later build', () => {
+  const f = make(), t = enemy(f, { col: 6.9 });
+  until(f, () => f.b.projectiles.list.length === 1);
+  const atk = f.u.s.atk;
+  f.b.retreat(f.u);
+  assert.equal(f.controller.stopped, true);
+  f.u.deploySeq++;
+  f.u.base.atk *= 10; f.u.markDirty();
+  until(f, () => f.hits.length === 1);
+  near(f.hits[0].hpLoss, atk); assert.equal(f.hits[0].target, t);
+});
+
+test('fizzled target life cannot hit its replacement and retained source records expire', () => {
+  const f = make(), t = enemy(f);
+  until(f, () => f.b.projectiles.list.length === 1);
+  t.deploySeq++;
+  f.b.addBuff(f.u, { key: 'fixture:disarm', flags: { disarm: true } });
+  advance(f.b, 11);
+  assert.equal(f.hits.length, 0); assert.equal(f.controller.flights.size, 0);
+});
+
+test('impact rechecks target sleep, stealth and source-token blocking after launch', () => {
+  for (const change of ['sleep', 'stealth', 'tokenRetreat']) {
+    const f = make(), t = enemy(f);
+    until(f, () => f.b.projectiles.list.length === 1);
+    if (change === 'sleep') f.b.applyStatus(t, 'sleep', { duration: 99 });
+    else if (change === 'stealth') f.b.addBuff(t, { key: 'fixture:hide', flags: { stealth: true } });
+    else {
+      const token = f.b.spawnToken(f.u, 'token_10030_mlyss_wtrman', 5, 6,
+        { def: f.record.token, stats: { blockCnt: 1 }, kit: { trait: { noAttack: true }, skill: null } });
+      assert.ok(token); f.b.retreat(token, { permanent: true });
+    }
+    f.b.addBuff(f.u, { key: 'fixture:disarm', flags: { disarm: true } });
+    advance(f.b, .5);
+    if (change === 'tokenRetreat') { assert.equal(f.hits.length, 1); near(f.hits[0].hpLoss, f.u.s.atk); }
+    else assert.equal(f.hits.length, 0);
+  }
+});
+
+test('pre-attack reentrant owner retirement cannot launch a late projectile', () => {
+  const f = make(); enemy(f);
+  f.b.on('beforeAttack', ({ attacker }) => { if (attacker === f.u) f.b.retreat(f.u); });
+  advance(f.b, 3);
+  assert.equal(f.hits.length, 0); assert.equal(f.b.projectiles.list.length, 0);
+  assert.equal(f.controller.stopped, true);
+});
+
+test('stale target life is never redirected to a neighbouring enemy', () => {
+  const f = make(), t = enemy(f); until(f, () => f.controller.phase?.kind === 'attack');
+  const p = f.controller.phase; t.deploySeq++;
+  enemy(f, { col: 5.8 });
+  while (f.b.time < p.releaseAt + .1) advance(f.b, f.b.dt);
+  assert.equal(f.hits.length, 0);
+});
+
+test('transient stun invalidates the pending owner attack even after it ends', () => {
+  const f = make(); enemy(f); until(f, () => f.controller.phase?.kind === 'attack');
+  const p = f.controller.phase;
+  f.b.applyStatus(f.u, 'stun', { duration: .05 }); advance(f.b, .1);
+  assert.notEqual(f.controller.phase, p);
+  assert.equal(f.hits.length, 0);
+  until(f, () => f.hits.length === 1);
+});
+
+test('disarm and disappearance cannot release a pending attack', () => {
+  for (const flag of ['disarm', 'hidden']) {
+    const f = make(); enemy(f); until(f, () => f.controller.phase?.kind === 'attack');
+    const p = f.controller.phase;
+    if (flag === 'hidden') f.u.hidden = true;
+    else f.b.addBuff(f.u, { key: 'fixture:disarm', flags: { disarm: true } });
+    while (f.b.time < p.releaseAt + .1) advance(f.b, f.b.dt);
+    assert.equal(f.hits.length, 0);
+    assert.equal(f.controller.stopped, false);
+    f.u.hidden = false; f.b.removeBuff(f.u, 'fixture:disarm');
+    until(f, () => f.hits.length === 1);
+  }
+});
+
+test('unsolicited force attacks and wrong target identities cannot produce damage', () => {
+  const f = make(), t = enemy(f);
+  f.b.forceAttack(f.u, [t]); assert.equal(f.hits.length, 0);
+  until(f, () => f.controller.phase?.kind === 'attack');
+  const z = enemy(f, { col: 5.8 }); f.b.forceAttack(f.u, [z]);
+  assert.equal(f.hits.length, 0);
+  until(f, () => f.hits.length === 1); assert.equal(f.hits[0].target, t);
+});
+
+test('owner removal and battle end retire clocks and hooks without future hits', () => {
+  for (const end of ['retreat', 'death', 'battleEnd']) {
+    const f = make(); enemy(f); until(f, () => f.controller.phase?.kind === 'attack');
+    if (end === 'retreat') f.b.retreat(f.u);
+    else if (end === 'death') f.b.kill(f.u);
+    else f.b.emit('battleEnd', {});
+    assert.equal(f.controller.stopped, true); assert.equal(f.controller.phase, null);
+    assert.deepEqual(f.controller.handles, []); assert.equal(f.u.mem.regularFormVisual, null);
+    advance(f.b, 3); assert.equal(f.hits.length, 0);
+  }
+});
+
+test('controller cannot duplicate hooks or reinstall after its source life ends', () => {
+  const f = make(), count = f.controller.handles.length;
+  assert.throws(() => f.controller.install(), /cannot be installed/);
+  assert.equal(f.controller.handles.length, count);
+  enemy(f); until(f, () => f.hits.length === 1);
+  f.b.retreat(f.u);
+  assert.throws(() => f.controller.install(), /after retirement/);
+  assert.deepEqual(f.controller.handles, []);
+});
