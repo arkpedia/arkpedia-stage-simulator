@@ -38,7 +38,7 @@ export function regularSummonCards(battle) {
   return [...(battle.regularSummons?.values() ?? [])].map(state => ({
     ...state, available: live(state.owner) && state.stock > 0
       && (!state.config.requiresActiveSkill || state.owner.skill.active),
-    deployed: ownTokens(battle, state.owner).length,
+    deployed: state.deck?.own ? state.deck.own().length : ownTokens(battle, state.owner).length,
     cost: state.record.stats.cost,
   }));
 }
@@ -151,7 +151,8 @@ export function deployRegularSummon(battle, key, row, col, dir = 'RIGHT') {
 export function selectedRegularSummon(battle, key) {
   if (key?.startsWith('summon:')) return cardState(battle, key) ?? null;
   if (!key?.startsWith('token:')) return null;
-  const unit = battle.allyUnits.find(token => summonUnitId(token) === key && live(token));
+  const unit = battle.units.find(token => token.mem.regularSummonCard
+    && summonUnitId(token) === key && live(token));
   const state = unit && cardState(battle, unit.mem.regularSummonCard);
   return state ? { ...state, unit } : null;
 }
@@ -160,6 +161,7 @@ export function retreatRegularSummon(battle, key) {
   if (!canDeployInViewport(battle.viewport) || battle.finished) throw Error('Battle workspace is inactive.');
   const state = selectedRegularSummon(battle, key), token = state?.unit;
   if (!live(token)) throw Error('Summon is not deployed.');
+  if (state.deck?.retreat) { state.deck.retreat(token); return; }
   if (token.mem.metalCrabRest) { token.mem.metalCrabRest(); return; }
   battle.addDp(token.ownerId, Math.floor(state.record.stats.cost * state.config.refundRatio));
   battle.retreat(token, { permanent: true });

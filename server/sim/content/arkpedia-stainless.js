@@ -168,21 +168,27 @@ export class StainlessCoreController {
   }
   install() {
     const { b, u } = this;
+    this.devices?.install();
     this.handles = [b.on('deploy', ({ unit, move }) => {
       if (unit === u && !move) {
         this.seq = u.deploySeq;
         this.phase = { kind: 'born', readyAt: b.time + this.model().durations.Start };
         this.visual('Start');
+        this.devices?.born();
       }
     }, { owner: u }), b.on('tick', () => {
       if (this.stopped || b.finished || this.seq !== null && !this.valid()) { this.stop(); return; }
       this.tickAttack();
-    }, { owner: u }), b.on('death', ({ unit }) => { if (unit === u) this.stop(); }, { owner: u }),
+      this.devices?.tick();
+    }, { owner: u }), b.on('death', ({ unit }) => {
+      if (unit === u) this.stop(); else this.devices?.removed(unit);
+    }, { owner: u }),
     b.on('battleEnd', () => this.stop())];
   }
   stop() {
     if (this.stopped) return;
     this.stopped = true; this.phase = null; this.accepting = false;
+    this.devices?.stop();
     this.u.mem.regularFormVisual = null; delete this.u.mem.regularVisualDirection;
     for (const h of this.handles) this.b.off(h); this.handles = [];
   }

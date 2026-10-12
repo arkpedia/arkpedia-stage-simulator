@@ -311,7 +311,9 @@ export function dealDamage(battle, source, target, dmgIn) {
   if (battle._hooks.damageFinal) {
     const ctx = { source: hs, target, dmg, credit: source, amount: final };
     battle.emit('damageFinal', ctx);
-    if (dmg.cancel || !target.alive || !target.deployed) return 0;
+    // Recipient cancellation does not poison a shared DamageInfo used for
+    // subsequent targets of the same area attack.
+    if (ctx.cancel || dmg.cancel || !target.alive || !target.deployed) return 0;
     final = Number.isFinite(ctx.amount) ? Math.max(0, ctx.amount) : 0;
   }
   // 限伤: a leader's hit of ≥ BOSS_HIT_LIMIT in a boss / hidden battle is cancelled before it reaches shields / HP — what
