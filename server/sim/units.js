@@ -164,6 +164,7 @@ export class Unit {
       spCostFlat: a('spCostFlat'),
       redeployMul: m('redeployMul'),
       hpRegen: fin((b.hpRecoveryPerSec + a('hpRegen') + a('hpRegenRatio') * maxHp) * m('hpRegenMul'), 0),
+      epRegen: fin(a('epRegen'), 0), // EP_RECOVERY_PER_SEC; independent of HP/healing modifiers
       shield,
       flags: flags || EMPTY,
     };

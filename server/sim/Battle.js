@@ -1395,6 +1395,10 @@ export class Battle {
           }
         }
       }
+      // EP_RECOVERY_PER_SEC is a recovery attribute, not a Medic heal output.
+      // The common gauge path retains independent gauges and burst locks.
+      if (u.alive && u.deployed && u.s.epRegen > 0)
+        this.reduceElement(u, u.s.epRegen * dt);
     }
   }
 
