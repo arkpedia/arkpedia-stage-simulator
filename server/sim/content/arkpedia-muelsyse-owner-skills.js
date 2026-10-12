@@ -76,6 +76,21 @@ export class MuelsyseOwnerSkills {
     this.parents.delete(s); this.b.removeBuff(s.unit, p.key);
   }
   clearParents() { for (const s of [...this.parents.keys()]) this.tokenRemoved(s); }
+  attachToken(s) {
+    const { core, u, b, record: r } = this;
+    if (!this.active || !core.devices.valid(s) || ![1, 2, 3].includes(s.mode) || this.parents.has(s)) return;
+    const p = { seq: s.seq, generation: s.generation, key: `muelsyse:owner-skill:${this.castSeq}` };
+    this.parents.set(s, p);
+    s.unit.skill.end('owner-skill');
+    if (!this.active || !core.devices.valid(s) || s.generation !== p.generation) {
+      this.tokenRemoved(s); return;
+    }
+    const buff = b.addBuff(s.unit, { key: p.key, source: u,
+      mods: { atkPct: r.bb.atk, ...(r.index === 0 ? { aspd: r.bb.attack_speed } : {}) } });
+    if (!buff || !this.active || !core.devices.valid(s) || this.parents.get(s) !== p) {
+      this.tokenRemoved(s); if (buff) b.removeBuff(s.unit, buff);
+    }
+  }
   start() {
     const { core, u, b, record: r } = this;
     this.clearParents(); this.castSeq++; this.clock = 0; this.pulses = 0;
@@ -84,18 +99,7 @@ export class MuelsyseOwnerSkills {
       if (!this.active) break;
       // Native shared holder rejects mode zero. Warming/reborn relay and
       // form-specific holders have separate unimplemented dispatch contracts.
-      if (!core.devices.valid(s) || ![1, 2, 3].includes(s.mode)) continue;
-      const p = { seq: s.seq, generation: s.generation, key: `muelsyse:owner-skill:${this.castSeq}` };
-      this.parents.set(s, p);
-      s.unit.skill.end('owner-skill');
-      if (!this.active || !core.devices.valid(s) || s.generation !== p.generation) {
-        this.tokenRemoved(s); continue;
-      }
-      const buff = b.addBuff(s.unit, { key: p.key, source: u,
-        mods: { atkPct: r.bb.atk, ...(r.index === 0 ? { aspd: r.bb.attack_speed } : {}) } });
-      if (!buff || !this.active || !core.devices.valid(s) || this.parents.get(s) !== p) {
-        this.tokenRemoved(s); if (buff) b.removeBuff(s.unit, buff);
-      }
+      this.attachToken(s);
     }
     if (!this.active) return;
     if (r.index) b.addDp(u.ownerId, r.bb.cost);
