@@ -15,6 +15,7 @@ export class ProjectileSystem {
     /** @type {object[]} */
     this.list = [];
     this.speedAuras = new Set();
+    this.interceptors = new Set();
     this.arriving = [];
   }
 
@@ -39,6 +40,30 @@ export class ProjectileSystem {
         scale = Math.min(scale, aura.scale);
     }
     return scale;
+  }
+
+  /** Opt-in moving projectile interception, before collision/hit dispatch. */
+  registerInterceptor({ owner, intercept }) {
+    if (!owner || typeof intercept !== 'function') throw new TypeError('Invalid projectile interceptor');
+    const entry = { owner, deploySeq: owner.deploySeq, intercept };
+    this.interceptors.add(entry);
+    return { cancel: () => this.interceptors.delete(entry) };
+  }
+
+  intercept(projectile, previous) {
+    for (const entry of this.interceptors) {
+      const u = entry.owner;
+      if (!u.alive || !u.deployed || u.deploySeq !== entry.deploySeq) {
+        this.interceptors.delete(entry); continue;
+      }
+      if (u.hidden) continue;
+      if (this.battle._safe(() => entry.intercept({ projectile, from: previous,
+        to: { x: projectile.x, y: projectile.y } }), 'projectile.intercept', u)) {
+        projectile.removed = true; return true;
+      }
+      if (projectile.removed) return true;
+    }
+    return false;
   }
 
   /** Remove eligible existing projectiles without running their hit callback. */
@@ -91,6 +116,7 @@ export class ProjectileSystem {
     const keep = [];
     const arrived = [];
     for (const p of this.list) {
+      if (p.removed) continue;
       const previous = { x: p.x, y: p.y, age: p.age };
       p.age += dt;
       if (p.target) {
@@ -109,6 +135,7 @@ export class ProjectileSystem {
         const progress = Math.min(1, p.age / p.flightTime);
         p.x = p.fromX + (p.tx - p.fromX) * progress;
         p.y = p.fromY + (p.ty - p.fromY) * progress;
+        if (this.intercept(p, previous)) continue;
         if (progress === 1 || p.age >= p.maxAge) arrived.push(p);
         else keep.push(p);
         continue;
@@ -122,6 +149,7 @@ export class ProjectileSystem {
         if (p.expireInPlace && p.age >= p.maxAge - 1e-9) arrived.push(p);
         else keep.push(p);
       }
+      if (this.intercept(p, previous)) continue;
       if (p.onMove) this.battle._safe(() => p.onMove({ battle: this.battle,
         projectile: p, previous, x: p.x, y: p.y }), 'projectile.onMove', p.source);
     }
@@ -135,5 +163,5 @@ export class ProjectileSystem {
     this.arriving = [];
   }
 
-  clear() { this.list = []; this.arriving = []; this.speedAuras.clear(); }
+  clear() { this.list = []; this.arriving = []; this.speedAuras.clear(); this.interceptors.clear(); }
 }
