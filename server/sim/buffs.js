@@ -13,7 +13,7 @@ import { COLD_ASPD, COLD_FREEZE_DURATION, FREEZE_RES_DOWN, RESIST_DEFAULT } from
 export const ADD_KEYS = Object.freeze([
   'atkFlat', 'atkFinalFlat', 'atkPct', 'defFlat', 'defFinalFlat', 'defPct', 'hpFlat', 'hpFinalFlat', 'hpPct', 'resFlat', 'resPct', 'aspd', 'batFlat', 'batPct', 'blockCnt',
   'rangeExtend', 'defIgnoreFlat', 'defIgnorePct', 'resIgnoreFlat', 'resIgnorePct', 'dodgePhys', 'dodgeArts',
-  'spRecoveryFlat', 'maxTargets', 'taunt', 'hpRegen', 'hpRegenRatio', 'spCostFlat', 'moveFlat', 'movePct', 'massFlat',
+  'spRecoveryFlat', 'maxTargets', 'taunt', 'hpRegen', 'hpRegenRatio', 'epRegen', 'spCostFlat', 'moveFlat', 'movePct', 'massFlat',
   'flatDamageResistance', 'damageHpFloorRatio', 'hitRatePhys', 'hitRateArts',
 ]);
 /** Multiplicative mod keys (product; ^ stacks). */
