@@ -346,6 +346,7 @@ a {
 .command .meter { width: 100%; height: 4px; margin-top: 0; border-radius: 0; background: #0008; }
 .command .meter.hp { position: absolute; width: calc(100% + 44px); left: -22px; bottom: 29px; }
 .command .meter.hp span { background: #00acec; }
+.command-copy .meter.hp { position: static; width: 100%; margin: 3px 0 8px; }
 .range-preview { position: absolute; top: 48px; left: 120px; display: grid; gap: 7px; justify-items: center; padding: 9px 10px; background: #0009; }
 .range-preview small { color: #eee; font-size: 11px; }
 .range-grid { display: grid; grid-auto-rows: 8px; gap: 2px; }
@@ -380,6 +381,7 @@ a {
 #skill.ready { background: #81b719; border-color: #d1f283; box-shadow: 0 0 0 3px #89b63166; }
 #skill.ready img { opacity: .8; }
 #skill:disabled { opacity: .7; }
+.copy-symbol { display: grid; place-items: center; height: 100%; font: 700 19px Rajdhani, sans-serif; letter-spacing: .05em; }
 .field-sp { position: absolute; inset: auto -1px -21px; background: #161b21ec; padding: 2px; color: #fff; font: 600 13px Rajdhani,sans-serif; }
 .deployment-wrap { position: absolute; z-index: 8; bottom: max(6px,env(safe-area-inset-bottom)); left: max(12px,env(safe-area-inset-left)); right: max(12px,env(safe-area-inset-right)); display: grid; grid-template-columns: 44px minmax(0,1fr) 44px; gap: 8px; align-items: stretch; }
 .deployment-wrap > button { padding: 0; border: 1px solid #ffffff55; border-radius: 0; background: #181d25bf; font-size: 30px; }
@@ -393,6 +395,9 @@ a {
 .deployment button.active { outline: 2px solid #fff; outline-offset: -2px; }
 .deployment button.unavailable .bench-portrait { filter: brightness(.42); }
 .deployment button.active .bench-portrait { filter: brightness(.95); }
+.deployment button.copy-eligible { outline: 2px solid #bbde64; outline-offset: -2px; cursor: pointer; }
+.deployment button.copy-eligible .cost { background: #304a17ed; color: #e8ffb5; font-size: 18px; }
+.deployment button.copy-unavailable .bench-portrait { filter: brightness(.3); }
 .bench-portrait { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .bench-class { position: absolute; top: 0; left: 0; width: 29px; height: 29px; padding: 4px; background: #1d242bd9; object-fit: contain; }
 .deployment .cost { position: absolute; top: 0; right: 0; padding: 0 5px; background: #111820cc; font: 500 24px Rajdhani,sans-serif; color: #fff; }

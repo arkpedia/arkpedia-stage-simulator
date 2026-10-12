@@ -15,6 +15,7 @@ import { swipeFacing } from "/shared/arkpedia/placement.js";
 import { skillHud, skillSourceFor, ammunitionHud } from "/shared/arkpedia/skill-hud.js";
 import { battleHud } from "/shared/arkpedia/battle-hud.js";
 import { requiresLandscape } from "/shared/arkpedia/viewport.js";
+import { flowingShapeDeck, FlowingShapeCopyInteraction } from './muelsyse-copy.js';
 import { summonUnitId } from "/shared/arkpedia/summons.js";
 import { regularSummonCards, selectedRegularSummon, summonPlacementError,
   deployRegularSummon, retreatRegularSummon } from "/sim/content/arkpedia-summons.js";
@@ -46,6 +47,7 @@ let loading = false,
   showRoutes = false,
   landscapeRequired = false;
 let operatorTab = "skill";
+let copyFlow = null;
 const response = await fetch("/data/arkpedia-mvp.json");
 if (!response.ok) throw Error("Stage data unavailable");
 const data = await response.json();
@@ -469,6 +471,7 @@ async function exit() {
 }
 function pick(row, col) {
   if (!battle || battle.finished || landscapeRequired) return;
+  if (copyFlow?.active) return;
   battleError = "";
   // Owned devices can deliberately use the enemy targeting side (Stainless).
   const selectable = battle.units.filter(u => u.side === 'ally' || u.mem.regularSummonCard);
@@ -513,13 +516,18 @@ function summonDetails(entry) {
     ? `<p class="sp-readout">Reinforcement recovering · ${Math.max(0,Math.ceil(unit.mem.crabReadyAt-battle.time))}s</p>`
     : unit && [0, 'warming'].includes(unit.mem.mitmMode)
       ? `<p class="sp-readout">Cherry-3 recovering · ${Math.max(0,Math.ceil(unit.mem.mitmReadyAt-battle.time))}s</p>` : '';
+  const copyDeck = flowingShapeDeck(entry), copyHud = copyDeck && unit ? skillHud(unit.skill) : null;
+  const copyDetails = copyHud ? `<section class="operator-skill"><div class="skill-copy"><h3>Copy an operator</h3>
+    <div class="skill-tags"><span class="auto">Auto recovery</span><span class="manual">Manual activation</span></div>
+    <p class="sp-readout">${escape(copyHud.text)}</p><div class="meter ${copyHud.state}"><span style="width:${copyHud.fraction * 100}%"></span></div>
+    <p class="skill-description">Choose an undeployed squad operator, then choose Flowing Shape’s facing. The donor stays in your squad and costs no DP.</p></div></section>` : '';
   return `<p class="operator-build">${escape(data.operators[entry.ownerId].name)} · E${entry.record.arkpedia.elite} · Lv ${entry.record.arkpedia.level}</p>
     <dl class="operator-stats">${numbers.map(([label, value]) => `<div><dt>${label}</dt><dd>${Math.round(value)}</dd></div>`).join('')}</dl>
     <div class="hp-readout"><span>HP</span><strong>${Math.min(Math.ceil(hp), Math.round(maxHp))} / ${Math.round(maxHp)}</strong></div>
     <div class="meter hp"><span style="width:${Math.min(1, Math.max(0, hp / maxHp)) * 100}%"></span></div>
     <p class="sp-readout">${entry.stock} remaining · ${raw.cost} DP · ${slots} deployment slot${slots === 1 ? '' : 's'}</p>
     ${ammunition ? `<p class="sp-readout">${escape(ammunition.text)} collected</p>` : ''}${recovery}${lifetime ? `<p class="sp-readout">${escape(lifetime.text)}</p><div class="meter active"><span style="width:${lifetime.fraction * 100}%"></span></div>` : ''}<p class="skill-description">${entry.ownerId === 'char_003_kalts' ? 'Can be healed only by Kal’tsit. ' : entry.config.healFree ? 'Cannot receive ordinary healing. ' : ''}${entry.config.tacticalPoint ? 'Its tactical point stays in place while the reinforcement recovers. ' : ''}Leaves the field when its summoner is removed.</p>
-    ${unit && skillSourceFor(unit) !== unit
+    ${copyDeck ? copyDetails : unit && skillSourceFor(unit) !== unit
       ? operatorSkillDetails(battle.bench[entry.ownerId].build, skillSourceFor(unit))
       : unit && !unit.skill.noSkill && entry.record.skill ? operatorSkillDetails(battle.bench[entry.ownerId].build, unit,
         data.tokens[entry.record.id].skills.find(s => s.id === entry.record.skill.skillId)
@@ -587,6 +595,11 @@ function updateShelfTrack() {
 }
 function drawHud() {
   if (!workspace || !battle) return;
+  if (copyFlow && !copyFlow.active) {
+    const old = selected;
+    cancelPlacement();
+    if (selectedEntry(old)?.unit) selected = old;
+  }
   const reading = battleHud(battle, paused);
   for (const [id, value] of Object.entries({
     "enemy-count": reading.enemies,
@@ -622,6 +635,11 @@ function drawHud() {
           button.suppressClick = false;
           return;
         }
+        if (copyFlow?.active) {
+          try { pending = copyFlow.choose(button.dataset.id); battleError = ''; }
+          catch (e) { battleError = e.message; }
+          drawHud(); return;
+        }
         selected = button.dataset.id;
         pending = null;
         battleError = "";
@@ -631,6 +649,7 @@ function drawHud() {
         // A touch drag may prevent its compatibility click entirely. Clear
         // that old suppression when a new gesture begins, including live ops.
         button.suppressClick = false;
+        if (copyFlow?.active) return;
         if (
           e.button !== 0 ||
           battle.finished ||
@@ -695,7 +714,7 @@ function drawHud() {
       continue;
     }
     const alive = b.unit?.alive,
-      cool = Math.max(0, Math.ceil(b.readyAt - battle.time));
+      cool = Number.isFinite(b.readyAt) ? Math.max(0, Math.ceil(b.readyAt - battle.time)) : 0;
     const cost = b.kind === 'summon'
       ? !b.owner.alive || !b.owner.deployed ? 'Summoner absent'
         : b.stock <= 0 ? b.config.tacticalPoint ? 'Tactical point set' : 'None remaining'
@@ -709,11 +728,22 @@ function drawHud() {
     button.setAttribute("aria-pressed", String(selected === id));
     button.setAttribute("aria-label", `${b.name}, ${cost}${id === supportId ? ', Support' : ''}`);
     button.title = `${b.name}${id === supportId ? ' · Support' : ''}`;
-    button.querySelector(".cost").textContent = alive ? 'IN' : cool ? cool + 's' : b.kind === 'summon' ? b.record.stats.cost : battle.cost(id);
+    button.querySelector(".cost").textContent = alive ? 'IN'
+      : cool ? cool + 's'
+      : b.kind === 'summon' && b.stock <= 0 ? b.config.tacticalPoint ? 'SET' : '—'
+      : b.kind === 'summon' ? b.record.stats.cost : battle.cost(id);
     const rarity = b.kind === 'operator' ? data.operators[id].rarity : 1;
     button.dataset.rarity = rarity;
     button.classList.toggle('unavailable', !!alive || cool > 0 || (b.kind === 'summon' ? b.record.stats.cost : battle.cost(id)) > battle.dp || b.kind === 'summon' && (!b.owner.alive || b.stock <= 0));
     button.classList.toggle('deployed', !!alive);
+    const copying = !!copyFlow?.active, eligible = copying && copyFlow.donorIds.includes(id);
+    button.classList.toggle('copy-eligible', eligible);
+    button.classList.toggle('copy-unavailable', copying && !eligible);
+    if (copying) {
+      button.setAttribute('aria-label', `${b.name}, ${eligible ? 'Copy this operator' : 'Unavailable for copying'}${id === supportId ? ', Support' : ''}`);
+      button.querySelector('.cost').textContent = eligible ? 'COPY' : '—';
+      button.classList.toggle('unavailable', !eligible);
+    }
   }
   updateShelfTrack();
   const b = selectedEntry(), unit = b?.unit;
@@ -727,7 +757,7 @@ function drawHud() {
   else if (b) for (let r = 0; r < data.stage.geometry.rows; r++)
     for (let c = 0; c < data.stage.geometry.cols; c++)
       if (!placementError(selected, r, c)) highlights.push(r * 21 + c);
-  field.hidden = !unit || battle.finished;
+  field.hidden = !unit || battle.finished || !!pending;
   if (b) {
     const skillUnit = skillSourceFor(unit);
     const hud = skillUnit ? skillHud(skillUnit.skill) : null;
@@ -771,7 +801,12 @@ function drawHud() {
         selected = null; drawHud();
       });
       field.querySelector('#skill')?.addEventListener('click', () => {
-        battle.activateOperator(skillUnit === unit && b.kind === 'token' ? summonUnitId(unit) : skillUnit.defId);
+        try {
+          if (flowingShapeDeck(b) && skillUnit === unit) {
+            if (copyFlow?.active) cancelPlacement();
+            else { copyFlow = FlowingShapeCopyInteraction.open(b); pending = null; }
+          } else battle.activateOperator(skillUnit === unit && b.kind === 'token' ? summonUnitId(unit) : skillUnit.defId);
+        } catch (e) { battleError = e.message; }
         drawHud();
       });
     }
@@ -785,16 +820,25 @@ function drawHud() {
     }
     const skillButton = field.querySelector('#skill');
     if (skillButton) {
-      skillButton.disabled = !canActivate;
+      const copySkill = !!flowingShapeDeck(b) && skillUnit === unit;
+      skillButton.disabled = !canActivate && !(copySkill && copyFlow?.active);
       skillButton.classList.toggle('ready', !!hud?.canActivate);
-      const label = hud?.canCancel ? 'Stop skill' : hud?.canActivate ? 'Skill ready · Activate' : hud?.text ?? 'Skill unavailable';
+      const label = copySkill && copyFlow?.active ? 'Cancel copy selection' : copySkill && hud?.canActivate
+        ? 'Copy an undeployed squad operator' : hud?.canCancel ? 'Stop skill' : hud?.canActivate ? 'Skill ready · Activate' : hud?.text ?? 'Skill unavailable';
       skillButton.setAttribute('aria-label', label); skillButton.title = label;
+      if (copySkill) {
+        skillButton.querySelector('img')?.remove();
+        if (!skillButton.querySelector('.copy-symbol')) {
+          const symbol = document.createElement('span'); symbol.className = 'copy-symbol';
+          symbol.textContent = 'COPY'; symbol.setAttribute('aria-hidden', 'true'); skillButton.prepend(symbol);
+        }
+      }
       skillButton.querySelector('.field-sp').textContent = hud?.canActivate ? 'READY' : hud?.text.match(/^\d+ \/ \d+ SP/)?.[0] ?? (hud?.state === 'overloaded' ? 'OVERLOAD' : hud?.state === 'active' ? 'ACTIVE' : 'PASSIVE');
     }
   }
   const hover = dragging?.over ? { ...dragging.over, dir: "RIGHT" } : null;
   const preview = pending || hover;
-  const range = unit
+  const range = pending?.kind === 'copy' ? absoluteRangeKeys(copyFlow?.rangeGrid ?? [], pending.row, pending.col, pending.dir ?? 'RIGHT') : unit
     ? highlights
     : preview?.dir
       ? absoluteRangeKeys(
@@ -808,13 +852,15 @@ function drawHud() {
     available: b && !unit && !pending ? highlights : [],
     range,
     chosen: preview,
-    operator: preview ? b.record.id ?? selected : null,
+    operator: preview && pending?.kind !== 'copy' ? b.record.id ?? selected : null,
     routes: showRoutes,
   });
   layoutFacing();
   workspace.querySelector("#battle-message").textContent =
     battleError ||
-    (pending ? "Drag from the direction picker's centre, then release to deploy · Escape: cancel"
+    (pending?.kind === 'copy' ? 'Choose the copy’s facing, then release to confirm · Escape: cancel'
+      : copyFlow?.active ? 'Choose an undeployed squad operator to copy · Escape: cancel'
+      : pending ? "Drag from the direction picker's centre, then release to deploy · Escape: cancel"
       : selected && !unit ? b?.kind === 'summon' && !b.config.chooseFacing
         ? 'Drag the summon onto a valid tile, then release to deploy · Escape: cancel'
         : "Drag onto a valid tile, or click a tile to choose facing · Escape: cancel"
@@ -830,6 +876,8 @@ function drawHud() {
   }
 }
 function cancelPlacement() {
+  copyFlow?.cancel();
+  copyFlow = null;
   const gesture = dragging;
   dragging = null;
   if (gesture?.button) {
@@ -863,7 +911,10 @@ function showDragGhost(x, y) {
 function confirmFacing(dir) {
   if (!pending || landscapeRequired) return;
   try {
-    if (selectedEntry()?.kind === 'summon') selected = summonUnitId(deployRegularSummon(battle, selected, pending.row, pending.col, dir));
+    if (pending.kind === 'copy') {
+      if (!copyFlow?.confirm(dir)) throw Error('Copy selection was interrupted.');
+      copyFlow = null;
+    } else if (selectedEntry()?.kind === 'summon') selected = summonUnitId(deployRegularSummon(battle, selected, pending.row, pending.col, dir));
     else battle.deployOperator(selected, pending.row, pending.col, dir);
     pending = null;
     battleError = "";
@@ -877,6 +928,10 @@ function layoutFacing() {
   updateShelfTrack();
   const picker = workspace.querySelector('.facing-picker');
   picker.hidden = !pending || battle.finished;
+  picker.querySelector('.facing-handle').setAttribute('aria-label', pending?.kind === 'copy'
+    ? 'Drag from here to choose the copy’s direction' : 'Drag from here to choose deployment direction');
+  for (const button of picker.querySelectorAll('[data-facing]')) button.setAttribute('aria-label',
+    `${pending?.kind === 'copy' ? 'Copy' : 'Deploy'} facing ${button.dataset.facing.toLowerCase()}`);
   const cancel = workspace.querySelector('#facing-cancel'), hint = workspace.querySelector('#aim-hint');
   cancel.hidden = !pending || battle.finished;
   hint.hidden = !aimPointer;
