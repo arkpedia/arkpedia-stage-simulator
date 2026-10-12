@@ -129,6 +129,7 @@ import { customizeFirewatchKit, installFirewatch } from './content/arkpedia-fire
 import { customizeSurferKit, installSurfer } from './content/arkpedia-surfer.js';
 import { customizeMelaniteKit, installMelanite } from './content/arkpedia-melanite.js';
 import { customizeAshKit, installAsh, adjustAshCost } from './content/arkpedia-ash.js';
+import { adjustMuelsyseSquadCost } from './content/arkpedia-muelsyse-squad.js';
 import { customizeChenKit, installChen } from './content/arkpedia-chen.js';
 import { customizeVulpisKit, installVulpis } from './content/arkpedia-vulpis.js';
 import { customizeSagaKit, installSaga } from './content/arkpedia-saga.js';
@@ -368,7 +369,8 @@ export class StandardBattle extends Battle {
     const ordinary = Math.floor(this.data.getChess(id).stats.cost
       * Math.min(2, 1 + entry.deployments * 0.5));
     const vanguard = adjustFiveStarVanguardSecondCost(this, id, ordinary);
-    return adjustInesCost(this, id, adjustAshCost(this, id, adjustFangFireSharpenedCost(this, id, adjustSaileachCost(this, id, adjustJieyunCost(this, id, vanguard)))));
+    const discounted = adjustInesCost(this, id, adjustAshCost(this, id, adjustFangFireSharpenedCost(this, id, adjustSaileachCost(this, id, adjustJieyunCost(this, id, vanguard)))));
+    return adjustMuelsyseSquadCost(this, id, discounted);
   }
   placementError(id, row, col) {
     return this._placementError(id, row, col);
