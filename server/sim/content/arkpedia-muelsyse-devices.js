@@ -16,6 +16,7 @@ export const MUELSYSE_DEVICE_CONTRACT = Object.freeze({
 });
 const TOKEN = 'token_10030_mlyss_wtrman', REST = 'muelsyse:rest', WARM = 'muelsyse:warm';
 const BLOCK = 'muelsyse:default-block', STEAL = 'muelsyse:stolen';
+const ACTIVE = [1, 2, 3, 4, 5];
 const present = u => u?.alive && u.deployed && !u._removing;
 const live = u => present(u) && !u.hidden;
 const due = (b, time) => b.time + 1e-9 >= time;
@@ -97,13 +98,14 @@ export class FlowingShapeDeck {
     s.unit.mem.regularFormVisual = { clip, loop, speed };
     s.unit.mem.regularDeathVisual = { clip: 'Die', die: 'Die', duration: this.record.models.Single.durations.Die };
   }
-  form(s, suffix) { return s.copy ? `${s.copy.ranged ? 'B' : 'A'}_${suffix}` : suffix === 'Idle' ? 'Idle_1' : suffix; }
+  form(s, suffix) { return s.mode === 4 && suffix === 'Attack' ? 'B_Attack_2'
+    : s.copy ? `${s.copy.ranged ? 'B' : 'A'}_${suffix}` : suffix === 'Idle' ? 'Idle_1' : suffix; }
   create(row, col, copy = null) {
     const b = this.b; let s;
     const t = b.spawnToken(this.u, TOKEN, row, col, { def: this.record, dir: copy?.dir ?? 'RIGHT',
       kit: { talents: [],
         skill: { kind: 'duration', trigger: { rule: 'NEVER' },
-          canActivate: () => this.valid(s) && !s.clone && !this.copying && [1, 2, 3].includes(s.mode)
+          canActivate: () => this.valid(s) && !s.clone && !this.copying && ACTIVE.includes(s.mode)
             && (this.core.skills?.canCopy(s) ?? true),
           onStart: () => { s.phase = null; this.copying = s; s.selecting = true; },
           onEnd: () => { if (this.copying === s) this.copying = null; s.selecting = false; } },
@@ -189,13 +191,15 @@ export class FlowingShapeDeck {
     s.mode = s.copy ? s.copy.ranged ? 3 : 2 : 1;
     if (!s.copy) b.addBuff(t, { key: BLOCK, mods: { blockCnt: this.talent.block_cnt } });
     t.atkCd = 0; this.sync(s); this.visual(s, this.form(s, 'Idle'), true);
+    this.core.skills?.tokenActivated?.(s);
+    if (!this.valid(s)) return;
     b.heal(t, t, t.s.maxHp, { self: true, ignoreHealFree: true, skipModifierEvent: true });
   }
-  targets(s) {
+  targets(s, { all = false } = {}) {
     const t = s.unit, keys = t.rangeKeySet ?? new Set(absoluteRangeKeys(t.rangeGrid, t.tileR, t.tileC, t.dir));
     const rows = this.b.enemies.filter(e => live(e) && canTargetEnemy(t, e, { canHitFly: !!s.copy })
       && (!e.s.flags.camou || e.blockedBy) && (bodyInKeys(e, keys) || e.blockedBy === t));
-    sortEnemyTargets(this.b, t, rows); return rows.slice(0, 1);
+    sortEnemyTargets(this.b, t, rows); return all ? rows : rows.slice(0, 1);
   }
   steal(s, target) {
     if (target !== s.unit && present(target)) {
@@ -223,14 +227,16 @@ export class FlowingShapeDeck {
     s.victims.clear();
   }
   release(s, target, info) {
+    if (s?.mode === 4) return this.core.skills?.releaseToken(s, target, info) ?? false;
     const p = s?.phase, t = s?.unit, b = this.b;
-    if (!s?.accepting || !this.valid(s) || ![1, 2, 3].includes(s.mode) || !live(t) || !t.canAct || t.s.flags.disarm
+    if (!s?.accepting || !this.valid(s) || !ACTIVE.includes(s.mode) || !live(t) || !t.canAct || t.s.flags.disarm
       || s.selecting || !p || p.accepted || p.target !== target || p.targetSeq !== target.deploySeq
       || p.epoch !== t.attackControlEpoch || !due(b, p.releaseAt)
       || !canTargetEnemy(t, target, { canHitFly: !!s.copy })) return false;
     p.accepted = true;
+    this.core.skills?.beforeTokenHit?.(s, target);
     if (s.copy && !s.copy.ranged) this.steal(s, target);
-    if (!this.valid(s) || ![1, 2, 3].includes(s.mode) || !t.canAct || t.s.flags.disarm
+    if (!this.valid(s) || !ACTIVE.includes(s.mode) || !t.canAct || t.s.flags.disarm
       || !live(target) || target.deploySeq !== p.targetSeq) return false;
     b.dealDamage(t, target, makeDamageInfo({ amount: t.s.atk * t.s.atkScaleMul,
       type: s.copy?.damageType ?? 'arts', isAttack: true, isSkill: false,
@@ -240,7 +246,7 @@ export class FlowingShapeDeck {
     return true;
   }
   split(s) {
-    if (!this.valid(s) || !s.copy?.ranged || ![3].includes(s.mode)) return;
+    if (!this.valid(s) || !s.copy?.ranged || ![3, 4].includes(s.mode)) return;
     const candidates = grid('x-5').map(([dr, dc]) => [s.unit.tileR + dr, s.unit.tileC + dc])
       .map(([r, c]) => ({ r, c, state: this.tokens.get(this.b.unitAt(r, c)) }))
       .filter(v => this.tileEligible(v.r, v.c, this.valid(v.state) ? v.state.unit : null)
@@ -249,10 +255,11 @@ export class FlowingShapeDeck {
     this.b.addProjectile({ from: s.unit, to: { x: chosen.c, y: chosen.r }, source: s.unit,
       speed: 4, maxAge: 10, visual: 'arrow',
       data: { arkpediaTrackedVisual: true, projectileKey: 'projectile_chr_mlyss_wtrman', zeroDamage: true } });
-    if (!this.valid(s) || s.mode !== 3) return;
+    if (!this.valid(s) || ![3, 4].includes(s.mode)) return;
     if (chosen.state) {
       const t = chosen.state.unit;
       this.b.heal(t, t, t.s.maxHp, { self: true, ignoreHealFree: true, skipModifierEvent: true });
+      this.core.skills?.tokenRefreshed?.(chosen.state);
       return;
     }
     const copy = structuredClone(s.copy);
@@ -286,7 +293,7 @@ export class FlowingShapeDeck {
     this.visual(s, clip, false, speed); t.atkCd = t.s.interval;
   }
   rest(s, { restoreHp = true } = {}) {
-    if (!this.valid(s) || ![1, 2, 3, 'changing'].includes(s.mode)) return false;
+    if (!this.valid(s) || ![...ACTIVE, 'changing'].includes(s.mode)) return false;
     if (s.clone) { this.b._remove(s.unit, 'muelsyse-copy-finished', null, true); return true; }
     this.core.skills?.tokenRemoved(s);
     this.clearVictims(s);
@@ -316,7 +323,7 @@ export class FlowingShapeDeck {
         } else if (due(this.b, s.dieUntil)) this.visual(s, 'Idle_2');
       }
       if (['warming', 'changing'].includes(s.mode) && due(this.b, s.readyAt)) this.activate(s);
-      if ([1, 2, 3].includes(s.mode)) this.tickAttack(s);
+      if (!this.core.skills?.tickToken?.(s) && ACTIVE.includes(s.mode)) this.tickAttack(s);
     }
   }
   retreat(t) {
@@ -337,7 +344,7 @@ export class FlowingShapeDeck {
     (this.b.regularSummons ??= new Map()).set(this.state.key, this.state);
     this.handles.push(this.b.on('fatal', ctx => {
       const s = this.tokens.get(ctx.unit);
-      if (!this.valid(s) || s.clone || ![1, 2, 3, 'changing'].includes(s.mode)) return;
+      if (!this.valid(s) || s.clone || ![...ACTIVE, 'changing'].includes(s.mode)) return;
       if (!this.rest(s, { restoreHp: false })) return;
       ctx.prevented = true;
       ctx.afterHpLoss = () => { if (this.valid(s) && s.mode === 0) s.unit.hp = 1; };
