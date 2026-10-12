@@ -292,9 +292,15 @@ export class Battle {
   }
 
   _makeAlly(ps, def, kind, r, c, extra = {}) {
+    return this._makePlacedUnit(ps, def, kind, r, c, extra);
+  }
+
+  // Placed tokens can have the native enemy targeting side without becoming
+  // wave enemies. Keep them out of the friendly roster, routing and counters.
+  _makePlacedUnit(ps, def, kind, r, c, extra = {}, side = 'ally') {
     const st = def.stats;
     const u = new Unit({
-      id: ++this._idSeq, side: 'ally', kind, def, defId: def.id, name: def.name, ownerId: ps ? ps.playerId : null,
+      id: ++this._idSeq, side, kind, def, defId: def.id, name: def.name, ownerId: ps ? ps.playerId : null,
       uid: extra.uid ?? null, ownerUnit: extra.ownerUnit ?? null, x: c, y: r, tileR: r, tileC: c,
       tags: def.tags ?? [],
       dir: extra.dir != null ? normDir(extra.dir) : extra.facing != null ? normDir(extra.facing) : ps ? ps.dir : 'RIGHT',
@@ -310,8 +316,14 @@ export class Battle {
     u.rangeGrid = def.rangeGrid;
     u.player = ps;
     this.units.push(u);
-    this.allyUnits.push(u);
-    if (ps) ps.units.push(u);
+    if (side === 'ally') {
+      this.allyUnits.push(u);
+      if (ps) ps.units.push(u);
+    } else {
+      u.counted = false; u.lpr = 0; u.mem.noLeak = true;
+      u.spawnSeq = ++this._spawnSeq;
+      this.enemies.push(u); this._enemiesDirty = true;
+    }
     return u;
   }
 
@@ -423,7 +435,13 @@ export class Battle {
         for (let i = 0, n = list.length; i < n && !this._endReq; i++) {
           const e = list[i];
           if (!e.alive) continue;
-          try { updateEnemy(this, e, dt); } catch (err) { this._internalError('updateEnemy', err); }
+          try {
+            // Enemy-targetable placed tokens own their combat controller.
+            // They charge normally, but never route, block, attack as enemies
+            // or touch the objective merely because their target side is red.
+            if (e.kind === 'token') { if (e.skill && e.deployed) e.skill.tick(dt); }
+            else updateEnemy(this, e, dt);
+          } catch (err) { this._internalError('updateEnemy', err); }
           this._clampPos(e);
         }
       });
@@ -488,7 +506,7 @@ export class Battle {
     // §5.5) — never merely because it emptied: the h07_04 pair leader (official route: no wait) can walk into the
     // objective, and the field then idles while another field may still empty the pool or the overtime drain ends it.
     const poolHolds = !!this.sharedBoss && (this.kind === 'boss' || this.kind === 'hidden');
-    if (this.autoFinish && !poolHolds && !this._pending.length && !this.enemies.some((e) => e.alive) && this.started) {
+    if (this.autoFinish && !poolHolds && !this._pending.length && !this.enemies.some((e) => e.alive && e.kind !== 'token') && this.started) {
       if (!this._hasPendingEnemySchedules()) { this._finish('cleared'); return; }
     }
     if (this.time >= this.timeLimit - 1e-9) { this._timeout(); return; }
@@ -989,6 +1007,10 @@ export class Battle {
       if (unit.kind === 'device' && unit.obstacle) this.grid.setObstacle(unit.tileR, unit.tileC, false, unit.obstacleKind);
     } else {
       unit.removed = true;
+      if (unit.kind === 'token') {
+        const k = unit.tileR * COLS + unit.tileC;
+        if (this._occ[k] === unit) this._occ[k] = null;
+      }
       this._unblock(unit);
       this._enemiesDirty = true;
       if (reason === 'killed') {
@@ -997,7 +1019,7 @@ export class Battle {
           const pp = this._pp(unit.ownerId);
           if (pp) pp.killed++;
         }
-        if (killer) killer.stats.kills++;
+        if (killer && unit.kind !== 'token') killer.stats.kills++;
         if (unit.bounty && unit.bounty.coins > 0) {
           const payee = killer && killer.side === 'ally' && killer.ownerId != null ? killer.ownerId : (unit.bounty.ownerPlayerId ?? unit.ownerId);
           this.addCoins(payee, unit.bounty.coins);
@@ -1891,6 +1913,8 @@ export class Battle {
    * under the default skill the kit stays the authority.
    */
   spawnToken(owner, tokenId, row, col, opts = {}) {
+    if (opts.targetSide != null && !['ally', 'enemy'].includes(opts.targetSide))
+      throw new TypeError('Unsupported token target side');
     const ownerUnit = owner && typeof owner === 'object' ? owner : null;
     const pid = ownerUnit ? ownerUnit.ownerId : owner;
     const ps = this.getPlayer(pid) ?? (ownerUnit ? ownerUnit.player : null);
@@ -1904,7 +1928,7 @@ export class Battle {
     const occ = this._occ[row * COLS + col];
     if (occ && occ.alive && !opts.force) return null;
     const dir = opts.dir != null ? normDir(opts.dir) : opts.facing != null ? normDir(opts.facing) : ownerUnit ? ownerUnit.dir : ps ? ps.dir : 'RIGHT';
-    const u = this._makeAlly(ps, def, 'token', row, col, { ownerUnit, dir });
+    const u = this._makePlacedUnit(ps, def, 'token', row, col, { ownerUnit, dir }, opts.targetSide ?? 'ally');
     if (opts.stats) for (const [k, v] of Object.entries(opts.stats)) if (Number.isFinite(v)) u.base[k] = v;
     this._setupUnit(u, opts.kit ?? null);
     if (opts.untargetable) this.addBuff(u, { key: 'trait:untargetable', flags: { untargetable: true }, persist: true, allowDead: true });
