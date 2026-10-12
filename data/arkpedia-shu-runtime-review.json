@@ -1,0 +1,116 @@
+{
+  "schemaVersion": 1,
+  "operatorId": "char_2025_shu",
+  "enabledOperators": [
+    "char_2025_shu"
+  ],
+  "sourceFoundation": "arkpedia-shu-prefabs.json",
+  "sourceFoundationSha256": "052fe83bbfb7033a36cc1d73730d52ccf44753e627b2da75f4d40266910719fc",
+  "assetCommit": "7a9f4698c4ee9a90d413cfa190a8613baefc920c",
+  "originalArtwork": {
+    "front": {
+      "source": {
+        "key": "operators",
+        "repository": "fexli/ArknightsResource",
+        "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+        "directory": "spine/char_2025_shu/char_2025_shu/Front"
+      },
+      "files": [
+        {
+          "path": "models/operator/char_2025_shu/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_2025_shu.skel",
+          "bytes": 522905,
+          "sha256": "b67207dc8e1ec895afd602803ace1922401edb19bafe3277ca50821d88e73507"
+        },
+        {
+          "path": "models/operator/char_2025_shu/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_2025_shu.atlas",
+          "bytes": 12311,
+          "sha256": "f98a88da86be205b416f443e766328fc60992f705be0466e85c01d685786992c"
+        },
+        {
+          "path": "models/operator/char_2025_shu/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_2025_shu.png",
+          "bytes": 438449,
+          "sha256": "716f4f625eb153395225cfc258a92e936ec666d6963fcc7572cd45194363a5e7"
+        }
+      ],
+      "animations": {
+        "Attack_1": 1.2,
+        "Attack_2": 1.3,
+        "Default": 0,
+        "Die": 1,
+        "Idle": 4,
+        "Skill_2_Attack": 1.3,
+        "Skill_2_Begin": 0.267,
+        "Skill_2_End": 0.267,
+        "Skill_2_Idle": 4,
+        "Skill_3_Attack_1": 1.2,
+        "Skill_3_Attack_2": 1.3,
+        "Skill_3_Begin": 0.167,
+        "Skill_3_End": 0.5,
+        "Skill_3_Idle": 4,
+        "Start": 1
+      },
+      "premultipliedAlpha": true
+    },
+    "back": {
+      "source": {
+        "key": "operators",
+        "repository": "fexli/ArknightsResource",
+        "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+        "directory": "spine/char_2025_shu/char_2025_shu/Back"
+      },
+      "files": [
+        {
+          "path": "models/operator/char_2025_shu/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_2025_shu.skel",
+          "bytes": 327042,
+          "sha256": "b7255c1d3ee42ef19f9bb9aefd0caf990fee227c2dc7a2485743a88ad3d69061"
+        },
+        {
+          "path": "models/operator/char_2025_shu/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_2025_shu.atlas",
+          "bytes": 8575,
+          "sha256": "91cb7c6950de3b703fa333aa3d636158688719701a884dc1beb74ee53e735263"
+        },
+        {
+          "path": "models/operator/char_2025_shu/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_2025_shu.png",
+          "bytes": 356332,
+          "sha256": "cb4fda6a73cd9d33738dea05bf39210b8a8ce5a102c9dcd2c8f494f777da359c"
+        }
+      ],
+      "animations": {
+        "Attack_1": 1.2,
+        "Attack_2": 1.3,
+        "Default": 0,
+        "Idle": 4,
+        "Skill_2_Attack": 1.3,
+        "Skill_2_Begin": 0.267,
+        "Skill_2_End": 0.267,
+        "Skill_2_Idle": 4,
+        "Skill_3_Attack_1": 1.2,
+        "Skill_3_Attack_2": 1.3,
+        "Skill_3_Begin": 0.167,
+        "Skill_3_End": 0.167,
+        "Skill_3_Idle": 4,
+        "Start": 1
+      },
+      "premultipliedAlpha": true
+    }
+  },
+  "scope": "All three selected-source skills, ordinary combat, Sowing, class/Sui talents, enemy aura and persistent teleport marks with public selected builds and original default owner artwork. The historical extraction receipt remains independently held.",
+  "frameParity": false,
+  "moduleSupport": false,
+  "nativeShaderParity": false,
+  "nativeParticleSupport": false,
+  "verification": [
+    "test/arkpedia-shu-public.test.js",
+    "test/arkpedia-shu.test.js",
+    "test/arkpedia-shu-skills.test.js",
+    "test/arkpedia-shu-source.test.js",
+    "tools/arkpedia/verify-shu.py",
+    "tools/arkpedia/review-shu-public.mjs"
+  ],
+  "limits": [
+    "Compiled selector/FSM/combined-ability callback ordering and root-tile geometry remain bounded local mappings.",
+    "Movement stops for the remainder of a teleported simulation tick. Native collision-offset reset and persistent pull physics remain unsupported.",
+    "Original default skeletons match the native TextAsset chains. Published extracted atlas/texture bytes are pinned; native shader, particle and RGBA parity are not certified.",
+    "Modules, native particles, audio and certified Unity frame parity remain unimplemented."
+  ]
+}

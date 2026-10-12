@@ -6,7 +6,7 @@ import { bodyInKeys } from '../body.js';
 import { makeDamageInfo } from '../damage.js';
 import { crossedRootTiles } from '../movement-observer.js';
 import { enforceBlockCapacity } from '../ai.js';
-import { prepareShuCore, SHU_CORE_CONTRACT } from './arkpedia-shu.js';
+import { prepareShuCore, SHU_CORE_CONTRACT, SHU_ID } from './arkpedia-shu.js';
 
 export const SHU_SKILL_CONTRACT = Object.freeze({
   scope: 'All thirty selected Shu skill ranks, charge healing, enhanced Sowing, independent attack/heal paths, enemy aura and persistent teleport marks',
@@ -268,3 +268,11 @@ export function prepareShuSkills(b, u, { contract } = {}) {
     canActivate: () => bridge.canCast(), onStart: () => bridge.start(), onEnd: ({ reason }) => bridge.end(reason),
   } } };
 }
+
+// Public approval is a separate receipt; the native extraction remains held.
+export function customizeShuKit({ battle, id, unit, kit }) {
+  if (id !== SHU_ID) return;
+  const prepared = prepareShuSkills(battle, unit, { contract: SHU_SKILL_CONTRACT });
+  Object.assign(kit, prepared.kit);
+}
+export function installShu({ unit }) { unit.mem.shuController?.install(); }

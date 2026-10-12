@@ -60,6 +60,15 @@ const [characters, skills, ranges, enemies, stage, geometry, buffTemplates, orig
 if (originalLevel.mapData.tags != null && (!Array.isArray(originalLevel.mapData.tags)
   || originalLevel.mapData.tags.some(tag => typeof tag !== 'string'))) throw Error('Unsupported source map tags');
 const ids = Object.keys(REGULAR_OPERATORS);
+if (ids.includes('char_2025_shu')) {
+  const review = JSON.parse(await readFile(new URL('../../data/arkpedia-shu-runtime-review.json', import.meta.url)));
+  const foundation = await readFile(new URL('../../data/arkpedia-shu-prefabs.json', import.meta.url));
+  const evidence = JSON.parse(foundation);
+  if (!review.enabledOperators.includes('char_2025_shu') || review.frameParity !== false
+    || review.sourceFoundationSha256 !== createHash('sha256').update(foundation).digest('hex')
+    || evidence.source.commit !== pins[paths.character_table[0]])
+    throw Error('Shu public runtime review differs from its pinned native source');
+}
 if (ids.includes('char_2023_ling')) {
   const review = JSON.parse(await readFile(new URL('../../data/arkpedia-ling-runtime-review.json', import.meta.url)));
   const foundation = await readFile(new URL('../../data/arkpedia-ling-prefabs.json', import.meta.url));
@@ -253,6 +262,21 @@ const models = Object.fromEntries(
 );
 // Bind the published default dragon files to the independently audited artwork,
 // rather than approving whichever model happens to be at the latest asset HEAD.
+if (ids.includes('char_2025_shu')) {
+  const review = JSON.parse(await readFile(new URL('../../data/arkpedia-shu-runtime-review.json', import.meta.url)));
+  const evidence = JSON.parse(await readFile(new URL('../../data/arkpedia-shu-prefabs.json', import.meta.url)));
+  for (const facing of ['front', 'back']) {
+    const model = models[`operator/char_2025_shu/default/${facing}`], art = review.originalArtwork[facing];
+    const files = [model.skeleton, model.atlas, ...model.textures];
+    if (JSON.stringify(files) !== JSON.stringify(art.files)
+      || JSON.stringify(model.source) !== JSON.stringify(art.source)
+      || JSON.stringify(model.animations) !== JSON.stringify(art.animations)
+      || model.source.commit !== evidence.source.modelCommit
+      || model.skeleton.sha256 !== evidence.officialSkeletonBindings.char_2025_shu[facing === 'front' ? 'Front' : 'Back'].sha256
+      || !model.premultipliedAlpha || !art.premultipliedAlpha)
+      throw Error(`Shu published owner differs from reviewed native artwork: ${facing}`);
+  }
+}
 if (ids.includes('char_2023_ling')) {
   const art = JSON.parse(await readFile(new URL('../../data/arkpedia-ling-dragon-art.json', import.meta.url)));
   for (const [id, record] of Object.entries(art.models)) for (const facing of ['front', 'back']) {
