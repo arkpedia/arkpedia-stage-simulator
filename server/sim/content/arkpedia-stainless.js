@@ -118,15 +118,16 @@ export class StainlessCoreController {
       this.u.mem.regularDeathVisual = { clip: 'Die', die: 'Die', duration: this.model().durations.Die };
     else delete this.u.mem.regularDeathVisual;
   }
-  targets() {
+  targets(limit = 1) {
     const { b, u } = this;
     const keys = u.rangeKeySet ?? new Set(absoluteRangeKeys(u.rangeGrid, u.tileR, u.tileC, u.dir, u.s.rangeExtend));
     const out = b.enemies.filter(t => live(t) && canTargetEnemy(u, t, { canHitFly: t.blockedBy === u })
       && (!t.s.flags.camou || !!t.blockedBy) && (bodyInKeys(t, keys) || t.blockedBy === u));
-    sortEnemyTargets(b, u, out); return out.slice(0, 1);
+    sortEnemyTargets(b, u, out); return out.slice(0, limit);
   }
   release(t, info) {
     const { b, u, phase: p } = this;
+    if (p?.kind === 'ironmn:active') return this.skills?.release(t, info) ?? false;
     if (!this.accepting || !this.valid() || !live(u) || !u.canAct || u.s.flags.disarm
       || p?.kind !== 'attack' || p.epoch !== u.attackControlEpoch || p.accepted
       || p.target !== t || p.targetSeq !== t.deploySeq || !live(t)
@@ -138,6 +139,7 @@ export class StainlessCoreController {
     return true;
   }
   tickAttack() {
+    if (this.skills?.active) { this.skills.tickAttack(); return; }
     const { b, u } = this;
     if (!this.valid()) { this.phase = null; return; }
     let p = this.phase;
@@ -188,6 +190,7 @@ export class StainlessCoreController {
   stop() {
     if (this.stopped) return;
     this.stopped = true; this.phase = null; this.accepting = false;
+    this.skills?.stop();
     this.devices?.stop();
     this.u.mem.regularFormVisual = null; delete this.u.mem.regularVisualDirection;
     for (const h of this.handles) this.b.off(h); this.handles = [];
