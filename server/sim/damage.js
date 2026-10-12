@@ -354,11 +354,22 @@ export function applyHpLoss(battle, source, target, amount, dmg) {
     battle._syncBossHp(target);
   } else {
     const before = target.hp;
-    target.hp -= amount;
+    let nextHp = before - amount;
     // Original UNDEADABLE affects fractional and fatal HP loss alike; it is
     // neither damage immunity nor protection against scripted removal.
     if (target.s.flags.undeadable)
-      target.hp = Math.max(Math.min(1, target.s.maxHp), target.hp);
+      nextHp = Math.max(Math.min(1, target.s.maxHp), nextHp);
+    // Opt-in native before-zero guards can reject the entire pending HP set.
+    // This is distinct from a fatal repair to one HP. UNDEADABLE has already
+    // resolved, so a guard does not spend its resource on a protected hit.
+    if (nextHp <= 0 && battle._hooks.beforeHpZero) {
+      const ctx = { unit: target, source: hs, credit: source, dmg, amount, before, blocked: false };
+      battle.emit('beforeHpZero', ctx);
+      if (ctx.blocked && target.alive) nextHp = before;
+    }
+    // Guard callbacks observe the old HP; a scripted removal inside a guard
+    // remains final and cannot be undone by the pending damage assignment.
+    if (target.alive) target.hp = nextHp;
     let postFatal = null;
     if (target.hp <= 0) {
       target.hp = 0;
