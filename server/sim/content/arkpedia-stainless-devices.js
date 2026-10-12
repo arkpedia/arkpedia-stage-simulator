@@ -41,7 +41,7 @@ export class StainlessDeviceDeck {
   constructor(core) {
     this.core = core; this.b = core.b; this.u = core.u; this.record = core.record.token;
     this.index = core.record.index; this.stock = 0; this.readyAt = Infinity;
-    this.devices = new Map(); this.handles = []; this.stopped = false;
+    this.devices = new Map(); this.handles = []; this.stopped = false; this.mode = false;
     if (this.record.native.side !== (this.index === 2 ? 2 : 1)
       || this.record.native.category !== (this.index === 2 ? 1 : 2)
       || this.record.native.buildableType !== (this.index === 2 ? 1 : 3)
@@ -63,6 +63,18 @@ export class StainlessDeviceDeck {
     this.readyAt = this.b.time;
   }
   recharge(count) { this.stock = Math.min(this.record.stats.maxDeckStackCnt, this.stock + count); }
+  get supplyInterval() { return this.mode ? this.skill['s2.interval'] : this.talent['default.interval']; }
+  setMode(active) {
+    // Token SwitchMode detaches the old aura/bleed ability. The newly attached
+    // mode starts its own recipient/first-drain clocks, including late devices.
+    if (this.mode === !!active || this.index === 2) return;
+    this.mode = !!active;
+    for (const state of this.devices.values()) {
+      for (const a of state.recipients.keys()) this.b.removeBuff(a, `ironmn:device-aura:${state.unit.id}`);
+      state.recipients.clear(); state.bleedAt = this.b.time + 1;
+      this.syncAura(state);
+    }
+  }
   placementError(row, col) {
     const { b, core } = this;
     if (!canDeployInViewport(b.viewport)) return 'Open the fullscreen workspace to deploy.';
@@ -131,11 +143,12 @@ export class StainlessDeviceDeck {
     }
     for (const a of next) {
       if (!state.recipients.has(a)) state.recipients.set(a, { seq: a.deploySeq,
-        nextSp: b.time + (this.talent['default.interval'] ?? Infinity) });
+        nextSp: b.time + (this.supplyInterval ?? Infinity) });
       if (this.index === 1) continue;
       if (!a.findBuff(key)) b.addBuff(a, { key, source: t,
         ...(this.index === 2 ? { status: 'sanctuary', data: { value: this.talent.damage_resistance },
-          mods: { physTakenMul: 1 - this.talent.damage_resistance } } : { mods: { atkPct: this.talent.atk } }) });
+          mods: { physTakenMul: 1 - this.talent.damage_resistance } }
+          : { mods: { atkPct: this.talent.atk * (this.mode ? this.skill.talent_scale : 1) } }) });
     }
   }
   targets(t) {
@@ -206,12 +219,13 @@ export class StainlessDeviceDeck {
       if (this.index === 1 && live(t)) {
         while (due(b, state.bleedAt) && present(t)) {
           state.bleedAt += 1;
-          b.loseHp(t, t.s.maxHp * this.drain, { source: t, tags: ['ironmn:device-drain'] });
+          b.loseHp(t, t.s.maxHp * (this.mode ? this.skill['s2.hp_ratio'] : this.drain),
+            { source: t, tags: ['ironmn:device-drain'] });
         }
         for (const [a, clock] of state.recipients) {
           if (a.deploySeq !== clock.seq) { state.recipients.delete(a); continue; }
           if (due(b, clock.nextSp)) {
-            clock.nextSp = b.time + this.talent['default.interval'];
+            clock.nextSp = b.time + this.supplyInterval;
             a.skill?.gainSp(1, 'ironmn-device');
           }
         }
