@@ -47,7 +47,7 @@
   },
   "sd": {
     "repository": "arkpedia/arkpedia-sd-assets",
-    "commit": "a2b2fdf1b0702609b510fcf386b70e11782c98d7",
+    "commit": "5f58569d050e7444bb7b33646554b9f99249b7be",
     "models": {
       "operator/char_123_fang/default/front": {
         "kind": "operator",
@@ -62514,6 +62514,203 @@
           "height": 449.265
         }
       },
+      "operator/char_4147_mitm/default/front": {
+        "kind": "operator",
+        "id": "char_4147_mitm",
+        "variant": "default",
+        "facing": "front",
+        "spineVersion": "3.8.99",
+        "source": {
+          "key": "operators",
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "spine/char_4147_mitm/char_4147_mitm/Front"
+        },
+        "skeleton": {
+          "path": "models/operator/char_4147_mitm/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4147_mitm.skel",
+          "bytes": 281040,
+          "sha256": "38904af450e9319a554b85997ac10ca786f3141d99b47f65ab940e3bcdf788f6"
+        },
+        "atlas": {
+          "path": "models/operator/char_4147_mitm/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4147_mitm.atlas",
+          "bytes": 10033,
+          "sha256": "88a08f4005d72a0625e9686d559e623cc93dfdad17d9429c19e835782fe4ee9e"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_4147_mitm/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4147_mitm.png",
+            "bytes": 156546,
+            "sha256": "efdcff9c4e298f832caf6ca02a2ddc5adcbd250ec577e6c6acdf2340c83cd515"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Attack": 1,
+          "Default": 0,
+          "Die": 1,
+          "Idle": 3.6,
+          "Skill_1": 1,
+          "Skill_2_Begin": 0.167,
+          "Skill_2_End": 0.167,
+          "Skill_2_Idle": 1.2,
+          "Skill_2_Loop": 1,
+          "Start": 1
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null
+          },
+          "attackDown": null,
+          "skill": {
+            "begin": null,
+            "loop": "Skill_1",
+            "end": null,
+            "index": 0,
+            "idle": null
+          },
+          "die": "Die",
+          "move": null,
+          "stun": null,
+          "skills": {
+            "0": {
+              "begin": null,
+              "loop": "Skill_1",
+              "end": null,
+              "index": 0,
+              "idle": null
+            },
+            "1": {
+              "begin": "Skill_2_Begin",
+              "loop": "Skill_2_Loop",
+              "end": "Skill_2_End",
+              "index": 1,
+              "idle": "Skill_2_Idle"
+            }
+          }
+        },
+        "hits": {
+          "Attack": [
+            0.367
+          ],
+          "Skill_1": [
+            0.367
+          ],
+          "Skill_2_Loop": [
+            0.4
+          ],
+          "Start": [
+            0.133
+          ]
+        },
+        "bounds": {
+          "x": -276.229,
+          "y": -2.25,
+          "width": 500.505,
+          "height": 389.987
+        }
+      },
+      "operator/char_4147_mitm/default/back": {
+        "kind": "operator",
+        "id": "char_4147_mitm",
+        "variant": "default",
+        "facing": "back",
+        "spineVersion": "3.8.99",
+        "source": {
+          "key": "operators",
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "spine/char_4147_mitm/char_4147_mitm/Back"
+        },
+        "skeleton": {
+          "path": "models/operator/char_4147_mitm/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4147_mitm.skel",
+          "bytes": 174547,
+          "sha256": "d1e5ffcefed09e18d7ff8cc4e9e0478481975dba0c45d811da7c0fb4449269e0"
+        },
+        "atlas": {
+          "path": "models/operator/char_4147_mitm/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4147_mitm.atlas",
+          "bytes": 5435,
+          "sha256": "97aed53cf2e81fa89f967a6f799cbba293ba1dcd47b5e242afa544b8853873d0"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_4147_mitm/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4147_mitm.png",
+            "bytes": 129566,
+            "sha256": "7bd27e828e2a1a3ac79898a33c675ed67f9513694e0e7d024bd12d9e6fd6b47d"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Attack": 1,
+          "Default": 0,
+          "Idle": 1.2,
+          "Skill_1": 1,
+          "Skill_2_Begin": 0.167,
+          "Skill_2_End": 0.167,
+          "Skill_2_Idle": 1.2,
+          "Skill_2_Loop": 1,
+          "Start": 1
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null
+          },
+          "attackDown": null,
+          "skill": {
+            "begin": null,
+            "loop": "Skill_1",
+            "end": null,
+            "index": 0,
+            "idle": null
+          },
+          "die": null,
+          "move": null,
+          "stun": null,
+          "skills": {
+            "0": {
+              "begin": null,
+              "loop": "Skill_1",
+              "end": null,
+              "index": 0,
+              "idle": null
+            },
+            "1": {
+              "begin": "Skill_2_Begin",
+              "loop": "Skill_2_Loop",
+              "end": "Skill_2_End",
+              "index": 1,
+              "idle": "Skill_2_Idle"
+            }
+          }
+        },
+        "hits": {
+          "Attack": [
+            0.367
+          ],
+          "Skill_1": [
+            0.367
+          ],
+          "Skill_2_Loop": [
+            0.4
+          ],
+          "Start": [
+            0.133
+          ]
+        },
+        "bounds": {
+          "x": -244.564,
+          "y": 0.1,
+          "width": 468.005,
+          "height": 386.103
+        }
+      },
       "operator/char_4027_heyak/default/front": {
         "kind": "operator",
         "id": "char_4027_heyak",
@@ -71795,6 +71992,210 @@
           "y": -1.446,
           "width": 306.352,
           "height": 515.892
+        }
+      },
+      "operator/token_10037_mitm_trshrb/default/front": {
+        "kind": "operator",
+        "id": "token_10037_mitm_trshrb",
+        "variant": "default",
+        "facing": "front",
+        "source": {
+          "key": "global-client",
+          "kind": "assetbundle",
+          "bundle": {
+            "path": "pkgrps/btl_pfb_tokens_0.ab",
+            "bytes": 5060143,
+            "md5": "5ab8526b9e59e97cc7e94ed6a248013d",
+            "sha256": "eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f",
+            "resourceVersion": "26-09-23-17-49-43_b9cc4a",
+            "url": "https://ark-us-static-online.yo-star.com/assetbundle/official/Android/assets/26-09-23-17-49-43_b9cc4a/pkgrps_btl_pfb_tokens_0.dat",
+            "transforms": [
+              "Original embedded-alpha RGBA page decoded to PNG without pixel changes; no split alpha texture",
+              "Atlas page dimensions normalized and pma: true recorded; native regions unchanged",
+              "Cherry-3 front/back aliases share its native single skeleton; literal static Waste and Idle_2 clips retained"
+            ]
+          },
+          "directory": "pkgrps/btl_pfb_tokens_0.ab",
+          "extractedSkeleton": "token_10037_mitm_trshrb.skel",
+          "facingAlias": "single-original-model",
+          "originalPathIds": {
+            "rootPathId": "-5025496332813830201",
+            "controllerPathId": "-3708278567375571001",
+            "animatorPathId": "7275110594963929031",
+            "faceSwitcherPathId": "-3626012598514190393",
+            "skeletonAnimationPathId": "5378261545833297863",
+            "skeletonDataAssetPathId": "5711818996121565540",
+            "textAssetPathId": "5937099011106347295",
+            "atlasAssetPathId": "1044180660098249092",
+            "atlasTextAssetPathId": "4394415808848240045",
+            "materialPathId": "-8743880024613573945",
+            "rgbTexturePathId": "2194246625555547790",
+            "alphaTexturePathId": "0"
+          },
+          "transforms": [
+            "Original embedded-alpha RGBA page decoded to PNG without pixel changes; no split alpha texture",
+            "Atlas page dimensions normalized and pma: true recorded; native regions unchanged",
+            "Cherry-3 front/back aliases share its native single skeleton; literal static Waste and Idle_2 clips retained"
+          ]
+        },
+        "spineVersion": "3.8.99",
+        "skeleton": {
+          "path": "models/operator/token_10037_mitm_trshrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/token_10037_mitm_trshrb.skel",
+          "bytes": 58089,
+          "sha256": "1ff78d0ad6122b8eb7815909fba960da903c7c1ce888aa4a0507f6e02e2c72b1"
+        },
+        "atlas": {
+          "path": "models/operator/token_10037_mitm_trshrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/token_10037_mitm_trshrb.atlas",
+          "bytes": 3248,
+          "sha256": "da23f32e8e305b474ae520393ba78d3de8197b7c169ee1eb794e9b1a1d033d56"
+        },
+        "textures": [
+          {
+            "path": "models/operator/token_10037_mitm_trshrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/token_10037_mitm_trshrb.png",
+            "bytes": 78035,
+            "sha256": "bfad9e358c7a74cd8eebf5e09ff62baa6d5c446e102969d6be8c56282874a63e"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Attack": 1,
+          "Default": 0,
+          "Die": 1,
+          "Idle_1": 0.667,
+          "Idle_2": 0,
+          "Skill_Begin": 0.167,
+          "Skill_End": 0.167,
+          "Skill_Loop": 1,
+          "Start": 1,
+          "Stun_1": 0.667,
+          "Stun_2": 0,
+          "Stun_3": 0,
+          "Waste": 0
+        },
+        "animationRoles": {
+          "idle": "Idle_1",
+          "deploy": "Start",
+          "die": "Die",
+          "attack": "Attack",
+          "skill": "Skill_Loop"
+        },
+        "hits": {
+          "Attack": [
+            0.467
+          ]
+        },
+        "bounds": null,
+        "avatar": {
+          "path": "models/operator/token_10037_mitm_trshrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png",
+          "bytes": 38137,
+          "sha256": "5ce17f3513335d5cccfa2206c0d462781e5f40175c942b334599d8117d3de194",
+          "source": {
+            "repository": "fexli/ArknightsResource",
+            "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+            "directory": "avatar/ASSISTANT"
+          }
+        }
+      },
+      "operator/token_10037_mitm_trshrb/default/back": {
+        "kind": "operator",
+        "id": "token_10037_mitm_trshrb",
+        "variant": "default",
+        "facing": "back",
+        "source": {
+          "key": "global-client",
+          "kind": "assetbundle",
+          "bundle": {
+            "path": "pkgrps/btl_pfb_tokens_0.ab",
+            "bytes": 5060143,
+            "md5": "5ab8526b9e59e97cc7e94ed6a248013d",
+            "sha256": "eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f",
+            "resourceVersion": "26-09-23-17-49-43_b9cc4a",
+            "url": "https://ark-us-static-online.yo-star.com/assetbundle/official/Android/assets/26-09-23-17-49-43_b9cc4a/pkgrps_btl_pfb_tokens_0.dat",
+            "transforms": [
+              "Original embedded-alpha RGBA page decoded to PNG without pixel changes; no split alpha texture",
+              "Atlas page dimensions normalized and pma: true recorded; native regions unchanged",
+              "Cherry-3 front/back aliases share its native single skeleton; literal static Waste and Idle_2 clips retained"
+            ]
+          },
+          "directory": "pkgrps/btl_pfb_tokens_0.ab",
+          "extractedSkeleton": "token_10037_mitm_trshrb.skel",
+          "facingAlias": "single-original-model",
+          "originalPathIds": {
+            "rootPathId": "-5025496332813830201",
+            "controllerPathId": "-3708278567375571001",
+            "animatorPathId": "7275110594963929031",
+            "faceSwitcherPathId": "-3626012598514190393",
+            "skeletonAnimationPathId": "5378261545833297863",
+            "skeletonDataAssetPathId": "5711818996121565540",
+            "textAssetPathId": "5937099011106347295",
+            "atlasAssetPathId": "1044180660098249092",
+            "atlasTextAssetPathId": "4394415808848240045",
+            "materialPathId": "-8743880024613573945",
+            "rgbTexturePathId": "2194246625555547790",
+            "alphaTexturePathId": "0"
+          },
+          "transforms": [
+            "Original embedded-alpha RGBA page decoded to PNG without pixel changes; no split alpha texture",
+            "Atlas page dimensions normalized and pma: true recorded; native regions unchanged",
+            "Cherry-3 front/back aliases share its native single skeleton; literal static Waste and Idle_2 clips retained"
+          ]
+        },
+        "spineVersion": "3.8.99",
+        "skeleton": {
+          "path": "models/operator/token_10037_mitm_trshrb/default/back/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/token_10037_mitm_trshrb.skel",
+          "bytes": 58089,
+          "sha256": "1ff78d0ad6122b8eb7815909fba960da903c7c1ce888aa4a0507f6e02e2c72b1"
+        },
+        "atlas": {
+          "path": "models/operator/token_10037_mitm_trshrb/default/back/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/token_10037_mitm_trshrb.atlas",
+          "bytes": 3248,
+          "sha256": "da23f32e8e305b474ae520393ba78d3de8197b7c169ee1eb794e9b1a1d033d56"
+        },
+        "textures": [
+          {
+            "path": "models/operator/token_10037_mitm_trshrb/default/back/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/token_10037_mitm_trshrb.png",
+            "bytes": 78035,
+            "sha256": "bfad9e358c7a74cd8eebf5e09ff62baa6d5c446e102969d6be8c56282874a63e"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Attack": 1,
+          "Default": 0,
+          "Die": 1,
+          "Idle_1": 0.667,
+          "Idle_2": 0,
+          "Skill_Begin": 0.167,
+          "Skill_End": 0.167,
+          "Skill_Loop": 1,
+          "Start": 1,
+          "Stun_1": 0.667,
+          "Stun_2": 0,
+          "Stun_3": 0,
+          "Waste": 0
+        },
+        "animationRoles": {
+          "idle": "Idle_1",
+          "deploy": "Start",
+          "die": "Die",
+          "attack": "Attack",
+          "skill": "Skill_Loop"
+        },
+        "hits": {
+          "Attack": [
+            0.467
+          ]
+        },
+        "bounds": null,
+        "avatar": {
+          "path": "models/operator/token_10037_mitm_trshrb/default/back/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png",
+          "bytes": 38137,
+          "sha256": "5ce17f3513335d5cccfa2206c0d462781e5f40175c942b334599d8117d3de194",
+          "source": {
+            "repository": "fexli/ArknightsResource",
+            "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+            "directory": "avatar/ASSISTANT"
+          }
         }
       },
       "operator/token_10027_ironmn_pile1/default/front": {
@@ -81801,7 +82202,7 @@
     },
     "art": {
       "repository": "arkpedia/arkpedia-sd-assets",
-      "commit": "a2b2fdf1b0702609b510fcf386b70e11782c98d7",
+      "commit": "5f58569d050e7444bb7b33646554b9f99249b7be",
       "scene": {
         "path": "stages/0-1/26-09-23-17-49-43_b9cc4a/scene.json",
         "bytes": 4479,
@@ -81810,7 +82211,7 @@
     },
     "gates": {
       "repository": "arkpedia/arkpedia-sd-assets",
-      "commit": "a2b2fdf1b0702609b510fcf386b70e11782c98d7",
+      "commit": "5f58569d050e7444bb7b33646554b9f99249b7be",
       "pack": {
         "path": "effects/standard-gates/26-09-23-17-49-43_b9cc4a/gates.json",
         "bytes": 3507,
@@ -553778,6 +554179,1784 @@
         "victoria"
       ]
     },
+    "char_4147_mitm": {
+      "id": "char_4147_mitm",
+      "name": "Mitm",
+      "description": "This unit can designate one <@ba.kw>Tactical Point</> within attack range to call Reinforcements; ATK is increased to 150% when attacking enemies blocked by Reinforcements",
+      "rarity": 5,
+      "profession": "PIONEER",
+      "subProfessionId": "tactician",
+      "position": "RANGED",
+      "nationId": "rhodes",
+      "groupId": null,
+      "teamId": null,
+      "phases": [
+        {
+          "maxLevel": 50,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 612,
+                "atk": 208,
+                "def": 42,
+                "magicResistance": 0,
+                "cost": 12,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 50,
+              "data": {
+                "maxHp": 875,
+                "atk": 307,
+                "def": 71,
+                "magicResistance": 0,
+                "cost": 12,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              0,
+              3
+            ],
+            [
+              -1,
+              0
+            ],
+            [
+              -1,
+              1
+            ],
+            [
+              -1,
+              2
+            ]
+          ]
+        },
+        {
+          "maxLevel": 70,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 875,
+                "atk": 307,
+                "def": 71,
+                "magicResistance": 0,
+                "cost": 14,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 70,
+              "data": {
+                "maxHp": 1123,
+                "atk": 405,
+                "def": 102,
+                "magicResistance": 0,
+                "cost": 14,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              0,
+              3
+            ],
+            [
+              -1,
+              0
+            ],
+            [
+              -1,
+              1
+            ],
+            [
+              -1,
+              2
+            ],
+            [
+              -1,
+              3
+            ]
+          ]
+        },
+        {
+          "maxLevel": 80,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 1123,
+                "atk": 405,
+                "def": 102,
+                "magicResistance": 0,
+                "cost": 14,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 80,
+              "data": {
+                "maxHp": 1370,
+                "atk": 495,
+                "def": 122,
+                "magicResistance": 0,
+                "cost": 14,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              0,
+              3
+            ],
+            [
+              -1,
+              0
+            ],
+            [
+              -1,
+              1
+            ],
+            [
+              -1,
+              2
+            ],
+            [
+              -1,
+              3
+            ]
+          ]
+        }
+      ],
+      "favorKeyFrames": [
+        {
+          "level": 0,
+          "data": {
+            "maxHp": 0,
+            "atk": 0,
+            "def": 0,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false
+          }
+        },
+        {
+          "level": 50,
+          "data": {
+            "maxHp": 0,
+            "atk": 60,
+            "def": 0,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false
+          }
+        }
+      ],
+      "potentialRanks": [
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "RESPAWN_TIME",
+            "formulaItem": "ADDITION",
+            "value": -4,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "ATTACK_SPEED",
+            "formulaItem": "ADDITION",
+            "value": 8,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "RESPAWN_TIME",
+            "formulaItem": "ADDITION",
+            "value": -6,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ]
+      ],
+      "trait": {
+        "candidates": [
+          {
+            "unlockCondition": {
+              "phase": "PHASE_0",
+              "level": 1
+            },
+            "requiredPotentialRank": 0,
+            "blackboard": [
+              {
+                "key": "atk_scale",
+                "value": 1.5,
+                "valueStr": null
+              }
+            ],
+            "overrideDescripton": null,
+            "prefabKey": null,
+            "rangeId": null
+          }
+        ]
+      },
+      "talents": [
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_0",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Scrapheap Buggies",
+              "description": "Can summon Cherry-3 to assist in combat from a Tactical Point; after being defeated, Cherry-3 will spawn Wreckage in the four adjacent tiles, then automatically respawn 20s later",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "cnt",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": "token_10037_mitm_trshrb",
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Scrapheap Buggies",
+              "description": "Can summon Cherry-3 to assist in combat from a Tactical Point; after being defeated, Cherry-3 will spawn Wreckage in the four adjacent tiles, then automatically respawn 17s later",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "cnt",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": "token_10037_mitm_trshrb",
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Scrapheap Buggies",
+              "description": "Can summon Cherry-3 to assist in combat from a Tactical Point; after being defeated, Cherry-3 will spawn Wreckage in the four adjacent tiles, then automatically respawn 15s later",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "cnt",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": "token_10037_mitm_trshrb",
+              "isHideTalent": false
+            }
+          ]
+        }
+      ],
+      "skills": [
+        {
+          "id": "skchr_mitm_1",
+          "unlockCondition": {
+            "phase": "PHASE_0",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "Remote Self-Destruct",
+              "rangeId": "x-5",
+              "description": "Instantly gains <@ba.vup>{cost}</> DP and causes Cherry-3 to self-destruct, dealing <@ba.vup>{aoe_damage_scale:0%}</> of Mitm's ATK as Physical damage to enemies in the four adjacent tiles",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 29,
+                "initSp": 3,
+                "increment": 1
+              },
+              "prefabId": "skchr_mitm_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 6,
+                  "valueStr": null
+                },
+                {
+                  "key": "aoe_damage_scale",
+                  "value": 2.9,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  0
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  0
+                ]
+              ]
+            },
+            {
+              "name": "Remote Self-Destruct",
+              "rangeId": "x-5",
+              "description": "Instantly gains <@ba.vup>{cost}</> DP and causes Cherry-3 to self-destruct, dealing <@ba.vup>{aoe_damage_scale:0%}</> of Mitm's ATK as Physical damage to enemies in the four adjacent tiles",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 28,
+                "initSp": 3,
+                "increment": 1
+              },
+              "prefabId": "skchr_mitm_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 6,
+                  "valueStr": null
+                },
+                {
+                  "key": "aoe_damage_scale",
+                  "value": 3,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  0
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  0
+                ]
+              ]
+            },
+            {
+              "name": "Remote Self-Destruct",
+              "rangeId": "x-5",
+              "description": "Instantly gains <@ba.vup>{cost}</> DP and causes Cherry-3 to self-destruct, dealing <@ba.vup>{aoe_damage_scale:0%}</> of Mitm's ATK as Physical damage to enemies in the four adjacent tiles",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 27,
+                "initSp": 3,
+                "increment": 1
+              },
+              "prefabId": "skchr_mitm_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 6,
+                  "valueStr": null
+                },
+                {
+                  "key": "aoe_damage_scale",
+                  "value": 3.1,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  0
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  0
+                ]
+              ]
+            },
+            {
+              "name": "Remote Self-Destruct",
+              "rangeId": "x-5",
+              "description": "Instantly gains <@ba.vup>{cost}</> DP and causes Cherry-3 to self-destruct, dealing <@ba.vup>{aoe_damage_scale:0%}</> of Mitm's ATK as Physical damage to enemies in the four adjacent tiles",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 26,
+                "initSp": 5,
+                "increment": 1
+              },
+              "prefabId": "skchr_mitm_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 6,
+                  "valueStr": null
+                },
+                {
+                  "key": "aoe_damage_scale",
+                  "value": 3.2,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  0
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  0
+                ]
+              ]
+            },
+            {
+              "name": "Remote Self-Destruct",
+              "rangeId": "x-5",
+              "description": "Instantly gains <@ba.vup>{cost}</> DP and causes Cherry-3 to self-destruct, dealing <@ba.vup>{aoe_damage_scale:0%}</> of Mitm's ATK as Physical damage to enemies in the four adjacent tiles",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 25,
+                "initSp": 5,
+                "increment": 1
+              },
+              "prefabId": "skchr_mitm_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 6,
+                  "valueStr": null
+                },
+                {
+                  "key": "aoe_damage_scale",
+                  "value": 3.3,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  0
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  0
+                ]
+              ]
+            },
+            {
+              "name": "Remote Self-Destruct",
+              "rangeId": "x-5",
+              "description": "Instantly gains <@ba.vup>{cost}</> DP and causes Cherry-3 to self-destruct, dealing <@ba.vup>{aoe_damage_scale:0%}</> of Mitm's ATK as Physical damage to enemies in the four adjacent tiles",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 24,
+                "initSp": 5,
+                "increment": 1
+              },
+              "prefabId": "skchr_mitm_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 6,
+                  "valueStr": null
+                },
+                {
+                  "key": "aoe_damage_scale",
+                  "value": 3.4,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  0
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  0
+                ]
+              ]
+            },
+            {
+              "name": "Remote Self-Destruct",
+              "rangeId": "x-5",
+              "description": "Instantly gains <@ba.vup>{cost}</> DP and causes Cherry-3 to self-destruct, dealing <@ba.vup>{aoe_damage_scale:0%}</> of Mitm's ATK as Physical damage to enemies in the four adjacent tiles",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 23,
+                "initSp": 6,
+                "increment": 1
+              },
+              "prefabId": "skchr_mitm_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 6,
+                  "valueStr": null
+                },
+                {
+                  "key": "aoe_damage_scale",
+                  "value": 3.55,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  0
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  0
+                ]
+              ]
+            },
+            {
+              "name": "Remote Self-Destruct",
+              "rangeId": "x-5",
+              "description": "Instantly gains <@ba.vup>{cost}</> DP and causes Cherry-3 to self-destruct, dealing <@ba.vup>{aoe_damage_scale:0%}</> of Mitm's ATK as Physical damage to enemies in the four adjacent tiles",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 22,
+                "initSp": 7,
+                "increment": 1
+              },
+              "prefabId": "skchr_mitm_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 6,
+                  "valueStr": null
+                },
+                {
+                  "key": "aoe_damage_scale",
+                  "value": 3.7,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  0
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  0
+                ]
+              ]
+            },
+            {
+              "name": "Remote Self-Destruct",
+              "rangeId": "x-5",
+              "description": "Instantly gains <@ba.vup>{cost}</> DP and causes Cherry-3 to self-destruct, dealing <@ba.vup>{aoe_damage_scale:0%}</> of Mitm's ATK as Physical damage to enemies in the four adjacent tiles",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 21,
+                "initSp": 8,
+                "increment": 1
+              },
+              "prefabId": "skchr_mitm_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 6,
+                  "valueStr": null
+                },
+                {
+                  "key": "aoe_damage_scale",
+                  "value": 3.85,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  0
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  0
+                ]
+              ]
+            },
+            {
+              "name": "Remote Self-Destruct",
+              "rangeId": "x-5",
+              "description": "Instantly gains <@ba.vup>{cost}</> DP and causes Cherry-3 to self-destruct, dealing <@ba.vup>{aoe_damage_scale:0%}</> of Mitm's ATK as Physical damage to enemies in the four adjacent tiles",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 20,
+                "initSp": 9,
+                "increment": 1
+              },
+              "prefabId": "skchr_mitm_1",
+              "duration": 0,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 6,
+                  "valueStr": null
+                },
+                {
+                  "key": "aoe_damage_scale",
+                  "value": 4,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  0
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  0
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "id": "skchr_mitm_2",
+          "unlockCondition": {
+            "phase": "PHASE_1",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "Power Under Pressure",
+              "rangeId": null,
+              "description": "Gradually gains <@ba.vup>{mitm_s_2[cost].display}</> DP over the skill duration, ATK <@ba.vup>+{atk:0%}</>; Cherry-3 <@ba.vdown>stops attacking</>, gains Block <@ba.vup>+{block_cnt_display}</> and DEF <@ba.vup>+{mitm_s_2[to_token].def:0%}</>\n<@ba.rem>After the skill ends, Cherry-3 will self-destruct</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 50,
+                "initSp": 10,
+                "increment": 1
+              },
+              "prefabId": "skchr_mitm_2",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "attack@max_target",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "mode",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "mitm_s_2[to_token].block_cnt",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "mitm_s_2[to_token].def",
+                  "value": 0.8,
+                  "valueStr": null
+                },
+                {
+                  "key": "mitm_s_2[to_token].hp",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "mitm_s_2[cost].cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "mitm_s_2[cost].interval",
+                  "value": 1.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "mitm_s_2[cost].display",
+                  "value": 12,
+                  "valueStr": null
+                },
+                {
+                  "key": "block_cnt_display",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Power Under Pressure",
+              "rangeId": null,
+              "description": "Gradually gains <@ba.vup>{mitm_s_2[cost].display}</> DP over the skill duration, ATK <@ba.vup>+{atk:0%}</>; Cherry-3 <@ba.vdown>stops attacking</>, gains Block <@ba.vup>+{block_cnt_display}</> and DEF <@ba.vup>+{mitm_s_2[to_token].def:0%}</>\n<@ba.rem>After the skill ends, Cherry-3 will self-destruct</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 49,
+                "initSp": 10,
+                "increment": 1
+              },
+              "prefabId": "skchr_mitm_2",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "attack@max_target",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.35,
+                  "valueStr": null
+                },
+                {
+                  "key": "mode",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "mitm_s_2[to_token].block_cnt",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "mitm_s_2[to_token].def",
+                  "value": 0.85,
+                  "valueStr": null
+                },
+                {
+                  "key": "mitm_s_2[to_token].hp",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "mitm_s_2[cost].cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "mitm_s_2[cost].interval",
+                  "value": 1.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "mitm_s_2[cost].display",
+                  "value": 12,
+                  "valueStr": null
+                },
+                {
+                  "key": "block_cnt_display",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Power Under Pressure",
+              "rangeId": null,
+              "description": "Gradually gains <@ba.vup>{mitm_s_2[cost].display}</> DP over the skill duration, ATK <@ba.vup>+{atk:0%}</>; Cherry-3 <@ba.vdown>stops attacking</>, gains Block <@ba.vup>+{block_cnt_display}</> and DEF <@ba.vup>+{mitm_s_2[to_token].def:0%}</>\n<@ba.rem>After the skill ends, Cherry-3 will self-destruct</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 48,
+                "initSp": 10,
+                "increment": 1
+              },
+              "prefabId": "skchr_mitm_2",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "attack@max_target",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "mode",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "mitm_s_2[to_token].block_cnt",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "mitm_s_2[to_token].def",
+                  "value": 0.9,
+                  "valueStr": null
+                },
+                {
+                  "key": "mitm_s_2[to_token].hp",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "mitm_s_2[cost].cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "mitm_s_2[cost].interval",
+                  "value": 1.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "mitm_s_2[cost].display",
+                  "value": 12,
+                  "valueStr": null
+                },
+                {
+                  "key": "block_cnt_display",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Power Under Pressure",
+              "rangeId": null,
+              "description": "Gradually gains <@ba.vup>{mitm_s_2[cost].display}</> DP over the skill duration, ATK <@ba.vup>+{atk:0%}</>; Cherry-3 <@ba.vdown>stops attacking</>, gains Block <@ba.vup>+{block_cnt_display}</> and DEF <@ba.vup>+{mitm_s_2[to_token].def:0%}</>\n<@ba.rem>After the skill ends, Cherry-3 will self-destruct</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 47,
+                "initSp": 15,
+                "increment": 1
+              },
+              "prefabId": "skchr_mitm_2",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "attack@max_target",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.45,
+                  "valueStr": null
+                },
+                {
+                  "key": "mode",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "mitm_s_2[to_token].block_cnt",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "mitm_s_2[to_token].def",
+                  "value": 0.95,
+                  "valueStr": null
+                },
+                {
+                  "key": "mitm_s_2[to_token].hp",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "mitm_s_2[cost].cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "mitm_s_2[cost].interval",
+                  "value": 1.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "mitm_s_2[cost].display",
+                  "value": 12,
+                  "valueStr": null
+                },
+                {
+                  "key": "block_cnt_display",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Power Under Pressure",
+              "rangeId": null,
+              "description": "Gradually gains <@ba.vup>{mitm_s_2[cost].display}</> DP over the skill duration, ATK <@ba.vup>+{atk:0%}</>; Cherry-3 <@ba.vdown>stops attacking</>, gains Block <@ba.vup>+{block_cnt_display}</> and DEF <@ba.vup>+{mitm_s_2[to_token].def:0%}</>\n<@ba.rem>After the skill ends, Cherry-3 will self-destruct</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 46,
+                "initSp": 15,
+                "increment": 1
+              },
+              "prefabId": "skchr_mitm_2",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "attack@max_target",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "mode",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "mitm_s_2[to_token].block_cnt",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "mitm_s_2[to_token].def",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "mitm_s_2[to_token].hp",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "mitm_s_2[cost].cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "mitm_s_2[cost].interval",
+                  "value": 1.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "mitm_s_2[cost].display",
+                  "value": 12,
+                  "valueStr": null
+                },
+                {
+                  "key": "block_cnt_display",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Power Under Pressure",
+              "rangeId": null,
+              "description": "Gradually gains <@ba.vup>{mitm_s_2[cost].display}</> DP over the skill duration, ATK <@ba.vup>+{atk:0%}</>; Cherry-3 <@ba.vdown>stops attacking</>, gains Block <@ba.vup>+{block_cnt_display}</> and DEF <@ba.vup>+{mitm_s_2[to_token].def:0%}</>\n<@ba.rem>After the skill ends, Cherry-3 will self-destruct</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 45,
+                "initSp": 15,
+                "increment": 1
+              },
+              "prefabId": "skchr_mitm_2",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "attack@max_target",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.55,
+                  "valueStr": null
+                },
+                {
+                  "key": "mode",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "mitm_s_2[to_token].block_cnt",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "mitm_s_2[to_token].def",
+                  "value": 1.05,
+                  "valueStr": null
+                },
+                {
+                  "key": "mitm_s_2[to_token].hp",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "mitm_s_2[cost].cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "mitm_s_2[cost].interval",
+                  "value": 1.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "mitm_s_2[cost].display",
+                  "value": 12,
+                  "valueStr": null
+                },
+                {
+                  "key": "block_cnt_display",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Power Under Pressure",
+              "rangeId": null,
+              "description": "Gradually gains <@ba.vup>{mitm_s_2[cost].display}</> DP over the skill duration, ATK <@ba.vup>+{atk:0%}</>; Cherry-3 <@ba.vdown>stops attacking</>, gains Block <@ba.vup>+{block_cnt_display}</> and DEF <@ba.vup>+{mitm_s_2[to_token].def:0%}</>\n<@ba.rem>After the skill ends, Cherry-3 will self-destruct</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 44,
+                "initSp": 17,
+                "increment": 1
+              },
+              "prefabId": "skchr_mitm_2",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "attack@max_target",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "mode",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "mitm_s_2[to_token].block_cnt",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "mitm_s_2[to_token].def",
+                  "value": 1.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "mitm_s_2[to_token].hp",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "mitm_s_2[cost].cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "mitm_s_2[cost].interval",
+                  "value": 1.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "mitm_s_2[cost].display",
+                  "value": 12,
+                  "valueStr": null
+                },
+                {
+                  "key": "block_cnt_display",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Power Under Pressure",
+              "rangeId": null,
+              "description": "Gradually gains <@ba.vup>{mitm_s_2[cost].display}</> DP over the skill duration, ATK <@ba.vup>+{atk:0%}</>; Cherry-3 <@ba.vdown>stops attacking</>, gains Block <@ba.vup>+{block_cnt_display}</> and DEF <@ba.vup>+{mitm_s_2[to_token].def:0%}</>\n<@ba.rem>After the skill ends, Cherry-3 will self-destruct</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 43,
+                "initSp": 18,
+                "increment": 1
+              },
+              "prefabId": "skchr_mitm_2",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "attack@max_target",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.65,
+                  "valueStr": null
+                },
+                {
+                  "key": "mode",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "mitm_s_2[to_token].block_cnt",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "mitm_s_2[to_token].def",
+                  "value": 1.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "mitm_s_2[to_token].hp",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "mitm_s_2[cost].cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "mitm_s_2[cost].interval",
+                  "value": 1.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "mitm_s_2[cost].display",
+                  "value": 12,
+                  "valueStr": null
+                },
+                {
+                  "key": "block_cnt_display",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Power Under Pressure",
+              "rangeId": null,
+              "description": "Gradually gains <@ba.vup>{mitm_s_2[cost].display}</> DP over the skill duration, ATK <@ba.vup>+{atk:0%}</>; Cherry-3 <@ba.vdown>stops attacking</>, gains Block <@ba.vup>+{block_cnt_display}</> and DEF <@ba.vup>+{mitm_s_2[to_token].def:0%}</>\n<@ba.rem>After the skill ends, Cherry-3 will self-destruct</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 42,
+                "initSp": 19,
+                "increment": 1
+              },
+              "prefabId": "skchr_mitm_2",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "attack@max_target",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.7,
+                  "valueStr": null
+                },
+                {
+                  "key": "mode",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "mitm_s_2[to_token].block_cnt",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "mitm_s_2[to_token].def",
+                  "value": 1.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "mitm_s_2[to_token].hp",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "mitm_s_2[cost].cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "mitm_s_2[cost].interval",
+                  "value": 1.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "mitm_s_2[cost].display",
+                  "value": 12,
+                  "valueStr": null
+                },
+                {
+                  "key": "block_cnt_display",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Power Under Pressure",
+              "rangeId": null,
+              "description": "Gradually gains <@ba.vup>{mitm_s_2[cost].display}</> DP over the skill duration, ATK <@ba.vup>+{atk:0%}</>; Cherry-3 <@ba.vdown>stops attacking</>, gains Block <@ba.vup>+{block_cnt_display}</> and DEF <@ba.vup>+{mitm_s_2[to_token].def:0%}</>\n<@ba.rem>After the skill ends, Cherry-3 will self-destruct</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 40,
+                "initSp": 20,
+                "increment": 1
+              },
+              "prefabId": "skchr_mitm_2",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "attack@max_target",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.8,
+                  "valueStr": null
+                },
+                {
+                  "key": "mode",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "mitm_s_2[to_token].block_cnt",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "mitm_s_2[to_token].def",
+                  "value": 1.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "mitm_s_2[to_token].hp",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "mitm_s_2[cost].cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "mitm_s_2[cost].interval",
+                  "value": 1.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "mitm_s_2[cost].display",
+                  "value": 12,
+                  "valueStr": null
+                },
+                {
+                  "key": "block_cnt_display",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "factionTags": [
+        "rhodes"
+      ]
+    },
     "char_4027_heyak": {
       "id": "char_4027_heyak",
       "name": "Ho'olheyak",
@@ -632171,6 +634350,433 @@
     }
   },
   "tokens": {
+    "token_10037_mitm_trshrb": {
+      "id": "token_10037_mitm_trshrb",
+      "name": "Cherry-3",
+      "profession": "TOKEN",
+      "subProfessionId": "notchar1",
+      "position": "MELEE",
+      "phases": [
+        {
+          "maxLevel": 50,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 1252,
+                "atk": 130,
+                "def": 114,
+                "magicResistance": 0,
+                "cost": 0,
+                "blockCnt": 0,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.25,
+                "respawnTime": 10,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 50,
+              "data": {
+                "maxHp": 1627,
+                "atk": 186,
+                "def": 153,
+                "magicResistance": 0,
+                "cost": 0,
+                "blockCnt": 0,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.25,
+                "respawnTime": 10,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ]
+          ]
+        },
+        {
+          "maxLevel": 70,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 1713,
+                "atk": 192,
+                "def": 158,
+                "magicResistance": 0,
+                "cost": 0,
+                "blockCnt": 0,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.25,
+                "respawnTime": 10,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 70,
+              "data": {
+                "maxHp": 2090,
+                "atk": 256,
+                "def": 198,
+                "magicResistance": 0,
+                "cost": 0,
+                "blockCnt": 0,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.25,
+                "respawnTime": 10,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ]
+          ]
+        },
+        {
+          "maxLevel": 80,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 2200,
+                "atk": 264,
+                "def": 205,
+                "magicResistance": 0,
+                "cost": 0,
+                "blockCnt": 0,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.25,
+                "respawnTime": 10,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 80,
+              "data": {
+                "maxHp": 2750,
+                "atk": 323,
+                "def": 250,
+                "magicResistance": 0,
+                "cost": 0,
+                "blockCnt": 0,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.25,
+                "respawnTime": 10,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ]
+          ]
+        }
+      ],
+      "trait": null,
+      "talents": [
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_0",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Scrapheap Buggies",
+              "description": "When in Buggy form, automatically respawns 20 seconds after being defeated; when in Wreckage form, can block 1 enemy",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "block_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "interval",
+                  "value": 20,
+                  "valueStr": null
+                },
+                {
+                  "key": "trshrb_t_1[trash_born].max_hp",
+                  "value": -0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "trshrb_t_1[trash_born].block_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "trshrb_t_1[trash_born].def",
+                  "value": -1,
+                  "valueStr": null
+                },
+                {
+                  "key": "trshrb_t_1[trash_born].atk",
+                  "value": -1,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Scrapheap Buggies",
+              "description": "When in Buggy form, automatically respawns 17 seconds after being defeated; when in Wreckage form, can block 1 enemy",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "block_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "interval",
+                  "value": 17,
+                  "valueStr": null
+                },
+                {
+                  "key": "trshrb_t_1[trash_born].max_hp",
+                  "value": -0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "trshrb_t_1[trash_born].block_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "trshrb_t_1[trash_born].def",
+                  "value": -1,
+                  "valueStr": null
+                },
+                {
+                  "key": "trshrb_t_1[trash_born].atk",
+                  "value": -1,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Scrapheap Buggies",
+              "description": "When in Buggy form, automatically respawns 15 seconds after being defeated; when in Wreckage form, can block 1 enemy",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "block_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "interval",
+                  "value": 15,
+                  "valueStr": null
+                },
+                {
+                  "key": "trshrb_t_1[trash_born].max_hp",
+                  "value": -0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "trshrb_t_1[trash_born].block_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "trshrb_t_1[trash_born].def",
+                  "value": -1,
+                  "valueStr": null
+                },
+                {
+                  "key": "trshrb_t_1[trash_born].atk",
+                  "value": -1,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            }
+          ]
+        }
+      ],
+      "skills": [
+        {
+          "id": "sktok_mitm_trshrb_1",
+          "unlockCondition": {
+            "phase": "PHASE_0",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "Scrapheap Buggies",
+              "rangeId": null,
+              "description": "If defeated in Buggy form, spawns Wreckage in the four adjacent tiles",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 0,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": null,
+              "duration": 0,
+              "blackboard": []
+            }
+          ]
+        },
+        {
+          "id": "sktok_mitm_trshrb_2",
+          "unlockCondition": {
+            "phase": "PHASE_1",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "Scrapheap Buggies",
+              "rangeId": null,
+              "description": "If defeated in Buggy form, spawns Wreckage in the four adjacent tiles",
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 0,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": null,
+              "duration": 0,
+              "blackboard": []
+            }
+          ]
+        }
+      ],
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10037_mitm_trshrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+    },
     "token_10027_ironmn_pile1": {
       "id": "token_10027_ironmn_pile1",
       "name": "Stainless™ Multifunctional Platform",
@@ -633265,7 +635871,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a2b2fdf1b0702609b510fcf386b70e11782c98d7/models/operator/token_10027_ironmn_pile1/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10027_ironmn_pile1/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10027_ironmn_pile2": {
       "id": "token_10027_ironmn_pile2",
@@ -634535,7 +637141,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a2b2fdf1b0702609b510fcf386b70e11782c98d7/models/operator/token_10027_ironmn_pile2/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10027_ironmn_pile2/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10027_ironmn_pile3": {
       "id": "token_10027_ironmn_pile3",
@@ -637043,7 +639649,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a2b2fdf1b0702609b510fcf386b70e11782c98d7/models/operator/token_10027_ironmn_pile3/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10027_ironmn_pile3/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10020_ling_soul1": {
       "id": "token_10020_ling_soul1",
@@ -637935,7 +640541,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a2b2fdf1b0702609b510fcf386b70e11782c98d7/models/operator/token_10020_ling_soul1/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10020_ling_soul1/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10020_ling_soul2": {
       "id": "token_10020_ling_soul2",
@@ -639271,7 +641877,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a2b2fdf1b0702609b510fcf386b70e11782c98d7/models/operator/token_10020_ling_soul2/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10020_ling_soul2/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10020_ling_soul3": {
       "id": "token_10020_ling_soul3",
@@ -641111,7 +643717,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a2b2fdf1b0702609b510fcf386b70e11782c98d7/models/operator/token_10020_ling_soul3/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10020_ling_soul3/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10005_mgllan_drone1": {
       "id": "token_10005_mgllan_drone1",
@@ -642203,7 +644809,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a2b2fdf1b0702609b510fcf386b70e11782c98d7/models/operator/token_10005_mgllan_drone1/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10005_mgllan_drone1/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10005_mgllan_drone2": {
       "id": "token_10005_mgllan_drone2",
@@ -643199,7 +645805,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a2b2fdf1b0702609b510fcf386b70e11782c98d7/models/operator/token_10005_mgllan_drone2/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10005_mgllan_drone2/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10005_mgllan_drone3": {
       "id": "token_10005_mgllan_drone3",
@@ -644291,7 +646897,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a2b2fdf1b0702609b510fcf386b70e11782c98d7/models/operator/token_10005_mgllan_drone3/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10005_mgllan_drone3/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10056_angel2_target": {
       "id": "token_10056_angel2_target",
@@ -645091,7 +647697,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a2b2fdf1b0702609b510fcf386b70e11782c98d7/models/operator/token_10056_angel2_target/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10056_angel2_target/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10035_wisdel_wward": {
       "id": "token_10035_wisdel_wward",
@@ -647750,7 +650356,7 @@
         }
       ],
       "automaticOnly": true,
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a2b2fdf1b0702609b510fcf386b70e11782c98d7/models/operator/token_10031_swire2_gdtrap/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10031_swire2_gdtrap/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10033_ela_grzmot": {
       "id": "token_10033_ela_grzmot",
@@ -649549,7 +652155,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a2b2fdf1b0702609b510fcf386b70e11782c98d7/models/operator/token_10033_ela_grzmot/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10033_ela_grzmot/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10034_ray_sndbst": {
       "id": "token_10034_ray_sndbst",
@@ -650183,7 +652789,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a2b2fdf1b0702609b510fcf386b70e11782c98d7/models/operator/token_10034_ray_sndbst/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10034_ray_sndbst/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10028_vigil_wolf": {
       "id": "token_10028_vigil_wolf",
@@ -650922,7 +653528,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a2b2fdf1b0702609b510fcf386b70e11782c98d7/models/operator/token_10028_vigil_wolf/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10028_vigil_wolf/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10026_bgsnow_subbow": {
       "id": "token_10026_bgsnow_subbow",
@@ -652487,7 +655093,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a2b2fdf1b0702609b510fcf386b70e11782c98d7/models/operator/token_10026_bgsnow_subbow/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10026_bgsnow_subbow/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10017_skadi2_dedant": {
       "id": "token_10017_skadi2_dedant",
@@ -654084,7 +656690,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a2b2fdf1b0702609b510fcf386b70e11782c98d7/models/operator/token_10017_skadi2_dedant/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10017_skadi2_dedant/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10025_doroth_recttp": {
       "id": "token_10025_doroth_recttp",
@@ -655944,7 +658550,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a2b2fdf1b0702609b510fcf386b70e11782c98d7/models/operator/token_10025_doroth_recttp/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10025_doroth_recttp/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10036_lasher_mcbird": {
       "id": "token_10036_lasher_mcbird",
@@ -656868,7 +659474,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a2b2fdf1b0702609b510fcf386b70e11782c98d7/models/operator/token_10036_lasher_mcbird/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10036_lasher_mcbird/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10032_jesca2_jckshd": {
       "id": "token_10032_jesca2_jckshd",
@@ -657205,7 +659811,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a2b2fdf1b0702609b510fcf386b70e11782c98d7/models/operator/token_10032_jesca2_jckshd/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10032_jesca2_jckshd/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10040_siege2_vlion": {
       "id": "token_10040_siege2_vlion",
@@ -658637,7 +661243,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a2b2fdf1b0702609b510fcf386b70e11782c98d7/models/operator/token_10009_weedy_cannon/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10009_weedy_cannon/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10024_ebnhlz_rcube": {
       "id": "token_10024_ebnhlz_rcube",
@@ -659210,7 +661816,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a2b2fdf1b0702609b510fcf386b70e11782c98d7/models/operator/token_10024_ebnhlz_rcube/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10024_ebnhlz_rcube/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10044_wulfen_mine": {
       "id": "token_10044_wulfen_mine",
@@ -660411,7 +663017,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a2b2fdf1b0702609b510fcf386b70e11782c98d7/models/operator/token_10044_wulfen_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10044_wulfen_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10042_tecno_puppet": {
       "id": "token_10042_tecno_puppet",
@@ -660660,7 +663266,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a2b2fdf1b0702609b510fcf386b70e11782c98d7/models/operator/token_10042_tecno_puppet/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10042_tecno_puppet/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10041_cathy_catsld": {
       "id": "token_10041_cathy_catsld",
@@ -661218,7 +663824,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a2b2fdf1b0702609b510fcf386b70e11782c98d7/models/operator/token_10041_cathy_catsld/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10041_cathy_catsld/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10022_kazema_shadow": {
       "id": "token_10022_kazema_shadow",
@@ -661688,7 +664294,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a2b2fdf1b0702609b510fcf386b70e11782c98d7/models/operator/token_10022_kazema_shadow/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10022_kazema_shadow/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10001_deepcl_tentac": {
       "id": "token_10001_deepcl_tentac",
@@ -662002,7 +664608,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a2b2fdf1b0702609b510fcf386b70e11782c98d7/models/operator/token_10001_deepcl_tentac/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10001_deepcl_tentac/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10018_robrta_mach": {
       "id": "token_10018_robrta_mach",
@@ -662492,7 +665098,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a2b2fdf1b0702609b510fcf386b70e11782c98d7/models/operator/token_10018_robrta_mach/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10018_robrta_mach/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10014_bstalk_crab": {
       "id": "token_10014_bstalk_crab",
@@ -662821,7 +665427,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a2b2fdf1b0702609b510fcf386b70e11782c98d7/models/operator/token_10014_bstalk_crab/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10014_bstalk_crab/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10011_beewax_oblisk": {
       "id": "token_10011_beewax_oblisk",
@@ -663766,7 +666372,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a2b2fdf1b0702609b510fcf386b70e11782c98d7/models/operator/token_10011_beewax_oblisk/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10011_beewax_oblisk/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10006_vodfox_doll": {
       "id": "token_10006_vodfox_doll",
@@ -664402,7 +667008,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a2b2fdf1b0702609b510fcf386b70e11782c98d7/models/operator/token_10006_vodfox_doll/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10006_vodfox_doll/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10003_cgbird_bird": {
       "id": "token_10003_cgbird_bird",
@@ -664697,7 +667303,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a2b2fdf1b0702609b510fcf386b70e11782c98d7/models/operator/token_10003_cgbird_bird/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10003_cgbird_bird/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10000_silent_healrb": {
       "id": "token_10000_silent_healrb",
@@ -665080,7 +667686,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a2b2fdf1b0702609b510fcf386b70e11782c98d7/models/operator/token_10000_silent_healrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10000_silent_healrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10015_dusk_drgn": {
       "id": "token_10015_dusk_drgn",
@@ -665494,7 +668100,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a2b2fdf1b0702609b510fcf386b70e11782c98d7/models/operator/token_10015_dusk_drgn/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10015_dusk_drgn/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10007_phatom_twin": {
       "id": "token_10007_phatom_twin",
@@ -667273,7 +669879,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a2b2fdf1b0702609b510fcf386b70e11782c98d7/models/operator/token_10007_phatom_twin/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10007_phatom_twin/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10008_cqbw_box": {
       "id": "token_10008_cqbw_box",
@@ -667846,7 +670452,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a2b2fdf1b0702609b510fcf386b70e11782c98d7/models/operator/token_10008_cqbw_box/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10008_cqbw_box/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10029_slent2_protrb": {
       "id": "token_10029_slent2_protrb",
@@ -668591,7 +671197,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a2b2fdf1b0702609b510fcf386b70e11782c98d7/models/operator/token_10029_slent2_protrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10029_slent2_protrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10019_nearl2_sword": {
       "id": "token_10019_nearl2_sword",
@@ -669378,7 +671984,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a2b2fdf1b0702609b510fcf386b70e11782c98d7/models/operator/token_10019_nearl2_sword/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10019_nearl2_sword/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10002_kalts_mon3tr": {
       "id": "token_10002_kalts_mon3tr",
@@ -669796,7 +672402,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a2b2fdf1b0702609b510fcf386b70e11782c98d7/models/operator/token_10002_kalts_mon3tr/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10002_kalts_mon3tr/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10010_folivo_car": {
       "id": "token_10010_folivo_car",
@@ -671417,7 +674023,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a2b2fdf1b0702609b510fcf386b70e11782c98d7/models/operator/token_10010_folivo_car/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10010_folivo_car/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10021_blkngt_hypnos": {
       "id": "token_10021_blkngt_hypnos",
@@ -671832,7 +674438,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a2b2fdf1b0702609b510fcf386b70e11782c98d7/models/operator/token_10021_blkngt_hypnos/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10021_blkngt_hypnos/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10023_windft_wrench": {
       "id": "token_10023_windft_wrench",
@@ -672996,7 +675602,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a2b2fdf1b0702609b510fcf386b70e11782c98d7/models/operator/token_10023_windft_wrench/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10023_windft_wrench/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10045_alanna_crane": {
       "id": "token_10045_alanna_crane",
@@ -673396,7 +676002,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a2b2fdf1b0702609b510fcf386b70e11782c98d7/models/operator/token_10045_alanna_crane/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10045_alanna_crane/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10013_robin_mine": {
       "id": "token_10013_robin_mine",
@@ -674327,7 +676933,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a2b2fdf1b0702609b510fcf386b70e11782c98d7/models/operator/token_10013_robin_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10013_robin_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10016_rfrost_mine": {
       "id": "token_10016_rfrost_mine",
@@ -675258,7 +677864,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a2b2fdf1b0702609b510fcf386b70e11782c98d7/models/operator/token_10016_rfrost_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10016_rfrost_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10004_otter_motter": {
       "id": "token_10004_otter_motter",
@@ -676607,7 +679213,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a2b2fdf1b0702609b510fcf386b70e11782c98d7/models/operator/token_10004_otter_motter/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10004_otter_motter/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     }
   },
   "enemies": {
@@ -676658,7 +679264,7 @@
   },
   "skillEffects": {
     "repository": "arkpedia/arkpedia-sd-assets",
-    "commit": "a2b2fdf1b0702609b510fcf386b70e11782c98d7",
+    "commit": "5f58569d050e7444bb7b33646554b9f99249b7be",
     "pack": {
       "path": "effects/charge-cost/26-09-23-17-49-43_b9cc4a/effect.json",
       "bytes": 15311,

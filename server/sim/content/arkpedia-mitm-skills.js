@@ -18,6 +18,14 @@ const live = u => u?.alive && u.deployed && !u._removing && !u.hidden;
 const due = (b, time) => b.time + 1e-9 >= time;
 const grid = evidence.tables.ranges['x-5'].grids.map(g => [g.row, g.col]);
 
+// Public approval stays separate from the immutable native-source receipt.
+export function customizeMitmKit({ battle, id, unit, kit }) {
+  if (id !== MITM_ID) return;
+  const prepared = prepareMitmSkills(battle, unit, { contract: MITM_SKILL_CONTRACT });
+  Object.assign(kit, prepared.kit);
+}
+export function installMitm({ unit }) { unit.mem.mitmController?.install(); }
+
 function verify() {
   const s1 = component('-3546622456979472834'), s2 = component('-6833631102932632390');
   for (const h of [s1, s2]) if (h._canSilenced !== 0 || h._canUseInAbnormalState !== 0

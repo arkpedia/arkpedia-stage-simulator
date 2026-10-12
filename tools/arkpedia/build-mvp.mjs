@@ -60,6 +60,18 @@ const [characters, skills, ranges, enemies, stage, geometry, buffTemplates, orig
 if (originalLevel.mapData.tags != null && (!Array.isArray(originalLevel.mapData.tags)
   || originalLevel.mapData.tags.some(tag => typeof tag !== 'string'))) throw Error('Unsupported source map tags');
 const ids = Object.keys(REGULAR_OPERATORS);
+if (ids.includes('char_4147_mitm')) {
+  const review = JSON.parse(await readFile(new URL('../../data/arkpedia-mitm-runtime-review.json', import.meta.url)));
+  const foundation = await readFile(new URL('../../data/arkpedia-mitm-prefabs.json', import.meta.url));
+  const artwork = await readFile(new URL('../../data/arkpedia-mitm-device-art.json', import.meta.url));
+  const evidence = JSON.parse(foundation), art = JSON.parse(artwork);
+  if (JSON.stringify(review.enabledOperators) !== JSON.stringify(['char_4147_mitm']) || review.frameParity !== false
+    || review.sourceFoundationSha256 !== createHash('sha256').update(foundation).digest('hex')
+    || review.deviceArtworkSha256 !== createHash('sha256').update(artwork).digest('hex')
+    || art.foundation.sha256 !== review.sourceFoundationSha256
+    || evidence.source.commit !== pins[paths.character_table[0]])
+    throw Error('Mitm public review differs from its pinned native source/artwork');
+}
 if (ids.includes('char_4072_ironmn')) {
   const review = JSON.parse(await readFile(new URL('../../data/arkpedia-stainless-runtime-review.json', import.meta.url)));
   const foundation = await readFile(new URL('../../data/arkpedia-stainless-prefabs.json', import.meta.url));
@@ -177,6 +189,7 @@ const tokenIds = ['token_10056_angel2_target', 'token_10035_wisdel_wward', 'toke
 tokenIds.unshift('token_10005_mgllan_drone1', 'token_10005_mgllan_drone2', 'token_10005_mgllan_drone3');
 tokenIds.unshift('token_10020_ling_soul1', 'token_10020_ling_soul2', 'token_10020_ling_soul3');
 tokenIds.unshift(...[1, 2, 3].map(n => `token_10027_ironmn_pile${n}`));
+tokenIds.unshift('token_10037_mitm_trshrb');
 const tokens = Object.fromEntries(tokenIds.map(id => {
   const c = characters[id];
   if (!c) throw Error(`Missing original token: ${id}`);
@@ -284,6 +297,13 @@ const models = Object.fromEntries(
 );
 // Bind the published default dragon files to the independently audited artwork,
 // rather than approving whichever model happens to be at the latest asset HEAD.
+if (ids.includes('char_4147_mitm')) {
+  const review = JSON.parse(await readFile(new URL('../../data/arkpedia-mitm-runtime-review.json', import.meta.url)));
+  for (const [key, expected] of Object.entries(review.originalArtwork)) {
+    if (!models[key] || JSON.stringify(models[key]) !== JSON.stringify(expected))
+      throw Error(`Mitm published model differs from reviewed native artwork: ${key}`);
+  }
+}
 if (ids.includes('char_4072_ironmn')) {
   const review = JSON.parse(await readFile(new URL('../../data/arkpedia-stainless-runtime-review.json', import.meta.url)));
   for (const [key, expected] of Object.entries(review.originalArtwork)) {

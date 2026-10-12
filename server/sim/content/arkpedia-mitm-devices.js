@@ -100,6 +100,7 @@ export class MitmDeviceDeck {
     state = { unit: t, seq: t.deploySeq, mode: wreckage ? 2 : 'warming', generation: ++this.generation,
       phase: null, readyAt: b.time + 1, accepting: false, skillBuff: false };
     t.mem.mitmMode = state.mode; t.mem.mitmGeneration = state.generation;
+    if (!wreckage) t.mem.mitmReadyAt = state.readyAt;
     this.tokens.set(t, state); this.visual(state, wreckage ? 'Waste' : 'Start', false);
     if (wreckage) t.hp = t.s.maxHp;
     return state;
