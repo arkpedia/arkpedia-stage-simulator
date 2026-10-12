@@ -171,6 +171,7 @@ import { customizeMagallanKit, installMagallan } from './content/arkpedia-magall
 import { customizeLingKit, installLing } from './content/arkpedia-ling-skills.js';
 import { customizeShuKit, installShu } from './content/arkpedia-shu-skills.js';
 import { customizeYuKit, installYu } from './content/arkpedia-yu-skills.js';
+import { customizeStainlessKit, installStainless } from './content/arkpedia-stainless-skills.js';
 import { installShuRoster } from './content/arkpedia-shu.js';
 import { customizeLeeKit, installLee } from './content/arkpedia-lee.js';
 import { customizeYatoAlterKit, installYatoAlter } from './content/arkpedia-yato-alter.js';
@@ -569,6 +570,7 @@ export class StandardBattle extends Battle {
     customizeLingKit({ battle: this, id, unit, kit });
     customizeShuKit({ battle: this, id, unit, kit });
     customizeYuKit({ battle: this, id, unit, kit });
+    customizeStainlessKit({ battle: this, id, unit, kit });
     customizeHoolheyakKit({ battle: this, id, def, unit, kit });
     customizeEbenholzKit({ battle: this, id, def, unit, kit });
     customizeLinKit({ battle: this, id, def, unit, kit });
@@ -770,6 +772,7 @@ export class StandardBattle extends Battle {
     installLing({ unit });
     installShu({ unit });
     installYu({ unit });
+    installStainless({ unit });
     installHoolheyak({ battle: this, unit, def });
     installEbenholz({ battle: this, unit, def });
     installLin({ battle: this, unit, def });

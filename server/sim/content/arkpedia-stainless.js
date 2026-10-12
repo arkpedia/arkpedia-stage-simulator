@@ -65,6 +65,7 @@ export function selectedStainlessBuild(build) {
   const ctrl = components.find(v => v.data._modes && v.data._animator?.m_PathID !== '0'
     && v.data.m_GameObject.m_PathID === evidence.tokens[tokenId].find(r => r.object === tokenId).pathId).data;
   const token = { id: tokenId, name: tc.name, position: tc.position, stats: tokenStats,
+    profession: tc.profession, subProfessionId: tc.subProfessionId, arkpedia: { ...build },
     rangeGrid: grid(tp.rangeId), talents: tokenTalents, source: tc,
     skill: { ...tokenSkill, ...tokenSkill.spData, skillId: tokenSkill.prefabId,
       rangeGrid: grid(tokenSkill.rangeId), trigger: { rule: 'NEVER' } },

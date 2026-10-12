@@ -7,7 +7,7 @@ import { regularVisualHeight } from "./regular-form-visual.js";
 import { createAssets } from "/js/assets.js";
 import { regionEdges } from "/shared/arkpedia/placement.js";
 import { rangeStripes } from "/shared/arkpedia/battle-ui.js";
-import { spriteFacing } from "/shared/arkpedia/facing.js";
+import { spriteFacing, regularModelKey } from "/shared/arkpedia/facing.js";
 import { skillHud, skillSourceFor, ammunitionHud } from "/shared/arkpedia/skill-hud.js";
 import { regularTokenIdsFor } from "/shared/arkpedia/summons.js";
 import { artBase } from "/shared/arkpedia/stage-art.js";
@@ -185,6 +185,7 @@ export class StageRenderer {
       ...[...ids, ...tokenIds].flatMap((id) =>
         ["front", "back"].map((f) => `operator/${id}/default/${f}`),
       ),
+      ...tokenIds.map(id => `operator/${id}/default/down`).filter(key => this.data.sd.models[key]),
       ...Object.keys(this.data.enemies).map(
         (id) => `enemy/${id}/default/default`,
       ),
@@ -429,10 +430,7 @@ export class StageRenderer {
         // while healing, even when the operator is deployed facing up.
         const back = u.side === "ally" && (u.mem?.regularVisualDirection ?? u.dir) === "UP"
           && u.mem?.regularAttackFacing !== "Front" && !u.mem?.regularFormVisual?.forceFront;
-        let key =
-          u.side === "ally"
-            ? `operator/${u.defId}/default/${back ? "back" : "front"}`
-            : `enemy/${u.defId}/default/default`;
+        let key = regularModelKey(u);
         const formVisual = u.mem?.regularFormVisual;
         // Some original back skeletons omit the outgoing substitute clips. The
         // source front skeleton contains them; use it only for that transition.
@@ -496,11 +494,11 @@ export class StageRenderer {
             .drawRect(x - 1, y - 1, w + 2, 6)
             .endFill();
           view.hp
-            .beginFill(u.side === "ally" ? 0x64d5ae : 0xe27c66)
+            .beginFill(u.side === "ally" || u.mem?.regularModelFacing ? 0x64d5ae : 0xe27c66)
             .drawRect(x, y, w * Math.max(0, Math.min(1, u.hp / u.s.maxHp)), 4)
             .endFill();
         }
-        const skill = u.side === "ally" ? skillHud(skillSourceFor(u)?.skill) : null;
+        const skill = u.side === "ally" || u.mem?.regularModelFacing ? skillHud(skillSourceFor(u)?.skill) : null;
         if (skill) {
           // The green SP gauge sits immediately below HP; orange counts down an active skill.
           view.hp

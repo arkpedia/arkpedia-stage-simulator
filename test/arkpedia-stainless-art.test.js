@@ -5,14 +5,11 @@ import { readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import art from '../data/arkpedia-stainless-device-art.json' with { type: 'json' };
 import source from '../data/arkpedia-stainless-prefabs.json' with { type: 'json' };
-import { REGULAR_OPERATORS } from '../shared/arkpedia/operators.js';
-import playable from '../data/arkpedia-mvp.json' with { type: 'json' };
 
-test('original device artwork never silently approves Stainless or native effects/frame parity', () => {
+test('original device artwork remains artwork-only, separate from public approval and native effects/frame parity', () => {
   assert.equal(art.owner, 'char_4072_ironmn'); assert.equal(art.artworkOnly, true);
   assert.deepEqual(art.enabledOperators, []);
   for (const key of ['frameParity', 'nativeParticleSupport', 'nativeShaderParity']) assert.equal(art[key], false);
-  assert.equal(REGULAR_OPERATORS[art.owner], undefined); assert.equal(playable.operators[art.owner], undefined);
 });
 
 test('device artwork is bound to the immutable native receipt, bundle and avatar source', async () => {

@@ -125,6 +125,8 @@ export class StainlessDeviceDeck {
     return this.record.models[this.index !== 2 ? 'Single' : t.dir === 'UP' ? 'Back' : t.dir === 'DOWN' ? 'Down' : 'Front'];
   }
   visual(t, clip, loop = false, speed = 1) {
+    // Targeting side is independent of the original device artwork.
+    t.mem.regularModelFacing = this.index !== 2 ? 'front' : t.dir === 'UP' ? 'back' : t.dir === 'DOWN' ? 'down' : 'front';
     t.mem.regularFormVisual = { clip, speed, loop };
     if (this.index === 2) t.mem.regularDeathVisual = { clip: 'Die', die: 'Die', duration: this.model(t).durations.Die };
     else t.mem.regularDeathVisual = { clip: 'End', die: 'End', duration: this.model(t).durations.End };
