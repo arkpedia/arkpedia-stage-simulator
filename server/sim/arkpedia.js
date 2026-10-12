@@ -170,6 +170,7 @@ import { customizeExusiaiCovenantKit, installExusiaiCovenant } from './content/a
 import { customizeMagallanKit, installMagallan } from './content/arkpedia-magallan-skills.js';
 import { customizeLingKit, installLing } from './content/arkpedia-ling-skills.js';
 import { customizeShuKit, installShu } from './content/arkpedia-shu-skills.js';
+import { customizeYuKit, installYu } from './content/arkpedia-yu-skills.js';
 import { installShuRoster } from './content/arkpedia-shu.js';
 import { customizeLeeKit, installLee } from './content/arkpedia-lee.js';
 import { customizeYatoAlterKit, installYatoAlter } from './content/arkpedia-yato-alter.js';
@@ -567,6 +568,7 @@ export class StandardBattle extends Battle {
     customizeMagallanKit({ battle: this, id, unit, kit });
     customizeLingKit({ battle: this, id, unit, kit });
     customizeShuKit({ battle: this, id, unit, kit });
+    customizeYuKit({ battle: this, id, unit, kit });
     customizeHoolheyakKit({ battle: this, id, def, unit, kit });
     customizeEbenholzKit({ battle: this, id, def, unit, kit });
     customizeLinKit({ battle: this, id, def, unit, kit });
@@ -767,6 +769,7 @@ export class StandardBattle extends Battle {
     installMagallan({ unit });
     installLing({ unit });
     installShu({ unit });
+    installYu({ unit });
     installHoolheyak({ battle: this, unit, def });
     installEbenholz({ battle: this, unit, def });
     installLin({ battle: this, unit, def });
