@@ -242,8 +242,10 @@ export class YuSkills {
     const entered = touches && !this.entries.has(projectile.id);
     if (inside) this.entries.add(projectile.id); else this.entries.delete(projectile.id);
     if (!entered || this.b.rng() >= this.record.bb.prob) return false;
-    this.b.emit('yuIntercept', { owner: this.u, projectile });
-    this.b.fx('intercept', { x: projectile.x, y: projectile.y, id: projectile.id, src: this.u.id }); return true;
+    const fraction = Math.abs(a) <= half ? 0 : ((a > half ? half : -half) - a) / (z - a);
+    const point = { x: from.x + (to.x - from.x) * fraction, y: from.y + (to.y - from.y) * fraction };
+    this.b.emit('yuIntercept', { owner: this.u, projectile, point });
+    this.b.fx('intercept', { ...point, id: projectile.id, src: this.u.id }); return true;
   }
   startWall() {
     this.modeReady = true;

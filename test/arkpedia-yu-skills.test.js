@@ -299,6 +299,15 @@ test('S3 probability draws only on wall entry; lingering projectiles do not rero
   p.tx = 4; p.speed = 100; f.b.projectiles.update(.05); assert.equal(rolls, 2);
 });
 
+test('S3 interception reports the first wall contact instead of the tick endpoint, in both crossing directions', () => {
+  const f = make({ skill: 3 }); wall(f); const source = enemy(f, { col: 12, block: false });
+  f.b.rng = () => 0; const points = []; f.b.on('yuIntercept', e => points.push(e.point));
+  projectile(f, { source, from: { x: 4, y: 5 }, to: { x: 7, y: 5 } });
+  projectile(f, { source, from: { x: 7, y: 6 }, to: { x: 4, y: 6 } });
+  f.b.projectiles.update(.05); assert.equal(points.length, 2);
+  near(points[0].x, 5.35); near(points[1].x, 5.65); near(points[0].y, 5); near(points[1].y, 6);
+});
+
 test('S3 interception uses forward offset slab independently of the owner-root Arts boundary and can remove projectiles already inside on start', () => {
   const f = make({ skill: 3 }); ready(f); const source = enemy(f, { col: 12, block: false }); f.b.rng = () => 0;
   const p = projectile(f, { source, from: { x: 5.5, y: 2 }, to: { x: 5.5, y: 10 }, speed: .001 }); until(f, () => f.skills.wallReady);
