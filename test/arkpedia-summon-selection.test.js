@@ -7,6 +7,7 @@ import data from '../data/arkpedia-mvp.json' with { type: 'json' };
 import { StandardBattle } from '../server/sim/arkpedia.js';
 import { defaultBuild } from '../shared/arkpedia/loadout.js';
 import { skillHud, skillSourceFor, ammunitionHud } from '../shared/arkpedia/skill-hud.js';
+import { flowingShapeDeck } from '../public/arkpedia/muelsyse-copy.js';
 import { summonCardId, summonUnitId } from '../shared/arkpedia/summons.js';
 import { selectedRegularSummon, summonPlacementError, deployRegularSummon,
   regularSummonCards, retreatRegularSummon } from '../server/sim/content/arkpedia-summons.js';
@@ -22,7 +23,7 @@ function make(id) {
   battle.autoFinish = false; battle.setViewport('fullscreen-workspace'); battle.addDp('arkpedia', 99);
   battle.deployOperator(id, id === 'char_484_robrta' ? 2 : 3, id === 'char_484_robrta' ? 7 : id === 'char_1034_jesca2' ? 5 : 2, 'RIGHT');
   const context = createContext({ battle, data: source, selected: summonCardId(id), pending: null,
-    battleError: '', landscapeRequired: false, drawHud: () => {},
+    battleError: '', landscapeRequired: false, copyFlow: null, flowingShapeDeck, drawHud: () => {},
     icon: () => '', artwork: () => '', summonIcon: () => '',
     summonUnitId, selectedRegularSummon, summonPlacementError, deployRegularSummon });
   runInContext(fn('selectedEntry', 'placementError') + fn('placementError', 'battleReadouts').split('const statIcon')[0]
