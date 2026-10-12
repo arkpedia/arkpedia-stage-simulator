@@ -136,6 +136,10 @@ export class MitmCoreController {
       || p.target !== t || p.targetSeq !== t.deploySeq || !live(t)
       || !due(b, p.releaseAt) || !canTargetEnemy(u, t, { canHitFly: true })) return false;
     p.accepted = true;
+    return this.projectile(t, info);
+  }
+  projectile(t, info, { isSkill = false, tag = 'mitm:ordinary', projectileKey = 'projectile_chr_mitm' } = {}) {
+    const { b, u } = this;
     const sourceSeq = u.deploySeq, targetSeq = t.deploySeq;
     // Native projectile permits source retirement; keep a final source snapshot
     // when the owner life ends instead of consulting a later redeployment.
@@ -146,7 +150,7 @@ export class MitmCoreController {
     // by the native projectile lifetime; do not tie born flight to owner life.
     const expiry = b.after(10 + b.dt, () => this.flights.delete(flight));
     b.addProjectile({ from: u, target: t, source: u, speed: 10, maxAge: 10,
-      visual: 'arrow', data: { arkpediaTrackedVisual: true, mitmSourceSeq: sourceSeq },
+      visual: 'arrow', data: { arkpediaTrackedVisual: true, mitmSourceSeq: sourceSeq, projectileKey },
       onHit: ({ target }) => {
         expiry.cancel();
         this.flights.delete(flight);
@@ -158,13 +162,13 @@ export class MitmCoreController {
         const token = target.blockedBy;
         const ownBlock = sameLife && present(token) && token.defId === TOKEN && token.ownerUnit === u;
         b.dealDamage(u, target, makeDamageInfo({ amount: atk * (ownBlock ? this.record.traitBb.atk_scale : 1),
-          type: 'phys', isAttack: true, isSkill: false, isSplash: false,
-          applyWay: 'ranged', attackId: flight.attackId, tags: ['mitm:ordinary'] }));
+          type: 'phys', isAttack: true, isSkill, isSplash: false,
+          applyWay: 'ranged', attackId: flight.attackId, tags: [tag] }));
       } });
     return true;
   }
   tickAttack() {
-    if (this.skills?.active) { this.skills.tickAttack(); return; }
+    if (this.skills?.ownsAttackClock) { this.skills.tickAttack(); return; }
     const { b, u } = this;
     if (!this.valid()) { this.phase = null; return; }
     let p = this.phase;

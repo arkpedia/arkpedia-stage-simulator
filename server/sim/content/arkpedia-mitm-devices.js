@@ -131,17 +131,17 @@ export class MitmDeviceDeck {
       this.create(row, col, true);
     }
   }
-  rest(state, { restoreHp = true } = {}) {
+  rest(state, { restoreHp = true, spawnWreckage = true } = {}) {
     if (!this.valid(state) || state.transitioning || ![1, 3].includes(state.mode)) return false;
     // Native listener dispatches SpawnTrash before switching the original point.
     // Its centre remains occupied; unforced spawn skips it and other occupants.
     state.transitioning = true;
-    try { this.spawnWreckage(state); } finally { state.transitioning = false; }
+    try { if (spawnWreckage) this.spawnWreckage(state); } finally { state.transitioning = false; }
     if (!this.valid(state)) return false;
     state.mode = 0; state.phase = null; state.accepting = false; state.skillBuff = false;
     state.generation = ++this.generation; state.readyAt = this.b.time + this.talent.interval;
     state.unit.mem.mitmMode = 0; state.unit.mem.mitmGeneration = state.generation;
-    this.b.removeBuff(state.unit, BLOCK); this.b.removeBuff(state.unit, 'mitm:token-s2');
+    this.b.removeBuff(state.unit, BLOCK);
     this.b.releaseBlocked(state.unit);
     this.b.addBuff(state.unit, { key: REST, flags: { invulnerable: true, untargetable: true,
       isolated: true, noHeal: true, noSp: true, disarm: true }, mods: { blockCntMul: 0 } });
