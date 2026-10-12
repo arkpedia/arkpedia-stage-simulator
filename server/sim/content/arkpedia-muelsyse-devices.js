@@ -103,7 +103,8 @@ export class FlowingShapeDeck {
     const t = b.spawnToken(this.u, TOKEN, row, col, { def: this.record, dir: copy?.dir ?? 'RIGHT',
       kit: { talents: [],
         skill: { kind: 'duration', trigger: { rule: 'NEVER' },
-          canActivate: () => this.valid(s) && !s.clone && !this.copying && [1, 2, 3].includes(s.mode),
+          canActivate: () => this.valid(s) && !s.clone && !this.copying && [1, 2, 3].includes(s.mode)
+            && (this.core.skills?.canCopy(s) ?? true),
           onStart: () => { s.phase = null; this.copying = s; s.selecting = true; },
           onEnd: () => { if (this.copying === s) this.copying = null; s.selecting = false; } },
         trait: { noAttack: true, attack: 'melee', dmgType: 'arts', projectile: 'none', canHitFly: false,
@@ -287,6 +288,7 @@ export class FlowingShapeDeck {
   rest(s, { restoreHp = true } = {}) {
     if (!this.valid(s) || ![1, 2, 3, 'changing'].includes(s.mode)) return false;
     if (s.clone) { this.b._remove(s.unit, 'muelsyse-copy-finished', null, true); return true; }
+    this.core.skills?.tokenRemoved(s);
     this.clearVictims(s);
     s.unit.skill.end('shape-defeat');
     s.mode = 0; s.phase = null; s.accepting = false; s.generation = ++this.generation;
@@ -323,6 +325,7 @@ export class FlowingShapeDeck {
   }
   removed(t) {
     const s = this.tokens.get(t); if (!s) return;
+    this.core.skills?.tokenRemoved(s);
     this.clearVictims(s);
     if (this.copying === s) this.copying = null;
     this.tokens.delete(t); s.phase = null; s.accepting = false;

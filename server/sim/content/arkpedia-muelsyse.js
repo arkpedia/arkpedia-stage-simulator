@@ -225,7 +225,9 @@ export class MuelsyseCoreController {
   stop() {
     if (this.stopped) return;
     this.stopped = true; this.phase = null; this.accepting = false;
-    for (const flight of this.flights) { flight.atk = this.u.s.atk * this.u.s.atkScaleMul; flight.retired = true; }
+    for (const flight of this.flights) if (!flight.retired) {
+      flight.atk = this.u.s.atk * this.u.s.atkScaleMul; flight.retired = true;
+    }
     this.flights.clear();
     this.skills?.stop();
     this.devices?.stop();
