@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Opt-in diagnostic kit; public approval remains a separate review.
+// Selected source kit; public approval remains a separate review.
 import evidence from '../../../data/arkpedia-yu-prefabs.json' with { type: 'json' };
-import { prepareYuCore, YU_CORE_CONTRACT } from './arkpedia-yu.js';
+import { prepareYuCore, YU_CORE_CONTRACT, YU_ID } from './arkpedia-yu.js';
 import { absoluteRangeKeys, canTargetEnemy, sortEnemyTargets } from '../targeting.js';
 import { bodyInKeys } from '../body.js';
 import { enforceBlockCapacity } from '../ai.js';
@@ -10,7 +10,7 @@ import { makeDamageInfo } from '../damage.js';
 export const YU_SKILL_CONTRACT = Object.freeze({
   scope: 'All thirty selected Yu ranks, defensive-SP S1 and inverse Burn, delayed reachable-ground S2 teleport/Arts mode, directional S3 Arts/Burn wall and enemy projectile interception, global recovery',
   mapping: 'Original uncapped hit clocks and selected stats; one retained S1/S2 attack input, one S3 CAST input, unlimited ground burst inputs, separate delayed teleport, source root comparisons and entry-only projectile probability.',
-  limits: 'Diagnostic only. Compiled mode/FSM/ability dispatch, effect-start ordering, count loading and damage-modifier callbacks are bounded local mappings. Projectile width is mapped to a full-width slab; teleport uses corroborated four-corner landing geometry without certified native RNG draw order or persistent pull physics. Modules, particles, shaders, audio and Unity frame parity remain unsupported.',
+  limits: 'Selected source mapping; public enablement uses a separate review. Compiled mode/FSM/ability dispatch, effect-start ordering, count loading and damage-modifier callbacks are bounded local mappings. Projectile width is mapped to a full-width slab; teleport uses corroborated four-corner landing geometry without certified native RNG draw order or persistent pull physics. Modules, particles, shaders, audio and Unity frame parity remain unsupported.',
   frameParity: false,
 });
 const components = [...Object.values(evidence.characters), ...Object.values(evidence.skills)].flat().flatMap(r => r.components);
@@ -298,3 +298,11 @@ export function prepareYuSkills(b, u, { contract } = {}) {
     canActivate: () => bridge.canCast(), onStart: () => bridge.start(), onEnd: ({ reason }) => bridge.end(reason),
   } } };
 }
+
+// Public runtime approval is separate from the unchanged native extraction.
+export function customizeYuKit({ battle, id, unit, kit }) {
+  if (id !== YU_ID) return;
+  const prepared = prepareYuSkills(battle, unit, { contract: YU_SKILL_CONTRACT });
+  Object.assign(kit, prepared.kit);
+}
+export function installYu({ unit }) { unit.mem.yuController?.install(); }

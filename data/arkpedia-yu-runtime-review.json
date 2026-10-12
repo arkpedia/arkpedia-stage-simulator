@@ -1,0 +1,109 @@
+{
+  "schemaVersion": 1,
+  "operatorId": "char_2026_yu",
+  "enabledOperators": [
+    "char_2026_yu"
+  ],
+  "sourceFoundation": "arkpedia-yu-prefabs.json",
+  "assetCommit": "7a9f4698c4ee9a90d413cfa190a8613baefc920c",
+  "sourceFoundationSha256": "44693f03e91db6084d6975bd4c67e8211a257038826bb6c670bace40028f5267",
+  "originalArtwork": {
+    "front": {
+      "source": {
+        "key": "operators",
+        "repository": "fexli/ArknightsResource",
+        "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+        "directory": "spine/char_2026_yu/char_2026_yu/Front"
+      },
+      "files": [
+        {
+          "path": "models/operator/char_2026_yu/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_2026_yu.skel",
+          "bytes": 616713,
+          "sha256": "951da8f3ea2311a488e43c34b0ae552d7e1749e5d9d99e798098ff98f511c832"
+        },
+        {
+          "path": "models/operator/char_2026_yu/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_2026_yu.atlas",
+          "bytes": 12814,
+          "sha256": "16f84ee40f72935e27bc00231b37ce3f14f2035c1fa5cce4df0b70a93caf10b4"
+        },
+        {
+          "path": "models/operator/char_2026_yu/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_2026_yu.png",
+          "bytes": 263492,
+          "sha256": "4ec52ece48ef1f8e85a580b349659adcf4ecd7b6fb3ddd1555bfd4134abdb198"
+        }
+      ],
+      "animations": {
+        "Attack": 1.6,
+        "Default": 0,
+        "Die": 1,
+        "Idle": 6.4,
+        "Skill_1": 1.6,
+        "Skill_2": 1.6,
+        "Skill_3_Begin": 1.6,
+        "Skill_3_End": 0.167,
+        "Skill_3_Idle": 3.2,
+        "Skill_3_Loop": 1.6,
+        "Start": 1
+      },
+      "premultipliedAlpha": true
+    },
+    "back": {
+      "source": {
+        "key": "operators",
+        "repository": "fexli/ArknightsResource",
+        "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+        "directory": "spine/char_2026_yu/char_2026_yu/Back"
+      },
+      "files": [
+        {
+          "path": "models/operator/char_2026_yu/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_2026_yu.skel",
+          "bytes": 477494,
+          "sha256": "0d5f8aea6e5e394f630456065f4e98704bc9ab0d8fd77368db25203b4afe38f3"
+        },
+        {
+          "path": "models/operator/char_2026_yu/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_2026_yu.atlas",
+          "bytes": 7981,
+          "sha256": "0cd7396b7c8469ab4a865db7c8088300e7badf71695d4cdaddbb907694269f2d"
+        },
+        {
+          "path": "models/operator/char_2026_yu/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_2026_yu.png",
+          "bytes": 208943,
+          "sha256": "7fafbfc03a77c951ed2c3ca6fd2cfa080ac5da90f40d58a3fc5b800ab6e0e0a8"
+        }
+      ],
+      "animations": {
+        "Attack": 1.6,
+        "Default": 0,
+        "Idle": 6.4,
+        "Skill_1": 1.6,
+        "Skill_2": 1.6,
+        "Skill_3_Begin": 1.6,
+        "Skill_3_End": 0.167,
+        "Skill_3_Idle": 3.2,
+        "Skill_3_Loop": 1.6,
+        "Start": 1
+      },
+      "premultipliedAlpha": true
+    }
+  },
+  "scope": "All three selected source skills, original combat, blocking Burn/Arts and Sanctuary, separate HP/elemental recovery, delayed ground teleport and directional wall/projectile interception with public selected builds and original default artwork. The historical extraction receipt remains independently held.",
+  "frameParity": false,
+  "moduleSupport": false,
+  "nativeShaderParity": false,
+  "nativeParticleSupport": false,
+  "verification": [
+    "test/arkpedia-yu-public.test.js",
+    "test/arkpedia-yu.test.js",
+    "test/arkpedia-yu-skills.test.js",
+    "test/arkpedia-yu-source.test.js",
+    "tools/arkpedia/verify-yu.py",
+    "tools/arkpedia/review-yu-public.mjs"
+  ],
+  "limits": [
+    "The selected table count includes four deployed operators. The serialized checker value of five is preserved; compiled count loading and owner handling remain unresolved.",
+    "Compiled selector/FSM/ability dispatch, effect-start ordering and damage-modifier callbacks remain bounded local mappings.",
+    "Projectile width uses a full-width slab and literal nearest-centre root comparisons. Corroborated corner teleport geometry does not certify native RNG draw order, collision-offset reset or persistent pull physics.",
+    "Published extracted skeleton/atlas/texture files are byte-pinned; native shader, particle and RGBA parity are not certified.",
+    "Modules, native particles, audio and certified Unity frame parity remain unimplemented."
+  ]
+}

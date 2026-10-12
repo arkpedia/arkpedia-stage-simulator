@@ -60,6 +60,15 @@ const [characters, skills, ranges, enemies, stage, geometry, buffTemplates, orig
 if (originalLevel.mapData.tags != null && (!Array.isArray(originalLevel.mapData.tags)
   || originalLevel.mapData.tags.some(tag => typeof tag !== 'string'))) throw Error('Unsupported source map tags');
 const ids = Object.keys(REGULAR_OPERATORS);
+if (ids.includes('char_2026_yu')) {
+  const review = JSON.parse(await readFile(new URL('../../data/arkpedia-yu-runtime-review.json', import.meta.url)));
+  const foundation = await readFile(new URL('../../data/arkpedia-yu-prefabs.json', import.meta.url));
+  const evidence = JSON.parse(foundation);
+  if (JSON.stringify(review.enabledOperators) !== JSON.stringify(['char_2026_yu']) || review.frameParity !== false
+    || review.sourceFoundationSha256 !== createHash('sha256').update(foundation).digest('hex')
+    || evidence.source.commit !== pins[paths.character_table[0]])
+    throw Error('Yu public runtime review differs from its pinned native source');
+}
 if (ids.includes('char_2025_shu')) {
   const review = JSON.parse(await readFile(new URL('../../data/arkpedia-shu-runtime-review.json', import.meta.url)));
   const foundation = await readFile(new URL('../../data/arkpedia-shu-prefabs.json', import.meta.url));
@@ -262,6 +271,20 @@ const models = Object.fromEntries(
 );
 // Bind the published default dragon files to the independently audited artwork,
 // rather than approving whichever model happens to be at the latest asset HEAD.
+if (ids.includes('char_2026_yu')) {
+  const review = JSON.parse(await readFile(new URL('../../data/arkpedia-yu-runtime-review.json', import.meta.url)));
+  const evidence = JSON.parse(await readFile(new URL('../../data/arkpedia-yu-prefabs.json', import.meta.url)));
+  for (const facing of ['front', 'back']) {
+    const model = models[`operator/char_2026_yu/default/${facing}`], art = review.originalArtwork[facing];
+    if (!model || JSON.stringify([model.skeleton, model.atlas, ...model.textures]) !== JSON.stringify(art.files)
+      || JSON.stringify(model.source) !== JSON.stringify(art.source)
+      || JSON.stringify(model.animations) !== JSON.stringify(art.animations)
+      || model.source.commit !== evidence.source.modelCommit
+      || model.skeleton.sha256 !== evidence.officialSkeletonBindings.char_2026_yu[facing === 'front' ? 'Front' : 'Back'].sha256
+      || !model.premultipliedAlpha || !art.premultipliedAlpha)
+      throw Error(`Yu published owner differs from reviewed native artwork: ${facing}`);
+  }
+}
 if (ids.includes('char_2025_shu')) {
   const review = JSON.parse(await readFile(new URL('../../data/arkpedia-shu-runtime-review.json', import.meta.url)));
   const evidence = JSON.parse(await readFile(new URL('../../data/arkpedia-shu-prefabs.json', import.meta.url)));
