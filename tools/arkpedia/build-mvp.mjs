@@ -60,6 +60,17 @@ const [characters, skills, ranges, enemies, stage, geometry, buffTemplates, orig
 if (originalLevel.mapData.tags != null && (!Array.isArray(originalLevel.mapData.tags)
   || originalLevel.mapData.tags.some(tag => typeof tag !== 'string'))) throw Error('Unsupported source map tags');
 const ids = Object.keys(REGULAR_OPERATORS);
+if (ids.includes('char_4072_ironmn')) {
+  const review = JSON.parse(await readFile(new URL('../../data/arkpedia-stainless-runtime-review.json', import.meta.url)));
+  const foundation = await readFile(new URL('../../data/arkpedia-stainless-prefabs.json', import.meta.url));
+  const artwork = await readFile(new URL('../../data/arkpedia-stainless-device-art.json', import.meta.url));
+  const evidence = JSON.parse(foundation);
+  if (JSON.stringify(review.enabledOperators) !== JSON.stringify(['char_4072_ironmn']) || review.frameParity !== false
+    || review.sourceFoundationSha256 !== createHash('sha256').update(foundation).digest('hex')
+    || review.deviceArtworkSha256 !== createHash('sha256').update(artwork).digest('hex')
+    || evidence.source.commit !== pins[paths.character_table[0]])
+    throw Error('Stainless public review differs from its pinned native source/artwork');
+}
 if (ids.includes('char_2026_yu')) {
   const review = JSON.parse(await readFile(new URL('../../data/arkpedia-yu-runtime-review.json', import.meta.url)));
   const foundation = await readFile(new URL('../../data/arkpedia-yu-prefabs.json', import.meta.url));
@@ -165,6 +176,7 @@ for (const op of Object.values(operators)) assertRegularOperator(op);
 const tokenIds = ['token_10056_angel2_target', 'token_10035_wisdel_wward', 'token_10012_rosmon_shield', 'token_10031_swire2_gdtrap', 'token_10033_ela_grzmot', 'token_10034_ray_sndbst', 'token_10028_vigil_wolf', 'token_10026_bgsnow_subbow', 'token_10017_skadi2_dedant', 'token_10025_doroth_recttp', 'token_10036_lasher_mcbird', 'token_10032_jesca2_jckshd', 'token_10040_siege2_vlion', 'token_10009_weedy_cannon', 'token_10024_ebnhlz_rcube', 'token_10044_wulfen_mine', 'token_10042_tecno_puppet', 'token_10041_cathy_catsld', 'token_10022_kazema_shadow', 'token_10001_deepcl_tentac', 'token_10018_robrta_mach', 'token_10014_bstalk_crab', 'token_10011_beewax_oblisk', 'token_10006_vodfox_doll', 'token_10003_cgbird_bird', 'token_10000_silent_healrb', 'token_10015_dusk_drgn', 'token_10007_phatom_twin', 'token_10008_cqbw_box', 'token_10029_slent2_protrb', 'token_10019_nearl2_sword', 'token_10002_kalts_mon3tr', 'token_10010_folivo_car', 'token_10021_blkngt_hypnos', 'token_10023_windft_wrench', 'token_10045_alanna_crane', 'token_10013_robin_mine', 'token_10016_rfrost_mine', 'token_10004_otter_motter'];
 tokenIds.unshift('token_10005_mgllan_drone1', 'token_10005_mgllan_drone2', 'token_10005_mgllan_drone3');
 tokenIds.unshift('token_10020_ling_soul1', 'token_10020_ling_soul2', 'token_10020_ling_soul3');
+tokenIds.unshift(...[1, 2, 3].map(n => `token_10027_ironmn_pile${n}`));
 const tokens = Object.fromEntries(tokenIds.map(id => {
   const c = characters[id];
   if (!c) throw Error(`Missing original token: ${id}`);
@@ -250,6 +262,7 @@ const modelKeys = [
     ["front", "back"].map((f) => `operator/${id}/default/${f}`),
   ),
   ...tokenIds.flatMap(id => ['front', 'back'].map(f => `operator/${id}/default/${f}`)),
+  'operator/token_10027_ironmn_pile3/default/down',
   ...Object.keys(enemyRecords).map((id) => `enemy/${id}/default/default`),
 ];
 const models = Object.fromEntries(
@@ -271,6 +284,14 @@ const models = Object.fromEntries(
 );
 // Bind the published default dragon files to the independently audited artwork,
 // rather than approving whichever model happens to be at the latest asset HEAD.
+if (ids.includes('char_4072_ironmn')) {
+  const review = JSON.parse(await readFile(new URL('../../data/arkpedia-stainless-runtime-review.json', import.meta.url)));
+  for (const [key, expected] of Object.entries(review.originalArtwork)) {
+    const model = models[key];
+    if (!model || JSON.stringify(model) !== JSON.stringify(expected))
+      throw Error(`Stainless published model differs from reviewed native artwork: ${key}`);
+  }
+}
 if (ids.includes('char_2026_yu')) {
   const review = JSON.parse(await readFile(new URL('../../data/arkpedia-yu-runtime-review.json', import.meta.url)));
   const evidence = JSON.parse(await readFile(new URL('../../data/arkpedia-yu-prefabs.json', import.meta.url)));

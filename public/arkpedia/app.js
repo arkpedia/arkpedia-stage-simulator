@@ -470,7 +470,9 @@ async function exit() {
 function pick(row, col) {
   if (!battle || battle.finished || landscapeRequired) return;
   battleError = "";
-  const occupied = battle.allyUnits.find(
+  // Owned devices can deliberately use the enemy targeting side (Stainless).
+  const selectable = battle.units.filter(u => u.side === 'ally' || u.mem.regularSummonCard);
+  const occupied = selectable.find(
     (u) => u.alive && u.deployed && u.tileR === row && u.tileC === col,
   );
   if (occupied) {
@@ -490,7 +492,7 @@ function pick(row, col) {
       pending = null;
     } else pending = { row, col, dir: null };
   } else {
-    const unit = battle.allyUnits.find(
+    const unit = selectable.find(
       (u) => u.alive && u.tileR === row && u.tileC === col,
     );
     selected = unit?.kind === 'token' || unit?.kind === 'device' && unit.mem.regularSummonCard
@@ -683,9 +685,14 @@ function drawHud() {
       };
   }
   for (const button of shelf.querySelectorAll("button")) {
-    const id = button.dataset.id,
-      b = selectedEntry(id),
-      alive = b.unit?.alive,
+    const id = button.dataset.id, b = selectedEntry(id);
+    // Owner-scoped decks unregister on retirement; their old card has no state.
+    if (!b) {
+      if (selected === id) cancelPlacement();
+      button.remove();
+      continue;
+    }
+    const alive = b.unit?.alive,
       cool = Math.max(0, Math.ceil(b.readyAt - battle.time));
     const cost = b.kind === 'summon'
       ? !b.owner.alive || !b.owner.deployed ? 'Summoner absent'

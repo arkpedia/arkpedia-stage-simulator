@@ -2,8 +2,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import e from '../data/arkpedia-stainless-prefabs.json' with { type: 'json' };
-import { REGULAR_OPERATORS } from '../shared/arkpedia/operators.js';
-import publicData from '../data/arkpedia-mvp.json' with { type: 'json' };
 
 const ID = 'char_4072_ironmn';
 const tokens = [1, 2, 3].map(n => `token_10027_ironmn_pile${n}`);
@@ -13,11 +11,9 @@ const actions = (key, event) => e.templates[key].eventToActions[event];
 const type = a => a.$type.split('+').at(-1).split(',')[0];
 const bb = rows => Object.fromEntries(rows.map(r => [r.key, r.valueStr || r.value]));
 
-test('Stainless foundation is held and never silently becomes playable', () => {
+test('Stainless immutable foundation remains held independently of separate public approval', () => {
   assert.deepEqual(e.enabledOperators, []); assert.deepEqual(e.heldOperators, [ID]);
   for (const k of ['frameParity', 'moduleSupport', 'nativeParticleSupport']) assert.equal(e[k], false);
-  assert.equal(REGULAR_OPERATORS[ID], undefined);
-  assert.equal(publicData.operators[ID], undefined);
   assert.equal(e.source.commit, '57010cb5b2afea112cae57daa756b58676ba6850');
   assert.equal(e.source.nativeClient, '26-09-23-17-49-43_b9cc4a');
 });

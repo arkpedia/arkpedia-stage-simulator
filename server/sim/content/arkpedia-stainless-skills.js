@@ -3,7 +3,7 @@
 import { makeDamageInfo } from '../damage.js';
 import { canTargetEnemy } from '../targeting.js';
 import { prepareStainlessDevices, STAINLESS_DEVICE_CONTRACT } from './arkpedia-stainless-devices.js';
-import { stainlessSourceComponent as component } from './arkpedia-stainless.js';
+import { STAINLESS_ID, stainlessSourceComponent as component } from './arkpedia-stainless.js';
 import evidence from '../../../data/arkpedia-stainless-prefabs.json' with { type: 'json' };
 
 export const STAINLESS_SKILL_CONTRACT = Object.freeze({
@@ -45,6 +45,14 @@ function verify() {
       throw Error('Unreviewed Stainless skill mode/modifiers');
   }
 }
+
+// Public approval is recorded separately from the immutable native extraction.
+export function customizeStainlessKit({ battle, id, unit, kit }) {
+  if (id !== STAINLESS_ID) return;
+  const prepared = prepareStainlessSkills(battle, unit, { contract: STAINLESS_SKILL_CONTRACT });
+  Object.assign(kit, prepared.kit);
+}
+export function installStainless({ unit }) { unit.mem.stainlessController?.install(); }
 
 export class StainlessSkills {
   constructor(core) { this.core = core; this.b = core.b; this.u = core.u; this.record = core.record; this.accepting = false; }

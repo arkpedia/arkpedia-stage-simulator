@@ -168,6 +168,7 @@ import { MAGALLAN_OPERATORS } from './magallan-operators.js';
 import { LING_OPERATORS } from './ling-operators.js';
 import { SHU_OPERATORS } from './shu-operators.js';
 import { YU_OPERATORS } from './yu-operators.js';
+import { STAINLESS_OPERATORS } from './stainless-operators.js';
 import { LEE_OPERATORS } from './lee-operators.js';
 import { YATO_ALTER_OPERATORS } from './yato-alter-operators.js';
 import { SPECTER_ALTER_OPERATORS } from './specter-alter-operators.js';
@@ -342,6 +343,7 @@ export const REGULAR_OPERATORS = Object.freeze({
   ...LING_OPERATORS,
   ...SHU_OPERATORS,
   ...YU_OPERATORS,
+  ...STAINLESS_OPERATORS,
   ...HOOLHEYAK_OPERATORS,
   ...EBENHOLZ_OPERATORS,
   ...LIN_OPERATORS,
