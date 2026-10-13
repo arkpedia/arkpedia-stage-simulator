@@ -87,5 +87,8 @@ test('original straight-cone sparks retain authored source speed, collapsed shap
   near(p.displacement[1],0);near(p.displacement[2],0);
  }
  const noLimit=structuredClone(s);noLimit.ClampVelocityModule.enabled=false;assert.notDeepEqual(createMovingParticles(noLimit).sample(.5),snapshot);
- const angled=structuredClone(s);angled.ShapeModule.angle=25;assert.throws(()=>createMovingParticles(angled),/angled cone/);
+ const angled=structuredClone(straight);angled.ShapeModule.angle=25;
+ const cone=createMovingParticles(angled).sample(.5);
+ assert.ok(cone.some(p=>Math.abs(p.direction[1])>1e-6||Math.abs(p.direction[2])>1e-6));
+ for(const p of cone)p.displacement.forEach((v,i)=>near(v,p.initialVelocity[i]*p.age));
 });

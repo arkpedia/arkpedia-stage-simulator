@@ -3639,3 +3639,32 @@ ARKPEDIA_REVIEW_CHROME='/path/to/chromium' node tools/arkpedia/review-tragodia-e
 ```
 
 Logs are `.cache/arkpedia/tragodia-source/start-rotation-*.log`. The original effect packs, shader/animation inputs, public MVP and coverage remain unchanged: **373/431 forms and 812 selected skills**. Full particle rendering, Animator state dispatch, delivered artwork and public mouse/touch battle review still gate Tragodia's registration. Arkpedia app PR229 remains outside dev until all operator, enemy, stage and dependable automation gates are met.
+
+### Source-configured cone-base replay (2026-10-14)
+
+Cone-base particles now use their authored angle, radius, thickness and shape scale. The local geometric model samples the existing area-uniform annulus and projects a ray from a virtual apex: divergence increases with distance from the center, reaching the authored angle at the rim. Zero degrees retains straight emission; 90 degrees produces an exactly planar direction. Shape scale affects the spawn position before the existing shape rotation and translation. Authored degrees convert to radians for this calculation.
+
+The [Unity 2021.3 Shape documentation](https://docs.unity3d.com/2021.3/Documentation/Manual/PartSysShapeModule.html) describes these controls and limits. This is a **local geometric reconstruction**, not recovered compiled Unity emission code. Native sampling distribution, random ordering and frame parity remain unverified; the manifest records `nativeEmissionParity: false` and enables no operators.
+
+The fixture retains all **59 original angled-cone ShapeModules** from the pinned Tragodia and Lappland packs. **51 geometries are sampled; eight remain held** for burst-spread or discrete arc settings. This does not certify the other modules or renderers of all 51 particle systems. Point cones, volume emission, partial arcs, resource-based shapes and random direction controls remain rejected. The seven Lappland 3D-rotation profiles previously held at the angle check now retain their more specific original burst-spread arc blocker.
+
+The independent Python audit reads the original Unity objects and serialized hashes, validates both effect packs, and compares every fixture field. Native pointer IDs retain the pack's decimal-string contract. Fixture bytes and decoded fields are checked separately to preserve tiny radii despite Python/JavaScript number-spelling differences. A separate Cartesian apex-ray calculation checks **3,672 values**; **three outputs reproduce exactly**, and **13 altered-evidence fixtures are rejected**.
+
+The original cage spark now plays in the diagnostic, bringing the cage to **15 draw components and three held components**: trails with distinct materials, inherited-velocity lifecycle, and the unresolved original mesh. The trail component also retains a discrete arc setting needing separate implementation. All 22 nodes and 20 renderer records remain present; two renderers are disabled in the source. Strict playback still rejects the partial cage.
+
+Validation:
+
+- The twenty-four-file adjacent regression set passes **500 checks on both Node 22 and Node 24**, without failures or skips.
+- Software WebGL2 compiles **22 original programs**, resolves **91 materials**, and verifies **15 cage-spark directions, initial velocities and actual rendered world positions**, including the source LocalScaling frame. Reverse scrubbing restores the same particles and matrices.
+- The existing **24 custom-stream GPU buffer checks** and original glow rotation check remain passing. No GL or page errors occur.
+- The updated 512-pixel cage diagnostic at 1.8 seconds was visually inspected. It remains a partial diagnostic, not full cage approval or native game pixel parity. Reports and the image are in `.cache/arkpedia/tragodia-source/effects/`; audit and regression logs use the `cone-` prefix in `.cache/arkpedia/tragodia-source/`.
+
+Reproduce with Node 22 on `PATH`, the extraction Python environment and a Chromium executable:
+
+```sh
+node tools/arkpedia/export-particle-cones.mjs
+.cache/map-env/bin/python tools/arkpedia/audit-particle-cones.py
+ARKPEDIA_REVIEW_CHROME='/path/to/chromium' node tools/arkpedia/review-tragodia-effect-shaders.mjs
+```
+
+The remaining cage components, unresolved resources, Animator state dispatch, delivered artwork and public mouse/touch battle review still gate Tragodia's registration. Public coverage remains **373/431 forms and 812 selected skills**, with unchanged Global/CN/model pins and published data. Arkpedia app PR229 remains outside dev until all operator, enemy, stage and dependable automation gates are met.

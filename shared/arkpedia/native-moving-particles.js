@@ -3,17 +3,19 @@ import {createParticleLifecycle,particleRandom} from './native-particle-lifecycl
 import {sampleParticleCurve} from './native-particle-curves.js';
 import {createParticleMotion} from './native-particle-motion.js';
 import {particleBirthFrame} from './native-particle-render.js';
+import {createParticleCone} from './native-particle-cone.js';
 
-// Original sphere/box/straight-cone emission, lifetime velocity and grid animation.
+// Source sphere/box/cone-base emission, lifetime velocity and grid animation.
 // RNG, event boundaries, native frame phase and renderer coordinates remain
 // explicit local mappings until compared with compiled Unity/game frames.
 export function createMovingParticles(source,{seed=1}={}){
   const lifecycle=createParticleLifecycle(source,{seed,modules:['ShapeModule','VelocityModule','UVModule','ClampVelocityModule','NoiseModule'],spaces:[0,1],allowInitialSpeed:true,allowDistanceEmission:true});
   const shape=source.ShapeModule,velocity=source.VelocityModule,uv=source.UVModule;
   const motion=createParticleMotion(source,{seed});
+  let cone=null;
   if(shape?.enabled){
     if(![0,4,5].includes(shape.type)||shape.alignToDirection||shape.randomDirectionAmount!==0||shape.sphericalDirectionAmount!==0||shape.randomPositionAmount!==0)throw Error('Native particle shape/direction needs review');
-    if(shape.type===4&&(shape.angle!==0||shape.arc?.mode!==0||shape.arc.spread!==0||shape.arc.value!==360))throw Error('Native angled cone/arc/radius mode needs review');
+    if(shape.type===4)cone=createParticleCone(shape);
     if(shape.type!==5&&(shape.radius?.mode!==0||shape.radius.spread!==0||!Number.isFinite(shape.radius.value)||shape.radius.value<0||!Number.isFinite(shape.radiusThickness)||shape.radiusThickness<0||shape.radiusThickness>1))throw Error('Native shape radius mode needs review');
     for(const field of ['m_Texture','m_Mesh','m_MeshRenderer','m_SkinnedMeshRenderer','m_Sprite','m_SpriteRenderer'])if(shape[field]?.m_PathID!=='0')throw Error('Native shape resource needs review');
     for(const field of ['m_Position','m_Rotation','m_Scale'])for(const axis of ['x','y','z'])if(!Number.isFinite(shape[field]?.[axis]))throw Error('Invalid native shape transform');
@@ -48,8 +50,7 @@ export function createMovingParticles(source,{seed=1}={}){
           const r=Math.cbrt(inner**3+random(12)*(radius**3-inner**3));
           origin=direction.map((v,i)=>v*r*shape.m_Scale[['x','y','z'][i]]);
         }else{
-          const radius=shape.radius.value,inner=radius*(1-shape.radiusThickness),r=Math.sqrt(inner*inner+random(10)*(radius*radius-inner*inner)),angle=random(11)*Math.PI*2;
-          origin=[r*Math.cos(angle)*shape.m_Scale.x,r*Math.sin(angle)*shape.m_Scale.y,0];
+          ({origin,direction}=cone.sample(random(10),random(11)));
         }
         origin=rotateShape(origin,shape.m_Rotation).map((v,i)=>v+shape.m_Position[['x','y','z'][i]]);
         direction=rotateShape(direction,shape.m_Rotation);
@@ -72,7 +73,7 @@ export function createMovingParticles(source,{seed=1}={}){
         const count=uv.tilesX*uv.tilesY,frame=Math.min(count-1,Math.floor(((phase%1+1)%1)*count));
         sheet={frame,scale:[1/uv.tilesX,1/uv.tilesY],offset:[(frame%uv.tilesX)/uv.tilesX,1-(Math.floor(frame/uv.tilesX)+1)/uv.tilesY],mask:uv.uvChannelMask};
       }
-      return {...p,origin,displacement,position:worldPosition??origin.map((v,i)=>v+displacement[i]),
+      return {...p,origin,direction,initialVelocity,displacement,position:worldPosition??origin.map((v,i)=>v+displacement[i]),
         ...(worldPosition?{worldPosition}:{}),velocitySpace:worldMotion||velocity?.enabled&&velocity.inWorldSpace?'world':'local',simulationSpace:source.moveWithTransform===1?'world':'local',birthTime,sheet};
     });
   }
