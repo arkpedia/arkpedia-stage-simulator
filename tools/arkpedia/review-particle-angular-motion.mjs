@@ -94,11 +94,69 @@ try{
    let strictRejected=false;try{await library.create('whitw2_skill_03_buff_01');}catch(error){if(!/unplayed components/.test(error.message))throw error;strictRejected=true;}
    if(!strictRejected||library.instanceCount!==1)throw Error('Partial angular root bypassed strict playback');
    const pivotDraws=instance.draws.filter(d=>d.pivot?.pivot.some(v=>v!==0));let pivotMatrices=0,pivotRenderPasses=0;
+   const rotationDraws=instance.draws.filter(d=>d.mesh.material.userData.textureRotations);let rotationRenderPasses=0;
+   if(rotationDraws.length!==1||instance.draws.length!==22||instance.blocked.length!==6)throw Error('Missing original texture rotation component');
+   const rotationMaterial=rotationDraws[0].mesh.material;
+   for(const d of rotationDraws)for(const part of d.pool)part.onAfterRender=function(){
+    const gl=renderer.getContext(),program=gl.getParameter(gl.CURRENT_PROGRAM);
+    for(let i=0;i<4;i++){
+     const name='_Rotation'+i,actual=gl.getUniform(program,gl.getUniformLocation(program,name)),expected=rotationMaterial.uniforms[name].value.toArray();
+     if(!actual||actual.some((v,j)=>Math.abs(v-expected[j])>1e-6))throw Error('Source texture rotation missed actual GPU uniform '+name);
+    }
+    rotationRenderPasses++;
+   };
    const pivotRendered=new Set();
    for(const d of pivotDraws)for(const part of d.pool){const before=part.onBeforeRender;part.onBeforeRender=function(...args){pivotRenderPasses++;pivotRendered.add(this);return before.apply(this,args);};}
    const pivotBounds=new T.Box3().setFromObject(instance.group),pivotCentre=pivotBounds.getCenter(new T.Vector3()),pivotSpan=Math.max(.1,pivotBounds.getSize(new T.Vector3()).length());
    camera.position.copy(pivotCentre).add(new T.Vector3(.2,.4,1).normalize().multiplyScalar(pivotSpan*1.8));camera.lookAt(pivotCentre);camera.updateMatrixWorld(true);
    instance.update(captureTime,{camera});renderer.render(scene,camera);
+   if(rotationRenderPasses<1)throw Error('Source rotated texture missed its render pass');
+   const verifiedRotationRenderPasses=rotationRenderPasses;
+   // Run the original vertex/fragment pair with transform feedback. Texture UVs
+   // are captured before fragment sampling; no native shader expression changes.
+   const glRotation=renderer.getContext(),programRotation=glRotation.createProgram(),rotationShaders=[],rotationBuffers=[];
+   const vaoRotation=glRotation.createVertexArray(),feedbackRotation=glRotation.createTransformFeedback();let rotationUvValues=0,rotationReadbacks=0;
+   try{
+    for(const[kind,source]of[[glRotation.VERTEX_SHADER,rotationMaterial.vertexShader],[glRotation.FRAGMENT_SHADER,rotationMaterial.fragmentShader]]){
+     const shader=glRotation.createShader(kind);rotationShaders.push(shader);glRotation.shaderSource(shader,'#version 300 es\n'+source);glRotation.compileShader(shader);
+     if(!glRotation.getShaderParameter(shader,glRotation.COMPILE_STATUS))throw Error(glRotation.getShaderInfoLog(shader));glRotation.attachShader(programRotation,shader);
+    }
+    glRotation.transformFeedbackVaryings(programRotation,['vs_TEXCOORD0','vs_TEXCOORD1'],glRotation.INTERLEAVED_ATTRIBS);glRotation.linkProgram(programRotation);
+    if(!glRotation.getProgramParameter(programRotation,glRotation.LINK_STATUS))throw Error(glRotation.getProgramInfoLog(programRotation));
+    glRotation.useProgram(programRotation);glRotation.bindVertexArray(vaoRotation);
+    const originalUv=rotationDraws[0].baseUVs[0],uvs=[[originalUv[0],originalUv[1]],[.25,.75],[.75,.25]];
+    for(const[name,width,values]of[['in_POSITION0',3,Array(9).fill(0)],['in_TEXCOORD0',2,uvs.flat()],['in_COLOR0',4,Array(12).fill(1)]]){
+     const buffer=glRotation.createBuffer();rotationBuffers.push(buffer);glRotation.bindBuffer(glRotation.ARRAY_BUFFER,buffer);glRotation.bufferData(glRotation.ARRAY_BUFFER,new Float32Array(values),glRotation.STATIC_DRAW);
+     const location=glRotation.getAttribLocation(programRotation,name);if(location<0)throw Error('Missing original UV probe vertex attribute');
+     glRotation.enableVertexAttribArray(location);glRotation.vertexAttribPointer(location,width,glRotation.FLOAT,false,0,0);
+    }
+    for(const[name,{value}]of Object.entries(rotationMaterial.uniforms)){
+     const location=glRotation.getUniformLocation(programRotation,name);if(location===null||value.isTexture)continue;
+     if(typeof value==='number')glRotation.uniform1f(location,value);
+     else{const values=value.toArray?.()??value;glRotation['uniform'+(values.length===16?4:values.length)+'fv'](location,values);}
+    }
+    const output=glRotation.createBuffer();rotationBuffers.push(output);glRotation.bindBuffer(glRotation.TRANSFORM_FEEDBACK_BUFFER,output);glRotation.bufferData(glRotation.TRANSFORM_FEEDBACK_BUFFER,3*8*4,glRotation.DYNAMIC_READ);
+    glRotation.bindTransformFeedback(glRotation.TRANSFORM_FEEDBACK,feedbackRotation);glRotation.bindBufferBase(glRotation.TRANSFORM_FEEDBACK_BUFFER,0,output);glRotation.enable(glRotation.RASTERIZER_DISCARD);
+    for(const rotated of[true,false]){
+     if(!rotated)glRotation.uniform4fv(glRotation.getUniformLocation(programRotation,'_Rotation0'),[1,0,0,1]);
+     glRotation.beginTransformFeedback(glRotation.POINTS);glRotation.drawArrays(glRotation.POINTS,0,3);glRotation.endTransformFeedback();
+     const actual=new Float32Array(24);glRotation.getBufferSubData(glRotation.TRANSFORM_FEEDBACK_BUFFER,0,actual);rotationReadbacks++;
+     const time=rotationMaterial.uniforms._Time.value.y,fract=v=>v-Math.floor(v);
+     for(const[index,uv]of uvs.entries()){
+      const wanted=[];
+      for(const texture of['Main','Dissolve','Ram','Disturb']){
+       const st=rotationMaterial.uniforms['_'+texture+'Tex_ST'].value.toArray(),x=uv[0]*st[0]+st[2]-.5,y=uv[1]*st[1]+st[3]-.5;
+       const turned=texture==='Main'&&rotated?[-y,x]:[x,y];
+       wanted.push(...turned.map((v,axis)=>v+.5+(texture==='Ram'?0:fract(time*rotationMaterial.uniforms['_'+texture+(axis?'V':'U')+'Speed'].value))));
+      }
+      wanted.forEach((value,j)=>{if(Math.abs(actual[index*8+j]-value)>1e-5)throw Error('Native UV output missed source rotation/scroll mapping');rotationUvValues++;});
+     }
+    }
+    if(glRotation.getError()!==glRotation.NO_ERROR)throw Error('GPU texture rotation probe failed');
+   }finally{
+    glRotation.disable(glRotation.RASTERIZER_DISCARD);glRotation.bindTransformFeedback(glRotation.TRANSFORM_FEEDBACK,null);glRotation.bindBufferBase(glRotation.TRANSFORM_FEEDBACK_BUFFER,0,null);glRotation.bindVertexArray(null);
+    glRotation.deleteTransformFeedback(feedbackRotation);glRotation.deleteVertexArray(vaoRotation);rotationBuffers.forEach(b=>glRotation.deleteBuffer(b));rotationShaders.forEach(s=>glRotation.deleteShader(s));glRotation.deleteProgram(programRotation);renderer.resetState();
+   }
    for(const d of pivotDraws)for(const[index,part]of d.pool.entries())if(part.visible){
     const p=d.lastParticles[index],s=d.particleSource,frame=sourceFrame(instance,d.transform,captureTime);
     if(p.parent||s.moveWithTransform!==0)throw Error('Pivot diagnostic requires an independent source-parent/world path');
@@ -155,11 +213,12 @@ try{
    instance.update(captureTime,{camera});renderer.render(scene,camera);
    const gl=renderer.getContext(),ext=gl.getExtension('WEBGL_debug_renderer_info'),glError=gl.getError(),driver=gl.getParameter(ext?.UNMASKED_RENDERER_WEBGL??gl.RENDERER);
    window.angularReview={library,renderer,scene,camera};
-   return {root:instance.name,draws:instance.draws.length,blocked:instance.blocked,programs:programs.length,sourceIds,matrices,pivotMatrices,pivotRenderPasses:verifiedPivotRenderPasses,collapsedPivotDraws:collapsedPivotDraws.length,pivotReverseStable:true,nativePivotSignOrderVerified:false,captureTime,parentRoots,reverseStable:true,strictRejected,glError,driver,compiledFrameParity:false,diagnosticOnly:true};
+   return {root:instance.name,draws:instance.draws.length,blocked:instance.blocked,programs:programs.length,sourceIds,matrices,pivotMatrices,pivotRenderPasses:verifiedPivotRenderPasses,collapsedPivotDraws:collapsedPivotDraws.length,pivotReverseStable:true,nativePivotSignOrderVerified:false,rotationRenderPasses:verifiedRotationRenderPasses,rotationUvValues,rotationReadbacks,nativeTextureRotationSignOrderVerified:false,captureTime,parentRoots,reverseStable:true,strictRejected,glError,driver,compiledFrameParity:false,diagnosticOnly:true};
   }catch(error){library.dispose();renderer.dispose();throw error;}
  },{pack,animations,shaders,builtinMeshes});
  assert.equal(result.programs,23);assert.ok(result.matrices>=5);assert.equal(result.sourceIds.length,5);assert.equal(result.strictRejected,true);assert.equal(result.glError,0);assert.match(result.driver,/SwiftShader/i);assert.deepEqual(errors,[]);
  assert.equal(result.pivotMatrices,5);assert.equal(result.pivotRenderPasses,5);assert.equal(result.collapsedPivotDraws,3);assert.equal(result.pivotReverseStable,true);assert.equal(result.nativePivotSignOrderVerified,false);
+ assert.ok(result.rotationRenderPasses>=1);assert.equal(result.rotationUvValues,48);assert.equal(result.rotationReadbacks,2);assert.equal(result.nativeTextureRotationSignOrderVerified,false);
  await page.screenshot({path:path.join(directory,'angular-motion-diagnostic.png')});
  const parentImage=await page.evaluate(()=>window.sourceParentImage);await writeFile(path.join(directory,'source-parent-motion-diagnostic.png'),Buffer.from(parentImage.split(',')[1],'base64'));
  const cleanup=await page.evaluate(async()=>{const{library,renderer,scene,camera}=angularReview;library.dispose();await Promise.resolve();renderer.render(scene,camera);const memory={...renderer.info.memory};renderer.dispose();return memory;});

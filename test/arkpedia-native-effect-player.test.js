@@ -96,8 +96,25 @@ test('source pivots shift only rendered matrices and leave particle anchors, clo
    assert.ok(d.mesh.geometry.getAttribute('in_POSITION0').array.every(Number.isFinite));
   }
   const before=state();i.update(.3,{camera:cam});i.update(1.8,{camera:cam});i.group.updateMatrixWorld(true);assert.equal(state(),before);
-  assert.equal(i.blocked.length,7);i.dispose();
+  assert.equal(i.blocked.length,6);i.dispose();
  }finally{lib.dispose();}
+});
+test('original texture script supplies four independent UV bases and missing inputs stay held',native,async()=>{
+ const component='battle/prefabs/effects/whitw2.ab:5856360940049941636',script='battle/prefabs/effects/whitw2.ab:-6541124626006981500';
+ const lib=library(original,async()=>new T.Texture(),builtinMeshes),cam=camera(),before=JSON.stringify(original.pack);
+ try{
+  const a=await lib.create('whitw2_skill_03_buff_01',{allowBlocked:true}),b=await lib.create(a.name,{allowBlocked:true});
+  const material=a.draws.find(d=>d.component===component)?.mesh.material,other=b.draws.find(d=>d.component===component)?.mesh.material;
+  assert.ok(material);assert.equal(a.draws.length,22);assert.equal(a.blocked.length,6);assert.equal(material.userData.textureRotations.script,script);
+  const rotation=material.uniforms._Rotation0.value.toArray();rotation.forEach((x,i)=>assert.ok(Math.abs(x-[0,1,-1,0][i])<1e-10));
+  for(let i=0;i<4;i++)assert.notEqual(material.uniforms['_Rotation'+i].value,other.uniforms['_Rotation'+i].value);
+  for(let i=1;i<4;i++)material.uniforms['_Rotation'+i].value.toArray().forEach((x,j)=>assert.ok(Math.abs(x-[1,0,0,1][j])<1e-10));
+  a.update(1.8,{camera:cam});a.update(.3,{camera:cam});a.update(1.8,{camera:cam});assert.deepEqual(material.uniforms._Rotation0.value.toArray(),rotation);
+  assert.equal(material.userData.textureRotations.scope.nativeSignOrderVerified,false);await assert.rejects(lib.create(a.name),/unplayed/);
+  assert.equal(JSON.stringify(original.pack),before);a.dispose();b.dispose();
+ }finally{lib.dispose();}
+ const missing=structuredClone(original);delete missing.pack.scriptBindings[script];const held=library(missing,async()=>new T.Texture(),builtinMeshes);
+ try{const i=await held.create('whitw2_skill_03_buff_01',{allowBlocked:true});assert.ok(i.blocked.some(b=>b.component===component&&/script binding/.test(b.reason)));assert.equal(i.blocked.length,7);i.dispose();}finally{held.dispose();}
 });
 test('explicit original particle inspection preserves parent links without altering the source root registry',native,async()=>{
  const id='battle/prefabs/effects/whitw2.ab:-1572538059954014246',lib=library(original),before=structuredClone(original.pack.records[id]);
