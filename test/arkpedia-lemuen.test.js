@@ -118,6 +118,25 @@ test('public S1 spends one round on two distinct original-event targets and pres
   const event = f.b.drainEvents().find(e => e[0] === 'atk' && e[1] === f.u.id);
   assert.equal(event[4].animation, 'none');
 });
+
+test('external replenishment survives Lemuen controller spending and uses the initial talent-adjusted activation capacity', () => {
+  for (const skill of [1, 2, 3]) {
+    const f = make({ skill }); advance(f.b, 21); const e = enemy(f);
+    if (skill === 1) { f.u.skill.setSpTotal(f.u.skill.spCost); advance(f.b, f.b.dt); }
+    else cast(f);
+    const sk = f.u.skill, ammo = f.u.mem.lemuenAmmunition, capacity = ammo.maximum;
+    assert.equal(sk.ammoCapacity, capacity);
+    const before = ammo.current;
+    assert.equal(sk.replenishAmmo(100), capacity);
+    assert.equal(ammo.current, before + capacity); assert.equal(sk.ammoLeft, ammo.current);
+    assert.equal(sk.replenishAmmo(1), 0);
+    advance(f.b, 3);
+    assert.equal(sk.active, true); assert.equal(sk.ammoLeft, ammo.current);
+    if (skill !== 2) assert.ok(ammo.current < before + capacity);
+    sk.end('manual'); assert.equal(ammo.current, 0); assert.equal(sk.replenishAmmo(1), 0);
+    assert.equal(sk.ammoReplenished, 0); assert.equal(e.alive, true);
+  }
+});
 test('public S2 preserves unspent ammunition on ordinary fallback and aims at a Wanted elite', () => {
   const f = make({ skill: 2 }); const e = enemy(f); e.def = { ...e.def, rank: 'ELITE' };
   advance(f.b, 1.1); cast(f); const count = f.u.skill.ammoLeft;

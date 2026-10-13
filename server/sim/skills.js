@@ -37,7 +37,8 @@
 //   the unit's 攻击距离), showOwnRange (rangeGrid only selects targets: the detail card keeps the unit's own range)},
 //   attack {dmgType, atkScale, splashRadius, splashScale, hits, projectile, maxTargets, dmgMul, onHit, heal…},
 //   heal (bool: heal-type skill for the trigger rule), canActivate() (temporary cast eligibility),
-//   isExhausted() (no uses remain), onStart(ctx), onEnd(ctx), onHit(ctx), onAttack(ctx), onTick(ctx).
+//   isExhausted() (no uses remain), onStart(ctx), onEnd(ctx), onHit(ctx), onAttack(ctx), onTick(ctx),
+//   onAmmoReplenish(ctx) mirrors an accepted external grant into a controller-owned ammo account.
 //   completeOnAttack: false lets a source ability controller end its multi-event instant cast itself.
 // ctx passed to spec callbacks: { battle, unit, skill, bb, target?, dealt?, targets?, dt?, reason? }; onAttack's ctx
 //   also carries `noAmmo` (set it to true: this attack spends no ammo). onEnd runs while the skill's mods / range are
@@ -107,6 +108,9 @@ export class SkillRuntime {
     this.timeLeft = 0;
     this.ammoLeft = 0;
     this.ammoMax = 0;             // ammo kind: the most bullets this activation held (snapshot's draining bar)
+    this.ammoCapacity = 0;        // loaded capacity, independent of external replenishment
+    this.ammoReplenished = 0;     // cumulative external recovery during this activation
+    this._loadingAmmo = false;
     this.pending = false;         // instant/charges: next attack uses spec.attack
     this.activations = 0;
     this.lastStart = -Infinity;
@@ -211,6 +215,9 @@ export class SkillRuntime {
     this.timeLeft = 0;
     this.ammoLeft = 0;
     this.ammoMax = 0;
+    this.ammoCapacity = 0;
+    this.ammoReplenished = 0;
+    this._loadingAmmo = false;
     this.charges = 0;
     this.sp = 0;
     this._trigKeys = null;
@@ -467,6 +474,8 @@ export class SkillRuntime {
       this.timeLeft = this.kind === 'duration' ? Math.max(0.01, this.duration) : (this.kind === 'ammo' && this.duration > 0 ? this.duration : Infinity);
       this.ammoLeft = this.kind === 'ammo' ? Math.max(1, this.ammo) : 0;
       this.ammoMax = this.ammoLeft;
+      this.ammoCapacity = this.ammoLeft;
+      this.ammoReplenished = 0;
       this._applyMods();
     } else {
       // instant / charges
@@ -477,8 +486,12 @@ export class SkillRuntime {
     }
     b._ev(['skill', u.id, 1]);
     u.skillAnimUntil = b.time + SKILL_ANIM_WINDOW;
-    this._call('onStart', { reason });
-    if (b._hooks.skillStart) b.emit('skillStart', { unit: u, skill: this, reason });
+    const wasLoadingAmmo = this._loadingAmmo;
+    this._loadingAmmo = this.kind === 'ammo';
+    try {
+      this._call('onStart', { reason });
+      if (b._hooks.skillStart) b.emit('skillStart', { unit: u, skill: this, reason });
+    } finally { this._loadingAmmo = wasLoadingAmmo; }
     // bullets added in skillStart (拉特兰's ×(1.05 + 0.015 × layers), 逃犯引渡手续, talents): the bar's full mark
     // (community report #35: the extra bullets sat above a full bar until fewer than the base count were left)
     if (this.active && this.ammoLeft > this.ammoMax) this.ammoMax = this.ammoLeft;
@@ -535,6 +548,8 @@ export class SkillRuntime {
     this.timeLeft = 0;
     this.ammoLeft = 0;
     this.ammoMax = 0;
+    this.ammoCapacity = 0;
+    this.ammoReplenished = 0;
     const n = this.activations;
     this._call('onEnd', { reason });
     if (!this.active && this.activations === n) this._removeMods();
@@ -558,10 +573,32 @@ export class SkillRuntime {
   // ---- helpers for content -------------------------------------------------------------------------------
   // (non-finite arguments are ignored: a NaN timer/ammo count would keep the skill active forever)
   // (bullets added above the activation's most so far raise the bar's full mark: the bar drains one bullet at a time)
-  addAmmo(n) {
+  // Initial load grants also grow capacity; later native capacity grants opt in explicitly.
+  addAmmo(n, { modifyCapacity = this._loadingAmmo } = {}) {
     if (!this.active || this.kind !== 'ammo' || !Number.isFinite(n)) return;
     this.ammoLeft += n;
     if (this.ammoLeft > this.ammoMax) this.ammoMax = this.ammoLeft;
+    if (modifyCapacity) this.modifyAmmoCapacity(n);
+  }
+  // Source AmmoSkillCountModifier.modifyMaxCount: adjusts loaded capacity
+  // without consuming the external recovery allowance or discarding rounds.
+  modifyAmmoCapacity(n) {
+    if (!this.active || this.kind !== 'ammo' || !Number.isFinite(n)) return;
+    this.ammoCapacity = Math.max(0, this.ammoCapacity + n);
+  }
+  get ammoReplenishmentLeft() {
+    return this.active && this.kind === 'ammo' ? Math.max(0, this.ammoCapacity - this.ammoReplenished) : 0;
+  }
+  // Pinned game term ba.addbullet: total external replenishment in one
+  // activation is bounded by loaded capacity. It does not enlarge capacity.
+  // Own capacity grants and explicit recoverSkipLimitCheck actions use addAmmo.
+  replenishAmmo(n) {
+    if (!Number.isFinite(n) || n <= 0) return 0;
+    const count = Math.min(Math.floor(n), this.ammoReplenishmentLeft);
+    this.ammoLeft += count;
+    this.ammoReplenished += count;
+    if (count > 0) this._call('onAmmoReplenish', { count });
+    return count;
   }
   extend(seconds) { if (this.active && Number.isFinite(this.timeLeft) && Number.isFinite(seconds)) this.timeLeft += seconds; }
   addCharge(n = 1) { if (!Number.isFinite(n)) return; this.charges = Math.max(0, Math.min(this.maxCharges, this.charges + n)); if (this.charges >= this.maxCharges) this.sp = this.spCost; }

@@ -96,8 +96,11 @@ test('selected latest-deployment mapping borrows from only one ally and never re
 });
 
 test('retiring a selected ally restores its debuff but retains owner speed and already granted ammunition',()=>{
-  const f=make(),a=ally(f);start(f);f.b.retreat(a);advance(f.b,f.b.dt);
-  assert.equal(f.controller.s2.loan,null);near(f.u.s.aspd,f.u.base.aspd+70);assert.equal(f.u.skill.ammoLeft,40);
+  const f=make(),a=ally(f);start(f);assert.equal(f.u.skill.ammoCapacity,40);
+  assert.equal(f.u.skill.replenishAmmo(39),39);
+  f.b.retreat(a);advance(f.b,f.b.dt);
+  assert.equal(f.controller.s2.loan,null);near(f.u.s.aspd,f.u.base.aspd+70);assert.equal(f.u.skill.ammoLeft,79);
+  assert.equal(f.u.skill.ammoCapacity,35);assert.equal(f.u.skill.replenishAmmo(9),0);
   near(a.s.aspd,100);assert.equal(f.controller.s2.monitor,null);assert.equal(shield(a),null);
 });
 

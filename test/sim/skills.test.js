@@ -298,6 +298,52 @@ test('ammo skills end when ammo runs out; ammoUsed fires per shot; no SP gain wh
   assert.equal(h.hooksOf('skillEnd')[0].reason, 'ammo');
 });
 
+test('external ammo recovery has a shared cumulative capacity budget, distinct from loaded bonuses and bypass recovery', () => {
+  const h = makeBattle({
+    defs: { chess: { t_sn: sniperWith({ spCost: 1, initSp: 1 }) } },
+    units: [{ chessId: 't_sn', row: 10, col: 4 }], autoFinish: false,
+    kits: { t_sn: () => ({ trait: { noAttack: true }, skill: {
+      kind: 'ammo', ammo: 4, trigger: 'NEVER', onStart: ({ skill }) => skill.addAmmo(2),
+    } }) },
+    setup(b) { b.on('skillStart', ({ skill }) => skill.replenishAmmo(2)); },
+  });
+  h.b.start(); const u = h.unit('t_sn'), sk = u.skill;
+  assert.ok(sk.activate('fixture'));
+  assert.equal(sk.ammoCapacity, 6); assert.equal(sk.ammoLeft, 8);
+  assert.equal(sk.ammoReplenished, 2); assert.equal(sk.ammoReplenishmentLeft, 4);
+  assert.equal(sk.replenishAmmo(100), 4); assert.equal(sk.ammoLeft, 12);
+  sk.onAttackPerformed([], true); sk.onAttackPerformed([], true);
+  assert.equal(sk.replenishAmmo(1), 0, 'spending rounds does not reset the recovery allowance');
+  sk.addAmmo(2); assert.equal(sk.ammoCapacity, 6);
+  assert.equal(sk.replenishAmmo(1), 0, 'bypass recovery does not enlarge the allowance');
+  sk.addAmmo(3, { modifyCapacity: true });
+  assert.equal(sk.ammoCapacity, 9); assert.equal(sk.replenishAmmo(100), 3);
+  sk.modifyAmmoCapacity(-3); assert.equal(sk.ammoReplenishmentLeft, 0);
+  sk.end('manual'); assert.equal(sk.ammoCapacity, 0); assert.equal(sk.ammoReplenished, 0);
+  assert.equal(sk.replenishAmmo(1), 0);
+  assert.ok(sk.activate('fixture', { free: true }));
+  assert.equal(sk.ammoCapacity, 6); assert.equal(sk.ammoReplenished, 2);
+  h.b.retreat(u); assert.ok(h.b.redeploy(u, { free: true }));
+  assert.equal(sk.ammoReplenished, 0); assert.equal(sk.ammoReplenishmentLeft, 0);
+  assert.ok(sk.activate('fixture', { free: true }));
+  assert.equal(sk.ammoReplenishmentLeft, 4); h.invariants();
+});
+
+test('external replenishment rejects invalid counts and never affects inactive or non-ammo skills', () => {
+  const h = makeBattle({
+    defs: { chess: { t_sn: sniperWith({ spCost: 1, initSp: 1 }) } },
+    units: [{ chessId: 't_sn', row: 10, col: 4 }], autoFinish: false,
+    kits: { t_sn: () => ({ trait: { noAttack: true }, skill: { kind: 'ammo', ammo: 4, trigger: 'NEVER' } }) },
+  });
+  h.b.start(); const sk = h.unit('t_sn').skill;
+  assert.equal(sk.replenishAmmo(4), 0); assert.ok(sk.activate('fixture'));
+  for (const n of [NaN, Infinity, -Infinity, -2, 0, '2', undefined]) assert.equal(sk.replenishAmmo(n), 0);
+  assert.equal(sk.ammoLeft, 4); assert.equal(sk.ammoReplenished, 0);
+  assert.equal(sk.replenishAmmo(1.9), 1); assert.equal(sk.ammoReplenished, 1);
+  sk.end('manual'); sk.kind = 'duration'; assert.ok(sk.activate('fixture', { free: true }));
+  assert.equal(sk.replenishAmmo(4), 0); assert.equal(sk.ammoLeft, 0); h.invariants();
+});
+
 test('charges accumulate up to maxCharges and are spent one per cast, 3 s apart (the automatic operation cooldown)', () => {
   const h = makeBattle({
     defs: { chess: { t_sn: sniperWith({ duration: 0, spCost: 2, initSp: 0, maxChargeTime: 3, bb: { atk_scale: 3 } }) }, enemies: { enemy_dummy: dummy() } },

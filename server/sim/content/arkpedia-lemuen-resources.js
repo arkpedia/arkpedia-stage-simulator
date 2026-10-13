@@ -42,6 +42,12 @@ export class LemuenAmmunition {
     if (this.removed || !this.active || this.current <= 0 || this.accepted.has(attackId)) return false;
     this.accepted.add(attackId); this.current--; return true;
   }
+  // Shared SkillRuntime owns the per-activation external recovery budget.
+  // Mirror only its accepted grant into this controller's spending account.
+  replenish(count) {
+    if (this.removed || !this.active || !Number.isInteger(count) || count <= 0) return false;
+    this.current += count; return true;
+  }
   end() { this.active = false; this.current = 0; this.accepted.clear(); }
   remove() { this.removed = true; this.end(); this.bonuses.clear(); }
 }

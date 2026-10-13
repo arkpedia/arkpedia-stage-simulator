@@ -18,11 +18,11 @@ export function until(f, condition, seconds = 5) {
   assert.ok(condition(), `Condition missing at ${f.b.time}`);
 }
 export function make({ skill = 2, elite = 2, rank = 10, potential = 1, trust = 0, dir = 'RIGHT',
-  contract = CONTRACT, prepare = prepareRmixerAttacks, mutate } = {}) {
+  contract = CONTRACT, prepare = prepareRmixerAttacks, mutate, operators = [] } = {}) {
   const d = structuredClone(data); d.stage.geometry.waves[0].spawns = []; d.stage.battle.dp_per_second = 0;
   d.stage.geometry.rows = 19; d.stage.geometry.cols = 21;
   d.stage.geometry.tileGrid = Array.from({ length: 19 }, () => Array(21).fill(2));
-  const b = new StandardBattle(d, { operators: [defaultBuild(d.operators.char_208_melan)] });
+  const b = new StandardBattle(d, { operators: [defaultBuild(d.operators.char_208_melan), ...operators] });
   b.autoFinish = false; b.recordEvents = true; b.setViewport('fullscreen-workspace');
   b.grid.tiles = b.grid.tiles.map(t => ({ ...t, height: 'LOW', build: 'ALL', pass: 'ALL' }));
   const build = { elite, level: e.tables.character.phases[elite].maxLevel, potential, trust,

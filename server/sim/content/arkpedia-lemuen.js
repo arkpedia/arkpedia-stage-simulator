@@ -62,6 +62,7 @@ export class LemuenController {
     const { b, u } = this;
     this.aiming?.cancel('mode-change'); this.phase = null; this.chain = false;
     if (!this.ammo.begin()) throw Error('Lemuen cast already owns ammunition');
+    u.skill.ammoCapacity = this.ammo.current;
     this.syncAmmo(); u.atkCd = 0; this.mode = this.skill;
     if (this.skill === 2) {
       this.aiming = new LemuenAiming(b, u, this.links, this.ammo, this.contracts.aiming);
@@ -298,6 +299,7 @@ export function prepareLemuenKit(b, u, { contracts } = {}) {
       canActivate: () => controller.canCast(), onAttack: ctx => { ctx.noAmmo = true; },
       ...(n === 2 ? { mods: { atkPct: s.bb.atk, aspd: s.bb.attack_speed } } : {}),
       onStart: () => { controller.nextMarkAt = null; controller.startSkill(); },
+      onAmmoReplenish: ({ count }) => { ammo.replenish(count); controller.syncAmmo(); },
       onEnd: ({ reason }) => controller.endSkill(reason) },
   };
   return { kit, controller, links, ammo, talents };

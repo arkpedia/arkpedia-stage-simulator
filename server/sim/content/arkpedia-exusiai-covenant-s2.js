@@ -72,7 +72,7 @@ export class ExusiaiCovenantS2 {
     b.addBuff(a, { key, source: u, tags: ['steal-victim'], mods: { aspd: -amount } });
     b.addBuff(a, { key: marker, source: u });
     b.addBuff(u, { key: 'angel2:s2-owner', source: u, mods: { aspd: amount } });
-    u.skill.addAmmo(r.bb.recover_each_cnt);
+    u.skill.addAmmo(r.bb.recover_each_cnt, { modifyCapacity: true });
     this.monitor = b.on('tick', () => {
       if (this.loan && (!this.eligibleAlly(a) || this.loan.seq !== a.deploySeq)) this.clearLoan(true);
     });
@@ -83,7 +83,10 @@ export class ExusiaiCovenantS2 {
     this.loan = null;
     if (loan) {
       b.removeBuff(loan.target, loan.key); b.removeBuff(loan.target, loan.marker);
-      if (u.skill?.active) u.skill.ammoMax = Math.max(u.skill.ammoLeft, u.skill.ammoMax - loan.granted);
+      if (u.skill?.active) {
+        u.skill.ammoMax = Math.max(u.skill.ammoLeft, u.skill.ammoMax - loan.granted);
+        u.skill.modifyAmmoCapacity(-loan.granted);
+      }
     }
     if (!keepGain) b.removeBuff(u, 'angel2:s2-owner');
     if (this.monitor) b.off(this.monitor); this.monitor = null;
