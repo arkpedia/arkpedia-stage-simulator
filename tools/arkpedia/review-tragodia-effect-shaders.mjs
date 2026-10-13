@@ -142,7 +142,38 @@ try{
     }finally{gl.bufferData=upload;gl.bufferSubData=updateBuffer;}
     const captureTime=1.8;
     instance.update(captureTime,{camera,clip});
-    instance.group.updateMatrixWorld(true);const bounds=new T.Box3().setFromObject(instance.group);
+    instance.group.updateMatrixWorld(true);
+    const glow=instance.draws.find(d=>d.component==='battle/prefabs/effects/phatm2.ab:4223695836916947179');
+    if(!glow||!glow.lastParticles.length)throw Error('Original 3D glow rotation is missing');
+    const pose=instance.pose.sample(captureTime,clip),ancestry=[];let node=glow.transform;
+    while(node){ancestry.unshift(pose.nodes.get(node));node=pose.nodes.get(node).parent;}
+    const parentRotation=new T.Quaternion();
+    for(const n of ancestry)parentRotation.multiply(n.euler
+     ?new T.Quaternion().setFromEuler(new T.Euler(...n.euler.map(v=>v*Math.PI/180),'ZXY')):new T.Quaternion(...n.rotation));
+    let rotationMatricesVerified=0;
+    for(const [index,part] of glow.pool.entries())if(part.visible){
+     const particle=glow.lastParticles[index],angles=particle.rotation3D;
+     if(!angles||Math.abs(angles[0]-1.570796251296997)>1e-12||angles[1]!==0||angles[2]!==0)throw Error('Changed original start rotation');
+     // Compare the rendered world basis against independent fixed-axis steps,
+     // rather than using the same Euler constructor as the effect player.
+     for(let axis=0;axis<3;axis++){
+      let [x,y,z]=[0,1,2].map(i=>Number(i===axis));const [a,b,c]=angles;
+      [x,y]=[x*Math.cos(c)-y*Math.sin(c),x*Math.sin(c)+y*Math.cos(c)];
+      [y,z]=[y*Math.cos(a)-z*Math.sin(a),y*Math.sin(a)+z*Math.cos(a)];
+      [x,z]=[x*Math.cos(b)+z*Math.sin(b),-x*Math.sin(b)+z*Math.cos(b)];
+      const wanted=new T.Vector3(x,y,z).applyQuaternion(parentRotation);
+      const actual=new T.Vector3().setFromMatrixColumn(part.matrixWorld,axis).normalize();
+      if(actual.distanceTo(wanted)>1e-7)throw Error('Rendered source start rotation matrix mismatch');
+     }
+     rotationMatricesVerified++;
+    }
+    if(rotationMatricesVerified===0)throw Error('Original rotated glow was not rendered');
+    const rotationSnapshot=()=>JSON.stringify({particles:glow.lastParticles,
+     matrices:glow.pool.filter(p=>p.visible).map(p=>Array.from(p.matrixWorld.elements))});
+    const rotationBefore=rotationSnapshot();
+    instance.update(.75,{camera,clip});instance.update(captureTime,{camera,clip});instance.group.updateMatrixWorld(true);
+    if(rotationSnapshot()!==rotationBefore)throw Error('Source start rotation did not reverse exactly');
+    const bounds=new T.Box3().setFromObject(instance.group);
     const centre=bounds.getCenter(new T.Vector3()),span=Math.max(1,bounds.getSize(new T.Vector3()).length());
     camera.position.copy(centre).add(new T.Vector3(.3,.4,1).normalize().multiplyScalar(span*1.8));camera.lookAt(centre);camera.updateMatrixWorld(true);
     instance.update(captureTime,{camera,clip});renderer.render(scene,camera);
@@ -150,7 +181,7 @@ try{
     cage={root:instance.name,draws:instance.draws.map(d=>d.component),blocked:instance.blocked,times,
      nodes:instance.pose.nodes.size,renderers:instance.pose.renderers.size,rendered:true,
      diagnosticOnly:true,strictRejected,captureTime,customDraws:customDraws.length,checkedCustomDraws,gpuBuffersVerified,
-     reverseStable:true,gpuAttributesVerified:true};
+     reverseStable:true,gpuAttributesVerified:true,rotationMatricesVerified,rotationReverseStable:true};
    }finally{library.dispose();}
    const debug=gl.getExtension('WEBGL_debug_renderer_info');
    const driver=gl.getParameter(debug?.UNMASKED_RENDERER_WEBGL??gl.RENDERER);
@@ -162,7 +193,9 @@ try{
  assert.equal(result.materials.length,91);assert.equal(result.glError,0);assert.deepEqual(errors,[]);
  assert.match(result.driver,/SwiftShader/i);
  assert.equal(result.cage.nodes,22);assert.equal(result.cage.renderers,20);
- assert.equal(result.cage.draws.length,13);assert.equal(result.cage.blocked.length,5);
+ assert.equal(result.cage.draws.length,14);assert.equal(result.cage.blocked.length,4);
+ assert.ok(result.cage.rotationMatricesVerified>0);
+ assert.equal(result.cage.rotationReverseStable,true);
  assert.equal(result.cage.customDraws,8);assert.equal(result.cage.reverseStable,true);
  assert.equal(result.cage.checkedCustomDraws,8);
  assert.equal(result.cage.gpuBuffersVerified,24);

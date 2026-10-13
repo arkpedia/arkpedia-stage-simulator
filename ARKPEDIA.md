@@ -3615,3 +3615,27 @@ ARKPEDIA_REVIEW_CHROME='/path/to/chromium' node tools/arkpedia/review-tragodia-e
 ```
 
 The five blocked components, unresolved effect resources, Animator state dispatch, delivered artwork and public mouse/touch battle review still gate Tragodia's registration. Public coverage remains **373/431 forms and 812 selected skills**, with unchanged Global/CN/model pins and published data. Arkpedia app PR229 remains outside dev until all operator, enemy, stage and dependable automation gates are met.
+
+### Original particle start rotation (2026-10-14)
+
+Particle birth sampling now retains all three authored start-rotation axes in radians. Each axis uses its own stable local random factor; the existing Z factor is unchanged. Curves sample emission phase and stay fixed through particle lifetime. Flip direction and rotation-over-lifetime modules remain rejected. Mesh particles apply Z, then X, then Y around fixed axes, matching the [Unity Euler convention](https://docs.unity3d.com/2021.3/Documentation/ScriptReference/Quaternion.Euler.html); the Three intrinsic Euler order is `YXZ` to produce that matrix product. Unsupported 3D billboard rotation stays rejected.
+
+The source fixtures cover all **eleven 3D start-rotation profiles** in the pinned Tragodia and Lappland effect packs: four Tragodia profiles use the original 90-degree X angle, while seven Lappland profiles retain a reversed X range and fixed Y angle. The independent audit reads the original Unity objects, validates both existing effect packs, reproduces **three outputs**, checks **1,287 angle/basis values** using successive fixed-axis equations, and rejects **twelve altered-evidence fixtures**. It checks original radians, ranges, object identities, source packs and noncommuting axis order; it does not certify Unity random ordering or compiled frame parity.
+
+The cage diagnostic now renders **14 components**, including the original rotated `glow` mesh. Its rendered world basis matches an independent rotation calculation, and reverse scrubbing restores the same particles and matrices. **Four enabled components remain blocked**: the angled cone, particle trails with distinct materials, inherited velocity and unresolved mesh. The seven Lappland profiles still have angled-cone blockers, and Tragodia's `line_01` retains its unsupported shape type 8. Sampling their start angles does not enable or flatten their remaining behavior.
+
+Validation:
+
+- The twenty-three-file adjacent regression set passes **435 checks on Node 22 and Node 24**, with no failures or skips. This includes all native particle, world/distance emission and effect-player tests.
+- The browser retains exact checks for **22 shader programs, 91 materials and 24 custom-stream GPU buffers**. The glow matrix check and reverse sample pass, strict playback still rejects the partial cage, and no GL or page errors occur.
+- The updated partial diagnostic image at 1.8 seconds is visually inspected. Full effect appearance and native game pixel parity remain unverified.
+
+Reproduce with Node 22 on `PATH`:
+
+```sh
+node tools/arkpedia/export-particle-start-rotation.mjs
+.cache/map-env/bin/python tools/arkpedia/audit-particle-start-rotation.py
+ARKPEDIA_REVIEW_CHROME='/path/to/chromium' node tools/arkpedia/review-tragodia-effect-shaders.mjs
+```
+
+Logs are `.cache/arkpedia/tragodia-source/start-rotation-*.log`. The original effect packs, shader/animation inputs, public MVP and coverage remain unchanged: **373/431 forms and 812 selected skills**. Full particle rendering, Animator state dispatch, delivered artwork and public mouse/touch battle review still gate Tragodia's registration. Arkpedia app PR229 remains outside dev until all operator, enemy, stage and dependable automation gates are met.

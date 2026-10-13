@@ -270,7 +270,11 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false}={}){
           }
           // A stage camera bridge can contain the Y/Z reflection. A quaternion
           // cannot represent that basis; retain its columns for view quads.
-          const rotation=new T.Matrix4().makeRotationZ(particle.rotation);
+          // Unity applies Z then X then Y around fixed axes; Three's intrinsic
+          // Euler order is reversed to produce the same matrix product.
+          const rotation=particle.rotation3D
+            ?new T.Matrix4().makeRotationFromEuler(new T.Euler(...particle.rotation3D,'YXZ'))
+            :new T.Matrix4().makeRotationZ(particle.rotation);
           const matrix=alignment===0?new T.Matrix4().copy(camera.matrixWorld)
             :new T.Matrix4().makeRotationFromQuaternion(current.rotation);
           matrix.setPosition(position).multiply(rotation).scale(new T.Vector3().fromArray(particle.size).multiply(scale));
@@ -333,6 +337,8 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false}={}){
           if(record.data.m_UseCustomVertexStreams)customLayout=createParticleVertexLayout(record.data.m_VertexStreams);
           const ps=(pack.records[r.gameObject].references??[]).map(r=>r.target).find(k=>pack.records[k]?.type==='ParticleSystem');
           particleSource=pack.records[ps].data;
+          if(particleSource.InitialModule.rotation3D&&record.data.m_RenderMode!==4)
+            throw Error('Native 3D billboard start rotation needs review');
           // The recovered particle renderers repeat the same material slot and
           // have their own TrailModule disabled. Different slots or particle-
           // generated trails need a renderer mapping, not silent first-slot use.
