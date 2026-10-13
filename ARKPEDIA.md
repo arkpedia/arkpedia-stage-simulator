@@ -3589,3 +3589,29 @@ ARKPEDIA_REVIEW_CHROME='/path/to/chromium' node tools/arkpedia/review-tragodia-e
 ```
 
 The four unresolved effect resources and eight missing animation bindings remain explicit. Particle/trail rendering, Animator state dispatch, delivered artwork and public mouse/touch battle review still gate Tragodia's registration. Public coverage remains **373/431 forms and 812 selected skills**, with unchanged source pins and data. Arkpedia app PR229 remains outside dev until all operator, enemy, stage and dependable automation gates are met.
+
+### Native particle custom data and Tragodia cage streams (2026-10-14)
+
+The shared particle lifecycle now samples authored Custom Data vectors and HDR colors at each particle's normalized age, retaining the existing emission clocks, delays, capacities and deterministic local random factors. Disabled streams have explicit local zero values. External script writes, native random ordering and compiled Unity dispatch are not reproduced.
+
+Eight original cage renderers use streams `[0,1,3,4,34,38]`: position, normal, color, UV, Custom1 XYZW and Custom2 XYZW. Their original UVs and custom values pack consecutively into **4/4/2-component TEXCOORD attributes**. Custom1's first component follows the source curve from -1 to +1 over particle lifetime; Custom2 is disabled. Each particle has independent geometry values, including during reverse scrubbing. Unknown streams and unsupported pivot/flip behavior remain rejected. Packing follows the [Unity 2021.3 renderer reference](https://github.com/Unity-Technologies/UnityCsReference/blob/2021.3/Modules/ParticleSystemEditor/ParticleSystemModules/RendererModuleUI.cs) and [Custom Data documentation](https://docs.unity3d.com/2021.3/Documentation/Manual/PartSysCustomDataModule.html).
+
+The independent audit checks all eight original ParticleSystem and renderer objects, their serialized hashes and every projected field. It reproduces **three outputs**, compares **1,008 sampled values**, and rejects **nine altered-evidence fixtures**. The committed fixture is 94,703 bytes; it contains source mappings rather than a claim that Tragodia is playable.
+
+The browser diagnostic now draws **13 cage components**, including all eight custom-stream components. Five enabled components remain blocked: `glow` (3D/randomized rotation), `spark_01` (angled cone/arc/radius behavior), `music_icon_01 (1)` (trails and distinct materials), `spark_p_add (1)` (inherited velocity), and `bg_01` (unresolved original mesh). All 22 nodes and 20 renderer records remain present; two renderers are disabled in the source. Strict playback rejects the partial cage and clears the rejected instance.
+
+Validation:
+
+- The twenty-file adjacent regression set passes **406 checks on Node 22 and Node 24**, with no failures or skips.
+- Software WebGL2 compiles **22 original shader programs**, resolves **91 materials**, and reads back **24 uploaded GPU buffers** across all eight custom-stream components. Attribute values match the expected Float32 packing, reverse samples are stable, and no GL or page errors occur.
+- The original partial cage is rendered at 1.8 seconds to a 512-pixel diagnostic image and visually inspected. This is not full cage approval, native game pixel parity, or public battle review. The report and image are in `.cache/arkpedia/tragodia-source/effects/`; logs are `.cache/arkpedia/tragodia-source/custom-stream-*.log`.
+
+Reproduce with Node 22 on `PATH`, the extraction Python environment and a Chromium executable:
+
+```sh
+node tools/arkpedia/export-tragodia-custom-streams.mjs
+.cache/map-env/bin/python tools/arkpedia/audit-tragodia-custom-streams.py
+ARKPEDIA_REVIEW_CHROME='/path/to/chromium' node tools/arkpedia/review-tragodia-effect-shaders.mjs
+```
+
+The five blocked components, unresolved effect resources, Animator state dispatch, delivered artwork and public mouse/touch battle review still gate Tragodia's registration. Public coverage remains **373/431 forms and 812 selected skills**, with unchanged Global/CN/model pins and published data. Arkpedia app PR229 remains outside dev until all operator, enemy, stage and dependable automation gates are met.

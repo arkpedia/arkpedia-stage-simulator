@@ -59,7 +59,8 @@ try{
   const T=await import('/vendor/three.module.js');
   const {compileNativeEffectPrograms,createNativeEffectLibrary}=await import('/arkpedia/native-effect-player.js');
   const {webglEffectProgram,selectEffectProgram,effectUniformDeclarations}=await import('/shared/arkpedia/native-effect-shader.js');
-  const renderer=new T.WebGLRenderer(),gl=renderer.getContext();
+  const renderer=new T.WebGLRenderer({preserveDrawingBuffer:true}),gl=renderer.getContext();
+  renderer.setSize(512,512);
   try{
    if(!(gl instanceof WebGL2RenderingContext))throw Error('Original programs require WebGL2');
    const compiled=compileNativeEffectPrograms(renderer,shaders);
@@ -79,26 +80,95 @@ try{
     const url=URL.createObjectURL(new Blob([bytes],{type:'image/webp'}));
     try{return await new T.TextureLoader().loadAsync(url);}finally{URL.revokeObjectURL(url);}
    }});
-   let cage;
+   let cage,diagnosticImage;
    try{
+    let strictRejected=false;
+    try{await library.create('phatm2_skill_03_prison_01');}
+    catch(error){if(!error.message.includes('unplayed components'))throw error;strictRejected=true;}
+    if(!strictRejected||library.instanceCount!==0)throw Error('Partial cage was accepted as strict playback');
     const instance=await library.create('phatm2_skill_03_prison_01',{allowBlocked:true});
     const camera=new T.PerspectiveCamera(35,1,.001,100);camera.position.set(0,2,3);camera.lookAt(0,0,0);camera.updateMatrixWorld(true);
+    const scene=new T.Scene();scene.background=new T.Color('#142027');scene.add(instance.group);
     const times=[0,.25,16/30,1],clip='battle/prefabs/effects/phatm2.ab:7379801640911501129';
     for(const time of times)instance.update(time,{camera,clip});
+    const customDraws=instance.draws.filter(d=>d.customLayout);
+    if(customDraws.length!==8)throw Error('Missing source custom-stream draw');
+    const snapshot=()=>customDraws.map(d=>({component:d.component,particles:d.lastParticles,
+     attributes:d.pool.filter(p=>p.visible).map(p=>Array.from({length:3},(_,channel)=>({
+      width:p.geometry.getAttribute('in_TEXCOORD'+channel).itemSize,
+      values:Array.from(p.geometry.getAttribute('in_TEXCOORD'+channel).array)})))}));
+    instance.update(.25,{camera,clip});const before=JSON.stringify(snapshot());
+    instance.update(1,{camera,clip});instance.update(.25,{camera,clip});
+    if(JSON.stringify(snapshot())!==before)throw Error('Custom streams did not reverse exactly');
+    const buffers=new WeakMap(),upload=gl.bufferData.bind(gl),updateBuffer=gl.bufferSubData.bind(gl);
+    gl.bufferData=function(target,array,...args){
+     upload(target,array,...args);
+     if(target===gl.ARRAY_BUFFER&&ArrayBuffer.isView(array))buffers.set(array,gl.getParameter(gl.ARRAY_BUFFER_BINDING));
+    };
+    gl.bufferSubData=function(target,offset,array,...args){
+     updateBuffer(target,offset,array,...args);
+     if(target===gl.ARRAY_BUFFER&&ArrayBuffer.isView(array))buffers.set(array,gl.getParameter(gl.ARRAY_BUFFER_BINDING));
+    };
+    let checkedCustomDraws=0,gpuBuffersVerified=0;
+    try{
+    for(const d of customDraws){
+     const clock=(d.particleSource.startDelay.scalar+.25)/d.particleSource.simulationSpeed;
+     instance.update(clock,{camera,clip});
+     if(!d.lastParticles.length)throw Error('Missing source custom particle after its authored start delay');
+     checkedCustomDraws++;
+     // Diagnostic readback includes each source draw even if the temporary
+     // inspection camera's frustum would hide it. Battle culling is unchanged.
+     for(const p of d.pool)p.frustumCulled=false;
+     renderer.render(scene,camera);
+     for(const [index,p] of d.pool.entries())if(p.visible){
+      const particle=d.lastParticles[index],uv=d.customUVs,expected=particle.customData;
+      for(let vertex=0;vertex<uv.length/2;vertex++){
+       const values=[uv[vertex*2],uv[vertex*2+1],...expected[0],...expected[1]];
+       values.forEach((value,lane)=>{
+        const attribute=p.geometry.getAttribute('in_TEXCOORD'+Math.floor(lane/4));
+        if(Math.abs(attribute.array[vertex*attribute.itemSize+lane%4]-value)>1e-6)throw Error('Custom GPU attribute mismatch');
+       });
+      }
+      for(let channel=0;channel<3;channel++){
+       const attribute=p.geometry.getAttribute('in_TEXCOORD'+channel),buffer=buffers.get(attribute.array);
+       if(!buffer)throw Error('Original custom stream was not uploaded');
+       const previous=gl.getParameter(gl.ARRAY_BUFFER_BINDING),readback=new Float32Array(attribute.array.length);
+       gl.bindBuffer(gl.ARRAY_BUFFER,buffer);gl.getBufferSubData(gl.ARRAY_BUFFER,0,readback);gl.bindBuffer(gl.ARRAY_BUFFER,previous);
+       if(readback.some((value,index)=>value!==attribute.array[index]))throw Error('GPU custom stream readback mismatch');
+       gpuBuffersVerified++;
+      }
+     }
+    }
+    }finally{gl.bufferData=upload;gl.bufferSubData=updateBuffer;}
+    const captureTime=1.8;
+    instance.update(captureTime,{camera,clip});
+    instance.group.updateMatrixWorld(true);const bounds=new T.Box3().setFromObject(instance.group);
+    const centre=bounds.getCenter(new T.Vector3()),span=Math.max(1,bounds.getSize(new T.Vector3()).length());
+    camera.position.copy(centre).add(new T.Vector3(.3,.4,1).normalize().multiplyScalar(span*1.8));camera.lookAt(centre);camera.updateMatrixWorld(true);
+    instance.update(captureTime,{camera,clip});renderer.render(scene,camera);
+    diagnosticImage=renderer.domElement.toDataURL('image/png');
     cage={root:instance.name,draws:instance.draws.map(d=>d.component),blocked:instance.blocked,times,
-     nodes:instance.pose.nodes.size,renderers:instance.pose.renderers.size,rendered:false};
+     nodes:instance.pose.nodes.size,renderers:instance.pose.renderers.size,rendered:true,
+     diagnosticOnly:true,strictRejected,captureTime,customDraws:customDraws.length,checkedCustomDraws,gpuBuffersVerified,
+     reverseStable:true,gpuAttributesVerified:true};
    }finally{library.dispose();}
    const debug=gl.getExtension('WEBGL_debug_renderer_info');
    const driver=gl.getParameter(debug?.UNMASKED_RENDERER_WEBGL??gl.RENDERER);
    return {compiled,materials:selected,glError:gl.getError(),driver,
-    cage,compiledFrameParity:false,rendererVerified:false};
+    cage,diagnosticImage,compiledFrameParity:false,rendererVerified:false};
   }finally{renderer.dispose();renderer.forceContextLoss();}
  },{shaders,materials,pack,animations});
  assert.equal(result.compiled.length,22);assert.equal(new Set(result.compiled.map(p=>p.shader)).size,8);
  assert.equal(result.materials.length,91);assert.equal(result.glError,0);assert.deepEqual(errors,[]);
  assert.match(result.driver,/SwiftShader/i);
  assert.equal(result.cage.nodes,22);assert.equal(result.cage.renderers,20);
- assert.equal(result.cage.draws.length,5);assert.equal(result.cage.blocked.length,13);
+ assert.equal(result.cage.draws.length,13);assert.equal(result.cage.blocked.length,5);
+ assert.equal(result.cage.customDraws,8);assert.equal(result.cage.reverseStable,true);
+ assert.equal(result.cage.checkedCustomDraws,8);
+ assert.equal(result.cage.gpuBuffersVerified,24);
+ assert.equal(result.cage.strictRejected,true);
+ await writeFile(path.join(directory,'cage-custom-stream-diagnostic.png'),Buffer.from(result.diagnosticImage.split(',')[1],'base64'));
+ delete result.diagnosticImage;
  const report={sourceArtifact:metadata.artifact.sha256,...result,errors};
  await writeFile(path.join(directory,'shader-browser-review.json'),JSON.stringify(report,null,2)+'\n');
  console.log(JSON.stringify({shaders:8,programs:result.compiled.length,materials:result.materials.length,
