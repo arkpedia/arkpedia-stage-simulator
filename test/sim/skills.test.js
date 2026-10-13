@@ -10,6 +10,28 @@ const approx = (a, b, eps = 1e-6) => assert.ok(Math.abs(a - b) <= eps, `${a} ≈
 const RANGE3 = [[0, 0], [0, 1], [0, 2], [0, 3], [1, 0], [1, 1], [1, 2], [1, 3], [-1, 0], [-1, 1], [-1, 2], [-1, 3]];
 const dummy = (o = {}) => enemyRec({ key: 'enemy_dummy', hp: 1e7, speed: 0, ...o });
 
+test('opted-in multi-event instant completion stays controller-owned; ordinary instant attacks still end once', () => {
+  for (const controlled of [false, true]) {
+    const h = makeBattle({
+      defs: { chess: { t_sn: sniperWith({ spCost: 1, initSp: 1 }) } },
+      units: [{ chessId: 't_sn', row: 10, col: 4 }],
+      kits: { t_sn: () => ({ trait: { noAttack: true }, skill: {
+        kind: 'instant', trigger: 'NEVER', attack: { isSkill: true }, flags: { noSp: true },
+        ...(controlled ? { completeOnAttack: false } : {}),
+      } }) },
+    });
+    h.b.start();
+    const u = h.unit('t_sn'), sk = u.skill;
+    assert.ok(sk.activate('fixture'));
+    for (let i = 0; i < 3; i++) sk.onAttackPerformed([], true, true);
+    assert.equal(sk.active, controlled); assert.equal(sk.pending, controlled);
+    if (controlled) { assert.equal(sk.gainSp(1, 'gift'), 0); sk.end('ability-complete'); }
+    assert.equal(sk.gainSp(1, 'gift'), 1);
+    assert.equal(h.hooksOf('skillEnd').length, 1);
+    h.invariants();
+  }
+});
+
 test('deployment duration: synchronous start, one charge, countdown, carry and fresh redeployment', () => {
   for (const carryState of [undefined, { hpPct: 0.5, sp: 0, skillActive: true }]) {
     const order = [];
