@@ -3808,3 +3808,30 @@ ARKPEDIA_REVIEW_CHROME='/path/to/chromium' node tools/arkpedia/review-tragodia-e
 ```
 
 Audit/regression logs use the `child-motion-` prefix in `.cache/arkpedia/tragodia-source/`; the image is `effects/scheduled-child-motion-diagnostic.png`. Original packs, previous fixtures/metadata, public MVP and coverage remain unchanged: **373/431 forms and 812 selected skills**. Arkpedia app PR229 remains outside dev until all operator, enemy, stage and dependable automation gates are met.
+
+### Source parent particles driving child emissions (2026-10-14)
+
+The shared source player now connects supported parent particle physics to its child emission schedules. **Six original Lappland parents** pass the motion boundary. Their **54 supported child profiles** retain scheduled lineage and use the parent's sampled shape position in the original child emitter frame. These parents have zero authored start speed; their cone-base positions, clocks and transforms come from the original data. No synthetic parent path is supplied to this dispatch. Nine Tragodia parents remain held for particle trails or a prewarm source-history contract. Unsupported child shapes, original meshes and renderer modes remain held independently.
+
+`SubModule` remains in the original source data. The moving sampler accepts it only when the same original source object and random seed are owned by a validated Birth-emission scheduler. Other active unsupported modules remain rejected. Cloned sources, different seeds or altered sub-emitter links cannot borrow this ownership. The coordinator samples accepted parent identities, rejects unborn/expired parents and maps their particles through explicit original emitter frames. Real-time velocity uses a local 60 Hz finite difference, with a bounded forward sample at birth so initial momentum is retained. This is an explicit local replay convention, not compiled Unity velocity acquisition or native RNG parity.
+
+The default source player scopes parent coordination to the selected original hierarchy. Supported children now use scheduled records and source parent frames without an isolated-inspection override. An unsupported parent or one outside that hierarchy cannot dispatch its child. Existing isolated inspection remains available. Original inactive child objects remain hidden, and partial roots still reject strict playback.
+
+Validation:
+
+- The independent Python audit reads all **fifteen original parent Unity objects**, checks their raw hashes, active module/non-module projections and original child pointers against the pinned packs, and independently reconstructs the six cone-base births. It compares **1,368 parent/child frame values** across **384 scheduled child particles**. All **three outputs reproduce exactly**, and **twelve altered-evidence fixtures are rejected**. Original infinite curve slopes retain the source pack's lossless string encoding.
+- The thirty-file adjacent regression set passes **783 checks on Node 22 and Node 24**, with no failures or skips. Cases include managed source/seed ownership, native parent holds, initial momentum, half-speed real velocities, moving/scaled emitter frames, children outliving parents, foreign lineage, root selection and six-root default dispatch.
+- The browser checks `whitw2_token_hit_01` through `_06`. **78 children reach verified render passes**, thirteen per root, across **26 prepared child components**. Eight additional sampled particles remain hidden by their original inactive objects. Independent calculations retain the full serialized quaternion matrix basis, original local scale and parent cone offset; conjugating an approximately unit quaternion is insufficient for the exact matrix inverse. Reverse sampling is exact for all six roots, and every partial root still rejects strict playback.
+- Each hit root retains **thirteen held render components** for original meshes, shape or alignment modes. Full appearance is not approved. The original angular review still checks eight rendered bases across five components and all 23 programs; cleanup leaves zero GPU geometries/textures. No GL/page errors occur. The partial source-parent image was visually inspected.
+- The Tragodia cage regression remains passing at fifteen prepared components and three holds, including orphan-child rejection, its original shaders/materials/custom streams and the separate synthetic-parent inspection diagnostic.
+
+Reproduce with Node 22 on `PATH`, the extraction Python environment and Chromium:
+
+```sh
+node tools/arkpedia/export-source-parent-motion.mjs
+.cache/map-env/bin/python tools/arkpedia/audit-source-parent-motion.py
+ARKPEDIA_REVIEW_CHROME='/path/to/chromium' node tools/arkpedia/review-particle-angular-motion.mjs
+ARKPEDIA_REVIEW_CHROME='/path/to/chromium' node tools/arkpedia/review-tragodia-effect-shaders.mjs
+```
+
+Logs use the `parent-motion-` prefix under `.cache/arkpedia/lappland-alter-source/`; the image/report are in its `effects/` directory. The numerical module diagnostic uses identity source frames; the browser uses actual original hierarchies. Source packs and previous metadata/fixtures remain unchanged. Public coverage remains **373/431 forms and 812 selected skills**; this effect integration adds no approved operator registrations. Original-resource completion, trails, discrete arcs, prewarm histories, Animator dispatch and full battle review remain required. Arkpedia app PR229 stays outside dev.

@@ -10,8 +10,9 @@ import {createParticleInheritance} from './native-particle-inheritance.js';
 // Source sphere/box/cone-base emission, lifetime velocity and grid animation.
 // RNG, event boundaries, native frame phase and renderer coordinates remain
 // explicit local mappings until compared with compiled Unity/game frames.
-export function createMovingParticles(source,{seed=1}={}){
-  const lifecycle=createParticleLifecycle(source,{seed,modules:['ShapeModule','VelocityModule','UVModule','ClampVelocityModule','NoiseModule','InheritVelocityModule'],spaces:[0,1],allowInitialSpeed:true,allowDistanceEmission:true});
+export function createMovingParticles(source,{seed=1,subEmitterSchedule=null}={}){
+  const managedSubModule=source.SubModule?.enabled&&subEmitterSchedule?.ownsParent(source,seed)===true;
+  const lifecycle=createParticleLifecycle(source,{seed,modules:['ShapeModule','VelocityModule','UVModule','ClampVelocityModule','NoiseModule','InheritVelocityModule',...(managedSubModule?['SubModule']:[])],spaces:[0,1],allowInitialSpeed:true,allowDistanceEmission:true});
   const shape=source.ShapeModule,velocity=source.VelocityModule,uv=source.UVModule;
   const motion=createParticleMotion(source,{seed});
   const inheritance=createParticleInheritance(source,{seed});
@@ -89,7 +90,7 @@ export function createMovingParticles(source,{seed=1}={}){
     });
   }
   function sample(time,options={}){return sampleParticles(lifecycle.sample(time,{history:options.history}),time,options);}
-  return {sample,worldMotion,sampleRecords(records,time,options){return sampleParticles(lifecycle.sampleRecords(records,time),time,options);}};
+  return {sample,worldMotion,births:lifecycle.births,sampleRecords(records,time,options){return sampleParticles(lifecycle.sampleRecords(records,time),time,options);}};
 }
 
 function rotateShape([x,y,z],rotation){

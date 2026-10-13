@@ -35,6 +35,57 @@ try{
   }});
   try{
    const programs=compileNativeEffectPrograms(renderer,shaders);
+   const parentRoots=[];
+   const sourceFrame=(instance,transform,time)=>{
+    const state=instance.pose.sample(time),nodes=[];let id=transform;while(id){nodes.unshift(state.nodes.get(id));id=state.nodes.get(id).parent;}
+    const matrix=new T.Matrix4(),rotation=new T.Quaternion();
+    for(const n of nodes){const q=n.euler?new T.Quaternion().setFromEuler(new T.Euler(...n.euler.map(v=>v*Math.PI/180),'ZXY')):new T.Quaternion(...n.rotation);
+     matrix.multiply(new T.Matrix4().compose(new T.Vector3(...n.position),q,new T.Vector3(...n.scale)));rotation.multiply(q);}
+    return{position:new T.Vector3().setFromMatrixPosition(matrix),rotation,scale:new T.Vector3(...state.nodes.get(transform).scale)};
+   };
+   const factor=(id,salt)=>{let h=Math.imul((id+1)^1,0x45d9f3b)^Math.imul(salt+1,0x27d4eb2d);h=Math.imul(h^(h>>>16),0x45d9f3b);return((h^(h>>>16))>>>0)/0x100000000;};
+   for(let root=1;root<=6;root++){
+    const instance=await library.create('whitw2_token_hit_0'+root,{allowBlocked:true}),scene=new T.Scene(),camera=new T.PerspectiveCamera(35,1,.001,100);
+    scene.background=new T.Color('#142027');scene.add(instance.group);camera.position.set(.2,.4,3);camera.lookAt(0,0,0);camera.updateMatrixWorld(true);
+    const time=.1;instance.update(time,{camera});instance.group.updateMatrixWorld(true);
+    const bounds=new T.Box3().setFromObject(instance.group),centre=bounds.getCenter(new T.Vector3()),span=Math.max(.1,bounds.getSize(new T.Vector3()).length());
+    camera.position.copy(centre).add(new T.Vector3(.2,.4,1).normalize().multiplyScalar(span*1.8));camera.lookAt(centre);camera.updateMatrixWorld(true);
+    instance.update(time,{camera});instance.group.updateMatrixWorld(true);
+    const selected=instance.draws.filter(d=>d.lastParticles?.some(p=>p.parent)),rendered=new Set();let samples=0,passes=0,sourceHiddenSamples=0;
+    for(const d of selected)for(const part of d.pool){const before=part.onBeforeRender;part.onBeforeRender=function(...args){passes++;rendered.add(this);return before.apply(this,args);};}
+    renderer.render(scene,camera);
+    for(const d of selected)for(const[index,part]of d.pool.entries())if(part.visible){
+     const p=d.lastParticles[index],parent=pack.records[p.parent],s=parent.data;
+     if(s.scalingMode!==1||s.moveWithTransform!==0||s.InitialModule.startSpeed.scalar!==0||s.ShapeModule.radiusThickness!==1
+      ||Object.values(s.ShapeModule.m_Position).some(v=>v!==0)||Object.values(s.ShapeModule.m_Rotation).some(v=>v!==0)
+      ||d.particleSource.scalingMode!==1||d.particleSource.moveWithTransform!==0)throw Error('Changed original parent/child frame diagnostic controls');
+     const parentGo=parent.references.find(r=>r.field==='m_GameObject').target,parentTransform=[...instance.pose.nodes].find(([,n])=>n.gameObject===parentGo)?.[0];
+     const pf=sourceFrame(instance,parentTransform,p.birthTime),birth=sourceFrame(instance,d.transform,p.birthTime),current=sourceFrame(instance,d.transform,time);
+     const radius=s.ShapeModule.radius.value*Math.sqrt(factor(p.parentParticle,10)),phi=factor(p.parentParticle,11)*Math.PI*2;
+     const basis=frame=>new T.Matrix4().compose(new T.Vector3(),frame.rotation,frame.scale);
+     const delta=new T.Vector3(radius*Math.cos(phi)*s.ShapeModule.m_Scale.x,radius*Math.sin(phi)*s.ShapeModule.m_Scale.y,0).applyMatrix4(basis(pf));
+     // Preserve the serialized quaternion basis rather than assuming a perfectly
+     // unit quaternion and replacing the inverse matrix with its conjugate.
+     const offset=delta.applyMatrix4(basis(birth).invert());
+     const expected=new T.Vector3(...(p.origin??[0,0,0])).add(offset).add(new T.Vector3(...(p.displacement??[0,0,0]))).applyMatrix4(basis(current)).add(current.position);
+     const actual=new T.Vector3().setFromMatrixPosition(part.matrixWorld);
+     if(expected.distanceTo(actual)>1e-8)throw Error('Source parent motion did not reach rendered child position '+JSON.stringify({root,child:d.particleId,expected:expected.toArray(),actual:actual.toArray()}));
+     const sourceVisible=instance.pose.sample(time).nodes.get(d.transform).visible;
+     if(sourceVisible){if(!rendered.has(part))throw Error('Visible source child missed its render pass');samples++;}
+     else{if(rendered.has(part))throw Error('Inactive original child was rendered');sourceHiddenSamples++;}
+    }
+    if(selected.length<4||passes!==samples||samples!==13)throw Error('Source child dispatch missed original render passes '+JSON.stringify({root,selected:selected.length,passes,samples}));
+    const verifiedPasses=passes;
+    const snapshot=()=>JSON.stringify(selected.map(d=>({particles:d.lastParticles,matrices:d.pool.filter(p=>p.visible).map(p=>Array.from(p.matrixWorld.elements))})));
+    const before=snapshot();instance.update(.8,{camera});instance.update(time,{camera});instance.group.updateMatrixWorld(true);
+    if(snapshot()!==before)throw Error('Source parent/child dispatch did not reverse exactly');
+    let strictRejected=false;try{await library.create(instance.name);}catch(e){if(!/unplayed/.test(e.message))throw e;strictRejected=true;}
+    if(!strictRejected||instance.inspection!==null)throw Error('Partial source dispatch bypassed its full-root fidelity boundary');
+    if(root===5){const box=new T.Box3().setFromObject(instance.group),centre=box.getCenter(new T.Vector3()),span=Math.max(.1,box.getSize(new T.Vector3()).length());
+     camera.position.copy(centre).add(new T.Vector3(.2,.4,1).normalize().multiplyScalar(span*1.8));camera.lookAt(centre);camera.updateMatrixWorld(true);
+     instance.update(time,{camera});renderer.render(scene,camera);window.sourceParentImage=renderer.domElement.toDataURL('image/png');}
+    parentRoots.push({root:instance.name,children:selected.length,samples,passes:verifiedPasses,sourceHiddenSamples,blocked:instance.blocked.length,reverseStable:true,strictRejected,syntheticParentMotion:false});instance.dispose();
+   }
    const instance=await library.create('whitw2_skill_03_buff_01',{allowBlocked:true}),scene=new T.Scene(),camera=new T.PerspectiveCamera(35,1,.001,100);
    scene.background=new T.Color('#142027');scene.add(instance.group);
    const captureTime=1.8;camera.position.set(.2,.4,3);camera.lookAt(0,0,0);camera.updateMatrixWorld(true);
@@ -78,11 +129,12 @@ try{
    instance.update(captureTime,{camera});renderer.render(scene,camera);
    const gl=renderer.getContext(),ext=gl.getExtension('WEBGL_debug_renderer_info'),glError=gl.getError(),driver=gl.getParameter(ext?.UNMASKED_RENDERER_WEBGL??gl.RENDERER);
    window.angularReview={library,renderer,scene,camera};
-   return {root:instance.name,draws:instance.draws.length,blocked:instance.blocked,programs:programs.length,sourceIds,matrices,captureTime,reverseStable:true,strictRejected,glError,driver,compiledFrameParity:false,diagnosticOnly:true};
+   return {root:instance.name,draws:instance.draws.length,blocked:instance.blocked,programs:programs.length,sourceIds,matrices,captureTime,parentRoots,reverseStable:true,strictRejected,glError,driver,compiledFrameParity:false,diagnosticOnly:true};
   }catch(error){library.dispose();renderer.dispose();throw error;}
  },{pack,animations,shaders});
  assert.equal(result.programs,23);assert.ok(result.matrices>=5);assert.equal(result.sourceIds.length,5);assert.equal(result.strictRejected,true);assert.equal(result.glError,0);assert.match(result.driver,/SwiftShader/i);assert.deepEqual(errors,[]);
  await page.screenshot({path:path.join(directory,'angular-motion-diagnostic.png')});
+ const parentImage=await page.evaluate(()=>window.sourceParentImage);await writeFile(path.join(directory,'source-parent-motion-diagnostic.png'),Buffer.from(parentImage.split(',')[1],'base64'));
  const cleanup=await page.evaluate(async()=>{const{library,renderer,scene,camera}=angularReview;library.dispose();await Promise.resolve();renderer.render(scene,camera);const memory={...renderer.info.memory};renderer.dispose();return memory;});
  assert.equal(cleanup.geometries,0);assert.equal(cleanup.textures,0);
  const report={...result,cleanup,errors};await writeFile(path.join(directory,'angular-motion-browser-review.json'),JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(report));

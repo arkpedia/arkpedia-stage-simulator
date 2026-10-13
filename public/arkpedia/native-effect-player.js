@@ -4,6 +4,7 @@
 import {webglEffectProgram,selectEffectProgram,effectUniformDeclarations} from '../../shared/arkpedia/native-effect-shader.js';
 import {createStationaryParticles} from '../../shared/arkpedia/native-stationary-particles.js';
 import {createMovingParticles} from '../../shared/arkpedia/native-moving-particles.js';
+import {createParentParticleMotion} from '../../shared/arkpedia/native-parent-particle-motion.js';
 import {particleWorldPosition,particleSheetUV} from '../../shared/arkpedia/native-particle-render.js';
 import {sampleParticleCurve} from '../../shared/arkpedia/native-particle-curves.js';
 import {effectMeshColors} from '../../shared/arkpedia/native-effect-mesh.js';
@@ -108,6 +109,17 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false}={}){
   library.assertOpen();
   const pose=createEffectPose(pack,animations,name),group=new T.Group();
   const subEmitters=createSubEmitterGraph(pack);
+  const particleTransforms=new Map();
+  for(const[id,n]of pose.nodes)for(const ref of pack.records[n.gameObject].references??[])
+    if(pack.records[ref.target]?.type==='ParticleSystem')particleTransforms.set(ref.target,id);
+  let activeClip=null,activeTrajectory=null;
+  const sourceFrameAt=(id,t)=>{
+    const transform=particleTransforms.get(id);if(!transform)throw Error('Parent particle transform is outside original source root');
+    const state=samplePose(Math.max(0,t),activeClip,activeTrajectory);
+    const frame=particleMatrices(particleFrame(transform,state),pack.records[id].data.scalingMode);
+    return{birth:frame.birth.elements,movement:frame.movement.elements};
+  };
+  const parentMotion=createParentParticleMotion(pack,{parentIds:[...particleTransforms.keys()].filter(id=>pack.records[id].data.SubModule?.enabled),frameAt:sourceFrameAt});
   const draws=[],blocked=[],geometries=new Set(),materials=new Set(),nodeObjects=new Map();
   let disposed=false;
   const assertOpen=()=>{library.assertOpen();if(disposed)throw Error('Native effect instance is disposed');};
@@ -236,6 +248,7 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false}={}){
     group.updateWorldMatrix(true,false);
     if(group.matrixWorld.elements.some((v,i)=>!Number.isFinite(v)||Math.abs(v-(i%5===0?1:0))>1e-12))
       throw Error('Native effect group must remain in original coordinate space');
+    activeClip=clip;activeTrajectory=trajectory;
     const state=samplePose(clock,clip,trajectory);
     for(const [id,n] of state.nodes){const o=nodeObjects.get(id);o.position.fromArray(n.position);o.scale.fromArray(n.scale);
       if(n.euler)o.quaternion.setFromEuler(new T.Euler(...n.euler.map(v=>v*Math.PI/180),'ZXY'));else o.quaternion.fromArray(n.rotation);
@@ -276,7 +289,9 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false}={}){
           if(!birthStates.has(t))birthStates.set(t,samplePose(t,clip,trajectory));
           return {time:t,position:particleFrame(transform,birthStates.get(t)).position.toArray()};
         });
-        const scheduled=scheduledParticles&&entry.particleId===library.inspectionSource?scheduledParticles:null;
+        const dispatch=subEmitters.parents(entry.particleId).length&&library.inspectionSource!==entry.particleId&&parentMotion.ready(entry.particleId);
+        const scheduled=scheduledParticles&&entry.particleId===library.inspectionSource?scheduledParticles:dispatch
+          ?{records:parentMotion.records(entry.particleId,clock),frames:parentMotion.childFrames(entry.particleId,sourceFrameAt)}:null;
         const particles=scheduled?emitter.sampleRecords(scheduled.records,clock,scheduled.frames):emitter.sample(clock,{frameAt,history,emitterVelocityAt});
         entry.lastParticles=particles;
         const inverse=new T.Matrix4().copy(mesh.parent.matrixWorld).invert();
@@ -347,7 +362,7 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false}={}){
     .map(r=>pack.records[r.target]).filter(r=>r?.type==='ParticleSystem').map(r=>r.data.lengthInSec*2));
   const timeWindow=Math.max(3,...periods,...pose.instances.map(i=>animations.clips[i.clip].stop));
   const inspection=library.inspectionSource?{particle:library.inspectionSource,parents:subEmitters.parents(library.inspectionSource),fullEffect:false}:null;
-  const instance={name,pose,group,draws,blocked,timeWindow,inspection,update,dispose,get disposed(){return disposed;}};
+  const instance={name,pose,group,draws,blocked,timeWindow,inspection,parentMotion,update,dispose,get disposed(){return disposed;}};
   library.register(instance);
   try{
     for(const [id,n] of pose.nodes){const o=new T.Group();nodeObjects.set(id,o);(n.parent?nodeObjects.get(n.parent):group).add(o);}
@@ -369,7 +384,7 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false}={}){
           const ps=(pack.records[r.gameObject].references??[]).map(r=>r.target).find(k=>pack.records[k]?.type==='ParticleSystem');
           particleId=ps;
           particleSource=pack.records[ps].data;
-          if(subEmitters.parents(ps).length&&library.inspectionSource!==ps)
+          if(subEmitters.parents(ps).length&&library.inspectionSource!==ps&&!parentMotion.ready(ps))
             throw Error('Original sub-emitter parent dispatch not playing');
           if((particleSource.InitialModule.rotation3D||particleSource.RotationModule?.enabled&&particleSource.RotationModule.separateAxes)&&record.data.m_RenderMode!==4)
             throw Error('Native 3D billboard start rotation needs review');
@@ -379,7 +394,7 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false}={}){
           if(particleSource.TrailModule?.enabled||r.materials.some(m=>m?.id!==r.materials[0]?.id))
             throw Error('Native particle trail/multi-material renderer needs review');
           const moving=['ShapeModule','VelocityModule','UVModule','ClampVelocityModule','NoiseModule','InheritVelocityModule'].some(k=>particleSource[k]?.enabled)||particleSource.moveWithTransform===1;
-          emitter=moving?createMovingParticles(particleSource):createStationaryParticles(particleSource);
+          emitter=moving?createMovingParticles(particleSource,{subEmitterSchedule:parentMotion.parentReady(ps)?parentMotion.schedule:null}):createStationaryParticles(particleSource);
           if(![0,1,2].includes(particleSource.scalingMode))throw Error('Native particle scaling mode needs review');
           if(particleSource.moveWithTransform===1&&!emitter.worldMotion){
             const ancestors=new Set();let n=r.transform;while(n){const d=pose.nodes.get(n);ancestors.add(d.gameObject);n=d.parent;}

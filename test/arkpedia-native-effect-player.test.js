@@ -51,6 +51,20 @@ test('closed libraries and invalid roots do not register orphan instances',async
   const a=await lib.create('empty'),b=await lib.create('empty');lib.dispose();assert.equal(lib.instanceCount,0);
   assert.equal(a.disposed,true);assert.equal(b.disposed,true);assert.throws(()=>lib.create('empty'),/disposed/);lib.dispose();
 });
+test('six original hit roots dispatch child records from supported parent physics without isolated overrides',native,async()=>{
+ const lib=library(original),cam=camera();
+ try{for(let root=1;root<=6;root++){
+  const i=await lib.create('whitw2_token_hit_0'+root,{allowBlocked:true});
+  assert.equal(i.inspection,null);assert.equal(Object.values(i.parentMotion.statuses()).filter(r=>r.sampled).length,1);
+  i.update(.1,{camera:cam});i.group.updateMatrixWorld(true);
+  const selected=i.draws.filter(d=>d.lastParticles?.some(p=>p.parent));assert.ok(selected.length>=4);
+  for(const d of selected)assert.deepEqual(d.lastParticles.map(p=>p.id),i.parentMotion.records(d.particleId,.1).map(p=>p.id));
+  const snapshot=()=>JSON.stringify(selected.map(d=>({particles:d.lastParticles,matrices:d.pool.filter(p=>p.visible).map(p=>Array.from(p.matrixWorld.elements))})));
+  const before=snapshot();i.update(.8,{camera:cam});i.update(.1,{camera:cam});i.group.updateMatrixWorld(true);assert.equal(snapshot(),before);
+  assert.ok(i.blocked.length>0);i.dispose();
+ }}finally{lib.dispose();}
+ assert.equal(lib.instanceCount,0);
+});
 test('explicit original particle inspection preserves parent links without altering the source root registry',native,async()=>{
  const id='battle/prefabs/effects/whitw2.ab:-1572538059954014246',lib=library(original),before=structuredClone(original.pack.records[id]);
  try{
