@@ -50,6 +50,19 @@ test('closed libraries and invalid roots do not register orphan instances',async
   const a=await lib.create('empty'),b=await lib.create('empty');lib.dispose();assert.equal(lib.instanceCount,0);
   assert.equal(a.disposed,true);assert.equal(b.disposed,true);assert.throws(()=>lib.create('empty'),/disposed/);lib.dispose();
 });
+test('explicit original particle inspection preserves parent links without altering the source root registry',native,async()=>{
+ const id='battle/prefabs/effects/whitw2.ab:-1572538059954014246',lib=library(original),before=structuredClone(original.pack.records[id]);
+ try{
+  assert.throws(()=>lib.inspectParticle('missing'),/Unknown original particle/);
+  const i=await lib.inspectParticle(id);
+  assert.deepEqual(i.inspection,{particle:id,parents:['battle/prefabs/effects/whitw2.ab:-4329880431612217382'],fullEffect:false});
+  assert.equal(Object.hasOwn(original.pack.roots,i.name),false);assert.deepEqual(original.pack.records[id],before);
+  // This original renderer is disabled. Inspection preserves it rather than
+  // inventing a visible mesh or pretending that the full parent effect plays.
+  assert.equal(i.draws.length,0);assert.deepEqual(i.blocked,[]);assert.equal(lib.instanceCount,1);
+  i.update(.2,{camera:camera()});i.dispose();assert.equal(lib.instanceCount,0);
+ }finally{lib.dispose();}
+});
 test('original S3 instances use distinct clocks, materials, geometry and histories with shared textures',native,async()=>{
   let loads=0;const lib=library(original,async()=>{loads++;await Promise.resolve();return new T.Texture();});
   try{
