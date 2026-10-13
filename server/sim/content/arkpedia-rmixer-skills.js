@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Selected-source diagnostic only; no public registration or silent defaults.
+// Independent diagnostic and public contracts; selected-source combat with explicit fidelity limits.
 import evidence from '../../../data/arkpedia-rmixer-prefabs.json' with { type: 'json' };
+import review from '../../../data/arkpedia-rmixer-runtime-review.json' with { type: 'json' };
 import { RMIXER_ID, rmixerSourceComponent as component } from './arkpedia-rmixer-source.js';
 import { RMIXER_RESOURCE_CONTRACT, prepareRmixerResources } from './arkpedia-rmixer-resources.js';
 import { RmixerAttackController, rmixerAttackTrait, verifyRmixerAttackSource } from './arkpedia-rmixer-attacks.js';
@@ -13,6 +14,15 @@ export const RMIXER_SKILL_CONTRACT = Object.freeze({
   mapping: 'S1 holds one defensive-SP charge and its SP lock through the three original Skill_Loop events. Each accepted event launches one current-ATK Physical projectile; the ability completes once at the loop boundary. One successful launch attempts one Laterano ammo replenishment in the nonextendable surrounding eight tiles. External grants share the recipient’s loaded-capacity recovery allowance for that activation. A sole eligible recipient is supported; multiple recipients are explicitly held rather than guessing compiled postFilter 66. S3 stops ordinary attacks, changes fixed nonextendable range/HP/ATK/DEF/BAT, replenishes other active Laterano ammo skills globally, and issues direct Physical counters to at most three legal in-range targets. One round is spent per counter group, including an empty group. Its normal counter interval uses the current modified attack interval. Accepted calculated HP damage triggers counters before shields/HP application; dodges, cancellation, invulnerability, elemental gauges and HP loss do not. Talent stacks use accepted post-shield damage receipts, including fully absorbed output, and the table-selected DEF/ASPD, three-stack cap and shared ten-second refresh.',
   limits: 'The compiled S1 recipient comparator, event/FSM dispatch and final-ammo clocks remain unrecovered. S1 wave target reselection, interruption completion and pre-first-shot target-loss refund are local mappings. Each wave emits a simulator attack event; this is not a claim about Unity event count. The talent table cap is three but CreateBuff has a literal maxStackCnt of one; applying the table cap is an explicit unresolved binding, not verified native execution. S3 counter receipt order, Begin/End eligibility, cooldown reset and other-only replenishment follow the diagnostic contract; native CreateBuffInRange does not explicitly exclude its owner. Selected table ranks all have positive base_attack_time; the unreachable zero-BB branch is preserved in evidence but not approved here. Public roster/browser combat approval, modules, particles/audio and Unity frame parity remain held.',
   frameParity: false,
+});
+export const RMIXER_RUNTIME_CONTRACT = Object.freeze({
+  ...RMIXER_SKILL_CONTRACT,
+  scope: 'Sankta selected-source public ordinary/S1/S2/S3 combat and both talents',
+  recipientPolicy: 'missing-ammo-then-latest-deployment-v1',
+  mapping: RMIXER_SKILL_CONTRACT.mapping.replace(
+    'A sole eligible recipient is supported; multiple recipients are explicitly held rather than guessing compiled postFilter 66.',
+    'Public S1 uses selector 66 with missing-ammo preference, then latest runtime deployment and same-tick deployment sequence. This is a reviewed local interpretation of published targeting research; aggro mutations do not affect it.'),
+  limits: review.limits.join(' '),
 });
 const live = u => u?.alive && u.deployed && !u.hidden && !u._removing;
 const due = (b, at) => b.time + 1e-9 >= at;
@@ -58,7 +68,7 @@ function verifySource() {
 
 export class RmixerSkillController extends RmixerAttackController {
   constructor(...args) {
-    super(...args); this.counterAt = -Infinity; this.countering = false;
+    super(...args); this.contract = RMIXER_SKILL_CONTRACT; this.counterAt = -Infinity; this.countering = false;
     this.t1 = this.record.talentBb.find(t => t.max_stack_cnt != null);
   }
   visual(...args) {
@@ -87,11 +97,19 @@ export class RmixerSkillController extends RmixerAttackController {
   }
   replenish(one) {
     const candidates = this.recipients(!one);
-    if (one && candidates.length > 1) {
+    if (one && candidates.length > 1 && this.contract === RMIXER_SKILL_CONTRACT) {
       this.b.emit('rmixerRecipientHeld', { owner: this.u, candidates: candidates.map(a => a.id), postFilter: 66 });
       return;
     }
-    for (const [recipient, seq] of candidates.map(a => [a, a.deploySeq])) {
+    if (one && this.contract === RMIXER_RUNTIME_CONTRACT) {
+      // Native selector 66; published research reports ammo-not-full first.
+      // Runtime creation is deployment here. Compiled same-frame timing remains
+      // an explicit review limit; never substitute mutable taunt/aggro order.
+      candidates.sort((a, z) => Number(a.skill.ammoLeft >= a.skill.ammoCapacity)
+        - Number(z.skill.ammoLeft >= z.skill.ammoCapacity)
+        || z.deployedAt - a.deployedAt || z.deploySeq - a.deploySeq);
+    }
+    for (const [recipient, seq] of (one ? candidates.slice(0, 1) : candidates).map(a => [a, a.deploySeq])) {
       if (!this.valid()) return;
       if (!live(recipient) || recipient.deploySeq !== seq || !recipient.skill.active) continue;
       const count = recipient.skill.replenishAmmo(one ? this.record.bb.charge : this.record.bb.ammo);
@@ -214,15 +232,17 @@ export class RmixerSkillController extends RmixerAttackController {
 }
 
 export function prepareRmixerSkills(b, u, { contract } = {}) {
-  if (contract !== RMIXER_SKILL_CONTRACT) throw Error('Sankta Miksaparato requires the reviewed skill contract');
+  if (contract !== RMIXER_SKILL_CONTRACT && contract !== RMIXER_RUNTIME_CONTRACT) throw Error('Sankta Miksaparato requires the reviewed skill contract');
   verifySource();
   const prepared = prepareRmixerResources(b, u, { contract: RMIXER_RESOURCE_CONTRACT });
   const { record, resources, kit } = prepared, bb = record.bb;
   const controller = new RmixerSkillController(b, u, record, resources);
+  controller.contract = contract;
   u.mem.rmixerAttacks = controller;
   kit.trait = rmixerAttackTrait(controller);
   kit.skill = { ...kit.skill, silenceable: false, manualCancel: record.index > 0,
     completeOnAttack: record.index !== 0,
+    ...(record.index === 0 ? { pendingText: 'Skill active · Three-shot attack' } : {}),
     flags: record.index === 0 ? { noSp: true } : {},
     mods: record.index === 2 ? { atkPct: bb.atk, defPct: bb.def, hpPct: bb.max_hp, batMul: bb.base_attack_time } : kit.skill.mods,
     targeting: record.index === 2 ? { rangeGrid: record.skillRange, noRangeExtend: true } : undefined,

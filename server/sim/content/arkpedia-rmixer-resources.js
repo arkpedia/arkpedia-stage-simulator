@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Opted-in resource diagnostic. The complete combat controller is still held.
+// Source-checked resource layer. Its independent resource-only contract remains diagnostic.
 import evidence from '../../../data/arkpedia-rmixer-prefabs.json' with { type: 'json' };
 import { RMIXER_ID, selectedRmixerBuild } from './arkpedia-rmixer-source.js';
 import { normalizeChess, normSpType, flattenBlackboard as flat } from '../simdata.js';
@@ -19,7 +19,7 @@ function verify(u, contract) {
   if (u.def.charId !== RMIXER_ID || u.deploySeq !== 0 || u.mem.rmixerResources)
     throw Error('Sankta Miksaparato requires a fresh original owner');
   const r = selectedRmixerBuild({ ...u.def.raw.arkpedia, skillId: u.def.skill?.id }), s = u.def.skill;
-  if (u.def.raw.arkpedia.skillId !== s.id || !same(u.def.stats, normalizeChess({ stats: r.stats }).stats)
+  if (u.def.raw.arkpedia.skillId != null && u.def.raw.arkpedia.skillId !== s.id || !same(u.def.stats, normalizeChess({ stats: r.stats }).stats)
     || !same(u.def.tags, r.tags) || !same(u.rangeGrid, r.rangeGrid)
     || !same(u.def.talents.map(t => t.bb), r.talentBb) || !same(s.bb, r.bb)
     || !same(s.rangeGrid ?? [], r.skillRange) || s.skillType !== r.source.skillType
@@ -106,8 +106,8 @@ export class RmixerResources {
 export function prepareRmixerResources(b, u, { contract } = {}) {
   const record = verify(u, contract), resources = new RmixerResources(b, u, record);
   u.mem.rmixerResources = resources;
-  // No placeholder attacks: this diagnostic is deliberately outside the public
-  // registry. The eventual controller supplies the original completion events.
+  // No placeholder attacks in this resource-only layer. Reviewed combat
+  // controllers supply the original completion events.
   const kind = record.index ? 'ammo' : 'instant';
   return { record, resources, kit: { trait: { noAttack: true, attackDrivenSkill: true }, talents: [], install: null,
     skill: { kind, trigger: { rule: 'NEVER' }, ammo: record.bb['attack@trigger_time'],

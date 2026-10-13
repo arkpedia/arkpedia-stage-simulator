@@ -10,8 +10,8 @@ import { make, enemy, advance, until, cast } from './helpers/rmixer-fixture.js';
 
 const near = (a, z) => assert.ok(Math.abs(a - z) < 1e-5, `${a} != ${z}`);
 
-test('attack diagnostic is strict, opt-in and keeps the incomplete operator outside the public roster', () => {
-  assert.equal(data.operators[ID], undefined); assert.deepEqual(e.enabledOperators, []);
+test('attack diagnostic is strict, opt-in and preserves its independent historical hold', () => {
+  assert.ok(data.operators[ID]); assert.deepEqual(e.enabledOperators, []);
   assert.equal(CONTRACT.frameParity, false);
   assert.throws(() => make({ contract: { ...CONTRACT } }), /reviewed attack contract/);
   for (const mutate of [d => d.stats.atk++, d => d.skill.bb.ammo_cost++, d => d.rangeGrid = [[0, 99]],

@@ -88,6 +88,7 @@ import { RAY_OPERATORS } from './ray-operators.js';
 import { COLDSHOT_OPERATORS } from './coldshot-operators.js';
 import { NYMPH_OPERATORS } from './nymph-operators.js';
 import { LEMUEN_OPERATORS } from './lemuen-operators.js';
+import { RMIXER_OPERATORS } from './rmixer-operators.js';
 import { NARANT_OPERATORS } from './narant-operators.js';
 import { ELA_OPERATORS } from './ela-operators.js';
 import { FUZE_OPERATORS } from './fuze-operators.js';
@@ -289,6 +290,7 @@ export const REGULAR_OPERATORS = Object.freeze({
   ...COLDSHOT_OPERATORS,
   ...NYMPH_OPERATORS,
   ...LEMUEN_OPERATORS,
+  ...RMIXER_OPERATORS,
   ...NARANT_OPERATORS,
   ...ELA_OPERATORS,
   ...FUZE_OPERATORS,

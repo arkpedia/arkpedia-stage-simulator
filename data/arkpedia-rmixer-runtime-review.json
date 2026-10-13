@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "operatorId": "char_4194_rmixer",
+  "enabledOperators": [
+    "char_4194_rmixer"
+  ],
+  "sourceFoundation": "arkpedia-rmixer-prefabs.json",
+  "sourceFoundationSha256": "4de40fff74f8c897da1ae24a6d56f06684d0ba136bae96080aa968107bd37563",
+  "scope": "Selected-source ordinary combat, all three skills, both talents and public deployment lifecycle. Historical extraction and its opt-in diagnostics remain independent of this public review.",
+  "frameParity": false,
+  "moduleSupport": false,
+  "nativeParticleSupport": false,
+  "recipientPolicy": "missing-ammo-then-latest-deployment-v1",
+  "recipientResearch": {
+    "url": "https://prts.wiki/w/仇恨机制",
+    "selector": 66,
+    "reportedEnum": "AMMO_NOT_FULL_ASC_CREATED_TIME_DES_FIRST",
+    "evidenceBoundary": "Published targeting research, not a recovered compiled comparator. Its enum and creation-order prose disagree; latest runtime deployment is an explicit local mapping.",
+    "nativeSelector": "-2442329197482112262"
+  },
+  "verification": [
+    "test/arkpedia-rmixer-public.test.js",
+    "test/arkpedia-rmixer-skills.test.js",
+    "test/arkpedia-rmixer-attacks.test.js",
+    "test/arkpedia-rmixer-resources.test.js",
+    "test/arkpedia-rmixer-source.test.js",
+    "tools/arkpedia/review-rmixer-public.mjs"
+  ],
+  "limits": [
+    "S1 prioritizes missing ammo, then most recent runtime deployment; same-tick ties use deployment sequence, not aggro sequence. Native creation-time dispatch is unrecovered.",
+    "S1 target reselection, interruption completion and pre-first-shot charge refund use documented local mappings.",
+    "S2 countEvent 4, sufficient-ammo fatal guard finish frame, projectile completion and source retirement use local dispatch.",
+    "S3 counter receipt order, cooldown, Begin/End eligibility and other-only global replenishment use explicit local mappings.",
+    "Talent 1 uses the table three-stack cap despite the native CreateBuff literal maxStackCnt of one; compiled binding remains unverified.",
+    "Original particles/audio, modules, compiled FSM dispatch and Unity frame parity are not enabled."
+  ]
+}
