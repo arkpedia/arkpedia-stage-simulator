@@ -30,7 +30,7 @@ test('S2 requires source-selected ranks, native projectile chains and its own op
 for(let rank=1;rank<=10;rank++)test(`S2 rank ${rank} automatically chants, debits once and keeps its first familiar indefinitely`,()=>{
   const f=make({rank}); const mana=f.wallet.value, ordinary=f.u.s.atk;
   advance(f,.1); assert.equal(f.controller.mode,'ordinary'); assert.equal(f.u.skill.active,false);
-  assert.equal(f.u.mem.regularFormVisual.clip,'Start'); born(f); assert.equal(f.controller.mode,'chant'); assert.equal(f.u.skill.active,true);
+  assert.equal(f.u.mem.regularFormVisual.clip,'Start'); born(f); assert.equal(f.controller.mode,'chant'); assert.equal(f.u.skill.active,false);
   assert.equal(f.u.mem.regularFormVisual.clip,'Skill_2_Begin_A'); near(f.u.s.atk,ordinary);
   assert.equal(f.u.skill.end('manual'),false); advance(f,.5);
   assert.equal(f.u.mem.regularFormVisual.clip,'Skill_2_Chant'); assert.equal(f.wallet.value,mana);
@@ -54,7 +54,7 @@ test('not enough starting mana at E1 waits for a legal grant, without an invente
 test('a failed chant costs nothing and creates no persistent enhancement mark',()=>{
   const f=make(); born(f); assert.equal(f.controller.mode,'chant');
   f.mana.controller.consume(1); // move below its source minimum after the automatic cast
-  until(f,()=>!f.u.skill.active,1);
+  until(f,()=>!f.controller.isChanting(),1);
   assert.equal(f.wallet.value,34); assert.equal(f.controller.enhancement,false);
   assert.equal(f.controller.tier,0); assert.equal(f.u.findBuff('marcil:s2'),null);
   f.u.skill.gainSp(1,'gift'); enable(f); assert.equal(f.controller.tier,1); assert.equal(f.wallet.value,0);
@@ -243,14 +243,15 @@ test('a temporarily hidden owner cannot resume a stale familiar windup or retain
   }
 });
 
-test('real Senshi final meals cannot recharge either S2 main chanting or a running familiar', () => {
+test('real Senshi final meals recharge S2 chanting but remain locked by a running familiar', () => {
   for (const phase of ['chant', 'familiar']) {
     const f = make(); if (phase === 'familiar') enable(f);
     const senshi = f.b.deployOperator('char_4143_sensi', 5, 5, 'RIGHT');
     senshi.atkCd = 1000; senshi.skill.rule = 'NEVER';
     senshi.skill.setSpTotal(senshi.skill.spCost); assert.equal(senshi.skill.activate('fixture'), true);
     const mana = f.wallet.value; advance(f, 9.4);
-    assert.equal(f.wallet.value, mana); assert.equal(f.u.skill.active, true);
+    assert.equal(f.wallet.value, phase === 'chant' ? mana + 10 : mana);
+    assert.equal(f.u.skill.active, phase === 'familiar');
     assert.equal(f.controller.mode, phase === 'chant' ? 'chant' : 's2');
   }
 });

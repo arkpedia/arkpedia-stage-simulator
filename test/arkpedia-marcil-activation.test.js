@@ -23,10 +23,10 @@ for (const skill of [1,2,3]) for (let rank=1; rank<=10; rank++)
     assert.equal(f.controller.canActivate(),true);
     if (skill === 2) {
       assert.equal(skillHud(f.u.skill).ready,false); advance(f,f.b.dt);
-      assert.equal(f.u.skill.activations,1); assert.equal(f.controller.mode,'chant');
+      assert.equal(f.controller.chantRequests,1); assert.equal(f.controller.mode,'chant');
     } else {
       assert.equal(skillHud(f.u.skill).ready,true); assert.equal(f.u.skill.activate('manual'),true);
-      assert.equal(f.u.skill.activations,1);
+      assert.equal(f.controller.chantRequests,1);
     }
     assert.equal(f.wallet.value,minimum); // Chant entry never debits mana.
     f.b.forceEnd('fixture'); assert.deepEqual(f.b.errors,[]);
@@ -42,7 +42,7 @@ for (const skill of [1,2,3]) for (const dir of ['RIGHT','UP','LEFT','DOWN'])
     assert.equal(f.u.skill.activations,0); assert.equal(f.controller.canActivate(),false);
     assert.equal(f.u.mem.regularFormVisual.clip,'Start');
     born(f);
-    if (skill === 2) assert.equal(f.u.skill.activations,1);
+    if (skill === 2) assert.equal(f.controller.chantRequests,1);
     else { assert.equal(f.controller.canActivate(),true); assert.equal(f.u.skill.activate('manual'),true); }
     f.b.forceEnd('fixture');
   });
@@ -57,7 +57,7 @@ for (const skill of [1,2,3]) for (const interruption of ['control','hidden'])
     assert.equal(f.controller.canActivate(),false); assert.equal(f.u.skill.activate('manual'),false);
     advance(f,.6); assert.equal(f.u.skill.activations,0); assert.equal(f.controller.canActivate(),false);
     born(f);
-    if (skill === 2) assert.equal(f.u.skill.activations,1);
+    if (skill === 2) assert.equal(f.controller.chantRequests,1);
     else assert.equal(f.u.skill.activate('manual'),true);
     f.b.forceEnd('fixture');
   });
@@ -68,8 +68,8 @@ for (const skill of [1,3])
     const minimum=f.record.bb.skill_cost_min_sp; f.u.skill.setSpTotal(minimum);
     assert.equal(f.u.skill.activate('manual'),true); const started=f.b.time;
     assert.equal(f.mana.controller.consume(1),true);
-    advance(f,.45); assert.equal(f.u.skill.active,true);
-    until(f,()=>!f.u.skill.active,1);
+    advance(f,.45); assert.equal(f.controller.isChanting(),true); assert.equal(f.u.skill.active,false);
+    until(f,()=>!f.controller.isChanting(),1);
     assert.ok(f.b.time>=started+.5); assert.ok(f.b.time<=started+.5+2*f.b.dt);
     assert.equal(f.wallet.value,minimum-1); assert.equal(f.hits.length,0);
     f.b.forceEnd('fixture');

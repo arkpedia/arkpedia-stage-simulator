@@ -115,7 +115,7 @@ for (let rank = 1; rank <= 10; rank++) test(`S1 rank ${rank} chants before its A
   const ordinary = f.u.s.atk, mana = f.wallet.value;
   assert.equal(beginManual(f), true);
   assert.equal(f.u.mem.regularFormVisual.clip, 'Skill_1_Begin'); near(f.u.s.atk, ordinary);
-  assert.equal(f.u.skill.end('manual'), false); assert.equal(f.u.skill.active, true);
+  assert.equal(f.u.skill.end('manual'), false); assert.equal(f.u.skill.active, false);
   advance(f, .4); assert.equal(f.u.mem.regularFormVisual.clip, 'Skill_1_Chant');
   assert.equal(f.outputs.length, 0); near(f.u.s.atk, ordinary);
   until(f, () => f.controller.mode === 's1', 10);
@@ -238,14 +238,14 @@ test('manual command and HUD allow running cancellation, without allowing chant 
   assert.equal(skillHud(f.u.skill).ready, true);
 });
 
-test('real Senshi meal cannot recover mana during either chant or active S1', () => {
+test('real Senshi meal recovers mana during a pending chant but is locked by active S1', () => {
   for (const phase of ['chant', 's1']) {
     const f = make(), senshi = f.b.deployOperator('char_4143_sensi', 5, 5, 'RIGHT');
     senshi.atkCd = 1000; senshi.skill.rule = 'NEVER';
     senshi.skill.setSpTotal(senshi.skill.spCost); assert.equal(senshi.skill.activate('fixture'), true);
     advance(f, phase === 'chant' ? 8.9 : 6.5);
     assert.equal(beginManual(f), true);
-    until(f, () => f.b.time >= 9.4); assert.equal(f.wallet.value, 50);
+    until(f, () => f.b.time >= 9.4); assert.equal(f.wallet.value, phase === 'chant' ? 60 : 50);
     assert.equal(f.controller.mode, phase);
   }
 });

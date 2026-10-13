@@ -31,7 +31,7 @@ export function skillHud(skill) {
     const ready = !!(resource.canActivate === true && skill.castEligible && !skill.active && !skill.pending);
     return {
       fraction: Math.max(0, Math.min(1, resource.current / resource.maximum)),
-      state: 'active', ready, canActivate: ready, canCancel: !!resource.canCancel,
+      state: resource.state ?? 'active', ready, canActivate: ready, canCancel: !!resource.canCancel,
       text: `${resource.current} / ${resource.maximum} ${resource.label}${resource.ending ? ' · Ending' : ''}`,
     };
   }

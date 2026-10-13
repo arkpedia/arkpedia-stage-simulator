@@ -121,7 +121,7 @@ test('S3 rejects sub-minimum mana without starting a chant or spending resources
 
 test('dropping below the initial threshold during extra chant ends it without a later volley',()=>{
   const f=make(); f.u.skill.setSpTotal(8); extra(f); assert.ok(f.mana.controller.consume(1));
-  until(f,()=>!f.u.skill.active,1); advance(f,15);
+  until(f,()=>!f.controller.isChanting(),1); advance(f,15);
   assert.equal(f.bursts.length,0); assert.equal(f.wallet.value,7); assert.equal(f.wallet.completedExtraChant,false);
 });
 
@@ -185,7 +185,8 @@ test('control ends each incomplete phase, and silence alone leaves the unsilence
   for(const phase of ['main','extra','volley']) {
     const f=make(); if(phase==='main') assert.equal(beginManual(f),true);
     else { extra(f); if(phase==='volley') f.controller.cancel(); }
-    f.b.applyStatus(f.u,'silence',{duration:2}); advance(f,.1); assert.equal(f.u.skill.active,true);
+    f.b.applyStatus(f.u,'silence',{duration:2}); advance(f,.1); assert.equal(f.u.skill.active,phase==='volley');
+    assert.equal(f.controller.isChanting(),phase!=='volley');
     f.b.applyStatus(f.u,'stun',{duration:2}); advance(f,.1);
     assert.equal(f.u.skill.active,false); assert.equal(f.wallet.completedExtraChant,false); assert.equal(f.controller.marker,null);
     assert.equal(f.bursts.length,0);
@@ -206,7 +207,7 @@ test('a changed deployment epoch cannot release the old marker or cancel a later
   advance(f,20); assert.equal(f.bursts.length,0);
 });
 
-test('real Senshi meals remain locked throughout extra chant and volley recovery',()=>{
+test('real Senshi meals recover mana during extra chant but remain locked during volley recovery',()=>{
   for(const phase of ['extra','recovery']) {
     const f=make(); if(phase==='recovery') f.u.skill.setSpTotal(8); extra(f);
     const senshi=f.b.deployOperator('char_4143_sensi',5,5,'RIGHT'); senshi.atkCd=1000; senshi.skill.rule='NEVER';
@@ -217,7 +218,8 @@ test('real Senshi meals remain locked throughout extra chant and volley recovery
       until(f,()=>f.controller.mode==='s3-recovery');
     }
     const mana=f.wallet.value; until(f,()=>cooking.released,10);
-    assert.equal(f.wallet.value,mana); assert.equal(f.u.skill.active,true);
+    assert.equal(f.wallet.value,phase==='extra'?mana+10:mana);
+    assert.equal(f.u.skill.active,phase==='recovery');
     assert.equal(f.controller.mode,`s3-${phase}`);
   }
 });

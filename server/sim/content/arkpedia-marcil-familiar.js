@@ -83,10 +83,13 @@ export class MarcilFamiliarController extends MarcilAttackController {
     this.mode = 'chant'; this.visual(`Skill_2_Begin_${suffix}`);
   }
   finishChant() {
-    if (!this.mana.controller.consume(this.record.bb.skill_cost_min_sp)) { this.u.skill.end('insufficient-mana'); return; }
-    if (!this.valid() || !this.u.skill.active || this.mode !== 'chant') return;
-    this.tier = this.enhancement ? 2 : 1; this.enhancement = true;
+    return this.commitEffect(() => this.enableSkill());
+  }
+  enableSkill() {
     this.phase = null; this.mode = 's2';
+    if (!this.mana.controller.consume(this.record.bb.skill_cost_min_sp)) { this.u.skill.end('insufficient-mana'); return; }
+    if (!this.valid() || !this.u.skill.active || this.mode !== 's2') return;
+    this.tier = this.enhancement ? 2 : 1; this.enhancement = true;
     const buff = this.b.addBuff(this.u, { key: BUFF, source: this.u,
       mods: { atkPct: this.record.bb.atk, ...(this.tier === 2 ? { aspd: this.record.bb.attack_speed } : {}) } });
     if (!this.valid() || !this.u.skill.active || this.mode !== 's2') {
@@ -170,8 +173,10 @@ export function prepareMarcilFamiliar(b, u, { contract } = {}) {
   if (mana.record.index !== 1) throw Error('Marcille familiar requires selected S2');
   const controller = new MarcilFamiliarController(b, u, mana.record, mana); u.mem.marcilAttacks = controller;
   const prepared = bindMarcilCombat(mana, controller);
-  prepared.kit.skill.resourceGauge = () => controller.valid()
-    ? { current: mana.wallet.value, maximum: mana.record.mana.maximum, label: 'Mana',
-      canActivate: false, canCancel: controller.canCancel() } : null;
+  const gauge = prepared.kit.skill.resourceGauge;
+  prepared.kit.skill.resourceGauge = () => {
+    const resource = gauge();
+    return resource ? { ...resource, canActivate: false } : null;
+  };
   return prepared;
 }
