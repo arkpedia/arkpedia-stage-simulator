@@ -95,10 +95,29 @@ export function updateAlly(b, u, dt) {
 /** Release blocked enemies beyond the current block capacity (latest blocked first). */
 export function enforceBlockCapacity(b, u) {
   const cap = u.alive && u.deployed ? u.s.blockCnt : 0;
+  if (typeof u.profile?.retainCapturedBlockee !== 'function') {
+    let used = 0;
+    for (const e of u.blocking) used += e.blockWeight ?? 1;
+    while (used > cap && u.blocking.length) {
+      const e = u.blocking.pop();
+      if (e.blockedBy === u) { e.blockedBy = null; b._stealthSwitch(e); }
+      if (b._hooks.unblocked) b.emit('unblocked', { blocker: u, enemy: e });
+      used -= e.blockWeight ?? 1;
+    }
+    return;
+  }
+  // Native capture abilities can retain an explicit, already-blocked snapshot
+  // without acquiring ordinary block capacity or catching later entrants.
+  const retained = new Set();
+  if (u.alive && u.deployed && typeof u.profile?.retainCapturedBlockee === 'function')
+    for (const e of u.blocking.slice()) if (e.blockedBy === u
+      && u.profile.retainCapturedBlockee(b, u, e) === true) retained.add(e);
   let used = 0;
-  for (const e of u.blocking) used += e.blockWeight ?? 1;
-  while (used > cap && u.blocking.length) {
-    const e = u.blocking.pop();
+  for (const e of u.blocking) if (!retained.has(e)) used += e.blockWeight ?? 1;
+  for (const e of u.blocking.slice().reverse()) {
+    if (used <= cap) break;
+    if (retained.has(e) || !u.blocking.includes(e)) continue;
+    u.blocking.splice(u.blocking.indexOf(e), 1);
     if (e.blockedBy === u) { e.blockedBy = null; b._stealthSwitch(e); }   // a released 隐匿 enemy hides again later
     if (b._hooks.unblocked) b.emit('unblocked', { blocker: u, enemy: e });
     used -= e.blockWeight ?? 1;

@@ -246,8 +246,10 @@ export function dealDamage(battle, source, target, dmgIn) {
   let ts = target.s;
   if (ts.flags.invulnerable || sleepBlocks(target, hs, dmg) || liftoffEvades(target, hs, dmg)) return 0;
   if (battle._hooks.hit) {
-    battle.emit('hit', { source: hs, target, dmg, credit: source });
-    if (dmg.cancel || !target.alive || !target.deployed) return 0;
+    // Recipient-only cancellation must not poison a DamageInfo shared by an
+    // area attack. Existing dmg.cancel keeps its original global semantics.
+    const ctx = battle.emit('hit', { source: hs, target, dmg, credit: source, cancel: false });
+    if (ctx.cancel || dmg.cancel || !target.alive || !target.deployed) return 0;
     if (dmg.type === 'element') return applyElement(battle, source, target, dmg);
     ts = target.s; // handlers may have changed the target's buffs (fragile, invulnerable, dodge…): never use stale stats
     if (ts.flags.invulnerable || sleepBlocks(target, hs, dmg)) return 0;
@@ -477,8 +479,9 @@ export function applyElement(battle, source, target, dmg) {
   if (liftoffEvades(target, dmg.sourceless ? null : source, dmg)) return 0;
   if (burstLocked(target, el)) return 0;
   if (battle._hooks.elementHit) {
-    battle.emit('elementHit', { source: hs, target, dmg, credit: source });
-    if (dmg.cancel || !target.alive || !target.deployed || burstLocked(target, el)) return 0;
+    // Same recipient-only cancellation as HP damage above.
+    const ctx = battle.emit('elementHit', { source: hs, target, dmg, credit: source, cancel: false });
+    if (ctx.cancel || dmg.cancel || !target.alive || !target.deployed || burstLocked(target, el)) return 0;
     if (dmg.type !== 'element') return dealDamage(battle, source, target, dmg); // a handler converted it
   }
   const max = target.gaugeMax;
