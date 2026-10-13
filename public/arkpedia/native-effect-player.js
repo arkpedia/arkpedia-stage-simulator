@@ -5,6 +5,7 @@ import {webglEffectProgram,selectEffectProgram,effectUniformDeclarations} from '
 import {createStationaryParticles} from '../../shared/arkpedia/native-stationary-particles.js';
 import {createMovingParticles} from '../../shared/arkpedia/native-moving-particles.js';
 import {createParentParticleMotion} from '../../shared/arkpedia/native-parent-particle-motion.js';
+import {createBuiltinMeshResolver} from '../../shared/arkpedia/native-builtin-mesh.js';
 import {particleWorldPosition,particleSheetUV} from '../../shared/arkpedia/native-particle-render.js';
 import {sampleParticleCurve} from '../../shared/arkpedia/native-particle-curves.js';
 import {effectMeshColors} from '../../shared/arkpedia/native-effect-mesh.js';
@@ -35,8 +36,9 @@ export function compileNativeEffectPrograms(renderer,shaders){
  * All update inputs use the original effect's Unity coordinate space. The
  * stage's coordinate/camera bridge and native frame parity remain separate.
  */
-export function createNativeEffectLibrary({three:T,pack,animations,shaders,loadTexture}){
+export function createNativeEffectLibrary({three:T,pack,animations,shaders,loadTexture,builtinMeshes=null}){
   if(!T||typeof loadTexture!=='function')throw Error('Native effect library needs Three and an original texture loader');
+  const builtin=builtinMeshes?createBuiltinMeshResolver(builtinMeshes,animations.sourcePackSha256):null;
   let closed=false;
   const textures=new Map(),defaults=new Map(),instances=new Set();
   const assertOpen=()=>{if(closed)throw Error('Native effect library is disposed');};
@@ -77,7 +79,7 @@ export function createNativeEffectLibrary({three:T,pack,animations,shaders,loadT
     return defaults.get(def);
   }
 
-  const context={three:T,pack,animations,shaders,sourceTexture,assertOpen,
+  const context={three:T,pack,animations,shaders,builtin,sourceTexture,assertOpen,
     register(instance){assertOpen();instances.add(instance);},unregister(instance){instances.delete(instance);}};
   const library={
     create(name,options){assertOpen();return createNativeEffectInstance(context,name,options);},
@@ -161,8 +163,9 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false}={}){
     // Native non-separate RGB/alpha blending uses the same factors for both.
     materials.add(m);return m;
   }
-  function geometry(id,color=null){
-    const d=pack.meshes[id];if(!d)throw Error('Unresolved original mesh');
+  function geometry(id,color=null,referenceSource=null){
+    const d=pack.meshes[id]??(library.builtin&&referenceSource?library.builtin.resolve(referenceSource,refs(referenceSource,'m_Mesh')[0]):null);
+    if(!d)throw Error('Unresolved original mesh');
     const g=new T.BufferGeometry();geometries.add(g);
     g.setAttribute('in_POSITION0',new T.Float32BufferAttribute(d.positions.flat(),d.positions[0].length));
     if(d.normals)g.setAttribute('in_NORMAL0',new T.Float32BufferAttribute(d.normals.flat(),d.normals[0].length));
@@ -373,10 +376,11 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false}={}){
         assertOpen();
         if(record.type!=='ParticleSystemRenderer'&&r.materials.length!==1)
           throw Error('Native multi-material renderer needs review');
-        let meshId,particleId,particleSource,emitter,trail,billboard=false,customLayout=null;
+        let meshId,meshReferenceSource,particleId,particleSource,emitter,trail,billboard=false,customLayout=null;
         if(record.type==='MeshRenderer'){
           const go=pack.records[r.gameObject];const filter=(go.references??[]).map(r=>r.target).find(k=>pack.records[k]?.type==='MeshFilter');
           meshId=target(filter,'m_Mesh');
+          meshReferenceSource=filter;
         }else if(record.type==='ParticleSystemRenderer'){
           if(![0,4].includes(record.data.m_RenderMode)||![0,2].includes(record.data.m_RenderAlignment)||record.data.m_RenderMode===4&&record.data.m_RenderAlignment!==2)throw Error('Particle alignment/render mode not playing');
           if(Object.values(record.data.m_Pivot).some(v=>v!==0)||Object.values(record.data.m_Flip).some(v=>v!==0))throw Error('Particle pivot/flip need review');
@@ -401,7 +405,7 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false}={}){
             if(pose.instances.some(i=>i.bindings.some(b=>ancestors.has(b.gameObject)&&['m_LocalRotation','localEulerAnglesRaw','m_LocalScale'].includes(b.property))))throw Error('Animated world particle velocity frame needs integration');
           }
           billboard=record.data.m_RenderMode===0;
-          if(!billboard)meshId=target(component,'m_Mesh');
+          if(!billboard){meshId=target(component,'m_Mesh');meshReferenceSource=component;}
         }else if(record.type==='TrailRenderer'){
           if(r.materials.length!==1)throw Error('Native multi-material trail needs review');
           trail=createEffectTrail(record.data);
@@ -409,7 +413,7 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false}={}){
         else throw Error('Native renderer needs review');
         const mat=r.materials[0];if(!mat)throw Error('Unresolved original material');
         const material=await makeMaterial(component,mat.id);assertOpen();
-        const g=trail?new T.BufferGeometry():billboard?billboardGeometry():geometry(meshId);
+        const g=trail?new T.BufferGeometry():billboard?billboardGeometry():geometry(meshId,null,meshReferenceSource);
         if(trail){geometries.add(g);g.setAttribute('position',new T.Float32BufferAttribute([],3));g.setAttribute('in_POSITION0',g.getAttribute('position'));g.setAttribute('in_COLOR0',new T.Float32BufferAttribute([],4));g.setAttribute('in_TEXCOORD0',new T.Float32BufferAttribute([],2));}
         if(particleSource?.UVModule?.enabled){
           if(customLayout&&particleSource.UVModule.uvChannelMask!==1)throw Error('Custom particle sheet must address the original UV stream only');
