@@ -54,4 +54,3 @@ export function cast(f) {
   advance(f, f.u.skill.spCost - f.u.skill.sp + f.b.dt);
   assert.equal(f.u.skill.activate('manual'), true);
 }
-
