@@ -8,7 +8,8 @@ import {createParticleNoise} from './native-particle-noise.js';
 // permutation tables remain unverified. Unsupported controls are never dropped.
 export function createParticleMotion(source,{seed=1}={}){
   const clamp=source.ClampVelocityModule,noise=source.NoiseModule;
-  if(!clamp?.enabled&&!noise?.enabled)return null;
+  const inherited=!!source.InheritVelocityModule?.enabled&&source.moveWithTransform===1;
+  if(!clamp?.enabled&&!noise?.enabled&&!inherited)return null;
   if(![0,1].includes(source.moveWithTransform)||source.VelocityModule?.enabled)throw Error('Native simulation space/linear velocity with particle turbulence needs review');
   if(clamp?.enabled){
     if(clamp.separateAxis||clamp.drag?.minMaxState!==0||clamp.drag.scalar!==0)throw Error('Native axis limit/drag needs review');
@@ -38,26 +39,36 @@ export function createParticleMotion(source,{seed=1}={}){
     }
     return result;
   }
-  function sample(particle,origin,initialVelocity){
+  function sample(particle,origin,initialVelocity,{inheritedVelocityAt,inheritanceMode=0}={}){
     if(![origin,initialVelocity].every(v=>Array.isArray(v)&&v.length===3&&v.every(Number.isFinite))
       ||!Number.isFinite(particle.born)||!Number.isFinite(particle.lifetime)||particle.lifetime<=0
       ||!Number.isInteger(particle.id)||particle.id<0)throw Error('Invalid native particle motion frame');
     const position=origin.slice();let velocity=initialVelocity.slice(),elapsed=0;
+    if(inheritedVelocityAt&&(typeof inheritedVelocityAt!=='function'||![0,1].includes(inheritanceMode)))throw Error('Invalid inherited particle motion mode');
+    let inheritedAttenuation=1;
     if(!Number.isFinite(particle.age)||particle.age<0||particle.age/step>10000)throw Error('Native motion review clock exceeds step budget');
     while(elapsed<particle.age-1e-12){
       const dt=Math.min(step,particle.age-elapsed),normalized=(elapsed+dt)/particle.lifetime;
+      const inherited=inheritedVelocityAt?.(elapsed+dt)??[0,0,0];
+      if(!Array.isArray(inherited)||inherited.length!==3||!inherited.every(Number.isFinite))throw Error('Invalid inherited particle motion velocity');
+      // Initial momentum retains its accumulated attenuation. Current motion
+      // follows the emitter afresh; stopping must not subtract an undamped old
+      // velocity from already-limited momentum and send the particle backward.
+      const inheritedDrift=inherited.map(v=>v*(inheritanceMode===0?inheritedAttenuation:1));
       const drift=flow(position,particle.born+elapsed,normalized,particle.id);
-      const total=velocity.map((v,i)=>v+drift[i]);
+      const total=velocity.map((v,i)=>v+drift[i]+inheritedDrift[i]);let ratio=1;
       if(clamp?.enabled){
         const limit=sampleParticleCurve(clamp.magnitude,normalized,particleRandom(particle.id,19,seed));
         if(limit<0)throw Error('Invalid native particle speed limit');
         const speed=Math.hypot(...total),blend=1-(1-clamp.dampen)**(dt/step);
-        if(speed>limit){const ratio=(speed-(speed-limit)*blend)/speed;total.forEach((v,i)=>total[i]=v*ratio);}
+        if(speed>limit){ratio=(speed-(speed-limit)*blend)/speed;total.forEach((v,i)=>total[i]=v*ratio);}
       }
       position.forEach((v,i)=>position[i]=v+total[i]*dt);
       // Re-evaluate the curl field each step; do not accumulate it as an
       // invented acceleration. The limited residual retains base momentum.
-      velocity=total.map((v,i)=>v-drift[i]);elapsed+=dt;
+      velocity=total.map((v,i)=>v-drift[i]-inheritedDrift[i]*ratio);
+      if(inheritanceMode===0)inheritedAttenuation*=ratio;
+      elapsed+=dt;
     }
     return position.map((v,i)=>v-origin[i]);
   }

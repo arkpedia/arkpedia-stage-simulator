@@ -144,9 +144,9 @@ try{
     instance.update(captureTime,{camera,clip});
     instance.group.updateMatrixWorld(true);
     const pose=instance.pose.sample(captureTime,clip);
-    const sourceRotation=transform=>{
+    const sourceRotation=(transform,state=pose)=>{
      const ancestry=[];let node=transform;
-     while(node){ancestry.unshift(pose.nodes.get(node));node=pose.nodes.get(node).parent;}
+     while(node){ancestry.unshift(state.nodes.get(node));node=state.nodes.get(node).parent;}
      const rotation=new T.Quaternion();
      for(const n of ancestry)rotation.multiply(n.euler
       ?new T.Quaternion().setFromEuler(new T.Euler(...n.euler.map(v=>v*Math.PI/180),'ZXY')):new T.Quaternion(...n.rotation));
@@ -209,6 +209,63 @@ try{
     instance.update(.75,{camera,clip});instance.update(captureTime,{camera,clip});instance.group.updateMatrixWorld(true);
     if(rotationSnapshot()!==rotationBefore)throw Error('Source start rotation did not reverse exactly');
     if(coneSnapshot()!==coneBefore)throw Error('Local cone replay did not reverse exactly');
+    const inherited=instance.draws.find(d=>d.component==='battle/prefabs/effects/phatm2.ab:7172346969955047659');
+    if(!inherited)throw Error('Original inherited-velocity cage renderer is missing');
+    const inheritedSource=inherited.particleSource,inheritModule=inheritedSource.InheritVelocityModule;
+    if(inheritModule.m_Mode!==0||inheritModule.m_Curve.minMaxState!==0||inheritModule.m_Curve.scalar!==.10000000149011612
+     ||inheritedSource.InitialModule.startSpeed.scalar!==0||inheritedSource.InitialModule.startSpeed.minMaxState!==0
+     ||inheritedSource.NoiseModule.enabled||inheritedSource.VelocityModule.enabled
+     ||inheritedSource.ClampVelocityModule.magnitude.minMaxState!==0||inheritedSource.scalingMode!==1)
+      throw Error('Changed original inherited-velocity diagnostic controls');
+    const {createEffectTrajectory}=await import('/shared/arkpedia/native-effect-trail.js');
+    const stopTime=1.5,trajectory=createEffectTrajectory([{time:0,position:[0,0,0]},{time:stopTime,position:[.45,.15,-.3]},
+     {time:2,position:[.45,.15,-.3]}]);
+    const inheritedPoseAt=t=>{
+     const state=instance.pose.sample(Math.max(0,t),clip),offset=trajectory.sample(Math.max(0,t));
+     for(const n of state.nodes.values())if(!n.parent)n.position=n.position.map((v,i)=>v+offset[i]);
+     return state;
+    };
+    const sourcePosition=(transform,state)=>{
+     const ancestry=[];let node=transform;
+     while(node){ancestry.unshift(state.nodes.get(node));node=state.nodes.get(node).parent;}
+     const matrix=new T.Matrix4();
+     for(const n of ancestry)matrix.multiply(new T.Matrix4().compose(new T.Vector3(...n.position),
+      n.euler?new T.Quaternion().setFromEuler(new T.Euler(...n.euler.map(v=>v*Math.PI/180),'ZXY')):new T.Quaternion(...n.rotation),
+      new T.Vector3(...n.scale)));
+     return new T.Vector3().setFromMatrixPosition(matrix);
+    };
+    instance.update(captureTime,{camera,clip,trajectory});instance.group.updateMatrixWorld(true);
+    let inheritedSamplesVerified=0,birthsBeforeStop=0,birthsAfterStop=0;
+    for(const [index,part]of inherited.pool.entries())if(part.visible){
+     const p=inherited.lastParticles[index],birth=p.birthTime,state=inheritedPoseAt(birth),position=sourcePosition(inherited.transform,state);
+     const from=Math.max(0,birth-1/60),previous=sourcePosition(inherited.transform,inheritedPoseAt(from));
+     const velocity=birth>0?position.clone().sub(previous).multiplyScalar(inheritModule.m_Curve.scalar/(birth-from)):new T.Vector3();
+     if(velocity.distanceTo(new T.Vector3(...p.inheritedVelocity))>1e-9)throw Error('Inherited birth velocity differs from original Transform motion');
+     const spawn=new T.Vector3(...p.origin).multiply(new T.Vector3(...state.nodes.get(inherited.transform).scale))
+      .applyQuaternion(sourceRotation(inherited.transform,state)).add(position);
+     // Independent scalar speed-limit recurrence: no Noise or initial speed in
+     // this original component. Constant Initial momentum decays each tick.
+     const initialSpeed=velocity.length(),limit=inheritedSource.ClampVelocityModule.magnitude.scalar,dampen=inheritedSource.ClampVelocityModule.dampen;
+     let speed=initialSpeed,distance=0,elapsed=0;
+     while(elapsed<p.age-1e-12){const dt=Math.min(1/60,p.age-elapsed);
+      if(speed>limit)speed=limit+(speed-limit)*(1-dampen)**(dt*60);
+      distance+=speed*dt;elapsed+=dt;
+     }
+     const expected=spawn.clone();if(initialSpeed>0)expected.addScaledVector(velocity,distance/initialSpeed);
+     if(expected.distanceTo(new T.Vector3(...p.worldPosition))>1e-8
+      ||expected.distanceTo(new T.Vector3().setFromMatrixPosition(part.matrixWorld))>1e-8)
+       throw Error('Inherited velocity did not reach the rendered world position');
+     if(birth<=stopTime)birthsBeforeStop++;else birthsAfterStop++;
+     inheritedSamplesVerified++;
+    }
+    if(!inheritedSamplesVerified||!birthsBeforeStop||!birthsAfterStop)throw Error('Inherited motion diagnostic missed moving or stopped births');
+    const inheritedSnapshot=()=>JSON.stringify({particles:inherited.lastParticles,
+     matrices:inherited.pool.filter(p=>p.visible).map(p=>Array.from(p.matrixWorld.elements))});
+    const inheritedBefore=inheritedSnapshot();
+    instance.update(.3,{camera,clip,trajectory});instance.update(captureTime,{camera,clip,trajectory});instance.group.updateMatrixWorld(true);
+    if(inheritedSnapshot()!==inheritedBefore)throw Error('Inherited world motion did not reverse exactly');
+    // The image retains the original stationary cage, without diagnostic motion.
+    instance.update(captureTime,{camera,clip});instance.group.updateMatrixWorld(true);
     const bounds=new T.Box3().setFromObject(instance.group);
     const centre=bounds.getCenter(new T.Vector3()),span=Math.max(1,bounds.getSize(new T.Vector3()).length());
     camera.position.copy(centre).add(new T.Vector3(.3,.4,1).normalize().multiplyScalar(span*1.8));camera.lookAt(centre);camera.updateMatrixWorld(true);
@@ -218,7 +275,8 @@ try{
      nodes:instance.pose.nodes.size,renderers:instance.pose.renderers.size,rendered:true,
      diagnosticOnly:true,strictRejected,captureTime,customDraws:customDraws.length,checkedCustomDraws,gpuBuffersVerified,
      reverseStable:true,gpuAttributesVerified:true,rotationMatricesVerified,rotationReverseStable:true,
-     coneSamplesVerified,coneReverseStable:true,nativeEmissionParity:false};
+     coneSamplesVerified,coneReverseStable:true,nativeEmissionParity:false,
+     inheritedSamplesVerified,birthsBeforeStop,birthsAfterStop,inheritedReverseStable:true};
    }finally{library.dispose();}
    const debug=gl.getExtension('WEBGL_debug_renderer_info');
    const driver=gl.getParameter(debug?.UNMASKED_RENDERER_WEBGL??gl.RENDERER);
@@ -230,7 +288,8 @@ try{
  assert.equal(result.materials.length,91);assert.equal(result.glError,0);assert.deepEqual(errors,[]);
  assert.match(result.driver,/SwiftShader/i);
  assert.equal(result.cage.nodes,22);assert.equal(result.cage.renderers,20);
- assert.equal(result.cage.draws.length,15);assert.equal(result.cage.blocked.length,3);
+ assert.equal(result.cage.draws.length,16);assert.equal(result.cage.blocked.length,2);
+ assert.ok(result.cage.inheritedSamplesVerified>0);assert.equal(result.cage.inheritedReverseStable,true);
  assert.ok(result.cage.coneSamplesVerified>0);assert.equal(result.cage.coneReverseStable,true);
  assert.equal(result.cage.nativeEmissionParity,false);
  assert.ok(result.cage.rotationMatricesVerified>0);

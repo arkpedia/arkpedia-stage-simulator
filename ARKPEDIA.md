@@ -3668,3 +3668,31 @@ ARKPEDIA_REVIEW_CHROME='/path/to/chromium' node tools/arkpedia/review-tragodia-e
 ```
 
 The remaining cage components, unresolved resources, Animator state dispatch, delivered artwork and public mouse/touch battle review still gate Tragodia's registration. Public coverage remains **373/431 forms and 812 selected skills**, with unchanged Global/CN/model pins and published data. Arkpedia app PR229 remains outside dev until all operator, enemy, stage and dependable automation gates are met.
+
+### Original inherited particle velocity (2026-10-14)
+
+World particles now consume explicit emitter velocity through the authored Inherit Velocity module. Initial mode retains the velocity at real particle birth; Current mode reads the emitter's changing velocity throughout the particle's lifetime. The authored multiplier curve samples normalized particle age with its own stable local random factor. Local simulation space has no inherited movement. Rigidbody/custom velocity acquisition and sub-emitter dispatch remain rejected. These controls follow the [Unity 2021.3 module documentation](https://docs.unity3d.com/2021.3/Documentation/Manual/PartSysInheritVelocity.html) and [enum meanings](https://github.com/Unity-Technologies/UnityCsReference/blob/2021.3/Modules/ParticleSystem/Managed/ParticleSystemEnums.cs).
+
+The player reconstructs Transform velocity from an explicit local 60 Hz backward difference of original world poses and caller-supplied motion. Prewarm has no invented movement before time zero. Birth time includes simulation speed and start delay; particle movement integrates simulated age. Initial inherited momentum retains speed-limit attenuation rather than being reset each step. Current motion refreshes its inherited channel so a stopped emitter cannot cause an artificial reverse kick after limiting. Multiplier curves, random ordering, frame timing and module ordering remain **local replay**, not compiled Unity parity.
+
+Fully integrated world particles retain their world positions when the emitter's rotation or scale later changes. The earlier transform-animation blocker remains for particle paths that lack world integration. Sphere emission no longer treats its dormant mesh slot as an active mesh-emission dependency; the original pointer and all source data remain intact. Mesh-based emission and active texture/resource shapes stay held. Shape-specific controls are described by the [original editor reference](https://github.com/Unity-Technologies/UnityCsReference/blob/2021.3/Modules/ParticleSystemEditor/ParticleSystemModules/ShapeModuleUI.cs).
+
+The fixture retains **all nine original inherited-velocity ParticleSystems and their renderers** in the pinned Tragodia pack; the pinned Lappland pack has none. All nine use Initial mode, Transform velocity, World space and the exact authored multiplier `0.10000000149011612`. Eight emit particles under their original clocks. The ninth has zero time emission and zero burst count values; it stays empty without invented emission. Synthetic motion/curve tests additionally exercise Current mode, stops, turns, lifetime multipliers, delay, half-speed simulation, limiting and rotated/scaled birth frames.
+
+Validation:
+
+- The independent Python audit reads every original ParticleSystem and renderer object, verifies serialized hashes and full decoded fields, and validates both original effect packs. It checks **324 velocity values**, reproduces **three outputs** and rejects **14 altered-evidence fixtures**. The committed fixture is 327,292 bytes.
+- The twenty-five-file adjacent regression set passes **518 checks on Node 22 and Node 24**, with no failures or skips.
+- The browser diagnostic prepares **16 cage components**, with **two remaining held components**: particle trails with distinct materials (also retaining a discrete arc setting) and the unresolved original mesh. Strict playback still rejects the partial cage.
+- With explicit moving-then-stopped diagnostic motion, **eight original cage particles** match independently reconstructed birth velocity, scalar speed-limit recurrence and rendered world position. Five were born before the stop and three afterward. Reverse scrubbing restores particles and matrices exactly. The image returns to the original stationary cage afterward.
+- All **22 original shader programs**, **91 materials**, **24 custom-stream GPU buffer checks**, cone checks and glow rotation checks remain passing. No GL or page errors occur. The updated partial image at 1.8 seconds was inspected; native game appearance and compiled frame parity remain unverified.
+
+Reproduce with Node 22 on `PATH`, the extraction Python environment and Chromium:
+
+```sh
+node tools/arkpedia/export-particle-inheritance.mjs
+.cache/map-env/bin/python tools/arkpedia/audit-particle-inheritance.py
+ARKPEDIA_REVIEW_CHROME='/path/to/chromium' node tools/arkpedia/review-tragodia-effect-shaders.mjs
+```
+
+Audit/regression logs use the `inheritance-` prefix in `.cache/arkpedia/tragodia-source/`; browser reports and the image remain in its `effects/` directory. The original packs, prior source inputs, public MVP and coverage remain unchanged: **373/431 forms and 812 selected skills**. Trails, unresolved resources, Animator state dispatch, delivered artwork and public mouse/touch battle review still gate Tragodia's registration. Arkpedia app PR229 remains outside dev until all operator, enemy, stage and dependable automation gates are met.
