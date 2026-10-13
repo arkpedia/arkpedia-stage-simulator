@@ -221,10 +221,15 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false}={}){
     return {birth,movement,scale};
   }
 
-  function update(clock,{camera,clip=null,trajectory=null}={}){
+  function update(clock,{camera,clip=null,trajectory=null,scheduledParticles=null}={}){
     assertOpen();
     if(!Number.isFinite(clock)||clock<0)throw Error('Invalid native effect clock');
     if(!camera?.isCamera)throw Error('Native effect update needs its render camera');
+    // External parent motion is allowed only in isolated source inspection.
+    // It must never bypass the full effect's unsupported parent dispatch.
+    if(scheduledParticles&&(!library.inspectionSource||!Array.isArray(scheduledParticles.records)
+      ||['frameAt','emitterVelocityAt','worldPosition'].some(k=>typeof scheduledParticles.frames?.[k]!=='function')))
+      throw Error('Scheduled particles require isolated inspection and explicit child frames');
     // Native World-space emission/noise must stay in source coordinates. A
     // stage caller needs an explicit camera bridge, not a silent group transform
     // that would convert finished particle paths but sample the wrong field.
@@ -271,7 +276,8 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false}={}){
           if(!birthStates.has(t))birthStates.set(t,samplePose(t,clip,trajectory));
           return {time:t,position:particleFrame(transform,birthStates.get(t)).position.toArray()};
         });
-        const particles=emitter.sample(clock,{frameAt,history,emitterVelocityAt});
+        const scheduled=scheduledParticles&&entry.particleId===library.inspectionSource?scheduledParticles:null;
+        const particles=scheduled?emitter.sampleRecords(scheduled.records,clock,scheduled.frames):emitter.sample(clock,{frameAt,history,emitterVelocityAt});
         entry.lastParticles=particles;
         const inverse=new T.Matrix4().copy(mesh.parent.matrixWorld).invert();
         while(pool.length<particles.length){const clone=mesh.clone();clone.geometry=mesh.geometry.clone();geometries.add(clone.geometry);clone.onBeforeRender=mesh.onBeforeRender;mesh.parent.add(clone);pool.push(clone);}
@@ -279,7 +285,11 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false}={}){
           const particle=particles[i];part.visible=!!particle&&mesh.parent.matrixWorld.determinant()!==0;
           if(!particle)return;
           let position=current.position.clone();
-          if(particle.position){
+          if(scheduled){
+            const positioned=particle.position?particle:{...particle,origin:[0,0,0],displacement:[0,0,0],velocitySpace:'local',simulationSpace:particleSource.moveWithTransform===1?'world':'local'};
+            position.fromArray(scheduled.frames.worldPosition(positioned,clock));
+            if(!position.toArray().every(Number.isFinite))throw Error('Invalid scheduled child world position');
+          }else if(particle.position){
             let born=frame;
             if(particle.simulationSpace==='world'){
               // Prewarm precedes visible playback: hold the source start pose
@@ -348,7 +358,7 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false}={}){
         assertOpen();
         if(record.type!=='ParticleSystemRenderer'&&r.materials.length!==1)
           throw Error('Native multi-material renderer needs review');
-        let meshId,particleSource,emitter,trail,billboard=false,customLayout=null;
+        let meshId,particleId,particleSource,emitter,trail,billboard=false,customLayout=null;
         if(record.type==='MeshRenderer'){
           const go=pack.records[r.gameObject];const filter=(go.references??[]).map(r=>r.target).find(k=>pack.records[k]?.type==='MeshFilter');
           meshId=target(filter,'m_Mesh');
@@ -357,6 +367,7 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false}={}){
           if(Object.values(record.data.m_Pivot).some(v=>v!==0)||Object.values(record.data.m_Flip).some(v=>v!==0))throw Error('Particle pivot/flip need review');
           if(record.data.m_UseCustomVertexStreams)customLayout=createParticleVertexLayout(record.data.m_VertexStreams);
           const ps=(pack.records[r.gameObject].references??[]).map(r=>r.target).find(k=>pack.records[k]?.type==='ParticleSystem');
+          particleId=ps;
           particleSource=pack.records[ps].data;
           if(subEmitters.parents(ps).length&&library.inspectionSource!==ps)
             throw Error('Original sub-emitter parent dispatch not playing');
@@ -395,7 +406,7 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false}={}){
         if(particleSource){const d=particleSource.InitialModule,x=sampleParticleCurve(d.startSize,0);
           mesh.scale.fromArray(d.size3D?[x,sampleParticleCurve(d.startSizeY,0),sampleParticleCurve(d.startSizeZ,0)]:[x,x,x]);}
 
-        nodeObjects.get(r.transform).add(mesh);draws.push({component,transform:r.transform,particleSource,trail,alignment:record.data.m_RenderAlignment,mesh,emitter,pool:emitter?[mesh]:null,
+        nodeObjects.get(r.transform).add(mesh);draws.push({component,transform:r.transform,particleId,particleSource,trail,alignment:record.data.m_RenderAlignment,mesh,emitter,pool:emitter?[mesh]:null,
           baseColors:emitter?g.getAttribute('in_COLOR0').array.slice():null,
           baseUVs:emitter?Array.from({length:8},(_,i)=>g.getAttribute('in_TEXCOORD'+i)?.array.slice()??null):null,
           customLayout,customUVs});

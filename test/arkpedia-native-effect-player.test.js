@@ -38,6 +38,7 @@ const disposedEvents=(i)=>{
 test('player accepts a caller camera/clock without creating a renderer or changing scene ownership',async()=>{
   const lib=library(),i=await lib.create('empty'),scene=new T.Scene();scene.add(i.group);
   i.update(0,{camera:camera()});assert.equal(lib.instanceCount,1);assert.equal(i.group.parent,scene);
+  assert.throws(()=>i.update(0,{camera:camera(),scheduledParticles:{records:[],frames:{}}}),/isolated inspection/);
   assert.throws(()=>i.update(NaN,{camera:camera()}),/clock/);assert.throws(()=>i.update(-1,{camera:camera()}),/clock/);
   assert.throws(()=>i.update(1),/camera/);assert.throws(()=>i.update(1,{camera:camera(),clip:'foreign'}),/outside/);
   scene.position.x=1;assert.throws(()=>i.update(0,{camera:camera()}),/original coordinate/);scene.position.x=0;

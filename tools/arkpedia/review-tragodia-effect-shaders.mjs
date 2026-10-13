@@ -80,7 +80,7 @@ try{
     const url=URL.createObjectURL(new Blob([bytes],{type:'image/webp'}));
     try{return await new T.TextureLoader().loadAsync(url);}finally{URL.revokeObjectURL(url);}
    }});
-   let cage,diagnosticImage;
+   let cage,diagnosticImage,scheduledImage;
    try{
     let strictRejected=false;
     try{await library.create('phatm2_skill_03_prison_01');}
@@ -275,6 +275,50 @@ try{
     const inheritedBefore=inheritedSnapshot();
     inheritedInstance.update(.3,{camera,trajectory});inheritedInstance.update(captureTime,{camera,trajectory});inheritedInstance.group.updateMatrixWorld(true);
     if(inheritedSnapshot()!==inheritedBefore)throw Error('Inherited world motion did not reverse exactly');
+    const ordinaryInheritedPasses=inheritedRenderPasses;
+    const {createChildEmissionSchedule}=await import('/shared/arkpedia/native-child-emission.js');
+    const {createChildParticleFrames}=await import('/shared/arkpedia/native-child-particle-frame.js');
+    const child='battle/prefabs/effects/phatm2.ab:4040094038318586091',schedule=createChildEmissionSchedule(pack);
+    const parentAt=(parent,id,t)=>({position:[id*.01+t*.2,t*.1,-t*.3],velocity:[.2,.1,-.3]});
+    const childFrames=createChildParticleFrames({parentAt,sourceFrameAt:t=>{
+     const state=inheritedInstance.pose.sample(Math.max(0,t)),position=sourcePosition(inherited.transform,state),rotation=sourceRotation(inherited.transform,state);
+     const matrix=new T.Matrix4().compose(position,rotation,new T.Vector3(...state.nodes.get(inherited.transform).scale));
+     return{birth:matrix.elements,movement:matrix.elements,parentOrigin:[0,0,0]};
+    }});
+    const scheduledAt=time=>({records:schedule.sample(child,time),frames:childFrames});
+    // The original source material/geometry now render the schedule's records;
+    // the parent path is explicitly synthetic and is not game dispatch proof.
+    inheritedInstance.update(captureTime,{camera,scheduledParticles:scheduledAt(captureTime)});inheritedInstance.group.updateMatrixWorld(true);
+    const scheduledBeforePasses=inheritedRenderPasses;renderer.render(inheritedScene,camera);
+    const scheduledRenderPasses=inheritedRenderPasses-scheduledBeforePasses;
+    let scheduledSamplesVerified=0;
+    const parents=new Set();
+    for(const[index,part]of inherited.pool.entries())if(part.visible){
+     const p=inherited.lastParticles[index],state=inheritedInstance.pose.sample(Math.max(0,p.birthTime));
+     const spawn=new T.Vector3(...p.origin).multiply(new T.Vector3(...state.nodes.get(inherited.transform).scale))
+      .applyQuaternion(sourceRotation(inherited.transform,state)).add(sourcePosition(inherited.transform,state))
+      .add(new T.Vector3(...parentAt(p.parent,p.parentParticle,p.birthTime).position));
+     const expected=spawn.addScaledVector(new T.Vector3(.2,.1,-.3),inheritModule.m_Curve.scalar*p.age);
+     if(expected.distanceTo(new T.Vector3(...p.worldPosition))>1e-8
+      ||expected.distanceTo(new T.Vector3().setFromMatrixPosition(part.matrixWorld))>1e-8)
+       throw Error('Scheduled child birth/motion did not reach its rendered position');
+     parents.add(p.parentParticle);scheduledSamplesVerified++;
+    }
+    if(!scheduledRenderPasses||scheduledSamplesVerified!==schedule.sample(child,captureTime).length||parents.size<2)
+      throw Error('Scheduled child diagnostic missed concurrent parent branches');
+    const scheduledBefore=inheritedSnapshot();
+    inheritedInstance.update(.5,{camera,scheduledParticles:scheduledAt(.5)});
+    inheritedInstance.update(captureTime,{camera,scheduledParticles:scheduledAt(captureTime)});inheritedInstance.group.updateMatrixWorld(true);
+    if(inheritedSnapshot()!==scheduledBefore)throw Error('Scheduled child render did not reverse exactly');
+    const cameraPosition=camera.position.clone(),cameraRotation=camera.quaternion.clone();
+    const scheduledBounds=new T.Box3().setFromObject(inheritedInstance.group),scheduledCentre=scheduledBounds.getCenter(new T.Vector3());
+    const scheduledSpan=Math.max(.1,scheduledBounds.getSize(new T.Vector3()).length());
+    camera.position.copy(scheduledCentre).add(new T.Vector3(.3,.4,1).normalize().multiplyScalar(scheduledSpan*1.8));camera.lookAt(scheduledCentre);camera.updateMatrixWorld(true);
+    inheritedInstance.update(captureTime,{camera,scheduledParticles:scheduledAt(captureTime)});renderer.render(inheritedScene,camera);
+    scheduledImage=renderer.domElement.toDataURL('image/png');
+    camera.position.copy(cameraPosition);camera.quaternion.copy(cameraRotation);camera.updateMatrixWorld(true);
+    inheritedInstance.update(captureTime,{camera,trajectory});inheritedInstance.group.updateMatrixWorld(true);
+    if(inheritedSnapshot()!==inheritedBefore)throw Error('Scheduled inspection changed ordinary source sampling');
     inheritedInstance.dispose();
     // The image retains the original cage, with the unsupported child held.
     instance.update(captureTime,{camera,clip});instance.group.updateMatrixWorld(true);
@@ -288,12 +332,13 @@ try{
      diagnosticOnly:true,strictRejected,captureTime,customDraws:customDraws.length,checkedCustomDraws,gpuBuffersVerified,
      reverseStable:true,gpuAttributesVerified:true,rotationMatricesVerified,rotationReverseStable:true,
      coneSamplesVerified,coneReverseStable:true,nativeEmissionParity:false,
-     inheritedSamplesVerified,inheritedRenderPasses,birthsBeforeStop,birthsAfterStop,inheritedReverseStable:true,inheritedInspectionOnly:true,orphanChildBlocked:true};
+     inheritedSamplesVerified,inheritedRenderPasses:ordinaryInheritedPasses,birthsBeforeStop,birthsAfterStop,inheritedReverseStable:true,inheritedInspectionOnly:true,orphanChildBlocked:true,
+     scheduledSamplesVerified,scheduledRenderPasses,scheduledParentBranches:parents.size,scheduledReverseStable:true,scheduledInspectionOnly:true,syntheticParentMotion:true};
    }finally{library.dispose();}
    const debug=gl.getExtension('WEBGL_debug_renderer_info');
    const driver=gl.getParameter(debug?.UNMASKED_RENDERER_WEBGL??gl.RENDERER);
    return {compiled,materials:selected,glError:gl.getError(),driver,
-    cage,diagnosticImage,compiledFrameParity:false,rendererVerified:false};
+    cage,diagnosticImage,scheduledImage,compiledFrameParity:false,rendererVerified:false};
   }finally{renderer.dispose();renderer.forceContextLoss();}
  },{shaders,materials,pack,animations});
  assert.equal(result.compiled.length,22);assert.equal(new Set(result.compiled.map(p=>p.shader)).size,8);
@@ -303,6 +348,8 @@ try{
  assert.equal(result.cage.draws.length,15);assert.equal(result.cage.blocked.length,3);
  assert.equal(result.cage.orphanChildBlocked,true);assert.equal(result.cage.inheritedInspectionOnly,true);assert.ok(result.cage.inheritedRenderPasses>0);
  assert.ok(result.cage.inheritedSamplesVerified>0);assert.equal(result.cage.inheritedReverseStable,true);
+ assert.ok(result.cage.scheduledSamplesVerified>0);assert.ok(result.cage.scheduledRenderPasses>0);assert.ok(result.cage.scheduledParentBranches>1);
+ assert.equal(result.cage.scheduledReverseStable,true);assert.equal(result.cage.scheduledInspectionOnly,true);assert.equal(result.cage.syntheticParentMotion,true);
  assert.ok(result.cage.coneSamplesVerified>0);assert.equal(result.cage.coneReverseStable,true);
  assert.equal(result.cage.nativeEmissionParity,false);
  assert.ok(result.cage.rotationMatricesVerified>0);
@@ -313,6 +360,8 @@ try{
  assert.equal(result.cage.strictRejected,true);
  await writeFile(path.join(directory,'cage-custom-stream-diagnostic.png'),Buffer.from(result.diagnosticImage.split(',')[1],'base64'));
  delete result.diagnosticImage;
+ await writeFile(path.join(directory,'scheduled-child-motion-diagnostic.png'),Buffer.from(result.scheduledImage.split(',')[1],'base64'));
+ delete result.scheduledImage;
  const report={sourceArtifact:metadata.artifact.sha256,...result,errors};
  await writeFile(path.join(directory,'shader-browser-review.json'),JSON.stringify(report,null,2)+'\n');
  console.log(JSON.stringify({shaders:8,programs:result.compiled.length,materials:result.materials.length,
