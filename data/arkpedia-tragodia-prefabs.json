@@ -11949,6 +11949,152 @@
           }
         ]
       }
+    ],
+    "sktok_empty": [
+      {
+        "object": "sktok_empty",
+        "pathId": "9085286642518104433",
+        "gameObjectData": {
+          "m_Component": [
+            {
+              "component": {
+                "m_FileID": 0,
+                "m_PathID": "-3987838181395424911"
+              }
+            },
+            {
+              "component": {
+                "m_FileID": 0,
+                "m_PathID": "-4681330631067002511"
+              }
+            },
+            {
+              "component": {
+                "m_FileID": 0,
+                "m_PathID": "7432906422034405745"
+              }
+            }
+          ],
+          "m_Layer": 10,
+          "m_Name": "sktok_empty",
+          "m_Tag": 0,
+          "m_IsActive": true
+        },
+        "components": [
+          {
+            "pathId": "-4681330631067002511",
+            "data": {
+              "m_GameObject": {
+                "m_FileID": 0,
+                "m_PathID": "9085286642518104433"
+              },
+              "m_Enabled": 1,
+              "m_Script": {
+                "m_FileID": 1,
+                "m_PathID": "-2816356044270894278"
+              },
+              "m_Name": "",
+              "_maxTriggerTime": -1,
+              "_allowSpRecoveryWhenAffecting": 0,
+              "_limitGlobalTriggerTime": 0,
+              "_hidden": 0,
+              "_showSpBarEvenHidden": 0,
+              "_showSpAsBulletMode": 0,
+              "_showSpRatioAsProgress": 0,
+              "_playCharWordVoice": 1,
+              "_playCharWordWithPassiveType": 0,
+              "_canCastWithNoSp": 0,
+              "_canSilenced": 0,
+              "_canUseInAbnormalState": 0,
+              "_defaultModeIndex": -1,
+              "_attackBlackboardModeIndex": -1,
+              "_extraAttackBlackboardModeIndices": [],
+              "_rangeIdModeIndex": -1,
+              "_extraRangeIdModeIndices": [],
+              "_rangeIdUsageType": 7,
+              "_writeDurationToAttackBlackboard": 0,
+              "_attachSignalIds": 0,
+              "_extraAbilities": [],
+              "_useEscapeTime": 0,
+              "_earlySkillFinishAtAttackFinished": 0,
+              "_showProgressToNext": 0,
+              "_hideSkillStackCount": 0,
+              "_hideHudSkillStackCount": 0,
+              "_playSkillBeginAnim": 0,
+              "_beginAnim": "",
+              "_beginAnimDown": "",
+              "_beginEffect": [],
+              "_useFaceVector": 0,
+              "_beginAnimValidator": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              },
+              "_availableValidator": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              },
+              "_attachInDummy": 1
+            }
+          },
+          {
+            "pathId": "-3987838181395424911",
+            "data": {
+              "m_GameObject": {
+                "m_FileID": 0,
+                "m_PathID": "9085286642518104433"
+              },
+              "m_LocalRotation": {
+                "x": -0.0,
+                "y": -0.0,
+                "z": -3.102349310779573e-08,
+                "w": 1.0
+              },
+              "m_LocalPosition": {
+                "x": 1.0,
+                "y": 0.0,
+                "z": 0.0
+              },
+              "m_LocalScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+              },
+              "m_Children": [],
+              "m_Father": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              }
+            }
+          },
+          {
+            "pathId": "7432906422034405745",
+            "data": {
+              "m_GameObject": {
+                "m_FileID": 0,
+                "m_PathID": "9085286642518104433"
+              },
+              "m_Enabled": 1,
+              "m_Script": {
+                "m_FileID": 1,
+                "m_PathID": "4865767822664548221"
+              },
+              "m_Name": "",
+              "_selector": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              },
+              "_metadata": {
+                "namedAsAlias": "",
+                "blackboardPrefix": ""
+              },
+              "_interruptAbilityOnDetach": 0,
+              "_attachPassiveBuffsOnDummy": 1,
+              "_ignoreIfOwnerDead": 0,
+              "_forceAsDmgOrHealAbility": 0
+            }
+          }
+        ]
+      }
     ]
   },
   "chararts": {
@@ -15081,6 +15227,22 @@
             "key": 0,
             "value": {
               "SerializedState": "[{\"_ownerType\":\"BUFF_OWNER\",\"_targetType\":\"BUFF_OWNER\",\"_abilityName\":\"attract\",\"_checkCanUseAblityFlag\":false,\"_castDirectly\":false,\"_useFirstActiveAbility\":false,\"_useCastResult\":false,\"_triggerHostAbility\":false,\"_notInterruptAbilityIfCasting\":false,\"$type\":\"Torappu.Battle.Action.Nodes+TriggerAbility\"}]",
+              "SerializedObjectReferences": []
+            }
+          }
+        ]
+      }
+    },
+    "token_phatm2_mndclv[passive]": {
+      "templateKey": "token_phatm2_mndclv[passive]",
+      "effectKey": "",
+      "onEventPriority": 0,
+      "eventToActions": {
+        "_items": [
+          {
+            "key": 97,
+            "value": {
+              "SerializedState": "[{\"_targetType\":\"BUFF_OWNER\",\"$type\":\"Torappu.Battle.Action.Nodes+CharSearchBlockeeImmediate\"}]",
               "SerializedObjectReferences": []
             }
           }
@@ -19697,6 +19859,9 @@
     }
   },
   "nativeTemplateGaps": [],
+  "jsonTemplateGaps": [
+    "token_phatm2_mndclv[passive]"
+  ],
   "nativeSkillPrefabGaps": [
     "sktok_phatm2_mndclv_3"
   ],

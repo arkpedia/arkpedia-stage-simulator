@@ -163,9 +163,10 @@ rt = json.loads((C/'range_table.json').read_text())
 for key, value in E['tables']['ranges'].items(): assert value == rt[key]
 holder = next(o for o in bundles['config/buff_template_holder.ab'].values()
     if o.type.name == 'MonoBehaviour' and '_templates' in o.read_typetree()).read_typetree()['_templates']
-for key, value in E['originalTemplates'].items(): assert value == next(t for t in holder if t['templateKey'] == key)
+native_templates = {t['templateKey']: t for t in holder}
+for key, value in E['originalTemplates'].items(): assert value == native_templates[key]
 assert E['nativeTemplateGaps'] == sorted(set(E['templates']) - {t['templateKey'] for t in holder})
-assert set(E['originalTemplates']) == set(E['templates']) - set(E['nativeTemplateGaps'])
+assert E['jsonTemplateGaps'] == sorted(set(E['originalTemplates']) - bt.keys())
 dbpath = C/'lessing-source/buff_table.json'
 assert hashlib.sha256(dbpath.read_bytes()).hexdigest() == E['source']['buffDatabase']['sha256']
 db = json.loads(dbpath.read_text())
@@ -187,8 +188,10 @@ while queue:
     if isinstance(value, dict): queue.extend((v, k) for k, v in value.items())
     elif isinstance(value, list): queue.extend((v, key) for v in value)
     elif isinstance(value, str):
-        if value in bt and value not in reachable:
-            reachable.add(value); queue.append((bt[value], '')); queue.append((next((t for t in holder if t['templateKey'] == value), {}), ''))
+        if (value in bt or value in native_templates) and value not in reachable:
+            reachable.add(value)
+            queue.append((bt.get(value, {}), ''))
+            queue.append((native_templates.get(value, {}), ''))
         if value in db and value not in dbkeys:
             dbkeys.add(value); queue.append((db[value], ''))
         if value.startswith('projectile_') and key not in PROJECTILE_PARAMETER_FIELDS and value not in projectile_keys:
@@ -199,7 +202,8 @@ while queue:
         if value.startswith(('[', '{')):
             try: queue.append((json.loads(value), ''))
             except json.JSONDecodeError: pass
-assert reachable == set(E['templates'])
+assert reachable & bt.keys() == set(E['templates']), 'incomplete JSON template closure'
+assert reachable & native_templates.keys() == set(E['originalTemplates']), 'incomplete native template closure'
 assert dbkeys == set(E['buffDatabase'])
 assert projectile_keys == set(E['projectiles'])
 assert range_keys == set(E['tables']['ranges'])
@@ -243,7 +247,10 @@ assert E['frameParity'] is False and E['moduleSupport'] is False and E['nativePa
 assert set(E['tables']['skills']) == {'skchr_phatm2_1', 'skchr_phatm2_2', 'skchr_phatm2_3'}
 assert E['nativeSkillPrefabGaps'] == ['sktok_phatm2_mndclv_3']
 assert not set(E['nativeSkillPrefabGaps']) & {o.read().m_Name for o in bundles['battle/prefabs/[uc]skills.ab'].values() if o.type.name == 'GameObject'}
-assert set(E['skills']) == (set(E['tables']['skills']) | set(E['tables']['tokenSkills'])) - set(E['nativeSkillPrefabGaps'])
+resolved_prefabs = {slot['overridePrefabKey'] or slot['skillId']
+    for character in [ct['char_1042_phatm2'], *(ct[k] for k in TOKENS)]
+    for slot in character['skills']}
+assert set(E['skills']) == resolved_prefabs, 'incomplete character-table prefab resolution'
 assert all(len(s['levels']) == 10 for s in E['tables']['skills'].values())
 assert all(len(s['levels']) == 10 for s in E['tables']['tokenSkills'].values())
 assert E['projectiles'] and E['templates']
@@ -255,4 +262,4 @@ unique = set()
 for group, path in [('characters','charpack/char_1042_phatm2.ab'), ('tokens','pkgrps/btl_pfb_tokens_0.ab'), ('skills','battle/prefabs/[uc]skills.ab'), ('projectiles','battle/prefabs/[uc]projectiles.ab')]:
     for rows in E[group].values():
         unique.update((path, c['pathId']) for row in rows for c in row['components'])
-print(f"Verified {count} component records ({len(unique)} unique), six original bundles, {len(E['templates'])} templates, thirty owner ranks and twenty token ranks, {len(E['projectiles'])} projectile trees and two owner and one lure skeleton chains plus an effect-only cage animator")
+print(f"Verified {count} component records ({len(unique)} unique), six original bundles, {len(E['templates'])} JSON and {len(E['originalTemplates'])} native templates, thirty owner ranks and twenty token ranks, {len(E['projectiles'])} projectile trees and two owner and one lure skeleton chains plus an effect-only cage animator")

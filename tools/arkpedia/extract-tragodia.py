@@ -29,7 +29,9 @@ SKILLS = ['skchr_phatm2_1', 'skchr_phatm2_2', 'skchr_phatm2_3']
 TOKENS = ['token_10054_phatm2_encdool', 'token_10055_phatm2_mndclv']
 TOKEN_SKILLS = ['sktok_phatm2_encdool_2', 'sktok_phatm2_mndclv_3']
 PREFAB_GAPS = ['sktok_phatm2_mndclv_3']
-PREFABS = SKILLS + [k for k in TOKEN_SKILLS if k not in PREFAB_GAPS]
+# The cage's three character-table slots override its skill prefab with the
+# original empty wrapper. Preserve that hierarchy as well as the absent raw ID.
+PREFABS = SKILLS + [k for k in TOKEN_SKILLS if k not in PREFAB_GAPS] + ['sktok_empty']
 
 # Blob identities independently read from the pinned Global Git tree.
 TABLE_GIT_BLOBS = {'buff_template_data': {'path': 'en_US/gamedata/battle/buff_template_data.json', 'sha': 'cb995e7a8d7b5569032bca40f8842ac4df4a56bf', 'size': 15472433}, 'character_table': {'path': 'en_US/gamedata/excel/character_table.json', 'sha': '5d20e09f1f8d630528b8c25bf0c09f811fdbf2da', 'size': 11459107}, 'range_table': {'path': 'en_US/gamedata/excel/range_table.json', 'sha': 'c1e28a9f2c7350bb5f5de13ba27950dca49f0de7', 'size': 42868}, 'skill_table': {'path': 'en_US/gamedata/excel/skill_table.json', 'sha': '11a76a9f2adf5859609e4f423229ff007af30e17', 'size': 9406193}}
@@ -158,8 +160,8 @@ def scan(value, key=""):
         if value.startswith('projectile_') and key not in PROJECTILE_PARAMETER_FIELDS and value not in projectiles:
             assert value in projectile_names, ('unresolved projectile dependency', value)
             projectiles.update(records(projectile_env, [value])); scan(projectiles[value])
-        if value in bt and value not in templates:
-            templates.add(value); scan(bt[value]); scan(native_templates.get(value, {}))
+        if (value in bt or value in native_templates) and value not in templates:
+            templates.add(value); scan(bt.get(value, {})); scan(native_templates.get(value, {}))
         if value in database and value not in db_keys:
             db_keys.add(value); scan(database[value])
         if value.startswith(('[', '{')):
@@ -180,7 +182,7 @@ def find_ranges(value):
             except json.JSONDecodeError: return
             find_ranges(decoded)
 find_ranges([ct[ID], [ct[k] for k in TOKENS], [st[k] for k in SKILLS + TOKEN_SKILLS], characters, tokens, skills,
-    projectiles, [bt[k] for k in templates], [native_templates[k] for k in templates if k in native_templates],
+    projectiles, [bt[k] for k in templates if k in bt], [native_templates[k] for k in templates if k in native_templates],
     [database[k] for k in db_keys]])
 models = read(C / 'tragodia-source/models.json')
 bindings = {ID: {}}
@@ -274,12 +276,13 @@ evidence = {
     'characters': characters, 'tokens': tokens, 'skills': skills, 'chararts': chararts,
     'models': models, 'officialSkeletonBindings': bindings, 'tokenModels': token_models,
     'officialTokenSkeletonBindings': token_bindings, 'projectiles': projectiles,
-    'templates': {k: bt[k] for k in sorted(templates)},
+    'templates': {k: bt[k] for k in sorted(templates) if k in bt},
     'originalTemplates': {k: native_templates[k] for k in sorted(templates) if k in native_templates},
     'buffDatabase': {k: database[k] for k in sorted(db_keys)},
     'tables': {'character': ct[ID], 'tokens': {k: ct[k] for k in TOKENS}, 'tokenSkills': {k: st[k] for k in TOKEN_SKILLS}, 'skills': {k: st[k] for k in SKILLS},
         'ranges': {k: rt[k] for k in sorted(ranges)}},
     'nativeTemplateGaps': sorted(templates - native_templates.keys()),
+    'jsonTemplateGaps': sorted(templates - bt.keys()),
     'nativeSkillPrefabGaps': PREFAB_GAPS,
     'recoveredFacts': [],
     'holdReasons': ['Complete owner combat, Nervous Impairment, lure pathing, token lifecycle, all skills, talents and public lifecycle require review'],

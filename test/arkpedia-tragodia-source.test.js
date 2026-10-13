@@ -22,8 +22,10 @@ test('native foundation preserves the public source pins and stays unregistered'
   assert.equal(Object.keys(e.projectiles).length, 1);
   const records = ['characters', 'tokens', 'skills', 'projectiles'].flatMap(g =>
     Object.values(e[g]).flatMap(rows => rows.flatMap(row => row.components)));
-  assert.equal(records.length, 213);
+  assert.equal(records.length, 216);
+  assert.equal(Object.keys(e.originalTemplates).length, 26);
   assert.deepEqual(e.nativeTemplateGaps, []);
+  assert.deepEqual(e.jsonTemplateGaps, ['token_phatm2_mndclv[passive]']);
   for (const key of ['frameParity', 'moduleSupport', 'nativeParticleSupport']) assert.equal(e[key], false);
 });
 
@@ -131,7 +133,7 @@ test('lure original End carries On_Attack despite having no standard OnAttack hi
   assert.equal(component('9056605678497710654')._occupiedRemainingCharacterCnt, 0);
 });
 
-test('Cage keeps an effects-only animator and its missing named skill prefab is explicit', () => {
+test('Cage keeps an effects-only animator and resolves its source empty skill override', () => {
   const cage = e.officialTokenSkeletonBindings[TOKENS[1]];
   assert.equal(cage.renderingKind, 'effect-only'); assert.deepEqual(cage.facings, {});
   assert.deepEqual(e.tokenModels[TOKENS[1]], {}); assert.deepEqual(cage.animationAliases, []);
@@ -140,6 +142,124 @@ test('Cage keeps an effects-only animator and its missing named skill prefab is 
   assert.equal(e.skills.sktok_phatm2_mndclv_3, undefined);
   assert.equal(e.tables.tokenSkills.sktok_phatm2_mndclv_3.levels.length, 10);
   assert.equal(component('6352044219529720151')._occupiedRemainingCharacterCnt, 0);
+  for (const slot of e.tables.tokens[TOKENS[1]].skills) {
+    assert.equal(slot.skillId, 'sktok_phatm2_mndclv_3');
+    assert.equal(slot.overridePrefabKey, 'sktok_empty');
+  }
+  assert.equal(e.skills.sktok_empty[0].pathId, '9085286642518104433');
+  const empty = component('-4681330631067002511');
+  assert.deepEqual(empty._extraAbilities, []);
+  assert.equal(empty._defaultModeIndex, -1);
+  assert.equal(empty._playSkillBeginAnim, 0);
+  assert.equal(empty._canSilenced, 0);
+});
+
+test('cage native-only passive retains its original event number and immediate block search', () => {
+  const key = 'token_phatm2_mndclv[passive]';
+  assert.equal(e.templates[key], undefined, 'no invented JSON-table template');
+  const template = e.originalTemplates[key];
+  assert.equal(template.templateKey, key);
+  assert.equal(template.effectKey, '');
+  assert.equal(template.onEventPriority, 0);
+  const events = template.eventToActions._items;
+  assert.equal(events.length, 1);
+  assert.equal(events[0].key, 97, 'keep numeric event until its enum is recovered');
+  assert.deepEqual(JSON.parse(events[0].value.SerializedState), [{
+    _targetType: 'BUFF_OWNER', $type: 'Torappu.Battle.Action.Nodes+CharSearchBlockeeImmediate',
+  }]);
+  assert.deepEqual(events[0].value.SerializedObjectReferences, []);
+});
+
+test('cage independent phases preserve three HP, zero normal capacity and zero cost', () => {
+  const cage = e.tables.tokens[TOKENS[1]];
+  assert.equal(cage.rangeId, undefined);
+  assert.equal(cage.talents, null);
+  for (const phase of cage.phases) for (const frame of phase.attributesKeyFrames) {
+    assert.equal(phase.rangeId, '0-1');
+    for (const [key, value] of Object.entries({ maxHp: 3, atk: 100, def: 0,
+      magicResistance: 0, cost: 0, blockCnt: 0, respawnTime: 5, maxDeployCount: 1, maxDeckStackCnt: 0 }))
+      assert.equal(frame.data[key], value, key);
+  }
+  const passive = component('-1339889754114526889')._buffs[0];
+  assert.deepEqual(passive.attributes.abnormalFlags, [7, 15]);
+  assert.deepEqual(passive.attributes.attributeModifiers.map(m => [m.attributeType, m.formulaItem, m.value]),
+    [[13, 3, 0], [19, 3, 0]]);
+  assert.equal(passive.templateKey, 'token_phatm2_mndclv[passive]');
+  assert.equal(passive.overrideEffectKey, 'phatm2_skill_03_prison_01');
+  assert.equal(passive.lifeTimeType, 2);
+  assert.equal(component('6352044219529720151')._ignoreBlockMode, 1);
+});
+
+test('S3 opening spawn filters an existing Nervous burst and excludes occupied lowland tiles', () => {
+  const spawn = component('-4415508241769316265');
+  assert.equal(spawn._metadata.namedAsAlias, 'SpawnInRange');
+  assert.equal(spawn._waitForAttackEvent, 0);
+  const nodes = JSON.parse(spawn._actions.SerializedState);
+  assert.deepEqual(nodes.map(type), ['FilterEPBreakRecoveryType', 'CheckTargetRootTile', 'IfNot',
+    'CheckTargetRootTile', 'IfNot', 'CheckHeightTypeOfRootTile', 'SpawnTokenOnTargetTile']);
+  assert.equal(nodes[0]._recoveryType, 'SANITY');
+  assert.equal(nodes[0]._skipInEPBreakRecoveryCheck, false);
+  assert.deepEqual(nodes[1]._characterKeys, [TOKENS[1]]);
+  assert.deepEqual(nodes[3]._characterKeys, []);
+  assert.equal(nodes[5]._heightType, 'LOWLAND');
+  assert.equal(nodes[6]._forceSpawn, true);
+  assert.equal(nodes[6]._spawnTokenFromCards, true);
+  assert.equal(nodes[6]._checkBuildableType, false);
+  assert.equal(nodes[6]._refreshTokenCardCooldown, false);
+  assert.equal(nodes[6]._spawnTokenKey, TOKENS[1]);
+  assert.equal(component('-656703250279448489')._limitTargetNum, 0);
+});
+
+test('new Nervous burst distinguishes existing-cage refresh from empty-tile creation', () => {
+  const nodes = actions('phatm2_s_3[token]', 'ON_BEFORE_EP_BREAK_START');
+  assert.equal(nodes[0]._recoveryType, 'SANITY');
+  assert.equal(nodes[0]._skipInEPBreakRecoveryCheck, true);
+  const branch = nodes[1];
+  assert.equal(type(branch), 'IfElse');
+  assert.deepEqual(branch._conditionNode._characterKeys, [TOKENS[1]]);
+  assert.equal(type(branch._succeedNodes[0]), 'CreateBuffToCharacterOnTargetRootTile');
+  assert.equal(branch._succeedNodes[0]._buffs[0].templateKey, 'phatm2_s_3[token][trigger]');
+  assert.deepEqual(branch._failNodes.map(type), ['CheckTargetRootTile', 'IfNot',
+    'CheckHeightTypeOfRootTile', 'SpawnTokenOnTargetTile']);
+  assert.equal(branch._failNodes[2]._heightType, 'LOWLAND');
+  assert.equal(branch._failNodes[3]._sourceType, 'BUFF_SOURCE');
+  const refresh = actions('phatm2_s_3[token][trigger]', 'ON_BUFF_START');
+  assert.deepEqual(refresh.map(type), ['FilterId', 'CharSearchBlockeeImmediate']);
+  assert.equal(refresh[0]._filterId, TOKENS[1]);
+  assert.equal(refresh[1]._targetType, 'BUFF_OWNER');
+});
+
+test('S3 start clears only producer-owned expiry clocks after the opening spawn', () => {
+  const start = actions('phatm2_s_3[sanity]', 'ON_BUFF_START');
+  assert.deepEqual(start.map(type), ['TriggerAbility', 'AlwaysNext', 'CreateBuffToToken']);
+  assert.equal(start[0]._abilityName, 'SpawnInRange');
+  assert.equal(start[2]._buffData.templateKey, 'phatm2_s_3[token_clear_cooldown]');
+  assert.equal(start[2]._onlyToFirstTarget, false);
+  assert.equal(start[2]._isDerivedBuff, false);
+  const clear = actions('phatm2_s_3[token_clear_cooldown]', 'ON_BUFF_START')[0];
+  assert.equal(type(clear), 'FinishBuffsById');
+  assert.equal(clear._buffKey, 'phatm2_s_3[token_cooldown]');
+  assert.equal(clear._checkBuffSource, true);
+  assert.equal(clear._sourceType, 'BUFF_SOURCE');
+});
+
+test('S3 finish schedules a separate delayed kill while owner attachment finish kills tokens', () => {
+  assert.equal(type(actions('phatm2_s_3[die]', 'ON_BUFF_FINISH')[0]), 'KillTokens');
+  const end = actions('phatm2_s_3[die]', 'ON_SKILL_FINISH')[0];
+  assert.equal(type(end), 'CreateBuffToToken');
+  assert.equal(end._isDerivedBuff, false);
+  assert.equal(end._onlyToFirstTarget, false);
+  const clock = end._buffData;
+  assert.equal(clock.templateKey, 'phatm2_s_3[token_cooldown]');
+  assert.equal(clock.disableOverride, true);
+  assert.equal(clock.lifeTimeType, 'INFINITY');
+  assert.equal(clock.triggerLifeType, 'LIMITED');
+  assert.equal(clock.triggerCnt, 1);
+  assert.equal(clock.waitFirstTriggerInterval, true);
+  assert.equal(clock.stripBlackboardParamsWithBuffKey, true);
+  assert.deepEqual(actions('phatm2_s_3[token_cooldown]', 'ON_BUFF_TRIGGER').map(type), ['InstantKill', 'FinishBuff']);
+  for (const rank of e.tables.skills.skchr_phatm2_3.levels)
+    assert.equal(rank.blackboard.find(v => v.key === 'phatm2_s_3[token_cooldown].interval').value, 30);
 });
 
 test('native Nervous splash excludes main target and bound scaling filters SANITY', () => {
