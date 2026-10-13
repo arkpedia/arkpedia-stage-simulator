@@ -10,11 +10,12 @@ import {particleRandom} from './native-particle-random.js';
 // dispatch still need integration. Native event timing/RNG parity is unverified.
 export function createChildEmissionSchedule(pack,{seed=1}={}){
   if(!Number.isSafeInteger(seed))throw Error('Invalid native child emission seed');
-  const graph=createSubEmitterGraph(pack),parents=new Map(),children=new Map();
+  const graph=createSubEmitterGraph(pack),parents=new Map(),children=new Map(),owned=new Map();
   for(const[id,r]of Object.entries(pack.records))if(r.type==='ParticleSystem'&&r.data.SubModule?.enabled){
     const links=graph.links(id);
     if(links.some(r=>r.type!==0||r.properties!==0||r.emitProbability!==1))throw Error('Native child event/inheritance/probability needs dispatch');
     parents.set(id,createParticleBirthClock(r.data,{seed}));
+    owned.set(r.data,JSON.stringify({module:r.data.SubModule,links}));
     for(const link of links)if(!children.has(link.child)){
       const source=pack.records[link.child].data;
       if(source.SubModule?.enabled)throw Error('Nested native child emission needs dispatch');
@@ -73,5 +74,10 @@ export function createChildEmissionSchedule(pack,{seed=1}={}){
     return result.map(p=>({...p,age:includeExpired?0:Math.max(0,(time-p.birthTime)*speed)}));
   }
   return {triggers:triggersAt,sample,births(child,time,options){return sample(child,time,{...options,includeExpired:true});},
+    ownsParent(source,requestedSeed=seed){
+      if(requestedSeed!==seed||!owned.has(source))return false;
+      const id=Object.keys(pack.records).find(id=>pack.records[id].data===source);
+      return owned.get(source)===JSON.stringify({module:source.SubModule,links:createSubEmitterGraph(pack).links(id)});
+    },
     scope:{childEmissionScheduling:true,parentLifetimeWindows:true,sharedChildCapacity:true,childMotionPlaying:false,compiledFrameParity:false}};
 }
