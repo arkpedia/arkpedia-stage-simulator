@@ -3696,3 +3696,30 @@ ARKPEDIA_REVIEW_CHROME='/path/to/chromium' node tools/arkpedia/review-tragodia-e
 ```
 
 Audit/regression logs use the `inheritance-` prefix in `.cache/arkpedia/tragodia-source/`; browser reports and the image remain in its `effects/` directory. The original packs, prior source inputs, public MVP and coverage remain unchanged: **373/431 forms and 812 selected skills**. Trails, unresolved resources, Animator state dispatch, delivered artwork and public mouse/touch battle review still gate Tragodia's registration. Arkpedia app PR229 remains outside dev until all operator, enemy, stage and dependable automation gates are met.
+
+### Original angular particle motion (2026-10-14)
+
+The trail-source inspection also identified Rotation over Lifetime and birth sub-emitters as prerequisites. Rotation over Lifetime is now implemented in the shared particle lifecycle. The module's angular velocity curves integrate over normalized age and multiply by particle lifetime, producing radians accumulated over simulated seconds. The result adds to the original birth rotation. Constant, two-constant, curve and two-curve modes retain stable independent local factors; the shared Hermite antiderivative has no render-step dependence. Its previous import from `native-moving-particles.js` remains available.
+
+Single-axis rotation retains existing X/Y birth angles. Separate axes produce an explicit local Euler replay, and the renderer keeps 3D billboard rotation blocked. Weighted/wrapped curves, randomized birth flip direction and Rotation by Speed remain rejected. This follows the [Rotation over Lifetime controls](https://docs.unity3d.com/2021.3/Documentation/Manual/PartSysRotOverLifeModule.html); the [original editor](https://github.com/Unity-Technologies/UnityCsReference/blob/2021.3/Modules/ParticleSystemEditor/ParticleSystemModules/RotationModuleUI.cs) remaps the serialized radians to degrees for display. Random ordering, multi-axis native dispatch and compiled game-frame parity remain unverified.
+
+The fixture preserves **57 original RotationModules**: fifteen Tragodia profiles and forty-two Lappland profiles, with their complete module fields, source identities and serialized ParticleSystem hashes. All 57 authored modules use a single axis. Their other particle modules and renderer gates are not implicitly approved by sampling angular motion.
+
+Validation:
+
+- The independent Python audit reads the original Unity objects and validates both original effect packs. Piecewise Simpson integration is exact for each authored unweighted cubic segment and independently compares **1,368 rotation samples** across lifetimes, normalized ages and random factors. **Three outputs reproduce exactly**, and **twelve altered-evidence fixtures are rejected**. The fixture is 64,636 bytes.
+- The twenty-six-file adjacent regression set passes **581 checks on Node 22 and Node 24**, without failures or skips. Cases cover reversing angular curves, radians/seconds, retained birth angles, three-axis local replay, half-speed clocks, delay and reverse sampling.
+- The isolated browser review plays five original rotating components in `whitw2_skill_03_buff_01`. **Eight rendered particle bases** match independently reconstructed angles, local birth factors and source-parent rotation. All **23 original Lappland shader programs** compile/link; reverse scrubbing is exact, no GL/page errors occur, and library cleanup releases all GPU geometry and textures.
+- This buff root remains a partial diagnostic: **nine components prepare and nineteen remain held** for alignment, pivot/flip, an unmapped original shader uniform, meshes or particle trails. Strict playback rejects it. Its 512-pixel image at 1.8 seconds was visually inspected; complete game appearance is not approved.
+- The cage browser regression still passes at **16 components and two held components**, preserving the earlier cone, inherited-velocity, original glow and 24 custom-stream GPU checks.
+
+Reproduce with Node 22 on `PATH`, the extraction Python environment and Chromium:
+
+```sh
+node tools/arkpedia/export-particle-angular-motion.mjs
+.cache/map-env/bin/python tools/arkpedia/audit-particle-angular-motion.py
+ARKPEDIA_REVIEW_CHROME='/path/to/chromium' node tools/arkpedia/review-particle-angular-motion.mjs
+ARKPEDIA_REVIEW_CHROME='/path/to/chromium' node tools/arkpedia/review-tragodia-effect-shaders.mjs
+```
+
+Audit/regression logs use the `angular-motion-` prefix in `.cache/arkpedia/tragodia-source/`; the rotating buff image/report are in `.cache/arkpedia/lappland-alter-source/effects/`. The original packs, prior inputs, public MVP and coverage remain unchanged: **373/431 forms and 812 selected skills**. Particle trails, discrete arc behavior, birth sub-emitter dispatch, unresolved resources, Animator state dispatch and full battle review remain work to complete. Arkpedia app PR229 remains outside dev until all operator, enemy, stage and dependable automation gates are met.

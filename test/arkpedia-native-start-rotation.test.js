@@ -94,9 +94,13 @@ test('flip, malformed axes, invalid factors and unsupported curves stay held',()
  const bad={minMaxState:1,scalar:1,maxCurve:{m_Curve:[{time:0,value:0,weightedMode:1},{time:1,value:1,weightedMode:1}],m_PreInfinity:2,m_PostInfinity:2}};
  assert.throws(()=>createParticleStartRotation({...initial(),startRotationX:bad}),/Weighted/);
 });
-test('sampling start angles does not silently enable rotation over lifetime',
+test('unsupported angular velocity curves and rotation by speed remain explicit blockers',
  {skip:packs.tragodia?false:'Original native source cache unavailable'},()=>{
  const source=structuredClone(packs.tragodia.records['battle/prefabs/effects/phatm2.ab:8060690848342612203'].data);
  source.RotationModule.enabled=true;
- assert.throws(()=>createMovingParticles(source),/RotationModule lifecycle not playing/);
+ source.RotationModule.curve={minMaxState:1,scalar:1,maxCurve:{m_PreInfinity:2,m_PostInfinity:2,m_Curve:[
+  {time:0,value:1,inSlope:0,outSlope:0,weightedMode:1},{time:1,value:1,inSlope:0,outSlope:0,weightedMode:1}]}};
+ assert.throws(()=>createMovingParticles(source),/Weighted/);
+ source.RotationModule.enabled=false;source.RotationBySpeedModule.enabled=true;
+ assert.throws(()=>createMovingParticles(source),/RotationBySpeedModule lifecycle not playing/);
 });

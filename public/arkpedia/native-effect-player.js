@@ -344,7 +344,7 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false}={}){
           if(record.data.m_UseCustomVertexStreams)customLayout=createParticleVertexLayout(record.data.m_VertexStreams);
           const ps=(pack.records[r.gameObject].references??[]).map(r=>r.target).find(k=>pack.records[k]?.type==='ParticleSystem');
           particleSource=pack.records[ps].data;
-          if(particleSource.InitialModule.rotation3D&&record.data.m_RenderMode!==4)
+          if((particleSource.InitialModule.rotation3D||particleSource.RotationModule?.enabled&&particleSource.RotationModule.separateAxes)&&record.data.m_RenderMode!==4)
             throw Error('Native 3D billboard start rotation needs review');
           // The recovered particle renderers repeat the same material slot and
           // have their own TrailModule disabled. Different slots or particle-

@@ -3,6 +3,7 @@ import {sampleParticleCurve,sampleParticleGradient} from './native-particle-curv
 import {createEffectTrajectory} from './native-effect-trail.js';
 import {createParticleCustomData} from './native-particle-custom-data.js';
 import {createParticleStartRotation} from './native-particle-start-rotation.js';
+import {createParticleAngularMotion} from './native-particle-angular-motion.js';
 
 // Shared source emission clocks, capacity and lifetime/color/size sampling.
 // Callers whitelist the active modules they actually implement. Event ordering
@@ -10,7 +11,7 @@ import {createParticleStartRotation} from './native-particle-start-rotation.js';
 export function createParticleLifecycle(source,{seed=1,modules=[],spaces=[0],allowInitialSpeed=false,allowDistanceEmission=false}={}){
   const initial=source.InitialModule,emission=source.EmissionModule;
   if(!initial?.enabled||!emission)throw new Error('Missing native particle initial/emission module');
-  const supported=new Set(['InitialModule','EmissionModule','ColorModule','SizeModule','CustomDataModule',...modules]);
+  const supported=new Set(['InitialModule','EmissionModule','ColorModule','SizeModule','CustomDataModule','RotationModule',...modules]);
   for(const [name,module] of Object.entries(source))if(module?.enabled&&!supported.has(name))throw new Error(name+' lifecycle not playing');
   const constant=(curve,label)=>{
     if(curve.minMaxState!==0||!Number.isFinite(curve.scalar))throw new Error('Varying native '+label+' needs emission integration');
@@ -26,6 +27,7 @@ export function createParticleLifecycle(source,{seed=1,modules=[],spaces=[0],all
   if(!Number.isFinite(delay)||delay<0||!Number.isFinite(length)||length<=0||!Number.isFinite(speed)||speed<=0||!Number.isInteger(capacity)||capacity<1||rate<0||distanceRate<0||!Number.isSafeInteger(seed))throw new Error('Invalid native particle clocks/capacity');
   if(![0,2].includes(initial.startColor.minMaxState))throw new Error('Initial gradient clock needs review');
   const startRotation=createParticleStartRotation(initial);
+  const angularMotion=createParticleAngularMotion(source.RotationModule);
   if(emission.m_BurstCount!==emission.m_Bursts.length)throw new Error('Incomplete native particle bursts');
   for(const burst of emission.m_Bursts){
     if(!Number.isFinite(burst.time)||burst.time<0||burst.time>=length||!Number.isInteger(burst.cycleCount)||burst.cycleCount<1||!Number.isFinite(burst.repeatInterval)||burst.repeatInterval<=0||burst.probability!==1)throw new Error('Native probabilistic/indefinite burst needs review');
@@ -111,7 +113,7 @@ export function createParticleLifecycle(source,{seed=1,modules=[],spaces=[0],all
         size.forEach((v,i)=>size[i]=v*factors[i]);
       }
       if(source.ColorModule?.enabled){const factor=sampleParticleGradient(source.ColorModule.gradient,t,random(p.id,9));color.forEach((v,i)=>color[i]=v*factor[i]);}
-      return {...p,age,size,color,...(customData?{customData:customData.sample(age,p.lifetime,
+      return {...p,age,size,color,...(angularMotion?angularMotion.sample({...p,age},[random(p.id,35),random(p.id,36),random(p.id,37)]):{}),...(customData?{customData:customData.sample(age,p.lifetime,
         (stream,channel)=>random(p.id,24+stream*4+channel))}:{})};
     });
   }

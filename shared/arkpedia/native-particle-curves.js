@@ -59,3 +59,28 @@ function sampleGradientKeys(g,time){
   }
   return ['r','g','b'].map(k=>channel('c',k,g.m_NumColorKeys)).concat(channel('a','a',g.m_NumAlphaKeys));
 }
+
+// Exact piecewise integral of the supported source Hermite curves, including
+// clamped tails. No preview frame-step dependence or numerical quadrature.
+export function integrateParticleCurve(curve,from,to,factor=1){
+  if(!Number.isFinite(from)||!Number.isFinite(to))throw Error('Invalid native particle integration clock');
+  sampleParticleCurve(curve,from,factor);sampleParticleCurve(curve,to,factor);
+  if(to<from)return -integrateParticleCurve(curve,to,from,factor);
+  if(curve.minMaxState===0||curve.minMaxState===3)return sampleParticleCurve(curve,0,factor)*(to-from);
+  const integrate=source=>{
+    const keys=source.m_Curve;let sum=0;
+    if(from<keys[0].time)sum+=(Math.min(to,keys[0].time)-from)*keys[0].value;
+    for(let i=1;i<keys.length;i++){
+      const a=keys[i-1],b=keys[i],lo=Math.max(from,a.time),hi=Math.min(to,b.time);
+      if(hi<=lo)continue;
+      const span=b.time-a.time,A=a.outSlope*span,B=b.inSlope*span;
+      const c3=2*a.value-2*b.value+A+B,c2=-3*a.value+3*b.value-2*A-B;
+      const primitive=u=>c3*u**4/4+c2*u**3/3+A*u*u/2+a.value*u;
+      sum+=span*(primitive((hi-a.time)/span)-primitive((lo-a.time)/span));
+    }
+    if(to>keys.at(-1).time)sum+=(to-Math.max(from,keys.at(-1).time))*keys.at(-1).value;
+    return sum;
+  };
+  const max=integrate(curve.maxCurve);
+  return curve.scalar*(curve.minMaxState===1?max:(()=>{const min=integrate(curve.minCurve);return min+(max-min)*Math.max(0,Math.min(1,factor));})());
+}
