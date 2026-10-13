@@ -8,7 +8,7 @@ import { prepareMarcilExplosion as prepare, MARCIL_EXPLOSION_CONTRACT as contrac
   from '../server/sim/content/arkpedia-marcil-explosion.js';
 import { skillHud } from '../shared/arkpedia/skill-hud.js';
 import { rotateOffset } from '../server/sim/dir.js';
-import { make as baseMake, advance, until, enemy } from './helpers/marcil-fixture.js';
+import { make as baseMake, advance, until, born, enemy } from './helpers/marcil-fixture.js';
 function make(opts = {}) {
   const f = baseMake({ skill: 3, prepare, contract, ...opts });
   f.bursts = []; f.marks = []; f.ends = [];
@@ -17,9 +17,10 @@ function make(opts = {}) {
   f.b.on('marcilExplosionMarkerEnd', x => f.ends.push(x));
   return f;
 }
+function beginManual(f) { born(f); return f.u.skill.activate('manual'); }
 const near = (a,z) => assert.ok(Math.abs(a-z) < 1e-5, `${a} != ${z}`);
 function extra(f) {
-  assert.equal(f.u.skill.activate('manual'), true);
+  assert.equal(beginManual(f), true);
   until(f, () => f.controller.mode === 's3-extra', 8);
 }
 function release(f) { extra(f); assert.equal(f.controller.cancel(), true); }
@@ -48,7 +49,7 @@ test('S3 requires its source-complete build and explicit contract while public r
 
 for(let rank=1;rank<=10;rank++)test(`S3 rank ${rank} cancels only its extra chant, debits once per burst and uses selected damage/stun`,()=>{
   const f=make({rank}); const mana=f.wallet.value, atk=f.u.s.atk; const target=at(f); high(f);
-  f.b.bench[ID]={unit:f.u}; assert.equal(f.b.activateOperator(ID),true);
+  born(f); f.b.bench[ID]={unit:f.u}; assert.equal(f.b.activateOperator(ID),true);
   assert.equal(f.u.skill.end('manual'),false); assert.equal(skillHud(f.u.skill).canCancel,false);
   until(f,()=>f.controller.mode==='s3-extra',8);
   assert.equal(f.wallet.value,mana); assert.equal(f.wallet.completedExtraChant,false); assert.equal(f.hits.length,0);
@@ -108,11 +109,13 @@ test('the centre stays two forward tiles independent of base range, and shrinks 
   }
 });
 
-test('zero/low mana may start but the original half-second chant check stops before any output or debit',()=>{
-  for(const value of [0,1,7]) {
-    const f=make(); f.u.skill.setSpTotal(value); assert.equal(f.u.skill.activate('manual'),true);
-    until(f,()=>!f.u.skill.active,1); assert.equal(f.wallet.value,value); assert.equal(f.bursts.length,0);
-    assert.equal(f.wallet.completedExtraChant,false); assert.equal(f.controller.marker,null);
+test('S3 rejects sub-minimum mana without starting a chant or spending resources',()=>{
+  for(const value of [0,1,7,7.99]) {
+    const f=make(); born(f); f.u.skill.setSpTotal(value);
+    assert.equal(f.u.skill.activate('manual'),false); assert.equal(skillHud(f.u.skill).ready,false);
+    advance(f,2); assert.equal(f.wallet.value,value); assert.equal(f.bursts.length,0);
+    assert.equal(f.u.skill.activations,0); assert.equal(f.wallet.completedExtraChant,false);
+    assert.equal(f.controller.marker,null);
   }
 });
 
@@ -162,7 +165,7 @@ test('S3 selects highland tiles for fragments without changing terrain',()=>{
 test('departure clears mana only after natural extra completion, through volley and recovery',()=>{
   for(const phase of ['main','extra','manual-release','natural-release','recovery'])for(const reason of ['killed','retreat']) {
     const f=make();
-    if(phase==='main') assert.equal(f.u.skill.activate('manual'),true);
+    if(phase==='main') assert.equal(beginManual(f),true);
     else if(phase==='natural-release'||phase==='recovery') {
       if(phase==='recovery') f.u.skill.setSpTotal(17);
       completeExtra(f);
@@ -180,7 +183,7 @@ test('departure clears mana only after natural extra completion, through volley 
 
 test('control ends each incomplete phase, and silence alone leaves the unsilenceable cast running',()=>{
   for(const phase of ['main','extra','volley']) {
-    const f=make(); if(phase==='main') assert.equal(f.u.skill.activate('manual'),true);
+    const f=make(); if(phase==='main') assert.equal(beginManual(f),true);
     else { extra(f); if(phase==='volley') f.controller.cancel(); }
     f.b.applyStatus(f.u,'silence',{duration:2}); advance(f,.1); assert.equal(f.u.skill.active,true);
     f.b.applyStatus(f.u,'stun',{duration:2}); advance(f,.1);
@@ -225,11 +228,12 @@ test('a naturally recovered full off-field wallet yields ten bursts without an i
   assert.equal(f.bursts.length,10); assert.equal(f.wallet.value,0); advance(f,10); assert.equal(f.wallet.value,0);
 });
 
-test('a cast during birth replaces the pending normal windup and uses the original S3 clock',()=>{
+test('S3 cannot replace the deployment animation, then releases on its original Attack event',()=>{
   const f=make(); at(f); assert.equal(f.controller.phase.kind,'born');
-  assert.equal(f.u.skill.activate('manual'),true); advance(f,1);
-  assert.equal(f.outputs.length,0); assert.equal(f.hits.length,0); assert.equal(f.marks.length,1);
-  until(f,()=>f.controller.mode==='s3-extra',6); const releasedAt=f.b.time;
+  assert.equal(f.u.skill.activate('manual'),false); assert.equal(f.u.mem.regularFormVisual.clip,'Start');
+  advance(f,.9); assert.equal(f.u.skill.activate('manual'),false); assert.equal(f.outputs.length,0);
+  assert.equal(f.marks.length,0); born(f); assert.equal(f.u.skill.activate('manual'),true);
+  until(f,()=>f.controller.mode==='s3-extra',7); const releasedAt=f.b.time;
   f.controller.cancel(); until(f,()=>f.bursts.length===1);
   const nativeRelease=evidence.models[ID].Front.eventPayloads.Skill_3_Attack[0].time;
   assert.ok(f.bursts[0].time>=releasedAt+nativeRelease-1e-9);
@@ -239,7 +243,7 @@ test('a cast during birth replaces the pending normal windup and uses the origin
 test('retirement from a marker or extra-phase callback cannot leave a marker, scheduled volley or stale wallet owner',()=>{
   for(const event of ['marcilExplosionMarker','marcilExtraChant']) {
     const f=make(); f.b.on(event,x=>{if(x.unit===f.u)f.b.retreat(f.u,{permanent:true});});
-    assert.equal(f.u.skill.activate('manual'),true); until(f,()=>f.controller.stopped,8);
+    assert.equal(beginManual(f),true); until(f,()=>f.controller.stopped,8);
     assert.equal(f.controller.marker,null); assert.equal(f.wallet.owner,null); assert.equal(f.wallet.completedExtraChant,false);
     assert.equal(f.ends.length,1); advance(f,20); assert.equal(f.bursts.length,0);
   }
@@ -279,7 +283,7 @@ test('a replacement recipient life cannot inherit a queued damage or stun from t
 test('battle finish in main/extra/release/recovery retires the marker and denies all retained commands',()=>{
   for(const phase of ['main','extra','release','recovery']) {
     const f=make();
-    if(phase==='main') assert.equal(f.u.skill.activate('manual'),true);
+    if(phase==='main') assert.equal(beginManual(f),true);
     else { extra(f); if(phase!=='extra') f.controller.cancel(); if(phase==='recovery') until(f,()=>f.controller.mode==='s3-recovery'); }
     const activate=f.u.skill.activate, end=f.u.skill.end; f.b.forceEnd('fixture');
     assert.equal(f.controller.stopped,true); assert.equal(f.wallet.closed,true); assert.equal(f.controller.marker,null);
