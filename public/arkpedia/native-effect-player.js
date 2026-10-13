@@ -9,6 +9,7 @@ import {sampleParticleCurve} from '../../shared/arkpedia/native-particle-curves.
 import {effectMeshColors} from '../../shared/arkpedia/native-effect-mesh.js';
 import {createEffectPose} from '../../shared/arkpedia/native-effect-pose.js';
 import {createEffectTrail} from '../../shared/arkpedia/native-effect-trail.js';
+import {createParticleVertexLayout} from '../../shared/arkpedia/native-particle-custom-data.js';
 export function compileNativeEffectPrograms(renderer,shaders){
   const gl=renderer.getContext(), result=[];
   try{
@@ -156,6 +157,15 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false}={}){
     g.setAttribute('in_TEXCOORD0',g.getAttribute('uv'));
     g.setAttribute('in_COLOR0',new T.Float32BufferAttribute(Array(16).fill(1),4));return g;
   }
+  function prepareCustomGeometry(g,layout){
+    const uv=g.getAttribute('in_TEXCOORD0');
+    if(!uv||uv.itemSize!==2)throw Error('Native custom stream needs two-component source UV');
+    const original=uv.array.slice();
+    for(let channel=0;channel<8;channel++)g.deleteAttribute('in_TEXCOORD'+channel);
+    layout.dimensions.forEach((width,channel)=>g.setAttribute('in_TEXCOORD'+channel,
+      new T.Float32BufferAttribute(new Float32Array(uv.count*width),width)));
+    return original;
+  }
   function samplePose(t,clip,trajectory){
     const state=pose.sample(t,clip);
     if(trajectory){const offset=trajectory.sample(t);for(const n of state.nodes.values())if(!n.parent)n.position=n.position.map((v,i)=>v+offset[i]);}
@@ -268,11 +278,19 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false}={}){
           const colors=part.geometry.getAttribute('in_COLOR0');
           for(let j=0;j<baseColors.length;j++)colors.array[j]=baseColors[j]*particle.color[j%4];
           colors.needsUpdate=true;
-          baseUVs.forEach((values,channel)=>{
-            if(!values)return;
-            const uv=part.geometry.getAttribute('in_TEXCOORD'+channel);
-            uv.array.set(particle.sheet&&(particle.sheet.mask&(1<<channel))?particleSheetUV(values,particle.sheet):values);uv.needsUpdate=true;
-          });
+          if(entry.customLayout){
+            const values=particle.sheet&&(particle.sheet.mask&1)?particleSheetUV(entry.customUVs,particle.sheet):entry.customUVs;
+            for(let vertex=0;vertex<values.length/2;vertex++){
+              const packed=entry.customLayout.sample([values[vertex*2],values[vertex*2+1]],
+                particle.customData??[[0,0,0,0],[0,0,0,0]]);
+              packed.forEach((value,channel)=>part.geometry.getAttribute('in_TEXCOORD'+channel).array.set(value,vertex*value.length));
+            }
+            entry.customLayout.dimensions.forEach((_,channel)=>part.geometry.getAttribute('in_TEXCOORD'+channel).needsUpdate=true);
+          }else baseUVs.forEach((values,channel)=>{
+              if(!values)return;
+              const uv=part.geometry.getAttribute('in_TEXCOORD'+channel);
+              uv.array.set(particle.sheet&&(particle.sheet.mask&(1<<channel))?particleSheetUV(values,particle.sheet):values);uv.needsUpdate=true;
+            });
         });
       }
       const p=state.renderers.get(component).materials[0].properties,u=mesh.material.uniforms;
@@ -305,13 +323,14 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false}={}){
         assertOpen();
         if(record.type!=='ParticleSystemRenderer'&&r.materials.length!==1)
           throw Error('Native multi-material renderer needs review');
-        let meshId,particleSource,emitter,trail,billboard=false;
+        let meshId,particleSource,emitter,trail,billboard=false,customLayout=null;
         if(record.type==='MeshRenderer'){
           const go=pack.records[r.gameObject];const filter=(go.references??[]).map(r=>r.target).find(k=>pack.records[k]?.type==='MeshFilter');
           meshId=target(filter,'m_Mesh');
         }else if(record.type==='ParticleSystemRenderer'){
           if(![0,4].includes(record.data.m_RenderMode)||![0,2].includes(record.data.m_RenderAlignment)||record.data.m_RenderMode===4&&record.data.m_RenderAlignment!==2)throw Error('Particle alignment/render mode not playing');
-          if(record.data.m_UseCustomVertexStreams||Object.values(record.data.m_Pivot).some(v=>v!==0)||Object.values(record.data.m_Flip).some(v=>v!==0))throw Error('Particle vertex streams/pivot/flip need review');
+          if(Object.values(record.data.m_Pivot).some(v=>v!==0)||Object.values(record.data.m_Flip).some(v=>v!==0))throw Error('Particle pivot/flip need review');
+          if(record.data.m_UseCustomVertexStreams)customLayout=createParticleVertexLayout(record.data.m_VertexStreams);
           const ps=(pack.records[r.gameObject].references??[]).map(r=>r.target).find(k=>pack.records[k]?.type==='ParticleSystem');
           particleSource=pack.records[ps].data;
           // The recovered particle renderers repeat the same material slot and
@@ -337,7 +356,11 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false}={}){
         const material=await makeMaterial(component,mat.id);assertOpen();
         const g=trail?new T.BufferGeometry():billboard?billboardGeometry():geometry(meshId);
         if(trail){geometries.add(g);g.setAttribute('position',new T.Float32BufferAttribute([],3));g.setAttribute('in_POSITION0',g.getAttribute('position'));g.setAttribute('in_COLOR0',new T.Float32BufferAttribute([],4));g.setAttribute('in_TEXCOORD0',new T.Float32BufferAttribute([],2));}
-        if(particleSource?.UVModule?.enabled&&Array.from({length:8},(_,i)=>g.getAttribute('in_TEXCOORD'+i)).some(a=>a&&a.itemSize!==2))throw Error('Native multidimensional particle UV stream needs review');
+        if(particleSource?.UVModule?.enabled){
+          if(customLayout&&particleSource.UVModule.uvChannelMask!==1)throw Error('Custom particle sheet must address the original UV stream only');
+          if(Array.from({length:8},(_,i)=>g.getAttribute('in_TEXCOORD'+i)).some(a=>a&&a.itemSize!==2))throw Error('Native multidimensional particle UV stream needs review');
+        }
+        const customUVs=customLayout?prepareCustomGeometry(g,customLayout):null;
         const mesh=new T.Mesh(g,material);
         mesh.renderOrder=record.data.m_SortingOrder??0;
         if(particleSource){const d=particleSource.InitialModule,x=sampleParticleCurve(d.startSize,0);
@@ -345,7 +368,8 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false}={}){
 
         nodeObjects.get(r.transform).add(mesh);draws.push({component,transform:r.transform,particleSource,trail,alignment:record.data.m_RenderAlignment,mesh,emitter,pool:emitter?[mesh]:null,
           baseColors:emitter?g.getAttribute('in_COLOR0').array.slice():null,
-          baseUVs:emitter?Array.from({length:8},(_,i)=>g.getAttribute('in_TEXCOORD'+i)?.array.slice()??null):null});
+          baseUVs:emitter?Array.from({length:8},(_,i)=>g.getAttribute('in_TEXCOORD'+i)?.array.slice()??null):null,
+          customLayout,customUVs});
         const sourceSide=material.side;
         mesh.onBeforeRender=function(_renderer,_scene,camera){
           const u=material.uniforms,matrix=this.matrixWorld;

@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import {sampleParticleCurve,sampleParticleGradient} from './native-particle-curves.js';
 import {createEffectTrajectory} from './native-effect-trail.js';
+import {createParticleCustomData} from './native-particle-custom-data.js';
 
 // Shared source emission clocks, capacity and lifetime/color/size sampling.
 // Callers whitelist the active modules they actually implement. Event ordering
@@ -8,7 +9,7 @@ import {createEffectTrajectory} from './native-effect-trail.js';
 export function createParticleLifecycle(source,{seed=1,modules=[],spaces=[0],allowInitialSpeed=false,allowDistanceEmission=false}={}){
   const initial=source.InitialModule,emission=source.EmissionModule;
   if(!initial?.enabled||!emission)throw new Error('Missing native particle initial/emission module');
-  const supported=new Set(['InitialModule','EmissionModule','ColorModule','SizeModule',...modules]);
+  const supported=new Set(['InitialModule','EmissionModule','ColorModule','SizeModule','CustomDataModule',...modules]);
   for(const [name,module] of Object.entries(source))if(module?.enabled&&!supported.has(name))throw new Error(name+' lifecycle not playing');
   const constant=(curve,label)=>{
     if(curve.minMaxState!==0||!Number.isFinite(curve.scalar))throw new Error('Varying native '+label+' needs emission integration');
@@ -29,6 +30,7 @@ export function createParticleLifecycle(source,{seed=1,modules=[],spaces=[0],all
     if(!Number.isFinite(burst.time)||burst.time<0||burst.time>=length||!Number.isInteger(burst.cycleCount)||burst.cycleCount<1||!Number.isFinite(burst.repeatInterval)||burst.repeatInterval<=0||burst.probability!==1)throw new Error('Native probabilistic/indefinite burst needs review');
   }
   const random=(id,salt)=>particleRandom(id,salt,seed);
+  const customData=createParticleCustomData(source.CustomDataModule);
   function sample(time,{history}={}){
     if(!Number.isFinite(time))throw new Error('Invalid native particle sample clock');
     // Physical world-position samples are explicit inputs. Prewarm has no
@@ -107,7 +109,8 @@ export function createParticleLifecycle(source,{seed=1,modules=[],spaces=[0],all
         size.forEach((v,i)=>size[i]=v*factors[i]);
       }
       if(source.ColorModule?.enabled){const factor=sampleParticleGradient(source.ColorModule.gradient,t,random(p.id,9));color.forEach((v,i)=>color[i]=v*factor[i]);}
-      return {...p,age,size,color};
+      return {...p,age,size,color,...(customData?{customData:customData.sample(age,p.lifetime,
+        (stream,channel)=>random(p.id,24+stream*4+channel))}:{})};
     });
   }
   return {sample};
