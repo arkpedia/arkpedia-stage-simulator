@@ -3723,3 +3723,34 @@ ARKPEDIA_REVIEW_CHROME='/path/to/chromium' node tools/arkpedia/review-tragodia-e
 ```
 
 Audit/regression logs use the `angular-motion-` prefix in `.cache/arkpedia/tragodia-source/`; the rotating buff image/report are in `.cache/arkpedia/lappland-alter-source/effects/`. The original packs, prior inputs, public MVP and coverage remain unchanged: **373/431 forms and 812 selected skills**. Particle trails, discrete arc behavior, birth sub-emitter dispatch, unresolved resources, Animator state dispatch and full battle review remain work to complete. Arkpedia app PR229 remains outside dev until all operator, enemy, stage and dependable automation gates are met.
+
+### Accepted particle births and original sub-emitter links (2026-10-14)
+
+The original packs contain **fifteen enabled SubModules and 69 resolved child links**: nine Tragodia parents each reference one child, and six Lappland parents each reference ten children. Every authored link uses Birth, probability 1 and no inherited-property flags. Eight Tragodia children have continuous emission; one has zero emission. The sixty Lappland children use bursts. The [Unity sub-emitter documentation](https://docs.unity3d.com/2021.3/Documentation/Manual/PartSysSubEmitModule.html) permits continuous emission for Birth, so dispatch must retain child clocks and parent-particle motion rather than treating every child as a one-shot burst.
+
+The original lifecycle's scheduler now lives in a shared **birth-clock API**. It preserves emission ordering, capacity rejection, skipped particle IDs, lifetime sampling, delay, simulation speed, prewarm and distance history. Its accepted-birth ledger remains available after particles expire. Existing visible-particle sampling retains the capacity-one optimization; complete birth history uses the full scheduler. The local random helper moved to a shared file with its original import path preserved.
+
+The source relationship index resolves the exact serialized pointers and validates ambiguous/missing links and cycles. Its Birth trigger API maps accepted particle IDs to original child slots and records real birth and parent-death times. Other event kinds, probabilistic dispatch and inherited-property flags remain indexed but cannot dispatch through the Birth-only API. **Child emission playback remains unimplemented**, explicitly recorded as `childEmissionPlaying: false`; this step does not certify child movement, shared child capacity, nested playback or compiled Unity event ordering.
+
+The source player now holds linked child systems until parent dispatch is implemented. Earlier partial cage diagnostics let `spark_p_add (1)` play on its own even though the music-particle parent was blocked. The corrected cage has **fifteen playing components and three held components**: particle trails/distinct materials, unresolved parent dispatch for the spark child, and the missing original mesh. This supersedes the previous sixteen-component diagnostic count; it is a fidelity correction rather than a claim that the full cage plays.
+
+An explicit `inspectParticle` API addresses the existing original particle GameObject as an isolated inspection root. It preserves source records and parent links, reports `fullEffect: false`, and does not change the original root registry. Unsupported modules/resources still reject inspection; disabled original renderers stay disabled. This allows the inherited-velocity module check to continue independently without presenting the child as complete cage playback.
+
+Validation:
+
+- The independent Python audit reads the original ParticleSystem objects, hashes, clock fields and pointer relationships and validates both original effect packs. It reconstructs **633 accepted births and 957 triggers**, comparing **11,778 field values**. **Three outputs reproduce exactly**, and **fourteen altered-evidence fixtures are rejected**. The fixture is 157,080 bytes.
+- The twenty-seven-file adjacent regression set passes **606 checks on Node 22 and Node 24**, with no failures or skips. Cases cover expired births, capacity rejection, simultaneous bursts, skipped identities, half-speed/delay, negative prewarm birth times, reverse scrubbing, ring-buffer rejection, malformed relationships and inspection scope.
+- The cage browser review proves the unresolved child cannot play in the parent effect. In isolated inspection, **eight inherited-velocity particles reach actual render passes**, match independently reconstructed world positions, and reverse exactly; five were born before the diagnostic stop and three afterward. This is module inspection, not child dispatch.
+- The cage's original **22 shader programs, 91 materials, 24 custom-stream GPU buffers**, cone and glow checks remain passing. No GL/page errors occur. The corrected partial image at 1.8 seconds was visually inspected.
+- The Lappland angular browser regression remains passing for **eight rendered bases across five components**, all 23 programs, reverse scrubbing, strict rejection of its partial root and complete GPU cleanup.
+
+Reproduce with Node 22 on `PATH`, the extraction Python environment and Chromium:
+
+```sh
+node tools/arkpedia/export-particle-birth-links.mjs
+.cache/map-env/bin/python tools/arkpedia/audit-particle-birth-links.py
+ARKPEDIA_REVIEW_CHROME='/path/to/chromium' node tools/arkpedia/review-tragodia-effect-shaders.mjs
+ARKPEDIA_REVIEW_CHROME='/path/to/chromium' node tools/arkpedia/review-particle-angular-motion.mjs
+```
+
+Logs use the `birth-link-` prefix in `.cache/arkpedia/tragodia-source/`; reports/images remain in the relevant original-source `effects/` directories. Source packs, prior metadata, public MVP and coverage remain unchanged: **373/431 forms and 812 selected skills**. Child emission/motion/capacity dispatch, trails, discrete arcs, unresolved resources, Animator dispatch and complete battle review remain work to finish. Arkpedia app PR229 remains outside dev until all operator, enemy, stage and dependable automation gates are met.

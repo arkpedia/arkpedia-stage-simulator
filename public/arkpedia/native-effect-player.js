@@ -10,6 +10,7 @@ import {effectMeshColors} from '../../shared/arkpedia/native-effect-mesh.js';
 import {createEffectPose} from '../../shared/arkpedia/native-effect-pose.js';
 import {createEffectTrail} from '../../shared/arkpedia/native-effect-trail.js';
 import {createParticleVertexLayout} from '../../shared/arkpedia/native-particle-custom-data.js';
+import {createSubEmitterGraph} from '../../shared/arkpedia/native-sub-emitter-graph.js';
 export function compileNativeEffectPrograms(renderer,shaders){
   const gl=renderer.getContext(), result=[];
   try{
@@ -79,6 +80,17 @@ export function createNativeEffectLibrary({three:T,pack,animations,shaders,loadT
     register(instance){assertOpen();instances.add(instance);},unregister(instance){instances.delete(instance);}};
   const library={
     create(name,options){assertOpen();return createNativeEffectInstance(context,name,options);},
+    inspectParticle(id,options){
+      assertOpen();const record=pack.records[id];
+      if(record?.type!=='ParticleSystem')throw Error('Unknown original particle inspection source');
+      const go=(record.references??[]).find(r=>r.field==='m_GameObject')?.target;
+      if(pack.records[go]?.type!=='GameObject')throw Error('Missing original particle inspection object');
+      // Address the existing original object as an explicit isolated inspection
+      // root. No source record or missing resource is replaced. The production
+      // effect's parent relationships remain blocked until dispatch is playing.
+      const name='particle-inspection:'+id;
+      return createNativeEffectInstance({...context,pack:{...pack,roots:{...pack.roots,[name]:go}},inspectionSource:id},name,options);
+    },
     get instanceCount(){return instances.size;},
     dispose(){
       if(closed)return;closed=true;
@@ -95,6 +107,7 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false}={}){
   const {three:T,pack,animations,shaders,sourceTexture}=library;
   library.assertOpen();
   const pose=createEffectPose(pack,animations,name),group=new T.Group();
+  const subEmitters=createSubEmitterGraph(pack);
   const draws=[],blocked=[],geometries=new Set(),materials=new Set(),nodeObjects=new Map();
   let disposed=false;
   const assertOpen=()=>{library.assertOpen();if(disposed)throw Error('Native effect instance is disposed');};
@@ -323,7 +336,8 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false}={}){
   const periods=[...pose.nodes.values()].flatMap(n=>(pack.records[n.gameObject].references??[])
     .map(r=>pack.records[r.target]).filter(r=>r?.type==='ParticleSystem').map(r=>r.data.lengthInSec*2));
   const timeWindow=Math.max(3,...periods,...pose.instances.map(i=>animations.clips[i.clip].stop));
-  const instance={name,pose,group,draws,blocked,timeWindow,update,dispose,get disposed(){return disposed;}};
+  const inspection=library.inspectionSource?{particle:library.inspectionSource,parents:subEmitters.parents(library.inspectionSource),fullEffect:false}:null;
+  const instance={name,pose,group,draws,blocked,timeWindow,inspection,update,dispose,get disposed(){return disposed;}};
   library.register(instance);
   try{
     for(const [id,n] of pose.nodes){const o=new T.Group();nodeObjects.set(id,o);(n.parent?nodeObjects.get(n.parent):group).add(o);}
@@ -344,6 +358,8 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false}={}){
           if(record.data.m_UseCustomVertexStreams)customLayout=createParticleVertexLayout(record.data.m_VertexStreams);
           const ps=(pack.records[r.gameObject].references??[]).map(r=>r.target).find(k=>pack.records[k]?.type==='ParticleSystem');
           particleSource=pack.records[ps].data;
+          if(subEmitters.parents(ps).length&&library.inspectionSource!==ps)
+            throw Error('Original sub-emitter parent dispatch not playing');
           if((particleSource.InitialModule.rotation3D||particleSource.RotationModule?.enabled&&particleSource.RotationModule.separateAxes)&&record.data.m_RenderMode!==4)
             throw Error('Native 3D billboard start rotation needs review');
           // The recovered particle renderers repeat the same material slot and

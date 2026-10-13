@@ -209,8 +209,14 @@ try{
     instance.update(.75,{camera,clip});instance.update(captureTime,{camera,clip});instance.group.updateMatrixWorld(true);
     if(rotationSnapshot()!==rotationBefore)throw Error('Source start rotation did not reverse exactly');
     if(coneSnapshot()!==coneBefore)throw Error('Local cone replay did not reverse exactly');
-    const inherited=instance.draws.find(d=>d.component==='battle/prefabs/effects/phatm2.ab:7172346969955047659');
-    if(!inherited)throw Error('Original inherited-velocity cage renderer is missing');
+    if(instance.draws.some(d=>d.component==='battle/prefabs/effects/phatm2.ab:7172346969955047659')
+      ||!instance.blocked.some(b=>b.component==='battle/prefabs/effects/phatm2.ab:7172346969955047659'&&/parent dispatch/.test(b.reason)))
+      throw Error('Blocked parent allowed an orphan cage sub-emitter');
+    const inheritedInstance=await library.inspectParticle('battle/prefabs/effects/phatm2.ab:4040094038318586091');
+    if(inheritedInstance.inspection?.fullEffect!==false||inheritedInstance.inspection.parents.length!==1)
+      throw Error('Missing explicit original particle inspection scope');
+    const inherited=inheritedInstance.draws.find(d=>d.component==='battle/prefabs/effects/phatm2.ab:7172346969955047659');
+    if(!inherited)throw Error('Isolated original inherited-velocity renderer is missing');
     const inheritedSource=inherited.particleSource,inheritModule=inheritedSource.InheritVelocityModule;
     if(inheritModule.m_Mode!==0||inheritModule.m_Curve.minMaxState!==0||inheritModule.m_Curve.scalar!==.10000000149011612
      ||inheritedSource.InitialModule.startSpeed.scalar!==0||inheritedSource.InitialModule.startSpeed.minMaxState!==0
@@ -221,7 +227,7 @@ try{
     const stopTime=1.5,trajectory=createEffectTrajectory([{time:0,position:[0,0,0]},{time:stopTime,position:[.45,.15,-.3]},
      {time:2,position:[.45,.15,-.3]}]);
     const inheritedPoseAt=t=>{
-     const state=instance.pose.sample(Math.max(0,t),clip),offset=trajectory.sample(Math.max(0,t));
+     const state=inheritedInstance.pose.sample(Math.max(0,t)),offset=trajectory.sample(Math.max(0,t));
      for(const n of state.nodes.values())if(!n.parent)n.position=n.position.map((v,i)=>v+offset[i]);
      return state;
     };
@@ -234,7 +240,12 @@ try{
       new T.Vector3(...n.scale)));
      return new T.Vector3().setFromMatrixPosition(matrix);
     };
-    instance.update(captureTime,{camera,clip,trajectory});instance.group.updateMatrixWorld(true);
+    inheritedInstance.update(captureTime,{camera,trajectory});inheritedInstance.group.updateMatrixWorld(true);
+    const inheritedScene=new T.Scene();inheritedScene.add(inheritedInstance.group);
+    let inheritedRenderPasses=0;
+    for(const part of inherited.pool){const original=part.onBeforeRender;part.onBeforeRender=function(...args){inheritedRenderPasses++;return original.apply(this,args);};}
+    renderer.render(inheritedScene,camera);
+    if(!inheritedRenderPasses)throw Error('Isolated inherited particles did not reach a render pass');
     let inheritedSamplesVerified=0,birthsBeforeStop=0,birthsAfterStop=0;
     for(const [index,part]of inherited.pool.entries())if(part.visible){
      const p=inherited.lastParticles[index],birth=p.birthTime,state=inheritedPoseAt(birth),position=sourcePosition(inherited.transform,state);
@@ -262,9 +273,10 @@ try{
     const inheritedSnapshot=()=>JSON.stringify({particles:inherited.lastParticles,
      matrices:inherited.pool.filter(p=>p.visible).map(p=>Array.from(p.matrixWorld.elements))});
     const inheritedBefore=inheritedSnapshot();
-    instance.update(.3,{camera,clip,trajectory});instance.update(captureTime,{camera,clip,trajectory});instance.group.updateMatrixWorld(true);
+    inheritedInstance.update(.3,{camera,trajectory});inheritedInstance.update(captureTime,{camera,trajectory});inheritedInstance.group.updateMatrixWorld(true);
     if(inheritedSnapshot()!==inheritedBefore)throw Error('Inherited world motion did not reverse exactly');
-    // The image retains the original stationary cage, without diagnostic motion.
+    inheritedInstance.dispose();
+    // The image retains the original cage, with the unsupported child held.
     instance.update(captureTime,{camera,clip});instance.group.updateMatrixWorld(true);
     const bounds=new T.Box3().setFromObject(instance.group);
     const centre=bounds.getCenter(new T.Vector3()),span=Math.max(1,bounds.getSize(new T.Vector3()).length());
@@ -276,7 +288,7 @@ try{
      diagnosticOnly:true,strictRejected,captureTime,customDraws:customDraws.length,checkedCustomDraws,gpuBuffersVerified,
      reverseStable:true,gpuAttributesVerified:true,rotationMatricesVerified,rotationReverseStable:true,
      coneSamplesVerified,coneReverseStable:true,nativeEmissionParity:false,
-     inheritedSamplesVerified,birthsBeforeStop,birthsAfterStop,inheritedReverseStable:true};
+     inheritedSamplesVerified,inheritedRenderPasses,birthsBeforeStop,birthsAfterStop,inheritedReverseStable:true,inheritedInspectionOnly:true,orphanChildBlocked:true};
    }finally{library.dispose();}
    const debug=gl.getExtension('WEBGL_debug_renderer_info');
    const driver=gl.getParameter(debug?.UNMASKED_RENDERER_WEBGL??gl.RENDERER);
@@ -288,7 +300,8 @@ try{
  assert.equal(result.materials.length,91);assert.equal(result.glError,0);assert.deepEqual(errors,[]);
  assert.match(result.driver,/SwiftShader/i);
  assert.equal(result.cage.nodes,22);assert.equal(result.cage.renderers,20);
- assert.equal(result.cage.draws.length,16);assert.equal(result.cage.blocked.length,2);
+ assert.equal(result.cage.draws.length,15);assert.equal(result.cage.blocked.length,3);
+ assert.equal(result.cage.orphanChildBlocked,true);assert.equal(result.cage.inheritedInspectionOnly,true);assert.ok(result.cage.inheritedRenderPasses>0);
  assert.ok(result.cage.inheritedSamplesVerified>0);assert.equal(result.cage.inheritedReverseStable,true);
  assert.ok(result.cage.coneSamplesVerified>0);assert.equal(result.cage.coneReverseStable,true);
  assert.equal(result.cage.nativeEmissionParity,false);
