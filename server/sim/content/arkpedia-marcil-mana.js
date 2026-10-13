@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Opt-in source resource diagnostic. Not registered in the public roster.
-import { MARCIL_ID, selectedMarcilBuild } from './arkpedia-marcil-source.js';
-import { normalizeChess, normSpType } from '../simdata.js';
+import { MARCIL_ID, validateMarcilDefinition } from './arkpedia-marcil-source.js';
 
 export const MARCIL_MANA_CONTRACT = Object.freeze({
   scope: 'Selected-source mana storage, owner lifecycle, recovery and Talent 1 ATK diagnostic',
@@ -17,15 +16,8 @@ const POWER = 'marcil:mana-atk';
 function selected(u, contract) {
   if (contract !== MARCIL_MANA_CONTRACT || u.def.charId !== MARCIL_ID || u.deploySeq !== 0
     || u.mem.marcilMana) throw Error('Marcille requires a fresh original owner and explicit mana contract');
-  const r = selectedMarcilBuild({ ...u.def.raw.arkpedia, skillId: u.def.skill?.id }), s = u.def.skill;
-  if (u.def.raw.arkpedia.skillId != null && u.def.raw.arkpedia.skillId !== s.id
-    || !same(u.def.stats, normalizeChess({ stats: r.stats }).stats) || !same(u.def.tags, r.tags)
-    || !same(u.rangeGrid, r.rangeGrid) || !same(u.def.talents.map(t => t.bb), r.talentBb)
-    || !same(s.bb, r.bb) || !same(s.rangeGrid ?? [], r.skillRange)
-    || s.skillType !== r.source.skillType || s.durationType !== r.source.durationType
-    || s.spType !== normSpType(r.source.spData.spType) || s.spCost !== r.source.spData.spCost
-    || s.initSp !== r.source.spData.initSp || s.maxCharges !== r.source.spData.maxChargeTime
-    || s.duration !== r.source.duration) throw Error('Incomplete Marcille selected source');
+  const r = validateMarcilDefinition(u.def);
+  if (!same(u.rangeGrid, r.rangeGrid)) throw Error('Incomplete Marcille selected source');
   return r;
 }
 

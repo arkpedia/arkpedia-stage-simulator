@@ -2,7 +2,7 @@
 // Source selection only. No public operator registration or default kit.
 import evidence from '../../../data/arkpedia-marcil-prefabs.json' with { type: 'json' };
 import { sourceCandidate } from '../../../shared/arkpedia/summons.js';
-import { flattenBlackboard as flat } from '../simdata.js';
+import { flattenBlackboard as flat, normalizeChess, normSpType } from '../simdata.js';
 
 export const MARCIL_ID = 'char_4141_marcil';
 const c = evidence.tables.character;
@@ -47,4 +47,22 @@ export function selectedMarcilBuild(build) {
 export function marcilSourceComponent(id) {
   for (const g of ['characters', 'skills', 'projectiles']) for (const rows of Object.values(evidence[g]))
     for (const row of rows) for (const comp of row.components) if (comp.pathId === id) return comp.data;
+}
+
+// Shared source gate for independent mana/combat and squad diagnostics. This
+// validates a definition, without reserving a wallet or registering an owner.
+export function validateMarcilDefinition(def) {
+  if (def?.charId !== MARCIL_ID || !def.raw?.arkpedia || !def.skill)
+    throw Error('Incomplete Marcille selected source');
+  const r = selectedMarcilBuild({ ...def.raw.arkpedia, skillId: def.skill.id }), s = def.skill;
+  const same = (a,b) => JSON.stringify(a) === JSON.stringify(b);
+  if (def.raw.arkpedia.skillId != null && def.raw.arkpedia.skillId !== s.id
+    || !same(def.stats, normalizeChess({ stats: r.stats }).stats) || !same(def.tags, r.tags)
+    || !same(def.rangeGrid, r.rangeGrid) || !same(def.talents.map(t => t.bb), r.talentBb)
+    || !same(s.bb, r.bb) || !same(s.rangeGrid ?? [], r.skillRange)
+    || s.skillType !== r.source.skillType || s.durationType !== r.source.durationType
+    || s.spType !== normSpType(r.source.spData.spType) || s.spCost !== r.source.spData.spCost
+    || s.initSp !== r.source.spData.initSp || s.maxCharges !== r.source.spData.maxChargeTime
+    || s.duration !== r.source.duration) throw Error('Incomplete Marcille selected source');
+  return r;
 }

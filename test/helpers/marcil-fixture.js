@@ -20,14 +20,15 @@ export function until(f, predicate, seconds = 8) {
 }
 // A controlled source-only actor. The public roster remains unchanged.
 export function make({ skill = 1, elite = 2, rank = 10, potential = 1, dir = 'RIGHT',
-  deferred = false, contract = CONTRACT, mutate, prepare = prepareMarcilAttacks } = {}) {
+  deferred = false, contract = CONTRACT, mutate, prepare = prepareMarcilAttacks, operators, support } = {}) {
   const d = structuredClone(data); d.stage.geometry.waves[0].spawns = [];
   d.stage.battle.dp_per_second = 0;
   d.stage.geometry.rows = 19; d.stage.geometry.cols = 21;
   d.stage.geometry.tileGrid = Array.from({ length: 19 }, () => Array(21).fill(2));
   const senshi = { ...defaultBuild(d.operators.char_4143_sensi), elite: 2, level: 80,
     skillId: 'skchr_sensi_2', skillRank: 10, trust: 0, potential: 1 };
-  const b = new StandardBattle(d, { operators: [senshi, defaultBuild(d.operators.char_208_melan)] });
+  const b = new StandardBattle(d, { operators: operators ?? [senshi, defaultBuild(d.operators.char_208_melan)],
+    ...(support ? { support } : {}) });
   b.autoFinish = false; b.recordEvents = true; b.setViewport('fullscreen-workspace');
   b.grid.tiles = b.grid.tiles.map(t => ({ ...t, height: 'LOW', build: 'ALL', pass: 'ALL' }));
   b.addDp('arkpedia', 99);
