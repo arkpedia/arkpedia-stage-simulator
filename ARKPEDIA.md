@@ -3308,3 +3308,21 @@ S2 uses the original projectile/Begin/Loop/End clips, one round per completed ab
 Build without refreshing sources using `node tools/arkpedia/build-mvp.mjs --sd-commit 5f58569d050e7444bb7b33646554b9f99249b7be`, then `node tools/arkpedia/coverage.mjs`. The optional SD argument accepts only an immutable commit; it keeps this public change on the existing asset snapshot rather than silently advancing to a newer local asset checkout. Coverage is 371/431 pinned operator forms and 806 selected skills, with sixty forms still held. Global/CN pins remain unchanged. Arkpedia app PR229 remains outside dev.
 
 Public validation: 118 Sankta source/diagnostic/public checks are covered by the final 446-check adjacent ammo/skill run on Node 22 and 24, with no failures or skips. Full local regression passes 11,916 tests with nine existing skips and zero failures (11,925 total, 325 suites). The frozen native verifier still checks 111 component records, five bundles, fourteen templates, thirty ranks, three projectile trees and two owner skeleton chains. Validation logs and inspected screenshots are in `.cache/arkpedia/rmixer-source/public-*`; the browser report is `public-browser/public-browser-review.json`. These are local results; no hosted CI result is inferred.
+
+### Marcille original source and selected builds (2026-10-13)
+
+`data/arkpedia-marcil-prefabs.json` preserves Marcille's original owner, three skill prefabs, six reachable projectile trees, eleven buff templates and both original model bindings. The extractor checks all five original bundles against the pinned client manifest and the Global tables against their frozen Git blob identities. The owner bundle is selected by the exact `charpack/char_4141_marcil.ab` manifest path; the separate `chararts` entry shares its basename but has different bytes. The original Front/Back skeletons match the pinned model repository byte for byte. No source or public SD snapshot is advanced.
+
+`selectedMarcilBuild` selects all thirty skill ranks, promotion talents, levels, trust and potential modifiers without registering an operator. It applies the original owner's mana preprocessor: starting mana combines selected skill `mana_init` with Talent 2's bonus, and the selected skill's `mana_max` replaces the talent table's placeholder cap. The original card component specifies a one-second recovery period and the shared `mana` key. Owner birth imports that value; owner finish stores current SP unless `clearSp` is set. Main chants are not suspendable; S3's extended chant is, and death during that extended chant sets the mana-clear flag. S1 charges attack/healing output, while S2 charges successful late enable. These are source contracts; compiled tick phase and combat event ordering are still unapproved.
+
+Reproduce using the existing pinned source cache and Python environment:
+
+```sh
+node tools/arkpedia/fetch-marcil.mjs
+node tools/arkpedia/inspect-marcil.mjs
+.cache/map-env/bin/python tools/arkpedia/extract-marcil.py
+.cache/map-env/bin/python tools/arkpedia/audit-marcil.py
+node --test test/arkpedia-marcil-source.test.js
+```
+
+The independent verifier checks 226 component records, complete object/component membership, transitive dependencies, all thirty ranks and original event payloads. Extraction is byte-reproducible; twenty-four mutated receipts are rejected, including broken mana persistence, altered recovery, missing projectile dependencies and premature enablement. Forty source/selection tests and the adjacent Senshi/Sankta tests pass on Node 22 and 24: 114 checks, no failures or skips. Logs are under `.cache/arkpedia/marcil-source/`. This change adds no playable operator or browser behavior. Marcille remains held until ordinary combat, both talents, all three skills, Senshi mana recovery, terrain effects and deployment/retreat/death behavior have been exercised together. Coverage remains 371/431 pinned forms and 806 selected skills, with sixty forms held. Arkpedia app PR229 remains outside dev.
