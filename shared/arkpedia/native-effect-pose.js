@@ -37,6 +37,8 @@ export function createEffectPose(pack, animations, rootName) {
     const currentNodes=structuredClone(baseNodes), currentRenderers=structuredClone(baseRenderers);
     if(clipId!==null){
       if(!instances.some(i=>i.clip===clipId))throw new Error('Clip is outside the selected original effect');
+      if(instances.some(i=>i.clip===clipId&&i.bindings.some(b=>b.unresolved)))
+        throw new Error('Selected clip has unresolved original animation bindings');
       const clip=animations.clips[clipId], values=sampleEffectClip(clip,time);
       for(const instance of instances.filter(i=>i.clip===clipId))for(const [index,target] of instance.bindings.entries()){
         const binding=clip.bindings[index], v=values.slice(binding.offset,binding.offset+binding.size);
@@ -54,16 +56,23 @@ export function createEffectPose(pack, animations, rootName) {
             const match=/^material\.([\w]+)(?:\.([rgbaxyzw]))?$/.exec(target.property);
             if(!match||binding.size!==1)throw new Error('Unsupported resolved material binding');
             const [,name,channel]=match;
-            // Unity material animation applies to the renderer's instantiated
-            // material. Each renderer owns its copies; shared native material
-            // identity must not cause unrelated effect instances to change.
-            const first=renderer.materials[0];
-            if(!first||!Object.hasOwn(first.properties,name))throw new Error('Missing animated source material property');
-            if(channel){
-              const slot='rgba'.includes(channel)?'rgba'.indexOf(channel):'xyzw'.indexOf(channel);
-              if(!Array.isArray(first.properties[name])||slot>=first.properties[name].length)throw new Error('Invalid material component');
-              first.properties[name][slot]=v[0];
-            }else first.properties[name]=v[0];
+            // Retain the source slot(s) that actually serialize this property,
+            // including a distinct particle trail material. Applying sampled
+            // channels to these copies is a local pose mapping, not certified
+            // Animator/multi-material dispatch. No first-slot substitution.
+            const slots=target.sourceMaterialSlots??[0];
+            if(!Array.isArray(slots)||!slots.length||new Set(slots).size!==slots.length
+              ||slots.some(s=>!Number.isSafeInteger(s)||s<0||s>=renderer.materials.length))
+              throw new Error('Invalid animated source material slots');
+            for(const index of slots){
+              const material=renderer.materials[index];
+              if(!material||!Object.hasOwn(material.properties,name))throw new Error('Missing animated source material property');
+              if(channel){
+                const slot='rgba'.includes(channel)?'rgba'.indexOf(channel):'xyzw'.indexOf(channel);
+                if(!Array.isArray(material.properties[name])||slot>=material.properties[name].length)throw new Error('Invalid material component');
+                material.properties[name][slot]=v[0];
+              }else material.properties[name]=v[0];
+            }
           }
         }
       }

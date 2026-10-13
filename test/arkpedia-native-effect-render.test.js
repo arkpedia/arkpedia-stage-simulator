@@ -104,6 +104,38 @@ test('pose rejects ambiguous hierarchies and unresolved animated properties',()=
   const g=fixture();g.animations.instances[0].bindings[2].property='material._Unknown';
   assert.throws(()=>createEffectPose(g.pack,g.animations,'effect').sample(0,'clip'),/Missing animated/);
 });
+test('pose refuses unresolved native path bindings without remapping or changing another clip',()=>{
+  const {pack,animations}=fixture();
+  animations.clips.broken=structuredClone(animations.clips.clip);
+  const broken=structuredClone(animations.instances[0]);broken.clip='broken';
+  broken.bindings[2]={unresolved:{reason:'missing-original-path',pathHash:3711244079,typeID:23,attribute:1970013738}};
+  animations.instances.push(broken);
+  const before=structuredClone({pack,animations}),pose=createEffectPose(pack,animations,'effect');
+  const valid=pose.sample(.2,'clip'),original=pose.sample(.2);
+  assert.throws(()=>pose.sample(.2,'broken'),/unresolved original animation bindings/);
+  assert.deepEqual(pose.sample(.2,'clip'),valid);
+  assert.deepEqual(pose.sample(.2),original);
+  assert.deepEqual({pack,animations},before);
+});
+test('source-selected second material properties animate independently from the first material',()=>{
+  const {pack,animations}=fixture();
+  pack.records.trailMat=structuredClone(pack.records.mat);
+  pack.records.mat.data.m_SavedProperties.m_Colors=[];
+  pack.records.ra.references.push({field:'m_Materials',target:'trailMat'});
+  animations.instances[0].bindings[3].sourceMaterialSlots=[1];
+  const before=structuredClone({pack,animations}),pose=createEffectPose(pack,animations,'effect');
+  const base=pose.sample(0),state=pose.sample(.2,'clip');
+  assert.equal(state.renderers.get('ra').materials[1].properties._TintColor[3],.8);
+  assert.equal(state.renderers.get('ra').materials[0].properties._TintColor,undefined);
+  assert.equal(state.renderers.get('ra').materials[0].properties._Amount,90);
+  assert.equal(state.renderers.get('ra').materials[1].properties._Amount,.2);
+  assert.deepEqual(pose.sample(0),base);
+  assert.deepEqual({pack,animations},before);
+  for(const slots of [[],[-1],[2],[1,1],[.5],['1']]){
+    const bad=structuredClone(animations);bad.instances[0].bindings[3].sourceMaterialSlots=slots;
+    assert.throws(()=>createEffectPose(pack,bad,'effect').sample(0,'clip'),/Invalid animated source material slots/);
+  }
+});
 test('shader recovery does not prematurely enable battle support or claim frame parity',()=>{
   assert.deepEqual(meta.counts,{shaders:12,programs:23});
   assert.equal(Object.keys(meta.shaders).length,12);
