@@ -10,6 +10,7 @@ import {createEffectTrajectory} from '../shared/arkpedia/native-effect-trail.js'
 import effects from '../data/arkpedia-lappland-effects.json' with {type:'json'};
 import anim from '../data/arkpedia-lappland-effect-animations.json' with {type:'json'};
 import shader from '../data/arkpedia-lappland-effect-shaders.json' with {type:'json'};
+import builtinMeshes from '../data/arkpedia-unity-builtin-meshes.json' with {type:'json'};
 const ROOT='whitw2_skill_03_token_trail_01',cache='.cache/arkpedia/lappland-alter-source/effects/';
 let original=null;
 try{
@@ -22,7 +23,7 @@ try{
 const native={skip:original===null?'Original effect cache unavailable':false};
 const empty={pack:{roots:{empty:'root'},records:{root:{data:{m_Name:'root',m_IsActive:true},references:[{field:'component',target:'tr'}]},
   tr:{type:'Transform',data:{m_LocalPosition:{x:0,y:0,z:0},m_LocalRotation:{x:0,y:0,z:0,w:1},m_LocalScale:{x:1,y:1,z:1}},references:[]}}},animations:{instances:[],clips:{}},shaders:{shaders:{}}};
-const library=(source=empty,loadTexture=async()=>new T.Texture())=>createNativeEffectLibrary({three:T,...source,loadTexture});
+const library=(source=empty,loadTexture=async()=>new T.Texture(),builtinMeshes=null)=>createNativeEffectLibrary({three:T,...source,loadTexture,builtinMeshes});
 const camera=()=>{const c=new T.PerspectiveCamera(35,1,.001,100);c.position.set(.4,.8,3);c.lookAt(0,0,0);c.updateProjectionMatrix();c.updateMatrixWorld(true);return c;};
 const trajectory=(x=0)=>createEffectTrajectory([{time:0,position:[x,0,0]},{time:1,position:[x+1,0,.5]},{time:2,position:[x+1,0,1]}]);
 const state=i=>i.draws.map(d=>({component:d.component,particles:d.lastParticles??null,trail:d.trailData??null,
@@ -64,6 +65,21 @@ test('six original hit roots dispatch child records from supported parent physic
   assert.ok(i.blocked.length>0);i.dispose();
  }}finally{lib.dispose();}
  assert.equal(lib.instanceCount,0);
+});
+test('recovered original built-in mesh binds exact positions, normals, UVs and winding without changing source pointers',native,async()=>{
+ const lib=library(original,async()=>new T.Texture(),builtinMeshes),cam=camera();
+ const before=structuredClone(original.pack.unresolvedReferences);
+ try{
+  const i=await lib.create('whitw2_token_hit_05',{allowBlocked:true});i.update(.1,{camera:cam});i.group.updateMatrixWorld(true);
+  assert.equal(i.draws.length,23);assert.equal(i.blocked.length,4);assert.ok(i.blocked.every(b=>!/mesh/.test(b.reason)));
+  const parent=i.draws.find(d=>d.particleId&&d.particleSource.SubModule.enabled);assert.ok(parent);assert.equal(parent.lastParticles.length,1);
+  const mesh=builtinMeshes.meshes['10210'].data,g=parent.mesh.geometry;
+  assert.deepEqual([...g.index.array],mesh.submeshTriangles.flat(2));
+  assert.deepEqual([...g.getAttribute('in_POSITION0').array],[...new Float32Array(mesh.positions.flat())]);
+  assert.deepEqual([...g.getAttribute('in_NORMAL0').array],[...new Float32Array(mesh.normals.flat())]);
+  assert.deepEqual([...g.getAttribute('in_TEXCOORD0').array],[...new Float32Array(mesh.uvChannels[0].flat())]);
+  assert.deepEqual(original.pack.unresolvedReferences,before);i.dispose();
+ }finally{lib.dispose();}
 });
 test('explicit original particle inspection preserves parent links without altering the source root registry',native,async()=>{
  const id='battle/prefabs/effects/whitw2.ab:-1572538059954014246',lib=library(original),before=structuredClone(original.pack.records[id]);

@@ -10,6 +10,7 @@ const check=(b,e)=>{assert.equal(b.length,e.bytes);assert.equal(createHash('sha2
 const artifact=async file=>{const m=JSON.parse(await readFile(path.join(root,'data/'+file))),b=await readFile(path.join(directory,m.artifact.path));check(b,m.artifact);return JSON.parse(b);};
 const bytes=await readFile(path.join(directory,meta.pack.path));check(bytes,meta.pack);
 const pack=JSON.parse(gunzipSync(bytes)),animations=await artifact('arkpedia-lappland-effect-animations.json'),shaders=await artifact('arkpedia-lappland-effect-shaders.json');
+const builtinMeshes=JSON.parse(await readFile(path.join(root,'data/arkpedia-unity-builtin-meshes.json')));
 const textureFiles=new Map(Object.values(meta.textures).map(e=>[e.path,e]));
 const serve=createStaticHandler({publicDir:path.join(root,'public'),dataDir:path.join(root,'data'),sharedDir:path.join(root,'shared')});
 const server=http.createServer(async(req,res)=>{const url=new URL(req.url,'http://127.0.0.1');try{
@@ -25,10 +26,10 @@ try{
  browser=await puppeteer.launch({executablePath,headless:true,args:['--no-sandbox','--enable-unsafe-swiftshader','--use-gl=angle','--use-angle=swiftshader']});
  const page=await browser.newPage(),errors=[];page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});
  await page.setViewport({width:512,height:512});await page.goto(`http://127.0.0.1:${server.address().port}/angular-review.html`,{waitUntil:'networkidle0'});
- const result=await page.evaluate(async({pack,animations,shaders})=>{
+ const result=await page.evaluate(async({pack,animations,shaders,builtinMeshes})=>{
   const T=await import('/vendor/three.module.js'),{createNativeEffectLibrary,compileNativeEffectPrograms}=await import('/arkpedia/native-effect-player.js');
   const renderer=new T.WebGLRenderer({antialias:true,preserveDrawingBuffer:true});renderer.setSize(512,512);renderer.setPixelRatio(1);document.body.style.margin='0';document.body.append(renderer.domElement);
-  const loader=new T.TextureLoader(),library=createNativeEffectLibrary({three:T,pack,animations,shaders,loadTexture:async e=>{
+  const loader=new T.TextureLoader(),library=createNativeEffectLibrary({three:T,pack,animations,shaders,builtinMeshes,loadTexture:async e=>{
    const b=await(await fetch('/review-textures/'+e.path)).arrayBuffer(),digest=Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',b)),v=>v.toString(16).padStart(2,'0')).join('');
    if(b.byteLength!==e.bytes||digest!==e.sha256)throw Error('Changed original angular diagnostic texture');
    const url=URL.createObjectURL(new Blob([b],{type:'image/webp'}));try{return await loader.loadAsync(url);}finally{URL.revokeObjectURL(url);}
@@ -131,7 +132,7 @@ try{
    window.angularReview={library,renderer,scene,camera};
    return {root:instance.name,draws:instance.draws.length,blocked:instance.blocked,programs:programs.length,sourceIds,matrices,captureTime,parentRoots,reverseStable:true,strictRejected,glError,driver,compiledFrameParity:false,diagnosticOnly:true};
   }catch(error){library.dispose();renderer.dispose();throw error;}
- },{pack,animations,shaders});
+ },{pack,animations,shaders,builtinMeshes});
  assert.equal(result.programs,23);assert.ok(result.matrices>=5);assert.equal(result.sourceIds.length,5);assert.equal(result.strictRejected,true);assert.equal(result.glError,0);assert.match(result.driver,/SwiftShader/i);assert.deepEqual(errors,[]);
  await page.screenshot({path:path.join(directory,'angular-motion-diagnostic.png')});
  const parentImage=await page.evaluate(()=>window.sourceParentImage);await writeFile(path.join(directory,'source-parent-motion-diagnostic.png'),Buffer.from(parentImage.split(',')[1],'base64'));

@@ -3835,3 +3835,33 @@ ARKPEDIA_REVIEW_CHROME='/path/to/chromium' node tools/arkpedia/review-tragodia-e
 ```
 
 Logs use the `parent-motion-` prefix under `.cache/arkpedia/lappland-alter-source/`; the image/report are in its `effects/` directory. The numerical module diagnostic uses identity source frames; the browser uses actual original hierarchies. Source packs and previous metadata/fixtures remain unchanged. Public coverage remains **373/431 forms and 812 selected skills**; this effect integration adds no approved operator registrations. Original-resource completion, trails, discrete arcs, prewarm histories, Animator dispatch and full battle review remain required. Arkpedia app PR229 stays outside dev.
+
+### Original built-in Quad resource recovery (2026-10-14)
+
+The effect packs' missing mesh pointers reference `Library/unity default resources`, object **10210**. The original object is Unity's **Quad**. It was recovered from the pinned official Hypergryph Android package, with its original positions, small nonzero Z values, -Z normals, tangents, UVs and triangle winding. No generated plane replaces this Mesh. Source packs and their unresolved-reference tables remain unchanged; the resource is a separate verified input.
+
+[Unity's build-format documentation](https://github.com/Unity-Technologies/UnityDataTools/blob/main/Documentation/assetbundle-format.md) explains that these built-in resources remain external to asset bundles and are supplied by the player. The pinned package's `globalgamemanagers` identifies runtime Unity **2021.3.39f1**, matching both original effect bundles and their Android platform. Its prebuilt resource file retains header **2021.3.38f1**; these distinct versions are recorded rather than rewritten or accepted by a nearest-version rule. [Unity's player-format documentation](https://github.com/Unity-Technologies/UnityDataTools/blob/main/Documentation/playerbuild-format.md) describes the prebuilt resource file being copied from the Editor into the player.
+
+The fetcher reads two approved ZIP entries with bounded, TLS-verified HTTP ranges from an immutable official package URL. It verifies response range/size/ETag, ZIP names, compression, decompressed sizes and CRCs, then records all fragment hashes. It retrieves **1,813,737 bytes** rather than the entire 1,861,585,573-byte APK. Resource and client inputs are pinned by SHA-256. This is **not whole-package signature/hash verification**, and no package is installed. The mesh object is **604 serialized bytes**, pinned independently by its raw SHA-256.
+
+The sidecar records **133 original pointers**: 21 MeshFilters, 105 ParticleSystemRenderers and seven MeshColliders. The runtime resolves only an admitted component's original file/path pointer from the two verified source pack hashes. Unknown files, object IDs, packs and mismatched player/platform metadata remain held. Collision references are inventoried; this step does not add a collision system. Existing libraries without the resource sidecar retain their prior mesh holds.
+
+Validation:
+
+- The independent audit reads the original player/resource asset files and original pointer objects from both effect bundles. It decodes the raw interleaved vertex bytes directly with their serialized channels and stride, independently of MeshHandler: **48 vertex values and six indices**. Both generated outputs reproduce exactly, and **ten altered-evidence fixtures** are rejected, including changed buffers, winding, engine headers, raw identity and pointers.
+- The thirty-one-file adjacent regression set passes **919 checks on Node 22 and Node 24**, without failures or skips. Every original pointer is tested against source ownership, wrong file/object IDs and unsupported resolution. Source geometry binds exact positions, normals, UVs and indices without modifying the original records.
+- The cage browser review now prepares **sixteen components with two held components**. Its recovered Quad reaches render passes, and **three GPU buffer readbacks** match the original positions, normals and UVs. Original shaders/materials, 24 custom-stream buffer checks, cone/glow behavior, isolated inheritance and scheduled-child diagnostics remain passing.
+- The six Lappland hit roots now retain **four held render components each**, reduced from thirteen, for shape or alignment modes. Their 78 source-visible child render passes and reverse checks remain passing. More recovered components remain hidden by original inactive objects. The rotating buff prepares thirteen components with fifteen holds and retains its eight angular-basis checks. All 23 programs still compile; cleanup leaves zero GPU geometries/textures. Both browser reviews report no GL/page errors.
+- The updated cage and hit-effect images were visually inspected. They remain partial diagnostics, with no approval of complete game appearance or compiled frame/RNG parity.
+
+Reproduce with the extraction Python environment and Node 22/Chromium:
+
+```sh
+.cache/map-env/bin/python tools/arkpedia/fetch-unity-builtin-resources.py
+.cache/map-env/bin/python tools/arkpedia/export-unity-builtin-meshes.py
+.cache/map-env/bin/python tools/arkpedia/audit-unity-builtin-meshes.py
+ARKPEDIA_REVIEW_CHROME='/path/to/chromium' node tools/arkpedia/review-tragodia-effect-shaders.mjs
+ARKPEDIA_REVIEW_CHROME='/path/to/chromium' node tools/arkpedia/review-particle-angular-motion.mjs
+```
+
+Logs use the `builtin-` prefix under `.cache/arkpedia/unity-builtin-source/`; images/reports remain in the original-source `effects/` directories. Source packs, previous fixtures/metadata, Global/CN/native/model pins, public MVP and coverage remain unchanged: **373/431 forms and 812 selected skills**. Trails, prewarm histories, discrete arcs, pivots/alignment, shader inputs, remaining foreign materials/textures, Animator dispatch and full battle review remain required. Arkpedia app PR229 stays outside dev.

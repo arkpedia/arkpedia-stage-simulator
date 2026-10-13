@@ -21,6 +21,7 @@ const check=(bytes,entry)=>{
 const shaderBytes=await readFile(path.join(directory,'native-shaders.json'));check(shaderBytes,metadata.artifact);
 const effectBytes=await readFile(path.join(directory,'native-effects.bin'));check(effectBytes,effects.pack);
 const shaders=JSON.parse(shaderBytes),pack=JSON.parse(gunzipSync(effectBytes));
+const builtinMeshes=JSON.parse(await readFile(path.join(root,'data/arkpedia-unity-builtin-meshes.json')));
 const animationMeta=JSON.parse(await readFile(path.join(root,'data/arkpedia-tragodia-effect-animations.json')));
 const animationBytes=await readFile(path.join(directory,'native-animations.json'));check(animationBytes,animationMeta.artifact);
 const animations=JSON.parse(animationBytes);
@@ -55,7 +56,7 @@ try{
  const page=await browser.newPage(),errors=[];
  page.on('pageerror',error=>errors.push(error.message));
  await page.goto(`http://127.0.0.1:${server.address().port}/shader-review.html`);
- const result=await page.evaluate(async({shaders,materials,pack,animations})=>{
+ const result=await page.evaluate(async({shaders,materials,pack,animations,builtinMeshes})=>{
   const T=await import('/vendor/three.module.js');
   const {compileNativeEffectPrograms,createNativeEffectLibrary}=await import('/arkpedia/native-effect-player.js');
   const {webglEffectProgram,selectEffectProgram,effectUniformDeclarations}=await import('/shared/arkpedia/native-effect-shader.js');
@@ -71,7 +72,7 @@ try{
     const declarations=effectUniformDeclarations(webglEffectProgram(program.source));
     return {material:m.key,shader:m.shader,blobIndex:program.blobIndex,uniforms:declarations.length};
    });
-   const library=createNativeEffectLibrary({three:T,pack,animations,shaders,loadTexture:async entry=>{
+   const library=createNativeEffectLibrary({three:T,pack,animations,shaders,builtinMeshes,loadTexture:async entry=>{
     const response=await fetch('/review-textures/'+entry.path);
     if(!response.ok)throw Error('Original texture unavailable');
     const bytes=await response.arrayBuffer();
@@ -109,7 +110,12 @@ try{
      updateBuffer(target,offset,array,...args);
      if(target===gl.ARRAY_BUFFER&&ArrayBuffer.isView(array))buffers.set(array,gl.getParameter(gl.ARRAY_BUFFER_BINDING));
     };
-    let checkedCustomDraws=0,gpuBuffersVerified=0;
+    let checkedCustomDraws=0,gpuBuffersVerified=0,builtinGpuBuffersVerified=0,builtinRenderPasses=0;
+    const builtinDraw=instance.draws.find(d=>d.component==='battle/prefabs/effects/phatm2.ab:5204555655546869995');
+    if(!builtinDraw)throw Error('Recovered original cage Quad was not prepared');
+    const builtinBeforeRender=builtinDraw.mesh.onBeforeRender;
+    builtinDraw.mesh.onBeforeRender=function(...args){builtinRenderPasses++;return builtinBeforeRender.apply(this,args);};
+    builtinDraw.mesh.frustumCulled=false;
     try{
     for(const d of customDraws){
      const clock=(d.particleSource.startDelay.scalar+.25)/d.particleSource.simulationSpeed;
@@ -138,6 +144,14 @@ try{
        gpuBuffersVerified++;
       }
      }
+    }
+    const originalQuad=builtinMeshes.meshes['10210'].data;
+    for(const[name,values]of [['in_POSITION0',originalQuad.positions.flat()],['in_NORMAL0',originalQuad.normals.flat()],['in_TEXCOORD0',originalQuad.uvChannels[0].flat()]]){
+     const attribute=builtinDraw.mesh.geometry.getAttribute(name),buffer=buffers.get(attribute.array),expected=new Float32Array(values);
+     if(!buffer||!builtinRenderPasses)throw Error('Original built-in Quad did not reach GPU rendering');
+     const previous=gl.getParameter(gl.ARRAY_BUFFER_BINDING),readback=new Float32Array(expected.length);
+     gl.bindBuffer(gl.ARRAY_BUFFER,buffer);gl.getBufferSubData(gl.ARRAY_BUFFER,0,readback);gl.bindBuffer(gl.ARRAY_BUFFER,previous);
+     if(readback.some((v,i)=>v!==expected[i]))throw Error('Original built-in Quad GPU buffer mismatch');builtinGpuBuffersVerified++;
     }
     }finally{gl.bufferData=upload;gl.bufferSubData=updateBuffer;}
     const captureTime=1.8;
@@ -329,7 +343,7 @@ try{
     diagnosticImage=renderer.domElement.toDataURL('image/png');
     cage={root:instance.name,draws:instance.draws.map(d=>d.component),blocked:instance.blocked,times,
      nodes:instance.pose.nodes.size,renderers:instance.pose.renderers.size,rendered:true,
-     diagnosticOnly:true,strictRejected,captureTime,customDraws:customDraws.length,checkedCustomDraws,gpuBuffersVerified,
+     diagnosticOnly:true,strictRejected,captureTime,customDraws:customDraws.length,checkedCustomDraws,gpuBuffersVerified,builtinGpuBuffersVerified,builtinRenderPasses,
      reverseStable:true,gpuAttributesVerified:true,rotationMatricesVerified,rotationReverseStable:true,
      coneSamplesVerified,coneReverseStable:true,nativeEmissionParity:false,
      inheritedSamplesVerified,inheritedRenderPasses:ordinaryInheritedPasses,birthsBeforeStop,birthsAfterStop,inheritedReverseStable:true,inheritedInspectionOnly:true,orphanChildBlocked:true,
@@ -340,12 +354,13 @@ try{
    return {compiled,materials:selected,glError:gl.getError(),driver,
     cage,diagnosticImage,scheduledImage,compiledFrameParity:false,rendererVerified:false};
   }finally{renderer.dispose();renderer.forceContextLoss();}
- },{shaders,materials,pack,animations});
+ },{shaders,materials,pack,animations,builtinMeshes});
  assert.equal(result.compiled.length,22);assert.equal(new Set(result.compiled.map(p=>p.shader)).size,8);
  assert.equal(result.materials.length,91);assert.equal(result.glError,0);assert.deepEqual(errors,[]);
  assert.match(result.driver,/SwiftShader/i);
  assert.equal(result.cage.nodes,22);assert.equal(result.cage.renderers,20);
- assert.equal(result.cage.draws.length,15);assert.equal(result.cage.blocked.length,3);
+ assert.equal(result.cage.draws.length,16);assert.equal(result.cage.blocked.length,2);
+ assert.equal(result.cage.builtinGpuBuffersVerified,3);assert.ok(result.cage.builtinRenderPasses>0);
  assert.equal(result.cage.orphanChildBlocked,true);assert.equal(result.cage.inheritedInspectionOnly,true);assert.ok(result.cage.inheritedRenderPasses>0);
  assert.ok(result.cage.inheritedSamplesVerified>0);assert.equal(result.cage.inheritedReverseStable,true);
  assert.ok(result.cage.scheduledSamplesVerified>0);assert.ok(result.cage.scheduledRenderPasses>0);assert.ok(result.cage.scheduledParentBranches>1);
