@@ -41,7 +41,10 @@ export class BattleActor extends SpineActor {
 
   setRegularVisual(visual) {
     const speed = Number.isFinite(visual?.speed) && visual.speed > 0 ? visual.speed : 1;
-    const key = visual ? `${visual.clip}|${!!visual.loop}|${visual.idle || ''}|${visual.attack || ''}|${visual.die || ''}|${speed}` : null;
+    // An opted-in source ability may repeat the same literal clip. Its stable
+    // per-ability identity restarts that clip once, never on every render frame.
+    const playId = typeof visual?.playId === 'string' ? visual.playId : '';
+    const key = visual ? `${visual.clip}|${!!visual.loop}|${visual.idle || ''}|${visual.attack || ''}|${visual.die || ''}|${speed}|${playId}` : null;
     if (key === this.regularVisualKey) return;
     this.regularVisualKey = key;
     this.regularVisualClip = visual?.clip ?? null;
