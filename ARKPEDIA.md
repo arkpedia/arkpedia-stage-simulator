@@ -3754,3 +3754,30 @@ ARKPEDIA_REVIEW_CHROME='/path/to/chromium' node tools/arkpedia/review-particle-a
 ```
 
 Logs use the `birth-link-` prefix in `.cache/arkpedia/tragodia-source/`; reports/images remain in the relevant original-source `effects/` directories. Source packs, prior metadata, public MVP and coverage remain unchanged: **373/431 forms and 812 selected skills**. Child emission/motion/capacity dispatch, trails, discrete arcs, unresolved resources, Animator dispatch and complete battle review remain work to finish. Arkpedia app PR229 remains outside dev until all operator, enemy, stage and dependable automation gates are met.
+
+### Source child emission scheduling (2026-10-14)
+
+Birth child emission now has a shared scheduling model for **all 69 original linked child systems**. It retains each child's authored time rate, bursts, delay, simulation speed, duration and lifetime. The original birth clock exposes uncapped emission attempts; visible-particle sampling retains its existing capacity-one optimization and behavior.
+
+This local model opens an emission window at each accepted parent birth and closes it at parent expiry. Continuous and delayed/burst emission keep the child's own clocks. Attempts from concurrent branches merge before admission to the **shared child system's capacity**, preserving rejected IDs and deterministic lifetime factors. Already-born child particles retain their own lifetimes after the parent expires. Child creation at the exact parent-death boundary is excluded, and equal-time branches use a stable source/parent/slot order. Expiry tolerance uses simulated seconds. These are explicit local timing/ordering contracts, not recovered compiled Unity dispatch or native RNG parity.
+
+The [Unity sub-emitter documentation](https://docs.unity3d.com/2021.3/Documentation/Manual/PartSysSubEmitModule.html) permits continuous emission for Birth; other event kinds have different requirements. Nested child dispatch, probabilistic/inherited-property links, child distance emission and looping child prewarm remain rejected here. Triggered scheduling can override Play On Awake while still preserving the authored Emission enabled flag. Parent prewarm birth windows retain their negative real timestamps without inventing child prewarm state.
+
+The manifest references the existing source-verified parent/child fixture rather than duplicating it. It records **child emission scheduling**, with `childEmissionPlaying: false` and `childMotionPlaying: false`. Parent-particle positions/velocities, child birth transforms, inherited motion, materials and rendered playback still require wiring to these schedules. This does not enable the children in the source player or approve any operator's full effects.
+
+Validation:
+
+- The independent Python audit first reads/verifies the original parent/child Unity objects through the prior birth-link audit. It then independently merges the original child clocks, windows, capacity admission, lifetimes and lineage. Across all 69 children and seven sample times, it compares **10,133 accepted births, 2,017 live-particle records and 121,500 field values**.
+- The **two new outputs reproduce exactly**, and **fourteen altered-evidence fixtures are rejected**, including wrong parent lineage, clocks, identity, lifetime, live age and premature playback claims. The cached sample file is 2,901,037 bytes. The prior three birth-link outputs remain unchanged and retain their fifteen rejection checks.
+- The twenty-eight-file adjacent regression set passes **685 checks on Node 22 and Node 24**, without failures or skips. Cases cover continuous windows, child delay, half-speed clocks, retained particles after parent death, concurrent/shared capacity, skipped identities, tie order, original emission flags, prewarm boundaries, merged event budgets and unsupported paths.
+- The cage browser regression remains passing at **fifteen components and three held components**, including orphan-child rejection, eight isolated inherited-velocity render passes, cone/glow checks and 24 custom-stream GPU buffer checks. All 22 original programs and 91 materials still resolve without GL/page errors. No new child rendering or appearance approval is claimed.
+
+Reproduce with Node 22 on `PATH`, the extraction Python environment and Chromium:
+
+```sh
+node tools/arkpedia/export-child-emission.mjs
+.cache/map-env/bin/python tools/arkpedia/audit-child-emission.py
+ARKPEDIA_REVIEW_CHROME='/path/to/chromium' node tools/arkpedia/review-tragodia-effect-shaders.mjs
+```
+
+Logs and scheduling reports use the `child-emission-` prefix in `.cache/arkpedia/tragodia-source/`. Original source packs, prior metadata/fixtures, public MVP and coverage remain unchanged: **373/431 forms and 812 selected skills**. Parent/child movement and rendered dispatch, trails, discrete arcs, unresolved resources, Animator dispatch and complete battle review remain work to finish. Arkpedia app PR229 remains outside dev until all operator, enemy, stage and dependable automation gates are met.

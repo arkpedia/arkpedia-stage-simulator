@@ -23,18 +23,18 @@ export function createParticleBirthClock(source,{seed=1,allowDistanceEmission=fa
     if(!Number.isFinite(burst.time)||burst.time<0||burst.time>=length||!Number.isInteger(burst.cycleCount)||burst.cycleCount<1||!Number.isFinite(burst.repeatInterval)||burst.repeatInterval<=0||burst.probability!==1)throw Error('Native probabilistic/indefinite burst needs review');
   }
   const random=(id,salt)=>particleRandom(id,salt,seed);
-  function sample(time,{history,includeExpired=false}={}){
-    if(!Number.isFinite(time)||typeof includeExpired!=='boolean')throw Error('Invalid native particle birth clock');
+  function events(time,{history,optimizeCapacityOne=false,triggered=false}={}){
+    if(!Number.isFinite(time)||typeof optimizeCapacityOne!=='boolean'||typeof triggered!=='boolean')throw Error('Invalid native particle birth clock');
     if(distanceRate>0&&!history)throw Error('Distance emission requires world-position history');
     const trajectory=distanceRate>0?createEffectTrajectory(history):null;
     const sinceStart=time*speed-delay;
-    if(sinceStart<0||!emission.enabled||!source.playOnAwake)return [];
+    if(sinceStart<0||!emission.enabled||(!triggered&&!source.playOnAwake))return [];
     const elapsed=sinceStart+(source.prewarm&&source.looping?length:0);
     const events=[],end=source.looping?elapsed:Math.min(elapsed,length);
     if(rate>0){
       const count=Math.floor(end*rate+1e-10);
       if(!Number.isSafeInteger(count))throw new Error('Particle review clock exceeds integer precision');
-      if(!includeExpired&&distanceRate===0&&capacity===1&&emission.m_BurstCount===0&&initial.startLifetime.minMaxState===0){
+      if(optimizeCapacityOne&&distanceRate===0&&capacity===1&&emission.m_BurstCount===0&&initial.startLifetime.minMaxState===0){
         // The native head emits at 1000/s but can hold only one five-second
         // particle. Skip rejected emission attempts arithmetically; retain the
         // same birth tick and preview random identity as the general scheduler.
@@ -76,8 +76,14 @@ export function createParticleBirthClock(source,{seed=1,allowDistanceEmission=fa
       events.push({born,count:n});
     }
     events.sort((a,b)=>a.born-b.born);
+    return events;
+  }
+  function sample(time,{history,includeExpired=false}={}){
+    if(typeof includeExpired!=='boolean')throw Error('Invalid native accepted birth mode');
+    const scheduled=events(time,{history,optimizeCapacityOne:!includeExpired});
+    const elapsed=time*speed-delay+(source.prewarm&&source.looping?length:0);
     let alive=[],accepted=[],id=0,total=0;
-    for(const event of events){
+    for(const event of scheduled){
       if(event.firstId!==undefined)id=event.firstId;
       total+=event.count;if(total>100000)throw new Error('Particle review clock exceeds event budget');
       alive=alive.filter(p=>p.born+p.lifetime>event.born+1e-10);
@@ -92,6 +98,6 @@ export function createParticleBirthClock(source,{seed=1,allowDistanceEmission=fa
     const prewarm=source.prewarm&&source.looping?length:0;
     return particles.map(p=>({...p,age:elapsed-p.born,birthTime:(p.born+delay-prewarm)/speed}));
   }
-  return {sample,births(time,options){return sample(time,{...options,includeExpired:true}).map(p=>({...p,age:0}));},
+  return {sample,events(time,options){return events(time,options);},births(time,options){return sample(time,{...options,includeExpired:true}).map(p=>({...p,age:0}));},
     scope:{birthClocksOnly:true,compiledFrameParity:false}};
 }
