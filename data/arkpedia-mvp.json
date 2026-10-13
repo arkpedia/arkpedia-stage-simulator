@@ -47,7 +47,7 @@
   },
   "sd": {
     "repository": "arkpedia/arkpedia-sd-assets",
-    "commit": "5f58569d050e7444bb7b33646554b9f99249b7be",
+    "commit": "f75740242898f24cad3fd0f5ffd24a9d0868da69",
     "models": {
       "operator/char_123_fang/default/front": {
         "kind": "operator",
@@ -50565,6 +50565,225 @@
           "height": 363.011
         }
       },
+      "operator/char_249_mlyss/default/front": {
+        "kind": "operator",
+        "id": "char_249_mlyss",
+        "variant": "default",
+        "facing": "front",
+        "spineVersion": "3.8.99",
+        "source": {
+          "key": "operators",
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "spine/char_249_mlyss/char_249_mlyss/Front"
+        },
+        "skeleton": {
+          "path": "models/operator/char_249_mlyss/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_249_mlyss.skel",
+          "bytes": 492823,
+          "sha256": "f4580041b34c4f0956a7c04267d5907e7c3332ad08dd9384a2c4b4332d459cc7"
+        },
+        "atlas": {
+          "path": "models/operator/char_249_mlyss/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_249_mlyss.atlas",
+          "bytes": 8663,
+          "sha256": "0a9bfbfae16fa52c4e73f4118f6675e5ab6e8a115278e7659fb89f6f76140555"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_249_mlyss/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_249_mlyss.png",
+            "bytes": 122542,
+            "sha256": "23f2c5f44981d5b58596f94cca43f120e89d43604ee08906edbf937f474a8fdf"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Attack": 1,
+          "Default": 0,
+          "Die": 1,
+          "Idle": 3,
+          "Skill_1": 1,
+          "Skill_2_Begin": 0.167,
+          "Skill_2_End": 0.167,
+          "Skill_2_Idle": 1,
+          "Skill_2_Loop": 1,
+          "Skill_3_Begin": 0.167,
+          "Skill_3_End": 0.167,
+          "Skill_3_Idle": 1,
+          "Skill_3_loop": 1,
+          "Start": 1
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null
+          },
+          "attackDown": null,
+          "skill": {
+            "begin": null,
+            "loop": "Skill_1",
+            "end": null,
+            "index": 0,
+            "idle": null
+          },
+          "die": "Die",
+          "move": null,
+          "stun": null,
+          "skills": {
+            "0": {
+              "begin": null,
+              "loop": "Skill_1",
+              "end": null,
+              "index": 0,
+              "idle": null
+            },
+            "1": {
+              "begin": "Skill_2_Begin",
+              "loop": "Skill_2_Loop",
+              "end": "Skill_2_End",
+              "index": 1,
+              "idle": "Skill_2_Idle"
+            },
+            "2": {
+              "begin": "Skill_3_Begin",
+              "loop": "Skill_3_loop",
+              "end": "Skill_3_End",
+              "index": 2,
+              "idle": "Skill_3_Idle"
+            }
+          }
+        },
+        "hits": {
+          "Attack": [
+            0.4
+          ],
+          "Skill_1": [
+            0.4
+          ],
+          "Skill_2_Loop": [
+            0.367
+          ],
+          "Skill_3_loop": [
+            0.4
+          ]
+        },
+        "bounds": {
+          "x": -297.499,
+          "y": -3.042,
+          "width": 686.426,
+          "height": 402.502
+        }
+      },
+      "operator/char_249_mlyss/default/back": {
+        "kind": "operator",
+        "id": "char_249_mlyss",
+        "variant": "default",
+        "facing": "back",
+        "spineVersion": "3.8.99",
+        "source": {
+          "key": "operators",
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "spine/char_249_mlyss/char_249_mlyss/Back"
+        },
+        "skeleton": {
+          "path": "models/operator/char_249_mlyss/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_249_mlyss.skel",
+          "bytes": 248557,
+          "sha256": "777ab7cbe4aef9416aea34023c37a8a3e3eb7405b60c579c84b6821ab26decf9"
+        },
+        "atlas": {
+          "path": "models/operator/char_249_mlyss/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_249_mlyss.atlas",
+          "bytes": 3074,
+          "sha256": "fd8524af6c90735a70930771765fd3695974ab858651d43d6c94c9ec09ccb199"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_249_mlyss/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_249_mlyss.png",
+            "bytes": 84275,
+            "sha256": "3d526c1ebdf67a24d8bfc989d483f66d905cce1954d46a8081f3ec45c89189f0"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Attack": 1,
+          "Default": 0,
+          "Idle": 3,
+          "Skill_1": 1,
+          "Skill_2_Begin": 0.167,
+          "Skill_2_End": 0.167,
+          "Skill_2_Idle": 1,
+          "Skill_2_Loop": 1,
+          "Skill_3_Begin": 0.167,
+          "Skill_3_End": 0.167,
+          "Skill_3_Idle": 1,
+          "Skill_3_loop": 1,
+          "Start": 1
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null
+          },
+          "attackDown": null,
+          "skill": {
+            "begin": null,
+            "loop": "Skill_1",
+            "end": null,
+            "index": 0,
+            "idle": null
+          },
+          "die": null,
+          "move": null,
+          "stun": null,
+          "skills": {
+            "0": {
+              "begin": null,
+              "loop": "Skill_1",
+              "end": null,
+              "index": 0,
+              "idle": null
+            },
+            "1": {
+              "begin": "Skill_2_Begin",
+              "loop": "Skill_2_Loop",
+              "end": "Skill_2_End",
+              "index": 1,
+              "idle": "Skill_2_Idle"
+            },
+            "2": {
+              "begin": "Skill_3_Begin",
+              "loop": "Skill_3_loop",
+              "end": "Skill_3_End",
+              "index": 2,
+              "idle": "Skill_3_Idle"
+            }
+          }
+        },
+        "hits": {
+          "Attack": [
+            0.4
+          ],
+          "Skill_1": [
+            0.4
+          ],
+          "Skill_2_Loop": [
+            0.367
+          ],
+          "Skill_3_loop": [
+            0.4
+          ]
+        },
+        "bounds": {
+          "x": -297.499,
+          "y": -3.042,
+          "width": 686.426,
+          "height": 402.502
+        }
+      },
       "operator/char_4138_narant/default/front": {
         "kind": "operator",
         "id": "char_4138_narant",
@@ -72452,6 +72671,274 @@
           "height": 515.892
         }
       },
+      "operator/token_10030_mlyss_wtrman/default/front": {
+        "kind": "operator",
+        "id": "token_10030_mlyss_wtrman",
+        "variant": "default",
+        "facing": "front",
+        "source": {
+          "key": "global-client",
+          "kind": "assetbundle",
+          "bundle": {
+            "path": "pkgrps/btl_pfb_tokens_0.ab",
+            "bytes": 5060143,
+            "md5": "5ab8526b9e59e97cc7e94ed6a248013d",
+            "sha256": "eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f",
+            "resourceVersion": "26-09-23-17-49-43_b9cc4a",
+            "url": "https://ark-us-static-online.yo-star.com/assetbundle/official/Android/assets/26-09-23-17-49-43_b9cc4a/pkgrps_btl_pfb_tokens_0.dat",
+            "transforms": [
+              "Original premultiplied RGB and separate grayscale alpha pages merged; RGB clamped to alpha to remove block-compression bleed",
+              "Atlas page dimensions normalized and pma: true recorded; native regions unchanged",
+              "Flowing Shape front/back aliases share one original skeleton; default, melee, ranged and literal zero-duration Idle_2 clips retained"
+            ]
+          },
+          "directory": "pkgrps/btl_pfb_tokens_0.ab",
+          "extractedSkeleton": "token_10030_mlyss_wtrman.skel",
+          "facingAlias": "single-original-model",
+          "originalPathIds": {
+            "rootPathId": "2648866167334787179",
+            "controllerPathId": "-2203269439485355925",
+            "animatorPathId": "1780975406791219307",
+            "faceSwitcherPathId": "1741497691204114539",
+            "skeletonAnimationPathId": "6558256638853142635",
+            "skeletonDataAssetPathId": "-9157201713931467059",
+            "textAssetPathId": "5712459927201897189",
+            "atlasAssetPathId": "-4140195168341198426",
+            "atlasTextAssetPathId": "8358971776639364961",
+            "materialPathId": "-3323982459809044147",
+            "rgbTexturePathId": "-3152131553628916044",
+            "alphaTexturePathId": "-5105136353530260667"
+          },
+          "transforms": [
+            "Original premultiplied RGB and separate grayscale alpha pages merged; RGB clamped to alpha to remove block-compression bleed",
+            "Atlas page dimensions normalized and pma: true recorded; native regions unchanged",
+            "Flowing Shape front/back aliases share one original skeleton; default, melee, ranged and literal zero-duration Idle_2 clips retained"
+          ]
+        },
+        "spineVersion": "3.8.99",
+        "skeleton": {
+          "path": "models/operator/token_10030_mlyss_wtrman/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/token_10030_mlyss_wtrman.skel",
+          "bytes": 546069,
+          "sha256": "1b10d982f0b41f504dd79d9036d4939165968d39b08229494f6849326f32386e"
+        },
+        "atlas": {
+          "path": "models/operator/token_10030_mlyss_wtrman/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/token_10030_mlyss_wtrman.atlas",
+          "bytes": 6393,
+          "sha256": "413a632bb8976b3441374d8c5c9fcd6efe7284212979df608832e57439331bb3"
+        },
+        "textures": [
+          {
+            "path": "models/operator/token_10030_mlyss_wtrman/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/token_10030_mlyss_wtrman.png",
+            "bytes": 73259,
+            "sha256": "6c62550280f0218677822cc9c6c1bf47b70ccec6cc33cf1e79803089e63c7f1e"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "A_Attack": 0.8,
+          "A_Combat": 0.8,
+          "A_Default": 0,
+          "A_Die": 0.733,
+          "A_Idle": 1,
+          "A_Start": 1,
+          "A_Stun": 1,
+          "Attack": 0.8,
+          "B_Attack": 0.8,
+          "B_Attack_2": 0.8,
+          "B_Combat": 0.8,
+          "B_Default": 0,
+          "B_Die": 0.733,
+          "B_Idle": 1,
+          "B_Start": 1,
+          "B_Stun": 1,
+          "Change_A": 0.667,
+          "Change_B": 0.667,
+          "Default": 0,
+          "Die": 0.6,
+          "Idle_1": 2,
+          "Idle_2": 0,
+          "Start": 1,
+          "Stun": 2
+        },
+        "animationRoles": {
+          "idle": "Idle_1",
+          "deploy": "Start",
+          "die": "Die",
+          "attack": "Attack",
+          "skill": null
+        },
+        "hits": {
+          "A_Attack": [
+            0.3
+          ],
+          "A_Combat": [
+            0.3
+          ],
+          "Attack": [
+            0.3
+          ],
+          "B_Attack": [
+            0.3
+          ],
+          "B_Attack_2": [
+            0.3,
+            0.333
+          ],
+          "B_Combat": [
+            0.3
+          ]
+        },
+        "bounds": {
+          "x": -99.636,
+          "y": -1.54,
+          "width": 233.478,
+          "height": 396.5
+        },
+        "avatar": {
+          "path": "models/operator/token_10030_mlyss_wtrman/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png",
+          "bytes": 21267,
+          "sha256": "e7eef512af396f7e4732fc336b8814d038b3372c95d4f935d58fc0c314c88a17",
+          "source": {
+            "repository": "fexli/ArknightsResource",
+            "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+            "directory": "avatar/ASSISTANT"
+          }
+        }
+      },
+      "operator/token_10030_mlyss_wtrman/default/back": {
+        "kind": "operator",
+        "id": "token_10030_mlyss_wtrman",
+        "variant": "default",
+        "facing": "back",
+        "source": {
+          "key": "global-client",
+          "kind": "assetbundle",
+          "bundle": {
+            "path": "pkgrps/btl_pfb_tokens_0.ab",
+            "bytes": 5060143,
+            "md5": "5ab8526b9e59e97cc7e94ed6a248013d",
+            "sha256": "eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f",
+            "resourceVersion": "26-09-23-17-49-43_b9cc4a",
+            "url": "https://ark-us-static-online.yo-star.com/assetbundle/official/Android/assets/26-09-23-17-49-43_b9cc4a/pkgrps_btl_pfb_tokens_0.dat",
+            "transforms": [
+              "Original premultiplied RGB and separate grayscale alpha pages merged; RGB clamped to alpha to remove block-compression bleed",
+              "Atlas page dimensions normalized and pma: true recorded; native regions unchanged",
+              "Flowing Shape front/back aliases share one original skeleton; default, melee, ranged and literal zero-duration Idle_2 clips retained"
+            ]
+          },
+          "directory": "pkgrps/btl_pfb_tokens_0.ab",
+          "extractedSkeleton": "token_10030_mlyss_wtrman.skel",
+          "facingAlias": "single-original-model",
+          "originalPathIds": {
+            "rootPathId": "2648866167334787179",
+            "controllerPathId": "-2203269439485355925",
+            "animatorPathId": "1780975406791219307",
+            "faceSwitcherPathId": "1741497691204114539",
+            "skeletonAnimationPathId": "6558256638853142635",
+            "skeletonDataAssetPathId": "-9157201713931467059",
+            "textAssetPathId": "5712459927201897189",
+            "atlasAssetPathId": "-4140195168341198426",
+            "atlasTextAssetPathId": "8358971776639364961",
+            "materialPathId": "-3323982459809044147",
+            "rgbTexturePathId": "-3152131553628916044",
+            "alphaTexturePathId": "-5105136353530260667"
+          },
+          "transforms": [
+            "Original premultiplied RGB and separate grayscale alpha pages merged; RGB clamped to alpha to remove block-compression bleed",
+            "Atlas page dimensions normalized and pma: true recorded; native regions unchanged",
+            "Flowing Shape front/back aliases share one original skeleton; default, melee, ranged and literal zero-duration Idle_2 clips retained"
+          ]
+        },
+        "spineVersion": "3.8.99",
+        "skeleton": {
+          "path": "models/operator/token_10030_mlyss_wtrman/default/back/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/token_10030_mlyss_wtrman.skel",
+          "bytes": 546069,
+          "sha256": "1b10d982f0b41f504dd79d9036d4939165968d39b08229494f6849326f32386e"
+        },
+        "atlas": {
+          "path": "models/operator/token_10030_mlyss_wtrman/default/back/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/token_10030_mlyss_wtrman.atlas",
+          "bytes": 6393,
+          "sha256": "413a632bb8976b3441374d8c5c9fcd6efe7284212979df608832e57439331bb3"
+        },
+        "textures": [
+          {
+            "path": "models/operator/token_10030_mlyss_wtrman/default/back/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/token_10030_mlyss_wtrman.png",
+            "bytes": 73259,
+            "sha256": "6c62550280f0218677822cc9c6c1bf47b70ccec6cc33cf1e79803089e63c7f1e"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "A_Attack": 0.8,
+          "A_Combat": 0.8,
+          "A_Default": 0,
+          "A_Die": 0.733,
+          "A_Idle": 1,
+          "A_Start": 1,
+          "A_Stun": 1,
+          "Attack": 0.8,
+          "B_Attack": 0.8,
+          "B_Attack_2": 0.8,
+          "B_Combat": 0.8,
+          "B_Default": 0,
+          "B_Die": 0.733,
+          "B_Idle": 1,
+          "B_Start": 1,
+          "B_Stun": 1,
+          "Change_A": 0.667,
+          "Change_B": 0.667,
+          "Default": 0,
+          "Die": 0.6,
+          "Idle_1": 2,
+          "Idle_2": 0,
+          "Start": 1,
+          "Stun": 2
+        },
+        "animationRoles": {
+          "idle": "Idle_1",
+          "deploy": "Start",
+          "die": "Die",
+          "attack": "Attack",
+          "skill": null
+        },
+        "hits": {
+          "A_Attack": [
+            0.3
+          ],
+          "A_Combat": [
+            0.3
+          ],
+          "Attack": [
+            0.3
+          ],
+          "B_Attack": [
+            0.3
+          ],
+          "B_Attack_2": [
+            0.3,
+            0.333
+          ],
+          "B_Combat": [
+            0.3
+          ]
+        },
+        "bounds": {
+          "x": -99.636,
+          "y": -1.54,
+          "width": 233.478,
+          "height": 396.5
+        },
+        "avatar": {
+          "path": "models/operator/token_10030_mlyss_wtrman/default/back/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png",
+          "bytes": 21267,
+          "sha256": "e7eef512af396f7e4732fc336b8814d038b3372c95d4f935d58fc0c314c88a17",
+          "source": {
+            "repository": "fexli/ArknightsResource",
+            "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+            "directory": "avatar/ASSISTANT"
+          }
+        }
+      },
       "operator/token_10037_mitm_trshrb/default/front": {
         "kind": "operator",
         "id": "token_10037_mitm_trshrb",
@@ -82660,7 +83147,7 @@
     },
     "art": {
       "repository": "arkpedia/arkpedia-sd-assets",
-      "commit": "5f58569d050e7444bb7b33646554b9f99249b7be",
+      "commit": "f75740242898f24cad3fd0f5ffd24a9d0868da69",
       "scene": {
         "path": "stages/0-1/26-09-23-17-49-43_b9cc4a/scene.json",
         "bytes": 4479,
@@ -82669,7 +83156,7 @@
     },
     "gates": {
       "repository": "arkpedia/arkpedia-sd-assets",
-      "commit": "5f58569d050e7444bb7b33646554b9f99249b7be",
+      "commit": "f75740242898f24cad3fd0f5ffd24a9d0868da69",
       "pack": {
         "path": "effects/standard-gates/26-09-23-17-49-43_b9cc4a/gates.json",
         "bytes": 3507,
@@ -445509,6 +445996,1856 @@
         }
       ]
     },
+    "char_249_mlyss": {
+      "id": "char_249_mlyss",
+      "name": "Muelsyse",
+      "description": "This unit can designate one <@ba.kw>Tactical Point</> within attack range to call Reinforcements; ATK is increased to 150% when attacking enemies blocked by Reinforcements",
+      "rarity": 6,
+      "profession": "PIONEER",
+      "subProfessionId": "tactician",
+      "position": "RANGED",
+      "nationId": "columbia",
+      "groupId": "rhine",
+      "teamId": null,
+      "phases": [
+        {
+          "maxLevel": 50,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 811,
+                "atk": 210,
+                "def": 40,
+                "magicResistance": 0,
+                "cost": 13,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 50,
+              "data": {
+                "maxHp": 1159,
+                "atk": 309,
+                "def": 68,
+                "magicResistance": 0,
+                "cost": 13,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              0,
+              3
+            ],
+            [
+              -1,
+              0
+            ],
+            [
+              -1,
+              1
+            ],
+            [
+              -1,
+              2
+            ]
+          ]
+        },
+        {
+          "maxLevel": 80,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 1159,
+                "atk": 309,
+                "def": 68,
+                "magicResistance": 0,
+                "cost": 15,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 80,
+              "data": {
+                "maxHp": 1486,
+                "atk": 407,
+                "def": 98,
+                "magicResistance": 0,
+                "cost": 15,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              0,
+              3
+            ],
+            [
+              -1,
+              0
+            ],
+            [
+              -1,
+              1
+            ],
+            [
+              -1,
+              2
+            ],
+            [
+              -1,
+              3
+            ]
+          ]
+        },
+        {
+          "maxLevel": 90,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 1486,
+                "atk": 407,
+                "def": 98,
+                "magicResistance": 0,
+                "cost": 15,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 90,
+              "data": {
+                "maxHp": 1813,
+                "atk": 497,
+                "def": 117,
+                "magicResistance": 0,
+                "cost": 15,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              0,
+              3
+            ],
+            [
+              -1,
+              0
+            ],
+            [
+              -1,
+              1
+            ],
+            [
+              -1,
+              2
+            ],
+            [
+              -1,
+              3
+            ]
+          ]
+        }
+      ],
+      "favorKeyFrames": [
+        {
+          "level": 0,
+          "data": {
+            "maxHp": 0,
+            "atk": 0,
+            "def": 0,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false
+          }
+        },
+        {
+          "level": 50,
+          "data": {
+            "maxHp": 0,
+            "atk": 40,
+            "def": 40,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false
+          }
+        }
+      ],
+      "potentialRanks": [
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "RESPAWN_TIME",
+            "formulaItem": "ADDITION",
+            "value": -4,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "ATK",
+            "formulaItem": "ADDITION",
+            "value": 25,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [],
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ]
+      ],
+      "trait": {
+        "candidates": [
+          {
+            "unlockCondition": {
+              "phase": "PHASE_0",
+              "level": 1
+            },
+            "requiredPotentialRank": 0,
+            "blackboard": [
+              {
+                "key": "atk_scale",
+                "value": 1.5,
+                "valueStr": null
+              }
+            ],
+            "overrideDescripton": null,
+            "prefabKey": null,
+            "rangeId": null
+          }
+        ]
+      },
+      "talents": [
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_0",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Pure Water is Life",
+              "description": "Can summon a Flowing Shape to assist in combat. Flowing Shapes can partially copy an undeployed Operator's attributes (Max HP, ATK, DEF, RES, Block Count, Attack Interval, Attack Range, Damage Type, and obtain a special trait depending on whether in melee or ranged form), will respawn 30 seconds after being defeated",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "cnt",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": "token_10030_mlyss_wtrman",
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Pure Water is Life",
+              "description": "Can summon a Flowing Shape to assist in combat. Flowing Shapes can partially copy an undeployed Operator's attributes (Max HP, ATK, DEF, RES, Block Count, Attack Interval, Attack Range, Damage Type, and obtain a special trait depending on whether in melee or ranged form), will respawn 28 seconds after being defeated",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "cnt",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": "token_10030_mlyss_wtrman",
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Pure Water is Life",
+              "description": "Can summon a Flowing Shape to assist in combat. Flowing Shapes can partially copy an undeployed Operator's attributes (Max HP, ATK, DEF, RES, Block Count, Attack Interval, Attack Range, Damage Type, and obtain a special trait depending on whether in melee or ranged form), will respawn 25 seconds after being defeated",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "cnt",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": "token_10030_mlyss_wtrman",
+              "isHideTalent": false
+            }
+          ]
+        },
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "2",
+              "name": "Expenditure Economization",
+              "description": "When in squad, all [Rhine Lab] Operators have -2 DP Cost, and the first Rhine Lab Operator deployed has an additional -1 DP Cost",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": -2,
+                  "valueStr": null
+                },
+                {
+                  "key": "runtime_cost",
+                  "value": -1,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 4,
+              "prefabKey": "2",
+              "name": "Expenditure Economization",
+              "description": "When in squad, all [Rhine Lab] Operators have -2 DP Cost, and the first [Rhine Lab] Operator deployed has an additional -2<@ba.talpu>(+1)</> DP Cost",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": -2,
+                  "valueStr": null
+                },
+                {
+                  "key": "runtime_cost",
+                  "value": -2,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            }
+          ]
+        }
+      ],
+      "skills": [
+        {
+          "id": "skchr_mlyss_1",
+          "unlockCondition": {
+            "phase": "PHASE_0",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "Progressive Moisturization",
+              "rangeId": null,
+              "description": "Gradually recovers <@ba.vup>{fake_cost}</> DP while skill is active, Muelsyse and her Flowing Shapes gain <@ba.vup>+{atk:0%}</> ATK, <@ba.vup>+{attack_speed}</> ASPD",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 38,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_mlyss_1",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "mlyss_s_1[cost].cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "mlyss_s_1[cost].interval",
+                  "value": 1.501,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack_speed",
+                  "value": 10,
+                  "valueStr": null
+                },
+                {
+                  "key": "fake_cost",
+                  "value": 10,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Progressive Moisturization",
+              "rangeId": null,
+              "description": "Gradually recovers <@ba.vup>{fake_cost}</> DP while skill is active, Muelsyse and her Flowing Shapes gain <@ba.vup>+{atk:0%}</> ATK, <@ba.vup>+{attack_speed}</> ASPD",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 37,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_mlyss_1",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "mlyss_s_1[cost].cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "mlyss_s_1[cost].interval",
+                  "value": 1.501,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.14,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack_speed",
+                  "value": 14,
+                  "valueStr": null
+                },
+                {
+                  "key": "fake_cost",
+                  "value": 10,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Progressive Moisturization",
+              "rangeId": null,
+              "description": "Gradually recovers <@ba.vup>{fake_cost}</> DP while skill is active, Muelsyse and her Flowing Shapes gain <@ba.vup>+{atk:0%}</> ATK, <@ba.vup>+{attack_speed}</> ASPD",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 36,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_mlyss_1",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "mlyss_s_1[cost].cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "mlyss_s_1[cost].interval",
+                  "value": 1.501,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.18,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack_speed",
+                  "value": 18,
+                  "valueStr": null
+                },
+                {
+                  "key": "fake_cost",
+                  "value": 10,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Progressive Moisturization",
+              "rangeId": null,
+              "description": "Gradually recovers <@ba.vup>{fake_cost}</> DP while skill is active, Muelsyse and her Flowing Shapes gain <@ba.vup>+{atk:0%}</> ATK, <@ba.vup>+{attack_speed}</> ASPD",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 35,
+                "initSp": 4,
+                "increment": 1
+              },
+              "prefabId": "skchr_mlyss_1",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "mlyss_s_1[cost].cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "mlyss_s_1[cost].interval",
+                  "value": 1.364,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.22,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack_speed",
+                  "value": 22,
+                  "valueStr": null
+                },
+                {
+                  "key": "fake_cost",
+                  "value": 11,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Progressive Moisturization",
+              "rangeId": null,
+              "description": "Gradually recovers <@ba.vup>{fake_cost}</> DP while skill is active, Muelsyse and her Flowing Shapes gain <@ba.vup>+{atk:0%}</> ATK, <@ba.vup>+{attack_speed}</> ASPD",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 34,
+                "initSp": 4,
+                "increment": 1
+              },
+              "prefabId": "skchr_mlyss_1",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "mlyss_s_1[cost].cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "mlyss_s_1[cost].interval",
+                  "value": 1.364,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.26,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack_speed",
+                  "value": 26,
+                  "valueStr": null
+                },
+                {
+                  "key": "fake_cost",
+                  "value": 11,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Progressive Moisturization",
+              "rangeId": null,
+              "description": "Gradually recovers <@ba.vup>{fake_cost}</> DP while skill is active, Muelsyse and her Flowing Shapes gain <@ba.vup>+{atk:0%}</> ATK, <@ba.vup>+{attack_speed}</> ASPD",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 33,
+                "initSp": 4,
+                "increment": 1
+              },
+              "prefabId": "skchr_mlyss_1",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "mlyss_s_1[cost].cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "mlyss_s_1[cost].interval",
+                  "value": 1.364,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack_speed",
+                  "value": 30,
+                  "valueStr": null
+                },
+                {
+                  "key": "fake_cost",
+                  "value": 11,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Progressive Moisturization",
+              "rangeId": null,
+              "description": "Gradually recovers <@ba.vup>{fake_cost}</> DP while skill is active, Muelsyse and her Flowing Shapes gain <@ba.vup>+{atk:0%}</> ATK, <@ba.vup>+{attack_speed}</> ASPD",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 32,
+                "initSp": 8,
+                "increment": 1
+              },
+              "prefabId": "skchr_mlyss_1",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "mlyss_s_1[cost].cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "mlyss_s_1[cost].interval",
+                  "value": 1.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.35,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack_speed",
+                  "value": 35,
+                  "valueStr": null
+                },
+                {
+                  "key": "fake_cost",
+                  "value": 12,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Progressive Moisturization",
+              "rangeId": null,
+              "description": "Gradually recovers <@ba.vup>{fake_cost}</> DP while skill is active, Muelsyse and her Flowing Shapes gain <@ba.vup>+{atk:0%}</> ATK, <@ba.vup>+{attack_speed}</> ASPD",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 31,
+                "initSp": 8,
+                "increment": 1
+              },
+              "prefabId": "skchr_mlyss_1",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "mlyss_s_1[cost].cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "mlyss_s_1[cost].interval",
+                  "value": 1.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack_speed",
+                  "value": 40,
+                  "valueStr": null
+                },
+                {
+                  "key": "fake_cost",
+                  "value": 12,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Progressive Moisturization",
+              "rangeId": null,
+              "description": "Gradually recovers <@ba.vup>{fake_cost}</> DP while skill is active, Muelsyse and her Flowing Shapes gain <@ba.vup>+{atk:0%}</> ATK, <@ba.vup>+{attack_speed}</> ASPD",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 30,
+                "initSp": 8,
+                "increment": 1
+              },
+              "prefabId": "skchr_mlyss_1",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "mlyss_s_1[cost].cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "mlyss_s_1[cost].interval",
+                  "value": 1.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.45,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack_speed",
+                  "value": 45,
+                  "valueStr": null
+                },
+                {
+                  "key": "fake_cost",
+                  "value": 12,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Progressive Moisturization",
+              "rangeId": null,
+              "description": "Gradually recovers <@ba.vup>{fake_cost}</> DP while skill is active, Muelsyse and her Flowing Shapes gain <@ba.vup>+{atk:0%}</> ATK, <@ba.vup>+{attack_speed}</> ASPD",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 28,
+                "initSp": 8,
+                "increment": 1
+              },
+              "prefabId": "skchr_mlyss_1",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "mlyss_s_1[cost].cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "mlyss_s_1[cost].interval",
+                  "value": 1.154,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack_speed",
+                  "value": 50,
+                  "valueStr": null
+                },
+                {
+                  "key": "fake_cost",
+                  "value": 13,
+                  "valueStr": null
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "skchr_mlyss_2",
+          "unlockCondition": {
+            "phase": "PHASE_1",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "Ecological Interaction",
+              "rangeId": null,
+              "description": "Immediately gains <@ba.vup>{cost}</> DP, Muelsyse and her Flowing Shapes gain <@ba.vup>+{atk:0%}</> ATK; if Flowing Shape is in Melee form, it recovers <@ba.vup>{hp_recovery_per_sec_by_max_hp_ratio:0%}</> HP every second and gains <@ba.vup>{damage_resistance:0%}</> <$ba.protect>Sanctuary</>, if Flowing Shape is in Ranged form, its attacks hit <@ba.vup>twice</> at random targets within attack range",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 45,
+                "initSp": 5,
+                "increment": 1
+              },
+              "prefabId": "skchr_mlyss_2",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 12,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "damage_resistance",
+                  "value": 0.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "hp_recovery_per_sec_by_max_hp_ratio",
+                  "value": 0.01,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Ecological Interaction",
+              "rangeId": null,
+              "description": "Immediately gains <@ba.vup>{cost}</> DP, Muelsyse and her Flowing Shapes gain <@ba.vup>+{atk:0%}</> ATK; if Flowing Shape is in Melee form, it recovers <@ba.vup>{hp_recovery_per_sec_by_max_hp_ratio:0%}</> HP every second and gains <@ba.vup>{damage_resistance:0%}</> <$ba.protect>Sanctuary</>, if Flowing Shape is in Ranged form, its attacks hit <@ba.vup>twice</> at random targets within attack range",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 44,
+                "initSp": 5,
+                "increment": 1
+              },
+              "prefabId": "skchr_mlyss_2",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 12,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.14,
+                  "valueStr": null
+                },
+                {
+                  "key": "damage_resistance",
+                  "value": 0.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "hp_recovery_per_sec_by_max_hp_ratio",
+                  "value": 0.01,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Ecological Interaction",
+              "rangeId": null,
+              "description": "Immediately gains <@ba.vup>{cost}</> DP, Muelsyse and her Flowing Shapes gain <@ba.vup>+{atk:0%}</> ATK; if Flowing Shape is in Melee form, it recovers <@ba.vup>{hp_recovery_per_sec_by_max_hp_ratio:0%}</> HP every second and gains <@ba.vup>{damage_resistance:0%}</> <$ba.protect>Sanctuary</>, if Flowing Shape is in Ranged form, its attacks hit <@ba.vup>twice</> at random targets within attack range",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 43,
+                "initSp": 5,
+                "increment": 1
+              },
+              "prefabId": "skchr_mlyss_2",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 12,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.18,
+                  "valueStr": null
+                },
+                {
+                  "key": "damage_resistance",
+                  "value": 0.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "hp_recovery_per_sec_by_max_hp_ratio",
+                  "value": 0.01,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Ecological Interaction",
+              "rangeId": null,
+              "description": "Immediately gains <@ba.vup>{cost}</> DP, Muelsyse and her Flowing Shapes gain <@ba.vup>+{atk:0%}</> ATK; if Flowing Shape is in Melee form, it recovers <@ba.vup>{hp_recovery_per_sec_by_max_hp_ratio:0%}</> HP every second and gains <@ba.vup>{damage_resistance:0%}</> <$ba.protect>Sanctuary</>, if Flowing Shape is in Ranged form, its attacks hit <@ba.vup>twice</> at random targets within attack range",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 42,
+                "initSp": 10,
+                "increment": 1
+              },
+              "prefabId": "skchr_mlyss_2",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 13,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.22,
+                  "valueStr": null
+                },
+                {
+                  "key": "damage_resistance",
+                  "value": 0.15,
+                  "valueStr": null
+                },
+                {
+                  "key": "hp_recovery_per_sec_by_max_hp_ratio",
+                  "value": 0.02,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Ecological Interaction",
+              "rangeId": null,
+              "description": "Immediately gains <@ba.vup>{cost}</> DP, Muelsyse and her Flowing Shapes gain <@ba.vup>+{atk:0%}</> ATK; if Flowing Shape is in Melee form, it recovers <@ba.vup>{hp_recovery_per_sec_by_max_hp_ratio:0%}</> HP every second and gains <@ba.vup>{damage_resistance:0%}</> <$ba.protect>Sanctuary</>, if Flowing Shape is in Ranged form, its attacks hit <@ba.vup>twice</> at random targets within attack range",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 41,
+                "initSp": 10,
+                "increment": 1
+              },
+              "prefabId": "skchr_mlyss_2",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 13,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.26,
+                  "valueStr": null
+                },
+                {
+                  "key": "damage_resistance",
+                  "value": 0.15,
+                  "valueStr": null
+                },
+                {
+                  "key": "hp_recovery_per_sec_by_max_hp_ratio",
+                  "value": 0.02,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Ecological Interaction",
+              "rangeId": null,
+              "description": "Immediately gains <@ba.vup>{cost}</> DP, Muelsyse and her Flowing Shapes gain <@ba.vup>+{atk:0%}</> ATK; if Flowing Shape is in Melee form, it recovers <@ba.vup>{hp_recovery_per_sec_by_max_hp_ratio:0%}</> HP every second and gains <@ba.vup>{damage_resistance:0%}</> <$ba.protect>Sanctuary</>, if Flowing Shape is in Ranged form, its attacks hit <@ba.vup>twice</> at random targets within attack range",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 40,
+                "initSp": 10,
+                "increment": 1
+              },
+              "prefabId": "skchr_mlyss_2",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 13,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "damage_resistance",
+                  "value": 0.15,
+                  "valueStr": null
+                },
+                {
+                  "key": "hp_recovery_per_sec_by_max_hp_ratio",
+                  "value": 0.02,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Ecological Interaction",
+              "rangeId": null,
+              "description": "Immediately gains <@ba.vup>{cost}</> DP, Muelsyse and her Flowing Shapes gain <@ba.vup>+{atk:0%}</> ATK; if Flowing Shape is in Melee form, it recovers <@ba.vup>{hp_recovery_per_sec_by_max_hp_ratio:0%}</> HP every second and gains <@ba.vup>{damage_resistance:0%}</> <$ba.protect>Sanctuary</>, if Flowing Shape is in Ranged form, its attacks hit <@ba.vup>twice</> at random targets within attack range",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 39,
+                "initSp": 15,
+                "increment": 1
+              },
+              "prefabId": "skchr_mlyss_2",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 14,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.35,
+                  "valueStr": null
+                },
+                {
+                  "key": "damage_resistance",
+                  "value": 0.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "hp_recovery_per_sec_by_max_hp_ratio",
+                  "value": 0.03,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Ecological Interaction",
+              "rangeId": null,
+              "description": "Immediately gains <@ba.vup>{cost}</> DP, Muelsyse and her Flowing Shapes gain <@ba.vup>+{atk:0%}</> ATK; if Flowing Shape is in Melee form, it recovers <@ba.vup>{hp_recovery_per_sec_by_max_hp_ratio:0%}</> HP every second and gains <@ba.vup>{damage_resistance:0%}</> <$ba.protect>Sanctuary</>, if Flowing Shape is in Ranged form, its attacks hit <@ba.vup>twice</> at random targets within attack range",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 38,
+                "initSp": 16,
+                "increment": 1
+              },
+              "prefabId": "skchr_mlyss_2",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 14,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "damage_resistance",
+                  "value": 0.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "hp_recovery_per_sec_by_max_hp_ratio",
+                  "value": 0.04,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Ecological Interaction",
+              "rangeId": null,
+              "description": "Immediately gains <@ba.vup>{cost}</> DP, Muelsyse and her Flowing Shapes gain <@ba.vup>+{atk:0%}</> ATK; if Flowing Shape is in Melee form, it recovers <@ba.vup>{hp_recovery_per_sec_by_max_hp_ratio:0%}</> HP every second and gains <@ba.vup>{damage_resistance:0%}</> <$ba.protect>Sanctuary</>, if Flowing Shape is in Ranged form, its attacks hit <@ba.vup>twice</> at random targets within attack range",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 37,
+                "initSp": 17,
+                "increment": 1
+              },
+              "prefabId": "skchr_mlyss_2",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 14,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.45,
+                  "valueStr": null
+                },
+                {
+                  "key": "damage_resistance",
+                  "value": 0.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "hp_recovery_per_sec_by_max_hp_ratio",
+                  "value": 0.04,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Ecological Interaction",
+              "rangeId": null,
+              "description": "Immediately gains <@ba.vup>{cost}</> DP, Muelsyse and her Flowing Shapes gain <@ba.vup>+{atk:0%}</> ATK; if Flowing Shape is in Melee form, it recovers <@ba.vup>{hp_recovery_per_sec_by_max_hp_ratio:0%}</> HP every second and gains <@ba.vup>{damage_resistance:0%}</> <$ba.protect>Sanctuary</>, if Flowing Shape is in Ranged form, its attacks hit <@ba.vup>twice</> at random targets within attack range",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 35,
+                "initSp": 18,
+                "increment": 1
+              },
+              "prefabId": "skchr_mlyss_2",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 15,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "damage_resistance",
+                  "value": 0.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "hp_recovery_per_sec_by_max_hp_ratio",
+                  "value": 0.05,
+                  "valueStr": null
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "skchr_mlyss_3",
+          "unlockCondition": {
+            "phase": "PHASE_2",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "Superficial Regulation",
+              "rangeId": null,
+              "description": "Immediately gains <@ba.vup>{cost}</> DP, Muelsyse and her Flowing Shapes gain <@ba.vup>+{atk:0%}</> ATK, if Flowing Shape is in Melee form, pulls surrounding enemies <@ba.vup>slightly</> towards it every <@ba.vup>{mlyss_s_3[token_melee_trigger].interval}</> seconds and <$ba.stun>Stuns</> all blocked enemies; if Flowing Shape is in Ranged form, respawns all Flowing Shapes and attacks <$ba.root>Bind</> enemies for <@ba.vup>{mlyss_s_3[unmoveable].duration}</> seconds",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 45,
+                "initSp": 5,
+                "increment": 1
+              },
+              "prefabId": "skchr_mlyss_3",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 12,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "mlyss_s_3[token_melee_trigger].interval",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "mlyss_s_3[unmoveable].duration",
+                  "value": 1.5,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Superficial Regulation",
+              "rangeId": null,
+              "description": "Immediately gains <@ba.vup>{cost}</> DP, Muelsyse and her Flowing Shapes gain <@ba.vup>+{atk:0%}</> ATK, if Flowing Shape is in Melee form, pulls surrounding enemies <@ba.vup>slightly</> towards it every <@ba.vup>{mlyss_s_3[token_melee_trigger].interval}</> seconds and <$ba.stun>Stuns</> all blocked enemies; if Flowing Shape is in Ranged form, respawns all Flowing Shapes and attacks <$ba.root>Bind</> enemies for <@ba.vup>{mlyss_s_3[unmoveable].duration}</> seconds",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 44,
+                "initSp": 5,
+                "increment": 1
+              },
+              "prefabId": "skchr_mlyss_3",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 12,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.14,
+                  "valueStr": null
+                },
+                {
+                  "key": "mlyss_s_3[token_melee_trigger].interval",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "mlyss_s_3[unmoveable].duration",
+                  "value": 1.5,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Superficial Regulation",
+              "rangeId": null,
+              "description": "Immediately gains <@ba.vup>{cost}</> DP, Muelsyse and her Flowing Shapes gain <@ba.vup>+{atk:0%}</> ATK, if Flowing Shape is in Melee form, pulls surrounding enemies <@ba.vup>slightly</> towards it every <@ba.vup>{mlyss_s_3[token_melee_trigger].interval}</> seconds and <$ba.stun>Stuns</> all blocked enemies; if Flowing Shape is in Ranged form, respawns all Flowing Shapes and attacks <$ba.root>Bind</> enemies for <@ba.vup>{mlyss_s_3[unmoveable].duration}</> seconds",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 43,
+                "initSp": 5,
+                "increment": 1
+              },
+              "prefabId": "skchr_mlyss_3",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 12,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.18,
+                  "valueStr": null
+                },
+                {
+                  "key": "mlyss_s_3[token_melee_trigger].interval",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "mlyss_s_3[unmoveable].duration",
+                  "value": 1.5,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Superficial Regulation",
+              "rangeId": null,
+              "description": "Immediately gains <@ba.vup>{cost}</> DP, Muelsyse and her Flowing Shapes gain <@ba.vup>+{atk:0%}</> ATK, if Flowing Shape is in Melee form, pulls surrounding enemies <@ba.vup>slightly</> towards it every <@ba.vup>{mlyss_s_3[token_melee_trigger].interval}</> seconds and <$ba.stun>Stuns</> all blocked enemies; if Flowing Shape is in Ranged form, respawns all Flowing Shapes and attacks <$ba.root>Bind</> enemies for <@ba.vup>{mlyss_s_3[unmoveable].duration}</> seconds",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 42,
+                "initSp": 10,
+                "increment": 1
+              },
+              "prefabId": "skchr_mlyss_3",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 13,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.22,
+                  "valueStr": null
+                },
+                {
+                  "key": "mlyss_s_3[token_melee_trigger].interval",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "mlyss_s_3[unmoveable].duration",
+                  "value": 1.5,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Superficial Regulation",
+              "rangeId": null,
+              "description": "Immediately gains <@ba.vup>{cost}</> DP, Muelsyse and her Flowing Shapes gain <@ba.vup>+{atk:0%}</> ATK, if Flowing Shape is in Melee form, pulls surrounding enemies <@ba.vup>slightly</> towards it every <@ba.vup>{mlyss_s_3[token_melee_trigger].interval}</> seconds and <$ba.stun>Stuns</> all blocked enemies; if Flowing Shape is in Ranged form, respawns all Flowing Shapes and attacks <$ba.root>Bind</> enemies for <@ba.vup>{mlyss_s_3[unmoveable].duration}</> seconds",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 41,
+                "initSp": 10,
+                "increment": 1
+              },
+              "prefabId": "skchr_mlyss_3",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 13,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.26,
+                  "valueStr": null
+                },
+                {
+                  "key": "mlyss_s_3[token_melee_trigger].interval",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "mlyss_s_3[unmoveable].duration",
+                  "value": 1.5,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Superficial Regulation",
+              "rangeId": null,
+              "description": "Immediately gains <@ba.vup>{cost}</> DP, Muelsyse and her Flowing Shapes gain <@ba.vup>+{atk:0%}</> ATK, if Flowing Shape is in Melee form, pulls surrounding enemies <@ba.vup>slightly</> towards it every <@ba.vup>{mlyss_s_3[token_melee_trigger].interval}</> seconds and <$ba.stun>Stuns</> all blocked enemies; if Flowing Shape is in Ranged form, respawns all Flowing Shapes and attacks <$ba.root>Bind</> enemies for <@ba.vup>{mlyss_s_3[unmoveable].duration}</> seconds",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 40,
+                "initSp": 10,
+                "increment": 1
+              },
+              "prefabId": "skchr_mlyss_3",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 13,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "mlyss_s_3[token_melee_trigger].interval",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "mlyss_s_3[unmoveable].duration",
+                  "value": 1.5,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Superficial Regulation",
+              "rangeId": null,
+              "description": "Immediately gains <@ba.vup>{cost}</> DP, Muelsyse and her Flowing Shapes gain <@ba.vup>+{atk:0%}</> ATK, if Flowing Shape is in Melee form, pulls surrounding enemies <@ba.vup>slightly</> towards it every <@ba.vup>{mlyss_s_3[token_melee_trigger].interval}</> seconds and <$ba.stun>Stuns</> all blocked enemies; if Flowing Shape is in Ranged form, respawns all Flowing Shapes and attacks <$ba.root>Bind</> enemies for <@ba.vup>{mlyss_s_3[unmoveable].duration}</> seconds",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 39,
+                "initSp": 15,
+                "increment": 1
+              },
+              "prefabId": "skchr_mlyss_3",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 14,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.35,
+                  "valueStr": null
+                },
+                {
+                  "key": "mlyss_s_3[token_melee_trigger].interval",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "mlyss_s_3[unmoveable].duration",
+                  "value": 1.5,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Superficial Regulation",
+              "rangeId": null,
+              "description": "Immediately gains <@ba.vup>{cost}</> DP, Muelsyse and her Flowing Shapes gain <@ba.vup>+{atk:0%}</> ATK, if Flowing Shape is in Melee form, pulls surrounding enemies <@ba.vup>slightly</> towards it every <@ba.vup>{mlyss_s_3[token_melee_trigger].interval}</> seconds and <$ba.stun>Stuns</> all blocked enemies; if Flowing Shape is in Ranged form, respawns all Flowing Shapes and attacks <$ba.root>Bind</> enemies for <@ba.vup>{mlyss_s_3[unmoveable].duration}</> seconds",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 38,
+                "initSp": 16,
+                "increment": 1
+              },
+              "prefabId": "skchr_mlyss_3",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 14,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "mlyss_s_3[token_melee_trigger].interval",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "mlyss_s_3[unmoveable].duration",
+                  "value": 1.5,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Superficial Regulation",
+              "rangeId": null,
+              "description": "Immediately gains <@ba.vup>{cost}</> DP, Muelsyse and her Flowing Shapes gain <@ba.vup>+{atk:0%}</> ATK, if Flowing Shape is in Melee form, pulls surrounding enemies <@ba.vup>slightly</> towards it every <@ba.vup>{mlyss_s_3[token_melee_trigger].interval}</> seconds and <$ba.stun>Stuns</> all blocked enemies; if Flowing Shape is in Ranged form, respawns all Flowing Shapes and attacks <$ba.root>Bind</> enemies for <@ba.vup>{mlyss_s_3[unmoveable].duration}</> seconds",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 37,
+                "initSp": 17,
+                "increment": 1
+              },
+              "prefabId": "skchr_mlyss_3",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 14,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.45,
+                  "valueStr": null
+                },
+                {
+                  "key": "mlyss_s_3[token_melee_trigger].interval",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "mlyss_s_3[unmoveable].duration",
+                  "value": 1.5,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Superficial Regulation",
+              "rangeId": null,
+              "description": "Immediately gains <@ba.vup>{cost}</> DP, Muelsyse and her Flowing Shapes gain <@ba.vup>+{atk:0%}</> ATK, if Flowing Shape is in Melee form, pulls surrounding enemies <@ba.vup>slightly</> towards it every <@ba.vup>{mlyss_s_3[token_melee_trigger].interval}</> seconds and <$ba.stun>Stuns</> all blocked enemies; if Flowing Shape is in Ranged form, respawns all Flowing Shapes and attacks <$ba.root>Bind</> enemies for <@ba.vup>{mlyss_s_3[unmoveable].duration}</> seconds",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 35,
+                "initSp": 18,
+                "increment": 1
+              },
+              "prefabId": "skchr_mlyss_3",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 15,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "mlyss_s_3[token_melee_trigger].interval",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "mlyss_s_3[unmoveable].duration",
+                  "value": 1.5,
+                  "valueStr": null
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "char_4138_narant": {
       "id": "char_4138_narant",
       "name": "Narantuya",
@@ -639382,6 +641719,475 @@
     }
   },
   "tokens": {
+    "token_10030_mlyss_wtrman": {
+      "id": "token_10030_mlyss_wtrman",
+      "name": "Flowing Shape",
+      "profession": "TOKEN",
+      "subProfessionId": "notchar1",
+      "position": "ALL",
+      "phases": [
+        {
+          "maxLevel": 50,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 910,
+                "atk": 121,
+                "def": 117,
+                "magicResistance": 0,
+                "cost": 0,
+                "blockCnt": 0,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.5,
+                "respawnTime": 10,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 50,
+              "data": {
+                "maxHp": 1183,
+                "atk": 173,
+                "def": 157,
+                "magicResistance": 0,
+                "cost": 0,
+                "blockCnt": 0,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.5,
+                "respawnTime": 10,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ]
+          ]
+        },
+        {
+          "maxLevel": 80,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 1246,
+                "atk": 179,
+                "def": 162,
+                "magicResistance": 0,
+                "cost": 0,
+                "blockCnt": 0,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.5,
+                "respawnTime": 10,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 80,
+              "data": {
+                "maxHp": 1520,
+                "atk": 239,
+                "def": 203,
+                "magicResistance": 0,
+                "cost": 0,
+                "blockCnt": 0,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.5,
+                "respawnTime": 10,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ]
+          ]
+        },
+        {
+          "maxLevel": 90,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 1600,
+                "atk": 247,
+                "def": 210,
+                "magicResistance": 0,
+                "cost": 0,
+                "blockCnt": 0,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.5,
+                "respawnTime": 10,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 90,
+              "data": {
+                "maxHp": 2000,
+                "atk": 302,
+                "def": 257,
+                "magicResistance": 0,
+                "cost": 0,
+                "blockCnt": 0,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.5,
+                "respawnTime": 10,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ]
+          ]
+        }
+      ],
+      "trait": null,
+      "talents": [
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_0",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": null,
+              "description": "On skill activation, copies 50% of the target's HP, ATK, DEF, and RES, as well as Block Count, Attack Interval, Attack Range, and Initial Damage Type (Does not inherit 'does not attack' or healing type)",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "interval",
+                  "value": 30,
+                  "valueStr": null
+                },
+                {
+                  "key": "block_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "scale",
+                  "value": 0.5,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": true
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": null,
+              "description": "On skill activation, copies 70% of the target's HP, ATK, DEF, and RES, as well as Block Count, Attack Interval, Attack Range, and Initial Damage Type (Does not inherit 'does not attack' or healing type)",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "interval",
+                  "value": 28,
+                  "valueStr": null
+                },
+                {
+                  "key": "block_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "scale",
+                  "value": 0.7,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": true
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": null,
+              "description": "On skill activation, copies 90% of the target's HP, ATK, DEF, and RES, as well as Block Count, Attack Interval, Attack Range, and Initial Damage Type (Does not inherit 'does not attack' or healing type)",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "interval",
+                  "value": 25,
+                  "valueStr": null
+                },
+                {
+                  "key": "block_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "scale",
+                  "value": 0.9,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": true
+            }
+          ]
+        },
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_0",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "2",
+              "name": null,
+              "description": null,
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "steal_atk",
+                  "value": 10,
+                  "valueStr": null
+                },
+                {
+                  "key": "steal_atk_max",
+                  "value": 250,
+                  "valueStr": null
+                },
+                {
+                  "key": "steal_def",
+                  "value": 10,
+                  "valueStr": null
+                },
+                {
+                  "key": "steal_def_max",
+                  "value": 250,
+                  "valueStr": null
+                },
+                {
+                  "key": "mlyss_wtrman_t_2[range].max_stack_cnt",
+                  "value": 10,
+                  "valueStr": null
+                },
+                {
+                  "key": "interval",
+                  "value": 25,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": true
+            }
+          ]
+        }
+      ],
+      "skills": [
+        {
+          "id": "sktok_mlyss_wtrman_1",
+          "unlockCondition": {
+            "phase": "PHASE_0",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "Flowing Shape",
+              "rangeId": null,
+              "description": "Copies an undeployed Operator. If it is a Ranged Operator, can split itself after every <@ba.vup>10</> attacks, automatically deploying a copy on an adjacent tile (lasts <@ba.vup>25</> seconds); if it is a Melee Operator, each attack <$ba.steal>Steals</> <@ba.vup>10</> ATK and DEF from enemies (Caps at<@ba.vup>250</>, resets after copying another Operator)",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 100,
+                "initSp": 95,
+                "increment": 1
+              },
+              "prefabId": "sktok_mlyss_wtrman_1",
+              "duration": 20,
+              "blackboard": []
+            }
+          ]
+        },
+        {
+          "id": "sktok_mlyss_wtrman_2",
+          "unlockCondition": {
+            "phase": "PHASE_1",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "Flowing Shape",
+              "rangeId": null,
+              "description": "Copies an undeployed Operator. If it is a Ranged Operator, can split itself after every <@ba.vup>10</> attacks, automatically deploying a copy on an adjacent tile (lasts <@ba.vup>25</> seconds); if it is a Melee Operator, each attack <$ba.steal>Steals</> <@ba.vup>10</> ATK and DEF from enemies (Caps at<@ba.vup>250</>, resets after copying another Operator)",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 100,
+                "initSp": 95,
+                "increment": 1
+              },
+              "prefabId": "sktok_mlyss_wtrman_2",
+              "duration": 20,
+              "blackboard": []
+            }
+          ]
+        },
+        {
+          "id": "sktok_mlyss_wtrman_3",
+          "unlockCondition": {
+            "phase": "PHASE_2",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "Flowing Shape",
+              "rangeId": null,
+              "description": "Copies an undeployed Operator. If it is a Ranged Operator, can split itself after every <@ba.vup>10</> attacks, automatically deploying a copy on an adjacent tile (lasts <@ba.vup>25</> seconds); if it is a Melee Operator, each attack <$ba.steal>Steals</> <@ba.vup>10</> ATK and DEF from enemies (Caps at<@ba.vup>250</>, resets after copying another Operator)",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 100,
+                "initSp": 95,
+                "increment": 1
+              },
+              "prefabId": "sktok_mlyss_wtrman_3",
+              "duration": 20,
+              "blackboard": [
+                {
+                  "key": "interval",
+                  "value": 25,
+                  "valueStr": null
+                },
+                {
+                  "key": "force",
+                  "value": 0,
+                  "valueStr": null
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/f75740242898f24cad3fd0f5ffd24a9d0868da69/models/operator/token_10030_mlyss_wtrman/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+    },
     "token_10037_mitm_trshrb": {
       "id": "token_10037_mitm_trshrb",
       "name": "Cherry-3",
@@ -639807,7 +642613,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10037_mitm_trshrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/f75740242898f24cad3fd0f5ffd24a9d0868da69/models/operator/token_10037_mitm_trshrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10027_ironmn_pile1": {
       "id": "token_10027_ironmn_pile1",
@@ -640903,7 +643709,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10027_ironmn_pile1/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/f75740242898f24cad3fd0f5ffd24a9d0868da69/models/operator/token_10027_ironmn_pile1/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10027_ironmn_pile2": {
       "id": "token_10027_ironmn_pile2",
@@ -642173,7 +644979,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10027_ironmn_pile2/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/f75740242898f24cad3fd0f5ffd24a9d0868da69/models/operator/token_10027_ironmn_pile2/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10027_ironmn_pile3": {
       "id": "token_10027_ironmn_pile3",
@@ -644681,7 +647487,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10027_ironmn_pile3/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/f75740242898f24cad3fd0f5ffd24a9d0868da69/models/operator/token_10027_ironmn_pile3/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10020_ling_soul1": {
       "id": "token_10020_ling_soul1",
@@ -645573,7 +648379,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10020_ling_soul1/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/f75740242898f24cad3fd0f5ffd24a9d0868da69/models/operator/token_10020_ling_soul1/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10020_ling_soul2": {
       "id": "token_10020_ling_soul2",
@@ -646909,7 +649715,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10020_ling_soul2/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/f75740242898f24cad3fd0f5ffd24a9d0868da69/models/operator/token_10020_ling_soul2/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10020_ling_soul3": {
       "id": "token_10020_ling_soul3",
@@ -648749,7 +651555,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10020_ling_soul3/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/f75740242898f24cad3fd0f5ffd24a9d0868da69/models/operator/token_10020_ling_soul3/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10005_mgllan_drone1": {
       "id": "token_10005_mgllan_drone1",
@@ -649841,7 +652647,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10005_mgllan_drone1/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/f75740242898f24cad3fd0f5ffd24a9d0868da69/models/operator/token_10005_mgllan_drone1/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10005_mgllan_drone2": {
       "id": "token_10005_mgllan_drone2",
@@ -650837,7 +653643,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10005_mgllan_drone2/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/f75740242898f24cad3fd0f5ffd24a9d0868da69/models/operator/token_10005_mgllan_drone2/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10005_mgllan_drone3": {
       "id": "token_10005_mgllan_drone3",
@@ -651929,7 +654735,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10005_mgllan_drone3/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/f75740242898f24cad3fd0f5ffd24a9d0868da69/models/operator/token_10005_mgllan_drone3/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10056_angel2_target": {
       "id": "token_10056_angel2_target",
@@ -652729,7 +655535,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10056_angel2_target/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/f75740242898f24cad3fd0f5ffd24a9d0868da69/models/operator/token_10056_angel2_target/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10035_wisdel_wward": {
       "id": "token_10035_wisdel_wward",
@@ -655388,7 +658194,7 @@
         }
       ],
       "automaticOnly": true,
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10031_swire2_gdtrap/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/f75740242898f24cad3fd0f5ffd24a9d0868da69/models/operator/token_10031_swire2_gdtrap/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10033_ela_grzmot": {
       "id": "token_10033_ela_grzmot",
@@ -657187,7 +659993,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10033_ela_grzmot/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/f75740242898f24cad3fd0f5ffd24a9d0868da69/models/operator/token_10033_ela_grzmot/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10034_ray_sndbst": {
       "id": "token_10034_ray_sndbst",
@@ -657821,7 +660627,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10034_ray_sndbst/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/f75740242898f24cad3fd0f5ffd24a9d0868da69/models/operator/token_10034_ray_sndbst/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10028_vigil_wolf": {
       "id": "token_10028_vigil_wolf",
@@ -658560,7 +661366,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10028_vigil_wolf/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/f75740242898f24cad3fd0f5ffd24a9d0868da69/models/operator/token_10028_vigil_wolf/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10026_bgsnow_subbow": {
       "id": "token_10026_bgsnow_subbow",
@@ -660125,7 +662931,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10026_bgsnow_subbow/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/f75740242898f24cad3fd0f5ffd24a9d0868da69/models/operator/token_10026_bgsnow_subbow/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10017_skadi2_dedant": {
       "id": "token_10017_skadi2_dedant",
@@ -661722,7 +664528,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10017_skadi2_dedant/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/f75740242898f24cad3fd0f5ffd24a9d0868da69/models/operator/token_10017_skadi2_dedant/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10025_doroth_recttp": {
       "id": "token_10025_doroth_recttp",
@@ -663582,7 +666388,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10025_doroth_recttp/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/f75740242898f24cad3fd0f5ffd24a9d0868da69/models/operator/token_10025_doroth_recttp/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10036_lasher_mcbird": {
       "id": "token_10036_lasher_mcbird",
@@ -664506,7 +667312,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10036_lasher_mcbird/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/f75740242898f24cad3fd0f5ffd24a9d0868da69/models/operator/token_10036_lasher_mcbird/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10032_jesca2_jckshd": {
       "id": "token_10032_jesca2_jckshd",
@@ -664843,7 +667649,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10032_jesca2_jckshd/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/f75740242898f24cad3fd0f5ffd24a9d0868da69/models/operator/token_10032_jesca2_jckshd/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10040_siege2_vlion": {
       "id": "token_10040_siege2_vlion",
@@ -666275,7 +669081,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10009_weedy_cannon/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/f75740242898f24cad3fd0f5ffd24a9d0868da69/models/operator/token_10009_weedy_cannon/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10024_ebnhlz_rcube": {
       "id": "token_10024_ebnhlz_rcube",
@@ -666848,7 +669654,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10024_ebnhlz_rcube/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/f75740242898f24cad3fd0f5ffd24a9d0868da69/models/operator/token_10024_ebnhlz_rcube/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10044_wulfen_mine": {
       "id": "token_10044_wulfen_mine",
@@ -668049,7 +670855,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10044_wulfen_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/f75740242898f24cad3fd0f5ffd24a9d0868da69/models/operator/token_10044_wulfen_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10042_tecno_puppet": {
       "id": "token_10042_tecno_puppet",
@@ -668298,7 +671104,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10042_tecno_puppet/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/f75740242898f24cad3fd0f5ffd24a9d0868da69/models/operator/token_10042_tecno_puppet/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10041_cathy_catsld": {
       "id": "token_10041_cathy_catsld",
@@ -668856,7 +671662,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10041_cathy_catsld/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/f75740242898f24cad3fd0f5ffd24a9d0868da69/models/operator/token_10041_cathy_catsld/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10022_kazema_shadow": {
       "id": "token_10022_kazema_shadow",
@@ -669326,7 +672132,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10022_kazema_shadow/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/f75740242898f24cad3fd0f5ffd24a9d0868da69/models/operator/token_10022_kazema_shadow/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10001_deepcl_tentac": {
       "id": "token_10001_deepcl_tentac",
@@ -669640,7 +672446,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10001_deepcl_tentac/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/f75740242898f24cad3fd0f5ffd24a9d0868da69/models/operator/token_10001_deepcl_tentac/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10018_robrta_mach": {
       "id": "token_10018_robrta_mach",
@@ -670130,7 +672936,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10018_robrta_mach/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/f75740242898f24cad3fd0f5ffd24a9d0868da69/models/operator/token_10018_robrta_mach/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10014_bstalk_crab": {
       "id": "token_10014_bstalk_crab",
@@ -670459,7 +673265,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10014_bstalk_crab/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/f75740242898f24cad3fd0f5ffd24a9d0868da69/models/operator/token_10014_bstalk_crab/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10011_beewax_oblisk": {
       "id": "token_10011_beewax_oblisk",
@@ -671404,7 +674210,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10011_beewax_oblisk/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/f75740242898f24cad3fd0f5ffd24a9d0868da69/models/operator/token_10011_beewax_oblisk/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10006_vodfox_doll": {
       "id": "token_10006_vodfox_doll",
@@ -672040,7 +674846,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10006_vodfox_doll/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/f75740242898f24cad3fd0f5ffd24a9d0868da69/models/operator/token_10006_vodfox_doll/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10003_cgbird_bird": {
       "id": "token_10003_cgbird_bird",
@@ -672335,7 +675141,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10003_cgbird_bird/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/f75740242898f24cad3fd0f5ffd24a9d0868da69/models/operator/token_10003_cgbird_bird/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10000_silent_healrb": {
       "id": "token_10000_silent_healrb",
@@ -672718,7 +675524,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10000_silent_healrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/f75740242898f24cad3fd0f5ffd24a9d0868da69/models/operator/token_10000_silent_healrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10015_dusk_drgn": {
       "id": "token_10015_dusk_drgn",
@@ -673132,7 +675938,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10015_dusk_drgn/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/f75740242898f24cad3fd0f5ffd24a9d0868da69/models/operator/token_10015_dusk_drgn/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10007_phatom_twin": {
       "id": "token_10007_phatom_twin",
@@ -674911,7 +677717,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10007_phatom_twin/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/f75740242898f24cad3fd0f5ffd24a9d0868da69/models/operator/token_10007_phatom_twin/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10008_cqbw_box": {
       "id": "token_10008_cqbw_box",
@@ -675484,7 +678290,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10008_cqbw_box/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/f75740242898f24cad3fd0f5ffd24a9d0868da69/models/operator/token_10008_cqbw_box/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10029_slent2_protrb": {
       "id": "token_10029_slent2_protrb",
@@ -676229,7 +679035,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10029_slent2_protrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/f75740242898f24cad3fd0f5ffd24a9d0868da69/models/operator/token_10029_slent2_protrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10019_nearl2_sword": {
       "id": "token_10019_nearl2_sword",
@@ -677016,7 +679822,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10019_nearl2_sword/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/f75740242898f24cad3fd0f5ffd24a9d0868da69/models/operator/token_10019_nearl2_sword/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10002_kalts_mon3tr": {
       "id": "token_10002_kalts_mon3tr",
@@ -677434,7 +680240,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10002_kalts_mon3tr/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/f75740242898f24cad3fd0f5ffd24a9d0868da69/models/operator/token_10002_kalts_mon3tr/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10010_folivo_car": {
       "id": "token_10010_folivo_car",
@@ -679055,7 +681861,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10010_folivo_car/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/f75740242898f24cad3fd0f5ffd24a9d0868da69/models/operator/token_10010_folivo_car/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10021_blkngt_hypnos": {
       "id": "token_10021_blkngt_hypnos",
@@ -679470,7 +682276,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10021_blkngt_hypnos/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/f75740242898f24cad3fd0f5ffd24a9d0868da69/models/operator/token_10021_blkngt_hypnos/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10023_windft_wrench": {
       "id": "token_10023_windft_wrench",
@@ -680634,7 +683440,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10023_windft_wrench/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/f75740242898f24cad3fd0f5ffd24a9d0868da69/models/operator/token_10023_windft_wrench/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10045_alanna_crane": {
       "id": "token_10045_alanna_crane",
@@ -681034,7 +683840,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10045_alanna_crane/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/f75740242898f24cad3fd0f5ffd24a9d0868da69/models/operator/token_10045_alanna_crane/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10013_robin_mine": {
       "id": "token_10013_robin_mine",
@@ -681965,7 +684771,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10013_robin_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/f75740242898f24cad3fd0f5ffd24a9d0868da69/models/operator/token_10013_robin_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10016_rfrost_mine": {
       "id": "token_10016_rfrost_mine",
@@ -682896,7 +685702,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10016_rfrost_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/f75740242898f24cad3fd0f5ffd24a9d0868da69/models/operator/token_10016_rfrost_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10004_otter_motter": {
       "id": "token_10004_otter_motter",
@@ -684245,7 +687051,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5f58569d050e7444bb7b33646554b9f99249b7be/models/operator/token_10004_otter_motter/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/f75740242898f24cad3fd0f5ffd24a9d0868da69/models/operator/token_10004_otter_motter/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     }
   },
   "enemies": {
@@ -684296,7 +687102,7 @@
   },
   "skillEffects": {
     "repository": "arkpedia/arkpedia-sd-assets",
-    "commit": "5f58569d050e7444bb7b33646554b9f99249b7be",
+    "commit": "f75740242898f24cad3fd0f5ffd24a9d0868da69",
     "pack": {
       "path": "effects/charge-cost/26-09-23-17-49-43_b9cc4a/effect.json",
       "bytes": 15311,

@@ -10,11 +10,17 @@ if (!executablePath) throw Error('Set ARKPEDIA_REVIEW_CHROME and start port 3182
 const origin = 'http://127.0.0.1:3182', out = '.cache/arkpedia/muelsyse-source/copy-browser/';
 const ID = 'char_249_mlyss', TOKEN = 'token_10030_mlyss_wtrman', DONOR = 'char_208_melan';
 const sdCommit = 'f75740242898f24cad3fd0f5ffd24a9d0868da69';
+const data = await (await fetch(origin + '/data/arkpedia-mvp.json')).json();
+// This historical injected fixture remains useful against source-only snapshots.
+// A selectable Muelsyse must instead exercise the real public squad and adapter.
+if (data.operators[ID]) {
+  await import('./review-muelsyse-public.mjs');
+  process.exit(0);
+}
+assert.equal(data.operators[ID], undefined);
 const manifest = JSON.parse(await readFile('../arkpedia-sd-assets/manifest.json', 'utf8'));
 const models = Object.fromEntries(Object.entries(manifest.models).filter(([k]) =>
   [ID, TOKEN].some(id => k.startsWith(`operator/${id}/default/`))));
-const data = await (await fetch(origin + '/data/arkpedia-mvp.json')).json();
-assert.equal(data.operators[ID], undefined);
 data.stage.geometry.waves[0].spawns = []; data.stage.battle.initial_dp = 99;
 data.stage.battle.dp_per_second = 0;
 const app = await readFile('public/arkpedia/app.js', 'utf8');

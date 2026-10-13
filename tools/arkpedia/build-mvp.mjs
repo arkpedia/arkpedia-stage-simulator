@@ -154,6 +154,18 @@ if(ids.includes('char_1040_blaze2')){
     ||evidence.source.commit!==pins[paths.character_table[0]])
     throw Error('Blaze Igniting public runtime review differs from the pinned native source');
 }
+if (ids.includes('char_249_mlyss')) {
+  const review = JSON.parse(await readFile(new URL('../../data/arkpedia-muelsyse-runtime-review.json', import.meta.url)));
+  for (const [name, key] of [['prefabs', 'sourceFoundationSha256'], ['device-art', 'deviceArtworkSha256'], ['copy-source', 'donorSourceSha256']]) {
+    const bytes = await readFile(new URL(`../../data/arkpedia-muelsyse-${name}.json`, import.meta.url));
+    if (createHash('sha256').update(bytes).digest('hex') !== review[key]) throw Error('Muelsyse reviewed source differs from its receipt');
+  }
+  const evidence = JSON.parse(await readFile(new URL('../../data/arkpedia-muelsyse-prefabs.json', import.meta.url)));
+  if (JSON.stringify(review.enabledOperators) !== JSON.stringify(['char_249_mlyss']) || review.frameParity !== false
+    || review.moduleSupport !== false || review.nativeParticleSupport !== false
+    || review.s1PulsePolicy !== 'source-interval-duration-clipping-v1' || review.cloneProtectionPolicy !== 'warming-only-v1'
+    || evidence.source.commit !== pins[paths.character_table[0]]) throw Error('Muelsyse lacks pinned public runtime review');
+}
 if (ids.includes('char_4141_marcil')) {
   const review = JSON.parse(await readFile(new URL('../../data/arkpedia-marcil-runtime-review.json', import.meta.url)));
   const foundation = await readFile(new URL('../../data/arkpedia-marcil-prefabs.json', import.meta.url));
@@ -212,6 +224,7 @@ tokenIds.unshift('token_10005_mgllan_drone1', 'token_10005_mgllan_drone2', 'toke
 tokenIds.unshift('token_10020_ling_soul1', 'token_10020_ling_soul2', 'token_10020_ling_soul3');
 tokenIds.unshift(...[1, 2, 3].map(n => `token_10027_ironmn_pile${n}`));
 tokenIds.unshift('token_10037_mitm_trshrb');
+if (ids.includes('char_249_mlyss')) tokenIds.unshift('token_10030_mlyss_wtrman');
 const tokens = Object.fromEntries(tokenIds.map(id => {
   const c = characters[id];
   if (!c) throw Error(`Missing original token: ${id}`);
@@ -321,6 +334,17 @@ const models = Object.fromEntries(
     return [k, sd.models[k]];
   }),
 );
+if (ids.includes('char_249_mlyss')) {
+  const review = JSON.parse(await readFile(new URL('../../data/arkpedia-muelsyse-runtime-review.json', import.meta.url)));
+  const keys = ['char_249_mlyss', 'token_10030_mlyss_wtrman'].flatMap(id =>
+    ['front', 'back'].map(face => `operator/${id}/default/${face}`)).sort();
+  if (JSON.stringify(Object.keys(review.originalArtwork).sort()) !== JSON.stringify(keys))
+    throw Error('Muelsyse review must bind both original owner and Flowing Shape facings');
+  for (const [key, expected] of Object.entries(review.originalArtwork)) {
+    if (!models[key] || JSON.stringify(models[key]) !== JSON.stringify(expected))
+      throw Error(`Muelsyse published model differs from reviewed native artwork: ${key}`);
+  }
+}
 if (ids.includes('char_4141_marcil')) {
   const review = JSON.parse(await readFile(new URL('../../data/arkpedia-marcil-runtime-review.json', import.meta.url)));
   const evidence = JSON.parse(await readFile(new URL('../../data/arkpedia-marcil-prefabs.json', import.meta.url)));

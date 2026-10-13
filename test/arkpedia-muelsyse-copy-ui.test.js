@@ -34,8 +34,8 @@ function fixture() {
   return { b, u, t, deck, entry, until, ready };
 }
 
-test('copy input remains opt-in and opens only a ready original Flowing Shape', () => {
-  const f = fixture(); assert.equal(data.operators[ID], undefined);
+test('copy input opens only a ready original Flowing Shape; extraction receipt stays immutable', () => {
+  const f = fixture(); assert.deepEqual(evidence.enabledOperators, []);
   assert.equal(flowingShapeDeck({ ...f.entry, ownerId: DONOR }), null);
   assert.equal(Copy.open({ ...f.entry, ownerId: DONOR }), null);
   assert.equal(Copy.open(f.entry), null); f.ready();

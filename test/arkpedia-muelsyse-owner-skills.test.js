@@ -72,12 +72,11 @@ function cast(f) {
 }
 const ownerHits = f => f.hits.filter(h => h.source === f.u && h.dmg.tags?.includes(`muelsyse:s${f.record.index + 1}`));
 
-test('owner contract is explicit and public support remains held', () => {
+test('owner diagnostic requires its exact contract and retains its original limits', () => {
   assert.throws(() => make({ contract: { ...CONTRACT } }), /reviewed owner skill contract/);
   assert.equal(CONTRACT.frameParity, false);
   assert.match(CONTRACT.limits, /incomplete skill support/);
   assert.match(CONTRACT.limits, /late\/recovered/);
-  assert.equal(data.operators[ID], undefined);
 });
 
 test('all thirty owner ranks use natural source SP, selected buffs and exact-duration DP clipping', () => {

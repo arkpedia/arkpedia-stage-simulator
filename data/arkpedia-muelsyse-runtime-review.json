@@ -1,0 +1,518 @@
+{
+  "schemaVersion": 1,
+  "operatorId": "char_249_mlyss",
+  "enabledOperators": [
+    "char_249_mlyss"
+  ],
+  "frameParity": false,
+  "moduleSupport": false,
+  "nativeParticleSupport": false,
+  "sourceFoundationSha256": "61b12822227e45497f9e68aba5d0d929a7211fe8b535d0e0b177cc69c6527549",
+  "deviceArtworkSha256": "cc8861bf8d1418438963df055a4f444a2c110b529c78fcf7a234be7588845ddd",
+  "donorSourceSha256": "913987db85add55c8191dab413ee960aab4946806a93d6189eff64d3556d4ec4",
+  "s1PulsePolicy": "source-interval-duration-clipping-v1",
+  "cloneProtectionPolicy": "warming-only-v1",
+  "scope": "Selected-source owner combat, all thirty skill ranks, copied melee/ranged forms, recovery, splitting, immutable Rhine squad cost and public copy/deployment lifecycle.",
+  "verification": [
+    "test/arkpedia-muelsyse-public.test.js",
+    "test/arkpedia-muelsyse-form-skills.test.js",
+    "test/arkpedia-muelsyse-copy-ui.test.js",
+    "tools/arkpedia/review-muelsyse-public.mjs"
+  ],
+  "limits": [
+    "S1 clips authored periodic intervals to fifteen seconds; display DP may exceed actual pulses. Compiled end-frame ordering remains unrecovered.",
+    "Spawned copies use warming protection only; native numeric flag/lifetime dispatch remains unrecovered.",
+    "Random split tiles, emit/spawn shared tiles, copied card snapshots, final-addition stealing, source-owned statuses and pull geometry use documented explicit local policies.",
+    "Rhine permanent and first-deployment discounts use the existing cost bucket after the redeployment multiplier. Native C# rounding/order remain unverified.",
+    "All normal and copied animations use original clips with local scheduler clocks; modules, original particles/audio and Unity frame parity remain unsupported."
+  ],
+  "originalArtwork": {
+    "operator/char_249_mlyss/default/front": {
+      "kind": "operator",
+      "id": "char_249_mlyss",
+      "variant": "default",
+      "facing": "front",
+      "spineVersion": "3.8.99",
+      "source": {
+        "key": "operators",
+        "repository": "fexli/ArknightsResource",
+        "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+        "directory": "spine/char_249_mlyss/char_249_mlyss/Front"
+      },
+      "skeleton": {
+        "path": "models/operator/char_249_mlyss/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_249_mlyss.skel",
+        "bytes": 492823,
+        "sha256": "f4580041b34c4f0956a7c04267d5907e7c3332ad08dd9384a2c4b4332d459cc7"
+      },
+      "atlas": {
+        "path": "models/operator/char_249_mlyss/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_249_mlyss.atlas",
+        "bytes": 8663,
+        "sha256": "0a9bfbfae16fa52c4e73f4118f6675e5ab6e8a115278e7659fb89f6f76140555"
+      },
+      "textures": [
+        {
+          "path": "models/operator/char_249_mlyss/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_249_mlyss.png",
+          "bytes": 122542,
+          "sha256": "23f2c5f44981d5b58596f94cca43f120e89d43604ee08906edbf937f474a8fdf"
+        }
+      ],
+      "premultipliedAlpha": true,
+      "animations": {
+        "Attack": 1,
+        "Default": 0,
+        "Die": 1,
+        "Idle": 3,
+        "Skill_1": 1,
+        "Skill_2_Begin": 0.167,
+        "Skill_2_End": 0.167,
+        "Skill_2_Idle": 1,
+        "Skill_2_Loop": 1,
+        "Skill_3_Begin": 0.167,
+        "Skill_3_End": 0.167,
+        "Skill_3_Idle": 1,
+        "Skill_3_loop": 1,
+        "Start": 1
+      },
+      "animationRoles": {
+        "idle": "Idle",
+        "deploy": "Start",
+        "attack": {
+          "begin": null,
+          "loop": "Attack",
+          "end": null
+        },
+        "attackDown": null,
+        "skill": {
+          "begin": null,
+          "loop": "Skill_1",
+          "end": null,
+          "index": 0,
+          "idle": null
+        },
+        "die": "Die",
+        "move": null,
+        "stun": null,
+        "skills": {
+          "0": {
+            "begin": null,
+            "loop": "Skill_1",
+            "end": null,
+            "index": 0,
+            "idle": null
+          },
+          "1": {
+            "begin": "Skill_2_Begin",
+            "loop": "Skill_2_Loop",
+            "end": "Skill_2_End",
+            "index": 1,
+            "idle": "Skill_2_Idle"
+          },
+          "2": {
+            "begin": "Skill_3_Begin",
+            "loop": "Skill_3_loop",
+            "end": "Skill_3_End",
+            "index": 2,
+            "idle": "Skill_3_Idle"
+          }
+        }
+      },
+      "hits": {
+        "Attack": [
+          0.4
+        ],
+        "Skill_1": [
+          0.4
+        ],
+        "Skill_2_Loop": [
+          0.367
+        ],
+        "Skill_3_loop": [
+          0.4
+        ]
+      },
+      "bounds": {
+        "x": -297.499,
+        "y": -3.042,
+        "width": 686.426,
+        "height": 402.502
+      }
+    },
+    "operator/char_249_mlyss/default/back": {
+      "kind": "operator",
+      "id": "char_249_mlyss",
+      "variant": "default",
+      "facing": "back",
+      "spineVersion": "3.8.99",
+      "source": {
+        "key": "operators",
+        "repository": "fexli/ArknightsResource",
+        "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+        "directory": "spine/char_249_mlyss/char_249_mlyss/Back"
+      },
+      "skeleton": {
+        "path": "models/operator/char_249_mlyss/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_249_mlyss.skel",
+        "bytes": 248557,
+        "sha256": "777ab7cbe4aef9416aea34023c37a8a3e3eb7405b60c579c84b6821ab26decf9"
+      },
+      "atlas": {
+        "path": "models/operator/char_249_mlyss/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_249_mlyss.atlas",
+        "bytes": 3074,
+        "sha256": "fd8524af6c90735a70930771765fd3695974ab858651d43d6c94c9ec09ccb199"
+      },
+      "textures": [
+        {
+          "path": "models/operator/char_249_mlyss/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_249_mlyss.png",
+          "bytes": 84275,
+          "sha256": "3d526c1ebdf67a24d8bfc989d483f66d905cce1954d46a8081f3ec45c89189f0"
+        }
+      ],
+      "premultipliedAlpha": true,
+      "animations": {
+        "Attack": 1,
+        "Default": 0,
+        "Idle": 3,
+        "Skill_1": 1,
+        "Skill_2_Begin": 0.167,
+        "Skill_2_End": 0.167,
+        "Skill_2_Idle": 1,
+        "Skill_2_Loop": 1,
+        "Skill_3_Begin": 0.167,
+        "Skill_3_End": 0.167,
+        "Skill_3_Idle": 1,
+        "Skill_3_loop": 1,
+        "Start": 1
+      },
+      "animationRoles": {
+        "idle": "Idle",
+        "deploy": "Start",
+        "attack": {
+          "begin": null,
+          "loop": "Attack",
+          "end": null
+        },
+        "attackDown": null,
+        "skill": {
+          "begin": null,
+          "loop": "Skill_1",
+          "end": null,
+          "index": 0,
+          "idle": null
+        },
+        "die": null,
+        "move": null,
+        "stun": null,
+        "skills": {
+          "0": {
+            "begin": null,
+            "loop": "Skill_1",
+            "end": null,
+            "index": 0,
+            "idle": null
+          },
+          "1": {
+            "begin": "Skill_2_Begin",
+            "loop": "Skill_2_Loop",
+            "end": "Skill_2_End",
+            "index": 1,
+            "idle": "Skill_2_Idle"
+          },
+          "2": {
+            "begin": "Skill_3_Begin",
+            "loop": "Skill_3_loop",
+            "end": "Skill_3_End",
+            "index": 2,
+            "idle": "Skill_3_Idle"
+          }
+        }
+      },
+      "hits": {
+        "Attack": [
+          0.4
+        ],
+        "Skill_1": [
+          0.4
+        ],
+        "Skill_2_Loop": [
+          0.367
+        ],
+        "Skill_3_loop": [
+          0.4
+        ]
+      },
+      "bounds": {
+        "x": -297.499,
+        "y": -3.042,
+        "width": 686.426,
+        "height": 402.502
+      }
+    },
+    "operator/token_10030_mlyss_wtrman/default/front": {
+      "kind": "operator",
+      "id": "token_10030_mlyss_wtrman",
+      "variant": "default",
+      "facing": "front",
+      "source": {
+        "key": "global-client",
+        "kind": "assetbundle",
+        "bundle": {
+          "path": "pkgrps/btl_pfb_tokens_0.ab",
+          "bytes": 5060143,
+          "md5": "5ab8526b9e59e97cc7e94ed6a248013d",
+          "sha256": "eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f",
+          "resourceVersion": "26-09-23-17-49-43_b9cc4a",
+          "url": "https://ark-us-static-online.yo-star.com/assetbundle/official/Android/assets/26-09-23-17-49-43_b9cc4a/pkgrps_btl_pfb_tokens_0.dat",
+          "transforms": [
+            "Original premultiplied RGB and separate grayscale alpha pages merged; RGB clamped to alpha to remove block-compression bleed",
+            "Atlas page dimensions normalized and pma: true recorded; native regions unchanged",
+            "Flowing Shape front/back aliases share one original skeleton; default, melee, ranged and literal zero-duration Idle_2 clips retained"
+          ]
+        },
+        "directory": "pkgrps/btl_pfb_tokens_0.ab",
+        "extractedSkeleton": "token_10030_mlyss_wtrman.skel",
+        "facingAlias": "single-original-model",
+        "originalPathIds": {
+          "rootPathId": "2648866167334787179",
+          "controllerPathId": "-2203269439485355925",
+          "animatorPathId": "1780975406791219307",
+          "faceSwitcherPathId": "1741497691204114539",
+          "skeletonAnimationPathId": "6558256638853142635",
+          "skeletonDataAssetPathId": "-9157201713931467059",
+          "textAssetPathId": "5712459927201897189",
+          "atlasAssetPathId": "-4140195168341198426",
+          "atlasTextAssetPathId": "8358971776639364961",
+          "materialPathId": "-3323982459809044147",
+          "rgbTexturePathId": "-3152131553628916044",
+          "alphaTexturePathId": "-5105136353530260667"
+        },
+        "transforms": [
+          "Original premultiplied RGB and separate grayscale alpha pages merged; RGB clamped to alpha to remove block-compression bleed",
+          "Atlas page dimensions normalized and pma: true recorded; native regions unchanged",
+          "Flowing Shape front/back aliases share one original skeleton; default, melee, ranged and literal zero-duration Idle_2 clips retained"
+        ]
+      },
+      "spineVersion": "3.8.99",
+      "skeleton": {
+        "path": "models/operator/token_10030_mlyss_wtrman/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/token_10030_mlyss_wtrman.skel",
+        "bytes": 546069,
+        "sha256": "1b10d982f0b41f504dd79d9036d4939165968d39b08229494f6849326f32386e"
+      },
+      "atlas": {
+        "path": "models/operator/token_10030_mlyss_wtrman/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/token_10030_mlyss_wtrman.atlas",
+        "bytes": 6393,
+        "sha256": "413a632bb8976b3441374d8c5c9fcd6efe7284212979df608832e57439331bb3"
+      },
+      "textures": [
+        {
+          "path": "models/operator/token_10030_mlyss_wtrman/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/token_10030_mlyss_wtrman.png",
+          "bytes": 73259,
+          "sha256": "6c62550280f0218677822cc9c6c1bf47b70ccec6cc33cf1e79803089e63c7f1e"
+        }
+      ],
+      "premultipliedAlpha": true,
+      "animations": {
+        "A_Attack": 0.8,
+        "A_Combat": 0.8,
+        "A_Default": 0,
+        "A_Die": 0.733,
+        "A_Idle": 1,
+        "A_Start": 1,
+        "A_Stun": 1,
+        "Attack": 0.8,
+        "B_Attack": 0.8,
+        "B_Attack_2": 0.8,
+        "B_Combat": 0.8,
+        "B_Default": 0,
+        "B_Die": 0.733,
+        "B_Idle": 1,
+        "B_Start": 1,
+        "B_Stun": 1,
+        "Change_A": 0.667,
+        "Change_B": 0.667,
+        "Default": 0,
+        "Die": 0.6,
+        "Idle_1": 2,
+        "Idle_2": 0,
+        "Start": 1,
+        "Stun": 2
+      },
+      "animationRoles": {
+        "idle": "Idle_1",
+        "deploy": "Start",
+        "die": "Die",
+        "attack": "Attack",
+        "skill": null
+      },
+      "hits": {
+        "A_Attack": [
+          0.3
+        ],
+        "A_Combat": [
+          0.3
+        ],
+        "Attack": [
+          0.3
+        ],
+        "B_Attack": [
+          0.3
+        ],
+        "B_Attack_2": [
+          0.3,
+          0.333
+        ],
+        "B_Combat": [
+          0.3
+        ]
+      },
+      "bounds": {
+        "x": -99.636,
+        "y": -1.54,
+        "width": 233.478,
+        "height": 396.5
+      },
+      "avatar": {
+        "path": "models/operator/token_10030_mlyss_wtrman/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png",
+        "bytes": 21267,
+        "sha256": "e7eef512af396f7e4732fc336b8814d038b3372c95d4f935d58fc0c314c88a17",
+        "source": {
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "avatar/ASSISTANT"
+        }
+      }
+    },
+    "operator/token_10030_mlyss_wtrman/default/back": {
+      "kind": "operator",
+      "id": "token_10030_mlyss_wtrman",
+      "variant": "default",
+      "facing": "back",
+      "source": {
+        "key": "global-client",
+        "kind": "assetbundle",
+        "bundle": {
+          "path": "pkgrps/btl_pfb_tokens_0.ab",
+          "bytes": 5060143,
+          "md5": "5ab8526b9e59e97cc7e94ed6a248013d",
+          "sha256": "eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f",
+          "resourceVersion": "26-09-23-17-49-43_b9cc4a",
+          "url": "https://ark-us-static-online.yo-star.com/assetbundle/official/Android/assets/26-09-23-17-49-43_b9cc4a/pkgrps_btl_pfb_tokens_0.dat",
+          "transforms": [
+            "Original premultiplied RGB and separate grayscale alpha pages merged; RGB clamped to alpha to remove block-compression bleed",
+            "Atlas page dimensions normalized and pma: true recorded; native regions unchanged",
+            "Flowing Shape front/back aliases share one original skeleton; default, melee, ranged and literal zero-duration Idle_2 clips retained"
+          ]
+        },
+        "directory": "pkgrps/btl_pfb_tokens_0.ab",
+        "extractedSkeleton": "token_10030_mlyss_wtrman.skel",
+        "facingAlias": "single-original-model",
+        "originalPathIds": {
+          "rootPathId": "2648866167334787179",
+          "controllerPathId": "-2203269439485355925",
+          "animatorPathId": "1780975406791219307",
+          "faceSwitcherPathId": "1741497691204114539",
+          "skeletonAnimationPathId": "6558256638853142635",
+          "skeletonDataAssetPathId": "-9157201713931467059",
+          "textAssetPathId": "5712459927201897189",
+          "atlasAssetPathId": "-4140195168341198426",
+          "atlasTextAssetPathId": "8358971776639364961",
+          "materialPathId": "-3323982459809044147",
+          "rgbTexturePathId": "-3152131553628916044",
+          "alphaTexturePathId": "-5105136353530260667"
+        },
+        "transforms": [
+          "Original premultiplied RGB and separate grayscale alpha pages merged; RGB clamped to alpha to remove block-compression bleed",
+          "Atlas page dimensions normalized and pma: true recorded; native regions unchanged",
+          "Flowing Shape front/back aliases share one original skeleton; default, melee, ranged and literal zero-duration Idle_2 clips retained"
+        ]
+      },
+      "spineVersion": "3.8.99",
+      "skeleton": {
+        "path": "models/operator/token_10030_mlyss_wtrman/default/back/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/token_10030_mlyss_wtrman.skel",
+        "bytes": 546069,
+        "sha256": "1b10d982f0b41f504dd79d9036d4939165968d39b08229494f6849326f32386e"
+      },
+      "atlas": {
+        "path": "models/operator/token_10030_mlyss_wtrman/default/back/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/token_10030_mlyss_wtrman.atlas",
+        "bytes": 6393,
+        "sha256": "413a632bb8976b3441374d8c5c9fcd6efe7284212979df608832e57439331bb3"
+      },
+      "textures": [
+        {
+          "path": "models/operator/token_10030_mlyss_wtrman/default/back/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/token_10030_mlyss_wtrman.png",
+          "bytes": 73259,
+          "sha256": "6c62550280f0218677822cc9c6c1bf47b70ccec6cc33cf1e79803089e63c7f1e"
+        }
+      ],
+      "premultipliedAlpha": true,
+      "animations": {
+        "A_Attack": 0.8,
+        "A_Combat": 0.8,
+        "A_Default": 0,
+        "A_Die": 0.733,
+        "A_Idle": 1,
+        "A_Start": 1,
+        "A_Stun": 1,
+        "Attack": 0.8,
+        "B_Attack": 0.8,
+        "B_Attack_2": 0.8,
+        "B_Combat": 0.8,
+        "B_Default": 0,
+        "B_Die": 0.733,
+        "B_Idle": 1,
+        "B_Start": 1,
+        "B_Stun": 1,
+        "Change_A": 0.667,
+        "Change_B": 0.667,
+        "Default": 0,
+        "Die": 0.6,
+        "Idle_1": 2,
+        "Idle_2": 0,
+        "Start": 1,
+        "Stun": 2
+      },
+      "animationRoles": {
+        "idle": "Idle_1",
+        "deploy": "Start",
+        "die": "Die",
+        "attack": "Attack",
+        "skill": null
+      },
+      "hits": {
+        "A_Attack": [
+          0.3
+        ],
+        "A_Combat": [
+          0.3
+        ],
+        "Attack": [
+          0.3
+        ],
+        "B_Attack": [
+          0.3
+        ],
+        "B_Attack_2": [
+          0.3,
+          0.333
+        ],
+        "B_Combat": [
+          0.3
+        ]
+      },
+      "bounds": {
+        "x": -99.636,
+        "y": -1.54,
+        "width": 233.478,
+        "height": 396.5
+      },
+      "avatar": {
+        "path": "models/operator/token_10030_mlyss_wtrman/default/back/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png",
+        "bytes": 21267,
+        "sha256": "e7eef512af396f7e4732fc336b8814d038b3372c95d4f935d58fc0c314c88a17",
+        "source": {
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "avatar/ASSISTANT"
+        }
+      }
+    }
+  }
+}
