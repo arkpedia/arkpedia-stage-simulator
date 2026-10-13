@@ -18,7 +18,7 @@ const live = u => present(u) && !u.hidden;
 const due = (b, at) => b.time + 1e-9 >= at;
 const enemyProfile = Object.freeze({ canHitFly: true });
 
-function verifyNative() {
+export function verifyRmixerAttackSource() {
   for (const [id, clip, projectile, wait] of [
     ['-7035987159684059176', 'Attack_Loop', 'projectile_chr_rmixer', 0],
     ['7781548002548215768', 'Skill_2_Loop', 'projectile_chr_rmixer_sk2', 1],
@@ -68,11 +68,11 @@ export class RmixerAttackController {
       this.u.mem.regularDeathVisual = { clip: 'Die', die: 'Die', duration: this.model().durations.Die };
     else delete this.u.mem.regularDeathVisual;
   }
-  targets() {
+  targets(limit = 1) {
     const u = this.u;
     const out = this.b.enemies.filter(t => live(t) && canTargetEnemy(u, t, enemyProfile)
       && (!t.s.flags.camou || !!t.blockedBy) && (bodyInKeys(t, u.rangeKeySet) || t.blockedBy === u));
-    sortEnemyTargets(this.b, u, out); return out.slice(0, 1);
+    sortEnemyTargets(this.b, u, out); return out.slice(0, limit);
   }
   idle() { this.visual(this.u.skill.active ? 'Skill_2_Idle' : 'Idle', 1, true); }
   transition(clip) {
@@ -92,25 +92,32 @@ export class RmixerAttackController {
       || !canTargetEnemy(u, target, enemyProfile) || target.s.flags.camou && !target.blockedBy
       || !due(b, p.releaseAt)) return false;
     p.accepted = true; this.engaged = true; this.completions.add(p);
+    p.flight = this.launchFlight(target, info, { isSkill: p.skill,
+      projectile: p.skill ? 'projectile_chr_rmixer_sk2' : 'projectile_chr_rmixer',
+      tag: p.skill ? 'rmixer:s2' : 'rmixer:ordinary', activation: p.activation });
+    return true;
+  }
+  launchFlight(target, info, { isSkill, projectile, tag, activation, scale = 1 }) {
+    const { b, u } = this;
     const flight = { sourceSeq: u.deploySeq, targetSeq: target.deploySeq, target,
       attackId: info.attackId, atk: u.s.atk * u.s.atkScaleMul, retired: false,
-      isSkill: p.skill, done: false, activation: p.activation };
-    p.flight = flight; this.flights.add(flight);
+      isSkill, done: false, activation };
+    this.flights.add(flight);
     flight.projectile = b.addProjectile({ from: u, target, source: u, speed: 10, maxAge: 10,
       visual: 'arrow', data: { arkpediaTrackedVisual: true, rmixerSourceSeq: flight.sourceSeq,
-        projectileKey: p.skill ? 'projectile_chr_rmixer_sk2' : 'projectile_chr_rmixer' },
+        projectileKey: projectile },
       onHit: ({ target: t }) => {
         try {
           if (b.finished || t !== target || !t || t.deploySeq !== flight.targetSeq
             || !canTargetEnemy(u, t, enemyProfile) || t.s.flags.camou && !t.blockedBy) return;
           const sameLife = !flight.retired && present(u) && u.deploySeq === flight.sourceSeq;
           const atk = sameLife ? u.s.atk * u.s.atkScaleMul : flight.atk;
-          b.dealDamage(u, t, makeDamageInfo({ amount: atk, type: 'phys', isAttack: true,
+          b.dealDamage(u, t, makeDamageInfo({ amount: atk * scale, type: 'phys', isAttack: true,
             isSkill: flight.isSkill, isSplash: false, applyWay: 'ranged', attackId: flight.attackId,
-            tags: [flight.isSkill ? 'rmixer:s2' : 'rmixer:ordinary'] }));
+            tags: [tag] }));
         } finally { flight.done = true; this.flights.delete(flight); }
       } });
-    return true;
+    return flight;
   }
   complete(p) {
     if (!p.accepted || !this.valid()) return;
@@ -162,6 +169,10 @@ export class RmixerAttackController {
     if ([...this.completions].some(c => c.skill)) return;
     const target = this.targets()[0];
     if (!target) { this.engaged = false; this.idle(); return; }
+    this.beginAttack(target);
+  }
+  beginAttack(target) {
+    const { b, u } = this;
     const skill = this.record.index === 1 && u.skill.active;
     const speed = u.base.bat / u.s.interval, m = this.model();
     const clip = skill ? 'Skill_2_Loop' : 'Attack_Loop';
@@ -198,18 +209,22 @@ export class RmixerAttackController {
   }
 }
 
-export function prepareRmixerAttacks(b, u, { contract } = {}) {
-  if (contract !== RMIXER_ATTACK_CONTRACT) throw Error('Sankta Miksaparato requires the reviewed attack contract');
-  verifyNative();
-  const prepared = prepareRmixerResources(b, u, { contract: RMIXER_RESOURCE_CONTRACT });
-  const { record, resources, kit } = prepared;
-  const controller = new RmixerAttackController(b, u, record, resources);
-  u.mem.rmixerAttacks = controller;
-  kit.trait = { noAttack: true, attackDrivenSkill: true, attack: 'ranged', projectile: 'none', dmgType: 'phys',
+export function rmixerAttackTrait(controller) {
+  return { noAttack: true, attackDrivenSkill: true, attack: 'ranged', projectile: 'none', dmgType: 'phys',
     canHitFly: true, maxTargets: 1, maxTargetsByBlock: false, hitAllBlocked: false, allInRange: false,
     rangeAoe: false, hits: 1, hitsFn: null, chain: null, splashRadius: 0, heal: null,
     onHit: null, onEachHit: null, install: null, requiresAcceptedLaunch: true, attackVisual: 'none',
     launchAttack: (_b, _u, _p, target, info) => controller.release(target, info) };
+}
+
+export function prepareRmixerAttacks(b, u, { contract } = {}) {
+  if (contract !== RMIXER_ATTACK_CONTRACT) throw Error('Sankta Miksaparato requires the reviewed attack contract');
+  verifyRmixerAttackSource();
+  const prepared = prepareRmixerResources(b, u, { contract: RMIXER_RESOURCE_CONTRACT });
+  const { record, resources, kit } = prepared;
+  const controller = new RmixerAttackController(b, u, record, resources);
+  u.mem.rmixerAttacks = controller;
+  kit.trait = rmixerAttackTrait(controller);
   kit.skill = { ...kit.skill, silenceable: false,
     manualCancel: record.index === 1,
     canActivate: () => controller.canActivate(),

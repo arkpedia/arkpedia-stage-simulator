@@ -38,6 +38,7 @@
 //   attack {dmgType, atkScale, splashRadius, splashScale, hits, projectile, maxTargets, dmgMul, onHit, heal…},
 //   heal (bool: heal-type skill for the trigger rule), canActivate() (temporary cast eligibility),
 //   isExhausted() (no uses remain), onStart(ctx), onEnd(ctx), onHit(ctx), onAttack(ctx), onTick(ctx).
+//   completeOnAttack: false lets a source ability controller end its multi-event instant cast itself.
 // ctx passed to spec callbacks: { battle, unit, skill, bb, target?, dealt?, targets?, dt?, reason? }; onAttack's ctx
 //   also carries `noAmmo` (set it to true: this attack spends no ammo). onEnd runs while the skill's mods / range are
 //   still applied (`active` is already false); they are removed right after it (unless onEnd re-activated the skill).
@@ -513,7 +514,7 @@ export class SkillRuntime {
       this.ammoLeft--;
       if (b._hooks.ammoUsed) b.emit('ammoUsed', { unit: this.unit, left: this.ammoLeft, skill: this });
       if (this.ammoLeft <= 0) this.end('ammo');
-    } else if (usedOverride && this.pending && !this.isTimed) {
+    } else if (usedOverride && this.pending && !this.isTimed && this.spec.completeOnAttack !== false) {
       this.pending = false;
       this.end('instant');
     }
