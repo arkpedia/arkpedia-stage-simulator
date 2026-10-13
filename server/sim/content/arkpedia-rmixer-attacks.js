@@ -62,6 +62,7 @@ export class RmixerAttackController {
   visual(clip, speed = 1, loop = false) {
     this.u.mem.regularVisualDirection = ['UP', 'LEFT'].includes(this.u.dir) ? 'UP' : 'RIGHT';
     this.u.mem.regularFormVisual = { clip, speed, loop,
+      ...(!loop ? { idle: this.record.index === 1 && this.u.skill.active ? 'Skill_2_Idle' : 'Idle' } : {}),
       ...(!loop && this.phase?.kind === 'attack' ? { playId: `${this.seq}:${this.phase.serial}` } : {}) };
     if (this.model().durations.Die != null)
       this.u.mem.regularDeathVisual = { clip: 'Die', die: 'Die', duration: this.model().durations.Die };
@@ -210,6 +211,7 @@ export function prepareRmixerAttacks(b, u, { contract } = {}) {
     onHit: null, onEachHit: null, install: null, requiresAcceptedLaunch: true, attackVisual: 'none',
     launchAttack: (_b, _u, _p, target, info) => controller.release(target, info) };
   kit.skill = { ...kit.skill, silenceable: false,
+    manualCancel: record.index === 1,
     canActivate: () => controller.canActivate(),
     attack: record.index === 1 ? { isSkill: true } : undefined,
     onStart: () => controller.transition('Skill_2_Begin'),

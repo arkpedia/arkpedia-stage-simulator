@@ -163,6 +163,7 @@ test('S2 waits for long projectile flight and cannot overlap shots or spend twic
   t.x = 15; t.y = 5;
   f.b.projectiles.list[0].speed = .5; // isolate invalidation from the native default flight speed
   advance(f, 3);
+  assert.equal(f.u.mem.regularFormVisual.idle, 'Skill_2_Idle');
   assert.equal(f.controller.phase, p); assert.equal(f.attacks.length, 1);
   assert.equal(f.u.skill.ammoLeft, ammo); assert.equal(f.ammo.length, 0);
   until(f, () => f.ammo.length === 1, 8);
@@ -200,7 +201,11 @@ test('transient control cancels an unfired windup and cannot create a free accep
 test('manual cancellation cannot debit a later activation or erase already born shots', () => {
   const f = make(); cast(f); enemy(f);
   until(f, () => f.b.projectiles.list.length === 1);
-  f.u.skill.end('manual'); near(f.u.s.atk, f.u.base.atk);
+  // Diagnostic bench binding exercises the real cancel command; it does not
+  // add this incomplete operator to the public registry or default roster.
+  f.b.bench[ID] = { unit: f.u };
+  assert.equal(f.u.skill.spec.manualCancel, true);
+  assert.equal(f.b.activateOperator(ID), true); near(f.u.s.atk, f.u.base.atk);
   until(f, () => f.hits.length === 1); near(f.hits[0].hpLoss, f.u.base.atk);
   advance(f, 2); assert.equal(f.ammo.length, 0);
   f.u.skill.setSpTotal(f.u.skill.spCost); assert.equal(f.u.skill.activate('manual'), true);

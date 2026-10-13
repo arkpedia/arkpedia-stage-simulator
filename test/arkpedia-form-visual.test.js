@@ -2,6 +2,7 @@
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import evidence from '../data/arkpedia-support-expansion-prefabs.json' with { type: 'json' };
+import rmixer from '../data/arkpedia-rmixer-prefabs.json' with { type: 'json' };
 import { regularVisualHeight } from '../public/arkpedia/regular-form-visual.js';
 import { installFakePixi } from './render/fakepixi.js';
 let fake, BattleActor;
@@ -56,6 +57,24 @@ test('opted-in repeated ability clips restart once for a new identity and stay s
   assert.equal(a.spine.state.tracks[0], second); a.destroy();
 });
 function nearDuration(a, z) { assert.ok(Math.abs(a - z) < 1e-9, `${a} != ${z}`); }
+
+test('Sankta original shot clips return to their selected stance while a long projectile is still flying', () => {
+  for (const facing of ['Front', 'Back']) {
+    const m = rmixer.models.char_4194_rmixer[facing];
+    const entry = { anims: { idle: 'Idle', attack: { loop: 'Attack_Loop' } },
+      animations: m.durations, hits: m.hits };
+    const skeleton = { animations: Object.keys(m.durations).map(name => ({ name })) };
+    const a = new BattleActor(skeleton, entry);
+    const s2 = { clip: 'Skill_2_Loop', idle: 'Skill_2_Idle', speed: 1, playId: 'shot:1' };
+    a.setRegularVisual(s2); assert.equal(a.current, 'Skill_2_Loop');
+    a.update(1.3); assert.equal(a.current, 'Skill_2_Idle');
+    const idle = a.spine.state.tracks[0]; a.setRegularVisual({ ...s2 });
+    assert.equal(a.spine.state.tracks[0], idle);
+    a.setRegularVisual({ ...s2, playId: 'shot:2' }); assert.equal(a.current, 'Skill_2_Loop');
+    a.setRegularVisual({ clip: 'Skill_2_End', idle: 'Idle', speed: 1 });
+    a.update(.7); assert.equal(a.current, 'Idle'); a.destroy();
+  }
+});
 
 test('invalid alias speeds fall back to original1 and absent clips never inherit another form speed',()=>{
   const entry={anims:{idle:'Idle',attack:{loop:'Attack'}},animations:{Idle:1,Attack:1,End:.8}};
