@@ -8,13 +8,14 @@ import { absoluteRangeKeys, canTargetEnemy } from '../targeting.js';
 import { rotateOffset } from '../dir.js';
 import { bodyInKeys } from '../body.js';
 import { makeDamageInfo } from '../damage.js';
+import { COLS } from '../constants.js';
 
 export const MARCIL_EXPLOSION_CONTRACT = Object.freeze({
   scope: 'Selected S3 main/extended chanting, cancel-to-release, source mana debits, original clips and separate damage/stun areas diagnostic',
-  phases: 'Local mapping: Begin, selected main chant, optional selected extra chant, original Attack release event, first explosion, repeated explosions at selected interval, original End. Cancelling only the extra chant releases the volley; it does not end the skill or unlock recovery. A fixed centre-front maximum base-range tile is retained at main-chant entry. An out-of-map centre rejects the cast.',
-  mana: 'Half-second main/extra checks require the selected initial cost. Actual extra-phase entry/exit drives the wallet death-clear mark. First explosion spends skill_cost_min_sp; later explosions spend sp_cost_extra while affordable, bounded by selected trig_cnt. Each explosion samples ATK before its debit. Native ModifySp/CheckHasSp actions retain an unaffordable remainder; the table says all remaining mana, so the unresolved remainder policy stays explicit.',
-  area: 'Source x-1 tile/body damage area and independent x-4 stun area use the existing area selection and status-immunity pipeline. Damage is Arts, can hit flying/camouflaged units, and excludes sleeping, untargetable and unrevealed stealth inputs. The same restrictions are a local mapping for the separate stun selector.',
-  limits: 'The compiled Chant component phase names, filterType twelve tile comparator, first-explosion versus extended-chant order, attack-hook dispatch, projectile reach/stop dispatch, transition frames, control interruption, range scale and same-frame callback ordering are unresolved. Fixed centre selection, release/repetition/recovery clocks and remainder retention are explicit local policies, not certified gameplay. No terrain mutation: high-ground collapse and native effects/audio remain held. Party talent, modules, played-stage approval, public registration and Unity frame parity remain held.',
+  phases: 'Begin, selected main chant, selected extra chant, original Attack release event and End use local scheduler clocks. Manual extra-chant cancellation releases one explosion; natural completion permits repeated explosions. Centre selection is two forward tiles, shortened at the stage edge, retained at main-chant entry independently of ordinary attack range.',
+  mana: 'Half-second main/extra checks require the selected initial cost. Only completed extra chanting marks mana for clearing on departure, including retreat. The first explosion spends skill_cost_min_sp; natural-completion repeats spend sp_cost_extra while affordable, bounded by selected trig_cnt. Each explosion samples ATK before its debit; an unaffordable remainder is retained.',
+  area: 'Source x-1 selects blast damage and affected HIGH tiles. Each affected HIGH tile centres its own x-4 stun area; their union uses the shared body/target/status pipeline. Damage is Arts and can hit flying/camouflaged units; sleeping, untargetable and unrevealed stealth inputs are excluded. Stun recipient restrictions remain a local selector mapping.',
+  limits: 'Native action chains and PRTS gameplay notes corroborate manual versus completed chanting, mana retention/departure and terrain-centred stun. Compiled Chant phase names, filterType twelve comparator, attack-hook and projectile reach/stop dispatch, transition frames, control interruption, range scale and same-frame callback ordering remain unresolved. PRTS excludes birth activation but the native root permits it; this diagnostic retains the root flag pending review. No permanent terrain mutation is evidenced. Native tile effects/audio, modules, played-stage approval, public registration and Unity frame parity remain held.',
   frameParity: false,
   terrainImplemented: false,
 });
@@ -46,12 +47,22 @@ export function verifyMarcilExplosionSource() {
       throw Error('Unreviewed Marcille S3 tile selector');
   }
   const tileActions = JSON.parse(component('8370765684772869361')._actions.SerializedState);
+  const tileSelector = component('8018860855038809329');
+  const tileHit = component('8204060961734104305');
   const start = actions('marcil_s_3[boom]', 'ON_BUFF_START');
   const trigger = actions('marcil_s_3[boom]', 'ON_BUFF_TRIGGER')[0];
-  if (tileActions[0]._rangeId !== 'x-4' || tileActions[0]._buffs[0].buffKey !== 'stun'
+  if (tileSelector._options.heightType !== 1 || tileSelector._options.checkHeightType !== 1
+    || tileSelector._limitTargetNum !== 0 || tileSelector._filterType !== 0
+    || tileHit._selector.m_PathID !== '8018860855038809329' || tileHit._ignoreRangeScale !== 1
+    || tileHit._onlyCheckHitWhenStop !== 1 || tileHit._onlyCheckHitWhenReachTarget !== 0
+    || chant._buffsWhenExtraChantEnd[0].buffKey !== 'marcil_3_extra_chant'
+    || tileActions[0]._rangeId !== 'x-4' || tileActions[0]._buffs[0].buffKey !== 'stun'
     || tileActions[1]._effectKey !== 'marcil_skill_03_range_03'
     || start[0]._abilityName !== 'Boom' || start[1]._spString !== 'skill_cost_min_sp'
     || start[1]._isMinis !== true || trigger._conditionNode._checkKey !== 'sp_cost_extra'
+    || start[2]._buffKeys[0] !== 'marcil_3_extra_chant' || !start[3].$type.endsWith('IfNot, Assembly-CSharp')
+    || start[4]._blackboardKey !== 'no_extra' || start[4]._value !== 1
+    || !start[5].$type.endsWith('FinishBuff, Assembly-CSharp')
     || trigger._conditionNode._condType !== 'GE' || trigger._succeedNodes[1]._spString !== 'sp_cost_extra'
     || trigger._succeedNodes[1]._isMinis !== true
     || actions('marcil_3_extra_chant', 'ON_BUFF_FINISH')[2]._blackboardKey !== 'clearSp')
@@ -68,16 +79,18 @@ export function verifyMarcilExplosionSource() {
 export class MarcilExplosionController extends MarcilAttackController {
   constructor(...args) { super(...args); this.marker = null; this.explosions = 0; }
   centre() {
-    const distance = Math.max(...this.record.rangeGrid.filter(([r]) => r === 0).map(([,c]) => c));
-    const [r,c] = rotateOffset(0, distance, this.u.dir);
-    const row = this.u.tileR + r, col = this.u.tileC + c;
-    return this.b.grid.inRect(row, col) ? { row, col, dir: this.u.dir } : null;
+    for (let distance = 2; distance >= 0; distance--) {
+      const [r,c] = rotateOffset(0, distance, this.u.dir);
+      const row = this.u.tileR + r, col = this.u.tileC + c;
+      if (this.b.grid.inRect(row, col)) return { row, col, dir: this.u.dir };
+    }
+    return null;
   }
   canActivate() { return this.valid() && this.mode === 'ordinary' && this.u.canAct
     && !this.u.s.flags.disarm && !this.u.skill.active && !!this.centre(); }
   canCancel() { return this.valid() && this.mode === 's3-extra' && this.u.skill.active
     && this.u.canAct && !this.u.s.flags.disarm; }
-  cancel() { if (!this.canCancel()) return false; this.beginVolley(); return true; }
+  cancel() { if (!this.canCancel()) return false; this.beginVolley(false); return true; }
   start() {
     this.mode = 's3-main'; this.explosions = 0;
     this.phase = { kind: 's3', stage: 'begin', epoch: this.u.attackControlEpoch,
@@ -89,18 +102,22 @@ export class MarcilExplosionController extends MarcilAttackController {
     const marker = this.marker; this.marker = null;
     this.b.emit('marcilExplosionMarkerEnd', { unit: this.u, marker });
   }
-  beginVolley() {
+  beginVolley(completedExtraChant) {
     if (!this.valid() || !this.u.skill.active || this.mode !== 's3-extra') return;
-    this.mana.controller.markExtraChant(false);
+    this.mana.controller.markCompletedExtraChant(completedExtraChant);
     this.mode = 's3-volley';
+    this.phase.repeatAllowed = completedExtraChant;
     this.phase.stage = 'release';
     this.phase.deadline = this.b.time + this.model().eventPayloads.Skill_3_Attack[0].time;
     this.visual('Skill_3_Attack');
   }
-  recipients(range) {
-    if (!this.marker) return [];
-    const { row, col, dir } = this.marker;
-    const keys = new Set(absoluteRangeKeys(range, row, col, dir));
+  areaKeys(range, centre = this.marker) {
+    if (!centre) return [];
+    const { row, col, dir } = centre;
+    return absoluteRangeKeys(range, row, col, dir).filter(k => this.b.grid.inRect(Math.floor(k / COLS), k % COLS));
+  }
+  recipients(keys) {
+    keys = new Set(keys);
     return this.b.enemies.filter(t => live(t) && canTargetEnemy(this.u, t, { canHitFly: true })
       && bodyInKeys(t, keys));
   }
@@ -111,7 +128,11 @@ export class MarcilExplosionController extends MarcilAttackController {
     // consume() may emit a buff-removal callback as the wallet crosses zero.
     if (!this.valid() || !this.u.skill.active || this.mode !== 's3-volley') return false;
     const index = ++this.explosions, marker = this.marker;
-    const victims = this.recipients(damageGrid), stunned = this.recipients(stunGrid);
+    const blastKeys = this.areaKeys(damageGrid);
+    const highTiles = blastKeys.filter(k => this.b.grid.tiles[k].height === 'HIGH')
+      .map(k => ({ row: Math.floor(k / COLS), col: k % COLS, dir: marker.dir }));
+    const stunKeys = new Set(highTiles.flatMap(tile => this.areaKeys(stunGrid, tile)));
+    const victims = this.recipients(blastKeys), stunned = this.recipients(stunKeys);
     const lives = new Map([...victims, ...stunned].map(t => [t, t.deploySeq]));
     for (const t of victims) {
       if (!this.valid() || !this.u.skill.active || this.marker !== marker) return false;
@@ -124,7 +145,7 @@ export class MarcilExplosionController extends MarcilAttackController {
       if (live(t) && lives.get(t) === t.deploySeq) this.b.applyStatus(t, 'stun', { source: this.u, duration: this.record.bb.stun });
     }
     if (!this.valid() || !this.u.skill.active || this.marker !== marker) return false;
-    this.b.emit('marcilExplosion', { unit: this.u, index, marker, victims, stunned, amount, cost,
+    this.b.emit('marcilExplosion', { unit: this.u, index, marker, victims, stunned, highTiles, stunKeys: [...stunKeys], amount, cost,
       mana: this.wallet.value, projectileKey: 'projectile_chr_marcil_s3', terrainImplemented: false });
     return this.valid() && this.u.skill.active && this.marker === marker;
   }
@@ -159,9 +180,8 @@ export class MarcilExplosionController extends MarcilAttackController {
       b.emit('marcilExplosionMarker', { unit: u, marker: this.marker, projectileKey: 'projectile_chr_marcil_s3_mark' });
     } else if (p.stage === 'main') {
       this.mode = 's3-extra'; p.stage = 'extra'; p.deadline += this.record.bb.extra_chant_duration;
-      this.mana.controller.markExtraChant(true);
       b.emit('marcilExtraChant', { unit: u, marker: this.marker });
-    } else if (p.stage === 'extra') this.beginVolley();
+    } else if (p.stage === 'extra') this.beginVolley(true);
     else if (p.stage === 'release' || p.stage === 'repeat') {
       const cost = p.stage === 'release' ? this.record.bb.skill_cost_min_sp : this.record.bb.sp_cost_extra;
       if (!this.explode(cost)) {
@@ -169,16 +189,16 @@ export class MarcilExplosionController extends MarcilAttackController {
         return;
       }
       if (this.phase !== p || !this.valid()) return;
-      if (this.wallet.value < this.record.bb.sp_cost_extra || this.explosions > this.record.bb.trig_cnt) this.recover();
+      if (!p.repeatAllowed || this.wallet.value < this.record.bb.sp_cost_extra || this.explosions > this.record.bb.trig_cnt) this.recover();
       else { p.stage = 'repeat'; p.deadline += this.record.bb.interval; this.visual('Skill_3_Loop', 1, true); }
     } else if (p.stage === 'recovery') u.skill.end('complete');
   }
   end(reason) {
-    // Retirement must observe the actual extra-phase mark before clearing it.
+    // Retirement must observe completed extra chanting before clearing its mark.
     if (reason === 'death') { super.end(reason); return; }
     // End can run while hidden, when the live-owner resource API denies writes.
     // Only this same deployment may clear its phase mark; death uses stop().
-    if (this.wallet.owner === this.u && this.seq === this.u.deploySeq) this.wallet.extraChant = false;
+    if (this.wallet.owner === this.u && this.seq === this.u.deploySeq) this.wallet.completedExtraChant = false;
     this.clearMarker(); super.end(reason);
   }
   install() {

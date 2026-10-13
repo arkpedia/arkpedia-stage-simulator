@@ -5,7 +5,7 @@ import { MARCIL_ID, validateMarcilDefinition } from './arkpedia-marcil-source.js
 export const MARCIL_MANA_CONTRACT = Object.freeze({
   scope: 'Selected-source mana storage, owner lifecycle, recovery and Talent 1 ATK diagnostic',
   clock: 'One recovery tick per original period from wallet creation, processed by the scheduler at the start of the first due step; ticks on the field do not add mana. The phase of the compiled dummy-card clock and same-frame ordering are unverified.',
-  removal: 'Owner finish preserves mana; an explicitly marked S3 extended chant clears mana on death, following marcil_3_extra_chant. Normal retreat preserves it.',
+  removal: 'Owner finish preserves mana; completed S3 extra chanting marks mana for clearing when the owner leaves, including retreat, following marcil_3_extra_chant. Incomplete chanting and manual release preserve it.',
   assignment: 'Inactive direct SP assignments update mana without emitting a gain event, retaining this engine’s init-assignment bypass of noSp. Active-skill assignments are held. Compiled forced assignment dispatch remains unverified.',
   limits: 'No attacks, skill activation, chant controller, splash enlargement, party buffs, terrain changes, dynamic SP-cost mapping, native particles/audio, modules, public registration or Unity frame parity.',
   frameParity: false,
@@ -24,7 +24,7 @@ function selected(u, contract) {
 export class MarcilManaWallet {
   constructor(b, record) {
     this.b = b; this.record = record; this.value = record.mana.initial;
-    this.closed = false; this.owner = null; this.claimed = null; this.extraChant = false;
+    this.closed = false; this.owner = null; this.claimed = null; this.completedExtraChant = false;
     this.period = b.every(record.mana.period, () => {
       if (this.closed || b.finished || this.owner) return;
       this.value = Math.min(record.mana.maximum, this.value + record.mana.recovery);
@@ -49,14 +49,14 @@ export class MarcilManaWallet {
   attach(u) {
     if (this.closed || this.b.finished || !live(u) || this.claimed !== u || this.owner && this.owner !== u)
       throw Error('Marcille mana wallet cannot attach this owner');
-    this.owner = u; this.extraChant = false; this.sync();
+    this.owner = u; this.completedExtraChant = false; this.sync();
   }
   finish(u, reason) {
     if (this.claimed === u) this.claimed = null;
     if (u !== this.owner) return;
-    if (this.extraChant && reason !== 'retreat') this.value = 0;
+    if (this.completedExtraChant) this.value = 0;
     this.b.removeBuff(u, POWER);
-    this.owner = null; this.claimed = null; this.extraChant = false;
+    this.owner = null; this.claimed = null; this.completedExtraChant = false;
   }
   gain(amount, reason, silent = false) {
     const u = this.owner;
@@ -76,16 +76,16 @@ export class MarcilManaWallet {
     if (!this.valid() || this.value < amount) return false;
     this.value -= amount; this.sync(); return true;
   }
-  markExtraChant(active) {
-    if (typeof active !== 'boolean' || this.record.index !== 2) throw Error('Invalid Marcille extended chant');
+  markCompletedExtraChant(active) {
+    if (typeof active !== 'boolean' || this.record.index !== 2) throw Error('Invalid Marcille completed extra chant');
     if (!this.valid()) return false;
-    this.extraChant = active; return true;
+    this.completedExtraChant = active; return true;
   }
   close() {
     if (this.closed) return;
     this.closed = true; this.period.cancel();
     if (this.owner) this.b.removeBuff(this.owner, POWER);
-    this.owner = null; this.claimed = null; this.extraChant = false;
+    this.owner = null; this.claimed = null; this.completedExtraChant = false;
     for (const h of this.handles) this.b.off(h);
     this.handles = [];
   }
@@ -103,7 +103,7 @@ export function prepareMarcilMana(b, u, { contract } = {}) {
     stopped: false, handles: [],
     valid() { return !this.stopped && wallet.valid(u); },
     consume(amount) { return this.valid() && wallet.consume(amount); },
-    markExtraChant(active) { return this.valid() && wallet.markExtraChant(active); },
+    markCompletedExtraChant(active) { return this.valid() && wallet.markCompletedExtraChant(active); },
     install() {
       if (this.handles.length || this.stopped || !u.skill) throw Error('Marcille mana controller cannot be installed');
       this.originalGain = u.skill.gainSp;
