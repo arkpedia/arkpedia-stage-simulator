@@ -47,16 +47,19 @@ test('moving the emitter after birth leaves existing noise particles behind and 
  // simulation whose whole finished path is merely translated afterwards.
  assert.ok(shifted.some((p,i)=>Math.abs(p.worldPosition[1]-a[i].worldPosition[1])>1e-7));
 });
-test('four time-emitted world-noise profiles play the two S3 straight cones and explicitly retain two angled-cone blockers',native,()=>{
+test('four time-emitted world-noise profiles retain two straight cones and two planar cone directions',native,()=>{
  const records=Object.values(pack.records).filter(r=>r.type==='ParticleSystem'&&r.data.NoiseModule.enabled&&r.data.moveWithTransform===1&&r.data.EmissionModule.rateOverDistance.scalar===0);
  assert.equal(records.length,4);
  const frameAt=t=>({birth:matrix(Math.max(0,t)/4),movement:matrix(Math.max(0,t)/4)});
- let played=0,blocked=0;
+ let played=0,planar=0;
  for(const r of records){
-  if(r.data.ShapeModule.angle!==0){assert.equal(r.data.ShapeModule.angle,90);assert.throws(()=>createMovingParticles(r.data),/angled cone/);blocked++;continue;}
   const e=createMovingParticles(r.data),p=e.sample(.5,{frameAt});assert.ok(p.length>0);played++;
   assert.ok(p.every(v=>v.worldPosition.every(Number.isFinite)&&v.color.every(Number.isFinite)&&v.sheet.frame>=0&&v.sheet.frame<4));
   e.sample(2,{frameAt});assert.deepEqual(e.sample(.5,{frameAt}),p);
+  if(r.data.ShapeModule.angle!==0){
+   assert.equal(r.data.ShapeModule.angle,90);assert.deepEqual(r.data.ShapeModule.m_Rotation,{x:0,y:0,z:0});
+   assert.ok(p.every(v=>v.direction[2]===0&&Math.abs(Math.hypot(...v.direction)-1)<1e-12));planar++;
+  }
  }
- assert.equal(played,2);assert.equal(blocked,2);
+ assert.equal(played,4);assert.equal(planar,2);
 });

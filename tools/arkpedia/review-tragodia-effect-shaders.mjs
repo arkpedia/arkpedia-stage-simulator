@@ -143,13 +143,46 @@ try{
     const captureTime=1.8;
     instance.update(captureTime,{camera,clip});
     instance.group.updateMatrixWorld(true);
+    const pose=instance.pose.sample(captureTime,clip);
+    const sourceRotation=transform=>{
+     const ancestry=[];let node=transform;
+     while(node){ancestry.unshift(pose.nodes.get(node));node=pose.nodes.get(node).parent;}
+     const rotation=new T.Quaternion();
+     for(const n of ancestry)rotation.multiply(n.euler
+      ?new T.Quaternion().setFromEuler(new T.Euler(...n.euler.map(v=>v*Math.PI/180),'ZXY')):new T.Quaternion(...n.rotation));
+     return rotation;
+    };
+    const spark=instance.draws.find(d=>d.component==='battle/prefabs/effects/phatm2.ab:-6319448289472538389');
+    if(!spark||!spark.lastParticles.length)throw Error('Original cone spark is missing');
+    const coneShape=spark.particleSource.ShapeModule;
+    if(coneShape.angle!==25||coneShape.radius.value!==.5299999713897705||coneShape.radiusThickness!==.6000000238418579)
+     throw Error('Changed original cage cone settings');
+    if(Object.values(coneShape.m_Rotation).some(v=>v!==0)||Object.values(coneShape.m_Position).some(v=>v!==0))
+     throw Error('Cone diagnostic needs an explicit transformed-shape comparison');
+    if(spark.particleSource.scalingMode!==1||spark.particleSource.moveWithTransform!==0)
+     throw Error('Cone diagnostic needs an explicit simulation/scaling comparison');
+    const coneRotation=sourceRotation(spark.transform),coneScale=new T.Vector3(...pose.nodes.get(spark.transform).scale);
+    let coneSamplesVerified=0;
+    for(const [index,part] of spark.pool.entries())if(part.visible){
+     const particle=spark.lastParticles[index],radius=coneShape.radius.value;
+     const x=particle.origin[0]/coneShape.m_Scale.x,y=particle.origin[1]/coneShape.m_Scale.y;
+     const focal=radius/Math.tan(coneShape.angle*Math.PI/180),length=Math.hypot(x,y,focal),wanted=[x/length,y/length,focal/length];
+     if(wanted.some((v,i)=>Math.abs(v-particle.direction[i])>1e-12))throw Error('Local cone ray mismatch');
+     if(particle.initialVelocity.some((v,i)=>Math.abs(v-wanted[i])>1e-12))throw Error('Original cone start speed mismatch');
+     // Verify the emitted particle reaches the renderer at its sampled world
+     // position. This is a local cone/noise replay, not native frame parity.
+     const actual=new T.Vector3().setFromMatrixPosition(part.matrixWorld);
+     // Source scalingMode=Local applies only emitter-local scale. Parent clip
+     // scale affects the emitter's origin, not this particle's movement scale.
+     const expected=new T.Vector3(...particle.position).multiply(coneScale).applyQuaternion(coneRotation)
+      .add(new T.Vector3().setFromMatrixPosition(part.parent.matrixWorld));
+     if(actual.distanceTo(expected)>1e-7)throw Error('Rendered cone position mismatch');
+     coneSamplesVerified++;
+    }
+    if(coneSamplesVerified===0)throw Error('Original cone spark was not rendered');
     const glow=instance.draws.find(d=>d.component==='battle/prefabs/effects/phatm2.ab:4223695836916947179');
     if(!glow||!glow.lastParticles.length)throw Error('Original 3D glow rotation is missing');
-    const pose=instance.pose.sample(captureTime,clip),ancestry=[];let node=glow.transform;
-    while(node){ancestry.unshift(pose.nodes.get(node));node=pose.nodes.get(node).parent;}
-    const parentRotation=new T.Quaternion();
-    for(const n of ancestry)parentRotation.multiply(n.euler
-     ?new T.Quaternion().setFromEuler(new T.Euler(...n.euler.map(v=>v*Math.PI/180),'ZXY')):new T.Quaternion(...n.rotation));
+    const parentRotation=sourceRotation(glow.transform);
     let rotationMatricesVerified=0;
     for(const [index,part] of glow.pool.entries())if(part.visible){
      const particle=glow.lastParticles[index],angles=particle.rotation3D;
@@ -171,8 +204,11 @@ try{
     const rotationSnapshot=()=>JSON.stringify({particles:glow.lastParticles,
      matrices:glow.pool.filter(p=>p.visible).map(p=>Array.from(p.matrixWorld.elements))});
     const rotationBefore=rotationSnapshot();
+    const coneSnapshot=()=>JSON.stringify({particles:spark.lastParticles,matrices:spark.pool.filter(p=>p.visible).map(p=>Array.from(p.matrixWorld.elements))});
+    const coneBefore=coneSnapshot();
     instance.update(.75,{camera,clip});instance.update(captureTime,{camera,clip});instance.group.updateMatrixWorld(true);
     if(rotationSnapshot()!==rotationBefore)throw Error('Source start rotation did not reverse exactly');
+    if(coneSnapshot()!==coneBefore)throw Error('Local cone replay did not reverse exactly');
     const bounds=new T.Box3().setFromObject(instance.group);
     const centre=bounds.getCenter(new T.Vector3()),span=Math.max(1,bounds.getSize(new T.Vector3()).length());
     camera.position.copy(centre).add(new T.Vector3(.3,.4,1).normalize().multiplyScalar(span*1.8));camera.lookAt(centre);camera.updateMatrixWorld(true);
@@ -181,7 +217,8 @@ try{
     cage={root:instance.name,draws:instance.draws.map(d=>d.component),blocked:instance.blocked,times,
      nodes:instance.pose.nodes.size,renderers:instance.pose.renderers.size,rendered:true,
      diagnosticOnly:true,strictRejected,captureTime,customDraws:customDraws.length,checkedCustomDraws,gpuBuffersVerified,
-     reverseStable:true,gpuAttributesVerified:true,rotationMatricesVerified,rotationReverseStable:true};
+     reverseStable:true,gpuAttributesVerified:true,rotationMatricesVerified,rotationReverseStable:true,
+     coneSamplesVerified,coneReverseStable:true,nativeEmissionParity:false};
    }finally{library.dispose();}
    const debug=gl.getExtension('WEBGL_debug_renderer_info');
    const driver=gl.getParameter(debug?.UNMASKED_RENDERER_WEBGL??gl.RENDERER);
@@ -193,7 +230,9 @@ try{
  assert.equal(result.materials.length,91);assert.equal(result.glError,0);assert.deepEqual(errors,[]);
  assert.match(result.driver,/SwiftShader/i);
  assert.equal(result.cage.nodes,22);assert.equal(result.cage.renderers,20);
- assert.equal(result.cage.draws.length,14);assert.equal(result.cage.blocked.length,4);
+ assert.equal(result.cage.draws.length,15);assert.equal(result.cage.blocked.length,3);
+ assert.ok(result.cage.coneSamplesVerified>0);assert.equal(result.cage.coneReverseStable,true);
+ assert.equal(result.cage.nativeEmissionParity,false);
  assert.ok(result.cage.rotationMatricesVerified>0);
  assert.equal(result.cage.rotationReverseStable,true);
  assert.equal(result.cage.customDraws,8);assert.equal(result.cage.reverseStable,true);

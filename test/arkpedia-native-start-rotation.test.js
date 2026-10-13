@@ -69,7 +69,8 @@ for(const [id,row] of Object.entries(fixtures))test(row.source+' '+row.name+' re
  // their start angles does not certify or flatten their full particle motion.
  if(row.source==='lappland-alter'){
   assert.ok([25,90].includes(source.ShapeModule.angle));
-  assert.throws(()=>createMovingParticles(source),/angled cone/);assert.deepEqual(source,before);return;
+  assert.equal(source.ShapeModule.arc.mode,3);
+  assert.throws(()=>createMovingParticles(source),/cone angle\/arc mode/);assert.deepEqual(source,before);return;
  }
  if(row.name==='line_01'){
   assert.equal(source.ShapeModule.type,8);
