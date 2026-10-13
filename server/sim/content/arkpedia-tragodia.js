@@ -70,20 +70,21 @@ export class TragodiaCoreController {
       this.u.mem.regularDeathVisual = { clip: 'Die', die: 'Die', duration: this.model().durations.Die };
     else delete this.u.mem.regularDeathVisual;
   }
+  idle() { this.visual(this.skills?.idleClip() ?? 'Idle', 1, true); }
   keys() {
     return this.u.rangeKeySet ?? new Set(absoluteRangeKeys(this.u.rangeGrid,
       this.u.tileR, this.u.tileC, this.u.dir, this.u.s.rangeExtend));
   }
-  targets() {
+  targets(priority) {
     const keys = this.keys(), u = this.u;
     const out = this.b.enemies.filter(t => live(t) && canTargetEnemy(u, t, plain)
       && (!t.s.flags.camou || !!t.blockedBy) && (bodyInKeys(t, keys) || t.blockedBy === u));
-    sortEnemyTargets(this.b, u, out); return out.slice(0, 1);
+    sortEnemyTargets(this.b, u, out, priority); return out.slice(0, 1);
   }
-  injury(t, amount, tag, attackId, isSplash = false) {
+  injury(t, amount, tag, attackId, isSplash = false, isSkill = false) {
     if (!this.valid() || !live(this.u) || !live(t)) return 0;
     return this.b.dealDamage(this.u, t, { amount, type: 'element', element: 'neural',
-      canDodge: false, isAttack: false, isSkill: false, isSplash, attackId,
+      canDodge: false, isAttack: false, isSkill, isSplash, attackId,
       applyWay: 'ranged', tags: [`tragodia:${tag}`] });
   }
   release(t, info) {
@@ -93,27 +94,31 @@ export class TragodiaCoreController {
       || p.target !== t || p.targetSeq !== t.deploySeq || !live(t)
       || !due(b, p.releaseAt) || !canTargetEnemy(u, t, plain)
       || t.s.flags.camou && !t.blockedBy) return false;
-    p.accepted = true;
+    p.accepted = true; p.info = info;
+    const config = p.config ?? {};
+    this.skills?.beforeStrike(t, config);
+    if (!this.valid() || !live(u) || !u.canAct || u.s.flags.disarm || this.phase !== p
+      || p.epoch !== u.attackControlEpoch || !live(t) || p.targetSeq !== t.deploySeq) return false;
     const atk = u.s.atk, x = t.x, y = t.y;
-    const recipients = b.enemiesInRadius(x, y, this.t1.range_radius, true)
+    const recipients = b.enemiesInRadius(x, y, config.radius ?? this.t1.range_radius, true)
       .filter(e => e !== t && live(e) && canTargetEnemy(u, e, splash))
       .map(e => ({ e, seq: e.deploySeq }));
     let accepted = false;
     const h = b.on('calculatedDamage', ctx => {
       if (ctx.source === u && ctx.target === t && ctx.dmg.type === 'arts'
-        && ctx.dmg.attackId === info.attackId && ctx.dmg.tags.includes('tragodia:ordinary')) accepted = true;
+        && ctx.dmg.attackId === info.attackId && ctx.dmg.tags.includes(`tragodia:${config.tag ?? 'ordinary'}`)) accepted = true;
     });
     try {
-      b.dealDamage(u, t, { amount: atk * u.s.atkScaleMul, type: 'arts', canDodge: true,
-        isAttack: true, isSkill: false, isSplash: false, applyWay: 'ranged',
-        attackId: info.attackId, tags: ['tragodia:ordinary'] });
+      b.dealDamage(u, t, { amount: atk * u.s.atkScaleMul * (config.scale ?? 1), type: 'arts', canDodge: true,
+        isAttack: true, isSkill: !!config.isSkill, isSplash: false, applyWay: 'ranged',
+        attackId: info.attackId, tags: [`tragodia:${config.tag ?? 'ordinary'}`] });
     } finally { b.off(h); }
     if (accepted && this.valid() && live(u)) {
-      if (t.deploySeq === p.targetSeq) this.injury(t, atk * this.t1['attack@ep_damage_ratio'], 'primary-injury', info.attackId);
+      if (t.deploySeq === p.targetSeq) this.injury(t, atk * this.t1['attack@ep_damage_ratio'], 'primary-injury', info.attackId, false, !!config.isSkill);
       for (const { e, seq } of recipients) {
         if (!this.valid() || !live(u)) break;
         if (e.deploySeq === seq && live(e) && canTargetEnemy(u, e, splash))
-          this.injury(e, atk * this.t1.ep_damage_ratio, 'splash-injury', info.attackId, true);
+          this.injury(e, atk * this.t1.ep_damage_ratio, 'splash-injury', info.attackId, true, !!config.isSkill);
       }
     }
     return true;
@@ -152,7 +157,7 @@ export class TragodiaCoreController {
     let p = this.phase;
     if (p?.kind === 'born') { if (!due(b, p.readyAt)) return; this.phase = null; p = null; }
     if (!live(u) || !u.canAct || u.s.flags.disarm || p && p.epoch !== u.attackControlEpoch) {
-      this.phase = null; this.visual('Idle', 1, true); return;
+      this.phase = null; this.skills?.cancelVolley(); this.idle(); return;
     }
     if (p) {
       if (!p.released && due(b, p.releaseAt)) {
@@ -162,18 +167,27 @@ export class TragodiaCoreController {
           try { b.forceAttack(u, [p.target]); } finally { this.accepting = false; }
         }
       }
+      if (p.info && p.config?.secondGap && !p.secondReleased && due(b, p.releaseAt + p.config.secondGap)) {
+        p.secondReleased = true; p.accepted = false;
+        this.accepting = true;
+        try { this.release(p.target, p.info); } finally { this.accepting = false; }
+      }
+      if (p.config?.secondGap && (p.secondReleased || p.released && !p.info)) this.skills?.finishVolley();
       if (!this.valid() || this.phase !== p || !due(b, p.readyAt)) return;
       this.phase = null;
     }
     if (u.atkCd > 1e-9) return;
-    const target = this.targets()[0];
-    if (!target) { this.visual('Idle', 1, true); return; }
-    const speed = Math.min(1, u.base.bat / u.s.interval), m = this.model(), clip = 'Attack_1';
-    const windup = m.eventPayloads[clip][0].time / speed;
-    this.phase = { kind: 'attack', startedAt: b.time, target, targetSeq: target.deploySeq,
+    this.skills?.beforeAcquire();
+    const config = this.skills?.attackSpec() ?? {};
+    const target = this.targets(config.priority)[0];
+    if (!target) { this.idle(); return; }
+    const speed = Math.min(1, u.base.bat / u.s.interval), m = this.model(), clip = config.clip ?? 'Attack_1';
+    const windup = config.preDelay ?? m.eventPayloads[clip][0].time / speed;
+    const cadence = Math.max(windup + (config.secondGap ?? 0), u.s.interval);
+    this.phase = { kind: 'attack', config, startedAt: b.time, target, targetSeq: target.deploySeq,
       epoch: u.attackControlEpoch, accepted: false, released: false,
-      releaseAt: b.time + windup, readyAt: b.time + Math.max(windup, u.s.interval) };
-    this.visual(clip, speed); u.atkCd = Math.max(windup, u.s.interval);
+      releaseAt: b.time + windup, readyAt: b.time + cadence };
+    this.visual(clip, speed); u.atkCd = cadence;
   }
   install() {
     if (this.stopped || this.handles.length) throw Error('Tragodia core cannot be installed twice or after retirement');
@@ -186,7 +200,7 @@ export class TragodiaCoreController {
       }
     }, { owner: u }), b.on('tick', () => {
       if (this.stopped || b.finished || this.seq !== null && !this.valid()) { this.stop(); return; }
-      this.refreshAuras(); this.tickAttack();
+      this.refreshAuras(); this.skills?.tick(); this.tickAttack();
     }, { owner: u }), b.on('beforeAttack', ctx => this.beforeEnemyAttack(ctx), { owner: u }),
     b.on('elementBurst', ({ target, element }) => {
       if (element === 'neural' && target.side === 'enemy') this.refreshAuras();
@@ -196,7 +210,7 @@ export class TragodiaCoreController {
   }
   stop() {
     if (this.stopped) return;
-    this.stopped = true; this.phase = null; this.accepting = false;
+    this.stopped = true; this.skills?.stop(); this.phase = null; this.accepting = false;
     for (const e of [...this.auraEntries.keys()]) this.removeAura(e);
     this.u.mem.regularFormVisual = null; delete this.u.mem.regularVisualDirection;
     for (const h of this.handles) this.b.off(h); this.handles = [];
