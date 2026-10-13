@@ -3865,3 +3865,32 @@ ARKPEDIA_REVIEW_CHROME='/path/to/chromium' node tools/arkpedia/review-particle-a
 ```
 
 Logs use the `builtin-` prefix under `.cache/arkpedia/unity-builtin-source/`; images/reports remain in the original-source `effects/` directories. Source packs, previous fixtures/metadata, Global/CN/native/model pins, public MVP and coverage remain unchanged: **373/431 forms and 812 selected skills**. Trails, prewarm histories, discrete arcs, pivots/alignment, shader inputs, remaining foreign materials/textures, Animator dispatch and full battle review remain required. Arkpedia app PR229 stays outside dev.
+
+### Original particle pivots and collapsed-parent bounds (2026-10-14)
+
+The source player now retains nonzero renderer pivots in its supported Mesh and Billboard modes. The original packs contain **64 nonzero pivot renderers**: **32 pass the current mode/alignment boundary** and 32 remain held for stretched rendering. All authored flip values in these profiles are zero; nonzero flips still reject. Other unsupported physical modules, meshes, shaders and alignment modes remain held independently.
+
+[Unity's pivot API documentation](https://docs.unity3d.com/2021.3/Documentation/ScriptReference/ParticleSystemRenderer-pivot.html) defines pivot units relative to particle diameter, including half-size offsets for edge rotation. The local mapping retains the physics position as the rotation anchor and applies `position - rotatedScaledPivot` to the rendered geometry frame. It uses each particle's current size, original emitter scaling and full renderer basis, including reflections and nonuniform scale. Original geometry, physics positions, emission identities, inherited velocity and child birth frames are unchanged. Large source values are not clamped to a normalized range.
+
+The exact **native sign and transformation order remain unverified**. The manifest records the local anchor convention and `nativeSignOrderVerified: false`; this is not compiled Unity or pixel parity evidence. Stretched billboards and nonzero flips have separate contracts and are not silently treated as ordinary billboards.
+
+This prepares eight more components in `whitw2_skill_03_buff_01`, bringing it to **twenty-one prepared components and seven holds**. Five pivoted particles reach rendered frames. Three source parents have zero Z scale and retain the player's existing collapsed-parent hold. Their previously inverted singular matrices produced all-zero transforms with homogeneous W=0, corrupting CPU bounds and diagnostic camera framing. Hidden particles now keep an affine identity local matrix, preserving finite source-parent bounds without enabling those collapsed renderers or changing original scale values.
+
+Validation:
+
+- The independent Python audit reads/verifies all **64 original renderer objects** and raw hashes from the pinned Unity bundles. It independently expands **96 scaled-basis matrices and 576 anchor/translation values**, including reflection and shear. All three outputs reproduce exactly, and **eight altered-evidence fixtures** are rejected.
+- The thirty-two-file adjacent regression set passes **988 checks on Node 22 and Node 24**, without failures or skips. Cases include edge pivots, large offsets, current-size multipliers, reflected/nonuniform frames, zero vectors, collapsed transforms, malformed vectors/frames and preserved original source data.
+- The browser independently reconstructs the original physical anchors and verifies **five pivoted particle matrices and five render passes**. Three collapsed source components remain hidden; bounds stay finite. Pivoted particles reverse exactly. Strict playback continues rejecting the partial root, and native sign/order verification remains false.
+- Existing eight angular-basis checks, all 23 original Lappland programs, six-root source child dispatch, source-hidden objects and complete GPU cleanup remain passing, without GL/page errors. The updated partial buff image was visually inspected.
+- The cage regression remains passing at sixteen prepared components and two holds, including the recovered original Quad GPU buffers, original shaders/materials/custom streams and separate inheritance/child diagnostics.
+
+Reproduce with Node 22 on `PATH`, the extraction Python environment and Chromium:
+
+```sh
+node tools/arkpedia/export-particle-pivots.mjs
+.cache/map-env/bin/python tools/arkpedia/audit-particle-pivots.py
+ARKPEDIA_REVIEW_CHROME='/path/to/chromium' node tools/arkpedia/review-particle-angular-motion.mjs
+ARKPEDIA_REVIEW_CHROME='/path/to/chromium' node tools/arkpedia/review-tragodia-effect-shaders.mjs
+```
+
+Logs use the `pivot-` prefix under `.cache/arkpedia/lappland-alter-source/`; the image/report remain in its `effects/` directory. Source packs, previous fixtures/metadata and public coverage remain unchanged: **373/431 forms and 812 selected skills**. Native pivot sign/order, flat-scale rendering, stretched/aligned rendering, flips, particle trails, prewarm histories, discrete arcs, unresolved shader/resources, Animator dispatch and full battle review remain required. No operator registration is added, and Arkpedia app PR229 stays outside dev.
