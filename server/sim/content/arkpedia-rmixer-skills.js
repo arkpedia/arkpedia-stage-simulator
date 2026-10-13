@@ -4,13 +4,13 @@ import evidence from '../../../data/arkpedia-rmixer-prefabs.json' with { type: '
 import { RMIXER_ID, rmixerSourceComponent as component } from './arkpedia-rmixer-source.js';
 import { RMIXER_RESOURCE_CONTRACT, prepareRmixerResources } from './arkpedia-rmixer-resources.js';
 import { RmixerAttackController, rmixerAttackTrait, verifyRmixerAttackSource } from './arkpedia-rmixer-attacks.js';
-import { canTargetEnemy, sortEnemyTargets } from '../targeting.js';
+import { absoluteRangeKeys, canTargetEnemy, sortEnemyTargets } from '../targeting.js';
 import { bodyInKeys } from '../body.js';
 import { makeDamageInfo, isHpLoss } from '../damage.js';
 
 export const RMIXER_SKILL_CONTRACT = Object.freeze({
   scope: 'Sankta selected-source ordinary/S1/S2/S3 and both talents, diagnostic only',
-  mapping: 'S1 holds one defensive-SP charge and its SP lock through the three original Skill_Loop events. Each accepted event launches one current-ATK Physical projectile; the ability completes once at the loop boundary. One successful launch attempts one nearby Laterano ammo replenishment. A sole eligible recipient is supported; multiple recipients are explicitly held rather than guessing compiled postFilter 66. S3 stops ordinary attacks, changes range/HP/ATK/DEF/BAT, replenishes other active Laterano ammo skills globally, and issues direct Physical counters to at most three legal in-range targets. One round is spent per counter group, including an empty group. Its normal counter interval uses the current modified attack interval. Accepted calculated HP damage triggers counters before shields/HP application; dodges, cancellation, invulnerability, elemental gauges and HP loss do not. Talent stacks use accepted post-shield damage receipts, including fully absorbed output, and the table-selected DEF/ASPD, three-stack cap and shared ten-second refresh.',
+  mapping: 'S1 holds one defensive-SP charge and its SP lock through the three original Skill_Loop events. Each accepted event launches one current-ATK Physical projectile; the ability completes once at the loop boundary. One successful launch attempts one Laterano ammo replenishment in the nonextendable surrounding eight tiles. External grants share the recipient’s loaded-capacity recovery allowance for that activation. A sole eligible recipient is supported; multiple recipients are explicitly held rather than guessing compiled postFilter 66. S3 stops ordinary attacks, changes fixed nonextendable range/HP/ATK/DEF/BAT, replenishes other active Laterano ammo skills globally, and issues direct Physical counters to at most three legal in-range targets. One round is spent per counter group, including an empty group. Its normal counter interval uses the current modified attack interval. Accepted calculated HP damage triggers counters before shields/HP application; dodges, cancellation, invulnerability, elemental gauges and HP loss do not. Talent stacks use accepted post-shield damage receipts, including fully absorbed output, and the table-selected DEF/ASPD, three-stack cap and shared ten-second refresh.',
   limits: 'The compiled S1 recipient comparator, event/FSM dispatch and final-ammo clocks remain unrecovered. S1 wave target reselection, interruption completion and pre-first-shot target-loss refund are local mappings. Each wave emits a simulator attack event; this is not a claim about Unity event count. The talent table cap is three but CreateBuff has a literal maxStackCnt of one; applying the table cap is an explicit unresolved binding, not verified native execution. S3 counter receipt order, Begin/End eligibility, cooldown reset and other-only replenishment follow the diagnostic contract; native CreateBuffInRange does not explicitly exclude its owner. Selected table ranks all have positive base_attack_time; the unreachable zero-BB branch is preserved in evidence but not approved here. Public roster/browser combat approval, modules, particles/audio and Unity frame parity remain held.',
   frameParity: false,
 });
@@ -24,11 +24,15 @@ function verifySource() {
   const s1 = component('-3268392782567208198'), selector = component('-2442329197482112262');
   const s3 = component('-8831280125258731560'), count = component('3109481951465074648');
   const s1Holder = component('825391216249572090'), counterSelector = component('6379982231158288344');
+  const recoverRange = component('-7988606994752828678'), counterMode = component('7410210635446120408');
   const counterRule = evidence.templates.rmixer_sk3.eventToActions.ON_TAKE_DAMAGE[0];
   const t1 = evidence.templates.rmixer_t1.eventToActions.ON_AFTER_OUTPUT_DAMAGE;
   if (s1._animKey !== 'Skill_Loop' || s1._additionalTimes !== 2 || s1._waitAttackEventForAllAttacks !== 1
     || s1._atkScaleKey !== 'atk_scale' || s1._useCachedAtkOnly !== 0
     || s1._projectileKey !== 'projectile_chr_rmixer_sk1' || selector._postFilter !== 66 || selector._excludeOwner !== 1
+    || recoverRange._rangeId !== 'x-4' || recoverRange._extendable !== 0
+    || recoverRange.m_GameObject.m_PathID !== selector.m_GameObject.m_PathID
+    || counterMode._updateAttackRangeExtendByAttributeDirty !== 0
     || s1Holder._allowSpRecoveryWhenAffecting !== 0 || s1Holder._playSkillBeginAnim !== 0
     || s3._metadata.namedAsAlias !== 'S3Attack' || s3._waitForAttackEvent !== 0 || s3._allowNoTarget !== 1
     || s3._damageType !== 1 || s3._atkScale !== 1 || count._countEvent !== 4 || count._expendPerTrigger !== 1
@@ -74,9 +78,12 @@ export class RmixerSkillController extends RmixerAttackController {
     return !this.u.skill.active;
   }
   recipients(global = false) {
+    const keys = global ? null : new Set(absoluteRangeKeys(evidence.tables.ranges['x-4'].grids
+      .map(g => [g.row, g.col]), this.u.tileR, this.u.tileC, this.u.dir));
     return this.b.alliesFor(this.u).filter(a => a !== this.u && live(a) && a.kind === 'op'
       && a.def.tags.includes('laterano') && a.def.skill?.durationType === 'AMMO'
-      && a.skill?.active && a.skill.kind === 'ammo' && (global || bodyInKeys(a, this.u.rangeKeySet)));
+      && a.skill?.active && a.skill.kind === 'ammo' && a.skill.ammoReplenishmentLeft > 0
+      && (global || bodyInKeys(a, keys)));
   }
   replenish(one) {
     const candidates = this.recipients(!one);
@@ -87,9 +94,8 @@ export class RmixerSkillController extends RmixerAttackController {
     for (const [recipient, seq] of candidates.map(a => [a, a.deploySeq])) {
       if (!this.valid()) return;
       if (!live(recipient) || recipient.deploySeq !== seq || !recipient.skill.active) continue;
-      const count = one ? this.record.bb.charge : this.record.bb.ammo;
-      recipient.skill.addAmmo(count);
-      this.b.emit('rmixerAmmoRecovered', { owner: this.u, recipient, count });
+      const count = recipient.skill.replenishAmmo(one ? this.record.bb.charge : this.record.bb.ammo);
+      if (count > 0) this.b.emit('rmixerAmmoRecovered', { owner: this.u, recipient, count });
     }
   }
   beginAttack(target) {
@@ -219,7 +225,7 @@ export function prepareRmixerSkills(b, u, { contract } = {}) {
     completeOnAttack: record.index !== 0,
     flags: record.index === 0 ? { noSp: true } : {},
     mods: record.index === 2 ? { atkPct: bb.atk, defPct: bb.def, hpPct: bb.max_hp, batMul: bb.base_attack_time } : kit.skill.mods,
-    targeting: record.index === 2 ? { rangeGrid: record.skillRange } : undefined,
+    targeting: record.index === 2 ? { rangeGrid: record.skillRange, noRangeExtend: true } : undefined,
     attack: { isSkill: true }, canActivate: () => controller.canActivate(),
     onStart: () => {
       if (record.index > 0) controller.transition(`Skill_${record.index + 1}_Begin`);

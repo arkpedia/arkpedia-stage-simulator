@@ -4,6 +4,7 @@ import assert from 'node:assert/strict';
 import data from '../data/arkpedia-mvp.json' with { type: 'json' };
 import evidence from '../data/arkpedia-rmixer-prefabs.json' with { type: 'json' };
 import { normalizeChess } from '../server/sim/simdata.js';
+import { defaultBuild } from '../shared/arkpedia/loadout.js';
 import { RMIXER_SKILL_CONTRACT as CONTRACT, prepareRmixerSkills } from '../server/sim/content/arkpedia-rmixer-skills.js';
 import { make as fixture, enemy, advance, until, cast } from './helpers/rmixer-fixture.js';
 const ID = 'char_4194_rmixer';
@@ -11,7 +12,7 @@ const near = (a, z) => assert.ok(Math.abs(a - z) < 1e-5, `${a} != ${z}`);
 const make = opts => fixture({ skill: 1, contract: CONTRACT, prepare: prepareRmixerSkills, ...opts });
 const stacks = f => f.u.buffs.find(x => x.key === 'rmixer:damage-stacks');
 const charge = f => f.u.skill.gainSp(f.u.skill.spCost, 'fixture');
-function ammoAlly(f, { col = 7, row = 5, tags = ['laterano'], active = true, kind = 'ammo', flags = {} } = {}) {
+function ammoAlly(f, { col = 6, row = 5, tags = ['laterano'], active = true, kind = 'ammo', flags = {} } = {}) {
   const def = normalizeChess({ chessId: `fixture:ammo:${row}:${col}`, stats: { maxHp: 5000, atk: 0, def: 0,
     cost: 0, blockCnt: 0 }, tags, rangeGrid: [[0, 0]],
     skill: { skillId: 'fixture:ammo', durationType: kind === 'ammo' ? 'AMMO' : 'TIME', spCost: 0 } });
@@ -94,7 +95,7 @@ test('S1 replenishes the sole nearby active Laterano ammo recipient once per abi
 });
 
 test('S1 does not invent compiled ordering when two recipients are eligible', () => {
-  const f = make(), a = ammoAlly(f), z = ammoAlly(f, { col: 6 }), held = [];
+  const f = make(), a = ammoAlly(f), z = ammoAlly(f, { row: 6 }), held = [];
   f.b.on('rmixerRecipientHeld', ctx => held.push(ctx)); enemy(f); charge(f);
   until(f, () => f.hits.length === 3);
   assert.equal(a.skill.ammoLeft, 10); assert.equal(z.skill.ammoLeft, 10);
@@ -104,12 +105,72 @@ test('S1 does not invent compiled ordering when two recipients are eligible', ()
 
 test('S1 filters out inactive, wrong-group, non-ammo, isolated, hidden and outside-range recipients', () => {
   for (const options of [{ active: false }, { tags: ['ursus'] }, { kind: 'duration' },
-    { flags: { isolated: true } }, { col: 15 }, { flags: {}, hidden: true }]) {
+    { flags: { isolated: true } }, { col: 7 }, { col: 15 }, { flags: {}, hidden: true }]) {
     const f = make(), a = ammoAlly(f, options), old = a.skill.ammoLeft;
     if (options.hidden) a.hidden = true;
     enemy(f); charge(f); until(f, () => f.hits.length === 3);
     assert.equal(a.skill.ammoLeft, old);
   }
+});
+
+test('S1 reaches every surrounding tile for every facing, independently of ordinary attack-range extensions', () => {
+  for (const dir of ['RIGHT', 'UP', 'LEFT', 'DOWN']) for (let dr = -1; dr <= 1; dr++) for (let dc = -1; dc <= 1; dc++) {
+    if (!dr && !dc) continue;
+    const f = make({ dir }), a = ammoAlly(f, { row: 5 + dr, col: 5 + dc });
+    f.b.addBuff(f.u, { key: 'fixture:range', mods: { rangeExtend: 5 } });
+    f.controller.replenish(true);
+    assert.equal(a.skill.ammoLeft, 11, `${dir} ${dr},${dc}`);
+    assert.equal(a.skill.ammoReplenished, 1);
+  }
+  const f = make(), a = ammoAlly(f, { col: 7 });
+  f.b.addBuff(f.u, { key: 'fixture:range', mods: { rangeExtend: 5 } });
+  f.controller.replenish(true); assert.equal(a.skill.ammoLeft, 10);
+});
+
+test('an exhausted recovery allowance removes a recipient from S1 ambiguity and bounds S3 grants', () => {
+  const f = make(), a = ammoAlly(f), z = ammoAlly(f, { row: 6 }), recovered = [];
+  assert.equal(z.skill.replenishAmmo(100), 30);
+  f.b.on('rmixerAmmoRecovered', ctx => recovered.push(ctx));
+  f.controller.replenish(true);
+  assert.equal(a.skill.ammoLeft, 11); assert.equal(z.skill.ammoLeft, 40);
+  assert.equal(recovered.length, 1); assert.equal(recovered[0].recipient, a);
+  const g = make({ skill: 3 }), other = ammoAlly(g, { col: 14 });
+  assert.equal(other.skill.replenishAmmo(29), 29);
+  g.b.on('rmixerAmmoRecovered', ctx => recovered.push(ctx));
+  cast(g);
+  assert.equal(other.skill.ammoReplenished, 30); assert.equal(other.skill.ammoLeft, 40);
+  assert.equal(recovered.at(-1).count, 1); assert.equal(other.skill.ammoCapacity, 30);
+  g.controller.replenish(false); assert.equal(recovered.length, 2);
+});
+
+test('Sankta S1 and S3 replenish a public Lemuen build through her real ammunition controller', () => {
+  for (const skill of [1, 3]) {
+    const op = data.operators.char_4193_lemuen;
+    assert.ok(op, 'Pinned public Lemuen source');
+    const build = { ...defaultBuild(op), elite: 2, level: 90, skillId: 'skchr_lemuen_1', skillRank: 10 };
+    const f = make({ skill, operators: [build] });
+    f.b.addDp('arkpedia', 99);
+    const a = f.b.deployOperator(op.id, 4, 5, 'RIGHT'); assert.ok(a);
+    advance(f, 1.1); assert.ok(a.skill.activate('fixture', { free: true }));
+    const ammo = a.mem.lemuenAmmunition, before = ammo.current;
+    if (skill === 1) f.controller.replenish(true); else cast(f);
+    const added = skill === 1 ? f.record.bb.charge : f.record.bb.ammo;
+    assert.equal(ammo.current, before + added); assert.equal(a.skill.ammoReplenished, added);
+    enemy(f, { row: 4, col: 6 });
+    until(f, () => ammo.current < before + added);
+    assert.equal(a.skill.ammoLeft, ammo.current); assert.equal(a.skill.active, true);
+  }
+});
+
+test('S3 keeps its fixed counter range while extensions still affect ordinary attacks after it ends', () => {
+  const f = make({ skill: 3 });
+  f.b.addBuff(f.u, { key: 'fixture:range', mods: { rangeExtend: 5 } });
+  readyS3(f);
+  const outside = enemy(f, { col: 9 }); input(f, outside);
+  assert.equal(f.hits.length, 0); assert.equal(f.u.skill.ammoLeft, 29);
+  f.u.skill.end('manual');
+  until(f, () => f.controller.phase?.kind !== 'transition');
+  assert.ok(f.controller.targets().includes(outside));
 });
 
 test('S1 reselection uses a living legal enemy after an earlier wave kills its input', () => {

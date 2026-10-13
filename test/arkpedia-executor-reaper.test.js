@@ -85,6 +85,7 @@ test('S1 and S3 source extended grid acquires an actual far target excluded by n
 });
 test('Laterano ammunition samples only current deployed operators including self and caps at four',()=>{
  const{b,deploy}=make({others:lateranos}),u=deploy();for(let i=0;i<lateranos.length;i++)deploy(1,i+1,'RIGHT',lateranos[i]);cast(u);assert.equal(u.skill.ammoLeft,12);assert.equal(u.skill.ammoMax,12);b.retreatOperator(lateranos[0]);assert.equal(u.skill.ammoLeft,12);
+ assert.equal(u.skill.ammoCapacity,12);assert.equal(u.skill.replenishAmmo(100),12);assert.equal(u.skill.replenishAmmo(1),0);
  const single=make({others:lateranos}),a=single.deploy();cast(a);assert.equal(a.skill.ammoLeft,9);
 });
 test('Laterano non-HEAL validator retains isolated and target-free allies without accepting unrelated nation',()=>{
