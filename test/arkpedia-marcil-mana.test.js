@@ -121,19 +121,19 @@ test('retreat preserves spent mana; a fresh selected actor binds the same recove
   assert.equal(next.u.skill.spTotal, 43); assert.notEqual(next.u, f.u);
   assert.equal(f.wallet.owner, next.u);
   assert.equal(oldGain(10, 'gift'), 0); assert.equal(f.controller.consume(1), false);
-  assert.equal(f.controller.markExtraChant(true), false);
+  assert.equal(f.controller.markCompletedExtraChant(true), false);
   advance(f, 5.05); assert.equal(f.wallet.value, 43);
 });
 
-test('ordinary death preserves mana, extended S3 death clears it, and retreat during that diagnostic phase preserves it', () => {
+test('ordinary death preserves mana; death and retreat after completed extra chanting clear it', () => {
   for (const mode of ['normal-death', 'extended-death', 'extended-retreat']) {
     const f = make({ skill: 3 }); f.wallet.consume(10);
-    if (mode.startsWith('extended')) assert.equal(f.wallet.markExtraChant(true), true);
+    if (mode.startsWith('extended')) assert.equal(f.wallet.markCompletedExtraChant(true), true);
     if (mode.endsWith('retreat')) f.b.retreat(f.u, { permanent: true }); else f.b.kill(f.u);
-    assert.equal(f.wallet.value, mode === 'extended-death' ? 0 : 55);
-    advance(f, 1.05); assert.equal(f.wallet.value, mode === 'extended-death' ? 1 : 56);
+    assert.equal(f.wallet.value, mode.startsWith('extended') ? 0 : 55);
+    advance(f, 1.05); assert.equal(f.wallet.value, mode.startsWith('extended') ? 1 : 56);
     const next = f.create(); assert.equal(next.u.skill.spTotal, f.wallet.value);
-    assert.equal(f.wallet.extraChant, false);
+    assert.equal(f.wallet.completedExtraChant, false);
   }
 });
 
@@ -204,11 +204,11 @@ test('retirement during a newly applied power buff leaves no ghost modifier', ()
   assert.equal(f.u.findBuff('marcil:mana-atk'), null);
 });
 
-test('diagnostic extended chant requires S3 and a valid owner', () => {
-  const a = make(); assert.throws(() => a.wallet.markExtraChant(true));
-  const b = make({ skill: 3 }); assert.throws(() => b.wallet.markExtraChant('true'));
-  assert.equal(b.wallet.markExtraChant(true), true); assert.equal(b.wallet.markExtraChant(false), true);
-  b.b.retreat(b.u, { permanent: true }); assert.equal(b.wallet.markExtraChant(true), false);
+test('diagnostic completed-extra mark requires S3 and a valid owner', () => {
+  const a = make(); assert.throws(() => a.wallet.markCompletedExtraChant(true));
+  const b = make({ skill: 3 }); assert.throws(() => b.wallet.markCompletedExtraChant('true'));
+  assert.equal(b.wallet.markCompletedExtraChant(true), true); assert.equal(b.wallet.markCompletedExtraChant(false), true);
+  b.b.retreat(b.u, { permanent: true }); assert.equal(b.wallet.markCompletedExtraChant(true), false);
 });
 
 test('direct inactive SP assignments update mana; retired setters cannot alter a new owner', () => {

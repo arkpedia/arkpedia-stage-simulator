@@ -20,18 +20,23 @@ export function until(f, predicate, seconds = 8) {
 }
 // A controlled source-only actor. The public roster remains unchanged.
 export function make({ skill = 1, elite = 2, rank = 10, potential = 1, dir = 'RIGHT',
-  deferred = false, contract = CONTRACT, mutate, prepare = prepareMarcilAttacks, operators, support } = {}) {
-  const d = structuredClone(data); d.stage.geometry.waves[0].spawns = [];
-  d.stage.battle.dp_per_second = 0;
-  d.stage.geometry.rows = 19; d.stage.geometry.cols = 21;
-  d.stage.geometry.tileGrid = Array.from({ length: 19 }, () => Array(21).fill(2));
+  deferred = false, contract = CONTRACT, mutate, prepare = prepareMarcilAttacks, operators, support,
+  originalStage = false, tile = [5,6] } = {}) {
+  const d = structuredClone(data);
+  if (!originalStage) {
+    d.stage.geometry.waves[0].spawns = []; d.stage.battle.dp_per_second = 0;
+    d.stage.geometry.rows = 19; d.stage.geometry.cols = 21;
+    d.stage.geometry.tileGrid = Array.from({ length: 19 }, () => Array(21).fill(2));
+  }
   const senshi = { ...defaultBuild(d.operators.char_4143_sensi), elite: 2, level: 80,
     skillId: 'skchr_sensi_2', skillRank: 10, trust: 0, potential: 1 };
   const b = new StandardBattle(d, { operators: operators ?? [senshi, defaultBuild(d.operators.char_208_melan)],
     ...(support ? { support } : {}) });
-  b.autoFinish = false; b.recordEvents = true; b.setViewport('fullscreen-workspace');
-  b.grid.tiles = b.grid.tiles.map(t => ({ ...t, height: 'LOW', build: 'ALL', pass: 'ALL' }));
-  b.addDp('arkpedia', 99);
+  b.autoFinish = originalStage; b.recordEvents = true; b.setViewport('fullscreen-workspace');
+  if (!originalStage) {
+    b.grid.tiles = b.grid.tiles.map(t => ({ ...t, height: 'LOW', build: 'ALL', pass: 'ALL' }));
+    b.addDp('arkpedia', 99);
+  }
   const build = { elite, level: evidence.tables.character.phases[elite].maxLevel,
     skillId: `skchr_marcil_${skill}`, skillRank: Math.min(rank, [4, 7, 10][elite]),
     potential, trust: 0, module: 'none' };
@@ -42,7 +47,7 @@ export function make({ skill = 1, elite = 2, rank = 10, potential = 1, dir = 'RI
     skill: { ...r.source, ...r.source.spData, skillId: build.skillId, rangeGrid: r.skillRange } });
   const create = ({ selectedContract = contract, modify = mutate, deploy = true } = {}) => {
     const selectedDef = structuredClone(def); modify?.(selectedDef);
-    const u = b._makeAlly(b.getPlayer('arkpedia'), selectedDef, 'op', 5, 6, { dir });
+    const u = b._makeAlly(b.getPlayer('arkpedia'), selectedDef, 'op', ...tile, { dir });
     const prepared = prepare(b, u, { contract: selectedContract });
     b._setupUnit(u, prepared.kit); prepared.controller.install();
     if (deploy) assert.ok(b._deploy(u, { initial: false }));
