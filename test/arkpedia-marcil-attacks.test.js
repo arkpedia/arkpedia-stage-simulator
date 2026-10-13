@@ -339,3 +339,15 @@ test('S1’s original periodic mana check also ends an idle skill without manufa
   assert.equal(f.wallet.value, 1); assert.equal(f.outputs.length, 0);
   assert.equal(f.u.findBuff('marcil:s1'), null);
 });
+
+test('temporary owner hiding discards pending ordinary/S1 attacks and interrupts an unfinished chant', () => {
+  for (const mode of ['ordinary', 'chant', 's1']) {
+    const f = make(); enemy(f);
+    if (mode === 'chant') assert.equal(f.u.skill.activate('manual'), true);
+    else { if (mode === 's1') cast(f); until(f, () => f.controller.phase?.kind === 'attack'); }
+    f.u.hidden = true; advance(f, 1); assert.equal(f.outputs.length, 0); assert.equal(f.controller.phase, null);
+    f.u.hidden = false; advance(f, .1); assert.equal(f.outputs.length, 0);
+    assert.equal(f.u.skill.active, mode === 's1');
+    until(f, () => f.outputs.length === 1); assert.equal(f.outputs[0].skill, mode === 's1');
+  }
+});
