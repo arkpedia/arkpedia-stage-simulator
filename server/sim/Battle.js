@@ -1515,7 +1515,10 @@ export class Battle {
       const b = this.addBuff(target, { key: ownedKey, duration, refresh: opts.refresh ?? 'extend', mods, flags: tpl.flags || null, status: key, visible: true, source,
         sourceStatusResistable: opts.sourceStatusResistable });
       if (!b) return false;
-      if (tpl.attract && b) this._setAttractPoint(target, b, opts.point ?? value, source);
+      if (tpl.attract && b) {
+        this._setAttractPoint(target, b, opts.point ?? value, source);
+        if (b.data.attract && opts.strictReachable) b.data.attract.strictReachable = true;
+      }
       // 恐惧: the hit position and the source's position of every application (fear.js — the fan of reachable tiles)
       if (key === 'fear' && b && target.side === 'enemy') stampFear(this, target, b, source);
       // Native DISARMED_COMBAT interrupts the blocked enemy's combat ability.
