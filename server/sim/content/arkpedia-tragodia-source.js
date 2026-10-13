@@ -8,6 +8,9 @@ export const TRAGODIA_ID = 'char_1042_phatm2';
 export const TRAGODIA_SKILLS = Object.freeze([1, 2, 3].map(n => `skchr_phatm2_${n}`));
 export const TRAGODIA_TOKENS = Object.freeze(['token_10054_phatm2_encdool', 'token_10055_phatm2_mndclv']);
 const c = evidence.tables.character;
+const tags = [...new Set([c, c.mainPower, ...(c.subPower ?? [])].filter(Boolean)
+  .flatMap(p => ['nationId', 'groupId', 'teamId'].map(k => p[k]))
+  .filter(v => typeof v === 'string' && v))];
 const grid = id => id ? evidence.tables.ranges[id].grids.map(v => [v.row, v.col]) : [];
 const interpolate = (frames, level) => {
   const lo = frames[0], hi = frames.at(-1);
@@ -49,6 +52,6 @@ export function selectedTragodiaBuild(build) {
       models: evidence.tokenModels[id], binding: evidence.officialTokenSkeletonBindings[id] }];
   }));
   return { build: { ...build }, index, source, bb: flattenBlackboard(source.blackboard), stats,
-    talents, talentBb: talents.map(t => flattenBlackboard(t.blackboard)),
+    talents, tags: [...tags], talentBb: talents.map(t => flattenBlackboard(t.blackboard)),
     rangeGrid: grid(phase.rangeId), skillRangeGrid: grid(source.rangeId), tokenRecords };
 }
