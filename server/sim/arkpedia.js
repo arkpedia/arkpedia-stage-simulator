@@ -100,6 +100,7 @@ import { customizeRayKit, installRay } from './content/arkpedia-ray.js';
 import { customizeColdshotKit, installColdshot } from './content/arkpedia-coldshot.js';
 import { customizeNymphKit, installNymph } from './content/arkpedia-nymph.js';
 import { customizeLemuenKit, installLemuen } from './content/arkpedia-lemuen.js';
+import { customizeMarcilKit, installMarcil, installMarcilSquad } from './content/arkpedia-marcil.js';
 import { customizeRmixerKit, installRmixer } from './content/arkpedia-rmixer.js';
 import { customizeNarantKit, installNarant } from './content/arkpedia-narant.js';
 import { customizeElaKit, installEla } from './content/arkpedia-ela.js';
@@ -338,6 +339,7 @@ export class StandardBattle extends Battle {
       ]),
     );
     installShuRoster({ battle: this, records: chess });
+    installMarcilSquad(this);
     this.start();
   }
   setViewport(viewport) {
@@ -522,6 +524,7 @@ export class StandardBattle extends Battle {
     customizeNymphKit({ battle: this, id, def, unit, kit });
     customizeLemuenKit({ battle: this, id, def, unit, kit });
     customizeRmixerKit({ battle: this, id, def, unit, kit });
+    customizeMarcilKit({ battle: this, id, unit, kit });
     customizeNarantKit({ battle: this, id, def, unit, kit });
     customizeElaKit({ battle: this, id, def, unit, kit });
     customizeFuzeKit({ battle: this, id, def, unit, kit });
@@ -726,6 +729,7 @@ export class StandardBattle extends Battle {
     installNymph({ battle: this, unit, def });
     installLemuen({ battle: this, unit, def });
     installRmixer({ battle: this, unit, def });
+    installMarcil({ unit, def });
     installNarant({ battle: this, unit, def });
     installEla({ battle: this, unit, def });
     installFuze({ battle: this, unit, def });

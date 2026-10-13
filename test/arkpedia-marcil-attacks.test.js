@@ -13,7 +13,7 @@ const near = (a, z) => assert.ok(Math.abs(a - z) < 1e-5, `${a} != ${z}`);
 
 test('native abilities and animation events are required; complete public kit stays held', () => {
   verifyMarcilAttackSource(); assert.equal(CONTRACT.frameParity, false);
-  assert.deepEqual(evidence.enabledOperators, []); assert.equal(data.operators[ID], undefined);
+  assert.deepEqual(evidence.enabledOperators, []);
   assert.throws(() => make({ contract: { ...CONTRACT } }), /explicit combat contract/);
   for (const mutate of [d => d.stats.atk++, d => d.skill.bb.sp_cost++, d => d.rangeGrid = [[0, 99]],
     d => d.tags = [], d => d.talents[0].bb.atk++, d => d.raw.arkpedia.module = 'unsupported'])

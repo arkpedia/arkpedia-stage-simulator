@@ -37,9 +37,9 @@ function at(f, dr=0, dc=0, opts={}) {
   return enemy(f,{row:centre.row+r,col:centre.col+c,...opts});
 }
 
-test('S3 requires its source-complete build and explicit contract while public registration and terrain stay held', () => {
+test('S3 requires its source-complete build and explicit contract without altering its historical registration receipt', () => {
   verifyMarcilExplosionSource(); assert.equal(contract.frameParity, false); assert.equal(contract.terrainImplemented, false);
-  assert.equal(data.operators[ID], undefined); assert.deepEqual(evidence.enabledOperators, []);
+  assert.deepEqual(evidence.enabledOperators, []);
   assert.throws(() => make({ contract: { ...contract } }), /explicit explosion contract/);
   for (const skill of [1,2]) assert.throws(() => make({ skill }), /selected S3/);
   for (const mutate of [d=>d.stats.atk++,d=>d.skill.bb.interval++,d=>d.skill.bb.trig_cnt++,

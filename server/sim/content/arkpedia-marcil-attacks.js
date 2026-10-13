@@ -316,6 +316,8 @@ export function bindMarcilCombat(mana, controller) {
     resourceGauge: () => controller.valid() ? { current: mana.wallet.value, maximum: mana.record.mana.maximum,
       label: controller.isChanting() ? 'Mana · Chanting' : 'Mana',
       state: controller.isChanting() ? 'charging' : 'active',
-      canActivate: controller.canActivate(), canCancel: controller.canCancel() } : null };
+      ...(controller.isChanting() ? { statusText: controller.mode === 's3-extra' ? 'RELEASE' : 'CHANTING' } : {}),
+      canActivate: controller.canActivate(), canCancel: controller.canCancel(),
+      ...(controller.mode === 's3-extra' ? { cancelText: 'Release explosion' } : {}) } : null };
   return { ...mana, mana, controller };
 }

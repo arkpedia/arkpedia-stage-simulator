@@ -32,6 +32,8 @@ export function skillHud(skill) {
     return {
       fraction: Math.max(0, Math.min(1, resource.current / resource.maximum)),
       state: resource.state ?? 'active', ready, canActivate: ready, canCancel: !!resource.canCancel,
+      ...(resource.cancelText ? { cancelText: resource.cancelText } : {}),
+      ...(resource.statusText ? { statusText: resource.statusText } : {}),
       text: `${resource.current} / ${resource.maximum} ${resource.label}${resource.ending ? ' · Ending' : ''}`,
     };
   }

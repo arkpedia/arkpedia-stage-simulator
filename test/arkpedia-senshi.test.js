@@ -79,7 +79,7 @@ test('S2 heals all full/injured recipients in x4 without giving ordinary allies 
  const{b,u,deploy}=make({skill:1}),a=deploy(GUARD,5,6),z=deploy(ALLY,6,5);injure(a,1000);z.skill.setSpTotal(0);b.addBuff(z,{key:'no-natural',mods:{spRecoveryMul:0}});cast(b,u);advance(b,9.35);assert.ok(a.hp>a.s.maxHp-1000);near(z.skill.spTotal,0);assert.equal(food(a).length,0);assert.equal(food(z).length,0);
 });
 test('native Mana action binds only Marcille, even at full HP; blocked SP remains blocked',()=>{
- for(const blocked of[false,true]){const{b,u,deploy}=make({skill:1}),a=deploy(ALLY,5,6);a.def={...a.def,charId:'char_4141_marcil'};a.skill.setSpTotal(0);b.addBuff(a,{key:'no-natural',mods:{spRecoveryMul:0},flags:blocked?{noSp:true}:null});cast(b,u);advance(b,9.35);near(a.skill.spTotal,blocked?0:Math.min(10,a.skill.spCost));assert.equal(data.operators.char_4141_marcil,undefined);}
+ for(const blocked of[false,true]){const{b,u,deploy}=make({skill:1}),a=deploy(ALLY,5,6);a.def={...a.def,charId:'char_4141_marcil'};a.skill.setSpTotal(0);b.addBuff(a,{key:'no-natural',mods:{spRecoveryMul:0},flags:blocked?{noSp:true}:null});cast(b,u);advance(b,9.35);near(a.skill.spTotal,blocked?0:Math.min(10,a.skill.spCost));}
  const tree=evidence.templates['sensi_s_2[recover_magic]'].eventToActions.ON_BUFF_START[0];assert.deepEqual(tree._conditionNode._characterKeys,['char_4141_marcil']);assert.equal(tree._succeedNodes.find(n=>n.$type.includes('ModifySp'))._spString,'magic_sp');
 });
 test('brief control permanently interrupts unreleased meal and later ticks; no ghost after stun expires',()=>{

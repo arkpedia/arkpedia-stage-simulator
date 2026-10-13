@@ -176,7 +176,7 @@ test('resource HUD displays mana while this diagnostic deliberately exposes no s
   assert.equal(hud.text, '50 / 80 Mana'); assert.equal(hud.fraction, .625);
   assert.equal(hud.canActivate, false); assert.equal(hud.canCancel, false);
   assert.equal(hud.ready, false); assert.equal(f.u.profile.noAttack, true);
-  assert.equal(data.operators[ID], undefined);
+  assert.equal(f.u.skill.spec.canActivate(), false);
 });
 
 test('separate battles never share starting, spent or recovered mana', () => {
