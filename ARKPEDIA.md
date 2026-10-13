@@ -3542,3 +3542,27 @@ node tools/arkpedia/fetch-tragodia-effects.mjs
 The native audit reproduces **75 output files** identically and rejects **21 semantic corruption fixtures**, including altered cage/root identity, omitted Back-facing inputs, changed particle/mesh/UV/color/animation/pixels, changed native references and false renderer/frame claims. The existing Lappland audit also reproduces its 93 files and rejects all sixteen fixtures. The seventeen-file adjacent source/Tragodia/effect-player regression set passes **375 checks on Node 22 and Node 24**, without failures or skips. Logs are `.cache/arkpedia/tragodia-source/effects-{audit,lappland-regression,node22-tests,node24-tests}.log`. These checks verify source recovery and existing runtime regressions; no new visual approval or full-suite pass is claimed.
 
 The original combat receipt, Global/CN/native/model pins and public data/coverage remain unchanged at **373/431 forms and 812 selected skills**. Tragodia remains held for delivered original owner/token art, cage/effect integration and mouse/touch battle review. Arkpedia app PR229 stays outside dev.
+
+### Tragodia original effect animation channels (2026-10-14)
+
+`decode-tragodia-effect-animations.mjs` retains all **nine original AnimationClips**, their nine Animator/controller bindings, **476 scalar channels** and **238 authored keys** from the pinned effects pack. The independent Python verifier reads the original Unity objects and checks the channel bytes, hierarchy/property resolution and **6,664 sampled values**. The cage clip contributes **72 channels**; it is not replaced with a Spine animation. The shared exporter/verifier keep the existing Lappland outputs unchanged.
+
+Eight bindings in the S3 buff-02 begin/end clips refer to `static_offset/rotation_y/bg_flow_02`, while the original prefab nests that object under `bg_flow_01`. The export retains their original hash and marks them unresolved. Pose sampling rejects these two clips rather than inventing a remap; the cage clip has no missing path bindings.
+
+Twenty-eight material bindings, including four in the cage clip, refer to properties serialized by a distinct second material. Their original slot **1** is now retained explicitly. The local pose sampler updates that material's independent copy and validates slot bounds. Sampling the original cage at 0, 0.25, 16/30 and 1 seconds succeeds for its **22 nodes and 20 renderers**. This is local pose sampling, not verified compiled Unity material dispatch or particle-trail playback.
+
+Validation:
+
+- `audit-tragodia-effect-animations.py` reproduces all **four animation outputs** and rejects **20 altered-evidence fixtures**, including invented path remaps, omitted cage channels and incorrect material slots.
+- The existing Lappland animation audit reproduces its **four outputs** and rejects **13 fixtures** with unchanged committed data and clip fixtures.
+- The eighteen-file adjacent regression set passes **390 checks on Node 22 and Node 24**, with no failures or skips. Logs are `.cache/arkpedia/tragodia-source/animation-{audit,lappland-regression,node22-tests,node24-tests}.log`.
+
+Reproduce the export and audit with Node 22 on `PATH`:
+
+```sh
+node tools/arkpedia/decode-tragodia-effect-animations.mjs
+.cache/map-env/bin/python tools/arkpedia/audit-tragodia-effect-animations.py
+.cache/map-env/bin/python tools/arkpedia/audit-lappland-effect-animations.py
+```
+
+The animation artifacts remain source-cache inputs. Four unresolved effect resources, three shader identities absent from the existing Lappland shader pack, particle/trail execution, Animator state dispatch and public mouse/touch battle review still require work. No new browser rendering or compiled frame-parity approval is claimed. Public coverage remains **373/431 forms and 812 selected skills**, with unchanged Global/CN/model pins. Arkpedia app PR229 remains outside dev until all operator, enemy, stage and dependable automation gates are met.

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Decode the stripped streamed/constant curves used by the pinned original
-// Lappland effects. This samples source channels; it does not execute Unity's
+// effect inputs. This samples source channels; it does not execute Unity's
 // Animator FSM, apply renderer properties, or certify compiled-frame parity.
 // Format references: AssetStudio/Classes/AnimationClip.cs (StreamedClip and
 // FindBinding); coefficients describe a cubic in seconds from the current key.
@@ -25,7 +25,7 @@ export function decodeEffectClip(source) {
   if (stop <= start || typeof muscle.m_LoopTime !== 'boolean') fail('invalid clip clock');
   const stream = clip.m_StreamedClip, dense = clip.m_DenseClip, constant = clip.m_ConstantClip;
   const streamedCount = count(stream.curveCount, 'streamed curve count');
-  // All ten pinned clips use zero dense curves. Do not invent interpolation for
+  // Reviewed pinned effect clips use zero dense curves. Do not invent interpolation for
   // additional formats until a source-backed implementation is reviewed.
   if (dense.m_CurveCount !== 0 || dense.m_SampleArray.length) fail('unsupported dense curves');
   if (!Array.isArray(constant.data)) fail('invalid constant curves');
