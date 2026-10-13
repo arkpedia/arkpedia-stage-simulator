@@ -3566,3 +3566,26 @@ node tools/arkpedia/decode-tragodia-effect-animations.mjs
 ```
 
 The animation artifacts remain source-cache inputs. Four unresolved effect resources, three shader identities absent from the existing Lappland shader pack, particle/trail execution, Animator state dispatch and public mouse/touch battle review still require work. No new browser rendering or compiled frame-parity approval is claimed. Public coverage remains **373/431 forms and 812 selected skills**, with unchanged Global/CN/model pins. Arkpedia app PR229 remains outside dev until all operator, enemy, stage and dependable automation gates are met.
+
+### Tragodia original effect shader programs (2026-10-14)
+
+`extract-tragodia-effect-shaders.py` recovers all **eight original shaders and 22 GLES player programs** linked by Tragodia's effect pack. Five shader records exactly match the existing Lappland inputs. The three additional original types are `Torappu/Particles/ZDistort/Disturb(CustomData)`, `Torappu/Particles/Ram/AlphaBlend` and `Torappu/Particles/Dissolve/Dissolve(CustomData)`. Recovery retains their original GLSL bytes, keyword variants, material defaults, native player links, pass state and unassigned trailer words; equations are not recreated. The original shader pack stays in the source cache.
+
+The shared exporter and independent verifier preserve Lappland's committed metadata and cached shader pack byte-for-byte. Each independent shader audit reproduces **two outputs** and rejects **12 changed-source fixtures**, including changed equations, keyword/player links, pass state, defaults, missing shaders/programs, source identities and premature renderer claims. The Tragodia shader pack is **183,122 bytes**, SHA-256 `293fc15b44275871deac8f649390de9be8cfacbe3718479250814cd624b441e4`.
+
+`review-tragodia-effect-shaders.mjs` runs an ephemeral loopback check with checksum-verified original inputs and textures. Chromium's software WebGL2 compiles and links **all 22 programs** using the existing port, and all **91 resolved original materials** select an exact keyword variant. No GL or page errors occur. This certifies that compilation check, not native game pixels, color-space interpretation or compiled Unity frame parity.
+
+The same check constructs the original cage in diagnostic `allowBlocked` mode and samples its clip at 0, 0.25, 16/30 and 1 seconds. Its 22 nodes and 20 renderer records remain present; five draw components can be prepared and **13 enabled components remain explicitly blocked**. Eight require vertex-stream/pivot/flip work; the others require randomized/3D rotation, angled cone/arc/radius behavior, particle trails and distinct materials, inherited-velocity lifecycle, or the unresolved source mesh. Two source renderer records are disabled. This probe does not draw or approve a partial cage. The detailed component reasons are retained in `.cache/arkpedia/tragodia-source/effects/shader-browser-review.json`.
+
+The nineteen-file adjacent regression set passes **393 checks on Node 22 and Node 24**, without failures or skips. Logs are `.cache/arkpedia/tragodia-source/shader-{audit,lappland-regression,browser-review,node22-tests,node24-tests}.log`.
+
+Reproduce with the extraction Python environment and Node 22:
+
+```sh
+.cache/map-env/bin/python tools/arkpedia/extract-tragodia-effect-shaders.py
+.cache/map-env/bin/python tools/arkpedia/audit-tragodia-effect-shaders.py
+.cache/map-env/bin/python tools/arkpedia/audit-lappland-effect-shaders.py
+ARKPEDIA_REVIEW_CHROME='/path/to/chromium' node tools/arkpedia/review-tragodia-effect-shaders.mjs
+```
+
+The four unresolved effect resources and eight missing animation bindings remain explicit. Particle/trail rendering, Animator state dispatch, delivered artwork and public mouse/touch battle review still gate Tragodia's registration. Public coverage remains **373/431 forms and 812 selected skills**, with unchanged source pins and data. Arkpedia app PR229 remains outside dev until all operator, enemy, stage and dependable automation gates are met.
