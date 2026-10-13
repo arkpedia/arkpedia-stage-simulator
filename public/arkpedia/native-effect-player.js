@@ -247,11 +247,18 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false}={}){
           const matrices=particleMatrices(particleFrame(transform,birthStates.get(t)),particleSource.scalingMode);
           return {birth:matrices.birth.elements,movement:matrices.movement.elements};
         };
+        const emitterVelocityAt=t=>{
+          // Explicit local 60 Hz backward Transform difference in real effect
+          // seconds. Native velocity acquisition/frame timing is unverified.
+          if(t<=0)return [0,0,0];
+          const from=Math.max(0,t-1/60),a=frameAt(from).birth,b=frameAt(t).birth;
+          return [0,1,2].map(i=>(b[12+i]-a[12+i])/(t-from));
+        };
         const history=(trajectory?trajectory.times(Math.max(0,clock)):[0]).map(t=>{
           if(!birthStates.has(t))birthStates.set(t,samplePose(t,clip,trajectory));
           return {time:t,position:particleFrame(transform,birthStates.get(t)).position.toArray()};
         });
-        const particles=emitter.sample(clock,{frameAt,history});
+        const particles=emitter.sample(clock,{frameAt,history,emitterVelocityAt});
         entry.lastParticles=particles;
         const inverse=new T.Matrix4().copy(mesh.parent.matrixWorld).invert();
         while(pool.length<particles.length){const clone=mesh.clone();clone.geometry=mesh.geometry.clone();geometries.add(clone.geometry);clone.onBeforeRender=mesh.onBeforeRender;mesh.parent.add(clone);pool.push(clone);}
@@ -344,10 +351,10 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false}={}){
           // generated trails need a renderer mapping, not silent first-slot use.
           if(particleSource.TrailModule?.enabled||r.materials.some(m=>m?.id!==r.materials[0]?.id))
             throw Error('Native particle trail/multi-material renderer needs review');
-          const moving=['ShapeModule','VelocityModule','UVModule','ClampVelocityModule','NoiseModule'].some(k=>particleSource[k]?.enabled)||particleSource.moveWithTransform===1;
+          const moving=['ShapeModule','VelocityModule','UVModule','ClampVelocityModule','NoiseModule','InheritVelocityModule'].some(k=>particleSource[k]?.enabled)||particleSource.moveWithTransform===1;
           emitter=moving?createMovingParticles(particleSource):createStationaryParticles(particleSource);
           if(![0,1,2].includes(particleSource.scalingMode))throw Error('Native particle scaling mode needs review');
-          if(particleSource.moveWithTransform===1){
+          if(particleSource.moveWithTransform===1&&!emitter.worldMotion){
             const ancestors=new Set();let n=r.transform;while(n){const d=pose.nodes.get(n);ancestors.add(d.gameObject);n=d.parent;}
             if(pose.instances.some(i=>i.bindings.some(b=>ancestors.has(b.gameObject)&&['m_LocalRotation','localEulerAnglesRaw','m_LocalScale'].includes(b.property))))throw Error('Animated world particle velocity frame needs integration');
           }

@@ -12,10 +12,13 @@ export function particleBirthFrame(origin,velocity,birth,movement=birth){
 export function particleWorldPosition(particle,birth,current,movement=current){
   validate(birth);validate(current);validate(movement);
   if(particle.simulationSpace==='world'){
+    // Fully integrated world particles already contain their birth-frame
+    // rotation/scale and inherited world velocity. Current emitter transforms
+    // must not move them again.
+    if(particle.worldPosition){vector(particle.worldPosition);return particle.worldPosition.slice();}
     // Translated emitters leave already-born particles behind. A rotated or
     // scaled emitter needs velocity-frame integration, and is rejected here.
     for(const i of [0,1,2,4,5,6,8,9,10])if(Math.abs(birth[i]-current[i])>1e-8)throw Error('Animated world particle velocity frame needs integration');
-    if(particle.worldPosition){vector(particle.worldPosition);return particle.worldPosition.slice();}
     const origin=point(birth,particle.origin),delta=particle.velocitySpace==='world'?particle.displacement:direction(movement,particle.displacement);
     return origin.map((v,i)=>v+delta[i]);
   }
