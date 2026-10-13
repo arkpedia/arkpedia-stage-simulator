@@ -6,6 +6,7 @@ import {createStationaryParticles} from '../../shared/arkpedia/native-stationary
 import {createMovingParticles} from '../../shared/arkpedia/native-moving-particles.js';
 import {createParentParticleMotion} from '../../shared/arkpedia/native-parent-particle-motion.js';
 import {createBuiltinMeshResolver} from '../../shared/arkpedia/native-builtin-mesh.js';
+import {createParticlePivot} from '../../shared/arkpedia/native-particle-pivot.js';
 import {particleWorldPosition,particleSheetUV} from '../../shared/arkpedia/native-particle-render.js';
 import {sampleParticleCurve} from '../../shared/arkpedia/native-particle-curves.js';
 import {effectMeshColors} from '../../shared/arkpedia/native-effect-mesh.js';
@@ -297,11 +298,17 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false}={}){
           ?{records:parentMotion.records(entry.particleId,clock),frames:parentMotion.childFrames(entry.particleId,sourceFrameAt)}:null;
         const particles=scheduled?emitter.sampleRecords(scheduled.records,clock,scheduled.frames):emitter.sample(clock,{frameAt,history,emitterVelocityAt});
         entry.lastParticles=particles;
-        const inverse=new T.Matrix4().copy(mesh.parent.matrixWorld).invert();
+        const parentCollapsed=mesh.parent.matrixWorld.determinant()===0;
+        const inverse=parentCollapsed?new T.Matrix4():new T.Matrix4().copy(mesh.parent.matrixWorld).invert();
         while(pool.length<particles.length){const clone=mesh.clone();clone.geometry=mesh.geometry.clone();geometries.add(clone.geometry);clone.onBeforeRender=mesh.onBeforeRender;mesh.parent.add(clone);pool.push(clone);}
         pool.forEach((part,i)=>{
-          const particle=particles[i];part.visible=!!particle&&mesh.parent.matrixWorld.determinant()!==0;
+          const particle=particles[i];part.visible=!!particle&&!parentCollapsed;
           if(!particle)return;
+          if(parentCollapsed){
+            // Keep the existing collapsed-parent hold without an all-zero
+            // inverse matrix (w=0), which corrupts Three's CPU bounds.
+            part.matrixAutoUpdate=false;part.matrix.identity();part.matrixWorldNeedsUpdate=true;return;
+          }
           let position=current.position.clone();
           if(scheduled){
             const positioned=particle.position?particle:{...particle,origin:[0,0,0],displacement:[0,0,0],velocitySpace:'local',simulationSpace:particleSource.moveWithTransform===1?'world':'local'};
@@ -326,6 +333,7 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false}={}){
           const matrix=alignment===0?new T.Matrix4().copy(camera.matrixWorld)
             :new T.Matrix4().makeRotationFromQuaternion(current.rotation);
           matrix.setPosition(position).multiply(rotation).scale(new T.Vector3().fromArray(particle.size).multiply(scale));
+          matrix.fromArray(entry.pivot.sample(matrix.elements));
           part.matrixAutoUpdate=false;part.matrix.copy(inverse).multiply(matrix);part.matrixWorldNeedsUpdate=true;
           const colors=part.geometry.getAttribute('in_COLOR0');
           for(let j=0;j<baseColors.length;j++)colors.array[j]=baseColors[j]*particle.color[j%4];
@@ -376,14 +384,14 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false}={}){
         assertOpen();
         if(record.type!=='ParticleSystemRenderer'&&r.materials.length!==1)
           throw Error('Native multi-material renderer needs review');
-        let meshId,meshReferenceSource,particleId,particleSource,emitter,trail,billboard=false,customLayout=null;
+        let meshId,meshReferenceSource,particleId,particleSource,emitter,trail,pivot,billboard=false,customLayout=null;
         if(record.type==='MeshRenderer'){
           const go=pack.records[r.gameObject];const filter=(go.references??[]).map(r=>r.target).find(k=>pack.records[k]?.type==='MeshFilter');
           meshId=target(filter,'m_Mesh');
           meshReferenceSource=filter;
         }else if(record.type==='ParticleSystemRenderer'){
           if(![0,4].includes(record.data.m_RenderMode)||![0,2].includes(record.data.m_RenderAlignment)||record.data.m_RenderMode===4&&record.data.m_RenderAlignment!==2)throw Error('Particle alignment/render mode not playing');
-          if(Object.values(record.data.m_Pivot).some(v=>v!==0)||Object.values(record.data.m_Flip).some(v=>v!==0))throw Error('Particle pivot/flip need review');
+          pivot=createParticlePivot(record.data);
           if(record.data.m_UseCustomVertexStreams)customLayout=createParticleVertexLayout(record.data.m_VertexStreams);
           const ps=(pack.records[r.gameObject].references??[]).map(r=>r.target).find(k=>pack.records[k]?.type==='ParticleSystem');
           particleId=ps;
@@ -425,7 +433,7 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false}={}){
         if(particleSource){const d=particleSource.InitialModule,x=sampleParticleCurve(d.startSize,0);
           mesh.scale.fromArray(d.size3D?[x,sampleParticleCurve(d.startSizeY,0),sampleParticleCurve(d.startSizeZ,0)]:[x,x,x]);}
 
-        nodeObjects.get(r.transform).add(mesh);draws.push({component,transform:r.transform,particleId,particleSource,trail,alignment:record.data.m_RenderAlignment,mesh,emitter,pool:emitter?[mesh]:null,
+        nodeObjects.get(r.transform).add(mesh);draws.push({component,transform:r.transform,particleId,particleSource,trail,pivot,alignment:record.data.m_RenderAlignment,mesh,emitter,pool:emitter?[mesh]:null,
           baseColors:emitter?g.getAttribute('in_COLOR0').array.slice():null,
           baseUVs:emitter?Array.from({length:8},(_,i)=>g.getAttribute('in_TEXCOORD'+i)?.array.slice()??null):null,
           customLayout,customUVs});

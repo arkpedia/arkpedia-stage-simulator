@@ -39,10 +39,10 @@ try{
    const parentRoots=[];
    const sourceFrame=(instance,transform,time)=>{
     const state=instance.pose.sample(time),nodes=[];let id=transform;while(id){nodes.unshift(state.nodes.get(id));id=state.nodes.get(id).parent;}
-    const matrix=new T.Matrix4(),rotation=new T.Quaternion();
+    const matrix=new T.Matrix4(),rotation=new T.Quaternion(),hierarchyScale=new T.Vector3(1,1,1);
     for(const n of nodes){const q=n.euler?new T.Quaternion().setFromEuler(new T.Euler(...n.euler.map(v=>v*Math.PI/180),'ZXY')):new T.Quaternion(...n.rotation);
-     matrix.multiply(new T.Matrix4().compose(new T.Vector3(...n.position),q,new T.Vector3(...n.scale)));rotation.multiply(q);}
-    return{position:new T.Vector3().setFromMatrixPosition(matrix),rotation,scale:new T.Vector3(...state.nodes.get(transform).scale)};
+     matrix.multiply(new T.Matrix4().compose(new T.Vector3(...n.position),q,new T.Vector3(...n.scale)));rotation.multiply(q);hierarchyScale.multiply(new T.Vector3(...n.scale));}
+    return{position:new T.Vector3().setFromMatrixPosition(matrix),rotation,scale:new T.Vector3(...state.nodes.get(transform).scale),hierarchyScale};
    };
    const factor=(id,salt)=>{let h=Math.imul((id+1)^1,0x45d9f3b)^Math.imul(salt+1,0x27d4eb2d);h=Math.imul(h^(h>>>16),0x45d9f3b);return((h^(h>>>16))>>>0)/0x100000000;};
    for(let root=1;root<=6;root++){
@@ -93,6 +93,31 @@ try{
    instance.update(captureTime,{camera});instance.group.updateMatrixWorld(true);
    let strictRejected=false;try{await library.create('whitw2_skill_03_buff_01');}catch(error){if(!/unplayed components/.test(error.message))throw error;strictRejected=true;}
    if(!strictRejected||library.instanceCount!==1)throw Error('Partial angular root bypassed strict playback');
+   const pivotDraws=instance.draws.filter(d=>d.pivot?.pivot.some(v=>v!==0));let pivotMatrices=0,pivotRenderPasses=0;
+   const pivotRendered=new Set();
+   for(const d of pivotDraws)for(const part of d.pool){const before=part.onBeforeRender;part.onBeforeRender=function(...args){pivotRenderPasses++;pivotRendered.add(this);return before.apply(this,args);};}
+   const pivotBounds=new T.Box3().setFromObject(instance.group),pivotCentre=pivotBounds.getCenter(new T.Vector3()),pivotSpan=Math.max(.1,pivotBounds.getSize(new T.Vector3()).length());
+   camera.position.copy(pivotCentre).add(new T.Vector3(.2,.4,1).normalize().multiplyScalar(pivotSpan*1.8));camera.lookAt(pivotCentre);camera.updateMatrixWorld(true);
+   instance.update(captureTime,{camera});renderer.render(scene,camera);
+   for(const d of pivotDraws)for(const[index,part]of d.pool.entries())if(part.visible){
+    const p=d.lastParticles[index],s=d.particleSource,frame=sourceFrame(instance,d.transform,captureTime);
+    if(p.parent||s.moveWithTransform!==0)throw Error('Pivot diagnostic requires an independent source-parent/world path');
+    const spawnScale=s.scalingMode===0?frame.hierarchyScale:s.scalingMode===1?frame.scale:frame.hierarchyScale,
+     movementScale=s.scalingMode===2?new T.Vector3(1,1,1):spawnScale;
+    const basis=new T.Matrix4().makeRotationFromQuaternion(frame.rotation);
+    const local=new T.Vector3(...(p.origin??[0,0,0])).multiply(spawnScale).add(new T.Vector3(...(p.displacement??[0,0,0])).multiply(movementScale));
+    const expected=local.applyMatrix4(basis).add(frame.position),actualAnchor=new T.Vector3(...d.pivot.pivot).applyMatrix4(part.matrixWorld);
+    if(expected.distanceTo(actualAnchor)>1e-8)throw Error('Rendered pivot displaced its original physics anchor');
+    if(!pivotRendered.has(part))throw Error('Original pivot particle missed its render pass');
+    if(!new T.Vector3().setFromMatrixPosition(part.matrixWorld).distanceTo(expected))throw Error('Nonzero pivot was discarded');
+    pivotMatrices++;
+   }
+   const collapsedPivotDraws=pivotDraws.filter(d=>d.mesh.parent.matrixWorld.determinant()===0);
+   if(pivotDraws.length!==8||pivotMatrices!==5||pivotRenderPasses!==5||collapsedPivotDraws.length!==3)throw Error('Original pivot diagnostic missed visible/collapsed source components');
+   const verifiedPivotRenderPasses=pivotRenderPasses;
+   const pivotSnapshot=()=>JSON.stringify(pivotDraws.map(d=>({particles:d.lastParticles,matrices:d.pool.filter(p=>p.visible).map(p=>Array.from(p.matrixWorld.elements))})));
+   const pivotBefore=pivotSnapshot();instance.update(.3,{camera});instance.update(captureTime,{camera});instance.group.updateMatrixWorld(true);
+   if(pivotSnapshot()!==pivotBefore)throw Error('Source pivot matrices did not reverse exactly');
    const selected=instance.draws.filter(d=>d.particleSource?.RotationModule?.enabled);
    const pose=instance.pose.sample(captureTime),worldRotation=transform=>{
     const nodes=[];let key=transform;while(key){nodes.unshift(pose.nodes.get(key));key=pose.nodes.get(key).parent;}
@@ -130,10 +155,11 @@ try{
    instance.update(captureTime,{camera});renderer.render(scene,camera);
    const gl=renderer.getContext(),ext=gl.getExtension('WEBGL_debug_renderer_info'),glError=gl.getError(),driver=gl.getParameter(ext?.UNMASKED_RENDERER_WEBGL??gl.RENDERER);
    window.angularReview={library,renderer,scene,camera};
-   return {root:instance.name,draws:instance.draws.length,blocked:instance.blocked,programs:programs.length,sourceIds,matrices,captureTime,parentRoots,reverseStable:true,strictRejected,glError,driver,compiledFrameParity:false,diagnosticOnly:true};
+   return {root:instance.name,draws:instance.draws.length,blocked:instance.blocked,programs:programs.length,sourceIds,matrices,pivotMatrices,pivotRenderPasses:verifiedPivotRenderPasses,collapsedPivotDraws:collapsedPivotDraws.length,pivotReverseStable:true,nativePivotSignOrderVerified:false,captureTime,parentRoots,reverseStable:true,strictRejected,glError,driver,compiledFrameParity:false,diagnosticOnly:true};
   }catch(error){library.dispose();renderer.dispose();throw error;}
  },{pack,animations,shaders,builtinMeshes});
  assert.equal(result.programs,23);assert.ok(result.matrices>=5);assert.equal(result.sourceIds.length,5);assert.equal(result.strictRejected,true);assert.equal(result.glError,0);assert.match(result.driver,/SwiftShader/i);assert.deepEqual(errors,[]);
+ assert.equal(result.pivotMatrices,5);assert.equal(result.pivotRenderPasses,5);assert.equal(result.collapsedPivotDraws,3);assert.equal(result.pivotReverseStable,true);assert.equal(result.nativePivotSignOrderVerified,false);
  await page.screenshot({path:path.join(directory,'angular-motion-diagnostic.png')});
  const parentImage=await page.evaluate(()=>window.sourceParentImage);await writeFile(path.join(directory,'source-parent-motion-diagnostic.png'),Buffer.from(parentImage.split(',')[1],'base64'));
  const cleanup=await page.evaluate(async()=>{const{library,renderer,scene,camera}=angularReview;library.dispose();await Promise.resolve();renderer.render(scene,camera);const memory={...renderer.info.memory};renderer.dispose();return memory;});

@@ -81,6 +81,24 @@ test('recovered original built-in mesh binds exact positions, normals, UVs and w
   assert.deepEqual(original.pack.unresolvedReferences,before);i.dispose();
  }finally{lib.dispose();}
 });
+test('source pivots shift only rendered matrices and leave particle anchors, clocks and original meshes intact',native,async()=>{
+ const lib=library(original,async()=>new T.Texture(),builtinMeshes),cam=camera();
+ try{
+  const i=await lib.create('whitw2_skill_03_buff_01',{allowBlocked:true});i.update(1.8,{camera:cam});i.group.updateMatrixWorld(true);
+  const selected=i.draws.filter(d=>d.pivot?.pivot.some(v=>v!==0));assert.equal(selected.length,8);
+  assert.ok([...new T.Box3().setFromObject(i.group).min.toArray(),...new T.Box3().setFromObject(i.group).max.toArray()].every(Number.isFinite));
+  const collapsed=selected.filter(d=>d.mesh.parent.matrixWorld.determinant()===0);assert.equal(collapsed.length,3);
+  for(const d of collapsed){assert.equal(d.mesh.visible,false);assert.equal(d.mesh.matrixWorld.elements[15],1);assert.ok(d.mesh.matrixWorld.elements.every(Number.isFinite));}
+  const state=()=>JSON.stringify(selected.map(d=>({particles:d.lastParticles,matrices:d.pool.filter(p=>p.visible).map(p=>Array.from(p.matrixWorld.elements))})));
+  for(const d of selected)for(const[index,part]of d.pool.entries())if(part.visible){
+   const anchor=new T.Vector3(...d.pivot.pivot).applyMatrix4(part.matrixWorld),p=d.lastParticles[index];
+   assert.ok(anchor.toArray().every(Number.isFinite));assert.equal(p.pivot,undefined);
+   assert.ok(d.mesh.geometry.getAttribute('in_POSITION0').array.every(Number.isFinite));
+  }
+  const before=state();i.update(.3,{camera:cam});i.update(1.8,{camera:cam});i.group.updateMatrixWorld(true);assert.equal(state(),before);
+  assert.equal(i.blocked.length,7);i.dispose();
+ }finally{lib.dispose();}
+});
 test('explicit original particle inspection preserves parent links without altering the source root registry',native,async()=>{
  const id='battle/prefabs/effects/whitw2.ab:-1572538059954014246',lib=library(original),before=structuredClone(original.pack.records[id]);
  try{
