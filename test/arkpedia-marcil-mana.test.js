@@ -160,12 +160,13 @@ test('SP hooks may modify a grant; retirement inside a hook cannot credit a ghos
 });
 
 test('battle end cleans timers, hooks, owner power and adapter replacements', () => {
-  const f = make(); const bound = f.u.skill.gainSp, value = f.wallet.value;
+  const f = make(); const bound = f.u.skill.gainSp, boundSet = f.u.skill.setSpTotal, value = f.wallet.value;
   f.b._finish('victory');
   assert.equal(f.wallet.closed, true); assert.equal(f.controller.stopped, true);
   assert.equal(f.wallet.period.cancelled, true); assert.equal(f.wallet.owner, null);
   assert.equal(f.wallet.handles.length, 0); assert.equal(f.controller.handles.length, 0);
   assert.notEqual(f.u.skill.gainSp, bound); assert.equal(f.u.findBuff('marcil:mana-atk'), null);
+  assert.notEqual(f.u.skill.setSpTotal, boundSet);
   assert.equal(f.wallet.consume(1), false); assert.equal(f.wallet.gain(10, 'gift'), 0);
   advance(f, 5); assert.equal(f.wallet.value, value);
 });
@@ -210,9 +211,19 @@ test('diagnostic extended chant requires S3 and a valid owner', () => {
   b.b.retreat(b.u, { permanent: true }); assert.equal(b.wallet.markExtraChant(true), false);
 });
 
-test('retired diagnostic skill gain and generic SP setters cannot overwrite stored mana', () => {
-  const f = make(); f.u.skill.setSpTotal(0); assert.equal(f.wallet.value, 50);
-  advance(f, f.b.dt); assert.equal(f.u.skill.spTotal, 50);
+test('direct inactive SP assignments update mana; retired setters cannot alter a new owner', () => {
+  const f = make(), oldSet = f.u.skill.setSpTotal;
+  f.u.skill.setSpTotal(0); assert.equal(f.wallet.value, 0);
+  assert.equal(f.u.findBuff('marcil:mana-atk'), null);
+  f.b.addBuff(f.u, { key: 'fixture:noSp', flags: { noSp: true } });
+  f.u.skill.setSpTotal(99); assert.equal(f.wallet.value, 80);
+  f.u.skill.setSpTotal(-1); assert.equal(f.wallet.value, 0);
+  f.u.skill.setSpTotal(33); assert.equal(f.wallet.value, 33);
+  f.u.skill.active = true; f.u.skill.setSpTotal(12); assert.equal(f.wallet.value, 33);
+  f.u.skill.active = false;
+  for (const n of [NaN, Infinity]) f.u.skill.setSpTotal(n);
+  assert.equal(f.wallet.value, 33);
   f.b.retreat(f.u, { permanent: true }); f.u.skill.setSpTotal(1);
-  assert.equal(f.wallet.value, 50);
+  assert.equal(f.wallet.value, 33);
+  const next = f.create(); oldSet(1); assert.equal(next.wallet.value, 33);
 });

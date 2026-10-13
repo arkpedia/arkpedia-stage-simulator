@@ -7,7 +7,8 @@ export const MARCIL_MANA_CONTRACT = Object.freeze({
   scope: 'Selected-source mana storage, owner lifecycle, recovery and Talent 1 ATK diagnostic',
   clock: 'One recovery tick per original period from wallet creation, processed by the scheduler at the start of the first due step; ticks on the field do not add mana. The phase of the compiled dummy-card clock and same-frame ordering are unverified.',
   removal: 'Owner finish preserves mana; an explicitly marked S3 extended chant clears mana on death, following marcil_3_extra_chant. Normal retreat preserves it.',
-  limits: 'No attacks, skill activation, chant controller, splash enlargement, party buffs, terrain changes, native particles/audio, modules, public registration or Unity frame parity.',
+  assignment: 'Inactive direct SP assignments update mana without emitting a gain event, retaining this engine’s init-assignment bypass of noSp. Active-skill assignments are held. Compiled forced assignment dispatch remains unverified.',
+  limits: 'No attacks, skill activation, chant controller, splash enlargement, party buffs, terrain changes, dynamic SP-cost mapping, native particles/audio, modules, public registration or Unity frame parity.',
   frameParity: false,
 });
 const live = u => u?.alive && u.deployed && !u.hidden && !u._removing;
@@ -114,12 +115,20 @@ export function prepareMarcilMana(b, u, { contract } = {}) {
     install() {
       if (this.handles.length || this.stopped || !u.skill) throw Error('Marcille mana controller cannot be installed');
       this.originalGain = u.skill.gainSp;
+      this.originalSet = u.skill.setSpTotal;
       this.boundGain = (amount, reason = 'time', silent = false) => {
         if (this.stopped) return 0;
         if (reason === 'init') return this.originalGain.call(u.skill, amount, reason, silent);
         return this.valid() ? wallet.gain(amount, reason, silent) : 0;
       };
       u.skill.gainSp = this.boundGain;
+      this.boundSet = total => {
+        if (this.stopped || !Number.isFinite(total)) return;
+        if (!wallet.owner) return this.originalSet.call(u.skill, total);
+        if (!this.valid() || u.skill.active) return;
+        wallet.value = Math.max(0, Math.min(record.mana.maximum, total)); wallet.sync();
+      };
+      u.skill.setSpTotal = this.boundSet;
       this.handles = [
         b.on('deploy', ({ unit }) => { if (unit === u) wallet.attach(u); }),
         b.on('tick', () => { if (wallet.owner === u) wallet.sync(); }),
@@ -131,6 +140,7 @@ export function prepareMarcilMana(b, u, { contract } = {}) {
       if (this.stopped) return;
       this.stopped = true; wallet.finish(u, reason);
       if (this.boundGain && u.skill?.gainSp === this.boundGain) u.skill.gainSp = this.originalGain;
+      if (this.boundSet && u.skill?.setSpTotal === this.boundSet) u.skill.setSpTotal = this.originalSet;
       for (const h of this.handles) b.off(h);
       this.handles = [];
     },
