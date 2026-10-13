@@ -2,6 +2,7 @@
 import {sampleParticleCurve,sampleParticleGradient} from './native-particle-curves.js';
 import {createEffectTrajectory} from './native-effect-trail.js';
 import {createParticleCustomData} from './native-particle-custom-data.js';
+import {createParticleStartRotation} from './native-particle-start-rotation.js';
 
 // Shared source emission clocks, capacity and lifetime/color/size sampling.
 // Callers whitelist the active modules they actually implement. Event ordering
@@ -24,7 +25,7 @@ export function createParticleLifecycle(source,{seed=1,modules=[],spaces=[0],all
   const length=source.lengthInSec,speed=source.simulationSpeed,capacity=initial.maxNumParticles;
   if(!Number.isFinite(delay)||delay<0||!Number.isFinite(length)||length<=0||!Number.isFinite(speed)||speed<=0||!Number.isInteger(capacity)||capacity<1||rate<0||distanceRate<0||!Number.isSafeInteger(seed))throw new Error('Invalid native particle clocks/capacity');
   if(![0,2].includes(initial.startColor.minMaxState))throw new Error('Initial gradient clock needs review');
-  if(initial.rotation3D||initial.randomizeRotationDirection!==0)throw new Error('3D/randomized rotation not playing');
+  const startRotation=createParticleStartRotation(initial);
   if(emission.m_BurstCount!==emission.m_Bursts.length)throw new Error('Incomplete native particle bursts');
   for(const burst of emission.m_Bursts){
     if(!Number.isFinite(burst.time)||burst.time<0||burst.time>=length||!Number.isInteger(burst.cycleCount)||burst.cycleCount<1||!Number.isFinite(burst.repeatInterval)||burst.repeatInterval<=0||burst.probability!==1)throw new Error('Native probabilistic/indefinite burst needs review');
@@ -98,7 +99,8 @@ export function createParticleLifecycle(source,{seed=1,modules=[],spaces=[0],all
         const size=sampleParticleCurve(initial.startSize,phase,random(id,1));
         alive.push({id,born:event.born,lifetime,
           size:initial.size3D?[size,sampleParticleCurve(initial.startSizeY,phase,random(id,2)),sampleParticleCurve(initial.startSizeZ,phase,random(id,3))]:[size,size,size],
-          rotation:sampleParticleCurve(initial.startRotation,phase,random(id,4)),color:sampleParticleGradient(initial.startColor,phase,random(id,5))});
+          ...startRotation.sample(phase,[random(id,32),random(id,33),random(id,4)]),
+          color:sampleParticleGradient(initial.startColor,phase,random(id,5))});
       }
     }
     return alive.filter(p=>p.born+p.lifetime>elapsed+1e-10).map(p=>{
