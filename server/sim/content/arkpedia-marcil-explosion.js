@@ -15,7 +15,7 @@ export const MARCIL_EXPLOSION_CONTRACT = Object.freeze({
   phases: 'Begin, selected main chant, selected extra chant, original Attack release event and End use local scheduler clocks. Manual extra-chant cancellation releases one explosion; natural completion permits repeated explosions. Centre selection is two forward tiles, shortened at the stage edge, retained at main-chant entry independently of ordinary attack range.',
   mana: 'Half-second main/extra checks require the selected initial cost. Only completed extra chanting marks mana for clearing on departure, including retreat. The first explosion spends skill_cost_min_sp; natural-completion repeats spend sp_cost_extra while affordable, bounded by selected trig_cnt. Each explosion samples ATK before its debit; an unaffordable remainder is retained.',
   area: 'Source x-1 selects blast damage and affected HIGH tiles. Each affected HIGH tile centres its own x-4 stun area; their union uses the shared body/target/status pipeline. Damage is Arts and can hit flying/camouflaged units; sleeping, untargetable and unrevealed stealth inputs are excluded. Stun recipient restrictions remain a local selector mapping.',
-  limits: 'Native action chains and PRTS gameplay notes corroborate manual versus completed chanting, mana retention/departure and terrain-centred stun. Compiled Chant phase names, filterType twelve comparator, attack-hook and projectile reach/stop dispatch, transition frames, control interruption, range scale and same-frame callback ordering remain unresolved. PRTS excludes birth activation but the native root permits it; this diagnostic retains the root flag pending review. No permanent terrain mutation is evidenced. Native tile effects/audio, modules, played-stage approval, public registration and Unity frame parity remain held.',
+  limits: 'Native action chains and PRTS gameplay notes corroborate manual versus completed chanting, mana retention/departure and terrain-centred stun. Compiled Chant phase names, filterType twelve comparator, attack-hook and projectile reach/stop dispatch, transition frames, control interruption, range scale and same-frame callback ordering remain unresolved. The root permits low-level birth casts but forbids switching state during birth. Activation uses the shared minimum-mana/deployment gates corroborated by PRTS; compiled born timing is unverified. No permanent terrain mutation is evidenced. Native tile effects/audio, modules, played-stage approval, public registration and Unity frame parity remain held.',
   frameParity: false,
   terrainImplemented: false,
 });
@@ -86,8 +86,7 @@ export class MarcilExplosionController extends MarcilAttackController {
     }
     return null;
   }
-  canActivate() { return this.valid() && this.mode === 'ordinary' && this.u.canAct
-    && !this.u.s.flags.disarm && !this.u.skill.active && !!this.centre(); }
+  canActivate() { return this.canBegin() && !!this.centre(); }
   canCancel() { return this.valid() && this.mode === 's3-extra' && this.u.skill.active
     && this.u.canAct && !this.u.s.flags.disarm; }
   cancel() { if (!this.canCancel()) return false; this.beginVolley(false); return true; }

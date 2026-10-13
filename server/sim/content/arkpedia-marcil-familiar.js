@@ -9,9 +9,9 @@ import { makeDamageInfo } from '../damage.js';
 
 export const MARCIL_FAMILIAR_CONTRACT = Object.freeze({
   scope: 'Selected S2 automatic chanting, first familiar, one cancel, upgraded familiar and original projectile diagnostic',
-  cast: 'The selected table is AUTO. This diagnostic requests its free native cast when the wallet reaches skill_cost_min_sp, including during birth. It debits that amount once after Begin/main/End successful chanting. The retained enhancement mark is owner-local: first successful enable establishes it, the next successful enable upgrades. Only the first running familiar may be manually deactivated.',
+  cast: 'The selected table is AUTO. This diagnostic requests its free native cast after deployment when the wallet reaches skill_cost_min_sp. It debits that amount once after Begin/main/End successful chanting. The retained enhancement mark is owner-local: first successful enable establishes it, the next successful enable upgrades. Only the first running familiar may be manually deactivated.',
   attack: 'One selected ground/flying target. Original A/B loop event, captured maxAnimScale-one clock, source speed-ten ten-second projectile, cached ATK at launch, original mana-dependent 1.1/1.5 circle. All legal impact victims receive selected Slow; upgraded main input also receives selected Stun. No per-shot mana debit. Born projectiles keep their cached same-life data after owner retirement or cancellation.',
-  control: 'Control interrupts a main chant. A running familiar retains its skill/modifiers through control, but an unfired attack is discarded on the control epoch. Birth, callback retirement, hidden/life-changed inputs and battle finish are guarded.',
+  control: 'Control interrupts a main chant. A running familiar retains its skill/modifiers through control, but an unfired attack is discarded on the control epoch. Automatic chanting waits for the shared deployment gate and selected minimum mana. Birth, callback retirement, hidden/life-changed inputs and battle finish are guarded.',
   limits: 'Automatic threshold polling, transition-frame inclusion, late-enable phase, retained input/area geometry, projectile expiry/target loss and same-frame dispatch are explicit local policies. Born-shot retention is not compiled certification: the ability has notClearProjectileWhenCastEnd zero despite source-managed false and stopWhenSourceInvalid false, and its cast-end clearing dispatch remains unresolved. Dynamic SP-cost modifiers, native particles/audio, modules and Unity frame parity are unverified. S3, party/terrain and public registration remain held.',
   frameParity: false,
 });
@@ -64,8 +64,7 @@ export class MarcilFamiliarController extends MarcilAttackController {
   constructor(...args) {
     super(...args); this.enhancement = false; this.tier = 0; this.flights = new Set();
   }
-  canActivate() { return this.valid() && this.mode === 'ordinary' && this.u.canAct && !this.u.s.flags.disarm
-    && !this.u.skill.active && this.wallet.value >= this.record.bb.skill_cost_min_sp; }
+  canActivate() { return this.canBegin(); }
   canCancel() { return this.valid() && this.mode === 's2' && this.tier === 1
     && this.u.skill.active && this.u.canAct && !this.u.s.flags.disarm; }
   visual(clip, speed = 1, loop = false) {

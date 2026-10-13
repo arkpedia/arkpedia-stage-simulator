@@ -12,7 +12,7 @@ export const MARCIL_ATTACK_CONTRACT = Object.freeze({
   scope: 'Selected-source ordinary Arts splash and S1 chanting, damage/healing and mana lifecycle diagnostic',
   clocks: 'Original facing Start/Attack and S1 Begin/Chant/End clips. Attack event and complete clip use captured base/current interval capped at native maxAnimScale one. Main chanting follows Begin, selected chant_duration, then End; compiled inclusion of transition frames remains unverified.',
   selection: 'One enemy input by this engine’s closest-goal priority; ordinary and S1 splash use original 1.1/1.5 circles according to mana at attack start. Retained input lives identify the centre at release, including a dead input’s last position. S1 falls back to one injured, healable ally by HP ratio/deployment sequence when no selectable enemy is present at windup.',
-  mana: 'S1 may start without full or sufficient mana; half-second original chant checks stop an insufficient-mana cast. One legal output group spends the selected cost after capturing ATK and before output callbacks. Empty/cancelled groups spend nothing. Main chanting cannot be manually canceled; the running S1 can. S1’s ATK modifier begins after chant completion and ends after the last accepted output group.',
+  mana: 'S1 requires the selected minimum mana, not a full wallet, and cannot switch into chanting during deployment. All three source roots switch state but forbid switching during birth; PRTS gameplay notes corroborate the deployment/minimum gates. The original Start clip bounds the local birth clock; compiled born-time dispatch remains unverified. Half-second original chant checks stop later insufficient-mana casts. One legal output group spends the selected cost after capturing ATK and before output callbacks. Empty/cancelled groups spend nothing. Main chanting cannot be manually canceled; the running S1 can.',
   limits: 'Compiled selector/event dispatch, centre/body collision, external circle scaling, transition frame inclusion, control interruption and same-frame ordering are explicit local mappings. Source circles are tested with the existing area/body queries. S2/S3, party buffs, terrain effects, public registration, modules, native effects/audio and Unity frame parity remain held.',
   frameParity: false,
 });
@@ -23,6 +23,12 @@ const SKILL_BUFF = 'marcil:s1';
 const NORMAL_RADIUS = component('-1275573190307791893').m_Radius;
 const POWER_RADIUS = component('5242925538742582251').m_Radius;
 export function verifyMarcilAttackSource() {
+  for (const id of ['478083744964993879', '2321002891159124941', '-7137456302563982919']) {
+    const root = component(id);
+    if (root._switchToState !== 1 || root._canSwitchDuringBorn !== 0 || root._canCastDuringBorn !== 1
+      || root._canCastWithNoSp !== 1 || root._canUseInAbnormalState !== 0)
+      throw Error('Unreviewed Marcille activation state gate');
+  }
   for (const id of ['1999087216603380715', '6531036271420849131', '-2255832452526097429', '9204866056716958699']) {
     const a = component(id);
     if (a._animKey !== 'Attack' || a._damageType !== 2 || a._waitForAttackEvent !== 1
@@ -49,7 +55,7 @@ export class MarcilAttackController {
   constructor(b, u, record, mana) {
     this.b = b; this.u = u; this.record = record; this.mana = mana; this.wallet = mana.wallet;
     this.seq = null; this.phase = null; this.mode = 'ordinary'; this.serial = 0;
-    this.stopped = false; this.handles = []; this.accepting = false;
+    this.stopped = false; this.handles = []; this.accepting = false; this.bornUntil = Infinity;
   }
   valid() { return !this.stopped && !this.b.finished && !this.b._endReq && live(this.u) && this.seq === this.u.deploySeq; }
   model() { return evidence.models[MARCIL_ID][['UP', 'LEFT'].includes(this.u.dir) ? 'Back' : 'Front']; }
@@ -75,8 +81,10 @@ export class MarcilAttackController {
     return this.b.allyUnits.filter(t => this.healable(t) && t.hp < t.s.maxHp - 1e-6 && bodyInKeys(t, keys))
       .sort((a, z) => a.hpRatio - z.hpRatio || a.deploySeq - z.deploySeq)[0];
   }
-  canActivate() { return this.valid() && this.record.index === 0 && this.mode === 'ordinary'
-    && this.u.canAct && !this.u.s.flags.disarm && !this.u.skill.active; }
+  canBegin() { return this.valid() && due(this.b, this.bornUntil) && this.mode === 'ordinary'
+    && this.u.canAct && !this.u.s.flags.disarm && !this.u.skill.active
+    && this.wallet.value >= this.record.bb.skill_cost_min_sp; }
+  canActivate() { return this.record.index === 0 && this.canBegin(); }
   canCancel() { return this.valid() && this.mode === 's1' && this.u.skill.active && this.u.canAct && !this.u.s.flags.disarm; }
   cancel() { if (!this.canCancel()) return false; this.u.skill.end('manual'); return true; }
   start() {
@@ -149,6 +157,9 @@ export class MarcilAttackController {
       return;
     }
     const { b, u } = this; let p = this.phase;
+    // A hidden/control epoch may clear the animation phase, but cannot shorten
+    // the deployment gate for attacks or skills in this same actor life.
+    if (!due(b, this.bornUntil)) return;
     if (!u.canAct || u.s.flags.disarm || p && p.epoch !== u.attackControlEpoch) {
       this.phase = null;
       if (u.skill.active) u.skill.end('control'); else this.visual('Idle', 1, true);
@@ -207,8 +218,8 @@ export class MarcilAttackController {
     this.handles = [
       this.b.on('deploy', ({ unit, move }) => {
         if (unit !== this.u || move) return;
-        this.seq = unit.deploySeq; this.phase = { kind: 'born', epoch: unit.attackControlEpoch,
-          deadline: this.b.time + this.model().durations.Start };
+        this.seq = unit.deploySeq; this.bornUntil = this.b.time + this.model().durations.Start;
+        this.phase = { kind: 'born', epoch: unit.attackControlEpoch, deadline: this.bornUntil };
         this.visual('Start');
       }),
       this.b.on('tick', () => this.tick()),

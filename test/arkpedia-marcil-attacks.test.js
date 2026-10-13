@@ -7,7 +7,8 @@ import { MARCIL_ID as ID } from '../server/sim/content/arkpedia-marcil-source.js
 import { MARCIL_ATTACK_CONTRACT as CONTRACT, prepareMarcilAttacks, verifyMarcilAttackSource }
   from '../server/sim/content/arkpedia-marcil-attacks.js';
 import { skillHud } from '../shared/arkpedia/skill-hud.js';
-import { make, advance, until, enemy, ally, cast } from './helpers/marcil-fixture.js';
+import { make, advance, until, born, enemy, ally, cast } from './helpers/marcil-fixture.js';
+function beginManual(f) { born(f); return f.u.skill.activate('manual'); }
 const near = (a, z) => assert.ok(Math.abs(a - z) < 1e-5, `${a} != ${z}`);
 
 test('native abilities and animation events are required; complete public kit stays held', () => {
@@ -112,7 +113,7 @@ test('original retained damage input samples its final position, including a dea
 for (let rank = 1; rank <= 10; rank++) test(`S1 rank ${rank} chants before its ATK buff and spends once for a complete splash group`, () => {
   const f = make({ rank }); enemy(f); enemy(f, { row: 5.7 });
   const ordinary = f.u.s.atk, mana = f.wallet.value;
-  assert.equal(f.u.skill.activate('manual'), true);
+  assert.equal(beginManual(f), true);
   assert.equal(f.u.mem.regularFormVisual.clip, 'Skill_1_Begin'); near(f.u.s.atk, ordinary);
   assert.equal(f.u.skill.end('manual'), false); assert.equal(f.u.skill.active, true);
   advance(f, .4); assert.equal(f.u.mem.regularFormVisual.clip, 'Skill_1_Chant');
@@ -137,15 +138,13 @@ test('the last legal S1 output keeps full captured ATK and circle before ending 
   near(f.outputs[1].radius, 1.100000023841858);
 });
 
-test('S1 is source-permitted at zero mana, stops on the half-second check, and never charges at cast start', () => {
-  for (const mana of [0, 1, 1.99]) {
-    const f = make(); f.u.skill.setSpTotal(mana);
-    assert.equal(skillHud(f.u.skill).ready, true); assert.equal(skillHud(f.u.skill).canActivate, true);
-    assert.equal(f.u.skill.activate('manual'), true); advance(f, .45);
-    assert.equal(f.u.skill.active, true); assert.equal(f.wallet.value, mana);
-    until(f, () => !f.u.skill.active, 1);
-    near(f.b.time, .5 + f.b.dt); assert.equal(f.wallet.value, mana);
-    assert.equal(f.outputs.length, 0); assert.equal(f.u.findBuff('marcil:s1'), null);
+test('S1 denies sub-minimum mana instead of starting and then interrupting a cast', () => {
+  for (const mana of [0,1,1.99]) {
+    const f=make(); born(f); f.u.skill.setSpTotal(mana);
+    assert.equal(skillHud(f.u.skill).ready,false); assert.equal(skillHud(f.u.skill).canActivate,false);
+    assert.equal(f.u.skill.activate('manual'),false); advance(f,2);
+    assert.equal(f.u.skill.active,false); assert.equal(f.wallet.value,mana);
+    assert.equal(f.u.skill.activations,0); assert.equal(f.outputs.length,0);
   }
 });
 
@@ -217,7 +216,7 @@ test('empty or hook-cancelled damage groups spend nothing and retirement cancels
 test('brief control invalidates a windup or chant; silence preserves source-unsilenceable S1', () => {
   for (const mode of ['ordinary', 'chant', 's1']) {
     const f = make(); enemy(f);
-    if (mode === 'chant') assert.equal(f.u.skill.activate('manual'), true);
+    if (mode === 'chant') assert.equal(beginManual(f), true);
     else { if (mode === 's1') cast(f); until(f, () => f.controller.phase?.kind === 'attack'); }
     f.b.applyStatus(f.u, 'stun', { duration: f.b.dt }); advance(f, .1);
     assert.equal(f.hits.length, 0); assert.equal(f.u.skill.active, false);
@@ -230,7 +229,7 @@ test('brief control invalidates a windup or chant; silence preserves source-unsi
 });
 
 test('manual command and HUD allow running cancellation, without allowing chant cancellation or spending more mana', () => {
-  const f = make(); f.b.bench[ID] = { unit: f.u };
+  const f = make(); born(f); f.b.bench[ID] = { unit: f.u };
   assert.equal(f.b.activateOperator(ID), true); assert.equal(skillHud(f.u.skill).canCancel, false);
   assert.equal(f.b.activateOperator(ID), false);
   until(f, () => f.controller.mode === 's1'); assert.equal(skillHud(f.u.skill).canCancel, true);
@@ -245,7 +244,7 @@ test('real Senshi meal cannot recover mana during either chant or active S1', ()
     senshi.atkCd = 1000; senshi.skill.rule = 'NEVER';
     senshi.skill.setSpTotal(senshi.skill.spCost); assert.equal(senshi.skill.activate('fixture'), true);
     advance(f, phase === 'chant' ? 8.9 : 6.5);
-    assert.equal(f.u.skill.activate('manual'), true);
+    assert.equal(beginManual(f), true);
     until(f, () => f.b.time >= 9.4); assert.equal(f.wallet.value, 50);
     assert.equal(f.controller.mode, phase);
   }
@@ -275,7 +274,7 @@ test('retirement inside S1 buff application leaves no ghost modifier', () => {
   const f = make(); f.b.on('beforeBuff', x => {
     if (x.unit === f.u && x.buff?.key === 'marcil:s1') f.b.retreat(f.u, { permanent: true });
   });
-  assert.equal(f.u.skill.activate('manual'), true); advance(f, 3);
+  assert.equal(beginManual(f), true); advance(f, 3);
   assert.equal(f.u.alive, false); assert.equal(f.u.findBuff('marcil:s1'), null);
   assert.equal(f.controller.handles.length, 0); assert.equal(f.outputs.length, 0);
 });
@@ -290,12 +289,13 @@ test('all selected ordinary skill ranks preserve source stats, including low-eli
     }
 });
 
-test('S1 source cast during birth replaces Start without an early attack or fictional full-wallet gate', () => {
-  const f = make(); enemy(f);
-  assert.equal(f.controller.phase.kind, 'born'); assert.equal(f.u.skill.activate('manual'), true);
-  advance(f, 1); assert.equal(f.outputs.length, 0);
-  until(f, () => f.outputs.length === 1); assert.equal(f.outputs[0].skill, true);
-  assert.equal(f.wallet.value, 48);
+test('S1 keeps Start during birth, then activates with only its selected minimum', () => {
+  const f=make(); enemy(f); f.u.skill.setSpTotal(2);
+  assert.equal(f.controller.phase.kind,'born'); assert.equal(f.u.skill.activate('manual'),false);
+  assert.equal(f.u.mem.regularFormVisual.clip,'Start'); assert.equal(skillHud(f.u.skill).ready,false);
+  advance(f,.9); assert.equal(f.u.skill.activate('manual'),false); assert.equal(f.outputs.length,0);
+  born(f); assert.equal(f.u.skill.activate('manual'),true);
+  until(f,()=>f.outputs.length===1); assert.equal(f.outputs[0].skill,true); assert.equal(f.wallet.value,0);
 });
 
 test('damage mitigation does not charge once per victim; owner retirement during an output stops later victims', () => {
@@ -313,7 +313,7 @@ test('canceling within the S1 ATK modifier callback cannot install a stale modif
   const f = make(); f.b.on('beforeBuff', x => {
     if (x.unit === f.u && x.buff?.key === 'marcil:s1') f.u.skill.end('manual');
   });
-  assert.equal(f.u.skill.activate('manual'), true); advance(f, 3);
+  assert.equal(beginManual(f), true); advance(f, 3);
   assert.equal(f.u.skill.active, false); assert.equal(f.u.findBuff('marcil:s1'), null);
   near(f.u.s.atk, f.u.base.atk * (1 + f.record.talentBb[0].atk));
   assert.equal(f.outputs.length, 0);
@@ -343,7 +343,7 @@ test('S1’s original periodic mana check also ends an idle skill without manufa
 test('temporary owner hiding discards pending ordinary/S1 attacks and interrupts an unfinished chant', () => {
   for (const mode of ['ordinary', 'chant', 's1']) {
     const f = make(); enemy(f);
-    if (mode === 'chant') assert.equal(f.u.skill.activate('manual'), true);
+    if (mode === 'chant') assert.equal(beginManual(f), true);
     else { if (mode === 's1') cast(f); until(f, () => f.controller.phase?.kind === 'attack'); }
     f.u.hidden = true; advance(f, 1); assert.equal(f.outputs.length, 0); assert.equal(f.controller.phase, null);
     f.u.hidden = false; advance(f, .1); assert.equal(f.outputs.length, 0);

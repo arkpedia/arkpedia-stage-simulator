@@ -18,6 +18,7 @@ export function until(f, predicate, seconds = 8) {
   while (!predicate() && f.b.time < end) advance(f, f.b.dt);
   assert.ok(predicate(), `Condition missing at ${f.b.time}`);
 }
+export function born(f) { until(f, () => f.b.time > f.controller.bornUntil, 2); }
 // A controlled source-only actor. The public roster remains unchanged.
 export function make({ skill = 1, elite = 2, rank = 10, potential = 1, dir = 'RIGHT',
   deferred = false, contract = CONTRACT, mutate, prepare = prepareMarcilAttacks, operators, support,
@@ -73,6 +74,7 @@ export function ally(f, { row = 4, col = 7, ratio = .1, flags = {}, kind = 'op' 
   f.b.addBuff(u, { key: 'fixture:flags', flags }); return u;
 }
 export function cast(f) {
+  born(f);
   assert.equal(f.u.skill.activate('manual'), true);
   until(f, () => f.controller.mode === 's1', 10);
 }

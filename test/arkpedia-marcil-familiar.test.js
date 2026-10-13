@@ -7,7 +7,7 @@ import { MARCIL_ID as ID } from '../server/sim/content/arkpedia-marcil-source.js
 import { prepareMarcilFamiliar as prepare, MARCIL_FAMILIAR_CONTRACT as contract, verifyMarcilFamiliarSource }
   from '../server/sim/content/arkpedia-marcil-familiar.js';
 import { skillHud } from '../shared/arkpedia/skill-hud.js';
-import { make as baseMake, advance, until, enemy } from './helpers/marcil-fixture.js';
+import { make as baseMake, advance, until, born, enemy } from './helpers/marcil-fixture.js';
 const make = opts => baseMake({ skill: 2, prepare, contract, ...opts });
 const near = (a,z) => assert.ok(Math.abs(a-z) < 1e-5, `${a} != ${z}`);
 function enable(f) { until(f, () => f.controller.mode === 's2', 20); }
@@ -29,7 +29,8 @@ test('S2 requires source-selected ranks, native projectile chains and its own op
 
 for(let rank=1;rank<=10;rank++)test(`S2 rank ${rank} automatically chants, debits once and keeps its first familiar indefinitely`,()=>{
   const f=make({rank}); const mana=f.wallet.value, ordinary=f.u.s.atk;
-  advance(f,.1); assert.equal(f.controller.mode,'chant'); assert.equal(f.u.skill.active,true);
+  advance(f,.1); assert.equal(f.controller.mode,'ordinary'); assert.equal(f.u.skill.active,false);
+  assert.equal(f.u.mem.regularFormVisual.clip,'Start'); born(f); assert.equal(f.controller.mode,'chant'); assert.equal(f.u.skill.active,true);
   assert.equal(f.u.mem.regularFormVisual.clip,'Skill_2_Begin_A'); near(f.u.s.atk,ordinary);
   assert.equal(f.u.skill.end('manual'),false); advance(f,.5);
   assert.equal(f.u.mem.regularFormVisual.clip,'Skill_2_Chant'); assert.equal(f.wallet.value,mana);
@@ -51,7 +52,7 @@ test('not enough starting mana at E1 waits for a legal grant, without an invente
 });
 
 test('a failed chant costs nothing and creates no persistent enhancement mark',()=>{
-  const f=make(); advance(f,1); assert.equal(f.controller.mode,'chant');
+  const f=make(); born(f); assert.equal(f.controller.mode,'chant');
   f.mana.controller.consume(1); // move below its source minimum after the automatic cast
   until(f,()=>!f.u.skill.active,1);
   assert.equal(f.wallet.value,34); assert.equal(f.controller.enhancement,false);
