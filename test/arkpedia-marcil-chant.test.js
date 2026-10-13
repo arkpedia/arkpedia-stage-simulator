@@ -34,13 +34,15 @@ for (const skill of [1,2,3]) for (let rank = 1; rank <= 10; rank++)
     advance(f, .4); assert.equal(f.u.skill.active, false); assert.equal(f.wallet.value, mana);
     assert.equal(f.u.findBuff(`marcil:s${skill}`), null);
     assert.equal(skillHud(f.u.skill).state, 'charging');
+    assert.equal(skillHud(f.u.skill).statusText, 'CHANTING');
     assert.equal(skillHud(f.u.skill).ready, false); assert.match(skillHud(f.u.skill).text, /Chanting/);
     complete(f);
     assert.equal(f.controller.isChanting(), false); assert.equal(f.u.skill.activations, 1);
     assert.equal(count(f, 'skillStart'), 1); assert.equal(count(f, 'marcilChantEnd'), 1);
     assert.equal(f.events.find(e => e.key === 'marcilChantEnd').completed, true);
     assert.equal(f.u.skill.gainSp(10, 'gift'), 0);
-    assert.equal(skillHud(f.u.skill).state, 'active'); assert.doesNotMatch(skillHud(f.u.skill).text, /Chanting/);
+    assert.equal(skillHud(f.u.skill).state, 'active');
+    assert.equal(skillHud(f.u.skill).statusText, undefined); assert.doesNotMatch(skillHud(f.u.skill).text, /Chanting/);
     assert.equal(f.wallet.value, skill === 2 ? mana - 35 : mana);
     advance(f, .1); assert.equal(count(f, 'skillStart'), 1);
     f.b.forceEnd('fixture'); assert.deepEqual(f.b.errors, []);
@@ -87,6 +89,8 @@ test('manual S3 extra-chant release commits one skill start and one explosion', 
   const f = make(3); begin(f); until(f, () => f.controller.mode === 's3-extra', 8);
   assert.equal(f.u.skill.active, false); assert.equal(count(f, 'skillStart'), 0);
   assert.equal(skillHud(f.u.skill).canCancel, true);
+  assert.equal(skillHud(f.u.skill).statusText, 'RELEASE');
+  assert.equal(skillHud(f.u.skill).cancelText, 'Release explosion');
   const bursts = []; f.b.on('marcilExplosion', x => bursts.push(x));
   assert.equal(f.u.skill.end('manual'), true);
   assert.equal(f.u.skill.active, true); assert.equal(f.u.skill.activations, 1);

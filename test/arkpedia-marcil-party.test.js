@@ -28,8 +28,8 @@ function make({elite=2,potential=1,install=true,members=PARTY,support,skill=1,..
 function deploy(f,id=LAIOS,row=4,col=6) { const u=f.b.deployOperator(id,row,col,'RIGHT'); assert.deepEqual(f.b.errors,[]);return u; }
 function owner(f) { assert.equal(f.b._deploy(f.u,{initial:false}),true); return f.u; }
 
-test('party talent requires its explicit contract and never enables a public Marcille kit',()=>{
-  verifyMarcilPartySource(); assert.equal(CONTRACT.frameParity,false); assert.equal(data.operators[ID],undefined);
+test('party talent requires its explicit contract and does not alter the historical native registration receipt',()=>{
+  verifyMarcilPartySource(); assert.equal(CONTRACT.frameParity,false);
   assert.deepEqual(evidence.enabledOperators,[]); const f=make({install:false});
   assert.throws(()=>installMarcilParty(f.b),/explicit party contract/);
   assert.throws(()=>installMarcilParty(f.b,{contract:{...CONTRACT}}),/explicit party contract/);

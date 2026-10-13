@@ -12,6 +12,7 @@ import { StageRenderer } from "./renderer.js";
 import { absoluteRangeKeys } from "/sim/targeting.js";
 import { classNames, skillIconFile, operatorAssetName, skillDescriptionText } from "/shared/arkpedia/battle-ui.js";
 import { swipeFacing } from "/shared/arkpedia/placement.js";
+import { marcilBenchMana } from '/sim/content/arkpedia-marcil.js';
 import { skillHud, skillSourceFor, ammunitionHud } from "/shared/arkpedia/skill-hud.js";
 import { battleHud } from "/shared/arkpedia/battle-hud.js";
 import { requiresLandscape } from "/shared/arkpedia/viewport.js";
@@ -552,9 +553,10 @@ function operatorDetails(build, unit) {
     ${ammunition ? `<p class="sp-readout">${escape(ammunition.text)}</p>` : ''}${rangeDiagram(record.rangeGrid)}`;
 }
 function operatorSkillDetails(build, unit, tokenLevel = null) {
-  const hud = unit ? skillHud(unit.skill) : null;
+  const mana = marcilBenchMana(battle, build.id);
+  const hud = unit ? skillHud(unit.skill) : mana ? { ...mana, state: 'charging' } : null;
   const level = tokenLevel ?? data.operators[build.id].skills.find((entry) => entry.id === build.skillId)?.levels[build.skillRank - 1];
-  const recovery = {
+  const recovery = build.id === 'char_4141_marcil' ? 'Mana' : {
     INCREASE_WITH_TIME: "Auto recovery",
     INCREASE_WHEN_ATTACK: "Offensive recovery",
     INCREASE_WHEN_TAKEN_DAMAGE: "Defensive recovery",
@@ -732,6 +734,23 @@ function drawHud() {
       : cool ? cool + 's'
       : b.kind === 'summon' && b.stock <= 0 ? b.config.tacticalPoint ? 'SET' : '—'
       : b.kind === 'summon' ? b.record.stats.cost : battle.cost(id);
+    const mana = marcilBenchMana(battle, id);
+    let manaFrame = button.querySelector('.mana-charge');
+    if (mana && !manaFrame) {
+      manaFrame = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      manaFrame.setAttribute('class', 'mana-charge'); manaFrame.setAttribute('viewBox', '0 0 100 100');
+      manaFrame.setAttribute('preserveAspectRatio', 'none'); manaFrame.setAttribute('aria-hidden', 'true');
+      manaFrame.innerHTML = '<path d="M50 99H1V1H50" pathLength="100"/><path d="M50 99H99V1H50" pathLength="100"/>';
+      button.append(manaFrame);
+    }
+    if (manaFrame) {
+      manaFrame.style.display = mana ? '' : 'none';
+      if (mana) for (const path of manaFrame.querySelectorAll('path')) path.style.strokeDashoffset = 100 * (1 - mana.fraction);
+    }
+    if (mana) {
+      button.setAttribute('aria-label', `${button.getAttribute('aria-label')}, ${mana.text}`);
+      button.title += ` · ${mana.text}`;
+    }
     const rarity = b.kind === 'operator' ? data.operators[id].rarity : 1;
     button.dataset.rarity = rarity;
     button.classList.toggle('unavailable', !!alive || cool > 0 || (b.kind === 'summon' ? b.record.stats.cost : battle.cost(id)) > battle.dp || b.kind === 'summon' && (!b.owner.alive || b.stock <= 0));
@@ -824,7 +843,7 @@ function drawHud() {
       skillButton.disabled = !canActivate && !(copySkill && copyFlow?.active);
       skillButton.classList.toggle('ready', !!hud?.canActivate);
       const label = copySkill && copyFlow?.active ? 'Cancel copy selection' : copySkill && hud?.canActivate
-        ? 'Copy an undeployed squad operator' : hud?.canCancel ? 'Stop skill' : hud?.canActivate ? 'Skill ready · Activate' : hud?.text ?? 'Skill unavailable';
+        ? 'Copy an undeployed squad operator' : hud?.canCancel ? hud.cancelText ?? 'Stop skill' : hud?.canActivate ? 'Skill ready · Activate' : hud?.text ?? 'Skill unavailable';
       skillButton.setAttribute('aria-label', label); skillButton.title = label;
       if (copySkill) {
         skillButton.querySelector('img')?.remove();
@@ -833,7 +852,7 @@ function drawHud() {
           symbol.textContent = 'COPY'; symbol.setAttribute('aria-hidden', 'true'); skillButton.prepend(symbol);
         }
       }
-      skillButton.querySelector('.field-sp').textContent = hud?.canActivate ? 'READY' : hud?.text.match(/^\d+ \/ \d+ SP/)?.[0] ?? (hud?.state === 'overloaded' ? 'OVERLOAD' : hud?.state === 'active' ? 'ACTIVE' : 'PASSIVE');
+      skillButton.querySelector('.field-sp').textContent = hud?.statusText ?? (hud?.canActivate ? 'READY' : hud?.text.match(/^\d+ \/ \d+ SP/)?.[0] ?? (hud?.state === 'overloaded' ? 'OVERLOAD' : hud?.state === 'active' ? 'ACTIVE' : 'PASSIVE'));
     }
   }
   const hover = dragging?.over ? { ...dragging.over, dir: "RIGHT" } : null;

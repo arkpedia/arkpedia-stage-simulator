@@ -20,7 +20,7 @@ function upgrade(f) {
 
 test('S2 requires source-selected ranks, native projectile chains and its own opt-in contract', () => {
   verifyMarcilFamiliarSource(); assert.equal(contract.frameParity, false);
-  assert.deepEqual(evidence.enabledOperators, []); assert.equal(data.operators[ID], undefined);
+  assert.deepEqual(evidence.enabledOperators, []);
   assert.throws(() => make({ contract: { ...contract } }), /explicit familiar contract/);
   for (const skill of [1,3]) assert.throws(() => make({ skill }), /selected S2/);
   for (const mutate of [d=>d.stats.atk++, d=>d.skill.bb.attack_speed++, d=>d.skill.bb.sp_cost++,

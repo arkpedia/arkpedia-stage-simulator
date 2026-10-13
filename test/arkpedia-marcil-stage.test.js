@@ -15,7 +15,7 @@ for (const skill of [1,2,3]) for (const cancel of skill === 3 ? [false,true] : [
       ...(skill === 2 ? { prepare: prepareMarcilFamiliar, contract: MARCIL_FAMILIAR_CONTRACT } : {}),
       ...(skill === 3 ? { prepare: prepareMarcilExplosion, contract: MARCIL_EXPLOSION_CONTRACT } : {}),
     });
-    assert.equal(data.operators[MARCIL_ID], undefined);
+    assert.equal(f.u.def.charId, MARCIL_ID);
     assert.deepEqual(f.b.grid.rect, { r0: 0, r1: 5, c0: 0, c1: 8 });
     assert.equal(f.b.grid.tile(4,6).height, 'HIGH');
     assert.equal(f.b.grid.tile(4,6).build, 'RANGED');

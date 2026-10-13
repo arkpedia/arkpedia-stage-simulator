@@ -154,6 +154,17 @@ if(ids.includes('char_1040_blaze2')){
     ||evidence.source.commit!==pins[paths.character_table[0]])
     throw Error('Blaze Igniting public runtime review differs from the pinned native source');
 }
+if (ids.includes('char_4141_marcil')) {
+  const review = JSON.parse(await readFile(new URL('../../data/arkpedia-marcil-runtime-review.json', import.meta.url)));
+  const foundation = await readFile(new URL('../../data/arkpedia-marcil-prefabs.json', import.meta.url));
+  const evidence = JSON.parse(foundation);
+  if (JSON.stringify(review.enabledOperators) !== JSON.stringify(['char_4141_marcil']) || review.frameParity !== false
+    || review.moduleSupport !== false || review.nativeParticleSupport !== false
+    || review.chantPolicy !== 'request-then-active-v1' || review.projectilePolicy !== 'retain-born-unmanaged-shots-v1'
+    || review.sourceFoundationSha256 !== createHash('sha256').update(foundation).digest('hex')
+    || evidence.source.commit !== pins[paths.character_table[0]])
+    throw Error('Marcille public runtime review differs from the pinned native source');
+}
 if (ids.includes('char_4194_rmixer')) {
   const review = JSON.parse(await readFile(new URL('../../data/arkpedia-rmixer-runtime-review.json', import.meta.url)));
   const foundation = await readFile(new URL('../../data/arkpedia-rmixer-prefabs.json', import.meta.url));
@@ -310,6 +321,16 @@ const models = Object.fromEntries(
     return [k, sd.models[k]];
   }),
 );
+if (ids.includes('char_4141_marcil')) {
+  const review = JSON.parse(await readFile(new URL('../../data/arkpedia-marcil-runtime-review.json', import.meta.url)));
+  const evidence = JSON.parse(await readFile(new URL('../../data/arkpedia-marcil-prefabs.json', import.meta.url)));
+  for (const face of ['front', 'back']) {
+    const expected = evidence.models.char_4141_marcil[face === 'front' ? 'Front' : 'Back'].sha256;
+    if (review.originalSkeletonSha256[face] !== expected
+      || models[`operator/char_4141_marcil/default/${face}`].skeleton.sha256 !== expected)
+      throw Error('Marcille published skeleton differs from the original native artwork');
+  }
+}
 // Bind the published default dragon files to the independently audited artwork,
 // rather than approving whichever model happens to be at the latest asset HEAD.
 if (ids.includes('char_4147_mitm')) {

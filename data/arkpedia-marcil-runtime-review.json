@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "operatorId": "char_4141_marcil",
+  "enabledOperators": [
+    "char_4141_marcil"
+  ],
+  "sourceFoundation": "arkpedia-marcil-prefabs.json",
+  "sourceFoundationSha256": "1afeb622805ee117cd7997717a8f685b646ccf7c7f4cd2f2fae19286f164260b",
+  "scope": "Selected-source ordinary Arts splash, both talents, all three skills, squad mana and public deployment lifecycle. Original extraction and opt-in diagnostics remain independent.",
+  "frameParity": false,
+  "moduleSupport": false,
+  "nativeParticleSupport": false,
+  "chantPolicy": "request-then-active-v1",
+  "projectilePolicy": "retain-born-unmanaged-shots-v1",
+  "verification": [
+    "test/arkpedia-marcil-public.test.js",
+    "test/arkpedia-marcil-chant.test.js",
+    "test/arkpedia-marcil-stage.test.js",
+    "test/arkpedia-marcil-party.test.js",
+    "tools/arkpedia/review-marcil-public.mjs"
+  ],
+  "limits": [
+    "Original Begin/main/End and attack events use explicit scheduler clocks; compiled transition frames and born timing are unverified.",
+    "Mana starts at squad setup. Its off-field period, forced assignments and external recovery during pre-skill chants are explicit local mappings.",
+    "Party membership uses immutable regular-stage cards, including support; native category-mask/card-state and modifier dispatch remain unrecovered.",
+    "Retained attack inputs, area/body geometry, closest-goal enemy priority and HP-ratio ally priority use documented engine selectors.",
+    "S2 retains born unmanaged projectiles after cancellation/removal; compiled ability cast-end clearing is unresolved.",
+    "S3 uses fixed two-forward centre, one manual explosion or affordable completed-chant repeats, highland-centred fragment stuns and no permanent terrain mutation. Native filter comparator and reach/stop order are unverified.",
+    "Native particles/audio, modules, compiled FSM dispatch and Unity frame parity are not enabled."
+  ],
+  "originalSkeletonSha256": {
+    "front": "bfa19a5fb71ab9cb86ed4185ddb03331d4376f6f992c57f69385965bdf4a783c",
+    "back": "84004e9259222935a6a85c24dd36d736895a7c0b58af75d7a5cc7e36b0be3c8c"
+  }
+}
