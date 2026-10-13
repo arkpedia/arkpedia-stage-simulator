@@ -51,7 +51,7 @@ export class MarcilAttackController {
     this.seq = null; this.phase = null; this.mode = 'ordinary'; this.serial = 0;
     this.stopped = false; this.handles = []; this.accepting = false;
   }
-  valid() { return !this.stopped && !this.b.finished && live(this.u) && this.seq === this.u.deploySeq; }
+  valid() { return !this.stopped && !this.b.finished && !this.b._endReq && live(this.u) && this.seq === this.u.deploySeq; }
   model() { return evidence.models[MARCIL_ID][['UP', 'LEFT'].includes(this.u.dir) ? 'Back' : 'Front']; }
   visual(clip, speed = 1, loop = false) {
     this.u.mem.regularVisualDirection = ['UP', 'LEFT'].includes(this.u.dir) ? 'UP' : 'RIGHT';
@@ -140,7 +140,14 @@ export class MarcilAttackController {
     this.visual('Attack', speed); u.atkCd = u.s.interval;
   }
   tick() {
-    if (!this.valid()) return;
+    if (!this.valid()) {
+      if (!this.stopped && this.u.alive && this.u.deployed && !this.u._removing
+        && this.u.hidden && this.seq === this.u.deploySeq) {
+        this.phase = null;
+        if (this.mode === 'chant' && this.u.skill.active) this.u.skill.end('hidden');
+      }
+      return;
+    }
     const { b, u } = this; let p = this.phase;
     if (!u.canAct || u.s.flags.disarm || p && p.epoch !== u.attackControlEpoch) {
       this.phase = null;
@@ -165,10 +172,10 @@ export class MarcilAttackController {
       if (!due(b, p.deadline)) return;
       if (p.stage === 'begin') {
         p.stage = 'main'; p.deadline += this.record.bb.chant_duration;
-        this.visual('Skill_1_Chant', 1, true);
+        this.visual(p.loopClip ?? 'Skill_1_Chant', 1, true);
       } else if (p.stage === 'main') {
-        p.stage = 'end'; p.deadline += this.model().durations.Skill_1_End;
-        this.visual('Skill_1_End');
+        p.stage = 'end'; p.deadline += this.model().durations[p.endClip ?? 'Skill_1_End'];
+        this.visual(p.endClip ?? 'Skill_1_End');
       } else this.finishChant();
       return;
     }
@@ -177,7 +184,7 @@ export class MarcilAttackController {
         p.released = true;
         this.releaseAttack(p);
         if (this.phase !== p || !this.valid()) return;
-        if (p.skill && this.wallet.value < this.record.bb.skill_cost_min_sp) { u.skill.end('mana'); return; }
+        if (this.mode === 's1' && p.skill && this.wallet.value < this.record.bb.skill_cost_min_sp) { u.skill.end('mana'); return; }
       }
       if (!due(b, p.readyAt)) return;
       this.phase = null;
@@ -227,6 +234,14 @@ export function prepareMarcilAttacks(b, u, { contract } = {}) {
   verifyMarcilAttackSource();
   const mana = prepareMarcilMana(b, u, { contract: MARCIL_MANA_CONTRACT });
   const controller = new MarcilAttackController(b, u, mana.record, mana); u.mem.marcilAttacks = controller;
+  return bindMarcilCombat(mana, controller);
+}
+
+// Shared by later explicit source diagnostics; it does not select a build or
+// expose an operator. Each entry point must validate its own source contract.
+export function bindMarcilCombat(mana, controller) {
+  if (!(controller instanceof MarcilAttackController) || controller.mana !== mana)
+    throw Error('Invalid Marcille combat binding');
   mana.kit.trait = { noAttack: true, attackDrivenSkill: true, attack: 'ranged', dmgType: 'arts',
     canHitFly: true, maxTargets: 1, maxTargetsByBlock: false, hitAllBlocked: false, allInRange: false,
     rangeAoe: false, hits: 1, hitsFn: null, splashRadius: 0, chain: null, projectile: 'none',
