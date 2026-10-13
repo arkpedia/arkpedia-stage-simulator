@@ -48,8 +48,8 @@ function cast(f) {
 const hit = (f, amount, type = 'true', opts = {}) => f.b.dealDamage(null, f.u,
   { amount, type, ...opts });
 
-test('resource implementation is opt-in and cannot become a public or incomplete skill kit', () => {
-  assert.equal(data.operators[ID], undefined);
+test('resource implementation is opt-in and cannot silently become the public skill kit', () => {
+  assert.ok(data.operators[ID]);
   assert.deepEqual(e.enabledOperators, []);
   assert.throws(() => make({ contract: { ...CONTRACT } }), /reviewed resource contract/);
   const f = make();

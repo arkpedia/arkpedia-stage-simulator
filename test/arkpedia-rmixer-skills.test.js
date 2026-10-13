@@ -5,7 +5,7 @@ import data from '../data/arkpedia-mvp.json' with { type: 'json' };
 import evidence from '../data/arkpedia-rmixer-prefabs.json' with { type: 'json' };
 import { normalizeChess } from '../server/sim/simdata.js';
 import { defaultBuild } from '../shared/arkpedia/loadout.js';
-import { RMIXER_SKILL_CONTRACT as CONTRACT, prepareRmixerSkills } from '../server/sim/content/arkpedia-rmixer-skills.js';
+import { RMIXER_SKILL_CONTRACT as CONTRACT, RMIXER_RUNTIME_CONTRACT as PUBLIC_CONTRACT, prepareRmixerSkills } from '../server/sim/content/arkpedia-rmixer-skills.js';
 import { make as fixture, enemy, advance, until, cast } from './helpers/rmixer-fixture.js';
 const ID = 'char_4194_rmixer';
 const near = (a, z) => assert.ok(Math.abs(a - z) < 1e-5, `${a} != ${z}`);
@@ -29,8 +29,8 @@ function input(f, source, { amount = 1, type = 'true', ...extra } = {}) {
 }
 function readyS3(f) { cast(f); until(f, () => f.u.mem.regularFormVisual.clip === 'Skill_3_Idle'); }
 
-test('full diagnostic requires its own explicit contract and retains source/public holds', () => {
-  assert.equal(data.operators[ID], undefined); assert.deepEqual(evidence.enabledOperators, []);
+test('full diagnostic requires its own explicit contract and retains its historical source hold', () => {
+  assert.ok(data.operators[ID]); assert.deepEqual(evidence.enabledOperators, []);
   assert.equal(CONTRACT.frameParity, false);
   assert.match(CONTRACT.limits, /literal maxStackCnt of one/);
   assert.match(CONTRACT.mapping, /multiple recipients are explicitly held/);
@@ -101,6 +101,32 @@ test('S1 does not invent compiled ordering when two recipients are eligible', ()
   assert.equal(a.skill.ammoLeft, 10); assert.equal(z.skill.ammoLeft, 10);
   assert.equal(held.length, 1); assert.deepEqual(new Set(held[0].candidates), new Set([a.id, z.id]));
   assert.equal(held[0].postFilter, 66);
+});
+
+test('public S1 selects missing ammo before deployment order, then newest deployment without using taunt', () => {
+  for (const mode of ['missing-first', 'latest-time', 'same-tick-sequence', 'full-tie', 'exhausted-newest']) {
+    const f = make({ contract: PUBLIC_CONTRACT }), a = ammoAlly(f);
+    if (mode === 'latest-time') advance(f, .1);
+    const z = ammoAlly(f, { row: 6 });
+    a.aggroSeq = z.deploySeq + 100; z.aggroSeq = 0;
+    let expected = z;
+    if (mode === 'missing-first') { z.skill.ammoLeft = z.skill.ammoCapacity; expected = a; }
+    if (mode === 'full-tie') { a.skill.ammoLeft = a.skill.ammoCapacity; z.skill.ammoLeft = z.skill.ammoCapacity; }
+    if (mode === 'exhausted-newest') { z.skill.replenishAmmo(99); z.skill.ammoLeft = 0; expected = a; }
+    const beforeA = a.skill.ammoLeft, beforeZ = z.skill.ammoLeft;
+    enemy(f); charge(f); until(f, () => f.hits.length === 3);
+    assert.equal(a.skill.ammoLeft, beforeA + Number(expected === a), mode);
+    assert.equal(z.skill.ammoLeft, beforeZ + Number(expected === z), mode);
+  }
+});
+
+test('public S1 revalidates captured recipients if recovery retires the source', () => {
+  const f = make({ contract: PUBLIC_CONTRACT }), a = ammoAlly(f), z = ammoAlly(f, { row: 6 });
+  const original = z.skill.spec.onAmmoReplenish;
+  z.skill.spec.onAmmoReplenish = ctx => { original?.(ctx); f.b.retreat(f.u, { permanent: true }); };
+  f.controller.replenish(true);
+  assert.equal(z.skill.ammoReplenished, 1); assert.equal(a.skill.ammoReplenished, 0);
+  assert.equal(f.controller.stopped, true); assert.equal(f.u.alive, false);
 });
 
 test('S1 filters out inactive, wrong-group, non-ammo, isolated, hidden and outside-range recipients', () => {

@@ -154,6 +154,17 @@ if(ids.includes('char_1040_blaze2')){
     ||evidence.source.commit!==pins[paths.character_table[0]])
     throw Error('Blaze Igniting public runtime review differs from the pinned native source');
 }
+if (ids.includes('char_4194_rmixer')) {
+  const review = JSON.parse(await readFile(new URL('../../data/arkpedia-rmixer-runtime-review.json', import.meta.url)));
+  const foundation = await readFile(new URL('../../data/arkpedia-rmixer-prefabs.json', import.meta.url));
+  const evidence = JSON.parse(foundation);
+  if (JSON.stringify(review.enabledOperators) !== JSON.stringify(['char_4194_rmixer']) || review.frameParity !== false
+    || review.moduleSupport !== false || review.nativeParticleSupport !== false
+    || review.recipientPolicy !== 'missing-ammo-then-latest-deployment-v1'
+    || review.sourceFoundationSha256 !== createHash('sha256').update(foundation).digest('hex')
+    || evidence.source.commit !== pins[paths.character_table[0]])
+    throw Error('Sankta public runtime review differs from the pinned native source');
+}
 const cnEvidence = usesCN ? JSON.parse(await readFile(new URL('../../data/arkpedia-cn-source.json', import.meta.url), 'utf8')) : null;
 if (cnEvidence) {
   const roster = JSON.parse(await readFile(new URL('../../data/arkpedia-roster-target.json', import.meta.url), 'utf8'));
@@ -259,7 +270,11 @@ if (
   geometry.waves.length !== 1
 )
   throw new Error("Stage now needs unsupported mechanics");
-const sdCommit = execFileSync("git", ["rev-parse", "HEAD"], {
+const sdArg = process.argv.indexOf('--sd-commit');
+const sdRequested = sdArg < 0 ? null : process.argv[sdArg + 1];
+if (sdArg >= 0 && !/^[a-f0-9]{40}$/.test(sdRequested ?? ''))
+  throw Error('--sd-commit requires an immutable forty-character Git commit');
+const sdCommit = execFileSync("git", ["rev-parse", ...(sdRequested ? ["--verify", `${sdRequested}^{commit}`] : ["HEAD"])], {
   cwd: new URL("../../../arkpedia-sd-assets/", import.meta.url),
   encoding: "utf8",
 }).trim();

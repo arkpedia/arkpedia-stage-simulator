@@ -8,7 +8,7 @@ const flat = b => Object.fromEntries(b.map(x => [x.key, x.value]));
 const actions = (key, event) => e.templates[key].eventToActions[event];
 const type = n => n.$type.split('+').at(-1).split(',')[0];
 
-test('native receipt keeps all dependencies and both original facing bindings while public enablement stays held', () => {
+test('native receipt keeps all dependencies and both original facing bindings while its historical enablement hold is preserved', () => {
   assert.deepEqual(e.enabledOperators, []); assert.deepEqual(e.heldOperators, [ID]);
   assert.equal(e.source.commit, '57010cb5b2afea112cae57daa756b58676ba6850');
   assert.equal(e.source.modelCommit, 'd0b5af0b004b044d322397ce5ae79632b6d9fcdd');
