@@ -256,31 +256,32 @@ export class Grid {
   /**
    * Flow field toward (er, ec). `allowDiagonal` false ⇒ line of sight only along a row or a column (every autochess
    * route allows diagonals). `ignoreObstacles` ⇒ blocks and crates are ignored (fallback when the goal is walled off).
+   * `avoidObstacleLike` makes crates impassable for source selectors which require a reachable, unobstructed path.
    * @returns {FlowField}
    */
-  flowField(er, ec, { allowDiagonal = true, ignoreObstacles = false } = {}) {
+  flowField(er, ec, { allowDiagonal = true, ignoreObstacles = false, avoidObstacleLike = false } = {}) {
     er |= 0; ec |= 0;
-    const ck = `${er},${ec},${allowDiagonal ? 1 : 0},${ignoreObstacles ? 1 : 0}`;
+    const ck = `${er},${ec},${allowDiagonal ? 1 : 0},${ignoreObstacles ? 1 : 0},${avoidObstacleLike ? 1 : 0}`;
     const hit = this._fields.get(ck);
     if (hit) return hit;
-    const f = this._buildField(er, ec, allowDiagonal, ignoreObstacles);
+    const f = this._buildField(er, ec, allowDiagonal, ignoreObstacles, avoidObstacleLike);
     if (this._fields.size >= FIELD_CACHE_MAX) this._fields.delete(this._fields.keys().next().value);
     this._fields.set(ck, f);
     return f;
   }
 
-  _buildField(er, ec, allowDiagonal, ignore) {
+  _buildField(er, ec, allowDiagonal, ignore, avoidObstacleLike = false) {
     const N = ROWS * COLS;
     const f = { dest: -1, dist: null, parent: null, pen: null, next: null, official: null, cost: null, len: null, version: this.version, allowDiagonal, ignore };
-    if (!this.inBounds(er, ec)) {
+    if (!this.inBounds(er, ec) || avoidObstacleLike && !ignore && this.isObstacle(er, ec)) {
       const none = new Int32Array(N).fill(-1);
       return Object.assign(f, { dist: none, parent: none, next: none, official: none, pen: new Int32Array(N), cost: new Int32Array(N) });
     }
     const dest = er * COLS + ec;
     f.dest = dest;
     const unb = this.unblockable;
-    const official = this._spfa(dest, ignore, null);
-    const pref = this._spfa(dest, ignore, unb);
+    const official = this._spfa(dest, ignore, null, avoidObstacleLike);
+    const pref = this._spfa(dest, ignore, unb, avoidObstacleLike);
     const dist = pref.dist; // the lexicographic relaxation leaves every distance the official one
     const walk = (r, c) => this.walkable(r, c, ignore) && (ignore || !(this.obstacle[r * COLS + c] & OB_CRATE));
     const ray = allowDiagonal ? bresenhamClear : segmentClear;
@@ -324,7 +325,7 @@ export class Grid {
    * FIFO SPFA from `dest` (walkable or not) with the official neighbour order and move costs. With `penalty` (per-tile
    * 0/1) the relaxation is lexicographic on (dist, pen): equal-length chains keep the fewest penalised tiles.
    */
-  _spfa(dest, ignore, penalty) {
+  _spfa(dest, ignore, penalty, avoidObstacleLike = false) {
     const N = ROWS * COLS;
     const dist = new Int32Array(N).fill(-1);
     const parent = new Int32Array(N).fill(-1);
@@ -347,6 +348,7 @@ export class Grid {
       for (let i = 0; i < 4; i++) {
         const nr = r + FOUR_WAYS[i][0], nc = c + FOUR_WAYS[i][1];
         if (!this.walkable(nr, nc, ignore)) continue;
+        if (!ignore && avoidObstacleLike && this.isCrate(nr, nc)) continue;
         const nb = nr * COLS + nc;
         const nd = dist[cur] + (!ignore && (this.obstacle[nb] & OB_CRATE) ? OBSTACLE_COST : 1);
         const np = penalty ? pen[cur] + penalty[nb] : 0;
@@ -385,12 +387,13 @@ export class Grid {
    * Smoothed waypoints [[r,c]…] from (sr,sc) to (er,ec) along the flow field (start and goal included), or null when
    * the start cannot reach the goal. With `ignoreObstacles` the field ignores blocks and crates.
    */
-  waypoints(sr, sc, er, ec, { ignoreObstacles = false, allowDiagonal = true } = {}) {
+  waypoints(sr, sc, er, ec, { ignoreObstacles = false, allowDiagonal = true, avoidObstacleLike = false } = {}) {
     if (!this.inBounds(sr, sc) || !this.inBounds(er, ec)) return null;
+    if (avoidObstacleLike && !ignoreObstacles && (this.isObstacle(sr, sc) || this.isObstacle(er, ec))) return null;
     const start = sr * COLS + sc;
     const goal = er * COLS + ec;
     if (start === goal) return [[sr, sc]];
-    const f = this.flowField(er, ec, { ignoreObstacles, allowDiagonal });
+    const f = this.flowField(er, ec, { ignoreObstacles, allowDiagonal, avoidObstacleLike });
     if (f.dist[start] < 0) return null;
     const out = [[sr, sc]];
     let k = start, guard = ROWS * COLS;
@@ -406,8 +409,8 @@ export class Grid {
    * Tiles crossed by the enemy route from (sr,sc) to (er,ec): the smoothed waypoints joined by their Bresenham lines
    * (start and goal included; consecutive tiles are 8-neighbours). null when unreachable (unless ignoreObstacles).
    */
-  findPath(sr, sc, er, ec, { ignoreObstacles = false } = {}) {
-    const wp = this.waypoints(sr, sc, er, ec, { ignoreObstacles });
+  findPath(sr, sc, er, ec, { ignoreObstacles = false, avoidObstacleLike = false } = {}) {
+    const wp = this.waypoints(sr, sc, er, ec, { ignoreObstacles, avoidObstacleLike });
     if (!wp) return null;
     const out = [wp[0]];
     for (let i = 1; i < wp.length; i++) {

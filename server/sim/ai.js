@@ -617,7 +617,11 @@ function moveAttracted(b, e, dt) {
     const sr = Math.round(e.y), sc = Math.round(e.x);
     let pts = null;
     if (e.motion !== 'FLY') { // (a hovering 近地悬浮 enemy is an air unit but walks the ground: motion decides the path)
-      const path = b.grid.waypoints(sr, sc, A.r, A.c) || b.grid.waypoints(sr, sc, A.r, A.c, { ignoreObstacles: true });
+      const path = b.grid.waypoints(sr, sc, A.r, A.c, { avoidObstacleLike: !!A.strictReachable })
+        || (!A.strictReachable && b.grid.waypoints(sr, sc, A.r, A.c, { ignoreObstacles: true }));
+      // Source selectors such as Blood's Whisper forbid obstacle fallback.
+      // A route changed between acquisition and movement must not tunnel.
+      if (!path && A.strictReachable) { A.pts = null; e.moving = false; return; }
       if (path) {
         pts = [];
         for (let i = 0; i < path.length; i++) {
@@ -640,6 +644,9 @@ function moveAttracted(b, e, dt) {
     if (d <= dist) { e.x = p.x; e.y = p.y; dist -= d; A.i++; } else { e.x += (dx / d) * dist; e.y += (dy / d) * dist; dist = 0; }
     moved = true;
     if (observeEnemyMove(b, e, from, 'attract')) { A.pts = null; e.moving = false; return; }
+    if (A.strictReachable && (A.ver !== b.grid.version || !e.buffs.some(x => x.data?.attract === A))) {
+      A.pts = null; if (e.route) e.route.pts = null; e.moving = false; return;
+    }
   }
   A.px = e.x; A.py = e.y;
   e.moving = moved;
