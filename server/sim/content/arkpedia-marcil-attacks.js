@@ -13,6 +13,7 @@ export const MARCIL_ATTACK_CONTRACT = Object.freeze({
   clocks: 'Original facing Start/Attack and S1 Begin/Chant/End clips. Attack event and complete clip use captured base/current interval capped at native maxAnimScale one. Main chanting follows Begin, selected chant_duration, then End; compiled inclusion of transition frames remains unverified.',
   selection: 'One enemy input by this engine’s closest-goal priority; ordinary and S1 splash use original 1.1/1.5 circles according to mana at attack start. Retained input lives identify the centre at release, including a dead input’s last position. S1 falls back to one injured, healable ally by HP ratio/deployment sequence when no selectable enemy is present at windup.',
   mana: 'S1 requires the selected minimum mana, not a full wallet, and cannot switch into chanting during deployment. All three source roots switch state but forbid switching during birth; PRTS gameplay notes corroborate the deployment/minimum gates. The original Start clip bounds the local birth clock; compiled born-time dispatch remains unverified. Half-second original chant checks stop later insufficient-mana casts. One legal output group spends the selected cost after capturing ATK and before output callbacks. Empty/cancelled groups spend nothing. Main chanting cannot be manually canceled; the running S1 can.',
+  lifecycle: 'A request enters a separate chant phase, not an active skill. The original chant buff finishes on ON_SKILL_START; PRTS notes distinguish chanting from skill duration. Completion alone commits the engine activation and start hooks. External mana grants and forced assignments retain inactive-phase rules while chanting and active-phase locks after completion. This recovery mapping and compiled event order remain unverified.',
   limits: 'Compiled selector/event dispatch, centre/body collision, external circle scaling, transition frame inclusion, control interruption and same-frame ordering are explicit local mappings. Source circles are tested with the existing area/body queries. S2/S3, party buffs, terrain effects, public registration, modules, native effects/audio and Unity frame parity remain held.',
   frameParity: false,
 });
@@ -23,10 +24,17 @@ const SKILL_BUFF = 'marcil:s1';
 const NORMAL_RADIUS = component('-1275573190307791893').m_Radius;
 const POWER_RADIUS = component('5242925538742582251').m_Radius;
 export function verifyMarcilAttackSource() {
+  const inChant = evidence.templates.marcil_in_chant.eventToActions;
+  if (!inChant.ON_SKILL_START[0].$type.endsWith('FinishBuff, Assembly-CSharp')
+    || inChant.ON_BUFF_TRIGGER[0]._checkKey !== 'skill_cost_min_sp'
+    || inChant.ON_BUFF_TRIGGER[0]._condType !== 'LT'
+    || inChant.ON_BUFF_TRIGGER[1]._switchOutFromSkillState !== true)
+    throw Error('Unreviewed Marcille pre-skill chant lifecycle');
   for (const id of ['478083744964993879', '2321002891159124941', '-7137456302563982919']) {
     const root = component(id);
     if (root._switchToState !== 1 || root._canSwitchDuringBorn !== 0 || root._canCastDuringBorn !== 1
-      || root._canCastWithNoSp !== 1 || root._canUseInAbnormalState !== 0)
+      || root._canCastWithNoSp !== 1 || root._canUseInAbnormalState !== 0
+      || root._allowSpRecoveryWhenAffecting !== 0)
       throw Error('Unreviewed Marcille activation state gate');
   }
   for (const id of ['1999087216603380715', '6531036271420849131', '-2255832452526097429', '9204866056716958699']) {
@@ -56,6 +64,7 @@ export class MarcilAttackController {
     this.b = b; this.u = u; this.record = record; this.mana = mana; this.wallet = mana.wallet;
     this.seq = null; this.phase = null; this.mode = 'ordinary'; this.serial = 0;
     this.stopped = false; this.handles = []; this.accepting = false; this.bornUntil = Infinity;
+    this.chantRequests = 0; this.committing = false; this.effectStart = null;
   }
   valid() { return !this.stopped && !this.b.finished && !this.b._endReq && live(this.u) && this.seq === this.u.deploySeq; }
   model() { return evidence.models[MARCIL_ID][['UP', 'LEFT'].includes(this.u.dir) ? 'Back' : 'Front']; }
@@ -81,12 +90,45 @@ export class MarcilAttackController {
     return this.b.allyUnits.filter(t => this.healable(t) && t.hp < t.s.maxHp - 1e-6 && bodyInKeys(t, keys))
       .sort((a, z) => a.hpRatio - z.hpRatio || a.deploySeq - z.deploySeq)[0];
   }
-  canBegin() { return this.valid() && due(this.b, this.bornUntil) && this.mode === 'ordinary'
+  isChanting() { return this.mode === 'chant'; }
+  canBegin() { return this.valid() && due(this.b, this.bornUntil) && (this.mode === 'ordinary' || this.committing)
     && this.u.canAct && !this.u.s.flags.disarm && !this.u.skill.active
     && this.wallet.value >= this.record.bb.skill_cost_min_sp; }
   canActivate() { return this.record.index === 0 && this.canBegin(); }
   canCancel() { return this.valid() && this.mode === 's1' && this.u.skill.active && this.u.canAct && !this.u.s.flags.disarm; }
   cancel() { if (!this.canCancel()) return false; this.u.skill.end('manual'); return true; }
+  requestChant(reason = 'auto') {
+    if (reason === 'manual' && this.isChanting() && this.canCancel()) return this.cancel();
+    if (!this.canActivate()) return false;
+    this.chantReason = reason; this.chantRequests++;
+    this.start();
+    this.b.emit('marcilChantStart', { unit: this.u, request: this.chantRequests, reason });
+    return true;
+  }
+  abortChant(reason) {
+    if (!this.isChanting()) return false;
+    const request = this.chantRequests;
+    this.mode = 'ordinary'; this.phase = null;
+    this.end(reason);
+    this.b.emit('marcilChantEnd', { unit: this.u, request, reason, completed: false });
+    return true;
+  }
+  commitEffect(start) {
+    if (!this.valid() || !this.isChanting()) return false;
+    const reason = this.chantReason, request = this.chantRequests;
+    this.committing = true; this.effectStart = start;
+    let accepted;
+    try { accepted = this.originalActivate.call(this.u.skill, reason, { free: true }); }
+    finally { this.committing = false; this.effectStart = null; }
+    if (!accepted) { this.abortChant('unavailable'); return false; }
+    this.b.emit('marcilChantEnd', { unit: this.u, request, reason, completed: true });
+    return true; // The command was accepted even if a start callback retired it.
+  }
+  requestEnd(reason) {
+    if (reason === 'manual' && !this.canCancel()) return false;
+    if (this.isChanting()) return reason === 'manual' ? this.cancel() : this.abortChant(reason);
+    return this.originalEnd.call(this.u.skill, reason);
+  }
   start() {
     if (!this.valid()) return;
     this.phase = { kind: 'chant', stage: 'begin', epoch: this.u.attackControlEpoch,
@@ -100,6 +142,9 @@ export class MarcilAttackController {
     if (this.valid()) this.visual('Idle', 1, true);
   }
   finishChant() {
+    return this.commitEffect(() => this.enableSkill());
+  }
+  enableSkill() {
     this.phase = null; this.mode = 's1';
     this.nextManaCheck = this.b.time + .5;
     const buff = this.b.addBuff(this.u, { key: SKILL_BUFF, source: this.u, mods: { atkPct: this.record.bb.atk } });
@@ -152,7 +197,7 @@ export class MarcilAttackController {
       if (!this.stopped && this.u.alive && this.u.deployed && !this.u._removing
         && this.u.hidden && this.seq === this.u.deploySeq) {
         this.phase = null;
-        if (this.mode === 'chant' && this.u.skill.active) this.u.skill.end('hidden');
+        if (this.isChanting()) this.u.skill.end('hidden');
       }
       return;
     }
@@ -162,7 +207,7 @@ export class MarcilAttackController {
     if (!due(b, this.bornUntil)) return;
     if (!u.canAct || u.s.flags.disarm || p && p.epoch !== u.attackControlEpoch) {
       this.phase = null;
-      if (u.skill.active) u.skill.end('control'); else this.visual('Idle', 1, true);
+      if (u.skill.active || this.isChanting()) u.skill.end('control'); else this.visual('Idle', 1, true);
       return;
     }
     // Original S1 buff also checks its mana threshold every half second,
@@ -212,8 +257,8 @@ export class MarcilAttackController {
     if (this.stopped || this.handles.length) throw Error('Marcille combat already installed');
     this.mana.controller.install();
     this.originalActivate = this.u.skill.activate; this.originalEnd = this.u.skill.end;
-    this.boundActivate = reason => this.canActivate() ? this.originalActivate.call(this.u.skill, reason, { free: true }) : false;
-    this.boundEnd = reason => reason === 'manual' && !this.canCancel() ? false : this.originalEnd.call(this.u.skill, reason);
+    this.boundActivate = reason => this.requestChant(reason);
+    this.boundEnd = reason => this.requestEnd(reason);
     this.u.skill.activate = this.boundActivate; this.u.skill.end = this.boundEnd;
     this.handles = [
       this.b.on('deploy', ({ unit, move }) => {
@@ -228,6 +273,8 @@ export class MarcilAttackController {
     ];
   }
   stop(reason) {
+    if (this.stopped) return;
+    if (this.isChanting()) this.abortChant(reason === 'battle-end' ? reason : 'death');
     if (this.stopped) return;
     if (this.u.skill.active) this.originalEnd.call(this.u.skill, reason === 'battle-end' ? reason : 'death');
     if (this.stopped) return; // onEnd('death') already retired this controller
@@ -262,8 +309,13 @@ export function bindMarcilCombat(mana, controller) {
   mana.kit.skill = { ...mana.kit.skill, kind: 'toggle', silenceable: false,
     canActivate: () => controller.canActivate(), manualCancel: true,
     canManualCancel: () => controller.canCancel(), onManualCancel: () => controller.cancel(),
-    onStart: () => controller.start(), onEnd: ({ reason }) => controller.end(reason),
+    onStart: () => {
+      if (!controller.committing || !controller.effectStart) throw Error('Marcille effect requires completed chanting');
+      controller.effectStart();
+    }, onEnd: ({ reason }) => controller.end(reason),
     resourceGauge: () => controller.valid() ? { current: mana.wallet.value, maximum: mana.record.mana.maximum,
-      label: 'Mana', canActivate: controller.canActivate(), canCancel: controller.canCancel() } : null };
+      label: controller.isChanting() ? 'Mana · Chanting' : 'Mana',
+      state: controller.isChanting() ? 'charging' : 'active',
+      canActivate: controller.canActivate(), canCancel: controller.canCancel() } : null };
   return { ...mana, mana, controller };
 }

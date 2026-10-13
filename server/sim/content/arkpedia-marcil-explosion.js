@@ -78,6 +78,7 @@ export function verifyMarcilExplosionSource() {
 
 export class MarcilExplosionController extends MarcilAttackController {
   constructor(...args) { super(...args); this.marker = null; this.explosions = 0; }
+  isChanting() { return this.mode === 's3-main' || this.mode === 's3-extra'; }
   centre() {
     for (let distance = 2; distance >= 0; distance--) {
       const [r,c] = rotateOffset(0, distance, this.u.dir);
@@ -87,9 +88,9 @@ export class MarcilExplosionController extends MarcilAttackController {
     return null;
   }
   canActivate() { return this.canBegin() && !!this.centre(); }
-  canCancel() { return this.valid() && this.mode === 's3-extra' && this.u.skill.active
+  canCancel() { return this.valid() && this.mode === 's3-extra'
     && this.u.canAct && !this.u.s.flags.disarm; }
-  cancel() { if (!this.canCancel()) return false; this.beginVolley(false); return true; }
+  cancel() { return this.canCancel() ? !!this.beginVolley(false) : false; }
   start() {
     this.mode = 's3-main'; this.explosions = 0;
     this.phase = { kind: 's3', stage: 'begin', epoch: this.u.attackControlEpoch,
@@ -102,7 +103,10 @@ export class MarcilExplosionController extends MarcilAttackController {
     this.b.emit('marcilExplosionMarkerEnd', { unit: this.u, marker });
   }
   beginVolley(completedExtraChant) {
-    if (!this.valid() || !this.u.skill.active || this.mode !== 's3-extra') return;
+    if (!this.valid() || this.mode !== 's3-extra') return;
+    return this.commitEffect(() => this.enableVolley(completedExtraChant));
+  }
+  enableVolley(completedExtraChant) {
     this.mana.controller.markCompletedExtraChant(completedExtraChant);
     this.mode = 's3-volley';
     this.phase.repeatAllowed = completedExtraChant;
@@ -199,11 +203,6 @@ export class MarcilExplosionController extends MarcilAttackController {
     // Only this same deployment may clear its phase mark; death uses stop().
     if (this.wallet.owner === this.u && this.seq === this.u.deploySeq) this.wallet.completedExtraChant = false;
     this.clearMarker(); super.end(reason);
-  }
-  install() {
-    super.install();
-    this.boundEnd = reason => reason === 'manual' ? this.cancel() : this.originalEnd.call(this.u.skill, reason);
-    this.u.skill.end = this.boundEnd;
   }
   stop(reason) { super.stop(reason); this.clearMarker(); }
 }
