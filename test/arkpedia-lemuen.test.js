@@ -137,6 +137,18 @@ test('external replenishment survives Lemuen controller spending and uses the in
     assert.equal(sk.ammoReplenished, 0); assert.equal(e.alive, true);
   }
 });
+
+test('Lemuen’s delayed capacity talent expands the live recovery allowance without loading an extra round', () => {
+  const f = make({ skill: 2 }); advance(f.b, 1.1); cast(f);
+  const sk = f.u.skill, ammo = f.u.mem.lemuenAmmunition, base = ammo.maximum;
+  assert.equal(sk.replenishAmmo(100), base); const before = ammo.current;
+  assert.equal(sk.ammoReplenishmentLeft, 0);
+  advance(f.b, 20);
+  assert.equal(ammo.current, before); assert.equal(sk.ammoCapacity, base + 1);
+  assert.equal(sk.ammoReplenishmentLeft, 1); assert.equal(sk.replenishAmmo(100), 1);
+  assert.equal(ammo.current, before + 1); assert.equal(sk.ammoReplenishmentLeft, 0);
+  sk.end('manual'); assert.equal(sk.ammoCapacity, 0);
+});
 test('public S2 preserves unspent ammunition on ordinary fallback and aims at a Wanted elite', () => {
   const f = make({ skill: 2 }); const e = enemy(f); e.def = { ...e.def, rank: 'ELITE' };
   advance(f.b, 1.1); cast(f); const count = f.u.skill.ammoLeft;

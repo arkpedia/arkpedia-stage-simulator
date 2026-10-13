@@ -46,6 +46,7 @@ export class LemuenController {
     if (this.u.skill?.active) {
       this.u.skill.ammoLeft = this.ammo.current;
       this.u.skill.ammoMax = Math.max(this.ammo.maximum, this.ammo.current);
+      this.u.skill.ammoCapacity = this.ammo.maximum;
     }
   }
   candidates(count = 1) { return lemuenCandidates(this.b, this.u, this.talents, count === Infinity ? Math.max(1, this.b.enemies.length) : count); }
