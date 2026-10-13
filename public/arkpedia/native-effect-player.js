@@ -7,6 +7,7 @@ import {createMovingParticles} from '../../shared/arkpedia/native-moving-particl
 import {createParentParticleMotion} from '../../shared/arkpedia/native-parent-particle-motion.js';
 import {createBuiltinMeshResolver} from '../../shared/arkpedia/native-builtin-mesh.js';
 import {createParticlePivot} from '../../shared/arkpedia/native-particle-pivot.js';
+import {createTextureRotations} from '../../shared/arkpedia/native-texture-rotation.js';
 import {particleWorldPosition,particleSheetUV} from '../../shared/arkpedia/native-particle-render.js';
 import {sampleParticleCurve} from '../../shared/arkpedia/native-particle-curves.js';
 import {effectMeshColors} from '../../shared/arkpedia/native-effect-mesh.js';
@@ -137,12 +138,17 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false}={}){
     const source=selectEffectProgram(shader,data.m_ValidKeywords),port=webglEffectProgram(source.source),props=pose.renderers.get(component).materials[0].properties;
     const uniforms={};
     const declarations=effectUniformDeclarations(port);
+    const rotations=createTextureRotations(pack,component,declarations,animations);
     for(const {type,name,count:size} of declarations){
       if(size){if(type!=='vec4'||size!==4||!name.startsWith('hlslcc_mtx4x4'))throw Error('Unsupported native uniform array');uniforms[name]={value:new Float32Array(16)};continue;}
       if(type==='sampler2D'){uniforms[name]={value:await sourceTexture(material,name,shader)};continue;}
       if(name==='_WorldSpaceCameraPos'){uniforms[name]={value:new T.Vector3()};continue;}
       if(name==='_Time'||name==='_SinTime'||name==='_CosTime'){uniforms[name]={value:new T.Vector4()};continue;}
       let value=props[name];
+      if(rotations&&Object.hasOwn(rotations.values,name)){
+        if(value!==undefined)throw Error('Conflicting source material/script texture rotation');
+        value=rotations.values[name];
+      }
       if(value===undefined){
         const d=shader.properties.m_Props.find(p=>p.m_Name===name);
         if(!d)throw Error('Unmapped native uniform '+name);
@@ -162,6 +168,7 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false}={}){
       depthWrite:stateValue(q.zWrite,props)!==0,side:[T.DoubleSide,T.BackSide,T.FrontSide][cull],
       blending:T.CustomBlending,blendSrc:src,blendDst:dst,blendEquation:T.AddEquation});
     // Native non-separate RGB/alpha blending uses the same factors for both.
+    if(rotations)m.userData.textureRotations=rotations;
     materials.add(m);return m;
   }
   function geometry(id,color=null,referenceSource=null){

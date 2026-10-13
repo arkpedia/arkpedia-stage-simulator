@@ -3894,3 +3894,29 @@ ARKPEDIA_REVIEW_CHROME='/path/to/chromium' node tools/arkpedia/review-tragodia-e
 ```
 
 Logs use the `pivot-` prefix under `.cache/arkpedia/lappland-alter-source/`; the image/report remain in its `effects/` directory. Source packs, previous fixtures/metadata and public coverage remain unchanged: **373/431 forms and 812 selected skills**. Native pivot sign/order, flat-scale rendering, stretched/aligned rendering, flips, particle trails, prewarm histories, discrete arcs, unresolved shader/resources, Animator dispatch and full battle review remain required. No operator registration is added, and Arkpedia app PR229 stays outside dev.
+
+### Serialized texture rotation inputs (2026-10-14)
+
+The original effect packs retain three texture-rotation MonoBehaviours: two in Tragodia's sky effects and one on Lappland's `flow01 (1)`. They all reference the same foreign script object and serialize `_Rotation`, four texture toggles and four angles. Lappland enables the main texture at 90 degrees; the other three textures are disabled with zero angles. Tragodia's profiles retain an enabled third texture at 90 degrees and an enabled first texture at zero degrees respectively.
+
+The player now binds these inputs to `_Rotation0` through `_Rotation3` using an explicit local counterclockwise basis `[cos(angle), sin(angle), -sin(angle), cos(angle)]`. The original compiled shader consumes `xz` and `yw` dot products around UV centre `(0.5, 0.5)`, followed by its original texture scrolling. Shader expressions, source material properties, UV buffers and particle motion are unchanged. This is a **local script mapping**: the foreign native script's sign/order, activation lifecycle and compiled frame/pixel parity remain unverified. Disabled textures require an authored zero angle; unknown script identities, missing/duplicate owners, disabled scripts, changed schemas, animated inputs and conflicting material values reject instead of silently receiving identity values.
+
+This prepares Lappland's flow component, bringing `whitw2_skill_03_buff_01` to **22 prepared components and six holds**. Four particle trail/multi-material components plus the smoke and rune alignment modes remain held. Strict playback continues rejecting the incomplete root. The original Tragodia inputs are inventoried and sampled without approving complete sky-effect playback.
+
+Validation:
+
+- The independent Python audit verifies all three original script and renderer objects, raw hashes, source pointers and foreign script bindings. Twelve vectors and sixty UV probes reproduce exactly; 120 UV values are independently reconstructed. All three outputs reproduce, and nine altered-evidence cases reject.
+- The 33-file adjacent regression set passes **995 checks on Node 22 and Node 24**, with no failures or skips. Tests cover source ownership, script identity/schema, disabled/animated inputs, quarter-turn/identity bases, missing-input holds, independent instances and reverse scrubbing.
+- The browser verifies all four actual GPU uniforms during the flow component's render pass. Two transform-feedback readbacks use the unchanged original vertex/fragment pair to compare **48 UV values**, including source UVs, rotated and identity main-texture bases, texture transforms and scrolling. All 23 original Lappland programs still compile; GL/page errors are absent and GPU geometry/texture cleanup is complete.
+- Existing pivot, angular and six-root parent/child dispatch checks pass. The cage regression remains at sixteen prepared components and two holds, with all 22 original programs and 91 materials passing. The updated partial buff image was visually inspected.
+
+Reproduce with Node 22 on `PATH`, the extraction Python environment and Chromium:
+
+```sh
+node tools/arkpedia/export-texture-rotations.mjs
+.cache/map-env/bin/python tools/arkpedia/audit-texture-rotations.py
+ARKPEDIA_REVIEW_CHROME='/path/to/chromium' node tools/arkpedia/review-particle-angular-motion.mjs
+ARKPEDIA_REVIEW_CHROME='/path/to/chromium' node tools/arkpedia/review-tragodia-effect-shaders.mjs
+```
+
+Logs use the `texture-rotation-` prefix under `.cache/arkpedia/lappland-alter-source/`; the image/report remain in its `effects/` directory. Original packs, previous metadata/fixtures and public coverage remain unchanged: **373/431 forms and 812 selected skills**. No operator approval or registration is added. Arkpedia app PR229 stays outside dev until the agreed coverage and automation gates are met.
