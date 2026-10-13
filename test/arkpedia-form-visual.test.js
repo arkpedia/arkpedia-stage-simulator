@@ -37,6 +37,26 @@ test('literal loop speed remains local to the selected clip and actor and resets
   a.destroy();other.destroy();
 });
 
+test('opted-in repeated ability clips restart once for a new identity and stay stable between frames', () => {
+  const entry = { anims: { idle: 'Idle', attack: { loop: 'Attack' } },
+    animations: { Idle: 1, Attack: 1.2 }, hits: { Attack: [0] } };
+  const skeleton = { animations: Object.keys(entry.animations).map(name => ({ name })) };
+  const a = new BattleActor(skeleton, entry);
+  const visual = { clip: 'Attack', speed: .5, playId: 'life:1:attack:1' };
+  a.setRegularVisual(visual); const first = a.spine.state.tracks[0];
+  a.update(.4); a.setRegularVisual({ ...visual });
+  assert.equal(a.spine.state.tracks[0], first);
+  a.update(2.1); assert.equal(a.current, 'Idle');
+  a.setRegularVisual({ ...visual, playId: 'life:1:attack:2' });
+  assert.equal(a.current, 'Attack'); assert.notEqual(a.spine.state.tracks[0], first);
+  assert.equal(a.spine.state.tracks[0].timeScale, .5);
+  nearDuration(a.changeUntil - a.clock, 2.4);
+  const second = a.spine.state.tracks[0];
+  a.setRegularVisual({ ...visual, playId: 'life:1:attack:2' });
+  assert.equal(a.spine.state.tracks[0], second); a.destroy();
+});
+function nearDuration(a, z) { assert.ok(Math.abs(a - z) < 1e-9, `${a} != ${z}`); }
+
 test('invalid alias speeds fall back to original1 and absent clips never inherit another form speed',()=>{
   const entry={anims:{idle:'Idle',attack:{loop:'Attack'}},animations:{Idle:1,Attack:1,End:.8}};
   const skeleton={animations:Object.keys(entry.animations).map(name=>({name}))};
