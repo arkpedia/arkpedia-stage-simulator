@@ -10,7 +10,7 @@ const ID = 'char_249_mlyss', TOKEN = 'token_10030_mlyss_wtrman', m = art.models[
 
 test('Flowing Shape artwork is separate from playable combat and native shader approval', () => {
   assert.equal(art.owner, ID); assert.equal(art.artworkOnly, true);
-  assert.deepEqual(art.enabledOperators, []); assert.equal(data.operators[ID], undefined);
+  assert.deepEqual(art.enabledOperators, []);
   for (const k of ['frameParity', 'nativeParticleSupport', 'nativeShaderParity']) assert.equal(art[k], false);
   assert.equal(art.foundation.sha256, createHash('sha256').update(readFileSync(new URL('../data/arkpedia-muelsyse-prefabs.json', import.meta.url))).digest('hex'));
 });

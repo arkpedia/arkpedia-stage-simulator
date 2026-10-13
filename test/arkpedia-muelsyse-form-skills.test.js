@@ -72,9 +72,9 @@ function cast(f) {
 }
 const ownerHits = f => f.hits.filter(h => h.source === f.u && h.dmg.tags?.includes(`muelsyse:s${f.record.index + 1}`));
 
-test('copied-form contract remains opt-in and leaves public coverage unchanged', () => {
+test('copied-form diagnostic requires its exact contract and makes no frame-parity claim', () => {
   assert.throws(() => make({ contract: { ...CONTRACT } }), /reviewed copied-form skill contract/);
-  assert.equal(data.operators[ID], undefined); assert.equal(CONTRACT.frameParity, false);
+  assert.equal(CONTRACT.frameParity, false);
 });
 
 test('all S2 ranks give melee-only regeneration/resistance and retain the selected shared ATK', () => {

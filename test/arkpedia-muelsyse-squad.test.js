@@ -33,13 +33,13 @@ function deploy(f, id = MAYER, row = 2, col = 7) {
   assert.equal(before - f.b.dp, quoted); assert.deepEqual(f.b.errors, []); return u;
 }
 
-test('squad cost remains explicitly opted in, without public roster approval', () => {
+test('squad diagnostic requires its exact contract, independently of public roster approval', () => {
   const f = make({ install: false });
   assert.throws(() => installMuelsyseSquad(f.b), /reviewed squad contract/);
   assert.throws(() => installMuelsyseSquad(f.b, { contract: { ...CONTRACT } }), /reviewed squad contract/);
   installMuelsyseSquad(f.b, { contract: CONTRACT });
   assert.throws(() => installMuelsyseSquad(f.b, { contract: CONTRACT }), /already installed/);
-  assert.equal(data.operators[ID], undefined); assert.equal(CONTRACT.frameParity, false);
+  assert.equal(CONTRACT.frameParity, false);
   assert.match(CONTRACT.limits, /after the ordinary redeploy multiplier/);
 });
 
