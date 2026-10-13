@@ -44,10 +44,10 @@ export function createMovingParticles(source,{seed=1}={}){
     sampleParticleCurve(uv.frameOverTime,0);sampleParticleCurve(uv.frameOverTime,1);
   }
   const worldMotion=!!motion&&source.moveWithTransform===1;
-  function sample(time,{frameAt,history,emitterVelocityAt}={}){
+  function sampleParticles(particles,time,{frameAt,emitterVelocityAt}={}){
     if(worldMotion&&typeof frameAt!=='function')throw Error('World turbulence requires an explicit particle birth frame');
     if(inheritance&&typeof emitterVelocityAt!=='function')throw Error('Inherited velocity requires explicit world emitter velocity');
-    return lifecycle.sample(time,{history}).map(p=>{
+    return particles.map(p=>{
       const random=salt=>particleRandom(p.id,salt,seed),birthPhase=(p.born%source.lengthInSec)/source.lengthInSec;
       let origin=[0,0,0],direction=[0,0,1];
       if(shape?.enabled){
@@ -66,13 +66,13 @@ export function createMovingParticles(source,{seed=1}={}){
       }
       const t=p.age/p.lifetime;
       const speed=sampleParticleCurve(source.InitialModule.startSpeed,birthPhase,random(18)),initialVelocity=direction.map(v=>v*speed);
-      const birthTime=time-p.age/source.simulationSpeed;
+      const birthTime=p.birthTime??time-p.age/source.simulationSpeed;
       let displacement,worldPosition,inheritedVelocity;
       if(worldMotion){
-        const frame=frameAt(birthTime);
+        const frame=frameAt(birthTime,p);
         if(!frame?.birth||!frame?.movement)throw Error('World turbulence requires spawn and movement matrices');
         const born=particleBirthFrame(origin,initialVelocity,frame.birth,frame.movement);
-        const inheritedVelocityAt=inheritance?.sample(p,time,emitterVelocityAt);
+        const inheritedVelocityAt=inheritance?.sample(p,time,t=>emitterVelocityAt(t,p));
         inheritedVelocity=inheritedVelocityAt?.(0);
         displacement=motion.sample(p,born.origin,born.velocity,{inheritedVelocityAt,inheritanceMode:source.InheritVelocityModule?.m_Mode});worldPosition=born.origin.map((v,i)=>v+displacement[i]);
       }else displacement=motion?motion.sample(p,origin,initialVelocity):['x','y','z'].map((axis,i)=>initialVelocity[i]*p.age+(velocity?.enabled?p.lifetime*integrateParticleCurve(velocity[axis],0,t,random(13+i)):0));
@@ -88,7 +88,8 @@ export function createMovingParticles(source,{seed=1}={}){
         ...(worldPosition?{worldPosition}:{}),...(inheritedVelocity?{inheritedVelocity}:{}),velocitySpace:worldMotion||velocity?.enabled&&velocity.inWorldSpace?'world':'local',simulationSpace:source.moveWithTransform===1?'world':'local',birthTime,sheet};
     });
   }
-  return {sample,worldMotion};
+  function sample(time,options={}){return sampleParticles(lifecycle.sample(time,{history:options.history}),time,options);}
+  return {sample,worldMotion,sampleRecords(records,time,options){return sampleParticles(lifecycle.sampleRecords(records,time),time,options);}};
 }
 
 function rotateShape([x,y,z],rotation){

@@ -28,9 +28,23 @@ export function createParticleLifecycle(source,{seed=1,modules=[],spaces=[0],all
   const angularMotion=createParticleAngularMotion(source.RotationModule);
   const random=(id,salt)=>particleRandom(id,salt,seed);
   const customData=createParticleCustomData(source.CustomDataModule);
-  function sample(time,{history}={}){
-    return clock.sample(time,{history}).map(p=>{
+  function sampleRecords(records,{scheduled=false,time}={}){
+    if(!Array.isArray(records)||records.length>100000||typeof scheduled!=='boolean')throw Error('Invalid native particle birth records');
+    if(scheduled&&(!Number.isFinite(time)||time<0||records.length>initial.maxNumParticles))throw Error('Invalid native scheduled particle clock/capacity');
+    const ids=new Set();
+    return records.map(p=>{
+      if(!Number.isSafeInteger(p?.id)||p.id<0||ids.has(p.id)||!Number.isFinite(p.born)||p.born<0
+        ||!Number.isFinite(p.lifetime)||p.lifetime<=0||!Number.isFinite(p.age)||(scheduled?p.age<0:p.age<-1e-10)||p.age>=p.lifetime)
+        throw Error('Invalid native particle birth record');
+      ids.add(p.id);
+      if(scheduled){
+        if(!Number.isFinite(time)||!Number.isFinite(p.birthTime)||p.birthTime>time+1e-10
+          ||Math.abs(p.age-Math.max(0,(time-p.birthTime)*source.simulationSpeed))>1e-8)
+          throw Error('Invalid native scheduled particle clock');
+      }
       const phase=(p.born%length)/length,startSize=sampleParticleCurve(initial.startSize,phase,random(p.id,1));
+      if(scheduled&&Math.abs(p.lifetime-sampleParticleCurve(initial.startLifetime,phase,random(p.id,0)))>1e-8)
+        throw Error('Scheduled particle lifetime differs from authored source');
       const size=initial.size3D?[startSize,sampleParticleCurve(initial.startSizeY,phase,random(p.id,2)),sampleParticleCurve(initial.startSizeZ,phase,random(p.id,3))]:[startSize,startSize,startSize];
       const rotation=startRotation.sample(phase,[random(p.id,32),random(p.id,33),random(p.id,4)]);
       const color=sampleParticleGradient(initial.startColor,phase,random(p.id,5)),age=p.age,t=age/p.lifetime;
@@ -41,9 +55,12 @@ export function createParticleLifecycle(source,{seed=1,modules=[],spaces=[0],all
       }
       if(source.ColorModule?.enabled){const factor=sampleParticleGradient(source.ColorModule.gradient,t,random(p.id,9));color.forEach((v,i)=>color[i]=v*factor[i]);}
       const {birthTime,...original}=p;
-      return {...original,...rotation,age,size,color,...(angularMotion?angularMotion.sample({...original,...rotation,age},[random(p.id,35),random(p.id,36),random(p.id,37)]):{}),...(customData?{customData:customData.sample(age,p.lifetime,
+      return {...original,...(scheduled?{birthTime}:{}),...rotation,age,size,color,...(angularMotion?angularMotion.sample({...original,...rotation,age},[random(p.id,35),random(p.id,36),random(p.id,37)]):{}),...(customData?{customData:customData.sample(age,p.lifetime,
         (stream,channel)=>random(p.id,24+stream*4+channel))}:{})};
     });
   }
-  return {sample,births:clock.births};
+  function sample(time,{history}={}){return sampleRecords(clock.sample(time,{history}));}
+  // External schedulers own emission windows/capacity admission. `born` keeps
+  // the child-local phase; `birthTime` and `time` are real effect seconds.
+  return {sample,births:clock.births,sampleRecords(records,time){return sampleRecords(records,{scheduled:true,time});}};
 }

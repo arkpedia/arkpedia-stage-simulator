@@ -3781,3 +3781,30 @@ ARKPEDIA_REVIEW_CHROME='/path/to/chromium' node tools/arkpedia/review-tragodia-e
 ```
 
 Logs and scheduling reports use the `child-emission-` prefix in `.cache/arkpedia/tragodia-source/`. Original source packs, prior metadata/fixtures, public MVP and coverage remain unchanged: **373/431 forms and 812 selected skills**. Parent/child movement and rendered dispatch, trails, discrete arcs, unresolved resources, Animator dispatch and complete battle review remain work to finish. Arkpedia app PR229 remains outside dev until all operator, enemy, stage and dependable automation gates are met.
+
+### Scheduled child particle movement (2026-10-14)
+
+The particle samplers now accept externally scheduled live birth records. Each record retains its parent identity, child-local clock, real birth time and authored lifetime. Lifecycle sampling applies the original size, color, rotation and custom data; moving sampling applies the original shape, velocity, clamp/noise, inheritance and texture-sheet controls. Invalid clocks, duplicate identities, altered lifetimes and excess live capacity are rejected. Ordinary emission sampling keeps its existing behavior.
+
+A separate frame helper takes **explicit parent world positions/velocities and original child emitter frames**. World children retain their birth frame; local children retain their birth offset in the child emitter's local coordinates and follow the explicitly supplied source frames afterward. Reflected/nonuniform scale and source child offsets are retained. A nonzero offset through a singular source frame is rejected. Children may outlive their parents without querying the expired parent for a new birth position. This is an explicit local mapping, not recovered compiled Unity dispatch. The [Unity sub-emitter documentation](https://docs.unity3d.com/2021.3/Documentation/Manual/PartSysSubEmitModule.html) places child emitters at parent particle positions but does not establish the exact native frame/RNG contract used here.
+
+**63 of the 69 original child profiles** pass the current sampler boundary; six remain held for discrete cone-arc behavior. The fixture projects active modules and original non-module fields from the pinned source packs; dormant module bodies remain unchanged in those packs. It does not strip active unsupported behavior. The diagnostic uses synthetic parent motion and identity source frames, explicitly recorded in the manifest. It samples **1,993 live particles** across seven times. This is effect-module coverage and does not add playable operators.
+
+The source player accepts scheduled records only through **isolated original-particle inspection**, with explicit frame callbacks. Full effects still reject unsupported parent dispatch. Inspection uses the same original geometry, materials, shaders, textures and GPU buffers as ordinary particle rendering; it adds no substitute effect or default game path.
+
+Validation:
+
+- The independent Python audit reads all **69 original Unity child objects**, checks their raw hashes and every projected field against the pinned packs, and compares scheduled lineage against the prior audited emission evidence. It checks **20,460 frame/inherited-velocity values**, reproduces all **three outputs**, and rejects **fourteen altered-evidence fixtures**.
+- The twenty-nine-file adjacent regression set passes **761 checks on Node 22 and Node 24**, with no failures or skips. Cases include child-local phase, shifted real clocks, source lifetime/capacity, distinct parent identity, world births, local offsets through rotated/nonuniform frames, expired parents, singular frames, malformed records and reverse sampling.
+- The original cage browser regression retains **fifteen prepared components and three held components**, all 22 original programs, 91 materials, 24 custom-stream GPU checks and eight ordinary inherited-velocity render passes. An additional isolated diagnostic verifies **nineteen scheduled children from four parent particles** reach real render passes at independently reconstructed positions and reverse exactly. Returning to ordinary sampling preserves the previous particle/matrix snapshot. No GL/page errors occur.
+- The scheduled-child image was visually inspected. It is an isolated module diagnostic with synthetic parent motion, not an approved game effect. Parent trajectories, complete child renderer dispatch, trails, discrete arcs and unresolved resources remain separate gates.
+
+Reproduce with Node 22 on `PATH`, the extraction Python environment and Chromium:
+
+```sh
+node tools/arkpedia/export-child-particle-motion.mjs
+.cache/map-env/bin/python tools/arkpedia/audit-child-particle-motion.py
+ARKPEDIA_REVIEW_CHROME='/path/to/chromium' node tools/arkpedia/review-tragodia-effect-shaders.mjs
+```
+
+Audit/regression logs use the `child-motion-` prefix in `.cache/arkpedia/tragodia-source/`; the image is `effects/scheduled-child-motion-diagnostic.png`. Original packs, previous fixtures/metadata, public MVP and coverage remain unchanged: **373/431 forms and 812 selected skills**. Arkpedia app PR229 remains outside dev until all operator, enemy, stage and dependable automation gates are met.
