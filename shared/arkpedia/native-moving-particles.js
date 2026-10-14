@@ -5,6 +5,7 @@ export {integrateParticleCurve} from './native-particle-curves.js';
 import {createParticleMotion} from './native-particle-motion.js';
 import {particleBirthFrame} from './native-particle-render.js';
 import {createParticleCone} from './native-particle-cone.js';
+import {createParticleConeVolume} from './native-particle-cone-volume.js';
 import {createParticleInheritance} from './native-particle-inheritance.js';
 
 // Source sphere/box/cone-base emission, lifetime velocity and grid animation.
@@ -18,8 +19,9 @@ export function createMovingParticles(source,{seed=1,subEmitterSchedule=null,par
   const inheritance=createParticleInheritance(source,{seed});
   let cone=null;
   if(shape?.enabled){
-    if(![0,4,5].includes(shape.type)||shape.alignToDirection||shape.randomDirectionAmount!==0||shape.sphericalDirectionAmount!==0||shape.randomPositionAmount!==0)throw Error('Native particle shape/direction needs review');
+    if(![0,4,5,8].includes(shape.type)||shape.alignToDirection||shape.randomDirectionAmount!==0||shape.sphericalDirectionAmount!==0||shape.randomPositionAmount!==0)throw Error('Native particle shape/direction needs review');
     if(shape.type===4)cone=createParticleCone(shape);
+    if(shape.type===8)cone=createParticleConeVolume(shape);
     if(shape.type!==5&&(shape.radius?.mode!==0||shape.radius.spread!==0||!Number.isFinite(shape.radius.value)||shape.radius.value<0||!Number.isFinite(shape.radiusThickness)||shape.radiusThickness<0||shape.radiusThickness>1))throw Error('Native shape radius mode needs review');
     for(const field of ['m_Texture','m_Mesh','m_MeshRenderer','m_SkinnedMeshRenderer','m_Sprite','m_SpriteRenderer']){
       // The Sphere shape does not consume the dormant authored mesh slot.
@@ -60,7 +62,7 @@ export function createMovingParticles(source,{seed=1,subEmitterSchedule=null,par
           const r=Math.cbrt(inner**3+random(12)*(radius**3-inner**3));
           origin=direction.map((v,i)=>v*r*shape.m_Scale[['x','y','z'][i]]);
         }else{
-          ({origin,direction}=cone.sample(random(10),random(11)));
+          ({origin,direction}=cone.sample(random(10),random(11),shape.type===8?random(12):undefined));
         }
         origin=rotateShape(origin,shape.m_Rotation).map((v,i)=>v+shape.m_Position[['x','y','z'][i]]);
         direction=rotateShape(direction,shape.m_Rotation);

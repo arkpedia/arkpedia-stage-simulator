@@ -3978,3 +3978,31 @@ ARKPEDIA_REVIEW_CHROME='/path/to/chromium' node tools/arkpedia/review-tragodia-e
 ```
 
 Logs use the `particle-trail-` prefix under `.cache/arkpedia/lappland-alter-source/`; images/reports remain in the original-source `effects/` directories. Source packs, prior metadata/fixtures, source pins and public coverage remain unchanged: **373/431 forms and 812 selected skills**. Remaining renderer/control/resource contracts, Animator dispatch and full battle review are still required. Arkpedia app PR229 stays outside dev.
+
+### Cone-volume emission and logical sheet masks (2026-10-15)
+
+The original packs contain seven cone-volume particle profiles. Unity's [2021.3 shape enum](https://github.com/Unity-Technologies/UnityCsReference/blob/2021.3/Modules/ParticleSystem/Managed/ParticleSystemEnums.cs) identifies serialized type 8 as ConeVolume. The [shape documentation](https://docs.unity3d.com/2021.3/Documentation/Manual/PartSysShapeModule.html) distinguishes base/volume emission and makes length apply to the volume. The local mapper now uses authored radius, angle, length, radial thickness and XYZ shape scale instead of treating these particles as cone-base emitters.
+
+The explicit geometric distribution samples depth from the integrated frustum cross-sectional area, then samples radial area at that depth. Bounded inversion avoids cancellation for shallow angles; cylinders retain uniform axial sampling. Direction follows the unscaled cone ray while authored scale changes the emission position. Point-apex volumes, zero lengths, endpoint depths and reflected/nonuniform scale retain finite outputs. Four original profiles pass the current control boundary; two Burst Spread profiles and one discrete-arc profile remain held. Sloped zero-thickness surfaces and flat 90-degree volumes retain separate holds. **Native emission density, RNG draw order and compiled frame parity remain unverified**; this geometric law is explicitly local.
+
+Preparing Lappland's rune then exposed its texture-sheet mask of `-1` (all channels). The admitted custom layouts contain UV0 as their sole UV semantic. Atlas transforms now address that logical UV before packing; custom data occupying TEXCOORD components is preserved rather than being treated as another texture coordinate. Invalid masks still reject. Tests exercise all-channel masks with nonzero custom vectors across packed TEXCOORD boundaries.
+
+`whitw2_skill_03_buff_01` now prepares **28 original source renderers and 32 draws, with no component holds**. The source player's strict constructor accepts that root without `allowBlocked`. This is preparation coverage, not approval of the native effect: three original zero-Z-scale parents retain their explicit collapsed-frame boundary, and Animator dispatch, RNG, native transformation/module ordering and complete battle appearance remain unverified. No operator registration or public coverage count changes.
+
+Validation:
+
+- The independent Python audit reads all seven original ShapeModule typetrees and whole-particle raw hashes. It independently verifies **108 samples and 756 values**, including integrated axial volume, radial bounds and cone directions. All three outputs reproduce, and eight altered-evidence cases reject.
+- The 36-file adjacent regression set passes **1,110 checks on Node 22 and Node 24**, without failures or skips. Tests include cylinder/frustum/apex distributions, shallow angles, annular radial limits, zero/endpoint depth, scale/reflection, unsupported arcs/surfaces, strict preparation and packed custom-data preservation.
+- The browser independently verifies **eight original rune volume samples, eight actual render passes and eight atlas-UV GPU readbacks**. Existing checks now cover 48 stretched matrices and 54 matrix uploads; all earlier angular/pivot checks, 244 force/trail points, sixteen ribbon buffers and texture-rotation UV probes continue passing. The six hit roots keep their separate strict-rejection boundaries.
+- All 23 original Lappland programs and the 22-program/91-material cage regression pass. GL/page errors are absent; cleanup leaves zero GPU geometries/textures. The updated buff image was visually inspected.
+
+Reproduce with Node 22 on `PATH`, the extraction Python environment and Chromium:
+
+```sh
+node tools/arkpedia/export-cone-volumes.mjs
+.cache/map-env/bin/python tools/arkpedia/audit-cone-volumes.py
+ARKPEDIA_REVIEW_CHROME='/path/to/chromium' node tools/arkpedia/review-particle-angular-motion.mjs
+ARKPEDIA_REVIEW_CHROME='/path/to/chromium' node tools/arkpedia/review-tragodia-effect-shaders.mjs
+```
+
+Logs use the `volume-` prefix under `.cache/arkpedia/lappland-alter-source/`; the image/report remain in its `effects/` directory. Original packs, prior fixtures/metadata, pins and public coverage remain unchanged: **373/431 forms and 812 selected skills**. Arkpedia app PR229 stays outside dev until the agreed operator/enemy/stage and automation gates are met.

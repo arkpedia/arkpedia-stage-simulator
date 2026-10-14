@@ -74,9 +74,9 @@ for(const [id,row] of Object.entries(fixtures))test(row.source+' '+row.name+' re
  }
  if(row.name==='line_01'){
   assert.equal(source.ShapeModule.type,8);
-  assert.throws(()=>createMovingParticles(source),/shape\/direction/);assert.deepEqual(source,before);return;
+  assert.ok(source.ShapeModule.length>0);
  }
- const e=createMovingParticles(source),clock=(source.startDelay.scalar+1)/source.simulationSpeed,snapshot=e.sample(clock);assert.ok(snapshot.length>0);
+ const e=createMovingParticles(source),clock=(source.startDelay.scalar+(row.name==='line_01'?.5:1))/source.simulationSpeed,snapshot=e.sample(clock);assert.ok(snapshot.length>0);
  for(const p of snapshot){
   assert.equal(p.rotation,p.rotation3D[2]);
   for(const [axis,field] of ['startRotationX','startRotationY','startRotation'].entries()){
