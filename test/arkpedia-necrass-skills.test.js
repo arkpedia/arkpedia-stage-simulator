@@ -63,7 +63,7 @@ const charge = f => f.u.skill.setSpTotal(f.u.skill.spCost);
 test('active contract rejects altered consent and S3 before registering an incomplete skill', () => {
   assert.throws(() => make({ contract: { ...ACTIVE } }), /reviewed active/);
   assert.throws(() => make({ skill: 3 }), /S3 remains held/);
-  assert.equal(publicData.operators[ID], undefined);
+  assert.ok(publicData.operators[ID]);
   const f = make({ defer: true });
   assert.throws(() => f.skills.install(), /twice/);
   f.controller.stop(); assert.throws(() => f.skills.install(), /retirement/);

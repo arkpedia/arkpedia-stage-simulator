@@ -96,6 +96,8 @@ export const REGULAR_SUMMONS = Object.freeze({
 // Automatic source spawns have no deployment-deck card, but their original
 // models must load with the owner before battle can draw the spawned unit.
 export const REGULAR_AUTOMATIC_TOKENS = Object.freeze({
+  // Enemy-death factory servants have no manual deployment card.
+  char_450_necras: Object.freeze(['token_10043_necras_skeltn']),
   // The Flowing Shape controller owns its zero-cost tactical point and copies.
   char_249_mlyss: Object.freeze(['token_10030_mlyss_wtrman']),
   // The dedicated coordinate controller owns its deck; preload the original art.

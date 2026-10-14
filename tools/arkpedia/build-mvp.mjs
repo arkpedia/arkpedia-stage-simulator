@@ -154,6 +154,18 @@ if(ids.includes('char_1040_blaze2')){
     ||evidence.source.commit!==pins[paths.character_table[0]])
     throw Error('Blaze Igniting public runtime review differs from the pinned native source');
 }
+if (ids.includes('char_450_necras')) {
+  const review = JSON.parse(await readFile(new URL('../../data/arkpedia-necrass-runtime-review.json', import.meta.url)));
+  for (const [name, key] of [['prefabs', 'sourceFoundationSha256'], ['device-art', 'deviceArtworkSha256']]) {
+    const bytes = await readFile(new URL(`../../data/arkpedia-necrass-${name}.json`, import.meta.url));
+    if (createHash('sha256').update(bytes).digest('hex') !== review[key]) throw Error('Necrass reviewed source differs from its receipt');
+  }
+  const evidence = JSON.parse(await readFile(new URL('../../data/arkpedia-necrass-prefabs.json', import.meta.url)));
+  if (JSON.stringify(review.enabledOperators) !== JSON.stringify(['char_450_necras']) || review.frameParity !== false
+    || review.moduleSupport !== false || review.nativeParticleSupport !== false
+    || review.servantPolicy !== 'source-forms-zero-slots-v1' || review.s3Policy !== 'selected-six-upgrades-three-stack-range-v1'
+    || evidence.source.commit !== pins[paths.character_table[0]]) throw Error('Necrass lacks pinned public runtime review');
+}
 if (ids.includes('char_249_mlyss')) {
   const review = JSON.parse(await readFile(new URL('../../data/arkpedia-muelsyse-runtime-review.json', import.meta.url)));
   for (const [name, key] of [['prefabs', 'sourceFoundationSha256'], ['device-art', 'deviceArtworkSha256'], ['copy-source', 'donorSourceSha256']]) {
@@ -225,6 +237,7 @@ tokenIds.unshift('token_10020_ling_soul1', 'token_10020_ling_soul2', 'token_1002
 tokenIds.unshift(...[1, 2, 3].map(n => `token_10027_ironmn_pile${n}`));
 tokenIds.unshift('token_10037_mitm_trshrb');
 if (ids.includes('char_249_mlyss')) tokenIds.unshift('token_10030_mlyss_wtrman');
+if (ids.includes('char_450_necras')) tokenIds.unshift('token_10043_necras_skeltn');
 const tokens = Object.fromEntries(tokenIds.map(id => {
   const c = characters[id];
   if (!c) throw Error(`Missing original token: ${id}`);
@@ -334,6 +347,17 @@ const models = Object.fromEntries(
     return [k, sd.models[k]];
   }),
 );
+if (ids.includes('char_450_necras')) {
+  const review = JSON.parse(await readFile(new URL('../../data/arkpedia-necrass-runtime-review.json', import.meta.url)));
+  const keys = ['char_450_necras', 'token_10043_necras_skeltn'].flatMap(id =>
+    ['front', 'back'].map(face => `operator/${id}/default/${face}`)).sort();
+  if (JSON.stringify(Object.keys(review.originalArtwork).sort()) !== JSON.stringify(keys))
+    throw Error('Necrass review must bind both original owner and servant facings');
+  for (const [key, expected] of Object.entries(review.originalArtwork)) {
+    if (!models[key] || JSON.stringify(models[key]) !== JSON.stringify(expected))
+      throw Error(`Necrass published model differs from reviewed original artwork: ${key}`);
+  }
+}
 if (ids.includes('char_249_mlyss')) {
   const review = JSON.parse(await readFile(new URL('../../data/arkpedia-muelsyse-runtime-review.json', import.meta.url)));
   const keys = ['char_249_mlyss', 'token_10030_mlyss_wtrman'].flatMap(id =>

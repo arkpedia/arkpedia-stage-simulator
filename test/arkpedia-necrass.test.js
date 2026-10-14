@@ -383,8 +383,8 @@ test('reentrant owner retirement during token deployment leaves no orphan servan
   assert.equal(f.servants.units.size, 0); assert.deepEqual(f.b.errors, []);
 });
 
-test('battle end retires all servants and keeps the public kit unregistered', () => {
+test('battle end retires all diagnostic servants without changing public records', () => {
   const f = make({ servants: true, skill: 2 }); const t = f.servants.create(5, 6);
   f.b.forceEnd('timeout'); assert.equal(t.alive, false); assert.equal(f.controller.stopped, true);
-  assert.equal(publicData.operators[ID], undefined); assert.equal(publicData.tokens[TOKEN], undefined);
+  assert.ok(publicData.operators[ID]); assert.ok(publicData.tokens[TOKEN]);
 });
