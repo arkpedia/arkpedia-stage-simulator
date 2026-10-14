@@ -61,6 +61,7 @@ export class NecrassServants {
     this.core = core; this.b = core.b; this.u = core.u; this.def = tokenRecord(core);
     this.t1 = flat(core.record.talents.find(t => t.prefabKey === '1').blackboard);
     this.units = new Map(); this.pending = []; this.deaths = new WeakMap(); this.handles = []; this.stopped = false;
+    this.creating = 0;
     const branch = evidence.templates.necras_t_1.eventToActions.ON_OWNER_KILLED[1];
     this.delay = branch._succeedNodes[1]._buff.blackboard.find(v => v.key === 'interval').value;
   }
@@ -86,17 +87,23 @@ export class NecrassServants {
     for (let i = 0; i < count; i++) this.pending.push({ due: this.b.time + this.delay, tile });
   }
   create(row, col) {
-    if (!this.valid() || this.all().length >= this.t1.max_token_cnt || !this.tileEligible(row, col)) return null;
-    let clock;
-    const t = this.b.spawnToken(this.u, TOKEN, row, col, { dir: this.u.dir, def: this.def,
+    if (!this.valid() || this.all().length + this.creating >= this.t1.max_token_cnt || !this.tileEligible(row, col)) return null;
+    let clock, t;
+    this.creating++;
+    try { t = this.b.spawnToken(this.u, TOKEN, row, col, { dir: this.u.dir, def: this.def,
       kit: { trait: { ...necrassAttackProfile({ release: (t, info) => clock.release(t, info) }, true) },
-        talents: [], skill: { kind: 'passive', trigger: { rule: 'NEVER' }, canActivate: () => false },
+        talents: [], skill: this.tokenSkill(() => t),
         install: (b, token) => {
-          clock = new NecrassAttackClock(this.core, token, { token: true });
+          clock = this.tokenClock(token);
           token.deploymentSlotCost = 0;
           token.mem.necrassServantClock = clock;
+          // Original common ability keeps all servant forms heal-free.
+          b.addBuff(token, { key: 'skeltn_heal_free', source: this.u, flags: { healFree: true },
+            persist: true, allowDead: true });
+          b.addBuff(token, { key: 'skeltn_block_skill', source: this.u, flags: { noSp: true },
+            persist: true, allowDead: true });
           b.on('deploy', ({ unit, move }) => { if (unit === token && !move) clock.born(); }, { owner: token });
-        } } });
+        } } }); } finally { this.creating--; }
     if (!t) return null;
     if (!this.valid() || !present(t)) {
       clock.stop();
@@ -104,9 +111,17 @@ export class NecrassServants {
       return null;
     }
     this.units.set(t, { seq: t.deploySeq, clock, upgraded: false });
+    this.created(t);
+    if (!this.valid() || !this.owns(t)) {
+      if (present(t)) this.b.retreat(t, { permanent: true, reason: 'necrass-owner-finished' });
+      return null;
+    }
     this.burst(t);
     return t;
   }
+  tokenClock(token) { return new NecrassAttackClock(this.core, token, { token: true }); }
+  tokenSkill() { return { kind: 'passive', trigger: { rule: 'NEVER' }, canActivate: () => false }; }
+  created() {}
   heal(t) {
     if (!this.valid() || !this.owns(t)) return 0;
     // Original HealViaMaxHpRatio ignores HealFree and modifier events.
@@ -118,7 +133,7 @@ export class NecrassServants {
   }
   upgradeOrHeal() {
     if (!this.valid()) return null;
-    const keys = this.core.clock.keys(), choices = this.all().filter(t => live(t) && bodyInKeys(t, keys));
+    const choices = this.upgradeCandidates(this.core.clock.keys());
     // Post-filter 16 ordering is not recovered. Stable local ID order is
     // explicit diagnostic policy; it does not certify the native selector.
     choices.sort((a, z) => a.id - z.id);
@@ -133,6 +148,7 @@ export class NecrassServants {
     } else this.heal(t);
     return t;
   }
+  upgradeCandidates(keys) { return this.all().filter(t => live(t) && bodyInKeys(t, keys)); }
   burst(t) {
     if (!this.valid() || this.core.record.index !== 0 || !this.owns(t)) return;
     const bb = this.core.record.bb;

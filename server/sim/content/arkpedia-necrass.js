@@ -94,6 +94,10 @@ export class NecrassAttackClock {
     sortEnemyTargets(this.b, u, out); return out.slice(0, 1);
   }
   release(t, info) {
+    if (!this.token && this.core.skills?.release) return this.core.skills.release(t, info);
+    return this.ordinaryRelease(t, info);
+  }
+  ordinaryRelease(t, info) {
     const { u, b, phase: p } = this;
     if (!this.accepting || !this.valid() || !live(u) || !u.canAct || u.s.flags.disarm
       || p?.kind !== 'attack' || p.accepted || p.epoch !== u.attackControlEpoch
