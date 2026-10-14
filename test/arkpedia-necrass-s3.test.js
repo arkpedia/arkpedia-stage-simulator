@@ -64,7 +64,7 @@ const charge = f => f.u.skill.setSpTotal(f.u.skill.spCost);
 test('S3 contract rejects other selected skills and altered contracts', () => {
   assert.throws(() => make({ skill: 1 }), /original selected skill/);
   assert.throws(() => make({ contract: { ...S3 } }), /reviewed S3/);
-  assert.equal(publicData.operators[ID], undefined);
+  assert.ok(publicData.operators[ID]);
 });
 
 for (let rank = 1; rank <= 10; rank++) {

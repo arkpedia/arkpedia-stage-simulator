@@ -1,0 +1,485 @@
+{
+  "schemaVersion": 1,
+  "operatorId": "char_450_necras",
+  "enabledOperators": [
+    "char_450_necras"
+  ],
+  "frameParity": false,
+  "moduleSupport": false,
+  "nativeParticleSupport": false,
+  "sourceFoundationSha256": "175bf1e9b3dd661d83992b9a7435a97819ae5a3b9dda28f1671002d10dbe5f45",
+  "deviceArtworkSha256": "0697156501d932d45c86e3f96c0071b229614768db4cdd464af7a5136cc93881",
+  "servantPolicy": "source-forms-zero-slots-v1",
+  "s3Policy": "selected-six-upgrades-three-stack-range-v1",
+  "scope": "Selected-source ordinary combat, S1 rebuilding/bursts, S2 Sleep links, S3 volleys/consumption and unique automatic dragon; all thirty source skill ranks and public lifecycle.",
+  "verification": [
+    "test/arkpedia-necrass-public.test.js",
+    "test/arkpedia-necrass.test.js",
+    "test/arkpedia-necrass-skills.test.js",
+    "test/arkpedia-necrass-s3.test.js",
+    "tools/arkpedia/review-necrass-public.mjs",
+    "tools/arkpedia/verify-necrass-models.py --delivered"
+  ],
+  "limits": [
+    "Native modifier/FSM/SP dispatch, selector ordering, range fallback RNG, homing flight and captured/release-time searches use documented local policies, not compiled Unity or battle-frame parity.",
+    "S2 unique links use first-active-producer precedence and bounded source Sleep; native admission/finish ordering remains unrecovered.",
+    "S3 begin/loop phases, interrupt/resume, min-zero automatic activation including empty range, heal-at-cap and selected six-stack versus native serialized nine-stack precedence use the explicit source contract.",
+    "S3 healing follows the localized dragon-max-HP ratio and shared-engine modifiers/HP-ratio preservation; native healing-source identity remains unverified.",
+    "Kill-checker/kill-mark records are retained; their compiled relation to deferred factory dispatch is not certified. Servant consumption uses permanent withdrawal without an enemy-kill credit.",
+    "Original Back Stun/Stun_2 and optional death/Down skill clips are absent and are not fabricated. Modules, native effects/shaders/audio and frame parity remain unsupported."
+  ],
+  "originalArtwork": {
+    "operator/char_450_necras/default/front": {
+      "kind": "operator",
+      "id": "char_450_necras",
+      "variant": "default",
+      "facing": "front",
+      "spineVersion": "3.8.99",
+      "source": {
+        "key": "operators",
+        "repository": "fexli/ArknightsResource",
+        "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+        "directory": "spine/char_450_necras/char_450_necras/Front"
+      },
+      "skeleton": {
+        "path": "models/operator/char_450_necras/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_450_necras.skel",
+        "bytes": 587380,
+        "sha256": "8589f13c29ea2eca83e6675d45ff265c7bae8283f1973857f1d1caa5db0dd00b"
+      },
+      "atlas": {
+        "path": "models/operator/char_450_necras/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_450_necras.atlas",
+        "bytes": 9629,
+        "sha256": "02ae5e1a1454aefb081d4cad6da07b2c50c23bc6d907344c32027915df0787c9"
+      },
+      "textures": [
+        {
+          "path": "models/operator/char_450_necras/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_450_necras.png",
+          "bytes": 231382,
+          "sha256": "a883ea55ed7c23297dbecf6ab24ffb20125629b5ddcbb95ea51eea9894ec28d4"
+        }
+      ],
+      "premultipliedAlpha": true,
+      "animations": {
+        "Attack": 1.6,
+        "Default": 0,
+        "Die": 1,
+        "Idle": 6,
+        "Skill_1": 1.6,
+        "Skill_2_Begin": 1.2,
+        "Skill_2_End": 1,
+        "Skill_2_Loop": 6,
+        "Skill_3_Begin": 0.733,
+        "Skill_3_End": 0.333,
+        "Skill_3_Idle": 6,
+        "Skill_3_Loop": 1.6,
+        "Start": 1
+      },
+      "animationRoles": {
+        "idle": "Idle",
+        "deploy": "Start",
+        "attack": {
+          "begin": null,
+          "loop": "Attack",
+          "end": null
+        },
+        "attackDown": null,
+        "skill": {
+          "begin": null,
+          "loop": "Skill_1",
+          "end": null,
+          "index": 0,
+          "idle": null
+        },
+        "die": "Die",
+        "move": null,
+        "stun": null,
+        "skills": {
+          "0": {
+            "begin": null,
+            "loop": "Skill_1",
+            "end": null,
+            "index": 0,
+            "idle": null
+          },
+          "1": {
+            "begin": "Skill_2_Begin",
+            "loop": "Skill_2_Loop",
+            "end": "Skill_2_End",
+            "index": 1,
+            "idle": null
+          },
+          "2": {
+            "begin": "Skill_3_Begin",
+            "loop": "Skill_3_Loop",
+            "end": "Skill_3_End",
+            "index": 2,
+            "idle": "Skill_3_Idle"
+          }
+        }
+      },
+      "hits": {
+        "Attack": [
+          0.5
+        ],
+        "Skill_1": [
+          0.5
+        ],
+        "Skill_2_Begin": [
+          0.667
+        ],
+        "Skill_3_Begin": [
+          0.567
+        ],
+        "Skill_3_Loop": [
+          0.567
+        ]
+      },
+      "bounds": {
+        "x": -406.787,
+        "y": -61.531,
+        "width": 556.765,
+        "height": 507.98
+      }
+    },
+    "operator/char_450_necras/default/back": {
+      "kind": "operator",
+      "id": "char_450_necras",
+      "variant": "default",
+      "facing": "back",
+      "spineVersion": "3.8.99",
+      "source": {
+        "key": "operators",
+        "repository": "fexli/ArknightsResource",
+        "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+        "directory": "spine/char_450_necras/char_450_necras/Back"
+      },
+      "skeleton": {
+        "path": "models/operator/char_450_necras/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_450_necras.skel",
+        "bytes": 415188,
+        "sha256": "e6dbc5d401fa29859b1d3111b1b661378fdafb12425aace5b7dc8b4c3da2954b"
+      },
+      "atlas": {
+        "path": "models/operator/char_450_necras/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_450_necras.atlas",
+        "bytes": 6541,
+        "sha256": "f3edcbb871dbf6715edf110d9e1c8fba40dd267ebf8c210bf200867e93a6def4"
+      },
+      "textures": [
+        {
+          "path": "models/operator/char_450_necras/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_450_necras.png",
+          "bytes": 174906,
+          "sha256": "4edaedeb5de542b9409f37fe90c8bc29e1100bbcbdccc657aa9bd72b62fe5060"
+        }
+      ],
+      "premultipliedAlpha": true,
+      "animations": {
+        "Attack": 1.6,
+        "Default": 0,
+        "Idle": 6,
+        "Skill_1": 1.6,
+        "Skill_2_Begin": 1.2,
+        "Skill_2_End": 1,
+        "Skill_2_Loop": 6,
+        "Skill_3_Begin": 0.733,
+        "Skill_3_End": 0.333,
+        "Skill_3_Idle": 6,
+        "Skill_3_Loop": 1.6,
+        "Start": 1
+      },
+      "animationRoles": {
+        "idle": "Idle",
+        "deploy": "Start",
+        "attack": {
+          "begin": null,
+          "loop": "Attack",
+          "end": null
+        },
+        "attackDown": null,
+        "skill": {
+          "begin": null,
+          "loop": "Skill_1",
+          "end": null,
+          "index": 0,
+          "idle": null
+        },
+        "die": null,
+        "move": null,
+        "stun": null,
+        "skills": {
+          "0": {
+            "begin": null,
+            "loop": "Skill_1",
+            "end": null,
+            "index": 0,
+            "idle": null
+          },
+          "1": {
+            "begin": "Skill_2_Begin",
+            "loop": "Skill_2_Loop",
+            "end": "Skill_2_End",
+            "index": 1,
+            "idle": null
+          },
+          "2": {
+            "begin": "Skill_3_Begin",
+            "loop": "Skill_3_Loop",
+            "end": "Skill_3_End",
+            "index": 2,
+            "idle": "Skill_3_Idle"
+          }
+        }
+      },
+      "hits": {
+        "Attack": [
+          0.5
+        ],
+        "Skill_1": [
+          0.5
+        ],
+        "Skill_2_Begin": [
+          0.667
+        ],
+        "Skill_2_Loop": [
+          0
+        ],
+        "Skill_3_Begin": [
+          0.567
+        ],
+        "Skill_3_Loop": [
+          0.567
+        ]
+      },
+      "bounds": {
+        "x": -406.787,
+        "y": -3.06,
+        "width": 1105.077,
+        "height": 482
+      }
+    },
+    "operator/token_10043_necras_skeltn/default/front": {
+      "kind": "operator",
+      "id": "token_10043_necras_skeltn",
+      "variant": "default",
+      "facing": "front",
+      "source": {
+        "key": "global-client",
+        "kind": "assetbundle",
+        "bundle": {
+          "path": "pkgrps/btl_pfb_tokens_0.ab",
+          "bytes": 5060143,
+          "md5": "5ab8526b9e59e97cc7e94ed6a248013d",
+          "sha256": "eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f",
+          "resourceVersion": "26-09-23-17-49-43_b9cc4a",
+          "url": "https://ark-us-static-online.yo-star.com/assetbundle/official/Android/assets/26-09-23-17-49-43_b9cc4a/pkgrps_btl_pfb_tokens_0.dat",
+          "transforms": [
+            "Original embedded premultiplied RGBA texture decoded; RGB clamped to alpha to remove compression bleed",
+            "Atlas page dimensions normalized and pma: true recorded; native regions unchanged",
+            "Original Front/Back skeletons and all clips retained; absent Back Stun/Stun_2 are not replaced"
+          ]
+        },
+        "directory": "pkgrps/btl_pfb_tokens_0.ab",
+        "extractedSkeleton": "token_10043_necras_skeltn.skel",
+        "originalPathIds": {
+          "rootPathId": "-220498972064200905",
+          "controllerPathId": "-8493436737972975817",
+          "animatorPathId": "8383878065682204471",
+          "faceSwitcherPathId": "5399612556174313271",
+          "skeletonAnimationPathId": "7410765992475576119",
+          "skeletonDataAssetPathId": "-4250034081237561642",
+          "textAssetPathId": "-1256038440087964278",
+          "atlasAssetPathId": "-7290225306191703293",
+          "atlasTextAssetPathId": "-4734388765988315445",
+          "materialPathId": "8107617638547089789",
+          "rgbTexturePathId": "3257845944432474594"
+        },
+        "transforms": [
+          "Original embedded premultiplied RGBA texture decoded; RGB clamped to alpha to remove compression bleed",
+          "Atlas page dimensions normalized and pma: true recorded; native regions unchanged",
+          "Original Front/Back skeletons and all clips retained; absent Back Stun/Stun_2 are not replaced"
+        ]
+      },
+      "spineVersion": "3.8.99",
+      "skeleton": {
+        "path": "models/operator/token_10043_necras_skeltn/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/token_10043_necras_skeltn.skel",
+        "bytes": 182938,
+        "sha256": "940040ac22aa2be93f55cde5054c9ff56c9456c2776ad93a79c65b305a012b62"
+      },
+      "atlas": {
+        "path": "models/operator/token_10043_necras_skeltn/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/token_10043_necras_skeltn.atlas",
+        "bytes": 4396,
+        "sha256": "acec3e34cd65ebe97b4e64c7aea2df500415fbc68ffb7c5009d1e6560f97db94"
+      },
+      "textures": [
+        {
+          "path": "models/operator/token_10043_necras_skeltn/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/token_10043_necras_skeltn.png",
+          "bytes": 138925,
+          "sha256": "75269ee5c18711fd271c7cfc2665f765db4f9e944a2162e147b6150b3a630abd"
+        }
+      ],
+      "premultipliedAlpha": true,
+      "animations": {
+        "Attack": 2,
+        "Attack_2": 2,
+        "Default": 0,
+        "Die": 1,
+        "Die_2": 0.333,
+        "Idle": 2,
+        "Idle_2": 2,
+        "Skill_Begin": 0.567,
+        "Skill_Down_Begin": 0.567,
+        "Skill_Down_End": 0.333,
+        "Skill_Down_Loop": 0.8,
+        "Skill_End": 0.333,
+        "Skill_Loop": 0.8,
+        "Start": 1,
+        "Start_2": 1,
+        "Stun": 1,
+        "Stun_2": 1
+      },
+      "animationRoles": {
+        "idle": "Idle_2",
+        "deploy": "Start_2",
+        "attack": "Attack_2",
+        "die": "Die_2",
+        "skill": null
+      },
+      "hits": {
+        "Attack": [
+          0.567
+        ],
+        "Attack_2": [
+          0.5
+        ],
+        "Skill_Down_Loop": [
+          0.067
+        ],
+        "Skill_Loop": [
+          0.067
+        ]
+      },
+      "bounds": {
+        "x": -265.35,
+        "y": -0.431,
+        "width": 720.496,
+        "height": 446.585
+      },
+      "avatar": {
+        "path": "models/operator/token_10043_necras_skeltn/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png",
+        "bytes": 31978,
+        "sha256": "951206c5d3017e85071ef49deb11546d3f2878ffb971dc689b560b1b47a96cfb",
+        "source": {
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "avatar/ASSISTANT"
+        }
+      }
+    },
+    "operator/token_10043_necras_skeltn/default/back": {
+      "kind": "operator",
+      "id": "token_10043_necras_skeltn",
+      "variant": "default",
+      "facing": "back",
+      "source": {
+        "key": "global-client",
+        "kind": "assetbundle",
+        "bundle": {
+          "path": "pkgrps/btl_pfb_tokens_0.ab",
+          "bytes": 5060143,
+          "md5": "5ab8526b9e59e97cc7e94ed6a248013d",
+          "sha256": "eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f",
+          "resourceVersion": "26-09-23-17-49-43_b9cc4a",
+          "url": "https://ark-us-static-online.yo-star.com/assetbundle/official/Android/assets/26-09-23-17-49-43_b9cc4a/pkgrps_btl_pfb_tokens_0.dat",
+          "transforms": [
+            "Original embedded premultiplied RGBA texture decoded; RGB clamped to alpha to remove compression bleed",
+            "Atlas page dimensions normalized and pma: true recorded; native regions unchanged",
+            "Original Front/Back skeletons and all clips retained; absent Back Stun/Stun_2 are not replaced"
+          ]
+        },
+        "directory": "pkgrps/btl_pfb_tokens_0.ab",
+        "extractedSkeleton": "token_10043_necras_skeltn.skel",
+        "originalPathIds": {
+          "rootPathId": "-220498972064200905",
+          "controllerPathId": "-8493436737972975817",
+          "animatorPathId": "8383878065682204471",
+          "faceSwitcherPathId": "5399612556174313271",
+          "skeletonAnimationPathId": "-897177660769024201",
+          "skeletonDataAssetPathId": "-1749271806096285325",
+          "textAssetPathId": "-8768257132216410422",
+          "atlasAssetPathId": "8168565492075066178",
+          "atlasTextAssetPathId": "-2842075466939740755",
+          "materialPathId": "8729474731614539287",
+          "rgbTexturePathId": "-3108441805676137462"
+        },
+        "transforms": [
+          "Original embedded premultiplied RGBA texture decoded; RGB clamped to alpha to remove compression bleed",
+          "Atlas page dimensions normalized and pma: true recorded; native regions unchanged",
+          "Original Front/Back skeletons and all clips retained; absent Back Stun/Stun_2 are not replaced"
+        ]
+      },
+      "spineVersion": "3.8.99",
+      "skeleton": {
+        "path": "models/operator/token_10043_necras_skeltn/default/back/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/token_10043_necras_skeltn.skel",
+        "bytes": 125220,
+        "sha256": "aa080318c2f1f7b216ba6bff712fba07ddb2a0564754ed3dd4eee47801c7dd27"
+      },
+      "atlas": {
+        "path": "models/operator/token_10043_necras_skeltn/default/back/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/token_10043_necras_skeltn.atlas",
+        "bytes": 4396,
+        "sha256": "acec3e34cd65ebe97b4e64c7aea2df500415fbc68ffb7c5009d1e6560f97db94"
+      },
+      "textures": [
+        {
+          "path": "models/operator/token_10043_necras_skeltn/default/back/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/token_10043_necras_skeltn.png",
+          "bytes": 138925,
+          "sha256": "75269ee5c18711fd271c7cfc2665f765db4f9e944a2162e147b6150b3a630abd"
+        }
+      ],
+      "premultipliedAlpha": true,
+      "animations": {
+        "Attack": 2,
+        "Attack_2": 2,
+        "Default": 0,
+        "Idle": 2,
+        "Idle_2": 2,
+        "Skill_Begin": 0.567,
+        "Skill_End": 0.333,
+        "Skill_Loop": 0.8,
+        "Start": 1,
+        "Start_2": 1
+      },
+      "animationRoles": {
+        "idle": "Idle_2",
+        "deploy": "Start_2",
+        "attack": "Attack_2",
+        "die": null,
+        "skill": null
+      },
+      "hits": {
+        "Attack": [
+          0.567
+        ],
+        "Attack_2": [
+          0.5
+        ],
+        "Skill_Loop": [
+          0.067
+        ]
+      },
+      "bounds": {
+        "x": -265.35,
+        "y": -0.431,
+        "width": 720.496,
+        "height": 446.585
+      },
+      "avatar": {
+        "path": "models/operator/token_10043_necras_skeltn/default/back/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png",
+        "bytes": 31978,
+        "sha256": "951206c5d3017e85071ef49deb11546d3f2878ffb971dc689b560b1b47a96cfb",
+        "source": {
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "avatar/ASSISTANT"
+        }
+      }
+    }
+  }
+}

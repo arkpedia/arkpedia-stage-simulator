@@ -9,8 +9,8 @@ const TOKEN = TOKENS[0];
 const build = (n = 1, skillRank = 10, elite = 2) => ({ elite, level: 1, potential: 1,
   trust: 0, skillId: `skchr_necras_${n}`, skillRank, module: 'none' });
 
-test('Necrass evidence stays held and uses the frozen public source identities', () => {
-  assert.equal(publicData.operators[ID], undefined);
+test('Necrass foundation remains immutable under a separate public runtime review', () => {
+  assert.ok(publicData.operators[ID]);
   assert.deepEqual(e.enabledOperators, []); assert.deepEqual(e.heldOperators, [ID]);
   assert.equal(e.source.commit, publicData.sources[e.source.repository]);
   assert.equal(e.source.commit, '57010cb5b2afea112cae57daa756b58676ba6850');
