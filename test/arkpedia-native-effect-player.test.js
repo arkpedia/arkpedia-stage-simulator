@@ -96,7 +96,7 @@ test('source pivots shift only rendered matrices and leave particle anchors, clo
    assert.ok(d.mesh.geometry.getAttribute('in_POSITION0').array.every(Number.isFinite));
   }
   const before=state();i.update(.3,{camera:cam});i.update(1.8,{camera:cam});i.group.updateMatrixWorld(true);assert.equal(state(),before);
-  assert.equal(i.blocked.length,5);i.dispose();
+  assert.equal(i.blocked.length,1);i.dispose();
  }finally{lib.dispose();}
 });
 test('original texture script supplies four independent UV bases and missing inputs stay held',native,async()=>{
@@ -105,7 +105,7 @@ test('original texture script supplies four independent UV bases and missing inp
  try{
   const a=await lib.create('whitw2_skill_03_buff_01',{allowBlocked:true}),b=await lib.create(a.name,{allowBlocked:true});
   const material=a.draws.find(d=>d.component===component)?.mesh.material,other=b.draws.find(d=>d.component===component)?.mesh.material;
-  assert.ok(material);assert.equal(a.draws.length,23);assert.equal(a.blocked.length,5);assert.equal(material.userData.textureRotations.script,script);
+  assert.ok(material);assert.equal(a.draws.length,31);assert.equal(a.blocked.length,1);assert.equal(material.userData.textureRotations.script,script);
   const rotation=material.uniforms._Rotation0.value.toArray();rotation.forEach((x,i)=>assert.ok(Math.abs(x-[0,1,-1,0][i])<1e-10));
   for(let i=0;i<4;i++)assert.notEqual(material.uniforms['_Rotation'+i].value,other.uniforms['_Rotation'+i].value);
   for(let i=1;i<4;i++)material.uniforms['_Rotation'+i].value.toArray().forEach((x,j)=>assert.ok(Math.abs(x-[1,0,0,1][j])<1e-10));
@@ -114,7 +114,37 @@ test('original texture script supplies four independent UV bases and missing inp
   assert.equal(JSON.stringify(original.pack),before);a.dispose();b.dispose();
  }finally{lib.dispose();}
  const missing=structuredClone(original);delete missing.pack.scriptBindings[script];const held=library(missing,async()=>new T.Texture(),builtinMeshes);
- try{const i=await held.create('whitw2_skill_03_buff_01',{allowBlocked:true});assert.ok(i.blocked.some(b=>b.component===component&&/script binding/.test(b.reason)));assert.equal(i.blocked.length,6);i.dispose();}finally{held.dispose();}
+ try{const i=await held.create('whitw2_skill_03_buff_01',{allowBlocked:true});assert.ok(i.blocked.some(b=>b.component===component&&/script binding/.test(b.reason)));assert.equal(i.blocked.length,2);i.dispose();}finally{held.dispose();}
+});
+test('particle trails bind both original material slots and replay negative prewarm/force history without dropping source modules',native,async()=>{
+ const lib=library(original,async()=>new T.Texture(),builtinMeshes),cam=camera();
+ try{
+  const i=await lib.create('whitw2_skill_03_buff_01',{allowBlocked:true});i.update(1.8,{camera:cam});i.group.updateMatrixWorld(true);
+  const trails=i.draws.filter(d=>d.particleTrails);assert.equal(trails.length,4);assert.equal(i.blocked.length,1);
+  for(const d of trails){assert.equal(d.materialSlot,1);assert.equal(d.sourceEntry.particleSource.TrailModule.enabled,true);assert.equal(d.sourceEntry.particleSource.ForceModule.enabled,true);
+   assert.notEqual(d.mesh.material,d.sourceEntry.mesh.material);assert.ok(d.trailData.indices.length>0);assert.ok(d.mesh.matrixWorld.elements.every(Number.isFinite));
+   assert.equal(d.trailData.positions.length,d.mesh.geometry.getAttribute('in_POSITION0').array.length);assert.ok(d.trailData.trails.some(t=>t.birthTime<0));}
+  const snapshot=()=>JSON.stringify(trails.map(d=>d.trailData)),before=snapshot();i.update(.3,{camera:cam});i.update(1.8,{camera:cam});assert.equal(snapshot(),before);
+  await assert.rejects(lib.create(i.name),/unplayed/);i.dispose();
+ }finally{lib.dispose();}
+ const bad=structuredClone(original),component='battle/prefabs/effects/whitw2.ab:2057827590122980484';
+ bad.pack.records[component].references.find(r=>r.field==='m_Materials'&&r.target.endsWith(':8786611903537063936')).target=undefined;
+ const held=library(bad,async()=>new T.Texture(),builtinMeshes);try{const i=await held.create('whitw2_skill_03_buff_01',{allowBlocked:true});assert.ok(i.blocked.some(b=>b.component===component));assert.ok(!i.draws.some(d=>d.component===component));i.dispose();}finally{held.dispose();}
+});
+test('changing ribbon groups replaces topology even when the uploaded vertex count stays constant',native,async()=>{
+ const lib=library(original,async()=>new T.Texture(),builtinMeshes),cam=camera();let changes=0;
+ try{
+  const i=await lib.create('whitw2_skill_03_buff_01',{allowBlocked:true}),previous=new Map();
+  for(let step=0;step<60;step++){
+   i.update(.8+step/100,{camera:cam});
+   for(const d of i.draws.filter(d=>d.particleTrails)){
+    const indices=[...d.mesh.geometry.index.array],old=previous.get(d);assert.deepEqual(indices,d.trailData.indices);
+    if(old?.vertices===d.trailData.positions.length&&JSON.stringify(old.indices)!==JSON.stringify(indices))changes++;
+    previous.set(d,{vertices:d.trailData.positions.length,indices});
+   }
+  }
+  assert.ok(changes>0,'Original emitter sequence must exercise equal-size topology changes');i.dispose();
+ }finally{lib.dispose();}
 });
 test('stretched children replay real source motion and retain stable clocks and finite matrices across scrubs',native,async()=>{
  const lib=library(original,async()=>new T.Texture(),builtinMeshes),cam=camera();

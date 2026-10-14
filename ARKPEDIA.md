@@ -3948,3 +3948,33 @@ ARKPEDIA_REVIEW_CHROME='/path/to/chromium' node tools/arkpedia/review-tragodia-e
 ```
 
 Logs use the `stretch-` prefix under `.cache/arkpedia/lappland-alter-source/`; the image/report remain in its `effects/` directory. Original packs, previous metadata/fixtures, source pins and public coverage remain unchanged: **373/431 forms and 812 selected skills**. No operator registration is added. Arkpedia app PR229 stays outside dev.
+
+### Particle-owned ribbons and force curves (2026-10-14)
+
+The original packs contain **sixteen particle-trail profiles and twenty-one Force over Lifetime profiles** across 29 particle objects. These remain separate from standalone TrailRenderer components. The particle-trail mapping retains per-particle selection, minimum vertex distance, lifetime multipliers, death policy, width/colour curves, size factors and particle-colour inheritance. [Unity's trails documentation](https://docs.unity3d.com/2021.3/Documentation/Manual/PartSysTrailsModule.html) defines vertex lifetime as a multiplier of the owning particle's lifetime and distinguishes trails that die immediately from trails that expire independently. The admitted profiles use per-particle mode, local storage, Stretch UVs and no lighting data; other modes/spaces remain held.
+
+Trail histories use a bounded 60 Hz replay in simulation seconds. The original negative prewarm birth ledger is available only through an owner-bound historical sampler, with the source prewarm window enforced. Ordinary scheduled samples still reject all negative clocks. Local trail points follow the current original emitter frame; their widths, colours and UVs remain separate from the main particle quad. Current head interpolation, averaged ribbon joins/pole fallback, terminal size/colour snapshots, random selection and frame/module ordering are **explicit local mappings**, not certified native execution or pixel parity. Original source objects are not edited or stripped of active modules.
+
+The sparks also require their authored force curves. Local non-randomized acceleration impulses now integrate the original unweighted Hermite curves before the existing damping step. Velocity increments are exact curve integrals; position retains the bounded semi-implicit replay. World-force conversion, per-frame randomness and combined linear-velocity ordering remain held. All 21 original force profiles are inventoried and their source-axis impulses tested; that mathematical diagnostic does not approve the unsupported physical spaces.
+
+The player now prepares the buff's four spark components atomically with their **two original material slots**: a particle material and a separate trail material. Missing trail materials cannot fall back to the particle slot or leave a half-prepared component. `whitw2_skill_03_buff_01` now has **27 prepared source renderers, 31 draws and one remaining rune-shape hold**. Strict playback continues rejecting that incomplete root; no operator registration is added.
+
+Physical trail samples use a bounded cache only for canonical numeric birth records. The owner is verified once per synchronous replay scope, escaped callbacks reject even cached reads, returned samples are independent copies, and retirement clears the cache. Other record schemas bypass caching. Ribbon topology now rebuilds when particle groups change, even if total vertex count stays constant; this prevents stale indices from joining different ribbons and releases old GPU buffers before replacement.
+
+Validation:
+
+- The independent Python audit reads all **29 original particle typetrees and raw hashes**. It independently verifies **189 force impulse values, 26,272 trail attribute values and 3,496 vertices** across 48 explicitly synthetic-motion trail probes. All three outputs reproduce; nine altered-evidence cases reject. Synthetic control probes are not native motion evidence.
+- The 35-file adjacent set passes **1,098 checks on Node 22 and Node 24**, without failures or skips. Tests include lifetime multipliers, death/retention, simulated clocks, colour/size controls, source ownership, negative-prewarm access, scope/cache isolation, reverse scrubbing, malformed inputs, replay limits, force/damping order and actual equal-size ribbon topology changes.
+- The browser independently reconstructs **244 original spark points** from original cone directions, force Hermite integrals and damping. It verifies emitter projection, separate material slots, **four trail render passes** and **sixteen GPU buffer readbacks** for positions, colours, UVs and indices. Both trail data and existing particle state reverse exactly. All 23 original Lappland programs, earlier angular/pivot/stretch checks and texture-rotation UV probes pass; GL/page errors are absent and GPU cleanup is complete. The updated partial buff image was visually inspected.
+- The cage regression remains at sixteen prepared components and two holds, with all 22 original programs and 91 materials passing. Its unresolved shape/prewarm/parent-motion contracts are not bypassed by the new trail-control mapping.
+
+Reproduce with Node 22 on `PATH`, the extraction Python environment and Chromium:
+
+```sh
+node tools/arkpedia/export-particle-trails.mjs
+.cache/map-env/bin/python tools/arkpedia/audit-particle-trails.py
+ARKPEDIA_REVIEW_CHROME='/path/to/chromium' node tools/arkpedia/review-particle-angular-motion.mjs
+ARKPEDIA_REVIEW_CHROME='/path/to/chromium' node tools/arkpedia/review-tragodia-effect-shaders.mjs
+```
+
+Logs use the `particle-trail-` prefix under `.cache/arkpedia/lappland-alter-source/`; images/reports remain in the original-source `effects/` directories. Source packs, prior metadata/fixtures, source pins and public coverage remain unchanged: **373/431 forms and 812 selected skills**. Remaining renderer/control/resource contracts, Animator dispatch and full battle review are still required. Arkpedia app PR229 stays outside dev.

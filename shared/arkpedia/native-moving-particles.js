@@ -10,9 +10,9 @@ import {createParticleInheritance} from './native-particle-inheritance.js';
 // Source sphere/box/cone-base emission, lifetime velocity and grid animation.
 // RNG, event boundaries, native frame phase and renderer coordinates remain
 // explicit local mappings until compared with compiled Unity/game frames.
-export function createMovingParticles(source,{seed=1,subEmitterSchedule=null}={}){
+export function createMovingParticles(source,{seed=1,subEmitterSchedule=null,particleTrails=null}={}){
   const managedSubModule=source.SubModule?.enabled&&subEmitterSchedule?.ownsParent(source,seed)===true;
-  const lifecycle=createParticleLifecycle(source,{seed,modules:['ShapeModule','VelocityModule','UVModule','ClampVelocityModule','NoiseModule','InheritVelocityModule',...(managedSubModule?['SubModule']:[])],spaces:[0,1],allowInitialSpeed:true,allowDistanceEmission:true});
+  const lifecycle=createParticleLifecycle(source,{seed,particleTrails,modules:['ShapeModule','VelocityModule','UVModule','ClampVelocityModule','NoiseModule','InheritVelocityModule','ForceModule',...(managedSubModule?['SubModule']:[])],spaces:[0,1],allowInitialSpeed:true,allowDistanceEmission:true});
   const shape=source.ShapeModule,velocity=source.VelocityModule,uv=source.UVModule;
   const motion=createParticleMotion(source,{seed});
   const inheritance=createParticleInheritance(source,{seed});
@@ -90,7 +90,18 @@ export function createMovingParticles(source,{seed=1,subEmitterSchedule=null}={}
     });
   }
   function sample(time,options={}){return sampleParticles(lifecycle.sample(time,{history:options.history}),time,options);}
-  return {sample,worldMotion,births:lifecycle.births,sampleRecords(records,time,options){return sampleParticles(lifecycle.sampleRecords(records,time),time,options);}};
+  const trailCache=new Map(),trailFields=new Set(['id','born','lifetime','age','birthTime']);
+  return {sample,worldMotion,births:lifecycle.births,sampleRecords(records,time,options){return sampleParticles(lifecycle.sampleRecords(records,time),time,options);},
+    sampleTrailRecords(records,time,options){return sampleParticles(lifecycle.sampleTrailRecords(records,time,particleTrails),time,options);},
+    withTrailHistory(callback){let active=true;try{return lifecycle.withTrailHistory(particleTrails,replay=>callback((records,time)=>{
+      if(!active)throw Error('Particle trail history scope has ended');
+      // Admitted trail sources simulate locally. Their physical replay is pure
+      // in these clocks/records; emitter projection happens separately per frame.
+      const cacheable=records.every(r=>Object.keys(r).every(k=>trailFields.has(k))&&Object.values(r).every(Number.isFinite));
+      const key=cacheable?JSON.stringify([time,records]):null;if(cacheable&&trailCache.has(key))return structuredClone(trailCache.get(key));
+      const result=sampleParticles(replay(records,time),time);if(!cacheable)return result;trailCache.set(key,structuredClone(result));
+      if(trailCache.size>10000)trailCache.delete(trailCache.keys().next().value);return result;
+    }));}finally{active=false;}},clearTrailHistoryCache(){trailCache.clear();}};
 }
 
 function rotateShape([x,y,z],rotation){

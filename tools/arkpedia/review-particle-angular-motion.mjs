@@ -122,8 +122,14 @@ try{
    if(!strictRejected||library.instanceCount!==1)throw Error('Partial angular root bypassed strict playback');
    const pivotDraws=instance.draws.filter(d=>!d.stretch&&d.pivot?.pivot.some(v=>v!==0));let pivotMatrices=0,pivotRenderPasses=0;
    const rotationDraws=instance.draws.filter(d=>d.mesh.material.userData.textureRotations);let rotationRenderPasses=0;
-   if(rotationDraws.length!==1||instance.draws.length!==23||instance.blocked.length!==5)throw Error('Missing original texture rotation component');
+   if(rotationDraws.length!==1||instance.draws.length!==31||instance.blocked.length!==1)throw Error('Missing original texture rotation component');
    const rotationMaterial=rotationDraws[0].mesh.material;
+   const particleTrailDraws=instance.draws.filter(d=>d.particleTrails);let particleTrailPasses=0,particleTrailPhysicsPoints=0,particleTrailGpuBuffers=0;
+   if(particleTrailDraws.length!==4)throw Error('Missing original particle/trail material pairs');
+   const glTrail=renderer.getContext(),trailBuffers=new WeakMap(),trailUpload=glTrail.bufferData.bind(glTrail),trailUpdate=glTrail.bufferSubData.bind(glTrail);
+   glTrail.bufferData=function(target,array,...args){const result=trailUpload(target,array,...args);if(ArrayBuffer.isView(array))trailBuffers.set(array,glTrail.getParameter(target===glTrail.ARRAY_BUFFER?glTrail.ARRAY_BUFFER_BINDING:glTrail.ELEMENT_ARRAY_BUFFER_BINDING));return result;};
+   glTrail.bufferSubData=function(target,offset,array,...args){const result=trailUpdate(target,offset,array,...args);if(ArrayBuffer.isView(array))trailBuffers.set(array,glTrail.getParameter(target===glTrail.ARRAY_BUFFER?glTrail.ARRAY_BUFFER_BINDING:glTrail.ELEMENT_ARRAY_BUFFER_BINDING));return result;};
+   for(const d of particleTrailDraws)d.mesh.onAfterRender=()=>{particleTrailPasses++;};
    for(const d of rotationDraws)for(const part of d.pool)part.onAfterRender=function(){
     const gl=renderer.getContext(),program=gl.getParameter(gl.CURRENT_PROGRAM);
     for(let i=0;i<4;i++){
@@ -138,6 +144,46 @@ try{
    const pivotBounds=new T.Box3().setFromObject(instance.group),pivotCentre=pivotBounds.getCenter(new T.Vector3()),pivotSpan=Math.max(.1,pivotBounds.getSize(new T.Vector3()).length());
    camera.position.copy(pivotCentre).add(new T.Vector3(.2,.4,1).normalize().multiplyScalar(pivotSpan*1.8));camera.lookAt(pivotCentre);camera.updateMatrixWorld(true);
    instance.update(captureTime,{camera});renderer.render(scene,camera);
+   const sourcePolynomial=(curve,lo,hi,integral=false)=>{
+    if(curve.minMaxState!==1)throw Error('Changed original force/clamp curve mode');
+    const keys=curve.maxCurve.m_Curve;if(keys.length!==2||keys[0].time!==0||keys[1].time!==1||keys.some(k=>k.weightedMode!==0))throw Error('Changed original force/clamp Hermite knots');
+    const[a,b]=keys,A=2*a.value-2*b.value+a.outSlope+b.inSlope,B=-3*a.value+3*b.value-2*a.outSlope-b.inSlope,C=a.outSlope,D=a.value;
+    return curve.scalar*(integral?A*(hi**4-lo**4)/4+B*(hi**3-lo**3)/3+C*(hi**2-lo**2)/2+D*(hi-lo):((A*hi+B)*hi+C)*hi+D);
+   };
+   for(const d of particleTrailDraws){
+    if(d.mesh.material===d.sourceEntry.mesh.material||d.materialSlot!==1||!d.trailData.indices.length)throw Error('Original trail was replaced by its particle material');
+    const s=d.sourceEntry.particleSource,shape=s.ShapeModule,frame=sourceFrame(instance,d.transform,captureTime),births=new Map(d.sourceEntry.emitter.births(captureTime).map(b=>[b.id,b]));
+    if(shape.type!==4||shape.angle!==0||s.NoiseModule.enabled||s.VelocityModule.enabled||s.ForceModule.inWorldSpace||s.ForceModule.randomizePerFrame||s.scalingMode!==1)throw Error('Changed original spark physics diagnostic controls');
+    const shapeRotation=new T.Matrix4().makeRotationFromEuler(new T.Euler(...['x','y','z'].map(k=>shape.m_Rotation[k]*Math.PI/180),'YXZ'));
+    for(const trail of d.trailData.trails)for(const[index,point]of trail.points.entries()){
+     const b=births.get(trail.id),radius=shape.radius.value,inner=radius*(1-shape.radiusThickness),r=Math.sqrt(inner*inner+factor(b.id,10)*(radius*radius-inner*inner)),phi=factor(b.id,11)*Math.PI*2;
+     const origin=new T.Vector3(r*Math.cos(phi)*shape.m_Scale.x,r*Math.sin(phi)*shape.m_Scale.y,0).applyMatrix4(shapeRotation).add(new T.Vector3(...['x','y','z'].map(k=>shape.m_Position[k])));
+     const initial=s.InitialModule.startSpeed;if(initial.minMaxState!==3)throw Error('Changed original spark speed distribution');
+     const velocity=new T.Vector3(0,0,initial.minScalar+(initial.scalar-initial.minScalar)*factor(b.id,18)).applyMatrix4(shapeRotation),position=origin.clone();
+     const age=(point.time-b.birthTime)*s.simulationSpeed;let elapsed=0;
+     while(elapsed<age-1e-12){const dt=Math.min(1/60,age-elapsed),t=(elapsed+dt)/b.lifetime;
+      for(const[axis,k]of['x','y','z'].entries())velocity.setComponent(axis,velocity.getComponent(axis)+b.lifetime*sourcePolynomial(s.ForceModule[k],elapsed/b.lifetime,t,true));
+      const limit=sourcePolynomial(s.ClampVelocityModule.magnitude,0,t),length=velocity.length(),blend=1-(1-s.ClampVelocityModule.dampen)**(dt*60);
+      if(length>limit)velocity.multiplyScalar((length-(length-limit)*blend)/length);
+      position.addScaledVector(velocity,dt);elapsed+=dt;
+     }
+     if(position.distanceTo(new T.Vector3(...point.position))>1e-8)throw Error('Trail vertex dropped original force/clamp motion');
+     const world=position.multiply(frame.scale).applyMatrix4(new T.Matrix4().makeRotationFromQuaternion(frame.rotation)).add(frame.position);
+     if(world.distanceTo(new T.Vector3(...trail.world[index]))>1e-8)throw Error('Trail vertex used the wrong emitter frame');particleTrailPhysicsPoints++;
+    }
+    const expected=[['in_POSITION0',d.trailData.positions],['in_COLOR0',d.trailData.colors],['in_TEXCOORD0',d.trailData.uvs],['index',d.trailData.indices]];
+    for(const[name,values]of expected){const attribute=name==='index'?d.mesh.geometry.index:d.mesh.geometry.getAttribute(name),buffer=trailBuffers.get(attribute.array);
+     if(!buffer)throw Error('Particle ribbon buffer missed its native shader upload');const target=name==='index'?glTrail.ELEMENT_ARRAY_BUFFER:glTrail.ARRAY_BUFFER;
+     const previous=glTrail.getParameter(name==='index'?glTrail.ELEMENT_ARRAY_BUFFER_BINDING:glTrail.ARRAY_BUFFER_BINDING),readback=new attribute.array.constructor(attribute.array.length);
+     glTrail.bindBuffer(target,buffer);glTrail.getBufferSubData(target,0,readback);glTrail.bindBuffer(target,previous);
+     const wanted=new attribute.array.constructor(values);if(readback.some((v,i)=>v!==wanted[i]))throw Error('GPU particle trail positions/colors/UVs/indices differ from source mapping');particleTrailGpuBuffers++;
+    }
+   }
+   glTrail.bufferData=trailUpload;glTrail.bufferSubData=trailUpdate;
+   if(particleTrailPasses!==4)throw Error('Particle trail material missed an actual render pass');
+   const verifiedParticleTrailPasses=particleTrailPasses;
+   const particleTrailSnapshot=()=>JSON.stringify(particleTrailDraws.map(d=>d.trailData)),trailBefore=particleTrailSnapshot();instance.update(.3,{camera});instance.update(captureTime,{camera});instance.group.updateMatrixWorld(true);
+   if(particleTrailSnapshot()!==trailBefore)throw Error('Source particle trails did not reverse exactly');
    for(const d of instance.draws.filter(d=>d.stretch))for(const[index,part]of d.pool.entries())if(part.visible)verifyStretch(d,d.lastParticles[index],part,sourceFrame(instance,d.transform,captureTime),camera);
    const verifiedStretchMatrices=stretchMatrices,verifiedStretchGpuMatrices=stretchGpuMatrices;
    if(rotationRenderPasses<1)throw Error('Source rotated texture missed its render pass');
@@ -243,13 +289,14 @@ try{
    instance.update(captureTime,{camera});renderer.render(scene,camera);
    const gl=renderer.getContext(),ext=gl.getExtension('WEBGL_debug_renderer_info'),glError=gl.getError(),driver=gl.getParameter(ext?.UNMASKED_RENDERER_WEBGL??gl.RENDERER);
    window.angularReview={library,renderer,scene,camera};
-   return {root:instance.name,draws:instance.draws.length,blocked:instance.blocked,programs:programs.length,sourceIds,matrices,pivotMatrices,pivotRenderPasses:verifiedPivotRenderPasses,collapsedPivotDraws:collapsedPivotDraws.length,pivotReverseStable:true,nativePivotSignOrderVerified:false,stretchMatrices:verifiedStretchMatrices,stretchGpuMatrices:verifiedStretchGpuMatrices,nativeStretchBasisOrderVerified:false,rotationRenderPasses:verifiedRotationRenderPasses,rotationUvValues,rotationReadbacks,nativeTextureRotationSignOrderVerified:false,captureTime,parentRoots,reverseStable:true,strictRejected,glError,driver,compiledFrameParity:false,diagnosticOnly:true};
+   return {root:instance.name,draws:instance.draws.length,blocked:instance.blocked,programs:programs.length,sourceIds,matrices,pivotMatrices,pivotRenderPasses:verifiedPivotRenderPasses,collapsedPivotDraws:collapsedPivotDraws.length,pivotReverseStable:true,nativePivotSignOrderVerified:false,stretchMatrices:verifiedStretchMatrices,stretchGpuMatrices:verifiedStretchGpuMatrices,nativeStretchBasisOrderVerified:false,rotationRenderPasses:verifiedRotationRenderPasses,rotationUvValues,rotationReadbacks,nativeTextureRotationSignOrderVerified:false,particleTrailPhysicsPoints,particleTrailGpuBuffers,particleTrailPasses:verifiedParticleTrailPasses,particleTrailReverseStable:true,captureTime,parentRoots,reverseStable:true,strictRejected,glError,driver,compiledFrameParity:false,diagnosticOnly:true};
   }catch(error){library.dispose();renderer.dispose();throw error;}
  },{pack,animations,shaders,builtinMeshes});
  assert.equal(result.programs,23);assert.ok(result.matrices>=5);assert.equal(result.sourceIds.length,5);assert.equal(result.strictRejected,true);assert.equal(result.glError,0);assert.match(result.driver,/SwiftShader/i);assert.deepEqual(errors,[]);
  assert.equal(result.pivotMatrices,5);assert.equal(result.pivotRenderPasses,5);assert.equal(result.collapsedPivotDraws,3);assert.equal(result.pivotReverseStable,true);assert.equal(result.nativePivotSignOrderVerified,false);
  assert.ok(result.rotationRenderPasses>=1);assert.equal(result.rotationUvValues,48);assert.equal(result.rotationReadbacks,2);assert.equal(result.nativeTextureRotationSignOrderVerified,false);
  assert.equal(result.stretchMatrices,40);assert.ok(result.stretchGpuMatrices>=40);assert.equal(result.nativeStretchBasisOrderVerified,false);
+ assert.ok(result.particleTrailPhysicsPoints>20);assert.equal(result.particleTrailGpuBuffers,16);assert.equal(result.particleTrailPasses,4);assert.equal(result.particleTrailReverseStable,true);
  await page.screenshot({path:path.join(directory,'angular-motion-diagnostic.png')});
  const parentImage=await page.evaluate(()=>window.sourceParentImage);await writeFile(path.join(directory,'source-parent-motion-diagnostic.png'),Buffer.from(parentImage.split(',')[1],'base64'));
  const cleanup=await page.evaluate(async()=>{const{library,renderer,scene,camera}=angularReview;library.dispose();await Promise.resolve();renderer.render(scene,camera);const memory={...renderer.info.memory};renderer.dispose();return memory;});
