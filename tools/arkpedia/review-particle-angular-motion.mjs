@@ -45,6 +45,32 @@ try{
     return{position:new T.Vector3().setFromMatrixPosition(matrix),rotation,scale:new T.Vector3(...state.nodes.get(transform).scale),hierarchyScale};
    };
    const factor=(id,salt)=>{let h=Math.imul((id+1)^1,0x45d9f3b)^Math.imul(salt+1,0x27d4eb2d);h=Math.imul(h^(h>>>16),0x45d9f3b);return((h^(h>>>16))>>>0)/0x100000000;};
+   let stretchMatrices=0,stretchGpuMatrices=0;
+   const verifyStretch=(d,p,part,frame,camera)=>{
+    const s=d.particleSource,shape=s.ShapeModule;
+    if(s.NoiseModule.enabled||s.VelocityModule.enabled||s.InheritVelocityModule.enabled||p.rotation!==0||shape.alignToDirection||s.moveWithTransform!==0)
+     throw Error('Changed original stretched source diagnostic controls');
+    const z=2*factor(p.id,10)-1,phi=factor(p.id,11)*Math.PI*2;let direction;
+    if(shape.type===0)direction=new T.Vector3(Math.sqrt(1-z*z)*Math.cos(phi),Math.sqrt(1-z*z)*Math.sin(phi),z);
+    else if(shape.type===4){
+     const radius=shape.radius.value,inner=radius*(1-shape.radiusThickness),r=Math.sqrt(inner*inner+factor(p.id,10)*(radius*radius-inner*inner)),angle=shape.angle*Math.PI/180;
+     const outward=r/radius*Math.sin(angle);direction=new T.Vector3(outward*Math.cos(phi),outward*Math.sin(phi),Math.cos(angle)).normalize();
+    }else throw Error('Unsupported original stretch diagnostic shape');
+    direction.applyMatrix4(new T.Matrix4().makeRotationFromEuler(new T.Euler(...['x','y','z'].map(k=>shape.m_Rotation[k]*Math.PI/180),'YXZ')));
+    const speed=s.InitialModule.startSpeed;if(![0,3].includes(speed.minMaxState))throw Error('Changed source stretch speed curve');
+    direction.multiplyScalar(speed.minMaxState===0?speed.scalar:speed.minScalar+(speed.scalar-speed.minScalar)*factor(p.id,18));
+    const scale=s.scalingMode===0?frame.hierarchyScale:s.scalingMode===1?frame.scale:new T.Vector3(1,1,1);
+    const y=direction.multiply(scale).applyMatrix4(new T.Matrix4().makeRotationFromQuaternion(frame.rotation)).normalize();
+    const anchor=new T.Vector3(...d.pivot.pivot).applyMatrix4(part.matrixWorld),view=camera.position.clone().sub(anchor).normalize();
+    const x=new T.Vector3().crossVectors(y,view),normal=new T.Vector3().crossVectors(x.clone().normalize(),y);
+    const source=pack.records[d.component].data,size=new T.Vector3(...p.size).multiply(scale),columns=[x.multiplyScalar(size.x),y.multiplyScalar(size.y*source.m_LengthScale),normal.multiplyScalar(size.z)];
+    for(let axis=0;axis<3;axis++){const e=part.matrixWorld.elements,actual=new T.Vector3(e[axis*4],e[axis*4+1],e[axis*4+2]);if(actual.distanceTo(columns[axis])>1e-7)throw Error('Rendered stretch missed original direction, signed size or head-on width');}
+    stretchMatrices++;
+   };
+   const hookStretch=(instance)=>{for(const d of instance.draws.filter(d=>d.stretch))for(const part of d.pool)part.onAfterRender=function(){
+    const gl=renderer.getContext(),program=gl.getParameter(gl.CURRENT_PROGRAM),value=Array.from({length:4},(_,i)=>gl.getUniform(program,gl.getUniformLocation(program,'hlslcc_mtx4x4unity_ObjectToWorld['+i+']'))).flatMap(v=>v?Array.from(v):[]);
+    if(value.length!==16||value.some((v,i)=>Math.abs(v-part.matrixWorld.elements[i])>1e-6))throw Error('Stretched matrix missed actual native shader GPU upload '+d.component);stretchGpuMatrices++;
+   };};
    for(let root=1;root<=6;root++){
     const instance=await library.create('whitw2_token_hit_0'+root,{allowBlocked:true}),scene=new T.Scene(),camera=new T.PerspectiveCamera(35,1,.001,100);
     scene.background=new T.Color('#142027');scene.add(instance.group);camera.position.set(.2,.4,3);camera.lookAt(0,0,0);camera.updateMatrixWorld(true);
@@ -54,6 +80,7 @@ try{
     instance.update(time,{camera});instance.group.updateMatrixWorld(true);
     const selected=instance.draws.filter(d=>d.lastParticles?.some(p=>p.parent)),rendered=new Set();let samples=0,passes=0,sourceHiddenSamples=0;
     for(const d of selected)for(const part of d.pool){const before=part.onBeforeRender;part.onBeforeRender=function(...args){passes++;rendered.add(this);return before.apply(this,args);};}
+    hookStretch(instance);
     renderer.render(scene,camera);
     for(const d of selected)for(const[index,part]of d.pool.entries())if(part.visible){
      const p=d.lastParticles[index],parent=pack.records[p.parent],s=parent.data;
@@ -69,13 +96,13 @@ try{
      // unit quaternion and replacing the inverse matrix with its conjugate.
      const offset=delta.applyMatrix4(basis(birth).invert());
      const expected=new T.Vector3(...(p.origin??[0,0,0])).add(offset).add(new T.Vector3(...(p.displacement??[0,0,0]))).applyMatrix4(basis(current)).add(current.position);
-     const actual=new T.Vector3().setFromMatrixPosition(part.matrixWorld);
+     const actual=new T.Vector3(...d.pivot.pivot).applyMatrix4(part.matrixWorld);
      if(expected.distanceTo(actual)>1e-8)throw Error('Source parent motion did not reach rendered child position '+JSON.stringify({root,child:d.particleId,expected:expected.toArray(),actual:actual.toArray()}));
      const sourceVisible=instance.pose.sample(time).nodes.get(d.transform).visible;
-     if(sourceVisible){if(!rendered.has(part))throw Error('Visible source child missed its render pass');samples++;}
+     if(sourceVisible){if(!rendered.has(part))throw Error('Visible source child missed its render pass');samples++;if(d.stretch)verifyStretch(d,p,part,current,camera);}
      else{if(rendered.has(part))throw Error('Inactive original child was rendered');sourceHiddenSamples++;}
     }
-    if(selected.length<4||passes!==samples||samples!==13)throw Error('Source child dispatch missed original render passes '+JSON.stringify({root,selected:selected.length,passes,samples}));
+    if(selected.length<6||passes!==samples||samples!==19)throw Error('Source child dispatch missed original render passes '+JSON.stringify({root,selected:selected.length,passes,samples}));
     const verifiedPasses=passes;
     const snapshot=()=>JSON.stringify(selected.map(d=>({particles:d.lastParticles,matrices:d.pool.filter(p=>p.visible).map(p=>Array.from(p.matrixWorld.elements))})));
     const before=snapshot();instance.update(.8,{camera});instance.update(time,{camera});instance.group.updateMatrixWorld(true);
@@ -93,9 +120,9 @@ try{
    instance.update(captureTime,{camera});instance.group.updateMatrixWorld(true);
    let strictRejected=false;try{await library.create('whitw2_skill_03_buff_01');}catch(error){if(!/unplayed components/.test(error.message))throw error;strictRejected=true;}
    if(!strictRejected||library.instanceCount!==1)throw Error('Partial angular root bypassed strict playback');
-   const pivotDraws=instance.draws.filter(d=>d.pivot?.pivot.some(v=>v!==0));let pivotMatrices=0,pivotRenderPasses=0;
+   const pivotDraws=instance.draws.filter(d=>!d.stretch&&d.pivot?.pivot.some(v=>v!==0));let pivotMatrices=0,pivotRenderPasses=0;
    const rotationDraws=instance.draws.filter(d=>d.mesh.material.userData.textureRotations);let rotationRenderPasses=0;
-   if(rotationDraws.length!==1||instance.draws.length!==22||instance.blocked.length!==6)throw Error('Missing original texture rotation component');
+   if(rotationDraws.length!==1||instance.draws.length!==23||instance.blocked.length!==5)throw Error('Missing original texture rotation component');
    const rotationMaterial=rotationDraws[0].mesh.material;
    for(const d of rotationDraws)for(const part of d.pool)part.onAfterRender=function(){
     const gl=renderer.getContext(),program=gl.getParameter(gl.CURRENT_PROGRAM);
@@ -106,10 +133,13 @@ try{
     rotationRenderPasses++;
    };
    const pivotRendered=new Set();
+   hookStretch(instance);
    for(const d of pivotDraws)for(const part of d.pool){const before=part.onBeforeRender;part.onBeforeRender=function(...args){pivotRenderPasses++;pivotRendered.add(this);return before.apply(this,args);};}
    const pivotBounds=new T.Box3().setFromObject(instance.group),pivotCentre=pivotBounds.getCenter(new T.Vector3()),pivotSpan=Math.max(.1,pivotBounds.getSize(new T.Vector3()).length());
    camera.position.copy(pivotCentre).add(new T.Vector3(.2,.4,1).normalize().multiplyScalar(pivotSpan*1.8));camera.lookAt(pivotCentre);camera.updateMatrixWorld(true);
    instance.update(captureTime,{camera});renderer.render(scene,camera);
+   for(const d of instance.draws.filter(d=>d.stretch))for(const[index,part]of d.pool.entries())if(part.visible)verifyStretch(d,d.lastParticles[index],part,sourceFrame(instance,d.transform,captureTime),camera);
+   const verifiedStretchMatrices=stretchMatrices,verifiedStretchGpuMatrices=stretchGpuMatrices;
    if(rotationRenderPasses<1)throw Error('Source rotated texture missed its render pass');
    const verifiedRotationRenderPasses=rotationRenderPasses;
    // Run the original vertex/fragment pair with transform feedback. Texture UVs
@@ -213,12 +243,13 @@ try{
    instance.update(captureTime,{camera});renderer.render(scene,camera);
    const gl=renderer.getContext(),ext=gl.getExtension('WEBGL_debug_renderer_info'),glError=gl.getError(),driver=gl.getParameter(ext?.UNMASKED_RENDERER_WEBGL??gl.RENDERER);
    window.angularReview={library,renderer,scene,camera};
-   return {root:instance.name,draws:instance.draws.length,blocked:instance.blocked,programs:programs.length,sourceIds,matrices,pivotMatrices,pivotRenderPasses:verifiedPivotRenderPasses,collapsedPivotDraws:collapsedPivotDraws.length,pivotReverseStable:true,nativePivotSignOrderVerified:false,rotationRenderPasses:verifiedRotationRenderPasses,rotationUvValues,rotationReadbacks,nativeTextureRotationSignOrderVerified:false,captureTime,parentRoots,reverseStable:true,strictRejected,glError,driver,compiledFrameParity:false,diagnosticOnly:true};
+   return {root:instance.name,draws:instance.draws.length,blocked:instance.blocked,programs:programs.length,sourceIds,matrices,pivotMatrices,pivotRenderPasses:verifiedPivotRenderPasses,collapsedPivotDraws:collapsedPivotDraws.length,pivotReverseStable:true,nativePivotSignOrderVerified:false,stretchMatrices:verifiedStretchMatrices,stretchGpuMatrices:verifiedStretchGpuMatrices,nativeStretchBasisOrderVerified:false,rotationRenderPasses:verifiedRotationRenderPasses,rotationUvValues,rotationReadbacks,nativeTextureRotationSignOrderVerified:false,captureTime,parentRoots,reverseStable:true,strictRejected,glError,driver,compiledFrameParity:false,diagnosticOnly:true};
   }catch(error){library.dispose();renderer.dispose();throw error;}
  },{pack,animations,shaders,builtinMeshes});
  assert.equal(result.programs,23);assert.ok(result.matrices>=5);assert.equal(result.sourceIds.length,5);assert.equal(result.strictRejected,true);assert.equal(result.glError,0);assert.match(result.driver,/SwiftShader/i);assert.deepEqual(errors,[]);
  assert.equal(result.pivotMatrices,5);assert.equal(result.pivotRenderPasses,5);assert.equal(result.collapsedPivotDraws,3);assert.equal(result.pivotReverseStable,true);assert.equal(result.nativePivotSignOrderVerified,false);
  assert.ok(result.rotationRenderPasses>=1);assert.equal(result.rotationUvValues,48);assert.equal(result.rotationReadbacks,2);assert.equal(result.nativeTextureRotationSignOrderVerified,false);
+ assert.equal(result.stretchMatrices,40);assert.ok(result.stretchGpuMatrices>=40);assert.equal(result.nativeStretchBasisOrderVerified,false);
  await page.screenshot({path:path.join(directory,'angular-motion-diagnostic.png')});
  const parentImage=await page.evaluate(()=>window.sourceParentImage);await writeFile(path.join(directory,'source-parent-motion-diagnostic.png'),Buffer.from(parentImage.split(',')[1],'base64'));
  const cleanup=await page.evaluate(async()=>{const{library,renderer,scene,camera}=angularReview;library.dispose();await Promise.resolve();renderer.render(scene,camera);const memory={...renderer.info.memory};renderer.dispose();return memory;});

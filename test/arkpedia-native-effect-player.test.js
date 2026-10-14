@@ -71,7 +71,7 @@ test('recovered original built-in mesh binds exact positions, normals, UVs and w
  const before=structuredClone(original.pack.unresolvedReferences);
  try{
   const i=await lib.create('whitw2_token_hit_05',{allowBlocked:true});i.update(.1,{camera:cam});i.group.updateMatrixWorld(true);
-  assert.equal(i.draws.length,23);assert.equal(i.blocked.length,4);assert.ok(i.blocked.every(b=>!/mesh/.test(b.reason)));
+  assert.equal(i.draws.length,25);assert.equal(i.blocked.length,2);assert.ok(i.blocked.every(b=>!/mesh/.test(b.reason)));
   const parent=i.draws.find(d=>d.particleId&&d.particleSource.SubModule.enabled);assert.ok(parent);assert.equal(parent.lastParticles.length,1);
   const mesh=builtinMeshes.meshes['10210'].data,g=parent.mesh.geometry;
   assert.deepEqual([...g.index.array],mesh.submeshTriangles.flat(2));
@@ -85,7 +85,7 @@ test('source pivots shift only rendered matrices and leave particle anchors, clo
  const lib=library(original,async()=>new T.Texture(),builtinMeshes),cam=camera();
  try{
   const i=await lib.create('whitw2_skill_03_buff_01',{allowBlocked:true});i.update(1.8,{camera:cam});i.group.updateMatrixWorld(true);
-  const selected=i.draws.filter(d=>d.pivot?.pivot.some(v=>v!==0));assert.equal(selected.length,8);
+  const selected=i.draws.filter(d=>!d.stretch&&d.pivot?.pivot.some(v=>v!==0));assert.equal(selected.length,8);
   assert.ok([...new T.Box3().setFromObject(i.group).min.toArray(),...new T.Box3().setFromObject(i.group).max.toArray()].every(Number.isFinite));
   const collapsed=selected.filter(d=>d.mesh.parent.matrixWorld.determinant()===0);assert.equal(collapsed.length,3);
   for(const d of collapsed){assert.equal(d.mesh.visible,false);assert.equal(d.mesh.matrixWorld.elements[15],1);assert.ok(d.mesh.matrixWorld.elements.every(Number.isFinite));}
@@ -96,7 +96,7 @@ test('source pivots shift only rendered matrices and leave particle anchors, clo
    assert.ok(d.mesh.geometry.getAttribute('in_POSITION0').array.every(Number.isFinite));
   }
   const before=state();i.update(.3,{camera:cam});i.update(1.8,{camera:cam});i.group.updateMatrixWorld(true);assert.equal(state(),before);
-  assert.equal(i.blocked.length,6);i.dispose();
+  assert.equal(i.blocked.length,5);i.dispose();
  }finally{lib.dispose();}
 });
 test('original texture script supplies four independent UV bases and missing inputs stay held',native,async()=>{
@@ -105,7 +105,7 @@ test('original texture script supplies four independent UV bases and missing inp
  try{
   const a=await lib.create('whitw2_skill_03_buff_01',{allowBlocked:true}),b=await lib.create(a.name,{allowBlocked:true});
   const material=a.draws.find(d=>d.component===component)?.mesh.material,other=b.draws.find(d=>d.component===component)?.mesh.material;
-  assert.ok(material);assert.equal(a.draws.length,22);assert.equal(a.blocked.length,6);assert.equal(material.userData.textureRotations.script,script);
+  assert.ok(material);assert.equal(a.draws.length,23);assert.equal(a.blocked.length,5);assert.equal(material.userData.textureRotations.script,script);
   const rotation=material.uniforms._Rotation0.value.toArray();rotation.forEach((x,i)=>assert.ok(Math.abs(x-[0,1,-1,0][i])<1e-10));
   for(let i=0;i<4;i++)assert.notEqual(material.uniforms['_Rotation'+i].value,other.uniforms['_Rotation'+i].value);
   for(let i=1;i<4;i++)material.uniforms['_Rotation'+i].value.toArray().forEach((x,j)=>assert.ok(Math.abs(x-[1,0,0,1][j])<1e-10));
@@ -114,7 +114,30 @@ test('original texture script supplies four independent UV bases and missing inp
   assert.equal(JSON.stringify(original.pack),before);a.dispose();b.dispose();
  }finally{lib.dispose();}
  const missing=structuredClone(original);delete missing.pack.scriptBindings[script];const held=library(missing,async()=>new T.Texture(),builtinMeshes);
- try{const i=await held.create('whitw2_skill_03_buff_01',{allowBlocked:true});assert.ok(i.blocked.some(b=>b.component===component&&/script binding/.test(b.reason)));assert.equal(i.blocked.length,7);i.dispose();}finally{held.dispose();}
+ try{const i=await held.create('whitw2_skill_03_buff_01',{allowBlocked:true});assert.ok(i.blocked.some(b=>b.component===component&&/script binding/.test(b.reason)));assert.equal(i.blocked.length,6);i.dispose();}finally{held.dispose();}
+});
+test('stretched children replay real source motion and retain stable clocks and finite matrices across scrubs',native,async()=>{
+ const lib=library(original,async()=>new T.Texture(),builtinMeshes),cam=camera();
+ try{for(let root=1;root<=6;root++){
+  const i=await lib.create('whitw2_token_hit_0'+root,{allowBlocked:true});i.update(.1,{camera:cam});i.group.updateMatrixWorld(true);
+  const selected=i.draws.filter(d=>d.stretch);assert.equal(selected.length,2);
+  assert.equal(selected.reduce((n,d)=>n+d.pool.filter(p=>p.visible).length,0),12);
+  for(const d of selected){assert.equal(d.stretch.scope.nativeBasisOrderVerified,false);assert.ok(d.lastParticles.every(p=>p.parent));
+   assert.ok(d.pool.every(p=>p.matrixWorld.elements.every(Number.isFinite)));assert.equal(d.mesh.geometry.getAttribute('position').itemSize,3);}
+  const snapshot=()=>JSON.stringify(selected.map(d=>({particles:d.lastParticles,matrices:d.pool.map(p=>p.matrixWorld.elements)}))),before=snapshot();
+  i.update(.7,{camera:cam});i.update(.1,{camera:cam});i.group.updateMatrixWorld(true);assert.equal(snapshot(),before);
+  await assert.rejects(lib.create(i.name),/unplayed/);i.dispose();
+ }}finally{lib.dispose();}
+});
+test('stretched rendering uses the same world camera under a translated parent',native,async()=>{
+ const lib=library(original,async()=>new T.Texture(),builtinMeshes),cam=camera();
+ try{
+  const i=await lib.create('whitw2_skill_03_buff_01',{allowBlocked:true});i.update(1.8,{camera:cam});i.group.updateMatrixWorld(true);
+  const selected=i.draws.filter(d=>d.stretch),snapshot=()=>selected.flatMap(d=>d.pool.filter(p=>p.visible).map(p=>p.matrixWorld.elements.slice())),before=snapshot();
+  const nested=cam.clone(),parent=new T.Group();parent.position.set(4,5,6);nested.position.sub(parent.position);parent.add(nested);parent.updateMatrixWorld(true);
+  i.update(1.8,{camera:nested});i.group.updateMatrixWorld(true);const after=snapshot();assert.equal(after.length,before.length);
+  after.forEach((matrix,j)=>matrix.forEach((v,k)=>assert.ok(Math.abs(v-before[j][k])<1e-10)));i.dispose();
+ }finally{lib.dispose();}
 });
 test('explicit original particle inspection preserves parent links without altering the source root registry',native,async()=>{
  const id='battle/prefabs/effects/whitw2.ab:-1572538059954014246',lib=library(original),before=structuredClone(original.pack.records[id]);
