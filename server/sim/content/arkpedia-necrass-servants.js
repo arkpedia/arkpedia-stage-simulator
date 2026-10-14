@@ -81,6 +81,10 @@ export class NecrassServants {
       .filter(([r, c]) => this.tileEligible(r, c));
     return choices.length ? choices[Math.floor(this.b.rng() * choices.length)] : null;
   }
+  enqueue(count = 1, tile = null) {
+    if (!this.valid() || !Number.isInteger(count) || count < 0 || count > 100) return;
+    for (let i = 0; i < count; i++) this.pending.push({ due: this.b.time + this.delay, tile });
+  }
   create(row, col) {
     if (!this.valid() || this.all().length >= this.t1.max_token_cnt || !this.tileEligible(row, col)) return null;
     let clock;
@@ -147,7 +151,7 @@ export class NecrassServants {
       if (reason !== 'killed' || unit.side !== 'enemy' || !this.valid() || !live(this.u)
         || !bodyInKeys(unit, this.core.clock.keys()) || this.deaths.get(unit) === unit.deploySeq) return;
       this.deaths.set(unit, unit.deploySeq);
-      this.pending.push({ due: this.b.time + this.delay, tile: [Math.round(unit.y), Math.round(unit.x)] });
+      this.enqueue(1, [Math.round(unit.y), Math.round(unit.x)]);
     }, { owner: this.u })];
   }
   tick() {
