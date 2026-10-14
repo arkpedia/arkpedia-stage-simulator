@@ -84,7 +84,8 @@ export class NecrassAttackClock {
   }
   keys() { return this.u.rangeKeySet ?? new Set(absoluteRangeKeys(this.u.rangeGrid,
     this.u.tileR, this.u.tileC, this.u.dir, this.u.s.rangeExtend)); }
-  selectable(t) { return live(t) && canTargetEnemy(this.u, t, this.token ? { canHitFly: false } : plain)
+  selectable(t, hitSleep = false) { return live(t) && canTargetEnemy(this.u, t,
+    this.token ? { canHitFly: false } : hitSleep ? { ...plain, hitSleep: true } : plain)
     && (!t.s.flags.camou || !!t.blockedBy); }
   targets() {
     const keys = this.keys(), u = this.u;
@@ -104,6 +105,7 @@ export class NecrassAttackClock {
     return true;
   }
   tick() {
+    if (!this.token && this.core.skills?.controlsOwner) { this.core.skills.tick(); return; }
     const { b, u } = this;
     if (!this.valid()) { this.phase = null; return; }
     let p = this.phase;
@@ -146,6 +148,7 @@ export class NecrassCoreController {
   }
   valid() { return !this.stopped && !this.b.finished && necrassPresent(this.u) && this.u.deploySeq === this.seq; }
   output({ source, target, dmg }) {
+    this.skills?.output({ source, target, dmg });
     if (!this.valid() || !this.t2 || (source !== this.u && !this.servants?.owns(source))
       || !live(target) || target.side !== 'enemy' || target.hpRatio >= this.t2.hp_ratio) return;
     dmg.mul *= this.t2.damage_scale;
@@ -163,7 +166,8 @@ export class NecrassCoreController {
       data: { arkpediaTrackedVisual: true, projectileKey: 'projectile_chr_necras' },
       onHit: ({ target }) => {
         expiry.cancel(); this.flights.delete(flight);
-        if (b.finished || target !== t || t.deploySeq !== targetSeq || !this.clock.selectable(t)) return;
+        if (b.finished || target !== t || t.deploySeq !== targetSeq
+          || !this.clock.selectable(t, this.skills?.hitsSleep === true)) return;
         const source = !flight.retired && necrassPresent(u) && u.deploySeq === flight.sourceSeq ? u : snapshot;
         b.dealDamage(source, t, { amount: source.s.atk * source.s.atkScaleMul, type: 'arts',
           isAttack: true, isProjectile: true, applyWay: 'ranged', attackId: info.attackId,
@@ -174,6 +178,7 @@ export class NecrassCoreController {
     if (this.stopped || this.handles.length) throw Error('Necrass cannot install twice or after retirement');
     const { b, u } = this;
     this.servants?.install();
+    this.skills?.install();
     this.handles = [b.on('deploy', ({ unit, move }) => {
       if (unit === u && !move) { this.seq = u.deploySeq; this.clock.born(); }
     }, { owner: u }), b.on('tick', () => {
@@ -185,7 +190,7 @@ export class NecrassCoreController {
   }
   stop() {
     if (this.stopped) return;
-    this.stopped = true; this.clock.stop();
+    this.stopped = true; this.skills?.stop(); this.clock.stop();
     for (const f of this.flights) f.retired = true;
     this.flights.clear(); this.servants?.stop();
     for (const h of this.handles) this.b.off(h); this.handles = [];
