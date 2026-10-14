@@ -9,6 +9,7 @@ import {createBuiltinMeshResolver} from '../../shared/arkpedia/native-builtin-me
 import {createParticlePivot} from '../../shared/arkpedia/native-particle-pivot.js';
 import {createTextureRotations} from '../../shared/arkpedia/native-texture-rotation.js';
 import {createParticleStretch,particleWorldVelocity} from '../../shared/arkpedia/native-particle-stretch.js';
+import {createParticleTrails} from '../../shared/arkpedia/native-particle-trails.js';
 import {particleWorldPosition,particleSheetUV} from '../../shared/arkpedia/native-particle-render.js';
 import {sampleParticleCurve} from '../../shared/arkpedia/native-particle-curves.js';
 import {effectMeshColors} from '../../shared/arkpedia/native-effect-mesh.js';
@@ -133,10 +134,10 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false}={}){
   const factor=value=>({0:T.ZeroFactor,1:T.OneFactor,2:T.DstColorFactor,3:T.SrcColorFactor,4:T.OneMinusDstColorFactor,
     5:T.SrcAlphaFactor,6:T.OneMinusSrcColorFactor,7:T.DstAlphaFactor,8:T.OneMinusDstAlphaFactor,9:T.SrcAlphaSaturateFactor,10:T.OneMinusSrcAlphaFactor})[value];
   function stateValue(v,props){if(v.name.startsWith('_')){if(!Object.hasOwn(props,v.name))throw Error('Missing native pass property');return props[v.name];}return v.val;}
-  async function makeMaterial(component,material){
+  async function makeMaterial(component,material,slot=0){
     const data=pack.records[material].data,shader=shaders.shaders[target(material,'m_Shader')];
     if(!shader||shader.passes.length!==1)throw Error('Unsupported native multipass shader');
-    const source=selectEffectProgram(shader,data.m_ValidKeywords),port=webglEffectProgram(source.source),props=pose.renderers.get(component).materials[0].properties;
+    const source=selectEffectProgram(shader,data.m_ValidKeywords),port=webglEffectProgram(source.source),props=pose.renderers.get(component).materials[slot].properties;
     const uniforms={};
     const declarations=effectUniformDeclarations(port);
     const rotations=createTextureRotations(pack,component,declarations,animations);
@@ -209,7 +210,8 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false}={}){
     return state;
   }
   function updateTrailGeometry(g,data){
-    if(g.getAttribute('position').array.length!==data.positions.length){
+    const index=g.index?.array,indexChanged=!index||index.length!==data.indices.length||index.some((v,i)=>v!==data.indices[i]);
+    if(g.getAttribute('position').array.length!==data.positions.length||indexChanged){
       // Release old GPU buffers before resizing; equal-size scrubs reuse them.
       g.dispose();
       g.setAttribute('position',new T.Float32BufferAttribute(data.positions,3));g.setAttribute('in_POSITION0',g.getAttribute('position'));
@@ -280,6 +282,18 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false}={}){
         mesh.visible=data.indices.length>0&&mesh.parent.matrixWorld.determinant()!==0;
         mesh.matrixAutoUpdate=false;mesh.matrix.copy(inverse);mesh.matrixWorldNeedsUpdate=true;
         updateTrailGeometry(g,data);
+      }
+      if(entry.particleTrails){
+        const owner=entry.sourceEntry,current=particleFrame(transform,state),frame=particleMatrices(current,owner.particleSource.scalingMode);
+        const data=owner.emitter.withTrailHistory(replay=>entry.particleTrails.sample(clock,owner.emitter.births(clock),{
+          stateAt(t,birth){return replay([{...birth,age:Math.max(0,(t-birth.birthTime)*owner.particleSource.simulationSpeed)}],t)[0];},
+          project(p){return particleWorldPosition(p,frame.birth.elements,frame.birth.elements,frame.movement.elements);},
+          camera:new T.Vector3().setFromMatrixPosition(camera.matrixWorld).toArray(),widthScale:Math.abs(frame.scale.x)
+        }));
+        entry.trailData=data;const collapsed=mesh.parent.matrixWorld.determinant()===0;
+        mesh.visible=data.indices.length>0&&!collapsed;mesh.matrixAutoUpdate=false;
+        mesh.matrix.copy(collapsed?new T.Matrix4():new T.Matrix4().copy(mesh.parent.matrixWorld).invert());mesh.matrixWorldNeedsUpdate=true;
+        updateTrailGeometry(mesh.geometry,data);
       }
       if(emitter){
         const current=particleFrame(transform,state);
@@ -375,7 +389,7 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false}={}){
             });
         });
       }
-      const p=state.renderers.get(component).materials[0].properties,u=mesh.material.uniforms;
+      const p=state.renderers.get(component).materials[entry.materialSlot??0].properties,u=mesh.material.uniforms;
       for(const [name,{value}] of Object.entries(u))if(Object.hasOwn(p,name)){
         if(typeof p[name]==='number')u[name].value=p[name];else value.fromArray(p[name]);
       }
@@ -387,6 +401,7 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false}={}){
   }
   function dispose(){
     if(disposed)return;disposed=true;group.removeFromParent();
+    for(const entry of draws)entry.emitter?.clearTrailHistoryCache?.();
     for(const m of materials)m.dispose();for(const g of geometries)g.dispose();
     materials.clear();geometries.clear();nodeObjects.clear();group.clear();
     library.unregister(instance);
@@ -406,7 +421,7 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false}={}){
         assertOpen();
         if(record.type!=='ParticleSystemRenderer'&&r.materials.length!==1)
           throw Error('Native multi-material renderer needs review');
-        let meshId,meshReferenceSource,particleId,particleSource,emitter,trail,pivot,stretch=null,billboard=false,customLayout=null;
+        let meshId,meshReferenceSource,particleId,particleSource,emitter,trail,pivot,particleTrails=null,stretch=null,billboard=false,customLayout=null;
         if(record.type==='MeshRenderer'){
           const go=pack.records[r.gameObject];const filter=(go.references??[]).map(r=>r.target).find(k=>pack.records[k]?.type==='MeshFilter');
           meshId=target(filter,'m_Mesh');
@@ -423,13 +438,14 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false}={}){
             throw Error('Original sub-emitter parent dispatch not playing');
           if((particleSource.InitialModule.rotation3D||particleSource.RotationModule?.enabled&&particleSource.RotationModule.separateAxes)&&record.data.m_RenderMode!==4)
             throw Error('Native 3D billboard start rotation needs review');
-          // The recovered particle renderers repeat the same material slot and
-          // have their own TrailModule disabled. Different slots or particle-
-          // generated trails need a renderer mapping, not silent first-slot use.
-          if(particleSource.TrailModule?.enabled||r.materials.some(m=>m?.id!==r.materials[0]?.id))
+          if(particleSource.TrailModule?.enabled){
+            particleTrails=createParticleTrails(particleSource);
+            if(r.materials.length!==2||!r.materials[1]||record.data.m_UseCustomVertexStreams)
+              throw Error('Native particle trail material/vertex stream needs review');
+          }else if(r.materials.some(m=>m?.id!==r.materials[0]?.id))
             throw Error('Native particle trail/multi-material renderer needs review');
-          const moving=['ShapeModule','VelocityModule','UVModule','ClampVelocityModule','NoiseModule','InheritVelocityModule'].some(k=>particleSource[k]?.enabled)||particleSource.moveWithTransform===1;
-          emitter=moving?createMovingParticles(particleSource,{subEmitterSchedule:parentMotion.parentReady(ps)?parentMotion.schedule:null}):createStationaryParticles(particleSource);
+          const moving=['ShapeModule','VelocityModule','UVModule','ClampVelocityModule','NoiseModule','InheritVelocityModule','ForceModule'].some(k=>particleSource[k]?.enabled)||particleSource.moveWithTransform===1;
+          emitter=moving?createMovingParticles(particleSource,{particleTrails,subEmitterSchedule:parentMotion.parentReady(ps)?parentMotion.schedule:null}):createStationaryParticles(particleSource);
           if(![0,1,2].includes(particleSource.scalingMode))throw Error('Native particle scaling mode needs review');
           if(particleSource.moveWithTransform===1&&!emitter.worldMotion){
             const ancestors=new Set();let n=r.transform;while(n){const d=pose.nodes.get(n);ancestors.add(d.gameObject);n=d.parent;}
@@ -444,6 +460,14 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false}={}){
         else throw Error('Native renderer needs review');
         const mat=r.materials[0];if(!mat)throw Error('Unresolved original material');
         const material=await makeMaterial(component,mat.id);assertOpen();
+        let particleTrailMesh=null;
+        if(particleTrails){
+          const trailMaterial=await makeMaterial(component,r.materials[1].id,1);assertOpen();
+          const trailGeometry=new T.BufferGeometry();geometries.add(trailGeometry);
+          trailGeometry.setAttribute('position',new T.Float32BufferAttribute([],3));trailGeometry.setAttribute('in_POSITION0',trailGeometry.getAttribute('position'));
+          trailGeometry.setAttribute('in_COLOR0',new T.Float32BufferAttribute([],4));trailGeometry.setAttribute('in_TEXCOORD0',new T.Float32BufferAttribute([],2));
+          particleTrailMesh=new T.Mesh(trailGeometry,trailMaterial);particleTrailMesh.renderOrder=record.data.m_SortingOrder??0;
+        }
         const g=trail?new T.BufferGeometry():billboard?billboardGeometry():geometry(meshId,null,meshReferenceSource);
         if(trail){geometries.add(g);g.setAttribute('position',new T.Float32BufferAttribute([],3));g.setAttribute('in_POSITION0',g.getAttribute('position'));g.setAttribute('in_COLOR0',new T.Float32BufferAttribute([],4));g.setAttribute('in_TEXCOORD0',new T.Float32BufferAttribute([],2));}
         if(particleSource?.UVModule?.enabled){
@@ -456,12 +480,12 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false}={}){
         if(particleSource){const d=particleSource.InitialModule,x=sampleParticleCurve(d.startSize,0);
           mesh.scale.fromArray(d.size3D?[x,sampleParticleCurve(d.startSizeY,0),sampleParticleCurve(d.startSizeZ,0)]:[x,x,x]);}
 
-        nodeObjects.get(r.transform).add(mesh);draws.push({component,transform:r.transform,particleId,particleSource,trail,pivot,stretch,alignment:record.data.m_RenderAlignment,mesh,emitter,pool:emitter?[mesh]:null,
+        const sourceEntry={component,transform:r.transform,particleId,particleSource,trail,pivot,stretch,alignment:record.data.m_RenderAlignment,mesh,emitter,pool:emitter?[mesh]:null,
           baseColors:emitter?g.getAttribute('in_COLOR0').array.slice():null,
           baseUVs:emitter?Array.from({length:8},(_,i)=>g.getAttribute('in_TEXCOORD'+i)?.array.slice()??null):null,
-          customLayout,customUVs});
-        const sourceSide=material.side;
-        mesh.onBeforeRender=function(_renderer,_scene,camera){
+          customLayout,customUVs};
+        nodeObjects.get(r.transform).add(mesh);draws.push(sourceEntry);
+        const bindMaterial=material=>{const sourceSide=material.side;return function(_renderer,_scene,camera){
           const u=material.uniforms,matrix=this.matrixWorld;
           if(!matrix.elements.every(Number.isFinite))throw Error('Invalid source particle matrix '+component);
           if(!camera.matrixWorldInverse.elements.every(Number.isFinite))throw Error('Invalid effect inspection camera');
@@ -473,7 +497,12 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false}={}){
           material.side=camera.matrixWorld.determinant()<0&&sourceSide!==T.DoubleSide
             ?sourceSide===T.FrontSide?T.BackSide:T.FrontSide:sourceSide;
           u._WorldSpaceCameraPos?.value.setFromMatrixPosition(camera.matrixWorld);material.uniformsNeedUpdate=true;
-        };
+        };};
+        mesh.onBeforeRender=bindMaterial(material);
+        if(particleTrailMesh){
+          particleTrailMesh.onBeforeRender=bindMaterial(particleTrailMesh.material);nodeObjects.get(r.transform).add(particleTrailMesh);
+          draws.push({component,transform:r.transform,mesh:particleTrailMesh,particleTrails,sourceEntry,materialSlot:1});
+        }
       }catch(e){
         for(const g of geometries)if(!beforeGeometry.has(g)){g.dispose();geometries.delete(g);}
         for(const m of materials)if(!beforeMaterial.has(m)){m.dispose();materials.delete(m);}

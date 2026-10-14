@@ -1,16 +1,21 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import {particleRandom} from './native-particle-lifecycle.js';
-import {sampleParticleCurve} from './native-particle-curves.js';
+import {sampleParticleCurve,integrateParticleCurve} from './native-particle-curves.js';
 import {createParticleNoise} from './native-particle-noise.js';
+import {particleForceImpulse} from './native-particle-force.js';
 
 // Original magnitude-limit/high-quality noise controls with an explicit local
 // 60 Hz replay. Native module ordering, damping timestep, field scroll axis and
 // permutation tables remain unverified. Unsupported controls are never dropped.
 export function createParticleMotion(source,{seed=1}={}){
-  const clamp=source.ClampVelocityModule,noise=source.NoiseModule;
+  const clamp=source.ClampVelocityModule,noise=source.NoiseModule,force=source.ForceModule;
   const inherited=!!source.InheritVelocityModule?.enabled&&source.moveWithTransform===1;
-  if(!clamp?.enabled&&!noise?.enabled&&!inherited)return null;
+  if(!clamp?.enabled&&!noise?.enabled&&!inherited&&!force?.enabled)return null;
   if(![0,1].includes(source.moveWithTransform)||source.VelocityModule?.enabled)throw Error('Native simulation space/linear velocity with particle turbulence needs review');
+  if(force?.enabled){
+    if(force.inWorldSpace!==false||force.randomizePerFrame!==false||source.moveWithTransform!==0)throw Error('Native force space/per-frame randomness needs review');
+    for(const axis of['x','y','z'])for(const factor of[0,1])integrateParticleCurve(force[axis],0,1,factor);
+  }
   if(clamp?.enabled){
     if(clamp.separateAxis||clamp.drag?.minMaxState!==0||clamp.drag.scalar!==0)throw Error('Native axis limit/drag needs review');
     if(!Number.isFinite(clamp.dampen)||clamp.dampen<0||clamp.dampen>1)throw Error('Invalid native particle dampen');
@@ -49,6 +54,10 @@ export function createParticleMotion(source,{seed=1}={}){
     if(!Number.isFinite(particle.age)||particle.age<0||particle.age/step>10000)throw Error('Native motion review clock exceeds step budget');
     while(elapsed<particle.age-1e-12){
       const dt=Math.min(step,particle.age-elapsed),normalized=(elapsed+dt)/particle.lifetime;
+      // Local interpretation: integrate authored acceleration before damping.
+      // Curve velocity increments are exact; position still uses the existing
+      // bounded 60 Hz semi-implicit replay, not Unity native ordering/parity.
+      if(force?.enabled)particleForceImpulse(force,particle,elapsed,elapsed+dt,seed).forEach((v,i)=>velocity[i]+=v);
       const inherited=inheritedVelocityAt?.(elapsed+dt)??[0,0,0];
       if(!Array.isArray(inherited)||inherited.length!==3||!inherited.every(Number.isFinite))throw Error('Invalid inherited particle motion velocity');
       // Initial momentum retains its accumulated attenuation. Current motion
