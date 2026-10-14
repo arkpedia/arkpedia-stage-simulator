@@ -4006,3 +4006,28 @@ ARKPEDIA_REVIEW_CHROME='/path/to/chromium' node tools/arkpedia/review-tragodia-e
 ```
 
 Logs use the `volume-` prefix under `.cache/arkpedia/lappland-alter-source/`; the image/report remain in its `effects/` directory. Original packs, prior fixtures/metadata, pins and public coverage remain unchanged: **373/431 forms and 812 selected skills**. Arkpedia app PR229 stays outside dev until the agreed operator/enemy/stage and automation gates are met.
+### Necrass original kit source foundation (2026-10-15)
+
+Necrass now has a separate source receipt and build selector. She remains outside public selection while her combat controller is implemented. The receipt preserves all three owner skills at all ten source ranks, the servant's three independent one-rank skill tables, promotion and potential talent candidates, five original ranges, three projectile hierarchies and the original owner/servant Front and Back skeleton bindings. Owner rank changes do not index past the servant's single source rank. Potential selection includes the original six-second redeployment reduction and trust stops increasing stats at 100%.
+
+The independent verifier walks original Transform child lists and GameObject component lists, rather than using the exporter's parent lookup. It checks **252 original components**, the complete dependency closure of **25 JSON and 26 native templates**, all six checksum-verified bundles, pinned Global Git blobs and imported owner skeleton bytes. `necras_dragon[one_shot_fx]` exists only in the native holder and remains recorded in `jsonTemplateGaps`. The original servant controller consumes zero deployment slots.
+
+The servant Back skeleton lacks the native animator's required `Stun` and `Stun_2` clips. `modelAliasGaps` preserves this discrepancy. The owner Back S2 loop also contains an `OnAttack` event at zero that is absent in Front; no event or facing is substituted. Source recovery does not establish compiled dispatch, native effects or battle-frame parity.
+
+Validation:
+
+- **145 checks across three source suites** pass on Node 22 and Node 24, including 37 Necrass checks covering all skill ranks, servant indexing, stats, potential thresholds, locked builds, source release events and explicit gaps.
+- The source audit reproduces eight durable receipt/model outputs and rejects **18 changed-source fixtures**, including an invented servant rank, removed controller, altered release timing, slot consumption and jointly hidden native-template or animation gaps.
+- The local preview at `http://localhost:3182/arkpedia/` returns HTTP 200. This source-only change does not expose an unfinished kit in that preview.
+
+Reproduction after the existing frozen shared-table/native-bundle cache is available:
+
+```sh
+node tools/arkpedia/fetch-necrass.mjs
+node tools/arkpedia/inspect-necrass.mjs
+.cache/map-env/bin/python tools/arkpedia/extract-necrass.py
+.cache/map-env/bin/python tools/arkpedia/audit-necrass.py
+node --test test/arkpedia-necrass-source.test.js test/arkpedia-tragodia-source.test.js test/arkpedia-cn-source.test.js
+```
+
+Audit and test logs are in `.cache/arkpedia/necrass-source/`. The receipt is `data/arkpedia-necrass-prefabs.json`, SHA-256 `175bf1e9b3dd661d83992b9a7435a97819ae5a3b9dda28f1671002d10dbe5f45`. Global, CN, native-client and model pins are unchanged. Public MVP and coverage hashes remain unchanged at **373/431 forms and 812 selected skills**. Owner attacks, servant creation/upgrades/death, S2 Sleep damage, S3's special servant, delivered artwork and public lifecycle still require implementation and review. Arkpedia app PR229 remains outside dev until operator, enemy, stage and dependable automation gates are met.
