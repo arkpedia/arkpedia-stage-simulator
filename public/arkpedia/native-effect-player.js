@@ -471,7 +471,10 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false}={}){
         const g=trail?new T.BufferGeometry():billboard?billboardGeometry():geometry(meshId,null,meshReferenceSource);
         if(trail){geometries.add(g);g.setAttribute('position',new T.Float32BufferAttribute([],3));g.setAttribute('in_POSITION0',g.getAttribute('position'));g.setAttribute('in_COLOR0',new T.Float32BufferAttribute([],4));g.setAttribute('in_TEXCOORD0',new T.Float32BufferAttribute([],2));}
         if(particleSource?.UVModule?.enabled){
-          if(customLayout&&particleSource.UVModule.uvChannelMask!==1)throw Error('Custom particle sheet must address the original UV stream only');
+          // The admitted stream layouts have UV0 as their sole UV semantic.
+          // Sheet masks address those logical UVs before packing; custom data
+          // stored in TEXCOORD components is not another texture UV channel.
+          if(customLayout&&(particleSource.UVModule.uvChannelMask< -1||particleSource.UVModule.uvChannelMask>255))throw Error('Invalid custom particle sheet mask');
           if(Array.from({length:8},(_,i)=>g.getAttribute('in_TEXCOORD'+i)).some(a=>a&&a.itemSize!==2))throw Error('Native multidimensional particle UV stream needs review');
         }
         const customUVs=customLayout?prepareCustomGeometry(g,customLayout):null;
