@@ -8,6 +8,7 @@ import {createParentParticleMotion} from '../../shared/arkpedia/native-parent-pa
 import {createBuiltinMeshResolver} from '../../shared/arkpedia/native-builtin-mesh.js';
 import {createParticlePivot} from '../../shared/arkpedia/native-particle-pivot.js';
 import {createTextureRotations} from '../../shared/arkpedia/native-texture-rotation.js';
+import {createParticleStretch,particleWorldVelocity} from '../../shared/arkpedia/native-particle-stretch.js';
 import {particleWorldPosition,particleSheetUV} from '../../shared/arkpedia/native-particle-render.js';
 import {sampleParticleCurve} from '../../shared/arkpedia/native-particle-curves.js';
 import {effectMeshColors} from '../../shared/arkpedia/native-effect-mesh.js';
@@ -268,13 +269,13 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false}={}){
     group.updateMatrixWorld(true);camera.updateMatrixWorld(true);
     const birthStates=new Map();
     for(const entry of draws){
-      const {component,mesh,emitter,trail,pool,baseColors,baseUVs,transform,particleSource,alignment}=entry;
+      const {component,mesh,emitter,trail,pool,baseColors,baseUVs,transform,particleSource,alignment,stretch}=entry;
       if(trail){
         const history=trajectory?trajectory.times(clock).map(t=>{
           if(!birthStates.has(t))birthStates.set(t,samplePose(t,clip,trajectory));
           const s=birthStates.get(t);return {time:t,position:particleFrame(transform,s).position.toArray(),emitting:s.nodes.get(transform).visible};
         }):[];
-        const data=trail.sample(clock,history,camera.position.toArray());entry.trailData=data;
+        const data=trail.sample(clock,history,new T.Vector3().setFromMatrixPosition(camera.matrixWorld).toArray());entry.trailData=data;
         const g=mesh.geometry,inverse=new T.Matrix4().copy(mesh.parent.matrixWorld).invert();
         mesh.visible=data.indices.length>0&&mesh.parent.matrixWorld.determinant()!==0;
         mesh.matrixAutoUpdate=false;mesh.matrix.copy(inverse);mesh.matrixWorldNeedsUpdate=true;
@@ -305,6 +306,14 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false}={}){
           ?{records:parentMotion.records(entry.particleId,clock),frames:parentMotion.childFrames(entry.particleId,sourceFrameAt)}:null;
         const particles=scheduled?emitter.sampleRecords(scheduled.records,clock,scheduled.frames):emitter.sample(clock,{frameAt,history,emitterVelocityAt});
         entry.lastParticles=particles;
+        const worldAt=(t,p)=>{
+          const age=Math.max(0,(t-p.birthTime)*particleSource.simulationSpeed);
+          const sampled=emitter.sampleRecords([{...p,age}],t,scheduled?scheduled.frames:{frameAt,emitterVelocityAt})[0];
+          if(scheduled)return scheduled.frames.worldPosition(sampled,t);
+          const at=frameAt(t),born=frameAt(p.birthTime);
+          if(!sampled.position)return [at.birth[12],at.birth[13],at.birth[14]];
+          return particleWorldPosition(sampled,born.birth,at.birth,at.movement);
+        };
         const parentCollapsed=mesh.parent.matrixWorld.determinant()===0;
         const inverse=parentCollapsed?new T.Matrix4():new T.Matrix4().copy(mesh.parent.matrixWorld).invert();
         while(pool.length<particles.length){const clone=mesh.clone();clone.geometry=mesh.geometry.clone();geometries.add(clone.geometry);clone.onBeforeRender=mesh.onBeforeRender;mesh.parent.add(clone);pool.push(clone);}
@@ -337,9 +346,15 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false}={}){
           const rotation=particle.rotation3D
             ?new T.Matrix4().makeRotationFromEuler(new T.Euler(...particle.rotation3D,'YXZ'))
             :new T.Matrix4().makeRotationZ(particle.rotation);
-          const matrix=alignment===0?new T.Matrix4().copy(camera.matrixWorld)
+          let matrix=alignment===0?new T.Matrix4().copy(camera.matrixWorld)
             :new T.Matrix4().makeRotationFromQuaternion(current.rotation);
-          matrix.setPosition(position).multiply(rotation).scale(new T.Vector3().fromArray(particle.size).multiply(scale));
+          if(stretch){
+            const timed={...particle,birthTime:particle.birthTime??clock-particle.age/particleSource.simulationSpeed};
+            const velocity=particleWorldVelocity(timed,clock,worldAt,particleSource.simulationSpeed);
+            const stretched=stretch.sample({position:position.toArray(),velocity,size:new T.Vector3().fromArray(particle.size).multiply(scale).toArray(),cameraPosition:new T.Vector3().setFromMatrixPosition(camera.matrixWorld).toArray(),rotation:particle.rotation});
+            if(!stretched){part.visible=false;part.matrixAutoUpdate=false;part.matrix.identity();part.matrixWorldNeedsUpdate=true;return;}
+            matrix.fromArray(stretched);
+          }else matrix.setPosition(position).multiply(rotation).scale(new T.Vector3().fromArray(particle.size).multiply(scale));
           matrix.fromArray(entry.pivot.sample(matrix.elements));
           part.matrixAutoUpdate=false;part.matrix.copy(inverse).multiply(matrix);part.matrixWorldNeedsUpdate=true;
           const colors=part.geometry.getAttribute('in_COLOR0');
@@ -391,14 +406,15 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false}={}){
         assertOpen();
         if(record.type!=='ParticleSystemRenderer'&&r.materials.length!==1)
           throw Error('Native multi-material renderer needs review');
-        let meshId,meshReferenceSource,particleId,particleSource,emitter,trail,pivot,billboard=false,customLayout=null;
+        let meshId,meshReferenceSource,particleId,particleSource,emitter,trail,pivot,stretch=null,billboard=false,customLayout=null;
         if(record.type==='MeshRenderer'){
           const go=pack.records[r.gameObject];const filter=(go.references??[]).map(r=>r.target).find(k=>pack.records[k]?.type==='MeshFilter');
           meshId=target(filter,'m_Mesh');
           meshReferenceSource=filter;
         }else if(record.type==='ParticleSystemRenderer'){
-          if(![0,4].includes(record.data.m_RenderMode)||![0,2].includes(record.data.m_RenderAlignment)||record.data.m_RenderMode===4&&record.data.m_RenderAlignment!==2)throw Error('Particle alignment/render mode not playing');
-          pivot=createParticlePivot(record.data);
+          if(record.data.m_RenderMode===1)stretch=createParticleStretch(record.data);
+          else if(![0,4].includes(record.data.m_RenderMode)||![0,2].includes(record.data.m_RenderAlignment)||record.data.m_RenderMode===4&&record.data.m_RenderAlignment!==2)throw Error('Particle alignment/render mode not playing');
+          pivot=createParticlePivot(record.data,{stretch});
           if(record.data.m_UseCustomVertexStreams)customLayout=createParticleVertexLayout(record.data.m_VertexStreams);
           const ps=(pack.records[r.gameObject].references??[]).map(r=>r.target).find(k=>pack.records[k]?.type==='ParticleSystem');
           particleId=ps;
@@ -419,7 +435,7 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false}={}){
             const ancestors=new Set();let n=r.transform;while(n){const d=pose.nodes.get(n);ancestors.add(d.gameObject);n=d.parent;}
             if(pose.instances.some(i=>i.bindings.some(b=>ancestors.has(b.gameObject)&&['m_LocalRotation','localEulerAnglesRaw','m_LocalScale'].includes(b.property))))throw Error('Animated world particle velocity frame needs integration');
           }
-          billboard=record.data.m_RenderMode===0;
+          billboard=[0,1].includes(record.data.m_RenderMode);
           if(!billboard){meshId=target(component,'m_Mesh');meshReferenceSource=component;}
         }else if(record.type==='TrailRenderer'){
           if(r.materials.length!==1)throw Error('Native multi-material trail needs review');
@@ -440,7 +456,7 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false}={}){
         if(particleSource){const d=particleSource.InitialModule,x=sampleParticleCurve(d.startSize,0);
           mesh.scale.fromArray(d.size3D?[x,sampleParticleCurve(d.startSizeY,0),sampleParticleCurve(d.startSizeZ,0)]:[x,x,x]);}
 
-        nodeObjects.get(r.transform).add(mesh);draws.push({component,transform:r.transform,particleId,particleSource,trail,pivot,alignment:record.data.m_RenderAlignment,mesh,emitter,pool:emitter?[mesh]:null,
+        nodeObjects.get(r.transform).add(mesh);draws.push({component,transform:r.transform,particleId,particleSource,trail,pivot,stretch,alignment:record.data.m_RenderAlignment,mesh,emitter,pool:emitter?[mesh]:null,
           baseColors:emitter?g.getAttribute('in_COLOR0').array.slice():null,
           baseUVs:emitter?Array.from({length:8},(_,i)=>g.getAttribute('in_TEXCOORD'+i)?.array.slice()??null):null,
           customLayout,customUVs});
@@ -456,7 +472,7 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false}={}){
           // Keep the source face test when the board/source camera swaps Y/Z.
           material.side=camera.matrixWorld.determinant()<0&&sourceSide!==T.DoubleSide
             ?sourceSide===T.FrontSide?T.BackSide:T.FrontSide:sourceSide;
-          u._WorldSpaceCameraPos?.value.copy(camera.position);material.uniformsNeedUpdate=true;
+          u._WorldSpaceCameraPos?.value.setFromMatrixPosition(camera.matrixWorld);material.uniformsNeedUpdate=true;
         };
       }catch(e){
         for(const g of geometries)if(!beforeGeometry.has(g)){g.dispose();geometries.delete(g);}

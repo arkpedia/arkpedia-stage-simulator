@@ -11,11 +11,11 @@ export function particlePivotMatrix(frame,pivot){
  if(!out.every(Number.isFinite))throw Error('Native particle pivot exceeds coordinate precision');
  return out;
 }
-export function createParticlePivot(source){
+export function createParticlePivot(source,{stretch=null}={}){
  const read=(value,label)=>{const vector=['x','y','z'].map(k=>value?.[k]);if(!vector.every(Number.isFinite))throw Error('Invalid native particle '+label);return vector;};
  const pivot=read(source.m_Pivot,'pivot'),flip=read(source.m_Flip,'flip');
  if(flip.some(v=>v!==0))throw Error('Native particle flip needs review');
- if(![0,4].includes(source.m_RenderMode)||![0,2].includes(source.m_RenderAlignment)||source.m_RenderMode===4&&source.m_RenderAlignment!==2)
+ if(!(source.m_RenderMode===1&&stretch?.ownsRenderer(source))&&(![0,4].includes(source.m_RenderMode)||![0,2].includes(source.m_RenderAlignment)||source.m_RenderMode===4&&source.m_RenderAlignment!==2))
   throw Error('Native particle pivot render mode/alignment needs review');
  return{sample:frame=>particlePivotMatrix(frame,pivot),pivot:pivot.slice(),scope:{localPivotMapping:true,compiledFrameParity:false}};
 }

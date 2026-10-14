@@ -3920,3 +3920,31 @@ ARKPEDIA_REVIEW_CHROME='/path/to/chromium' node tools/arkpedia/review-tragodia-e
 ```
 
 Logs use the `texture-rotation-` prefix under `.cache/arkpedia/lappland-alter-source/`; the image/report remain in its `effects/` directory. Original packs, previous metadata/fixtures and public coverage remain unchanged: **373/431 forms and 812 selected skills**. No operator approval or registration is added. Arkpedia app PR229 stays outside dev until the agreed coverage and automation gates are met.
+
+### Original stretched-particle renderer path (2026-10-14)
+
+Both original effect packs contain **52 stretched-billboard renderers**. Their camera and velocity stretch scales are zero, freeform stretching is disabled, and rotation with stretch is enabled. Authored length scales include negative values; pivots and separate-axis sizes are retained rather than clamped or normalized. Unity's [renderer documentation](https://docs.unity3d.com/2021.3/Documentation/Manual/PartSysRendererModule.html) specifies velocity alignment even with zero velocity scale and head-on thinning for non-freeform stretching. Its [2021.3 editor source](https://github.com/Unity-Technologies/UnityCsReference/blob/2021.3/Modules/ParticleSystemEditor/ParticleSystemModules/RendererModuleUI.cs) exposes alignment selection for ordinary billboards/meshes, while Stretch3D has its own controls.
+
+The shared player now supplies generated billboard geometry for this source render mode. An explicit local basis uses replayed world motion as its length axis and `cross(velocityDirection, cameraDirection)` as its width axis, retaining head-on thinning. Current X/Y/Z sizes and emitter scaling are preserved; the signed authored length multiplier applies to Y. Existing diameter-relative pivots then offset rendered vertices while keeping the original physics anchor. This axis/order convention is a local mapping, **not recovered native renderer or pixel parity**. The world velocity is a bounded 60 Hz backward position difference, with a one-sided lifetime-bounded sample at birth. It replays the same original particle identity, physical modules, child frames and emitter transforms; it does not substitute initial speed for damped motion or discard unsupported modules. Stationary and eye-coincident particles have an explicit hidden-heading boundary instead of receiving an invented direction. Freeform/nonzero camera/nonzero speed-scale controls remain held. Native basis/order, viewport-size constraints and compiled frame parity remain unverified.
+
+Thirteen additional components prepare across Lappland's buff and six token-hit roots. The buff now has **23 prepared components and five holds**: four particle trail/multi-material components and an unsupported rune shape. Each hit root has two remaining holds for shape and 3D billboard rotation. Original inactive children stay hidden; no complete effect or operator approval is added. Stretched pivots require the matching validated renderer mapping, so earlier pivot-only artifacts and their unsupported-mode boundary remain unchanged.
+
+Camera-facing calculations, trail inspection and `_WorldSpaceCameraPos` now use the actual world camera matrix. A translated camera parent therefore produces the same particle geometry as an equivalent standalone camera.
+
+Validation:
+
+- The independent Python audit reads every original stretched renderer typetree and raw hash. All **156 matrices and 2,496 matrix values** reproduce, including oblique views, signed lengths, pivots, reflections and degenerate head-on geometry. All three outputs reproduce exactly; nine altered-evidence cases reject.
+- The 34-file adjacent set passes **1,053 checks on Node 22 and Node 24**, without failures or skips. Tests cover all 52 source renderer profiles, heading acquisition, one-sided birth samples, prewarm clocks, expired/invalid inputs, zero/signed lengths, head-on thinning, owner-bound pivots, reverse scrubbing and parented cameras.
+- The browser independently reconstructs source sphere/cone directions and verifies **40 visible stretched particle frames** plus **46 actual shader matrix uploads**. The six hit roots have 114 visible child render passes and 56 preserved source-hidden samples; the buff adds four visible smoke particles. All 23 original Lappland programs, existing angular/pivot checks and the 48 texture-rotation UV checks pass. Strict playback still rejects incomplete roots, GL/page errors are absent, and cleanup leaves no GPU geometries/textures.
+- The cage regression remains at sixteen prepared components and two holds, with all 22 original programs and 91 materials passing. The updated partial buff image was visually inspected.
+
+Reproduce with Node 22 on `PATH`, the extraction Python environment and Chromium:
+
+```sh
+node tools/arkpedia/export-particle-stretch.mjs
+.cache/map-env/bin/python tools/arkpedia/audit-particle-stretch.py
+ARKPEDIA_REVIEW_CHROME='/path/to/chromium' node tools/arkpedia/review-particle-angular-motion.mjs
+ARKPEDIA_REVIEW_CHROME='/path/to/chromium' node tools/arkpedia/review-tragodia-effect-shaders.mjs
+```
+
+Logs use the `stretch-` prefix under `.cache/arkpedia/lappland-alter-source/`; the image/report remain in its `effects/` directory. Original packs, previous metadata/fixtures, source pins and public coverage remain unchanged: **373/431 forms and 812 selected skills**. No operator registration is added. Arkpedia app PR229 stays outside dev.
