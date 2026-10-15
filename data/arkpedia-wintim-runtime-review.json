@@ -1,0 +1,309 @@
+{
+  "schemaVersion": 1,
+  "operatorId": "char_4208_wintim",
+  "enabledOperators": [
+    "char_4208_wintim"
+  ],
+  "frameParity": false,
+  "moduleSupport": false,
+  "nativePixelParity": false,
+  "nativeParticleSupport": false,
+  "sourceFoundationSha256": "5b3a3a925b5185220d77362dcd3c82db304b24955ef291fed68230b9c17389f1",
+  "mechanicsPolicy": "source-cn-cast-dp-and-output-damage-v1",
+  "scope": "Original selected CN ordinary melee/ranged attacks, damage-lost ASPD talent and all twenty S1/S2 ranks.",
+  "verification": {
+    "source": "Original six frozen Git blobs and five native bundles independently verified; seven outputs reproduced; thirty source/approval mutations rejected; pipeline cross-check retains all fifty-three prior Akkord components.",
+    "runtime": "470 focused source, public, CN, roster, Akkord, Mon3tr, Puzzle and Chilchuck tests pass on Node 22 and 24 without failures or skips; includes fifty-one Snegurochka source/combat and thirty public-path cases. Full local Node 22 suite: 14,058 passed, ten optional/platform skips, zero failures across 325 suites.",
+    "browser": {
+      "status": "passed",
+      "script": "tools/arkpedia/review-wintim-public.mjs",
+      "scriptSha256": "0fe8784fe33735a1e1d7839af48d7bedfcf3db5fe334279437a14850aaa5ab71",
+      "driver": "tools/arkpedia/public-review-driver.mjs",
+      "driverSha256": "1ef20a71f4982799d1368e61d0b2e2eac9eb36efe1aaad45294150566246359f",
+      "cases": 8,
+      "captures": 36,
+      "viewports": [
+        "1280x800 desktop mouse",
+        "844x390 landscape phone touch"
+      ],
+      "originalWaves": false,
+      "fixture": "Original stage 0-1 terrain, 99 DP, empty waves and pinned target; original-wave/DP tests run separately.",
+      "checks": [
+        "Public squad/skill selection and separate drag/drop/direction swipe",
+        "Both native Front/Back models, original S1 and S2 Begin/Loop clips",
+        "Natural offensive/time SP, S1 cast-start DP before projectile release and S2 output DP/Sluggish",
+        "Two later attack clips per case restart their original Spine track",
+        "HP/SP gauges, original skill icons and retreat cleanup"
+      ],
+      "repeatedAttackRestarts": 16,
+      "browserErrors": 0,
+      "failedResources": 0,
+      "visualReview": "Desktop S2 Front active and landscape-phone S1 Back ready captures inspected. Original particles, pixel/frame parity remain unverified."
+    }
+  },
+  "limits": [
+    "Selector aliases, sampled mode/FSM ordering, launch ATK snapshot and tile-center projectile origin are explicit local policies.",
+    "S1 grants DP on cast start; its dead-input refund retains that grant. S2 uses accepted output damage while active, including shield-absorbed zero HP loss, without an IsAttack filter.",
+    "Talent requires real HP damage; HPLOSS, gauge fill and shielded hits preserve it.",
+    "English display spelling follows the verified asset basename; original Chinese name/skill text and Cyrillic appellation are retained.",
+    "Native particles, audio, modules and original game-frame/pixel parity remain unsupported.",
+    "DP updates the shared counter; S2 forced floating-number presentation remains unsupported."
+  ],
+  "originalArtwork": {
+    "operator/char_4208_wintim/default/front": {
+      "kind": "operator",
+      "id": "char_4208_wintim",
+      "variant": "default",
+      "facing": "front",
+      "spineVersion": "3.8.99",
+      "source": {
+        "key": "operators",
+        "repository": "fexli/ArknightsResource",
+        "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+        "directory": "spine/char_4208_wintim/char_4208_wintim/Front"
+      },
+      "skeleton": {
+        "path": "models/operator/char_4208_wintim/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4208_wintim.skel",
+        "bytes": 430411,
+        "sha256": "6350ea1be9b5296331d06538499b11899e1818281a2c79e603592001cc2052cd"
+      },
+      "atlas": {
+        "path": "models/operator/char_4208_wintim/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4208_wintim.atlas",
+        "bytes": 12110,
+        "sha256": "8217c5d7512f689c10ca90cf6c67b1926717ab3b634736523ee001e35c11583e"
+      },
+      "textures": [
+        {
+          "path": "models/operator/char_4208_wintim/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4208_wintim.png",
+          "bytes": 170465,
+          "sha256": "d1ef94e4512cc347e20daa4ddb647d060ca7d2a1b4285430d22f95094ad14f49"
+        }
+      ],
+      "premultipliedAlpha": false,
+      "animations": {
+        "Attack": 1,
+        "Combat": 1,
+        "Default": 0,
+        "Die": 1,
+        "Idle": 2.667,
+        "Skill_1": 1,
+        "Skill_2_Begin": 0.167,
+        "Skill_2_End": 0.167,
+        "Skill_2_Idle": 1,
+        "Skill_2_Loop": 1,
+        "Start": 1
+      },
+      "animationRoles": {
+        "idle": "Idle",
+        "deploy": "Start",
+        "attack": {
+          "begin": null,
+          "loop": "Attack",
+          "end": null
+        },
+        "attackDown": null,
+        "skill": {
+          "begin": null,
+          "loop": "Skill_1",
+          "end": null,
+          "index": 0,
+          "idle": null,
+          "via": "attack"
+        },
+        "die": "Die",
+        "move": null,
+        "stun": null,
+        "skills": {
+          "0": {
+            "begin": null,
+            "loop": "Skill_1",
+            "end": null,
+            "index": 0,
+            "idle": null,
+            "via": "attack"
+          },
+          "1": {
+            "begin": "Skill_2_Begin",
+            "loop": "Skill_2_Loop",
+            "end": null,
+            "index": 1,
+            "idle": "Skill_2_Idle",
+            "via": "attack"
+          }
+        }
+      },
+      "hits": {
+        "Attack": [
+          0.567
+        ],
+        "Combat": [
+          0.567
+        ],
+        "Skill_1": [
+          0.433
+        ],
+        "Skill_2_Loop": [
+          0.467
+        ]
+      },
+      "bounds": {
+        "x": -223.017,
+        "y": -1.17,
+        "width": 712.067,
+        "height": 371.013
+      }
+    },
+    "operator/char_4208_wintim/default/back": {
+      "kind": "operator",
+      "id": "char_4208_wintim",
+      "variant": "default",
+      "facing": "back",
+      "spineVersion": "3.8.99",
+      "source": {
+        "key": "operators",
+        "repository": "fexli/ArknightsResource",
+        "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+        "directory": "spine/char_4208_wintim/char_4208_wintim/Back"
+      },
+      "skeleton": {
+        "path": "models/operator/char_4208_wintim/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4208_wintim.skel",
+        "bytes": 289591,
+        "sha256": "1917d9dba5683f1f06b028aceb127864b06bbcccd48a6f3e447b2dc668e150a7"
+      },
+      "atlas": {
+        "path": "models/operator/char_4208_wintim/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4208_wintim.atlas",
+        "bytes": 6667,
+        "sha256": "bf91edd657d5c23c90bc3ffb6b266646f51090c5a706c095128412215e79e5c8"
+      },
+      "textures": [
+        {
+          "path": "models/operator/char_4208_wintim/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4208_wintim.png",
+          "bytes": 130632,
+          "sha256": "6bc830ea26e2cc454a63afc53817e61213a7d5f3f2d37b16ad1311d87234ff51"
+        }
+      ],
+      "premultipliedAlpha": false,
+      "animations": {
+        "Attack": 1,
+        "Combat": 1,
+        "Default": 0,
+        "Idle": 2.667,
+        "Skill_1": 1,
+        "Skill_2_Begin": 0.167,
+        "Skill_2_End": 0.167,
+        "Skill_2_Idle": 1,
+        "Skill_2_Loop": 1,
+        "Start": 1
+      },
+      "animationRoles": {
+        "idle": "Idle",
+        "deploy": "Start",
+        "attack": {
+          "begin": null,
+          "loop": "Attack",
+          "end": null
+        },
+        "attackDown": null,
+        "skill": {
+          "begin": null,
+          "loop": "Skill_1",
+          "end": null,
+          "index": 0,
+          "idle": null,
+          "via": "attack"
+        },
+        "die": null,
+        "move": null,
+        "stun": null,
+        "skills": {
+          "0": {
+            "begin": null,
+            "loop": "Skill_1",
+            "end": null,
+            "index": 0,
+            "idle": null,
+            "via": "attack"
+          },
+          "1": {
+            "begin": "Skill_2_Begin",
+            "loop": "Skill_2_Loop",
+            "end": null,
+            "index": 1,
+            "idle": "Skill_2_Idle",
+            "via": "attack"
+          }
+        }
+      },
+      "hits": {
+        "Attack": [
+          0.567
+        ],
+        "Combat": [
+          0.567
+        ],
+        "Skill_1": [
+          0.433
+        ],
+        "Skill_2_Loop": [
+          0.467
+        ]
+      },
+      "bounds": {
+        "x": -223.017,
+        "y": -1.17,
+        "width": 712.067,
+        "height": 371.013
+      }
+    }
+  },
+  "interfaceAssets": [
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "four-star-icons/Snegurochka - Base.webp",
+      "bytes": 12792,
+      "sha256": "5345e20098b128ee437410d73e196cbcdaaafd1748f306769fef701f05b362ea"
+    },
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "skill-icons/Snegurochka - Data Analysis.webp",
+      "bytes": 4648,
+      "sha256": "153cd4bd831cdf47791df9b9b703bfd983f862e3e4984a2b8616438e3599b681"
+    },
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "skill-icons/Snegurochka - Rational Attribution.webp",
+      "bytes": 6842,
+      "sha256": "88f54191098d0d69c2cbf43c7c8f5fbb38f69251ed5921bb9363927f2b54488c"
+    },
+    {
+      "repository": "arkpedia/arkpedia-skin-assets",
+      "commit": "6fb723692d89c4a08d9a7aa4015e19c0753dd270",
+      "path": "four-star-skins/Snegurochka - Base.webp",
+      "bytes": 136516,
+      "sha256": "ed23bf18a5c5f64627efc18329d03341d68fe80105c4c5000f8173950ea69f54"
+    }
+  ],
+  "sdCommit": "04a4667d76962df9affbb2a016b500013a3007fa",
+  "snapshotPreservation": {
+    "baseline": "778132ad34e868baea6c6f274a4507f263276c38",
+    "normalizedDeliveryCommit": "0c0325c65f6dea493c22c212156a48afb78dbda2",
+    "olderOperators": 377,
+    "olderModels": 863,
+    "operatorsSha256": "361d9666fff22dac4f4a1fc2bedbaeff564588ca3e188a1a809edbdd5f010ff2",
+    "unchanged": [
+      "older operators",
+      "older model metadata",
+      "default squad order",
+      "stage",
+      "tokens",
+      "enemies",
+      "effects",
+      "all table/image/skin source pins"
+    ]
+  },
+  "browserTestedSDCommit": "9aaedd95d497f109ee51c839b6438cbc974d7cf9",
+  "sdMergedTreeMatchesBrowserTest": true
+}

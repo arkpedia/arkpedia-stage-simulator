@@ -153,7 +153,7 @@ function filterRoster() {
   let matched = false;
   for (const item of document.querySelectorAll('#roster .roster-item')) {
     const op = data.operators[item.dataset.id];
-    item.hidden = !`${op.name} ${op.sourceName ?? ''} ${classes[op.profession] ?? op.profession}`.toLocaleLowerCase().includes(query);
+    item.hidden = !`${op.name} ${op.sourceName ?? ''} ${op.sourceAppellation ?? ''} ${classes[op.profession] ?? op.profession}`.toLocaleLowerCase().includes(query);
     matched ||= !item.hidden;
   }
   document.querySelector('#roster .roster-empty').hidden = matched;

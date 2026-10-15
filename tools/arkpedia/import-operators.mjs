@@ -159,6 +159,14 @@ for (const id of ids) {
         index: 1, idle: 'Skill_2_Idle', via: 'attack' };
       roles.skill = roles.skills['0'];
     }
+    // Original CN Snegurochka: S1 is a distinct attack, while S2 requests its
+    // Begin clip and alternate Attack/Combat loop. No controller requests End.
+    if (id === 'char_4208_wintim') {
+      roles.skills['0'] = { begin: null, loop: 'Skill_1', end: null, index: 0, idle: null, via: 'attack' };
+      roles.skills['1'] = { begin: 'Skill_2_Begin', loop: 'Skill_2_Loop', end: null,
+        index: 1, idle: 'Skill_2_Idle', via: 'attack' };
+      roles.skill = roles.skills['0'];
+    }
     if (!roles.idle || !support.noBasicAttack && catalogue[id]?.subProfessionId !== 'bard' && (!roles.attack || roles.attack.via === "idle"))
       throw Error(`${key}: missing idle/attack clips`);
     Object.assign(model, { premultipliedAlpha: values.pma === "true", animations: info.durations,

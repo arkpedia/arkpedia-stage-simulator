@@ -84,9 +84,15 @@ export function compileReviewedOperators({ registry, global, cn }) {
     const [key, record] = compileOperator(id, tables);
     if (support.displayNameFrom) {
       const appellation = tables.characters[id].appellation;
-      if (channel !== 'cn' || support.displayNameFrom !== 'appellation' || typeof appellation !== 'string' || !appellation.trim())
+      if (channel !== 'cn' || !['appellation', 'assetName'].includes(support.displayNameFrom)
+        || typeof appellation !== 'string' || !appellation.trim())
         throw Error(`Missing reviewed CN appellation: ${id}`);
       record.sourceName = record.name; record.name = appellation; record.sourceChannel = channel;
+      if (support.displayNameFrom === 'assetName') {
+        if (typeof support.assetName !== 'string' || !support.assetName.trim() || /[\\/]/.test(support.assetName))
+          throw Error(`Missing reviewed CN asset name: ${id}`);
+        record.sourceAppellation = appellation; record.name = support.assetName;
+      }
     }
     if (support.skillIconFiles) {
       if (channel !== 'cn' || Object.keys(support.skillIconFiles).length !== record.skills.length)
