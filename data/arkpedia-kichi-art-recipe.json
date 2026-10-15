@@ -1,0 +1,105 @@
+{
+  "operator": "char_4203_kichi",
+  "name": "Kichisei",
+  "foundationSha256": "171761adf7b8bc65b03ea6f0d95f2a8bf9c3d0c16bcf836d99e2a1088448b025",
+  "artCommit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+  "output": "data/arkpedia-kichi-art.json",
+  "sdReview": "source-reviews/kichisei.json",
+  "scope": "Original owner files unchanged; native pixels and PMA verified. Both skills retain literal Begin/Loop/Idle/End tracks and the two native Idle-to-Idle End mixes. Front has downward attacks; Back has no death clip. No combat/public approval.",
+  "roles": {
+    "Front": {
+      "idle": "Idle",
+      "deploy": "Start",
+      "attack": {
+        "begin": null,
+        "loop": "Attack",
+        "end": null
+      },
+      "attackDown": {
+        "begin": null,
+        "loop": "Attack_Down",
+        "end": null
+      },
+      "skill": {
+        "begin": "Skill_1_Begin",
+        "loop": "Skill_1_Loop",
+        "end": "Skill_1_End",
+        "idle": "Skill_1_Idle",
+        "index": 0,
+        "via": "skill"
+      },
+      "skills": {
+        "0": {
+          "begin": "Skill_1_Begin",
+          "loop": "Skill_1_Loop",
+          "end": "Skill_1_End",
+          "idle": "Skill_1_Idle",
+          "index": 0,
+          "via": "skill"
+        },
+        "1": {
+          "begin": "Skill_2_Begin",
+          "loop": "Skill_2_Loop",
+          "end": "Skill_2_End",
+          "idle": "Skill_2_Idle",
+          "index": 1,
+          "via": "skill"
+        }
+      },
+      "die": "Die",
+      "stun": null,
+      "move": null
+    },
+    "Back": {
+      "idle": "Idle",
+      "deploy": "Start",
+      "attack": {
+        "begin": null,
+        "loop": "Attack",
+        "end": null
+      },
+      "attackDown": null,
+      "skill": {
+        "begin": "Skill_1_Begin",
+        "loop": "Skill_1_Loop",
+        "end": "Skill_1_End",
+        "idle": "Skill_1_Idle",
+        "index": 0,
+        "via": "skill"
+      },
+      "skills": {
+        "0": {
+          "begin": "Skill_1_Begin",
+          "loop": "Skill_1_Loop",
+          "end": "Skill_1_End",
+          "idle": "Skill_1_Idle",
+          "index": 0,
+          "via": "skill"
+        },
+        "1": {
+          "begin": "Skill_2_Begin",
+          "loop": "Skill_2_Loop",
+          "end": "Skill_2_End",
+          "idle": "Skill_2_Idle",
+          "index": 1,
+          "via": "skill"
+        }
+      },
+      "die": null,
+      "stun": null,
+      "move": null
+    }
+  },
+  "nativeMixes": [
+    {
+      "sourceAnimName": "Skill_1_Idle",
+      "targetAnimName": "Idle",
+      "mixAnimName": "Skill_1_End"
+    },
+    {
+      "sourceAnimName": "Skill_2_Idle",
+      "targetAnimName": "Idle",
+      "mixAnimName": "Skill_2_End"
+    }
+  ]
+}

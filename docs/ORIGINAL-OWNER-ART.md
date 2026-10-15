@@ -1,0 +1,14 @@
+# Recipe-based original owner-art checks
+
+The reusable path covers owners with the reviewed two-model Front/Back layout and matching files already in `arkpedia-sd-assets`. It does not infer gameplay support, role semantics, native effects or game-frame parity. Other layouts must use their own native binding review.
+
+1. Recover and independently audit the original operator foundation with `extract-cn-operator.py` and `audit-cn-operator.py`.
+2. Write a reviewed recipe with the owner ID, exact foundation SHA-256, immutable art Git commit, literal Front/Back roles, native End mixes, receipt path and SD review path. Kichisei's recipe is `data/arkpedia-kichi-art-recipe.json`.
+3. Recover unrounded skeleton clocks with the shared `original-clocks.mjs` helper. Verify the original receipt bytes and keep the default parser output unchanged.
+4. Run `cn-owner-art.py bind --recipe data/arkpedia-kichi-art-recipe.json --hydrate` with the source Python environment and a Node 22/24 `ARKPEDIA_SOURCE_NODE`. This changes metadata only; all original source files must remain identical.
+5. Copy the receipt to the recipe's SD review path, then run `cn-owner-art.py verify --recipe data/arkpedia-kichi-art-recipe.json --assets`. The verifier walks native skeleton/atlas/material/texture pointers, checks the pinned hot-update inventory, compares pinned Git files and every decoded pixel, and checks all declared clips against the original skeleton.
+6. Run `audit-cn-owner-art.py --recipe data/arkpedia-kichi-art-recipe.json` separately on Node 22 and 24. It reproduces the receipt and rejects changed source, pointer, role, pixel, alpha and approval claims. Original art files must remain unchanged.
+7. Run `review-cn-owner-art.mjs --recipe data/arkpedia-kichi-art-recipe.json --clocks data/arkpedia-kichi-clocks.json` with `ARKPEDIA_REVIEW_CHROME`. It loads every original clip on desktop and emulated touch, compares browser durations with the exact clock receipt and records selected original phases. Inspect the captures; this is an art-only review.
+8. Run the SD tests and complete model/scenery/effect validation on both Node versions before publishing. Public squad selection, source mechanics, original waves and real UI controls still require their separate runtime review.
+
+The art receipt retains the recipe hash, original foundation hash, file hashes, native pointers, material settings and decoded-pixel hash. A changed recipe or source cannot silently reuse an old receipt. A passing source/metadata check does not establish original shader behavior or C# event/FSM ordering.
