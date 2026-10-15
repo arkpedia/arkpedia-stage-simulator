@@ -1,0 +1,326 @@
+{
+  "schemaVersion": 1,
+  "operatorId": "char_4211_snhunt",
+  "enabledOperators": [
+    "char_4211_snhunt"
+  ],
+  "frameParity": false,
+  "moduleSupport": false,
+  "nativePixelParity": false,
+  "nativeParticleSupport": false,
+  "sourceFoundationSha256": "37d0ab829cd389fe71eb180e858aa6d82bb43bea0f34bec1a70658ba361d95dd",
+  "ownerArtworkSha256": "0553a37b87d83020e13f76b2f87ae489668616fa8980f147ed9398a11b4d36ae",
+  "sourceClocksSha256": "9cdccc72eb0c13dac5f8d30b064fac422f066428c4398e6f71558a5c609eab6f",
+  "mechanicsPolicy": "source-cn-hunter-magazine-double-shot-and-beast-cold-v1",
+  "scope": "Selected original CN ordinary attacks, all twenty S1/S2 ranks and beast/Cold through the reviewed regular-stage public squad/build path.",
+  "verification": {
+    "source": "Five original bundles, 133 components including artwork, thirteen templates and four projectiles; seven outputs reproduced and thirty altered claims rejected on Node 22 and 24.",
+    "artwork": "Original files, pixels and PMA verified; 32 altered claims rejected on both Node versions; 38 usable clips per viewport and thirty desktop/emulated-phone captures without errors.",
+    "runtime": "278 focused source/combat/public/clock/HUD/Coldshot/Ray/Gnosis cases pass on Node 22 and 24. Both original 0-1 skill builds with Melantha clear eleven enemies without leaks and preserve full life. Full local/hosted suite is separate.",
+    "browser": {
+      "status": "passed",
+      "script": "tools/arkpedia/review-snhunt-public.mjs",
+      "driver": "tools/arkpedia/public-review-driver.mjs",
+      "scriptSha256": "cdea7a12d96f8fd2b09b677d341ace9f676127062938a07aac3352fa95297b2c",
+      "driverSha256": "1ef20a71f4982799d1368e61d0b2e2eac9eb36efe1aaad45294150566246359f",
+      "cases": 8,
+      "captures": 44,
+      "viewports": [
+        "1280x800 desktop mouse",
+        "844x390 emulated landscape phone touch"
+      ],
+      "originalWaves": false,
+      "fixture": "Original 0-1 terrain, empty waves, 99 DP and a pinned high-HP nonattacking target. Original waves, natural DP and terrain tested separately.",
+      "checks": [
+        "Public squad/skill choice and separate drag/drop/direction swipe",
+        "Original Front/Back S1 and S2 Begin/Loop tracks",
+        "Natural offensive S1 and time-based S2 SP, automatic S1 and public manual S2",
+        "One powered arrow, two separate S2 launches, beast Cold, owned ammunition HUD and readiness",
+        "Retreat removes controller/capacity without inventing ammo; born projectiles finish and tracking cleans up"
+      ],
+      "browserErrors": 0,
+      "failedResources": 0,
+      "visualReview": "Desktop S1 Back powered shot and phone S2 Front second-shot captures inspected. Thirty art-only captures and exact browser duration comparisons are separate. Physical-device, native effects and original game frame/pixel parity remain unverified.",
+      "normalPreviewReplay": {
+        "status": "passed",
+        "candidate": false,
+        "cases": 8,
+        "captures": 44,
+        "browserErrors": 0,
+        "failedResources": 0
+      }
+    }
+  },
+  "originalArtwork": {
+    "operator/char_4211_snhunt/default/front": {
+      "kind": "operator",
+      "id": "char_4211_snhunt",
+      "variant": "default",
+      "facing": "front",
+      "spineVersion": "3.8.99",
+      "source": {
+        "key": "operators",
+        "repository": "fexli/ArknightsResource",
+        "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+        "directory": "spine/char_4211_snhunt/char_4211_snhunt/Front"
+      },
+      "skeleton": {
+        "path": "models/operator/char_4211_snhunt/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4211_snhunt.skel",
+        "bytes": 659453,
+        "sha256": "00abb7195a0e3c7a706baeb345fbdd6e8593dbb491c753fb648b78f469b01e43"
+      },
+      "atlas": {
+        "path": "models/operator/char_4211_snhunt/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4211_snhunt.atlas",
+        "bytes": 13904,
+        "sha256": "203abfff452cd2656a9cda042b0c57864a272a461ab4b68856e4546baa2631bb"
+      },
+      "textures": [
+        {
+          "path": "models/operator/char_4211_snhunt/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4211_snhunt.png",
+          "bytes": 196546,
+          "sha256": "be184f77418fc5f84df301fea21bba34976d62143be70f94f3bbfb7f428a3586"
+        }
+      ],
+      "premultipliedAlpha": true,
+      "animations": {
+        "Attack_Begin": 0.167,
+        "Attack_Down_Begin": 0.167,
+        "Attack_Down_End": 0.167,
+        "Attack_Down_Loop": 1.6,
+        "Attack_End": 0.167,
+        "Attack_Loop": 1.6,
+        "Default": 0,
+        "Die": 1,
+        "Idle": 3.333,
+        "Reload_Begin": 0.167,
+        "Reload_Break": 0.167,
+        "Reload_Down_Begin": 0.167,
+        "Reload_Down_Break": 0.167,
+        "Reload_Down_End": 0.167,
+        "Reload_Down_Loop": 1.6,
+        "Reload_End": 0.167,
+        "Reload_Loop": 1.6,
+        "Skill_1": 1.6,
+        "Skill_2_Begin": 0.167,
+        "Skill_2_End": 0.333,
+        "Skill_2_Loop": 0.667,
+        "Skill_Down_1": 1.6,
+        "Skill_Down_2_Begin": 0.167,
+        "Skill_Down_2_End": 0.333,
+        "Skill_Down_2_Loop": 0.667,
+        "Start": 1
+      },
+      "hits": {
+        "Attack_Down_Loop": [
+          0.067
+        ],
+        "Attack_Loop": [
+          0.067
+        ],
+        "Skill_1": [
+          0.233
+        ],
+        "Skill_2_Loop": [
+          0.033,
+          0.2
+        ],
+        "Skill_Down_1": [
+          0.233
+        ],
+        "Skill_Down_2_Loop": [
+          0.033,
+          0.2
+        ]
+      },
+      "bounds": {
+        "x": -524.827,
+        "y": -1.914,
+        "width": 634.122,
+        "height": 368.844
+      },
+      "animationRoles": {
+        "idle": "Idle",
+        "deploy": "Start",
+        "attack": {
+          "begin": "Attack_Begin",
+          "loop": "Attack_Loop",
+          "end": "Attack_End"
+        },
+        "attackDown": {
+          "begin": "Attack_Down_Begin",
+          "loop": "Attack_Down_Loop",
+          "end": "Attack_Down_End"
+        },
+        "skill": {
+          "begin": null,
+          "loop": "Skill_1",
+          "end": null,
+          "idle": null,
+          "index": 0,
+          "via": "skill"
+        },
+        "skills": {
+          "0": {
+            "begin": null,
+            "loop": "Skill_1",
+            "end": null,
+            "idle": null,
+            "index": 0,
+            "via": "skill"
+          },
+          "1": {
+            "begin": "Skill_2_Begin",
+            "loop": "Skill_2_Loop",
+            "end": "Skill_2_End",
+            "idle": null,
+            "index": 1,
+            "via": "skill"
+          }
+        },
+        "die": "Die",
+        "stun": null,
+        "move": null
+      }
+    },
+    "operator/char_4211_snhunt/default/back": {
+      "kind": "operator",
+      "id": "char_4211_snhunt",
+      "variant": "default",
+      "facing": "back",
+      "spineVersion": "3.8.99",
+      "source": {
+        "key": "operators",
+        "repository": "fexli/ArknightsResource",
+        "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+        "directory": "spine/char_4211_snhunt/char_4211_snhunt/Back"
+      },
+      "skeleton": {
+        "path": "models/operator/char_4211_snhunt/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4211_snhunt.skel",
+        "bytes": 258748,
+        "sha256": "94dbbbb62fb6a3cd687cefb7d115994278691218862b520751b3e50d0cbe4ae1"
+      },
+      "atlas": {
+        "path": "models/operator/char_4211_snhunt/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4211_snhunt.atlas",
+        "bytes": 10109,
+        "sha256": "fa2266e83d947e1bdcf8c5d21751aefb1214def717b3377dadb7a846c5902541"
+      },
+      "textures": [
+        {
+          "path": "models/operator/char_4211_snhunt/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4211_snhunt.png",
+          "bytes": 159655,
+          "sha256": "32b4e5293ecc95e43526c85b4af516f2b9a625be70ba2224bf6ad176589ece52"
+        }
+      ],
+      "premultipliedAlpha": true,
+      "animations": {
+        "Attack_Begin": 0.167,
+        "Attack_End": 0.167,
+        "Attack_Loop": 1.6,
+        "Default": 0,
+        "Idle": 1.667,
+        "Reload_Begin": 0.167,
+        "Reload_Break": 0.167,
+        "Reload_End": 0.167,
+        "Reload_Loop": 1.6,
+        "Skill_1": 1.6,
+        "Skill_2_Begin": 0.167,
+        "Skill_2_End": 0.333,
+        "Skill_2_Loop": 0.667,
+        "Start": 1
+      },
+      "hits": {
+        "Attack_Loop": [
+          0.067
+        ],
+        "Skill_1": [
+          0.233
+        ],
+        "Skill_2_Loop": [
+          0.033,
+          0.2
+        ]
+      },
+      "bounds": {
+        "x": 303.443,
+        "y": -1.891,
+        "width": 631.777,
+        "height": 368.468
+      },
+      "animationRoles": {
+        "idle": "Idle",
+        "deploy": "Start",
+        "attack": {
+          "begin": "Attack_Begin",
+          "loop": "Attack_Loop",
+          "end": "Attack_End"
+        },
+        "attackDown": null,
+        "skill": {
+          "begin": null,
+          "loop": "Skill_1",
+          "end": null,
+          "idle": null,
+          "index": 0,
+          "via": "skill"
+        },
+        "skills": {
+          "0": {
+            "begin": null,
+            "loop": "Skill_1",
+            "end": null,
+            "idle": null,
+            "index": 0,
+            "via": "skill"
+          },
+          "1": {
+            "begin": "Skill_2_Begin",
+            "loop": "Skill_2_Loop",
+            "end": "Skill_2_End",
+            "idle": null,
+            "index": 1,
+            "via": "skill"
+          }
+        },
+        "die": null,
+        "stun": null,
+        "move": null
+      }
+    }
+  },
+  "interfaceAssets": [
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "five-star-icons/Snow Hunter - Base.webp",
+      "bytes": 14682,
+      "sha256": "bc116cac14cc3e25a4377ec8c5fe693118090afecf8c15f8f426b1b11bdbdacb"
+    },
+    {
+      "repository": "arkpedia/arkpedia-skin-assets",
+      "commit": "6fb723692d89c4a08d9a7aa4015e19c0753dd270",
+      "path": "five-star-skins/Snow Hunter - Base.webp",
+      "bytes": 183230,
+      "sha256": "5cb7ed55bbbc69ff9346b76b2153c273aed29c4b4e1858802d5b0955a781bcae"
+    },
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "skill-icons/Snow Hunter - Power Strike β.webp",
+      "bytes": 4858,
+      "sha256": "3c3ad6fe28804fa41b1bea444cb137acfefbaa58a156933ec40472a4e6a5bf21"
+    },
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "skill-icons/Snow Hunter - Twin Blizzard Bolts.webp",
+      "bytes": 7882,
+      "sha256": "271af8c1835c47cd72d0428c05842ac085fc98f9e6e00fc9517f8ec5b757f273"
+    }
+  ],
+  "limitations": [
+    "Eventless reload maps to loop completion; compiled fallback not recovered",
+    "Source selector aliases, stay-still classification, fixed-step ordering, SP/refund clocks and source-only modifier dispatch are local mappings",
+    "Retired sources use launch snapshots; no original game frame/pixel parity",
+    "Modules, native particles, shaders and audio remain unverified"
+  ]
+}

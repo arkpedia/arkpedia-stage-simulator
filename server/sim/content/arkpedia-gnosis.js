@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import evidence from '../../../data/arkpedia-gnosis-prefabs.json' with { type: 'json' };
 import { canTargetEnemy, sortEnemyTargets } from '../targeting.js';
+import { applySourceCold, syncSourceColdSpeed } from './arkpedia-source-cold.js';
 
 const ID = 'char_206_gnosis';
 const present = u => u?.alive && u.deployed && !u.hidden;
@@ -27,17 +28,7 @@ function targets(b, u, p, count = 1) {
 }
 
 function coldModifiers(b, e) {
-  const frozen = !!e.s.flags.freeze;
-  const cold = e.buffs.filter(buff => buff.status === 'cold');
-  // The original abnormal flag owns one debuff. Independent pairing credits
-  // must not turn several Cold producers into several -30 ASPD modifiers.
-  for (const buff of cold) if (buff.mods?.aspd) {
-    buff.mods = { ...buff.mods, aspd: 0 }; e.markDirty();
-  }
-  if (cold.length && !frozen) {
-    if (!e.findBuff('gnosis:cold-aspd')) b.addBuff(e, {
-      key: 'gnosis:cold-aspd', mods: { aspd: -30 } });
-  } else b.removeBuff(e, 'gnosis:cold-aspd');
+  syncSourceColdSpeed(b, e);
   const held = e.buffs.some(buff => buff.data.gnosisFreezeHolder);
   const nativeCut = e.buffs.some(buff => buff.status === 'freeze' && buff.mods?.resFlat < 0);
   if (held && !nativeCut) {
@@ -50,15 +41,7 @@ function coldModifiers(b, e) {
 function applyCold(b, u, e, duration) {
   // disableOverride=true and triggerCnt=1: retain Cold layers, but consume each
   // layer's pairing credit once. An existing Frozen flag is not a Cold credit.
-  const old = e.buffs.find(v => v.status === 'cold' && !v.data.gnosisPaired);
-  const owned = `gnosis:cold:${++b._gnosisColdSeq}`;
-  if (!b.applyStatus(e, 'cold', { duration, source: u, key: owned, coldPairing: 'independent' })) return;
-  const added = e.findBuff(owned);
-  if (old && added && !e.def.immune.has('frozen')) {
-    old.data.gnosisPaired = added.data.gnosisPaired = true;
-    b.applyStatus(e, 'freeze', { duration: Math.max(old.timeLeft, added.timeLeft),
-      source: u, resistApplied: true });
-  }
+  if (!applySourceCold(b, u, e, duration)) return;
   coldModifiers(b, e); syncAll(b);
 }
 

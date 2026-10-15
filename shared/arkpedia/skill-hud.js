@@ -10,7 +10,7 @@ export function skillSourceFor(unit) {
 
 // Source-owned ammunition is separate from skill SP and activation readiness.
 export function ammunitionHud(unit) {
-  const value = (unit?.mem?.rayMagazine ?? unit?.mem?.coldshotMagazine)?.ammoUi;
+  const value = (unit?.mem?.rayMagazine ?? unit?.mem?.coldshotMagazine ?? unit?.mem?.snhuntMagazine)?.ammoUi;
   return value ? { ...value, text: `${value.current} / ${value.maximum} ammunition` } : null;
 }
 

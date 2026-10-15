@@ -5,6 +5,7 @@
 import evidence from '../../../data/arkpedia-coldshot-prefabs.json' with { type: 'json' };
 import { canTargetEnemy, sortEnemyTargets } from '../targeting.js';
 import { bodyInKeys } from '../body.js';
+import { HunterMagazine } from './arkpedia-hunter-magazine.js';
 export const COLDSHOT_ID = 'char_4104_coldst';
 const bb = rows => Object.fromEntries(rows.map(r => [r.key, r.value]));
 const live = u => u?.alive && u.deployed && !u.hidden && !u._removing;
@@ -21,25 +22,14 @@ export function coldshotCandidates(b, u) {
 /** One source magazine; neither skill activation nor a reload cancellation
  * replaces its stored rounds. The absent no-module extra_add is explicitly
  * mapped to zero, rather than presented as a recovered native default. */
-export class ColdshotMagazine {
+export class ColdshotMagazine extends HunterMagazine {
   constructor(elite) {
     if (![0, 1, 2].includes(elite)) throw Error('Invalid Coldshot promotion');
     const trait = bb(evidence.tables.character.trait.candidates[elite].blackboard);
-    this.capacity = trait.value; this.bullets = this.capacity;
-    this.removed = false;
-    if (![4, 6, 8].includes(this.capacity) || trait.atk_scale !== 1.2)
+    if (![4, 6, 8].includes(trait.value) || trait.atk_scale !== 1.2)
       throw Error('Unreviewed Coldshot trait');
+    super(trait.value);
   }
-  get ammoUi() { return { current: this.bullets, maximum: this.capacity }; }
-  consume() {
-    if (this.removed || this.bullets <= 0) return false;
-    this.bullets--; return true;
-  }
-  refill() {
-    if (this.removed || this.bullets >= this.capacity) return false;
-    this.bullets++; return true;
-  }
-  remove() { this.removed = true; }
 }
 
 export class ColdshotController {

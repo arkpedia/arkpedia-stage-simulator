@@ -58,11 +58,11 @@ const round3 = (x) => Math.round(Number(x) * 1000) / 1000;
  * Parse a Spine 3.8 binary skeleton.
  * @param {Uint8Array} bytes .skel file contents
  * @param {Set<string>} [atlasRegions] region names of the matching atlas (optional, for validation)
- * @param {{includeEventPayloads?: boolean}} [options] retain exact event values for source audits
+ * @param {{includeEventPayloads?: boolean, includeExactDurations?: boolean}} [options] retain exact clocks for source audits
  * @returns {SkelInfo}
  * @throws on malformed data
  */
-export function parseSkel(bytes, atlasRegions, { includeEventPayloads = false } = {}) {
+export function parseSkel(bytes, atlasRegions, { includeEventPayloads = false, includeExactDurations = false } = {}) {
   const r = loadRuntime();
   const missing = new Set();
   const bin = new r.SkeletonBinary(makeLoader(r, atlasRegions, missing));
@@ -72,10 +72,12 @@ export function parseSkel(bytes, atlasRegions, { includeEventPayloads = false } 
   const data = bin.readSkeletonData(new Uint8Array(bytes));
   const animations = data.animations.map((a) => a.name);
   const durations = {};
+  const exactDurations = {};
   const hits = {};
   const eventPayloads = {};
   for (const a of data.animations) {
     durations[a.name] = round3(a.duration);
+    if (includeExactDurations) exactDurations[a.name] = Number(a.duration);
     for (const t of a.timelines) {
       if (!t || !Array.isArray(t.events)) continue;
       for (const e of t.events) {
@@ -97,6 +99,7 @@ export function parseSkel(bytes, atlasRegions, { includeEventPayloads = false } 
     version: String(data.version ?? ''),
     animations,
     durations,
+    ...(includeExactDurations ? { exactDurations } : {}),
     events: data.events.map((e) => e.name),
     hits,
     ...(includeEventPayloads ? { eventPayloads } : {}),
