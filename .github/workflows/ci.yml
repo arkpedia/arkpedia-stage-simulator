@@ -24,10 +24,10 @@ jobs:
     if: ${{ inputs.scope != 'enemy-clocks' }}
     name: ${{ inputs.scope == 'atomic-json' && 'atomic JSON' || 'test' }} (${{ matrix.os }}, node ${{ matrix.node }})
     runs-on: ${{ matrix.os }}
-    # Full Windows/Node 22 runs continued producing passing results when the
-    # old 45-minute job limit stopped them. Keep the complete suite and allow
-    # that slower matrix entry a bounded 90 minutes; other entries retain 45.
-    timeout-minutes: ${{ matrix.os == 'windows-latest' && matrix.node == 22 && 90 || 45 }}
+    # Full source suites now exceed 45 minutes on multiple matrix entries.
+    # Keep every test on Linux/Windows and both Node versions; allow each
+    # complete run a bounded 90 minutes rather than stopping passing progress.
+    timeout-minutes: 90
     strategy:
       fail-fast: false
       matrix:
