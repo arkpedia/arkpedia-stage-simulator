@@ -107,6 +107,7 @@ import { customizePublicMon3trKit, installPublicMon3tr } from './content/arkpedi
 import { customizePublicAkkordKit, installPublicAkkord } from './content/arkpedia-akkord-public.js';
 import { customizePublicWintimKit, installPublicWintim } from './content/arkpedia-wintim-public.js';
 import { customizePublicJcintaKit, installPublicJcinta } from './content/arkpedia-jcinta-public.js';
+import { assertClosurEnemyCompatibility } from '../../shared/arkpedia/closur-enemy-compatibility.js';
 import { customizePublicLieselKit, installPublicLiesel } from './content/arkpedia-liesel-public.js';
 import { customizePublicNecrassKit, installPublicNecrass } from './content/arkpedia-necrass-public.js';
 import { installPublicMuelsyseSquad, customizePublicMuelsyseKit, installPublicMuelsyse } from './content/arkpedia-muelsyse-public.js';
@@ -287,6 +288,8 @@ export class StandardBattle extends Battle {
       ...squad.operators,
       ...(squad.support ? [squad.support] : []),
     ];
+    if (builds.some(b => b.id === 'char_4228_closur' && b.skillId === 'skchr_closur_3'))
+      assertClosurEnemyCompatibility(data);
     const chess = Object.fromEntries(
       builds.map((b) => [b.id, recordFor(b, data)]),
     );
