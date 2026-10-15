@@ -1,0 +1,15 @@
+# Snow Hunter source and runtime review
+
+The original CN receipt is frozen at `data/arkpedia-native-operators/char_4211_snhunt.json` (SHA-256 `37d0ab829cd389fe71eb180e858aa6d82bb43bea0f34bec1a70658ba361d95dd`). It contains five original bundles, 133 components including artwork, thirteen templates and four projectiles. Source selection covers all twenty skill ranks and the promotion/potential/trust variants. No module is admitted.
+
+The held controller reuses the bounded hunter magazine, regular-stage targeting/projectiles/damage/status, and the inherited Stronghold S1 specification. It does not install the seasonal automatic S2 or instant beast handler. A shared Cold-layer helper preserves Gnosis's single-use pairing credits and one ASPD penalty, including after the original producer retires.
+
+- Ordinary shots and S1 consume one round at accepted release, earn ordinary offensive SP only when appropriate, and select one target.
+- S2 preserves the magazine, allows its source charge count, selects each shot independently and launches the second shot after the native additional-launch interval. Its second Spine marker is not a second launch gate.
+- The beast is a separate fixed-lifetime projectile. Its Cold attachment is not damage-missable, so dodge or absorbed HP damage does not suppress an otherwise accepted status.
+- Source projectile survival, current same-life ATK, retired-source launch snapshots, target lives, control interruption and cleanup have separate regression checks.
+- An additive clock receipt preserves unrounded original Spine durations. The original foundation bytes and default parser output stay unchanged.
+
+Original Front/Back artwork retains all six source files and matches the native material, skeleton/atlas pointers and every decoded pixel. Both textures use premultiplied alpha. Separate attack/reload families, downward Front clips and the absent Back death track remain explicit. `extract-snhunt-models.py`, `verify-snhunt-models.py` and `audit-snhunt-models.py` reproduce these bindings and reject 32 altered claims. The art-only browser review loads 38 clips per viewport and records thirty desktop/emulated-phone captures; it does not approve gameplay.
+
+The compiled reload fallback was not recovered. Reload_Loop has no Spine event; the local adapter explicitly refills at loop completion. Numeric selector aliases, stay-still classification, fixed-step ordering, SP/refund clocks, source-only modifier dispatch and retired-source snapshots remain local mappings. Native particles, audio, shaders, modules and original game frame/pixel parity are unverified. Art inspection, combat tests, public squad admission and hosted checks are separate gates.
