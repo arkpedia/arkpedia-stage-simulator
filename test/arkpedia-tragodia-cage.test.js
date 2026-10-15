@@ -64,7 +64,7 @@ test('cage adapter requires its own contract and a fresh selected S3 owner', () 
   assert.throws(() => make({ contract: { ...CONTRACT } }), /reviewed cage contract/);
   assert.throws(() => make({ skill: 1 }), /fresh S3 owner/);
   assert.throws(() => make({ skill: 2 }), /fresh S3 owner/);
-  assert.equal(data.operators[ID], undefined);
+  assert.ok(data.operators[ID]);
   const f = make(); assert.equal(f.b.regularSummons?.has(`summon:${ID}`) ?? false, false);
   assert.equal(CONTRACT.frameParity, false);
 });

@@ -25,7 +25,7 @@ test('eight original cage fixtures remain tied to source object and export diges
   assert.deepEqual(row.streams,[0,1,3,4,34,38]);
  }
  assert.deepEqual(meta.scope,{sourceMapping:true,compiledFrameParity:false,enabledOperators:[]});
- assert.equal(mvp.operators[meta.operator],undefined);
+ assert.ok(mvp.operators[meta.operator]);
 });
 for(const [id,row] of Object.entries(fixtures))test(row.name+' samples authored custom data at its particle age and reverses exactly',()=>{
  const before=structuredClone(row),emitter=createStationaryParticles(row.source),data=createParticleCustomData(row.source.CustomDataModule);

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Opted-in owner diagnostic. Active skills and token controllers remain separate.
+// Source owner controller; active skills, tokens and public review remain separate.
 import evidence from '../../../data/arkpedia-tragodia-prefabs.json' with { type: 'json' };
 import { TRAGODIA_ID as ID, selectedTragodiaBuild, tragodiaSourceComponent as component }
   from './arkpedia-tragodia-source.js';
@@ -8,9 +8,9 @@ import { absoluteRangeKeys, canTargetEnemy, sortEnemyTargets } from '../targetin
 import { bodyInKeys } from '../body.js';
 
 export const TRAGODIA_CORE_CONTRACT = Object.freeze({
-  scope: 'Source-selected Tragodia ordinary Arts attacks, Nervous splash and E2 talents; diagnostic only',
+  scope: 'Source-selected Tragodia ordinary Arts attacks, Nervous splash and E2 talents; public approval recorded separately',
   mapping: 'One retained ground/flying input, original Front/Back Attack_1 release, capped animation speed and independently repeating attack interval. A calculated Arts receipt commits the ATK-based main injury then centre-circle splash, excluding the primary. E2 applies fixed 70 Nervous to an in-range normal enemy attacker at the shared pre-attack hook, after existing palsy interruption; a newly created burst affects subsequent attacks. Source-owned global ASPD additions are the negative magnitude of the source talent during Nervous burst only.',
-  limits: 'Accepted-output, dodge/shield/fatal ordering, numeric selector aliases, aura refresh, newly triggered palsy and the negative ASPD modifier bucket are explicit simulator policies, not recovered compiled Unity dispatch or frame parity. All active skills, lure attraction/pathing, cage lifecycle, token inheritance, delivered artwork and public review remain held. Modules and native particles/shaders/audio remain unsupported.',
+  limits: 'Accepted-output, dodge/shield/fatal ordering, numeric selector aliases, aura refresh, newly triggered palsy and the negative ASPD modifier bucket are explicit simulator policies, not recovered compiled Unity dispatch or frame parity. Active skills, lure/cage controllers and public artwork/approval are supplied separately. Modules, owner/lure native particles and audio remain unsupported; cage presentation retains separate fidelity limits.',
   frameParity: false,
 });
 const present = u => u?.alive && u.deployed && !u._removing;

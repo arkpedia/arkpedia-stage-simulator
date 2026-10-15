@@ -3,6 +3,7 @@ import * as THREE from "/vendor/three.module.js";
 import { fitCamera, syncThreeCamera, pickTile } from "/js/render/projection.js";
 import { BattleActor } from "./battle-actor.js";
 import { HeartCandleActor } from "./heart-candle.js";
+import { loadTragodiaStageEffects } from "./tragodia-assets.js";
 import { EffectOnlyActor } from "./effect-only-actor.js";
 import { regularVisualHeight } from "./regular-form-visual.js";
 import { createAssets } from "/js/assets.js";
@@ -39,6 +40,7 @@ export class StageRenderer {
     this.preloaded = new Map();
     this.effects = [];
     this.nativeEffects = nativeEffects;
+    this.externalNativeEffects = nativeEffects !== null;
     this.scene = new THREE.Scene();
     this.scene.background = new THREE.Color("#10191d");
     this.camera = new THREE.PerspectiveCamera();
@@ -181,6 +183,16 @@ export class StageRenderer {
     };
   }
   async preload(ids, onProgress) {
+    if (!this.externalNativeEffects) {
+      if (ids.includes('char_1042_phatm2') && !this.nativeEffects) {
+        const pass = await loadTragodiaStageEffects({three: THREE, renderer: this.three,
+          descriptor: this.data.nativeEffects?.tragodia, heightAt: (row,col) => this.heightAt(row,col)});
+        if (this.destroyed) { pass.dispose(); throw Error('Stage renderer was closed while loading cage assets'); }
+        this.nativeEffects = pass;
+      } else if (!ids.includes('char_1042_phatm2') && this.nativeEffects) {
+        this.nativeEffects.dispose(); this.nativeEffects = null;
+      }
+    }
     const tokenIds = regularTokenIdsFor(ids);
     const keys = [
       ...[...ids, ...tokenIds].flatMap((id) =>
@@ -559,6 +571,7 @@ export class StageRenderer {
         if (!live.has(id)) {
           if (v.dying === undefined) {
             const death = v.unit?.mem?.regularDeathVisual;
+            if (death?.hide) v.actor.spine.visible = false;
             if (death?.die) v.actor.setRegularVisual(death);
             v.deathDuration = Number.isFinite(death?.duration) && death.duration > 0 ? death.duration : 0.6;
             v.dying = v.deathDuration;

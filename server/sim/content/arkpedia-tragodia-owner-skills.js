@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Owner-only diagnostic. Lure and cage abilities are deliberately not registered.
+// Source owner skills shared by opt-in diagnostics and the reviewed public adapter.
 import evidence from '../../../data/arkpedia-tragodia-prefabs.json' with { type: 'json' };
 import { tragodiaSourceComponent as component } from './arkpedia-tragodia-source.js';
 import { prepareTragodiaCore, TRAGODIA_CORE_CONTRACT } from './arkpedia-tragodia.js';
@@ -7,9 +7,9 @@ import { bodyInKeys } from '../body.js';
 import { burstLocked } from '../damage.js';
 
 export const TRAGODIA_OWNER_SKILLS_CONTRACT = Object.freeze({
-  scope: 'Diagnostic owner portions of all three source-selected Tragodia skills; no public kit approval',
+  scope: 'Diagnostic owner portions of all three source-selected Tragodia skills; public approval recorded separately',
   mapping: 'S1 retains one non-burst-prioritized input, feeds its non-damage-missable Bind before each Arts receipt and releases two hits on one attack account, 0.4 seconds apart. Nervous-only nonstacking amplification follows the accepted owned Bind lifetime. S2 switches to permanent ASPD and expanded centre splash after its native begin clip. S3 uses its source range, ATK, target priority and native 0.2-second ability predelay, rather than the unrelated zero-time Spine event. Positive owner Nervous receipts start a derived 0.1-second-first/selected-interval injury clock, removed at any burst or parent end. In-range Nervous cooldown speed is a source-owned extra elapsed clock and applies to existing bursts on aura enable.',
-  limits: 'Selector numeric aliases, Bind-before-Arts ordering, one retained attack account, nonstacking amplification, derived clock refresh, mode presentation and sampled cooldown speed are explicit simulator policies, not recovered Unity dispatch or frame parity. S2 lure recharge, attraction and paths; S3 cage creation, inheritance and lifecycle; public artwork and review remain held. Modules, native particles, shaders and audio remain unsupported.',
+  limits: 'Selector numeric aliases, Bind-before-Arts ordering, one retained attack account, nonstacking amplification, derived clock refresh, mode presentation and sampled cooldown speed are explicit simulator policies, not recovered Unity dispatch or frame parity. S2 lure and S3 cage mechanics are supplied by their separate controllers and public review. Modules, owner/lure native particles and audio remain unsupported; the original cage presentation retains separate fidelity limits.',
   frameParity: false,
 });
 const live = u => u?.alive && u.deployed && !u.hidden && !u._removing;

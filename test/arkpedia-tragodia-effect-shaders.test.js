@@ -30,9 +30,9 @@ test('all shader receipts stay tied to the original effects bundle and GLES prog
     assert.match(program.entrySha256,/^[0-9a-f]{64}$/);
   }
 });
-test('source shader recovery does not enable an incomplete Tragodia renderer or kit',()=>{
+test('historic shader receipt remains source-only independently of public runtime review',()=>{
   assert.deepEqual(shaders.scope,{nativeSourceOnly:true,rendererVerified:false,
     compiledFrameParity:false,enabledOperators:[]});
-  assert.equal(mvp.operators[shaders.operator],undefined);
+  assert.ok(mvp.operators[shaders.operator]);
   assert.equal(Object.keys(effects.unresolvedReferences).length,4);
 });

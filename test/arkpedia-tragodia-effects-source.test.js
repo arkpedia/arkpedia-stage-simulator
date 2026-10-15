@@ -40,8 +40,8 @@ test('source effect recovery does not publish Tragodia or claim a rendered cage'
   assert.equal(art.scope.pending.length, 3);
   assert.deepEqual(source.enabledOperators, []);
   assert.deepEqual(source.heldOperators, [ID]);
-  assert.equal(REGULAR_OPERATORS[ID], undefined);
-  assert.equal(mvp.operators[ID], undefined);
+  assert.equal(REGULAR_OPERATORS[ID].mechanic, 'tragodia');
+  assert.ok(mvp.operators[ID]);
   const cage = source.officialTokenSkeletonBindings.token_10055_phatm2_mndclv;
   assert.equal(cage.renderingKind, 'effect-only');
   assert.deepEqual(source.tokenModels.token_10055_phatm2_mndclv, {});

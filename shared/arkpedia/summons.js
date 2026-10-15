@@ -96,6 +96,8 @@ export const REGULAR_SUMMONS = Object.freeze({
 // Automatic source spawns have no deployment-deck card, but their original
 // models must load with the owner before battle can draw the spawned unit.
 export const REGULAR_AUTOMATIC_TOKENS = Object.freeze({
+  // The dedicated S2 deck owns the lure; S3 cages render as effects, not Spine.
+  char_1042_phatm2: Object.freeze(['token_10054_phatm2_encdool']),
   // Enemy-death factory servants have no manual deployment card.
   char_450_necras: Object.freeze(['token_10043_necras_skeltn']),
   // The Flowing Shape controller owns its zero-cost tactical point and copies.

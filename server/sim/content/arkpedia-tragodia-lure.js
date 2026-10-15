@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Opt-in S2 diagnostic; this does not register Tragodia in the public roster.
+// Source S2 lure controller; public registration and review remain separate.
 import evidence from '../../../data/arkpedia-tragodia-prefabs.json' with { type: 'json' };
 import { TRAGODIA_ID as ID, tragodiaSourceComponent as component } from './arkpedia-tragodia-source.js';
 import { prepareTragodiaOwnerSkills, TRAGODIA_OWNER_SKILLS_CONTRACT } from './arkpedia-tragodia-owner-skills.js';
@@ -10,9 +10,9 @@ import { absoluteRangeKeys, canTargetEnemy, sortEnemyTargets } from '../targetin
 import { bodyInKeys, bodyDist } from '../body.js';
 
 export const TRAGODIA_LURE_CONTRACT = Object.freeze({
-  scope: 'Source-selected Blood’s Whisper deck, strict attraction and S2 detonation diagnostic; no public approval',
+  scope: 'Source-selected Blood’s Whisper deck, strict attraction and S2 detonation adapter; public approval recorded separately',
   mapping: 'One 5-DP, zero-slot low-ground lure while S2 is active, with its own 25-second recharge after finish. Original token stats remain independent of host stats. Up to four distinct reachable enemies are acquired, elites/leaders first, with the original projectile scan interval and ten-second lifetime. Owned attraction retains targets outside range, ignores status resistance and ends with the lure or target disappearance. Arrival within the selected radius or the ten-second timeout starts the original End clip; native predelay plus On_Attack releases it. Finish selects the original x-1 grid, caches host ATK once and admits independent Slow/damage lifetimes: first 0.1-second receipt then selected interval, Nervous before Arts.',
-  limits: 'Selector numeric aliases, accepted-hit accounting, immediate first scan, strict path smoothing, Begin/End event ordering, combined predelay/event clock, finish-on-withdrawal, independent damage resistance duration and cached source lifetime are explicit simulator policies, not recovered compiled Unity dispatch. Arts scaling follows the selected English skill description; native FixedValueDamage has no explicit atk_scale operand, so the compiled scale transport remains unresolved. Native particles, shaders and audio, S3 cage, delivered artwork and public review remain held.',
+  limits: 'Selector numeric aliases, accepted-hit accounting, immediate first scan, strict path smoothing, Begin/End event ordering, combined predelay/event clock, finish-on-withdrawal, independent damage resistance duration and cached source lifetime are explicit simulator policies, not recovered compiled Unity dispatch. Arts scaling follows the selected English skill description; native FixedValueDamage has no explicit atk_scale operand, so the compiled scale transport remains unresolved. Owner/lure native particles and audio remain unsupported; S3 cage and public artwork/approval are supplied separately.',
   frameParity: false,
 });
 export const TRAGODIA_LURE_ID = 'token_10054_phatm2_encdool';
@@ -76,9 +76,9 @@ export function selectedTragodiaLure(record) {
     || stats.respawnTime !== 25 || stats.maxDeployCount !== 1 || talent.max_target !== 4 || talent.duration !== 10)
     throw Error('Unreviewed Blood’s Whisper selected stats');
   return { ...selected, ...normalizeToken(TOKEN, { name: raw.name, position: raw.position,
-    profession: raw.profession, stats, rangeGrid, talents,
+    profession: raw.profession, stats, rangeGrid, talents, arkpedia: {...record.build},
     skill: { ...selected.skill, ...selected.skill.spData, skillId: selected.skillId } }),
-    bb: selected.bb, models: selected.models, talent };
+    bb: selected.bb, models: selected.models, talent, arkpedia: {...record.build} };
 }
 
 export class TragodiaLureDeck {
@@ -114,7 +114,7 @@ export class TragodiaLureDeck {
   visual(s, clip, loop = false) {
     s.unit.mem.regularModelFacing = 'front';
     s.unit.mem.regularFormVisual = { clip, loop, speed: 1 };
-    s.unit.mem.regularDeathVisual = { clip: 'End', die: 'End', duration: this.record.models.Single.durations.End };
+    delete s.unit.mem.regularDeathVisual; // End is played by the live controller, never replayed as Die.
   }
   place(row, col) {
     const error = this.placementError(row, col); if (error) throw Error(error);
@@ -249,6 +249,7 @@ export class TragodiaLureDeck {
       for (const t of [...s.targets.keys()]) this.dropTarget(s, t);
       if (this.point === s) { this.point = null; this.readyAt = b.time + this.record.stats.respawnTime; }
       if (!this.stopped && this.core.valid()) this.stock = 1;
+      s.unit.mem.regularDeathVisual = {hide:true}; // Completed End or immediate withdrawal has no separate Die artwork.
       if (remove && present(s.unit)) b._remove(s.unit, `tragodia-lure-${reason}`, null, true);
       for (const { t, seq } of recipients) if (!b.finished && live(t) && t.deploySeq === seq) this.attachDamage(s, t, atk);
     } finally { this.finishing--; this.disposeRetired(); }

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Opt-in source-selected S3 capture diagnostic; no public registration.
+// Source S3 capture controller; public registration and review remain separate.
 import evidence from '../../../data/arkpedia-tragodia-prefabs.json' with { type: 'json' };
 import { prepareTragodiaOwnerSkills, TRAGODIA_OWNER_SKILLS_CONTRACT } from './arkpedia-tragodia-owner-skills.js';
 import { tragodiaSourceComponent as component, TRAGODIA_ID } from './arkpedia-tragodia-source.js';
@@ -10,9 +10,9 @@ import { TragodiaCoreController } from './arkpedia-tragodia.js';
 
 export const TRAGODIA_CAGE = 'token_10055_phatm2_mndclv';
 export const TRAGODIA_CAGE_CONTRACT = Object.freeze({
-  scope: 'Source-selected S3 automatic Cage of Chaos creation, refresh, captured blocking, attack-count life and cleanup; diagnostic only',
+  scope: 'Source-selected S3 automatic Cage of Chaos creation, refresh, captured blocking, attack-count life and cleanup; public approval recorded separately',
   mapping: 'Current source-range aura owns one non-independent target slot. Existing Nervous bursts at skill start create cages on empty lowland root tiles; a new accepted Nervous burst creates or refreshes the cage already on that tile. Independent token stats, no DP/slots/manual card, no ordinary acquisition. Creation and refresh capture the ground enemies presently on that root tile, respecting ordinary unblockability/levitation/fear. Captures retain normal attack targets with zero ordinary capacity and never catch later arrivals until refresh. Positive landed HP receipts from captured attackers consume one of three HP per attackId; repeated hits of the same attack do not consume extra lives. Refresh searches again without healing. Empty cages vanish. Skill finish starts an owned thirty-second clock, restart clears only owned clocks, and owner retirement kills owned cages.',
-  limits: 'Native event97, ignoreBlockMode1, numeric flags7/15 and modifiers13/19, force-spawn/card stock and advanced build-mask dispatch, target-root rounding, immediate capture/transfer, ground/immunity eligibility, sampled aura ownership and attackId frequency counting are explicit local mappings. Attack receipts without an identity count individually. Three-hit life follows the pinned English description, not recovered compiled damage conversion. Capture may transfer a current block from another blocker. Scripted HP loss/removal uses the shared engine. Native particles, modules, audio and compiled Unity frame/event/blocking parity remain unverified; no substitute Spine or public kit approval.',
+  limits: 'Native event97, ignoreBlockMode1, numeric flags7/15 and modifiers13/19, force-spawn/card stock and advanced build-mask dispatch, target-root rounding, immediate capture/transfer, ground/immunity eligibility, sampled aura ownership and attackId frequency counting are explicit local mappings. Attack receipts without an identity count individually. Three-hit life follows the pinned English description, not recovered compiled damage conversion. Capture may transfer a current block from another blocker. Scripted HP loss/removal uses the shared engine. Native particles, modules, audio and compiled Unity frame/event/blocking parity remain unverified; no substitute Spine or compiled Unity parity is claimed.',
   frameParity: false,
 });
 const AURA = 'phatm2_s_3[token]', EXPIRY = 'phatm2_s_3[token_cooldown]';

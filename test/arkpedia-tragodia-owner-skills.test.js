@@ -68,7 +68,7 @@ const skillArts = (f, n = f.skills.index) => arts(f).filter(h => h.dmg.tags.incl
 
 test('owner skills require their own contract and remain absent from public selection', () => {
   assert.throws(() => make({ contract: { ...CONTRACT } }), /owner skills contract/);
-  assert.equal(data.operators[ID], undefined);
+  assert.ok(data.operators[ID]);
   const f = make(); assert.equal(f.u.skill.activate(), false);
   assert.equal(f.b.regularSummons?.has(`summon:${ID}`) ?? false, false);
 });
