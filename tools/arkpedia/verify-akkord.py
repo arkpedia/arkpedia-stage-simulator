@@ -30,7 +30,12 @@ assert e['source']['repository'] == 'Kengxxiao/ArknightsGameData'
 assert e['source']['nativeClient'] == '26-09-22-07-47-20_6c71fa'
 assert e['source']['nativeInventorySha256'] == sha(inventory_bytes)
 tree = json.loads((C / 'cn-coverage/table-tree.json').read_bytes())
+assert tree['sha'] == 'a550f5e048bb94e7cdefc6eb97a4091f0c4c7add' and tree['truncated'] is False
 tree = {r['path']: r for r in tree['tree']}
+for path, blob, size in [
+    ('zh_CN/gamedata/battle/buff_template_data.json', 'a94bbb391fded80e59db38ad7c3ded89e25fd682', 27996217),
+    ('zh_CN/gamedata/buff_table.json', 'b588d86b514d61c0025c0d9534f2a4e548aae302', 176162)]:
+    assert tree[path]['sha'] == blob and tree[path]['size'] == size
 expected_paths = {'zh_CN/gamedata/excel/' + s + '.json' for s in
                   ['character_table', 'char_patch_table', 'skill_table', 'range_table']}
 expected_paths |= {'zh_CN/gamedata/battle/buff_template_data.json', 'zh_CN/gamedata/buff_table.json'}

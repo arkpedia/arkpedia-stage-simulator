@@ -115,7 +115,12 @@ test('area API cannot count unarmed/recursive forced attacks or turn a hook-canc
   assert.equal(f.u.stats.attacks, 0);
   const h = f.b.on('beforeAttack', ctx => { if (ctx.attacker === f.u) ctx.targets = []; });
   until(f, () => f.controller.phase?.released); assert.equal(f.attacks.length, 0); assert.equal(f.hits.length, 0);
-  f.b.off(h); until(f, () => f.attacks.length === 1);
+  f.b.off(h);
+  const nested = [], onHit = [];
+  f.b.on('beforeAttack', ctx => { if (ctx.attacker === f.u) nested.push(f.b.forceAttack(f.u, [t])); });
+  f.b.on('damaged', ctx => { if (ctx.source === f.u) onHit.push(f.b.forceAttack(f.u, [t])); });
+  until(f, () => f.attacks.length === 1);
+  assert.deepEqual(nested, [false]); assert.deepEqual(onHit, [false]); assert.equal(f.u.stats.attacks, 1);
 });
 test('an explicit hook veto also cancels an empty source release, and direct empty attacks need opt-in', () => {
   const f = make({ skill: 2 }), t = enemy(f); cast(f);

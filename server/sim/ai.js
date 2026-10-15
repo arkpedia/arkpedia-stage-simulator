@@ -199,8 +199,20 @@ export function acquireTargets(b, u, prof) {
   return n >= cands.length ? cands : cands.slice(0, n);
 }
 
-/** Perform an attack/heal with profile `prof` against `targets`. opts: { noAmmo } (Battle.forceAttack). */
+const areaAdmissions = new WeakSet();
+/** Perform an attack/heal. Reviewed area receipts also serialize reentrant hooks per owner. */
 export function performAttack(b, u, prof, targets, opts = null) {
+  const area = typeof prof.launchAreaAttack === 'function' && typeof prof.acceptAreaAttack === 'function';
+  if (!area) return performAttackReceipt(b, u, prof, targets, opts);
+  // Reserve before beforeAttack, rather than only at damage release: a hook
+  // recursively forcing this owner must not emit itself again or double-spend.
+  // Other owners remain free to attack, and a veto always releases admission.
+  if (areaAdmissions.has(u)) return;
+  areaAdmissions.add(u);
+  try { return performAttackReceipt(b, u, prof, targets, opts); }
+  finally { areaAdmissions.delete(u); }
+}
+function performAttackReceipt(b, u, prof, targets, opts = null) {
   const isSkill = !!prof.isSkill;
   // Explicit source controllers may release one area attack after the enemy
   // which started its windup has gone. Never fabricate a self/enemy target.
