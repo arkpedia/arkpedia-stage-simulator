@@ -1,19 +1,18 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import data from '../data/arkpedia-mvp.json' with { type: 'json' };
 import { prepareMon3trS2, MON3TR_S2_CONTRACT as CONTRACT } from '../server/sim/content/arkpedia-mon3tr-s2.js';
 import { make as makeBase, ally, advance, until, near, disarm } from './helpers/mon3tr-fixture.js';
-const ID = 'char_4179_monstr', KEY = 'monstr_s_2[proj]';
+const KEY = 'monstr_s_2[proj]';
 const make = (opts = {}) => makeBase({ skill: 2, contract: CONTRACT, prepare: prepareMon3trS2, ...opts });
 const cast = f => { f.u.skill.setSpTotal(f.u.skill.spCost); assert.ok(f.u.skill.activate('manual')); };
 const tagged = (f, tag) => f.heals.filter(h => h.opts.mon3trTag === tag);
 
-test('S2 requires a fresh exact selected source contract and does not enable the public roster', () => {
+test('standalone S2 requires a fresh exact selected source contract and does not supply a normal deck', () => {
   assert.throws(() => make({ contract: { ...CONTRACT } }), /selected-skill contract/);
   assert.throws(() => make({ skill: 1 }), /selected-skill contract/);
   assert.throws(() => make({ mutate: d => { d.skill.bb.talent_scale++; } }), /selected source/);
-  assert.equal(data.operators[ID], undefined);
+  assert.equal(make().controller.deck, undefined);
 });
 for (let rank = 1; rank <= 10; rank++) test(`S2 rank ${rank} prioritizes full Reconstruction and emits one independent delayed chain with selected talent scaling`, () => {
   const f = make({ rank }), token = ally(f, { token: true, ratio: 1 });

@@ -1,15 +1,12 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import data from '../data/arkpedia-mvp.json' with { type: 'json' };
-import { MON3TR_ID as ID } from '../server/sim/content/arkpedia-mon3tr-source.js';
 import { prepareMon3trHealing, MON3TR_HEALING_CONTRACT as CONTRACT } from '../server/sim/content/arkpedia-mon3tr-healing.js';
 import { make, ally, advance, until, near, disarm } from './helpers/mon3tr-fixture.js';
 
-test('healing diagnostics require exact source and contract and do not enable S2/S3 or public selection', () => {
+test('standalone healing diagnostics require exact source and contract and do not supply S2/S3', () => {
   assert.throws(() => make({ contract: { ...CONTRACT } }), /healing contract/);
   assert.throws(() => make({ mutate: def => { def.stats.atk++; } }), /selected source/);
-  assert.equal(data.operators[ID], undefined);
   for (const skill of [2, 3]) {
     const f = make({ skill }); ally(f); f.u.skill.setSpTotal(99);
     assert.equal(f.u.skill.activate(), false); assert.equal(f.u.skill.active, false);

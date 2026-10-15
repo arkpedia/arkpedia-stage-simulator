@@ -48,7 +48,7 @@
   "nativeEffects": {
     "tragodia": {
       "repository": "arkpedia/arkpedia-sd-assets",
-      "commit": "b419b4546a6a59fdf01e7089499f986a454c1a89",
+      "commit": "5205aa71124bcfde0493b8ea32e057d8bf7e0eed",
       "manifest": {
         "path": "effects/native/tragodia/26-09-23-17-49-43_b9cc4a/e39769c56a91f5d483632808082a05a3dbe0b71d5a5c99b3ade9ebdee68fd0ff/manifest.json",
         "bytes": 44646,
@@ -58,7 +58,7 @@
   },
   "sd": {
     "repository": "arkpedia/arkpedia-sd-assets",
-    "commit": "b419b4546a6a59fdf01e7089499f986a454c1a89",
+    "commit": "5205aa71124bcfde0493b8ea32e057d8bf7e0eed",
     "models": {
       "operator/char_123_fang/default/front": {
         "kind": "operator",
@@ -51254,6 +51254,222 @@
           "height": 413.006
         }
       },
+      "operator/char_4179_monstr/default/front": {
+        "kind": "operator",
+        "id": "char_4179_monstr",
+        "variant": "default",
+        "facing": "front",
+        "spineVersion": "3.8.99",
+        "source": {
+          "key": "operators",
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "spine/char_4179_monstr/char_4179_monstr/Front"
+        },
+        "skeleton": {
+          "path": "models/operator/char_4179_monstr/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4179_monstr.skel",
+          "bytes": 805793,
+          "sha256": "39371927a29e4d83353d070c640eca535185a25c2beb0621ebc5bbdb2f6b1aac"
+        },
+        "atlas": {
+          "path": "models/operator/char_4179_monstr/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4179_monstr.atlas",
+          "bytes": 13365,
+          "sha256": "88066f7bdfd8e559d9b62f65d463c83efea9561baa85728ecb6efd1157b7117e"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_4179_monstr/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4179_monstr.png",
+            "bytes": 307472,
+            "sha256": "b3545aa3dc319c2d7bf12c707e695756475e470ef9b9f634ffdd46b997a118d0"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Attack": 2.833,
+          "Default": 0,
+          "Die": 1,
+          "Idle": 2.667,
+          "Skill_1": 2.833,
+          "Skill_2_Begin": 0.267,
+          "Skill_2_End": 0.2,
+          "Skill_2_Idle": 2.667,
+          "Skill_2_Loop": 2.833,
+          "Skill_3_Back": 0.833,
+          "Skill_3_Begin": 0.667,
+          "Skill_3_End": 0.333,
+          "Skill_3_Idle": 2.4,
+          "Skill_3_Loop": 1.5,
+          "Skill_3_ReStart": 1,
+          "Start": 1
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null
+          },
+          "attackDown": null,
+          "skill": {
+            "begin": null,
+            "loop": "Skill_1",
+            "end": null,
+            "index": 0,
+            "idle": null
+          },
+          "die": "Die",
+          "move": null,
+          "stun": null,
+          "skills": {
+            "0": {
+              "begin": null,
+              "loop": "Skill_1",
+              "end": null,
+              "index": 0,
+              "idle": null
+            },
+            "1": {
+              "begin": "Skill_2_Begin",
+              "loop": "Skill_2_Loop",
+              "end": "Skill_2_End",
+              "index": 1,
+              "idle": "Skill_2_Idle"
+            },
+            "2": {
+              "begin": "Skill_3_Begin",
+              "loop": "Skill_3_Loop",
+              "end": "Skill_3_End",
+              "index": 2,
+              "idle": "Skill_3_Idle"
+            }
+          }
+        },
+        "hits": {
+          "Attack": [
+            0.567
+          ],
+          "Skill_1": [
+            0.567
+          ],
+          "Skill_2_Loop": [
+            0.667
+          ],
+          "Skill_3_Loop": [
+            0.667
+          ]
+        },
+        "bounds": {
+          "x": -428.481,
+          "y": -2.531,
+          "width": 727.458,
+          "height": 472.36
+        }
+      },
+      "operator/char_4179_monstr/default/back": {
+        "kind": "operator",
+        "id": "char_4179_monstr",
+        "variant": "default",
+        "facing": "back",
+        "spineVersion": "3.8.99",
+        "source": {
+          "key": "operators",
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "spine/char_4179_monstr/char_4179_monstr/Back"
+        },
+        "skeleton": {
+          "path": "models/operator/char_4179_monstr/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4179_monstr.skel",
+          "bytes": 402643,
+          "sha256": "b061d5b237b13798fc556642792468db89ce66ee330e17ecbfe977b9d23266fa"
+        },
+        "atlas": {
+          "path": "models/operator/char_4179_monstr/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4179_monstr.atlas",
+          "bytes": 6772,
+          "sha256": "e08b596464292d6a65d8d8d093242a9d74a0654c605ee894fb1bb95c79183a6c"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_4179_monstr/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4179_monstr.png",
+            "bytes": 243776,
+            "sha256": "f99d5be224be61256833fefbc51b11e9f12afb69363ce99d3917f9cfc3be9318"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Attack": 2.833,
+          "Default": 0,
+          "Idle": 2.667,
+          "Skill_1": 2.833,
+          "Skill_2_Begin": 0.267,
+          "Skill_2_End": 0.2,
+          "Skill_2_Idle": 2.667,
+          "Skill_2_Loop": 2.833,
+          "Skill_3_Back": 0.833,
+          "Skill_3_Begin": 0.667,
+          "Start": 1
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null
+          },
+          "attackDown": null,
+          "skill": {
+            "begin": null,
+            "loop": "Skill_1",
+            "end": null,
+            "index": 0,
+            "idle": null
+          },
+          "die": null,
+          "move": null,
+          "stun": null,
+          "skills": {
+            "0": {
+              "begin": null,
+              "loop": "Skill_1",
+              "end": null,
+              "index": 0,
+              "idle": null
+            },
+            "1": {
+              "begin": "Skill_2_Begin",
+              "loop": "Skill_2_Loop",
+              "end": "Skill_2_End",
+              "index": 1,
+              "idle": "Skill_2_Idle"
+            },
+            "2": {
+              "begin": "Skill_3_Begin",
+              "loop": "Skill_3_Back",
+              "end": null,
+              "index": 2,
+              "idle": null
+            }
+          }
+        },
+        "hits": {
+          "Attack": [
+            0.567
+          ],
+          "Skill_1": [
+            0.567
+          ],
+          "Skill_2_Loop": [
+            0.667
+          ]
+        },
+        "bounds": {
+          "x": -428.481,
+          "y": -1.249,
+          "width": 761.49,
+          "height": 530.75
+        }
+      },
       "operator/char_4138_narant/default/front": {
         "kind": "operator",
         "id": "char_4138_narant",
@@ -73367,6 +73583,196 @@
           }
         }
       },
+      "operator/token_10050_monstr_prosts/default/front": {
+        "kind": "operator",
+        "id": "token_10050_monstr_prosts",
+        "variant": "default",
+        "facing": "front",
+        "source": {
+          "key": "global-client",
+          "kind": "assetbundle",
+          "bundle": {
+            "path": "pkgrps/btl_pfb_tokens_0.ab",
+            "bytes": 5060143,
+            "md5": "5ab8526b9e59e97cc7e94ed6a248013d",
+            "sha256": "eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f",
+            "resourceVersion": "26-09-23-17-49-43_b9cc4a",
+            "url": "https://ark-us-static-online.yo-star.com/assetbundle/official/Android/assets/26-09-23-17-49-43_b9cc4a/pkgrps_btl_pfb_tokens_0.dat",
+            "transforms": [
+              "Original embedded premultiplied RGBA texture decoded; RGB clamped to alpha to remove compression bleed",
+              "Atlas page dimensions normalized and pma: true recorded; native regions unchanged",
+              "Original Single skeleton retains all literal clips; Front/Back entries explicitly alias it"
+            ]
+          },
+          "directory": "pkgrps/btl_pfb_tokens_0.ab",
+          "extractedSkeleton": "token_10050_monstr_prosts.skel",
+          "facingAlias": "single-original-model",
+          "originalPathIds": {
+            "rootPathId": "-7561030455343268320",
+            "controllerPathId": "3549317659382103584",
+            "animatorPathId": "4398285470538710560",
+            "faceSwitcherPathId": "-2266228612215226848",
+            "skeletonAnimationPathId": "-8827589373851222496",
+            "skeletonDataAssetPathId": "3782208699966538094",
+            "textAssetPathId": "4576702927653873844",
+            "atlasAssetPathId": "-8211051051119043435",
+            "atlasTextAssetPathId": "565808119932354042",
+            "materialPathId": "-6482690546241148482",
+            "rgbTexturePathId": "-2969475592712772800"
+          },
+          "transforms": [
+            "Original embedded premultiplied RGBA texture decoded; RGB clamped to alpha to remove compression bleed",
+            "Atlas page dimensions normalized and pma: true recorded; native regions unchanged",
+            "Original Single skeleton retains all literal clips; Front/Back entries explicitly alias it"
+          ]
+        },
+        "spineVersion": "3.8.99",
+        "skeleton": {
+          "path": "models/operator/token_10050_monstr_prosts/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/token_10050_monstr_prosts.skel",
+          "bytes": 16696,
+          "sha256": "1b515f35f427d9e281055cabb218074beed5bbff48321a0ecc9d4e5e0dfdb82a"
+        },
+        "atlas": {
+          "path": "models/operator/token_10050_monstr_prosts/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/token_10050_monstr_prosts.atlas",
+          "bytes": 294,
+          "sha256": "426212d334c46445affd4d255e4b50054470ad21996834cdb7266fa854394d22"
+        },
+        "textures": [
+          {
+            "path": "models/operator/token_10050_monstr_prosts/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/token_10050_monstr_prosts.png",
+            "bytes": 11460,
+            "sha256": "23be20e8090a89186a7a560b31685e83fa64d363b4121f824623440320363b80"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Attack": 1.333,
+          "Default": 0,
+          "Die": 1,
+          "Idle": 2,
+          "Skill_3": 0,
+          "Skill_3_Begin": 0.667,
+          "Start": 1
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": null,
+          "die": "Die",
+          "skill": null
+        },
+        "hits": {
+          "Attack": [
+            0.033
+          ]
+        },
+        "bounds": null,
+        "avatar": {
+          "path": "models/operator/token_10050_monstr_prosts/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png",
+          "bytes": 24703,
+          "sha256": "fec504d3bf457f7a7786287c1f83c15e3a660d7a0d56b752de1a42e251dccc05",
+          "source": {
+            "repository": "fexli/ArknightsResource",
+            "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+            "directory": "avatar/ASSISTANT"
+          }
+        }
+      },
+      "operator/token_10050_monstr_prosts/default/back": {
+        "kind": "operator",
+        "id": "token_10050_monstr_prosts",
+        "variant": "default",
+        "facing": "back",
+        "source": {
+          "key": "global-client",
+          "kind": "assetbundle",
+          "bundle": {
+            "path": "pkgrps/btl_pfb_tokens_0.ab",
+            "bytes": 5060143,
+            "md5": "5ab8526b9e59e97cc7e94ed6a248013d",
+            "sha256": "eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f",
+            "resourceVersion": "26-09-23-17-49-43_b9cc4a",
+            "url": "https://ark-us-static-online.yo-star.com/assetbundle/official/Android/assets/26-09-23-17-49-43_b9cc4a/pkgrps_btl_pfb_tokens_0.dat",
+            "transforms": [
+              "Original embedded premultiplied RGBA texture decoded; RGB clamped to alpha to remove compression bleed",
+              "Atlas page dimensions normalized and pma: true recorded; native regions unchanged",
+              "Original Single skeleton retains all literal clips; Front/Back entries explicitly alias it"
+            ]
+          },
+          "directory": "pkgrps/btl_pfb_tokens_0.ab",
+          "extractedSkeleton": "token_10050_monstr_prosts.skel",
+          "facingAlias": "single-original-model",
+          "originalPathIds": {
+            "rootPathId": "-7561030455343268320",
+            "controllerPathId": "3549317659382103584",
+            "animatorPathId": "4398285470538710560",
+            "faceSwitcherPathId": "-2266228612215226848",
+            "skeletonAnimationPathId": "-8827589373851222496",
+            "skeletonDataAssetPathId": "3782208699966538094",
+            "textAssetPathId": "4576702927653873844",
+            "atlasAssetPathId": "-8211051051119043435",
+            "atlasTextAssetPathId": "565808119932354042",
+            "materialPathId": "-6482690546241148482",
+            "rgbTexturePathId": "-2969475592712772800"
+          },
+          "transforms": [
+            "Original embedded premultiplied RGBA texture decoded; RGB clamped to alpha to remove compression bleed",
+            "Atlas page dimensions normalized and pma: true recorded; native regions unchanged",
+            "Original Single skeleton retains all literal clips; Front/Back entries explicitly alias it"
+          ]
+        },
+        "spineVersion": "3.8.99",
+        "skeleton": {
+          "path": "models/operator/token_10050_monstr_prosts/default/back/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/token_10050_monstr_prosts.skel",
+          "bytes": 16696,
+          "sha256": "1b515f35f427d9e281055cabb218074beed5bbff48321a0ecc9d4e5e0dfdb82a"
+        },
+        "atlas": {
+          "path": "models/operator/token_10050_monstr_prosts/default/back/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/token_10050_monstr_prosts.atlas",
+          "bytes": 294,
+          "sha256": "426212d334c46445affd4d255e4b50054470ad21996834cdb7266fa854394d22"
+        },
+        "textures": [
+          {
+            "path": "models/operator/token_10050_monstr_prosts/default/back/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/token_10050_monstr_prosts.png",
+            "bytes": 11460,
+            "sha256": "23be20e8090a89186a7a560b31685e83fa64d363b4121f824623440320363b80"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Attack": 1.333,
+          "Default": 0,
+          "Die": 1,
+          "Idle": 2,
+          "Skill_3": 0,
+          "Skill_3_Begin": 0.667,
+          "Start": 1
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": null,
+          "die": "Die",
+          "skill": null
+        },
+        "hits": {
+          "Attack": [
+            0.033
+          ]
+        },
+        "bounds": null,
+        "avatar": {
+          "path": "models/operator/token_10050_monstr_prosts/default/back/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png",
+          "bytes": 24703,
+          "sha256": "fec504d3bf457f7a7786287c1f83c15e3a660d7a0d56b752de1a42e251dccc05",
+          "source": {
+            "repository": "fexli/ArknightsResource",
+            "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+            "directory": "avatar/ASSISTANT"
+          }
+        }
+      },
       "operator/token_10054_phatm2_encdool/default/front": {
         "kind": "operator",
         "id": "token_10054_phatm2_encdool",
@@ -84019,7 +84425,7 @@
     },
     "art": {
       "repository": "arkpedia/arkpedia-sd-assets",
-      "commit": "b419b4546a6a59fdf01e7089499f986a454c1a89",
+      "commit": "5205aa71124bcfde0493b8ea32e057d8bf7e0eed",
       "scene": {
         "path": "stages/0-1/26-09-23-17-49-43_b9cc4a/scene.json",
         "bytes": 4479,
@@ -84028,7 +84434,7 @@
     },
     "gates": {
       "repository": "arkpedia/arkpedia-sd-assets",
-      "commit": "b419b4546a6a59fdf01e7089499f986a454c1a89",
+      "commit": "5205aa71124bcfde0493b8ea32e057d8bf7e0eed",
       "pack": {
         "path": "effects/standard-gates/26-09-23-17-49-43_b9cc4a/gates.json",
         "bytes": 3507,
@@ -454597,6 +455003,3176 @@
         "victoria"
       ]
     },
+    "char_4179_monstr": {
+      "id": "char_4179_monstr",
+      "name": "Mon3tr",
+      "description": "Restores HP of allies, bouncing between <@ba.kw>3</> allies. Healing reduced by 25% per bounce.",
+      "rarity": 6,
+      "profession": "MEDIC",
+      "subProfessionId": "chainhealer",
+      "position": "RANGED",
+      "nationId": "rhodes",
+      "groupId": null,
+      "teamId": null,
+      "phases": [
+        {
+          "maxLevel": 50,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 952,
+                "atk": 184,
+                "def": 96,
+                "magicResistance": 0,
+                "cost": 16,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 2.85,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 50,
+              "data": {
+                "maxHp": 1253,
+                "atk": 303,
+                "def": 140,
+                "magicResistance": 0,
+                "cost": 16,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 2.85,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              1,
+              -1
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              0,
+              -1
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              -1,
+              -1
+            ],
+            [
+              -1,
+              0
+            ],
+            [
+              -1,
+              1
+            ]
+          ]
+        },
+        {
+          "maxLevel": 80,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 1253,
+                "atk": 303,
+                "def": 140,
+                "magicResistance": 0,
+                "cost": 18,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 2.85,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 80,
+              "data": {
+                "maxHp": 1492,
+                "atk": 422,
+                "def": 176,
+                "magicResistance": 0,
+                "cost": 18,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 2.85,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              1,
+              -1
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              0,
+              -1
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              -1,
+              -1
+            ],
+            [
+              -1,
+              0
+            ],
+            [
+              -1,
+              1
+            ],
+            [
+              -1,
+              2
+            ]
+          ]
+        },
+        {
+          "maxLevel": 90,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 1492,
+                "atk": 422,
+                "def": 176,
+                "magicResistance": 0,
+                "cost": 18,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 2.85,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 90,
+              "data": {
+                "maxHp": 1735,
+                "atk": 528,
+                "def": 221,
+                "magicResistance": 0,
+                "cost": 18,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 2.85,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              1,
+              -1
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              0,
+              -1
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              -1,
+              -1
+            ],
+            [
+              -1,
+              0
+            ],
+            [
+              -1,
+              1
+            ],
+            [
+              -1,
+              2
+            ]
+          ]
+        }
+      ],
+      "favorKeyFrames": [
+        {
+          "level": 0,
+          "data": {
+            "maxHp": 0,
+            "atk": 0,
+            "def": 0,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false
+          }
+        },
+        {
+          "level": 50,
+          "data": {
+            "maxHp": 500,
+            "atk": 30,
+            "def": 0,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false
+          }
+        }
+      ],
+      "potentialRanks": [
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [],
+        [
+          {
+            "attributeType": "ATK",
+            "formulaItem": "ADDITION",
+            "value": 25,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        []
+      ],
+      "trait": {
+        "candidates": [
+          {
+            "unlockCondition": {
+              "phase": "PHASE_0",
+              "level": 1
+            },
+            "requiredPotentialRank": 0,
+            "blackboard": [
+              {
+                "key": "attack@chain.max_target",
+                "value": 3,
+                "valueStr": null
+              },
+              {
+                "key": "attack@chain.atk_scale",
+                "value": 0.75,
+                "valueStr": null
+              }
+            ],
+            "overrideDescripton": "Restores HP of allies, bouncing between <@ba.kw>3</> allies. Healing reduced by 25% per bounce.",
+            "prefabKey": "-1",
+            "rangeId": null
+          }
+        ]
+      },
+      "talents": [
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_0",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Self-Repair",
+              "description": "Can deploy a Reconstruction on the ground within Attack Range that can only be healed by Mon3tr; the Reconstruction grants surrounding allies +3% ATK; when the Reconstruction receives healing from itself or Mon3tr, it performs an additional healing bounce that does not weaken",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.03,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": "token_10050_monstr_prosts",
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_0",
+                "level": 1
+              },
+              "requiredPotentialRank": 2,
+              "prefabKey": "1",
+              "name": "Self-Repair",
+              "description": "Can deploy a Reconstruction on the ground within Attack Range that can only be healed by Mon3tr; the Reconstruction grants surrounding allies +8% <@ba.talpu>(+5%)</> ATK; when the Reconstruction receives healing from itself or Mon3tr, it performs an additional healing bounce that does not weaken",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.08,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": "token_10050_monstr_prosts",
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Self-Repair",
+              "description": "Can deploy a Reconstruction on the ground within Attack Range that can only be healed by Mon3tr; the Reconstruction grants surrounding allies +5% ATK; when the Reconstruction receives healing from itself or Mon3tr, it performs an additional healing bounce that does not weaken",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.05,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": "token_10050_monstr_prosts",
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 1
+              },
+              "requiredPotentialRank": 2,
+              "prefabKey": "1",
+              "name": "Self-Repair",
+              "description": "Can deploy a Reconstruction on the ground within Attack Range that can only be healed by Mon3tr; the Reconstruction grants surrounding allies +10% <@ba.talpu>(+5%)</> ATK; when the Reconstruction receives healing from itself or Mon3tr, it performs an additional healing bounce that does not weaken",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.1,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": "token_10050_monstr_prosts",
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "Self-Repair",
+              "description": "Can deploy a Reconstruction on the ground within Attack Range that can only be healed by Mon3tr; the Reconstruction grants surrounding allies +15% ATK; when the Reconstruction receives healing from itself or Mon3tr, it performs an additional healing bounce that does not weaken",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.15,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": "token_10050_monstr_prosts",
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 2,
+              "prefabKey": "1",
+              "name": "Self-Repair",
+              "description": "Can deploy a Reconstruction on the ground within Attack Range that can only be healed by Mon3tr; the Reconstruction grants surrounding allies +20% <@ba.talpu>(+5%)</> ATK; when the Reconstruction receives healing from itself or Mon3tr, it performs an additional healing bounce that does not weaken",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.2,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": "token_10050_monstr_prosts",
+              "isHideTalent": false
+            }
+          ]
+        },
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "2",
+              "name": "Tactical Coordination",
+              "description": "Whenever Mon3tr or the Reconstruction heals a target, grants Mon3tr and the target +10 ASPD for 10s (does not stack)",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "buff_duration",
+                  "value": 10,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack_speed",
+                  "value": 10,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": "token_10050_monstr_prosts",
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 1
+              },
+              "requiredPotentialRank": 5,
+              "prefabKey": "2",
+              "name": "Tactical Coordination",
+              "description": "Whenever Mon3tr or the Reconstruction heals a target, grants Mon3tr and the target +12 <@ba.talpu>(+2)</> ASPD for 10s (does not stack)",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "buff_duration",
+                  "value": 10,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack_speed",
+                  "value": 12,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": "token_10050_monstr_prosts",
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "2",
+              "name": "Tactical Coordination",
+              "description": "Whenever Mon3tr or the Reconstruction heals a target, grants Mon3tr and the target +20 ASPD for 10s (does not stack)",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "buff_duration",
+                  "value": 10,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack_speed",
+                  "value": 20,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": "token_10050_monstr_prosts",
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 5,
+              "prefabKey": "2",
+              "name": "Tactical Coordination",
+              "description": "Whenever Mon3tr or the Reconstruction heals a target, grants Mon3tr and the target +22 <@ba.talpu>(+2)</> ASPD for 10s (does not stack)",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "buff_duration",
+                  "value": 10,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack_speed",
+                  "value": 22,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": "token_10050_monstr_prosts",
+              "isHideTalent": false
+            }
+          ]
+        }
+      ],
+      "skills": [
+        {
+          "id": "skchr_monstr_1",
+          "unlockCondition": {
+            "phase": "PHASE_0",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "Stratagem: Hyperpressurized Link",
+              "rangeId": "y-2",
+              "description": "The next heal is increased to <@ba.vup>{heal_scale:0%}</> ATK, and bounces per heal <@ba.vup>+1</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 5,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_monstr_1",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "heal_scale",
+                  "value": 1.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "chain.max_target",
+                  "value": 4,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ]
+              ]
+            },
+            {
+              "name": "Stratagem: Hyperpressurized Link",
+              "rangeId": "y-2",
+              "description": "The next heal is increased to <@ba.vup>{heal_scale:0%}</> ATK, and bounces per heal <@ba.vup>+1</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 5,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_monstr_1",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "heal_scale",
+                  "value": 1.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "chain.max_target",
+                  "value": 4,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ]
+              ]
+            },
+            {
+              "name": "Stratagem: Hyperpressurized Link",
+              "rangeId": "y-2",
+              "description": "The next heal is increased to <@ba.vup>{heal_scale:0%}</> ATK, and bounces per heal <@ba.vup>+1</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 5,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_monstr_1",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "heal_scale",
+                  "value": 1.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "chain.max_target",
+                  "value": 4,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ]
+              ]
+            },
+            {
+              "name": "Stratagem: Hyperpressurized Link",
+              "rangeId": "y-2",
+              "description": "The next heal is increased to <@ba.vup>{heal_scale:0%}</> ATK, and bounces per heal <@ba.vup>+1</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 5,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_monstr_1",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "heal_scale",
+                  "value": 1.35,
+                  "valueStr": null
+                },
+                {
+                  "key": "chain.max_target",
+                  "value": 4,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ]
+              ]
+            },
+            {
+              "name": "Stratagem: Hyperpressurized Link",
+              "rangeId": "y-2",
+              "description": "The next heal is increased to <@ba.vup>{heal_scale:0%}</> ATK, and bounces per heal <@ba.vup>+1</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 5,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_monstr_1",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "heal_scale",
+                  "value": 1.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "chain.max_target",
+                  "value": 4,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ]
+              ]
+            },
+            {
+              "name": "Stratagem: Hyperpressurized Link",
+              "rangeId": "y-2",
+              "description": "The next heal is increased to <@ba.vup>{heal_scale:0%}</> ATK, and bounces per heal <@ba.vup>+1</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 5,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_monstr_1",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "heal_scale",
+                  "value": 1.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "chain.max_target",
+                  "value": 4,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ]
+              ]
+            },
+            {
+              "name": "Stratagem: Hyperpressurized Link",
+              "rangeId": "y-2",
+              "description": "The next heal is increased to <@ba.vup>{heal_scale:0%}</> ATK, and bounces per heal <@ba.vup>+1</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 3,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_monstr_1",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "heal_scale",
+                  "value": 1.7,
+                  "valueStr": null
+                },
+                {
+                  "key": "chain.max_target",
+                  "value": 4,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ]
+              ]
+            },
+            {
+              "name": "Stratagem: Hyperpressurized Link",
+              "rangeId": "y-2",
+              "description": "The next heal is increased to <@ba.vup>{heal_scale:0%}</> ATK, and bounces per heal <@ba.vup>+1</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 3,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_monstr_1",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "heal_scale",
+                  "value": 1.8,
+                  "valueStr": null
+                },
+                {
+                  "key": "chain.max_target",
+                  "value": 4,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ]
+              ]
+            },
+            {
+              "name": "Stratagem: Hyperpressurized Link",
+              "rangeId": "y-2",
+              "description": "The next heal is increased to <@ba.vup>{heal_scale:0%}</> ATK, and bounces per heal <@ba.vup>+1</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 3,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_monstr_1",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "heal_scale",
+                  "value": 1.9,
+                  "valueStr": null
+                },
+                {
+                  "key": "chain.max_target",
+                  "value": 4,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ]
+              ]
+            },
+            {
+              "name": "Stratagem: Hyperpressurized Link",
+              "rangeId": "y-2",
+              "description": "The next heal is increased to <@ba.vup>{heal_scale:0%}</> ATK, and bounces per heal <@ba.vup>+1</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 2,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_monstr_1",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "heal_scale",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "chain.max_target",
+                  "value": 4,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "id": "skchr_monstr_2",
+          "unlockCondition": {
+            "phase": "PHASE_1",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "Stratagem: Overload",
+              "rangeId": "y-2",
+              "description": "When skill is active, prioritizes healing the Reconstruction; whenever the Reconstruction is healed by Mon3tr, it will perform a bouncing heal; Talent 2's effect increases to <@ba.vup>{talent_scale}</>x",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 15,
+                "initSp": 5,
+                "increment": 1
+              },
+              "prefabId": "skchr_monstr_2",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "talent_scale",
+                  "value": 1.5,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ]
+              ]
+            },
+            {
+              "name": "Stratagem: Overload",
+              "rangeId": "y-2",
+              "description": "When skill is active, prioritizes healing the Reconstruction; whenever the Reconstruction is healed by Mon3tr, it will perform a bouncing heal; Talent 2's effect increases to <@ba.vup>{talent_scale}</>x",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 15,
+                "initSp": 5,
+                "increment": 1
+              },
+              "prefabId": "skchr_monstr_2",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "talent_scale",
+                  "value": 1.6,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ]
+              ]
+            },
+            {
+              "name": "Stratagem: Overload",
+              "rangeId": "y-2",
+              "description": "When skill is active, prioritizes healing the Reconstruction; whenever the Reconstruction is healed by Mon3tr, it will perform a bouncing heal; Talent 2's effect increases to <@ba.vup>{talent_scale}</>x",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 15,
+                "initSp": 5,
+                "increment": 1
+              },
+              "prefabId": "skchr_monstr_2",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "talent_scale",
+                  "value": 1.7,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ]
+              ]
+            },
+            {
+              "name": "Stratagem: Overload",
+              "rangeId": "y-2",
+              "description": "When skill is active, prioritizes healing the Reconstruction; whenever the Reconstruction is healed by Mon3tr, it will perform a bouncing heal; Talent 2's effect increases to <@ba.vup>{talent_scale}</>x",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 15,
+                "initSp": 7,
+                "increment": 1
+              },
+              "prefabId": "skchr_monstr_2",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "talent_scale",
+                  "value": 1.8,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ]
+              ]
+            },
+            {
+              "name": "Stratagem: Overload",
+              "rangeId": "y-2",
+              "description": "When skill is active, prioritizes healing the Reconstruction; whenever the Reconstruction is healed by Mon3tr, it will perform a bouncing heal; Talent 2's effect increases to <@ba.vup>{talent_scale}</>x",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 15,
+                "initSp": 7,
+                "increment": 1
+              },
+              "prefabId": "skchr_monstr_2",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "talent_scale",
+                  "value": 2,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ]
+              ]
+            },
+            {
+              "name": "Stratagem: Overload",
+              "rangeId": "y-2",
+              "description": "When skill is active, prioritizes healing the Reconstruction; whenever the Reconstruction is healed by Mon3tr, it will perform a bouncing heal; Talent 2's effect increases to <@ba.vup>{talent_scale}</>x",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 15,
+                "initSp": 7,
+                "increment": 1
+              },
+              "prefabId": "skchr_monstr_2",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "talent_scale",
+                  "value": 2.1,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ]
+              ]
+            },
+            {
+              "name": "Stratagem: Overload",
+              "rangeId": "y-2",
+              "description": "When skill is active, prioritizes healing the Reconstruction; whenever the Reconstruction is healed by Mon3tr, it will perform a bouncing heal; Talent 2's effect increases to <@ba.vup>{talent_scale}</>x",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 15,
+                "initSp": 8,
+                "increment": 1
+              },
+              "prefabId": "skchr_monstr_2",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "talent_scale",
+                  "value": 2.3,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ]
+              ]
+            },
+            {
+              "name": "Stratagem: Overload",
+              "rangeId": "y-2",
+              "description": "When skill is active, prioritizes healing the Reconstruction; whenever the Reconstruction is healed by Mon3tr, it will perform a bouncing heal; Talent 2's effect increases to <@ba.vup>{talent_scale}</>x",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 15,
+                "initSp": 9,
+                "increment": 1
+              },
+              "prefabId": "skchr_monstr_2",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "talent_scale",
+                  "value": 2.5,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ]
+              ]
+            },
+            {
+              "name": "Stratagem: Overload",
+              "rangeId": "y-2",
+              "description": "When skill is active, prioritizes healing the Reconstruction; whenever the Reconstruction is healed by Mon3tr, it will perform a bouncing heal; Talent 2's effect increases to <@ba.vup>{talent_scale}</>x",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 15,
+                "initSp": 10,
+                "increment": 1
+              },
+              "prefabId": "skchr_monstr_2",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "talent_scale",
+                  "value": 2.6,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ]
+              ]
+            },
+            {
+              "name": "Stratagem: Overload",
+              "rangeId": "y-2",
+              "description": "When skill is active, prioritizes healing the Reconstruction; whenever the Reconstruction is healed by Mon3tr, it will perform a bouncing heal; Talent 2's effect increases to <@ba.vup>{talent_scale}</>x",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 15,
+                "initSp": 13,
+                "increment": 1
+              },
+              "prefabId": "skchr_monstr_2",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "talent_scale",
+                  "value": 2.8,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "id": "skchr_monstr_3",
+          "unlockCondition": {
+            "phase": "PHASE_2",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "Stratagem: Meltdown",
+              "rangeId": "x-4",
+              "description": "Attack Range changes, <$ba.addash>Moves</> to the position of the Reconstruction, ATK <@ba.vup>+{atk:0%}</>, Attack Interval reduces, Block <@ba.vup>+{block_cnt}</>, Max HP <@ba.vup>+{max_hp}</>, loses <@ba.vdown>{damage_per_second}</> HP per second, attacks all blocked enemies, attacks deal <@ba.vup>True</> damage, and attacks heal self by <@ba.vup>{attack@heal_scale:0%}</> ATK\n<@ba.rem>When skill ends or lethal damage is taken, Mon3tr returns to her original position</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 15,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_monstr_3",
+              "duration": 25,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "damage_per_second",
+                  "value": 80,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_hp",
+                  "value": 5000,
+                  "valueStr": null
+                },
+                {
+                  "key": "block_cnt",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": -1.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@heal_scale",
+                  "value": 0.5,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Stratagem: Meltdown",
+              "rangeId": "x-4",
+              "description": "Attack Range changes, <$ba.addash>Moves</> to the position of the Reconstruction, ATK <@ba.vup>+{atk:0%}</>, Attack Interval reduces, Block <@ba.vup>+{block_cnt}</>, Max HP <@ba.vup>+{max_hp}</>, loses <@ba.vdown>{damage_per_second}</> HP per second, attacks all blocked enemies, attacks deal <@ba.vup>True</> damage, and attacks heal self by <@ba.vup>{attack@heal_scale:0%}</> ATK\n<@ba.rem>When skill ends or lethal damage is taken, Mon3tr returns to her original position</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 15,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_monstr_3",
+              "duration": 25,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 2.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "damage_per_second",
+                  "value": 80,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_hp",
+                  "value": 5000,
+                  "valueStr": null
+                },
+                {
+                  "key": "block_cnt",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": -1.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@heal_scale",
+                  "value": 0.5,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Stratagem: Meltdown",
+              "rangeId": "x-4",
+              "description": "Attack Range changes, <$ba.addash>Moves</> to the position of the Reconstruction, ATK <@ba.vup>+{atk:0%}</>, Attack Interval reduces, Block <@ba.vup>+{block_cnt}</>, Max HP <@ba.vup>+{max_hp}</>, loses <@ba.vdown>{damage_per_second}</> HP per second, attacks all blocked enemies, attacks deal <@ba.vup>True</> damage, and attacks heal self by <@ba.vup>{attack@heal_scale:0%}</> ATK\n<@ba.rem>When skill ends or lethal damage is taken, Mon3tr returns to her original position</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 15,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_monstr_3",
+              "duration": 25,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 2.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "damage_per_second",
+                  "value": 80,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_hp",
+                  "value": 5000,
+                  "valueStr": null
+                },
+                {
+                  "key": "block_cnt",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": -1.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@heal_scale",
+                  "value": 0.5,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Stratagem: Meltdown",
+              "rangeId": "x-4",
+              "description": "Attack Range changes, <$ba.addash>Moves</> to the position of the Reconstruction, ATK <@ba.vup>+{atk:0%}</>, Attack Interval reduces, Block <@ba.vup>+{block_cnt}</>, Max HP <@ba.vup>+{max_hp}</>, loses <@ba.vdown>{damage_per_second}</> HP per second, attacks all blocked enemies, attacks deal <@ba.vup>True</> damage, and attacks heal self by <@ba.vup>{attack@heal_scale:0%}</> ATK\n<@ba.rem>When skill ends or lethal damage is taken, Mon3tr returns to her original position</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 15,
+                "initSp": 5,
+                "increment": 1
+              },
+              "prefabId": "skchr_monstr_3",
+              "duration": 25,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 2.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "damage_per_second",
+                  "value": 80,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_hp",
+                  "value": 5000,
+                  "valueStr": null
+                },
+                {
+                  "key": "block_cnt",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": -1.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@heal_scale",
+                  "value": 0.5,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Stratagem: Meltdown",
+              "rangeId": "x-4",
+              "description": "Attack Range changes, <$ba.addash>Moves</> to the position of the Reconstruction, ATK <@ba.vup>+{atk:0%}</>, Attack Interval reduces, Block <@ba.vup>+{block_cnt}</>, Max HP <@ba.vup>+{max_hp}</>, loses <@ba.vdown>{damage_per_second}</> HP per second, attacks all blocked enemies, attacks deal <@ba.vup>True</> damage, and attacks heal self by <@ba.vup>{attack@heal_scale:0%}</> ATK\n<@ba.rem>When skill ends or lethal damage is taken, Mon3tr returns to her original position</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 15,
+                "initSp": 5,
+                "increment": 1
+              },
+              "prefabId": "skchr_monstr_3",
+              "duration": 25,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 2.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "damage_per_second",
+                  "value": 80,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_hp",
+                  "value": 5000,
+                  "valueStr": null
+                },
+                {
+                  "key": "block_cnt",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": -1.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@heal_scale",
+                  "value": 0.5,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Stratagem: Meltdown",
+              "rangeId": "x-4",
+              "description": "Attack Range changes, <$ba.addash>Moves</> to the position of the Reconstruction, ATK <@ba.vup>+{atk:0%}</>, Attack Interval reduces, Block <@ba.vup>+{block_cnt}</>, Max HP <@ba.vup>+{max_hp}</>, loses <@ba.vdown>{damage_per_second}</> HP per second, attacks all blocked enemies, attacks deal <@ba.vup>True</> damage, and attacks heal self by <@ba.vup>{attack@heal_scale:0%}</> ATK\n<@ba.rem>When skill ends or lethal damage is taken, Mon3tr returns to her original position</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 15,
+                "initSp": 5,
+                "increment": 1
+              },
+              "prefabId": "skchr_monstr_3",
+              "duration": 25,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 2.7,
+                  "valueStr": null
+                },
+                {
+                  "key": "damage_per_second",
+                  "value": 80,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_hp",
+                  "value": 5000,
+                  "valueStr": null
+                },
+                {
+                  "key": "block_cnt",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": -1.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@heal_scale",
+                  "value": 0.5,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Stratagem: Meltdown",
+              "rangeId": "x-4",
+              "description": "Attack Range changes, <$ba.addash>Moves</> to the position of the Reconstruction, ATK <@ba.vup>+{atk:0%}</>, Attack Interval reduces, Block <@ba.vup>+{block_cnt}</>, Max HP <@ba.vup>+{max_hp}</>, loses <@ba.vdown>{damage_per_second}</> HP per second, attacks all blocked enemies, attacks deal <@ba.vup>True</> damage, and attacks heal self by <@ba.vup>{attack@heal_scale:0%}</> ATK\n<@ba.rem>When skill ends or lethal damage is taken, Mon3tr returns to her original position</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 15,
+                "initSp": 7,
+                "increment": 1
+              },
+              "prefabId": "skchr_monstr_3",
+              "duration": 25,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 2.8,
+                  "valueStr": null
+                },
+                {
+                  "key": "damage_per_second",
+                  "value": 80,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_hp",
+                  "value": 5000,
+                  "valueStr": null
+                },
+                {
+                  "key": "block_cnt",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": -1.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@heal_scale",
+                  "value": 0.5,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Stratagem: Meltdown",
+              "rangeId": "x-4",
+              "description": "Attack Range changes, <$ba.addash>Moves</> to the position of the Reconstruction, ATK <@ba.vup>+{atk:0%}</>, Attack Interval reduces, Block <@ba.vup>+{block_cnt}</>, Max HP <@ba.vup>+{max_hp}</>, loses <@ba.vdown>{damage_per_second}</> HP per second, attacks all blocked enemies, attacks deal <@ba.vup>True</> damage, and attacks heal self by <@ba.vup>{attack@heal_scale:0%}</> ATK\n<@ba.rem>When skill ends or lethal damage is taken, Mon3tr returns to her original position</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 15,
+                "initSp": 8,
+                "increment": 1
+              },
+              "prefabId": "skchr_monstr_3",
+              "duration": 25,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "damage_per_second",
+                  "value": 80,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_hp",
+                  "value": 5000,
+                  "valueStr": null
+                },
+                {
+                  "key": "block_cnt",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": -1.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@heal_scale",
+                  "value": 0.5,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Stratagem: Meltdown",
+              "rangeId": "x-4",
+              "description": "Attack Range changes, <$ba.addash>Moves</> to the position of the Reconstruction, ATK <@ba.vup>+{atk:0%}</>, Attack Interval reduces, Block <@ba.vup>+{block_cnt}</>, Max HP <@ba.vup>+{max_hp}</>, loses <@ba.vdown>{damage_per_second}</> HP per second, attacks all blocked enemies, attacks deal <@ba.vup>True</> damage, and attacks heal self by <@ba.vup>{attack@heal_scale:0%}</> ATK\n<@ba.rem>When skill ends or lethal damage is taken, Mon3tr returns to her original position</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 15,
+                "initSp": 9,
+                "increment": 1
+              },
+              "prefabId": "skchr_monstr_3",
+              "duration": 25,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 3.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "damage_per_second",
+                  "value": 80,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_hp",
+                  "value": 5000,
+                  "valueStr": null
+                },
+                {
+                  "key": "block_cnt",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": -1.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@heal_scale",
+                  "value": 0.5,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Stratagem: Meltdown",
+              "rangeId": "x-4",
+              "description": "Attack Range changes, <$ba.addash>Moves</> to the position of the Reconstruction, ATK <@ba.vup>+{atk:0%}</>, Attack Interval reduces, Block <@ba.vup>+{block_cnt}</>, Max HP <@ba.vup>+{max_hp}</>, loses <@ba.vdown>{damage_per_second}</> HP per second, attacks all blocked enemies, attacks deal <@ba.vup>True</> damage, and attacks heal self by <@ba.vup>{attack@heal_scale:0%}</> ATK\n<@ba.rem>When skill ends or lethal damage is taken, Mon3tr returns to her original position</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_ATTACK",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 15,
+                "initSp": 11,
+                "increment": 1
+              },
+              "prefabId": "skchr_monstr_3",
+              "duration": 25,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 3.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "damage_per_second",
+                  "value": 80,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_hp",
+                  "value": 5000,
+                  "valueStr": null
+                },
+                {
+                  "key": "block_cnt",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": -1.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@heal_scale",
+                  "value": 0.5,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            }
+          ]
+        }
+      ],
+      "factionTags": [
+        "rhodes"
+      ]
+    },
     "char_4138_narant": {
       "id": "char_4138_narant",
       "name": "Narantuya",
@@ -648851,7 +652427,1845 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b419b4546a6a59fdf01e7089499f986a454c1a89/models/operator/token_10043_necras_skeltn/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5205aa71124bcfde0493b8ea32e057d8bf7e0eed/models/operator/token_10043_necras_skeltn/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+    },
+    "token_10050_monstr_prosts": {
+      "id": "token_10050_monstr_prosts",
+      "name": "Reconstruction",
+      "profession": "TOKEN",
+      "subProfessionId": "notchar1",
+      "position": "MELEE",
+      "phases": [
+        {
+          "maxLevel": 50,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 2510,
+                "atk": 0,
+                "def": 93,
+                "magicResistance": 0,
+                "cost": 3,
+                "blockCnt": 0,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 2.85,
+                "respawnTime": 15,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 50,
+              "data": {
+                "maxHp": 3347,
+                "atk": 0,
+                "def": 131,
+                "magicResistance": 0,
+                "cost": 3,
+                "blockCnt": 0,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 2.85,
+                "respawnTime": 15,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              1,
+              -1
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              0,
+              -1
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              -1,
+              -1
+            ],
+            [
+              -1,
+              0
+            ],
+            [
+              -1,
+              1
+            ]
+          ]
+        },
+        {
+          "maxLevel": 80,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 3347,
+                "atk": 0,
+                "def": 136,
+                "magicResistance": 0,
+                "cost": 3,
+                "blockCnt": 0,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 2.85,
+                "respawnTime": 15,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 80,
+              "data": {
+                "maxHp": 4292,
+                "atk": 0,
+                "def": 175,
+                "magicResistance": 0,
+                "cost": 3,
+                "blockCnt": 0,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 2.85,
+                "respawnTime": 15,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              1,
+              -1
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              0,
+              -1
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              -1,
+              -1
+            ],
+            [
+              -1,
+              0
+            ],
+            [
+              -1,
+              1
+            ]
+          ]
+        },
+        {
+          "maxLevel": 90,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 4292,
+                "atk": 0,
+                "def": 181,
+                "magicResistance": 0,
+                "cost": 3,
+                "blockCnt": 0,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 2.85,
+                "respawnTime": 15,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            },
+            {
+              "level": 90,
+              "data": {
+                "maxHp": 5433,
+                "atk": 0,
+                "def": 221,
+                "magicResistance": 0,
+                "cost": 3,
+                "blockCnt": 0,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 2.85,
+                "respawnTime": 15,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              1,
+              -1
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              0,
+              -1
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              -1,
+              -1
+            ],
+            [
+              -1,
+              0
+            ],
+            [
+              -1,
+              1
+            ]
+          ]
+        }
+      ],
+      "trait": {
+        "candidates": [
+          {
+            "unlockCondition": {
+              "phase": "PHASE_0",
+              "level": 1
+            },
+            "requiredPotentialRank": 0,
+            "blackboard": [
+              {
+                "key": "cnt",
+                "value": 1,
+                "valueStr": null
+              },
+              {
+                "key": "damage_per_second",
+                "value": 80,
+                "valueStr": null
+              }
+            ],
+            "overrideDescripton": "Continually loses HP over time",
+            "prefabKey": null,
+            "rangeId": null
+          },
+          {
+            "unlockCondition": {
+              "phase": "PHASE_1",
+              "level": 1
+            },
+            "requiredPotentialRank": 0,
+            "blackboard": [
+              {
+                "key": "cnt",
+                "value": 1,
+                "valueStr": null
+              },
+              {
+                "key": "damage_per_second",
+                "value": 80,
+                "valueStr": null
+              }
+            ],
+            "overrideDescripton": "Continually loses HP over time",
+            "prefabKey": null,
+            "rangeId": null
+          },
+          {
+            "unlockCondition": {
+              "phase": "PHASE_2",
+              "level": 1
+            },
+            "requiredPotentialRank": 0,
+            "blackboard": [
+              {
+                "key": "cnt",
+                "value": 1,
+                "valueStr": null
+              },
+              {
+                "key": "damage_per_second",
+                "value": 80,
+                "valueStr": null
+              }
+            ],
+            "overrideDescripton": "Continually loses HP over time",
+            "prefabKey": null,
+            "rangeId": null
+          }
+        ]
+      },
+      "talents": [
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_0",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "-1",
+              "name": null,
+              "description": null,
+              "rangeId": "x-4",
+              "blackboard": [],
+              "tokenKey": null,
+              "isHideTalent": true,
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_0",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": null,
+              "description": null,
+              "rangeId": "x-4",
+              "blackboard": [],
+              "tokenKey": null,
+              "isHideTalent": true,
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            }
+          ]
+        }
+      ],
+      "skills": [
+        {
+          "id": "sktok_monstr_prosts1",
+          "unlockCondition": {
+            "phase": "PHASE_0",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "Stratagem: Hyperpressurized Link",
+              "rangeId": "x-4",
+              "description": null,
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "sktok_monstr_prosts1",
+              "duration": -1,
+              "blackboard": [],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Stratagem: Hyperpressurized Link",
+              "rangeId": "x-4",
+              "description": null,
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "sktok_monstr_prosts1",
+              "duration": -1,
+              "blackboard": [],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Stratagem: Hyperpressurized Link",
+              "rangeId": "x-4",
+              "description": null,
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "sktok_monstr_prosts1",
+              "duration": -1,
+              "blackboard": [],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Stratagem: Hyperpressurized Link",
+              "rangeId": "x-4",
+              "description": null,
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "sktok_monstr_prosts1",
+              "duration": -1,
+              "blackboard": [],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Stratagem: Hyperpressurized Link",
+              "rangeId": "x-4",
+              "description": null,
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "sktok_monstr_prosts1",
+              "duration": -1,
+              "blackboard": [],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Stratagem: Hyperpressurized Link",
+              "rangeId": "x-4",
+              "description": null,
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "sktok_monstr_prosts1",
+              "duration": -1,
+              "blackboard": [],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Stratagem: Hyperpressurized Link",
+              "rangeId": "x-4",
+              "description": null,
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "sktok_monstr_prosts1",
+              "duration": -1,
+              "blackboard": [],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Stratagem: Hyperpressurized Link",
+              "rangeId": "x-4",
+              "description": null,
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "sktok_monstr_prosts1",
+              "duration": -1,
+              "blackboard": [],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Stratagem: Hyperpressurized Link",
+              "rangeId": "x-4",
+              "description": null,
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "sktok_monstr_prosts1",
+              "duration": -1,
+              "blackboard": [],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Stratagem: Hyperpressurized Link",
+              "rangeId": "x-4",
+              "description": null,
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "sktok_monstr_prosts1",
+              "duration": -1,
+              "blackboard": [],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "id": "sktok_monstr_prosts2",
+          "unlockCondition": {
+            "phase": "PHASE_1",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "Stratagem: Overload",
+              "rangeId": "x-4",
+              "description": null,
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "sktok_monstr_prosts2",
+              "duration": -1,
+              "blackboard": [],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Stratagem: Overload",
+              "rangeId": "x-4",
+              "description": null,
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "sktok_monstr_prosts2",
+              "duration": -1,
+              "blackboard": [],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Stratagem: Overload",
+              "rangeId": "x-4",
+              "description": null,
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "sktok_monstr_prosts2",
+              "duration": -1,
+              "blackboard": [],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Stratagem: Overload",
+              "rangeId": "x-4",
+              "description": null,
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "sktok_monstr_prosts2",
+              "duration": -1,
+              "blackboard": [],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Stratagem: Overload",
+              "rangeId": "x-4",
+              "description": null,
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "sktok_monstr_prosts2",
+              "duration": -1,
+              "blackboard": [],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Stratagem: Overload",
+              "rangeId": "x-4",
+              "description": null,
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "sktok_monstr_prosts2",
+              "duration": -1,
+              "blackboard": [],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Stratagem: Overload",
+              "rangeId": "x-4",
+              "description": null,
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "sktok_monstr_prosts2",
+              "duration": -1,
+              "blackboard": [],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Stratagem: Overload",
+              "rangeId": "x-4",
+              "description": null,
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "sktok_monstr_prosts2",
+              "duration": -1,
+              "blackboard": [],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Stratagem: Overload",
+              "rangeId": "x-4",
+              "description": null,
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "sktok_monstr_prosts2",
+              "duration": -1,
+              "blackboard": [],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "Stratagem: Overload",
+              "rangeId": "x-4",
+              "description": null,
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "sktok_monstr_prosts2",
+              "duration": -1,
+              "blackboard": [],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "id": "sktok_monstr_prosts3",
+          "unlockCondition": {
+            "phase": "PHASE_2",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "Stratagem: Meltdown",
+              "rangeId": null,
+              "description": null,
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "sktok_monstr_prosts3",
+              "duration": -1,
+              "blackboard": []
+            },
+            {
+              "name": "Stratagem: Meltdown",
+              "rangeId": null,
+              "description": null,
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "sktok_monstr_prosts3",
+              "duration": -1,
+              "blackboard": []
+            },
+            {
+              "name": "Stratagem: Meltdown",
+              "rangeId": null,
+              "description": null,
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "sktok_monstr_prosts3",
+              "duration": -1,
+              "blackboard": []
+            },
+            {
+              "name": "Stratagem: Meltdown",
+              "rangeId": null,
+              "description": null,
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "sktok_monstr_prosts3",
+              "duration": -1,
+              "blackboard": []
+            },
+            {
+              "name": "Stratagem: Meltdown",
+              "rangeId": null,
+              "description": null,
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "sktok_monstr_prosts3",
+              "duration": -1,
+              "blackboard": []
+            },
+            {
+              "name": "Stratagem: Meltdown",
+              "rangeId": null,
+              "description": null,
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "sktok_monstr_prosts3",
+              "duration": -1,
+              "blackboard": []
+            },
+            {
+              "name": "Stratagem: Meltdown",
+              "rangeId": null,
+              "description": null,
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "sktok_monstr_prosts3",
+              "duration": -1,
+              "blackboard": []
+            },
+            {
+              "name": "Stratagem: Meltdown",
+              "rangeId": null,
+              "description": null,
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "sktok_monstr_prosts3",
+              "duration": -1,
+              "blackboard": []
+            },
+            {
+              "name": "Stratagem: Meltdown",
+              "rangeId": null,
+              "description": null,
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "sktok_monstr_prosts3",
+              "duration": -1,
+              "blackboard": []
+            },
+            {
+              "name": "Stratagem: Meltdown",
+              "rangeId": null,
+              "description": null,
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "sktok_monstr_prosts3",
+              "duration": -1,
+              "blackboard": []
+            }
+          ]
+        }
+      ],
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5205aa71124bcfde0493b8ea32e057d8bf7e0eed/models/operator/token_10050_monstr_prosts/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10054_phatm2_encdool": {
       "id": "token_10054_phatm2_encdool",
@@ -651055,7 +656469,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b419b4546a6a59fdf01e7089499f986a454c1a89/models/operator/token_10054_phatm2_encdool/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5205aa71124bcfde0493b8ea32e057d8bf7e0eed/models/operator/token_10054_phatm2_encdool/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10055_phatm2_mndclv": {
       "id": "token_10055_phatm2_mndclv",
@@ -652326,7 +657740,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b419b4546a6a59fdf01e7089499f986a454c1a89/models/operator/token_10030_mlyss_wtrman/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5205aa71124bcfde0493b8ea32e057d8bf7e0eed/models/operator/token_10030_mlyss_wtrman/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10037_mitm_trshrb": {
       "id": "token_10037_mitm_trshrb",
@@ -652753,7 +658167,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b419b4546a6a59fdf01e7089499f986a454c1a89/models/operator/token_10037_mitm_trshrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5205aa71124bcfde0493b8ea32e057d8bf7e0eed/models/operator/token_10037_mitm_trshrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10027_ironmn_pile1": {
       "id": "token_10027_ironmn_pile1",
@@ -653849,7 +659263,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b419b4546a6a59fdf01e7089499f986a454c1a89/models/operator/token_10027_ironmn_pile1/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5205aa71124bcfde0493b8ea32e057d8bf7e0eed/models/operator/token_10027_ironmn_pile1/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10027_ironmn_pile2": {
       "id": "token_10027_ironmn_pile2",
@@ -655119,7 +660533,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b419b4546a6a59fdf01e7089499f986a454c1a89/models/operator/token_10027_ironmn_pile2/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5205aa71124bcfde0493b8ea32e057d8bf7e0eed/models/operator/token_10027_ironmn_pile2/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10027_ironmn_pile3": {
       "id": "token_10027_ironmn_pile3",
@@ -657627,7 +663041,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b419b4546a6a59fdf01e7089499f986a454c1a89/models/operator/token_10027_ironmn_pile3/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5205aa71124bcfde0493b8ea32e057d8bf7e0eed/models/operator/token_10027_ironmn_pile3/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10020_ling_soul1": {
       "id": "token_10020_ling_soul1",
@@ -658519,7 +663933,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b419b4546a6a59fdf01e7089499f986a454c1a89/models/operator/token_10020_ling_soul1/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5205aa71124bcfde0493b8ea32e057d8bf7e0eed/models/operator/token_10020_ling_soul1/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10020_ling_soul2": {
       "id": "token_10020_ling_soul2",
@@ -659855,7 +665269,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b419b4546a6a59fdf01e7089499f986a454c1a89/models/operator/token_10020_ling_soul2/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5205aa71124bcfde0493b8ea32e057d8bf7e0eed/models/operator/token_10020_ling_soul2/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10020_ling_soul3": {
       "id": "token_10020_ling_soul3",
@@ -661695,7 +667109,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b419b4546a6a59fdf01e7089499f986a454c1a89/models/operator/token_10020_ling_soul3/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5205aa71124bcfde0493b8ea32e057d8bf7e0eed/models/operator/token_10020_ling_soul3/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10005_mgllan_drone1": {
       "id": "token_10005_mgllan_drone1",
@@ -662787,7 +668201,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b419b4546a6a59fdf01e7089499f986a454c1a89/models/operator/token_10005_mgllan_drone1/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5205aa71124bcfde0493b8ea32e057d8bf7e0eed/models/operator/token_10005_mgllan_drone1/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10005_mgllan_drone2": {
       "id": "token_10005_mgllan_drone2",
@@ -663783,7 +669197,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b419b4546a6a59fdf01e7089499f986a454c1a89/models/operator/token_10005_mgllan_drone2/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5205aa71124bcfde0493b8ea32e057d8bf7e0eed/models/operator/token_10005_mgllan_drone2/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10005_mgllan_drone3": {
       "id": "token_10005_mgllan_drone3",
@@ -664875,7 +670289,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b419b4546a6a59fdf01e7089499f986a454c1a89/models/operator/token_10005_mgllan_drone3/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5205aa71124bcfde0493b8ea32e057d8bf7e0eed/models/operator/token_10005_mgllan_drone3/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10056_angel2_target": {
       "id": "token_10056_angel2_target",
@@ -665675,7 +671089,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b419b4546a6a59fdf01e7089499f986a454c1a89/models/operator/token_10056_angel2_target/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5205aa71124bcfde0493b8ea32e057d8bf7e0eed/models/operator/token_10056_angel2_target/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10035_wisdel_wward": {
       "id": "token_10035_wisdel_wward",
@@ -668334,7 +673748,7 @@
         }
       ],
       "automaticOnly": true,
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b419b4546a6a59fdf01e7089499f986a454c1a89/models/operator/token_10031_swire2_gdtrap/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5205aa71124bcfde0493b8ea32e057d8bf7e0eed/models/operator/token_10031_swire2_gdtrap/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10033_ela_grzmot": {
       "id": "token_10033_ela_grzmot",
@@ -670133,7 +675547,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b419b4546a6a59fdf01e7089499f986a454c1a89/models/operator/token_10033_ela_grzmot/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5205aa71124bcfde0493b8ea32e057d8bf7e0eed/models/operator/token_10033_ela_grzmot/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10034_ray_sndbst": {
       "id": "token_10034_ray_sndbst",
@@ -670767,7 +676181,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b419b4546a6a59fdf01e7089499f986a454c1a89/models/operator/token_10034_ray_sndbst/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5205aa71124bcfde0493b8ea32e057d8bf7e0eed/models/operator/token_10034_ray_sndbst/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10028_vigil_wolf": {
       "id": "token_10028_vigil_wolf",
@@ -671506,7 +676920,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b419b4546a6a59fdf01e7089499f986a454c1a89/models/operator/token_10028_vigil_wolf/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5205aa71124bcfde0493b8ea32e057d8bf7e0eed/models/operator/token_10028_vigil_wolf/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10026_bgsnow_subbow": {
       "id": "token_10026_bgsnow_subbow",
@@ -673071,7 +678485,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b419b4546a6a59fdf01e7089499f986a454c1a89/models/operator/token_10026_bgsnow_subbow/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5205aa71124bcfde0493b8ea32e057d8bf7e0eed/models/operator/token_10026_bgsnow_subbow/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10017_skadi2_dedant": {
       "id": "token_10017_skadi2_dedant",
@@ -674668,7 +680082,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b419b4546a6a59fdf01e7089499f986a454c1a89/models/operator/token_10017_skadi2_dedant/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5205aa71124bcfde0493b8ea32e057d8bf7e0eed/models/operator/token_10017_skadi2_dedant/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10025_doroth_recttp": {
       "id": "token_10025_doroth_recttp",
@@ -676528,7 +681942,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b419b4546a6a59fdf01e7089499f986a454c1a89/models/operator/token_10025_doroth_recttp/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5205aa71124bcfde0493b8ea32e057d8bf7e0eed/models/operator/token_10025_doroth_recttp/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10036_lasher_mcbird": {
       "id": "token_10036_lasher_mcbird",
@@ -677452,7 +682866,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b419b4546a6a59fdf01e7089499f986a454c1a89/models/operator/token_10036_lasher_mcbird/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5205aa71124bcfde0493b8ea32e057d8bf7e0eed/models/operator/token_10036_lasher_mcbird/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10032_jesca2_jckshd": {
       "id": "token_10032_jesca2_jckshd",
@@ -677789,7 +683203,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b419b4546a6a59fdf01e7089499f986a454c1a89/models/operator/token_10032_jesca2_jckshd/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5205aa71124bcfde0493b8ea32e057d8bf7e0eed/models/operator/token_10032_jesca2_jckshd/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10040_siege2_vlion": {
       "id": "token_10040_siege2_vlion",
@@ -679221,7 +684635,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b419b4546a6a59fdf01e7089499f986a454c1a89/models/operator/token_10009_weedy_cannon/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5205aa71124bcfde0493b8ea32e057d8bf7e0eed/models/operator/token_10009_weedy_cannon/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10024_ebnhlz_rcube": {
       "id": "token_10024_ebnhlz_rcube",
@@ -679794,7 +685208,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b419b4546a6a59fdf01e7089499f986a454c1a89/models/operator/token_10024_ebnhlz_rcube/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5205aa71124bcfde0493b8ea32e057d8bf7e0eed/models/operator/token_10024_ebnhlz_rcube/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10044_wulfen_mine": {
       "id": "token_10044_wulfen_mine",
@@ -680995,7 +686409,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b419b4546a6a59fdf01e7089499f986a454c1a89/models/operator/token_10044_wulfen_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5205aa71124bcfde0493b8ea32e057d8bf7e0eed/models/operator/token_10044_wulfen_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10042_tecno_puppet": {
       "id": "token_10042_tecno_puppet",
@@ -681244,7 +686658,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b419b4546a6a59fdf01e7089499f986a454c1a89/models/operator/token_10042_tecno_puppet/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5205aa71124bcfde0493b8ea32e057d8bf7e0eed/models/operator/token_10042_tecno_puppet/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10041_cathy_catsld": {
       "id": "token_10041_cathy_catsld",
@@ -681802,7 +687216,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b419b4546a6a59fdf01e7089499f986a454c1a89/models/operator/token_10041_cathy_catsld/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5205aa71124bcfde0493b8ea32e057d8bf7e0eed/models/operator/token_10041_cathy_catsld/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10022_kazema_shadow": {
       "id": "token_10022_kazema_shadow",
@@ -682272,7 +687686,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b419b4546a6a59fdf01e7089499f986a454c1a89/models/operator/token_10022_kazema_shadow/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5205aa71124bcfde0493b8ea32e057d8bf7e0eed/models/operator/token_10022_kazema_shadow/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10001_deepcl_tentac": {
       "id": "token_10001_deepcl_tentac",
@@ -682586,7 +688000,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b419b4546a6a59fdf01e7089499f986a454c1a89/models/operator/token_10001_deepcl_tentac/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5205aa71124bcfde0493b8ea32e057d8bf7e0eed/models/operator/token_10001_deepcl_tentac/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10018_robrta_mach": {
       "id": "token_10018_robrta_mach",
@@ -683076,7 +688490,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b419b4546a6a59fdf01e7089499f986a454c1a89/models/operator/token_10018_robrta_mach/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5205aa71124bcfde0493b8ea32e057d8bf7e0eed/models/operator/token_10018_robrta_mach/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10014_bstalk_crab": {
       "id": "token_10014_bstalk_crab",
@@ -683405,7 +688819,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b419b4546a6a59fdf01e7089499f986a454c1a89/models/operator/token_10014_bstalk_crab/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5205aa71124bcfde0493b8ea32e057d8bf7e0eed/models/operator/token_10014_bstalk_crab/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10011_beewax_oblisk": {
       "id": "token_10011_beewax_oblisk",
@@ -684350,7 +689764,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b419b4546a6a59fdf01e7089499f986a454c1a89/models/operator/token_10011_beewax_oblisk/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5205aa71124bcfde0493b8ea32e057d8bf7e0eed/models/operator/token_10011_beewax_oblisk/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10006_vodfox_doll": {
       "id": "token_10006_vodfox_doll",
@@ -684986,7 +690400,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b419b4546a6a59fdf01e7089499f986a454c1a89/models/operator/token_10006_vodfox_doll/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5205aa71124bcfde0493b8ea32e057d8bf7e0eed/models/operator/token_10006_vodfox_doll/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10003_cgbird_bird": {
       "id": "token_10003_cgbird_bird",
@@ -685281,7 +690695,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b419b4546a6a59fdf01e7089499f986a454c1a89/models/operator/token_10003_cgbird_bird/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5205aa71124bcfde0493b8ea32e057d8bf7e0eed/models/operator/token_10003_cgbird_bird/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10000_silent_healrb": {
       "id": "token_10000_silent_healrb",
@@ -685664,7 +691078,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b419b4546a6a59fdf01e7089499f986a454c1a89/models/operator/token_10000_silent_healrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5205aa71124bcfde0493b8ea32e057d8bf7e0eed/models/operator/token_10000_silent_healrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10015_dusk_drgn": {
       "id": "token_10015_dusk_drgn",
@@ -686078,7 +691492,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b419b4546a6a59fdf01e7089499f986a454c1a89/models/operator/token_10015_dusk_drgn/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5205aa71124bcfde0493b8ea32e057d8bf7e0eed/models/operator/token_10015_dusk_drgn/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10007_phatom_twin": {
       "id": "token_10007_phatom_twin",
@@ -687857,7 +693271,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b419b4546a6a59fdf01e7089499f986a454c1a89/models/operator/token_10007_phatom_twin/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5205aa71124bcfde0493b8ea32e057d8bf7e0eed/models/operator/token_10007_phatom_twin/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10008_cqbw_box": {
       "id": "token_10008_cqbw_box",
@@ -688430,7 +693844,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b419b4546a6a59fdf01e7089499f986a454c1a89/models/operator/token_10008_cqbw_box/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5205aa71124bcfde0493b8ea32e057d8bf7e0eed/models/operator/token_10008_cqbw_box/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10029_slent2_protrb": {
       "id": "token_10029_slent2_protrb",
@@ -689175,7 +694589,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b419b4546a6a59fdf01e7089499f986a454c1a89/models/operator/token_10029_slent2_protrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5205aa71124bcfde0493b8ea32e057d8bf7e0eed/models/operator/token_10029_slent2_protrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10019_nearl2_sword": {
       "id": "token_10019_nearl2_sword",
@@ -689962,7 +695376,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b419b4546a6a59fdf01e7089499f986a454c1a89/models/operator/token_10019_nearl2_sword/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5205aa71124bcfde0493b8ea32e057d8bf7e0eed/models/operator/token_10019_nearl2_sword/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10002_kalts_mon3tr": {
       "id": "token_10002_kalts_mon3tr",
@@ -690380,7 +695794,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b419b4546a6a59fdf01e7089499f986a454c1a89/models/operator/token_10002_kalts_mon3tr/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5205aa71124bcfde0493b8ea32e057d8bf7e0eed/models/operator/token_10002_kalts_mon3tr/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10010_folivo_car": {
       "id": "token_10010_folivo_car",
@@ -692001,7 +697415,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b419b4546a6a59fdf01e7089499f986a454c1a89/models/operator/token_10010_folivo_car/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5205aa71124bcfde0493b8ea32e057d8bf7e0eed/models/operator/token_10010_folivo_car/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10021_blkngt_hypnos": {
       "id": "token_10021_blkngt_hypnos",
@@ -692416,7 +697830,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b419b4546a6a59fdf01e7089499f986a454c1a89/models/operator/token_10021_blkngt_hypnos/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5205aa71124bcfde0493b8ea32e057d8bf7e0eed/models/operator/token_10021_blkngt_hypnos/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10023_windft_wrench": {
       "id": "token_10023_windft_wrench",
@@ -693580,7 +698994,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b419b4546a6a59fdf01e7089499f986a454c1a89/models/operator/token_10023_windft_wrench/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5205aa71124bcfde0493b8ea32e057d8bf7e0eed/models/operator/token_10023_windft_wrench/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10045_alanna_crane": {
       "id": "token_10045_alanna_crane",
@@ -693980,7 +699394,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b419b4546a6a59fdf01e7089499f986a454c1a89/models/operator/token_10045_alanna_crane/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5205aa71124bcfde0493b8ea32e057d8bf7e0eed/models/operator/token_10045_alanna_crane/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10013_robin_mine": {
       "id": "token_10013_robin_mine",
@@ -694911,7 +700325,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b419b4546a6a59fdf01e7089499f986a454c1a89/models/operator/token_10013_robin_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5205aa71124bcfde0493b8ea32e057d8bf7e0eed/models/operator/token_10013_robin_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10016_rfrost_mine": {
       "id": "token_10016_rfrost_mine",
@@ -695842,7 +701256,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b419b4546a6a59fdf01e7089499f986a454c1a89/models/operator/token_10016_rfrost_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5205aa71124bcfde0493b8ea32e057d8bf7e0eed/models/operator/token_10016_rfrost_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10004_otter_motter": {
       "id": "token_10004_otter_motter",
@@ -697191,7 +702605,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b419b4546a6a59fdf01e7089499f986a454c1a89/models/operator/token_10004_otter_motter/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/5205aa71124bcfde0493b8ea32e057d8bf7e0eed/models/operator/token_10004_otter_motter/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     }
   },
   "enemies": {
@@ -697242,7 +702656,7 @@
   },
   "skillEffects": {
     "repository": "arkpedia/arkpedia-sd-assets",
-    "commit": "b419b4546a6a59fdf01e7089499f986a454c1a89",
+    "commit": "5205aa71124bcfde0493b8ea32e057d8bf7e0eed",
     "pack": {
       "path": "effects/charge-cost/26-09-23-17-49-43_b9cc4a/effect.json",
       "bytes": 15311,

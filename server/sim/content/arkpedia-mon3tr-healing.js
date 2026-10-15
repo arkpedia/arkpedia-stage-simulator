@@ -70,12 +70,16 @@ export class Mon3trHealingController {
   constructor(b, u, record) {
     this.b = b; this.u = u; this.record = record; this.seq = null;
     this.phase = null; this.accepting = false; this.stopped = false; this.handles = [];
-    this.reconstructions = new Map();
+    this.reconstructions = new Map(); this.visualSeq = 0;
   }
   valid() { return !this.stopped && !this.b.finished && present(this.u) && this.seq === this.u.deploySeq; }
   model() { return evidence.models[ID][['UP', 'LEFT'].includes(this.u.dir) ? 'Back' : 'Front']; }
   visual(clip, speed = 1, loop = false) {
-    this.u.mem.regularFormVisual = { clip, speed, loop };
+    // Repeated source-timed attacks can use the same literal clip and speed.
+    // Give each one-shot a new identity so BattleActor replays it; stable idle
+    // loops deliberately retain their key and never restart every tick.
+    this.u.mem.regularFormVisual = { clip, speed, loop,
+      ...(!loop ? { playId: `mon3tr:${this.u.deploySeq}:${++this.visualSeq}` } : {}) };
     this.u.mem.regularVisualDirection = ['UP', 'LEFT'].includes(this.u.dir) ? 'UP' : 'RIGHT';
   }
   eligible(a, source = this.u) {
