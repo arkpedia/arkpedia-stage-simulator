@@ -114,10 +114,12 @@ jobs:
       - name: Fetch and verify the frozen original manifest and all enemy prefab bundles
         run: node tools/arkpedia/cn-enemy-native-source.mjs --fetch
       - name: Check source membership, precision and per-prefab flag distinctions
-        run: node --test test/arkpedia-enemy-clock-source.test.js test/arkpedia-closur-enemy-compatibility.test.js
+        run: node --test test/arkpedia-enemy-clock-source.test.js test/arkpedia-closur-enemy-compatibility.test.js test/arkpedia-upstream-enemies.test.js
       - name: Verify the frozen Global table and current regular-enemy compatibility boundary
         run: node tools/arkpedia/closur-enemy-compatibility.mjs --fetch --check
+      - name: Verify the held primary-source upstream enemy review
+        run: node tools/arkpedia/review-upstream-enemies.mjs --fetch --check
       - name: Independently reproduce native hierarchy and timing records; reject altered claims and corrupt inputs
         run: python tools/arkpedia/audit-enemy-clocks.py
       - name: Keep reviewed source receipts byte-identical
-        run: git diff --exit-code -- data/arkpedia-cn-enemy-native-source.json data/arkpedia-enemy-clock-source.json data/arkpedia-closur-enemy-compatibility.json
+        run: git diff --exit-code -- data/arkpedia-cn-enemy-native-source.json data/arkpedia-enemy-clock-source.json data/arkpedia-closur-enemy-compatibility.json data/arkpedia-upstream-enemy-review.json
