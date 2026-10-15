@@ -407,6 +407,7 @@
     "char_4211_snhunt": "cn",
     "char_4203_kichi": "cn",
     "char_4214_cairn": "cn",
+    "char_4225_tanya": "cn",
     "char_4207_branch": "cn"
   },
   "behaviors": {
@@ -438,7 +439,7 @@
   "nativeEffects": {
     "tragodia": {
       "repository": "arkpedia/arkpedia-sd-assets",
-      "commit": "3ca02f23278bdd59814e5e191a6e8c34adac44f7",
+      "commit": "47ce24294dbd274f41c614276720477f60826977",
       "manifest": {
         "path": "effects/native/tragodia/26-09-23-17-49-43_b9cc4a/e39769c56a91f5d483632808082a05a3dbe0b71d5a5c99b3ade9ebdee68fd0ff/manifest.json",
         "bytes": 44646,
@@ -448,7 +449,7 @@
   },
   "sd": {
     "repository": "arkpedia/arkpedia-sd-assets",
-    "commit": "3ca02f23278bdd59814e5e191a6e8c34adac44f7",
+    "commit": "47ce24294dbd274f41c614276720477f60826977",
     "models": {
       "operator/char_123_fang/default/front": {
         "kind": "operator",
@@ -75748,6 +75749,225 @@
           "move": null
         }
       },
+      "operator/char_4225_tanya/default/front": {
+        "kind": "operator",
+        "id": "char_4225_tanya",
+        "variant": "default",
+        "facing": "front",
+        "spineVersion": "3.8.99",
+        "source": {
+          "key": "operators",
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "spine/char_4225_tanya/char_4225_tanya/Front"
+        },
+        "skeleton": {
+          "path": "models/operator/char_4225_tanya/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4225_tanya.skel",
+          "bytes": 348129,
+          "sha256": "873fd49e6dc46eb8454eb6b6e32d198f329ea19a164b3784c0177eaee5642aa0"
+        },
+        "atlas": {
+          "path": "models/operator/char_4225_tanya/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4225_tanya.atlas",
+          "bytes": 11219,
+          "sha256": "1e4c95be90ac19a5d73636516b2909e16bb940e1cee1bd017cfa795aa87711f6"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_4225_tanya/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4225_tanya.png",
+            "bytes": 158504,
+            "sha256": "3164ace99ec2f787b4264e78969c0a9fc4d39bd98fc245750da07fcc342f267f"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Attack_1": 1.6,
+          "Attack_2": 1.6,
+          "Default": 0,
+          "Die": 1,
+          "Idle": 3.2,
+          "Skill_1_Begin": 0.4,
+          "Skill_1_End": 0.267,
+          "Skill_1_Idle": 1.6,
+          "Skill_1_Loop": 1.6,
+          "Skill_2": 1.6,
+          "Start": 1
+        },
+        "hits": {
+          "Attack_1": [
+            0.567
+          ],
+          "Attack_2": [
+            0.567
+          ],
+          "Skill_1_Loop": [
+            0.633
+          ],
+          "Skill_2": [
+            0.667
+          ]
+        },
+        "bounds": {
+          "x": -146.89,
+          "y": -1.84,
+          "width": 277.784,
+          "height": 372.586
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": null,
+            "loop": "Attack_1",
+            "end": null
+          },
+          "attackVariants": {
+            "0": {
+              "loop": "Attack_1"
+            },
+            "1": {
+              "loop": "Attack_2"
+            }
+          },
+          "attackDown": null,
+          "skill": {
+            "begin": "Skill_1_Begin",
+            "loop": "Skill_1_Loop",
+            "end": "Skill_1_End",
+            "idle": "Skill_1_Idle",
+            "index": 0,
+            "via": "skill"
+          },
+          "skills": {
+            "0": {
+              "begin": "Skill_1_Begin",
+              "loop": "Skill_1_Loop",
+              "end": "Skill_1_End",
+              "idle": "Skill_1_Idle",
+              "index": 0,
+              "via": "skill"
+            },
+            "1": {
+              "begin": null,
+              "loop": "Skill_2",
+              "end": null,
+              "index": 1,
+              "via": "skill"
+            }
+          },
+          "die": "Die",
+          "stun": null,
+          "move": null
+        }
+      },
+      "operator/char_4225_tanya/default/back": {
+        "kind": "operator",
+        "id": "char_4225_tanya",
+        "variant": "default",
+        "facing": "back",
+        "spineVersion": "3.8.99",
+        "source": {
+          "key": "operators",
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "spine/char_4225_tanya/char_4225_tanya/Back"
+        },
+        "skeleton": {
+          "path": "models/operator/char_4225_tanya/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4225_tanya.skel",
+          "bytes": 237373,
+          "sha256": "3aa889ccf0c68ac3033cb53a2ec0d143955880bbf6a7fe0d37e5b3db54397eeb"
+        },
+        "atlas": {
+          "path": "models/operator/char_4225_tanya/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4225_tanya.atlas",
+          "bytes": 6650,
+          "sha256": "365a58d39e5a8c43323499b3d9f7977a3cf749c504b2d458df4e6187dd49ef97"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_4225_tanya/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4225_tanya.png",
+            "bytes": 125953,
+            "sha256": "b25582e466534286287acf60bd5bc5a21019627bdb42c66ee3360535f0277b51"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Attack_1": 1.6,
+          "Attack_2": 1.6,
+          "Default": 0,
+          "Idle": 3.2,
+          "Skill_1_Begin": 0.4,
+          "Skill_1_End": 0.267,
+          "Skill_1_Idle": 1.6,
+          "Skill_1_Loop": 1.6,
+          "Skill_2": 1.6,
+          "Start": 1
+        },
+        "hits": {
+          "Attack_1": [
+            0.567
+          ],
+          "Attack_2": [
+            0.567
+          ],
+          "Skill_1_Loop": [
+            0.633
+          ],
+          "Skill_2": [
+            0.667
+          ]
+        },
+        "bounds": {
+          "x": -125.64,
+          "y": -1.272,
+          "width": 254.789,
+          "height": 372.015
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": null,
+            "loop": "Attack_1",
+            "end": null
+          },
+          "attackVariants": {
+            "0": {
+              "loop": "Attack_1"
+            },
+            "1": {
+              "loop": "Attack_2"
+            }
+          },
+          "attackDown": null,
+          "skill": {
+            "begin": "Skill_1_Begin",
+            "loop": "Skill_1_Loop",
+            "end": "Skill_1_End",
+            "idle": "Skill_1_Idle",
+            "index": 0,
+            "via": "skill"
+          },
+          "skills": {
+            "0": {
+              "begin": "Skill_1_Begin",
+              "loop": "Skill_1_Loop",
+              "end": "Skill_1_End",
+              "idle": "Skill_1_Idle",
+              "index": 0,
+              "via": "skill"
+            },
+            "1": {
+              "begin": null,
+              "loop": "Skill_2",
+              "end": null,
+              "index": 1,
+              "via": "skill"
+            }
+          },
+          "die": null,
+          "stun": null,
+          "move": null
+        }
+      },
       "operator/char_4207_branch/default/front": {
         "kind": "operator",
         "id": "char_4207_branch",
@@ -87186,7 +87406,7 @@
     },
     "art": {
       "repository": "arkpedia/arkpedia-sd-assets",
-      "commit": "3ca02f23278bdd59814e5e191a6e8c34adac44f7",
+      "commit": "47ce24294dbd274f41c614276720477f60826977",
       "scene": {
         "path": "stages/0-1/26-09-23-17-49-43_b9cc4a/scene.json",
         "bytes": 4479,
@@ -87195,7 +87415,7 @@
     },
     "gates": {
       "repository": "arkpedia/arkpedia-sd-assets",
-      "commit": "3ca02f23278bdd59814e5e191a6e8c34adac44f7",
+      "commit": "47ce24294dbd274f41c614276720477f60826977",
       "pack": {
         "path": "effects/standard-gates/26-09-23-17-49-43_b9cc4a/gates.json",
         "bytes": 3507,
@@ -669350,6 +669570,1553 @@
         "columbia"
       ]
     },
+    "char_4225_tanya": {
+      "id": "char_4225_tanya",
+      "name": "Crackborne",
+      "description": "能够阻挡三个敌人，可以造成元素损伤",
+      "rarity": 5,
+      "profession": "TANK",
+      "subProfessionId": "primprotector",
+      "position": "MELEE",
+      "nationId": "ursus",
+      "groupId": null,
+      "teamId": null,
+      "phases": [
+        {
+          "maxLevel": 50,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 1276,
+                "atk": 252,
+                "def": 220,
+                "magicResistance": 10,
+                "cost": 21,
+                "blockCnt": 3,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.6,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false,
+                "teleportImmune": false,
+                "groundBoundImmune": false
+              }
+            },
+            {
+              "level": 50,
+              "data": {
+                "maxHp": 1725,
+                "atk": 360,
+                "def": 324,
+                "magicResistance": 10,
+                "cost": 21,
+                "blockCnt": 3,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.6,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false,
+                "teleportImmune": false,
+                "groundBoundImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ]
+          ]
+        },
+        {
+          "maxLevel": 70,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 1725,
+                "atk": 360,
+                "def": 324,
+                "magicResistance": 10,
+                "cost": 23,
+                "blockCnt": 3,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.6,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false,
+                "teleportImmune": false,
+                "groundBoundImmune": false
+              }
+            },
+            {
+              "level": 70,
+              "data": {
+                "maxHp": 2300,
+                "atk": 481,
+                "def": 439,
+                "magicResistance": 10,
+                "cost": 23,
+                "blockCnt": 3,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.6,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false,
+                "teleportImmune": false,
+                "groundBoundImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ]
+          ]
+        },
+        {
+          "maxLevel": 80,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 2300,
+                "atk": 481,
+                "def": 439,
+                "magicResistance": 10,
+                "cost": 25,
+                "blockCnt": 3,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.6,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false,
+                "teleportImmune": false,
+                "groundBoundImmune": false
+              }
+            },
+            {
+              "level": 80,
+              "data": {
+                "maxHp": 3195,
+                "atk": 602,
+                "def": 549,
+                "magicResistance": 10,
+                "cost": 25,
+                "blockCnt": 3,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.6,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false,
+                "teleportImmune": false,
+                "groundBoundImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ]
+          ]
+        }
+      ],
+      "favorKeyFrames": [
+        {
+          "level": 0,
+          "data": {
+            "maxHp": 0,
+            "atk": 0,
+            "def": 0,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false,
+            "teleportImmune": false,
+            "groundBoundImmune": false
+          }
+        },
+        {
+          "level": 50,
+          "data": {
+            "maxHp": 0,
+            "atk": 30,
+            "def": 50,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false,
+            "teleportImmune": false,
+            "groundBoundImmune": false
+          }
+        }
+      ],
+      "potentialRanks": [
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "RESPAWN_TIME",
+            "formulaItem": "ADDITION",
+            "value": -4,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "ATK",
+            "formulaItem": "ADDITION",
+            "value": 25,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [],
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ]
+      ],
+      "trait": null,
+      "talents": [
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "劣质溶剂耐受",
+              "description": "自身受到的<$ba.dt.element>元素损伤</>-5%，受到的<$ba.dt.erosion>侵蚀损伤</>额外-5%",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "ep_damage_resistance[other]",
+                  "value": 0.05,
+                  "valueStr": null
+                },
+                {
+                  "key": "ep_damage_resistance[water]",
+                  "value": 0.05,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 1
+              },
+              "requiredPotentialRank": 4,
+              "prefabKey": "1",
+              "name": "劣质溶剂耐受",
+              "description": "自身受到的<$ba.dt.element>元素损伤</>-7%<@ba.talpu>（+2%）</>，受到的<$ba.dt.erosion>侵蚀损伤</>额外-7%<@ba.talpu>（+2%）</>",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "ep_damage_resistance[other]",
+                  "value": 0.07,
+                  "valueStr": null
+                },
+                {
+                  "key": "ep_damage_resistance[water]",
+                  "value": 0.07,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "劣质溶剂耐受",
+              "description": "自身受到的<$ba.dt.element>元素损伤</>-10%，受到的<$ba.dt.erosion>侵蚀损伤</>额外-10%",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "ep_damage_resistance[other]",
+                  "value": 0.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "ep_damage_resistance[water]",
+                  "value": 0.1,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 4,
+              "prefabKey": "1",
+              "name": "劣质溶剂耐受",
+              "description": "自身受到的<$ba.dt.element>元素损伤</>-12%<@ba.talpu>（+2%）</>，受到的<$ba.dt.erosion>侵蚀损伤</>额外-12%<@ba.talpu>（+2%）</>",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "ep_damage_resistance[other]",
+                  "value": 0.12,
+                  "valueStr": null
+                },
+                {
+                  "key": "ep_damage_resistance[water]",
+                  "value": 0.12,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            }
+          ]
+        }
+      ],
+      "skills": [
+        {
+          "id": "skchr_tanya_1",
+          "unlockCondition": {
+            "phase": "PHASE_0",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "涤净",
+              "rangeId": null,
+              "description": "生命上限<@ba.vup>+{max_hp:0%}</>，自身每秒回复<@ba.vup>{ep_heal}</>点<$ba.dt.element>元素损伤</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 40,
+                "initSp": 5,
+                "increment": 1
+              },
+              "prefabId": "skchr_tanya_1",
+              "duration": 20,
+              "blackboard": [
+                {
+                  "key": "max_hp",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "ep_heal",
+                  "value": 30,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "涤净",
+              "rangeId": null,
+              "description": "生命上限<@ba.vup>+{max_hp:0%}</>，自身每秒回复<@ba.vup>{ep_heal}</>点<$ba.dt.element>元素损伤</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 39,
+                "initSp": 5,
+                "increment": 1
+              },
+              "prefabId": "skchr_tanya_1",
+              "duration": 20,
+              "blackboard": [
+                {
+                  "key": "max_hp",
+                  "value": 0.45,
+                  "valueStr": null
+                },
+                {
+                  "key": "ep_heal",
+                  "value": 40,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "涤净",
+              "rangeId": null,
+              "description": "生命上限<@ba.vup>+{max_hp:0%}</>，自身每秒回复<@ba.vup>{ep_heal}</>点<$ba.dt.element>元素损伤</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 38,
+                "initSp": 5,
+                "increment": 1
+              },
+              "prefabId": "skchr_tanya_1",
+              "duration": 20,
+              "blackboard": [
+                {
+                  "key": "max_hp",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "ep_heal",
+                  "value": 50,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "涤净",
+              "rangeId": null,
+              "description": "生命上限<@ba.vup>+{max_hp:0%}</>，自身每秒回复<@ba.vup>{ep_heal}</>点<$ba.dt.element>元素损伤</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 37,
+                "initSp": 7,
+                "increment": 1
+              },
+              "prefabId": "skchr_tanya_1",
+              "duration": 20,
+              "blackboard": [
+                {
+                  "key": "max_hp",
+                  "value": 0.55,
+                  "valueStr": null
+                },
+                {
+                  "key": "ep_heal",
+                  "value": 60,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "涤净",
+              "rangeId": null,
+              "description": "生命上限<@ba.vup>+{max_hp:0%}</>，自身每秒回复<@ba.vup>{ep_heal}</>点<$ba.dt.element>元素损伤</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 36,
+                "initSp": 7,
+                "increment": 1
+              },
+              "prefabId": "skchr_tanya_1",
+              "duration": 20,
+              "blackboard": [
+                {
+                  "key": "max_hp",
+                  "value": 0.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "ep_heal",
+                  "value": 70,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "涤净",
+              "rangeId": null,
+              "description": "生命上限<@ba.vup>+{max_hp:0%}</>，自身每秒回复<@ba.vup>{ep_heal}</>点<$ba.dt.element>元素损伤</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 35,
+                "initSp": 7,
+                "increment": 1
+              },
+              "prefabId": "skchr_tanya_1",
+              "duration": 20,
+              "blackboard": [
+                {
+                  "key": "max_hp",
+                  "value": 0.65,
+                  "valueStr": null
+                },
+                {
+                  "key": "ep_heal",
+                  "value": 80,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "涤净",
+              "rangeId": null,
+              "description": "生命上限<@ba.vup>+{max_hp:0%}</>，自身每秒回复<@ba.vup>{ep_heal}</>点<$ba.dt.element>元素损伤</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 34,
+                "initSp": 10,
+                "increment": 1
+              },
+              "prefabId": "skchr_tanya_1",
+              "duration": 20,
+              "blackboard": [
+                {
+                  "key": "max_hp",
+                  "value": 0.7,
+                  "valueStr": null
+                },
+                {
+                  "key": "ep_heal",
+                  "value": 90,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "涤净",
+              "rangeId": null,
+              "description": "生命上限<@ba.vup>+{max_hp:0%}</>，自身每秒回复<@ba.vup>{ep_heal}</>点<$ba.dt.element>元素损伤</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 33,
+                "initSp": 13,
+                "increment": 1
+              },
+              "prefabId": "skchr_tanya_1",
+              "duration": 20,
+              "blackboard": [
+                {
+                  "key": "max_hp",
+                  "value": 0.8,
+                  "valueStr": null
+                },
+                {
+                  "key": "ep_heal",
+                  "value": 100,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "涤净",
+              "rangeId": null,
+              "description": "生命上限<@ba.vup>+{max_hp:0%}</>，自身每秒回复<@ba.vup>{ep_heal}</>点<$ba.dt.element>元素损伤</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 32,
+                "initSp": 14,
+                "increment": 1
+              },
+              "prefabId": "skchr_tanya_1",
+              "duration": 20,
+              "blackboard": [
+                {
+                  "key": "max_hp",
+                  "value": 0.9,
+                  "valueStr": null
+                },
+                {
+                  "key": "ep_heal",
+                  "value": 110,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "涤净",
+              "rangeId": null,
+              "description": "生命上限<@ba.vup>+{max_hp:0%}</>，自身每秒回复<@ba.vup>{ep_heal}</>点<$ba.dt.element>元素损伤</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 30,
+                "initSp": 15,
+                "increment": 1
+              },
+              "prefabId": "skchr_tanya_1",
+              "duration": 20,
+              "blackboard": [
+                {
+                  "key": "max_hp",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "ep_heal",
+                  "value": 120,
+                  "valueStr": null
+                }
+              ]
+            }
+          ],
+          "assetIcon": "skill-icons/Crackborne - Cleanse.webp"
+        },
+        {
+          "id": "skchr_tanya_2",
+          "unlockCondition": {
+            "phase": "PHASE_1",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "溃决",
+              "rangeId": "x-4",
+              "description": "获得<@ba.vup>{cnt}</>层可叠加的防御力<@ba.vup>+{def:0%}</>的增益，受到攻击后消耗1层，并对周围所有地面敌人造成相当于攻击力<@ba.vup>{ep_damage_ratio:0%}</>的<$ba.dt.erosion2>侵蚀损伤</>\\n<@ba.rem>增益最多叠加{max_stack_cnt}层</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 35,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_tanya_2",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "def",
+                  "value": 0.14,
+                  "valueStr": null
+                },
+                {
+                  "key": "ep_damage_ratio",
+                  "value": 0.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_stack_cnt",
+                  "value": 5,
+                  "valueStr": null
+                },
+                {
+                  "key": "cnt",
+                  "value": 5,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "溃决",
+              "rangeId": "x-4",
+              "description": "获得<@ba.vup>{cnt}</>层可叠加的防御力<@ba.vup>+{def:0%}</>的增益，受到攻击后消耗1层，并对周围所有地面敌人造成相当于攻击力<@ba.vup>{ep_damage_ratio:0%}</>的<$ba.dt.erosion2>侵蚀损伤</>\\n<@ba.rem>增益最多叠加{max_stack_cnt}层</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 34,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_tanya_2",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "def",
+                  "value": 0.15,
+                  "valueStr": null
+                },
+                {
+                  "key": "ep_damage_ratio",
+                  "value": 0.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_stack_cnt",
+                  "value": 5,
+                  "valueStr": null
+                },
+                {
+                  "key": "cnt",
+                  "value": 5,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "溃决",
+              "rangeId": "x-4",
+              "description": "获得<@ba.vup>{cnt}</>层可叠加的防御力<@ba.vup>+{def:0%}</>的增益，受到攻击后消耗1层，并对周围所有地面敌人造成相当于攻击力<@ba.vup>{ep_damage_ratio:0%}</>的<$ba.dt.erosion2>侵蚀损伤</>\\n<@ba.rem>增益最多叠加{max_stack_cnt}层</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 33,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_tanya_2",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "def",
+                  "value": 0.16,
+                  "valueStr": null
+                },
+                {
+                  "key": "ep_damage_ratio",
+                  "value": 0.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_stack_cnt",
+                  "value": 5,
+                  "valueStr": null
+                },
+                {
+                  "key": "cnt",
+                  "value": 5,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "溃决",
+              "rangeId": "x-4",
+              "description": "获得<@ba.vup>{cnt}</>层可叠加的防御力<@ba.vup>+{def:0%}</>的增益，受到攻击后消耗1层，并对周围所有地面敌人造成相当于攻击力<@ba.vup>{ep_damage_ratio:0%}</>的<$ba.dt.erosion2>侵蚀损伤</>\\n<@ba.rem>增益最多叠加{max_stack_cnt}层</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 31,
+                "initSp": 5,
+                "increment": 1
+              },
+              "prefabId": "skchr_tanya_2",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "def",
+                  "value": 0.17,
+                  "valueStr": null
+                },
+                {
+                  "key": "ep_damage_ratio",
+                  "value": 0.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_stack_cnt",
+                  "value": 5,
+                  "valueStr": null
+                },
+                {
+                  "key": "cnt",
+                  "value": 5,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "溃决",
+              "rangeId": "x-4",
+              "description": "获得<@ba.vup>{cnt}</>层可叠加的防御力<@ba.vup>+{def:0%}</>的增益，受到攻击后消耗1层，并对周围所有地面敌人造成相当于攻击力<@ba.vup>{ep_damage_ratio:0%}</>的<$ba.dt.erosion2>侵蚀损伤</>\\n<@ba.rem>增益最多叠加{max_stack_cnt}层</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 30,
+                "initSp": 5,
+                "increment": 1
+              },
+              "prefabId": "skchr_tanya_2",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "def",
+                  "value": 0.18,
+                  "valueStr": null
+                },
+                {
+                  "key": "ep_damage_ratio",
+                  "value": 0.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_stack_cnt",
+                  "value": 5,
+                  "valueStr": null
+                },
+                {
+                  "key": "cnt",
+                  "value": 5,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "溃决",
+              "rangeId": "x-4",
+              "description": "获得<@ba.vup>{cnt}</>层可叠加的防御力<@ba.vup>+{def:0%}</>的增益，受到攻击后消耗1层，并对周围所有地面敌人造成相当于攻击力<@ba.vup>{ep_damage_ratio:0%}</>的<$ba.dt.erosion2>侵蚀损伤</>\\n<@ba.rem>增益最多叠加{max_stack_cnt}层</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 29,
+                "initSp": 5,
+                "increment": 1
+              },
+              "prefabId": "skchr_tanya_2",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "def",
+                  "value": 0.19,
+                  "valueStr": null
+                },
+                {
+                  "key": "ep_damage_ratio",
+                  "value": 0.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_stack_cnt",
+                  "value": 5,
+                  "valueStr": null
+                },
+                {
+                  "key": "cnt",
+                  "value": 5,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "溃决",
+              "rangeId": "x-4",
+              "description": "获得<@ba.vup>{cnt}</>层可叠加的防御力<@ba.vup>+{def:0%}</>的增益，受到攻击后消耗1层，并对周围所有地面敌人造成相当于攻击力<@ba.vup>{ep_damage_ratio:0%}</>的<$ba.dt.erosion2>侵蚀损伤</>\\n<@ba.rem>增益最多叠加{max_stack_cnt}层</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 28,
+                "initSp": 9,
+                "increment": 1
+              },
+              "prefabId": "skchr_tanya_2",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "def",
+                  "value": 0.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "ep_damage_ratio",
+                  "value": 0.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_stack_cnt",
+                  "value": 5,
+                  "valueStr": null
+                },
+                {
+                  "key": "cnt",
+                  "value": 5,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "溃决",
+              "rangeId": "x-4",
+              "description": "获得<@ba.vup>{cnt}</>层可叠加的防御力<@ba.vup>+{def:0%}</>的增益，受到攻击后消耗1层，并对周围所有地面敌人造成相当于攻击力<@ba.vup>{ep_damage_ratio:0%}</>的<$ba.dt.erosion2>侵蚀损伤</>\\n<@ba.rem>增益最多叠加{max_stack_cnt}层</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 27,
+                "initSp": 10,
+                "increment": 1
+              },
+              "prefabId": "skchr_tanya_2",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "def",
+                  "value": 0.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "ep_damage_ratio",
+                  "value": 0.31,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_stack_cnt",
+                  "value": 5,
+                  "valueStr": null
+                },
+                {
+                  "key": "cnt",
+                  "value": 5,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "溃决",
+              "rangeId": "x-4",
+              "description": "获得<@ba.vup>{cnt}</>层可叠加的防御力<@ba.vup>+{def:0%}</>的增益，受到攻击后消耗1层，并对周围所有地面敌人造成相当于攻击力<@ba.vup>{ep_damage_ratio:0%}</>的<$ba.dt.erosion2>侵蚀损伤</>\\n<@ba.rem>增益最多叠加{max_stack_cnt}层</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 26,
+                "initSp": 11,
+                "increment": 1
+              },
+              "prefabId": "skchr_tanya_2",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "def",
+                  "value": 0.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "ep_damage_ratio",
+                  "value": 0.33,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_stack_cnt",
+                  "value": 5,
+                  "valueStr": null
+                },
+                {
+                  "key": "cnt",
+                  "value": 5,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "溃决",
+              "rangeId": "x-4",
+              "description": "获得<@ba.vup>{cnt}</>层可叠加的防御力<@ba.vup>+{def:0%}</>的增益，受到攻击后消耗1层，并对周围所有地面敌人造成相当于攻击力<@ba.vup>{ep_damage_ratio:0%}</>的<$ba.dt.erosion2>侵蚀损伤</>\\n<@ba.rem>增益最多叠加{max_stack_cnt}层</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 25,
+                "initSp": 12,
+                "increment": 1
+              },
+              "prefabId": "skchr_tanya_2",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "def",
+                  "value": 0.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "ep_damage_ratio",
+                  "value": 0.35,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_stack_cnt",
+                  "value": 5,
+                  "valueStr": null
+                },
+                {
+                  "key": "cnt",
+                  "value": 5,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            }
+          ],
+          "assetIcon": "skill-icons/Crackborne - Wash Away.webp"
+        }
+      ],
+      "sourceName": "裂响",
+      "sourceChannel": "cn",
+      "sourceAppellation": "Crackborne",
+      "factionTags": [
+        "ursus"
+      ]
+    },
     "char_4207_branch": {
       "id": "char_4207_branch",
       "name": "Vetochki",
@@ -671294,7 +673061,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3ca02f23278bdd59814e5e191a6e8c34adac44f7/models/operator/token_10066_closur_ourbase/default/front/af23c7f497862f38be2cdca0cd4079d44753bde8d61b97398e5a2777a54281e4/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/47ce24294dbd274f41c614276720477f60826977/models/operator/token_10066_closur_ourbase/default/front/af23c7f497862f38be2cdca0cd4079d44753bde8d61b97398e5a2777a54281e4/avatar.png"
     },
     "token_10043_necras_skeltn": {
       "id": "token_10043_necras_skeltn",
@@ -671677,7 +673444,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3ca02f23278bdd59814e5e191a6e8c34adac44f7/models/operator/token_10043_necras_skeltn/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/47ce24294dbd274f41c614276720477f60826977/models/operator/token_10043_necras_skeltn/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10050_monstr_prosts": {
       "id": "token_10050_monstr_prosts",
@@ -673515,7 +675282,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3ca02f23278bdd59814e5e191a6e8c34adac44f7/models/operator/token_10050_monstr_prosts/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/47ce24294dbd274f41c614276720477f60826977/models/operator/token_10050_monstr_prosts/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10054_phatm2_encdool": {
       "id": "token_10054_phatm2_encdool",
@@ -675719,7 +677486,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3ca02f23278bdd59814e5e191a6e8c34adac44f7/models/operator/token_10054_phatm2_encdool/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/47ce24294dbd274f41c614276720477f60826977/models/operator/token_10054_phatm2_encdool/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10055_phatm2_mndclv": {
       "id": "token_10055_phatm2_mndclv",
@@ -676990,7 +678757,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3ca02f23278bdd59814e5e191a6e8c34adac44f7/models/operator/token_10030_mlyss_wtrman/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/47ce24294dbd274f41c614276720477f60826977/models/operator/token_10030_mlyss_wtrman/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10037_mitm_trshrb": {
       "id": "token_10037_mitm_trshrb",
@@ -677417,7 +679184,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3ca02f23278bdd59814e5e191a6e8c34adac44f7/models/operator/token_10037_mitm_trshrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/47ce24294dbd274f41c614276720477f60826977/models/operator/token_10037_mitm_trshrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10027_ironmn_pile1": {
       "id": "token_10027_ironmn_pile1",
@@ -678513,7 +680280,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3ca02f23278bdd59814e5e191a6e8c34adac44f7/models/operator/token_10027_ironmn_pile1/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/47ce24294dbd274f41c614276720477f60826977/models/operator/token_10027_ironmn_pile1/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10027_ironmn_pile2": {
       "id": "token_10027_ironmn_pile2",
@@ -679783,7 +681550,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3ca02f23278bdd59814e5e191a6e8c34adac44f7/models/operator/token_10027_ironmn_pile2/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/47ce24294dbd274f41c614276720477f60826977/models/operator/token_10027_ironmn_pile2/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10027_ironmn_pile3": {
       "id": "token_10027_ironmn_pile3",
@@ -682291,7 +684058,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3ca02f23278bdd59814e5e191a6e8c34adac44f7/models/operator/token_10027_ironmn_pile3/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/47ce24294dbd274f41c614276720477f60826977/models/operator/token_10027_ironmn_pile3/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10020_ling_soul1": {
       "id": "token_10020_ling_soul1",
@@ -683183,7 +684950,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3ca02f23278bdd59814e5e191a6e8c34adac44f7/models/operator/token_10020_ling_soul1/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/47ce24294dbd274f41c614276720477f60826977/models/operator/token_10020_ling_soul1/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10020_ling_soul2": {
       "id": "token_10020_ling_soul2",
@@ -684519,7 +686286,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3ca02f23278bdd59814e5e191a6e8c34adac44f7/models/operator/token_10020_ling_soul2/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/47ce24294dbd274f41c614276720477f60826977/models/operator/token_10020_ling_soul2/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10020_ling_soul3": {
       "id": "token_10020_ling_soul3",
@@ -686359,7 +688126,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3ca02f23278bdd59814e5e191a6e8c34adac44f7/models/operator/token_10020_ling_soul3/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/47ce24294dbd274f41c614276720477f60826977/models/operator/token_10020_ling_soul3/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10005_mgllan_drone1": {
       "id": "token_10005_mgllan_drone1",
@@ -687451,7 +689218,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3ca02f23278bdd59814e5e191a6e8c34adac44f7/models/operator/token_10005_mgllan_drone1/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/47ce24294dbd274f41c614276720477f60826977/models/operator/token_10005_mgllan_drone1/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10005_mgllan_drone2": {
       "id": "token_10005_mgllan_drone2",
@@ -688447,7 +690214,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3ca02f23278bdd59814e5e191a6e8c34adac44f7/models/operator/token_10005_mgllan_drone2/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/47ce24294dbd274f41c614276720477f60826977/models/operator/token_10005_mgllan_drone2/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10005_mgllan_drone3": {
       "id": "token_10005_mgllan_drone3",
@@ -689539,7 +691306,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3ca02f23278bdd59814e5e191a6e8c34adac44f7/models/operator/token_10005_mgllan_drone3/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/47ce24294dbd274f41c614276720477f60826977/models/operator/token_10005_mgllan_drone3/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10056_angel2_target": {
       "id": "token_10056_angel2_target",
@@ -690339,7 +692106,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3ca02f23278bdd59814e5e191a6e8c34adac44f7/models/operator/token_10056_angel2_target/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/47ce24294dbd274f41c614276720477f60826977/models/operator/token_10056_angel2_target/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10035_wisdel_wward": {
       "id": "token_10035_wisdel_wward",
@@ -692998,7 +694765,7 @@
         }
       ],
       "automaticOnly": true,
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3ca02f23278bdd59814e5e191a6e8c34adac44f7/models/operator/token_10031_swire2_gdtrap/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/47ce24294dbd274f41c614276720477f60826977/models/operator/token_10031_swire2_gdtrap/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10033_ela_grzmot": {
       "id": "token_10033_ela_grzmot",
@@ -694797,7 +696564,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3ca02f23278bdd59814e5e191a6e8c34adac44f7/models/operator/token_10033_ela_grzmot/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/47ce24294dbd274f41c614276720477f60826977/models/operator/token_10033_ela_grzmot/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10034_ray_sndbst": {
       "id": "token_10034_ray_sndbst",
@@ -695431,7 +697198,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3ca02f23278bdd59814e5e191a6e8c34adac44f7/models/operator/token_10034_ray_sndbst/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/47ce24294dbd274f41c614276720477f60826977/models/operator/token_10034_ray_sndbst/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10028_vigil_wolf": {
       "id": "token_10028_vigil_wolf",
@@ -696170,7 +697937,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3ca02f23278bdd59814e5e191a6e8c34adac44f7/models/operator/token_10028_vigil_wolf/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/47ce24294dbd274f41c614276720477f60826977/models/operator/token_10028_vigil_wolf/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10026_bgsnow_subbow": {
       "id": "token_10026_bgsnow_subbow",
@@ -697735,7 +699502,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3ca02f23278bdd59814e5e191a6e8c34adac44f7/models/operator/token_10026_bgsnow_subbow/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/47ce24294dbd274f41c614276720477f60826977/models/operator/token_10026_bgsnow_subbow/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10017_skadi2_dedant": {
       "id": "token_10017_skadi2_dedant",
@@ -699332,7 +701099,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3ca02f23278bdd59814e5e191a6e8c34adac44f7/models/operator/token_10017_skadi2_dedant/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/47ce24294dbd274f41c614276720477f60826977/models/operator/token_10017_skadi2_dedant/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10025_doroth_recttp": {
       "id": "token_10025_doroth_recttp",
@@ -701192,7 +702959,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3ca02f23278bdd59814e5e191a6e8c34adac44f7/models/operator/token_10025_doroth_recttp/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/47ce24294dbd274f41c614276720477f60826977/models/operator/token_10025_doroth_recttp/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10036_lasher_mcbird": {
       "id": "token_10036_lasher_mcbird",
@@ -702116,7 +703883,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3ca02f23278bdd59814e5e191a6e8c34adac44f7/models/operator/token_10036_lasher_mcbird/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/47ce24294dbd274f41c614276720477f60826977/models/operator/token_10036_lasher_mcbird/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10032_jesca2_jckshd": {
       "id": "token_10032_jesca2_jckshd",
@@ -702453,7 +704220,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3ca02f23278bdd59814e5e191a6e8c34adac44f7/models/operator/token_10032_jesca2_jckshd/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/47ce24294dbd274f41c614276720477f60826977/models/operator/token_10032_jesca2_jckshd/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10040_siege2_vlion": {
       "id": "token_10040_siege2_vlion",
@@ -703885,7 +705652,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3ca02f23278bdd59814e5e191a6e8c34adac44f7/models/operator/token_10009_weedy_cannon/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/47ce24294dbd274f41c614276720477f60826977/models/operator/token_10009_weedy_cannon/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10024_ebnhlz_rcube": {
       "id": "token_10024_ebnhlz_rcube",
@@ -704458,7 +706225,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3ca02f23278bdd59814e5e191a6e8c34adac44f7/models/operator/token_10024_ebnhlz_rcube/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/47ce24294dbd274f41c614276720477f60826977/models/operator/token_10024_ebnhlz_rcube/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10044_wulfen_mine": {
       "id": "token_10044_wulfen_mine",
@@ -705659,7 +707426,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3ca02f23278bdd59814e5e191a6e8c34adac44f7/models/operator/token_10044_wulfen_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/47ce24294dbd274f41c614276720477f60826977/models/operator/token_10044_wulfen_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10042_tecno_puppet": {
       "id": "token_10042_tecno_puppet",
@@ -705908,7 +707675,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3ca02f23278bdd59814e5e191a6e8c34adac44f7/models/operator/token_10042_tecno_puppet/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/47ce24294dbd274f41c614276720477f60826977/models/operator/token_10042_tecno_puppet/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10041_cathy_catsld": {
       "id": "token_10041_cathy_catsld",
@@ -706466,7 +708233,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3ca02f23278bdd59814e5e191a6e8c34adac44f7/models/operator/token_10041_cathy_catsld/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/47ce24294dbd274f41c614276720477f60826977/models/operator/token_10041_cathy_catsld/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10022_kazema_shadow": {
       "id": "token_10022_kazema_shadow",
@@ -706936,7 +708703,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3ca02f23278bdd59814e5e191a6e8c34adac44f7/models/operator/token_10022_kazema_shadow/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/47ce24294dbd274f41c614276720477f60826977/models/operator/token_10022_kazema_shadow/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10001_deepcl_tentac": {
       "id": "token_10001_deepcl_tentac",
@@ -707250,7 +709017,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3ca02f23278bdd59814e5e191a6e8c34adac44f7/models/operator/token_10001_deepcl_tentac/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/47ce24294dbd274f41c614276720477f60826977/models/operator/token_10001_deepcl_tentac/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10018_robrta_mach": {
       "id": "token_10018_robrta_mach",
@@ -707740,7 +709507,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3ca02f23278bdd59814e5e191a6e8c34adac44f7/models/operator/token_10018_robrta_mach/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/47ce24294dbd274f41c614276720477f60826977/models/operator/token_10018_robrta_mach/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10014_bstalk_crab": {
       "id": "token_10014_bstalk_crab",
@@ -708069,7 +709836,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3ca02f23278bdd59814e5e191a6e8c34adac44f7/models/operator/token_10014_bstalk_crab/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/47ce24294dbd274f41c614276720477f60826977/models/operator/token_10014_bstalk_crab/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10011_beewax_oblisk": {
       "id": "token_10011_beewax_oblisk",
@@ -709014,7 +710781,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3ca02f23278bdd59814e5e191a6e8c34adac44f7/models/operator/token_10011_beewax_oblisk/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/47ce24294dbd274f41c614276720477f60826977/models/operator/token_10011_beewax_oblisk/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10006_vodfox_doll": {
       "id": "token_10006_vodfox_doll",
@@ -709650,7 +711417,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3ca02f23278bdd59814e5e191a6e8c34adac44f7/models/operator/token_10006_vodfox_doll/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/47ce24294dbd274f41c614276720477f60826977/models/operator/token_10006_vodfox_doll/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10003_cgbird_bird": {
       "id": "token_10003_cgbird_bird",
@@ -709945,7 +711712,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3ca02f23278bdd59814e5e191a6e8c34adac44f7/models/operator/token_10003_cgbird_bird/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/47ce24294dbd274f41c614276720477f60826977/models/operator/token_10003_cgbird_bird/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10000_silent_healrb": {
       "id": "token_10000_silent_healrb",
@@ -710328,7 +712095,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3ca02f23278bdd59814e5e191a6e8c34adac44f7/models/operator/token_10000_silent_healrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/47ce24294dbd274f41c614276720477f60826977/models/operator/token_10000_silent_healrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10015_dusk_drgn": {
       "id": "token_10015_dusk_drgn",
@@ -710742,7 +712509,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3ca02f23278bdd59814e5e191a6e8c34adac44f7/models/operator/token_10015_dusk_drgn/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/47ce24294dbd274f41c614276720477f60826977/models/operator/token_10015_dusk_drgn/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10007_phatom_twin": {
       "id": "token_10007_phatom_twin",
@@ -712521,7 +714288,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3ca02f23278bdd59814e5e191a6e8c34adac44f7/models/operator/token_10007_phatom_twin/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/47ce24294dbd274f41c614276720477f60826977/models/operator/token_10007_phatom_twin/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10008_cqbw_box": {
       "id": "token_10008_cqbw_box",
@@ -713094,7 +714861,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3ca02f23278bdd59814e5e191a6e8c34adac44f7/models/operator/token_10008_cqbw_box/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/47ce24294dbd274f41c614276720477f60826977/models/operator/token_10008_cqbw_box/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10029_slent2_protrb": {
       "id": "token_10029_slent2_protrb",
@@ -713839,7 +715606,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3ca02f23278bdd59814e5e191a6e8c34adac44f7/models/operator/token_10029_slent2_protrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/47ce24294dbd274f41c614276720477f60826977/models/operator/token_10029_slent2_protrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10019_nearl2_sword": {
       "id": "token_10019_nearl2_sword",
@@ -714626,7 +716393,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3ca02f23278bdd59814e5e191a6e8c34adac44f7/models/operator/token_10019_nearl2_sword/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/47ce24294dbd274f41c614276720477f60826977/models/operator/token_10019_nearl2_sword/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10002_kalts_mon3tr": {
       "id": "token_10002_kalts_mon3tr",
@@ -715044,7 +716811,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3ca02f23278bdd59814e5e191a6e8c34adac44f7/models/operator/token_10002_kalts_mon3tr/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/47ce24294dbd274f41c614276720477f60826977/models/operator/token_10002_kalts_mon3tr/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10010_folivo_car": {
       "id": "token_10010_folivo_car",
@@ -716665,7 +718432,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3ca02f23278bdd59814e5e191a6e8c34adac44f7/models/operator/token_10010_folivo_car/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/47ce24294dbd274f41c614276720477f60826977/models/operator/token_10010_folivo_car/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10021_blkngt_hypnos": {
       "id": "token_10021_blkngt_hypnos",
@@ -717080,7 +718847,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3ca02f23278bdd59814e5e191a6e8c34adac44f7/models/operator/token_10021_blkngt_hypnos/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/47ce24294dbd274f41c614276720477f60826977/models/operator/token_10021_blkngt_hypnos/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10023_windft_wrench": {
       "id": "token_10023_windft_wrench",
@@ -718244,7 +720011,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3ca02f23278bdd59814e5e191a6e8c34adac44f7/models/operator/token_10023_windft_wrench/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/47ce24294dbd274f41c614276720477f60826977/models/operator/token_10023_windft_wrench/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10045_alanna_crane": {
       "id": "token_10045_alanna_crane",
@@ -718644,7 +720411,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3ca02f23278bdd59814e5e191a6e8c34adac44f7/models/operator/token_10045_alanna_crane/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/47ce24294dbd274f41c614276720477f60826977/models/operator/token_10045_alanna_crane/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10013_robin_mine": {
       "id": "token_10013_robin_mine",
@@ -719575,7 +721342,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3ca02f23278bdd59814e5e191a6e8c34adac44f7/models/operator/token_10013_robin_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/47ce24294dbd274f41c614276720477f60826977/models/operator/token_10013_robin_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10016_rfrost_mine": {
       "id": "token_10016_rfrost_mine",
@@ -720506,7 +722273,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3ca02f23278bdd59814e5e191a6e8c34adac44f7/models/operator/token_10016_rfrost_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/47ce24294dbd274f41c614276720477f60826977/models/operator/token_10016_rfrost_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10004_otter_motter": {
       "id": "token_10004_otter_motter",
@@ -721855,7 +723622,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3ca02f23278bdd59814e5e191a6e8c34adac44f7/models/operator/token_10004_otter_motter/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/47ce24294dbd274f41c614276720477f60826977/models/operator/token_10004_otter_motter/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     }
   },
   "enemies": {
@@ -721906,7 +723673,7 @@
   },
   "skillEffects": {
     "repository": "arkpedia/arkpedia-sd-assets",
-    "commit": "3ca02f23278bdd59814e5e191a6e8c34adac44f7",
+    "commit": "47ce24294dbd274f41c614276720477f60826977",
     "pack": {
       "path": "effects/charge-cost/26-09-23-17-49-43_b9cc4a/effect.json",
       "bytes": 15311,

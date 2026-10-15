@@ -114,25 +114,43 @@ function chainHeal(b, u, target, def, prof) {
 }
 
 /** Original nonstackable elemental-damage protection: strongest same-channel
- * source wins; weaker live producers remain available when it leaves. */
+ * source wins; weaker live producers remain available when it leaves.
+ * Optional element-specific values share the same channel. Self passives have
+ * no ally-target selector, so may explicitly bypass aura eligibility for self. */
 export function registerBerryProtection(b, u, value, eligible = a => bodyInKeys(a, u.rangeKeySet),
-  active = () => u.skill.active) {
+  active = () => u.skill.active, { elements = {}, self = false } = {}) {
   const sources = b._arkpediaBerryProtection ??= new Map();
-  sources.set(u.id, { unit: u, value, eligible, active });
+  const entry = { unit: u, value, eligible, active, elements, self };
+  sources.set(u.id, entry);
+  const admits = (a, e) => live(a) && a.kind !== 'device' && live(e.unit) && e.active() && e.eligible(a)
+    && (e.self ? a === e.unit : auraAlly(b, a, e.unit));
   const sync = () => {
     for (const ally of b.allyUnits) {
       let highest;
-      if (live(ally) && ally.kind !== 'device') for (const entry of sources.values())
-        if (live(entry.unit) && entry.active() && entry.eligible(ally)
-          && auraAlly(b, ally, entry.unit)
-          && (!highest || entry.value > highest.value)) highest = entry;
+      for (const e of sources.values()) if (admits(ally, e) && (!highest || e.value > highest.value)) highest = e;
       const key = 'source:mberry-safe-zone', old = ally.findBuff(key);
       if (!highest) b.removeBuff(ally, key);
       else if (old?.mods.elemTakenMul !== 1 - highest.value || old.source !== highest.unit)
         b.addBuff(ally, { key, source: highest.unit, mods: { elemTakenMul: 1 - highest.value } });
     }
   };
-  for (const ev of ['deploy', 'death', 'tick', 'skillStart', 'skillEnd']) b.on(ev, sync, { owner: u });
+  if (Object.keys(elements).length && !b._arkpediaBerryElementHook) {
+    // Keep the ordinary all-element multiplier for existing previews/barriers.
+    // At an element receipt replace that channel's share with its strongest
+    // typed value. Unrelated intake multipliers still apply exactly once.
+    b._arkpediaBerryElementHook = b.on('elementHit', ({ target, dmg }) => {
+      if (!live(target) || target.side !== 'ally' || dmg.cancel || dmg.type !== 'element') return;
+      sync();
+      const applied = target.findBuff('source:mberry-safe-zone')?.mods.elemTakenMul;
+      if (!(applied > 0)) return;
+      let highest = 1 - applied;
+      for (const e of sources.values()) if (admits(target, e))
+        highest = Math.max(highest, e.elements?.[dmg.element] ?? e.value);
+      dmg.mul *= Math.max(0, 1 - highest) / applied;
+    }, { priority: 2000 });
+  }
+  const handles = ['deploy', 'death', 'tick', 'skillStart', 'skillEnd'].map(ev => b.on(ev, sync, { owner: u }));
+  sync.remove = () => { for (const h of handles) b.off(h); if (sources.get(u.id) === entry) sources.delete(u.id); sync(); };
   return sync;
 }
 
