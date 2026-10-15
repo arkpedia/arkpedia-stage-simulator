@@ -70,6 +70,12 @@ test('S2 predelay survives control while the subsequent attack still waits for r
  f.b.applyStatus(f.u,'stun',{duration:1});advance(f.b,.5);assert.equal(f.controller.resources.mode,1);assert.equal(f.hits.length,hits);
  until(f,()=>f.hits.length>hits,3);assert.equal(f.u.skill.active,true);
 });
+test('S2 mode entry and exit interrupt pending abilities without resetting ordinary cooldown',()=>{
+ const f=make({skill:2});enemy(f);advance(f.b,1.1);const cd=f.u.atkCd;assert.ok(cd>0);cast(f);near(f.u.atkCd,cd);
+ advance(f.b,.4);assert.equal(f.resources.mode,1);assert.equal(f.hits.length,0);
+ until(f,()=>f.hits.length>0,3);const remaining=f.u.atkCd;assert.ok(remaining>.2);f.u.skill.end('test');near(f.u.atkCd,remaining);
+ assert.equal(f.u.mem.regularFormVisual.clip,'Skill_2_End');advance(f.b,.24);assert.equal(f.u.mem.regularFormVisual.clip,'Idle');
+});
 test('the Minos talent compares the receiving ally HP ratio and scales before physical mitigation',()=>{
  const f=make(),{b,u}=f,a=enemy(f);advance(b,1.1);a.hp=a.s.maxHp*.6;
  // Controlled normalized ally isolates the recipient HP predicate from the aura owner.

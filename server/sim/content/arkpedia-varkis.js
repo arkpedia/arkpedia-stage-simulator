@@ -7,7 +7,7 @@ import { normalizeChess, normSpType } from '../simdata.js';
 import { acquireTargets, effectiveProfile, resolveHit } from '../ai.js';
 export const VARKIS_CONTRACT=Object.freeze({
  scope:'Held original CN ordinary attacks, three-event S1, manual S2 and selected Minos talent; public admission remains separate',
- mapping:'Input-time targets retain their deployment identities. One accepted attack owns all three S1 event releases; subsequent strikes do not create extra attack/SP receipts. S1 holds SP until its third marker, or refunds on a wholly dead input before its first marker. S2 enters source mode after the unscaled Begin and restarts ordinary attack cadence; its thirty-second skill account starts at activation. One accepted S2 attack supplies one self-heal. Minos HP-ratio scaling runs in the shared pre-mitigation hit channel.',
+ mapping:'Input-time targets retain their deployment identities. One accepted attack owns all three S1 event releases; subsequent strikes do not create extra attack/SP receipts. S1 holds SP until its third marker, or refunds on a wholly dead input before its first marker. S2 enters source mode after the unscaled Begin; mode changes interrupt the pending ability and preserve its remaining ordinary cooldown. Its thirty-second skill account starts at activation. One accepted S2 attack supplies one self-heal. Minos HP-ratio scaling runs in the shared pre-mitigation hit channel.',
  limits:'Numeric selector aliases and body geometry, cast/cooldown/FSM ordering, S1 refund/finish timing, S2 heal event alias, aura hidden-state/attachment ordering and native ES intermediaries are explicit mappings, not recovered compiled Unity dispatch. Elemental gauge output is not mapped to the Minos damage talent. Full Start represents birth. Modules, native particles/shaders/audio, game-frame/pixel parity and public artwork delivery remain unverified.',
  frameParity:false,
 });
@@ -18,7 +18,7 @@ const due=(b,t)=>b.time+1e-7>=t;
 function selected(u,contract) {
  if(contract!==VARKIS_CONTRACT||u.def.charId!==ID||u.deploySeq!==0||u.mem.varkis)throw Error('Fresh selected Varkáris and explicit contract required');
  const build={...u.def.raw.arkpedia,skillId:u.def.skill?.id},r=selectedVarkisBuild(build),s=u.def.skill,n=varkisNativeInputs();
- if(u.def.raw.arkpedia.skillId!==build.skillId||!same(u.def.stats,normalizeChess({stats:r.stats}).stats)
+ if(u.def.raw.arkpedia.skillId!=null&&u.def.raw.arkpedia.skillId!==build.skillId||!same(u.def.stats,normalizeChess({stats:r.stats}).stats)
   ||!same(u.rangeGrid,r.rangeGrid)||!same(u.def.tags,r.tags)||!same(u.def.talents.map(t=>t.bb),r.talentBb)
   ||!same(s.bb,r.bb)||s.skillType!==r.source.skillType||s.durationType!==r.source.durationType
   ||s.spType!==normSpType(r.source.spData.spType)||s.spCost!==r.source.spData.spCost||s.initSp!==r.source.spData.initSp
@@ -29,7 +29,7 @@ function selected(u,contract) {
   if(s._targetMotion!==1||s._limitedMaxTargetNumToBlockedCnt!==1||s._allowZeroBlockCntLimit!==0)throw Error('Unreviewed Varkáris native target cap');
  if(n.burst._additionalTimes!==2||n.burst._waitAttackEventForAllAttacks!==1||n.burst._refreshInputTargetOnCheckSpell!==0
   ||n.s1._recoverSpIfTargetDead!==1||n.s2._beginAnim!=='Skill_2_Begin'||n.s2._playSkillBeginAnim!==1
-  ||n.s2._allowSpRecoveryWhenAffecting!==0||n.s2._attackBlackboardModeIndex!==1
+  ||n.s2._allowSpRecoveryWhenAffecting!==0||n.s2._attackBlackboardModeIndex!==1||n.s2._resetAbilityCooldownWhenCastEnd!==0
   ||!same(n.talentValidator._tags,['minos'])||n.attackHeal._maxTarget!==1
   ||n.attackHeal._runActionOnEvent!==4||n.templates['varkis_s2[attack_add_hp]'].eventToActions.ON_BUFF_START[0]._ignoreHealFree!==false)
   throw Error('Unreviewed Varkáris native skill/talent inputs');
@@ -49,9 +49,9 @@ export class VarkisController {
  targets(){if(this.b.rangeChanged(this.u))this.b._refreshRange(this.u);return acquireTargets(this.b,this.u,effectiveProfile(this.u));}
  canCast(){return this.valid()&&live(this.u)&&this.u.canAct&&!this.u.skill.active
   &&(this.record.index===1||!this.u.s.flags.disarm&&!this.phase&&this.u.atkCd<=1e-9&&this.targets().length>0);}
- startS2(){this.facing=this.u.dir;this.mixUntil=0;this.u.atkCd=0;
+ startS2(){this.facing=this.u.dir;this.mixUntil=0;
   this.phase={kind:'begin',until:this.b.time+this.model().durations.Skill_2_Begin};this.visual('Skill_2_Begin');}
- endS2(){this.resources.setSourceMode(0);this.phase=null;this.u.atkCd=0;
+ endS2(){this.resources.setSourceMode(0);this.phase=null;
   if(!this.valid())return;
   if(['Skill_2_Idle','Skill_2_Loop'].includes(this.lastClip)){this.mixUntil=this.b.time+this.model().durations.Skill_2_End;this.visual('Skill_2_End');}
   else{this.mixUntil=0;this.idle();}}
@@ -103,7 +103,7 @@ export class VarkisController {
   this.phase={kind:'attack',s1,s2,inputs:targets.map(unit=>({unit,seq:unit.deploySeq})),events,index:0,epoch:u.attackControlEpoch,
    until:b.time+period,accepted:false,releaseTargets:[]};u.atkCd=period;this.visual(clip,speed);
  }
- spec(){return this.record.index===0?{kind:'instant',silenceable:false,trigger:{rule:'NEVER'},flags:{noSp:true},attack:{atkScale:this.record.bb.atk_scale},
+ spec(){return this.record.index===0?{kind:'instant',silenceable:false,trigger:{rule:'NEVER'},flags:{noSp:true},pendingText:'Skill active · Three-strike burst',attack:{atkScale:this.record.bb.atk_scale},
   completeOnAttack:false,canActivate:()=>this.canCast(),onEnd:()=>{
    if(this.finishingS1)return;this.phase=null;this.mixUntil=0;if(this.valid())this.idle();}}
   :{kind:'duration',duration:this.record.source.duration,silenceable:false,trigger:{rule:'NEVER'},attack:{atkScale:this.record.bb['attack@s2_atk_scale']},

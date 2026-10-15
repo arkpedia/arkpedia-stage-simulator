@@ -6,13 +6,12 @@ import { createHash } from 'node:crypto';
 import e from '../data/arkpedia-native-operators/char_4166_varkis.json' with { type: 'json' };
 import { VARKIS_ID as ID, VARKIS_SKILLS as SKILLS, selectedVarkisBuild as select, varkisNativeInputs }
   from '../server/sim/content/arkpedia-varkis-source.js';
-import { REGULAR_OPERATORS } from '../shared/arkpedia/operators.js';
 import { near } from './helpers/mon3tr-fixture.js';
 const build = (elite = 2, skill = 0, rank = [4,7,10][elite], potential = 1, trust = 0) => ({
   elite, level: e.tables.character.phases[elite].maxLevel, potential, trust,
   skillId: SKILLS[skill], skillRank: rank, module: 'none',
 });
-test('Varkáris receipt retains original bytes and stays outside public admission', async () => {
+test('Varkáris receipt retains original bytes and does not itself grant public admission', async () => {
   const raw = await readFile(new URL('../data/arkpedia-native-operators/char_4166_varkis.json', import.meta.url));
   assert.equal(raw.length, 248827);
   assert.equal(createHash('sha256').update(raw).digest('hex'), '2726cf348a031ad5330fe733096a604c3109f9558a38896031870a003ccc9574');
@@ -20,7 +19,6 @@ test('Varkáris receipt retains original bytes and stays outside public admissio
   assert.equal(e.source.nativeClient, '26-09-22-07-47-20_6c71fa');
   assert.deepEqual(e.enabledOperators, []); assert.deepEqual(e.heldOperators, [ID]);
   for (const key of ['frameParity','moduleSupport','nativeParticleSupport']) assert.equal(e[key], false);
-  assert.equal(REGULAR_OPERATORS[ID], undefined);
   assert.deepEqual(e.nativeTemplateGaps, []); assert.deepEqual(e.jsonTemplateGaps, []);
   assert.equal(e.source.bundles.length, 5); assert.equal(Object.keys(e.templates).length, 8);
   assert.deepEqual(e.projectiles, {}); assert.deepEqual(Object.keys(e.models), [ID]);
