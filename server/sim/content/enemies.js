@@ -233,12 +233,16 @@ function stOf(b) {
   return st;
 }
 
-/** Register the global dispatch hooks once per battle (idempotent). */
-export function ensureInstalled(b) {
+/** Register one fixed enemy-kit scope per battle. Full-mode callers keep the original registry. */
+function installDispatch(b, scope, kits) {
   const st = stOf(b);
-  if (st.installed) return st;
-  st.installed = true;
-  b.on('enemySpawn', ({ enemy }) => onSpawn(b, enemy), { priority: 100 });
+  if (st.installed) {
+    if (st.kitScope !== scope) throw Error('Enemy kit scope cannot change within a battle');
+    return st;
+  }
+  if (scope !== 'full' && b.enemies.length) throw Error('Select enemy kits before the first spawn');
+  st.installed = true; st.kitScope = scope; st.kits = kits;
+  b.on('enemySpawn', ({ enemy }) => onSpawn(b, enemy, st.kits), { priority: 100 });
   b.on('hit', (c) => onHitOut(b, c), { priority: 200 });
   b.on('hit', (c) => chaliceShare(b, c), { priority: -400 });
   b.on('hit', (c) => onHitIn(b, c), { priority: -500 });
@@ -262,6 +266,21 @@ export function ensureInstalled(b) {
   b.on('tick', (c) => onTick(b, c.dt), { priority: 50 });
   b.on('battleEnd', ({ result }) => { if (st.lpLoss > 0 && result) result.lpLoss = (result.lpLoss ?? 0) + st.lpLoss; });
   return st;
+}
+
+/** Original full-mode installation, shared with bosses.js; idempotent for the same scope. */
+export function ensureInstalled(b) { return installDispatch(b, 'full', KITS); }
+
+/** Reuse only explicitly selected upstream factories and their common dispatchers.
+ * This is a dispatch mechanism, not regular-stage approval. Callers own the source review.
+ * Selection is copied, immutable and never widened by later full-mode installation.
+ */
+export function installSelected(b, keys) {
+  if (!Array.isArray(keys) || !keys.length || keys.some(k => typeof k !== 'string'
+    || !Object.hasOwn(KITS, k) || typeof KITS[k] !== 'function') || new Set(keys).size !== keys.length)
+    throw Error('Select a nonempty, distinct list of known upstream enemy kits');
+  const sorted = [...keys].sort();
+  return installDispatch(b, 'selected:' + JSON.stringify(sorted), Object.freeze(Object.fromEntries(sorted.map(k => [k, KITS[k]]))));
 }
 
 export function install(battle) { ensureInstalled(battle); }
@@ -327,8 +346,8 @@ export function canCast(e, sil) { return e.alive && !e.hidden && !e.s.flags.stun
 // ---------------------------------------------------------------------------------------------------------------
 // global dispatchers
 
-function onSpawn(b, e) {
-  const kit = KITS[e.defId];
+function onSpawn(b, e, kits) {
+  const kit = Object.hasOwn(kits, e.defId) ? kits[e.defId] : null;
   if (typeof kit !== 'function') return;
   const ab = abOf(b, e);
   const list = safe(b, e, () => kit(ab, e, b)) || [];
