@@ -1,0 +1,310 @@
+{
+  "schemaVersion": 1,
+  "operatorId": "char_4203_kichi",
+  "enabledOperators": [
+    "char_4203_kichi"
+  ],
+  "frameParity": false,
+  "moduleSupport": false,
+  "nativePixelParity": false,
+  "nativeParticleSupport": false,
+  "sourceFoundationSha256": "171761adf7b8bc65b03ea6f0d95f2a8bf9c3d0c16bcf836d99e2a1088448b025",
+  "ownerArtworkSha256": "d9bbac7aa8447c0d7985568562408058098b3f5db8000255b89134615daf89e3",
+  "sourceClocksSha256": "eb66e809e151b090620a314b3d27da05f79d6bc6d0942d0b3bab0b6bf10f7eb3",
+  "mechanicsPolicy": "source-cn-spread-wave-stacks-status-cycle-and-unique-kills-v1",
+  "scope": "Selected original CN Kichisei spread waves, S1 attack-count stacks, S2 per-wave status cycle and unique-definition kill talent through the reviewed regular-stage public squad/build path.",
+  "verification": {
+    "source": "Five original bundles, 71 owner/skill components and nine templates; seven outputs reproduced and 29 altered claims rejected on Node 22 and 24.",
+    "artwork": "Recipe-bound original files, pixels, PMA and literal roles verified; 33 altered claims rejected on both Node versions; 26 clips per viewport and thirty desktop/emulated-phone captures without errors.",
+    "runtime": "447 source/combat/public/clock/HUD/hunter/Gnosis/spreadshooter/profession/damage cases pass on Node 22 and 24. Both original 0-1 skill builds with Melantha preserve terrain/natural DP and clear eleven kills, zero leaks and full life, with nine Kichisei hits and one activation each. Full local/hosted verification is separate.",
+    "browser": {
+      "status": "passed",
+      "script": "tools/arkpedia/review-kichi-public.mjs",
+      "driver": "tools/arkpedia/public-review-driver.mjs",
+      "scriptSha256": "7a9dab9729258fce632c454586aa052ad9e0e464e4de63da9532a5298878cca6",
+      "driverSha256": "1ef20a71f4982799d1368e61d0b2e2eac9eb36efe1aaad45294150566246359f",
+      "cases": 8,
+      "captures": 60,
+      "viewports": [
+        "1280x800 desktop mouse",
+        "844x390 emulated landscape phone touch"
+      ],
+      "originalWaves": false,
+      "fixture": "Original 0-1 terrain, empty waves, 99 DP and two pinned high-HP nonattacking targets. Original waves/DP/terrain tested separately.",
+      "checks": [
+        "Public squad/skill choice and separate drag/drop/direction swipe",
+        "Natural SP and public manual activation with original Front/Back Begin/Loop tracks",
+        "S1 four multi-target waves produce four capped ATK stacks, eight hits and four attack IDs",
+        "S2 shares Slow/Bind/Stun state across both recipients in each wave",
+        "Natural finish clears owned skill state; retreat clears front marks, controller handles and capacity with no stale attacks"
+      ],
+      "browserErrors": 0,
+      "failedResources": 0,
+      "visualReview": "Desktop S1 Back capped ATK and phone S2 Front third-wave captures inspected. An earlier fixture used diagonal targets and exposed the controller/renderer horizontal-facing mismatch; corrected model selection and explicit Up/Down fixture pass all eight cases. Physical-device, native effects and original game frame/pixel parity remain unverified.",
+      "normalPreviewReplay": {
+        "status": "passed",
+        "candidate": false,
+        "cases": 8,
+        "captures": 60,
+        "browserErrors": 0,
+        "failedResources": 0
+      }
+    }
+  },
+  "originalArtwork": {
+    "operator/char_4203_kichi/default/front": {
+      "kind": "operator",
+      "id": "char_4203_kichi",
+      "variant": "default",
+      "facing": "front",
+      "spineVersion": "3.8.99",
+      "source": {
+        "key": "operators",
+        "repository": "fexli/ArknightsResource",
+        "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+        "directory": "spine/char_4203_kichi/char_4203_kichi/Front"
+      },
+      "skeleton": {
+        "path": "models/operator/char_4203_kichi/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4203_kichi.skel",
+        "bytes": 462582,
+        "sha256": "d0ba19978645bab47ac310e6f3af9e3e6f8d318f75d507ecb575b7a40ce7f357"
+      },
+      "atlas": {
+        "path": "models/operator/char_4203_kichi/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4203_kichi.atlas",
+        "bytes": 11512,
+        "sha256": "8057ad4ff32b704e6abdf37052827f641bb7d76a63d64c27631a2512112164bb"
+      },
+      "textures": [
+        {
+          "path": "models/operator/char_4203_kichi/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4203_kichi.png",
+          "bytes": 159073,
+          "sha256": "a2c827040c88fc55ddbf0ff714f4a87ece1733ad69593ede423fd1bab4399811"
+        }
+      ],
+      "premultipliedAlpha": true,
+      "animations": {
+        "Attack": 2.333,
+        "Attack_Down": 2.333,
+        "Default": 0,
+        "Die": 1,
+        "Idle": 2,
+        "Skill_1_Begin": 0.1,
+        "Skill_1_End": 0.1,
+        "Skill_1_Idle": 2,
+        "Skill_1_Loop": 2.833,
+        "Skill_2_Begin": 0.1,
+        "Skill_2_End": 0.1,
+        "Skill_2_Idle": 2,
+        "Skill_2_Loop": 3,
+        "Skill_Down_1_Loop": 2.833,
+        "Skill_Down_2_Loop": 3,
+        "Start": 1
+      },
+      "hits": {
+        "Attack": [
+          0.5
+        ],
+        "Attack_Down": [
+          0.5
+        ],
+        "Skill_1_Loop": [
+          0.5
+        ],
+        "Skill_2_Loop": [
+          0.5
+        ],
+        "Skill_Down_1_Loop": [
+          0.5
+        ],
+        "Skill_Down_2_Loop": [
+          0.5
+        ]
+      },
+      "bounds": {
+        "x": -274.103,
+        "y": -5.216,
+        "width": 675.993,
+        "height": 580.877
+      },
+      "animationRoles": {
+        "idle": "Idle",
+        "deploy": "Start",
+        "attack": {
+          "begin": null,
+          "loop": "Attack",
+          "end": null
+        },
+        "attackDown": {
+          "begin": null,
+          "loop": "Attack_Down",
+          "end": null
+        },
+        "skill": {
+          "begin": "Skill_1_Begin",
+          "loop": "Skill_1_Loop",
+          "end": "Skill_1_End",
+          "idle": "Skill_1_Idle",
+          "index": 0,
+          "via": "skill"
+        },
+        "skills": {
+          "0": {
+            "begin": "Skill_1_Begin",
+            "loop": "Skill_1_Loop",
+            "end": "Skill_1_End",
+            "idle": "Skill_1_Idle",
+            "index": 0,
+            "via": "skill"
+          },
+          "1": {
+            "begin": "Skill_2_Begin",
+            "loop": "Skill_2_Loop",
+            "end": "Skill_2_End",
+            "idle": "Skill_2_Idle",
+            "index": 1,
+            "via": "skill"
+          }
+        },
+        "die": "Die",
+        "stun": null,
+        "move": null
+      }
+    },
+    "operator/char_4203_kichi/default/back": {
+      "kind": "operator",
+      "id": "char_4203_kichi",
+      "variant": "default",
+      "facing": "back",
+      "spineVersion": "3.8.99",
+      "source": {
+        "key": "operators",
+        "repository": "fexli/ArknightsResource",
+        "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+        "directory": "spine/char_4203_kichi/char_4203_kichi/Back"
+      },
+      "skeleton": {
+        "path": "models/operator/char_4203_kichi/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4203_kichi.skel",
+        "bytes": 215683,
+        "sha256": "2b1dddf795c79f9aa6549ed50c6e3d642fceef1f895b3753939b0701612471ae"
+      },
+      "atlas": {
+        "path": "models/operator/char_4203_kichi/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4203_kichi.atlas",
+        "bytes": 6059,
+        "sha256": "323f9f19edb4431470fde73f754a08758d3ae1dc2654a01cad276285cd330a5a"
+      },
+      "textures": [
+        {
+          "path": "models/operator/char_4203_kichi/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4203_kichi.png",
+          "bytes": 117021,
+          "sha256": "2be216bbf52ea9df749173c4ab8932b7243104bfad15d342740a9a82c1abc07f"
+        }
+      ],
+      "premultipliedAlpha": true,
+      "animations": {
+        "Attack": 2.333,
+        "Default": 0,
+        "Idle": 2,
+        "Skill_1_Begin": 0.1,
+        "Skill_1_End": 0.1,
+        "Skill_1_Idle": 2,
+        "Skill_1_Loop": 2.833,
+        "Skill_2_Begin": 0.1,
+        "Skill_2_End": 0.1,
+        "Skill_2_Idle": 2,
+        "Skill_2_Loop": 3,
+        "Start": 1
+      },
+      "hits": {
+        "Attack": [
+          0.5
+        ],
+        "Skill_1_Loop": [
+          0.5
+        ],
+        "Skill_2_Loop": [
+          0.5
+        ]
+      },
+      "bounds": {
+        "x": -159.86,
+        "y": -2.846,
+        "width": 561.75,
+        "height": 578.506
+      },
+      "animationRoles": {
+        "idle": "Idle",
+        "deploy": "Start",
+        "attack": {
+          "begin": null,
+          "loop": "Attack",
+          "end": null
+        },
+        "attackDown": null,
+        "skill": {
+          "begin": "Skill_1_Begin",
+          "loop": "Skill_1_Loop",
+          "end": "Skill_1_End",
+          "idle": "Skill_1_Idle",
+          "index": 0,
+          "via": "skill"
+        },
+        "skills": {
+          "0": {
+            "begin": "Skill_1_Begin",
+            "loop": "Skill_1_Loop",
+            "end": "Skill_1_End",
+            "idle": "Skill_1_Idle",
+            "index": 0,
+            "via": "skill"
+          },
+          "1": {
+            "begin": "Skill_2_Begin",
+            "loop": "Skill_2_Loop",
+            "end": "Skill_2_End",
+            "idle": "Skill_2_Idle",
+            "index": 1,
+            "via": "skill"
+          }
+        },
+        "die": null,
+        "stun": null,
+        "move": null
+      }
+    }
+  },
+  "interfaceAssets": [
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "five-star-icons/Kichisei - Base.webp",
+      "bytes": 12812,
+      "sha256": "3384c0f5dcfd84a8b1c578f15422d05f8290901953b83311cc6bd8c643bce71e"
+    },
+    {
+      "repository": "arkpedia/arkpedia-skin-assets",
+      "commit": "6fb723692d89c4a08d9a7aa4015e19c0753dd270",
+      "path": "five-star-skins/Kichisei - Base.webp",
+      "bytes": 186456,
+      "sha256": "1abb46bce980f4ac4718684f48fcedbc37f5c0f883367170ec75ec1b8303a666"
+    },
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "skill-icons/Kichisei - Irasshaimase!.webp",
+      "bytes": 5510,
+      "sha256": "07e626512e1187fc7c286758f58d08548d1d5600cfefec33910835cccab57ea0"
+    },
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "skill-icons/Kichisei - Lucky Star, Shining Bright!.webp",
+      "bytes": 7242,
+      "sha256": "d5af07f1ab5029c009c7e8e0d54be493f63285681f43fac17437341737035fe8"
+    }
+  ],
+  "limitations": [
+    "Compiled event/FSM/selector aliases, body/front-mark geometry, empty-wave accounting, same-wave kill ordering and S1 dynamic stack cap are explicit local mappings",
+    "Nominal mode BAT/current interval speed sampling, Begin/control timing and positive cooldown preservation remain selected mappings",
+    "Modules, native particles, shaders, audio and original game-frame/pixel parity remain unverified"
+  ]
+}

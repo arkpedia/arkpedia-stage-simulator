@@ -57,6 +57,7 @@ for(const dir of['RIGHT','LEFT','UP','DOWN'])for(const skill of[1,2])test(`S${sk
  enemy(f,{x:5+(dir==='RIGHT'?1:dir==='LEFT'?-1:0),y:5+(dir==='UP'?1:dir==='DOWN'?-1:0)});cast(f);
  until(f,()=>f.controller.phase?.kind==='attack',1);near(f.u.s.interval,(skill===1?2.8:3)/3);near(f.u.mem.regularFormVisual.speed,3);
  assert.equal(f.u.mem.regularFormVisual.clip,dir==='DOWN'?`Skill_Down_${skill}_Loop`:`Skill_${skill}_Loop`);
+ assert.equal(f.controller.model().durations.Die!=null,dir!=='UP');
  const start=f.b.time;until(f,()=>f.attacks.length===1,1);near(f.b.time-start,.5/3,f.b.dt+1e-6);
 });
 test('one accepted empty release advances S1 once after all prior targets leave; hooks cancelling a nonempty selection do not',()=>{

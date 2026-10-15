@@ -42,7 +42,7 @@ export class KichiController{
   this.accepting=false;this.visualSeq=0;this.lastClip=null;this.mixUntil=0;}
  valid(){return!this.stopped&&!this.b.finished&&present(this.u)&&this.seq===this.u.deploySeq;}
  mode(){return this.u.skill.active?this.record.index+1:0;}
- model(){return models[['UP','LEFT'].includes(this.facing)?'Back':'Front'];}
+ model(){return models[this.facing==='UP'?'Back':'Front'];}
  visual(clip,speed=1,loop=false){if(!Object.hasOwn(this.model().durations,clip))throw Error('Missing original Kichisei clip: '+clip);
   if(loop&&this.lastClip===clip&&this.u.mem.regularVisualDirection===this.facing)return;
   this.lastClip=clip;this.u.mem.regularVisualDirection=this.facing;this.u.mem.regularFormVisual={clip,speed,loop,

@@ -405,6 +405,7 @@
     "char_4196_reckpr": "cn",
     "char_4166_varkis": "cn",
     "char_4211_snhunt": "cn",
+    "char_4203_kichi": "cn",
     "char_4207_branch": "cn"
   },
   "behaviors": {
@@ -436,7 +437,7 @@
   "nativeEffects": {
     "tragodia": {
       "repository": "arkpedia/arkpedia-sd-assets",
-      "commit": "6af857f9a9709a6b1b1ab29f7d49984ae4cfd54b",
+      "commit": "0610d7037f223f4db129afb033dfd04d225fecf5",
       "manifest": {
         "path": "effects/native/tragodia/26-09-23-17-49-43_b9cc4a/e39769c56a91f5d483632808082a05a3dbe0b71d5a5c99b3ade9ebdee68fd0ff/manifest.json",
         "bytes": 44646,
@@ -446,7 +447,7 @@
   },
   "sd": {
     "repository": "arkpedia/arkpedia-sd-assets",
-    "commit": "6af857f9a9709a6b1b1ab29f7d49984ae4cfd54b",
+    "commit": "0610d7037f223f4db129afb033dfd04d225fecf5",
     "models": {
       "operator/char_123_fang/default/front": {
         "kind": "operator",
@@ -75332,6 +75333,225 @@
           "move": null
         }
       },
+      "operator/char_4203_kichi/default/front": {
+        "kind": "operator",
+        "id": "char_4203_kichi",
+        "variant": "default",
+        "facing": "front",
+        "spineVersion": "3.8.99",
+        "source": {
+          "key": "operators",
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "spine/char_4203_kichi/char_4203_kichi/Front"
+        },
+        "skeleton": {
+          "path": "models/operator/char_4203_kichi/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4203_kichi.skel",
+          "bytes": 462582,
+          "sha256": "d0ba19978645bab47ac310e6f3af9e3e6f8d318f75d507ecb575b7a40ce7f357"
+        },
+        "atlas": {
+          "path": "models/operator/char_4203_kichi/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4203_kichi.atlas",
+          "bytes": 11512,
+          "sha256": "8057ad4ff32b704e6abdf37052827f641bb7d76a63d64c27631a2512112164bb"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_4203_kichi/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4203_kichi.png",
+            "bytes": 159073,
+            "sha256": "a2c827040c88fc55ddbf0ff714f4a87ece1733ad69593ede423fd1bab4399811"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Attack": 2.333,
+          "Attack_Down": 2.333,
+          "Default": 0,
+          "Die": 1,
+          "Idle": 2,
+          "Skill_1_Begin": 0.1,
+          "Skill_1_End": 0.1,
+          "Skill_1_Idle": 2,
+          "Skill_1_Loop": 2.833,
+          "Skill_2_Begin": 0.1,
+          "Skill_2_End": 0.1,
+          "Skill_2_Idle": 2,
+          "Skill_2_Loop": 3,
+          "Skill_Down_1_Loop": 2.833,
+          "Skill_Down_2_Loop": 3,
+          "Start": 1
+        },
+        "hits": {
+          "Attack": [
+            0.5
+          ],
+          "Attack_Down": [
+            0.5
+          ],
+          "Skill_1_Loop": [
+            0.5
+          ],
+          "Skill_2_Loop": [
+            0.5
+          ],
+          "Skill_Down_1_Loop": [
+            0.5
+          ],
+          "Skill_Down_2_Loop": [
+            0.5
+          ]
+        },
+        "bounds": {
+          "x": -274.103,
+          "y": -5.216,
+          "width": 675.993,
+          "height": 580.877
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null
+          },
+          "attackDown": {
+            "begin": null,
+            "loop": "Attack_Down",
+            "end": null
+          },
+          "skill": {
+            "begin": "Skill_1_Begin",
+            "loop": "Skill_1_Loop",
+            "end": "Skill_1_End",
+            "idle": "Skill_1_Idle",
+            "index": 0,
+            "via": "skill"
+          },
+          "skills": {
+            "0": {
+              "begin": "Skill_1_Begin",
+              "loop": "Skill_1_Loop",
+              "end": "Skill_1_End",
+              "idle": "Skill_1_Idle",
+              "index": 0,
+              "via": "skill"
+            },
+            "1": {
+              "begin": "Skill_2_Begin",
+              "loop": "Skill_2_Loop",
+              "end": "Skill_2_End",
+              "idle": "Skill_2_Idle",
+              "index": 1,
+              "via": "skill"
+            }
+          },
+          "die": "Die",
+          "stun": null,
+          "move": null
+        }
+      },
+      "operator/char_4203_kichi/default/back": {
+        "kind": "operator",
+        "id": "char_4203_kichi",
+        "variant": "default",
+        "facing": "back",
+        "spineVersion": "3.8.99",
+        "source": {
+          "key": "operators",
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "spine/char_4203_kichi/char_4203_kichi/Back"
+        },
+        "skeleton": {
+          "path": "models/operator/char_4203_kichi/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4203_kichi.skel",
+          "bytes": 215683,
+          "sha256": "2b1dddf795c79f9aa6549ed50c6e3d642fceef1f895b3753939b0701612471ae"
+        },
+        "atlas": {
+          "path": "models/operator/char_4203_kichi/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4203_kichi.atlas",
+          "bytes": 6059,
+          "sha256": "323f9f19edb4431470fde73f754a08758d3ae1dc2654a01cad276285cd330a5a"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_4203_kichi/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4203_kichi.png",
+            "bytes": 117021,
+            "sha256": "2be216bbf52ea9df749173c4ab8932b7243104bfad15d342740a9a82c1abc07f"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Attack": 2.333,
+          "Default": 0,
+          "Idle": 2,
+          "Skill_1_Begin": 0.1,
+          "Skill_1_End": 0.1,
+          "Skill_1_Idle": 2,
+          "Skill_1_Loop": 2.833,
+          "Skill_2_Begin": 0.1,
+          "Skill_2_End": 0.1,
+          "Skill_2_Idle": 2,
+          "Skill_2_Loop": 3,
+          "Start": 1
+        },
+        "hits": {
+          "Attack": [
+            0.5
+          ],
+          "Skill_1_Loop": [
+            0.5
+          ],
+          "Skill_2_Loop": [
+            0.5
+          ]
+        },
+        "bounds": {
+          "x": -159.86,
+          "y": -2.846,
+          "width": 561.75,
+          "height": 578.506
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null
+          },
+          "attackDown": null,
+          "skill": {
+            "begin": "Skill_1_Begin",
+            "loop": "Skill_1_Loop",
+            "end": "Skill_1_End",
+            "idle": "Skill_1_Idle",
+            "index": 0,
+            "via": "skill"
+          },
+          "skills": {
+            "0": {
+              "begin": "Skill_1_Begin",
+              "loop": "Skill_1_Loop",
+              "end": "Skill_1_End",
+              "idle": "Skill_1_Idle",
+              "index": 0,
+              "via": "skill"
+            },
+            "1": {
+              "begin": "Skill_2_Begin",
+              "loop": "Skill_2_Loop",
+              "end": "Skill_2_End",
+              "idle": "Skill_2_Idle",
+              "index": 1,
+              "via": "skill"
+            }
+          },
+          "die": null,
+          "stun": null,
+          "move": null
+        }
+      },
       "operator/char_4207_branch/default/front": {
         "kind": "operator",
         "id": "char_4207_branch",
@@ -86770,7 +86990,7 @@
     },
     "art": {
       "repository": "arkpedia/arkpedia-sd-assets",
-      "commit": "6af857f9a9709a6b1b1ab29f7d49984ae4cfd54b",
+      "commit": "0610d7037f223f4db129afb033dfd04d225fecf5",
       "scene": {
         "path": "stages/0-1/26-09-23-17-49-43_b9cc4a/scene.json",
         "bytes": 4479,
@@ -86779,7 +86999,7 @@
     },
     "gates": {
       "repository": "arkpedia/arkpedia-sd-assets",
-      "commit": "6af857f9a9709a6b1b1ab29f7d49984ae4cfd54b",
+      "commit": "0610d7037f223f4db129afb033dfd04d225fecf5",
       "pack": {
         "path": "effects/standard-gates/26-09-23-17-49-43_b9cc4a/gates.json",
         "bytes": 3507,
@@ -666038,6 +666258,1375 @@
         "kjerag"
       ]
     },
+    "char_4203_kichi": {
+      "id": "char_4203_kichi",
+      "name": "Kichisei",
+      "description": "攻击范围内的<@ba.kw>所有敌人</>，对自己前方一横排的敌人攻击力提升至150%",
+      "rarity": 5,
+      "profession": "SNIPER",
+      "subProfessionId": "reaperrange",
+      "position": "RANGED",
+      "nationId": "higashi",
+      "groupId": null,
+      "teamId": null,
+      "phases": [
+        {
+          "maxLevel": 50,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 1026,
+                "atk": 330,
+                "def": 103,
+                "magicResistance": 0,
+                "cost": 28,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 2.3,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false,
+                "teleportImmune": false,
+                "groundBoundImmune": false
+              }
+            },
+            {
+              "level": 50,
+              "data": {
+                "maxHp": 1368,
+                "atk": 472,
+                "def": 135,
+                "magicResistance": 0,
+                "cost": 28,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 2.3,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false,
+                "teleportImmune": false,
+                "groundBoundImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              1,
+              1
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              -1,
+              1
+            ]
+          ]
+        },
+        {
+          "maxLevel": 70,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 1368,
+                "atk": 472,
+                "def": 135,
+                "magicResistance": 0,
+                "cost": 31,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 2.3,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false,
+                "teleportImmune": false,
+                "groundBoundImmune": false
+              }
+            },
+            {
+              "level": 70,
+              "data": {
+                "maxHp": 1732,
+                "atk": 610,
+                "def": 171,
+                "magicResistance": 0,
+                "cost": 31,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 2.3,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false,
+                "teleportImmune": false,
+                "groundBoundImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              -1,
+              1
+            ],
+            [
+              -1,
+              2
+            ]
+          ]
+        },
+        {
+          "maxLevel": 80,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 1732,
+                "atk": 610,
+                "def": 171,
+                "magicResistance": 0,
+                "cost": 31,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 2.3,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false,
+                "teleportImmune": false,
+                "groundBoundImmune": false
+              }
+            },
+            {
+              "level": 80,
+              "data": {
+                "maxHp": 2310,
+                "atk": 727,
+                "def": 190,
+                "magicResistance": 0,
+                "cost": 31,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 2.3,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false,
+                "teleportImmune": false,
+                "groundBoundImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              -1,
+              1
+            ],
+            [
+              -1,
+              2
+            ]
+          ]
+        }
+      ],
+      "favorKeyFrames": [
+        {
+          "level": 0,
+          "data": {
+            "maxHp": 0,
+            "atk": 0,
+            "def": 0,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false,
+            "teleportImmune": false,
+            "groundBoundImmune": false
+          }
+        },
+        {
+          "level": 50,
+          "data": {
+            "maxHp": 0,
+            "atk": 65,
+            "def": 0,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false,
+            "teleportImmune": false,
+            "groundBoundImmune": false
+          }
+        }
+      ],
+      "potentialRanks": [
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "RESPAWN_TIME",
+            "formulaItem": "ADDITION",
+            "value": -4,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "ATK",
+            "formulaItem": "ADDITION",
+            "value": 31,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [],
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ]
+      ],
+      "trait": {
+        "candidates": [
+          {
+            "unlockCondition": {
+              "phase": "PHASE_0",
+              "level": 1
+            },
+            "requiredPotentialRank": 0,
+            "blackboard": [
+              {
+                "key": "atk_scale",
+                "value": 1.5,
+                "valueStr": null
+              }
+            ],
+            "overrideDescripton": null,
+            "prefabKey": "-1",
+            "rangeId": "1-3",
+            "rangeGrid": [
+              [
+                1,
+                1
+              ],
+              [
+                0,
+                0
+              ],
+              [
+                0,
+                1
+              ],
+              [
+                -1,
+                1
+              ]
+            ]
+          }
+        ]
+      },
+      "talents": [
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "好运连击！",
+              "description": "上场后每击倒过一种敌人，自身造成的伤害+6%，最多叠加2次",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "damage_scale",
+                  "value": 0.06,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_stack_cnt",
+                  "value": 2,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 1
+              },
+              "requiredPotentialRank": 4,
+              "prefabKey": "1",
+              "name": "好运连击！",
+              "description": "上场后每击倒过一种敌人，自身造成的伤害+7%<@ba.talpu>（+1%）</>，最多叠加2次",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "damage_scale",
+                  "value": 0.07,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_stack_cnt",
+                  "value": 2,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "好运连击！",
+              "description": "上场后每击倒过一种敌人，自身造成的伤害+6%，最多叠加3次",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "damage_scale",
+                  "value": 0.06,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_stack_cnt",
+                  "value": 3,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 4,
+              "prefabKey": "1",
+              "name": "好运连击！",
+              "description": "上场后每击倒过一种敌人，自身造成的伤害+7%<@ba.talpu>（+1%）</>，最多叠加3次",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "damage_scale",
+                  "value": 0.07,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_stack_cnt",
+                  "value": 3,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            }
+          ]
+        }
+      ],
+      "skills": [
+        {
+          "id": "skchr_kichi_1",
+          "unlockCondition": {
+            "phase": "PHASE_0",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "欢迎您来！",
+              "rangeId": null,
+              "description": "攻击间隔<@ba.vdown>略微增大</>，每次攻击后攻击力<@ba.vup>+{atk:0%}</>，最多叠加<@ba.vup>{max_stack_cnt}</>次",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 60,
+                "initSp": 30,
+                "increment": 1
+              },
+              "prefabId": "skchr_kichi_1",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "base_attack_time",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_stack_cnt",
+                  "value": 4,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "欢迎您来！",
+              "rangeId": null,
+              "description": "攻击间隔<@ba.vdown>略微增大</>，每次攻击后攻击力<@ba.vup>+{atk:0%}</>，最多叠加<@ba.vup>{max_stack_cnt}</>次",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 58,
+                "initSp": 30,
+                "increment": 1
+              },
+              "prefabId": "skchr_kichi_1",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "base_attack_time",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.12,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_stack_cnt",
+                  "value": 4,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "欢迎您来！",
+              "rangeId": null,
+              "description": "攻击间隔<@ba.vdown>略微增大</>，每次攻击后攻击力<@ba.vup>+{atk:0%}</>，最多叠加<@ba.vup>{max_stack_cnt}</>次",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 56,
+                "initSp": 30,
+                "increment": 1
+              },
+              "prefabId": "skchr_kichi_1",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "base_attack_time",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.14,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_stack_cnt",
+                  "value": 4,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "欢迎您来！",
+              "rangeId": null,
+              "description": "攻击间隔<@ba.vdown>略微增大</>，每次攻击后攻击力<@ba.vup>+{atk:0%}</>，最多叠加<@ba.vup>{max_stack_cnt}</>次",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 55,
+                "initSp": 30,
+                "increment": 1
+              },
+              "prefabId": "skchr_kichi_1",
+              "duration": 33,
+              "blackboard": [
+                {
+                  "key": "base_attack_time",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.15,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_stack_cnt",
+                  "value": 4,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "欢迎您来！",
+              "rangeId": null,
+              "description": "攻击间隔<@ba.vdown>略微增大</>，每次攻击后攻击力<@ba.vup>+{atk:0%}</>，最多叠加<@ba.vup>{max_stack_cnt}</>次",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 53,
+                "initSp": 30,
+                "increment": 1
+              },
+              "prefabId": "skchr_kichi_1",
+              "duration": 33,
+              "blackboard": [
+                {
+                  "key": "base_attack_time",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.17,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_stack_cnt",
+                  "value": 4,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "欢迎您来！",
+              "rangeId": null,
+              "description": "攻击间隔<@ba.vdown>略微增大</>，每次攻击后攻击力<@ba.vup>+{atk:0%}</>，最多叠加<@ba.vup>{max_stack_cnt}</>次",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 51,
+                "initSp": 30,
+                "increment": 1
+              },
+              "prefabId": "skchr_kichi_1",
+              "duration": 33,
+              "blackboard": [
+                {
+                  "key": "base_attack_time",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.18,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_stack_cnt",
+                  "value": 4,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "欢迎您来！",
+              "rangeId": null,
+              "description": "攻击间隔<@ba.vdown>略微增大</>，每次攻击后攻击力<@ba.vup>+{atk:0%}</>，最多叠加<@ba.vup>{max_stack_cnt}</>次",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 50,
+                "initSp": 30,
+                "increment": 1
+              },
+              "prefabId": "skchr_kichi_1",
+              "duration": 36,
+              "blackboard": [
+                {
+                  "key": "base_attack_time",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_stack_cnt",
+                  "value": 4,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "欢迎您来！",
+              "rangeId": null,
+              "description": "攻击间隔<@ba.vdown>略微增大</>，每次攻击后攻击力<@ba.vup>+{atk:0%}</>，最多叠加<@ba.vup>{max_stack_cnt}</>次",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 49,
+                "initSp": 30,
+                "increment": 1
+              },
+              "prefabId": "skchr_kichi_1",
+              "duration": 38,
+              "blackboard": [
+                {
+                  "key": "base_attack_time",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.22,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_stack_cnt",
+                  "value": 4,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "欢迎您来！",
+              "rangeId": null,
+              "description": "攻击间隔<@ba.vdown>略微增大</>，每次攻击后攻击力<@ba.vup>+{atk:0%}</>，最多叠加<@ba.vup>{max_stack_cnt}</>次",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 47,
+                "initSp": 30,
+                "increment": 1
+              },
+              "prefabId": "skchr_kichi_1",
+              "duration": 40,
+              "blackboard": [
+                {
+                  "key": "base_attack_time",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.23,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_stack_cnt",
+                  "value": 4,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "欢迎您来！",
+              "rangeId": null,
+              "description": "攻击间隔<@ba.vdown>略微增大</>，每次攻击后攻击力<@ba.vup>+{atk:0%}</>，最多叠加<@ba.vup>{max_stack_cnt}</>次",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 45,
+                "initSp": 30,
+                "increment": 1
+              },
+              "prefabId": "skchr_kichi_1",
+              "duration": 42,
+              "blackboard": [
+                {
+                  "key": "base_attack_time",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_stack_cnt",
+                  "value": 4,
+                  "valueStr": null
+                }
+              ]
+            }
+          ],
+          "assetIcon": "skill-icons/Kichisei - Irasshaimase!.webp"
+        },
+        {
+          "id": "skchr_kichi_2",
+          "unlockCondition": {
+            "phase": "PHASE_1",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "吉星高照！",
+              "rangeId": null,
+              "description": "攻击间隔<@ba.vdown>增大</>，攻击力<@ba.vup>+{atk:0%}</>；攻击时将依次并且循环对命中的目标施加不同效果：<$ba.sluggish>停顿</><@ba.vup>{attack@unmoveable}</>秒、<$ba.root>束缚</><@ba.vup>{attack@sluggish}</>秒、<$ba.stun>晕眩</><@ba.vup>{attack@stun}</>秒；",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 50,
+                "initSp": 16,
+                "increment": 1
+              },
+              "prefabId": "skchr_kichi_2",
+              "duration": 24,
+              "blackboard": [
+                {
+                  "key": "base_attack_time",
+                  "value": 0.7,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@unmoveable",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@sluggish",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@stun",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "吉星高照！",
+              "rangeId": null,
+              "description": "攻击间隔<@ba.vdown>增大</>，攻击力<@ba.vup>+{atk:0%}</>；攻击时将依次并且循环对命中的目标施加不同效果：<$ba.sluggish>停顿</><@ba.vup>{attack@unmoveable}</>秒、<$ba.root>束缚</><@ba.vup>{attack@sluggish}</>秒、<$ba.stun>晕眩</><@ba.vup>{attack@stun}</>秒；",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 49,
+                "initSp": 17,
+                "increment": 1
+              },
+              "prefabId": "skchr_kichi_2",
+              "duration": 25,
+              "blackboard": [
+                {
+                  "key": "base_attack_time",
+                  "value": 0.7,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.35,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@unmoveable",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@sluggish",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@stun",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "吉星高照！",
+              "rangeId": null,
+              "description": "攻击间隔<@ba.vdown>增大</>，攻击力<@ba.vup>+{atk:0%}</>；攻击时将依次并且循环对命中的目标施加不同效果：<$ba.sluggish>停顿</><@ba.vup>{attack@unmoveable}</>秒、<$ba.root>束缚</><@ba.vup>{attack@sluggish}</>秒、<$ba.stun>晕眩</><@ba.vup>{attack@stun}</>秒；",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 48,
+                "initSp": 18,
+                "increment": 1
+              },
+              "prefabId": "skchr_kichi_2",
+              "duration": 26,
+              "blackboard": [
+                {
+                  "key": "base_attack_time",
+                  "value": 0.7,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@unmoveable",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@sluggish",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@stun",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "吉星高照！",
+              "rangeId": null,
+              "description": "攻击间隔<@ba.vdown>增大</>，攻击力<@ba.vup>+{atk:0%}</>；攻击时将依次并且循环对命中的目标施加不同效果：<$ba.sluggish>停顿</><@ba.vup>{attack@unmoveable}</>秒、<$ba.root>束缚</><@ba.vup>{attack@sluggish}</>秒、<$ba.stun>晕眩</><@ba.vup>{attack@stun}</>秒；",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 47,
+                "initSp": 19,
+                "increment": 1
+              },
+              "prefabId": "skchr_kichi_2",
+              "duration": 27,
+              "blackboard": [
+                {
+                  "key": "base_attack_time",
+                  "value": 0.7,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.45,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@unmoveable",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@sluggish",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@stun",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "吉星高照！",
+              "rangeId": null,
+              "description": "攻击间隔<@ba.vdown>增大</>，攻击力<@ba.vup>+{atk:0%}</>；攻击时将依次并且循环对命中的目标施加不同效果：<$ba.sluggish>停顿</><@ba.vup>{attack@unmoveable}</>秒、<$ba.root>束缚</><@ba.vup>{attack@sluggish}</>秒、<$ba.stun>晕眩</><@ba.vup>{attack@stun}</>秒；",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 46,
+                "initSp": 20,
+                "increment": 1
+              },
+              "prefabId": "skchr_kichi_2",
+              "duration": 28,
+              "blackboard": [
+                {
+                  "key": "base_attack_time",
+                  "value": 0.7,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@unmoveable",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@sluggish",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@stun",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "吉星高照！",
+              "rangeId": null,
+              "description": "攻击间隔<@ba.vdown>增大</>，攻击力<@ba.vup>+{atk:0%}</>；攻击时将依次并且循环对命中的目标施加不同效果：<$ba.sluggish>停顿</><@ba.vup>{attack@unmoveable}</>秒、<$ba.root>束缚</><@ba.vup>{attack@sluggish}</>秒、<$ba.stun>晕眩</><@ba.vup>{attack@stun}</>秒；",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 45,
+                "initSp": 21,
+                "increment": 1
+              },
+              "prefabId": "skchr_kichi_2",
+              "duration": 29,
+              "blackboard": [
+                {
+                  "key": "base_attack_time",
+                  "value": 0.7,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.55,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@unmoveable",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@sluggish",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@stun",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "吉星高照！",
+              "rangeId": null,
+              "description": "攻击间隔<@ba.vdown>增大</>，攻击力<@ba.vup>+{atk:0%}</>；攻击时将依次并且循环对命中的目标施加不同效果：<$ba.sluggish>停顿</><@ba.vup>{attack@unmoveable}</>秒、<$ba.root>束缚</><@ba.vup>{attack@sluggish}</>秒、<$ba.stun>晕眩</><@ba.vup>{attack@stun}</>秒；",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 44,
+                "initSp": 22,
+                "increment": 1
+              },
+              "prefabId": "skchr_kichi_2",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "base_attack_time",
+                  "value": 0.7,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@unmoveable",
+                  "value": 1.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@sluggish",
+                  "value": 1.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@stun",
+                  "value": 1.3,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "吉星高照！",
+              "rangeId": null,
+              "description": "攻击间隔<@ba.vdown>增大</>，攻击力<@ba.vup>+{atk:0%}</>；攻击时将依次并且循环对命中的目标施加不同效果：<$ba.sluggish>停顿</><@ba.vup>{attack@unmoveable}</>秒、<$ba.root>束缚</><@ba.vup>{attack@sluggish}</>秒、<$ba.stun>晕眩</><@ba.vup>{attack@stun}</>秒；",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 43,
+                "initSp": 23,
+                "increment": 1
+              },
+              "prefabId": "skchr_kichi_2",
+              "duration": 31,
+              "blackboard": [
+                {
+                  "key": "base_attack_time",
+                  "value": 0.7,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.65,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@unmoveable",
+                  "value": 1.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@sluggish",
+                  "value": 1.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@stun",
+                  "value": 1.3,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "吉星高照！",
+              "rangeId": null,
+              "description": "攻击间隔<@ba.vdown>增大</>，攻击力<@ba.vup>+{atk:0%}</>；攻击时将依次并且循环对命中的目标施加不同效果：<$ba.sluggish>停顿</><@ba.vup>{attack@unmoveable}</>秒、<$ba.root>束缚</><@ba.vup>{attack@sluggish}</>秒、<$ba.stun>晕眩</><@ba.vup>{attack@stun}</>秒；",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 42,
+                "initSp": 24,
+                "increment": 1
+              },
+              "prefabId": "skchr_kichi_2",
+              "duration": 33,
+              "blackboard": [
+                {
+                  "key": "base_attack_time",
+                  "value": 0.7,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.7,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@unmoveable",
+                  "value": 1.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@sluggish",
+                  "value": 1.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@stun",
+                  "value": 1.3,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "吉星高照！",
+              "rangeId": null,
+              "description": "攻击间隔<@ba.vdown>增大</>，攻击力<@ba.vup>+{atk:0%}</>；攻击时将依次并且循环对命中的目标施加不同效果：<$ba.sluggish>停顿</><@ba.vup>{attack@unmoveable}</>秒、<$ba.root>束缚</><@ba.vup>{attack@sluggish}</>秒、<$ba.stun>晕眩</><@ba.vup>{attack@stun}</>秒；",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 40,
+                "initSp": 25,
+                "increment": 1
+              },
+              "prefabId": "skchr_kichi_2",
+              "duration": 36,
+              "blackboard": [
+                {
+                  "key": "base_attack_time",
+                  "value": 0.7,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.8,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@unmoveable",
+                  "value": 1.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@sluggish",
+                  "value": 1.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@stun",
+                  "value": 1.5,
+                  "valueStr": null
+                }
+              ]
+            }
+          ],
+          "assetIcon": "skill-icons/Kichisei - Lucky Star, Shining Bright!.webp"
+        }
+      ],
+      "sourceName": "吉星",
+      "sourceChannel": "cn",
+      "sourceAppellation": "Kichisei",
+      "factionTags": [
+        "higashi"
+      ]
+    },
     "char_4207_branch": {
       "id": "char_4207_branch",
       "name": "Vetochki",
@@ -667982,7 +669571,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6af857f9a9709a6b1b1ab29f7d49984ae4cfd54b/models/operator/token_10066_closur_ourbase/default/front/af23c7f497862f38be2cdca0cd4079d44753bde8d61b97398e5a2777a54281e4/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/0610d7037f223f4db129afb033dfd04d225fecf5/models/operator/token_10066_closur_ourbase/default/front/af23c7f497862f38be2cdca0cd4079d44753bde8d61b97398e5a2777a54281e4/avatar.png"
     },
     "token_10043_necras_skeltn": {
       "id": "token_10043_necras_skeltn",
@@ -668365,7 +669954,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6af857f9a9709a6b1b1ab29f7d49984ae4cfd54b/models/operator/token_10043_necras_skeltn/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/0610d7037f223f4db129afb033dfd04d225fecf5/models/operator/token_10043_necras_skeltn/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10050_monstr_prosts": {
       "id": "token_10050_monstr_prosts",
@@ -670203,7 +671792,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6af857f9a9709a6b1b1ab29f7d49984ae4cfd54b/models/operator/token_10050_monstr_prosts/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/0610d7037f223f4db129afb033dfd04d225fecf5/models/operator/token_10050_monstr_prosts/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10054_phatm2_encdool": {
       "id": "token_10054_phatm2_encdool",
@@ -672407,7 +673996,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6af857f9a9709a6b1b1ab29f7d49984ae4cfd54b/models/operator/token_10054_phatm2_encdool/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/0610d7037f223f4db129afb033dfd04d225fecf5/models/operator/token_10054_phatm2_encdool/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10055_phatm2_mndclv": {
       "id": "token_10055_phatm2_mndclv",
@@ -673678,7 +675267,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6af857f9a9709a6b1b1ab29f7d49984ae4cfd54b/models/operator/token_10030_mlyss_wtrman/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/0610d7037f223f4db129afb033dfd04d225fecf5/models/operator/token_10030_mlyss_wtrman/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10037_mitm_trshrb": {
       "id": "token_10037_mitm_trshrb",
@@ -674105,7 +675694,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6af857f9a9709a6b1b1ab29f7d49984ae4cfd54b/models/operator/token_10037_mitm_trshrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/0610d7037f223f4db129afb033dfd04d225fecf5/models/operator/token_10037_mitm_trshrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10027_ironmn_pile1": {
       "id": "token_10027_ironmn_pile1",
@@ -675201,7 +676790,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6af857f9a9709a6b1b1ab29f7d49984ae4cfd54b/models/operator/token_10027_ironmn_pile1/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/0610d7037f223f4db129afb033dfd04d225fecf5/models/operator/token_10027_ironmn_pile1/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10027_ironmn_pile2": {
       "id": "token_10027_ironmn_pile2",
@@ -676471,7 +678060,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6af857f9a9709a6b1b1ab29f7d49984ae4cfd54b/models/operator/token_10027_ironmn_pile2/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/0610d7037f223f4db129afb033dfd04d225fecf5/models/operator/token_10027_ironmn_pile2/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10027_ironmn_pile3": {
       "id": "token_10027_ironmn_pile3",
@@ -678979,7 +680568,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6af857f9a9709a6b1b1ab29f7d49984ae4cfd54b/models/operator/token_10027_ironmn_pile3/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/0610d7037f223f4db129afb033dfd04d225fecf5/models/operator/token_10027_ironmn_pile3/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10020_ling_soul1": {
       "id": "token_10020_ling_soul1",
@@ -679871,7 +681460,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6af857f9a9709a6b1b1ab29f7d49984ae4cfd54b/models/operator/token_10020_ling_soul1/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/0610d7037f223f4db129afb033dfd04d225fecf5/models/operator/token_10020_ling_soul1/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10020_ling_soul2": {
       "id": "token_10020_ling_soul2",
@@ -681207,7 +682796,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6af857f9a9709a6b1b1ab29f7d49984ae4cfd54b/models/operator/token_10020_ling_soul2/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/0610d7037f223f4db129afb033dfd04d225fecf5/models/operator/token_10020_ling_soul2/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10020_ling_soul3": {
       "id": "token_10020_ling_soul3",
@@ -683047,7 +684636,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6af857f9a9709a6b1b1ab29f7d49984ae4cfd54b/models/operator/token_10020_ling_soul3/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/0610d7037f223f4db129afb033dfd04d225fecf5/models/operator/token_10020_ling_soul3/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10005_mgllan_drone1": {
       "id": "token_10005_mgllan_drone1",
@@ -684139,7 +685728,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6af857f9a9709a6b1b1ab29f7d49984ae4cfd54b/models/operator/token_10005_mgllan_drone1/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/0610d7037f223f4db129afb033dfd04d225fecf5/models/operator/token_10005_mgllan_drone1/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10005_mgllan_drone2": {
       "id": "token_10005_mgllan_drone2",
@@ -685135,7 +686724,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6af857f9a9709a6b1b1ab29f7d49984ae4cfd54b/models/operator/token_10005_mgllan_drone2/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/0610d7037f223f4db129afb033dfd04d225fecf5/models/operator/token_10005_mgllan_drone2/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10005_mgllan_drone3": {
       "id": "token_10005_mgllan_drone3",
@@ -686227,7 +687816,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6af857f9a9709a6b1b1ab29f7d49984ae4cfd54b/models/operator/token_10005_mgllan_drone3/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/0610d7037f223f4db129afb033dfd04d225fecf5/models/operator/token_10005_mgllan_drone3/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10056_angel2_target": {
       "id": "token_10056_angel2_target",
@@ -687027,7 +688616,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6af857f9a9709a6b1b1ab29f7d49984ae4cfd54b/models/operator/token_10056_angel2_target/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/0610d7037f223f4db129afb033dfd04d225fecf5/models/operator/token_10056_angel2_target/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10035_wisdel_wward": {
       "id": "token_10035_wisdel_wward",
@@ -689686,7 +691275,7 @@
         }
       ],
       "automaticOnly": true,
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6af857f9a9709a6b1b1ab29f7d49984ae4cfd54b/models/operator/token_10031_swire2_gdtrap/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/0610d7037f223f4db129afb033dfd04d225fecf5/models/operator/token_10031_swire2_gdtrap/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10033_ela_grzmot": {
       "id": "token_10033_ela_grzmot",
@@ -691485,7 +693074,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6af857f9a9709a6b1b1ab29f7d49984ae4cfd54b/models/operator/token_10033_ela_grzmot/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/0610d7037f223f4db129afb033dfd04d225fecf5/models/operator/token_10033_ela_grzmot/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10034_ray_sndbst": {
       "id": "token_10034_ray_sndbst",
@@ -692119,7 +693708,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6af857f9a9709a6b1b1ab29f7d49984ae4cfd54b/models/operator/token_10034_ray_sndbst/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/0610d7037f223f4db129afb033dfd04d225fecf5/models/operator/token_10034_ray_sndbst/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10028_vigil_wolf": {
       "id": "token_10028_vigil_wolf",
@@ -692858,7 +694447,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6af857f9a9709a6b1b1ab29f7d49984ae4cfd54b/models/operator/token_10028_vigil_wolf/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/0610d7037f223f4db129afb033dfd04d225fecf5/models/operator/token_10028_vigil_wolf/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10026_bgsnow_subbow": {
       "id": "token_10026_bgsnow_subbow",
@@ -694423,7 +696012,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6af857f9a9709a6b1b1ab29f7d49984ae4cfd54b/models/operator/token_10026_bgsnow_subbow/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/0610d7037f223f4db129afb033dfd04d225fecf5/models/operator/token_10026_bgsnow_subbow/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10017_skadi2_dedant": {
       "id": "token_10017_skadi2_dedant",
@@ -696020,7 +697609,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6af857f9a9709a6b1b1ab29f7d49984ae4cfd54b/models/operator/token_10017_skadi2_dedant/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/0610d7037f223f4db129afb033dfd04d225fecf5/models/operator/token_10017_skadi2_dedant/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10025_doroth_recttp": {
       "id": "token_10025_doroth_recttp",
@@ -697880,7 +699469,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6af857f9a9709a6b1b1ab29f7d49984ae4cfd54b/models/operator/token_10025_doroth_recttp/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/0610d7037f223f4db129afb033dfd04d225fecf5/models/operator/token_10025_doroth_recttp/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10036_lasher_mcbird": {
       "id": "token_10036_lasher_mcbird",
@@ -698804,7 +700393,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6af857f9a9709a6b1b1ab29f7d49984ae4cfd54b/models/operator/token_10036_lasher_mcbird/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/0610d7037f223f4db129afb033dfd04d225fecf5/models/operator/token_10036_lasher_mcbird/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10032_jesca2_jckshd": {
       "id": "token_10032_jesca2_jckshd",
@@ -699141,7 +700730,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6af857f9a9709a6b1b1ab29f7d49984ae4cfd54b/models/operator/token_10032_jesca2_jckshd/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/0610d7037f223f4db129afb033dfd04d225fecf5/models/operator/token_10032_jesca2_jckshd/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10040_siege2_vlion": {
       "id": "token_10040_siege2_vlion",
@@ -700573,7 +702162,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6af857f9a9709a6b1b1ab29f7d49984ae4cfd54b/models/operator/token_10009_weedy_cannon/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/0610d7037f223f4db129afb033dfd04d225fecf5/models/operator/token_10009_weedy_cannon/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10024_ebnhlz_rcube": {
       "id": "token_10024_ebnhlz_rcube",
@@ -701146,7 +702735,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6af857f9a9709a6b1b1ab29f7d49984ae4cfd54b/models/operator/token_10024_ebnhlz_rcube/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/0610d7037f223f4db129afb033dfd04d225fecf5/models/operator/token_10024_ebnhlz_rcube/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10044_wulfen_mine": {
       "id": "token_10044_wulfen_mine",
@@ -702347,7 +703936,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6af857f9a9709a6b1b1ab29f7d49984ae4cfd54b/models/operator/token_10044_wulfen_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/0610d7037f223f4db129afb033dfd04d225fecf5/models/operator/token_10044_wulfen_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10042_tecno_puppet": {
       "id": "token_10042_tecno_puppet",
@@ -702596,7 +704185,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6af857f9a9709a6b1b1ab29f7d49984ae4cfd54b/models/operator/token_10042_tecno_puppet/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/0610d7037f223f4db129afb033dfd04d225fecf5/models/operator/token_10042_tecno_puppet/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10041_cathy_catsld": {
       "id": "token_10041_cathy_catsld",
@@ -703154,7 +704743,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6af857f9a9709a6b1b1ab29f7d49984ae4cfd54b/models/operator/token_10041_cathy_catsld/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/0610d7037f223f4db129afb033dfd04d225fecf5/models/operator/token_10041_cathy_catsld/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10022_kazema_shadow": {
       "id": "token_10022_kazema_shadow",
@@ -703624,7 +705213,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6af857f9a9709a6b1b1ab29f7d49984ae4cfd54b/models/operator/token_10022_kazema_shadow/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/0610d7037f223f4db129afb033dfd04d225fecf5/models/operator/token_10022_kazema_shadow/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10001_deepcl_tentac": {
       "id": "token_10001_deepcl_tentac",
@@ -703938,7 +705527,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6af857f9a9709a6b1b1ab29f7d49984ae4cfd54b/models/operator/token_10001_deepcl_tentac/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/0610d7037f223f4db129afb033dfd04d225fecf5/models/operator/token_10001_deepcl_tentac/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10018_robrta_mach": {
       "id": "token_10018_robrta_mach",
@@ -704428,7 +706017,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6af857f9a9709a6b1b1ab29f7d49984ae4cfd54b/models/operator/token_10018_robrta_mach/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/0610d7037f223f4db129afb033dfd04d225fecf5/models/operator/token_10018_robrta_mach/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10014_bstalk_crab": {
       "id": "token_10014_bstalk_crab",
@@ -704757,7 +706346,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6af857f9a9709a6b1b1ab29f7d49984ae4cfd54b/models/operator/token_10014_bstalk_crab/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/0610d7037f223f4db129afb033dfd04d225fecf5/models/operator/token_10014_bstalk_crab/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10011_beewax_oblisk": {
       "id": "token_10011_beewax_oblisk",
@@ -705702,7 +707291,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6af857f9a9709a6b1b1ab29f7d49984ae4cfd54b/models/operator/token_10011_beewax_oblisk/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/0610d7037f223f4db129afb033dfd04d225fecf5/models/operator/token_10011_beewax_oblisk/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10006_vodfox_doll": {
       "id": "token_10006_vodfox_doll",
@@ -706338,7 +707927,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6af857f9a9709a6b1b1ab29f7d49984ae4cfd54b/models/operator/token_10006_vodfox_doll/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/0610d7037f223f4db129afb033dfd04d225fecf5/models/operator/token_10006_vodfox_doll/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10003_cgbird_bird": {
       "id": "token_10003_cgbird_bird",
@@ -706633,7 +708222,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6af857f9a9709a6b1b1ab29f7d49984ae4cfd54b/models/operator/token_10003_cgbird_bird/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/0610d7037f223f4db129afb033dfd04d225fecf5/models/operator/token_10003_cgbird_bird/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10000_silent_healrb": {
       "id": "token_10000_silent_healrb",
@@ -707016,7 +708605,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6af857f9a9709a6b1b1ab29f7d49984ae4cfd54b/models/operator/token_10000_silent_healrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/0610d7037f223f4db129afb033dfd04d225fecf5/models/operator/token_10000_silent_healrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10015_dusk_drgn": {
       "id": "token_10015_dusk_drgn",
@@ -707430,7 +709019,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6af857f9a9709a6b1b1ab29f7d49984ae4cfd54b/models/operator/token_10015_dusk_drgn/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/0610d7037f223f4db129afb033dfd04d225fecf5/models/operator/token_10015_dusk_drgn/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10007_phatom_twin": {
       "id": "token_10007_phatom_twin",
@@ -709209,7 +710798,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6af857f9a9709a6b1b1ab29f7d49984ae4cfd54b/models/operator/token_10007_phatom_twin/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/0610d7037f223f4db129afb033dfd04d225fecf5/models/operator/token_10007_phatom_twin/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10008_cqbw_box": {
       "id": "token_10008_cqbw_box",
@@ -709782,7 +711371,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6af857f9a9709a6b1b1ab29f7d49984ae4cfd54b/models/operator/token_10008_cqbw_box/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/0610d7037f223f4db129afb033dfd04d225fecf5/models/operator/token_10008_cqbw_box/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10029_slent2_protrb": {
       "id": "token_10029_slent2_protrb",
@@ -710527,7 +712116,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6af857f9a9709a6b1b1ab29f7d49984ae4cfd54b/models/operator/token_10029_slent2_protrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/0610d7037f223f4db129afb033dfd04d225fecf5/models/operator/token_10029_slent2_protrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10019_nearl2_sword": {
       "id": "token_10019_nearl2_sword",
@@ -711314,7 +712903,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6af857f9a9709a6b1b1ab29f7d49984ae4cfd54b/models/operator/token_10019_nearl2_sword/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/0610d7037f223f4db129afb033dfd04d225fecf5/models/operator/token_10019_nearl2_sword/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10002_kalts_mon3tr": {
       "id": "token_10002_kalts_mon3tr",
@@ -711732,7 +713321,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6af857f9a9709a6b1b1ab29f7d49984ae4cfd54b/models/operator/token_10002_kalts_mon3tr/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/0610d7037f223f4db129afb033dfd04d225fecf5/models/operator/token_10002_kalts_mon3tr/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10010_folivo_car": {
       "id": "token_10010_folivo_car",
@@ -713353,7 +714942,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6af857f9a9709a6b1b1ab29f7d49984ae4cfd54b/models/operator/token_10010_folivo_car/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/0610d7037f223f4db129afb033dfd04d225fecf5/models/operator/token_10010_folivo_car/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10021_blkngt_hypnos": {
       "id": "token_10021_blkngt_hypnos",
@@ -713768,7 +715357,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6af857f9a9709a6b1b1ab29f7d49984ae4cfd54b/models/operator/token_10021_blkngt_hypnos/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/0610d7037f223f4db129afb033dfd04d225fecf5/models/operator/token_10021_blkngt_hypnos/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10023_windft_wrench": {
       "id": "token_10023_windft_wrench",
@@ -714932,7 +716521,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6af857f9a9709a6b1b1ab29f7d49984ae4cfd54b/models/operator/token_10023_windft_wrench/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/0610d7037f223f4db129afb033dfd04d225fecf5/models/operator/token_10023_windft_wrench/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10045_alanna_crane": {
       "id": "token_10045_alanna_crane",
@@ -715332,7 +716921,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6af857f9a9709a6b1b1ab29f7d49984ae4cfd54b/models/operator/token_10045_alanna_crane/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/0610d7037f223f4db129afb033dfd04d225fecf5/models/operator/token_10045_alanna_crane/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10013_robin_mine": {
       "id": "token_10013_robin_mine",
@@ -716263,7 +717852,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6af857f9a9709a6b1b1ab29f7d49984ae4cfd54b/models/operator/token_10013_robin_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/0610d7037f223f4db129afb033dfd04d225fecf5/models/operator/token_10013_robin_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10016_rfrost_mine": {
       "id": "token_10016_rfrost_mine",
@@ -717194,7 +718783,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6af857f9a9709a6b1b1ab29f7d49984ae4cfd54b/models/operator/token_10016_rfrost_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/0610d7037f223f4db129afb033dfd04d225fecf5/models/operator/token_10016_rfrost_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10004_otter_motter": {
       "id": "token_10004_otter_motter",
@@ -718543,7 +720132,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6af857f9a9709a6b1b1ab29f7d49984ae4cfd54b/models/operator/token_10004_otter_motter/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/0610d7037f223f4db129afb033dfd04d225fecf5/models/operator/token_10004_otter_motter/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     }
   },
   "enemies": {
@@ -718594,7 +720183,7 @@
   },
   "skillEffects": {
     "repository": "arkpedia/arkpedia-sd-assets",
-    "commit": "6af857f9a9709a6b1b1ab29f7d49984ae4cfd54b",
+    "commit": "0610d7037f223f4db129afb033dfd04d225fecf5",
     "pack": {
       "path": "effects/charge-cost/26-09-23-17-49-43_b9cc4a/effect.json",
       "bytes": 15311,
