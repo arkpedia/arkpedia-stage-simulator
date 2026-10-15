@@ -30,6 +30,7 @@
 
 import { toLocal, frontOf } from './dir.js';
 import { isHpLoss } from './damage.js';
+import { spendDp } from './content/arkpedia-dp-budget.js';
 import { absoluteRangeKeys } from './targeting.js';
 import { bodyInKeys, bodyKeys, bodyOnTile } from './body.js';
 import { COLS, CHAIN_RADIUS } from './constants.js';
@@ -135,8 +136,9 @@ const installMerchant = (battle, unit) => {
     const ctx = battle.hasHook('merchantPay') ? battle.emit('merchantPay', { unit, cost, cancel: false }) : null;
     if (!unit.alive || !unit.deployed || (ctx && ctx.cancel)) return;
     const c = ctx && Number.isFinite(ctx.cost) ? Math.max(0, ctx.cost) : cost;
-    if (pl.dp >= c) battle.addDp(unit.ownerId, -c);
-    else battle.retreat(unit, { reason: 'merchant' });
+    // Original CN strong_tr/nothin_tr/talr_tr CheckCost explicitly includes
+    // the borrowing floor. Upstream battles still have the default zero floor.
+    if (!spendDp(battle, unit.ownerId, c)) battle.retreat(unit, { reason: 'merchant' });
   }, { owner: unit });
 };
 

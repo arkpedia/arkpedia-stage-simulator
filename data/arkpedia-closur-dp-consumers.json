@@ -1,0 +1,278 @@
+{
+  "schemaVersion": 1,
+  "scope": "Selected unmoduled merchant debt checks; no playable Closure approval or compiled frame parity.",
+  "enabledOperators": [],
+  "frameParity": false,
+  "moduleSupport": false,
+  "source": {
+    "client": "cn",
+    "resourceVersion": "26-09-22-07-47-20_6c71fa",
+    "manifestSha256": "d1ac02a61d98e6e4c772335bb85dc44da4794a0a8bc915354b6f9ffbc7ec1f35",
+    "bundle": {
+      "path": "config/buff_template_holder.ab",
+      "bytes": 1963907,
+      "md5": "8d395a42a34fbbb5af1f2e4ad7d39ef8",
+      "sha256": "30bacb35c8962817931d8fd2cad66cd5a4455b86f6f34e21257829ff7f0fd0a3",
+      "url": "https://ak.hycdn.cn/assetbundle/official/Android/assets/26-09-22-07-47-20_6c71fa/config_buff_template_holder.dat"
+    },
+    "container": "dyn/config/buff_template_holder.asset",
+    "pathId": "6070581171229484677"
+  },
+  "checkCostInventory": {
+    "strong_tr": [
+      {
+        "location": ".eventToActions._items[0].value.SerializedState[0]._conditionNode",
+        "node": {
+          "_compareType": "GE",
+          "_blackboardKey": "cost",
+          "_considerNegativeCost": true,
+          "$type": "Torappu.Battle.Action.Nodes+CheckCost"
+        }
+      }
+    ],
+    "nothin_tr": [
+      {
+        "location": ".eventToActions._items[0].value.SerializedState[0]._conditionNode",
+        "node": {
+          "_compareType": "GE",
+          "_blackboardKey": "cost",
+          "_considerNegativeCost": true,
+          "$type": "Torappu.Battle.Action.Nodes+CheckCost"
+        }
+      }
+    ],
+    "lmlee_tr": [
+      {
+        "location": ".eventToActions._items[0].value.SerializedState[0]._succeedNodes[0]._conditionNode",
+        "node": {
+          "_compareType": "GE",
+          "_blackboardKey": "extra_cost",
+          "_considerNegativeCost": false,
+          "$type": "Torappu.Battle.Action.Nodes+CheckCost"
+        }
+      },
+      {
+        "location": ".eventToActions._items[0].value.SerializedState[0]._succeedNodes[0]._failNodes[0]._conditionNode",
+        "node": {
+          "_compareType": "GE",
+          "_blackboardKey": "cost",
+          "_considerNegativeCost": true,
+          "$type": "Torappu.Battle.Action.Nodes+CheckCost"
+        }
+      },
+      {
+        "location": ".eventToActions._items[0].value.SerializedState[0]._failNodes[0]._conditionNode",
+        "node": {
+          "_compareType": "GE",
+          "_blackboardKey": "cost",
+          "_considerNegativeCost": true,
+          "$type": "Torappu.Battle.Action.Nodes+CheckCost"
+        }
+      }
+    ],
+    "swire2_t_2": [
+      {
+        "location": ".eventToActions._items[0].value.SerializedState[0]",
+        "node": {
+          "_compareType": "GE",
+          "_blackboardKey": "cost",
+          "_considerNegativeCost": true,
+          "$type": "Torappu.Battle.Action.Nodes+CheckCost"
+        }
+      }
+    ],
+    "swire2_tr": [
+      {
+        "location": ".eventToActions._items[0].value.SerializedState[1]._conditionNode",
+        "node": {
+          "_compareType": "GE",
+          "_blackboardKey": "cost",
+          "_considerNegativeCost": true,
+          "$type": "Torappu.Battle.Action.Nodes+CheckCost"
+        }
+      }
+    ],
+    "talr_tr": [
+      {
+        "location": ".eventToActions._items[0].value.SerializedState[1]._conditionNode",
+        "node": {
+          "_compareType": "GE",
+          "_blackboardKey": "cost",
+          "_considerNegativeCost": true,
+          "$type": "Torappu.Battle.Action.Nodes+CheckCost"
+        }
+      }
+    ],
+    "swire2_e_003[talent]": [
+      {
+        "location": ".eventToActions._items[0].value.SerializedState[0]._failNodes[0]._conditionNode",
+        "node": {
+          "_compareType": "GE",
+          "_blackboardKey": "cost",
+          "_considerNegativeCost": true,
+          "$type": "Torappu.Battle.Action.Nodes+CheckCost"
+        }
+      }
+    ],
+    "swire2_e_004_tr": [
+      {
+        "location": ".eventToActions._items[1].value.SerializedState[1]._conditionNode",
+        "node": {
+          "_compareType": "GE",
+          "_blackboardKey": "cost_check",
+          "_considerNegativeCost": true,
+          "$type": "Torappu.Battle.Action.Nodes+CheckCost"
+        }
+      }
+    ],
+    "legion_trap_mercha_add_buff": [
+      {
+        "location": ".eventToActions._items[0].value.SerializedState[2]._succeedNodes[0]",
+        "node": {
+          "_compareType": "GE",
+          "_blackboardKey": "cost",
+          "_considerNegativeCost": false,
+          "$type": "Torappu.Battle.Action.Nodes+CheckCost"
+        }
+      }
+    ],
+    "rogue_5_damage_after_max_cost[global]": [
+      {
+        "location": ".eventToActions._items[0].value.SerializedState[0]._conditionNode",
+        "node": {
+          "_compareType": "GE",
+          "_blackboardKey": "cost",
+          "_considerNegativeCost": false,
+          "$type": "Torappu.Battle.Action.Nodes+CheckCost"
+        }
+      }
+    ],
+    "rogue_5_finalDefense[end_tile]": [
+      {
+        "location": ".eventToActions._items[0].value.SerializedState[0]._conditionNode",
+        "node": {
+          "_compareType": "GE",
+          "_blackboardKey": "cost",
+          "_considerNegativeCost": false,
+          "$type": "Torappu.Battle.Action.Nodes+CheckCost"
+        }
+      }
+    ],
+    "attri_up_filter_level_cost": [
+      {
+        "location": ".eventToActions._items[0].value.SerializedState[0]._conditionNode",
+        "node": {
+          "_compareType": "GE",
+          "_blackboardKey": "cost",
+          "_considerNegativeCost": false,
+          "$type": "Torappu.Battle.Action.Nodes+CheckCost"
+        }
+      }
+    ]
+  },
+  "selectedOriginalTemplates": {
+    "strong_tr": {
+      "templateKey": "strong_tr",
+      "effectKey": "",
+      "onEventPriority": 0,
+      "eventToActions": {
+        "_items": [
+          {
+            "key": 2,
+            "value": {
+              "SerializedState": "[{\"_conditionNode\":{\"_compareType\":\"GE\",\"_blackboardKey\":\"cost\",\"_considerNegativeCost\":true,\"$type\":\"Torappu.Battle.Action.Nodes+CheckCost\"},\"_succeedNodes\":[{\"_sourceType\":\"BUFF_OWNER\",\"_forceToDisplayNumber\":true,\"_forceToDisplayNegativeNumber\":true,\"_blackboardKey\":\"cost\",\"$type\":\"Torappu.Battle.Action.Nodes+ModifyCost\"}],\"_failNodes\":[{\"_withdrawSource\":true,\"_switchToDeadState\":false,\"_force\":true,\"_needLog\":true,\"$type\":\"Torappu.Battle.Action.Nodes+Withdraw\"}],\"$type\":\"Torappu.Battle.Action.Nodes+IfElse\"}]",
+              "SerializedObjectReferences": []
+            }
+          }
+        ]
+      }
+    },
+    "nothin_tr": {
+      "templateKey": "nothin_tr",
+      "effectKey": "",
+      "onEventPriority": 0,
+      "eventToActions": {
+        "_items": [
+          {
+            "key": 2,
+            "value": {
+              "SerializedState": "[{\"_conditionNode\":{\"_compareType\":\"GE\",\"_blackboardKey\":\"cost\",\"_considerNegativeCost\":true,\"$type\":\"Torappu.Battle.Action.Nodes+CheckCost\"},\"_succeedNodes\":[{\"_sourceType\":\"BUFF_OWNER\",\"_forceToDisplayNumber\":true,\"_forceToDisplayNegativeNumber\":true,\"_blackboardKey\":\"cost\",\"$type\":\"Torappu.Battle.Action.Nodes+ModifyCost\"}],\"_failNodes\":[{\"_withdrawSource\":true,\"_switchToDeadState\":false,\"_force\":true,\"_needLog\":true,\"$type\":\"Torappu.Battle.Action.Nodes+Withdraw\"}],\"$type\":\"Torappu.Battle.Action.Nodes+IfElse\"}]",
+              "SerializedObjectReferences": []
+            }
+          }
+        ]
+      }
+    },
+    "lmlee_tr": {
+      "templateKey": "lmlee_tr",
+      "effectKey": "",
+      "onEventPriority": 0,
+      "eventToActions": {
+        "_items": [
+          {
+            "key": 2,
+            "value": {
+              "SerializedState": "[{\"_conditionNode\":{\"_targetType\":\"BUFF_OWNER\",\"_buffKeys\":[\"lmlee_t_2\"],\"isAND\":true,\"_loadFromBlackboard\":false,\"_checkBuffSource\":false,\"_buffSourceType\":\"BUFF_SOURCE\",\"_checkSourceHost\":false,\"$type\":\"Torappu.Battle.Action.Nodes+CheckContainsBuff\"},\"_succeedNodes\":[{\"_conditionNode\":{\"_compareType\":\"GE\",\"_blackboardKey\":\"extra_cost\",\"_considerNegativeCost\":false,\"$type\":\"Torappu.Battle.Action.Nodes+CheckCost\"},\"_succeedNodes\":[{\"_conditionNode\":{\"_targetType\":\"BUFF_OWNER\",\"_buffKeys\":[\"lmlee_t_2[bounce]\"],\"isAND\":true,\"_loadFromBlackboard\":false,\"_checkBuffSource\":false,\"_buffSourceType\":\"BUFF_SOURCE\",\"_checkSourceHost\":false,\"$type\":\"Torappu.Battle.Action.Nodes+CheckContainsBuff\"},\"_succeedNodes\":[{\"_sourceType\":\"BUFF_OWNER\",\"_forceToDisplayNumber\":true,\"_forceToDisplayNegativeNumber\":true,\"_blackboardKey\":\"cost\",\"$type\":\"Torappu.Battle.Action.Nodes+ModifyCost\"}],\"_failNodes\":[{\"_sourceType\":\"BUFF_OWNER\",\"_forceToDisplayNumber\":true,\"_forceToDisplayNegativeNumber\":true,\"_blackboardKey\":\"extra_cost\",\"$type\":\"Torappu.Battle.Action.Nodes+ModifyCost\"},{\"_buff\":{\"attributes\":{\"abnormalFlags\":[],\"abnormalImmunes\":[],\"abnormalAntis\":[],\"abnormalCombos\":[],\"abnormalComboImmunes\":[],\"attributeModifiers\":[]},\"buffKey\":\"lmlee_t_2[bounce]\",\"loadFromDB\":false,\"isDurableBuff\":false,\"isDamageMissable\":false,\"isSilenceable\":false,\"isStunnable\":false,\"isFreezable\":false,\"isLevitatable\":false,\"isGroundBoundable\":false,\"statusResistable\":\"AUTOMATIC\",\"templateKey\":\"lmlee_t_2[bounce]\",\"disableOverride\":false,\"overrideKey\":null,\"overrideType\":\"DEFAULT\",\"maxStackCnt\":1,\"refreshRemainingTimeWhenStackMax\":false,\"clearAllStackCntWhenTimeUp\":false,\"maxValidStackCnt\":-1,\"independentCharacterSource\":false,\"overrideEffectKey\":\"lmlee_buff_02_start\",\"overrideOnEventPriority\":false,\"onEventPriority\":\"DEFAULT\",\"audioSignal\":\"lmlee_telent_2_start\",\"lifeTimeType\":\"INFINITY\",\"takeSnapshotWhenExtend\":false,\"durationKey\":null,\"remainingTimeKey\":null,\"lifeTime\":0.0,\"triggerLifeType\":\"IMMEDIATELY\",\"triggerCnt\":0,\"triggerInterval\":-1.0,\"waitFirstTriggerInterval\":true,\"firstTriggerInterval\":-1.0,\"priority\":-1,\"priorityBBKeys\":[],\"stripBlackboardParamsWithBuffKey\":false,\"blackboard\":[],\"enableInitDirectionFromSource\":false},\"_buffOwner\":\"BUFF_OWNER\",\"_useSpecialBuffSource\":false,\"_specialBuffSource\":\"BUFF_SOURCE\",\"_isDerivedBuff\":false,\"_finishDerivedBuffIfParentFinish\":false,\"_inherateSourceProjectileFromParentBuff\":false,\"_hookEffectKeyFromSourceProjectile\":false,\"$type\":\"Torappu.Battle.Action.Nodes+CreateBuff\"}],\"$type\":\"Torappu.Battle.Action.Nodes+IfElse\"}],\"_failNodes\":[{\"_conditionNode\":{\"_compareType\":\"GE\",\"_blackboardKey\":\"cost\",\"_considerNegativeCost\":true,\"$type\":\"Torappu.Battle.Action.Nodes+CheckCost\"},\"_succeedNodes\":[{\"_sourceType\":\"BUFF_OWNER\",\"_forceToDisplayNumber\":true,\"_forceToDisplayNegativeNumber\":true,\"_blackboardKey\":\"cost\",\"$type\":\"Torappu.Battle.Action.Nodes+ModifyCost\"}],\"_failNodes\":[{\"_withdrawSource\":true,\"_switchToDeadState\":false,\"_force\":true,\"_needLog\":true,\"$type\":\"Torappu.Battle.Action.Nodes+Withdraw\"}],\"$type\":\"Torappu.Battle.Action.Nodes+IfElse\"}],\"$type\":\"Torappu.Battle.Action.Nodes+IfElse\"}],\"_failNodes\":[{\"_conditionNode\":{\"_compareType\":\"GE\",\"_blackboardKey\":\"cost\",\"_considerNegativeCost\":true,\"$type\":\"Torappu.Battle.Action.Nodes+CheckCost\"},\"_succeedNodes\":[{\"_sourceType\":\"BUFF_OWNER\",\"_forceToDisplayNumber\":true,\"_forceToDisplayNegativeNumber\":true,\"_blackboardKey\":\"cost\",\"$type\":\"Torappu.Battle.Action.Nodes+ModifyCost\"}],\"_failNodes\":[{\"_withdrawSource\":true,\"_switchToDeadState\":false,\"_force\":true,\"_needLog\":true,\"$type\":\"Torappu.Battle.Action.Nodes+Withdraw\"}],\"$type\":\"Torappu.Battle.Action.Nodes+IfElse\"}],\"$type\":\"Torappu.Battle.Action.Nodes+IfElse\"}]",
+              "SerializedObjectReferences": []
+            }
+          }
+        ]
+      }
+    },
+    "swire2_tr": {
+      "templateKey": "swire2_tr",
+      "effectKey": "",
+      "onEventPriority": 0,
+      "eventToActions": {
+        "_items": [
+          {
+            "key": 2,
+            "value": {
+              "SerializedState": "[{\"_inputKey\":\"cost\",\"_outputKey\":\"cost\",\"_multiplyParamKey\":null,\"_dividedParamKey\":null,\"_useRemainder\":false,\"_addParamKey\":null,\"_minusParamKey\":null,\"_minValueKey\":\"cost_max\",\"_maxValueKey\":null,\"_finalAbs\":false,\"_finalCeil\":false,\"_finalFloor\":false,\"_finalRound\":false,\"_useAbilityBlackboard\":false,\"_abilityName\":\"\",\"$type\":\"Torappu.Battle.Action.Nodes+CalculateBlackboardValueViaParams\"},{\"_conditionNode\":{\"_compareType\":\"GE\",\"_blackboardKey\":\"cost\",\"_considerNegativeCost\":true,\"$type\":\"Torappu.Battle.Action.Nodes+CheckCost\"},\"_succeedNodes\":[{\"_sourceType\":\"BUFF_OWNER\",\"_forceToDisplayNumber\":true,\"_forceToDisplayNegativeNumber\":true,\"_blackboardKey\":\"cost\",\"$type\":\"Torappu.Battle.Action.Nodes+ModifyCost\"},{\"_targetType\":\"BUFF_OWNER\",\"_buffKeys\":[\"swire2_t_1\",\"swire2_skill_on\"],\"isAND\":true,\"_loadFromBlackboard\":false,\"_checkBuffSource\":false,\"_buffSourceType\":\"BUFF_SOURCE\",\"_checkSourceHost\":false,\"$type\":\"Torappu.Battle.Action.Nodes+CheckContainsBuff\"},{\"_targetType\":\"BUFF_OWNER\",\"_modifyByRatio\":false,\"_modifyRatio\":0.0,\"_modifyByRatioBasedOnCurSP\":false,\"_modifyBySpCost\":false,\"_dontCheckSpType\":true,\"_spMask\":\"ALL\",\"_forceFlag\":true,\"_dontShowSpUI\":true,\"_modifyValue\":0,\"_spString\":\"sp\",\"_isMinis\":false,\"_customModifierKey\":\"swire2_add_coin\",\"$type\":\"Torappu.Battle.Action.Nodes+ModifySp\"},{\"_buff\":{\"attributes\":{\"abnormalFlags\":[],\"abnormalImmunes\":[],\"abnormalAntis\":[],\"abnormalCombos\":[],\"abnormalComboImmunes\":[],\"attributeModifiers\":[{\"attributeType\":\"ATK\",\"formulaItem\":\"MULTIPLIER\",\"value\":0.0,\"loadFromBlackboard\":true,\"fetchBaseValueFromSourceEntity\":false}]},\"buffKey\":\"swire2_t_1[atk]\",\"loadFromDB\":false,\"isDurableBuff\":false,\"isDamageMissable\":false,\"isSilenceable\":false,\"isStunnable\":false,\"isFreezable\":false,\"isLevitatable\":false,\"isGroundBoundable\":false,\"statusResistable\":\"AUTOMATIC\",\"templateKey\":\"swire2_t_atk[stack]\",\"disableOverride\":false,\"overrideKey\":null,\"overrideType\":\"STACK\",\"maxStackCnt\":1,\"refreshRemainingTimeWhenStackMax\":false,\"clearAllStackCntWhenTimeUp\":false,\"maxValidStackCnt\":-1,\"independentCharacterSource\":false,\"overrideEffectKey\":\"swire2_buff_01_start\",\"overrideOnEventPriority\":false,\"onEventPriority\":\"DEFAULT\",\"audioSignal\":null,\"lifeTimeType\":\"INFINITY\",\"takeSnapshotWhenExtend\":false,\"durationKey\":null,\"remainingTimeKey\":null,\"lifeTime\":0.0,\"triggerLifeType\":\"IMMEDIATELY\",\"triggerCnt\":0,\"triggerInterval\":-1.0,\"waitFirstTriggerInterval\":true,\"firstTriggerInterval\":-1.0,\"priority\":-1,\"priorityBBKeys\":[],\"stripBlackboardParamsWithBuffKey\":false,\"blackboard\":[],\"enableInitDirectionFromSource\":false},\"_buffOwner\":\"BUFF_OWNER\",\"_useSpecialBuffSource\":false,\"_specialBuffSource\":\"BUFF_SOURCE\",\"_isDerivedBuff\":false,\"_finishDerivedBuffIfParentFinish\":false,\"_inherateSourceProjectileFromParentBuff\":false,\"_hookEffectKeyFromSourceProjectile\":false,\"$type\":\"Torappu.Battle.Action.Nodes+CreateBuff\"},{\"_targetType\":\"BUFF_OWNER\",\"_buffKey\":\"swire2_t_1[atk]\",\"_stackCount\":0,\"_stackCountKey\":\"max_stack_cnt\",\"_stackCountPeeling\":0,\"_condType\":\"GE\",\"_checkFromUnoverridableBuffCount\":false,\"_checkSnapshotBuff\":false,\"_checkBuffSource\":false,\"_sourceType\":\"BUFF_OWNER\",\"_checkTargetHost\":false,\"$type\":\"Torappu.Battle.Action.Nodes+FilterByBuffStackCount\"},{\"_targetType\":\"BUFF_OWNER\",\"_buffKeys\":[\"swire2_t_1[atk][max]\"],\"isAND\":true,\"_loadFromBlackboard\":false,\"_checkBuffSource\":false,\"_buffSourceType\":\"BUFF_SOURCE\",\"_checkSourceHost\":false,\"$type\":\"Torappu.Battle.Action.Nodes+CheckContainsBuff\"},{\"$type\":\"Torappu.Battle.Action.Nodes+IfNot\"},{\"_buff\":{\"attributes\":{\"abnormalFlags\":[],\"abnormalImmunes\":[],\"abnormalAntis\":[],\"abnormalCombos\":[],\"abnormalComboImmunes\":[],\"attributeModifiers\":[]},\"buffKey\":\"swire2_t_1[atk][max]\",\"loadFromDB\":false,\"isDurableBuff\":false,\"isDamageMissable\":false,\"isSilenceable\":false,\"isStunnable\":false,\"isFreezable\":false,\"isLevitatable\":false,\"isGroundBoundable\":false,\"statusResistable\":\"AUTOMATIC\",\"templateKey\":\"empty\",\"disableOverride\":false,\"overrideKey\":null,\"overrideType\":\"UNIQUE\",\"maxStackCnt\":1,\"refreshRemainingTimeWhenStackMax\":false,\"clearAllStackCntWhenTimeUp\":false,\"maxValidStackCnt\":-1,\"independentCharacterSource\":false,\"overrideEffectKey\":\"swire2_buff_01_start_02\",\"overrideOnEventPriority\":false,\"onEventPriority\":\"DEFAULT\",\"audioSignal\":null,\"lifeTimeType\":\"INFINITY\",\"takeSnapshotWhenExtend\":false,\"durationKey\":null,\"remainingTimeKey\":null,\"lifeTime\":0.0,\"triggerLifeType\":\"IMMEDIATELY\",\"triggerCnt\":0,\"triggerInterval\":-1.0,\"waitFirstTriggerInterval\":true,\"firstTriggerInterval\":-1.0,\"priority\":-1,\"priorityBBKeys\":[],\"stripBlackboardParamsWithBuffKey\":false,\"blackboard\":[],\"enableInitDirectionFromSource\":false},\"_buffOwner\":\"BUFF_OWNER\",\"_useSpecialBuffSource\":false,\"_specialBuffSource\":\"BUFF_SOURCE\",\"_isDerivedBuff\":false,\"_finishDerivedBuffIfParentFinish\":false,\"_inherateSourceProjectileFromParentBuff\":false,\"_hookEffectKeyFromSourceProjectile\":false,\"$type\":\"Torappu.Battle.Action.Nodes+CreateBuff\"}],\"_failNodes\":[{\"_withdrawSource\":true,\"_switchToDeadState\":false,\"_force\":true,\"_needLog\":true,\"$type\":\"Torappu.Battle.Action.Nodes+Withdraw\"}],\"$type\":\"Torappu.Battle.Action.Nodes+IfElse\"}]",
+              "SerializedObjectReferences": []
+            }
+          }
+        ]
+      }
+    },
+    "swire2_t_2": {
+      "templateKey": "swire2_t_2",
+      "effectKey": "",
+      "onEventPriority": 0,
+      "eventToActions": {
+        "_items": [
+          {
+            "key": 27,
+            "value": {
+              "SerializedState": "[{\"_compareType\":\"GE\",\"_blackboardKey\":\"cost\",\"_considerNegativeCost\":true,\"$type\":\"Torappu.Battle.Action.Nodes+CheckCost\"},{\"_blockThisHpSet\":false,\"_dontConsumeWhenUndeadable\":true,\"$type\":\"Torappu.Battle.Action.Nodes+ConsumeTrySetHpZeroModifier\"},{\"_sourceType\":\"BUFF_OWNER\",\"_forceToDisplayNumber\":true,\"_forceToDisplayNegativeNumber\":true,\"_blackboardKey\":\"cost\",\"$type\":\"Torappu.Battle.Action.Nodes+ModifyCost\"},{\"_inputKey\":\"cost\",\"_outputKey\":\"cost\",\"_multiplyParamKey\":\"cost_multi\",\"_dividedParamKey\":null,\"_useRemainder\":false,\"_addParamKey\":null,\"_minusParamKey\":null,\"_minValueKey\":null,\"_maxValueKey\":null,\"_finalAbs\":false,\"_finalCeil\":false,\"_finalFloor\":false,\"_finalRound\":false,\"_useAbilityBlackboard\":false,\"_abilityName\":\"\",\"$type\":\"Torappu.Battle.Action.Nodes+CalculateBlackboardValueViaParams\"}]",
+              "SerializedObjectReferences": []
+            }
+          },
+          {
+            "key": 82,
+            "value": {
+              "SerializedState": "[{\"$type\":\"Torappu.Battle.Action.Nodes+IsConsumerOfTrySetHpZeroModifier\"},{\"_buff\":{\"attributes\":{\"abnormalFlags\":[],\"abnormalImmunes\":[],\"abnormalAntis\":[],\"abnormalCombos\":[],\"abnormalComboImmunes\":[],\"attributeModifiers\":[]},\"buffKey\":\"swire2_t_2[heal]\",\"loadFromDB\":false,\"isDurableBuff\":false,\"isDamageMissable\":false,\"isSilenceable\":false,\"isStunnable\":false,\"isFreezable\":false,\"isLevitatable\":false,\"isGroundBoundable\":false,\"statusResistable\":\"AUTOMATIC\",\"templateKey\":\"swire2_t_2[heal]\",\"disableOverride\":false,\"overrideKey\":null,\"overrideType\":\"UNIQUE\",\"maxStackCnt\":1,\"refreshRemainingTimeWhenStackMax\":false,\"clearAllStackCntWhenTimeUp\":false,\"maxValidStackCnt\":-1,\"independentCharacterSource\":false,\"overrideEffectKey\":\"swire2_buff_02_start\",\"overrideOnEventPriority\":false,\"onEventPriority\":\"DEFAULT\",\"audioSignal\":null,\"lifeTimeType\":\"IMMEDIATELY\",\"takeSnapshotWhenExtend\":false,\"durationKey\":null,\"remainingTimeKey\":null,\"lifeTime\":0.0,\"triggerLifeType\":\"IMMEDIATELY\",\"triggerCnt\":0,\"triggerInterval\":-1.0,\"waitFirstTriggerInterval\":true,\"firstTriggerInterval\":-1.0,\"priority\":-1,\"priorityBBKeys\":[],\"stripBlackboardParamsWithBuffKey\":false,\"blackboard\":[],\"enableInitDirectionFromSource\":false},\"_buffOwner\":\"BUFF_OWNER\",\"_useSpecialBuffSource\":false,\"_specialBuffSource\":\"BUFF_SOURCE\",\"_isDerivedBuff\":false,\"_finishDerivedBuffIfParentFinish\":false,\"_inherateSourceProjectileFromParentBuff\":false,\"_hookEffectKeyFromSourceProjectile\":false,\"$type\":\"Torappu.Battle.Action.Nodes+CreateBuff\"}]",
+              "SerializedObjectReferences": []
+            }
+          }
+        ]
+      }
+    },
+    "talr_tr": {
+      "templateKey": "talr_tr",
+      "effectKey": "",
+      "onEventPriority": 0,
+      "eventToActions": {
+        "_items": [
+          {
+            "key": 2,
+            "value": {
+              "SerializedState": "[{\"_inputKey\":\"cost\",\"_outputKey\":\"cost\",\"_multiplyParamKey\":null,\"_dividedParamKey\":null,\"_useRemainder\":false,\"_addParamKey\":null,\"_minusParamKey\":null,\"_minValueKey\":\"cost_max\",\"_maxValueKey\":null,\"_finalAbs\":false,\"_finalCeil\":false,\"_finalFloor\":false,\"_finalRound\":false,\"_useAbilityBlackboard\":false,\"_abilityName\":\"\",\"$type\":\"Torappu.Battle.Action.Nodes+CalculateBlackboardValueViaParams\"},{\"_conditionNode\":{\"_compareType\":\"GE\",\"_blackboardKey\":\"cost\",\"_considerNegativeCost\":true,\"$type\":\"Torappu.Battle.Action.Nodes+CheckCost\"},\"_succeedNodes\":[{\"_sourceType\":\"BUFF_OWNER\",\"_forceToDisplayNumber\":true,\"_forceToDisplayNegativeNumber\":true,\"_blackboardKey\":\"cost\",\"$type\":\"Torappu.Battle.Action.Nodes+ModifyCost\"}],\"_failNodes\":[{\"_withdrawSource\":true,\"_switchToDeadState\":false,\"_force\":true,\"_needLog\":true,\"$type\":\"Torappu.Battle.Action.Nodes+Withdraw\"}],\"$type\":\"Torappu.Battle.Action.Nodes+IfElse\"}]",
+              "SerializedObjectReferences": []
+            }
+          }
+        ]
+      }
+    }
+  }
+}

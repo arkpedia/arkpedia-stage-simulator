@@ -2,6 +2,7 @@
 // Source-fed resource adapter, shared by all three Swire skill controllers.
 import evidence from '../../../data/arkpedia-swire-alter-prefabs.json' with { type: 'json' };
 import { sourceCandidate } from '../../../shared/arkpedia/summons.js';
+import { spendDp } from './arkpedia-dp-budget.js';
 
 export const SWIRE_ALTER_ID = 'char_1033_swire2';
 export const SWIRE_ECONOMY_CONTRACT = Object.freeze({
@@ -83,9 +84,10 @@ export class SwireCoinEconomy {
     const seq = this.seq;
     this.upkeep = this.b.every(this.record.trait.interval, () => {
       if (!this.valid() || this.seq !== seq) return;
-      const p = this.b.getPlayer(this.u.ownerId), cost = -this.record.trait.cost;
-      if (p.dp < cost) { this.b.retreat(this.u, { reason: 'merchant', permanent: true }); return; }
-      p.dp -= cost;
+      const cost = -this.record.trait.cost;
+      if (!spendDp(this.b, this.u.ownerId, cost)) {
+        this.b.retreat(this.u, { reason: 'merchant', permanent: true }); return;
+      }
       if (this.active) {
         this.gain(this.record.talent.trait_sp);
         this.stacks = Math.min(this.record.talent.max_stack_cnt, this.stacks + 1);
@@ -124,10 +126,10 @@ export class SwireCoinEconomy {
   preventFatal(ctx) {
     if (ctx.unit !== this.u || !this.valid() || !this.record.fatal || ctx.prevented
       || this.u.s.flags.undeadable || this.repair) return;
-    const p = this.b.getPlayer(this.u.ownerId);
-    if (p.dp < this.fatalCost) return;
     const cost = this.fatalCost;
-    p.dp -= cost; this.fatalCost *= this.record.fatal.cost_multi;
+    // swire2_t_2's native CheckCost includes the current borrowing floor.
+    if (!spendDp(this.b, this.u.ownerId, cost)) return;
+    this.fatalCost *= this.record.fatal.cost_multi;
     ctx.prevented = true; this.u.hp = Math.min(1, this.u.s.maxHp);
     // Serialized native actions separate fatal consumption and buff-finish
     // healing. The short protection interval is an authored-note mapping,
