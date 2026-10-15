@@ -18,6 +18,19 @@ export function until(f, condition, seconds = 20) {
   while (!condition() && f.b.time < end) advance(f.b, f.b.dt);
   assert.ok(condition(), `Condition missing at ${f.b.time}`);
 }
+export function addOwner(b, build, { row = 5, col = 5, dir = 'RIGHT',
+  contract = CONTRACT, prepare = prepareMon3trHealing, mutate } = {}) {
+  const r = selectedMon3trBuild(build), c = e.tables.character;
+  const def = normalizeChess({ chessId: ID, charId: ID, name: c.name, profession: c.profession,
+    position: c.position, subProfessionId: c.subProfessionId, stats: r.stats, rangeGrid: r.rangeGrid,
+    tags: r.tags, talents: r.talents, skill: { ...r.source, ...r.source.spData, skillId: build.skillId,
+      rangeGrid: r.skillRangeGrid, trigger: { rule: 'NEVER' } }, arkpedia: build });
+  mutate?.(def);
+  const u = b._makeAlly(b.getPlayer('arkpedia'), def, 'op', row, col, { dir });
+  const prepared = prepare(b, u, { contract });
+  b._setupUnit(u, prepared.kit); prepared.controller.install();
+  return { u, ...prepared };
+}
 export function make({ skill = 1, elite = 2, rank = [4, 7, 10][elite], potential = 1, trust = 0,
   dir = 'RIGHT', defer = false, contract = CONTRACT, prepare = prepareMon3trHealing, mutate } = {}) {
   const d = structuredClone(data); d.stage.geometry.waves[0].spawns = []; d.stage.battle.dp_per_second = 0;
@@ -28,15 +41,7 @@ export function make({ skill = 1, elite = 2, rank = [4, 7, 10][elite], potential
   b.grid.tiles = b.grid.tiles.map(t => ({ ...t, height: 'LOW', build: 'ALL', pass: 'ALL' }));
   const build = { elite, level: e.tables.character.phases[elite].maxLevel, potential, trust,
     skillRank: rank, skillId: `skchr_monstr_${skill}`, module: 'none' };
-  const r = selectedMon3trBuild(build), c = e.tables.character;
-  const def = normalizeChess({ chessId: ID, charId: ID, name: c.name, profession: c.profession,
-    position: c.position, subProfessionId: c.subProfessionId, stats: r.stats, rangeGrid: r.rangeGrid,
-    tags: r.tags, talents: r.talents, skill: { ...r.source, ...r.source.spData, skillId: build.skillId,
-      rangeGrid: r.skillRangeGrid, trigger: { rule: 'NEVER' } }, arkpedia: build });
-  mutate?.(def);
-  const u = b._makeAlly(b.getPlayer('arkpedia'), def, 'op', 5, 5, { dir });
-  const prepared = prepare(b, u, { contract });
-  b._setupUnit(u, prepared.kit); prepared.controller.install();
+  const prepared = addOwner(b, build, { dir, contract, prepare, mutate }), { u } = prepared;
   const heals = [], attacks = [];
   b.on('calculatedHeal', ctx => { if (ctx.source === u) heals.push({ ...ctx, time: b.time }); });
   b.on('attack', ctx => { if (ctx.attacker === u) attacks.push({ ...ctx, time: b.time }); });
