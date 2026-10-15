@@ -2,6 +2,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+import review from '../data/arkpedia-closur-runtime-review.json' with { type: 'json' };
 import data from '../data/arkpedia-mvp.json' with { type: 'json' };
 import { StandardBattle } from '../server/sim/arkpedia.js';
 import { defaultBuild, recordFor } from '../shared/arkpedia/loadout.js';
@@ -27,6 +29,14 @@ function make({ skill = 1, rank = 10, elite = 2, potential = 1, trust = 0, suppo
   return f;
 }
 test('Closure public source and cards preserve all three exact skill selections and original command-center portrait', () => {
+  assert.deepEqual(review.enabledOperators, [ID]);
+  for (const flag of ['frameParity', 'moduleSupport', 'nativePixelParity', 'nativeParticleSupport']) assert.equal(review[flag], false);
+  const hash = path => createHash('sha256').update(readFileSync(new URL('../' + path, import.meta.url))).digest('hex');
+  assert.equal(hash('data/arkpedia-native-operators/' + ID + '.json'), review.sourceFoundationSha256);
+  assert.equal(hash('data/arkpedia-closur-device-art.json'), review.deviceArtworkSha256);
+  assert.equal(hash(review.verification.browser.script), review.verification.browser.scriptSha256);
+  assert.equal(hash(review.verification.browser.driver), review.verification.browser.driverSha256);
+  for (const [key, model] of Object.entries(review.originalArtwork)) assert.deepEqual(source.sd.models[key], model);
   const op = source.operators[ID]; assert.equal(op.name, 'Closure'); assert.equal(op.sourceName, '可露希尔');
   assert.equal(op.sourceChannel, 'cn'); assert.deepEqual(op.skills.map(s => s.id), [1, 2, 3].map(n => `skchr_closur_${n}`));
   assert.deepEqual(op.skills.map(s => s.assetIcon), ['skill-icons/Closure - Recursion Tactic.webp',
@@ -106,4 +116,20 @@ for (const skill of [1, 2, 3]) test(`public S${skill} completes original 0-1 wav
   assert.equal(result.killed + leaked, 11); assert.equal(b.life, source.stage.battle.max_life - leaked);
   assert.deepEqual(b.grid.tiles, tiles); assert.deepEqual(b.errors, []); assert.equal(regularSummonCards(b).length, 0);
   assert.equal(b.bench[ID].unit.mem.closur.controller.stopped, true); assert.equal(point.alive, false);
+});
+test('carried public Closure permits an exact-floor operator payment before she is deployed', () => {
+  const f = make({ defer: true }), { b } = f, id = 'char_122_beagle';
+  b.getPlayer('arkpedia').dp = b.cost(id) - 3;
+  const u = b.deployOperator(id, 3, 2, 'RIGHT'); assert.ok(u); near(b.dp, -3);
+  assert.equal(b.bench[ID].unit, null); assert.match(b.placementError(ID, 3, 3), /DP/);
+  assert.equal(regularSummonCards(b).length, 0); assert.deepEqual(b.errors, []);
+});
+test('selected public Closure S3 rejects injected enemy abilities for squad and support before starting the battle', () => {
+  for (const support of [false, true]) {
+    const d = structuredClone(source); d.enemies.enemy_1007_slime.skills = [{ prefabKey: 'unreviewed', cooldown: 1 }];
+    const build = { ...defaultBuild(d.operators[ID]), skillId: 'skchr_closur_3' };
+    assert.throws(() => new StandardBattle(d, support
+      ? { operators: [defaultBuild(d.operators.char_122_beagle)], support: build } : { operators: [build] }),
+    /needs native clock review for enemy abilities/);
+  }
 });

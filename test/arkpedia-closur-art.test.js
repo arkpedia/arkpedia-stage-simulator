@@ -3,7 +3,6 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import art from '../data/arkpedia-closur-device-art.json' with { type: 'json' };
 import native from '../data/arkpedia-native-operators/char_4228_closur.json' with { type: 'json' };
-import data from '../data/arkpedia-mvp.json' with { type: 'json' };
 const owner = 'char_4228_closur', token = 'token_10066_closur_ourbase';
 
 test('Closure art retains the exact CN bundle identity and cannot imply playable or native-renderer approval', () => {
@@ -12,7 +11,7 @@ test('Closure art retains the exact CN bundle identity and cannot imply playable
   const b = native.source.bundles.find(r => r.path === art.sourceBundle.path);
   for (const k of ['path', 'bytes', 'md5', 'sha256', 'url']) assert.equal(art.sourceBundle[k], b[k]);
   assert.equal(art.sourceBundle.client, 'cn'); assert.equal(art.sourceBundle.resourceVersion, native.source.nativeClient);
-  assert.deepEqual(Object.keys(art.models), [token]); assert.equal(data.operators[owner], undefined);
+  assert.deepEqual(Object.keys(art.models), [token]);
   assert.deepEqual(native.enabledOperators, []);
 });
 

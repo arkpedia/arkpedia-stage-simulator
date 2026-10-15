@@ -1,7 +1,9 @@
 {
   "schemaVersion": 1,
   "operatorId": "char_4228_closur",
-  "enabledOperators": [],
+  "enabledOperators": [
+    "char_4228_closur"
+  ],
   "frameParity": false,
   "moduleSupport": false,
   "nativePixelParity": false,
@@ -11,8 +13,31 @@
   "mechanicsPolicy": "source-cn-command-center-continuous-fire-and-debt-v1",
   "verification": {
     "browser": {
-      "status": "pending"
-    }
+      "status": "passed",
+      "script": "tools/arkpedia/review-closur-public.mjs",
+      "scriptSha256": "012c636a359b6432e3762e19a0534e00cd5f186821eaa4a8ed6e3494f33f8ebb",
+      "driver": "tools/arkpedia/public-review-driver.mjs",
+      "driverSha256": "1ef20a71f4982799d1368e61d0b2e2eac9eb36efe1aaad45294150566246359f",
+      "cases": 6,
+      "captures": 36,
+      "viewports": [
+        "1280x800 desktop mouse",
+        "844x390 landscape phone touch"
+      ],
+      "originalWaves": false,
+      "fixture": "Original 0-1 terrain; empty waves, 99 DP, pinned enemy. Browser emulation, not physical device or original-frame proof.",
+      "browserErrors": 0,
+      "failedResources": 0,
+      "checks": [
+        "Squad and all three skill selections; separate operator drag/drop and direction swipe",
+        "Fixed-facing zero-DP/zero-slot command-center drop without direction picker",
+        "Ordinary single-target physical fire; original Front/Back and selected skill clips",
+        "Natural time SP, automatic S1, manual S2/S3, skill use and end",
+        "Point withdrawal, recovery readout, native OnStart restoration and owner removal"
+      ],
+      "visualReview": "Desktop S3 active, desktop/phone point recharge and phone S2 Back active captures inspected. No native particle or original pixel/frame parity is claimed."
+    },
+    "runtime": "All 48 public-path cases pass on Node 22, including all thirty source skill ranks, carried squad/support talent, exact-floor payment, command-center card/withdrawal/redeployment and all three skills on original 0-1 waves. The earlier 331-case selected Closure/source/renderer/adjacent-public set passes on Node 22 and 24; the final full regression is recorded separately."
   },
   "originalArtwork": {
     "operator/char_4228_closur/default/front": {
@@ -407,5 +432,22 @@
   "limits": [
     "Selected source/FSM aliases, tick dispatch, targeting geometry and roster mapping are simulator implementations; compiled Unity execution and original frame/pixel parity are unverified.",
     "Only explicitly reviewed regular enemies are admitted for S3. Native particles, audio and modules remain unsupported."
-  ]
+  ],
+  "sdCommit": "b977caef87feab47336f29b4c40bed2e423a8ce7",
+  "snapshotPreservation": {
+    "baseline": "84e9c7268732df7ef79de269f565a326bc807f07",
+    "olderOperators": 380,
+    "olderModels": 869,
+    "olderTokens": 54,
+    "unchanged": [
+      "older operator records",
+      "older model metadata",
+      "older tokens after normalizing SD avatar delivery URL",
+      "all table/image/skin source pins",
+      "default squad",
+      "stage geometry and pathing",
+      "enemies",
+      "stage art and gates after normalizing SD delivery commit"
+    ]
+  }
 }
