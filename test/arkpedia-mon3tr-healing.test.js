@@ -241,3 +241,11 @@ test('hiding during the shared pre-attack callback rejects release and offensive
   until(f, () => f.u.hidden); advance(f.b, .3);
   assert.equal(f.heals.length, 0); near(f.u.skill.sp, sp); assert.equal(f.controller.stopped, false);
 });
+test('S1 retains the native non-silenceable controller and does not suppress its selected healing talent', () => {
+  const f = make(), t = ally(f);
+  f.b.addBuff(f.u, { key: 'fixture:silence', flags: { silence: true } });
+  f.u.skill.setSpTotal(f.u.skill.spCost);
+  until(f, () => f.heals.length === 1);
+  near(f.heals[0].amount, f.record.stats.atk * f.record.bb.heal_scale);
+  near(t.s.aspd, 120); assert.equal(f.u.skill.activations, 1);
+});

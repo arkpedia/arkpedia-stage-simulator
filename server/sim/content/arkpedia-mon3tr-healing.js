@@ -46,6 +46,20 @@ function selected(u, contract) {
   if (attack._animKey !== 'Attack' || attack._maxAnimScale !== 1 || attack._waitForAttackEvent !== 1
     || attack._projectileKey !== 'projectile_chr_monstr' || attack._ignoreHealFree !== 1)
     throw Error('Unreviewed Mon3tr native healing ability');
+  if (component('-3392515966174333146')._canSilenced !== 0
+    || component('-3392515966174333146')._allowSpRecoveryWhenAffecting !== 0)
+    throw Error('Unreviewed Mon3tr S1 controller');
+  for (const key of ['projectile_chr_monstr', 'projectile_chr_monstr_s1']) {
+    const rows = evidence.projectiles[key].flatMap(row => row.components);
+    const chain = rows.find(row => '_atkScale' in row.data).data;
+    const selector = rows.find(row => row.pathId === chain._selector.m_PathID)?.data;
+    const free = rows.find(row => row.pathId === chain._freeJumpValidator.m_PathID)?.data;
+    if (chain._atkScale !== .75 || chain._onlyCheckHitWhenReachTarget !== 1
+      || selector?._maxTarget !== 3 || selector._useChainPrefix !== 1
+      || !same(free?._buffs, ['monstr[free_jump]'])
+      || rows.find(row => '_speed' in row.data)?.data._speed !== 10)
+      throw Error('Unreviewed Mon3tr chain projectile');
+  }
   return r;
 }
 
@@ -207,7 +221,7 @@ export function prepareMon3trHealing(b, u, { contract } = {}) {
       heal: null, maxTargets: 1, maxTargetsByBlock: false, hitAllBlocked: false, chain: null,
       splashRadius: 0, attackVisual: 'none', requiresAcceptedLaunch: true,
       launchAttack: (_b, _u, _p, target) => controller.release(target) },
-    skill: record.index === 0 ? { kind: 'instant', trigger: { rule: 'NEVER' }, attack: {},
+    skill: record.index === 0 ? { kind: 'instant', silenceable: false, trigger: { rule: 'NEVER' }, attack: {},
       flags: { noSp: true }, completeOnAttack: false, canActivate: () => controller.canS1() }
       : { kind: 'instant', trigger: { rule: 'NEVER' }, canActivate: () => false } } };
 }
