@@ -111,6 +111,7 @@ import { assertClosurEnemyCompatibility } from '../../shared/arkpedia/closur-ene
 import { customizePublicClosurKit, installPublicClosur } from './content/arkpedia-closur-public.js';
 import { installClosurRoster, CLOSUR_ROSTER_CONTRACT } from './content/arkpedia-closur-roster.js';
 import { customizePublicVarkisKit, installPublicVarkis } from './content/arkpedia-varkis-public.js';
+import { customizePublicSnhuntKit, installPublicSnhunt } from './content/arkpedia-snhunt-public.js';
 import { customizePublicBranchKit, installPublicBranch } from './content/arkpedia-branch-public.js';
 import { customizePublicReckprKit, installPublicReckpr } from './content/arkpedia-reckpr-public.js';
 import { customizePublicLieselKit, installPublicLiesel } from './content/arkpedia-liesel-public.js';
@@ -572,6 +573,7 @@ export class StandardBattle extends Battle {
     customizePublicClosurKit({ battle: this, id, unit, kit });
     customizePublicReckprKit({ battle: this, id, unit, kit });
     customizePublicVarkisKit({ battle: this, id, unit, kit });
+    customizePublicSnhuntKit({ battle: this, id, unit, kit });
     customizePublicBranchKit({ battle: this, id, unit, kit });
     customizeNarantKit({ battle: this, id, def, unit, kit });
     customizeElaKit({ battle: this, id, def, unit, kit });
@@ -789,6 +791,7 @@ export class StandardBattle extends Battle {
     installPublicClosur({ unit, def });
     installPublicReckpr({ battle: this, unit, def });
     installPublicVarkis({ battle: this, unit, def });
+    installPublicSnhunt({ battle: this, unit, def });
     installPublicBranch({ battle: this, unit, def });
     installNarant({ battle: this, unit, def });
     installEla({ battle: this, unit, def });
