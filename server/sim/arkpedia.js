@@ -110,6 +110,7 @@ import { customizePublicJcintaKit, installPublicJcinta } from './content/arkpedi
 import { assertClosurEnemyCompatibility } from '../../shared/arkpedia/closur-enemy-compatibility.js';
 import { customizePublicClosurKit, installPublicClosur } from './content/arkpedia-closur-public.js';
 import { installClosurRoster, CLOSUR_ROSTER_CONTRACT } from './content/arkpedia-closur-roster.js';
+import { customizePublicReckprKit, installPublicReckpr } from './content/arkpedia-reckpr-public.js';
 import { customizePublicLieselKit, installPublicLiesel } from './content/arkpedia-liesel-public.js';
 import { customizePublicNecrassKit, installPublicNecrass } from './content/arkpedia-necrass-public.js';
 import { installPublicMuelsyseSquad, customizePublicMuelsyseKit, installPublicMuelsyse } from './content/arkpedia-muelsyse-public.js';
@@ -332,6 +333,7 @@ export class StandardBattle extends Battle {
         { playerId: "arkpedia", side: "L", coords: "field", units: [] },
       ],
     });
+    this.regularReviewCandidates = Object.freeze([...(data.reviewCandidates ?? [])]);
     this.life = config.max_life;
     this.regularModels = data.sd?.models ?? {};
     this.regularSkillUses = new Map();
@@ -566,6 +568,7 @@ export class StandardBattle extends Battle {
     customizePublicJcintaKit({ battle: this, id, unit, kit });
     customizePublicLieselKit({ battle: this, id, unit, kit });
     customizePublicClosurKit({ battle: this, id, unit, kit });
+    customizePublicReckprKit({ battle: this, id, unit, kit });
     customizeNarantKit({ battle: this, id, def, unit, kit });
     customizeElaKit({ battle: this, id, def, unit, kit });
     customizeFuzeKit({ battle: this, id, def, unit, kit });
@@ -780,6 +783,7 @@ export class StandardBattle extends Battle {
     installPublicJcinta({ unit, def });
     installPublicLiesel({ unit, def });
     installPublicClosur({ unit, def });
+    installPublicReckpr({ battle: this, unit, def });
     installNarant({ battle: this, unit, def });
     installEla({ battle: this, unit, def });
     installFuze({ battle: this, unit, def });
