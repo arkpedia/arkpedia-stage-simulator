@@ -60,6 +60,17 @@ const [characters, skills, ranges, enemies, stage, geometry, buffTemplates, orig
 if (originalLevel.mapData.tags != null && (!Array.isArray(originalLevel.mapData.tags)
   || originalLevel.mapData.tags.some(tag => typeof tag !== 'string'))) throw Error('Unsupported source map tags');
 const ids = Object.keys(REGULAR_OPERATORS);
+if (ids.includes('char_4179_monstr')) {
+  const review = JSON.parse(await readFile(new URL('../../data/arkpedia-mon3tr-runtime-review.json', import.meta.url)));
+  for (const [name, key] of [['prefabs', 'sourceFoundationSha256'], ['device-art', 'deviceArtworkSha256']]) {
+    const bytes = await readFile(new URL(`../../data/arkpedia-mon3tr-${name}.json`, import.meta.url));
+    if (createHash('sha256').update(bytes).digest('hex') !== review[key]) throw Error('Changed Mon3tr source/artwork receipt');
+  }
+  const evidence = JSON.parse(await readFile(new URL('../../data/arkpedia-mon3tr-prefabs.json', import.meta.url)));
+  if (JSON.stringify(review.enabledOperators) !== JSON.stringify(['char_4179_monstr']) || review.frameParity !== false
+    || review.nativeParticleSupport !== false || review.moduleSupport !== false || review.nativePixelParity !== false
+    || evidence.source.commit !== pins[paths.character_table[0]]) throw Error('Mon3tr lacks pinned selected public review');
+}
 if (ids.includes('char_4147_mitm')) {
   const review = JSON.parse(await readFile(new URL('../../data/arkpedia-mitm-runtime-review.json', import.meta.url)));
   const foundation = await readFile(new URL('../../data/arkpedia-mitm-prefabs.json', import.meta.url));
@@ -212,6 +223,20 @@ if (ids.includes('char_4194_rmixer')) {
     throw Error('Sankta public runtime review differs from the pinned native source');
 }
 const cnEvidence = usesCN ? JSON.parse(await readFile(new URL('../../data/arkpedia-cn-source.json', import.meta.url), 'utf8')) : null;
+if (ids.includes('char_4051_akkord')) {
+  const review = JSON.parse(await readFile(new URL('../../data/arkpedia-akkord-runtime-review.json', import.meta.url)));
+  const foundation = await readFile(new URL('../../data/arkpedia-akkord-prefabs.json', import.meta.url));
+  const evidence = JSON.parse(foundation), id = 'char_4051_akkord';
+  if (JSON.stringify(review.enabledOperators) !== JSON.stringify([id]) || review.frameParity !== false
+    || review.nativeParticleSupport !== false || review.moduleSupport !== false || review.nativePixelParity !== false
+    || review.mechanicsPolicy !== 'source-cn-line-and-ally-bursts-v1'
+    || review.verification.browser.status !== 'passed'
+    || review.sourceFoundationSha256 !== createHash('sha256').update(foundation).digest('hex')
+    || evidence.source.commit !== cnEvidence?.source.commit
+    || JSON.stringify(evidence.tables.character) !== JSON.stringify(cnEvidence.tables.characters[id])
+    || Object.entries(evidence.tables.skills).some(([key, value]) => JSON.stringify(value) !== JSON.stringify(cnEvidence.tables.skills[key])))
+    throw Error('Akkord lacks matching pinned CN source review');
+}
 if (cnEvidence) {
   const roster = JSON.parse(await readFile(new URL('../../data/arkpedia-roster-target.json', import.meta.url), 'utf8'));
   if (cnEvidence.source.repository !== roster.source.repository || cnEvidence.source.commit !== roster.source.commit
@@ -249,6 +274,7 @@ tokenIds.unshift(...[1, 2, 3].map(n => `token_10027_ironmn_pile${n}`));
 tokenIds.unshift('token_10037_mitm_trshrb');
 if (ids.includes('char_249_mlyss')) tokenIds.unshift('token_10030_mlyss_wtrman');
 if(ids.includes('char_1042_phatm2'))tokenIds.unshift('token_10054_phatm2_encdool','token_10055_phatm2_mndclv');
+if (ids.includes('char_4179_monstr')) tokenIds.unshift('token_10050_monstr_prosts');
 if (ids.includes('char_450_necras')) tokenIds.unshift('token_10043_necras_skeltn');
 const tokens = Object.fromEntries(tokenIds.map(id => {
   const c = characters[id];
@@ -359,6 +385,21 @@ const models = Object.fromEntries(
     return [k, sd.models[k]];
   }),
 );
+if (ids.includes('char_4179_monstr')) {
+  const review = JSON.parse(await readFile(new URL('../../data/arkpedia-mon3tr-runtime-review.json', import.meta.url)));
+  const keys = ['char_4179_monstr', 'token_10050_monstr_prosts']
+    .flatMap(id => ['front', 'back'].map(face => `operator/${id}/default/${face}`)).sort();
+  if (JSON.stringify(Object.keys(review.originalArtwork).sort()) !== JSON.stringify(keys)) throw Error('Incomplete Mon3tr artwork review');
+  for (const key of keys) if (JSON.stringify(models[key]) !== JSON.stringify(review.originalArtwork[key]))
+    throw Error('Changed Mon3tr original artwork: ' + key);
+}
+if (ids.includes('char_4051_akkord')) {
+  const review = JSON.parse(await readFile(new URL('../../data/arkpedia-akkord-runtime-review.json', import.meta.url)));
+  const keys = ['front', 'back'].map(face => `operator/char_4051_akkord/default/${face}`).sort();
+  if (JSON.stringify(Object.keys(review.originalArtwork).sort()) !== JSON.stringify(keys)) throw Error('Incomplete Akkord artwork review');
+  for (const key of keys) if (JSON.stringify(models[key]) !== JSON.stringify(review.originalArtwork[key]))
+    throw Error('Changed original Akkord artwork: ' + key);
+}
 let nativeEffects;
 if(ids.includes('char_1042_phatm2')){
   const review=JSON.parse(await readFile(new URL('../../data/arkpedia-tragodia-runtime-review.json',import.meta.url)));

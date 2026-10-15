@@ -199,20 +199,40 @@ export function acquireTargets(b, u, prof) {
   return n >= cands.length ? cands : cands.slice(0, n);
 }
 
-/** Perform an attack/heal with profile `prof` against `targets`. opts: { noAmmo } (Battle.forceAttack). */
+const areaAdmissions = new WeakSet();
+/** Perform an attack/heal. Reviewed area receipts also serialize reentrant hooks per owner. */
 export function performAttack(b, u, prof, targets, opts = null) {
+  const area = typeof prof.launchAreaAttack === 'function' && typeof prof.acceptAreaAttack === 'function';
+  if (!area) return performAttackReceipt(b, u, prof, targets, opts);
+  // Reserve before beforeAttack, rather than only at damage release: a hook
+  // recursively forcing this owner must not emit itself again or double-spend.
+  // Other owners remain free to attack, and a veto always releases admission.
+  if (areaAdmissions.has(u)) return;
+  areaAdmissions.add(u);
+  try { return performAttackReceipt(b, u, prof, targets, opts); }
+  finally { areaAdmissions.delete(u); }
+}
+function performAttackReceipt(b, u, prof, targets, opts = null) {
   const isSkill = !!prof.isSkill;
+  // Explicit source controllers may release one area attack after the enemy
+  // which started its windup has gone. Never fabricate a self/enemy target.
+  // A hook clearing a previously nonempty selection still cancels the attack.
+  const area = typeof prof.launchAreaAttack === 'function' && typeof prof.acceptAreaAttack === 'function';
+  const emptyArea = area && opts?.allowEmpty === true && targets.length === 0;
+  if (area && !targets.length && !emptyArea) return;
   if (b._hooks.beforeAttack) {
     const ctx = { attacker: u, targets, isSkill, profile: prof };
     b.emit('beforeAttack', ctx);
+    if (area && ctx.cancel === true) return;
     // A reviewed source ability may retain its previously captured input
     // position after that unit dies. The predicate cannot restore a target
     // explicitly removed by a beforeAttack hook; ordinary attacks still
     // discard dead inputs.
     targets = (ctx.targets || []).filter((t) => t && (typeof prof.acceptAttackInput === 'function'
       ? prof.acceptAttackInput(t) : t.alive));
-    if (!targets.length || !u.alive) return;
+    if ((!targets.length && !emptyArea) || !u.alive) return;
   }
+  if (area && (!u.alive || prof.acceptAreaAttack(b, u, prof, targets) !== true)) return;
   u.lastAttackAt = b.time;
   u.stats.attacks++;
   const attackId = ++b._attackSeq; // every damage instance of this attack (all targets, splash, chain) carries it
@@ -243,7 +263,10 @@ export function performAttack(b, u, prof, targets, opts = null) {
     // A source ability whose selectTargetTiming is CAST selects at the strike,
     // so enemies entering or leaving its range during windup are handled then.
     if (prof.retargetOnRelease) targets = acquireTargets(b, u, prof);
-    for (let i = 0; i < targets.length; i++) {
+    if (area) b._safe(() => {
+      if (prof.launchAreaAttack(b, u, prof, targets, { isSkill, attackId }) === true) acceptedLaunches++;
+    }, 'profile.launchAreaAttack', u);
+    for (let i = 0; !area && i < targets.length; i++) {
       const t = targets[i];
       if (isHeal) {
         if (t.alive && prof.healProjectileSpeed > 0) b.addProjectile({

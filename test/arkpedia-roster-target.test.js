@@ -12,7 +12,8 @@ test('full target includes both Amiya alternate forms and all playable records w
   const ids = new Set(target.operators.map(o => o.id)); assert.equal(ids.size, target.operators.length);
   for (const id of Object.keys(data.operators)) assert.ok(ids.has(id), id);
   assert.equal(coverage.fullRosterTarget.playableOperatorForms + coverage.fullRosterTarget.remainingOperatorForms, target.summary.operatorForms);
-  assert.equal(coverage.fullRosterTarget.remainingOutsideGlobalSnapshot, 55);
+  const reviewedCN = Object.values(data.operatorSourceChannels ?? {}).filter(channel => channel === 'cn').length;
+  assert.equal(coverage.fullRosterTarget.remainingOutsideGlobalSnapshot, 55 - reviewedCN);
   assert.deepEqual(coverage.globalAlternateForms.forms,
     [{ id: 'char_1001_amiya2', playable: true }, { id: 'char_1037_amiya3', playable: true }]);
   assert.ok(coverage.scope.includes('Global')); assert.match(target.source.commit, /^[a-f0-9]{40}$/);

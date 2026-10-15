@@ -89,6 +89,8 @@ import { COLDSHOT_OPERATORS } from './coldshot-operators.js';
 import { NYMPH_OPERATORS } from './nymph-operators.js';
 import { LEMUEN_OPERATORS } from './lemuen-operators.js';
 import { TRAGODIA_OPERATORS } from './tragodia-operators.js';
+import { MON3TR_OPERATORS } from './mon3tr-operators.js';
+import { AKKORD_OPERATORS } from './akkord-operators.js';
 import { NECRASS_OPERATORS } from './necrass-operators.js';
 import { MUELSYSE_OPERATORS } from './muelsyse-operators.js';
 import { MARCIL_OPERATORS } from './marcil-operators.js';
@@ -299,6 +301,7 @@ export const REGULAR_OPERATORS = Object.freeze({
   ...MUELSYSE_OPERATORS,
   ...NECRASS_OPERATORS,
   ...TRAGODIA_OPERATORS,
+  ...MON3TR_OPERATORS,
   ...NARANT_OPERATORS,
   ...ELA_OPERATORS,
   ...FUZE_OPERATORS,
@@ -395,6 +398,7 @@ export const REGULAR_OPERATORS = Object.freeze({
   ...FIVE_STAR_SPECIALIST_EXPANSION_OPERATORS,
   ...Object.fromEntries(Object.entries(SUPPORT_EXPANSION_OPERATORS)
     .filter(([id]) => ['char_272_strong', 'char_4107_vrdant', 'char_4165_ctrail', 'char_110_deepcl', 'char_484_robrta', 'char_452_bstalk'].includes(id))),
+  ...AKKORD_OPERATORS,
 });
 
 export function assertRegularOperator(op) {

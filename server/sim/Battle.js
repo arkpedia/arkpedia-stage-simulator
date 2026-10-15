@@ -2605,13 +2605,14 @@ export class Battle {
    * attack that spends no ammo (no `ammoUsed`, the skill never ends on it; 圣约送葬人 "不额外消耗弹药").
    * Returns true when an attack was made.
    */
-  forceAttack(u, targets = null, { noAmmo = false } = {}) {
+  forceAttack(u, targets = null, { noAmmo = false, allowEmpty = false } = {}) {
     if (!u || !u.alive || !u.profile) return false;
     const prof = effectiveProfile(u);
     const t = targets ?? acquireTargets(this, u, prof);
-    if (!t || !t.length) return false;
+    if (!t || !t.length && !(allowEmpty && typeof prof.launchAreaAttack === 'function'
+      && typeof prof.acceptAreaAttack === 'function')) return false;
     const n0 = u.stats.attacks;
-    performAttack(this, u, prof, t, noAmmo ? { noAmmo: true } : null);
+    performAttack(this, u, prof, t, { noAmmo, allowEmpty });
     return u.stats.attacks > n0;
   }
 }
