@@ -22,8 +22,11 @@ def checked(tool):
     r = run(tool)
     assert r.returncode == 0, r.stdout + r.stderr
 def hashes():
-    return {str(p): hashlib.sha256(p.read_bytes()).hexdigest() for p in
-            [source, out / 'models.json', out / 'bindings.json', *out.glob('*.skel'), *out.glob('*.atlas')]}
+    outputs = [source, out / 'models.json', out / 'bindings.json', *out.glob('*.skel'), *out.glob('*.atlas')]
+    if (out / 'tokens').exists():
+        outputs.extend(p for p in (out / 'tokens').rglob('*') if p.is_file()
+                       and (p.suffix in ['.skel', '.atlas'] or p.name in ['models.json', 'bindings.json']))
+    return {str(p): hashlib.sha256(p.read_bytes()).hexdigest() for p in outputs}
 checked('verify-cn-operator')
 before = hashes()
 checked('extract-cn-operator')
@@ -89,6 +92,45 @@ if original.get('skillPrefabOverrides'):
         ('changed explicit skill override', change(['skillPrefabOverrides', overridden], 'invented')),
         ('missing explicit override prefab', delete(['skills', original['skillPrefabOverrides'][overridden]])),
     ])
+if original.get('tokens'):
+    token = next(iter(original['tokens']))
+    token_face = next(iter(original['models'][token]))
+    cases.extend([
+        ('missing token graph', delete(['tokens', token])),
+        ('missing token child', delete(['tokens', token, -1])),
+        ('missing token component', delete(['tokens', token, 0, 'components', 0])),
+        ('changed token component', change(['tokens', token, 0, 'components', 0, 'type'], 'Unknown')),
+        ('missing token table', delete(['tables', 'tokens', token])),
+        ('invented token mode skill', change(['tokenModeSkills', token], ['invented'])),
+        ('missing token source', delete(['tokenSources', token])),
+        ('wrong token bundle', change(['tokenSources', token, 'bundle'], 'invented')),
+        ('wrong token container', change(['tokenSources', token, 'container'], 'invented')),
+        ('wrong token root', change(['tokenSources', token, 'rootPathId'], '0')),
+        ('wrong token animator', change(['tokenSources', token, 'animatorPathId'], '0')),
+        ('missing embedded token artwork controller', delete(['tokenArtworkControllers', token])),
+        ('changed token artwork controller', change(['tokenArtworkControllers', token, 0, 'pathId'], '0')),
+        ('missing token skeleton binding', delete(['officialSkeletonBindings', token])),
+        ('wrong token skeleton bytes', change(['officialSkeletonBindings', token, token_face, 'sha256'], '0' * 64)),
+        ('missing token model', delete(['models', token])),
+        ('invented token attack animation', change(['models', token, token_face, 'durations', 'Attack'], 1)),
+    ])
+    token_skill = next(iter(original['tokenSkillBindings'][token]), None)
+    if token_skill:
+        cases.extend([
+            ('missing token-owned skill table', delete(['tables', 'tokenSkills', token_skill])),
+            ('changed token skill binding', change(['tokenSkillBindings', token, token_skill], ['invented'])),
+            ('invented token skill override', change(['tokenSkillPrefabOverrides', token, token_skill], 'invented')),
+        ])
+        token_prefab = original['tokenSkillPrefabOverrides'][token].get(token_skill)
+        if token_prefab is None:
+            token_prefab = next((p for p in original['tokenSkillBindings'][token][token_skill] if p is not None), None)
+        if token_prefab:
+            cases.append(('missing token skill prefab', delete(['skills', token_prefab])))
+    payloads = original['models'][token][token_face]['eventPayloads']
+    track = next((name for name, events in payloads.items() if events), None)
+    if track:
+        cases.append(('changed token literal event', change(['models', token, token_face, 'eventPayloads', track, 0, 'time'],
+                                                           payloads[track][0]['time'] + 1)))
 negative = out / 'negative-evidence.json'
 try:
     for name, apply in cases:

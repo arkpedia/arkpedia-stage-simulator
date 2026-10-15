@@ -2,8 +2,8 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Recover an explicitly selected CN owner's native hierarchy and dependencies.
 
-This creates held source evidence, never a playable kit. Token-dependent owners
-fail closed until their separate native token/artwork graphs can be recovered.
+This creates held source evidence, never a playable kit. Referenced tokens must
+resolve to original prefab graphs and embedded artwork; unsupported bindings fail.
 """
 from pathlib import Path
 import argparse
@@ -66,7 +66,7 @@ def exact(v, key=''):
         return 'Infinity' if v > 0 else '-Infinity' if v < 0 else 'NaN'
     return v
 
-bundles, bundle_sources = {}, []
+bundles = {}
 def load(path):
     if path in bundles:
         return bundles[path]
@@ -83,7 +83,6 @@ def load(path):
                     assert name not in roots
                     roots[name] = pointer['m_PathID']
     bundles[path] = {'objects': objects, 'roots': roots}
-    bundle_sources.append(row)
     return bundles[path]
 
 def graph(path, container):
@@ -118,20 +117,25 @@ chararts = {ID: [{'pathId': r['pathId'], 'data': r['data']} for r in art_parts]}
 skill_path = 'battle/prefabs/[uc]skills.ab'
 skill_bundle = load(skill_path)
 skills, skill_bindings, mode_skills, prefab_overrides = {}, {}, [], {}
-for key in skill_ids:
-    prefabs = list(dict.fromkeys(rank['prefabId'] for rank in st[key]['levels']))
-    skill_bindings[key] = prefabs
-    override = next(s for s in ct[ID]['skills'] if s['skillId'] == key)['overridePrefabKey']
-    if override is not None:
-        assert isinstance(override, str) and override, 'Invalid original skill prefab override'
-        prefab_overrides[key] = override
-    # Preserve literal rank bindings, but follow an explicit character override
-    # instead of treating a null shared prefab as an inferred owner-mode skill.
-    for prefab in [override] if override is not None else prefabs:
-        if prefab is None:
-            mode_skills.append(key)
-        elif prefab not in skills:
-            skills[prefab] = graph(skill_path, f'dyn/battle/prefabs/[uc]skills/{prefab}.prefab')
+def skill_graphs(rows):
+    bindings, overrides, modes = {}, {}, []
+    for row in rows:
+        key = row['skillId']
+        prefabs = list(dict.fromkeys(rank['prefabId'] for rank in st[key]['levels']))
+        bindings[key] = prefabs
+        override = row['overridePrefabKey']
+        if override is not None:
+            assert isinstance(override, str) and override, 'Invalid original skill prefab override'
+            overrides[key] = override
+        # Literal null ranks remain evidence; only explicit overrides resolve them.
+        for prefab in [override] if override is not None else prefabs:
+            if prefab is None:
+                modes.append(key)
+            elif prefab not in skills:
+                skills[prefab] = graph(skill_path, f'dyn/battle/prefabs/[uc]skills/{prefab}.prefab')
+    return bindings, overrides, modes
+skill_bindings, prefab_overrides, mode_skills = skill_graphs(ct[ID]['skills'])
+token_skill_bindings, token_prefab_overrides, token_mode_skills = {}, {}, {}
 projectile_path = 'battle/prefabs/[uc]projectiles.ab'
 projectile_bundle = load(projectile_path)
 holder_bundle = load('config/buff_template_holder.ab')
@@ -141,19 +145,51 @@ assert len(holders) == 1
 native = {r['templateKey']: r for r in holders[0]}
 parameters = {'key', '_blackboardKey', '_blackboardKeys', '_fromBlackboardKeys', '_sourceBlackboardKey',
               '_targetBlackboardKey', '_inputKey', '_outputKey', '_maxValueKey', '_anotherKeyToCompare', '_addParamKey'}
-needed, db_keys, projectiles, token_refs = set(), set(), {}, set()
+needed, db_keys, projectiles, tokens, token_sources = set(), set(), {}, {}, {}
+token_containers = None
+def resolve_token(key):
+    global token_containers
+    if token_containers is None:
+        token_containers = {}
+        for row in inventory['bundles']:
+            if not re.fullmatch(r'pkgrps/btl_pfb_tokens_\d+\.ab', row['path']):
+                continue
+            for container, root in load(row['path'])['roots'].items():
+                if not re.fullmatch(r'dyn/battle/prefabs/\[uc\]tokens/token_[a-z0-9_]+\.prefab', container):
+                    continue
+                assert container not in token_containers, ('Ambiguous original token container', container)
+                token_containers[container] = (row['path'], root)
+    container = f'dyn/battle/prefabs/[uc]tokens/{key}.prefab'
+    assert container in token_containers, ('Missing original token container', key)
+    path, root = token_containers[container]
+    rows = graph(path, container)
+    roots = [part for row in rows if row['pathId'] == str(root) for part in row['components']
+             if '_animator' in part['data']]
+    assert len(roots) == 1, ('Expected one original token animator owner', key)
+    pointer = roots[0]['data']['_animator']
+    assert pointer['m_FileID'] == 0 and pointer['m_PathID'] != '0', ('Unsupported external token artwork', key)
+    controllers = [part for row in rows for part in row['components']
+                   if part['pathId'] == pointer['m_PathID'] and '_animations' in part['data']]
+    assert len(controllers) == 1, ('Missing embedded original token artwork controller', key)
+    token_sources[key] = {'bundle': path, 'container': container, 'rootPathId': str(root),
+                          'animatorPathId': pointer['m_PathID']}
+    return rows
 def scan(v, field=''):
     if field in ['_overrideAudioSignal', 'audioSignal']:
         return
     if isinstance(v, dict):
-        for key, value in v.items():
+        for key, value in list(v.items()):
+            if key.startswith('token_') and key in ct:
+                scan(key)
             scan(value, key)
     elif isinstance(v, (list, tuple)):
         for value in v:
             scan(value, field)
     elif isinstance(v, str):
-        if v.startswith('token_') and v in ct and field not in parameters:
-            token_refs.add(v)
+        if v.startswith('token_') and v in ct and field not in parameters and v not in tokens:
+            tokens[v] = resolve_token(v)
+            token_skill_bindings[v], token_prefab_overrides[v], token_mode_skills[v] = skill_graphs(ct[v]['skills'])
+            scan([tokens[v], ct[v], [st[row['skillId']] for row in ct[v]['skills']], skills])
         if v.startswith('projectile_') and field not in parameters and v not in projectiles:
             container = f'dyn/battle/prefabs/[uc]projectiles/{v}.prefab'
             assert container in projectile_bundle['roots'], ('Missing native projectile', v)
@@ -171,7 +207,6 @@ def scan(v, field=''):
                 return
             scan(decoded)
 scan([characters, skills, ct[ID], [st[s] for s in skill_ids]])
-assert not token_refs, f'Token-dependent source remains held for a native token/artwork graph extension: {sorted(token_refs)}'
 all_values = []
 def values(v):
     if isinstance(v, dict):
@@ -189,44 +224,59 @@ def values(v):
                 return
             values(decoded)
 values([ct[ID], [st[s] for s in skill_ids], characters, skills, projectiles,
-        [bt.get(k) for k in needed], [native.get(k) for k in needed]])
+        [bt.get(k) for k in needed], [native.get(k) for k in needed], tokens, [ct[k] for k in tokens],
+        [st[row['skillId']] for key in tokens for row in ct[key]['skills']]])
 ranges = sorted(set(all_values) & rt.keys())
 
-by = bundles[art_path]['objects']
-def ref(p):
-    assert p['m_FileID'] == 0 and int(p['m_PathID']) != 0
-    return by[int(p['m_PathID'])]
-animator = chararts[ID][0]
-bindings = {}
-art_data = animator['data']
-facings = {face.title(): art_data['_' + face]['skeleton'] for face in ['front', 'back', 'down']
-           if '_' + face in art_data and art_data['_' + face]['skeleton']['m_PathID'] != '0'}
-if '_skeleton' in art_data:
-    assert not facings
-    facings = {'Single': art_data['_skeleton']}
-assert facings
-exports = {}
-for face, pointer in facings.items():
-    skeleton = ref(pointer); asset = ref(skeleton.read_typetree()['skeletonDataAsset'])
-    data = asset.read_typetree(); text = ref(data['skeletonJSON'])
-    assert len(data['atlasAssets']) == 1
-    atlas = ref(data['atlasAssets'][0]); atlas_text = ref(atlas.read_typetree()['atlasFile'])
-    def raw(reader):
-        text = reader.read().m_Script
-        return text.encode('utf8', 'surrogateescape') if isinstance(text, str) else bytes(text)
-    skel_bytes, atlas_bytes = raw(text), raw(atlas_text)
-    bindings[face] = {'animatorPathId': animator['pathId'], 'skeletonAnimationPathId': str(skeleton.path_id),
-                      'skeletonDataAssetPathId': str(asset.path_id), 'textAssetPathId': str(text.path_id),
-                      'atlasAssetPathId': str(atlas.path_id), 'atlasTextAssetPathId': str(atlas_text.path_id),
-                      'sha256': sha(skel_bytes), 'bytes': len(skel_bytes),
-                      'atlasSha256': sha(atlas_bytes), 'atlasBytes': len(atlas_bytes)}
-    exports[face.lower() + '.skel'] = skel_bytes
-    exports[face.lower() + '.atlas'] = atlas_bytes
-OUT.mkdir(parents=True, exist_ok=True)
-for name, raw_bytes in exports.items():
-    (OUT / name).write_bytes(raw_bytes)
-(OUT / 'bindings.json').write_text(json.dumps(bindings, indent=2) + '\n')
-subprocess.run([NODE, 'tools/arkpedia/inspect-cn-operator.mjs', '--operator', ID], cwd=ROOT, check=True)
+def export_artwork(path, animator, directory, token=None):
+    by = bundles[path]['objects']
+    def ref(p):
+        assert p['m_FileID'] == 0 and int(p['m_PathID']) != 0
+        return by[int(p['m_PathID'])]
+    bindings, exports = {}, {}
+    art_data = animator['data']
+    facings = {face.title(): art_data['_' + face]['skeleton'] for face in ['front', 'back', 'down']
+               if '_' + face in art_data and art_data['_' + face]['skeleton']['m_PathID'] != '0'}
+    if '_skeleton' in art_data:
+        assert not facings
+        facings = {'Single': art_data['_skeleton']}
+    assert facings
+    for face, pointer in facings.items():
+        skeleton = ref(pointer); asset = ref(skeleton.read_typetree()['skeletonDataAsset'])
+        data = asset.read_typetree(); text = ref(data['skeletonJSON'])
+        assert len(data['atlasAssets']) == 1
+        atlas = ref(data['atlasAssets'][0]); atlas_text = ref(atlas.read_typetree()['atlasFile'])
+        def raw(reader):
+            text = reader.read().m_Script
+            return text.encode('utf8', 'surrogateescape') if isinstance(text, str) else bytes(text)
+        skel_bytes, atlas_bytes = raw(text), raw(atlas_text)
+        bindings[face] = {'animatorPathId': animator['pathId'], 'skeletonAnimationPathId': str(skeleton.path_id),
+                          'skeletonDataAssetPathId': str(asset.path_id), 'textAssetPathId': str(text.path_id),
+                          'atlasAssetPathId': str(atlas.path_id), 'atlasTextAssetPathId': str(atlas_text.path_id),
+                          'sha256': sha(skel_bytes), 'bytes': len(skel_bytes),
+                          'atlasSha256': sha(atlas_bytes), 'atlasBytes': len(atlas_bytes)}
+        exports[face.lower() + '.skel'] = skel_bytes
+        exports[face.lower() + '.atlas'] = atlas_bytes
+    directory.mkdir(parents=True, exist_ok=True)
+    for name, raw_bytes in exports.items():
+        (directory / name).write_bytes(raw_bytes)
+    (directory / 'bindings.json').write_text(json.dumps(bindings, indent=2) + '\n')
+    subprocess.run([NODE, 'tools/arkpedia/inspect-cn-operator.mjs', '--operator', ID,
+                    *(['--token', token] if token else [])], cwd=ROOT, check=True)
+    return bindings, json.loads((directory / 'models.json').read_bytes())
+
+bindings, owner_models = export_artwork(art_path, chararts[ID][0], OUT)
+all_bindings, all_models, token_art = {ID: bindings}, {ID: owner_models}, {}
+for key in sorted(tokens):
+    source = token_sources[key]
+    controller = next(part for row in tokens[key] for part in row['components']
+                      if part['pathId'] == source['animatorPathId'])
+    token_art[key] = [{'pathId': controller['pathId'], 'data': controller['data']}]
+    all_bindings[key], all_models[key] = export_artwork(source['bundle'], controller, OUT / 'tokens' / key, key)
+# Discovery may inspect all token groups; only referenced groups belong in evidence.
+base_paths = [owner_path, art_path, skill_path, projectile_path, 'config/buff_template_holder.ab']
+used_paths = base_paths + sorted(set(row['bundle'] for row in token_sources.values()))
+bundle_sources = [next(r for r in inventory['bundles'] if r['path'] == path) for path in used_paths]
 evidence = {'schemaVersion': 2, 'operatorId': ID, 'enabledOperators': [], 'heldOperators': [ID],
             'frameParity': False, 'moduleSupport': False, 'nativeParticleSupport': False,
             'source': {'repository': inventory['source']['repository'], 'commit': PIN,
@@ -238,9 +288,18 @@ evidence = {'schemaVersion': 2, 'operatorId': ID, 'enabledOperators': [], 'heldO
             'originalTemplates': {k: exact(native[k]) for k in sorted(needed) if k in native},
             'buffDatabase': {k: db[k] for k in sorted(db_keys)},
             'tables': {'character': ct[ID], 'skills': {s: st[s] for s in skill_ids}, 'ranges': {k: rt[k] for k in ranges}},
-            'officialSkeletonBindings': {ID: bindings}, 'models': {ID: json.loads((OUT / 'models.json').read_bytes())},
+            'officialSkeletonBindings': all_bindings, 'models': all_models,
             'nativeTemplateGaps': sorted(needed - native.keys()), 'jsonTemplateGaps': sorted(needed - bt.keys()),
             'reviewStatus': 'Held original CN source; combat, model delivery, modules and game-frame proof remain separate'}
+if tokens:
+    evidence['tokens'] = {key: tokens[key] for key in sorted(tokens)}
+    evidence['tokenSources'] = {key: token_sources[key] for key in sorted(tokens)}
+    evidence['tokenArtworkControllers'] = token_art
+    evidence['tables']['tokens'] = {key: ct[key] for key in sorted(tokens)}
+    evidence['tables']['tokenSkills'] = {key: st[key] for key in sorted({row['skillId'] for t in tokens for row in ct[t]['skills']})}
+    evidence['tokenSkillBindings'] = {key: token_skill_bindings[key] for key in sorted(tokens)}
+    evidence['tokenSkillPrefabOverrides'] = {key: token_prefab_overrides[key] for key in sorted(tokens)}
+    evidence['tokenModeSkills'] = {key: token_mode_skills[key] for key in sorted(tokens)}
 if prefab_overrides:
     evidence['skillPrefabOverrides'] = prefab_overrides
 destination = ROOT / 'data/arkpedia-native-operators' / (ID + '.json')
@@ -248,7 +307,7 @@ destination.parent.mkdir(parents=True, exist_ok=True)
 temporary = destination.with_suffix('.json.tmp')
 temporary.write_text(json.dumps(evidence, indent=2, ensure_ascii=False) + '\n')
 temporary.replace(destination)
-print(json.dumps({'operator': ID, 'components': sum(len(r['components']) for group in [characters, skills, projectiles]
+print(json.dumps({'operator': ID, 'components': sum(len(r['components']) for group in [characters, skills, projectiles, tokens]
                                                    for rows in group.values() for r in rows),
-                  'templates': sorted(needed), 'projectiles': sorted(projectiles), 'ranges': ranges,
+                  'templates': sorted(needed), 'projectiles': sorted(projectiles), 'tokens': sorted(tokens), 'ranges': ranges,
                   'nativeTemplateGaps': evidence['nativeTemplateGaps'], 'jsonTemplateGaps': evidence['jsonTemplateGaps']}))
