@@ -47,7 +47,9 @@ try{
   const match=/^\/owner-art-review-assets\/(\d+)\/([^/]+)$/.exec(url.pathname),file=match&&rows[Number(match[1])]?.files[match[2]];
   if(file)return r.respond({status:200,contentType:file.endsWith('.png')?'image/png':file.endsWith('.atlas')?'text/plain':'application/octet-stream',body:await readFile(file)});return r.continue();
  });
- const phases=['Start','Idle','Die','Attack','Attack_Down','Skill_1_Begin','Skill_1_Loop','Skill_Down_1_Loop','Skill_1_Idle','Skill_1_End','Skill_2_Begin','Skill_2_Loop','Skill_Down_2_Loop','Skill_2_Idle','Skill_2_End'];
+ const phases=recipe.reviewPhases??['Start','Idle','Die','Attack','Attack_Down','Skill_1_Begin','Skill_1_Loop','Skill_Down_1_Loop','Skill_1_Idle','Skill_1_End','Skill_2_Begin','Skill_2_Loop','Skill_Down_2_Loop','Skill_2_Idle','Skill_2_End'];
+ assert.ok(Array.isArray(phases)&&phases.length>0&&new Set(phases).size===phases.length);
+ for(const phase of phases)assert.ok(typeof phase==='string'&&rows.some(r=>Object.hasOwn(r.durations,phase))||!recipe.reviewPhases,'Invalid declared review phase');
  for(const[name,width,height,touch]of[['desktop',1280,720,false],['landscape-phone',844,390,true]]){
   await page.setViewport({width,height,hasTouch:touch,isMobile:touch,deviceScaleFactor:1});await page.goto(origin+route,{waitUntil:'domcontentloaded'});await page.waitForFunction(()=>window.ownerArtReview?.ready||window.reviewError,{timeout:60000});assert.equal(await page.evaluate(()=>window.reviewError),undefined);
   const clips=await page.evaluate(()=>ownerArtReview.actors.flatMap(a=>a.s.spineData.animations.filter(c=>c.name!=='Default').map(c=>{a.s.skeleton.setToSetupPose();a.s.state.clearTracks();a.s.state.setAnimation(0,c.name,false);a.s.update(Math.min(.5,c.duration/2));const b=a.s.getLocalBounds();return {id:a.id,face:a.face,clip:c.name,duration:c.duration,width:b.width,height:b.height};})));
