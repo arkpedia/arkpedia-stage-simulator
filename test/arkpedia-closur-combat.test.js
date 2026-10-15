@@ -92,4 +92,7 @@ test('an attack hook cannot duplicate one captured target into two S2 damage rec
   advance(f.b, 2); assert.equal(f.shots.length, 0); assert.equal(f.attacks.length, 0);
   f.b.off(h); until(f, () => f.shots.length > 0, 2); assert.equal(f.shots.length, 1); assert.equal(f.attacks.length, 1);
 });
-test('unsupported S3 combat fails closed rather than selecting an ordinary fallback kit', () => assert.throws(() => make({ skill: 3 }), /S3 combat remains held/));
+test('S3 requires the selected combat contract rather than silently choosing a generic kit', () => {
+  assert.throws(() => make({ skill: 3, contract: {} }), /selected combat contract/);
+  const f = make({ skill: 3 }); assert.equal(f.record.index, 2); assert.ok(f.command.acceptedAttack);
+});

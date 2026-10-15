@@ -890,7 +890,7 @@ export class Battle {
    * operator that left the field comes back on its body tile, restTile). `keepSp` = { sp, charges }
    * restored right after the skill reset, before the `deploy` hook fires.
    */
-  _deploy(u, { initial = false, carry = null, tile = null, keepSp = null, moveLikeRespawn = false } = {}) {
+  _deploy(u, { initial = false, carry = null, tile = null, keepSp = null, moveLikeRespawn = false, costAttribute = null } = {}) {
     if ((u.alive && u.deployed) || u._removing) return false;
     const R0 = tile ? tile[0] : u.homeR, C0 = tile ? tile[1] : u.homeC;
     if (!this.grid.inRect(R0, C0)) {
@@ -918,6 +918,8 @@ export class Battle {
     u.deployedAt = this.time;
     u.moveLikeRespawn = !!moveLikeRespawn;
     delete u.mem.regularBornUntil;
+    if (Number.isFinite(costAttribute) && costAttribute >= 0) u.mem.regularCostAttribute = costAttribute;
+    else delete u.mem.regularCostAttribute;
     u.atkCd = 0;
     u.lastAttackAt = -Infinity;
     u.elem.burn = u.elem.neural = u.elem.necrosis = u.elem.apoptosis = u.elem.erosion = 0;
@@ -1382,6 +1384,8 @@ export class Battle {
       } else u._resistPalsyAcc = 0;
       if (u.buffs.length) {
         const arr = u.buffs.slice();
+        // Sample once per unit/tick so buff array order cannot change clocks.
+        const slowDownRate = u.s.slowDownRate;
         for (const b of arr) {
           if (!u.alive) break;
           if (u.buffs.indexOf(b) < 0) continue;
@@ -1396,7 +1400,9 @@ export class Battle {
             } else this._safe(() => b.onTick({ battle: this, unit: u, buff: b, dt }), 'buff.onTick', u);
           }
           if (b.timeLeft !== Infinity) {
-            b.timeLeft -= dt;
+            const resistable = b.sourceStatusResistable === true
+              || b.sourceStatusResistable == null && RESIST_STATUSES.has(b.status);
+            b.timeLeft -= dt * (resistable ? slowDownRate : 1);
             if (b.timeLeft <= 1e-9) {
               const i = u.buffs.indexOf(b);
               if (i >= 0) {

@@ -908,9 +908,11 @@ export class StandardBattle extends Battle {
         enumerable: true, get: () => Math.max(1, unit.s.blockCnt),
       });
     }
-    entry.lastCost = fromSkill ? 0 : this.cost(id);
+    const costAttribute = this.cost(id);
+    entry.lastCost = fromSkill ? 0 : costAttribute;
     ps.dp -= entry.lastCost;
-    this._deploy(unit, { tile: [row, col], moveLikeRespawn: fromSkill });
+    // A free card delivery is a real deployment, not MOVE_LIKE_RESPAWN.
+    this._deploy(unit, { tile: [row, col], costAttribute });
     if (mechanic === "starting-sp")
       unit.skill.gainSp(def.talents.reduce((sum, talent) => sum + (talent.bb.sp ?? 0), 0), "talent");
     entry.deployments++;

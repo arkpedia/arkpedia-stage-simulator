@@ -3,8 +3,8 @@
 import e from '../../../data/arkpedia-native-operators/char_4228_closur.json' with { type: 'json' };
 export const CLOSUR_S2_CONTRACT = Object.freeze({
   scope: 'All ten source S2 ranks: immediate/periodic DP, owned reinforcement DEF/block aura, and BORN-entry refunds',
-  mapping: 'One DP is granted at each original two-second interval. Current reinforcement recipients receive source DEF and block bonuses. An accepted new aura application records whether an operator is in BORN, then triggers once after the original .03s delay. Refunds use ceil(current normalized unit COST * cost_return), excluding move-like self/external redeploys.',
-  limits: 'Global aura/category aliases, per-owner local aura keys and tick ordering are explicit mappings. The regular BORN observer follows advertised selected-native deadlines or the reviewed original deploy clip, not recovered compiled Unity FSM state. COST maps to the normalized unit base cost, independently of card payment/redeploy multipliers. Owner firing, S3, public delivery, modules/particles/audio and original frame/pixel parity remain separate.',
+  mapping: 'One DP is granted at each original two-second interval. Current reinforcement recipients receive source DEF and block bonuses. An accepted new aura application records whether an operator is in BORN, then triggers once after the original .03s delay. Refunds use ceil(current normalized COST * cost_return), excluding actual move-like self/external respawns. Free card delivery is eligible: its cost attribute is distinct from payment.',
+  limits: 'Global aura/category aliases, per-owner local keys and tick ordering are mappings. BORN follows advertised selected-native deadlines or the original deploy clip, not compiled Unity FSM state. Regular card COST retains the selected deployment cost including card discounts/redeployment scaling; low-level diagnostics fall back to base COST. Native dynamic COST modifiers, public delivery, modules/particles/audio and frame/pixel parity remain separate.',
   frameParity: false,
 });
 const present = u => u?.alive && u.deployed && !u._removing;
@@ -45,7 +45,8 @@ export function prepareClosurS2(point, { contract } = {}) {
         row.timer = null;
         if (!active() || !present(a) || a.deploySeq !== row.seq || a.moveLikeRespawn
           || state.recipients.get(a) !== row || a.findBuff(key) !== row.buff || !point.friends().includes(a)) return;
-        b.addDp(u.ownerId, Math.ceil(Math.abs(a.base.cost * r.bb.cost_return)));
+        const cost = a.mem.regularCostAttribute ?? a.base.cost;
+        b.addDp(u.ownerId, Math.ceil(Math.abs(cost * r.bb.cost_return)));
       }, { owner: u });
     }
   }

@@ -1,16 +1,17 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Selected ordinary/S1/S2 combat only; S3 and all public registration remain held.
+// Selected source combat; public registration/artwork approval remain separate.
 import e from '../../../data/arkpedia-native-operators/char_4228_closur.json' with { type: 'json' };
 import { CLOSUR_ID as ID } from './arkpedia-closur-source.js';
 import { prepareClosurPoint, CLOSUR_POINT_CONTRACT } from './arkpedia-closur-point.js';
 import { prepareClosurS1, CLOSUR_S1_CONTRACT } from './arkpedia-closur-s1.js';
 import { prepareClosurS2, CLOSUR_S2_CONTRACT } from './arkpedia-closur-s2.js';
+import { prepareClosurS3, CLOSUR_S3_CONTRACT } from './arkpedia-closur-s3.js';
 import { canTargetEnemy, sortEnemyTargets } from '../targeting.js';
 import { bodyInKeys } from '../body.js';
 export const CLOSUR_COMBAT_CONTRACT = Object.freeze({
-  scope: 'Selected original ordinary fire, owned-blocker trait, all S1/S2 ranks and command-center interactions',
-  mapping: 'Ordinary first fire plays the explicit Begin then the aliased Attack_Loop; subsequent continuous attacks omit Begin. Attack presentation follows the captured primary, retaining fixed deployment range. S2 uses the original Begin/Loop/Idle mode, acquires up to two distinct windup targets from own range or owned reinforcement blockers and fires independent speed-ten projectiles. Direct damage remains normal physical damage; current source ATK and owned-blocker trait are sampled on impact.',
-  limits: 'Normal/S2 selector aliases, first-fire cooldown/FSM timing, target/body geometry and fixed-tick dispatch are explicit local mappings. S2 keeps the ordinary cooldown through mode changes. Unrequested End clips are not inferred from their existence. Launched projectiles retain their source after retreat; unreleased casts are cancelled. S3, BORN executable parity, full debt-consumer coverage, public/art/browser delivery, native particles/audio/modules and original frame/pixel parity remain unsupported.',
+  scope: 'Selected original ordinary fire, owned-blocker trait, all thirty source skill ranks and command-center interactions',
+  mapping: 'Ordinary first fire plays the explicit Begin then the aliased Attack_Loop; subsequent continuous attacks omit Begin. Presentation follows the selected primary, retaining deployment geometry. S2 captures up to two windup inputs and fires independent speed-ten projectiles. S3 selects at release, grows to seven targets, and attaches a delayed hit at the target for the original .30000001192092896s. Both use literal mode clips. Direct damage is normal physical; current source ATK and owned-blocker trait are sampled at impact.',
+  limits: 'Selector/collider aliases, first-fire cooldown/FSM timing, target/body geometry and fixed-tick dispatch are explicit mappings. Ordinary cooldown is retained through skill-mode changes. Unrequested End clips are not inferred. Launched projectiles retain their source after retreat; unreleased casts are cancelled. BORN executable parity, absent enemy slow-down flags/animation/channel controllers, full debt-consumer coverage, public/art/browser delivery, native particles/audio/modules and original frame/pixel parity remain unverified.',
   frameParity: false,
 });
 const present = u => u?.alive && u.deployed && !u._removing;
@@ -25,6 +26,8 @@ export class ClosurCombatController {
   }
   valid() { return !this.stopped && !this.b.finished && present(this.u) && this.seq === this.u.deploySeq; }
   s2() { return this.record.index === 1 && this.u.skill.active; }
+  s3() { return this.record.index === 2 && this.u.skill.active; }
+  mode() { return this.s3() ? 3 : this.s2() ? 2 : 0; }
   model() { return e.models[ID][this.facing === 'UP' ? 'Back' : 'Front']; }
   face(target) {
     const dx = target.x - this.u.x, dy = target.y - this.u.y;
@@ -40,28 +43,29 @@ export class ClosurCombatController {
       ...(!loop ? { playId: `closur:${this.u.deploySeq}:${++this.visualSeq}` } : {}) };
     this.u.mem.regularVisualDirection = this.facing;
   }
-  idle() { this.facing = this.u.dir; this.visual(this.clip(this.s2() ? 2 : 0, 'idle'), 1, true); }
+  idle() { this.facing = this.u.dir; this.visual(this.clip(this.mode(), 'idle'), 1, true); }
   targets(s2 = this.s2()) {
     if (this.b.rangeChanged(this.u)) this.b._refreshRange(this.u);
+    if (this.s3()) this.command.refreshRange();
     this.point.mark();
     const all = this.b.enemies.filter(a => canTargetEnemy(this.u, a, profile) && (!a.s.flags.camou || a.blockedBy)
       && (a.blockedBy === this.u || bodyInKeys(a, this.u.rangeKeySet)
-        || s2 && live(a.blockedBy) && !!a.blockedBy.findBuff(this.point.friendKey)));
+        || (s2 || this.s3()) && live(a.blockedBy) && !!a.blockedBy.findBuff(this.point.friendKey)));
     const own = all.filter(a => a.blockedBy === this.u);
     return [...sortEnemyTargets(this.b, this.u, own), ...sortEnemyTargets(this.b, this.u, all.filter(a => a.blockedBy !== this.u))]
-      .slice(0, s2 ? this.record.bb['attack@max_target'] : 1);
+      .slice(0, this.s3() ? this.command.state.maxTargets : s2 ? this.record.bb['attack@max_target'] : 1);
   }
   traitScale(target) {
     const blocker = target.blockedBy;
     return live(blocker) && (blocker.ownerUnit === this.u || blocker.findBuff(this.point.friendKey))
       ? e.tables.character.trait.candidates[0].blackboard.find(p => p.key === 'atk_scale').value : 1;
   }
-  startS2() {
+  startMode(mode) {
     this.continuing = false; this.facing = this.u.dir;
-    const clip = this.clip(2, 'begin'); this.visual(clip);
+    const clip = this.clip(mode, 'begin'); this.visual(clip);
     this.phase = { kind: 'begin', until: this.b.time + this.model().durations[clip] };
   }
-  endS2() {
+  endMode() {
     if (!this.valid()) return;
     this.phase = null; this.continuing = false; this.idle();
   }
@@ -80,16 +84,21 @@ export class ClosurCombatController {
       if (!this.valid()) break;
       const seq = phase.inputs.find(input => input.unit === target).seq;
       if (!live(target) || target.deploySeq !== seq) continue;
-      this.b.addProjectile({ from: this.u, source: this.u, target, speed: 10, maxAge: 10, visual: 'arrow',
-        data: { arkpediaTrackedVisual: true, closur: true, nativeKey: phase.s2 ? 'projectile_chr_closur_s2' : 'projectile_chr_closur' },
+      this.b.addProjectile({ from: phase.s3 ? target : this.u, source: this.u, target, speed: 10, maxAge: 10,
+        ...(phase.s3 ? { flightTime: .30000001192092896, attached: true } : {}), visual: phase.s3 ? 'none' : 'arrow',
+        data: { arkpediaTrackedVisual: true, closur: true, nativeKey: phase.s3 ? 'projectile_chr_closur_s3' : phase.s2 ? 'projectile_chr_closur_s2' : 'projectile_chr_closur' },
         onHit: ({ target: a }) => {
           if (this.b.finished || !a || a.deploySeq !== seq || !canTargetEnemy(this.u, a, profile)) return;
           this.point.mark();
-          this.b.dealDamage(this.u, a, { amount: this.u.s.atk * this.u.s.atkScaleMul * this.traitScale(a),
+          if (phase.s3) this.command.slow(a);
+          if (!live(a) || a.deploySeq !== seq) return;
+          this.b.dealDamage(this.u, a, { amount: this.u.s.atk * this.u.s.atkScaleMul * this.traitScale(a)
+            * (phase.s3 ? this.record.bb['attack@atk_scale'] : 1),
             type: 'phys', isAttack: true, isSkill: false, attackId: info.attackId, applyWay: 'ranged',
-            tags: ['closur:direct', phase.s2 ? 'closur:s2' : 'closur:ordinary'] });
+            tags: ['closur:direct', phase.s3 ? 'closur:s3' : phase.s2 ? 'closur:s2' : 'closur:ordinary'] });
         } });
     }
+    if (phase.s3) this.command.acceptedAttack();
     return true;
   }
   tick() {
@@ -105,6 +114,7 @@ export class ClosurCombatController {
       if (!p.loopStarted && due(b, p.loopAt)) { p.loopStarted = true; this.visual(p.loop, p.speed); }
       if (!p.released && due(b, p.releaseAt)) {
         p.released = true;
+        if (p.s3) p.inputs = this.targets().map(unit => ({ unit, seq: unit.deploySeq }));
         const targets = p.inputs.filter(input => live(input.unit) && input.unit.deploySeq === input.seq
           && canTargetEnemy(u, input.unit, profile)).map(input => input.unit);
         this.accepting = true;
@@ -116,16 +126,16 @@ export class ClosurCombatController {
     if (u.atkCd > 1e-9) return;
     const targets = this.targets();
     if (!targets.length) { this.continuing = false; this.idle(); return; }
-    const s2 = this.s2(); this.face(targets[0]);
-    const loop = this.clip(s2 ? 2 : 0, 'loop'), speed = Math.min(1, u.base.bat / u.s.interval);
-    const begin = !s2 && !this.continuing ? this.clip(0, 'begin') : null;
+    const s2 = this.s2(), s3 = this.s3(); this.face(targets[0]);
+    const loop = this.clip(this.mode(), 'loop'), speed = Math.min(1, u.base.bat / u.s.interval);
+    const begin = !s2 && !s3 && !this.continuing ? this.clip(0, 'begin') : null;
     const beginDelay = begin ? this.model().durations[begin] / speed : 0;
     const release = beginDelay + this.model().eventPayloads[loop].find(p => p.name === 'OnAttack').time / speed;
     const cadence = beginDelay + Math.max(u.s.interval, release - beginDelay);
-    this.phase = { kind: 'attack', inputs: targets.map(unit => ({ unit, seq: unit.deploySeq })), s2,
+    this.phase = { kind: 'attack', inputs: targets.map(unit => ({ unit, seq: unit.deploySeq })), s2, s3,
       loop, loopAt: b.time + beginDelay, loopStarted: !begin, speed, epoch: u.attackControlEpoch,
       releaseAt: b.time + release, until: b.time + cadence, accepted: false, released: false };
-    u.atkCd = cadence; this.continuing = !s2; this.visual(begin ?? loop, speed);
+    u.atkCd = cadence; this.continuing = !s2 && !s3; this.visual(begin ?? loop, speed);
   }
   install() {
     if (this.handles.length || this.stopped) throw Error('Closure combat cannot be reinstalled');
@@ -150,16 +160,22 @@ export class ClosurCombatController {
 export function prepareClosurCombat(b, u, { contract } = {}) {
   if (contract !== CLOSUR_COMBAT_CONTRACT) throw Error('Closure requires its selected combat contract');
   const { controller: point, record } = prepareClosurPoint(b, u, { contract: CLOSUR_POINT_CONTRACT });
-  if (![0, 1].includes(record.owner.index)) throw Error('Closure S3 combat remains held');
   const parts = e.characters[ID].flatMap(row => row.components), part = id => parts.find(p => p.pathId === id).data;
   if (part('1012175510054882834')._onlyPlayBeginAnimWhenFirstAttack !== 1
     || part('1012175510054882834')._maxAnimScale !== 1 || part('-7792546040983204334')._selectTargetTiming !== 0)
     throw Error('Unreviewed Closure continuous-fire inputs');
+  const motion = e.projectiles.projectile_chr_closur_s3.flatMap(row => row.components)
+    .find(p => p.pathId === '-7962353101399098955').data;
+  if (part('1116450498941406738')._selectTargetTiming !== 2 || part('-6472147311241474542')._maxAnimScale !== 1
+    || motion._delayTime !== .30000001192092896 || motion._followTarget !== 1 || motion._immediatelyReach !== 0
+    || motion._stopIfTargetDead !== 1 || motion._stopIfTargetDisappeared !== 1)
+    throw Error('Unreviewed Closure S3 selector/attachment inputs');
   const command = record.owner.index === 0 ? prepareClosurS1(point, { contract: CLOSUR_S1_CONTRACT })
-    : prepareClosurS2(point, { contract: CLOSUR_S2_CONTRACT });
+    : record.owner.index === 1 ? prepareClosurS2(point, { contract: CLOSUR_S2_CONTRACT })
+      : prepareClosurS3(point, { contract: CLOSUR_S3_CONTRACT });
   const controller = new ClosurCombatController(point, command);
-  const skill = { ...command.spec, onStart: ctx => { command.spec.onStart?.(ctx); if (record.owner.index === 1) controller.startS2(); },
-    onEnd: ctx => { command.spec.onEnd?.(ctx); if (record.owner.index === 1) controller.endS2(); } };
+  const skill = { ...command.spec, onStart: ctx => { command.spec.onStart?.(ctx); if (record.owner.index > 0) controller.startMode(record.owner.index + 1); },
+    onEnd: ctx => { command.spec.onEnd?.(ctx); if (record.owner.index > 0) controller.endMode(); } };
   return { record: record.owner, tokenRecord: record, controller, point, command, kit: { talents: [], install: null,
     trait: { noAttack: true, install: null, attackDrivenSkill: true, attack: 'ranged', projectile: 'none',
       dmgType: 'none', canHitFly: true, heal: null, windup: 0, attackVisual: 'none', requiresAcceptedLaunch: true,

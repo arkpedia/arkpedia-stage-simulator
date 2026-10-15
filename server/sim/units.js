@@ -122,13 +122,14 @@ export class Unit {
     const atk = Math.max(0, fin((b.atk + a('atkFlat')) * Math.max(0, 1 + a('atkPct')) * m('atkMul') + a('atkFinalFlat'), fin(b.atk, 0)));
     const def = Math.max(0, fin((b.def + a('defFlat')) * Math.max(0, 1 + a('defPct')) * m('defMul') + a('defFinalFlat'), fin(b.def, 0)));
     const res = clamp(fin((b.res + a('resFlat')) * Math.max(0, 1 + a('resPct')) * m('resMul'), fin(b.res, 0)), 0, 100);
-    const aspd = clamp(fin(b.aspd + a('aspd'), 100), ASPD_MIN, ASPD_MAX);
+    const aspd = clamp(fin((b.aspd + a('aspd')) * m('aspdMul'), 100), ASPD_MIN, ASPD_MAX);
     const bBat = fin(b.bat, 1) > 0 ? fin(b.bat, 1) : 1;
     // Source FINAL_SCALER attack-time modifiers apply after additive/percentage
     // attack-time changes (Jackie S2 and Purestream S2), before ASPD.
     const bat = fin(Math.max(.001, bBat + a('batFlat')) * Math.max(0.1, 1 + a('batPct')) * m('batMul'), bBat);
     const s = {
       maxHp, atk, def, res, aspd, bat,
+      slowDownRate: clamp(fin(m('slowDownMul'), 1), 0, 1),
       interval: (bat * 100) / aspd,
       blockCnt: Math.max(0, fin(Math.round((b.blockCnt + a('blockCnt')) * m('blockCntMul')), 0)),
       moveSpeed: Math.max(0, fin((b.moveSpeed + a('moveFlat')) * Math.max(0, 1 + a('movePct')) * m('moveMul'), fin(b.moveSpeed, 0))),

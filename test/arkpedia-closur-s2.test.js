@@ -82,7 +82,7 @@ test('S2 excludes self/external move-like redeploys while allowing a real new de
   f.b.retreat(a, { permanent: true }); assert.ok(f.b._deploy(a, { tile: [5, 7] }));
   assert.equal(a.moveLikeRespawn, false); advance(f.b, .1); near(refunds(f)[0].n, 6);
 });
-test('the actual source RespawnCharacter and engine-owned external delivery paths cannot issue S2 deployment refunds', () => {
+test('source RespawnCharacter is excluded, while a free external card delivery still refunds its nonzero COST attribute', () => {
   const f = ready(); cast(f); const a = ally(f, { row: 10, col: 10 });
   a.mem.regularBornUntil = f.b.time + 10;
   assert.ok(sourceMoveRespawn(f.b, a, 5, 7, { carryBuffKeys: [], rebuildBuffs: [], clearSp: true }));
@@ -91,8 +91,20 @@ test('the actual source RespawnCharacter and engine-owned external delivery path
   assert.equal(f.grants.length, n);
   const g = ready(); cast(g); const before = g.grants.length;
   const delivered = g.b.redeployOperatorFromSkill('char_289_gyuki', 5, 7, 'RIGHT');
-  assert.equal(delivered.moveLikeRespawn, true); assert.ok(delivered.findBuff(g.command.auraKey));
-  advance(g.b, .1); assert.equal(g.grants.length, before);
+  assert.equal(delivered.moveLikeRespawn, false); assert.ok(delivered.findBuff(g.command.auraKey));
+  assert.equal(g.b.bench.char_289_gyuki.lastCost, 0);
+  advance(g.b, .1); assert.equal(g.grants.length, before + 1);
+  near(g.grants.at(-1).n, Math.ceil(delivered.mem.regularCostAttribute * g.record.bb.cost_return));
+});
+test('real card refunds retain the deployment COST including redeployment scaling, independently of the next card or free payment', () => {
+  for (const free of [false, true]) {
+    const f = ready(); cast(f); const id = 'char_289_gyuki';
+    f.b.bench[id].deployments = 1; const cost = f.b.cost(id); f.u.player.dp = 99;
+    const n = f.grants.length, a = free ? f.b.redeployOperatorFromSkill(id, 5, 7, 'RIGHT') : f.b.deployOperator(id, 5, 7, 'RIGHT');
+    near(a.mem.regularCostAttribute, cost); assert.notEqual(f.b.cost(id), cost);
+    near(f.b.bench[id].lastCost, free ? 0 : cost);
+    advance(f.b, .1); assert.equal(f.grants.length, n + 1); near(f.grants.at(-1).n, Math.ceil(cost * .4));
+  }
 });
 test('S2 cancels pending entry refunds when the target leaves, dies, changes deployment or the owner leaves', () => {
   for (const action of [

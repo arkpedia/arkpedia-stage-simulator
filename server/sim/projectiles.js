@@ -95,6 +95,7 @@ export class ProjectileSystem {
       ty: fin(p.to ? p.to.y : (target ? target.y : fy), fy),
       speed: p.speed > 0 ? p.speed : PROJECTILE_SPEED,
       flightTime: Number.isFinite(p.flightTime) && p.flightTime > 0 ? p.flightTime : null,
+      attached: p.attached === true,
       onHit: p.onHit ?? null,
       // Opt-in moving colliders (piercing shots). Existing point impacts keep
       // their original arrival behavior; finite colliders expire where they are.
@@ -133,8 +134,8 @@ export class ProjectileSystem {
       // target crosses the projectile; only the duration boundary can impact.
       if (p.flightTime !== null) {
         const progress = Math.min(1, p.age / p.flightTime);
-        p.x = p.fromX + (p.tx - p.fromX) * progress;
-        p.y = p.fromY + (p.ty - p.fromY) * progress;
+        p.x = p.attached ? p.tx : p.fromX + (p.tx - p.fromX) * progress;
+        p.y = p.attached ? p.ty : p.fromY + (p.ty - p.fromY) * progress;
         if (this.intercept(p, previous)) continue;
         if (progress === 1 || p.age >= p.maxAge) arrived.push(p);
         else keep.push(p);
