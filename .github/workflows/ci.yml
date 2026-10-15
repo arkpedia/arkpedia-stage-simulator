@@ -16,7 +16,7 @@ jobs:
   test:
     name: test (${{ matrix.os }}, node ${{ matrix.node }})
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 25
+    timeout-minutes: 45
     strategy:
       fail-fast: false
       matrix:
@@ -43,6 +43,9 @@ jobs:
 
       - name: Setup check (no downloads)
         run: node tools/setup.mjs --check --no-local
+
+      - name: Fetch and verify pinned original skeletons for source-identity tests
+        run: node tools/arkpedia/test-assets.mjs
 
       - name: Unit & integration tests
         run: node --test
