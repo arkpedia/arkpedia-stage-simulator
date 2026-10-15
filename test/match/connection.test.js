@@ -84,6 +84,31 @@ test('m.public is throttled to ≤ 10/s; m.private is only resent when it change
   h.m.dispose();
 });
 
+test('m.public pacing uses the published timestamp when snapshot construction takes time', () => {
+  const h = makeMatch({ mode: 'solo', seed: 62 }).start();
+  try {
+    h.sched.advance(500);
+    const view = h.m.publicView.bind(h.m);
+    let stall = 12;
+    h.m.publicView = () => {
+      // Model a scheduler pause after admission but before the view samples its timestamp.
+      h.sched.t += stall;
+      stall = 0;
+      return view();
+    };
+    h.m.flush(true);
+    const first = h.lastBc('m.public'), count = h.bc.filter(m => m.t === 'm.public').length;
+    h.ps('p_0').name = 'Changed';
+    h.m.markPublic();
+    h.sched.advance(88);
+    h.m.flush();
+    assert.equal(h.bc.filter(m => m.t === 'm.public').length, count, '88 ms since the published frame is still throttled');
+    h.sched.advance(12);
+    assert.equal(h.bc.filter(m => m.t === 'm.public').length, count + 1);
+    assert.equal(h.lastBc('m.public').serverNow - first.serverNow, 100);
+  } finally { h.m.dispose(); }
+});
+
 test('disconnect: the seat keeps playing; draft turns / prep auto-resolve at deadlines; reconnect resends everything', () => {
   const h = makeMatch({ mode: 'coop', humans: 2, seed: 63, fake: true, script: () => ({ duration: 4 }) }).start();
   const m = h.m;

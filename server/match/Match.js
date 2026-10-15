@@ -817,7 +817,9 @@ export class Match {
     const json = JSON.stringify(rest);
     if (!force && json === this._lastPubJson) return;
     this._lastPubJson = json;
-    this._lastPubAt = now;
+    // Snapshot creation can be delayed after the admission clock is sampled.
+    // Pace the next frame from the timestamp actually published to clients.
+    this._lastPubAt = serverNow;
     this.broadcast(view);
   }
 
