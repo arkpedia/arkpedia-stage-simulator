@@ -38,6 +38,65 @@ test('literal loop speed remains local to the selected clip and actor and resets
   a.destroy();other.destroy();
 });
 
+test('a changing native clock retimes only the remaining one-shot clip without replaying its beginning', () => {
+  const entry = { anims: { idle: 'Idle' }, animations: { Idle: 1, Cast: 1 } };
+  const a = new BattleActor({ animations: [{ name: 'Idle' }, { name: 'Cast' }] }, entry);
+  const visual = { clip: 'Cast', loop: false, speed: 1, playId: 'cast:1' };
+  a.setRegularVisual(visual); a.update(.25);
+  const track = a.spine.state.tracks[0]; track.trackTime = .25;
+  a.setRegularVisual({ ...visual, speed: .5 });
+  assert.equal(a.spine.state.tracks[0], track); assert.equal(track.trackTime, .25);
+  assert.equal(track.timeScale, .5); nearDuration(a.changeUntil, 1.75);
+  a.update(.25); track.trackTime = .375;
+  a.setRegularVisual({ ...visual, speed: 2 });
+  assert.equal(a.spine.state.tracks[0], track); assert.equal(track.trackTime, .375);
+  assert.equal(track.timeScale, 2); nearDuration(a.changeUntil, .8125);
+  a.update(.3124); assert.equal(a.current, 'Cast');
+  a.update(.0002); assert.equal(a.current, 'Idle');
+  a.setRegularVisual({ ...visual, speed: .5 }); assert.equal(a.current, 'Idle');
+  a.setRegularVisual({ ...visual, speed: .5, playId: 'cast:2' });
+  assert.equal(a.current, 'Cast'); assert.notEqual(a.spine.state.tracks[0], track);
+  nearDuration(a.changeUntil, a.clock + 2); a.destroy();
+});
+
+test('loop rate changes preserve phase and keep a frozen source animation frozen', () => {
+  const entry = { anims: { idle: 'Idle' }, animations: { Idle: 1, Loop: 1 } };
+  const a = new BattleActor({ animations: [{ name: 'Idle' }, { name: 'Loop' }] }, entry);
+  a.setRegularVisual({ clip: 'Loop', loop: true, speed: .8 });
+  const track = a.spine.state.tracks[0]; track.trackTime = 1.3;
+  a.setRegularVisual({ clip: 'Loop', loop: true, speed: .4 });
+  assert.equal(a.spine.state.tracks[0], track); assert.equal(track.trackTime, 1.3); assert.equal(track.timeScale, .4);
+  a.setBase('stun'); assert.equal(a.frozen, true);
+  a.setRegularVisual({ clip: 'Loop', loop: true, speed: .7 });
+  assert.equal(a.spine.state.tracks[0], track); assert.equal(track.timeScale, .4); assert.equal(a.frozen, true);
+  a.setBase('idle'); assert.equal(a.frozen, false); assert.equal(a.spine.state.tracks[0].timeScale, .7); a.destroy();
+});
+
+test('retiming an idle source loop leaves an intervening attack and its deadline unchanged', () => {
+  const entry = { anims: { idle: 'Idle', attack: { loop: 'Attack' } },
+    animations: { Idle: 1, Loop: 1, Attack: 1 }, hits: { Attack: [.3] } };
+  const a = new BattleActor({ animations: Object.keys(entry.animations).map(name => ({ name })) }, entry);
+  a.setRegularVisual({ clip: 'Loop', loop: true, speed: 1 });
+  a.attack(1, false, { animation: 'Attack', windup: .3 });
+  const track = a.spine.state.tracks[0], deadline = a.windUntil, scale = track.timeScale;
+  a.setRegularVisual({ clip: 'Loop', loop: true, speed: .2 });
+  assert.equal(a.spine.state.tracks[0], track); assert.equal(track.timeScale, scale); assert.equal(a.windUntil, deadline);
+  a.update(1.2); assert.equal(a.current, 'Loop'); assert.equal(a.spine.state.tracks[0].timeScale, .2); a.destroy();
+});
+
+test('a combat-owned strike keeps its explicit rate even when the resting form uses the same clip', () => {
+  const entry = { anims: { idle: 'Idle', attack: { loop: 'Attack' } },
+    animations: { Idle: 1, Attack: 1 }, hits: { Attack: [.3] } };
+  const a = new BattleActor({ animations: Object.keys(entry.animations).map(name => ({ name })) }, entry);
+  a.setRegularVisual({ clip: 'Attack', loop: true, speed: 1 });
+  a.attack(1, false, { animation: 'Attack', windup: .3 });
+  const track = a.spine.state.tracks[0], deadline = a.windUntil, scale = track.timeScale;
+  a.setRegularVisual({ clip: 'Attack', loop: true, speed: .2 });
+  assert.equal(a.spine.state.tracks[0], track); assert.equal(track.timeScale, scale); assert.equal(a.windUntil, deadline);
+  a.update(1.2); assert.equal(a.current, 'Attack'); assert.equal(a.mode, 'base');
+  assert.equal(a.spine.state.tracks[0].timeScale, .2); a.destroy();
+});
+
 test('opted-in repeated ability clips restart once for a new identity and stay stable between frames', () => {
   const entry = { anims: { idle: 'Idle', attack: { loop: 'Attack' } },
     animations: { Idle: 1, Attack: 1.2 }, hits: { Attack: [0] } };

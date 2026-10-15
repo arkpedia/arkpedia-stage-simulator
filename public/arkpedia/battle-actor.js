@@ -44,8 +44,21 @@ export class BattleActor extends SpineActor {
     // An opted-in source ability may repeat the same literal clip. Its stable
     // per-ability identity restarts that clip once, never on every render frame.
     const playId = typeof visual?.playId === 'string' ? visual.playId : '';
-    const key = visual ? `${visual.clip}|${!!visual.loop}|${visual.idle || ''}|${visual.attack || ''}|${visual.die || ''}|${speed}|${playId}` : null;
-    if (key === this.regularVisualKey) return;
+    const key = visual ? `${visual.clip}|${!!visual.loop}|${visual.idle || ''}|${visual.attack || ''}|${visual.die || ''}|${playId}` : null;
+    if (key === this.regularVisualKey) {
+      const previousSpeed = this.regularVisualSpeed ?? 1;
+      this.regularVisualSpeed = speed;
+      // A changing source clock changes the current track's rate, not its
+      // identity. Preserve phase, unrelated attacks, frozen poses and deaths.
+      if (speed !== previousSpeed && visual && this.current === visual.clip
+        && !this.dead && !this.frozen && (this.mode === 'change' || visual.loop && this.mode === 'base')) {
+        const track = this.spine.state.getCurrent?.(0) ?? this.spine.state.tracks?.[0];
+        if (track) track.timeScale = speed;
+        if (!visual.loop && this.mode === 'change')
+          this.changeUntil = this.clock + Math.max(0, this.changeUntil - this.clock) * previousSpeed / speed;
+      }
+      return;
+    }
     this.regularVisualKey = key;
     this.regularVisualClip = visual?.clip ?? null;
     this.regularVisualSpeed = speed;
