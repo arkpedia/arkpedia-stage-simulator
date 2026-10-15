@@ -4104,6 +4104,14 @@ The Chromium shader review now accepts the complete cage root strictly, compiles
 
 This closes the cage's component-dispatch blockers. Asset publication, the regular-stage camera/lifetime bridge, lure artwork and complete public skill review still remain; it does not make Tragodia selectable or establish native pixel/frame/Animator parity. Public MVP, coverage, source artifacts and asset pins are unchanged at **374/431 forms and 815 skills**. Arkpedia PR229 remains outside dev.
 
+### Native Windows atomic-replacement checks (2026-10-15)
+
+A continuously reopening reader can starve Windows file replacement. The atomic writer retains the old target and retries only Windows `EPERM`/`EACCES`/`EBUSY`, with thirty attempts, a 250 ms delay cap and 6.31 seconds of total scheduled wait. Other platforms and permanent error codes still fail immediately; exhausted retries leave the existing target intact. It never deletes the destination before replacement.
+
+The concurrent-read consistency check yields briefly between complete reads. A separate Windows test holds a real .NET file handle without delete sharing until the parent releases it, beyond the former 1.27-second retry budget. It checks that the old JSON remains visible during the hold, replacement succeeds after release and no temporary files remain. This tests actual OS sharing behavior in addition to mocked retry/error paths.
+
+Manual CI dispatch accepts `scope=atomic-json` for this targeted investigation. Its run and job names explicitly say Atomic JSON; it skips source-art preparation and the unrelated server smoke test. Default, push and PR runs still execute the full unit/integration suite and smoke test. A targeted green run is not a full-suite approval.
+
 ### Tragodia immutable asset delivery (2026-10-15)
 
 The lure now has an independently verified extraction and SD delivery. `extract-tragodia-models.py` follows the frozen Global root/controller/animator/Single-skeleton/atlas/material/texture chain. It preserves the 116×116 native premultiplied RGBA page, clamping compressed RGB bleed to alpha; only atlas page dimensions/PMA headers are normalized. Both logical facing entries explicitly alias the one original skeleton. Start, Loop and End retain their literal clips and End event. The controller-driven End is not assigned as a generic Die animation. The pinned default avatar and all native pointers are recorded in `data/arkpedia-tragodia-device-art.json` and the SD source review.

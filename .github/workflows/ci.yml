@@ -1,12 +1,19 @@
 name: CI
+run-name: "${{ inputs.scope == 'atomic-json' && 'Atomic JSON verification' || 'Full simulator verification' }} (${{ github.ref_name }})"
 
 on:
   push:
   pull_request:
   workflow_dispatch:
+    inputs:
+      scope:
+        description: Full suite, or targeted verification of native atomic replacement locks
+        type: choice
+        options: [full, atomic-json]
+        default: full
 
 concurrency:
-  group: ci-${{ github.ref }}
+  group: ci-${{ github.ref }}-${{ inputs.scope || 'full' }}
   cancel-in-progress: true
 
 permissions:
@@ -14,7 +21,7 @@ permissions:
 
 jobs:
   test:
-    name: test (${{ matrix.os }}, node ${{ matrix.node }})
+    name: ${{ inputs.scope == 'atomic-json' && 'atomic JSON' || 'test' }} (${{ matrix.os }}, node ${{ matrix.node }})
     runs-on: ${{ matrix.os }}
     timeout-minutes: 45
     strategy:
@@ -45,12 +52,19 @@ jobs:
         run: node tools/setup.mjs --check --no-local
 
       - name: Fetch and verify pinned original skeletons for source-identity tests
+        if: ${{ inputs.scope != 'atomic-json' }}
         run: node tools/arkpedia/test-assets.mjs
 
       - name: Unit & integration tests
+        if: ${{ inputs.scope != 'atomic-json' }}
         run: node --test
 
+      - name: Atomic replacement tests including real Windows sharing locks
+        if: ${{ inputs.scope == 'atomic-json' }}
+        run: node --test test/arkpedia-write-json.test.js
+
       - name: Server smoke test (boot, /healthz, index.html, doctor)
+        if: ${{ inputs.scope != 'atomic-json' }}
         shell: bash
         run: |
           node server/index.js > server.log 2>&1 &

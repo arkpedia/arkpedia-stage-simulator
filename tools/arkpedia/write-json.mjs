@@ -11,8 +11,8 @@ export async function renameWithRetry(source,target,{renameFile=rename,wait=paus
   for(let attempt=0;;attempt++) {
     try{return await renameFile(source,target);}
     catch(error){
-      if(platform!=='win32'||!['EPERM','EACCES','EBUSY'].includes(error.code)||attempt>=7)throw error;
-      await wait(10*2**attempt);
+      if(platform!=='win32'||!['EPERM','EACCES','EBUSY'].includes(error.code)||attempt>=29)throw error;
+      await wait(Math.min(10*2**attempt,250));
     }
   }
 }
