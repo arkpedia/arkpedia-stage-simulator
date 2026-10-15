@@ -1,0 +1,300 @@
+{
+  "schemaVersion": 1,
+  "operatorId": "char_4207_branch",
+  "enabledOperators": [
+    "char_4207_branch"
+  ],
+  "frameParity": false,
+  "moduleSupport": false,
+  "nativePixelParity": false,
+  "nativeParticleSupport": false,
+  "sourceFoundationSha256": "9166668d00123dc82ad7a2116141ef55a3d3cc9328217d832ca40104508d1705",
+  "ownerArtworkSha256": "67b1f7668d0f0620cf14d61cb56b20e995a52ac4d6cbfde93fd8e91f35403490",
+  "mechanicsPolicy": "source-cn-upstream-unyield-activation-pulse-and-parented-resistance-v1",
+  "scope": "Selected original CN Vetochki ordinary attacks, all twenty S1/S2 ranks and skill-end healing through reviewed Stronghold reuse and the regular-stage public squad/build path.",
+  "verification": {
+    "source": "Five original bundles independently verified; seven outputs reproduced and 29 altered source claims rejected on Node 22 and 24.",
+    "artwork": "Original files/pixels/PMA and explicit native End mixes verified; 32 altered claims rejected on both Node versions; 15 clips per viewport and 16 inspected captures.",
+    "runtime": "44 focused source/controller cases and thirty public-path cases. The final 202-case Vetochki/Record Keeper/defender/buff/damage/upstream-adapter set passes on Node 22 and 24. Both S1/S2 complete original 0-1 waves with Melantha: eleven kills, no leaks, full life, seven observed Vetochki hits, one activation and one self-heal.",
+    "browser": {
+      "status": "passed",
+      "script": "tools/arkpedia/review-branch-public.mjs",
+      "scriptSha256": "461506377ebfb1f7b9ba11c765c9b7bda3d4cc480e3ebe5514a1394e740c100a",
+      "driver": "tools/arkpedia/public-review-driver.mjs",
+      "driverSha256": "1ef20a71f4982799d1368e61d0b2e2eac9eb36efe1aaad45294150566246359f",
+      "cases": 8,
+      "captures": 48,
+      "viewports": [
+        "1280x800 desktop mouse",
+        "844x390 emulated landscape phone touch"
+      ],
+      "originalWaves": false,
+      "fixture": "Original 0-1 terrain, empty waves, 99 DP and one pinned high-HP attacker with source-relative ATK and a short interval; original waves/DP/terrain are tested separately.",
+      "checks": [
+        "Public squad/skill selection and separate drag/drop/direction swipe",
+        "Original Front/Back attack restarts, literal S2 Begin/Loop/End and owned exit mix",
+        "Natural defensive S1 SP and time-based S2 SP; public manual activation and HP/SP gauges",
+        "Reused S1 DEF/resistance; delayed S2 Tremble and ATK/DEF; natural skill-end self-heal",
+        "Early retreat cancels owner hooks without prematurely clearing applied Tremble; debuff expiry and no stale heal"
+      ],
+      "browserErrors": 0,
+      "failedResources": 0,
+      "visualReview": "Desktop S2 Back active, phone S1 Front Begin and phone S2 Back End inspected. First run completed all cases but failed its clean-resource gate on a transient default Nightingale icon request; the complete rerun passed with no errors. Physical-device and game-frame/pixel parity remain unverified."
+    }
+  },
+  "originalArtwork": {
+    "operator/char_4207_branch/default/front": {
+      "kind": "operator",
+      "id": "char_4207_branch",
+      "variant": "default",
+      "facing": "front",
+      "spineVersion": "3.8.99",
+      "source": {
+        "key": "operators",
+        "repository": "fexli/ArknightsResource",
+        "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+        "directory": "spine/char_4207_branch/char_4207_branch/Front"
+      },
+      "skeleton": {
+        "path": "models/operator/char_4207_branch/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4207_branch.skel",
+        "bytes": 214086,
+        "sha256": "198746e29212f86e3c5d50586e47d02d3ad321f12d85d211b0c5e1a957bf8e4a"
+      },
+      "atlas": {
+        "path": "models/operator/char_4207_branch/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4207_branch.atlas",
+        "bytes": 13743,
+        "sha256": "4afe5da6bc015345d9d22984b0fe2624501978f0ac21c5e907b055daf106154e"
+      },
+      "textures": [
+        {
+          "path": "models/operator/char_4207_branch/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4207_branch.png",
+          "bytes": 210680,
+          "sha256": "bc15860afe24c88c5f5e820f0146c565987b1c6f8f8c01105e75c186ba88f092"
+        }
+      ],
+      "premultipliedAlpha": true,
+      "animations": {
+        "Attack": 1.533,
+        "Default": 0,
+        "Die": 1,
+        "Idle": 4,
+        "Skill_2_Begin": 1,
+        "Skill_2_End": 0.1,
+        "Skill_2_Idle": 4,
+        "Skill_2_Loop": 1.533,
+        "Start": 1
+      },
+      "hits": {
+        "Attack": [
+          0.733
+        ],
+        "Skill_2_Begin": [
+          0.6
+        ],
+        "Skill_2_Loop": [
+          0.8
+        ]
+      },
+      "bounds": {
+        "x": -261.627,
+        "y": -1.492,
+        "width": 1155.477,
+        "height": 595.997
+      },
+      "animationRoles": {
+        "idle": "Idle",
+        "deploy": "Start",
+        "attack": {
+          "begin": null,
+          "loop": "Attack",
+          "end": null
+        },
+        "attackDown": null,
+        "skill": {
+          "begin": null,
+          "loop": "Attack",
+          "end": null,
+          "idle": null,
+          "index": 0,
+          "via": "attack"
+        },
+        "skills": {
+          "0": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null,
+            "idle": null,
+            "index": 0,
+            "via": "attack"
+          },
+          "1": {
+            "begin": "Skill_2_Begin",
+            "loop": "Skill_2_Loop",
+            "end": "Skill_2_End",
+            "idle": "Skill_2_Idle",
+            "index": 1,
+            "via": "skill"
+          }
+        },
+        "die": "Die",
+        "stun": null,
+        "move": null
+      }
+    },
+    "operator/char_4207_branch/default/back": {
+      "kind": "operator",
+      "id": "char_4207_branch",
+      "variant": "default",
+      "facing": "back",
+      "spineVersion": "3.8.99",
+      "source": {
+        "key": "operators",
+        "repository": "fexli/ArknightsResource",
+        "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+        "directory": "spine/char_4207_branch/char_4207_branch/Back"
+      },
+      "skeleton": {
+        "path": "models/operator/char_4207_branch/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4207_branch.skel",
+        "bytes": 113880,
+        "sha256": "cbea9ea423480108af87c04bc402a84e13dc9dd3980e65837a46871f4f652bba"
+      },
+      "atlas": {
+        "path": "models/operator/char_4207_branch/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4207_branch.atlas",
+        "bytes": 6883,
+        "sha256": "ff7f8a04a844e08aef5e8b07487bd248dbe6a4c4375a286f3f45491703ebb46e"
+      },
+      "textures": [
+        {
+          "path": "models/operator/char_4207_branch/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4207_branch.png",
+          "bytes": 160473,
+          "sha256": "59092047130bc90bba5b19c133586e461501adcba2dfac4053e41a63304888c0"
+        }
+      ],
+      "premultipliedAlpha": true,
+      "animations": {
+        "Attack": 1.533,
+        "Default": 0,
+        "Idle": 4,
+        "Skill_2_Begin": 1,
+        "Skill_2_End": 0.1,
+        "Skill_2_Idle": 4,
+        "Skill_2_Loop": 1.533,
+        "Start": 1
+      },
+      "hits": {
+        "Attack": [
+          0.733
+        ],
+        "Skill_2_Begin": [
+          0.6
+        ],
+        "Skill_2_Loop": [
+          0.8
+        ]
+      },
+      "bounds": {
+        "x": -403.627,
+        "y": -1.55,
+        "width": 1297.477,
+        "height": 596.055
+      },
+      "animationRoles": {
+        "idle": "Idle",
+        "deploy": "Start",
+        "attack": {
+          "begin": null,
+          "loop": "Attack",
+          "end": null
+        },
+        "attackDown": null,
+        "skill": {
+          "begin": null,
+          "loop": "Attack",
+          "end": null,
+          "idle": null,
+          "index": 0,
+          "via": "attack"
+        },
+        "skills": {
+          "0": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null,
+            "idle": null,
+            "index": 0,
+            "via": "attack"
+          },
+          "1": {
+            "begin": "Skill_2_Begin",
+            "loop": "Skill_2_Loop",
+            "end": "Skill_2_End",
+            "idle": "Skill_2_Idle",
+            "index": 1,
+            "via": "skill"
+          }
+        },
+        "die": null,
+        "stun": null,
+        "move": null
+      }
+    }
+  },
+  "interfaceAssets": [
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "five-star-icons/Vetochki - Base.webp",
+      "bytes": 11284,
+      "gitBlob": "bcef3f957bbee690cef3799ceaaa514193faa735",
+      "sha256": "9f07ba7feb2b72a5ca15ef14f9424fc8061425d51ecc8a6767fa84a767b27c6d"
+    },
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "skill-icons/Vetochki - Desperate Resistance.webp",
+      "bytes": 6060,
+      "gitBlob": "18d559ff1fd996f9d3363db67292de0764e1dbcb",
+      "sha256": "f7b81579452456be69591254f265c4dcae2be9f0c294276a2b4281088c462b50"
+    },
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "skill-icons/Vetochki - Set on Survival.webp",
+      "bytes": 6906,
+      "gitBlob": "176cceb53a3bea669af07b653d22b826277f02fb",
+      "sha256": "a9ac90d8f53ed07cd6f1704fd01c03bdaa625afaef4e3e450c23c64a4fa08c65"
+    },
+    {
+      "repository": "arkpedia/arkpedia-skin-assets",
+      "commit": "6fb723692d89c4a08d9a7aa4015e19c0753dd270",
+      "path": "five-star-skins/Vetochki - Base.webp",
+      "bytes": 160366,
+      "gitBlob": "8483dc007595e6c1529dba228cdd26f174367f04",
+      "sha256": "706b8da0aaf75b3ddf985189988f6b40d6cdc6561e658059ed2b626f8405bfc6"
+    }
+  ],
+  "sdCommit": "bdd1360683e81cfb09f567b6d867ab93715ac183",
+  "reuse": {
+    "repository": "sganggs/Stronghold-Protocol",
+    "inheritedCommit": "19a89085a4c9a773a7b88437d7cd79c3e7131cfd",
+    "comparedCommit": "488db49f11daf862b67ce26fa4cf89aa6cba2466",
+    "factory": "server/sim/content/kits/tier2.js:chess_char_2_17_a",
+    "retained": [
+      "S1/S2 stat modifier specs",
+      "S1 resistance calculation/callback with owned derived lifetime",
+      "skillEnd self-heal calculation/listener through restricted native flag adapter",
+      "shared target selection and damage/status/healing pipelines"
+    ]
+  },
+  "limits": [
+    "Native enum aliases, root/body geometry, cooldown/FSM dispatch, marker consumption and zero-damage pulse missability remain explicit mappings or unverified boundaries.",
+    "Full Start represents birth; compiled Born timing, modules, native particles/shaders/audio and original game-frame/pixel parity remain unverified."
+  ],
+  "snapshotPreservation": {
+    "baseline": "42053e26f29936a41b24b40e1c730bd60952f3d3",
+    "olderOperators": 382,
+    "olderModels": 875,
+    "olderTokens": 55,
+    "normalization": "Only immutable SD delivery revisions/URLs normalized; prior operators, models, tokens, source pins, default squad, stage art, geometry, pathing and enemies unchanged."
+  }
+}
