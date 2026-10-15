@@ -1,5 +1,5 @@
 name: CI
-run-name: "${{ inputs.scope == 'atomic-json' && 'Atomic JSON verification' || 'Full simulator verification' }} (${{ github.ref_name }})"
+run-name: "${{ inputs.scope == 'atomic-json' && 'Atomic JSON verification' || inputs.scope == 'enemy-clocks' && 'Enemy clock source verification' || 'Full simulator verification' }} (${{ github.ref_name }})"
 
 on:
   push:
@@ -7,9 +7,9 @@ on:
   workflow_dispatch:
     inputs:
       scope:
-        description: Full suite, or targeted verification of native atomic replacement locks
+        description: Full suite, native atomic replacement locks, or original enemy timing sources
         type: choice
-        options: [full, atomic-json]
+        options: [full, atomic-json, enemy-clocks]
         default: full
 
 concurrency:
@@ -21,6 +21,7 @@ permissions:
 
 jobs:
   test:
+    if: ${{ inputs.scope != 'enemy-clocks' }}
     name: ${{ inputs.scope == 'atomic-json' && 'atomic JSON' || 'test' }} (${{ matrix.os }}, node ${{ matrix.node }})
     runs-on: ${{ matrix.os }}
     # Full Windows/Node 22 runs continued producing passing results when the
@@ -86,3 +87,35 @@ jobs:
           curl -fsS -o /dev/null http://127.0.0.1:3000/vendor/pixi.min.js
           node tools/doctor.mjs || true
           kill $pid || true
+
+  enemy-clocks:
+    if: ${{ inputs.scope == 'enemy-clocks' }}
+    name: original enemy clocks (node ${{ matrix.node }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [22, 24]
+    env:
+      ARKPEDIA_SOURCE_NODE: node
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: ${{ matrix.node }}
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+          cache: pip
+          cache-dependency-path: tools/arkpedia/stages/requirements.txt
+      - name: Install the pinned native source reader
+        run: python -m pip install -r tools/arkpedia/stages/requirements.txt
+      - name: Fetch and verify the frozen original manifest and all enemy prefab bundles
+        run: node tools/arkpedia/cn-enemy-native-source.mjs --fetch
+      - name: Check source membership, precision and per-prefab flag distinctions
+        run: node --test test/arkpedia-enemy-clock-source.test.js
+      - name: Independently reproduce native hierarchy and timing records; reject altered claims and corrupt inputs
+        run: python tools/arkpedia/audit-enemy-clocks.py
+      - name: Keep reviewed source receipts byte-identical
+        run: git diff --exit-code -- data/arkpedia-cn-enemy-native-source.json data/arkpedia-enemy-clock-source.json
