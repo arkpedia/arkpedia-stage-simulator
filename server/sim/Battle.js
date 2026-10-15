@@ -890,7 +890,7 @@ export class Battle {
    * operator that left the field comes back on its body tile, restTile). `keepSp` = { sp, charges }
    * restored right after the skill reset, before the `deploy` hook fires.
    */
-  _deploy(u, { initial = false, carry = null, tile = null, keepSp = null } = {}) {
+  _deploy(u, { initial = false, carry = null, tile = null, keepSp = null, moveLikeRespawn = false } = {}) {
     if ((u.alive && u.deployed) || u._removing) return false;
     const R0 = tile ? tile[0] : u.homeR, C0 = tile ? tile[1] : u.homeC;
     if (!this.grid.inRect(R0, C0)) {
@@ -916,6 +916,8 @@ export class Battle {
     u.deploySeq = ++this._deploySeq;
     u.aggroSeq = u.deploySeq;
     u.deployedAt = this.time;
+    u.moveLikeRespawn = !!moveLikeRespawn;
+    delete u.mem.regularBornUntil;
     u.atkCd = 0;
     u.lastAttackAt = -Infinity;
     u.elem.burn = u.elem.neural = u.elem.necrosis = u.elem.apoptosis = u.elem.erosion = 0;
@@ -940,7 +942,7 @@ export class Battle {
     }
     if (first) this._ev(['spawn', unitInfo(u)]);
     this._ev(['deploy', u.id]);
-    if (this._hooks.deploy) this.emit('deploy', { unit: u, initial });
+    if (this._hooks.deploy) this.emit('deploy', { unit: u, initial, ...(moveLikeRespawn ? { moveLikeRespawn: true } : {}) });
     // 联防: "部署完成后，将对应单位的…技力修改至与上一阶段结束时相同" — the carried SP is set again once the deployment is
     // done, so a deploy-time SP gift (独行, 黄沙罗盘 …) does not come on top of it; later redeploys keep those gifts
     if (cs && Number.isFinite(cs.sp) && u.alive && u.skill) u.skill.setSpTotal(cs.sp);
@@ -2078,6 +2080,8 @@ export class Battle {
     unit.deploySeq = ++this._deploySeq;
     unit.aggroSeq = unit.deploySeq;
     unit.deployedAt = this.time;
+    unit.moveLikeRespawn = true;
+    delete unit.mem.regularBornUntil;
     const sk = unit.skill;
     if (clearSp && sk && !sk.noSkill && sk.kind !== 'passive' && !(sk.active && sk.isTimed)) {
       sk.sp = 0;

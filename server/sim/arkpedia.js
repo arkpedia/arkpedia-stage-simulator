@@ -4,6 +4,7 @@ import { Battle } from "./Battle.js";
 import { DataSource } from "./simdata.js";
 import { genericKit } from "./content/generic.js";
 import { regularDpMinimum, canSpendDp, regularDpRecoveryForStep } from './content/arkpedia-dp-budget.js';
+import { regularModelKey } from '../../shared/arkpedia/facing.js';
 import { customizeMedicKit, installMedic, installMedicSquad } from './content/arkpedia-medics.js';
 import { customizeCasterKit, installCaster } from './content/arkpedia-casters.js';
 import { customizeGuardKit, installGuard } from './content/arkpedia-guards.js';
@@ -327,6 +328,7 @@ export class StandardBattle extends Battle {
       ],
     });
     this.life = config.max_life;
+    this.regularModels = data.sd?.models ?? {};
     this.regularSkillUses = new Map();
     this.addDp('arkpedia', startingVanguardDp);
     installMedicSquad({ battle: this, records: chess });
@@ -360,6 +362,17 @@ export class StandardBattle extends Battle {
   }
   dpMinimumFor(ownerId = 'arkpedia') { return regularDpMinimum(this, ownerId); }
   dpRecoveryForStep(ownerId, dt) { return regularDpRecoveryForStep(this, ownerId, dt); }
+  isUnitInBornState(unit) {
+    if (!unit?.alive || !unit.deployed) return false;
+    // Selected native controllers may advertise a more specific FSM endpoint.
+    // Otherwise follow the same reviewed deployment clip shown by the viewer.
+    // This source-backed visual observer does not claim compiled Unity BORN parity.
+    const explicit = unit.mem.regularBornUntil;
+    if (Number.isFinite(explicit)) return this.time + 1e-9 < explicit;
+    const model = this.regularModels?.[regularModelKey(unit)], clip = model?.animationRoles?.deploy;
+    const duration = model?.animations?.[clip];
+    return Number.isFinite(duration) && duration > 0 && this.time + 1e-9 < unit.deployedAt + duration;
+  }
   dpRecoveryRateFor(ownerId = 'arkpedia') {
     const scale = this.allyUnits.filter(u => u.ownerId === ownerId && u.alive && u.deployed && !u.hidden)
       .reduce((n, u) => n * (u.mem.regularDpRegenScale ?? 1), 1);
@@ -897,7 +910,7 @@ export class StandardBattle extends Battle {
     }
     entry.lastCost = fromSkill ? 0 : this.cost(id);
     ps.dp -= entry.lastCost;
-    this._deploy(unit, { tile: [row, col] });
+    this._deploy(unit, { tile: [row, col], moveLikeRespawn: fromSkill });
     if (mechanic === "starting-sp")
       unit.skill.gainSp(def.talents.reduce((sum, talent) => sum + (talent.bb.sp ?? 0), 0), "talent");
     entry.deployments++;

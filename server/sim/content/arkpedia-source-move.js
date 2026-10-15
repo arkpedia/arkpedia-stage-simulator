@@ -39,6 +39,8 @@ export function sourceMoveRespawn(b, u, row, col, policy) {
   u.deploySeq = ++b._deploySeq;
   u.aggroSeq = u.deploySeq;
   u.deployedAt = b.time;
+  u.moveLikeRespawn = true;
+  delete u.mem.regularBornUntil;
   u.attackControlEpoch = (u.attackControlEpoch ?? 0) + 1;
   u.atkCd = 0; u.lastAttackAt = -Infinity;
   u.skill.pending = false;
