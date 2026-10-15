@@ -3,6 +3,8 @@
 import { Battle } from "./Battle.js";
 import { DataSource } from "./simdata.js";
 import { genericKit } from "./content/generic.js";
+import { regularDpMinimum, canSpendDp, regularDpRecoveryForStep } from './content/arkpedia-dp-budget.js';
+import { regularModelKey } from '../../shared/arkpedia/facing.js';
 import { customizeMedicKit, installMedic, installMedicSquad } from './content/arkpedia-medics.js';
 import { customizeCasterKit, installCaster } from './content/arkpedia-casters.js';
 import { customizeGuardKit, installGuard } from './content/arkpedia-guards.js';
@@ -105,6 +107,9 @@ import { customizePublicMon3trKit, installPublicMon3tr } from './content/arkpedi
 import { customizePublicAkkordKit, installPublicAkkord } from './content/arkpedia-akkord-public.js';
 import { customizePublicWintimKit, installPublicWintim } from './content/arkpedia-wintim-public.js';
 import { customizePublicJcintaKit, installPublicJcinta } from './content/arkpedia-jcinta-public.js';
+import { assertClosurEnemyCompatibility } from '../../shared/arkpedia/closur-enemy-compatibility.js';
+import { customizePublicClosurKit, installPublicClosur } from './content/arkpedia-closur-public.js';
+import { installClosurRoster, CLOSUR_ROSTER_CONTRACT } from './content/arkpedia-closur-roster.js';
 import { customizePublicLieselKit, installPublicLiesel } from './content/arkpedia-liesel-public.js';
 import { customizePublicNecrassKit, installPublicNecrass } from './content/arkpedia-necrass-public.js';
 import { installPublicMuelsyseSquad, customizePublicMuelsyseKit, installPublicMuelsyse } from './content/arkpedia-muelsyse-public.js';
@@ -285,6 +290,8 @@ export class StandardBattle extends Battle {
       ...squad.operators,
       ...(squad.support ? [squad.support] : []),
     ];
+    if (builds.some(b => b.id === 'char_4228_closur' && b.skillId === 'skchr_closur_3'))
+      assertClosurEnemyCompatibility(data);
     const chess = Object.fromEntries(
       builds.map((b) => [b.id, recordFor(b, data)]),
     );
@@ -326,6 +333,7 @@ export class StandardBattle extends Battle {
       ],
     });
     this.life = config.max_life;
+    this.regularModels = data.sd?.models ?? {};
     this.regularSkillUses = new Map();
     this.addDp('arkpedia', startingVanguardDp);
     installMedicSquad({ battle: this, records: chess });
@@ -346,6 +354,8 @@ export class StandardBattle extends Battle {
         { build: b, unit: null, deployments: 0, readyAt: 0, lastCost: 0 },
       ]),
     );
+    const closurBuilds = builds.filter(build => build.id === 'char_4228_closur');
+    if (closurBuilds.length) installClosurRoster(this, closurBuilds, { contract: CLOSUR_ROSTER_CONTRACT });
     installShuRoster({ battle: this, records: chess });
     installMarcilSquad(this);
     installPublicMuelsyseSquad(this);
@@ -356,6 +366,19 @@ export class StandardBattle extends Battle {
   }
   get dp() {
     return this.getPlayer("arkpedia").dp;
+  }
+  dpMinimumFor(ownerId = 'arkpedia') { return regularDpMinimum(this, ownerId); }
+  dpRecoveryForStep(ownerId, dt) { return regularDpRecoveryForStep(this, ownerId, dt); }
+  isUnitInBornState(unit) {
+    if (!unit?.alive || !unit.deployed) return false;
+    // Selected native controllers may advertise a more specific FSM endpoint.
+    // Otherwise follow the same reviewed deployment clip shown by the viewer.
+    // This source-backed visual observer does not claim compiled Unity BORN parity.
+    const explicit = unit.mem.regularBornUntil;
+    if (Number.isFinite(explicit)) return this.time + 1e-9 < explicit;
+    const model = this.regularModels?.[regularModelKey(unit)], clip = model?.animationRoles?.deploy;
+    const duration = model?.animations?.[clip];
+    return Number.isFinite(duration) && duration > 0 && this.time + 1e-9 < unit.deployedAt + duration;
   }
   dpRecoveryRateFor(ownerId = 'arkpedia') {
     const scale = this.allyUnits.filter(u => u.ownerId === ownerId && u.alive && u.deployed && !u.hidden)
@@ -417,7 +440,7 @@ export class StandardBattle extends Battle {
     )
       return "Tile is occupied.";
     if (this.tileReservation(row, col)) return "Tile is reserved for an operator's return.";
-    if (!fromSkill && this.dp < this.cost(id)) return "Not enough DP.";
+    if (!fromSkill && !canSpendDp(this, 'arkpedia', this.cost(id))) return "Not enough DP.";
     return null;
   }
   deployOperator(id, row, col, dir) {
@@ -542,6 +565,7 @@ export class StandardBattle extends Battle {
     customizePublicWintimKit({ battle: this, id, unit, kit });
     customizePublicJcintaKit({ battle: this, id, unit, kit });
     customizePublicLieselKit({ battle: this, id, unit, kit });
+    customizePublicClosurKit({ battle: this, id, unit, kit });
     customizeNarantKit({ battle: this, id, def, unit, kit });
     customizeElaKit({ battle: this, id, def, unit, kit });
     customizeFuzeKit({ battle: this, id, def, unit, kit });
@@ -755,6 +779,7 @@ export class StandardBattle extends Battle {
     installPublicWintim({ unit, def });
     installPublicJcinta({ unit, def });
     installPublicLiesel({ unit, def });
+    installPublicClosur({ unit, def });
     installNarant({ battle: this, unit, def });
     installEla({ battle: this, unit, def });
     installFuze({ battle: this, unit, def });
@@ -892,9 +917,11 @@ export class StandardBattle extends Battle {
         enumerable: true, get: () => Math.max(1, unit.s.blockCnt),
       });
     }
-    entry.lastCost = fromSkill ? 0 : this.cost(id);
+    const costAttribute = this.cost(id);
+    entry.lastCost = fromSkill ? 0 : costAttribute;
     ps.dp -= entry.lastCost;
-    this._deploy(unit, { tile: [row, col] });
+    // A free card delivery is a real deployment, not MOVE_LIKE_RESPAWN.
+    this._deploy(unit, { tile: [row, col], costAttribute });
     if (mechanic === "starting-sp")
       unit.skill.gainSp(def.talents.reduce((sum, talent) => sum + (talent.bb.sp ?? 0), 0), "talent");
     entry.deployments++;

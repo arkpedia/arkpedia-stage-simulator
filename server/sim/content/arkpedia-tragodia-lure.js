@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import { canSpendDp } from './arkpedia-dp-budget.js';
 // Source S2 lure controller; public registration and review remain separate.
 import evidence from '../../../data/arkpedia-tragodia-prefabs.json' with { type: 'json' };
 import { TRAGODIA_ID as ID, tragodiaSourceComponent as component } from './arkpedia-tragodia-source.js';
@@ -108,7 +109,7 @@ export class TragodiaLureDeck {
     const tile = b.grid.tile(row, col);
     if (tile.height !== 'LOW' || !['MELEE', 'ALL'].includes(tile.build) || b.grid.isObstacle(row, col)) return 'Choose a low-ground deployment tile.';
     if (b.unitAt(row, col) || b.tileReservation(row, col) || b.downOn(row, col)) return 'Tile is occupied.';
-    if (b.dp < this.record.stats.cost) return 'Not enough DP.';
+    if (!canSpendDp(b, this.u.ownerId, this.record.stats.cost)) return 'Not enough DP.';
     return null;
   }
   visual(s, clip, loop = false) {

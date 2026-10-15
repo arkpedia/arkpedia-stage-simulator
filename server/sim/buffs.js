@@ -20,7 +20,7 @@ export const ADD_KEYS = Object.freeze([
 export const MUL_KEYS = Object.freeze([
   'atkMul', 'defMul', 'hpMul', 'resMul', 'moveMul', 'dmgDealtMul', 'dmgTakenMul', 'physTakenMul', 'artsTakenMul',
   'trueTakenMul', 'elemTakenMul', 'elementalTakenMul', 'healingDealtMul', 'healingTakenMul', 'spRecoveryMul', 'redeployMul',
-  'atkScaleMul', 'physDealtMul', 'artsDealtMul', 'blockCntMul', 'batMul', 'hpRegenMul',
+  'atkScaleMul', 'physDealtMul', 'artsDealtMul', 'blockCntMul', 'batMul', 'hpRegenMul', 'aspdMul', 'slowDownMul',
 ]);
 /**
  * Boolean flag keys (OR). `taunt` is also accepted as a numeric mod. `liftoff` = 起飞 of an ally (蒂比's skills): blocks
@@ -194,6 +194,7 @@ export function aggregateMods(buffs) {
   let shield = 0;
   let permRangeExtend = 0;
   let sluggishMoveMul = 1;
+  let nativeSlowDown = 0;
   // dodge sources are independent rolls: total = 1 − Π(1 − p)^stacks (one single source keeps its exact value)
   const dodge = { dodgePhys: null, dodgeArts: null };
   // Source-owned valued statuses can be removed independently. Only the
@@ -221,6 +222,10 @@ export function aggregateMods(buffs) {
   for (let i = 0; i < buffs.length; i++) {
     const b = buffs[i];
     const st = b.stacks;
+    const slow = b.data?.nativeSlowDown;
+    if (slow && Number.isFinite(slow.increment) && slow.increment > 0
+      && Number.isFinite(slow.maxStrength) && slow.maxStrength > 0 && slow.maxStrength < 1)
+      nativeSlowDown = Math.max(nativeSlowDown, Math.min(slow.maxStrength, slow.increment * st));
     const m = b.mods;
     if (m && (!strongest.has(b.status) || strongest.get(b.status) === b)) {
       for (const k in m) {
@@ -267,5 +272,8 @@ export function aggregateMods(buffs) {
     if (d) add[k] = (add[k] ?? 0) + (d.n === 1 ? d.p : 1 - d.miss);
   }
   if (sluggishMoveMul !== 1) mul.moveMul = (mul.moveMul ?? 1) * sluggishMoveMul;
+  if (nativeSlowDown > 0) {
+    for (const k of ['moveMul', 'aspdMul', 'slowDownMul']) mul[k] = (mul[k] ?? 1) * (1 - nativeSlowDown);
+  }
   return { add, mul, flags, shield, permRangeExtend };
 }

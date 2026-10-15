@@ -400,7 +400,8 @@
     "char_4051_akkord": "cn",
     "char_4208_wintim": "cn",
     "char_4237_jcinta": "cn",
-    "char_4031_liesel": "cn"
+    "char_4031_liesel": "cn",
+    "char_4228_closur": "cn"
   },
   "behaviors": {
     "source": {
@@ -431,7 +432,7 @@
   "nativeEffects": {
     "tragodia": {
       "repository": "arkpedia/arkpedia-sd-assets",
-      "commit": "6555112e4293b223da51742704709d027764bc5a",
+      "commit": "b977caef87feab47336f29b4c40bed2e423a8ce7",
       "manifest": {
         "path": "effects/native/tragodia/26-09-23-17-49-43_b9cc4a/e39769c56a91f5d483632808082a05a3dbe0b71d5a5c99b3ade9ebdee68fd0ff/manifest.json",
         "bytes": 44646,
@@ -441,7 +442,7 @@
   },
   "sd": {
     "repository": "arkpedia/arkpedia-sd-assets",
-    "commit": "6555112e4293b223da51742704709d027764bc5a",
+    "commit": "b977caef87feab47336f29b4c40bed2e423a8ce7",
     "models": {
       "operator/char_123_fang/default/front": {
         "kind": "operator",
@@ -74524,6 +74525,352 @@
           "height": 419.748
         }
       },
+      "operator/char_4228_closur/default/front": {
+        "kind": "operator",
+        "id": "char_4228_closur",
+        "variant": "default",
+        "facing": "front",
+        "spineVersion": "3.8.99",
+        "source": {
+          "key": "operators",
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "spine/char_4228_closur/char_4228_closur/Front"
+        },
+        "skeleton": {
+          "path": "models/operator/char_4228_closur/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4228_closur.skel",
+          "bytes": 1350718,
+          "sha256": "c36a703553029011f99d4a9bf8f4859dacad45b2fef29c9a4a7fd8436801214a"
+        },
+        "atlas": {
+          "path": "models/operator/char_4228_closur/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4228_closur.atlas",
+          "bytes": 11839,
+          "sha256": "bac512e4155fa63eb0918685e9faff9326a28c6b6ac13d388fe50bbefd56e184"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_4228_closur/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4228_closur.png",
+            "bytes": 154405,
+            "sha256": "f323235b80d9d6ff84ff6941a6d3e7fca30aee06df08d7529dab43d4612a1c66"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Attack_Begin": 0.2,
+          "Attack_Down_Begin": 0.2,
+          "Attack_Down_End": 0.267,
+          "Attack_Down_Loop": 1,
+          "Attack_End": 0.267,
+          "Attack_Loop": 1,
+          "Default": 0,
+          "Die": 1,
+          "Idle": 8,
+          "Skill_2_Begin": 0.333,
+          "Skill_2_End": 0.333,
+          "Skill_2_Idle": 8,
+          "Skill_2_Loop": 1,
+          "Skill_3_Begin": 0.5,
+          "Skill_3_End": 0.333,
+          "Skill_3_Idle": 8,
+          "Skill_3_Loop": 0.5,
+          "Skill_Down_2_Begin": 0.333,
+          "Skill_Down_2_End": 0.333,
+          "Skill_Down_2_Idle": 8,
+          "Skill_Down_2_Loop": 1,
+          "Skill_Down_3_Begin": 0.5,
+          "Skill_Down_3_End": 0.333,
+          "Skill_Down_3_Idle": 8,
+          "Skill_Down_3_Loop": 0.5,
+          "Start": 1
+        },
+        "hits": {
+          "Attack_Down_Loop": [
+            0.4
+          ],
+          "Attack_Loop": [
+            0.4
+          ],
+          "Skill_2_Loop": [
+            0.4
+          ],
+          "Skill_3_Loop": [
+            0.133
+          ],
+          "Skill_Down_2_Loop": [
+            0.4
+          ],
+          "Skill_Down_3_Loop": [
+            0.133
+          ]
+        },
+        "bounds": null,
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": "Attack_Begin",
+            "loop": "Attack_Loop",
+            "end": null
+          },
+          "attackDown": {
+            "begin": "Attack_Down_Begin",
+            "loop": "Attack_Down_Loop",
+            "end": null
+          },
+          "skill": null,
+          "die": "Die",
+          "stun": null,
+          "move": null
+        }
+      },
+      "operator/char_4228_closur/default/back": {
+        "kind": "operator",
+        "id": "char_4228_closur",
+        "variant": "default",
+        "facing": "back",
+        "spineVersion": "3.8.99",
+        "source": {
+          "key": "operators",
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "spine/char_4228_closur/char_4228_closur/Back"
+        },
+        "skeleton": {
+          "path": "models/operator/char_4228_closur/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4228_closur.skel",
+          "bytes": 603677,
+          "sha256": "e852e2b4ce5a90f0ce1e923e05bfa96d97bdb74824e929a2f450531db913de24"
+        },
+        "atlas": {
+          "path": "models/operator/char_4228_closur/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4228_closur.atlas",
+          "bytes": 6386,
+          "sha256": "fa9d26717d7b38fbfc4802c91f1dc69e6d293d09e37b7417e1145b2eb31972f7"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_4228_closur/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4228_closur.png",
+            "bytes": 123414,
+            "sha256": "401c44d62df25e72d4b923ace2171bdcdf316909dc1cf6c6e062fc7da6847627"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Attack_Begin": 0.2,
+          "Attack_End": 0.267,
+          "Attack_Loop": 1,
+          "Default": 0,
+          "Idle": 8,
+          "Skill_2_Begin": 0.333,
+          "Skill_2_End": 0.333,
+          "Skill_2_Idle": 8,
+          "Skill_2_Loop": 1,
+          "Skill_3_Begin": 0.5,
+          "Skill_3_End": 0.333,
+          "Skill_3_Idle": 8,
+          "Skill_3_Loop": 0.5,
+          "Start": 1
+        },
+        "hits": {
+          "Attack_Loop": [
+            0.4
+          ],
+          "Skill_2_Loop": [
+            0.4
+          ],
+          "Skill_3_Loop": [
+            0.133
+          ]
+        },
+        "bounds": null,
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": "Attack_Begin",
+            "loop": "Attack_Loop",
+            "end": null
+          },
+          "attackDown": null,
+          "skill": null,
+          "die": null,
+          "stun": null,
+          "move": null
+        }
+      },
+      "operator/token_10066_closur_ourbase/default/front": {
+        "kind": "operator",
+        "id": "token_10066_closur_ourbase",
+        "variant": "default",
+        "facing": "front",
+        "source": {
+          "key": "cn-client",
+          "kind": "assetbundle",
+          "bundle": {
+            "path": "pkgrps/btl_pfb_tokens_4.ab",
+            "bytes": 2568582,
+            "md5": "0fa7fd1e638ba6a269e09b6398ec5028",
+            "sha256": "af23c7f497862f38be2cdca0cd4079d44753bde8d61b97398e5a2777a54281e4",
+            "url": "https://ak.hycdn.cn/assetbundle/official/Android/assets/26-09-22-07-47-20_6c71fa/pkgrps_btl_pfb_tokens_4.dat",
+            "client": "cn",
+            "resourceVersion": "26-09-22-07-47-20_6c71fa",
+            "transforms": [
+              "Original embedded premultiplied RGBA textures decoded; RGB clamped to alpha to remove compression bleed",
+              "Atlas page dimensions normalized and pma: true recorded; native regions unchanged",
+              "Distinct original Front and Back skeletons retained; no missing attack, death or stun clip invented"
+            ]
+          },
+          "directory": "pkgrps/btl_pfb_tokens_4.ab",
+          "extractedSkeleton": "token_10066_closur_ourbase.skel",
+          "originalPathIds": {
+            "rootPathId": "-5788352084631041927",
+            "animatorPathId": "-4151407806632834951",
+            "controllerPathId": "9056934687418337401",
+            "faceSwitcherPathId": "6292302609185753209",
+            "skeletonAnimationPathId": "-8166834467469277063",
+            "skeletonDataAssetPathId": "-3137227980182877557",
+            "textAssetPathId": "-2434291153260369589",
+            "atlasAssetPathId": "-1890305436070276919",
+            "atlasTextAssetPathId": "-6792279715639184749",
+            "materialPathId": "3021645399074082078",
+            "rgbTexturePathId": "-6672615201505261140"
+          },
+          "transforms": [
+            "Original embedded premultiplied RGBA textures decoded; RGB clamped to alpha to remove compression bleed",
+            "Atlas page dimensions normalized and pma: true recorded; native regions unchanged",
+            "Distinct original Front and Back skeletons retained; no missing attack, death or stun clip invented"
+          ]
+        },
+        "spineVersion": "3.8.99",
+        "skeleton": {
+          "path": "models/operator/token_10066_closur_ourbase/default/front/af23c7f497862f38be2cdca0cd4079d44753bde8d61b97398e5a2777a54281e4/token_10066_closur_ourbase.skel",
+          "bytes": 20944,
+          "sha256": "1352451da8f1358be37b313d5e4376bd66a524967a5b324f36325bf76b25b329"
+        },
+        "atlas": {
+          "path": "models/operator/token_10066_closur_ourbase/default/front/af23c7f497862f38be2cdca0cd4079d44753bde8d61b97398e5a2777a54281e4/token_10066_closur_ourbase.atlas",
+          "bytes": 494,
+          "sha256": "ab77f005e1369b96f50dd468a0d268848ca329618e1ae2ab803ea5049789bd12"
+        },
+        "textures": [
+          {
+            "path": "models/operator/token_10066_closur_ourbase/default/front/af23c7f497862f38be2cdca0cd4079d44753bde8d61b97398e5a2777a54281e4/token_10066_closur_ourbase.png",
+            "bytes": 5795,
+            "sha256": "99fe6df17025d550ee6dfd6f1d0a77204f877fec77a18aa289d3920af1c47050"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Default": 0,
+          "Die": 1,
+          "Idle": 1.333,
+          "Start": 1
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": null,
+          "skill": null,
+          "die": "Die"
+        },
+        "hits": {},
+        "bounds": null,
+        "avatar": {
+          "path": "models/operator/token_10066_closur_ourbase/default/front/af23c7f497862f38be2cdca0cd4079d44753bde8d61b97398e5a2777a54281e4/avatar.png",
+          "bytes": 27670,
+          "sha256": "af675fb5b2ad829b4983fadd5e431126dabc7c8642a6c6e9b2ac84a799b33dbd",
+          "source": {
+            "repository": "fexli/ArknightsResource",
+            "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+            "directory": "avatar/ASSISTANT"
+          }
+        }
+      },
+      "operator/token_10066_closur_ourbase/default/back": {
+        "kind": "operator",
+        "id": "token_10066_closur_ourbase",
+        "variant": "default",
+        "facing": "back",
+        "source": {
+          "key": "cn-client",
+          "kind": "assetbundle",
+          "bundle": {
+            "path": "pkgrps/btl_pfb_tokens_4.ab",
+            "bytes": 2568582,
+            "md5": "0fa7fd1e638ba6a269e09b6398ec5028",
+            "sha256": "af23c7f497862f38be2cdca0cd4079d44753bde8d61b97398e5a2777a54281e4",
+            "url": "https://ak.hycdn.cn/assetbundle/official/Android/assets/26-09-22-07-47-20_6c71fa/pkgrps_btl_pfb_tokens_4.dat",
+            "client": "cn",
+            "resourceVersion": "26-09-22-07-47-20_6c71fa",
+            "transforms": [
+              "Original embedded premultiplied RGBA textures decoded; RGB clamped to alpha to remove compression bleed",
+              "Atlas page dimensions normalized and pma: true recorded; native regions unchanged",
+              "Distinct original Front and Back skeletons retained; no missing attack, death or stun clip invented"
+            ]
+          },
+          "directory": "pkgrps/btl_pfb_tokens_4.ab",
+          "extractedSkeleton": "token_10066_closur_ourbase.skel",
+          "originalPathIds": {
+            "rootPathId": "-5788352084631041927",
+            "animatorPathId": "-4151407806632834951",
+            "controllerPathId": "9056934687418337401",
+            "faceSwitcherPathId": "6292302609185753209",
+            "skeletonAnimationPathId": "-464917371174270855",
+            "skeletonDataAssetPathId": "6294780015484215945",
+            "textAssetPathId": "-1572920748420474972",
+            "atlasAssetPathId": "6523054572338793872",
+            "atlasTextAssetPathId": "7651954779882870622",
+            "materialPathId": "6742679679801756683",
+            "rgbTexturePathId": "6509799426158450750"
+          },
+          "transforms": [
+            "Original embedded premultiplied RGBA textures decoded; RGB clamped to alpha to remove compression bleed",
+            "Atlas page dimensions normalized and pma: true recorded; native regions unchanged",
+            "Distinct original Front and Back skeletons retained; no missing attack, death or stun clip invented"
+          ]
+        },
+        "spineVersion": "3.8.99",
+        "skeleton": {
+          "path": "models/operator/token_10066_closur_ourbase/default/back/af23c7f497862f38be2cdca0cd4079d44753bde8d61b97398e5a2777a54281e4/token_10066_closur_ourbase.skel",
+          "bytes": 14807,
+          "sha256": "27498403d1606c842f6f2441603c9f3cca19b42ef670051bd049ccc2ccbe50ef"
+        },
+        "atlas": {
+          "path": "models/operator/token_10066_closur_ourbase/default/back/af23c7f497862f38be2cdca0cd4079d44753bde8d61b97398e5a2777a54281e4/token_10066_closur_ourbase.atlas",
+          "bytes": 498,
+          "sha256": "69f86bc94158230d9507c9b20967298449f95974c014c85a3761978701f544a3"
+        },
+        "textures": [
+          {
+            "path": "models/operator/token_10066_closur_ourbase/default/back/af23c7f497862f38be2cdca0cd4079d44753bde8d61b97398e5a2777a54281e4/token_10066_closur_ourbase.png",
+            "bytes": 5139,
+            "sha256": "5ccd3d82ab3219506e106b53b572fecb81e3c85f78291371a9bf942d6fe58d18"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Default": 0,
+          "Idle": 1.333,
+          "Start": 1
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": null,
+          "skill": null,
+          "die": null
+        },
+        "hits": {},
+        "bounds": null,
+        "avatar": {
+          "path": "models/operator/token_10066_closur_ourbase/default/back/af23c7f497862f38be2cdca0cd4079d44753bde8d61b97398e5a2777a54281e4/avatar.png",
+          "bytes": 27670,
+          "sha256": "af675fb5b2ad829b4983fadd5e431126dabc7c8642a6c6e9b2ac84a799b33dbd",
+          "source": {
+            "repository": "fexli/ArknightsResource",
+            "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+            "directory": "avatar/ASSISTANT"
+          }
+        }
+      },
       "operator/token_10043_necras_skeltn/default/front": {
         "kind": "operator",
         "id": "token_10043_necras_skeltn",
@@ -85592,7 +85939,7 @@
     },
     "art": {
       "repository": "arkpedia/arkpedia-sd-assets",
-      "commit": "6555112e4293b223da51742704709d027764bc5a",
+      "commit": "b977caef87feab47336f29b4c40bed2e423a8ce7",
       "scene": {
         "path": "stages/0-1/26-09-23-17-49-43_b9cc4a/scene.json",
         "bytes": 4479,
@@ -85601,7 +85948,7 @@
     },
     "gates": {
       "repository": "arkpedia/arkpedia-sd-assets",
-      "commit": "6555112e4293b223da51742704709d027764bc5a",
+      "commit": "b977caef87feab47336f29b4c40bed2e423a8ce7",
       "pack": {
         "path": "effects/standard-gates/26-09-23-17-49-43_b9cc4a/gates.json",
         "bytes": 3507,
@@ -658688,9 +659035,2960 @@
         "siracusa",
         "leithanien"
       ]
+    },
+    "char_4228_closur": {
+      "id": "char_4228_closur",
+      "name": "Closure",
+      "description": "可以在攻击范围内选择一次<@ba.kw>战术点</>来召唤援军，自身攻击援军阻挡的敌人时攻击力提升至150%",
+      "rarity": 6,
+      "profession": "PIONEER",
+      "subProfessionId": "tactician",
+      "position": "RANGED",
+      "nationId": "rhodes",
+      "groupId": null,
+      "teamId": null,
+      "phases": [
+        {
+          "maxLevel": 50,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 788,
+                "atk": 202,
+                "def": 46,
+                "magicResistance": 0,
+                "cost": 13,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false,
+                "teleportImmune": false,
+                "groundBoundImmune": false
+              }
+            },
+            {
+              "level": 50,
+              "data": {
+                "maxHp": 1126,
+                "atk": 298,
+                "def": 77,
+                "magicResistance": 0,
+                "cost": 13,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false,
+                "teleportImmune": false,
+                "groundBoundImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              0,
+              3
+            ],
+            [
+              -1,
+              0
+            ],
+            [
+              -1,
+              1
+            ],
+            [
+              -1,
+              2
+            ]
+          ]
+        },
+        {
+          "maxLevel": 80,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 1126,
+                "atk": 298,
+                "def": 77,
+                "magicResistance": 0,
+                "cost": 15,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false,
+                "teleportImmune": false,
+                "groundBoundImmune": false
+              }
+            },
+            {
+              "level": 80,
+              "data": {
+                "maxHp": 1444,
+                "atk": 393,
+                "def": 110,
+                "magicResistance": 0,
+                "cost": 15,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false,
+                "teleportImmune": false,
+                "groundBoundImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              0,
+              3
+            ],
+            [
+              -1,
+              0
+            ],
+            [
+              -1,
+              1
+            ],
+            [
+              -1,
+              2
+            ],
+            [
+              -1,
+              3
+            ]
+          ]
+        },
+        {
+          "maxLevel": 90,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 1444,
+                "atk": 393,
+                "def": 110,
+                "magicResistance": 0,
+                "cost": 15,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false,
+                "teleportImmune": false,
+                "groundBoundImmune": false
+              }
+            },
+            {
+              "level": 90,
+              "data": {
+                "maxHp": 1762,
+                "atk": 480,
+                "def": 131,
+                "magicResistance": 0,
+                "cost": 15,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false,
+                "teleportImmune": false,
+                "groundBoundImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              0,
+              3
+            ],
+            [
+              -1,
+              0
+            ],
+            [
+              -1,
+              1
+            ],
+            [
+              -1,
+              2
+            ],
+            [
+              -1,
+              3
+            ]
+          ]
+        }
+      ],
+      "favorKeyFrames": [
+        {
+          "level": 0,
+          "data": {
+            "maxHp": 0,
+            "atk": 0,
+            "def": 0,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false,
+            "teleportImmune": false,
+            "groundBoundImmune": false
+          }
+        },
+        {
+          "level": 50,
+          "data": {
+            "maxHp": 0,
+            "atk": 60,
+            "def": 20,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false,
+            "teleportImmune": false,
+            "groundBoundImmune": false
+          }
+        }
+      ],
+      "potentialRanks": [
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [],
+        [
+          {
+            "attributeType": "ATK",
+            "formulaItem": "ADDITION",
+            "value": 25,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "ATTACK_SPEED",
+            "formulaItem": "ADDITION",
+            "value": 8,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ]
+      ],
+      "trait": {
+        "candidates": [
+          {
+            "unlockCondition": {
+              "phase": "PHASE_0",
+              "level": 1
+            },
+            "requiredPotentialRank": 0,
+            "blackboard": [
+              {
+                "key": "atk_scale",
+                "value": 1.5,
+                "valueStr": null
+              }
+            ],
+            "overrideDescripton": null,
+            "prefabKey": null,
+            "rangeId": null
+          }
+        ]
+      },
+      "talents": [
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_0",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "精准投放",
+              "description": "可以在战术点召唤指挥中心协助作战，其被击败后会在15秒后自动刷新；战术点效果范围随携带技能变化，效果范围内的友方单位视为自身的援军",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "cnt",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": "token_10066_closur_ourbase",
+              "isHideTalent": false
+            }
+          ]
+        },
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "2",
+              "name": "极限调度",
+              "description": "携带可露希尔时，<$ba.costlowerbound>部署费用下限</>降低3，【罗德岛】干员攻击力+4%",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": -3,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.04,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 2,
+              "prefabKey": "2",
+              "name": "极限调度",
+              "description": "携带可露希尔时，<$ba.costlowerbound>部署费用下限</>降低4<@ba.talpu>（+1）</>，【罗德岛】干员攻击力+4%",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": -4,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.04,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            }
+          ]
+        }
+      ],
+      "skills": [
+        {
+          "id": "skchr_closur_1",
+          "unlockCondition": {
+            "phase": "PHASE_0",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "递归策略",
+              "rangeId": null,
+              "description": "立即使自身的援军获得<@ba.vup>{shield_cnt}</>层<$ba.shield>护盾</>（不叠加），技能持续时间内逐渐获得<@ba.vup>{cost}</>点部署费用；部署后每使用过一次技能，获得的部署费用<@ba.vup>+{cost_per_add}</>（最多提升至<@ba.vup>{cost_add_max}</>点）",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 17,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_closur_1",
+              "duration": 8,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost_per_add",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost_add_max",
+                  "value": 5,
+                  "valueStr": null
+                },
+                {
+                  "key": "shield_cnt",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "递归策略",
+              "rangeId": null,
+              "description": "立即使自身的援军获得<@ba.vup>{shield_cnt}</>层<$ba.shield>护盾</>（不叠加），技能持续时间内逐渐获得<@ba.vup>{cost}</>点部署费用；部署后每使用过一次技能，获得的部署费用<@ba.vup>+{cost_per_add}</>（最多提升至<@ba.vup>{cost_add_max}</>点）",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 16,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_closur_1",
+              "duration": 8,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost_per_add",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost_add_max",
+                  "value": 5,
+                  "valueStr": null
+                },
+                {
+                  "key": "shield_cnt",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "递归策略",
+              "rangeId": null,
+              "description": "立即使自身的援军获得<@ba.vup>{shield_cnt}</>层<$ba.shield>护盾</>（不叠加），技能持续时间内逐渐获得<@ba.vup>{cost}</>点部署费用；部署后每使用过一次技能，获得的部署费用<@ba.vup>+{cost_per_add}</>（最多提升至<@ba.vup>{cost_add_max}</>点）",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 15,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_closur_1",
+              "duration": 8,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost_per_add",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost_add_max",
+                  "value": 5,
+                  "valueStr": null
+                },
+                {
+                  "key": "shield_cnt",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "递归策略",
+              "rangeId": null,
+              "description": "立即使自身的援军获得<@ba.vup>{shield_cnt}</>层<$ba.shield>护盾</>（不叠加），技能持续时间内逐渐获得<@ba.vup>{cost}</>点部署费用；部署后每使用过一次技能，获得的部署费用<@ba.vup>+{cost_per_add}</>（最多提升至<@ba.vup>{cost_add_max}</>点）",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 14,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_closur_1",
+              "duration": 8,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost_per_add",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost_add_max",
+                  "value": 6,
+                  "valueStr": null
+                },
+                {
+                  "key": "shield_cnt",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "递归策略",
+              "rangeId": null,
+              "description": "立即使自身的援军获得<@ba.vup>{shield_cnt}</>层<$ba.shield>护盾</>（不叠加），技能持续时间内逐渐获得<@ba.vup>{cost}</>点部署费用；部署后每使用过一次技能，获得的部署费用<@ba.vup>+{cost_per_add}</>（最多提升至<@ba.vup>{cost_add_max}</>点）",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 13,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_closur_1",
+              "duration": 8,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost_per_add",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost_add_max",
+                  "value": 6,
+                  "valueStr": null
+                },
+                {
+                  "key": "shield_cnt",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "递归策略",
+              "rangeId": null,
+              "description": "立即使自身的援军获得<@ba.vup>{shield_cnt}</>层<$ba.shield>护盾</>（不叠加），技能持续时间内逐渐获得<@ba.vup>{cost}</>点部署费用；部署后每使用过一次技能，获得的部署费用<@ba.vup>+{cost_per_add}</>（最多提升至<@ba.vup>{cost_add_max}</>点）",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 12,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_closur_1",
+              "duration": 8,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost_per_add",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost_add_max",
+                  "value": 6,
+                  "valueStr": null
+                },
+                {
+                  "key": "shield_cnt",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "递归策略",
+              "rangeId": null,
+              "description": "立即使自身的援军获得<@ba.vup>{shield_cnt}</>层<$ba.shield>护盾</>（不叠加），技能持续时间内逐渐获得<@ba.vup>{cost}</>点部署费用；部署后每使用过一次技能，获得的部署费用<@ba.vup>+{cost_per_add}</>（最多提升至<@ba.vup>{cost_add_max}</>点）",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 11,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_closur_1",
+              "duration": 8,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost_per_add",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost_add_max",
+                  "value": 7,
+                  "valueStr": null
+                },
+                {
+                  "key": "shield_cnt",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "递归策略",
+              "rangeId": null,
+              "description": "立即使自身的援军获得<@ba.vup>{shield_cnt}</>层<$ba.shield>护盾</>（不叠加），技能持续时间内逐渐获得<@ba.vup>{cost}</>点部署费用；部署后每使用过一次技能，获得的部署费用<@ba.vup>+{cost_per_add}</>（最多提升至<@ba.vup>{cost_add_max}</>点）",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 10,
+                "initSp": 1,
+                "increment": 1
+              },
+              "prefabId": "skchr_closur_1",
+              "duration": 8,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost_per_add",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost_add_max",
+                  "value": 7,
+                  "valueStr": null
+                },
+                {
+                  "key": "shield_cnt",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "递归策略",
+              "rangeId": null,
+              "description": "立即使自身的援军获得<@ba.vup>{shield_cnt}</>层<$ba.shield>护盾</>（不叠加），技能持续时间内逐渐获得<@ba.vup>{cost}</>点部署费用；部署后每使用过一次技能，获得的部署费用<@ba.vup>+{cost_per_add}</>（最多提升至<@ba.vup>{cost_add_max}</>点）",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 9,
+                "initSp": 1,
+                "increment": 1
+              },
+              "prefabId": "skchr_closur_1",
+              "duration": 8,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost_per_add",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost_add_max",
+                  "value": 7,
+                  "valueStr": null
+                },
+                {
+                  "key": "shield_cnt",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "递归策略",
+              "rangeId": null,
+              "description": "立即使自身的援军获得<@ba.vup>{shield_cnt}</>层<$ba.shield>护盾</>（不叠加），技能持续时间内逐渐获得<@ba.vup>{cost}</>点部署费用；部署后每使用过一次技能，获得的部署费用<@ba.vup>+{cost_per_add}</>（最多提升至<@ba.vup>{cost_add_max}</>点）",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 8,
+                "initSp": 1,
+                "increment": 1
+              },
+              "prefabId": "skchr_closur_1",
+              "duration": 8,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost_per_add",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost_add_max",
+                  "value": 7,
+                  "valueStr": null
+                },
+                {
+                  "key": "shield_cnt",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ]
+            }
+          ],
+          "assetIcon": "skill-icons/Closure - Recursion Tactic.webp"
+        },
+        {
+          "id": "skchr_closur_2",
+          "unlockCondition": {
+            "phase": "PHASE_1",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "模型扩展",
+              "rangeId": null,
+              "description": "立即获得<@ba.vup>{cost}</>点部署费用，持续时间内逐渐获得<@ba.vup>{cost_period}</>点部署费用，自身的援军防御力<@ba.vup>+{def:0%}</>，阻挡数<@ba.vup>+{block_cnt}</>，自身攻击力<@ba.vup>+{atk:0%}</>，同时攻击<@ba.vup>{attack@max_target}</>个目标且能攻击到自身援军阻挡的敌人；在战术点效果范围内部署干员时，立即返还部署费用的<@ba.vup>{cost_return:0%}</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 50,
+                "initSp": 25,
+                "increment": 1
+              },
+              "prefabId": "skchr_closur_2",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 5,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost_return",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "block_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "def",
+                  "value": 0.15,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_target",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost_period",
+                  "value": 15,
+                  "valueStr": null
+                },
+                {
+                  "key": "closur_s_2[add_cost_period].cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "closur_s_2[add_cost_period].interval",
+                  "value": 2,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "模型扩展",
+              "rangeId": null,
+              "description": "立即获得<@ba.vup>{cost}</>点部署费用，持续时间内逐渐获得<@ba.vup>{cost_period}</>点部署费用，自身的援军防御力<@ba.vup>+{def:0%}</>，阻挡数<@ba.vup>+{block_cnt}</>，自身攻击力<@ba.vup>+{atk:0%}</>，同时攻击<@ba.vup>{attack@max_target}</>个目标且能攻击到自身援军阻挡的敌人；在战术点效果范围内部署干员时，立即返还部署费用的<@ba.vup>{cost_return:0%}</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 49,
+                "initSp": 26,
+                "increment": 1
+              },
+              "prefabId": "skchr_closur_2",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 5,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost_return",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "block_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "def",
+                  "value": 0.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_target",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost_period",
+                  "value": 15,
+                  "valueStr": null
+                },
+                {
+                  "key": "closur_s_2[add_cost_period].cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "closur_s_2[add_cost_period].interval",
+                  "value": 2,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "模型扩展",
+              "rangeId": null,
+              "description": "立即获得<@ba.vup>{cost}</>点部署费用，持续时间内逐渐获得<@ba.vup>{cost_period}</>点部署费用，自身的援军防御力<@ba.vup>+{def:0%}</>，阻挡数<@ba.vup>+{block_cnt}</>，自身攻击力<@ba.vup>+{atk:0%}</>，同时攻击<@ba.vup>{attack@max_target}</>个目标且能攻击到自身援军阻挡的敌人；在战术点效果范围内部署干员时，立即返还部署费用的<@ba.vup>{cost_return:0%}</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 48,
+                "initSp": 27,
+                "increment": 1
+              },
+              "prefabId": "skchr_closur_2",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 5,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost_return",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "block_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "def",
+                  "value": 0.25,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.35,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_target",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost_period",
+                  "value": 15,
+                  "valueStr": null
+                },
+                {
+                  "key": "closur_s_2[add_cost_period].cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "closur_s_2[add_cost_period].interval",
+                  "value": 2,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "模型扩展",
+              "rangeId": null,
+              "description": "立即获得<@ba.vup>{cost}</>点部署费用，持续时间内逐渐获得<@ba.vup>{cost_period}</>点部署费用，自身的援军防御力<@ba.vup>+{def:0%}</>，阻挡数<@ba.vup>+{block_cnt}</>，自身攻击力<@ba.vup>+{atk:0%}</>，同时攻击<@ba.vup>{attack@max_target}</>个目标且能攻击到自身援军阻挡的敌人；在战术点效果范围内部署干员时，立即返还部署费用的<@ba.vup>{cost_return:0%}</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 47,
+                "initSp": 28,
+                "increment": 1
+              },
+              "prefabId": "skchr_closur_2",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 6,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost_return",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "block_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "def",
+                  "value": 0.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_target",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost_period",
+                  "value": 15,
+                  "valueStr": null
+                },
+                {
+                  "key": "closur_s_2[add_cost_period].cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "closur_s_2[add_cost_period].interval",
+                  "value": 2,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "模型扩展",
+              "rangeId": null,
+              "description": "立即获得<@ba.vup>{cost}</>点部署费用，持续时间内逐渐获得<@ba.vup>{cost_period}</>点部署费用，自身的援军防御力<@ba.vup>+{def:0%}</>，阻挡数<@ba.vup>+{block_cnt}</>，自身攻击力<@ba.vup>+{atk:0%}</>，同时攻击<@ba.vup>{attack@max_target}</>个目标且能攻击到自身援军阻挡的敌人；在战术点效果范围内部署干员时，立即返还部署费用的<@ba.vup>{cost_return:0%}</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 46,
+                "initSp": 29,
+                "increment": 1
+              },
+              "prefabId": "skchr_closur_2",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 6,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost_return",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "block_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "def",
+                  "value": 0.35,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.45,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_target",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost_period",
+                  "value": 15,
+                  "valueStr": null
+                },
+                {
+                  "key": "closur_s_2[add_cost_period].cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "closur_s_2[add_cost_period].interval",
+                  "value": 2,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "模型扩展",
+              "rangeId": null,
+              "description": "立即获得<@ba.vup>{cost}</>点部署费用，持续时间内逐渐获得<@ba.vup>{cost_period}</>点部署费用，自身的援军防御力<@ba.vup>+{def:0%}</>，阻挡数<@ba.vup>+{block_cnt}</>，自身攻击力<@ba.vup>+{atk:0%}</>，同时攻击<@ba.vup>{attack@max_target}</>个目标且能攻击到自身援军阻挡的敌人；在战术点效果范围内部署干员时，立即返还部署费用的<@ba.vup>{cost_return:0%}</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 45,
+                "initSp": 30,
+                "increment": 1
+              },
+              "prefabId": "skchr_closur_2",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 6,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost_return",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "block_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "def",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_target",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost_period",
+                  "value": 15,
+                  "valueStr": null
+                },
+                {
+                  "key": "closur_s_2[add_cost_period].cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "closur_s_2[add_cost_period].interval",
+                  "value": 2,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "模型扩展",
+              "rangeId": null,
+              "description": "立即获得<@ba.vup>{cost}</>点部署费用，持续时间内逐渐获得<@ba.vup>{cost_period}</>点部署费用，自身的援军防御力<@ba.vup>+{def:0%}</>，阻挡数<@ba.vup>+{block_cnt}</>，自身攻击力<@ba.vup>+{atk:0%}</>，同时攻击<@ba.vup>{attack@max_target}</>个目标且能攻击到自身援军阻挡的敌人；在战术点效果范围内部署干员时，立即返还部署费用的<@ba.vup>{cost_return:0%}</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 44,
+                "initSp": 31,
+                "increment": 1
+              },
+              "prefabId": "skchr_closur_2",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 7,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost_return",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "block_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "def",
+                  "value": 0.45,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.55,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_target",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost_period",
+                  "value": 15,
+                  "valueStr": null
+                },
+                {
+                  "key": "closur_s_2[add_cost_period].cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "closur_s_2[add_cost_period].interval",
+                  "value": 2,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "模型扩展",
+              "rangeId": null,
+              "description": "立即获得<@ba.vup>{cost}</>点部署费用，持续时间内逐渐获得<@ba.vup>{cost_period}</>点部署费用，自身的援军防御力<@ba.vup>+{def:0%}</>，阻挡数<@ba.vup>+{block_cnt}</>，自身攻击力<@ba.vup>+{atk:0%}</>，同时攻击<@ba.vup>{attack@max_target}</>个目标且能攻击到自身援军阻挡的敌人；在战术点效果范围内部署干员时，立即返还部署费用的<@ba.vup>{cost_return:0%}</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 43,
+                "initSp": 32,
+                "increment": 1
+              },
+              "prefabId": "skchr_closur_2",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 8,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost_return",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "block_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "def",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_target",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost_period",
+                  "value": 15,
+                  "valueStr": null
+                },
+                {
+                  "key": "closur_s_2[add_cost_period].cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "closur_s_2[add_cost_period].interval",
+                  "value": 2,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "模型扩展",
+              "rangeId": null,
+              "description": "立即获得<@ba.vup>{cost}</>点部署费用，持续时间内逐渐获得<@ba.vup>{cost_period}</>点部署费用，自身的援军防御力<@ba.vup>+{def:0%}</>，阻挡数<@ba.vup>+{block_cnt}</>，自身攻击力<@ba.vup>+{atk:0%}</>，同时攻击<@ba.vup>{attack@max_target}</>个目标且能攻击到自身援军阻挡的敌人；在战术点效果范围内部署干员时，立即返还部署费用的<@ba.vup>{cost_return:0%}</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 42,
+                "initSp": 33,
+                "increment": 1
+              },
+              "prefabId": "skchr_closur_2",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 9,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost_return",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "block_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "def",
+                  "value": 0.55,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.7,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_target",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost_period",
+                  "value": 15,
+                  "valueStr": null
+                },
+                {
+                  "key": "closur_s_2[add_cost_period].cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "closur_s_2[add_cost_period].interval",
+                  "value": 2,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "模型扩展",
+              "rangeId": null,
+              "description": "立即获得<@ba.vup>{cost}</>点部署费用，持续时间内逐渐获得<@ba.vup>{cost_period}</>点部署费用，自身的援军防御力<@ba.vup>+{def:0%}</>，阻挡数<@ba.vup>+{block_cnt}</>，自身攻击力<@ba.vup>+{atk:0%}</>，同时攻击<@ba.vup>{attack@max_target}</>个目标且能攻击到自身援军阻挡的敌人；在战术点效果范围内部署干员时，立即返还部署费用的<@ba.vup>{cost_return:0%}</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 40,
+                "initSp": 34,
+                "increment": 1
+              },
+              "prefabId": "skchr_closur_2",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 10,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost_return",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "block_cnt",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "def",
+                  "value": 0.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "atk",
+                  "value": 0.8,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_target",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost_period",
+                  "value": 15,
+                  "valueStr": null
+                },
+                {
+                  "key": "closur_s_2[add_cost_period].cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "closur_s_2[add_cost_period].interval",
+                  "value": 2,
+                  "valueStr": null
+                }
+              ]
+            }
+          ],
+          "assetIcon": "skill-icons/Closure - Algorithm Expansion.webp"
+        },
+        {
+          "id": "skchr_closur_3",
+          "unlockCondition": {
+            "phase": "PHASE_2",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "Q.E.D.",
+              "rangeId": null,
+              "description": "技能持续时间内逐渐获得<@ba.vup>{cost_period}</>点部署费用，攻击间隔缩短，锁定自身和援军原本攻击范围内的敌人进行攻击，造成可露希尔<@ba.vup>{attack@atk_scale:0%}</>攻击力的物理伤害并施加持续<@ba.vup>{attack@slow_down_time}</>秒的<@ba.vup>{attack@slow_down:0%}</><$ba.slowdown>迟钝</>效果（可叠加，最高<@ba.vup>{attack@slow_down_max:0%}</>），每攻击<@ba.vup>{attack_trigger_cnt}</>次后攻击目标数+1（最多触发<@ba.vup>{max_trigger_cnt}</>次）",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 42,
+                "initSp": 12,
+                "increment": 1
+              },
+              "prefabId": "skchr_closur_3",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 0,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost_attack_add",
+                  "value": 0,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack_trigger_cnt",
+                  "value": 9,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_trigger_cnt",
+                  "value": 6,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@atk_scale",
+                  "value": 1.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": -0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@slow_down",
+                  "value": 0.03,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@slow_down_time",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_stack_cnt",
+                  "value": 10,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@slow_down_max",
+                  "value": 0.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost_period",
+                  "value": 18,
+                  "valueStr": null
+                },
+                {
+                  "key": "closur_s_3[add_cost_period].cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "closur_s_3[add_cost_period].interval",
+                  "value": 1.66,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Q.E.D.",
+              "rangeId": null,
+              "description": "技能持续时间内逐渐获得<@ba.vup>{cost_period}</>点部署费用，攻击间隔缩短，锁定自身和援军原本攻击范围内的敌人进行攻击，造成可露希尔<@ba.vup>{attack@atk_scale:0%}</>攻击力的物理伤害并施加持续<@ba.vup>{attack@slow_down_time}</>秒的<@ba.vup>{attack@slow_down:0%}</><$ba.slowdown>迟钝</>效果（可叠加，最高<@ba.vup>{attack@slow_down_max:0%}</>），每攻击<@ba.vup>{attack_trigger_cnt}</>次后攻击目标数+1（最多触发<@ba.vup>{max_trigger_cnt}</>次）",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 41,
+                "initSp": 13,
+                "increment": 1
+              },
+              "prefabId": "skchr_closur_3",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 0,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost_attack_add",
+                  "value": 0,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack_trigger_cnt",
+                  "value": 9,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_trigger_cnt",
+                  "value": 6,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@atk_scale",
+                  "value": 1.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": -0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@slow_down",
+                  "value": 0.03,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@slow_down_time",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_stack_cnt",
+                  "value": 10,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@slow_down_max",
+                  "value": 0.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost_period",
+                  "value": 18,
+                  "valueStr": null
+                },
+                {
+                  "key": "closur_s_3[add_cost_period].cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "closur_s_3[add_cost_period].interval",
+                  "value": 1.66,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Q.E.D.",
+              "rangeId": null,
+              "description": "技能持续时间内逐渐获得<@ba.vup>{cost_period}</>点部署费用，攻击间隔缩短，锁定自身和援军原本攻击范围内的敌人进行攻击，造成可露希尔<@ba.vup>{attack@atk_scale:0%}</>攻击力的物理伤害并施加持续<@ba.vup>{attack@slow_down_time}</>秒的<@ba.vup>{attack@slow_down:0%}</><$ba.slowdown>迟钝</>效果（可叠加，最高<@ba.vup>{attack@slow_down_max:0%}</>），每攻击<@ba.vup>{attack_trigger_cnt}</>次后攻击目标数+1（最多触发<@ba.vup>{max_trigger_cnt}</>次）",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 40,
+                "initSp": 14,
+                "increment": 1
+              },
+              "prefabId": "skchr_closur_3",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 0,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost_attack_add",
+                  "value": 0,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack_trigger_cnt",
+                  "value": 9,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_trigger_cnt",
+                  "value": 6,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@atk_scale",
+                  "value": 1.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": -0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@slow_down",
+                  "value": 0.03,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@slow_down_time",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_stack_cnt",
+                  "value": 10,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@slow_down_max",
+                  "value": 0.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost_period",
+                  "value": 18,
+                  "valueStr": null
+                },
+                {
+                  "key": "closur_s_3[add_cost_period].cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "closur_s_3[add_cost_period].interval",
+                  "value": 1.66,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Q.E.D.",
+              "rangeId": null,
+              "description": "技能持续时间内逐渐获得<@ba.vup>{cost_period}</>点部署费用，攻击间隔缩短，锁定自身和援军原本攻击范围内的敌人进行攻击，造成可露希尔<@ba.vup>{attack@atk_scale:0%}</>攻击力的物理伤害并施加持续<@ba.vup>{attack@slow_down_time}</>秒的<@ba.vup>{attack@slow_down:0%}</><$ba.slowdown>迟钝</>效果（可叠加，最高<@ba.vup>{attack@slow_down_max:0%}</>），每攻击<@ba.vup>{attack_trigger_cnt}</>次后攻击目标数+1（最多触发<@ba.vup>{max_trigger_cnt}</>次）",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 39,
+                "initSp": 15,
+                "increment": 1
+              },
+              "prefabId": "skchr_closur_3",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 0,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost_attack_add",
+                  "value": 0,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack_trigger_cnt",
+                  "value": 9,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_trigger_cnt",
+                  "value": 6,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@atk_scale",
+                  "value": 1.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": -0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@slow_down",
+                  "value": 0.04,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@slow_down_time",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_stack_cnt",
+                  "value": 10,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@slow_down_max",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost_period",
+                  "value": 18,
+                  "valueStr": null
+                },
+                {
+                  "key": "closur_s_3[add_cost_period].cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "closur_s_3[add_cost_period].interval",
+                  "value": 1.66,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Q.E.D.",
+              "rangeId": null,
+              "description": "技能持续时间内逐渐获得<@ba.vup>{cost_period}</>点部署费用，攻击间隔缩短，锁定自身和援军原本攻击范围内的敌人进行攻击，造成可露希尔<@ba.vup>{attack@atk_scale:0%}</>攻击力的物理伤害并施加持续<@ba.vup>{attack@slow_down_time}</>秒的<@ba.vup>{attack@slow_down:0%}</><$ba.slowdown>迟钝</>效果（可叠加，最高<@ba.vup>{attack@slow_down_max:0%}</>），每攻击<@ba.vup>{attack_trigger_cnt}</>次后攻击目标数+1（最多触发<@ba.vup>{max_trigger_cnt}</>次）",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 38,
+                "initSp": 16,
+                "increment": 1
+              },
+              "prefabId": "skchr_closur_3",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 0,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost_attack_add",
+                  "value": 0,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack_trigger_cnt",
+                  "value": 9,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_trigger_cnt",
+                  "value": 6,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@atk_scale",
+                  "value": 1.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": -0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@slow_down",
+                  "value": 0.04,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@slow_down_time",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_stack_cnt",
+                  "value": 10,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@slow_down_max",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost_period",
+                  "value": 18,
+                  "valueStr": null
+                },
+                {
+                  "key": "closur_s_3[add_cost_period].cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "closur_s_3[add_cost_period].interval",
+                  "value": 1.66,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Q.E.D.",
+              "rangeId": null,
+              "description": "技能持续时间内逐渐获得<@ba.vup>{cost_period}</>点部署费用，攻击间隔缩短，锁定自身和援军原本攻击范围内的敌人进行攻击，造成可露希尔<@ba.vup>{attack@atk_scale:0%}</>攻击力的物理伤害并施加持续<@ba.vup>{attack@slow_down_time}</>秒的<@ba.vup>{attack@slow_down:0%}</><$ba.slowdown>迟钝</>效果（可叠加，最高<@ba.vup>{attack@slow_down_max:0%}</>），每攻击<@ba.vup>{attack_trigger_cnt}</>次后攻击目标数+1（最多触发<@ba.vup>{max_trigger_cnt}</>次）",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 37,
+                "initSp": 17,
+                "increment": 1
+              },
+              "prefabId": "skchr_closur_3",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 0,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost_attack_add",
+                  "value": 0,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack_trigger_cnt",
+                  "value": 9,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_trigger_cnt",
+                  "value": 6,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@atk_scale",
+                  "value": 1.7,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": -0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@slow_down",
+                  "value": 0.04,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@slow_down_time",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_stack_cnt",
+                  "value": 10,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@slow_down_max",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost_period",
+                  "value": 18,
+                  "valueStr": null
+                },
+                {
+                  "key": "closur_s_3[add_cost_period].cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "closur_s_3[add_cost_period].interval",
+                  "value": 1.66,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Q.E.D.",
+              "rangeId": null,
+              "description": "技能持续时间内逐渐获得<@ba.vup>{cost_period}</>点部署费用，攻击间隔缩短，锁定自身和援军原本攻击范围内的敌人进行攻击，造成可露希尔<@ba.vup>{attack@atk_scale:0%}</>攻击力的物理伤害并施加持续<@ba.vup>{attack@slow_down_time}</>秒的<@ba.vup>{attack@slow_down:0%}</><$ba.slowdown>迟钝</>效果（可叠加，最高<@ba.vup>{attack@slow_down_max:0%}</>），每攻击<@ba.vup>{attack_trigger_cnt}</>次后攻击目标数+1（最多触发<@ba.vup>{max_trigger_cnt}</>次）",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 36,
+                "initSp": 18,
+                "increment": 1
+              },
+              "prefabId": "skchr_closur_3",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 0,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost_attack_add",
+                  "value": 0,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack_trigger_cnt",
+                  "value": 9,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_trigger_cnt",
+                  "value": 6,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@atk_scale",
+                  "value": 1.9,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": -0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@slow_down",
+                  "value": 0.05,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@slow_down_time",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_stack_cnt",
+                  "value": 10,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@slow_down_max",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost_period",
+                  "value": 18,
+                  "valueStr": null
+                },
+                {
+                  "key": "closur_s_3[add_cost_period].cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "closur_s_3[add_cost_period].interval",
+                  "value": 1.66,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Q.E.D.",
+              "rangeId": null,
+              "description": "技能持续时间内逐渐获得<@ba.vup>{cost_period}</>点部署费用，攻击间隔缩短，锁定自身和援军原本攻击范围内的敌人进行攻击，造成可露希尔<@ba.vup>{attack@atk_scale:0%}</>攻击力的物理伤害并施加持续<@ba.vup>{attack@slow_down_time}</>秒的<@ba.vup>{attack@slow_down:0%}</><$ba.slowdown>迟钝</>效果（可叠加，最高<@ba.vup>{attack@slow_down_max:0%}</>），每攻击<@ba.vup>{attack_trigger_cnt}</>次后攻击目标数+1（最多触发<@ba.vup>{max_trigger_cnt}</>次）",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 34,
+                "initSp": 19,
+                "increment": 1
+              },
+              "prefabId": "skchr_closur_3",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 0,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost_attack_add",
+                  "value": 0,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack_trigger_cnt",
+                  "value": 9,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_trigger_cnt",
+                  "value": 6,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@atk_scale",
+                  "value": 2.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": -0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@slow_down",
+                  "value": 0.05,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@slow_down_time",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_stack_cnt",
+                  "value": 10,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@slow_down_max",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost_period",
+                  "value": 18,
+                  "valueStr": null
+                },
+                {
+                  "key": "closur_s_3[add_cost_period].cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "closur_s_3[add_cost_period].interval",
+                  "value": 1.66,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Q.E.D.",
+              "rangeId": null,
+              "description": "技能持续时间内逐渐获得<@ba.vup>{cost_period}</>点部署费用，攻击间隔缩短，锁定自身和援军原本攻击范围内的敌人进行攻击，造成可露希尔<@ba.vup>{attack@atk_scale:0%}</>攻击力的物理伤害并施加持续<@ba.vup>{attack@slow_down_time}</>秒的<@ba.vup>{attack@slow_down:0%}</><$ba.slowdown>迟钝</>效果（可叠加，最高<@ba.vup>{attack@slow_down_max:0%}</>），每攻击<@ba.vup>{attack_trigger_cnt}</>次后攻击目标数+1（最多触发<@ba.vup>{max_trigger_cnt}</>次）",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 32,
+                "initSp": 21,
+                "increment": 1
+              },
+              "prefabId": "skchr_closur_3",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 0,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost_attack_add",
+                  "value": 0,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack_trigger_cnt",
+                  "value": 9,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_trigger_cnt",
+                  "value": 6,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@atk_scale",
+                  "value": 2.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": -0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@slow_down",
+                  "value": 0.05,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@slow_down_time",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_stack_cnt",
+                  "value": 10,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@slow_down_max",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost_period",
+                  "value": 18,
+                  "valueStr": null
+                },
+                {
+                  "key": "closur_s_3[add_cost_period].cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "closur_s_3[add_cost_period].interval",
+                  "value": 1.66,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "Q.E.D.",
+              "rangeId": null,
+              "description": "技能持续时间内逐渐获得<@ba.vup>{cost_period}</>点部署费用，攻击间隔缩短，锁定自身和援军原本攻击范围内的敌人进行攻击，造成可露希尔<@ba.vup>{attack@atk_scale:0%}</>攻击力的物理伤害并施加持续<@ba.vup>{attack@slow_down_time}</>秒的<@ba.vup>{attack@slow_down:0%}</><$ba.slowdown>迟钝</>效果（可叠加，最高<@ba.vup>{attack@slow_down_max:0%}</>），每攻击<@ba.vup>{attack_trigger_cnt}</>次后攻击目标数+1（最多触发<@ba.vup>{max_trigger_cnt}</>次）",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 30,
+                "initSp": 23,
+                "increment": 1
+              },
+              "prefabId": "skchr_closur_3",
+              "duration": 30,
+              "blackboard": [
+                {
+                  "key": "cost",
+                  "value": 0,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost_attack_add",
+                  "value": 0,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack_trigger_cnt",
+                  "value": 9,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_trigger_cnt",
+                  "value": 6,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@atk_scale",
+                  "value": 2.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "base_attack_time",
+                  "value": -0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@slow_down",
+                  "value": 0.06,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@slow_down_time",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_stack_cnt",
+                  "value": 10,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@slow_down_max",
+                  "value": 0.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "cost_period",
+                  "value": 18,
+                  "valueStr": null
+                },
+                {
+                  "key": "closur_s_3[add_cost_period].cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "closur_s_3[add_cost_period].interval",
+                  "value": 1.66,
+                  "valueStr": null
+                }
+              ]
+            }
+          ],
+          "assetIcon": "skill-icons/Closure - Q.E.D..webp"
+        }
+      ],
+      "sourceName": "可露希尔",
+      "sourceChannel": "cn",
+      "factionTags": [
+        "rhodes"
+      ]
     }
   },
   "tokens": {
+    "token_10066_closur_ourbase": {
+      "id": "token_10066_closur_ourbase",
+      "name": "Command Center",
+      "profession": "TOKEN",
+      "subProfessionId": "notchar1",
+      "position": "ALL",
+      "phases": [
+        {
+          "maxLevel": 50,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 1492,
+                "atk": 0,
+                "def": 198,
+                "magicResistance": 0,
+                "cost": 0,
+                "blockCnt": 2,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 10,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false,
+                "teleportImmune": false,
+                "groundBoundImmune": false
+              }
+            },
+            {
+              "level": 50,
+              "data": {
+                "maxHp": 1938,
+                "atk": 0,
+                "def": 265,
+                "magicResistance": 0,
+                "cost": 0,
+                "blockCnt": 2,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 10,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false,
+                "teleportImmune": false,
+                "groundBoundImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ]
+          ]
+        },
+        {
+          "maxLevel": 80,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 2040,
+                "atk": 0,
+                "def": 274,
+                "magicResistance": 0,
+                "cost": 0,
+                "blockCnt": 2,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 10,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false,
+                "teleportImmune": false,
+                "groundBoundImmune": false
+              }
+            },
+            {
+              "level": 80,
+              "data": {
+                "maxHp": 2489,
+                "atk": 0,
+                "def": 343,
+                "magicResistance": 0,
+                "cost": 0,
+                "blockCnt": 2,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 10,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false,
+                "teleportImmune": false,
+                "groundBoundImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ]
+          ]
+        },
+        {
+          "maxLevel": 90,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 2620,
+                "atk": 0,
+                "def": 354,
+                "magicResistance": 0,
+                "cost": 0,
+                "blockCnt": 2,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 10,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false,
+                "teleportImmune": false,
+                "groundBoundImmune": false
+              }
+            },
+            {
+              "level": 90,
+              "data": {
+                "maxHp": 3275,
+                "atk": 0,
+                "def": 432,
+                "magicResistance": 0,
+                "cost": 0,
+                "blockCnt": 2,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 10,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false,
+                "teleportImmune": false,
+                "groundBoundImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ]
+          ]
+        }
+      ],
+      "trait": null,
+      "talents": [
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_0",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "0",
+              "name": "广域覆盖",
+              "description": "效果范围随可露希尔携带技能变化，范围内的友方单位视为可露希尔的援军",
+              "rangeId": null,
+              "blackboard": [],
+              "tokenKey": null,
+              "isHideTalent": false
+            }
+          ]
+        },
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_0",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "-1",
+              "name": null,
+              "description": null,
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "interval",
+                  "value": 15,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": true
+            }
+          ]
+        }
+      ],
+      "skills": [
+        {
+          "id": "sktok_closur_ourbase1",
+          "unlockCondition": {
+            "phase": "PHASE_0",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "支援范围",
+              "rangeId": "x-5",
+              "description": null,
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 0,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 0
+              },
+              "prefabId": "sktok_closur_ourbase1",
+              "duration": 0,
+              "blackboard": [],
+              "rangeGrid": [
+                [
+                  1,
+                  0
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  0
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "id": "sktok_closur_ourbase2",
+          "unlockCondition": {
+            "phase": "PHASE_1",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "支援范围",
+              "rangeId": "x-4",
+              "description": null,
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 0,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 0
+              },
+              "prefabId": "sktok_closur_ourbase2",
+              "duration": 0,
+              "blackboard": [],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "id": "sktok_closur_ourbase3",
+          "unlockCondition": {
+            "phase": "PHASE_2",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "支援范围",
+              "rangeId": "x-6",
+              "description": null,
+              "skillType": "PASSIVE",
+              "durationType": "NONE",
+              "spData": {
+                "spType": 8,
+                "levelUpCost": null,
+                "maxChargeTime": 0,
+                "spCost": 0,
+                "initSp": 0,
+                "increment": 0
+              },
+              "prefabId": "sktok_closur_ourbase3",
+              "duration": 0,
+              "blackboard": [],
+              "rangeGrid": [
+                [
+                  2,
+                  0
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  0,
+                  -2
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -2,
+                  0
+                ]
+              ]
+            }
+          ]
+        }
+      ],
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b977caef87feab47336f29b4c40bed2e423a8ce7/models/operator/token_10066_closur_ourbase/default/front/af23c7f497862f38be2cdca0cd4079d44753bde8d61b97398e5a2777a54281e4/avatar.png"
+    },
     "token_10043_necras_skeltn": {
       "id": "token_10043_necras_skeltn",
       "name": "Servant of Lamentation",
@@ -659072,7 +662370,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6555112e4293b223da51742704709d027764bc5a/models/operator/token_10043_necras_skeltn/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b977caef87feab47336f29b4c40bed2e423a8ce7/models/operator/token_10043_necras_skeltn/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10050_monstr_prosts": {
       "id": "token_10050_monstr_prosts",
@@ -660910,7 +664208,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6555112e4293b223da51742704709d027764bc5a/models/operator/token_10050_monstr_prosts/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b977caef87feab47336f29b4c40bed2e423a8ce7/models/operator/token_10050_monstr_prosts/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10054_phatm2_encdool": {
       "id": "token_10054_phatm2_encdool",
@@ -663114,7 +666412,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6555112e4293b223da51742704709d027764bc5a/models/operator/token_10054_phatm2_encdool/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b977caef87feab47336f29b4c40bed2e423a8ce7/models/operator/token_10054_phatm2_encdool/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10055_phatm2_mndclv": {
       "id": "token_10055_phatm2_mndclv",
@@ -664385,7 +667683,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6555112e4293b223da51742704709d027764bc5a/models/operator/token_10030_mlyss_wtrman/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b977caef87feab47336f29b4c40bed2e423a8ce7/models/operator/token_10030_mlyss_wtrman/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10037_mitm_trshrb": {
       "id": "token_10037_mitm_trshrb",
@@ -664812,7 +668110,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6555112e4293b223da51742704709d027764bc5a/models/operator/token_10037_mitm_trshrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b977caef87feab47336f29b4c40bed2e423a8ce7/models/operator/token_10037_mitm_trshrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10027_ironmn_pile1": {
       "id": "token_10027_ironmn_pile1",
@@ -665908,7 +669206,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6555112e4293b223da51742704709d027764bc5a/models/operator/token_10027_ironmn_pile1/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b977caef87feab47336f29b4c40bed2e423a8ce7/models/operator/token_10027_ironmn_pile1/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10027_ironmn_pile2": {
       "id": "token_10027_ironmn_pile2",
@@ -667178,7 +670476,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6555112e4293b223da51742704709d027764bc5a/models/operator/token_10027_ironmn_pile2/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b977caef87feab47336f29b4c40bed2e423a8ce7/models/operator/token_10027_ironmn_pile2/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10027_ironmn_pile3": {
       "id": "token_10027_ironmn_pile3",
@@ -669686,7 +672984,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6555112e4293b223da51742704709d027764bc5a/models/operator/token_10027_ironmn_pile3/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b977caef87feab47336f29b4c40bed2e423a8ce7/models/operator/token_10027_ironmn_pile3/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10020_ling_soul1": {
       "id": "token_10020_ling_soul1",
@@ -670578,7 +673876,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6555112e4293b223da51742704709d027764bc5a/models/operator/token_10020_ling_soul1/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b977caef87feab47336f29b4c40bed2e423a8ce7/models/operator/token_10020_ling_soul1/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10020_ling_soul2": {
       "id": "token_10020_ling_soul2",
@@ -671914,7 +675212,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6555112e4293b223da51742704709d027764bc5a/models/operator/token_10020_ling_soul2/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b977caef87feab47336f29b4c40bed2e423a8ce7/models/operator/token_10020_ling_soul2/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10020_ling_soul3": {
       "id": "token_10020_ling_soul3",
@@ -673754,7 +677052,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6555112e4293b223da51742704709d027764bc5a/models/operator/token_10020_ling_soul3/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b977caef87feab47336f29b4c40bed2e423a8ce7/models/operator/token_10020_ling_soul3/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10005_mgllan_drone1": {
       "id": "token_10005_mgllan_drone1",
@@ -674846,7 +678144,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6555112e4293b223da51742704709d027764bc5a/models/operator/token_10005_mgllan_drone1/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b977caef87feab47336f29b4c40bed2e423a8ce7/models/operator/token_10005_mgllan_drone1/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10005_mgllan_drone2": {
       "id": "token_10005_mgllan_drone2",
@@ -675842,7 +679140,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6555112e4293b223da51742704709d027764bc5a/models/operator/token_10005_mgllan_drone2/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b977caef87feab47336f29b4c40bed2e423a8ce7/models/operator/token_10005_mgllan_drone2/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10005_mgllan_drone3": {
       "id": "token_10005_mgllan_drone3",
@@ -676934,7 +680232,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6555112e4293b223da51742704709d027764bc5a/models/operator/token_10005_mgllan_drone3/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b977caef87feab47336f29b4c40bed2e423a8ce7/models/operator/token_10005_mgllan_drone3/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10056_angel2_target": {
       "id": "token_10056_angel2_target",
@@ -677734,7 +681032,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6555112e4293b223da51742704709d027764bc5a/models/operator/token_10056_angel2_target/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b977caef87feab47336f29b4c40bed2e423a8ce7/models/operator/token_10056_angel2_target/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10035_wisdel_wward": {
       "id": "token_10035_wisdel_wward",
@@ -680393,7 +683691,7 @@
         }
       ],
       "automaticOnly": true,
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6555112e4293b223da51742704709d027764bc5a/models/operator/token_10031_swire2_gdtrap/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b977caef87feab47336f29b4c40bed2e423a8ce7/models/operator/token_10031_swire2_gdtrap/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10033_ela_grzmot": {
       "id": "token_10033_ela_grzmot",
@@ -682192,7 +685490,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6555112e4293b223da51742704709d027764bc5a/models/operator/token_10033_ela_grzmot/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b977caef87feab47336f29b4c40bed2e423a8ce7/models/operator/token_10033_ela_grzmot/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10034_ray_sndbst": {
       "id": "token_10034_ray_sndbst",
@@ -682826,7 +686124,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6555112e4293b223da51742704709d027764bc5a/models/operator/token_10034_ray_sndbst/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b977caef87feab47336f29b4c40bed2e423a8ce7/models/operator/token_10034_ray_sndbst/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10028_vigil_wolf": {
       "id": "token_10028_vigil_wolf",
@@ -683565,7 +686863,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6555112e4293b223da51742704709d027764bc5a/models/operator/token_10028_vigil_wolf/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b977caef87feab47336f29b4c40bed2e423a8ce7/models/operator/token_10028_vigil_wolf/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10026_bgsnow_subbow": {
       "id": "token_10026_bgsnow_subbow",
@@ -685130,7 +688428,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6555112e4293b223da51742704709d027764bc5a/models/operator/token_10026_bgsnow_subbow/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b977caef87feab47336f29b4c40bed2e423a8ce7/models/operator/token_10026_bgsnow_subbow/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10017_skadi2_dedant": {
       "id": "token_10017_skadi2_dedant",
@@ -686727,7 +690025,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6555112e4293b223da51742704709d027764bc5a/models/operator/token_10017_skadi2_dedant/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b977caef87feab47336f29b4c40bed2e423a8ce7/models/operator/token_10017_skadi2_dedant/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10025_doroth_recttp": {
       "id": "token_10025_doroth_recttp",
@@ -688587,7 +691885,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6555112e4293b223da51742704709d027764bc5a/models/operator/token_10025_doroth_recttp/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b977caef87feab47336f29b4c40bed2e423a8ce7/models/operator/token_10025_doroth_recttp/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10036_lasher_mcbird": {
       "id": "token_10036_lasher_mcbird",
@@ -689511,7 +692809,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6555112e4293b223da51742704709d027764bc5a/models/operator/token_10036_lasher_mcbird/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b977caef87feab47336f29b4c40bed2e423a8ce7/models/operator/token_10036_lasher_mcbird/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10032_jesca2_jckshd": {
       "id": "token_10032_jesca2_jckshd",
@@ -689848,7 +693146,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6555112e4293b223da51742704709d027764bc5a/models/operator/token_10032_jesca2_jckshd/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b977caef87feab47336f29b4c40bed2e423a8ce7/models/operator/token_10032_jesca2_jckshd/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10040_siege2_vlion": {
       "id": "token_10040_siege2_vlion",
@@ -691280,7 +694578,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6555112e4293b223da51742704709d027764bc5a/models/operator/token_10009_weedy_cannon/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b977caef87feab47336f29b4c40bed2e423a8ce7/models/operator/token_10009_weedy_cannon/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10024_ebnhlz_rcube": {
       "id": "token_10024_ebnhlz_rcube",
@@ -691853,7 +695151,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6555112e4293b223da51742704709d027764bc5a/models/operator/token_10024_ebnhlz_rcube/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b977caef87feab47336f29b4c40bed2e423a8ce7/models/operator/token_10024_ebnhlz_rcube/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10044_wulfen_mine": {
       "id": "token_10044_wulfen_mine",
@@ -693054,7 +696352,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6555112e4293b223da51742704709d027764bc5a/models/operator/token_10044_wulfen_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b977caef87feab47336f29b4c40bed2e423a8ce7/models/operator/token_10044_wulfen_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10042_tecno_puppet": {
       "id": "token_10042_tecno_puppet",
@@ -693303,7 +696601,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6555112e4293b223da51742704709d027764bc5a/models/operator/token_10042_tecno_puppet/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b977caef87feab47336f29b4c40bed2e423a8ce7/models/operator/token_10042_tecno_puppet/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10041_cathy_catsld": {
       "id": "token_10041_cathy_catsld",
@@ -693861,7 +697159,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6555112e4293b223da51742704709d027764bc5a/models/operator/token_10041_cathy_catsld/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b977caef87feab47336f29b4c40bed2e423a8ce7/models/operator/token_10041_cathy_catsld/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10022_kazema_shadow": {
       "id": "token_10022_kazema_shadow",
@@ -694331,7 +697629,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6555112e4293b223da51742704709d027764bc5a/models/operator/token_10022_kazema_shadow/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b977caef87feab47336f29b4c40bed2e423a8ce7/models/operator/token_10022_kazema_shadow/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10001_deepcl_tentac": {
       "id": "token_10001_deepcl_tentac",
@@ -694645,7 +697943,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6555112e4293b223da51742704709d027764bc5a/models/operator/token_10001_deepcl_tentac/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b977caef87feab47336f29b4c40bed2e423a8ce7/models/operator/token_10001_deepcl_tentac/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10018_robrta_mach": {
       "id": "token_10018_robrta_mach",
@@ -695135,7 +698433,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6555112e4293b223da51742704709d027764bc5a/models/operator/token_10018_robrta_mach/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b977caef87feab47336f29b4c40bed2e423a8ce7/models/operator/token_10018_robrta_mach/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10014_bstalk_crab": {
       "id": "token_10014_bstalk_crab",
@@ -695464,7 +698762,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6555112e4293b223da51742704709d027764bc5a/models/operator/token_10014_bstalk_crab/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b977caef87feab47336f29b4c40bed2e423a8ce7/models/operator/token_10014_bstalk_crab/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10011_beewax_oblisk": {
       "id": "token_10011_beewax_oblisk",
@@ -696409,7 +699707,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6555112e4293b223da51742704709d027764bc5a/models/operator/token_10011_beewax_oblisk/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b977caef87feab47336f29b4c40bed2e423a8ce7/models/operator/token_10011_beewax_oblisk/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10006_vodfox_doll": {
       "id": "token_10006_vodfox_doll",
@@ -697045,7 +700343,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6555112e4293b223da51742704709d027764bc5a/models/operator/token_10006_vodfox_doll/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b977caef87feab47336f29b4c40bed2e423a8ce7/models/operator/token_10006_vodfox_doll/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10003_cgbird_bird": {
       "id": "token_10003_cgbird_bird",
@@ -697340,7 +700638,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6555112e4293b223da51742704709d027764bc5a/models/operator/token_10003_cgbird_bird/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b977caef87feab47336f29b4c40bed2e423a8ce7/models/operator/token_10003_cgbird_bird/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10000_silent_healrb": {
       "id": "token_10000_silent_healrb",
@@ -697723,7 +701021,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6555112e4293b223da51742704709d027764bc5a/models/operator/token_10000_silent_healrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b977caef87feab47336f29b4c40bed2e423a8ce7/models/operator/token_10000_silent_healrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10015_dusk_drgn": {
       "id": "token_10015_dusk_drgn",
@@ -698137,7 +701435,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6555112e4293b223da51742704709d027764bc5a/models/operator/token_10015_dusk_drgn/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b977caef87feab47336f29b4c40bed2e423a8ce7/models/operator/token_10015_dusk_drgn/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10007_phatom_twin": {
       "id": "token_10007_phatom_twin",
@@ -699916,7 +703214,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6555112e4293b223da51742704709d027764bc5a/models/operator/token_10007_phatom_twin/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b977caef87feab47336f29b4c40bed2e423a8ce7/models/operator/token_10007_phatom_twin/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10008_cqbw_box": {
       "id": "token_10008_cqbw_box",
@@ -700489,7 +703787,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6555112e4293b223da51742704709d027764bc5a/models/operator/token_10008_cqbw_box/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b977caef87feab47336f29b4c40bed2e423a8ce7/models/operator/token_10008_cqbw_box/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10029_slent2_protrb": {
       "id": "token_10029_slent2_protrb",
@@ -701234,7 +704532,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6555112e4293b223da51742704709d027764bc5a/models/operator/token_10029_slent2_protrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b977caef87feab47336f29b4c40bed2e423a8ce7/models/operator/token_10029_slent2_protrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10019_nearl2_sword": {
       "id": "token_10019_nearl2_sword",
@@ -702021,7 +705319,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6555112e4293b223da51742704709d027764bc5a/models/operator/token_10019_nearl2_sword/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b977caef87feab47336f29b4c40bed2e423a8ce7/models/operator/token_10019_nearl2_sword/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10002_kalts_mon3tr": {
       "id": "token_10002_kalts_mon3tr",
@@ -702439,7 +705737,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6555112e4293b223da51742704709d027764bc5a/models/operator/token_10002_kalts_mon3tr/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b977caef87feab47336f29b4c40bed2e423a8ce7/models/operator/token_10002_kalts_mon3tr/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10010_folivo_car": {
       "id": "token_10010_folivo_car",
@@ -704060,7 +707358,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6555112e4293b223da51742704709d027764bc5a/models/operator/token_10010_folivo_car/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b977caef87feab47336f29b4c40bed2e423a8ce7/models/operator/token_10010_folivo_car/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10021_blkngt_hypnos": {
       "id": "token_10021_blkngt_hypnos",
@@ -704475,7 +707773,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6555112e4293b223da51742704709d027764bc5a/models/operator/token_10021_blkngt_hypnos/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b977caef87feab47336f29b4c40bed2e423a8ce7/models/operator/token_10021_blkngt_hypnos/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10023_windft_wrench": {
       "id": "token_10023_windft_wrench",
@@ -705639,7 +708937,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6555112e4293b223da51742704709d027764bc5a/models/operator/token_10023_windft_wrench/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b977caef87feab47336f29b4c40bed2e423a8ce7/models/operator/token_10023_windft_wrench/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10045_alanna_crane": {
       "id": "token_10045_alanna_crane",
@@ -706039,7 +709337,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6555112e4293b223da51742704709d027764bc5a/models/operator/token_10045_alanna_crane/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b977caef87feab47336f29b4c40bed2e423a8ce7/models/operator/token_10045_alanna_crane/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10013_robin_mine": {
       "id": "token_10013_robin_mine",
@@ -706970,7 +710268,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6555112e4293b223da51742704709d027764bc5a/models/operator/token_10013_robin_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b977caef87feab47336f29b4c40bed2e423a8ce7/models/operator/token_10013_robin_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10016_rfrost_mine": {
       "id": "token_10016_rfrost_mine",
@@ -707901,7 +711199,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6555112e4293b223da51742704709d027764bc5a/models/operator/token_10016_rfrost_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b977caef87feab47336f29b4c40bed2e423a8ce7/models/operator/token_10016_rfrost_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10004_otter_motter": {
       "id": "token_10004_otter_motter",
@@ -709250,7 +712548,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/6555112e4293b223da51742704709d027764bc5a/models/operator/token_10004_otter_motter/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/b977caef87feab47336f29b4c40bed2e423a8ce7/models/operator/token_10004_otter_motter/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     }
   },
   "enemies": {
@@ -709301,7 +712599,7 @@
   },
   "skillEffects": {
     "repository": "arkpedia/arkpedia-sd-assets",
-    "commit": "6555112e4293b223da51742704709d027764bc5a",
+    "commit": "b977caef87feab47336f29b4c40bed2e423a8ce7",
     "pack": {
       "path": "effects/charge-cost/26-09-23-17-49-43_b9cc4a/effect.json",
       "bytes": 15311,

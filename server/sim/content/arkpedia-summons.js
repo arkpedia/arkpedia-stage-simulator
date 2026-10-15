@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import { canSpendDp } from './arkpedia-dp-budget.js';
 import evidence from '../../../data/arkpedia-summon-prefabs.json' with { type: 'json' };
 import { REGULAR_SUMMONS, summonCardId, summonUnitId, summonRecordFor } from '../../../shared/arkpedia/summons.js';
 import { canDeployInViewport } from '../../../shared/arkpedia/squad.js';
@@ -73,7 +74,7 @@ export function summonPlacementError(battle, key, row, col) {
   if (state.config.excludeWalkingEnemy && battle.enemies.some(enemy => live(enemy)
     && enemy.motion !== 'FLY' && Math.round(enemy.x) === col && Math.round(enemy.y) === row))
     return 'Choose a tile without a ground enemy.';
-  if (battle.dp < state.record.stats.cost) return 'Not enough DP.';
+  if (!canSpendDp(battle, state.owner.ownerId, state.record.stats.cost)) return 'Not enough DP.';
   return null;
 }
 

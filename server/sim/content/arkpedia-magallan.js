@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import { canSpendDp } from './arkpedia-dp-budget.js';
 // Selected-source diagnostic. Complete skills/art/public approval stay separate.
 import evidence from '../../../data/arkpedia-magallan-prefabs.json' with { type: 'json' };
 import { sourceCandidate, summonCardId } from '../../../shared/arkpedia/summons.js';
@@ -224,7 +225,7 @@ export class MagallanDroneDeck {
       return position === 'MELEE' ? 'Choose a melee tile.' : position === 'RANGED' ? 'Choose a high-ground tile.' : 'Choose a deployable tile.';
     if (b.allyUnits.some(t => present(t) && t.tileR === row && t.tileC === col)) return 'Tile is occupied.';
     if (b.tileReservation(row, col)) return 'Tile is reserved for an operator return.';
-    if (b.dp < this.record.stats.cost) return 'Not enough DP.';
+    if (!canSpendDp(b, this.u.ownerId, this.record.stats.cost)) return 'Not enough DP.';
     return null;
   }
   place(row, col, dir = 'RIGHT') {

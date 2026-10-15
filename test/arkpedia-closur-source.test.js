@@ -14,7 +14,7 @@ const part = (group, key, id) => {
   assert.ok(found, `Missing original ${group}/${key} component ${id}`);
   return found.data;
 };
-test('Closure and her command center remain held source evidence, outside playable coverage', () => {
+test('the immutable Closure/command-center source receipt does not itself approve a public runtime', () => {
   assert.deepEqual(e.enabledOperators, []); assert.deepEqual(e.heldOperators, [ID]);
   assert.equal(e.source.commit, 'a550f5e048bb94e7cdefc6eb97a4091f0c4c7add');
   assert.equal(e.source.nativeClient, '26-09-22-07-47-20_6c71fa');

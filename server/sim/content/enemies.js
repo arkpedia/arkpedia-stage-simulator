@@ -281,7 +281,8 @@ export function abOf(b, e) {
   const sk = {};
   for (const s of (ov && Array.isArray(ov.skills) ? ov.skills : (e.def && e.def.skills) || [])) {
     if (!s || s.prefabKey == null) continue;
-    sk[s.prefabKey] = { cd: num(s.cooldown, 0), icd: num(s.initCooldown, 0), sp: num(s.spCost, 0), bb: s.bb || {}, bs: s.bbStr || {} };
+    sk[s.prefabKey] = { cd: num(s.cooldown, 0), icd: num(s.initCooldown, 0), sp: num(s.spCost, 0), bb: s.bb || {}, bs: s.bbStr || {},
+      affectedBySlowDown: s.affectedBySlowDown === true };
   }
   e.mem.ab = { key, t, tS, sk, list: [], times: null, hitShield: 0, atkType: null, immune: null, origMaxHp: e.base.maxHp };
   return e.mem.ab;
@@ -416,7 +417,7 @@ function onTick(b, dt) {
         }
       }
       if (a.fire && a.cd != null) {
-        a.left -= dt;
+        a.left -= dt * (a.affectedBySlowDown === true ? e.s.slowDownRate : 1);
         if (a.left <= 1e-9 && canCast(e, a.sil) && (!a.cond || safe(b, e, () => a.cond(b, e, a)))) {
           a.left = Math.max(TICK, a.cd);
           a.casts = (a.casts ?? 0) + 1;
@@ -1218,8 +1219,8 @@ function dmgZone(b, src, x, y, r, life, iv, amount, type = 'arts', kind = 'zone'
 }
 
 /** A cooldown skill ability (`id` labels it for tests / other abilities). */
-const skill = (s, fire, { cond = null, sil = false, cd = null, icd = null, id = null } = {}) => (s || cd != null) && fire ? ({
-  id: id ?? null, sil, cd: cd ?? s.cd, icd: icd ?? s.icd, cond, fire,
+const skill = (s, fire, { cond = null, sil = false, cd = null, icd = null, id = null, affectedBySlowDown = s?.affectedBySlowDown === true } = {}) => (s || cd != null) && fire ? ({
+  id: id ?? null, sil, cd: cd ?? s.cd, icd: icd ?? s.icd, cond, fire, affectedBySlowDown,
 }) : null;
 
 /** Blink past the blocker along the path (弑君者 / 卢西恩). Returns the start position. */

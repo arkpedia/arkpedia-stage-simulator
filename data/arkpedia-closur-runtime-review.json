@@ -1,0 +1,453 @@
+{
+  "schemaVersion": 1,
+  "operatorId": "char_4228_closur",
+  "enabledOperators": [
+    "char_4228_closur"
+  ],
+  "frameParity": false,
+  "moduleSupport": false,
+  "nativePixelParity": false,
+  "nativeParticleSupport": false,
+  "sourceFoundationSha256": "c196d4fbf6a42a4e75e0435b8507b2206411fe8fb7515dfc1c967860f9a7f6de",
+  "deviceArtworkSha256": "3d8b84ae3916aabb2c82b46eb89d278a406cd262d5bd76daf825a5ee8fab3ce2",
+  "mechanicsPolicy": "source-cn-command-center-continuous-fire-and-debt-v1",
+  "verification": {
+    "browser": {
+      "status": "passed",
+      "script": "tools/arkpedia/review-closur-public.mjs",
+      "scriptSha256": "012c636a359b6432e3762e19a0534e00cd5f186821eaa4a8ed6e3494f33f8ebb",
+      "driver": "tools/arkpedia/public-review-driver.mjs",
+      "driverSha256": "1ef20a71f4982799d1368e61d0b2e2eac9eb36efe1aaad45294150566246359f",
+      "cases": 6,
+      "captures": 36,
+      "viewports": [
+        "1280x800 desktop mouse",
+        "844x390 landscape phone touch"
+      ],
+      "originalWaves": false,
+      "fixture": "Original 0-1 terrain; empty waves, 99 DP, pinned enemy. Browser emulation, not physical device or original-frame proof.",
+      "browserErrors": 0,
+      "failedResources": 0,
+      "checks": [
+        "Squad and all three skill selections; separate operator drag/drop and direction swipe",
+        "Fixed-facing zero-DP/zero-slot command-center drop without direction picker",
+        "Ordinary single-target physical fire; original Front/Back and selected skill clips",
+        "Natural time SP, automatic S1, manual S2/S3, skill use and end",
+        "Point withdrawal, recovery readout, native OnStart restoration and owner removal"
+      ],
+      "visualReview": "Desktop S3 active, desktop/phone point recharge and phone S2 Back active captures inspected. No native particle or original pixel/frame parity is claimed."
+    },
+    "runtime": "All 48 public-path cases pass on Node 22, including all thirty source skill ranks, carried squad/support talent, exact-floor payment, command-center card/withdrawal/redeployment and all three skills on original 0-1 waves. The earlier 331-case selected Closure/source/renderer/adjacent-public set passes on Node 22 and 24; the final full regression is recorded separately."
+  },
+  "originalArtwork": {
+    "operator/char_4228_closur/default/front": {
+      "kind": "operator",
+      "id": "char_4228_closur",
+      "variant": "default",
+      "facing": "front",
+      "spineVersion": "3.8.99",
+      "source": {
+        "key": "operators",
+        "repository": "fexli/ArknightsResource",
+        "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+        "directory": "spine/char_4228_closur/char_4228_closur/Front"
+      },
+      "skeleton": {
+        "path": "models/operator/char_4228_closur/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4228_closur.skel",
+        "bytes": 1350718,
+        "sha256": "c36a703553029011f99d4a9bf8f4859dacad45b2fef29c9a4a7fd8436801214a"
+      },
+      "atlas": {
+        "path": "models/operator/char_4228_closur/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4228_closur.atlas",
+        "bytes": 11839,
+        "sha256": "bac512e4155fa63eb0918685e9faff9326a28c6b6ac13d388fe50bbefd56e184"
+      },
+      "textures": [
+        {
+          "path": "models/operator/char_4228_closur/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4228_closur.png",
+          "bytes": 154405,
+          "sha256": "f323235b80d9d6ff84ff6941a6d3e7fca30aee06df08d7529dab43d4612a1c66"
+        }
+      ],
+      "premultipliedAlpha": true,
+      "animations": {
+        "Attack_Begin": 0.2,
+        "Attack_Down_Begin": 0.2,
+        "Attack_Down_End": 0.267,
+        "Attack_Down_Loop": 1,
+        "Attack_End": 0.267,
+        "Attack_Loop": 1,
+        "Default": 0,
+        "Die": 1,
+        "Idle": 8,
+        "Skill_2_Begin": 0.333,
+        "Skill_2_End": 0.333,
+        "Skill_2_Idle": 8,
+        "Skill_2_Loop": 1,
+        "Skill_3_Begin": 0.5,
+        "Skill_3_End": 0.333,
+        "Skill_3_Idle": 8,
+        "Skill_3_Loop": 0.5,
+        "Skill_Down_2_Begin": 0.333,
+        "Skill_Down_2_End": 0.333,
+        "Skill_Down_2_Idle": 8,
+        "Skill_Down_2_Loop": 1,
+        "Skill_Down_3_Begin": 0.5,
+        "Skill_Down_3_End": 0.333,
+        "Skill_Down_3_Idle": 8,
+        "Skill_Down_3_Loop": 0.5,
+        "Start": 1
+      },
+      "hits": {
+        "Attack_Down_Loop": [
+          0.4
+        ],
+        "Attack_Loop": [
+          0.4
+        ],
+        "Skill_2_Loop": [
+          0.4
+        ],
+        "Skill_3_Loop": [
+          0.133
+        ],
+        "Skill_Down_2_Loop": [
+          0.4
+        ],
+        "Skill_Down_3_Loop": [
+          0.133
+        ]
+      },
+      "bounds": null,
+      "animationRoles": {
+        "idle": "Idle",
+        "deploy": "Start",
+        "attack": {
+          "begin": "Attack_Begin",
+          "loop": "Attack_Loop",
+          "end": null
+        },
+        "attackDown": {
+          "begin": "Attack_Down_Begin",
+          "loop": "Attack_Down_Loop",
+          "end": null
+        },
+        "skill": null,
+        "die": "Die",
+        "stun": null,
+        "move": null
+      }
+    },
+    "operator/char_4228_closur/default/back": {
+      "kind": "operator",
+      "id": "char_4228_closur",
+      "variant": "default",
+      "facing": "back",
+      "spineVersion": "3.8.99",
+      "source": {
+        "key": "operators",
+        "repository": "fexli/ArknightsResource",
+        "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+        "directory": "spine/char_4228_closur/char_4228_closur/Back"
+      },
+      "skeleton": {
+        "path": "models/operator/char_4228_closur/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4228_closur.skel",
+        "bytes": 603677,
+        "sha256": "e852e2b4ce5a90f0ce1e923e05bfa96d97bdb74824e929a2f450531db913de24"
+      },
+      "atlas": {
+        "path": "models/operator/char_4228_closur/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4228_closur.atlas",
+        "bytes": 6386,
+        "sha256": "fa9d26717d7b38fbfc4802c91f1dc69e6d293d09e37b7417e1145b2eb31972f7"
+      },
+      "textures": [
+        {
+          "path": "models/operator/char_4228_closur/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4228_closur.png",
+          "bytes": 123414,
+          "sha256": "401c44d62df25e72d4b923ace2171bdcdf316909dc1cf6c6e062fc7da6847627"
+        }
+      ],
+      "premultipliedAlpha": true,
+      "animations": {
+        "Attack_Begin": 0.2,
+        "Attack_End": 0.267,
+        "Attack_Loop": 1,
+        "Default": 0,
+        "Idle": 8,
+        "Skill_2_Begin": 0.333,
+        "Skill_2_End": 0.333,
+        "Skill_2_Idle": 8,
+        "Skill_2_Loop": 1,
+        "Skill_3_Begin": 0.5,
+        "Skill_3_End": 0.333,
+        "Skill_3_Idle": 8,
+        "Skill_3_Loop": 0.5,
+        "Start": 1
+      },
+      "hits": {
+        "Attack_Loop": [
+          0.4
+        ],
+        "Skill_2_Loop": [
+          0.4
+        ],
+        "Skill_3_Loop": [
+          0.133
+        ]
+      },
+      "bounds": null,
+      "animationRoles": {
+        "idle": "Idle",
+        "deploy": "Start",
+        "attack": {
+          "begin": "Attack_Begin",
+          "loop": "Attack_Loop",
+          "end": null
+        },
+        "attackDown": null,
+        "skill": null,
+        "die": null,
+        "stun": null,
+        "move": null
+      }
+    },
+    "operator/token_10066_closur_ourbase/default/front": {
+      "kind": "operator",
+      "id": "token_10066_closur_ourbase",
+      "variant": "default",
+      "facing": "front",
+      "source": {
+        "key": "cn-client",
+        "kind": "assetbundle",
+        "bundle": {
+          "path": "pkgrps/btl_pfb_tokens_4.ab",
+          "bytes": 2568582,
+          "md5": "0fa7fd1e638ba6a269e09b6398ec5028",
+          "sha256": "af23c7f497862f38be2cdca0cd4079d44753bde8d61b97398e5a2777a54281e4",
+          "url": "https://ak.hycdn.cn/assetbundle/official/Android/assets/26-09-22-07-47-20_6c71fa/pkgrps_btl_pfb_tokens_4.dat",
+          "client": "cn",
+          "resourceVersion": "26-09-22-07-47-20_6c71fa",
+          "transforms": [
+            "Original embedded premultiplied RGBA textures decoded; RGB clamped to alpha to remove compression bleed",
+            "Atlas page dimensions normalized and pma: true recorded; native regions unchanged",
+            "Distinct original Front and Back skeletons retained; no missing attack, death or stun clip invented"
+          ]
+        },
+        "directory": "pkgrps/btl_pfb_tokens_4.ab",
+        "extractedSkeleton": "token_10066_closur_ourbase.skel",
+        "originalPathIds": {
+          "rootPathId": "-5788352084631041927",
+          "animatorPathId": "-4151407806632834951",
+          "controllerPathId": "9056934687418337401",
+          "faceSwitcherPathId": "6292302609185753209",
+          "skeletonAnimationPathId": "-8166834467469277063",
+          "skeletonDataAssetPathId": "-3137227980182877557",
+          "textAssetPathId": "-2434291153260369589",
+          "atlasAssetPathId": "-1890305436070276919",
+          "atlasTextAssetPathId": "-6792279715639184749",
+          "materialPathId": "3021645399074082078",
+          "rgbTexturePathId": "-6672615201505261140"
+        },
+        "transforms": [
+          "Original embedded premultiplied RGBA textures decoded; RGB clamped to alpha to remove compression bleed",
+          "Atlas page dimensions normalized and pma: true recorded; native regions unchanged",
+          "Distinct original Front and Back skeletons retained; no missing attack, death or stun clip invented"
+        ]
+      },
+      "spineVersion": "3.8.99",
+      "skeleton": {
+        "path": "models/operator/token_10066_closur_ourbase/default/front/af23c7f497862f38be2cdca0cd4079d44753bde8d61b97398e5a2777a54281e4/token_10066_closur_ourbase.skel",
+        "bytes": 20944,
+        "sha256": "1352451da8f1358be37b313d5e4376bd66a524967a5b324f36325bf76b25b329"
+      },
+      "atlas": {
+        "path": "models/operator/token_10066_closur_ourbase/default/front/af23c7f497862f38be2cdca0cd4079d44753bde8d61b97398e5a2777a54281e4/token_10066_closur_ourbase.atlas",
+        "bytes": 494,
+        "sha256": "ab77f005e1369b96f50dd468a0d268848ca329618e1ae2ab803ea5049789bd12"
+      },
+      "textures": [
+        {
+          "path": "models/operator/token_10066_closur_ourbase/default/front/af23c7f497862f38be2cdca0cd4079d44753bde8d61b97398e5a2777a54281e4/token_10066_closur_ourbase.png",
+          "bytes": 5795,
+          "sha256": "99fe6df17025d550ee6dfd6f1d0a77204f877fec77a18aa289d3920af1c47050"
+        }
+      ],
+      "premultipliedAlpha": true,
+      "animations": {
+        "Default": 0,
+        "Die": 1,
+        "Idle": 1.333,
+        "Start": 1
+      },
+      "animationRoles": {
+        "idle": "Idle",
+        "deploy": "Start",
+        "attack": null,
+        "skill": null,
+        "die": "Die"
+      },
+      "hits": {},
+      "bounds": null,
+      "avatar": {
+        "path": "models/operator/token_10066_closur_ourbase/default/front/af23c7f497862f38be2cdca0cd4079d44753bde8d61b97398e5a2777a54281e4/avatar.png",
+        "bytes": 27670,
+        "sha256": "af675fb5b2ad829b4983fadd5e431126dabc7c8642a6c6e9b2ac84a799b33dbd",
+        "source": {
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "avatar/ASSISTANT"
+        }
+      }
+    },
+    "operator/token_10066_closur_ourbase/default/back": {
+      "kind": "operator",
+      "id": "token_10066_closur_ourbase",
+      "variant": "default",
+      "facing": "back",
+      "source": {
+        "key": "cn-client",
+        "kind": "assetbundle",
+        "bundle": {
+          "path": "pkgrps/btl_pfb_tokens_4.ab",
+          "bytes": 2568582,
+          "md5": "0fa7fd1e638ba6a269e09b6398ec5028",
+          "sha256": "af23c7f497862f38be2cdca0cd4079d44753bde8d61b97398e5a2777a54281e4",
+          "url": "https://ak.hycdn.cn/assetbundle/official/Android/assets/26-09-22-07-47-20_6c71fa/pkgrps_btl_pfb_tokens_4.dat",
+          "client": "cn",
+          "resourceVersion": "26-09-22-07-47-20_6c71fa",
+          "transforms": [
+            "Original embedded premultiplied RGBA textures decoded; RGB clamped to alpha to remove compression bleed",
+            "Atlas page dimensions normalized and pma: true recorded; native regions unchanged",
+            "Distinct original Front and Back skeletons retained; no missing attack, death or stun clip invented"
+          ]
+        },
+        "directory": "pkgrps/btl_pfb_tokens_4.ab",
+        "extractedSkeleton": "token_10066_closur_ourbase.skel",
+        "originalPathIds": {
+          "rootPathId": "-5788352084631041927",
+          "animatorPathId": "-4151407806632834951",
+          "controllerPathId": "9056934687418337401",
+          "faceSwitcherPathId": "6292302609185753209",
+          "skeletonAnimationPathId": "-464917371174270855",
+          "skeletonDataAssetPathId": "6294780015484215945",
+          "textAssetPathId": "-1572920748420474972",
+          "atlasAssetPathId": "6523054572338793872",
+          "atlasTextAssetPathId": "7651954779882870622",
+          "materialPathId": "6742679679801756683",
+          "rgbTexturePathId": "6509799426158450750"
+        },
+        "transforms": [
+          "Original embedded premultiplied RGBA textures decoded; RGB clamped to alpha to remove compression bleed",
+          "Atlas page dimensions normalized and pma: true recorded; native regions unchanged",
+          "Distinct original Front and Back skeletons retained; no missing attack, death or stun clip invented"
+        ]
+      },
+      "spineVersion": "3.8.99",
+      "skeleton": {
+        "path": "models/operator/token_10066_closur_ourbase/default/back/af23c7f497862f38be2cdca0cd4079d44753bde8d61b97398e5a2777a54281e4/token_10066_closur_ourbase.skel",
+        "bytes": 14807,
+        "sha256": "27498403d1606c842f6f2441603c9f3cca19b42ef670051bd049ccc2ccbe50ef"
+      },
+      "atlas": {
+        "path": "models/operator/token_10066_closur_ourbase/default/back/af23c7f497862f38be2cdca0cd4079d44753bde8d61b97398e5a2777a54281e4/token_10066_closur_ourbase.atlas",
+        "bytes": 498,
+        "sha256": "69f86bc94158230d9507c9b20967298449f95974c014c85a3761978701f544a3"
+      },
+      "textures": [
+        {
+          "path": "models/operator/token_10066_closur_ourbase/default/back/af23c7f497862f38be2cdca0cd4079d44753bde8d61b97398e5a2777a54281e4/token_10066_closur_ourbase.png",
+          "bytes": 5139,
+          "sha256": "5ccd3d82ab3219506e106b53b572fecb81e3c85f78291371a9bf942d6fe58d18"
+        }
+      ],
+      "premultipliedAlpha": true,
+      "animations": {
+        "Default": 0,
+        "Idle": 1.333,
+        "Start": 1
+      },
+      "animationRoles": {
+        "idle": "Idle",
+        "deploy": "Start",
+        "attack": null,
+        "skill": null,
+        "die": null
+      },
+      "hits": {},
+      "bounds": null,
+      "avatar": {
+        "path": "models/operator/token_10066_closur_ourbase/default/back/af23c7f497862f38be2cdca0cd4079d44753bde8d61b97398e5a2777a54281e4/avatar.png",
+        "bytes": 27670,
+        "sha256": "af675fb5b2ad829b4983fadd5e431126dabc7c8642a6c6e9b2ac84a799b33dbd",
+        "source": {
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "avatar/ASSISTANT"
+        }
+      }
+    }
+  },
+  "interfaceAssets": [
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "six-star-icons/Closure - Base.webp",
+      "bytes": 10488,
+      "gitBlob": "3de59b7e7288d6cd139d10c2b02a222538beede7",
+      "sha256": "b2569fad238f2dcad6befb16a69997fe99653ed8d45a5350451b23448864b0d4"
+    },
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "skill-icons/Closure - Recursion Tactic.webp",
+      "bytes": 6062,
+      "gitBlob": "b82c53dd1fd98c096a0f8beebfed8042edd4f81c",
+      "sha256": "6e46aa5522aa4d4b12e2d7006ff6a5934737e7a1a20978a7114463a86a49dc9d"
+    },
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "skill-icons/Closure - Algorithm Expansion.webp",
+      "bytes": 4820,
+      "gitBlob": "129101c7c96a612963072e905be05dd48cc11413",
+      "sha256": "9ccbc1d5e39e0eef84203160c63ca0cf41b5b9df5bc9333dc1b2a9f5f8ffb6a8"
+    },
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "skill-icons/Closure - Q.E.D..webp",
+      "bytes": 7700,
+      "gitBlob": "6653d36a5b2ca469a54c7883273fc4ed369f6e95",
+      "sha256": "859893e1003101708296e2194269f305df871bcd57e1c1a90e50867ca50e7ab6"
+    },
+    {
+      "repository": "arkpedia/arkpedia-skin-assets",
+      "commit": "6fb723692d89c4a08d9a7aa4015e19c0753dd270",
+      "path": "six-star-skins/Closure - Base.webp",
+      "bytes": 208056,
+      "gitBlob": "b97ea0c1030b1738e82ce3b36d38afb3b5df3805",
+      "sha256": "1387fabf43c900366324c5744900a154b4d1e887eb3c921444cd2d724d89eaa0"
+    }
+  ],
+  "limits": [
+    "Selected source/FSM aliases, tick dispatch, targeting geometry and roster mapping are simulator implementations; compiled Unity execution and original frame/pixel parity are unverified.",
+    "Only explicitly reviewed regular enemies are admitted for S3. Native particles, audio and modules remain unsupported."
+  ],
+  "sdCommit": "b977caef87feab47336f29b4c40bed2e423a8ce7",
+  "snapshotPreservation": {
+    "baseline": "84e9c7268732df7ef79de269f565a326bc807f07",
+    "olderOperators": 380,
+    "olderModels": 869,
+    "olderTokens": 54,
+    "unchanged": [
+      "older operator records",
+      "older model metadata",
+      "older tokens after normalizing SD avatar delivery URL",
+      "all table/image/skin source pins",
+      "default squad",
+      "stage geometry and pathing",
+      "enemies",
+      "stage art and gates after normalizing SD delivery commit"
+    ]
+  }
+}

@@ -59,6 +59,7 @@ const [characters, skills, ranges, enemies, stage, geometry, buffTemplates, orig
   await Promise.all(Object.keys(paths).concat("pins").map(read));
 if (originalLevel.mapData.tags != null && (!Array.isArray(originalLevel.mapData.tags)
   || originalLevel.mapData.tags.some(tag => typeof tag !== 'string'))) throw Error('Unsupported source map tags');
+const candidateClosur = process.argv.includes('--review-candidate-closur');
 const ids = Object.keys(REGULAR_OPERATORS);
 if (ids.includes('char_4179_monstr')) {
   const review = JSON.parse(await readFile(new URL('../../data/arkpedia-mon3tr-runtime-review.json', import.meta.url)));
@@ -262,6 +263,29 @@ if (ids.includes('char_4237_jcinta')) {
     || review.interfaceAssets.some(a => pins[a.repository] !== a.commit || !/^[a-f0-9]{64}$/.test(a.sha256)
       || !Number.isSafeInteger(a.bytes) || a.bytes < 1)) throw Error('Jacinta lacks pinned interface assets');
 }
+if (ids.includes('char_4228_closur')) {
+  const id = 'char_4228_closur';
+  const review = JSON.parse(await readFile(new URL('../../data/arkpedia-closur-runtime-review.json', import.meta.url)));
+  const foundation = await readFile(new URL('../../data/arkpedia-native-operators/char_4228_closur.json', import.meta.url));
+  const art = await readFile(new URL('../../data/arkpedia-closur-device-art.json', import.meta.url));
+  const e = JSON.parse(foundation);
+  const approved = JSON.stringify(review.enabledOperators) === JSON.stringify([id]) && review.verification.browser.status === 'passed';
+  const pending = candidateClosur && review.enabledOperators.length === 0 && review.verification.browser.status === 'pending';
+  if ((!approved && !pending) || review.frameParity !== false || review.nativeParticleSupport !== false
+    || review.moduleSupport !== false || review.nativePixelParity !== false
+    || review.mechanicsPolicy !== 'source-cn-command-center-continuous-fire-and-debt-v1'
+    || review.sourceFoundationSha256 !== createHash('sha256').update(foundation).digest('hex')
+    || review.deviceArtworkSha256 !== createHash('sha256').update(art).digest('hex')
+    || e.source.commit !== cnEvidence?.source.commit
+    || JSON.stringify(e.tables.character) !== JSON.stringify(cnEvidence.tables.characters[id])
+    || Object.entries(e.tables.skills).some(([key, value]) => JSON.stringify(value) !== JSON.stringify(cnEvidence.tables.skills[key])))
+    throw Error('Closure lacks matching source/artwork and completed public browser review');
+  const expected = ['six-star-icons/Closure - Base.webp', 'six-star-skins/Closure - Base.webp',
+    'skill-icons/Closure - Recursion Tactic.webp', 'skill-icons/Closure - Algorithm Expansion.webp', 'skill-icons/Closure - Q.E.D..webp'].sort();
+  if (JSON.stringify(review.interfaceAssets.map(a => a.path).sort()) !== JSON.stringify(expected)
+    || review.interfaceAssets.some(a => pins[a.repository] !== a.commit || !/^[a-f0-9]{64}$/.test(a.sha256)
+      || !Number.isSafeInteger(a.bytes) || a.bytes < 1)) throw Error('Closure lacks pinned interface assets');
+}
 if (ids.includes('char_4031_liesel')) {
   const review = JSON.parse(await readFile(new URL('../../data/arkpedia-liesel-runtime-review.json', import.meta.url)));
   const foundation = await readFile(new URL('../../data/arkpedia-native-operators/char_4031_liesel.json', import.meta.url));
@@ -334,22 +358,28 @@ if (ids.includes('char_249_mlyss')) tokenIds.unshift('token_10030_mlyss_wtrman')
 if(ids.includes('char_1042_phatm2'))tokenIds.unshift('token_10054_phatm2_encdool','token_10055_phatm2_mndclv');
 if (ids.includes('char_4179_monstr')) tokenIds.unshift('token_10050_monstr_prosts');
 if (ids.includes('char_450_necras')) tokenIds.unshift('token_10043_necras_skeltn');
+if (ids.includes('char_4228_closur')) tokenIds.unshift('token_10066_closur_ourbase');
+const closurSource = ids.includes('char_4228_closur')
+  ? JSON.parse(await readFile(new URL('../../data/arkpedia-native-operators/char_4228_closur.json', import.meta.url))) : null;
 const tokens = Object.fromEntries(tokenIds.map(id => {
-  const c = characters[id];
+  const closurToken = id === 'token_10066_closur_ourbase';
+  const c = closurToken ? closurSource.tables.tokens[id] : characters[id];
+  const tokenRanges = closurToken ? closurSource.tables.ranges : ranges;
+  const tokenSkills = closurToken ? closurSource.tables.tokenSkills : skills;
   if (!c) throw Error(`Missing original token: ${id}`);
   const candidate = v => v.rangeId
-    ? { ...v, rangeGrid: ranges[v.rangeId].grids.map(p => [p.row, p.col]) } : v;
-  return [id, { id, name: c.name, profession: c.profession,
+    ? { ...v, rangeGrid: tokenRanges[v.rangeId].grids.map(p => [p.row, p.col]) } : v;
+  return [id, { id, name: closurToken ? c.appellation : c.name, profession: c.profession,
     subProfessionId: c.subProfessionId, position: c.position,
     phases: c.phases.map(p => ({ maxLevel: p.maxLevel,
       attributesKeyFrames: p.attributesKeyFrames,
-      rangeGrid: ranges[p.rangeId].grids.map(p => [p.row, p.col]),
+      rangeGrid: tokenRanges[p.rangeId].grids.map(p => [p.row, p.col]),
     })),
     trait: c.trait ? { ...c.trait, candidates: c.trait.candidates.map(candidate) } : null,
     talents: (c.talents ?? []).map(t => ({ ...t, candidates: (t.candidates ?? []).map(candidate) })),
     skills: (c.skills ?? []).map(s => ({ id: s.skillId, unlockCondition: s.unlockCond,
-      levels: (s.skillId === null ? [] : skills[s.skillId].levels).map(level => level.rangeId
-        ? { ...level, rangeGrid: ranges[level.rangeId].grids.map(p => [p.row, p.col]) } : level) })),
+      levels: (s.skillId === null ? [] : tokenSkills[s.skillId].levels).map(level => level.rangeId
+        ? { ...level, rangeGrid: tokenRanges[level.rangeId].grids.map(p => [p.row, p.col]) } : level) })),
   }];
 }));
 const bindingEvidence = JSON.parse(await readFile(new URL("../../data/arkpedia-skill-prefabs.json", import.meta.url), "utf8"));
@@ -438,7 +468,15 @@ const models = Object.fromEntries(
     )
       throw new Error(`Unverified SD runtime metadata: ${k}`);
     const op = operators[model.id];
-    if (op?.skills.length > 1 && op.skills.some((_, index) => !model.animationRoles.skills?.[index]))
+    // Closure's source controller selects literal continuous-fire clips. S1
+    // retains ordinary fire; do not invent a generic skill animation family.
+    if (model.id === 'char_4228_closur') {
+      const source = closurSource.models.char_4228_closur[model.facing === 'front' ? 'Front' : 'Back'];
+      for (const [clip, duration] of Object.entries(source.durations))
+        if (Math.abs((model.animations[clip] ?? NaN) - duration) > .001 || model.animations[clip] == null)
+          throw Error('Changed Closure literal animation: ' + clip);
+    }
+    if (op?.skills.length > 1 && model.id !== 'char_4228_closur' && op.skills.some((_, index) => !model.animationRoles.skills?.[index]))
       throw new Error(`Missing per-skill SD animation roles: ${k}`);
     return [k, sd.models[k]];
   }),
@@ -464,6 +502,14 @@ if (ids.includes('char_4208_wintim')) {
   if (JSON.stringify(Object.keys(review.originalArtwork).sort()) !== JSON.stringify(keys)) throw Error('Incomplete Snegurochka artwork review');
   for (const key of keys) if (JSON.stringify(models[key]) !== JSON.stringify(review.originalArtwork[key]))
     throw Error('Changed original Snegurochka artwork: ' + key);
+}
+if (ids.includes('char_4228_closur')) {
+  const review = JSON.parse(await readFile(new URL('../../data/arkpedia-closur-runtime-review.json', import.meta.url)));
+  const keys = ['char_4228_closur', 'token_10066_closur_ourbase']
+    .flatMap(id => ['front', 'back'].map(face => `operator/${id}/default/${face}`)).sort();
+  if (JSON.stringify(Object.keys(review.originalArtwork).sort()) !== JSON.stringify(keys)) throw Error('Incomplete Closure artwork review');
+  for (const key of keys) if (JSON.stringify(models[key]) !== JSON.stringify(review.originalArtwork[key]))
+    throw Error('Changed original Closure artwork: ' + key);
 }
 if (ids.includes('char_4237_jcinta')) {
   const review = JSON.parse(await readFile(new URL('../../data/arkpedia-jcinta-runtime-review.json', import.meta.url)));
@@ -663,7 +709,7 @@ for (const [id,support] of Object.entries(REGULAR_OPERATORS)) {
 output.skillEffects = {repository:"arkpedia/arkpedia-sd-assets",commit:sdCommit,
   pack:stageAssets.effects.chargeCost,bindings};
 await writeJSONAtomic(
-  new URL("../../data/arkpedia-mvp.json", import.meta.url),
+  candidateClosur ? new URL("arkpedia-closur-candidate.json", cache) : new URL("../../data/arkpedia-mvp.json", import.meta.url),
   output,
 );
 console.log(

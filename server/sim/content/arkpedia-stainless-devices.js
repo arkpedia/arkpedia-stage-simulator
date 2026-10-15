@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import { canSpendDp } from './arkpedia-dp-budget.js';
 // Opt-in native-source device diagnostic. Public approval and owner skills are separate.
 import evidence from '../../../data/arkpedia-stainless-prefabs.json' with { type: 'json' };
 import { sourceCandidate, summonCardId } from '../../../shared/arkpedia/summons.js';
@@ -89,7 +90,7 @@ export class StainlessDeviceDeck {
     if (!allowed.includes(build)) return this.index === 2 ? 'Choose a melee tile.' : 'Choose a deployable tile.';
     if (b.unitAt(row, col)) return 'Tile is occupied.';
     if (b.tileReservation(row, col) || b.downOn(row, col)) return 'Tile is reserved for an operator return.';
-    if (b.dp < this.record.stats.cost) return 'Not enough DP.';
+    if (!canSpendDp(b, this.u.ownerId, this.record.stats.cost)) return 'Not enough DP.';
     return null;
   }
   place(row, col, dir = 'RIGHT') {

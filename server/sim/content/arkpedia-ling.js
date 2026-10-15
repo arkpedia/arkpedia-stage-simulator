@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import { canSpendDp } from './arkpedia-dp-budget.js';
 // Source-selected diagnostic; public enablement requires complete skills/art review.
 import evidence from '../../../data/arkpedia-ling-prefabs.json' with { type: 'json' };
 import { sourceCandidate, summonCardId } from '../../../shared/arkpedia/summons.js';
@@ -234,7 +235,7 @@ export class LingDragonDeck {
     if (build !== 'ALL' && build !== position) return position === 'MELEE' ? 'Choose a melee tile.' : 'Choose a high-ground tile.';
     if (b.allyUnits.some(t => present(t) && t.tileR === row && t.tileC === col)) return 'Tile is occupied.';
     if (b.tileReservation(row, col)) return 'Tile is reserved for an operator return.';
-    if (b.dp < this.record.stats.cost) return 'Not enough DP.';
+    if (!canSpendDp(b, this.u.ownerId, this.record.stats.cost)) return 'Not enough DP.';
     return null;
   }
   place(row, col, dir = 'RIGHT') {

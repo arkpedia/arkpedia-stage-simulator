@@ -5,6 +5,7 @@ import { absoluteRangeKeys, canTargetEnemy, sortEnemyTargets } from '../targetin
 import { bodyInKeys, bodyInRadius } from '../body.js';
 import { isHpLoss } from '../damage.js';
 import { resolveHit } from '../ai.js';
+import { canSpendDp, spendDp } from './arkpedia-dp-budget.js';
 const ID = 'char_322_lmlee';
 const live = u => u?.alive && u.deployed && !u.hidden;
 const n = u => Number(u.skill.id.at(-1));
@@ -126,10 +127,13 @@ export function installLee({battle:b,unit:u,def}) {
     if(n(u)===2)b.addBuff(u,{key:key(u,'passive'),mods:{aspd:u.skill.bb.attack_speed}});
     u.mem.leeUpkeep=b.every(def.traitBb.interval,()=>{
       if(!u.alive||!u.deployed)return;
-      const p=b.getPlayer(u.ownerId),normal=-def.traitBb.cost,extra=-t2?.extra_cost;
-      if(p.dp<normal){b.retreat(u,{reason:'merchant'});return;}
-      const charge=t2&&!u.mem.leeShield&&p.dp>=extra;
-      b.addDp(u.ownerId,-(charge?extra:normal));if(charge)u.mem.leeShield=true;
+      const normal=-def.traitBb.cost,extra=-t2?.extra_cost;
+      // lmlee_tr: ordinary upkeep includes debt; extra_cost explicitly does not.
+      const charge=t2&&!u.mem.leeShield&&canSpendDp(b,u.ownerId,extra,{considerNegative:false});
+      if(!spendDp(b,u.ownerId,charge?extra:normal,{considerNegative:!charge})){
+        b.retreat(u,{reason:'merchant'});return;
+      }
+      if(charge)u.mem.leeShield=true;
     },{owner:u});
     u.mem.leeBlockTimer=b.every(.10000000149011612,()=>syncBlock(b,u),{owner:u});
   },{owner:u});
