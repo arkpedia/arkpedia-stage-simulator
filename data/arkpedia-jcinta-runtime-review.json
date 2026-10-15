@@ -1,0 +1,288 @@
+{
+  "schemaVersion": 1,
+  "operatorId": "char_4237_jcinta",
+  "enabledOperators": [
+    "char_4237_jcinta"
+  ],
+  "frameParity": false,
+  "moduleSupport": false,
+  "nativePixelParity": false,
+  "nativeParticleSupport": false,
+  "sourceFoundationSha256": "c43d9cebc0231826e476dde9dd6cc0f8d44887244379a93600468986cf67f9a5",
+  "mechanicsPolicy": "source-cn-override-channel-and-flying-sanctuary-v1",
+  "scope": "Original selected CN ordinary attacks, flying-source Sanctuary and all twenty S1/S2 ranks.",
+  "verification": {
+    "source": "Original six frozen Git blobs and five native bundles independently verified; seven outputs reproduced; 32 source/approval mutations rejected.",
+    "runtime": "43 selected-source/combat cases and thirty public-path cases pass on Node 22; the final 413-test cross-operator, source, roster and damage set passes on Node 24 without failures or skips. Full local Node 22 suite: 14,132 passed, ten optional/platform skips, zero failures across 325 suites.",
+    "browser": {
+      "status": "passed",
+      "script": "tools/arkpedia/review-jcinta-public.mjs",
+      "scriptSha256": "f993eed377cb59a3ad8157e26a30b1010512600256e628ddefb1d3b4269f0072",
+      "driver": "tools/arkpedia/public-review-driver.mjs",
+      "driverSha256": "1ef20a71f4982799d1368e61d0b2e2eac9eb36efe1aaad45294150566246359f",
+      "cases": 8,
+      "captures": 48,
+      "viewports": [
+        "1280x800 desktop mouse",
+        "844x390 landscape phone touch"
+      ],
+      "originalWaves": false,
+      "fixture": "Original 0-1 terrain, 99 DP, empty waves, pinned enemy and wounded Beagle; original-wave/DP tests run separately.",
+      "checks": [
+        "Public squad/skill selection and separate drag/drop/direction swipe",
+        "Original Front/Back attack and both skill Begin/Loop/End families",
+        "Natural time SP, delayed channel DP, S2 healing, enlarged displayed range and owned aerial Sanctuary",
+        "Two native ordinary attack restarts before and after each channel",
+        "HP/SP gauges, source skill icons and retreat cleanup"
+      ],
+      "repeatedAttackRestarts": 32,
+      "browserErrors": 0,
+      "failedResources": 0,
+      "visualReview": "Desktop S2 Front enlarged-area channel and phone S1 Back channel captures inspected. Native particle and original pixel/frame parity remain unverified."
+    }
+  },
+  "limits": [
+    "Selector aliases, tick-sampled aura/heal selection, animation/FSM transitions and source motion via local isFlying are explicit simulator mappings.",
+    "Native projectile-source and modifier-source pointers share the local credited owner; independent compiled Unity attribution is not recovered.",
+    "Native particles, audio, modules and original game-frame/pixel parity remain unsupported."
+  ],
+  "originalArtwork": {
+    "operator/char_4237_jcinta/default/back": {
+      "kind": "operator",
+      "id": "char_4237_jcinta",
+      "variant": "default",
+      "facing": "back",
+      "spineVersion": "3.8.99",
+      "source": {
+        "key": "operators",
+        "repository": "fexli/ArknightsResource",
+        "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+        "directory": "spine/char_4237_jcinta/char_4237_jcinta/Back"
+      },
+      "skeleton": {
+        "path": "models/operator/char_4237_jcinta/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4237_jcinta.skel",
+        "bytes": 288975,
+        "sha256": "657ed4d5f23cbe4d53f82ccd5110a0db63d2976b645b3b437a41f92947df57c7"
+      },
+      "atlas": {
+        "path": "models/operator/char_4237_jcinta/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4237_jcinta.atlas",
+        "bytes": 8678,
+        "sha256": "d5ade108555d51f47bcec10aeba6d70e0fa4f8a14c754a099ad5368e28a20802"
+      },
+      "textures": [
+        {
+          "path": "models/operator/char_4237_jcinta/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4237_jcinta.png",
+          "bytes": 239321,
+          "sha256": "212303d3de713f00faf865a7b9f749a7e38e69c86accadaec132c405084dc305"
+        }
+      ],
+      "premultipliedAlpha": false,
+      "animations": {
+        "Attack": 1.3,
+        "Default": 0,
+        "Idle": 1.667,
+        "Skill_1_Begin": 0.467,
+        "Skill_1_End": 0.333,
+        "Skill_1_Loop": 1.667,
+        "Skill_2_Begin": 0.467,
+        "Skill_2_End": 0.333,
+        "Skill_2_Loop": 1.333,
+        "Start": 1
+      },
+      "animationRoles": {
+        "idle": "Idle",
+        "deploy": "Start",
+        "attack": {
+          "begin": null,
+          "loop": "Attack",
+          "end": null
+        },
+        "attackDown": null,
+        "skill": {
+          "begin": "Skill_1_Begin",
+          "loop": "Skill_1_Loop",
+          "end": "Skill_1_End",
+          "index": 0,
+          "idle": null,
+          "via": "skill"
+        },
+        "die": null,
+        "move": null,
+        "stun": null,
+        "skills": {
+          "0": {
+            "begin": "Skill_1_Begin",
+            "loop": "Skill_1_Loop",
+            "end": "Skill_1_End",
+            "index": 0,
+            "idle": null,
+            "via": "skill"
+          },
+          "1": {
+            "begin": "Skill_2_Begin",
+            "loop": "Skill_2_Loop",
+            "end": "Skill_2_End",
+            "index": 1,
+            "idle": null,
+            "via": "skill"
+          }
+        }
+      },
+      "hits": {
+        "Attack": [
+          0.467
+        ]
+      },
+      "bounds": {
+        "x": -697.935,
+        "y": -1.842,
+        "width": 1950.146,
+        "height": 810.263
+      }
+    },
+    "operator/char_4237_jcinta/default/front": {
+      "kind": "operator",
+      "id": "char_4237_jcinta",
+      "variant": "default",
+      "facing": "front",
+      "spineVersion": "3.8.99",
+      "source": {
+        "key": "operators",
+        "repository": "fexli/ArknightsResource",
+        "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+        "directory": "spine/char_4237_jcinta/char_4237_jcinta/Front"
+      },
+      "skeleton": {
+        "path": "models/operator/char_4237_jcinta/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4237_jcinta.skel",
+        "bytes": 502736,
+        "sha256": "6198699fea73c4183f3b22e92e964841b9b7860493e923c4f8acb98183448089"
+      },
+      "atlas": {
+        "path": "models/operator/char_4237_jcinta/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4237_jcinta.atlas",
+        "bytes": 14588,
+        "sha256": "33006acafd4e6f8219a46dc82cc29a1b51b80e5f3686346466ada9541af27c47"
+      },
+      "textures": [
+        {
+          "path": "models/operator/char_4237_jcinta/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4237_jcinta.png",
+          "bytes": 280057,
+          "sha256": "6898a608cd2aec1cd741bdcce14a42ef5846dd8d914bfc6126ed1639613bbdd4"
+        }
+      ],
+      "premultipliedAlpha": false,
+      "animations": {
+        "Attack": 1.3,
+        "Default": 0,
+        "Die": 1,
+        "Idle": 3.333,
+        "Skill_1_Begin": 0.467,
+        "Skill_1_End": 0.333,
+        "Skill_1_Loop": 3.333,
+        "Skill_2_Begin": 0.467,
+        "Skill_2_End": 0.333,
+        "Skill_2_Loop": 2.667,
+        "Start": 1
+      },
+      "animationRoles": {
+        "idle": "Idle",
+        "deploy": "Start",
+        "attack": {
+          "begin": null,
+          "loop": "Attack",
+          "end": null
+        },
+        "attackDown": null,
+        "skill": {
+          "begin": "Skill_1_Begin",
+          "loop": "Skill_1_Loop",
+          "end": "Skill_1_End",
+          "index": 0,
+          "idle": null,
+          "via": "skill"
+        },
+        "die": "Die",
+        "move": null,
+        "stun": null,
+        "skills": {
+          "0": {
+            "begin": "Skill_1_Begin",
+            "loop": "Skill_1_Loop",
+            "end": "Skill_1_End",
+            "index": 0,
+            "idle": null,
+            "via": "skill"
+          },
+          "1": {
+            "begin": "Skill_2_Begin",
+            "loop": "Skill_2_Loop",
+            "end": "Skill_2_End",
+            "index": 1,
+            "idle": null,
+            "via": "skill"
+          }
+        }
+      },
+      "hits": {
+        "Attack": [
+          0.467
+        ]
+      },
+      "bounds": {
+        "x": -697.935,
+        "y": -1.842,
+        "width": 1950.146,
+        "height": 810.263
+      }
+    }
+  },
+  "interfaceAssets": [
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "five-star-icons/Jacinta - Base.webp",
+      "bytes": 10740,
+      "sha256": "84dce9033f8e1a2cc35ca3ce786f5feebc0483998ca189b35d7544b47bfca60e"
+    },
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "skill-icons/Jacinta - Support γ.webp",
+      "bytes": 7692,
+      "sha256": "a231fc1ffb986dce7b04fe3fe3302273c722d8fea80f9e6a7369238445fbefb3"
+    },
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "skill-icons/Jacinta - Parasol's Shade.webp",
+      "bytes": 5648,
+      "sha256": "cb1c568551e37837715c5cdb094b844c83deac2052eabb9eb2aa2238f0e956ec"
+    },
+    {
+      "repository": "arkpedia/arkpedia-skin-assets",
+      "commit": "6fb723692d89c4a08d9a7aa4015e19c0753dd270",
+      "path": "five-star-skins/Jacinta - Base.webp",
+      "bytes": 185858,
+      "sha256": "d7bbd8fe1e05eb8e26b214c365285495c78bdbe81c9664669ecbe8b34b79bb1e"
+    }
+  ],
+  "sdCommit": "3cec41fbee09dff3b02891cbd047bb256e2b5ba8",
+  "snapshotPreservation": {
+    "baseline": "ea9854188db9e598a1d049075a6ad9e723c15000",
+    "normalizedDeliveryCommit": "04a4667d76962df9affbb2a016b500013a3007fa",
+    "olderOperators": 378,
+    "olderModels": 865,
+    "operatorsSha256": "ca41ccbabd8076740c59b9a94f1388d6a19a15dd02dfe253866a9a18e28ad76b",
+    "unchanged": [
+      "older operators",
+      "older model metadata",
+      "default squad order",
+      "stage",
+      "tokens",
+      "enemies",
+      "effects",
+      "all table/image/skin source pins"
+    ]
+  },
+  "browserTestedSDCommit": "e3b63547f9e638319d02aa70e09ee0359f940230",
+  "sdMergedTreeMatchesBrowserTest": true
+}

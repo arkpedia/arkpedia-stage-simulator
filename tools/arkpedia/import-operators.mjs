@@ -167,6 +167,13 @@ for (const id of ids) {
         index: 1, idle: 'Skill_2_Idle', via: 'attack' };
       roles.skill = roles.skills['0'];
     }
+    if (id === 'char_4237_jcinta') {
+      for (let i = 0; i < 2; i++) roles.skills[String(i)] = {
+        begin: `Skill_${i + 1}_Begin`, loop: `Skill_${i + 1}_Loop`, end: `Skill_${i + 1}_End`,
+        index: i, idle: null, via: 'skill',
+      };
+      roles.skill = roles.skills['0'];
+    }
     if (!roles.idle || !support.noBasicAttack && catalogue[id]?.subProfessionId !== 'bard' && (!roles.attack || roles.attack.via === "idle"))
       throw Error(`${key}: missing idle/attack clips`);
     Object.assign(model, { premultipliedAlpha: values.pma === "true", animations: info.durations,

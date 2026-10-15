@@ -65,7 +65,11 @@ skill_ids = [s['skillId'] for s in ct[ID]['skills']]
 assert e['tables']['skills'] == {s: st[s] for s in skill_ids}
 bindings = {s: list(dict.fromkeys(rank['prefabId'] for rank in st[s]['levels'])) for s in skill_ids}
 assert e['skillBindings'] == bindings
-assert e['ownerModeSkills'] == [s for s, prefabs in bindings.items() if None in prefabs]
+overrides = {row['skillId']: row['overridePrefabKey'] for row in ct[ID]['skills'] if row['overridePrefabKey'] is not None}
+assert all(isinstance(value, str) and value for value in overrides.values())
+assert e.get('skillPrefabOverrides', {}) == overrides
+effective = {skill: [overrides[skill]] if skill in overrides else prefabs for skill, prefabs in bindings.items()}
+assert e['ownerModeSkills'] == [s for s, prefabs in effective.items() if None in prefabs]
 owner_path, art_path = f'charpack/{ID}.ab', f'chararts/{ID}.ab'
 skill_path, projectile_path, holder_path = 'battle/prefabs/[uc]skills.ab', 'battle/prefabs/[uc]projectiles.ab', 'config/buff_template_holder.ab'
 paths = [owner_path, art_path, skill_path, projectile_path, holder_path]
@@ -125,7 +129,7 @@ def original_graph(path, container):
 original_owner = {ID: original_graph(owner_path, f'dyn/battle/prefabs/characters/{ID}.prefab')}
 original_art = {ID: original_graph(art_path, f'dyn/battle/prefabs/skins/character/{ID}/defaultskin.prefab')}
 original_skills = {prefab: original_graph(skill_path, f'dyn/battle/prefabs/[uc]skills/{prefab}.prefab')
-                   for prefab in dict.fromkeys(p for prefabs in bindings.values() for p in prefabs if p is not None)}
+                   for prefab in dict.fromkeys(p for prefabs in effective.values() for p in prefabs if p is not None)}
 assert e['characters'] == original_owner and e['artworkHierarchy'] == original_art and e['skills'] == original_skills
 art_parts = [{'pathId': p['pathId'], 'data': p['data']} for row in original_art[ID] for p in row['components']
              if '_animations' in p['data']]

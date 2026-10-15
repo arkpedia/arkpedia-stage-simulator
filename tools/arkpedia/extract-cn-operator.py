@@ -117,11 +117,17 @@ assert len(art_parts) == 1, 'Expected one original default-skin animation contro
 chararts = {ID: [{'pathId': r['pathId'], 'data': r['data']} for r in art_parts]}
 skill_path = 'battle/prefabs/[uc]skills.ab'
 skill_bundle = load(skill_path)
-skills, skill_bindings, mode_skills = {}, {}, []
+skills, skill_bindings, mode_skills, prefab_overrides = {}, {}, [], {}
 for key in skill_ids:
     prefabs = list(dict.fromkeys(rank['prefabId'] for rank in st[key]['levels']))
     skill_bindings[key] = prefabs
-    for prefab in prefabs:
+    override = next(s for s in ct[ID]['skills'] if s['skillId'] == key)['overridePrefabKey']
+    if override is not None:
+        assert isinstance(override, str) and override, 'Invalid original skill prefab override'
+        prefab_overrides[key] = override
+    # Preserve literal rank bindings, but follow an explicit character override
+    # instead of treating a null shared prefab as an inferred owner-mode skill.
+    for prefab in [override] if override is not None else prefabs:
         if prefab is None:
             mode_skills.append(key)
         elif prefab not in skills:
@@ -235,6 +241,8 @@ evidence = {'schemaVersion': 2, 'operatorId': ID, 'enabledOperators': [], 'heldO
             'officialSkeletonBindings': {ID: bindings}, 'models': {ID: json.loads((OUT / 'models.json').read_bytes())},
             'nativeTemplateGaps': sorted(needed - native.keys()), 'jsonTemplateGaps': sorted(needed - bt.keys()),
             'reviewStatus': 'Held original CN source; combat, model delivery, modules and game-frame proof remain separate'}
+if prefab_overrides:
+    evidence['skillPrefabOverrides'] = prefab_overrides
 destination = ROOT / 'data/arkpedia-native-operators' / (ID + '.json')
 destination.parent.mkdir(parents=True, exist_ok=True)
 temporary = destination.with_suffix('.json.tmp')
