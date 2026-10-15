@@ -13,7 +13,8 @@ export const MON3TR_HEALING_CONTRACT = Object.freeze({
   frameParity: false,
 });
 const TOKEN = 'token_10050_monstr_prosts';
-const live = u => u?.alive && u.deployed && !u.hidden && !u._removing;
+const present = u => u?.alive && u.deployed && !u._removing;
+const live = u => present(u) && !u.hidden;
 const same = (a, z) => JSON.stringify(a) === JSON.stringify(z);
 const due = (b, at) => b.time + 1e-8 >= at;
 const grid = evidence.tables.ranges['x-4'].grids.map(g => [g.row, g.col]);
@@ -54,7 +55,7 @@ export class Mon3trHealingController {
     this.phase = null; this.accepting = false; this.stopped = false; this.handles = [];
     this.reconstructions = new Map();
   }
-  valid() { return !this.stopped && !this.b.finished && live(this.u) && this.seq === this.u.deploySeq; }
+  valid() { return !this.stopped && !this.b.finished && present(this.u) && this.seq === this.u.deploySeq; }
   model() { return evidence.models[ID][['UP', 'LEFT'].includes(this.u.dir) ? 'Back' : 'Front']; }
   visual(clip, speed = 1, loop = false) {
     this.u.mem.regularFormVisual = { clip, speed, loop };
@@ -76,9 +77,10 @@ export class Mon3trHealingController {
       || this.reconstructions.has(token)) throw Error('Expected a fresh owned diagnostic Reconstruction');
     const seq = token.deploySeq;
     const guard = this.b.on('heal', ctx => {
-      if (ctx.target === token && token.deploySeq === seq && ctx.source !== token && ctx.source?.defId !== ID)
-        ctx.amount = 0;
-    }, { owner: token });
+      if (ctx.target === token && token.deploySeq === seq && ctx.source !== token && ctx.source?.defId !== ID) {
+        ctx.amount = 0; ctx.stopPropagation = true;
+      }
+    }, { owner: token, priority: Number.MAX_SAFE_INTEGER });
     this.b.addBuff(token, { key: 'monstr[free_jump]', source: this.u });
     this.reconstructions.set(token, { seq, guard });
     return token;
@@ -131,7 +133,7 @@ export class Mon3trHealingController {
   }
   release(target) {
     const p = this.phase;
-    if (!this.accepting || !this.valid() || !this.u.canAct || this.u.s.flags.disarm || !p
+    if (!this.accepting || !this.valid() || !live(this.u) || !this.u.canAct || this.u.s.flags.disarm || !p
       || p.kind !== 'attack' || p.target !== target || p.targetSeq !== target.deploySeq || p.accepted
       || p.epoch !== this.u.attackControlEpoch || !due(this.b, p.releaseAt) || !this.eligible(target)) return false;
     p.accepted = true;
@@ -139,14 +141,14 @@ export class Mon3trHealingController {
       * (p.skill ? this.record.bb.heal_scale : 1) });
     return true;
   }
-  canS1() { return this.record.index === 0 && this.valid() && this.u.canAct && !this.u.s.flags.disarm
+  canS1() { return this.record.index === 0 && this.valid() && live(this.u) && this.u.canAct && !this.u.s.flags.disarm
     && !this.u.skill.active && this.u.atkCd <= 1e-9 && !this.phase && this.targets().length > 0; }
   tick() {
     if (!this.valid()) return;
     const { b, u } = this;
     let p = this.phase;
     if (p?.kind === 'born') { if (!due(b, p.readyAt)) return; this.phase = p = null; }
-    if (!u.canAct || u.s.flags.disarm || p && p.epoch !== u.attackControlEpoch) {
+    if (!live(u) || !u.canAct || u.s.flags.disarm || p && p.epoch !== u.attackControlEpoch) {
       this.phase = null; if (u.skill.active && this.record.index === 0) u.skill.end('interrupted');
       this.visual('Idle', 1, true); return;
     }

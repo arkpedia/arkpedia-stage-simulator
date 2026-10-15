@@ -202,3 +202,42 @@ test('source Front and Back attack events remain literal and animation speed is 
     until(f, () => f.heals.length === 1); assert.ok(f.heals[0].time >= p.releaseAt);
   }
 });
+test('S1 retains four counted allies plus the free Reconstruction recipient', () => {
+  const f = make(), token = ally(f, { col: 6, token: true, ratio: .05 });
+  const others = [7, 8, 9, 10].map((col, i) => ally(f, { col, ratio: .1 + i * .1 }));
+  f.u.skill.setSpTotal(f.u.skill.spCost); until(f, () => f.heals.length === 5);
+  assert.deepEqual(f.heals.map(h => h.target), [token, ...others]);
+  f.heals.forEach((h, i) => near(h.amount, f.record.stats.atk * f.record.bb.heal_scale * .75 ** Math.max(0, i - 1)));
+  assert.equal(f.attacks.length, 1);
+});
+test('temporary hiding pauses the healer without permanently retiring its deployment controller', () => {
+  const f = make({ skill: 2 }); ally(f);
+  until(f, () => f.controller.phase?.kind === 'attack');
+  f.u.hidden = true; advance(f.b, 3);
+  assert.equal(f.heals.length, 0); assert.equal(f.controller.stopped, false);
+  f.u.hidden = false; until(f, () => f.heals.length === 1);
+  assert.equal(f.controller.stopped, false);
+});
+test('Reconstruction rejects foreign healing before unrelated output modifiers can turn it back into positive healing', () => {
+  const f = make(), token = ally(f, { token: true }), other = ally(f, { row: 6 });
+  let modified = false;
+  f.b.on('heal', ctx => { if (ctx.target === token) { modified = true; ctx.amount = 100; } });
+  const hp = token.hp;
+  near(f.b.heal(other, token, 100, { ignoreHealFree: true }), 0);
+  near(token.hp, hp); assert.equal(modified, false);
+});
+test('a zeroed accepted heal grants no coordination while the chain retains its independent bounce budget', () => {
+  const f = make({ skill: 2 }), a = ally(f), next = ally(f, { col: 7, ratio: .2 });
+  f.b.on('heal', ctx => { if (ctx.target === a) ctx.amount = 0; });
+  until(f, () => f.heals.length === 2); disarm(f);
+  near(f.heals[0].amount, 0); near(a.hp, 1000);
+  assert.equal(a.findBuff(`mon3tr:${f.u.id}:coordination`), null);
+  assert.equal(f.heals[1].target, next); near(f.heals[1].amount, f.record.stats.atk * .75);
+});
+test('hiding during the shared pre-attack callback rejects release and offensive SP without retiring the controller', () => {
+  const f = make({ skill: 2 }); ally(f);
+  const sp = f.u.skill.sp;
+  f.b.on('beforeAttack', ({ attacker }) => { if (attacker === f.u) f.u.hidden = true; });
+  until(f, () => f.u.hidden); advance(f.b, .3);
+  assert.equal(f.heals.length, 0); near(f.u.skill.sp, sp); assert.equal(f.controller.stopped, false);
+});
