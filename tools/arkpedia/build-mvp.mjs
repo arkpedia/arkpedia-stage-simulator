@@ -223,6 +223,26 @@ if (ids.includes('char_4194_rmixer')) {
     throw Error('Sankta public runtime review differs from the pinned native source');
 }
 const cnEvidence = usesCN ? JSON.parse(await readFile(new URL('../../data/arkpedia-cn-source.json', import.meta.url), 'utf8')) : null;
+if (ids.includes('char_4208_wintim')) {
+  const review = JSON.parse(await readFile(new URL('../../data/arkpedia-wintim-runtime-review.json', import.meta.url)));
+  const foundation = await readFile(new URL('../../data/arkpedia-native-operators/char_4208_wintim.json', import.meta.url));
+  const evidence = JSON.parse(foundation), id = 'char_4208_wintim';
+  if (JSON.stringify(review.enabledOperators) !== JSON.stringify([id]) || review.frameParity !== false
+    || review.nativeParticleSupport !== false || review.moduleSupport !== false || review.nativePixelParity !== false
+    || review.mechanicsPolicy !== 'source-cn-cast-dp-and-output-damage-v1'
+    || review.verification.browser.status !== 'passed'
+    || review.sourceFoundationSha256 !== createHash('sha256').update(foundation).digest('hex')
+    || evidence.source.commit !== cnEvidence?.source.commit
+    || JSON.stringify(evidence.tables.character) !== JSON.stringify(cnEvidence.tables.characters[id])
+    || Object.entries(evidence.tables.skills).some(([key, value]) => JSON.stringify(value) !== JSON.stringify(cnEvidence.tables.skills[key])))
+    throw Error('Snegurochka lacks matching pinned CN source review');
+  const expected = ['four-star-icons/Snegurochka - Base.webp', 'four-star-skins/Snegurochka - Base.webp',
+    'skill-icons/Snegurochka - Data Analysis.webp', 'skill-icons/Snegurochka - Rational Attribution.webp'].sort();
+  if (JSON.stringify(review.interfaceAssets.map(a => a.path).sort()) !== JSON.stringify(expected)
+    || review.interfaceAssets.some(a => pins[a.repository] !== a.commit || !/^[a-f0-9]{64}$/.test(a.sha256)
+      || !Number.isSafeInteger(a.bytes) || a.bytes < 1) || REGULAR_OPERATORS[id].assetName !== 'Snegurochka')
+    throw Error('Snegurochka display spelling lacks its pinned interface assets');
+}
 if (ids.includes('char_4051_akkord')) {
   const review = JSON.parse(await readFile(new URL('../../data/arkpedia-akkord-runtime-review.json', import.meta.url)));
   const foundation = await readFile(new URL('../../data/arkpedia-akkord-prefabs.json', import.meta.url));
@@ -399,6 +419,13 @@ if (ids.includes('char_4051_akkord')) {
   if (JSON.stringify(Object.keys(review.originalArtwork).sort()) !== JSON.stringify(keys)) throw Error('Incomplete Akkord artwork review');
   for (const key of keys) if (JSON.stringify(models[key]) !== JSON.stringify(review.originalArtwork[key]))
     throw Error('Changed original Akkord artwork: ' + key);
+}
+if (ids.includes('char_4208_wintim')) {
+  const review = JSON.parse(await readFile(new URL('../../data/arkpedia-wintim-runtime-review.json', import.meta.url)));
+  const keys = ['front', 'back'].map(face => `operator/char_4208_wintim/default/${face}`).sort();
+  if (JSON.stringify(Object.keys(review.originalArtwork).sort()) !== JSON.stringify(keys)) throw Error('Incomplete Snegurochka artwork review');
+  for (const key of keys) if (JSON.stringify(models[key]) !== JSON.stringify(review.originalArtwork[key]))
+    throw Error('Changed original Snegurochka artwork: ' + key);
 }
 let nativeEffects;
 if(ids.includes('char_1042_phatm2')){
