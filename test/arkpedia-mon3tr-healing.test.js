@@ -2,61 +2,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import data from '../data/arkpedia-mvp.json' with { type: 'json' };
-import e from '../data/arkpedia-mon3tr-prefabs.json' with { type: 'json' };
-import { StandardBattle } from '../server/sim/arkpedia.js';
-import { normalizeChess } from '../server/sim/simdata.js';
-import { defaultBuild } from '../shared/arkpedia/loadout.js';
-import { MON3TR_ID as ID, selectedMon3trBuild } from '../server/sim/content/arkpedia-mon3tr-source.js';
+import { MON3TR_ID as ID } from '../server/sim/content/arkpedia-mon3tr-source.js';
 import { prepareMon3trHealing, MON3TR_HEALING_CONTRACT as CONTRACT } from '../server/sim/content/arkpedia-mon3tr-healing.js';
-const TOKEN = 'token_10050_monstr_prosts';
-const near = (a, z, eps = 1e-5) => assert.ok(Math.abs(a - z) < eps, `${a} != ${z}`);
-function advance(b, seconds) {
-  for (let n = 0; n < Math.ceil(seconds / b.dt - 1e-9); n++) b.step();
-  assert.deepEqual(b.errors, []);
-}
-function until(f, condition, seconds = 20) {
-  const end = f.b.time + seconds;
-  while (!condition() && f.b.time < end) advance(f.b, f.b.dt);
-  assert.ok(condition(), `Condition missing at ${f.b.time}`);
-}
-function make({ skill = 1, elite = 2, rank = [4, 7, 10][elite], potential = 1, trust = 0,
-  dir = 'RIGHT', defer = false, contract = CONTRACT, mutate } = {}) {
-  const d = structuredClone(data); d.stage.geometry.waves[0].spawns = []; d.stage.battle.dp_per_second = 0;
-  d.stage.geometry.rows = 19; d.stage.geometry.cols = 21;
-  d.stage.geometry.tileGrid = Array.from({ length: 19 }, () => Array(21).fill(2));
-  const b = new StandardBattle(d, { operators: [defaultBuild(d.operators.char_289_gyuki)] });
-  b.autoFinish = false; b.recordEvents = true; b.setViewport('fullscreen-workspace');
-  b.grid.tiles = b.grid.tiles.map(t => ({ ...t, height: 'LOW', build: 'ALL', pass: 'ALL' }));
-  const build = { elite, level: e.tables.character.phases[elite].maxLevel, potential, trust,
-    skillRank: rank, skillId: `skchr_monstr_${skill}`, module: 'none' };
-  const r = selectedMon3trBuild(build), c = e.tables.character;
-  const def = normalizeChess({ chessId: ID, charId: ID, name: c.name, profession: c.profession,
-    position: c.position, subProfessionId: c.subProfessionId, stats: r.stats, rangeGrid: r.rangeGrid,
-    tags: r.tags, talents: r.talents, skill: { ...r.source, ...r.source.spData, skillId: build.skillId,
-      rangeGrid: r.skillRangeGrid, trigger: { rule: 'NEVER' } }, arkpedia: build });
-  mutate?.(def);
-  const u = b._makeAlly(b.getPlayer('arkpedia'), def, 'op', 5, 5, { dir });
-  const prepared = prepareMon3trHealing(b, u, { contract });
-  b._setupUnit(u, prepared.kit); prepared.controller.install();
-  const heals = [], attacks = [];
-  b.on('calculatedHeal', ctx => { if (ctx.source === u) heals.push({ ...ctx, time: b.time }); });
-  b.on('attack', ctx => { if (ctx.attacker === u) attacks.push({ ...ctx, time: b.time }); });
-  const deploy = () => { u.player.dp = 99; assert.ok(b._deploy(u, { initial: false })); };
-  if (!defer) deploy();
-  return { b, u, d, build, deploy, heals, attacks, ...prepared };
-}
-function ally(f, { row = 5, col = 6, hp = 10000, ratio = .1, token = false, flags } = {}) {
-  const t = f.b.spawnToken(f.u, token ? TOKEN : 'diagnostic:healing-recipient', row, col, {
-    def: { name: token ? 'Reconstruction' : 'Diagnostic recipient', profession: 'TOKEN', position: 'MELEE',
-      stats: { maxHp: hp, atk: 0, def: 0, blockCnt: 0, cost: 0 }, skill: null },
-    kit: { trait: { noAttack: true, noBlock: true }, talents: [], skill: { kind: 'passive' } },
-  });
-  assert.ok(t); t.hp = hp * ratio;
-  if (flags) f.b.addBuff(t, { key: 'fixture:flags', flags });
-  if (token) f.controller.attachReconstruction(t);
-  return t;
-}
-const disarm = f => f.b.addBuff(f.u, { key: 'fixture:disarm', flags: { disarm: true } });
+import { make, ally, advance, until, near, disarm } from './helpers/mon3tr-fixture.js';
 
 test('healing diagnostics require exact source and contract and do not enable S2/S3 or public selection', () => {
   assert.throws(() => make({ contract: { ...CONTRACT } }), /healing contract/);
@@ -107,11 +55,12 @@ test('foreign ordinary healers cannot heal attached Reconstruction; Mon3tr and s
   assert.throws(() => f.controller.attachReconstruction(t), /fresh owned/);
   assert.throws(() => f.controller.attachReconstruction(other), /fresh owned/);
 });
-test('isolation, no-heal, untargetable and device recipients are excluded while source ignore-heal-free remains honored', () => {
+test('recipient masks exclude ordinary heal-free allies while retaining the marked Reconstruction exception', () => {
   const f = make({ skill: 2 });
   for (const [i, flags] of [{ isolated: true }, { noHeal: true }, { untargetable: true }].entries())
     ally(f, { row: 4 + i, col: 6, ratio: .001, flags });
-  const t = ally(f, { row: 5, col: 7, flags: { healFree: true } });
+  ally(f, { row: 4, col: 7, ratio: .001, flags: { healFree: true } });
+  const t = ally(f, { row: 5, col: 7, token: true, flags: { healFree: true } });
   const device = f.b.spawnDevice('fixture:device', 5, 8, { hp: 1e4 }); device.hp = 1;
   until(f, () => f.heals.length === 1);
   assert.equal(f.heals[0].target, t); near(device.hp, 1);
@@ -141,16 +90,21 @@ test('an already fired heal survives owner retirement but does not revive it or 
   assert.equal(f.u.alive, false); assert.equal(f.u.findBuff(`mon3tr:${f.u.id}:coordination`), null);
   assert.equal(f.controller.stopped, true);
 });
-for (const elite of [0, 1, 2]) test(`E${elite} base talent grants the selected ASPD for ten seconds without equal-priority refresh`, () => {
+for (const elite of [0, 1, 2]) test(`E${elite} base talent grants selected ASPD and renews its ten-second gift without stacking`, () => {
   const f = make({ elite, potential: 6 }), t = ally(f, { hp: 1e6 });
   until(f, () => f.heals.length === 1); disarm(f);
   const talent = f.record.talentBb[1], key = `mon3tr:${f.u.id}:coordination`;
   if (elite === 0) { assert.equal(t.findBuff(key), null); return; }
   near(f.u.s.aspd, 100 + talent.attack_speed); near(t.s.aspd, 100 + talent.attack_speed);
   const buff = t.findBuff(key); advance(f.b, 2); const left = buff.timeLeft;
-  f.controller.chain(t); until(f, () => f.heals.length === 2);
-  assert.equal(t.findBuff(key), buff); assert.ok(buff.timeLeft < left);
-  advance(f.b, buff.timeLeft + f.b.dt); near(t.s.aspd, 100); near(f.u.s.aspd, 100);
+  const before = f.heals.filter(h => h.target === t).length;
+  f.controller.chain(t); until(f, () => f.heals.filter(h => h.target === t).length > before);
+  const renewed = t.findBuff(key);
+  assert.notEqual(renewed, buff); assert.ok(renewed.timeLeft > left); near(t.s.aspd, 100 + talent.attack_speed);
+  near(renewed.timeLeft, talent.buff_duration, f.b.dt * 2);
+  advance(f.b, .3); // Complete the later bounce onto the full-health caster.
+  advance(f.b, f.heals.at(-1).time + talent.buff_duration - f.b.time + f.b.dt * 2);
+  near(t.s.aspd, 100); near(f.u.s.aspd, 100);
 });
 test('a cancelled heal does not grant Tactical Coordination, and a modifier removing its target cannot leave a stale bounce', () => {
   const f = make({ skill: 2 }), a = ally(f), next = ally(f, { col: 7, ratio: .2 });
@@ -248,4 +202,21 @@ test('S1 retains the native non-silenceable controller and does not suppress its
   until(f, () => f.heals.length === 1);
   near(f.heals[0].amount, f.record.stats.atk * f.record.bb.heal_scale);
   near(t.s.aspd, 120); assert.equal(f.u.skill.activations, 1);
+});
+test('a full-health ally carries a bounce to an injured recipient outside the primary bounce range', () => {
+  const f = make({ skill: 2 }), a = ally(f, { col: 6 }), bridge = ally(f, { col: 7, ratio: 1 });
+  const t = ally(f, { col: 8, ratio: .2 });
+  until(f, () => f.heals.length === 3);
+  assert.deepEqual(f.heals.map(h => h.target), [a, bridge, t]);
+  near(bridge.hpRatio, 1); near(f.heals[2].amount, f.record.stats.atk * .75 ** 2);
+});
+test('equal-HP primary inputs and bounce ties prefer the newest deployment', () => {
+  const f = make({ skill: 2 }), older = ally(f, { row: 4, col: 6 }), newer = ally(f, { row: 5, col: 6 });
+  until(f, () => f.heals.length === 2);
+  assert.deepEqual(f.heals.map(h => h.target), [newer, older]);
+});
+test('the ordinary selector does not spend attacks or SP on an unrelated heal-free unit', () => {
+  const f = make({ skill: 2 }), t = ally(f, { flags: { healFree: true } });
+  advance(f.b, 4); assert.equal(f.attacks.length, 0); assert.equal(f.heals.length, 0);
+  near(f.u.skill.sp, f.record.source.spData.initSp); near(t.hp, 1000);
 });

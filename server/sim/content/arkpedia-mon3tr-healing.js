@@ -8,8 +8,9 @@ import { bodyInKeys } from '../body.js';
 
 export const MON3TR_HEALING_CONTRACT = Object.freeze({
   scope: 'Diagnostic ordinary and S1 chain healing, native owner release timing, offensive SP and base Tactical Coordination',
-  mapping: 'One injured input; three counted recipients, or S1 selected chain.max_target. Reconstruction consumes neither a bounce nor decay. Each chain visits a deployment once, chooses the lowest HP ratio within x-4, and uses the original speed-10 flight. The fired chain retains its release ATK/scale/talent snapshot independently of owner removal. Positive healing modifiers grant separate ten-second nonstacking owner/recipient ASPD buckets without refreshing an existing equal-priority bucket.',
-  limits: 'Selector numeric aliases, free-jump count/decay dispatch, target tie-breaking, launch snapshot and modifier ordering are explicit simulator policies, not recovered compiled Unity behavior. Full-HP ordinary bounce targets are excluded. Reconstruction can be attached only as an explicit diagnostic recipient: deployment, repair, aura and S2/S3 are not supplied here. Modules, native particles, audio and game-frame parity remain held.',
+  mapping: 'One injured primary input; three counted recipients, or S1 selected chain.max_target. Reconstruction consumes neither a bounce nor decay. Bounces can traverse full-health allies, choosing lowest HP ratio then newest deployment within x-4; each deployment is visited once. The original speed-10 flight retains its release ATK/scale/talent snapshot independently of owner removal. Positive healing modifiers renew ten-second nonstacking owner/recipient ASPD buckets; only the strongest live source applies.',
+  limits: 'Selector numeric aliases, free-jump count/decay dispatch, launch snapshot and modifier ordering are explicit simulator policies, not recovered compiled Unity behavior. Full-health bounce, newest-deployment tie-breaking and talent renewal are corroborated by community gameplay notes; serialized max-stack refresh flags alone do not prove default replacement lifetime. Reconstruction can be attached only as an explicit diagnostic recipient: deployment, decay/aura and S3 are supplied separately. Modules, native particles, audio and game-frame parity remain held.',
+  gameplayCorroboration: 'https://prts.wiki/w/Mon3tr',
   frameParity: false,
 });
 const TOKEN = 'token_10050_monstr_prosts';
@@ -46,6 +47,8 @@ function selected(u, contract) {
   if (attack._animKey !== 'Attack' || attack._maxAnimScale !== 1 || attack._waitForAttackEvent !== 1
     || attack._projectileKey !== 'projectile_chr_monstr' || attack._ignoreHealFree !== 1)
     throw Error('Unreviewed Mon3tr native healing ability');
+  if (component('7930403534330423272')._ignoreHealFree !== 0)
+    throw Error('Unreviewed Mon3tr healing selection mask');
   if (component('-3392515966174333146')._canSilenced !== 0
     || component('-3392515966174333146')._allowSpRecoveryWhenAffecting !== 0)
     throw Error('Unreviewed Mon3tr S1 controller');
@@ -79,12 +82,14 @@ export class Mon3trHealingController {
     return live(a) && a.side === 'ally' && a.kind !== 'device' && !a.s.flags.untargetable
       && this.b.allySelectable(a, source) && (source === a || !(a.s.flags.noHeal || a.profile?.noHeal));
   }
-  candidates(keys, seen = null) {
-    return this.b.allyUnits.filter(a => this.eligible(a) && a.hp < a.s.maxHp - 1e-8
+  candidates(keys, seen = null, source = this.u, includeFull = false) {
+    return this.b.allyUnits.filter(a => this.eligible(a, source) && (includeFull || a.hp < a.s.maxHp - 1e-8)
+      && (!a.s.flags.healFree || a === source || this.freeJump(a))
       && (!seen || !seen.has(a)) && bodyInKeys(a, keys))
-      .sort((a, z) => a.hpRatio - z.hpRatio || a.deploySeq - z.deploySeq);
+      .sort((a, z) => a.hpRatio - z.hpRatio || z.deploySeq - a.deploySeq);
   }
-  targets() { return this.candidates(this.u.rangeKeySet).slice(0, 1); }
+  targets() { return this.ownerSkills?.targets() ?? this.candidates(this.u.rangeKeySet).slice(0, 1); }
+  idle() { this.visual(this.ownerSkills?.idleClip() ?? 'Idle', 1, true); }
   // No token creation or deployment approval is implied by attaching a recipient.
   attachReconstruction(token) {
     if (this.stopped || !live(token) || token.defId !== TOKEN || token.ownerUnit !== this.u
@@ -100,50 +105,54 @@ export class Mon3trHealingController {
     return token;
   }
   freeJump(a) { return a.defId === TOKEN && !!a.findBuff('monstr[free_jump]'); }
-  coordination(target, talent) {
+  coordination(target, talent, scale = 1) {
     if (!talent) return;
     for (const a of new Set([this.u, target])) {
       if (!live(a)) continue;
-      const key = `mon3tr:${this.u.id}:coordination`;
-      // Native same-source equal-priority max-stack entries do not refresh.
-      if (!a.findBuff(key)) {
-        this.b.addBuff(a, { key, source: this.u, duration: talent.buff_duration,
-          tags: ['mon3tr:coordination-source'], data: { attackSpeed: talent.attack_speed },
-          onRemove: () => syncCoordination(this.b, a), onExpire: () => syncCoordination(this.b, a) });
-        syncCoordination(this.b, a);
-      }
+      const value = talent.attack_speed * scale;
+      const key = `mon3tr:${this.u.id}:coordination${value > talent.attack_speed ? ':m2' : ''}`;
+      // Default replacement is a renewed gift, not a stacking operation. Keep
+      // base/boosted logical entries independent under the source priority rule.
+      this.b.addBuff(a, { key, source: this.u, duration: talent.buff_duration,
+        tags: ['mon3tr:coordination-source'], data: { attackSpeed: value },
+        onRemove: () => syncCoordination(this.b, a), onExpire: () => syncCoordination(this.b, a) });
+      syncCoordination(this.b, a);
     }
   }
-  chain(target, { skill = false, amount = this.u.s.atk * this.u.s.atkScaleMul } = {}) {
-    const { b, u, record } = this, seen = new Set(), life = new Map();
+  chain(target, { skill = false, amount = this.u.s.atk * this.u.s.atkScaleMul,
+    source = this.u, from = source, coordinationScale = 1, onRecipient = null, tag = 'ordinary' } = {}) {
+    const { b, record } = this, seen = new Set(), life = new Map();
     const limit = skill ? record.bb['chain.max_target'] : 3;
     const talent = record.talentBb[1] && { ...record.talentBb[1] };
     const visited = a => seen.has(a) && life.get(a) === a.deploySeq;
     const bounce = (from, next, remaining, power) => {
       const seq = next.deploySeq;
-      b.addProjectile({ from, target: next, source: u, speed: 10, visual: 'orb',
-        data: { arkpediaTrackedVisual: true, mon3trChain: true, isSkill: skill },
+      b.addProjectile({ from, target: next, source, speed: 10, visual: 'orb',
+        data: { arkpediaTrackedVisual: true, mon3trChain: true, isSkill: skill || tag !== 'ordinary', tag },
         onHit: ({ target: a }) => {
-          if (b.finished || !a || a.deploySeq !== seq || !this.eligible(a) || visited(a)) return;
+          if (b.finished || !a || a.deploySeq !== seq || !this.eligible(a, source) || visited(a)) return;
           seen.add(a); life.set(a, seq);
           // A source identity/sequence stays fixed across modifier callbacks.
           let accepted = false;
           const h = b.on('calculatedHeal', ctx => {
-            if (ctx.source === u && ctx.target === a && ctx.opts === opts && ctx.amount > 0) accepted = true;
+            if (ctx.source === source && ctx.target === a && ctx.opts === opts && ctx.amount > 0) accepted = true;
           });
-          const opts = { ignoreHealFree: true, mon3trChain: true };
-          try { b.heal(u, a, power, opts); } finally { b.off(h); }
-          if (accepted && live(a) && a.deploySeq === seq) this.coordination(a, talent);
+          const opts = { ignoreHealFree: true, mon3trChain: true, mon3trTag: tag };
+          try { b.heal(source, a, power, opts); } finally { b.off(h); }
+          if (accepted && live(a) && a.deploySeq === seq)
+            this.coordination(a, talent, typeof coordinationScale === 'function' ? coordinationScale() : coordinationScale);
+          if (!live(a) || a.deploySeq !== seq || b.finished) return;
+          onRecipient?.({ target: a, seq, power, accepted });
           if (!live(a) || a.deploySeq !== seq || b.finished) return;
           const free = this.freeJump(a), left = remaining - (free ? 0 : 1);
           if (left <= 0) return;
           const keys = new Set(absoluteRangeKeys(grid, a.tileR, a.tileC, 'RIGHT'));
-          const next = this.candidates(keys).find(t => !visited(t));
+          const next = this.candidates(keys, null, source, true).find(t => !visited(t));
           if (next) bounce({ x: a.x, y: a.y }, next, left, power * (free ? 1 : .75));
         } });
     };
     if (!Number.isInteger(limit) || limit < 1) throw Error('Invalid Mon3tr chain target budget');
-    bounce(u, target, limit, amount);
+    bounce(from, target, limit, amount);
   }
   release(target) {
     const p = this.phase;
@@ -151,7 +160,7 @@ export class Mon3trHealingController {
       || p.kind !== 'attack' || p.target !== target || p.targetSeq !== target.deploySeq || p.accepted
       || p.epoch !== this.u.attackControlEpoch || !due(this.b, p.releaseAt) || !this.eligible(target)) return false;
     p.accepted = true;
-    this.chain(target, { skill: p.skill, amount: this.u.s.atk * this.u.s.atkScaleMul
+    this.chain(target, { ...p.chainOptions, skill: p.skill, amount: this.u.s.atk * this.u.s.atkScaleMul
       * (p.skill ? this.record.bb.heal_scale : 1) });
     return true;
   }
@@ -164,7 +173,7 @@ export class Mon3trHealingController {
     if (p?.kind === 'born') { if (!due(b, p.readyAt)) return; this.phase = p = null; }
     if (!live(u) || !u.canAct || u.s.flags.disarm || p && p.epoch !== u.attackControlEpoch) {
       this.phase = null; if (u.skill.active && this.record.index === 0) u.skill.end('interrupted');
-      this.visual('Idle', 1, true); return;
+      this.idle(); return;
     }
     if (p) {
       if (!p.released && due(b, p.releaseAt)) {
@@ -180,13 +189,14 @@ export class Mon3trHealingController {
     }
     if (u.atkCd > 1e-9) return;
     const target = this.targets()[0];
-    if (!target) { this.visual('Idle', 1, true); return; }
+    if (!target) { this.idle(); return; }
     if (this.record.index === 0 && u.skill.ready && this.canS1()) u.skill.activate('DEFAULT');
     const skill = this.record.index === 0 && u.skill.active;
-    const clip = skill ? 'Skill_1' : 'Attack', speed = Math.min(1, u.base.bat / u.s.interval);
+    const config = this.ownerSkills?.attackConfig() ?? {};
+    const clip = config.clip ?? (skill ? 'Skill_1' : 'Attack'), speed = Math.min(1, u.base.bat / u.s.interval);
     const release = this.model().eventPayloads[clip][0].time / speed;
     const cadence = Math.max(release, u.s.interval);
-    this.phase = { kind: 'attack', startedAt: b.time, target, targetSeq: target.deploySeq, skill,
+    this.phase = { kind: 'attack', startedAt: b.time, target, targetSeq: target.deploySeq, skill, chainOptions: config.chainOptions,
       epoch: u.attackControlEpoch, releaseAt: b.time + release, readyAt: b.time + cadence };
     u.atkCd = cadence; this.visual(clip, speed);
   }
@@ -205,7 +215,7 @@ export class Mon3trHealingController {
   }
   stop() {
     if (this.stopped) return;
-    this.stopped = true; this.phase = null; this.accepting = false;
+    this.stopped = true; this.ownerSkills?.stop(); this.phase = null; this.accepting = false;
     for (const h of this.handles) this.b.off(h); this.handles = [];
     // Token guards belong to their recipient lifetimes, including an already
     // fired projectile after the owner retires. No owner hook owns those guards.
