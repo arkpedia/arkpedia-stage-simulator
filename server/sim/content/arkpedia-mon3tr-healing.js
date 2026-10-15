@@ -104,7 +104,8 @@ export class Mon3trHealingController {
     this.reconstructions.set(token, { seq, guard });
     return token;
   }
-  freeJump(a) { return a.defId === TOKEN && !!a.findBuff('monstr[free_jump]'); }
+  freeJump(a) { return !!a.findBuff('monstr[free_jump]')
+    && (a.defId === TOKEN || a === this.u && this.ownerSkills?.selfFreeJump?.()); }
   coordination(target, talent, scale = 1) {
     if (!talent) return;
     for (const a of new Set([this.u, target])) {
@@ -120,16 +121,14 @@ export class Mon3trHealingController {
     }
   }
   chain(target, { skill = false, amount = this.u.s.atk * this.u.s.atkScaleMul,
-    source = this.u, from = source, coordinationScale = 1, onRecipient = null, tag = 'ordinary' } = {}) {
+    source = this.u, from = source, coordinationScale = 1, onRecipient = null, tag = 'ordinary', immediate = false } = {}) {
     const { b, record } = this, seen = new Set(), life = new Map();
     const limit = skill ? record.bb['chain.max_target'] : 3;
     const talent = record.talentBb[1] && { ...record.talentBb[1] };
     const visited = a => seen.has(a) && life.get(a) === a.deploySeq;
     const bounce = (from, next, remaining, power) => {
       const seq = next.deploySeq;
-      b.addProjectile({ from, target: next, source, speed: 10, visual: 'orb',
-        data: { arkpediaTrackedVisual: true, mon3trChain: true, isSkill: skill || tag !== 'ordinary', tag },
-        onHit: ({ target: a }) => {
+      const hit = ({ target: a }) => {
           if (b.finished || !a || a.deploySeq !== seq || !this.eligible(a, source) || visited(a)) return;
           seen.add(a); life.set(a, seq);
           // A source identity/sequence stays fixed across modifier callbacks.
@@ -149,7 +148,12 @@ export class Mon3trHealingController {
           const keys = new Set(absoluteRangeKeys(grid, a.tileR, a.tileC, 'RIGHT'));
           const next = this.candidates(keys, null, source, true).find(t => !visited(t));
           if (next) bounce({ x: a.x, y: a.y }, next, left, power * (free ? 1 : .75));
-        } });
+        };
+      // S3's original mover has immediatelyReach=1; do not invent a speed-ten
+      // flight for its empty-animation ExtraHeal ability.
+      if (immediate) hit({ target: next });
+      else b.addProjectile({ from, target: next, source, speed: 10, visual: 'orb',
+        data: { arkpediaTrackedVisual: true, mon3trChain: true, isSkill: skill || tag !== 'ordinary', tag }, onHit: hit });
     };
     if (!Number.isInteger(limit) || limit < 1) throw Error('Invalid Mon3tr chain target budget');
     bounce(from, target, limit, amount);

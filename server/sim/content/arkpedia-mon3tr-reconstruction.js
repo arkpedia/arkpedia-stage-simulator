@@ -1,9 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Native normal Reconstruction card and lifetime. S3 marker/return modes are held.
+// Native normal Reconstruction card and lifetime, composed with selected skill adapters.
 import evidence from '../../../data/arkpedia-mon3tr-prefabs.json' with { type: 'json' };
 import { MON3TR_ID as ID, mon3trSourceComponent as component } from './arkpedia-mon3tr-source.js';
 import { prepareMon3trHealing, MON3TR_HEALING_CONTRACT } from './arkpedia-mon3tr-healing.js';
 import { prepareMon3trS2, MON3TR_S2_CONTRACT } from './arkpedia-mon3tr-s2.js';
+import { prepareMon3trS3, MON3TR_S3_CONTRACT } from './arkpedia-mon3tr-s3.js';
 import { normalizeToken, flattenBlackboard } from '../simdata.js';
 import { sourceCandidate, summonCardId } from '../../../shared/arkpedia/summons.js';
 import { canDeployInViewport } from '../../../shared/arkpedia/squad.js';
@@ -12,9 +13,9 @@ import { bodyInKeys } from '../body.js';
 import { COLS } from '../constants.js';
 
 export const MON3TR_RECONSTRUCTION_CONTRACT = Object.freeze({
-  scope: 'Diagnostic normal Reconstruction card, selected independent stats, pure HP-loss clock, ATK aura and S1/S2 integration',
+  scope: 'Diagnostic normal Reconstruction card, selected independent stats, pure HP-loss clock, ATK aura and selected S1/S2/S3 composition',
   mapping: 'One three-DP, zero-slot low-ground summon within current host attack range, without facing selection. Stock stays unavailable while deployed; departure returns one card with a source fifteen-second cooldown. Normal withdrawal refunds floor(half cost). Source trait loses eight HP per 0.10000000149011612-second pulse, with an immediate first pulse matching its non-waiting trigger policy. Selected host Talent 1 supplies a strongest-source ATK-percent aura on adjacent selectable allies. Original Single Start/Idle/Die clips remain literal; healing emits no invented token attack animation.',
-  limits: 'Normal-mode initialization, first-pulse scheduling, card/cooldown/withdraw transaction and sampled aura ordering are explicit local mappings; compiled preprocessing, native card/FSM dispatch and game-frame parity remain unverified. S3 hidden marker, source respawn/return modes, modules, particles and audio are not supplied here. No public roster approval is implied.',
+  limits: 'Normal-mode initialization, first-pulse scheduling, card/cooldown/withdraw transaction and sampled aura ordering are explicit local mappings; compiled preprocessing, native card/FSM dispatch and game-frame parity remain unverified. S3 marker/respawn/return use the separate selected S3 contract and adapter. Modules, particles and audio are not supplied here. No public roster approval is implied.',
   gameplayCorroboration: 'https://prts.wiki/w/%E9%87%8D%E6%9E%84%E4%BD%93',
   frameParity: false,
 });
@@ -210,7 +211,8 @@ export function prepareMon3trReconstruction(b, u, { contract } = {}) {
   if (contract !== MON3TR_RECONSTRUCTION_CONTRACT) throw Error('Mon3tr requires its normal Reconstruction contract');
   verify();
   const prepared = u.def.skill?.id === 'skchr_monstr_2' ? prepareMon3trS2(b, u, { contract: MON3TR_S2_CONTRACT })
-    : prepareMon3trHealing(b, u, { contract: MON3TR_HEALING_CONTRACT });
+    : u.def.skill?.id === 'skchr_monstr_3' ? prepareMon3trS3(b, u, { contract: MON3TR_S3_CONTRACT })
+      : prepareMon3trHealing(b, u, { contract: MON3TR_HEALING_CONTRACT });
   const deck = new ReconstructionDeck(prepared.controller);
   const install = prepared.controller.install.bind(prepared.controller), stop = prepared.controller.stop.bind(prepared.controller);
   prepared.controller.install = () => { install(); deck.install(); };
