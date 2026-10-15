@@ -114,6 +114,7 @@ import { customizePublicVarkisKit, installPublicVarkis } from './content/arkpedi
 import { customizePublicSnhuntKit, installPublicSnhunt } from './content/arkpedia-snhunt-public.js';
 import { customizePublicKichiKit, installPublicKichi } from './content/arkpedia-kichi-public.js';
 import { customizePublicCairnKit, installPublicCairn } from './content/arkpedia-cairn-public.js';
+import { customizePublicCrackborneKit, installPublicCrackborne } from './content/arkpedia-tanya-public.js';
 import { customizePublicBranchKit, installPublicBranch } from './content/arkpedia-branch-public.js';
 import { customizePublicReckprKit, installPublicReckpr } from './content/arkpedia-reckpr-public.js';
 import { customizePublicLieselKit, installPublicLiesel } from './content/arkpedia-liesel-public.js';
@@ -578,6 +579,7 @@ export class StandardBattle extends Battle {
     customizePublicSnhuntKit({ battle: this, id, unit, kit });
     customizePublicKichiKit({ battle: this, id, unit, kit });
     customizePublicCairnKit({ battle: this, id, unit, kit });
+    customizePublicCrackborneKit({ battle: this, id, unit, kit });
     customizePublicBranchKit({ battle: this, id, unit, kit });
     customizeNarantKit({ battle: this, id, def, unit, kit });
     customizeElaKit({ battle: this, id, def, unit, kit });
@@ -798,6 +800,7 @@ export class StandardBattle extends Battle {
     installPublicSnhunt({ battle: this, unit, def });
     installPublicKichi({ battle: this, unit, def });
     installPublicCairn({ battle: this, unit, def });
+    installPublicCrackborne({ battle: this, unit, def });
     installPublicBranch({ battle: this, unit, def });
     installNarant({ battle: this, unit, def });
     installEla({ battle: this, unit, def });

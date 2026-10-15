@@ -1,0 +1,302 @@
+{
+  "schemaVersion": 1,
+  "operatorId": "char_4225_tanya",
+  "enabledOperators": [
+    "char_4225_tanya"
+  ],
+  "frameParity": false,
+  "moduleSupport": false,
+  "nativePixelParity": false,
+  "nativeParticleSupport": false,
+  "sourceFoundationSha256": "03e393621ac50e478e6816846c0fbb9b3d0dc5409e4914d7ec483fc1858c967c",
+  "ownerArtworkSha256": "d79f9cab2dbfba42eae96495bb678e190269198b72b302fb20d42eaefcf0f376",
+  "sourceClocksSha256": "167d6bd42c92c3a1755678793b1fb06f32c8b8f53f5ed4d62f7dca39def4624f",
+  "mechanicsPolicy": "source-cn-immediate-hp-recovery-permanent-def-hp-loss-erosion-v1",
+  "scope": "Selected original CN Crackborne single-target attacks, immediate timed S1 HP/elemental recovery, S2 permanent DEF stacks and accepted-HP-loss erosion responses through the regular-stage squad path.",
+  "verification": {
+    "source": "Five bundles, 62 owner/skill components and six templates; seven outputs reproduced and 28 altered claims rejected on Node 22 and 24.",
+    "artwork": "Recipe-bound original files, decoded pixels and PMA; 33 altered claims rejected on both Node versions. Nineteen clips per viewport and twenty desktop/emulated-phone captures without errors.",
+    "runtime": "505 source/clock/resource/combat/public/slow-down and adjacent checks pass on Node 22 and 24. Both original 0-1 builds use natural DP and unchanged terrain with Melantha: eleven kills, zero leaks and full life. S1 records 10 attributed damage receipts/one activation; S2 records 19/two activations. Full local and hosted verification remain separate.",
+    "browser": {
+      "status": "passed",
+      "script": "tools/arkpedia/review-tanya-public.mjs",
+      "driver": "tools/arkpedia/public-review-driver.mjs",
+      "cases": 8,
+      "captures": 56,
+      "viewports": [
+        "1280x800 desktop mouse",
+        "844x390 emulated landscape phone touch"
+      ],
+      "originalWaves": false,
+      "fixture": "Original 0-1 terrain, empty waves, 99 DP, two pinned nonattacking targets and an explicit injected HP-loss receipt for S2; original waves/natural DP tested separately.",
+      "checks": [
+        "Public squad/skill choice and separate drag/drop/direction swipe",
+        "Natural SP and manual activation with original Front/Back S1 and one-shot S2 tracks",
+        "Immediate S1 maximum HP, fixed self recovery and single-target attacks",
+        "S2 marker-time permanent DEF stacks and accepted-HP-loss erosion without ordinary attack receipts",
+        "Natural finish retains S2 stacks; public retreat clears owner resources and controller handles"
+      ],
+      "browserErrors": 0,
+      "failedResources": 0,
+      "visualReview": "Desktop S1 Back attack and emulated-phone S2 Front HP response inspected. Physical-device, native effects and original game-frame/pixel parity remain unverified.",
+      "scriptSha256": "aae096758709ed6b6ff3c65e4fc07d73d499f5721f13e3e5f3dd198a2cd79fe6",
+      "driverSha256": "1ef20a71f4982799d1368e61d0b2e2eac9eb36efe1aaad45294150566246359f"
+    }
+  },
+  "originalArtwork": {
+    "operator/char_4225_tanya/default/back": {
+      "kind": "operator",
+      "id": "char_4225_tanya",
+      "variant": "default",
+      "facing": "back",
+      "spineVersion": "3.8.99",
+      "source": {
+        "key": "operators",
+        "repository": "fexli/ArknightsResource",
+        "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+        "directory": "spine/char_4225_tanya/char_4225_tanya/Back"
+      },
+      "skeleton": {
+        "path": "models/operator/char_4225_tanya/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4225_tanya.skel",
+        "bytes": 237373,
+        "sha256": "3aa889ccf0c68ac3033cb53a2ec0d143955880bbf6a7fe0d37e5b3db54397eeb"
+      },
+      "atlas": {
+        "path": "models/operator/char_4225_tanya/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4225_tanya.atlas",
+        "bytes": 6650,
+        "sha256": "365a58d39e5a8c43323499b3d9f7977a3cf749c504b2d458df4e6187dd49ef97"
+      },
+      "textures": [
+        {
+          "path": "models/operator/char_4225_tanya/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4225_tanya.png",
+          "bytes": 125953,
+          "sha256": "b25582e466534286287acf60bd5bc5a21019627bdb42c66ee3360535f0277b51"
+        }
+      ],
+      "premultipliedAlpha": true,
+      "animations": {
+        "Attack_1": 1.6,
+        "Attack_2": 1.6,
+        "Default": 0,
+        "Idle": 3.2,
+        "Skill_1_Begin": 0.4,
+        "Skill_1_End": 0.267,
+        "Skill_1_Idle": 1.6,
+        "Skill_1_Loop": 1.6,
+        "Skill_2": 1.6,
+        "Start": 1
+      },
+      "hits": {
+        "Attack_1": [
+          0.567
+        ],
+        "Attack_2": [
+          0.567
+        ],
+        "Skill_1_Loop": [
+          0.633
+        ],
+        "Skill_2": [
+          0.667
+        ]
+      },
+      "bounds": {
+        "x": -125.64,
+        "y": -1.272,
+        "width": 254.789,
+        "height": 372.015
+      },
+      "animationRoles": {
+        "idle": "Idle",
+        "deploy": "Start",
+        "attack": {
+          "begin": null,
+          "loop": "Attack_1",
+          "end": null
+        },
+        "attackVariants": {
+          "0": {
+            "loop": "Attack_1"
+          },
+          "1": {
+            "loop": "Attack_2"
+          }
+        },
+        "attackDown": null,
+        "skill": {
+          "begin": "Skill_1_Begin",
+          "loop": "Skill_1_Loop",
+          "end": "Skill_1_End",
+          "idle": "Skill_1_Idle",
+          "index": 0,
+          "via": "skill"
+        },
+        "skills": {
+          "0": {
+            "begin": "Skill_1_Begin",
+            "loop": "Skill_1_Loop",
+            "end": "Skill_1_End",
+            "idle": "Skill_1_Idle",
+            "index": 0,
+            "via": "skill"
+          },
+          "1": {
+            "begin": null,
+            "loop": "Skill_2",
+            "end": null,
+            "index": 1,
+            "via": "skill"
+          }
+        },
+        "die": null,
+        "stun": null,
+        "move": null
+      }
+    },
+    "operator/char_4225_tanya/default/front": {
+      "kind": "operator",
+      "id": "char_4225_tanya",
+      "variant": "default",
+      "facing": "front",
+      "spineVersion": "3.8.99",
+      "source": {
+        "key": "operators",
+        "repository": "fexli/ArknightsResource",
+        "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+        "directory": "spine/char_4225_tanya/char_4225_tanya/Front"
+      },
+      "skeleton": {
+        "path": "models/operator/char_4225_tanya/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4225_tanya.skel",
+        "bytes": 348129,
+        "sha256": "873fd49e6dc46eb8454eb6b6e32d198f329ea19a164b3784c0177eaee5642aa0"
+      },
+      "atlas": {
+        "path": "models/operator/char_4225_tanya/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4225_tanya.atlas",
+        "bytes": 11219,
+        "sha256": "1e4c95be90ac19a5d73636516b2909e16bb940e1cee1bd017cfa795aa87711f6"
+      },
+      "textures": [
+        {
+          "path": "models/operator/char_4225_tanya/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4225_tanya.png",
+          "bytes": 158504,
+          "sha256": "3164ace99ec2f787b4264e78969c0a9fc4d39bd98fc245750da07fcc342f267f"
+        }
+      ],
+      "premultipliedAlpha": true,
+      "animations": {
+        "Attack_1": 1.6,
+        "Attack_2": 1.6,
+        "Default": 0,
+        "Die": 1,
+        "Idle": 3.2,
+        "Skill_1_Begin": 0.4,
+        "Skill_1_End": 0.267,
+        "Skill_1_Idle": 1.6,
+        "Skill_1_Loop": 1.6,
+        "Skill_2": 1.6,
+        "Start": 1
+      },
+      "hits": {
+        "Attack_1": [
+          0.567
+        ],
+        "Attack_2": [
+          0.567
+        ],
+        "Skill_1_Loop": [
+          0.633
+        ],
+        "Skill_2": [
+          0.667
+        ]
+      },
+      "bounds": {
+        "x": -146.89,
+        "y": -1.84,
+        "width": 277.784,
+        "height": 372.586
+      },
+      "animationRoles": {
+        "idle": "Idle",
+        "deploy": "Start",
+        "attack": {
+          "begin": null,
+          "loop": "Attack_1",
+          "end": null
+        },
+        "attackVariants": {
+          "0": {
+            "loop": "Attack_1"
+          },
+          "1": {
+            "loop": "Attack_2"
+          }
+        },
+        "attackDown": null,
+        "skill": {
+          "begin": "Skill_1_Begin",
+          "loop": "Skill_1_Loop",
+          "end": "Skill_1_End",
+          "idle": "Skill_1_Idle",
+          "index": 0,
+          "via": "skill"
+        },
+        "skills": {
+          "0": {
+            "begin": "Skill_1_Begin",
+            "loop": "Skill_1_Loop",
+            "end": "Skill_1_End",
+            "idle": "Skill_1_Idle",
+            "index": 0,
+            "via": "skill"
+          },
+          "1": {
+            "begin": null,
+            "loop": "Skill_2",
+            "end": null,
+            "index": 1,
+            "via": "skill"
+          }
+        },
+        "die": "Die",
+        "stun": null,
+        "move": null
+      }
+    }
+  },
+  "interfaceAssets": [
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "five-star-icons/Crackborne - Base.webp",
+      "bytes": 11352,
+      "sha256": "5b9d8e40e9549ecb56321943fa1a53ca4f9276026b770bfb7148e3fba12d6a98"
+    },
+    {
+      "repository": "arkpedia/arkpedia-skin-assets",
+      "commit": "6fb723692d89c4a08d9a7aa4015e19c0753dd270",
+      "path": "five-star-skins/Crackborne - Base.webp",
+      "bytes": 189992,
+      "sha256": "7e857ba8b694929d4cc5aa5114e16d1d7d8c9fe9d001aca0f9b39d694f680542"
+    },
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "skill-icons/Crackborne - Cleanse.webp",
+      "bytes": 4868,
+      "sha256": "bcfd9be0181e60a40ae41a61327a285a92c37985c4573d3fd73de26bf7e2c79e"
+    },
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "skill-icons/Crackborne - Wash Away.webp",
+      "bytes": 6308,
+      "sha256": "d2ba8eeaba0f8a683700c46fa573fbcf43847b3474b695faa18f2ff213cef677"
+    }
+  ],
+  "limitations": [
+    "Native multi-ability selection/RNG, self-trigger aliases, S1 mode/Begin order and fixed-time/slow-down conversion are explicit local mappings",
+    "Accepted HP-delta ordering, expiry-frame dispatch, stack aggregation and strongest-channel protection do not certify compiled native dispatch",
+    "Modules, native particles/shaders/audio and original game-frame/pixel parity remain unverified"
+  ]
+}
