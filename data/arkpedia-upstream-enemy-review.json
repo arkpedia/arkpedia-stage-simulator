@@ -1,0 +1,122 @@
+{
+  "schemaVersion": 1,
+  "scope": "Held selective upstream ability reuse; no public enemy/stage admission",
+  "enabledEnemies": [],
+  "compiledDispatchVerified": false,
+  "frameParity": false,
+  "nativeArtworkVerified": false,
+  "source": {
+    "repository": "Kengxxiao/ArknightsGameData_YoStar",
+    "commit": "57010cb5b2afea112cae57daa756b58676ba6850",
+    "path": "en_US/gamedata/levels/enemydata/enemy_database.json",
+    "gitBlob": "ff07c033f8808d01d60624864cfea972402f75c5",
+    "bytes": 10273791,
+    "sha256": "962642b9ec347d5a749e8519ec61c0f9fa6ea26abeefc954b52e1c88d6a49a0a"
+  },
+  "nativeIndex": {
+    "path": "data/arkpedia-enemy-clock-source.json",
+    "sha256": "56d6b96a60a11ce111401b0afff0fd4f68dde5843c7758de0e91e2d9e78a5f80"
+  },
+  "upstream": {
+    "repository": "sganggs/Stronghold-Protocol",
+    "inheritedCommit": "19a89085a4c9a773a7b88437d7cd79c3e7131cfd",
+    "comparedCommit": "488db49f11daf862b67ce26fa4cf89aa6cba2466",
+    "license": "GPL-3.0-or-later",
+    "inheritedPath": "server/sim/content/enemies.js",
+    "currentPaths": [
+      "server/sim/content/enemies/archetypes.js",
+      "server/sim/content/enemies/special.js"
+    ],
+    "reused": "KITS[enemy_1026_aghost] and its permanent unblockable spawn buff; shared enemy dispatch hooks"
+  },
+  "enemies": {
+    "enemy_1026_aghost": {
+      "level": 0,
+      "name": "Wraith Leader",
+      "description": "A tougher Reunion engineer that boasts higher DEF and HP than a regular Wraith and <@eb.key>cannot be blocked</>. Must be eliminated as quickly as possible.",
+      "stats": {
+        "maxHp": 3800,
+        "atk": 100,
+        "def": 350,
+        "res": 35,
+        "aspd": 100,
+        "bat": 1,
+        "moveSpeed": 1.2,
+        "hpRecoveryPerSec": 0,
+        "massLevel": 1,
+        "lpr": 1,
+        "applyWay": "NONE",
+        "motion": "WALK",
+        "dmgType": "none",
+        "rangeRadius": 0
+      },
+      "skills": [],
+      "talent": {},
+      "rule": "permanent-unblockable",
+      "prefabKey": "dyn/battle/prefabs/enemies/enemy_1026_aghost.prefab",
+      "prefab": {
+        "bundle": "battle/enm_pfb_3.ab",
+        "rootPathId": "8419201075955883274",
+        "rootName": "enemy_1026_aghost",
+        "hierarchyObjects": 12,
+        "components": 25,
+        "hierarchySha256": "ff0a8f123498754a55dcc93c89279c89eb1aa41470f8f6eb3902e05b4032391c",
+        "clockComponents": [
+          {
+            "pathId": "-5638058251170620150",
+            "gameObjectPathId": "8419201075955883274",
+            "objectName": "enemy_1026_aghost",
+            "ancestors": [],
+            "script": {
+              "m_FileID": 1,
+              "m_PathID": "-6629209555389654693"
+            },
+            "originalDataSha256": "e4e6587b71fbca9e6666f78d4730bbdcfc64aca92a1b5551529fce67d5a026a5",
+            "fields": {
+              "_modes": [
+                {
+                  "m_FileID": 0,
+                  "m_PathID": "-4262607443439330038"
+                }
+              ],
+              "_commonAbilities": []
+            }
+          },
+          {
+            "pathId": "-4262607443439330038",
+            "gameObjectPathId": "15299183794445578",
+            "objectName": "Default",
+            "ancestors": [
+              "8419201075955883274"
+            ],
+            "script": {
+              "m_FileID": 1,
+              "m_PathID": "5390319429299248724"
+            },
+            "originalDataSha256": "e33001bc6ae29c1ee30b4e30ba727a40a674f6c1df875501f154803f51dd77a6",
+            "fields": {
+              "_combat": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              },
+              "_attack": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              },
+              "_attackTrigger": {
+                "m_FileID": 0,
+                "m_PathID": "0"
+              },
+              "_generalAbilities": []
+            }
+          }
+        ]
+      }
+    }
+  },
+  "limits": [
+    "The primary table states cannot be blocked. This maps to the existing simulator unblockable flag.",
+    "The native timing index identifies the original prefab and no active ability clocks; it does not recover compiled class dispatch.",
+    "No stealth restoration, enemy skills, bosses, mode-specific domains, artwork or new public stage is approved."
+  ]
+}
