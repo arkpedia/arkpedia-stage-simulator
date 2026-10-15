@@ -1,0 +1,304 @@
+{
+  "schemaVersion": 1,
+  "operatorId": "char_4031_liesel",
+  "enabledOperators": [
+    "char_4031_liesel"
+  ],
+  "frameParity": false,
+  "moduleSupport": false,
+  "nativePixelParity": false,
+  "nativeParticleSupport": false,
+  "sourceFoundationSha256": "62949eb87a3cee7788f874b668d81200080c235d34af8fd1fe1bc4eb2b27ab4c",
+  "mechanicsPolicy": "source-cn-charged-splash-and-delayed-homing-v1",
+  "scope": "Selected CN ordinary splash, count-dependent talent and all twenty S1/S2 ranks.",
+  "verification": {
+    "source": "Original six table blobs, five bundles and 109 components independently verified; seven outputs reproduced and 29 source/approval mutations rejected.",
+    "runtime": "47 combat cases, 21 source cases and thirty public-path cases pass on Node 22. The final 430-test cross-operator/source/roster set passes on Node 24 without failures or skips. Full local Node 22 suite: 14,231 passed, ten optional/platform skips, zero failures across 325 suites.",
+    "browser": {
+      "status": "passed",
+      "script": "tools/arkpedia/review-liesel-public.mjs",
+      "scriptSha256": "2df997375f8815a5170029059671153716808662cd9358548a95d701c56b56ae",
+      "driver": "tools/arkpedia/public-review-driver.mjs",
+      "driverSha256": "1ef20a71f4982799d1368e61d0b2e2eac9eb36efe1aaad45294150566246359f",
+      "cases": 8,
+      "captures": 44,
+      "viewports": [
+        "1280x800 desktop mouse",
+        "844x390 emulated landscape phone touch"
+      ],
+      "originalWaves": false,
+      "fixture": "Original 0-1 terrain, 99 DP, empty waves and three pinned targets. Original-wave/natural-DP tests run separately.",
+      "checks": [
+        "Public squad/skill selection and high-ground drag/drop/direction swipe",
+        "Original Front/Back ordinary, enhanced S1 and manually cast S2 clips",
+        "Natural SP, source splash, three distinct delayed homing shots and sourceless DOT",
+        "Two native attack restarts before and after each skill review",
+        "HP/SP gauges, original skill icons and retreat cleanup"
+      ],
+      "repeatedAttackRestarts": 32,
+      "browserErrors": 0,
+      "failedResources": 0,
+      "visualReview": "Desktop S2 Front active and S1 Back ready captures, plus phone S2 Back DOT capture inspected. Native particles and original pixel/frame parity remain unverified."
+    }
+  },
+  "limits": [
+    "Selector/FSM timing, per-burst ATK sampling, body geometry and tile-center projectile origins are explicit simulator mappings.",
+    "S2 skill account ends on launch; local recovery follows the literal AnimeAttack event. Emitted shots retain independent flight clocks.",
+    "DOT refresh updates cached launch ATK without resetting its owned tick clock. Exclusion marks use the corroborated any-Ripresa predicate.",
+    "Native particles, audio, modules and original game-frame/pixel parity remain unsupported."
+  ],
+  "originalArtwork": {
+    "operator/char_4031_liesel/default/back": {
+      "kind": "operator",
+      "id": "char_4031_liesel",
+      "variant": "default",
+      "facing": "back",
+      "spineVersion": "3.8.99",
+      "source": {
+        "key": "operators",
+        "repository": "fexli/ArknightsResource",
+        "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+        "directory": "spine/char_4031_liesel/char_4031_liesel/Back"
+      },
+      "skeleton": {
+        "path": "models/operator/char_4031_liesel/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4031_liesel.skel",
+        "bytes": 158054,
+        "sha256": "81999dacb19feb38b163bc289f4271afcdffb0d15a8f5d657a7ebaf4a1e7fb5b"
+      },
+      "atlas": {
+        "path": "models/operator/char_4031_liesel/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4031_liesel.atlas",
+        "bytes": 5908,
+        "sha256": "f8ce86d4d3ca75376200d0a5527cf81acf9a1cb50f5eedde4550aabd9733a1a4"
+      },
+      "textures": [
+        {
+          "path": "models/operator/char_4031_liesel/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4031_liesel.png",
+          "bytes": 154697,
+          "sha256": "006d91a5f1d38979b07cb7130a4faf08c19d2d988c31571e1c03e5758a80b3dd"
+        }
+      ],
+      "premultipliedAlpha": false,
+      "animations": {
+        "Attack": 2.9,
+        "Default": 0,
+        "Idle": 2,
+        "Skill_1": 2.9,
+        "Skill_2": 1.5,
+        "Start": 1
+      },
+      "animationRoles": {
+        "idle": "Idle",
+        "deploy": "Start",
+        "attack": {
+          "begin": null,
+          "loop": "Attack",
+          "end": null
+        },
+        "attackDown": null,
+        "skill": {
+          "begin": null,
+          "loop": "Skill_1",
+          "end": null,
+          "index": 0,
+          "idle": null,
+          "via": "attack"
+        },
+        "die": null,
+        "move": null,
+        "stun": null,
+        "skills": {
+          "0": {
+            "begin": null,
+            "loop": "Skill_1",
+            "end": null,
+            "index": 0,
+            "idle": null,
+            "via": "attack"
+          },
+          "1": {
+            "begin": null,
+            "loop": "Skill_2",
+            "end": null,
+            "index": 1,
+            "idle": null,
+            "via": "attack"
+          }
+        }
+      },
+      "hits": {
+        "Attack": [
+          0.5
+        ],
+        "Skill_1": [
+          0.5
+        ],
+        "Skill_2": [
+          0.267
+        ]
+      },
+      "bounds": {
+        "x": -198.39,
+        "y": -1.408,
+        "width": 300.507,
+        "height": 419.748
+      }
+    },
+    "operator/char_4031_liesel/default/front": {
+      "kind": "operator",
+      "id": "char_4031_liesel",
+      "variant": "default",
+      "facing": "front",
+      "spineVersion": "3.8.99",
+      "source": {
+        "key": "operators",
+        "repository": "fexli/ArknightsResource",
+        "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+        "directory": "spine/char_4031_liesel/char_4031_liesel/Front"
+      },
+      "skeleton": {
+        "path": "models/operator/char_4031_liesel/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4031_liesel.skel",
+        "bytes": 255068,
+        "sha256": "753fabdaf1c1e151ecfebb24ff3c655de32fa2fa5769c9a3350fb5e0f5bb8961"
+      },
+      "atlas": {
+        "path": "models/operator/char_4031_liesel/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4031_liesel.atlas",
+        "bytes": 10437,
+        "sha256": "f987de6e4c66a9c1f04411cd43554f6686bfd43181c5acfd7bfb7fb895867b15"
+      },
+      "textures": [
+        {
+          "path": "models/operator/char_4031_liesel/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4031_liesel.png",
+          "bytes": 160616,
+          "sha256": "ac8044b9260c15bde52858cc438ee14bb2ffa6e564540235bc9379a47443eb48"
+        }
+      ],
+      "premultipliedAlpha": false,
+      "animations": {
+        "Attack": 2.9,
+        "Default": 0,
+        "Die": 1,
+        "Idle": 2,
+        "Skill_1": 2.9,
+        "Skill_2": 1.5,
+        "Start": 1
+      },
+      "animationRoles": {
+        "idle": "Idle",
+        "deploy": "Start",
+        "attack": {
+          "begin": null,
+          "loop": "Attack",
+          "end": null
+        },
+        "attackDown": null,
+        "skill": {
+          "begin": null,
+          "loop": "Skill_1",
+          "end": null,
+          "index": 0,
+          "idle": null,
+          "via": "attack"
+        },
+        "die": "Die",
+        "move": null,
+        "stun": null,
+        "skills": {
+          "0": {
+            "begin": null,
+            "loop": "Skill_1",
+            "end": null,
+            "index": 0,
+            "idle": null,
+            "via": "attack"
+          },
+          "1": {
+            "begin": null,
+            "loop": "Skill_2",
+            "end": null,
+            "index": 1,
+            "idle": null,
+            "via": "attack"
+          }
+        }
+      },
+      "hits": {
+        "Attack": [
+          0.5
+        ],
+        "Skill_1": [
+          0.5
+        ],
+        "Skill_2": [
+          0.267
+        ]
+      },
+      "bounds": {
+        "x": -263.332,
+        "y": -1.914,
+        "width": 365.486,
+        "height": 590.734
+      }
+    }
+  },
+  "interfaceAssets": [
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "five-star-icons/Ripresa - Base.webp",
+      "bytes": 10402,
+      "sha256": "f31527c91f74deb094ccbcfb748c7c9f54cf36eae6955e3f21bfcbf9ca682d2e"
+    },
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "skill-icons/Ripresa - Conductor's Cue.webp",
+      "bytes": 6120,
+      "sha256": "95826e8c8b0721a2956e13ffaed37cc134c736a0f168c8c9fd92faedcdb5c955"
+    },
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "skill-icons/Ripresa - Al Fine.webp",
+      "bytes": 7252,
+      "sha256": "277fd2036734d44f1dac9e9c906d061d532a214ca9faaf8dce214a5b3f60859b"
+    },
+    {
+      "repository": "arkpedia/arkpedia-skin-assets",
+      "commit": "6fb723692d89c4a08d9a7aa4015e19c0753dd270",
+      "path": "five-star-skins/Ripresa - Base.webp",
+      "bytes": 133962,
+      "sha256": "84d709ca5dcb2d2dc55de120377034a2d0c8ea7832868189db3758ad4960174b"
+    }
+  ],
+  "sdCommit": "6555112e4293b223da51742704709d027764bc5a",
+  "skillIconAliases": {
+    "selected": [
+      "Conductor's Cue (128px)",
+      "Al Fine (128px)"
+    ],
+    "lowerResolutionAliases": [
+      "Levare (64px)",
+      "Fino al Finale (64px)"
+    ],
+    "review": "Both alias pairs inspected visually: same respective S1/S2 glyphs at different resolutions. Native in-game icon pixel parity is unverified."
+  },
+  "snapshotPreservation": {
+    "baseline": "ed4ba9560928a88474d99c5f68da7f450485cb24",
+    "normalizedDeliveryCommit": "3cec41fbee09dff3b02891cbd047bb256e2b5ba8",
+    "olderOperators": 379,
+    "olderModels": 867,
+    "operatorsSha256": "baa015457f0e2dd7782b8e9eca2e41946630b48adb99ac7d8ae7545c208280e1",
+    "unchanged": [
+      "older operators",
+      "older model metadata",
+      "default squad order",
+      "stage",
+      "tokens",
+      "enemies",
+      "effects",
+      "all table/image/skin source pins"
+    ]
+  },
+  "browserTestedSDCommit": "20e19738bd38c48e38ad5edd1c2bcfd8c42733cc",
+  "sdMergedTreeMatchesBrowserTest": true
+}

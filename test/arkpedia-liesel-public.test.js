@@ -1,0 +1,73 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
+import data from '../data/arkpedia-mvp.json' with { type: 'json' };
+import review from '../data/arkpedia-liesel-runtime-review.json' with { type: 'json' };
+import { StandardBattle } from '../server/sim/arkpedia.js';
+import { defaultBuild, recordFor } from '../shared/arkpedia/loadout.js';
+import { selectedLieselBuild } from '../server/sim/content/arkpedia-liesel-source.js';
+import { skillHud } from '../shared/arkpedia/skill-hud.js';
+import { advance, until, near, enemy } from './helpers/liesel-fixture.js';
+const ID = 'char_4031_liesel';
+function make({ skill = 1, rank = 10, elite = 2, potential = 1, trust = 0, support = false } = {}) {
+  const d = structuredClone(data); d.stage.geometry.waves[0].spawns = []; d.stage.battle.dp_per_second = 0;
+  const build = { ...defaultBuild(d.operators[ID]), skillId: `skchr_liesel_${skill}`, skillRank: rank,
+    elite, level: d.operators[ID].phases[elite].maxLevel, potential, trust };
+  const b = new StandardBattle(d, support ? { operators: [defaultBuild(d.operators.char_208_melan)], support: build } : { operators: [build] });
+  b.autoFinish = false; b.recordEvents = true; b.setViewport('fullscreen-workspace'); b.getPlayer('arkpedia').dp = 99;
+  const before = b.dp, cost = b.cost(ID), u = b.deployOperator(ID, 4, 4, 'DOWN'); near(before - b.dp, cost);
+  b.getPlayer('arkpedia').dp = 0;
+  const hits = [], attacks = [];
+  b.on('damaged', ctx => { if (ctx.source === u || ctx.credit === u) hits.push({ ...ctx }); });
+  b.on('attack', ctx => { if (ctx.attacker === u) attacks.push({ ...ctx }); });
+  return { b, u, controller: u.mem.liesel, build: b.bench[ID].build, hits, attacks };
+}
+test('public Ripresa binds held CN evidence to separate runtime review and pinned original chibis/interface images', async () => {
+  const op = data.operators[ID]; assert.equal(op.name, 'Ripresa'); assert.equal(op.sourceName, '复奏');
+  assert.equal(op.sourceChannel, 'cn'); assert.equal(data.operatorSourceChannels[ID], 'cn');
+  assert.equal(data.sources['Kengxxiao/ArknightsGameData_YoStar'], '57010cb5b2afea112cae57daa756b58676ba6850');
+  assert.deepEqual(op.skills.map(s => s.levels[0].name), ['合奏起拍', '直到终曲']);
+  assert.deepEqual(op.skills.map(s => s.assetIcon), ["skill-icons/Ripresa - Conductor's Cue.webp", 'skill-icons/Ripresa - Al Fine.webp']);
+  assert.equal(createHash('sha256').update(await readFile(new URL('../data/arkpedia-native-operators/char_4031_liesel.json', import.meta.url))).digest('hex'), review.sourceFoundationSha256);
+  for (const [key, m] of Object.entries(review.originalArtwork)) assert.deepEqual(data.sd.models[key], m);
+  for (const flag of ['frameParity', 'moduleSupport', 'nativeParticleSupport', 'nativePixelParity']) assert.equal(review[flag], false);
+  assert.equal(review.interfaceAssets.length, 4);
+});
+for (const skill of [1, 2]) for (let rank = 1; rank <= 10; rank++) test(`public S${skill}/rank ${rank} charges naturally, executes source combat and cleans up on retreat`, () => {
+  const f = make({ skill, rank }); enemy(f, { row: 3, col: 4 }); near(f.u.skill.spTotal, f.u.skill.initSp);
+  if (skill === 2) { until(f, () => skillHud(f.u.skill).canActivate, 90); assert.equal(f.b.activateOperator(ID), true); }
+  until(f, () => f.hits.some(h => h.dmg.tags.includes(skill === 1 ? 'liesel:s1' : 'liesel:burst')), 60);
+  assert.ok(f.u.skill.activations > 0); assert.ok(f.attacks.length > 0);
+  const before = f.b.time, dp = f.b.dp, refund = Math.floor(f.controller.record.stats.cost / 2);
+  f.b.retreatOperator(ID); assert.equal(f.controller.stopped, true); near(f.b.dp, dp + refund);
+  near(f.b.bench[ID].readyAt - before, f.controller.record.stats.respawnTime);
+  advance(f.b, 1); assert.equal(f.b.deployedSlots(), 0); assert.deepEqual(f.b.errors, []);
+});
+for (const elite of [0, 1, 2]) for (const potential of [1, 6]) test(`public E${elite}/P${potential} retains source stats, trust, talent and support selection`, () => {
+  const f = make({ elite, potential, trust: 200, rank: [4, 7, 10][elite], support: potential === 6 });
+  const r = selectedLieselBuild(f.build); assert.deepEqual(recordFor(f.build, data).stats, r.stats);
+  near(f.u.s.maxHp, r.stats.maxHp); near(f.u.s.atk, r.stats.atk); assert.deepEqual(f.u.def.tags, r.tags);
+  assert.deepEqual(f.controller.record.talentBb, r.talentBb);
+});
+test('public redeployment retains source cooldown and creates a fresh controller/SP account', () => {
+  const f = make({ skill: 2, potential: 6 }); const before = f.b.time; f.b.retreatOperator(ID);
+  near(f.b.bench[ID].readyAt - before, 66); until(f, () => f.b.bench[ID].readyAt <= f.b.time, 80);
+  f.b.getPlayer('arkpedia').dp = 99; const u = f.b.deployOperator(ID, 4, 4, 'DOWN'); assert.notEqual(u.mem.liesel, f.controller);
+  near(u.skill.spTotal, u.skill.initSp); assert.equal(u.skill.active, false); assert.equal(u.mem.liesel.stopped, false);
+});
+for (const skill of [1, 2]) test(`public S${skill} fights and completes original 0-1 with unchanged waves/terrain and natural DP/SP`, () => {
+  const build = { ...defaultBuild(data.operators[ID]), skillId: `skchr_liesel_${skill}` };
+  const b = new StandardBattle(data, { operators: [build] }); b.setViewport('fullscreen-workspace');
+  const tiles = structuredClone(b.grid.tiles); let deployed = false;
+  for (let n = 0; n < 9001 && !b.finished; n++) {
+    if (!deployed && b.dp >= b.cost(ID)) { b.deployOperator(ID, 4, 4, 'DOWN'); deployed = true; }
+    const u = b.bench[ID].unit; if (skill === 2 && u?.alive && skillHud(u.skill).canActivate) b.activateOperator(ID); b.step();
+  }
+  const result = b.result(); assert.equal(result.reason, 'cleared'); assert.equal(result.total, 11);
+  const leaked = result.perPlayer.arkpedia.leaked.filter(x => x.counted).length;
+  assert.equal(result.killed + leaked, 11); assert.equal(b.life, data.stage.battle.max_life - leaked);
+  assert.ok(b.bench[ID].unit.skill.activations > 0); assert.ok(b.bench[ID].unit.stats.dmg > 0);
+  assert.deepEqual(b.grid.tiles, tiles); assert.deepEqual(b.errors, []); assert.equal(b.bench[ID].unit.mem.liesel.stopped, true);
+});
