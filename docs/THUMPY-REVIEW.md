@@ -1,0 +1,13 @@
+# Thumpy source preparation
+
+Thumpy (`char_4235_thumpy`) remains outside the public roster. The normal preview stays at 388 frozen source forms and 846 skills, with 43 forms remaining. Original source preparation does not install combat, skills, public gameplay or modules.
+
+The foundation contains 467,378 bytes, SHA-256 `9a727b44984f8286d4dd8921a0c2e4e6f47e1ac62f8407bca6be0a7b421e69da`. It is pinned to CN commit `a550f5e048bb94e7cdefc6eb97a4091f0c4c7add`, client `26-09-22-07-47-20_6c71fa`. Five original bundles retain 123 owner/skill components and fifteen transitive templates. No referenced projectile/token graph or unresolved template remains.
+
+Independent audits reproduce seven original outputs and reject 29 altered source or premature-approval claims on Node 22 and 24. Forty-two source-selection and exact-clock checks pass on both versions, covering all thirty skill ranks, promotion/potential/trust, visible and empty native talent candidates, original component identities, locked inputs and animation tracks.
+
+The source has ordinary Attack plus three distinct Begin/Loop/Idle/End families. S1 Begin is approximately 0.166667 seconds, S2 Begin 0.666667 and S3 Begin one second; every End is approximately 0.166667. S2/S3 tile-cast abilities use fixed time with native slow-down and original Begin markers. Ordinary/mode attack abilities retain native maximum animation scale `-1`, unlike Crackborne's cap of `1`; ordinary selectors also retain their block-count-related operands. These values are inputs rather than approved local timing/targeting behavior.
+
+The first visible talent scales elemental intake and branches on a physical-output target's WATER recovery state, reducing its recovery cooldown or applying injury. The second visible talent uses source-specific recipient marks and pre-burst dispatch to grant DEF stacks and capped barriers. Empty native talent candidates remain present. S1 retains ATK/DEF and push operands; S2/S3 have separate tile setup, repeat intervals, trigger-versus-damage injury keys, and mode switching. Native stack-cap priority, derived mark lifetime, reentrant burst ordering, tile/conveyor movement, casting/FSM order and source action execution require separate runtime work.
+
+Original owner artwork is being verified separately. Modules, native effects/audio and original game-frame/pixel parity remain unverified. Arkpedia app dev and production remain untouched.
