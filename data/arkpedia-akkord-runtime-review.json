@@ -1,0 +1,300 @@
+{
+  "schemaVersion": 1,
+  "operatorId": "char_4051_akkord",
+  "enabledOperators": [
+    "char_4051_akkord"
+  ],
+  "frameParity": false,
+  "moduleSupport": false,
+  "nativePixelParity": false,
+  "nativeParticleSupport": false,
+  "sourceFoundationSha256": "3d2aa18369ffc63c55ccc27ed082d3e72fff28b2b8911b0cb161a2617fad9bab",
+  "mechanicsPolicy": "source-cn-line-and-ally-bursts-v1",
+  "scope": "Pinned CN ordinary attack, conditional talent and both ten-rank skills; original Front/Back artwork.",
+  "verification": {
+    "source": "Original six Git blobs, five native bundles, 53 behavior components and 22-mutation audit passed",
+    "runtime": "323 source, public, roster-coverage and adjacent Mon3tr tests passed on Node 22 and 24 without failures or skips. Full-suite verification is separate.",
+    "browser": {
+      "status": "passed",
+      "script": "tools/arkpedia/review-akkord-public.mjs",
+      "scriptSha256": "95c8d1c4eeb54055f77e562cb260b508258141d46297b90d411fd769589329fd",
+      "cases": 8,
+      "captures": 32,
+      "viewports": [
+        "1280x800 desktop mouse",
+        "844x390 landscape phone touch"
+      ],
+      "originalWaves": false,
+      "fixture": "Original stage 0-1 terrain, 99 DP, empty waves, pinned enemy and public Melantha ally; unchanged original-wave tests run separately.",
+      "checks": [
+        "Squad selection and both source skill choices",
+        "Operator drag/drop followed by separate direction swipe; actual deployment on swipe release",
+        "Both Front/Back native models, downward aliases and original skill icons",
+        "Natural time SP, S1 charge consumption and S2 allied normal-damage bursts",
+        "Two later attacks per case restart their literal Spine track with a unique one-shot identity",
+        "Public retreat and independent ally retention"
+      ],
+      "repeatedAttackRestarts": 16,
+      "browserErrors": 0,
+      "failedResources": 0,
+      "visualReview": "Desktop S2 Front and landscape-phone S2 Back active captures inspected; particles, pixel/frame parity remain unverified."
+    }
+  },
+  "limits": [
+    "Compiled selector, damage-callback ordering, S1 empty-target refund and mode FSM dispatch use explicit local policies.",
+    "Source CN names and descriptions are retained; Akkord display name uses the original appellation and verified English asset paths.",
+    "Native particles, audio, modules, game-frame and pixel parity remain unsupported."
+  ],
+  "originalArtwork": {
+    "operator/char_4051_akkord/default/front": {
+      "kind": "operator",
+      "id": "char_4051_akkord",
+      "variant": "default",
+      "facing": "front",
+      "spineVersion": "3.8.99",
+      "source": {
+        "key": "operators",
+        "repository": "fexli/ArknightsResource",
+        "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+        "directory": "spine/char_4051_akkord/char_4051_akkord/Front"
+      },
+      "skeleton": {
+        "path": "models/operator/char_4051_akkord/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4051_akkord.skel",
+        "bytes": 480593,
+        "sha256": "6b7a82e539763f97da6bce414997829c3caab20b74499c24118b008cdb5914a5"
+      },
+      "atlas": {
+        "path": "models/operator/char_4051_akkord/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4051_akkord.atlas",
+        "bytes": 12309,
+        "sha256": "ed2c187222d8ef5eb9a923d912db7021b5fe27c90d052c9a317d0541e7c6ee08"
+      },
+      "textures": [
+        {
+          "path": "models/operator/char_4051_akkord/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4051_akkord.png",
+          "bytes": 241602,
+          "sha256": "53021fb6169465235f1518aebdab0a188aecc949747e0f6126b4a12e71ffdb2c"
+        }
+      ],
+      "premultipliedAlpha": false,
+      "animations": {
+        "Attack": 2.9,
+        "Attack_Down": 2.9,
+        "Default": 0,
+        "Die": 1,
+        "Idle": 4.5,
+        "Skill_2_Begin": 0.267,
+        "Skill_2_End": 0.233,
+        "Skill_2_Idle": 4.5,
+        "Skill_2_Loop": 2.9,
+        "Skill_Down_2_Loop": 2.9,
+        "Start": 1
+      },
+      "animationRoles": {
+        "idle": "Idle",
+        "deploy": "Start",
+        "attack": {
+          "begin": null,
+          "loop": "Attack",
+          "end": null
+        },
+        "attackDown": {
+          "begin": null,
+          "loop": "Attack_Down",
+          "end": null
+        },
+        "skill": {
+          "begin": null,
+          "loop": "Attack",
+          "end": null,
+          "index": 0,
+          "idle": null,
+          "via": "attack"
+        },
+        "die": "Die",
+        "move": null,
+        "stun": null,
+        "skills": {
+          "0": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null,
+            "index": 0,
+            "idle": null,
+            "via": "attack"
+          },
+          "1": {
+            "begin": null,
+            "loop": "Skill_2_Loop",
+            "end": null,
+            "index": 1,
+            "idle": "Skill_2_Idle",
+            "via": "attack"
+          }
+        }
+      },
+      "hits": {
+        "Attack": [
+          0.667
+        ],
+        "Attack_Down": [
+          0.667
+        ],
+        "Skill_2_Loop": [
+          0.667
+        ],
+        "Skill_Down_2_Loop": [
+          0.667
+        ]
+      },
+      "bounds": {
+        "x": -534.535,
+        "y": -1.278,
+        "width": 1585.601,
+        "height": 447.556
+      }
+    },
+    "operator/char_4051_akkord/default/back": {
+      "kind": "operator",
+      "id": "char_4051_akkord",
+      "variant": "default",
+      "facing": "back",
+      "spineVersion": "3.8.99",
+      "source": {
+        "key": "operators",
+        "repository": "fexli/ArknightsResource",
+        "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+        "directory": "spine/char_4051_akkord/char_4051_akkord/Back"
+      },
+      "skeleton": {
+        "path": "models/operator/char_4051_akkord/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4051_akkord.skel",
+        "bytes": 300951,
+        "sha256": "cb34ff9af29ca8e2975bb2c42eaf40bbab119e36daedef5288cf21caf2f90484"
+      },
+      "atlas": {
+        "path": "models/operator/char_4051_akkord/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4051_akkord.atlas",
+        "bytes": 12309,
+        "sha256": "ed2c187222d8ef5eb9a923d912db7021b5fe27c90d052c9a317d0541e7c6ee08"
+      },
+      "textures": [
+        {
+          "path": "models/operator/char_4051_akkord/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4051_akkord.png",
+          "bytes": 241602,
+          "sha256": "53021fb6169465235f1518aebdab0a188aecc949747e0f6126b4a12e71ffdb2c"
+        }
+      ],
+      "premultipliedAlpha": false,
+      "animations": {
+        "Attack": 2.9,
+        "Default": 0,
+        "Idle": 4.5,
+        "Skill_2_Begin": 0.267,
+        "Skill_2_End": 0.233,
+        "Skill_2_Idle": 4.5,
+        "Skill_2_Loop": 2.9,
+        "Start": 1
+      },
+      "animationRoles": {
+        "idle": "Idle",
+        "deploy": "Start",
+        "attack": {
+          "begin": null,
+          "loop": "Attack",
+          "end": null
+        },
+        "attackDown": null,
+        "skill": {
+          "begin": null,
+          "loop": "Attack",
+          "end": null,
+          "index": 0,
+          "idle": null,
+          "via": "attack"
+        },
+        "die": null,
+        "move": null,
+        "stun": null,
+        "skills": {
+          "0": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null,
+            "index": 0,
+            "idle": null,
+            "via": "attack"
+          },
+          "1": {
+            "begin": null,
+            "loop": "Skill_2_Loop",
+            "end": null,
+            "index": 1,
+            "idle": "Skill_2_Idle",
+            "via": "attack"
+          }
+        }
+      },
+      "hits": {
+        "Attack": [
+          0.667
+        ],
+        "Skill_2_Loop": [
+          0.667
+        ]
+      },
+      "bounds": {
+        "x": -534.535,
+        "y": -1.278,
+        "width": 1585.601,
+        "height": 447.556
+      }
+    }
+  },
+  "interfaceAssets": [
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "four-star-icons/Akkord - Base.webp",
+      "bytes": 10544,
+      "sha256": "df053a4e5b65ee9f8dcc93a4ed0506da60bd8a7ec41f6191a8f65fc4b5470618"
+    },
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "skill-icons/Akkord - Backbeat Stress.webp",
+      "bytes": 7648,
+      "sha256": "f56a1343c852e5e46c663cbb02d745014e316464f1648738b0abb1d337017f85"
+    },
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "skill-icons/Akkord - Explosive Tuning.webp",
+      "bytes": 8088,
+      "sha256": "014e56ce5a23e3a31c477f51bdd263ba524b6077aaf283247c6ec58128c1f488"
+    },
+    {
+      "repository": "arkpedia/arkpedia-skin-assets",
+      "commit": "6fb723692d89c4a08d9a7aa4015e19c0753dd270",
+      "path": "four-star-skins/Akkord - Base.webp",
+      "bytes": 116786,
+      "sha256": "a96fd9c18143343f8957f01322ab2db88b2654acfdf9fab48776e219b4e8a3b6"
+    }
+  ],
+  "sdCommit": "0c0325c65f6dea493c22c212156a48afb78dbda2",
+  "snapshotPreservation": {
+    "baseline": "e8277baa173a314bda0a0566c275f5857c315f2c",
+    "normalizedDeliveryCommit": "5205aa71124bcfde0493b8ea32e057d8bf7e0eed",
+    "olderOperators": 376,
+    "olderModels": 861,
+    "operatorsSha256": "9bb812598d09b056ede84876fec1970a1fa6d9befe90ac2c1a86067a323a52f8",
+    "unchanged": [
+      "older operators",
+      "older model metadata",
+      "stage",
+      "tokens",
+      "enemies",
+      "effects",
+      "older source pins"
+    ]
+  },
+  "browserTestedSDCommit": "f84f88eb7bded736a005d2f24bc6c17e8572ba93",
+  "sdMergedTreeMatchesBrowserTest": true
+}

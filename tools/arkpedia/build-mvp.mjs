@@ -223,6 +223,20 @@ if (ids.includes('char_4194_rmixer')) {
     throw Error('Sankta public runtime review differs from the pinned native source');
 }
 const cnEvidence = usesCN ? JSON.parse(await readFile(new URL('../../data/arkpedia-cn-source.json', import.meta.url), 'utf8')) : null;
+if (ids.includes('char_4051_akkord')) {
+  const review = JSON.parse(await readFile(new URL('../../data/arkpedia-akkord-runtime-review.json', import.meta.url)));
+  const foundation = await readFile(new URL('../../data/arkpedia-akkord-prefabs.json', import.meta.url));
+  const evidence = JSON.parse(foundation), id = 'char_4051_akkord';
+  if (JSON.stringify(review.enabledOperators) !== JSON.stringify([id]) || review.frameParity !== false
+    || review.nativeParticleSupport !== false || review.moduleSupport !== false || review.nativePixelParity !== false
+    || review.mechanicsPolicy !== 'source-cn-line-and-ally-bursts-v1'
+    || review.verification.browser.status !== 'passed'
+    || review.sourceFoundationSha256 !== createHash('sha256').update(foundation).digest('hex')
+    || evidence.source.commit !== cnEvidence?.source.commit
+    || JSON.stringify(evidence.tables.character) !== JSON.stringify(cnEvidence.tables.characters[id])
+    || Object.entries(evidence.tables.skills).some(([key, value]) => JSON.stringify(value) !== JSON.stringify(cnEvidence.tables.skills[key])))
+    throw Error('Akkord lacks matching pinned CN source review');
+}
 if (cnEvidence) {
   const roster = JSON.parse(await readFile(new URL('../../data/arkpedia-roster-target.json', import.meta.url), 'utf8'));
   if (cnEvidence.source.repository !== roster.source.repository || cnEvidence.source.commit !== roster.source.commit
@@ -378,6 +392,13 @@ if (ids.includes('char_4179_monstr')) {
   if (JSON.stringify(Object.keys(review.originalArtwork).sort()) !== JSON.stringify(keys)) throw Error('Incomplete Mon3tr artwork review');
   for (const key of keys) if (JSON.stringify(models[key]) !== JSON.stringify(review.originalArtwork[key]))
     throw Error('Changed Mon3tr original artwork: ' + key);
+}
+if (ids.includes('char_4051_akkord')) {
+  const review = JSON.parse(await readFile(new URL('../../data/arkpedia-akkord-runtime-review.json', import.meta.url)));
+  const keys = ['front', 'back'].map(face => `operator/char_4051_akkord/default/${face}`).sort();
+  if (JSON.stringify(Object.keys(review.originalArtwork).sort()) !== JSON.stringify(keys)) throw Error('Incomplete Akkord artwork review');
+  for (const key of keys) if (JSON.stringify(models[key]) !== JSON.stringify(review.originalArtwork[key]))
+    throw Error('Changed original Akkord artwork: ' + key);
 }
 let nativeEffects;
 if(ids.includes('char_1042_phatm2')){

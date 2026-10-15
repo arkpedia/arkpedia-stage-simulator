@@ -151,6 +151,14 @@ for (const id of ids) {
       roles.skills['1'] = { begin: null, loop: 'Skill_2', end: null,
         index: 1, idle: null, via: 'attack' };
     }
+    // Pinned CN Akkord uses Attack for S1; S2's owner mode replaces Idle
+    // and its attack loop only. The controller requests no Begin/End clip.
+    if (id === 'char_4051_akkord') {
+      roles.skills['0'] = { ...roles.attack, index: 0, idle: null, via: 'attack' };
+      roles.skills['1'] = { begin: null, loop: 'Skill_2_Loop', end: null,
+        index: 1, idle: 'Skill_2_Idle', via: 'attack' };
+      roles.skill = roles.skills['0'];
+    }
     if (!roles.idle || !support.noBasicAttack && catalogue[id]?.subProfessionId !== 'bard' && (!roles.attack || roles.attack.via === "idle"))
       throw Error(`${key}: missing idle/attack clips`);
     Object.assign(model, { premultipliedAlpha: values.pma === "true", animations: info.durations,

@@ -82,6 +82,22 @@ export function compileReviewedOperators({ registry, global, cn }) {
       return [id, record];
     }
     const [key, record] = compileOperator(id, tables);
+    if (support.displayNameFrom) {
+      const appellation = tables.characters[id].appellation;
+      if (channel !== 'cn' || support.displayNameFrom !== 'appellation' || typeof appellation !== 'string' || !appellation.trim())
+        throw Error(`Missing reviewed CN appellation: ${id}`);
+      record.sourceName = record.name; record.name = appellation; record.sourceChannel = channel;
+    }
+    if (support.skillIconFiles) {
+      if (channel !== 'cn' || Object.keys(support.skillIconFiles).length !== record.skills.length)
+        throw Error(`Incomplete reviewed CN skill artwork: ${id}`);
+      for (const skill of record.skills) {
+        const file = support.skillIconFiles[skill.id];
+        if (typeof file !== 'string' || !file.endsWith('.webp') || /[\\/]/.test(file))
+          throw Error(`Missing reviewed CN skill icon: ${id}/${skill.id}`);
+        skill.assetIcon = `skill-icons/${file}`;
+      }
+    }
     if (support.secondaryFactions) {
       const c = tables.characters[id];
       record.factionTags = [...new Set([c, c.mainPower, ...(c.subPower ?? [])]

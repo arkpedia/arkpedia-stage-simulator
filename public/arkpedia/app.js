@@ -86,7 +86,9 @@ const classIcon = record => classNames[record.profession] ? imageAsset(`class-ic
 const classImage = (record, css = '') => classIcon(record) ? `<img class="${css}" src="${classIcon(record)}" alt="">` : '';
 function skillIcon(build) {
   const op = data.operators[build.id];
-  const level = op.skills.find(s => s.id === build.skillId)?.levels[build.skillRank - 1];
+  const skill = op.skills.find(s => s.id === build.skillId);
+  if (skill?.assetIcon) return imageAsset(skill.assetIcon.split('/').map(encodeURIComponent).join('/'));
+  const level = skill?.levels[build.skillRank - 1];
   const file = skillIconFile(op.name, level?.name);
   return file ? imageAsset(`skill-icons/${encodeURIComponent(file)}`) : null;
 }
@@ -151,7 +153,7 @@ function filterRoster() {
   let matched = false;
   for (const item of document.querySelectorAll('#roster .roster-item')) {
     const op = data.operators[item.dataset.id];
-    item.hidden = !`${op.name} ${classes[op.profession] ?? op.profession}`.toLocaleLowerCase().includes(query);
+    item.hidden = !`${op.name} ${op.sourceName ?? ''} ${classes[op.profession] ?? op.profession}`.toLocaleLowerCase().includes(query);
     matched ||= !item.hidden;
   }
   document.querySelector('#roster .roster-empty').hidden = matched;
@@ -179,7 +181,7 @@ function renderPrep() {
   );
   filterRoster();
   document.querySelector("#build").innerHTML =
-    `<div class="build-heading"><h3>${escape(op.name)}</h3><button id="toggle">${chosen.has(editing) ? "Remove from squad" : "Add to squad"}</button></div><div class="build-form">
+    `<div class="build-heading"><h3>${escape(op.name)}</h3><button id="toggle">${chosen.has(editing) ? "Remove from squad" : "Add to squad"}</button></div>${op.sourceChannel === 'cn' ? `<p class="help">CN source · ${escape(op.sourceName)} · Original Chinese skill text</p>` : ''}<div class="build-form">
  <label>Elite<select id="elite" ${op.phases.length === 1 ? "disabled" : ""}>${op.phases.map((p, elite) => `<option value="${elite}" ${b.elite === elite ? "selected" : ""}>E${elite}</option>`).join("")}</select></label>
  <label>Level<input id="level" type="number" min="1" max="${op.phases[b.elite].maxLevel}" value="${b.level}"></label>
  <label>Skill<select id="skillId" ${available.length < 2 ? "disabled" : ""}>${available.length ? available.map((entry) => `<option value="${entry.id}" ${entry.id === b.skillId ? "selected" : ""}>S${op.skills.indexOf(entry) + 1} · ${escape(entry.levels[0].name)}</option>`).join("") : '<option value="">No skill</option>'}</select></label>

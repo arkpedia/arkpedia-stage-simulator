@@ -11,7 +11,7 @@ import { prepareCNSource, gitBlob } from '../tools/arkpedia/cn-source.mjs';
 import prior from '../data/arkpedia-entelechia-prefabs.json' with { type: 'json' };
 import { coverageFor } from '../tools/arkpedia/coverage.mjs';
 
-test('CN candidate pin matches the full roster and never increases playable coverage', () => {
+test('CN candidate pin matches the full roster and only separately reviewed kits increase playable coverage', () => {
   assert.equal(cn.source.repository, roster.source.repository);
   assert.equal(cn.source.commit, roster.source.commit);
   assert.equal(cn.globalSource.commit, data.sources[cn.globalSource.repository]);
@@ -24,10 +24,14 @@ test('CN candidate pin matches the full roster and never increases playable cove
   assert.equal(Object.keys(cn.tables.characters).filter(id => !globalForms.has(id) && !data.operators[id]).length,
     coverage.fullRosterTarget.remainingOutsideGlobalSnapshot);
   for (const id of Object.keys(cn.tables.characters)) {
-    if (data.operators[id]) {
+    if (data.operators[id] && globalForms.has(id)) {
       assert.ok(globalForms.has(id));
       assert.equal(REGULAR_OPERATORS[id].sourceForm, 'patch');
       assert.equal(operatorChannel(id, REGULAR_OPERATORS[id]), 'global');
+    } else if (data.operators[id]) {
+      assert.equal(operatorChannel(id, REGULAR_OPERATORS[id]), 'cn');
+      const selected = compileReviewedOperators({ registry: { [id]: REGULAR_OPERATORS[id] }, global: {}, cn: cn.tables })[id];
+      assert.deepEqual(data.operators[id], selected);
     } else {
       assert.ok(coverage.fullRosterTarget.missingForms.includes(id));
       assert.equal(REGULAR_OPERATORS[id], undefined);
