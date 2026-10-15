@@ -95,6 +95,7 @@ import { WINTIM_OPERATORS } from './wintim-operators.js';
 import { JCINTA_OPERATORS } from './jcinta-operators.js';
 import { VARKIS_OPERATORS } from './varkis-operators.js';
 import { SNHUNT_OPERATORS } from './snhunt-operators.js';
+import { KICHI_OPERATORS } from './kichi-operators.js';
 import { BRANCH_OPERATORS } from './branch-operators.js';
 import { RECKPR_OPERATORS } from './reckpr-operators.js';
 import { CLOSUR_OPERATORS } from './closur-operators.js';
@@ -414,6 +415,7 @@ export const REGULAR_OPERATORS = Object.freeze({
   ...RECKPR_OPERATORS,
   ...VARKIS_OPERATORS,
   ...SNHUNT_OPERATORS,
+  ...KICHI_OPERATORS,
   ...BRANCH_OPERATORS,
 });
 

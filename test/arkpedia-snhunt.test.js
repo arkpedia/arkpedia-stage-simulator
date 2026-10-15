@@ -51,7 +51,7 @@ for(const dir of['RIGHT','LEFT','UP','DOWN'])test(`${dir} uses original facing f
  const f=make({dir}),x=5+(dir==='RIGHT'?1:dir==='LEFT'?-1:0),y=5+(dir==='UP'?1:dir==='DOWN'?-1:0);
  f.b.addBuff(f.u,{key:'fixture:fast',mods:{aspd:200}});enemy(f,{x,y});until(f,()=>arrows(f).length===1,3);
  assert.equal(f.u.mem.regularFormVisual.clip,dir==='DOWN'?'Attack_Down_Loop':'Attack_Loop');near(f.u.mem.regularFormVisual.speed,3);
- assert.equal(f.controller.model().durations.Attack_Down_Loop!=null,['RIGHT','DOWN'].includes(dir));
+ assert.equal(f.controller.model().durations.Attack_Down_Loop!=null,dir!=='UP');
  const g=make({dir});g.b.addBuff(g.u,{key:'fixture:fast',mods:{aspd:200}});g.magazine.consume();
  until(g,()=>g.controller.phase?.kind==='reload',3);near(g.u.mem.regularFormVisual.speed,1);
  const t=g.b.time;until(g,()=>g.magazine.bullets===8,3);near(g.b.time-t,1.6,g.b.dt+1e-6);

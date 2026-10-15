@@ -42,7 +42,7 @@ export class SnhuntController{
   this.magazine=new HunterMagazine(trait.bb.value);this.projectiles=new SnhuntProjectiles(this);this.seq=null;this.phase=null;this.stopped=false;
   this.handles=[];this.facing=u.dir;this.chain=false;this.reloadFlag=false;this.resetAt=null;this.accepting=false;this.visualSeq=0;this.lastClip=null;this.mixUntil=0;}
  valid(){return!this.stopped&&!this.b.finished&&present(this.u)&&this.seq===this.u.deploySeq;}
- model(){return models[['UP','LEFT'].includes(this.facing)?'Back':'Front'];}
+ model(){return models[this.facing==='UP'?'Back':'Front'];}
  clip(part,suffix){return`${part}${this.facing==='DOWN'?'_Down':''}_${suffix}`;}
  visual(clip,speed=1,loop=false){if(!Object.hasOwn(this.model().durations,clip))throw Error('Missing original Snow Hunter clip: '+clip);
   this.lastClip=clip;this.u.mem.regularVisualDirection=this.facing;this.u.mem.regularFormVisual={clip,speed,loop,
