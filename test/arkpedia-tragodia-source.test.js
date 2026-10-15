@@ -11,9 +11,9 @@ const build = (n = 1, rank = 10, elite = 2) => ({ elite, level: 1, potential: 1,
 const actions = (key, event) => e.templates[key].eventToActions[event];
 const type = n => n.$type.split('+').at(-1).split(',')[0];
 
-test('native foundation preserves the public source pins and stays unregistered', () => {
+test('historic native foundation preserves its held review and unchanged public source pins', () => {
   assert.deepEqual(e.enabledOperators, []); assert.deepEqual(e.heldOperators, [ID]);
-  assert.equal(publicData.operators[ID], undefined);
+  assert.ok(publicData.operators[ID]);
   assert.equal(e.source.commit, publicData.sources[e.source.repository]);
   assert.equal(e.source.commit, '57010cb5b2afea112cae57daa756b58676ba6850');
   assert.equal(e.source.modelCommit, 'd0b5af0b004b044d322397ce5ae79632b6d9fcdd');

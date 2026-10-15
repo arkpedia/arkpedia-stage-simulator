@@ -84,7 +84,7 @@ test('lure is explicit S2-only and remains absent from public roster', () => {
   assert.throws(() => make({ contract: { ...CONTRACT } }), /lure contract/);
   assert.throws(() => make({ skill: 1 }), /selected S2/);
   assert.throws(() => make({ skill: 3 }), /selected S2/);
-  assert.equal(data.operators[ID], undefined);
+  assert.ok(data.operators[ID]);
   const f = make(); assert.equal(f.deck.stock, 1);
   assert.match(f.deck.placementError(8, 8), /Activate S2/);
 });

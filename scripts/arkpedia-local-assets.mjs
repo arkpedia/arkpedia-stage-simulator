@@ -34,7 +34,7 @@ export function createLocalAssets(assetRoot) {
       await revision(data.sd.commit);
       const local = structuredClone(data);
       const base = `/arkpedia-assets/${data.sd.commit}/`;
-      for (const descriptor of [local.sd, local.stage.art, local.stage.gates, local.skillEffects]) {
+      for (const descriptor of [local.sd, local.stage.art, local.stage.gates, local.skillEffects, ...Object.values(local.nativeEffects ?? {})]) {
         if (descriptor?.repository === repository && descriptor.commit === data.sd.commit)
           descriptor.localBase = base;
       }

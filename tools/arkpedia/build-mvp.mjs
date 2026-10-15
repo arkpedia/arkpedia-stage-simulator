@@ -154,6 +154,17 @@ if(ids.includes('char_1040_blaze2')){
     ||evidence.source.commit!==pins[paths.character_table[0]])
     throw Error('Blaze Igniting public runtime review differs from the pinned native source');
 }
+if(ids.includes('char_1042_phatm2')){
+  const review=JSON.parse(await readFile(new URL('../../data/arkpedia-tragodia-runtime-review.json',import.meta.url)));
+  for(const [name,key]of [['prefabs','sourceFoundationSha256'],['device-art','deviceArtworkSha256']]){
+    const bytes=await readFile(new URL(`../../data/arkpedia-tragodia-${name}.json`,import.meta.url));
+    if(createHash('sha256').update(bytes).digest('hex')!==review[key])throw Error('Tragodia source/artwork receipt changed');
+  }
+  const evidence=JSON.parse(await readFile(new URL('../../data/arkpedia-tragodia-prefabs.json',import.meta.url)));
+  if(JSON.stringify(review.enabledOperators)!==JSON.stringify(['char_1042_phatm2'])||review.frameParity!==false
+    ||review.moduleSupport!==false||review.nativePixelParity!==false
+    ||evidence.source.commit!==pins[paths.character_table[0]])throw Error('Tragodia lacks pinned public review');
+}
 if (ids.includes('char_450_necras')) {
   const review = JSON.parse(await readFile(new URL('../../data/arkpedia-necrass-runtime-review.json', import.meta.url)));
   for (const [name, key] of [['prefabs', 'sourceFoundationSha256'], ['device-art', 'deviceArtworkSha256']]) {
@@ -237,6 +248,7 @@ tokenIds.unshift('token_10020_ling_soul1', 'token_10020_ling_soul2', 'token_1002
 tokenIds.unshift(...[1, 2, 3].map(n => `token_10027_ironmn_pile${n}`));
 tokenIds.unshift('token_10037_mitm_trshrb');
 if (ids.includes('char_249_mlyss')) tokenIds.unshift('token_10030_mlyss_wtrman');
+if(ids.includes('char_1042_phatm2'))tokenIds.unshift('token_10054_phatm2_encdool','token_10055_phatm2_mndclv');
 if (ids.includes('char_450_necras')) tokenIds.unshift('token_10043_necras_skeltn');
 const tokens = Object.fromEntries(tokenIds.map(id => {
   const c = characters[id];
@@ -326,7 +338,7 @@ const modelKeys = [
   ...ids.flatMap((id) =>
     ["front", "back"].map((f) => `operator/${id}/default/${f}`),
   ),
-  ...tokenIds.flatMap(id => ['front', 'back'].map(f => `operator/${id}/default/${f}`)),
+  ...tokenIds.filter(id=>id!=='token_10055_phatm2_mndclv').flatMap(id => ['front', 'back'].map(f => `operator/${id}/default/${f}`)),
   'operator/token_10027_ironmn_pile3/default/down',
   ...Object.keys(enemyRecords).map((id) => `enemy/${id}/default/default`),
 ];
@@ -347,6 +359,18 @@ const models = Object.fromEntries(
     return [k, sd.models[k]];
   }),
 );
+let nativeEffects;
+if(ids.includes('char_1042_phatm2')){
+  const review=JSON.parse(await readFile(new URL('../../data/arkpedia-tragodia-runtime-review.json',import.meta.url)));
+  const keys=['char_1042_phatm2','token_10054_phatm2_encdool'].flatMap(id=>['front','back'].map(face=>`operator/${id}/default/${face}`)).sort();
+  if(JSON.stringify(Object.keys(review.originalArtwork).sort())!==JSON.stringify(keys))throw Error('Incomplete Tragodia artwork review');
+  for(const key of keys)if(JSON.stringify(models[key])!==JSON.stringify(review.originalArtwork[key]))throw Error('Changed Tragodia original model: '+key);
+  const registry=JSON.parse(execFileSync('git',['show',`${sdCommit}:native-effect-manifest.json`],{cwd:new URL('../../../arkpedia-sd-assets/',import.meta.url),encoding:'utf8'}));
+  if(JSON.stringify(registry.effects.tragodia)!==JSON.stringify(review.nativeEffectManifest))throw Error('Changed Tragodia native effect delivery');
+  const bytes=execFileSync('git',['show',`${sdCommit}:${review.nativeEffectManifest.path}`],{cwd:new URL('../../../arkpedia-sd-assets/',import.meta.url),maxBuffer:16*1024*1024});
+  if(bytes.length!==review.nativeEffectManifest.bytes||createHash('sha256').update(bytes).digest('hex')!==review.nativeEffectManifest.sha256)throw Error('Changed native package manifest');
+  nativeEffects={tragodia:{repository:'arkpedia/arkpedia-sd-assets',commit:sdCommit,manifest:review.nativeEffectManifest}};
+}
 if (ids.includes('char_450_necras')) {
   const review = JSON.parse(await readFile(new URL('../../data/arkpedia-necrass-runtime-review.json', import.meta.url)));
   const keys = ['char_450_necras', 'token_10043_necras_skeltn'].flatMap(id =>
@@ -439,6 +463,7 @@ if (ids.includes('char_2023_ling')) {
   }
 }
 for (const token of Object.values(tokens)) {
+  if(token.id==='token_10055_phatm2_mndclv'){token.automaticOnly=true;token.renderingKind='effect-only';token.avatar=null;continue;}
   if (token.id === 'token_10031_swire2_gdtrap') token.automaticOnly = true;
   const model = models[`operator/${token.id}/default/front`];
   // Golden Vows, Tactical Equipment and Revenant's Shadow spawn automatically.
@@ -459,6 +484,7 @@ const output = {
       path: paths.buff_template_data[1], sha256: tableHash },
     templates,
   },
+  ...(nativeEffects?{nativeEffects}:{}),
   sd: { repository: "arkpedia/arkpedia-sd-assets", commit: sdCommit, models },
   stage: {
     code: stage.code,

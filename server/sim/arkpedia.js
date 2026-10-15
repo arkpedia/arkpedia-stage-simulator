@@ -100,6 +100,7 @@ import { customizeRayKit, installRay } from './content/arkpedia-ray.js';
 import { customizeColdshotKit, installColdshot } from './content/arkpedia-coldshot.js';
 import { customizeNymphKit, installNymph } from './content/arkpedia-nymph.js';
 import { customizeLemuenKit, installLemuen } from './content/arkpedia-lemuen.js';
+import { customizePublicTragodiaKit, installPublicTragodia } from './content/arkpedia-tragodia-public.js';
 import { customizePublicNecrassKit, installPublicNecrass } from './content/arkpedia-necrass-public.js';
 import { installPublicMuelsyseSquad, customizePublicMuelsyseKit, installPublicMuelsyse } from './content/arkpedia-muelsyse-public.js';
 import { customizeMarcilKit, installMarcil, installMarcilSquad } from './content/arkpedia-marcil.js';
@@ -530,6 +531,7 @@ export class StandardBattle extends Battle {
     customizeMarcilKit({ battle: this, id, unit, kit });
     customizePublicMuelsyseKit({ battle: this, id, unit, kit });
     customizePublicNecrassKit({ battle: this, id, unit, kit });
+    customizePublicTragodiaKit({ battle: this, id, unit, kit });
     customizeNarantKit({ battle: this, id, def, unit, kit });
     customizeElaKit({ battle: this, id, def, unit, kit });
     customizeFuzeKit({ battle: this, id, def, unit, kit });
@@ -737,6 +739,7 @@ export class StandardBattle extends Battle {
     installMarcil({ unit, def });
     installPublicMuelsyse({ unit, def });
     installPublicNecrass({ unit, def });
+    installPublicTragodia({ unit, def });
     installNarant({ battle: this, unit, def });
     installEla({ battle: this, unit, def });
     installFuze({ battle: this, unit, def });

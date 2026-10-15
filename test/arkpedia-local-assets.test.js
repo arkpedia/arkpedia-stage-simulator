@@ -22,11 +22,15 @@ test('loopback assets serve only pinned public asset-tree blobs and ignore check
     const commit = git(['rev-parse', 'HEAD']);
     const source = { sd: { repository: 'arkpedia/arkpedia-sd-assets', commit },
       stage: { art: { repository: 'arkpedia/arkpedia-sd-assets', commit } },
+      nativeEffects: { tragodia: { repository: 'arkpedia/arkpedia-sd-assets', commit }, unrelated: { repository: 'someone/else', commit } },
       tokens: { token: { avatar: `https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/${commit}/models/operator/test/icon.png` } } };
     const local = createLocalAssets(root), snapshot = await local.snapshot(source);
     assert.equal(source.sd.localBase, undefined);
     assert.equal(artBase(snapshot.sd), `/arkpedia-assets/${commit}/`);
     assert.equal(snapshot.stage.art.localBase, snapshot.sd.localBase);
+    assert.equal(snapshot.nativeEffects.tragodia.localBase,snapshot.sd.localBase);
+    assert.equal(snapshot.nativeEffects.unrelated.localBase,undefined);
+    assert.equal(source.nativeEffects.tragodia.localBase,undefined);
     assert.equal(snapshot.tokens.token.avatar, snapshot.sd.localBase + 'models/operator/test/icon.png');
     await writeFile(path.join(root, 'models/operator/test/model.skel'), 'modified checkout');
     await writeFile(path.join(root, 'models/operator/test/untracked.skel'), 'untracked');

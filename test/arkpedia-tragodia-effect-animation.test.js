@@ -56,12 +56,12 @@ test('source channels keep the two original missing-path clips explicit without 
   assert.ok(meta.unresolvedBindings.every(b=>b.clip!==cage));
 });
 
-test('animation recovery preserves source-only scope and does not publish a partial Tragodia kit',()=>{
+test('historic animation receipt preserves source-only scope independently of public runtime review',()=>{
   assert.equal(meta.operator,'char_1042_phatm2');assert.equal(meta.version,source.version);
   assert.equal(meta.scope.sourceChannelsOnly,true);assert.equal(meta.scope.rendererVerified,false);
   assert.equal(meta.scope.compiledFrameParity,false);assert.deepEqual(meta.scope.enabledOperators,[]);
   assert.equal(meta.scope.pending.length,2);
-  assert.equal(mvp.operators[meta.operator],undefined);
+  assert.ok(mvp.operators[meta.operator]);
   assert.deepEqual(meta.properties,['material._MainColor.a','material._MainColor.b','material._MainColor.g',
     'material._MainColor.r','material._TintColor.a','material._TintColor.b','material._TintColor.g','material._TintColor.r']);
 });

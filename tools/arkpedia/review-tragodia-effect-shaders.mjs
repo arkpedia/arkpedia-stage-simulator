@@ -5,13 +5,18 @@ import puppeteer from 'puppeteer-core';
 import assert from 'node:assert/strict';
 import http from 'node:http';
 import path from 'node:path';
-import {readFile,writeFile} from 'node:fs/promises';
+import {readFile,writeFile,mkdir} from 'node:fs/promises';
+import {loadTragodiaDelivery} from './verify-tragodia-delivery.mjs';
 import {fileURLToPath} from 'node:url';
 import {createHash} from 'node:crypto';
 import {gunzipSync} from 'node:zlib';
 import {createStaticHandler} from '../../server/index.js';
 const root=fileURLToPath(new URL('../../',import.meta.url));
-const directory=path.join(root,'.cache/arkpedia/tragodia-source/effects');
+const delivery=process.env.ARKPEDIA_EFFECT_DELIVERY_ROOT?await loadTragodiaDelivery(process.env.ARKPEDIA_EFFECT_DELIVERY_ROOT):null;
+const cache=path.join(root,'.cache/arkpedia/tragodia-source/effects');
+const directory=delivery?.directory??cache;
+const output=delivery?path.join(cache,'delivered-browser'):cache;
+await mkdir(output,{recursive:true});
 const metadata=JSON.parse(await readFile(path.join(root,'data/arkpedia-tragodia-effect-shaders.json')));
 const effects=JSON.parse(await readFile(path.join(root,'data/arkpedia-tragodia-effects.json')));
 const check=(bytes,entry)=>{
@@ -21,7 +26,7 @@ const check=(bytes,entry)=>{
 const shaderBytes=await readFile(path.join(directory,'native-shaders.json'));check(shaderBytes,metadata.artifact);
 const effectBytes=await readFile(path.join(directory,'native-effects.bin'));check(effectBytes,effects.pack);
 const shaders=JSON.parse(shaderBytes),pack=JSON.parse(gunzipSync(effectBytes));
-const builtinMeshes=JSON.parse(await readFile(path.join(root,'data/arkpedia-unity-builtin-meshes.json')));
+const builtinMeshes=JSON.parse(await readFile(delivery?path.join(directory,delivery.meta.builtinMeshes.path):path.join(root,'data/arkpedia-unity-builtin-meshes.json')));
 const animationMeta=JSON.parse(await readFile(path.join(root,'data/arkpedia-tragodia-effect-animations.json')));
 const animationBytes=await readFile(path.join(directory,'native-animations.json'));check(animationBytes,animationMeta.artifact);
 const animations=JSON.parse(animationBytes);
@@ -395,12 +400,12 @@ try{
  assert.equal(result.cage.checkedCustomDraws,8);
  assert.equal(result.cage.gpuBuffersVerified,24);
  assert.equal(result.cage.strictAccepted,true);
- await writeFile(path.join(directory,'cage-custom-stream-diagnostic.png'),Buffer.from(result.diagnosticImage.split(',')[1],'base64'));
+ await writeFile(path.join(output,'cage-custom-stream-diagnostic.png'),Buffer.from(result.diagnosticImage.split(',')[1],'base64'));
  delete result.diagnosticImage;
- await writeFile(path.join(directory,'scheduled-child-motion-diagnostic.png'),Buffer.from(result.scheduledImage.split(',')[1],'base64'));
+ await writeFile(path.join(output,'scheduled-child-motion-diagnostic.png'),Buffer.from(result.scheduledImage.split(',')[1],'base64'));
  delete result.scheduledImage;
- const report={sourceArtifact:metadata.artifact.sha256,...result,errors};
- await writeFile(path.join(directory,'shader-browser-review.json'),JSON.stringify(report,null,2)+'\n');
+ const report={sourceArtifact:metadata.artifact.sha256,deliveryManifestSha256:delivery?.manifestSha256??null,deliveryFilesVerified:delivery?.files??0,...result,errors};
+ await writeFile(path.join(output,'shader-browser-review.json'),JSON.stringify(report,null,2)+'\n');
  console.log(JSON.stringify({shaders:8,programs:result.compiled.length,materials:result.materials.length,
   cageDraws:result.cage.draws.length,cageBlocked:result.cage.blocked.length,
   glError:result.glError,driver:result.driver,compiledFrameParity:false,rendererVerified:false,errors}));

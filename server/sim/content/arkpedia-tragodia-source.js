@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Selected native source records only; no public registration or combat adapter.
+// Selected native source records; public approval is recorded separately.
 import evidence from '../../../data/arkpedia-tragodia-prefabs.json' with { type: 'json' };
 import { sourceCandidate } from '../../../shared/arkpedia/summons.js';
 import { flattenBlackboard } from '../simdata.js';

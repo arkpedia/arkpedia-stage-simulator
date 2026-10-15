@@ -39,9 +39,18 @@ describe('make-windows-bundle.mjs: --out 不能指向仓库自己或它的上级
   test('大小写不同也算同一个目录（Windows / macOS 的文件系统默认不区分大小写）', async () => {
     const { outDirIsUnsafe } = await mod('scripts/make-windows-bundle.mjs');
     // Linux 的默认文件系统区分大小写：`/HOME/X` 就是另一个目录，放行才对。
-    const sameThing = process.platform !== 'linux';
-    assert.equal(outDirIsUnsafe(ROOT.toUpperCase()), sameThing, `大写写法的仓库路径（${ROOT.toUpperCase()}）`);
-    assert.equal(outDirIsUnsafe(ROOT.replace(/\//g, path.sep).toLowerCase()), sameThing, '全小写写法');
+    for (const changed of [ROOT.toUpperCase(), ROOT.replace(/\//g, path.sep).toLowerCase()]) {
+      // GitHub's Linux checkout is already lowercase: that spelling remains
+      // the exact repository path and must still be rejected.
+      const sameThing = changed === ROOT || process.platform !== 'linux';
+      assert.equal(outDirIsUnsafe(changed), sameThing, `大小写路径（${changed}）`);
+    }
+    // Keep both genuinely changed spellings covered even when ROOT contains
+    // only lowercase letters. A nonexistent mixed-case fixture avoids relying
+    // on the checkout directory's name or the filesystem's case policy.
+    const fixtureRoot = path.join(os.tmpdir(), 'Sp-Bundle-Case-Fixture');
+    for (const changed of [fixtureRoot.toUpperCase(), fixtureRoot.toLowerCase()])
+      assert.equal(outDirIsUnsafe(changed, fixtureRoot), process.platform !== 'linux');
   });
 
   test('经过符号链接的路径会被认出来（macOS 的 /tmp 就是指向 /private/tmp 的链接）', async () => {
