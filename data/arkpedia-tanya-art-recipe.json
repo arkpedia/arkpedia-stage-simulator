@@ -1,0 +1,147 @@
+{
+  "operator": "char_4225_tanya",
+  "name": "Crackborne",
+  "foundationSha256": "03e393621ac50e478e6816846c0fbb9b3d0dc5409e4914d7ec483fc1858c967c",
+  "artCommit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+  "output": "data/arkpedia-tanya-art.json",
+  "sdReview": "source-reviews/crackborne.json",
+  "scope": "Original owner files unchanged; native pointers, pixels and PMA verified. Two ordinary Attack_1/Attack_2 variants, literal S1 Begin/Loop/Idle/End tracks and six native End mixes; one-shot Skill_2. Back has no death clip. No combat/public approval.",
+  "roles": {
+    "Front": {
+      "idle": "Idle",
+      "deploy": "Start",
+      "attack": {
+        "begin": null,
+        "loop": "Attack_1",
+        "end": null
+      },
+      "attackVariants": {
+        "0": {
+          "loop": "Attack_1"
+        },
+        "1": {
+          "loop": "Attack_2"
+        }
+      },
+      "attackDown": null,
+      "skill": {
+        "begin": "Skill_1_Begin",
+        "loop": "Skill_1_Loop",
+        "end": "Skill_1_End",
+        "idle": "Skill_1_Idle",
+        "index": 0,
+        "via": "skill"
+      },
+      "skills": {
+        "0": {
+          "begin": "Skill_1_Begin",
+          "loop": "Skill_1_Loop",
+          "end": "Skill_1_End",
+          "idle": "Skill_1_Idle",
+          "index": 0,
+          "via": "skill"
+        },
+        "1": {
+          "begin": null,
+          "loop": "Skill_2",
+          "end": null,
+          "index": 1,
+          "via": "skill"
+        }
+      },
+      "die": "Die",
+      "stun": null,
+      "move": null
+    },
+    "Back": {
+      "idle": "Idle",
+      "deploy": "Start",
+      "attack": {
+        "begin": null,
+        "loop": "Attack_1",
+        "end": null
+      },
+      "attackVariants": {
+        "0": {
+          "loop": "Attack_1"
+        },
+        "1": {
+          "loop": "Attack_2"
+        }
+      },
+      "attackDown": null,
+      "skill": {
+        "begin": "Skill_1_Begin",
+        "loop": "Skill_1_Loop",
+        "end": "Skill_1_End",
+        "idle": "Skill_1_Idle",
+        "index": 0,
+        "via": "skill"
+      },
+      "skills": {
+        "0": {
+          "begin": "Skill_1_Begin",
+          "loop": "Skill_1_Loop",
+          "end": "Skill_1_End",
+          "idle": "Skill_1_Idle",
+          "index": 0,
+          "via": "skill"
+        },
+        "1": {
+          "begin": null,
+          "loop": "Skill_2",
+          "end": null,
+          "index": 1,
+          "via": "skill"
+        }
+      },
+      "die": null,
+      "stun": null,
+      "move": null
+    }
+  },
+  "nativeMixes": [
+    {
+      "sourceAnimName": "Skill_1_Idle",
+      "targetAnimName": "Idle",
+      "mixAnimName": "Skill_1_End"
+    },
+    {
+      "sourceAnimName": "Skill_1_Loop",
+      "targetAnimName": "Idle",
+      "mixAnimName": "Skill_1_End"
+    },
+    {
+      "sourceAnimName": "Skill_1_Idle",
+      "targetAnimName": "Attack_1",
+      "mixAnimName": "Skill_1_End"
+    },
+    {
+      "sourceAnimName": "Skill_1_Loop",
+      "targetAnimName": "Attack_1",
+      "mixAnimName": "Skill_1_End"
+    },
+    {
+      "sourceAnimName": "Skill_1_Idle",
+      "targetAnimName": "Attack_2",
+      "mixAnimName": "Skill_1_End"
+    },
+    {
+      "sourceAnimName": "Skill_1_Loop",
+      "targetAnimName": "Attack_2",
+      "mixAnimName": "Skill_1_End"
+    }
+  ],
+  "reviewPhases": [
+    "Start",
+    "Idle",
+    "Die",
+    "Attack_1",
+    "Attack_2",
+    "Skill_1_Begin",
+    "Skill_1_Loop",
+    "Skill_1_Idle",
+    "Skill_1_End",
+    "Skill_2"
+  ]
+}
