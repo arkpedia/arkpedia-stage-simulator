@@ -3,6 +3,7 @@
 import { Battle } from "./Battle.js";
 import { DataSource } from "./simdata.js";
 import { genericKit } from "./content/generic.js";
+import { regularDpMinimum, canSpendDp, regularDpRecoveryForStep } from './content/arkpedia-dp-budget.js';
 import { customizeMedicKit, installMedic, installMedicSquad } from './content/arkpedia-medics.js';
 import { customizeCasterKit, installCaster } from './content/arkpedia-casters.js';
 import { customizeGuardKit, installGuard } from './content/arkpedia-guards.js';
@@ -357,6 +358,8 @@ export class StandardBattle extends Battle {
   get dp() {
     return this.getPlayer("arkpedia").dp;
   }
+  dpMinimumFor(ownerId = 'arkpedia') { return regularDpMinimum(this, ownerId); }
+  dpRecoveryForStep(ownerId, dt) { return regularDpRecoveryForStep(this, ownerId, dt); }
   dpRecoveryRateFor(ownerId = 'arkpedia') {
     const scale = this.allyUnits.filter(u => u.ownerId === ownerId && u.alive && u.deployed && !u.hidden)
       .reduce((n, u) => n * (u.mem.regularDpRegenScale ?? 1), 1);
@@ -417,7 +420,7 @@ export class StandardBattle extends Battle {
     )
       return "Tile is occupied.";
     if (this.tileReservation(row, col)) return "Tile is reserved for an operator's return.";
-    if (!fromSkill && this.dp < this.cost(id)) return "Not enough DP.";
+    if (!fromSkill && !canSpendDp(this, 'arkpedia', this.cost(id))) return "Not enough DP.";
     return null;
   }
   deployOperator(id, row, col, dir) {

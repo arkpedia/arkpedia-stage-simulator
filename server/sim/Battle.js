@@ -423,8 +423,9 @@ export class Battle {
       this._phase('spawns', () => this._processSpawns());
       this._phase('dp', () => {
         for (const ps of this.players) {
-          const rate = this.dpRecoveryRateFor?.(ps.id) ?? this.flags.dpPerSec;
-          ps.dp = Math.min(this.flags.dpMax, ps.dp + rate * dt);
+          const rate = this.dpRecoveryRateFor?.(ps.playerId) ?? this.flags.dpPerSec;
+          const gain = this.dpRecoveryForStep?.(ps.playerId, dt) ?? rate * dt;
+          ps.dp = Math.min(this.flags.dpMax, ps.dp + gain);
         }
       });
       this._phase('buffs', () => this._tickBuffs(dt));
@@ -2364,7 +2365,7 @@ export class Battle {
   addDp(playerId, n) {
     const ps = this.getPlayer(playerId);
     if (!ps || !Number.isFinite(n)) return 0;
-    ps.dp = Math.max(0, Math.min(this.flags.dpMax, ps.dp + n));
+    ps.dp = Math.max(this.dpMinimumFor?.(playerId) ?? 0, Math.min(this.flags.dpMax, ps.dp + n));
     return ps.dp;
   }
 

@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import { canSpendDp } from './arkpedia-dp-budget.js';
 // Native normal Reconstruction card and lifetime, composed with selected skill adapters.
 import evidence from '../../../data/arkpedia-mon3tr-prefabs.json' with { type: 'json' };
 import { MON3TR_ID as ID, mon3trSourceComponent as component } from './arkpedia-mon3tr-source.js';
@@ -117,7 +118,7 @@ export class ReconstructionDeck {
     const tile = b.grid.tile(row, col);
     if (tile.height !== 'LOW' || !['MELEE', 'ALL'].includes(tile.build) || b.grid.isObstacle(row, col)) return 'Choose a low-ground deployment tile.';
     if (b.unitAt(row, col) || b.tileReservation(row, col) || b.downOn(row, col)) return 'Tile is occupied or reserved.';
-    if (b.dp < this.record.stats.cost) return 'Not enough DP.';
+    if (!canSpendDp(b, this.u.ownerId, this.record.stats.cost)) return 'Not enough DP.';
     return null;
   }
   visual(s, clip, loop = false) {
