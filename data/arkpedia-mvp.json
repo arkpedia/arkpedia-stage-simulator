@@ -402,7 +402,8 @@
     "char_4237_jcinta": "cn",
     "char_4031_liesel": "cn",
     "char_4228_closur": "cn",
-    "char_4196_reckpr": "cn"
+    "char_4196_reckpr": "cn",
+    "char_4207_branch": "cn"
   },
   "behaviors": {
     "source": {
@@ -433,7 +434,7 @@
   "nativeEffects": {
     "tragodia": {
       "repository": "arkpedia/arkpedia-sd-assets",
-      "commit": "20048e0b125e2bce10a87d9e5ed705a075ca52e2",
+      "commit": "bdd1360683e81cfb09f567b6d867ab93715ac183",
       "manifest": {
         "path": "effects/native/tragodia/26-09-23-17-49-43_b9cc4a/e39769c56a91f5d483632808082a05a3dbe0b71d5a5c99b3ade9ebdee68fd0ff/manifest.json",
         "bytes": 44646,
@@ -443,7 +444,7 @@
   },
   "sd": {
     "repository": "arkpedia/arkpedia-sd-assets",
-    "commit": "20048e0b125e2bce10a87d9e5ed705a075ca52e2",
+    "commit": "bdd1360683e81cfb09f567b6d867ab93715ac183",
     "models": {
       "operator/char_123_fang/default/front": {
         "kind": "operator",
@@ -74886,6 +74887,201 @@
           "move": null
         }
       },
+      "operator/char_4207_branch/default/front": {
+        "kind": "operator",
+        "id": "char_4207_branch",
+        "variant": "default",
+        "facing": "front",
+        "spineVersion": "3.8.99",
+        "source": {
+          "key": "operators",
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "spine/char_4207_branch/char_4207_branch/Front"
+        },
+        "skeleton": {
+          "path": "models/operator/char_4207_branch/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4207_branch.skel",
+          "bytes": 214086,
+          "sha256": "198746e29212f86e3c5d50586e47d02d3ad321f12d85d211b0c5e1a957bf8e4a"
+        },
+        "atlas": {
+          "path": "models/operator/char_4207_branch/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4207_branch.atlas",
+          "bytes": 13743,
+          "sha256": "4afe5da6bc015345d9d22984b0fe2624501978f0ac21c5e907b055daf106154e"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_4207_branch/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4207_branch.png",
+            "bytes": 210680,
+            "sha256": "bc15860afe24c88c5f5e820f0146c565987b1c6f8f8c01105e75c186ba88f092"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Attack": 1.533,
+          "Default": 0,
+          "Die": 1,
+          "Idle": 4,
+          "Skill_2_Begin": 1,
+          "Skill_2_End": 0.1,
+          "Skill_2_Idle": 4,
+          "Skill_2_Loop": 1.533,
+          "Start": 1
+        },
+        "hits": {
+          "Attack": [
+            0.733
+          ],
+          "Skill_2_Begin": [
+            0.6
+          ],
+          "Skill_2_Loop": [
+            0.8
+          ]
+        },
+        "bounds": {
+          "x": -261.627,
+          "y": -1.492,
+          "width": 1155.477,
+          "height": 595.997
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null
+          },
+          "attackDown": null,
+          "skill": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null,
+            "idle": null,
+            "index": 0,
+            "via": "attack"
+          },
+          "skills": {
+            "0": {
+              "begin": null,
+              "loop": "Attack",
+              "end": null,
+              "idle": null,
+              "index": 0,
+              "via": "attack"
+            },
+            "1": {
+              "begin": "Skill_2_Begin",
+              "loop": "Skill_2_Loop",
+              "end": "Skill_2_End",
+              "idle": "Skill_2_Idle",
+              "index": 1,
+              "via": "skill"
+            }
+          },
+          "die": "Die",
+          "stun": null,
+          "move": null
+        }
+      },
+      "operator/char_4207_branch/default/back": {
+        "kind": "operator",
+        "id": "char_4207_branch",
+        "variant": "default",
+        "facing": "back",
+        "spineVersion": "3.8.99",
+        "source": {
+          "key": "operators",
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "spine/char_4207_branch/char_4207_branch/Back"
+        },
+        "skeleton": {
+          "path": "models/operator/char_4207_branch/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4207_branch.skel",
+          "bytes": 113880,
+          "sha256": "cbea9ea423480108af87c04bc402a84e13dc9dd3980e65837a46871f4f652bba"
+        },
+        "atlas": {
+          "path": "models/operator/char_4207_branch/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4207_branch.atlas",
+          "bytes": 6883,
+          "sha256": "ff7f8a04a844e08aef5e8b07487bd248dbe6a4c4375a286f3f45491703ebb46e"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_4207_branch/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4207_branch.png",
+            "bytes": 160473,
+            "sha256": "59092047130bc90bba5b19c133586e461501adcba2dfac4053e41a63304888c0"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Attack": 1.533,
+          "Default": 0,
+          "Idle": 4,
+          "Skill_2_Begin": 1,
+          "Skill_2_End": 0.1,
+          "Skill_2_Idle": 4,
+          "Skill_2_Loop": 1.533,
+          "Start": 1
+        },
+        "hits": {
+          "Attack": [
+            0.733
+          ],
+          "Skill_2_Begin": [
+            0.6
+          ],
+          "Skill_2_Loop": [
+            0.8
+          ]
+        },
+        "bounds": {
+          "x": -403.627,
+          "y": -1.55,
+          "width": 1297.477,
+          "height": 596.055
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null
+          },
+          "attackDown": null,
+          "skill": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null,
+            "idle": null,
+            "index": 0,
+            "via": "attack"
+          },
+          "skills": {
+            "0": {
+              "begin": null,
+              "loop": "Attack",
+              "end": null,
+              "idle": null,
+              "index": 0,
+              "via": "attack"
+            },
+            "1": {
+              "begin": "Skill_2_Begin",
+              "loop": "Skill_2_Loop",
+              "end": "Skill_2_End",
+              "idle": "Skill_2_Idle",
+              "index": 1,
+              "via": "skill"
+            }
+          },
+          "die": null,
+          "stun": null,
+          "move": null
+        }
+      },
       "operator/token_10066_closur_ourbase/default/front": {
         "kind": "operator",
         "id": "token_10066_closur_ourbase",
@@ -86129,7 +86325,7 @@
     },
     "art": {
       "repository": "arkpedia/arkpedia-sd-assets",
-      "commit": "20048e0b125e2bce10a87d9e5ed705a075ca52e2",
+      "commit": "bdd1360683e81cfb09f567b6d867ab93715ac183",
       "scene": {
         "path": "stages/0-1/26-09-23-17-49-43_b9cc4a/scene.json",
         "bytes": 4479,
@@ -86138,7 +86334,7 @@
     },
     "gates": {
       "repository": "arkpedia/arkpedia-sd-assets",
-      "commit": "20048e0b125e2bce10a87d9e5ed705a075ca52e2",
+      "commit": "bdd1360683e81cfb09f567b6d867ab93715ac183",
       "pack": {
         "path": "effects/standard-gates/26-09-23-17-49-43_b9cc4a/gates.json",
         "bytes": 3507,
@@ -663059,6 +663255,1483 @@
       "factionTags": [
         "yan"
       ]
+    },
+    "char_4207_branch": {
+      "id": "char_4207_branch",
+      "name": "Vetochki",
+      "description": "<@ba.kw>无法</>被友方角色治疗",
+      "rarity": 5,
+      "profession": "TANK",
+      "subProfessionId": "unyield",
+      "position": "MELEE",
+      "nationId": "ursus",
+      "groupId": null,
+      "teamId": null,
+      "phases": [
+        {
+          "maxLevel": 50,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 1600,
+                "atk": 363,
+                "def": 205,
+                "magicResistance": 10,
+                "cost": 31,
+                "blockCnt": 2,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.6,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false,
+                "teleportImmune": false,
+                "groundBoundImmune": false
+              }
+            },
+            {
+              "level": 50,
+              "data": {
+                "maxHp": 2106,
+                "atk": 505,
+                "def": 311,
+                "magicResistance": 10,
+                "cost": 31,
+                "blockCnt": 2,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.6,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false,
+                "teleportImmune": false,
+                "groundBoundImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ]
+          ]
+        },
+        {
+          "maxLevel": 70,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 2106,
+                "atk": 505,
+                "def": 311,
+                "magicResistance": 10,
+                "cost": 33,
+                "blockCnt": 3,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.6,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false,
+                "teleportImmune": false,
+                "groundBoundImmune": false
+              }
+            },
+            {
+              "level": 70,
+              "data": {
+                "maxHp": 2736,
+                "atk": 674,
+                "def": 415,
+                "magicResistance": 10,
+                "cost": 33,
+                "blockCnt": 3,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.6,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false,
+                "teleportImmune": false,
+                "groundBoundImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ]
+          ]
+        },
+        {
+          "maxLevel": 80,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 2736,
+                "atk": 674,
+                "def": 415,
+                "magicResistance": 10,
+                "cost": 35,
+                "blockCnt": 3,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.6,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false,
+                "teleportImmune": false,
+                "groundBoundImmune": false
+              }
+            },
+            {
+              "level": 80,
+              "data": {
+                "maxHp": 3748,
+                "atk": 865,
+                "def": 540,
+                "magicResistance": 10,
+                "cost": 35,
+                "blockCnt": 3,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.6,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false,
+                "teleportImmune": false,
+                "groundBoundImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ]
+          ]
+        }
+      ],
+      "favorKeyFrames": [
+        {
+          "level": 0,
+          "data": {
+            "maxHp": 0,
+            "atk": 0,
+            "def": 0,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false,
+            "teleportImmune": false,
+            "groundBoundImmune": false
+          }
+        },
+        {
+          "level": 50,
+          "data": {
+            "maxHp": 400,
+            "atk": 0,
+            "def": 50,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false,
+            "teleportImmune": false,
+            "groundBoundImmune": false
+          }
+        }
+      ],
+      "potentialRanks": [
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "RESPAWN_TIME",
+            "formulaItem": "ADDITION",
+            "value": -4,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "MAX_HP",
+            "formulaItem": "ADDITION",
+            "value": 250,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [],
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ]
+      ],
+      "trait": null,
+      "talents": [
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "简易包扎",
+              "description": "技能结束时恢复自身40%最大生命值",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "hp_ratio",
+                  "value": 0.4,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 1
+              },
+              "requiredPotentialRank": 4,
+              "prefabKey": "1",
+              "name": "简易包扎",
+              "description": "技能结束时恢复自身50%<@ba.talpu>（+10%）</>最大生命值",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "hp_ratio",
+                  "value": 0.5,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "简易包扎",
+              "description": "技能结束时恢复自身50%最大生命值",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "hp_ratio",
+                  "value": 0.5,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 4,
+              "prefabKey": "1",
+              "name": "简易包扎",
+              "description": "技能结束时恢复自身60%<@ba.talpu>（+10%）</>最大生命值",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "hp_ratio",
+                  "value": 0.6,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            }
+          ]
+        }
+      ],
+      "skills": [
+        {
+          "id": "skchr_branch_1",
+          "unlockCondition": {
+            "phase": "PHASE_0",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "绝境抵抗",
+              "rangeId": null,
+              "description": "防御力<@ba.vup>+{def:0%}</>，获得<$ba.buffres>抵抗</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_TAKEN_DAMAGE",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 20,
+                "initSp": 4,
+                "increment": 1
+              },
+              "prefabId": "skchr_branch_1",
+              "duration": 12,
+              "blackboard": [
+                {
+                  "key": "def",
+                  "value": 0.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "one_minus_status_resistance",
+                  "value": -0.5,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "绝境抵抗",
+              "rangeId": null,
+              "description": "防御力<@ba.vup>+{def:0%}</>，获得<$ba.buffres>抵抗</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_TAKEN_DAMAGE",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 20,
+                "initSp": 4,
+                "increment": 1
+              },
+              "prefabId": "skchr_branch_1",
+              "duration": 12,
+              "blackboard": [
+                {
+                  "key": "def",
+                  "value": 0.65,
+                  "valueStr": null
+                },
+                {
+                  "key": "one_minus_status_resistance",
+                  "value": -0.5,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "绝境抵抗",
+              "rangeId": null,
+              "description": "防御力<@ba.vup>+{def:0%}</>，获得<$ba.buffres>抵抗</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_TAKEN_DAMAGE",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 20,
+                "initSp": 4,
+                "increment": 1
+              },
+              "prefabId": "skchr_branch_1",
+              "duration": 12,
+              "blackboard": [
+                {
+                  "key": "def",
+                  "value": 0.7,
+                  "valueStr": null
+                },
+                {
+                  "key": "one_minus_status_resistance",
+                  "value": -0.5,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "绝境抵抗",
+              "rangeId": null,
+              "description": "防御力<@ba.vup>+{def:0%}</>，获得<$ba.buffres>抵抗</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_TAKEN_DAMAGE",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 20,
+                "initSp": 4,
+                "increment": 1
+              },
+              "prefabId": "skchr_branch_1",
+              "duration": 12,
+              "blackboard": [
+                {
+                  "key": "def",
+                  "value": 0.75,
+                  "valueStr": null
+                },
+                {
+                  "key": "one_minus_status_resistance",
+                  "value": -0.5,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "绝境抵抗",
+              "rangeId": null,
+              "description": "防御力<@ba.vup>+{def:0%}</>，获得<$ba.buffres>抵抗</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_TAKEN_DAMAGE",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 20,
+                "initSp": 6,
+                "increment": 1
+              },
+              "prefabId": "skchr_branch_1",
+              "duration": 12,
+              "blackboard": [
+                {
+                  "key": "def",
+                  "value": 0.8,
+                  "valueStr": null
+                },
+                {
+                  "key": "one_minus_status_resistance",
+                  "value": -0.5,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "绝境抵抗",
+              "rangeId": null,
+              "description": "防御力<@ba.vup>+{def:0%}</>，获得<$ba.buffres>抵抗</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_TAKEN_DAMAGE",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 20,
+                "initSp": 6,
+                "increment": 1
+              },
+              "prefabId": "skchr_branch_1",
+              "duration": 12,
+              "blackboard": [
+                {
+                  "key": "def",
+                  "value": 0.85,
+                  "valueStr": null
+                },
+                {
+                  "key": "one_minus_status_resistance",
+                  "value": -0.5,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "绝境抵抗",
+              "rangeId": null,
+              "description": "防御力<@ba.vup>+{def:0%}</>，获得<$ba.buffres>抵抗</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_TAKEN_DAMAGE",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 20,
+                "initSp": 6,
+                "increment": 1
+              },
+              "prefabId": "skchr_branch_1",
+              "duration": 12,
+              "blackboard": [
+                {
+                  "key": "def",
+                  "value": 0.9,
+                  "valueStr": null
+                },
+                {
+                  "key": "one_minus_status_resistance",
+                  "value": -0.5,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "绝境抵抗",
+              "rangeId": null,
+              "description": "防御力<@ba.vup>+{def:0%}</>，获得<$ba.buffres>抵抗</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_TAKEN_DAMAGE",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 18,
+                "initSp": 8,
+                "increment": 1
+              },
+              "prefabId": "skchr_branch_1",
+              "duration": 12,
+              "blackboard": [
+                {
+                  "key": "def",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "one_minus_status_resistance",
+                  "value": -0.5,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "绝境抵抗",
+              "rangeId": null,
+              "description": "防御力<@ba.vup>+{def:0%}</>，获得<$ba.buffres>抵抗</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_TAKEN_DAMAGE",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 18,
+                "initSp": 8,
+                "increment": 1
+              },
+              "prefabId": "skchr_branch_1",
+              "duration": 12,
+              "blackboard": [
+                {
+                  "key": "def",
+                  "value": 1.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "one_minus_status_resistance",
+                  "value": -0.5,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "绝境抵抗",
+              "rangeId": null,
+              "description": "防御力<@ba.vup>+{def:0%}</>，获得<$ba.buffres>抵抗</>",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WHEN_TAKEN_DAMAGE",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 15,
+                "initSp": 10,
+                "increment": 1
+              },
+              "prefabId": "skchr_branch_1",
+              "duration": 12,
+              "blackboard": [
+                {
+                  "key": "def",
+                  "value": 1.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "one_minus_status_resistance",
+                  "value": -0.5,
+                  "valueStr": null
+                }
+              ]
+            }
+          ],
+          "assetIcon": "skill-icons/Vetochki - Desperate Resistance.webp"
+        },
+        {
+          "id": "skchr_branch_2",
+          "unlockCondition": {
+            "phase": "PHASE_1",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "生存决心",
+              "rangeId": "x-4",
+              "description": "技能开启时使自身周围的地面敌人<$ba.tremble>战栗</><@ba.vup>{not_combat}</>秒；攻击力<@ba.vup>+{atk:0%}</>，防御力<@ba.vup>+{def:0%}</>，同时攻击阻挡的所有敌人",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 24,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_branch_2",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.8,
+                  "valueStr": null
+                },
+                {
+                  "key": "not_combat",
+                  "value": 5,
+                  "valueStr": null
+                },
+                {
+                  "key": "def",
+                  "value": 0.3,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "生存决心",
+              "rangeId": "x-4",
+              "description": "技能开启时使自身周围的地面敌人<$ba.tremble>战栗</><@ba.vup>{not_combat}</>秒；攻击力<@ba.vup>+{atk:0%}</>，防御力<@ba.vup>+{def:0%}</>，同时攻击阻挡的所有敌人",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 24,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_branch_2",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.85,
+                  "valueStr": null
+                },
+                {
+                  "key": "not_combat",
+                  "value": 5,
+                  "valueStr": null
+                },
+                {
+                  "key": "def",
+                  "value": 0.3,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "生存决心",
+              "rangeId": "x-4",
+              "description": "技能开启时使自身周围的地面敌人<$ba.tremble>战栗</><@ba.vup>{not_combat}</>秒；攻击力<@ba.vup>+{atk:0%}</>，防御力<@ba.vup>+{def:0%}</>，同时攻击阻挡的所有敌人",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 24,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_branch_2",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.9,
+                  "valueStr": null
+                },
+                {
+                  "key": "not_combat",
+                  "value": 5,
+                  "valueStr": null
+                },
+                {
+                  "key": "def",
+                  "value": 0.3,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "生存决心",
+              "rangeId": "x-4",
+              "description": "技能开启时使自身周围的地面敌人<$ba.tremble>战栗</><@ba.vup>{not_combat}</>秒；攻击力<@ba.vup>+{atk:0%}</>，防御力<@ba.vup>+{def:0%}</>，同时攻击阻挡的所有敌人",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 24,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_branch_2",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "not_combat",
+                  "value": 5,
+                  "valueStr": null
+                },
+                {
+                  "key": "def",
+                  "value": 0.3,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "生存决心",
+              "rangeId": "x-4",
+              "description": "技能开启时使自身周围的地面敌人<$ba.tremble>战栗</><@ba.vup>{not_combat}</>秒；攻击力<@ba.vup>+{atk:0%}</>，防御力<@ba.vup>+{def:0%}</>，同时攻击阻挡的所有敌人",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 22,
+                "initSp": 3,
+                "increment": 1
+              },
+              "prefabId": "skchr_branch_2",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 1.05,
+                  "valueStr": null
+                },
+                {
+                  "key": "not_combat",
+                  "value": 5,
+                  "valueStr": null
+                },
+                {
+                  "key": "def",
+                  "value": 0.4,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "生存决心",
+              "rangeId": "x-4",
+              "description": "技能开启时使自身周围的地面敌人<$ba.tremble>战栗</><@ba.vup>{not_combat}</>秒；攻击力<@ba.vup>+{atk:0%}</>，防御力<@ba.vup>+{def:0%}</>，同时攻击阻挡的所有敌人",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 22,
+                "initSp": 3,
+                "increment": 1
+              },
+              "prefabId": "skchr_branch_2",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 1.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "not_combat",
+                  "value": 5,
+                  "valueStr": null
+                },
+                {
+                  "key": "def",
+                  "value": 0.4,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "生存决心",
+              "rangeId": "x-4",
+              "description": "技能开启时使自身周围的地面敌人<$ba.tremble>战栗</><@ba.vup>{not_combat}</>秒；攻击力<@ba.vup>+{atk:0%}</>，防御力<@ba.vup>+{def:0%}</>，同时攻击阻挡的所有敌人",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 22,
+                "initSp": 3,
+                "increment": 1
+              },
+              "prefabId": "skchr_branch_2",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 1.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "not_combat",
+                  "value": 5,
+                  "valueStr": null
+                },
+                {
+                  "key": "def",
+                  "value": 0.4,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "生存决心",
+              "rangeId": "x-4",
+              "description": "技能开启时使自身周围的地面敌人<$ba.tremble>战栗</><@ba.vup>{not_combat}</>秒；攻击力<@ba.vup>+{atk:0%}</>，防御力<@ba.vup>+{def:0%}</>，同时攻击阻挡的所有敌人",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 20,
+                "initSp": 5,
+                "increment": 1
+              },
+              "prefabId": "skchr_branch_2",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 1.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "not_combat",
+                  "value": 5,
+                  "valueStr": null
+                },
+                {
+                  "key": "def",
+                  "value": 0.5,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "生存决心",
+              "rangeId": "x-4",
+              "description": "技能开启时使自身周围的地面敌人<$ba.tremble>战栗</><@ba.vup>{not_combat}</>秒；攻击力<@ba.vup>+{atk:0%}</>，防御力<@ba.vup>+{def:0%}</>，同时攻击阻挡的所有敌人",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 20,
+                "initSp": 5,
+                "increment": 1
+              },
+              "prefabId": "skchr_branch_2",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 1.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "not_combat",
+                  "value": 5,
+                  "valueStr": null
+                },
+                {
+                  "key": "def",
+                  "value": 0.5,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            },
+            {
+              "name": "生存决心",
+              "rangeId": "x-4",
+              "description": "技能开启时使自身周围的地面敌人<$ba.tremble>战栗</><@ba.vup>{not_combat}</>秒；攻击力<@ba.vup>+{atk:0%}</>，防御力<@ba.vup>+{def:0%}</>，同时攻击阻挡的所有敌人",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 18,
+                "initSp": 5,
+                "increment": 1
+              },
+              "prefabId": "skchr_branch_2",
+              "duration": 15,
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 1.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "not_combat",
+                  "value": 5,
+                  "valueStr": null
+                },
+                {
+                  "key": "def",
+                  "value": 0.5,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            }
+          ],
+          "assetIcon": "skill-icons/Vetochki - Set on Survival.webp"
+        }
+      ],
+      "sourceName": "折桠",
+      "sourceChannel": "cn",
+      "sourceAppellation": "Веточки",
+      "factionTags": [
+        "ursus"
+      ]
     }
   },
   "tokens": {
@@ -663527,7 +665200,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/20048e0b125e2bce10a87d9e5ed705a075ca52e2/models/operator/token_10066_closur_ourbase/default/front/af23c7f497862f38be2cdca0cd4079d44753bde8d61b97398e5a2777a54281e4/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/bdd1360683e81cfb09f567b6d867ab93715ac183/models/operator/token_10066_closur_ourbase/default/front/af23c7f497862f38be2cdca0cd4079d44753bde8d61b97398e5a2777a54281e4/avatar.png"
     },
     "token_10043_necras_skeltn": {
       "id": "token_10043_necras_skeltn",
@@ -663910,7 +665583,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/20048e0b125e2bce10a87d9e5ed705a075ca52e2/models/operator/token_10043_necras_skeltn/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/bdd1360683e81cfb09f567b6d867ab93715ac183/models/operator/token_10043_necras_skeltn/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10050_monstr_prosts": {
       "id": "token_10050_monstr_prosts",
@@ -665748,7 +667421,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/20048e0b125e2bce10a87d9e5ed705a075ca52e2/models/operator/token_10050_monstr_prosts/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/bdd1360683e81cfb09f567b6d867ab93715ac183/models/operator/token_10050_monstr_prosts/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10054_phatm2_encdool": {
       "id": "token_10054_phatm2_encdool",
@@ -667952,7 +669625,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/20048e0b125e2bce10a87d9e5ed705a075ca52e2/models/operator/token_10054_phatm2_encdool/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/bdd1360683e81cfb09f567b6d867ab93715ac183/models/operator/token_10054_phatm2_encdool/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10055_phatm2_mndclv": {
       "id": "token_10055_phatm2_mndclv",
@@ -669223,7 +670896,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/20048e0b125e2bce10a87d9e5ed705a075ca52e2/models/operator/token_10030_mlyss_wtrman/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/bdd1360683e81cfb09f567b6d867ab93715ac183/models/operator/token_10030_mlyss_wtrman/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10037_mitm_trshrb": {
       "id": "token_10037_mitm_trshrb",
@@ -669650,7 +671323,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/20048e0b125e2bce10a87d9e5ed705a075ca52e2/models/operator/token_10037_mitm_trshrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/bdd1360683e81cfb09f567b6d867ab93715ac183/models/operator/token_10037_mitm_trshrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10027_ironmn_pile1": {
       "id": "token_10027_ironmn_pile1",
@@ -670746,7 +672419,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/20048e0b125e2bce10a87d9e5ed705a075ca52e2/models/operator/token_10027_ironmn_pile1/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/bdd1360683e81cfb09f567b6d867ab93715ac183/models/operator/token_10027_ironmn_pile1/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10027_ironmn_pile2": {
       "id": "token_10027_ironmn_pile2",
@@ -672016,7 +673689,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/20048e0b125e2bce10a87d9e5ed705a075ca52e2/models/operator/token_10027_ironmn_pile2/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/bdd1360683e81cfb09f567b6d867ab93715ac183/models/operator/token_10027_ironmn_pile2/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10027_ironmn_pile3": {
       "id": "token_10027_ironmn_pile3",
@@ -674524,7 +676197,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/20048e0b125e2bce10a87d9e5ed705a075ca52e2/models/operator/token_10027_ironmn_pile3/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/bdd1360683e81cfb09f567b6d867ab93715ac183/models/operator/token_10027_ironmn_pile3/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10020_ling_soul1": {
       "id": "token_10020_ling_soul1",
@@ -675416,7 +677089,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/20048e0b125e2bce10a87d9e5ed705a075ca52e2/models/operator/token_10020_ling_soul1/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/bdd1360683e81cfb09f567b6d867ab93715ac183/models/operator/token_10020_ling_soul1/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10020_ling_soul2": {
       "id": "token_10020_ling_soul2",
@@ -676752,7 +678425,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/20048e0b125e2bce10a87d9e5ed705a075ca52e2/models/operator/token_10020_ling_soul2/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/bdd1360683e81cfb09f567b6d867ab93715ac183/models/operator/token_10020_ling_soul2/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10020_ling_soul3": {
       "id": "token_10020_ling_soul3",
@@ -678592,7 +680265,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/20048e0b125e2bce10a87d9e5ed705a075ca52e2/models/operator/token_10020_ling_soul3/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/bdd1360683e81cfb09f567b6d867ab93715ac183/models/operator/token_10020_ling_soul3/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10005_mgllan_drone1": {
       "id": "token_10005_mgllan_drone1",
@@ -679684,7 +681357,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/20048e0b125e2bce10a87d9e5ed705a075ca52e2/models/operator/token_10005_mgllan_drone1/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/bdd1360683e81cfb09f567b6d867ab93715ac183/models/operator/token_10005_mgllan_drone1/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10005_mgllan_drone2": {
       "id": "token_10005_mgllan_drone2",
@@ -680680,7 +682353,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/20048e0b125e2bce10a87d9e5ed705a075ca52e2/models/operator/token_10005_mgllan_drone2/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/bdd1360683e81cfb09f567b6d867ab93715ac183/models/operator/token_10005_mgllan_drone2/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10005_mgllan_drone3": {
       "id": "token_10005_mgllan_drone3",
@@ -681772,7 +683445,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/20048e0b125e2bce10a87d9e5ed705a075ca52e2/models/operator/token_10005_mgllan_drone3/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/bdd1360683e81cfb09f567b6d867ab93715ac183/models/operator/token_10005_mgllan_drone3/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10056_angel2_target": {
       "id": "token_10056_angel2_target",
@@ -682572,7 +684245,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/20048e0b125e2bce10a87d9e5ed705a075ca52e2/models/operator/token_10056_angel2_target/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/bdd1360683e81cfb09f567b6d867ab93715ac183/models/operator/token_10056_angel2_target/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10035_wisdel_wward": {
       "id": "token_10035_wisdel_wward",
@@ -685231,7 +686904,7 @@
         }
       ],
       "automaticOnly": true,
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/20048e0b125e2bce10a87d9e5ed705a075ca52e2/models/operator/token_10031_swire2_gdtrap/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/bdd1360683e81cfb09f567b6d867ab93715ac183/models/operator/token_10031_swire2_gdtrap/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10033_ela_grzmot": {
       "id": "token_10033_ela_grzmot",
@@ -687030,7 +688703,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/20048e0b125e2bce10a87d9e5ed705a075ca52e2/models/operator/token_10033_ela_grzmot/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/bdd1360683e81cfb09f567b6d867ab93715ac183/models/operator/token_10033_ela_grzmot/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10034_ray_sndbst": {
       "id": "token_10034_ray_sndbst",
@@ -687664,7 +689337,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/20048e0b125e2bce10a87d9e5ed705a075ca52e2/models/operator/token_10034_ray_sndbst/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/bdd1360683e81cfb09f567b6d867ab93715ac183/models/operator/token_10034_ray_sndbst/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10028_vigil_wolf": {
       "id": "token_10028_vigil_wolf",
@@ -688403,7 +690076,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/20048e0b125e2bce10a87d9e5ed705a075ca52e2/models/operator/token_10028_vigil_wolf/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/bdd1360683e81cfb09f567b6d867ab93715ac183/models/operator/token_10028_vigil_wolf/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10026_bgsnow_subbow": {
       "id": "token_10026_bgsnow_subbow",
@@ -689968,7 +691641,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/20048e0b125e2bce10a87d9e5ed705a075ca52e2/models/operator/token_10026_bgsnow_subbow/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/bdd1360683e81cfb09f567b6d867ab93715ac183/models/operator/token_10026_bgsnow_subbow/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10017_skadi2_dedant": {
       "id": "token_10017_skadi2_dedant",
@@ -691565,7 +693238,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/20048e0b125e2bce10a87d9e5ed705a075ca52e2/models/operator/token_10017_skadi2_dedant/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/bdd1360683e81cfb09f567b6d867ab93715ac183/models/operator/token_10017_skadi2_dedant/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10025_doroth_recttp": {
       "id": "token_10025_doroth_recttp",
@@ -693425,7 +695098,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/20048e0b125e2bce10a87d9e5ed705a075ca52e2/models/operator/token_10025_doroth_recttp/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/bdd1360683e81cfb09f567b6d867ab93715ac183/models/operator/token_10025_doroth_recttp/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10036_lasher_mcbird": {
       "id": "token_10036_lasher_mcbird",
@@ -694349,7 +696022,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/20048e0b125e2bce10a87d9e5ed705a075ca52e2/models/operator/token_10036_lasher_mcbird/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/bdd1360683e81cfb09f567b6d867ab93715ac183/models/operator/token_10036_lasher_mcbird/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10032_jesca2_jckshd": {
       "id": "token_10032_jesca2_jckshd",
@@ -694686,7 +696359,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/20048e0b125e2bce10a87d9e5ed705a075ca52e2/models/operator/token_10032_jesca2_jckshd/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/bdd1360683e81cfb09f567b6d867ab93715ac183/models/operator/token_10032_jesca2_jckshd/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10040_siege2_vlion": {
       "id": "token_10040_siege2_vlion",
@@ -696118,7 +697791,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/20048e0b125e2bce10a87d9e5ed705a075ca52e2/models/operator/token_10009_weedy_cannon/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/bdd1360683e81cfb09f567b6d867ab93715ac183/models/operator/token_10009_weedy_cannon/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10024_ebnhlz_rcube": {
       "id": "token_10024_ebnhlz_rcube",
@@ -696691,7 +698364,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/20048e0b125e2bce10a87d9e5ed705a075ca52e2/models/operator/token_10024_ebnhlz_rcube/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/bdd1360683e81cfb09f567b6d867ab93715ac183/models/operator/token_10024_ebnhlz_rcube/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10044_wulfen_mine": {
       "id": "token_10044_wulfen_mine",
@@ -697892,7 +699565,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/20048e0b125e2bce10a87d9e5ed705a075ca52e2/models/operator/token_10044_wulfen_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/bdd1360683e81cfb09f567b6d867ab93715ac183/models/operator/token_10044_wulfen_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10042_tecno_puppet": {
       "id": "token_10042_tecno_puppet",
@@ -698141,7 +699814,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/20048e0b125e2bce10a87d9e5ed705a075ca52e2/models/operator/token_10042_tecno_puppet/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/bdd1360683e81cfb09f567b6d867ab93715ac183/models/operator/token_10042_tecno_puppet/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10041_cathy_catsld": {
       "id": "token_10041_cathy_catsld",
@@ -698699,7 +700372,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/20048e0b125e2bce10a87d9e5ed705a075ca52e2/models/operator/token_10041_cathy_catsld/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/bdd1360683e81cfb09f567b6d867ab93715ac183/models/operator/token_10041_cathy_catsld/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10022_kazema_shadow": {
       "id": "token_10022_kazema_shadow",
@@ -699169,7 +700842,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/20048e0b125e2bce10a87d9e5ed705a075ca52e2/models/operator/token_10022_kazema_shadow/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/bdd1360683e81cfb09f567b6d867ab93715ac183/models/operator/token_10022_kazema_shadow/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10001_deepcl_tentac": {
       "id": "token_10001_deepcl_tentac",
@@ -699483,7 +701156,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/20048e0b125e2bce10a87d9e5ed705a075ca52e2/models/operator/token_10001_deepcl_tentac/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/bdd1360683e81cfb09f567b6d867ab93715ac183/models/operator/token_10001_deepcl_tentac/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10018_robrta_mach": {
       "id": "token_10018_robrta_mach",
@@ -699973,7 +701646,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/20048e0b125e2bce10a87d9e5ed705a075ca52e2/models/operator/token_10018_robrta_mach/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/bdd1360683e81cfb09f567b6d867ab93715ac183/models/operator/token_10018_robrta_mach/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10014_bstalk_crab": {
       "id": "token_10014_bstalk_crab",
@@ -700302,7 +701975,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/20048e0b125e2bce10a87d9e5ed705a075ca52e2/models/operator/token_10014_bstalk_crab/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/bdd1360683e81cfb09f567b6d867ab93715ac183/models/operator/token_10014_bstalk_crab/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10011_beewax_oblisk": {
       "id": "token_10011_beewax_oblisk",
@@ -701247,7 +702920,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/20048e0b125e2bce10a87d9e5ed705a075ca52e2/models/operator/token_10011_beewax_oblisk/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/bdd1360683e81cfb09f567b6d867ab93715ac183/models/operator/token_10011_beewax_oblisk/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10006_vodfox_doll": {
       "id": "token_10006_vodfox_doll",
@@ -701883,7 +703556,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/20048e0b125e2bce10a87d9e5ed705a075ca52e2/models/operator/token_10006_vodfox_doll/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/bdd1360683e81cfb09f567b6d867ab93715ac183/models/operator/token_10006_vodfox_doll/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10003_cgbird_bird": {
       "id": "token_10003_cgbird_bird",
@@ -702178,7 +703851,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/20048e0b125e2bce10a87d9e5ed705a075ca52e2/models/operator/token_10003_cgbird_bird/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/bdd1360683e81cfb09f567b6d867ab93715ac183/models/operator/token_10003_cgbird_bird/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10000_silent_healrb": {
       "id": "token_10000_silent_healrb",
@@ -702561,7 +704234,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/20048e0b125e2bce10a87d9e5ed705a075ca52e2/models/operator/token_10000_silent_healrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/bdd1360683e81cfb09f567b6d867ab93715ac183/models/operator/token_10000_silent_healrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10015_dusk_drgn": {
       "id": "token_10015_dusk_drgn",
@@ -702975,7 +704648,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/20048e0b125e2bce10a87d9e5ed705a075ca52e2/models/operator/token_10015_dusk_drgn/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/bdd1360683e81cfb09f567b6d867ab93715ac183/models/operator/token_10015_dusk_drgn/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10007_phatom_twin": {
       "id": "token_10007_phatom_twin",
@@ -704754,7 +706427,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/20048e0b125e2bce10a87d9e5ed705a075ca52e2/models/operator/token_10007_phatom_twin/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/bdd1360683e81cfb09f567b6d867ab93715ac183/models/operator/token_10007_phatom_twin/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10008_cqbw_box": {
       "id": "token_10008_cqbw_box",
@@ -705327,7 +707000,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/20048e0b125e2bce10a87d9e5ed705a075ca52e2/models/operator/token_10008_cqbw_box/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/bdd1360683e81cfb09f567b6d867ab93715ac183/models/operator/token_10008_cqbw_box/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10029_slent2_protrb": {
       "id": "token_10029_slent2_protrb",
@@ -706072,7 +707745,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/20048e0b125e2bce10a87d9e5ed705a075ca52e2/models/operator/token_10029_slent2_protrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/bdd1360683e81cfb09f567b6d867ab93715ac183/models/operator/token_10029_slent2_protrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10019_nearl2_sword": {
       "id": "token_10019_nearl2_sword",
@@ -706859,7 +708532,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/20048e0b125e2bce10a87d9e5ed705a075ca52e2/models/operator/token_10019_nearl2_sword/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/bdd1360683e81cfb09f567b6d867ab93715ac183/models/operator/token_10019_nearl2_sword/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10002_kalts_mon3tr": {
       "id": "token_10002_kalts_mon3tr",
@@ -707277,7 +708950,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/20048e0b125e2bce10a87d9e5ed705a075ca52e2/models/operator/token_10002_kalts_mon3tr/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/bdd1360683e81cfb09f567b6d867ab93715ac183/models/operator/token_10002_kalts_mon3tr/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10010_folivo_car": {
       "id": "token_10010_folivo_car",
@@ -708898,7 +710571,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/20048e0b125e2bce10a87d9e5ed705a075ca52e2/models/operator/token_10010_folivo_car/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/bdd1360683e81cfb09f567b6d867ab93715ac183/models/operator/token_10010_folivo_car/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10021_blkngt_hypnos": {
       "id": "token_10021_blkngt_hypnos",
@@ -709313,7 +710986,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/20048e0b125e2bce10a87d9e5ed705a075ca52e2/models/operator/token_10021_blkngt_hypnos/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/bdd1360683e81cfb09f567b6d867ab93715ac183/models/operator/token_10021_blkngt_hypnos/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10023_windft_wrench": {
       "id": "token_10023_windft_wrench",
@@ -710477,7 +712150,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/20048e0b125e2bce10a87d9e5ed705a075ca52e2/models/operator/token_10023_windft_wrench/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/bdd1360683e81cfb09f567b6d867ab93715ac183/models/operator/token_10023_windft_wrench/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10045_alanna_crane": {
       "id": "token_10045_alanna_crane",
@@ -710877,7 +712550,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/20048e0b125e2bce10a87d9e5ed705a075ca52e2/models/operator/token_10045_alanna_crane/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/bdd1360683e81cfb09f567b6d867ab93715ac183/models/operator/token_10045_alanna_crane/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10013_robin_mine": {
       "id": "token_10013_robin_mine",
@@ -711808,7 +713481,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/20048e0b125e2bce10a87d9e5ed705a075ca52e2/models/operator/token_10013_robin_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/bdd1360683e81cfb09f567b6d867ab93715ac183/models/operator/token_10013_robin_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10016_rfrost_mine": {
       "id": "token_10016_rfrost_mine",
@@ -712739,7 +714412,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/20048e0b125e2bce10a87d9e5ed705a075ca52e2/models/operator/token_10016_rfrost_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/bdd1360683e81cfb09f567b6d867ab93715ac183/models/operator/token_10016_rfrost_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10004_otter_motter": {
       "id": "token_10004_otter_motter",
@@ -714088,7 +715761,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/20048e0b125e2bce10a87d9e5ed705a075ca52e2/models/operator/token_10004_otter_motter/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/bdd1360683e81cfb09f567b6d867ab93715ac183/models/operator/token_10004_otter_motter/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     }
   },
   "enemies": {
@@ -714139,7 +715812,7 @@
   },
   "skillEffects": {
     "repository": "arkpedia/arkpedia-sd-assets",
-    "commit": "20048e0b125e2bce10a87d9e5ed705a075ca52e2",
+    "commit": "bdd1360683e81cfb09f567b6d867ab93715ac183",
     "pack": {
       "path": "effects/charge-cost/26-09-23-17-49-43_b9cc4a/effect.json",
       "bytes": 15311,

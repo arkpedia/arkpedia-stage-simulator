@@ -7,7 +7,7 @@ import { normalizeChess, normSpType } from '../simdata.js';
 import { acquireTargets, effectiveProfile, resolveHit } from '../ai.js';
 import { enemiesInGrid } from './kits/tier1.js';
 export const BRANCH_CONTRACT = Object.freeze({
- scope:'Selected source Vetochki S1/S2 and reused Stronghold stat buffs, resistance and skill-end heal; held from public selection',
+ scope:'Selected source Vetochki S1/S2 and reused Stronghold stat buffs, resistance and skill-end heal; public admission is checked by its separate runtime receipt',
  reuse:'Stronghold tier2 chess_char_2_17_a factory, its S1 resistance callback, both stat-modifier specs, its skill-end healing calculation, target selection and core hit pipeline. S2 pulse timing/selection and native attack clocks are adapted; no seasonal module or fallback kit is enabled.',
  limits:'Native enum aliases, root/body tile geometry, input/strike selection timing, cooldown/FSM dispatch and marker consumption at accepted initial pulse are simulator mappings. Windup speed is sampled at cast start; full Start represents birth because the compiled Born clock is not recovered. Removing or hiding the caster cancels unlaunched actions; an already applied Tremble keeps its own lifetime. The native damage-missable zero-damage pulse dispatch is not recovered; the selected non-damage pulse applies status without inventing an independent dodge roll. Native compiled transitions, particles/audio/modules and original frame/pixel parity remain unverified. Public source/art/browser admission is separate.',
  frameParity:false,
@@ -34,6 +34,14 @@ function selected(u,contract){
   ||n.pulse._waitForAttackEvent!==0||n.pulse._animKey!==''||n.pulse._timeMode!==2
   ||n.pulse._activeBuffs[0].buffKey!=='disarmed_combat'||n.pulse._activeBuffs[0].loadFromDB!==1
   ||n.pulseSelector._targetMotion!==1||n.pulseSelector._limitTargetNum!==0
+  ||n.ordinary._timeMode!==0||n.modeAttack._timeMode!==0||n.first._timeMode!==0
+  ||n.markerEnd._runActionOnEvent!==2
+  ||JSON.parse(n.first._actions.SerializedState)[0]._abilityName!=='SpAttack'
+  ||JSON.parse(n.markerEnd._actions.SerializedState)[0]._buffKey!=='branch_s_2[first]'
+  ||n.s2._playSkillBeginAnim!==0||n.s2._attackBlackboardModeIndex!==-1
+  ||!same(n.tremble.attributes.abnormalFlags,['DISARMED_COMBAT'])
+  ||n.resistance.attributes.attributeModifiers[0].attributeType!=='ONE_MINUS_STATUS_RESISTANCE'
+  ||n.resistance.attributes.attributeModifiers[0].formulaItem!=='FINAL_SCALER'
   ||n.talent._ignoreHealFree!==true||n.talent._skipModifierEvent!==false||n.talent._getMaxHpFromTarget!==false
   ||n.talent._healTarget!=='BUFF_OWNER'||n.passive._buffs[0].buffKey!=='unhealable'
   ||n.s1._allowSpRecoveryWhenAffecting!==0||n.s2._allowSpRecoveryWhenAffecting!==0
@@ -105,6 +113,7 @@ export class BranchController{
   if(this.firstPending&&this.s2()){
    this.beginFirst();return;
   }
+  if(this.mixUntil>0&&due(b,this.mixUntil)){this.mixUntil=0;this.idle();}
   if(u.atkCd>1e-9)return;const targets=this.targets();if(!targets.length){this.idle();return;}
   this.face(targets[0]);this.mixUntil=0;const skill=this.s2(),clip=skill?'Skill_2_Loop':'Attack',speed=Math.min(1,u.base.bat/u.s.interval);
   const hit=this.model().eventPayloads[clip].find(x=>x.name==='OnAttack').time/speed,period=Math.max(u.s.interval,hit);

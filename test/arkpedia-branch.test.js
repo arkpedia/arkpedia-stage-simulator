@@ -116,3 +116,9 @@ test('a reused install requesting an unreviewed event rolls back all newly regis
  assert.throws(()=>f.controller.install(),/Unreviewed upstream Vetochki listener/);
  assert.equal(f.controller.stopped,true);assert.equal(f.controller.handles.length,0);
 });
+
+test('the 0.1-second source End mix expires independently of a longer combat cooldown',()=>{
+ const f=make({skill:2});advance(f.b,1.1);cast(f);advance(f.b,1.2);f.u.atkCd=.5;f.u.skill.end('test');
+ assert.equal(f.u.mem.regularFormVisual.clip,'Skill_2_End');advance(f.b,.11);
+ assert.equal(f.u.mem.regularFormVisual.clip,'Idle');assert.ok(f.u.atkCd>0);
+});
