@@ -4226,3 +4226,26 @@ The real browser review passes six desktop/landscape-phone cases through squad s
 Frame-stepped review exposed a repeated-attack animation bug: the next identical clip retained the old playback clock. Each one-shot now has an explicit playback identity, while idle loops retain stable keys. The browser verifies **twelve later attack restarts**, two in each S1/S2/S3 desktop/phone case, against the real Spine track name and reset clock. The source attack and healing clocks are unchanged.
 
 Public approval and its remaining selector/FSM/transport/ordering limits live in the separate runtime review; original source-only receipts remain unchanged. Modules, native particles/audio and original game-frame/pixel parity stay unsupported. The roster is now **376/431 forms and 821 skills**, covering the frozen Global snapshot and both alternate Amiya forms. The remaining 55 forms are outside that snapshot. All have prepared pinned CN table rows; 36 have owner bundles in the current native manifest, while 19 require a newer native source. Bundle availability alone is not behavior approval. The pinned CN commit identifies client `2.7.71`, data `26-09-22-07-47-20_6c71fa`; that version metadata does not establish a verified native bundle manifest. Arkpedia app PR229 stays draft and outside dev.
+
+### Matching CN native input pipeline (2026-10-15)
+
+The official CN publisher still serves `26-09-22-07-47-20_6c71fa`, matching the pinned CN table commit `a550f5e048bb94e7cdefc6eb97a4091f0c4c7add`. Its full 3,241,788-byte manifest is pinned by SHA-256 `d1ac02a61d98e6e4c772335bb85dc44da4794a0a8bc915354b6f9ffbc7ec1f35`. The live version endpoint reports a different/newer resource, which is not substituted. All 55 CN-only owner and artwork bundles are present at the matching revision; the 19 absent from the Global client therefore have an original source available.
+
+`cn-native-source.mjs --fetch` prepares the whole input set with four bounded workers. Existing bytes must pass their original manifest size/MD5 and UnityFS header; downloaded archives must contain the exact member/size before cache admission. Every bundle also gets a SHA-256 identity. Failures preserve the prior receipt, and cache-only replay uses no network. `data/arkpedia-cn-native-source.json` binds **120 original bundles / 237,784,085 bytes**: 55 owner packs, 55 artwork packs, three skill/projectile/template libraries and seven token groups. The selection covers **128 source skills and 1,280 ranks**, excluding the two separately reviewed Global alternate Amiya forms.
+
+The independent Node verifier reads the full publisher manifest, all four original CN Git blobs, the original Global alternate-form table and every cached bundle. It does not import the generator. Its audit reproduces the saved receipt exactly and rejects **24 altered-source or premature-approval fixtures**.
+
+`index-cn-native.py` reads the original AssetBundle container maps directly. This avoids UnityPy's eager preload/dependency lookup and preserves local root/component IDs as decimal strings. The separately verified index binds **55 owner roots, 55 default-art roots and 127 skill-prefab roots**, with no missing or ambiguous roots. Jacinta's `skcom_assist_cost[3]` explicitly has a null prefab in the table; it stays null and marked for owner-mode review. No `empty` or other fallback is inferred. The independent Python verifier rereads the original container maps and GameObjects; its audit reproduces the index and rejects **12 changed-pointer or premature-approval fixtures**.
+
+The native metadata/index and neighboring Mon3tr public regression set passes **65 tests on Node 22 and 24**, with no failures or skips. These structural tests do not replace the independent raw-input verification. Logs are `.cache/arkpedia/cn-native-source/{verification,audit,index,index-verification,index-audit,combined-node22,combined-node24}.log`. Reproduce with Node 22/24 and the existing UnityPy/aklz4 Python environment:
+
+```sh
+node tools/arkpedia/cn-native-source.mjs --fetch
+node tools/arkpedia/verify-cn-native.mjs
+node tools/arkpedia/audit-cn-native.mjs
+.cache/map-env/bin/python tools/arkpedia/index-cn-native.py
+.cache/map-env/bin/python tools/arkpedia/verify-cn-native-index.py
+.cache/map-env/bin/python tools/arkpedia/audit-cn-native-index.py
+```
+
+Both receipts remain source-only: no kits are enabled, and component-graph closure, animation bindings, modules, native particles and game-frame parity remain false. Per-operator graph tracing, selected stat/talent/skill implementations, original-art delivery and public mouse/touch battle checks still gate every CN addition. Public data/coverage/source pins and the live local roster remain **376/431 forms and 821 skills**. Arkpedia app PR229 remains draft and outside dev.
