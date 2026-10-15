@@ -5,7 +5,7 @@ import { mkdtemp, readFile, readdir, mkdir, rm } from 'node:fs/promises';
 import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { tmpdir } from 'node:os';
-import { writeJSONAtomic } from '../tools/arkpedia/write-json.mjs';
+import { writeJSONAtomic, renameWithRetry } from '../tools/arkpedia/write-json.mjs';
 
 test('a concurrent reader only observes complete JSON snapshots during repeated large rebuilds', async t => {
   const dir = await mkdtemp(join(tmpdir(), 'arkpedia-json-'));
@@ -40,4 +40,23 @@ test('a failed final rename cleans its temporary file and preserves the existing
   const target = join(dir, 'existing'); await mkdir(target);
   await assert.rejects(writeJSONAtomic(pathToFileURL(target), { valid: true }));
   assert.deepEqual(await readdir(dir), ['existing']); assert.deepEqual(await readdir(target), []);
+});
+
+test('Windows transient replacement locks retry without deleting or changing the target path',async()=>{
+  const calls=[],delays=[];let failures=2;
+  await renameWithRetry('prepared','snapshot',{platform:'win32',wait:async ms=>delays.push(ms),
+    renameFile:async(...args)=>{calls.push(args);if(failures-->0)throw Object.assign(Error('locked'),{code:'EPERM'});}});
+  assert.deepEqual(calls,Array.from({length:3},()=>['prepared','snapshot']));assert.deepEqual(delays,[10,20]);
+});
+test('permanent rename errors and non-Windows failures are not retried',async()=>{
+  for(const [platform,code]of [['win32','EISDIR'],['linux','EPERM']]){
+    let calls=0;const error=Object.assign(Error('permanent'),{code});
+    await assert.rejects(renameWithRetry('a','b',{platform,wait:async()=>assert.fail('Unexpected retry'),renameFile:async()=>{calls++;throw error;}}),e=>e===error);
+    assert.equal(calls,1);
+  }
+});
+test('persistent Windows locks fail after a bounded retry window',async()=>{
+  let calls=0;const delays=[],error=Object.assign(Error('locked'),{code:'EBUSY'});
+  await assert.rejects(renameWithRetry('a','b',{platform:'win32',wait:async ms=>delays.push(ms),renameFile:async()=>{calls++;throw error;}}),e=>e===error);
+  assert.equal(calls,8);assert.equal(delays.reduce((a,b)=>a+b,0),1270);
 });
