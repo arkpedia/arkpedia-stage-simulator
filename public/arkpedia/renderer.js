@@ -3,6 +3,7 @@ import * as THREE from "/vendor/three.module.js";
 import { fitCamera, syncThreeCamera, pickTile } from "/js/render/projection.js";
 import { BattleActor } from "./battle-actor.js";
 import { HeartCandleActor } from "./heart-candle.js";
+import { EffectOnlyActor } from "./effect-only-actor.js";
 import { regularVisualHeight } from "./regular-form-visual.js";
 import { createAssets } from "/js/assets.js";
 import { regionEdges } from "/shared/arkpedia/placement.js";
@@ -446,9 +447,11 @@ export class StageRenderer {
         if (!view) {
           const loaded = this.preloaded.get(key);
           const heartCandle = u.defId === 'enemy_5601_entlec' && u.mem?.entelechiaHost;
-          if (!loaded && !heartCandle) continue;
+          const effectOnly = this.nativeEffects?.isActor?.(u) === true;
+          if (!loaded && !heartCandle && !effectOnly) continue;
           const skillIndex = this.data.operators[u.defId]?.skills.findIndex(skill => skill.id === u.skill?.id);
-          const actor = heartCandle ? new HeartCandleActor(P) : new BattleActor(loaded.skeleton, loaded.entry,
+          const actor = effectOnly ? new EffectOnlyActor(P, { gaugeHeight: 280 })
+            : heartCandle ? new HeartCandleActor(P) : new BattleActor(loaded.skeleton, loaded.entry,
             skillIndex >= 0 ? skillIndex : null,
             { attackDrivenSkill: u.profile?.attackDrivenSkill === true });
           const hp = new P.Graphics();
