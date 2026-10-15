@@ -2,16 +2,13 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import e from '../data/arkpedia-native-operators/char_4031_liesel.json' with { type: 'json' };
-import data from '../data/arkpedia-mvp.json' with { type: 'json' };
-import { REGULAR_OPERATORS } from '../shared/arkpedia/operators.js';
 import { LIESEL_ID as ID, LIESEL_SKILLS, selectedLieselBuild as select, lieselNativeInputs } from '../server/sim/content/arkpedia-liesel-source.js';
 import { near } from './helpers/mon3tr-fixture.js';
 const build = (elite = 2, skill = 0, rank = [4, 7, 10][elite], potential = 1, trust = 0) => ({
   elite, level: e.tables.character.phases[elite].maxLevel, potential, trust, skillId: LIESEL_SKILLS[skill], skillRank: rank, module: 'none',
 });
-test('Ripresa remains held and absent from the playable roster despite verified original graphs', () => {
+test('Ripresa original source receipt stays held independently of public runtime approval', () => {
   assert.deepEqual(e.enabledOperators, []); assert.deepEqual(e.heldOperators, [ID]);
-  assert.equal(REGULAR_OPERATORS[ID], undefined); assert.equal(data.operators[ID], undefined);
   assert.equal(e.source.commit, 'a550f5e048bb94e7cdefc6eb97a4091f0c4c7add');
   assert.equal(e.source.nativeClient, '26-09-22-07-47-20_6c71fa');
   assert.equal(e.source.bundles.length, 5); assert.equal(Object.keys(e.source.tableGitBlobs).length, 6);

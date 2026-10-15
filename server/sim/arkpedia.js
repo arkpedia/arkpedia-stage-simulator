@@ -105,6 +105,7 @@ import { customizePublicMon3trKit, installPublicMon3tr } from './content/arkpedi
 import { customizePublicAkkordKit, installPublicAkkord } from './content/arkpedia-akkord-public.js';
 import { customizePublicWintimKit, installPublicWintim } from './content/arkpedia-wintim-public.js';
 import { customizePublicJcintaKit, installPublicJcinta } from './content/arkpedia-jcinta-public.js';
+import { customizePublicLieselKit, installPublicLiesel } from './content/arkpedia-liesel-public.js';
 import { customizePublicNecrassKit, installPublicNecrass } from './content/arkpedia-necrass-public.js';
 import { installPublicMuelsyseSquad, customizePublicMuelsyseKit, installPublicMuelsyse } from './content/arkpedia-muelsyse-public.js';
 import { customizeMarcilKit, installMarcil, installMarcilSquad } from './content/arkpedia-marcil.js';
@@ -540,6 +541,7 @@ export class StandardBattle extends Battle {
     customizePublicAkkordKit({ battle: this, id, unit, kit });
     customizePublicWintimKit({ battle: this, id, unit, kit });
     customizePublicJcintaKit({ battle: this, id, unit, kit });
+    customizePublicLieselKit({ battle: this, id, unit, kit });
     customizeNarantKit({ battle: this, id, def, unit, kit });
     customizeElaKit({ battle: this, id, def, unit, kit });
     customizeFuzeKit({ battle: this, id, def, unit, kit });
@@ -752,6 +754,7 @@ export class StandardBattle extends Battle {
     installPublicAkkord({ unit, def });
     installPublicWintim({ unit, def });
     installPublicJcinta({ unit, def });
+    installPublicLiesel({ unit, def });
     installNarant({ battle: this, unit, def });
     installEla({ battle: this, unit, def });
     installFuze({ battle: this, unit, def });
