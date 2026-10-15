@@ -1,0 +1,287 @@
+{
+  "schemaVersion": 1,
+  "operatorId": "char_4214_cairn",
+  "enabledOperators": [
+    "char_4214_cairn"
+  ],
+  "frameParity": false,
+  "moduleSupport": false,
+  "nativePixelParity": false,
+  "nativeParticleSupport": false,
+  "sourceFoundationSha256": "c3b66218299c5e18daea25e691e7777a3273329e96ae757f067434ba118e876a",
+  "ownerArtworkSha256": "178318d70161bb93b03a7040d4c652c32ed4f2c878f9da1ad051b31d0b5fc9ed",
+  "sourceClocksSha256": "5ecf8b2e9113ae34fe3960e3c01a6811856cc74581cea8fbd3fb55375a6d879f",
+  "mechanicsPolicy": "source-cn-hp-mode-shield-snapshot-dot-and-blocked-injury-v1",
+  "scope": "Selected original CN Cairn single-target attacks, S1 maximum HP, S2 finite shield and cached-ATK DOT and current-ATK blocked talent through the reviewed regular-stage squad path.",
+  "verification": {
+    "source": "Five original bundles, 58 owner/skill components and eight templates; seven outputs reproduced and 28 altered claims rejected on Node 22 and 24.",
+    "artwork": "Recipe-bound original files, decoded pixels, PMA and literal roles; 33 altered claims rejected on both Node versions. Seventeen clips per viewport and eighteen desktop/emulated-phone captures without errors.",
+    "runtime": "269 source/clock/resource/combat/public and adjacent checks pass on Node 22 and 24. Both original 0-1 builds use natural DP and unchanged terrain with Melantha: eleven kills, zero leaks and full life. S1 records 46 attributed damage receipts/one activation; S2 records 45/two activations. Full local/hosted verification remains separate.",
+    "browser": {
+      "status": "passed",
+      "script": "tools/arkpedia/review-cairn-public.mjs",
+      "driver": "tools/arkpedia/public-review-driver.mjs",
+      "scriptSha256": "424a5c87a0b32d90acc16a18a3ac144984fbdf50cd2f177425ddd34f390aa421",
+      "driverSha256": "1ef20a71f4982799d1368e61d0b2e2eac9eb36efe1aaad45294150566246359f",
+      "cases": 8,
+      "captures": 60,
+      "viewports": [
+        "1280x800 desktop mouse",
+        "844x390 emulated landscape phone touch"
+      ],
+      "originalWaves": false,
+      "fixture": "Original 0-1 terrain, empty waves, 99 DP and two pinned high-HP nonattacking targets; original waves/natural DP tested separately.",
+      "checks": [
+        "Public squad/skill choice and separate drag/drop/direction swipe",
+        "Natural SP and manual activation with original Front/Back S1 and one-shot S2 tracks",
+        "S1 native Begin, selected maximum HP and single-target attacks",
+        "S2 marker-time ground DOTs and capped shield without ordinary attack receipts",
+        "Natural finish and public retreat clean up owner mode/shield/blocked talent and controller handles",
+        "Accepted recipient DOTs survive retreat, then expire without stale ordinary attacks"
+      ],
+      "browserErrors": 0,
+      "failedResources": 0,
+      "visualReview": "Desktop S1 Back first attack and mobile S2 Front release inspected. Physical-device, native effects and original game-frame/pixel parity remain unverified.",
+      "normalPreviewReplay": {
+        "status": "passed",
+        "candidate": false,
+        "cases": 8,
+        "captures": 60,
+        "browserErrors": 0,
+        "failedResources": 0
+      }
+    }
+  },
+  "originalArtwork": {
+    "operator/char_4214_cairn/default/front": {
+      "kind": "operator",
+      "id": "char_4214_cairn",
+      "variant": "default",
+      "facing": "front",
+      "spineVersion": "3.8.99",
+      "source": {
+        "key": "operators",
+        "repository": "fexli/ArknightsResource",
+        "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+        "directory": "spine/char_4214_cairn/char_4214_cairn/Front"
+      },
+      "skeleton": {
+        "path": "models/operator/char_4214_cairn/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4214_cairn.skel",
+        "bytes": 283209,
+        "sha256": "af254d5106d486c92af3bdc0a5e24201bbb888d371683ecadc4cb1c9824512a3"
+      },
+      "atlas": {
+        "path": "models/operator/char_4214_cairn/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4214_cairn.atlas",
+        "bytes": 10032,
+        "sha256": "f39d621cb40cef521875997e064fd9337bb07586b569c1ac2effdac60d043fe9"
+      },
+      "textures": [
+        {
+          "path": "models/operator/char_4214_cairn/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4214_cairn.png",
+          "bytes": 184287,
+          "sha256": "2fe9211eea320eec44ebdc75895fdbeaca0bc4820ab4e02939bd90fa68e08f74"
+        }
+      ],
+      "premultipliedAlpha": true,
+      "animations": {
+        "Attack": 1.6,
+        "Default": 0,
+        "Die": 1,
+        "Idle": 5.333,
+        "Skill_1_Begin": 0.333,
+        "Skill_1_End": 0.333,
+        "Skill_1_Idle": 5.333,
+        "Skill_1_Loop": 1.6,
+        "Skill_2": 1.667,
+        "Start": 1
+      },
+      "hits": {
+        "Attack": [
+          0.6
+        ],
+        "Skill_1_Loop": [
+          0.6
+        ],
+        "Skill_2": [
+          0.6
+        ]
+      },
+      "bounds": {
+        "x": -192.104,
+        "y": -1.592,
+        "width": 469.313,
+        "height": 480.925
+      },
+      "animationRoles": {
+        "idle": "Idle",
+        "deploy": "Start",
+        "attack": {
+          "begin": null,
+          "loop": "Attack",
+          "end": null
+        },
+        "attackDown": null,
+        "skill": {
+          "begin": "Skill_1_Begin",
+          "loop": "Skill_1_Loop",
+          "end": "Skill_1_End",
+          "idle": "Skill_1_Idle",
+          "index": 0,
+          "via": "skill"
+        },
+        "skills": {
+          "0": {
+            "begin": "Skill_1_Begin",
+            "loop": "Skill_1_Loop",
+            "end": "Skill_1_End",
+            "idle": "Skill_1_Idle",
+            "index": 0,
+            "via": "skill"
+          },
+          "1": {
+            "begin": null,
+            "loop": "Skill_2",
+            "end": null,
+            "index": 1,
+            "via": "skill"
+          }
+        },
+        "die": "Die",
+        "stun": null,
+        "move": null
+      }
+    },
+    "operator/char_4214_cairn/default/back": {
+      "kind": "operator",
+      "id": "char_4214_cairn",
+      "variant": "default",
+      "facing": "back",
+      "spineVersion": "3.8.99",
+      "source": {
+        "key": "operators",
+        "repository": "fexli/ArknightsResource",
+        "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+        "directory": "spine/char_4214_cairn/char_4214_cairn/Back"
+      },
+      "skeleton": {
+        "path": "models/operator/char_4214_cairn/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4214_cairn.skel",
+        "bytes": 148372,
+        "sha256": "fdd5919ed1f447398f02eba81df2694b34e5a4888af1781b4a27545c1420a0c5"
+      },
+      "atlas": {
+        "path": "models/operator/char_4214_cairn/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4214_cairn.atlas",
+        "bytes": 7715,
+        "sha256": "7a78b81c1b968fd0fbf2b1ecc048c4da6ed2063ad44c7cde495f844c28b2d3ff"
+      },
+      "textures": [
+        {
+          "path": "models/operator/char_4214_cairn/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4214_cairn.png",
+          "bytes": 173535,
+          "sha256": "a41af5b43cdfb2dc61e20516adfa161b1b082d1a89ad5b37e50c330468122772"
+        }
+      ],
+      "premultipliedAlpha": true,
+      "animations": {
+        "Attack": 1.6,
+        "Default": 0,
+        "Idle": 1.333,
+        "Skill_1_Begin": 0.333,
+        "Skill_1_End": 0.333,
+        "Skill_1_Idle": 1.333,
+        "Skill_1_Loop": 1.6,
+        "Skill_2": 1.667,
+        "Start": 1
+      },
+      "hits": {
+        "Attack": [
+          0.6
+        ],
+        "Skill_1_Loop": [
+          0.6
+        ],
+        "Skill_2": [
+          0.6
+        ]
+      },
+      "bounds": {
+        "x": 556.83,
+        "y": -3.837,
+        "width": 433.177,
+        "height": 368.54
+      },
+      "animationRoles": {
+        "idle": "Idle",
+        "deploy": "Start",
+        "attack": {
+          "begin": null,
+          "loop": "Attack",
+          "end": null
+        },
+        "attackDown": null,
+        "skill": {
+          "begin": "Skill_1_Begin",
+          "loop": "Skill_1_Loop",
+          "end": "Skill_1_End",
+          "idle": "Skill_1_Idle",
+          "index": 0,
+          "via": "skill"
+        },
+        "skills": {
+          "0": {
+            "begin": "Skill_1_Begin",
+            "loop": "Skill_1_Loop",
+            "end": "Skill_1_End",
+            "idle": "Skill_1_Idle",
+            "index": 0,
+            "via": "skill"
+          },
+          "1": {
+            "begin": null,
+            "loop": "Skill_2",
+            "end": null,
+            "index": 1,
+            "via": "skill"
+          }
+        },
+        "die": null,
+        "stun": null,
+        "move": null
+      }
+    }
+  },
+  "interfaceAssets": [
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "five-star-icons/Cairn - Base.webp",
+      "bytes": 13032,
+      "sha256": "83b503406079891acaa7918cab11575c3f1fb81c2aad327db76cd15696553d02"
+    },
+    {
+      "repository": "arkpedia/arkpedia-skin-assets",
+      "commit": "6fb723692d89c4a08d9a7aa4015e19c0753dd270",
+      "path": "five-star-skins/Cairn - Base.webp",
+      "bytes": 220238,
+      "sha256": "a3bae7547debced5cd93bc0ba3f8d13b2fbfc8f8b93f7a3b657dbbfb1c829633"
+    },
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "skill-icons/Cairn - Covered Consolidation.webp",
+      "bytes": 6820,
+      "sha256": "90c7ab88fba17242156d905406a4cd89adac7c80103fd21c93a602c0d8983913"
+    },
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "skill-icons/Cairn - Stunning Directives.webp",
+      "bytes": 7700,
+      "sha256": "1f9907f32b41ca9f8956716213409e91793bbe0f22bc8a61b5886022743f5ee9"
+    }
+  ],
+  "limitations": [
+    "Compiled selector/callback/FSM ordering, S1 account versus HP start, S2 shield marker phase and ordinary cooldown are explicit local mappings",
+    "Selected ten-second DOT with ten expiry-inclusive ticks, default shared-key replacement, block sampling and shield extension do not recover raw native trigger/counter dispatch",
+    "Modules, native particles/shaders/audio and original game-frame/pixel parity remain unverified"
+  ]
+}
