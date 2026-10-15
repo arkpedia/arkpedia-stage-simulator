@@ -73,9 +73,11 @@ assert e['ownerModeSkills'] == [s for s, prefabs in effective.items() if None in
 owner_path, art_path = f'charpack/{ID}.ab', f'chararts/{ID}.ab'
 skill_path, projectile_path, holder_path = 'battle/prefabs/[uc]skills.ab', 'battle/prefabs/[uc]projectiles.ab', 'config/buff_template_holder.ab'
 paths = [owner_path, art_path, skill_path, projectile_path, holder_path]
-assert e['source']['bundles'] == [next(r for r in inventory['bundles'] if r['path'] == path) for path in paths]
 objects, containers = {}, {}
-for row in e['source']['bundles']:
+def load_original(path):
+    if path in objects:
+        return
+    row = next(r for r in inventory['bundles'] if r['path'] == path)
     raw = (C / 'cn-native-source/bundles' / row['path']).read_bytes()
     assert len(raw) == row['bytes'] and hashlib.md5(raw).hexdigest() == row['md5'] and sha(raw) == row['sha256']
     env = UnityPy.load(raw)
@@ -88,6 +90,8 @@ for row in e['source']['bundles']:
                 if p['m_FileID'] == 0:
                     assert name not in roots
                     roots[name] = p['m_PathID']
+for path in paths:
+    load_original(path)
 
 def norm(v, key=''):
     if isinstance(v, dict):
@@ -130,7 +134,7 @@ original_owner = {ID: original_graph(owner_path, f'dyn/battle/prefabs/characters
 original_art = {ID: original_graph(art_path, f'dyn/battle/prefabs/skins/character/{ID}/defaultskin.prefab')}
 original_skills = {prefab: original_graph(skill_path, f'dyn/battle/prefabs/[uc]skills/{prefab}.prefab')
                    for prefab in dict.fromkeys(p for prefabs in effective.values() for p in prefabs if p is not None)}
-assert e['characters'] == original_owner and e['artworkHierarchy'] == original_art and e['skills'] == original_skills
+assert e['characters'] == original_owner and e['artworkHierarchy'] == original_art
 art_parts = [{'pathId': p['pathId'], 'data': p['data']} for row in original_art[ID] for p in row['components']
              if '_animations' in p['data']]
 assert len(art_parts) == 1 and e['chararts'] == {ID: art_parts}
@@ -140,7 +144,46 @@ assert len(holder) == 1
 native = {r['templateKey']: r for r in holder[0]}
 # Iterative dependency closure from originals, never from the claimed closure.
 queue = [original_owner, original_skills, ct[ID], [st[s] for s in skill_ids]]
-needed, db_keys, projectile_graphs, strings, token_refs = set(), set(), {}, set(), set()
+needed, db_keys, projectile_graphs, strings, token_graphs, token_sources = set(), set(), {}, set(), {}, {}
+token_roots = None
+token_bindings, token_overrides, token_modes = {}, {}, {}
+def original_token(key):
+    global token_roots
+    if token_roots is None:
+        token_roots = {}
+        for entry in inventory['bundles']:
+            path = entry['path']
+            if re.fullmatch(r'pkgrps/btl_pfb_tokens_\d+\.ab', path):
+                load_original(path)
+                for container, root in containers[path].items():
+                    if re.fullmatch(r'dyn/battle/prefabs/\[uc\]tokens/token_[a-z0-9_]+\.prefab', container):
+                        assert container not in token_roots
+                        token_roots[container] = (path, root)
+    container = f'dyn/battle/prefabs/[uc]tokens/{key}.prefab'
+    path, root = token_roots[container]
+    rows = original_graph(path, container)
+    owners = [part for row in rows if row['pathId'] == str(root) for part in row['components']
+              if '_animator' in part['data']]
+    assert len(owners) == 1
+    pointer = owners[0]['data']['_animator']
+    assert pointer['m_FileID'] == 0 and pointer['m_PathID'] != '0'
+    matches = [part for row in rows for part in row['components']
+               if part['pathId'] == pointer['m_PathID'] and '_animations' in part['data']]
+    assert len(matches) == 1
+    bindings = {r['skillId']: list(dict.fromkeys(level['prefabId'] for level in st[r['skillId']]['levels'])) for r in ct[key]['skills']}
+    overrides = {r['skillId']: r['overridePrefabKey'] for r in ct[key]['skills'] if r['overridePrefabKey'] is not None}
+    assert all(isinstance(v, str) and v for v in overrides.values())
+    modes = []
+    for skill, prefabs in bindings.items():
+        for prefab in [overrides[skill]] if skill in overrides else prefabs:
+            if prefab is None:
+                modes.append(skill)
+            elif prefab not in original_skills:
+                original_skills[prefab] = original_graph(skill_path, f'dyn/battle/prefabs/[uc]skills/{prefab}.prefab')
+    token_bindings[key], token_overrides[key], token_modes[key] = bindings, overrides, modes
+    token_sources[key] = {'bundle': path, 'container': container, 'rootPathId': str(root),
+                          'animatorPathId': pointer['m_PathID']}
+    return rows
 parameters = {'key', '_blackboardKey', '_blackboardKeys', '_fromBlackboardKeys', '_sourceBlackboardKey',
               '_targetBlackboardKey', '_inputKey', '_outputKey', '_maxValueKey', '_anotherKeyToCompare', '_addParamKey'}
 stack = [(item, '') for item in queue]
@@ -149,13 +192,16 @@ while stack:
     if field in ['_overrideAudioSignal', 'audioSignal']:
         continue
     if isinstance(value, dict):
+        stack.extend((k, '') for k in value if k.startswith('token_') and k in ct)
         stack.extend((v, k) for k, v in value.items())
     elif isinstance(value, (list, tuple)):
         stack.extend((v, field) for v in value)
     elif isinstance(value, str):
         strings.add(value)
-        if value in ct and value.startswith('token_') and field not in parameters:
-            token_refs.add(value)
+        if value in ct and value.startswith('token_') and field not in parameters and value not in token_graphs:
+            token_graphs[value] = original_token(value)
+            stack.extend([(token_graphs[value], ''), (ct[value], ''),
+                          ([st[row['skillId']] for row in ct[value]['skills']], ''), (original_skills, '')])
         if value.startswith('projectile_') and field not in parameters and value not in projectile_graphs:
             g = original_graph(projectile_path, f'dyn/battle/prefabs/[uc]projectiles/{value}.prefab')
             projectile_graphs[value] = g; stack.append((g, ''))
@@ -170,7 +216,16 @@ while stack:
             except json.JSONDecodeError:
                 continue
             stack.append((decoded, ''))
-assert not token_refs, 'Unsupported native token graph'
+assert e['skills'] == original_skills
+assert e.get('tokens', {}) == token_graphs
+assert e.get('tokenSkillBindings', {}) == token_bindings
+assert e.get('tokenSkillPrefabOverrides', {}) == token_overrides
+assert e.get('tokenModeSkills', {}) == token_modes
+assert e['tables'].get('tokenSkills', {}) == {s: st[s] for key in token_graphs for s in token_bindings[key]}
+assert e.get('tokenSources', {}) == token_sources
+assert e['tables'].get('tokens', {}) == {key: ct[key] for key in token_graphs}
+expected_paths = paths + sorted(set(row['bundle'] for row in token_sources.values()))
+assert e['source']['bundles'] == [next(r for r in inventory['bundles'] if r['path'] == path) for path in expected_paths]
 assert e['projectiles'] == projectile_graphs
 assert e['templates'] == {k: bt[k] for k in needed if k in bt}
 assert e['originalTemplates'] == norm({k: native[k] for k in needed if k in native})
@@ -179,45 +234,56 @@ assert e['nativeTemplateGaps'] == sorted(needed - native.keys())
 assert e['jsonTemplateGaps'] == sorted(needed - bt.keys())
 assert e['tables']['ranges'] == {k: rt[k] for k in strings & rt.keys()}
 
-art = objects[art_path]
-animator = art_parts[0]
-d = animator['data']
-facings = {f.title(): d['_' + f]['skeleton'] for f in ['front', 'back', 'down']
-           if '_' + f in d and d['_' + f]['skeleton']['m_PathID'] != '0'}
-if '_skeleton' in d:
-    assert not facings
-    facings = {'Single': d['_skeleton']}
-assert set(e['officialSkeletonBindings']) == {ID} and set(e['officialSkeletonBindings'][ID]) == set(facings)
-assert set(e['models']) == {ID} and set(e['models'][ID]) == set(facings)
-def ref(pointer):
-    assert pointer['m_FileID'] == 0 and int(pointer['m_PathID']) != 0
-    return art[int(pointer['m_PathID'])]
-for face, pointer in facings.items():
-    skeleton = ref(pointer); asset = ref(skeleton.read_typetree()['skeletonDataAsset']); data = asset.read_typetree()
-    text = ref(data['skeletonJSON']); assert len(data['atlasAssets']) == 1
-    atlas = ref(data['atlasAssets'][0]); atlas_text = ref(atlas.read_typetree()['atlasFile'])
-    def raw(reader):
-        v = reader.read().m_Script
-        return v.encode('utf8', 'surrogateescape') if isinstance(v, str) else bytes(v)
-    skel_bytes, atlas_bytes = raw(text), raw(atlas_text)
-    assert e['officialSkeletonBindings'][ID][face] == {
-        'animatorPathId': animator['pathId'], 'skeletonAnimationPathId': str(skeleton.path_id),
-        'skeletonDataAssetPathId': str(asset.path_id), 'textAssetPathId': str(text.path_id),
-        'atlasAssetPathId': str(atlas.path_id), 'atlasTextAssetPathId': str(atlas_text.path_id),
-        'sha256': sha(skel_bytes), 'bytes': len(skel_bytes), 'atlasSha256': sha(atlas_bytes), 'atlasBytes': len(atlas_bytes)}
-    assert (OUT / (face.lower() + '.skel')).read_bytes() == skel_bytes
-    assert (OUT / (face.lower() + '.atlas')).read_bytes() == atlas_bytes
-script = """
-import {readFileSync} from 'node:fs';import {createHash} from 'node:crypto';
-import {parseSkel} from './tools/assets/skel.mjs';import {atlasInfo} from './tools/assets/atlas.mjs';
-const root=process.argv[1],faces=JSON.parse(process.argv[2]),result={};
-for(const face of faces){const base=root+'/'+face.toLowerCase(),bytes=readFileSync(base+'.skel'),atlas=readFileSync(base+'.atlas','utf8');
- const p=parseSkel(bytes,atlasInfo(atlas).regions,{includeEventPayloads:true});if(p.missingRegions.length)throw Error('Missing native region');
- result[face]={sha256:createHash('sha256').update(bytes).digest('hex'),bytes:bytes.length,spineVersion:p.version,
- durations:p.durations,hits:p.hits,eventPayloads:p.eventPayloads,bounds:p.bounds};}
-console.log(JSON.stringify(result));
-"""
-models = json.loads(subprocess.check_output([NODE, '--input-type=module', '-e', script, str(OUT), json.dumps(list(facings))], cwd=ROOT))
-assert e['models'][ID] == models
+def verify_artwork(key, path, animator, directory):
+    art = objects[path]
+    d = animator['data']
+    facings = {f.title(): d['_' + f]['skeleton'] for f in ['front', 'back', 'down']
+               if '_' + f in d and d['_' + f]['skeleton']['m_PathID'] != '0'}
+    if '_skeleton' in d:
+        assert not facings
+        facings = {'Single': d['_skeleton']}
+    assert set(e['officialSkeletonBindings'][key]) == set(facings)
+    assert set(e['models'][key]) == set(facings)
+    def ref(pointer):
+        assert pointer['m_FileID'] == 0 and int(pointer['m_PathID']) != 0
+        return art[int(pointer['m_PathID'])]
+    for face, pointer in facings.items():
+        skeleton = ref(pointer); asset = ref(skeleton.read_typetree()['skeletonDataAsset']); data = asset.read_typetree()
+        text = ref(data['skeletonJSON']); assert len(data['atlasAssets']) == 1
+        atlas = ref(data['atlasAssets'][0]); atlas_text = ref(atlas.read_typetree()['atlasFile'])
+        def raw(reader):
+            v = reader.read().m_Script
+            return v.encode('utf8', 'surrogateescape') if isinstance(v, str) else bytes(v)
+        skel_bytes, atlas_bytes = raw(text), raw(atlas_text)
+        assert e['officialSkeletonBindings'][key][face] == {
+            'animatorPathId': animator['pathId'], 'skeletonAnimationPathId': str(skeleton.path_id),
+            'skeletonDataAssetPathId': str(asset.path_id), 'textAssetPathId': str(text.path_id),
+            'atlasAssetPathId': str(atlas.path_id), 'atlasTextAssetPathId': str(atlas_text.path_id),
+            'sha256': sha(skel_bytes), 'bytes': len(skel_bytes), 'atlasSha256': sha(atlas_bytes), 'atlasBytes': len(atlas_bytes)}
+        assert (directory / (face.lower() + '.skel')).read_bytes() == skel_bytes
+        assert (directory / (face.lower() + '.atlas')).read_bytes() == atlas_bytes
+    script = """
+    import {readFileSync} from 'node:fs';import {createHash} from 'node:crypto';
+    import {parseSkel} from './tools/assets/skel.mjs';import {atlasInfo} from './tools/assets/atlas.mjs';
+    const root=process.argv[1],faces=JSON.parse(process.argv[2]),result={};
+    for(const face of faces){const base=root+'/'+face.toLowerCase(),bytes=readFileSync(base+'.skel'),atlas=readFileSync(base+'.atlas','utf8');
+     const p=parseSkel(bytes,atlasInfo(atlas).regions,{includeEventPayloads:true});if(p.missingRegions.length)throw Error('Missing native region');
+     result[face]={sha256:createHash('sha256').update(bytes).digest('hex'),bytes:bytes.length,spineVersion:p.version,
+     durations:p.durations,hits:p.hits,eventPayloads:p.eventPayloads,bounds:p.bounds};}
+    console.log(JSON.stringify(result));
+    """
+    models = json.loads(subprocess.check_output([NODE, '--input-type=module', '-e', script, str(directory), json.dumps(list(facings))], cwd=ROOT))
+    assert e['models'][key] == models
+    return len(facings)
+
+assert set(e['officialSkeletonBindings']) == set(e['models']) == {ID, *token_graphs}
+facings_count = verify_artwork(ID, art_path, art_parts[0], OUT)
+token_art = {}
+for key, rows in token_graphs.items():
+    source = token_sources[key]
+    controller = next(part for row in rows for part in row['components'] if part['pathId'] == source['animatorPathId'])
+    token_art[key] = [{'pathId': controller['pathId'], 'data': controller['data']}]
+    facings_count += verify_artwork(key, source['bundle'], controller, OUT / 'tokens' / key)
+assert e.get('tokenArtworkControllers', {}) == token_art
 print(f'Verified complete original {ID} owner/art/skill/projectile hierarchies ({count} components), '
-      f'{len(needed)} transitive templates and {len(facings)} native facings; no public kit approval')
+      f'{len(needed)} transitive templates, {len(token_graphs)} token graphs and {facings_count} native facings; no public kit approval')

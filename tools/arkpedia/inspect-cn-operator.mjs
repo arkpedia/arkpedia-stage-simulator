@@ -5,9 +5,10 @@ import { readFile, writeFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { parseSkel } from '../assets/skel.mjs';
 import { atlasInfo } from '../assets/atlas.mjs';
-const { values } = parseArgs({ options: { operator: { type: 'string' } } });
+const { values } = parseArgs({ options: { operator: { type: 'string' }, token: { type: 'string' } } });
 if (!/^char_\d+_[a-z0-9]+$/.test(values.operator ?? '')) throw Error('Expected an original CN operator ID');
-const out = new URL(`../../.cache/arkpedia/cn-operators/${values.operator}/`, import.meta.url);
+if (values.token !== undefined && !/^token_\d+_[a-z0-9_]+$/.test(values.token)) throw Error('Expected an original token ID');
+const out = new URL(`../../.cache/arkpedia/cn-operators/${values.operator}/${values.token ? `tokens/${values.token}/` : ''}`, import.meta.url);
 const bindings = JSON.parse(await readFile(new URL('bindings.json', out)));
 const models = {};
 for (const [face, binding] of Object.entries(bindings)) {
@@ -23,4 +24,4 @@ for (const [face, binding] of Object.entries(bindings)) {
     durations: p.durations, hits: p.hits, eventPayloads: p.eventPayloads, bounds: p.bounds };
 }
 await writeFile(new URL('models.json', out), JSON.stringify(models, null, 2) + '\n');
-console.log('Inspected original CN animation tracks: ' + values.operator);
+console.log('Inspected original CN animation tracks: ' + (values.token ?? values.operator));
