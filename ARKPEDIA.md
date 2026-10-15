@@ -4101,3 +4101,28 @@ The cone's discrete full-circle Random arc requires `DISCRETE_CONE_ARC_CONTRACT`
 The Chromium shader review now accepts the complete cage root strictly, compiles its eight shaders/22 programs and checks 91 original materials. Actual GPU calls include the source parent, child and trail, with zero GL/browser errors; existing custom-stream and built-in-mesh readbacks still pass. Reverse playback preserves the new parent/child state. The original short trail often has no geometry before its distance threshold; the GPU trail check uses an authored-clock sample with admitted geometry instead of adding vertices. The rendered cage capture was visually inspected. Reports/logs use the `cage-prewarm-` prefix under `.cache/arkpedia/tragodia-source/`, with the image and shader report in `effects/`.
 
 This closes the cage's component-dispatch blockers. Asset publication, the regular-stage camera/lifetime bridge, lure artwork and complete public skill review still remain; it does not make Tragodia selectable or establish native pixel/frame/Animator parity. Public MVP, coverage, source artifacts and asset pins are unchanged at **374/431 forms and 815 skills**. Arkpedia PR229 remains outside dev.
+
+### Tragodia immutable asset delivery (2026-10-15)
+
+The lure now has an independently verified extraction and SD delivery. `extract-tragodia-models.py` follows the frozen Global root/controller/animator/Single-skeleton/atlas/material/texture chain. It preserves the 116×116 native premultiplied RGBA page, clamping compressed RGB bleed to alpha; only atlas page dimensions/PMA headers are normalized. Both logical facing entries explicitly alias the one original skeleton. Start, Loop and End retain their literal clips and End event. The controller-driven End is not assigned as a generic Die animation. The pinned default avatar and all native pointers are recorded in `data/arkpedia-tragodia-device-art.json` and the SD source review.
+
+`verify-tragodia-models.py --delivered` independently checks every decoded pixel, atlas region, native clip/event, source binding and delivered byte, plus the owner's complete existing Front/Back models against their pinned Git blobs. `audit-tragodia-models.py` reproduces all six extraction/receipt files byte-identically and rejects 22 altered source/model claims. `review-tragodia-models.mjs` loads the delivered SD models, decodes 31 non-Default clips and captures 30 desktop/landscape-phone states with no failed requests or browser errors. The idle/lure capture was visually reviewed. The SD import preserves all 3,007 existing records and adds only the lure's two aliases.
+
+`export-tragodia-delivery.mjs` assembles the original compressed effect pack, animation channels, shader programs, built-in mesh bindings, 72 textures and unchanged source receipts without rewriting their bytes. SD's separate `native-effect-manifest.json` indexes the immutable package by resource version and pack hash. Its importer validates checksums, decoded hash, complete texture inventory and source-chain bindings before publication; conflicting immutable files cannot be overwritten. The package retains all 33 source roots and the four unresolved references elsewhere in the pack. Only `phatm2_skill_03_prison_01` is declared prepared, and `publicBattleApproved` remains false.
+
+`verify-tragodia-delivery.mjs` compares all 79 delivered inputs against frozen original receipts/cache files. The shader browser review accepts `ARKPEDIA_EFFECT_DELIVERY_ROOT=<sd checkout>` to use those delivered inputs and writes separate results under `effects/delivered-browser/`. That run compiles all 22 programs/eight shaders, checks 91 original materials, renders all 19 prepared cage draw entries with no blocked components, and passes custom-stream/built-in GPU checks with zero WebGL/browser errors. It also preserves reverse sampling and actual parent/child/trail draws. The delivered cage capture was visually reviewed. Local emission, history and shader mappings retain the fidelity limits documented above.
+
+Reproduce after fetching/extracting the pinned native bundles:
+
+```sh
+.cache/map-env/bin/python tools/arkpedia/extract-tragodia-models.py
+.cache/map-env/bin/python tools/arkpedia/verify-tragodia-models.py --delivered
+.cache/map-env/bin/python tools/arkpedia/audit-tragodia-models.py
+node tools/arkpedia/export-tragodia-delivery.mjs
+# Import the generated lure sources.json and effect-delivery/manifest.json in the SD checkout.
+node tools/arkpedia/verify-tragodia-delivery.mjs
+ARKPEDIA_REVIEW_CHROME=<chromium executable> node tools/arkpedia/review-tragodia-models.mjs
+ARKPEDIA_EFFECT_DELIVERY_ROOT=<sd checkout> ARKPEDIA_REVIEW_CHROME=<chromium executable> node tools/arkpedia/review-tragodia-effect-shaders.mjs
+```
+
+SD tests pass on Node 22/24 (40 tests), including corruption, source rebinding, repeat-import and immutable-file rejection. These changes prepare original assets; regular-stage camera/lifetime wiring and complete public Tragodia skill review still remain. Public MVP, coverage and runtime asset pin remain **374/431 forms and 815 skills**. Arkpedia PR229 stays outside dev.
