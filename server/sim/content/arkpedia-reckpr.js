@@ -28,7 +28,7 @@ function selected(u, contract) {
     || s.duration !== r.source.duration || !same(s.rangeGrid ?? [], r.skillRangeGrid)) throw Error('Incomplete Record Keeper source selection');
   const n = reckprNativeInputs(), grant = n.talentActions.at(-1);
   if (n.ordinary._animKey !== 'Attack' || n.ordinary._maxAnimScale !== -1 || n.ordinary._useCachedAtkOnly !== 0
-    || n.s1._maxAnimScale !== 1 || n.s1Root._recoverSpIfTargetDead !== 1
+    || n.s1._maxAnimScale !== 1 || n.s1Root._recoverSpIfTargetDead !== 1 || n.s1Root._allowSpRecoveryWhenAffecting !== 0
     || n.s2._animKey !== 'Skill_Loop' || n.s2._maxAnimScale !== -1 || n.s2._useCachedAtkOnly !== 0
     || n.s2Root._beginAnim !== 'Skill_Begin' || n.s2Root._attackBlackboardModeIndex !== 1
     || n.talent._selfOption !== 1 || n.talent._removeBuffWhenAbilityDetached !== 1
@@ -182,7 +182,7 @@ export class ReckprController {
 }
 export function prepareReckpr(b, u, { contract } = {}) {
   const record = selected(u, contract), controller = new ReckprController(b, u, record); u.mem.reckpr = controller;
-  const skill = record.index === 0 ? { kind: 'charges', silenceable: false, trigger: { rule: 'NEVER' }, heal: true, attack: {},
+  const skill = record.index === 0 ? { kind: 'charges', silenceable: false, flags: { noSp: true }, trigger: { rule: 'NEVER' }, heal: true, attack: {},
     canActivate: () => controller.admittingS1 && controller.valid() && live(u) && u.canAct && !u.s.flags.disarm && controller.targets().length > 0 }
     : { kind: 'duration', silenceable: false, duration: record.source.duration, trigger: { rule: 'NEVER' }, mods: { atkPct: record.bb.atk },
       canActivate: () => controller.valid() && live(u) && u.canAct && !u.s.flags.disarm,

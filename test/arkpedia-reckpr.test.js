@@ -25,7 +25,7 @@ for (const elite of [0, 1, 2]) for (const potential of [1, 6]) test(`selected E$
 test('incomplete, locked, moduled and uncontracted source selections fail before controller installation', () => {
   assert.throws(() => make({ contract: {} })); assert.throws(() => make({ elite: 0, skill: 2 }));
   for (const mutate of [d => d.stats.atk++, d => d.skill.spCost++, d => d.skill.bb.atk = 123,
-    d => d.raw.arkpedia.skillId = 'skchr_reckpr_2', d => d.tags = ['invented']]) assert.throws(() => make({ mutate }));
+    d => d.raw.arkpedia.skillId = 'skchr_reckpr_2', d => d.raw.arkpedia.module = 'mod-x', d => d.tags = ['invented']]) assert.throws(() => make({ mutate }));
 });
 for (let rank = 1; rank <= 10; rank++) test(`S1 rank ${rank} heals two distinct wounded allies with one charge and exact source scale`, () => {
   const f = make({ rank }), a = ally(f), z = ally(f, { col: 5, hp: 2000 });
@@ -68,15 +68,16 @@ test('S2 own activation grants its ASPD but does not grant SP during the active 
   advance(f.b, .6); assert.equal(f.u.mem.regularFormVisual.clip, 'Skill_Idle');
 });
 test('native S1 speed is capped while ordinary/S2 windups accelerate; Front/Back S2 events remain distinct', () => {
-  for (const [skill, dir, row, col, event] of [[1, 'RIGHT', 3, 4, .5666666626930237],
+  for (const [skill, dir, row, col, event, charged] of [[1, 'RIGHT', 3, 4, .5666666626930237, true],
+    [1, 'RIGHT', 3, 4, .5666666626930237, false],
     [2, 'RIGHT', 3, 4, .6000000238418579], [2, 'UP', 4, 3, .5666666626930237]]) {
     const f = make({ skill, dir }); ally(f, { row, col });
     f.b.addBuff(f.u, { key: 'fixture:fast', mods: { aspd: 400 } });
-    if (skill === 1) f.u.skill.setSpTotal(f.u.skill.spCost); else cast(f);
+    if (charged) f.u.skill.setSpTotal(f.u.skill.spCost); else if (skill === 2) cast(f);
     until(f, () => f.controller.phase?.kind === 'attack', 4); const p = f.controller.phase;
-    const speed = skill === 1 ? 1 : f.u.base.bat / f.u.s.interval;
+    const speed = charged ? 1 : f.u.base.bat / f.u.s.interval;
     const started = p.startedAt; near(p.releaseAt - started, event / speed);
-    assert.equal(p.s1, skill === 1); assert.equal(p.s2, skill === 2);
+    assert.equal(p.s1, !!charged); assert.equal(p.s2, skill === 2);
     advance(f.b, event / speed - .05); assert.equal(f.shots.length, 0);
     until(f, () => f.shots.length > 0, 1); near(f.shots[0].time - started, event / speed, f.b.dt);
   }
@@ -92,7 +93,9 @@ test('S1 retains an interrupted pending heal and cannot spend a second charge or
   const f = make(); ally(f); f.u.skill.setSpTotal(f.u.skill.spCost * 3);
   until(f, () => f.controller.phase?.s1, 2); f.b.applyStatus(f.u, 'stun', { duration: .2, source: f.u });
   advance(f.b, .1); assert.equal(f.shots.length, 0); assert.equal(f.u.skill.pending, true); assert.equal(f.u.skill.activations, 1);
-  const reject = f.b.on('beforeAttack', ctx => { if (ctx.attacker === f.u) ctx.cancel = true; });
+  const reject = f.b.on('beforeAttack', ctx => {
+    if (ctx.attacker === f.u) { f.b.forceAttack(f.u, ctx.targets); ctx.cancel = true; }
+  });
   advance(f.b, 4); assert.equal(f.shots.length, 0); assert.equal(f.u.skill.activations, 1); f.b.off(reject);
   until(f, () => f.shots.length === 1, 4); assert.equal(f.u.skill.activations, 1); assert.equal(f.u.skill.pending, false);
 });
@@ -176,4 +179,12 @@ test('a recipient removed during reactive-buff attachment receives no stale list
   f.b.on('beforeBuff', ctx => { if (ctx.unit === a && ctx.buff.key.startsWith('reckpr:s2:')) f.b.retreat(a, { permanent: true }); });
   until(f, () => f.shots.length > 0, 3); advance(f.b, 1);
   assert.equal(a.alive, false); assert.equal(f.controller.reactiveBuffs.size, 0); assert.equal(f.heals.length, 0); assert.deepEqual(f.b.errors, []);
+});
+test('S1 holds ordinary SP during its pending windup, admits forced talent SP, then resumes natural recovery', () => {
+  const f = make(), a = ally(f); f.u.skill.setSpTotal(f.u.skill.spCost);
+  until(f, () => f.controller.phase?.s1, 2); const before = f.u.skill.spTotal;
+  assert.equal(f.u.s.flags.noSp, true); advance(f.b, .4); near(f.u.skill.spTotal, before);
+  f.b.emit('skillStart', { unit: a }); near(f.u.skill.spTotal, before + 1);
+  until(f, () => f.shots.length > 0, 1); assert.equal(!!f.u.s.flags.noSp, false);
+  const released = f.u.skill.spTotal; advance(f.b, .2); assert.ok(f.u.skill.spTotal > released);
 });
