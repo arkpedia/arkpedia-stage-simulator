@@ -1,0 +1,282 @@
+{
+  "schemaVersion": 1,
+  "operatorId": "char_4196_reckpr",
+  "enabledOperators": [
+    "char_4196_reckpr"
+  ],
+  "frameParity": false,
+  "moduleSupport": false,
+  "nativePixelParity": false,
+  "nativeParticleSupport": false,
+  "sourceFoundationSha256": "f90d041979ffbb891c4083c5392ba44c15ab7a265fe63bc67db4957f1a0a6430",
+  "ownerArtworkSha256": "5c5f7ac2a128919dd46a7023c7e9e6db57e23412a2af7fa5d2174520cbc8600c",
+  "mechanicsPolicy": "source-cn-charged-healing-and-recipient-reactive-listeners-v1",
+  "scope": "Selected original CN ordinary healing and all twenty S1/S2 ranks through the separate public regular-stage squad/build path.",
+  "verification": {
+    "source": "Five original bundles independently verified; seven outputs reproduced; 29 altered source claims rejected on Node 22 and 24.",
+    "artwork": "Unchanged original owner files, all decoded pixels and PMA verified; 32 altered artwork claims rejected on Node 22 and 24; 15 clips per viewport and 16 controlled artwork captures.",
+    "runtime": "46 focused controller cases; final 200-case Record Keeper/public/adjacent-CN/medic set passes on Node 22 and 24. Both S1/S2 complete original 0-1 waves with Beagle: eleven kills, no leaks, full life and eleven/twelve observed healing events.",
+    "browser": {
+      "status": "passed",
+      "script": "tools/arkpedia/review-reckpr-public.mjs",
+      "scriptSha256": "a004c6e89b2e849eab11ad87b2eec97e61c830fe00eda42194a50196ff6e6f5d",
+      "driver": "tools/arkpedia/public-review-driver.mjs",
+      "driverSha256": "1ef20a71f4982799d1368e61d0b2e2eac9eb36efe1aaad45294150566246359f",
+      "cases": 8,
+      "captures": 36,
+      "viewports": [
+        "1280x800 desktop mouse",
+        "844x390 emulated landscape phone touch"
+      ],
+      "originalWaves": false,
+      "fixture": "Original 0-1 terrain, empty waves, 99 DP, two deliberately wounded allies. Original waves/DP/terrain tested separately.",
+      "checks": [
+        "Public squad and skill selection; drag, drop and separate direction swipe",
+        "Original Front/Back healing attack restarts and S2 Begin/Loop/Idle roles",
+        "Natural SP, automatic two-recipient S1 and manual S2",
+        "Recipient reactive healing during S2 and after caster retreat; timed cleanup",
+        "HP/SP gauges, source icons, retreat and absence of browser/resource/WebGL errors"
+      ],
+      "browserErrors": 0,
+      "failedResources": 0,
+      "visualReview": "Desktop S2 Back active, phone S1 Front active and phone S2 Back Begin captures inspected. This is browser emulation, not physical-device or native frame/pixel parity."
+    }
+  },
+  "originalArtwork": {
+    "operator/char_4196_reckpr/default/front": {
+      "kind": "operator",
+      "id": "char_4196_reckpr",
+      "variant": "default",
+      "facing": "front",
+      "spineVersion": "3.8.99",
+      "source": {
+        "key": "operators",
+        "repository": "fexli/ArknightsResource",
+        "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+        "directory": "spine/char_4196_reckpr/char_4196_reckpr/Front"
+      },
+      "skeleton": {
+        "path": "models/operator/char_4196_reckpr/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4196_reckpr.skel",
+        "bytes": 402540,
+        "sha256": "d05a54bec7dd20f6455da1b63daebcf9e713761a2e08401de1baf2de69593d71"
+      },
+      "atlas": {
+        "path": "models/operator/char_4196_reckpr/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4196_reckpr.atlas",
+        "bytes": 10188,
+        "sha256": "632ce84d70c76e556bffede9a54065306622d57f42adf72aecf6bb4d234321e3"
+      },
+      "textures": [
+        {
+          "path": "models/operator/char_4196_reckpr/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4196_reckpr.png",
+          "bytes": 140551,
+          "sha256": "c9905d6e59fa49b420e57d4fc39bc0001ece30f149b15c1bd688a867f8594266"
+        }
+      ],
+      "premultipliedAlpha": true,
+      "animations": {
+        "Attack": 2.867,
+        "Default": 0,
+        "Die": 1,
+        "Idle": 2,
+        "Skill_Begin": 0.5,
+        "Skill_End": 0.167,
+        "Skill_Idle": 2,
+        "Skill_Loop": 2.833,
+        "Start": 1
+      },
+      "hits": {
+        "Attack": [
+          0.567
+        ],
+        "Skill_Loop": [
+          0.6
+        ]
+      },
+      "bounds": {
+        "x": -402.863,
+        "y": -1.029,
+        "width": 781.076,
+        "height": 906.509
+      },
+      "animationRoles": {
+        "idle": "Idle",
+        "deploy": "Start",
+        "attack": {
+          "begin": null,
+          "loop": "Attack",
+          "end": null
+        },
+        "attackDown": null,
+        "skill": {
+          "begin": null,
+          "loop": "Attack",
+          "end": null,
+          "idle": null,
+          "index": 0,
+          "via": "attack"
+        },
+        "skills": {
+          "0": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null,
+            "idle": null,
+            "index": 0,
+            "via": "attack"
+          },
+          "1": {
+            "begin": "Skill_Begin",
+            "loop": "Skill_Loop",
+            "end": null,
+            "idle": "Skill_Idle",
+            "index": 1,
+            "via": "skill"
+          }
+        },
+        "die": "Die",
+        "stun": null,
+        "move": null
+      }
+    },
+    "operator/char_4196_reckpr/default/back": {
+      "kind": "operator",
+      "id": "char_4196_reckpr",
+      "variant": "default",
+      "facing": "back",
+      "spineVersion": "3.8.99",
+      "source": {
+        "key": "operators",
+        "repository": "fexli/ArknightsResource",
+        "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+        "directory": "spine/char_4196_reckpr/char_4196_reckpr/Back"
+      },
+      "skeleton": {
+        "path": "models/operator/char_4196_reckpr/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4196_reckpr.skel",
+        "bytes": 260257,
+        "sha256": "6482e646a354511deb7f852a69819ff6c87e29eeff39cc934e33faeddc27f158"
+      },
+      "atlas": {
+        "path": "models/operator/char_4196_reckpr/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4196_reckpr.atlas",
+        "bytes": 6551,
+        "sha256": "893a0b46d2ceaa8fb20d1e63bd4d52e5e8d9e20184481ce3e90ab7b454c2474b"
+      },
+      "textures": [
+        {
+          "path": "models/operator/char_4196_reckpr/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4196_reckpr.png",
+          "bytes": 127691,
+          "sha256": "69220a4e3b2b603563be9beae18add7db99de110246bb7ea2af8d42bbe2d291f"
+        }
+      ],
+      "premultipliedAlpha": true,
+      "animations": {
+        "Attack": 2.867,
+        "Default": 0,
+        "Idle": 2,
+        "Skill_Begin": 0.5,
+        "Skill_End": 0.167,
+        "Skill_Idle": 2,
+        "Skill_Loop": 2.833,
+        "Start": 1
+      },
+      "hits": {
+        "Attack": [
+          0.567
+        ],
+        "Skill_Loop": [
+          0.567
+        ]
+      },
+      "bounds": {
+        "x": -402.863,
+        "y": -1.03,
+        "width": 781.076,
+        "height": 906.51
+      },
+      "animationRoles": {
+        "idle": "Idle",
+        "deploy": "Start",
+        "attack": {
+          "begin": null,
+          "loop": "Attack",
+          "end": null
+        },
+        "attackDown": null,
+        "skill": {
+          "begin": null,
+          "loop": "Attack",
+          "end": null,
+          "idle": null,
+          "index": 0,
+          "via": "attack"
+        },
+        "skills": {
+          "0": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null,
+            "idle": null,
+            "index": 0,
+            "via": "attack"
+          },
+          "1": {
+            "begin": "Skill_Begin",
+            "loop": "Skill_Loop",
+            "end": null,
+            "idle": "Skill_Idle",
+            "index": 1,
+            "via": "skill"
+          }
+        },
+        "die": null,
+        "stun": null,
+        "move": null
+      }
+    }
+  },
+  "interfaceAssets": [
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "five-star-icons/Record Keeper - Base.webp",
+      "bytes": 9694,
+      "gitBlob": "f97fc8fb147484fec4bee3648cfda504d37b056b",
+      "sha256": "7c79475c6be08c34161e19efde79655899182582948a47fb30e9a313e5b1d917"
+    },
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "skill-icons/Record Keeper - Learning by Analogy.webp",
+      "bytes": 6166,
+      "gitBlob": "af3775333534c9046b0f3ff57a8a4608397237b2",
+      "sha256": "d5612912f99e7022a8a8c89586afcbf8a7cce548a0f079aa74623eaedd2589bc"
+    },
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "skill-icons/Record Keeper - Sage Advice.webp",
+      "bytes": 6976,
+      "gitBlob": "7075ac5bf8d4342a0a7246f8aa146aad62bc177d",
+      "sha256": "1615640877d2ead838b9f96ffaf7b8c31904abb652ae0777522f44c8cf367de2"
+    },
+    {
+      "repository": "arkpedia/arkpedia-skin-assets",
+      "commit": "6fb723692d89c4a08d9a7aa4015e19c0753dd270",
+      "path": "five-star-skins/Record Keeper - Base.webp",
+      "bytes": 128188,
+      "gitBlob": "595c8b8327bf19ec5ac49b339b29545b4a5e72e0",
+      "sha256": "7b79952297a30bdbc37aa314d647d3fb60f09879486aa3579746f8e71c4c003f"
+    }
+  ],
+  "sdCommit": "20048e0b125e2bce10a87d9e5ed705a075ca52e2",
+  "limits": [
+    "Native selector/category/self-option aliases, root-tile geometry, fixed-tick/FSM/cooldown dispatch, cast-start speed sampling, all-input-dead refund and compiled zero-HP ordering are explicit mappings.",
+    "Modules, native particles/audio and original game-frame/pixel/shader parity remain unverified."
+  ],
+  "snapshotPreservation": {
+    "baseline": "27c646a04abf40e6d7cf0ac50cee5705505ebed1",
+    "olderOperators": 381,
+    "olderModels": 873,
+    "olderTokens": 55,
+    "normalization": "Only immutable SD delivery revisions/URLs normalized; all prior operators, models, tokens, source pins, defaults, stages, routes and enemies unchanged."
+  }
+}
