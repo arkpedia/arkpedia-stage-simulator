@@ -48,3 +48,12 @@ test('Thumpy rejects locked promotion/rank, unknown skills and unsupported modul
  for(const p of[{elite:3},{level:91},{potential:0},{trust:201},{skillRank:0},{skillRank:11},{skillId:'other'},{module:'mod-x'},
   {elite:0,level:50,skillRank:5},{elite:1,level:80,skillRank:8},{elite:0,level:50,skillRank:4,skillId:SKILLS[1]},{elite:1,level:80,skillRank:7,skillId:SKILLS[2]}])assert.throws(()=>select({...build(),...p}));
 });
+
+test('Thumpy preserves the table/raw-template cap difference and initial/explicit shield trigger paths',()=>{
+ const r=select(build()),nodes=e.templates['thumpy[water_break_detect]'].eventToActions.ON_BEFORE_EP_BREAK_START;
+ assert.equal(r.talentBb[1].max_stack_cnt,30);assert.equal(nodes[1]._buff.maxStackCnt,20);
+ assert.ok(nodes[2]._failNodes[0].$type.includes('CreateBuff'));assert.deepEqual(nodes[3]._buffKeys,['thumpy[shield]']);assert.equal(nodes[3]._forceTrigger,true);
+ const shield=e.templates['thumpy[shield]'].eventToActions;
+ assert.equal(shield.ON_BUFF_START[1]._blackboardKey,'dynamic');assert.equal(shield.ON_BUFF_START[1]._value,0);
+ for(const [event,index] of [['ON_BUFF_START',2],['ON_BUFF_TRIGGER',1]]){const a=shield[event][index];assert.equal(a._addParamKey,'shield_value');assert.equal(a._maxValueKey,'shield_max_value');}
+});
