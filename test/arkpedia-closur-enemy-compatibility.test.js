@@ -26,7 +26,7 @@ test('the currently admitted regular enemies have no declared enemy-ability cloc
 });
 test('the real regular-stage snapshot passes without changing its enemies, operator coverage or source records', () => {
   const before = JSON.stringify(data); assertClosurEnemyCompatibility(data);
-  assert.equal(JSON.stringify(data), before); assert.equal(data.operators.char_4228_closur, undefined);
+  assert.equal(JSON.stringify(data), before);
 });
 test('a practice field with no enemies needs no invented clock compatibility', () => {
   assert.doesNotThrow(() => assertClosurEnemyCompatibility({ enemies: {} }));

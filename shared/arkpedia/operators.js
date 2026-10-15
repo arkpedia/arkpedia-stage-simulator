@@ -93,6 +93,7 @@ import { MON3TR_OPERATORS } from './mon3tr-operators.js';
 import { AKKORD_OPERATORS } from './akkord-operators.js';
 import { WINTIM_OPERATORS } from './wintim-operators.js';
 import { JCINTA_OPERATORS } from './jcinta-operators.js';
+import { CLOSUR_OPERATORS } from './closur-operators.js';
 import { LIESEL_OPERATORS } from './liesel-operators.js';
 import { NECRASS_OPERATORS } from './necrass-operators.js';
 import { MUELSYSE_OPERATORS } from './muelsyse-operators.js';
@@ -405,6 +406,7 @@ export const REGULAR_OPERATORS = Object.freeze({
   ...WINTIM_OPERATORS,
   ...JCINTA_OPERATORS,
   ...LIESEL_OPERATORS,
+  ...CLOSUR_OPERATORS,
 });
 
 export function assertRegularOperator(op) {

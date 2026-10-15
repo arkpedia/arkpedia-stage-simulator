@@ -5,7 +5,6 @@ import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import inventory from '../data/arkpedia-cn-enemy-native-source.json' with { type: 'json' };
 import source from '../data/arkpedia-enemy-clock-source.json' with { type: 'json' };
-import data from '../data/arkpedia-mvp.json' with { type: 'json' };
 import { prepareCNEnemyPlan } from '../tools/arkpedia/cn-enemy-native-source.mjs';
 
 const manifest = () => ({ versionId: inventory.source.resourceVersion,
@@ -19,7 +18,6 @@ test('enemy source preparation retains the complete frozen membership without ru
     assert.equal(source[key], false); assert.equal(result[key], false);
   }
   assert.equal(source.compiledDispatchVerified, false);
-  assert.equal(data.operators.char_4228_closur, undefined);
   const raw = readFileSync(new URL('../data/arkpedia-cn-enemy-native-source.json', import.meta.url));
   assert.equal(createHash('sha256').update(raw).digest('hex'), source.source.sha256);
 });

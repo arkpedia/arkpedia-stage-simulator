@@ -108,6 +108,8 @@ import { customizePublicAkkordKit, installPublicAkkord } from './content/arkpedi
 import { customizePublicWintimKit, installPublicWintim } from './content/arkpedia-wintim-public.js';
 import { customizePublicJcintaKit, installPublicJcinta } from './content/arkpedia-jcinta-public.js';
 import { assertClosurEnemyCompatibility } from '../../shared/arkpedia/closur-enemy-compatibility.js';
+import { customizePublicClosurKit, installPublicClosur } from './content/arkpedia-closur-public.js';
+import { installClosurRoster, CLOSUR_ROSTER_CONTRACT } from './content/arkpedia-closur-roster.js';
 import { customizePublicLieselKit, installPublicLiesel } from './content/arkpedia-liesel-public.js';
 import { customizePublicNecrassKit, installPublicNecrass } from './content/arkpedia-necrass-public.js';
 import { installPublicMuelsyseSquad, customizePublicMuelsyseKit, installPublicMuelsyse } from './content/arkpedia-muelsyse-public.js';
@@ -352,6 +354,8 @@ export class StandardBattle extends Battle {
         { build: b, unit: null, deployments: 0, readyAt: 0, lastCost: 0 },
       ]),
     );
+    const closurBuilds = builds.filter(build => build.id === 'char_4228_closur');
+    if (closurBuilds.length) installClosurRoster(this, closurBuilds, { contract: CLOSUR_ROSTER_CONTRACT });
     installShuRoster({ battle: this, records: chess });
     installMarcilSquad(this);
     installPublicMuelsyseSquad(this);
@@ -561,6 +565,7 @@ export class StandardBattle extends Battle {
     customizePublicWintimKit({ battle: this, id, unit, kit });
     customizePublicJcintaKit({ battle: this, id, unit, kit });
     customizePublicLieselKit({ battle: this, id, unit, kit });
+    customizePublicClosurKit({ battle: this, id, unit, kit });
     customizeNarantKit({ battle: this, id, def, unit, kit });
     customizeElaKit({ battle: this, id, def, unit, kit });
     customizeFuzeKit({ battle: this, id, def, unit, kit });
@@ -774,6 +779,7 @@ export class StandardBattle extends Battle {
     installPublicWintim({ unit, def });
     installPublicJcinta({ unit, def });
     installPublicLiesel({ unit, def });
+    installPublicClosur({ unit, def });
     installNarant({ battle: this, unit, def });
     installEla({ battle: this, unit, def });
     installFuze({ battle: this, unit, def });

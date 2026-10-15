@@ -25,6 +25,7 @@ export class ClosurPointController {
     this.handles = []; this.recipients = new Set(); this.friendKey = `closur:friend:${u.id}`; this.readyAt = 0;
   }
   valid() { return !this.stopped && !this.b.finished && present(this.u) && this.seq === this.u.deploySeq; }
+  own() { return this.point && present(this.point.unit) ? [this.point.unit] : []; }
   active() { return this.valid() && this.point?.mode === 'active' && live(this.point.unit); }
   range() {
     if (!this.active()) return new Set();
@@ -142,7 +143,9 @@ export class ClosurPointController {
 export function prepareClosurPoint(b, u, { contract } = {}) {
   if (contract !== CLOSUR_POINT_CONTRACT || u.def.charId !== ID || u.deploySeq !== 0 || u.mem.closurPointController)
     throw Error('Command center requires a fresh selected Closure owner and explicit contract');
-  const build = u.def.raw.arkpedia, selected = selectedClosurBuild(build);
+  const build = { ...u.def.raw.arkpedia, skillId: u.def.skill?.id }, selected = selectedClosurBuild(build);
+  if (u.def.raw.arkpedia.skillId != null && u.def.raw.arkpedia.skillId !== build.skillId)
+    throw Error('Conflicting Closure selected source skill');
   const skill = u.def.skill, source = selected.source;
   if (!same(u.def.stats, normalizeChess({ stats: selected.stats }).stats) || !same(u.rangeGrid, selected.rangeGrid)
     || skill.id !== build.skillId || !same(skill.bb, selected.bb) || !same(u.def.tags, selected.tags)

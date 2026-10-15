@@ -515,7 +515,11 @@ function summonDetails(entry) {
   const hp = unit?.hp ?? raw.maxHp, maxHp = stats?.maxHp ?? raw.maxHp;
   const numbers = [['ATK', stats?.atk ?? raw.atk], ['DEF', stats?.def ?? raw.def],
     ['RES', stats?.res ?? raw.magicResistance], ['Block', stats?.blockCnt ?? raw.blockCnt]];
-  const recovery = unit?.mem.crabMode && unit.mem.crabMode !== 'active'
+  const point = unit?.mem.closurPoint;
+  const recovery = point?.mode === 'recharge'
+    ? `<p class="sp-readout">Command center recovering · ${Math.max(0, Math.ceil(point.readyAt - battle.time))}s</p>`
+    : point?.mode === 'born' ? '<p class="sp-readout">Command center activating</p>'
+    : unit?.mem.crabMode && unit.mem.crabMode !== 'active'
     ? `<p class="sp-readout">Reinforcement recovering · ${Math.max(0,Math.ceil(unit.mem.crabReadyAt-battle.time))}s</p>`
     : unit && [0, 'warming'].includes(unit.mem.mitmMode)
       ? `<p class="sp-readout">Cherry-3 recovering · ${Math.max(0,Math.ceil(unit.mem.mitmReadyAt-battle.time))}s</p>` : '';
