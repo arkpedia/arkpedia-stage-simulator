@@ -11,16 +11,16 @@ import {createParticleInheritance} from './native-particle-inheritance.js';
 // Source sphere/box/cone-base emission, lifetime velocity and grid animation.
 // RNG, event boundaries, native frame phase and renderer coordinates remain
 // explicit local mappings until compared with compiled Unity/game frames.
-export function createMovingParticles(source,{seed=1,subEmitterSchedule=null,particleTrails=null}={}){
+export function createMovingParticles(source,{seed=1,subEmitterSchedule=null,particleTrails=null,discreteArcContract=null}={}){
   const managedSubModule=source.SubModule?.enabled&&subEmitterSchedule?.ownsParent(source,seed)===true;
-  const lifecycle=createParticleLifecycle(source,{seed,particleTrails,modules:['ShapeModule','VelocityModule','UVModule','ClampVelocityModule','NoiseModule','InheritVelocityModule','ForceModule',...(managedSubModule?['SubModule']:[])],spaces:[0,1],allowInitialSpeed:true,allowDistanceEmission:true});
+  const lifecycle=createParticleLifecycle(source,{seed,particleTrails,subEmitterSchedule,modules:['ShapeModule','VelocityModule','UVModule','ClampVelocityModule','NoiseModule','InheritVelocityModule','ForceModule',...(managedSubModule?['SubModule']:[])],spaces:[0,1],allowInitialSpeed:true,allowDistanceEmission:true});
   const shape=source.ShapeModule,velocity=source.VelocityModule,uv=source.UVModule;
   const motion=createParticleMotion(source,{seed});
   const inheritance=createParticleInheritance(source,{seed});
   let cone=null;
   if(shape?.enabled){
     if(![0,4,5,8].includes(shape.type)||shape.alignToDirection||shape.randomDirectionAmount!==0||shape.sphericalDirectionAmount!==0||shape.randomPositionAmount!==0)throw Error('Native particle shape/direction needs review');
-    if(shape.type===4)cone=createParticleCone(shape);
+    if(shape.type===4)cone=createParticleCone(shape,{discreteArcContract});
     if(shape.type===8)cone=createParticleConeVolume(shape);
     if(shape.type!==5&&(shape.radius?.mode!==0||shape.radius.spread!==0||!Number.isFinite(shape.radius.value)||shape.radius.value<0||!Number.isFinite(shape.radiusThickness)||shape.radiusThickness<0||shape.radiusThickness>1))throw Error('Native shape radius mode needs review');
     for(const field of ['m_Texture','m_Mesh','m_MeshRenderer','m_SkinnedMeshRenderer','m_Sprite','m_SpriteRenderer']){
@@ -95,6 +95,11 @@ export function createMovingParticles(source,{seed=1,subEmitterSchedule=null,par
   const trailCache=new Map(),trailFields=new Set(['id','born','lifetime','age','birthTime']);
   return {sample,worldMotion,births:lifecycle.births,sampleRecords(records,time,options){return sampleParticles(lifecycle.sampleRecords(records,time),time,options);},
     sampleTrailRecords(records,time,options){return sampleParticles(lifecycle.sampleTrailRecords(records,time,particleTrails),time,options);},
+    withParentHistory(callback){
+      if(typeof callback!=='function')throw Error('Prewarm parent history requires a replay callback');
+      return lifecycle.withParentHistory(subEmitterSchedule,replay=>callback((records,time,options={})=>
+        sampleParticles(replay(records,time),time,options)));
+    },
     withTrailHistory(callback){let active=true;try{return lifecycle.withTrailHistory(particleTrails,replay=>callback((records,time)=>{
       if(!active)throw Error('Particle trail history scope has ended');
       // Admitted trail sources simulate locally. Their physical replay is pure

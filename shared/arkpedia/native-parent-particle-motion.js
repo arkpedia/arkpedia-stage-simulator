@@ -8,7 +8,7 @@ import{createChildParticleFrames}from'./native-child-particle-frame.js';
 // Source particle physics and explicit original emitter frames drive child
 // births. A parent SubModule is managed by the validated Birth scheduler, never
 // deleted or silently ignored. Other unsupported modules stay held.
-export function createParentParticleMotion(pack,{seed=1,parentIds,frameAt}={}){
+export function createParentParticleMotion(pack,{seed=1,parentIds,frameAt,prewarmFrameAt,trailForParent,discreteArcContract=null}={}){
  if(typeof frameAt!=='function')throw Error('Parent particles need original emitter frames');
  const graph=createSubEmitterGraph(pack),schedule=createChildEmissionSchedule(pack,{seed}),parents=new Map(),held=new Map();
  const ids=Object.entries(pack.records).filter(([,r])=>r.type==='ParticleSystem'&&r.data.SubModule?.enabled).map(([id])=>id);
@@ -16,13 +16,18 @@ export function createParentParticleMotion(pack,{seed=1,parentIds,frameAt}={}){
  for(const id of parentIds??ids){
   const source=pack.records[id].data;
   try{
-   if(source.prewarm&&source.looping)throw Error('Parent prewarm motion needs a source-history contract');
-   const sampler=createMovingParticles(source,{seed,subEmitterSchedule:schedule});
+   if(source.prewarm&&source.looping){
+     if(typeof prewarmFrameAt!=='function')throw Error('Parent prewarm motion needs a source-history contract');
+     if(source.startDelay.minMaxState!==0||source.startDelay.scalar!==0)
+       throw Error('Parent prewarm motion needs a zero-delay source-history contract');
+   }
+   const particleTrails=source.TrailModule?.enabled&&typeof trailForParent==='function'?trailForParent(id):null;
+   const sampler=createMovingParticles(source,{seed,subEmitterSchedule:schedule,particleTrails,discreteArcContract});
    parents.set(id,{source,sampler});
   }catch(error){held.set(id,error.message);}
  }
  function frames(id,time){
-  const frame=frameAt(id,time);
+  const frame=time<0?prewarmFrameAt(id,time):frameAt(id,time);
   if(!frame?.birth||!frame?.movement)throw Error('Missing original parent particle frame');
   // Validate both matrices, including finite affine coordinates.
   particleWorldPosition({simulationSpace:'local',velocitySpace:'local',origin:[0,0,0],displacement:[0,0,0]},frame.birth,frame.birth,frame.movement);
@@ -30,15 +35,22 @@ export function createParentParticleMotion(pack,{seed=1,parentIds,frameAt}={}){
  }
  function sample(parent,identity,time){
   if(!parents.has(parent))throw Error('Native parent particle motion held: '+(held.get(parent)??'outside source root'));
-  if(!Number.isSafeInteger(identity)||identity<0||!Number.isFinite(time)||time<0)throw Error('Invalid native parent particle sample');
-  const{source,sampler}=parents.get(parent),birth=sampler.births(time).find(p=>p.id===identity);
+  const{source,sampler}=parents.get(parent),prewarm=source.prewarm&&source.looping;
+  const minimum=prewarm?-source.lengthInSec/source.simulationSpeed:0;
+  if(!Number.isSafeInteger(identity)||identity<0||!Number.isFinite(time)||time<minimum-1e-10)
+    throw Error('Invalid native parent particle sample');
+  // Accepted identities at zero include the entire native prewarm interval.
+  // Negative replay selects that immutable ledger, never a new warm-up stream.
+  const birth=sampler.births(Math.max(0,time)).find(p=>p.id===identity&&p.birthTime<=time+1e-10);
   if(!birth)throw Error('Native parent particle was not born');
   const age=Math.max(0,(time-birth.birthTime)*source.simulationSpeed);
   if(age>=birth.lifetime)throw Error('Native parent particle has expired');
-  const particle=sampler.sampleRecords([{...birth,age}],time,{frameAt:t=>frames(parent,t),emitterVelocityAt:t=>{
+  const options={frameAt:t=>frames(parent,t),emitterVelocityAt:t=>{
    const from=Math.max(birth.birthTime,t-1/60),a=frames(parent,from).birth,b=frames(parent,t).birth;
    return t===from?[0,0,0]:[0,1,2].map(i=>(b[12+i]-a[12+i])/(t-from));
-  }})[0];
+  }};
+  const particle=time<0?sampler.withParentHistory(replay=>replay([{...birth,age}],time,options))[0]
+    :sampler.sampleRecords([{...birth,age}],time,options)[0];
   const born=frames(parent,birth.birthTime),current=frames(parent,time);
   return{birth,particle,position:particleWorldPosition(particle,born.birth,current.birth,current.movement)};
  }
@@ -72,6 +84,6 @@ export function createParentParticleMotion(pack,{seed=1,parentIds,frameAt}={}){
     return{...original,parentOrigin:[parent.birth[12],parent.birth[13],parent.birth[14]]};
    }});
   },
-  scope:{sourceParentParticleMotion:true,velocityAcquisition:'local60HzOneSidedAtBirth',compiledFrameParity:false}
+  scope:{sourceParentParticleMotion:true,velocityAcquisition:'local60HzOneSidedAtBirth',prewarmSourceHistory:typeof prewarmFrameAt==='function',compiledFrameParity:false}
  };
 }
