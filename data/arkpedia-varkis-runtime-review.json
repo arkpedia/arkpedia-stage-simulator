@@ -1,0 +1,319 @@
+{
+  "schemaVersion": 1,
+  "operatorId": "char_4166_varkis",
+  "enabledOperators": [
+    "char_4166_varkis"
+  ],
+  "frameParity": false,
+  "moduleSupport": false,
+  "nativePixelParity": false,
+  "nativeParticleSupport": false,
+  "sourceFoundationSha256": "2726cf348a031ad5330fe733096a604c3109f9558a38896031870a003ccc9574",
+  "ownerArtworkSha256": "b38f7b3a96ddc96d50e2f1950e9ef18e8c9fb2cd61ae8ef1aba6a532f37892dd",
+  "mechanicsPolicy": "source-cn-three-event-burst-minos-hp-predicate-overheal-barrier-v1",
+  "scope": "Selected original CN Varkáris ordinary/S1/S2 and Minos talent through the shared regular-stage targeting/damage/healing/barrier pipelines; separate public review required.",
+  "verification": {
+    "source": "Five original bundles, 77 components and eight transitive templates verified; seven outputs reproduced and 28 altered claims rejected on Node 22 and 24.",
+    "artwork": "Six original files/pixels/PMA and explicit native End mixes verified; 32 altered claims rejected on both Node versions; 18 usable clips per viewport and 20 inspected artwork captures.",
+    "runtime": "22 source, 17 resource, 34 combat and 30 public-path cases. The broader 375-case CN/guard/barrier set passes on Node 22 and 24. Both original 0-1 skill builds alongside Melantha kill all eleven enemies without leaks and preserve twenty life: S1 ten hits/two activations; S2 nine hits/six heals/one activation.",
+    "browser": {
+      "status": "passed",
+      "script": "tools/arkpedia/review-varkis-public.mjs",
+      "driver": "tools/arkpedia/public-review-driver.mjs",
+      "cases": 8,
+      "captures": 44,
+      "viewports": [
+        "1280x800 desktop mouse",
+        "844x390 emulated landscape phone touch"
+      ],
+      "originalWaves": false,
+      "fixture": "Original 0-1 terrain, empty waves, 99 DP and one pinned high-HP attacker with source-relative ATK and a short interval. Original waves, natural DP and terrain are tested separately.",
+      "checks": [
+        "Public squad/skill selection and separate drag/drop/direction swipe",
+        "Original Front/Back attack restarts, native three-event S1 with one attack receipt and accurate active HUD text",
+        "Naturally earned offensive S1/time S2 SP; automatic S1 and public manual S2 activation",
+        "Literal S2 Begin/Loop/End, self-heal, retained capped barrier and post-skill decay",
+        "Public retreat removes owner/controller/resource handles and capacity; no stale hits or healing"
+      ],
+      "browserErrors": 0,
+      "failedResources": 0,
+      "visualReview": "Desktop S1 Back first strike/active HUD and phone S2 Back active captures inspected. A first pre-integration attempt stopped at deployment due to the strict optional raw skillId guard; complete runs after correction pass. Physical-device and original frame/pixel parity remain unverified.",
+      "scriptSha256": "83a5ba3d4e7cfc5363b7f92fcecdcb93e5af9393ce569c89787667d85791e267",
+      "driverSha256": "1ef20a71f4982799d1368e61d0b2e2eac9eb36efe1aaad45294150566246359f",
+      "normalPreviewReplay": {
+        "status": "passed",
+        "cases": 8,
+        "captures": 44,
+        "browserErrors": 0,
+        "failedResources": 0,
+        "candidate": false
+      }
+    },
+    "heldFullSuite": {
+      "commit": "f4d1a5e74c697ee902b9ea9038bb958e2cba6f54",
+      "passed": 14740,
+      "skipped": 10,
+      "failures": 0,
+      "tests": 14750,
+      "suites": 325,
+      "scope": "Held source/combat/art before public integration, optional-raw-skillId guard and cooldown-preservation correction. Final public validation is separate."
+    }
+  },
+  "originalArtwork": {
+    "operator/char_4166_varkis/default/back": {
+      "kind": "operator",
+      "id": "char_4166_varkis",
+      "variant": "default",
+      "facing": "back",
+      "spineVersion": "3.8.99",
+      "source": {
+        "key": "operators",
+        "repository": "fexli/ArknightsResource",
+        "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+        "directory": "spine/char_4166_varkis/char_4166_varkis/Back"
+      },
+      "skeleton": {
+        "path": "models/operator/char_4166_varkis/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4166_varkis.skel",
+        "bytes": 315836,
+        "sha256": "b3522615631373635b03511905e121771a16d565ccfae73b6936e4f13eee164a"
+      },
+      "atlas": {
+        "path": "models/operator/char_4166_varkis/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4166_varkis.atlas",
+        "bytes": 7767,
+        "sha256": "fda235cee61adeb772f7a4100065758355bef6377b035adb81bd1e97c5079ccf"
+      },
+      "textures": [
+        {
+          "path": "models/operator/char_4166_varkis/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4166_varkis.png",
+          "bytes": 159093,
+          "sha256": "022a566db47ade38834c8bcc4075ab87b845e033eaf0733fec4317328c555d49"
+        }
+      ],
+      "premultipliedAlpha": true,
+      "animations": {
+        "Attack": 1.2,
+        "Default": 0,
+        "Idle": 8,
+        "Skill": 1.2,
+        "Skill_2_Begin": 0.333,
+        "Skill_2_End": 0.167,
+        "Skill_2_Idle": 4,
+        "Skill_2_Loop": 1.2,
+        "Start": 1
+      },
+      "hits": {
+        "Attack": [
+          0.567
+        ],
+        "Skill": [
+          0.467,
+          0.5,
+          0.533
+        ],
+        "Skill_2_Loop": [
+          0.567
+        ]
+      },
+      "bounds": {
+        "x": -231.83,
+        "y": -3.342,
+        "width": 492.073,
+        "height": 872.559
+      },
+      "animationRoles": {
+        "idle": "Idle",
+        "deploy": "Start",
+        "attack": {
+          "begin": null,
+          "loop": "Attack",
+          "end": null
+        },
+        "attackDown": null,
+        "skill": {
+          "begin": null,
+          "loop": "Skill",
+          "end": null,
+          "idle": null,
+          "index": 0,
+          "via": "skill"
+        },
+        "skills": {
+          "0": {
+            "begin": null,
+            "loop": "Skill",
+            "end": null,
+            "idle": null,
+            "index": 0,
+            "via": "skill"
+          },
+          "1": {
+            "begin": "Skill_2_Begin",
+            "loop": "Skill_2_Loop",
+            "end": "Skill_2_End",
+            "idle": "Skill_2_Idle",
+            "index": 1,
+            "via": "skill"
+          }
+        },
+        "die": null,
+        "stun": null,
+        "move": null
+      }
+    },
+    "operator/char_4166_varkis/default/front": {
+      "kind": "operator",
+      "id": "char_4166_varkis",
+      "variant": "default",
+      "facing": "front",
+      "spineVersion": "3.8.99",
+      "source": {
+        "key": "operators",
+        "repository": "fexli/ArknightsResource",
+        "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+        "directory": "spine/char_4166_varkis/char_4166_varkis/Front"
+      },
+      "skeleton": {
+        "path": "models/operator/char_4166_varkis/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4166_varkis.skel",
+        "bytes": 546998,
+        "sha256": "7417932558365afbf2e09d359cb0bd73fc2a00ae1cc0fdfb4c4736310ff7ba34"
+      },
+      "atlas": {
+        "path": "models/operator/char_4166_varkis/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4166_varkis.atlas",
+        "bytes": 11207,
+        "sha256": "1ca8d3b965bbf4f612c786b5dbee00a7ca5405446a8fb817d581a3ce2d89e21a"
+      },
+      "textures": [
+        {
+          "path": "models/operator/char_4166_varkis/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4166_varkis.png",
+          "bytes": 221392,
+          "sha256": "d7db19b7ca84c1a1db23b78b12dac4482e2c3eccc5dc2ba38695fb27d514e3f8"
+        }
+      ],
+      "premultipliedAlpha": true,
+      "animations": {
+        "Attack": 1.2,
+        "Attack_Down": 1.2,
+        "Default": 0,
+        "Die": 1,
+        "Idle": 8,
+        "Skill": 1.2,
+        "Skill_2_Begin": 0.333,
+        "Skill_2_End": 0.167,
+        "Skill_2_Idle": 4,
+        "Skill_2_Loop": 1.2,
+        "Start": 1
+      },
+      "hits": {
+        "Attack": [
+          0.567
+        ],
+        "Attack_Down": [
+          0.567
+        ],
+        "Skill": [
+          0.467,
+          0.5,
+          0.533
+        ],
+        "Skill_2_Loop": [
+          0.567
+        ]
+      },
+      "bounds": {
+        "x": -231.83,
+        "y": -3.342,
+        "width": 492.073,
+        "height": 872.559
+      },
+      "animationRoles": {
+        "idle": "Idle",
+        "deploy": "Start",
+        "attack": {
+          "begin": null,
+          "loop": "Attack",
+          "end": null
+        },
+        "attackDown": {
+          "begin": null,
+          "loop": "Attack_Down",
+          "end": null
+        },
+        "skill": {
+          "begin": null,
+          "loop": "Skill",
+          "end": null,
+          "idle": null,
+          "index": 0,
+          "via": "skill"
+        },
+        "skills": {
+          "0": {
+            "begin": null,
+            "loop": "Skill",
+            "end": null,
+            "idle": null,
+            "index": 0,
+            "via": "skill"
+          },
+          "1": {
+            "begin": "Skill_2_Begin",
+            "loop": "Skill_2_Loop",
+            "end": "Skill_2_End",
+            "idle": "Skill_2_Idle",
+            "index": 1,
+            "via": "skill"
+          }
+        },
+        "die": "Die",
+        "stun": null,
+        "move": null
+      }
+    }
+  },
+  "interfaceAssets": [
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "five-star-icons/Varkáris - Base.webp",
+      "bytes": 11642,
+      "gitBlob": "db3bd8a0979020437b9fb1bda7f710e095ff4a44",
+      "sha256": "dbe74775a857158e785bd53679300420676b7c4a5939c7d97d450901f6f177a8"
+    },
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "skill-icons/Varkáris - Raging River.webp",
+      "bytes": 7020,
+      "gitBlob": "23a6fc4cb142ce37c6c6659d7d8c07841d50d6d6",
+      "sha256": "cd57f6e6943d783bf1fdd297aa9090f651e45f12069f6d13cb8ed7f7a9f1f4e2"
+    },
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "skill-icons/Varkáris - The Will of His People.webp",
+      "bytes": 7284,
+      "gitBlob": "84dc0ed7297fad0531099ee9410213767d0c57b6",
+      "sha256": "1dc4403d65f2a4376648ecbb93291aecdf78e948a9aa5e9aaaff89b4fdcfb8ca"
+    },
+    {
+      "repository": "arkpedia/arkpedia-skin-assets",
+      "commit": "6fb723692d89c4a08d9a7aa4015e19c0753dd270",
+      "path": "five-star-skins/Varkáris - Base.webp",
+      "bytes": 148716,
+      "gitBlob": "84c5e6568e24f8f60ff23cdf507d8fbc5ae994a8",
+      "sha256": "775518b4044b7839b6eb3182eb94b8041361717578468f939288b0c439b32341"
+    }
+  ],
+  "sdCommit": "7a0a33e6644ef618ac5e4d0fd57eec982dd78182",
+  "limits": [
+    "Compiled mode/event/FSM and ES intermediary ordering, native enum/target geometry, S1 refund/finish timing, S2 heal-event alias and aura attachment/hidden-state ordering remain explicit mappings.",
+    "Modules, native particles/shaders/audio and original game-frame/pixel parity remain unverified."
+  ],
+  "snapshotPreservation": {
+    "baseline": "a07ee335efb5089ab91becec280be436374e5575",
+    "olderOperators": 383,
+    "olderModels": 877,
+    "olderTokens": 55,
+    "normalization": "Only immutable SD delivery revisions/URLs normalized; previous operator/model/token records, source pins, default squad, stage art, geometry, pathing and enemies preserved."
+  }
+}
