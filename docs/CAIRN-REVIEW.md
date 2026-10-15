@@ -1,0 +1,19 @@
+# Cairn source and runtime review
+
+Cairn remains held outside the public roster. The normal preview contains 386 frozen source forms and 842 skills. Source preparation, runtime behavior, artwork delivery and public gameplay verification are separate gates.
+
+The frozen foundation `data/arkpedia-native-operators/char_4214_cairn.json` contains 245,569 bytes, SHA-256 `c3b66218299c5e18daea25e691e7777a3273329e96ae757f067434ba118e876a`. It uses original CN commit `a550f5e048bb94e7cdefc6eb97a4091f0c4c7add`, client `26-09-22-07-47-20_6c71fa`. Five native bundles retain 58 owner/skill components and eight transitive templates, with no referenced projectile/token graph or unresolved template. Independent reproduction on Node 22 and 24 preserves seven output files and rejects 28 altered-source or premature-approval claims per run.
+
+Twenty-two source-selection and exact-clock checks pass on both Node versions. They cover both skills at all ten ranks, promotion/potential/trust, locked selections, original animation payloads and rejection of changed source bytes. These checks do not install combat behavior.
+
+The selected runtime must preserve these source distinctions:
+
+- Ordinary and S1 attacks target one enemy. Cairn blocks three; this does not make him attack three enemies at once. Original targeting is sampled at input, with one `OnAttack` marker at approximately 0.6 seconds and native maximum animation scale 1.
+- S1 increases maximum HP for thirty seconds. Its native mode maps attacks and idle to `Skill_1_Loop` and `Skill_1_Idle`, with a short Begin and four native End transition pairs.
+- S2 is an instant skill with a one-shot `Skill_2` animation. Nearby ground recipients are selected at its attack marker. The attached damage buff snapshots ATK on attachment; its Arts and neural-injury paths remain distinct. The elemental branch explicitly permits source-free output after source death.
+- The S2 shield adds a fraction of current maximum HP, caps against the selected maximum-HP ratio and uses the native EXTEND lifetime policy. It is not a permanent HP increase or a decaying overheal barrier.
+- The talent attaches to enemies blocked by Cairn, rejects invincible recipients at attachment and derives a one-second injury child from the parent. It uses current source ATK; ending the parent also ends the child.
+
+Raw lifetime/trigger fields are retained, including S2 damage's `lifeTime=4`, `triggerCnt=4`, `triggerLifeType=2`, the selected `buff_duration=10`, and one-second first/recurring delays. These fields alone do not establish the compiled dispatcher or expiry-frame policy. The runtime must document and test that mapping explicitly before admission. Source skill text, numeric enums, native callback phase, source-removal attribution and shield extension must not silently become claims of executable Unity parity.
+
+Modules, native particles/shaders/audio and game-frame/pixel parity remain unverified. Arkpedia app dev and production remain untouched.
