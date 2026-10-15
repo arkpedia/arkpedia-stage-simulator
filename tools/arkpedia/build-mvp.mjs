@@ -243,6 +243,25 @@ if (ids.includes('char_4208_wintim')) {
       || !Number.isSafeInteger(a.bytes) || a.bytes < 1) || REGULAR_OPERATORS[id].assetName !== 'Snegurochka')
     throw Error('Snegurochka display spelling lacks its pinned interface assets');
 }
+if (ids.includes('char_4237_jcinta')) {
+  const review = JSON.parse(await readFile(new URL('../../data/arkpedia-jcinta-runtime-review.json', import.meta.url)));
+  const foundation = await readFile(new URL('../../data/arkpedia-native-operators/char_4237_jcinta.json', import.meta.url));
+  const evidence = JSON.parse(foundation), id = 'char_4237_jcinta';
+  if (JSON.stringify(review.enabledOperators) !== JSON.stringify([id]) || review.frameParity !== false
+    || review.nativeParticleSupport !== false || review.moduleSupport !== false || review.nativePixelParity !== false
+    || review.mechanicsPolicy !== 'source-cn-override-channel-and-flying-sanctuary-v1'
+    || review.verification.browser.status !== 'passed'
+    || review.sourceFoundationSha256 !== createHash('sha256').update(foundation).digest('hex')
+    || evidence.source.commit !== cnEvidence?.source.commit
+    || JSON.stringify(evidence.tables.character) !== JSON.stringify(cnEvidence.tables.characters[id])
+    || Object.entries(evidence.tables.skills).some(([key, value]) => JSON.stringify(value) !== JSON.stringify(cnEvidence.tables.skills[key])))
+    throw Error('Jacinta lacks matching pinned CN source review');
+  const expected = ['five-star-icons/Jacinta - Base.webp', 'five-star-skins/Jacinta - Base.webp',
+    'skill-icons/Jacinta - Support γ.webp', "skill-icons/Jacinta - Parasol's Shade.webp"].sort();
+  if (JSON.stringify(review.interfaceAssets.map(a => a.path).sort()) !== JSON.stringify(expected)
+    || review.interfaceAssets.some(a => pins[a.repository] !== a.commit || !/^[a-f0-9]{64}$/.test(a.sha256)
+      || !Number.isSafeInteger(a.bytes) || a.bytes < 1)) throw Error('Jacinta lacks pinned interface assets');
+}
 if (ids.includes('char_4051_akkord')) {
   const review = JSON.parse(await readFile(new URL('../../data/arkpedia-akkord-runtime-review.json', import.meta.url)));
   const foundation = await readFile(new URL('../../data/arkpedia-akkord-prefabs.json', import.meta.url));
@@ -426,6 +445,13 @@ if (ids.includes('char_4208_wintim')) {
   if (JSON.stringify(Object.keys(review.originalArtwork).sort()) !== JSON.stringify(keys)) throw Error('Incomplete Snegurochka artwork review');
   for (const key of keys) if (JSON.stringify(models[key]) !== JSON.stringify(review.originalArtwork[key]))
     throw Error('Changed original Snegurochka artwork: ' + key);
+}
+if (ids.includes('char_4237_jcinta')) {
+  const review = JSON.parse(await readFile(new URL('../../data/arkpedia-jcinta-runtime-review.json', import.meta.url)));
+  const keys = ['front', 'back'].map(face => `operator/char_4237_jcinta/default/${face}`).sort();
+  if (JSON.stringify(Object.keys(review.originalArtwork).sort()) !== JSON.stringify(keys)) throw Error('Incomplete Jacinta artwork review');
+  for (const key of keys) if (JSON.stringify(models[key]) !== JSON.stringify(review.originalArtwork[key]))
+    throw Error('Changed original Jacinta artwork: ' + key);
 }
 let nativeEffects;
 if(ids.includes('char_1042_phatm2')){

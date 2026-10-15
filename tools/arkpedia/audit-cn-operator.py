@@ -65,7 +65,7 @@ cases = [
     ('duplicate owner object', lambda e: e['characters'][ID].append(copy.deepcopy(e['characters'][ID][0]))),
     ('missing source skill', delete(['skills', prefab])),
     ('missing source rank', delete(['tables', 'skills', skill, 'levels', 9])),
-    ('invented null-prefab fallback', change(['skillBindings', skill], [None])),
+    ('changed literal skill-prefab binding', change(['skillBindings', skill], ['invented'])),
     ('invented owner mode', change(['ownerModeSkills'], ['invented'])),
     ('missing JSON template', delete(['templates', template])),
     ('missing native template', delete(['originalTemplates', template])),
@@ -82,6 +82,13 @@ if original['projectiles']:
     cases.append(('missing native projectile', delete(['projectiles', next(iter(original['projectiles']))])))
 if original['buffDatabase']:
     cases.append(('missing buff database input', delete(['buffDatabase', next(iter(original['buffDatabase']))])))
+if original.get('skillPrefabOverrides'):
+    overridden = next(iter(original['skillPrefabOverrides']))
+    cases.extend([
+        ('missing explicit skill override', delete(['skillPrefabOverrides', overridden])),
+        ('changed explicit skill override', change(['skillPrefabOverrides', overridden], 'invented')),
+        ('missing explicit override prefab', delete(['skills', original['skillPrefabOverrides'][overridden]])),
+    ])
 negative = out / 'negative-evidence.json'
 try:
     for name, apply in cases:

@@ -53,6 +53,23 @@ import { MIN_DAMAGE_RATIO, ELEMENT, ELEMENT_ORDER, PALSY_MAX } from './constants
 import { BOSS_HIT_LIMIT } from '../../shared/constants.js';
 import { evadesGround } from './targeting.js';
 
+// The native damage_resistance[fly][phy_and_mag] is Sanctuary with a
+// per-damage source predicate. Ordinary Sanctuary is already in target stats;
+// replace only that strongest channel, before flat resistance/shields. Never
+// temporarily mutate target stats or a DamageInfo shared by multiple targets.
+export function flyingSanctuaryRatio(buffs, source, type) {
+  if (!source?.isFlying || !['phys', 'arts'].includes(type)) return 1;
+  const key = type === 'phys' ? 'physTakenMul' : 'artsTakenMul';
+  let ordinary = 1, conditional = 1;
+  for (const buff of buffs) {
+    if (buff.status !== 'sanctuary') continue;
+    if (Number.isFinite(buff.mods?.[key])) ordinary = Math.min(ordinary, buff.mods[key]);
+    if (Number.isFinite(buff.data?.flyingSourceSanctuary))
+      conditional = Math.min(conditional, Math.max(0, 1 - buff.data.flyingSourceSanctuary));
+  }
+  return ordinary > 0 ? Math.min(ordinary, conditional) / ordinary : 1;
+}
+
 const clamp01 = (v) => (v < 0 ? 0 : v > 1 ? 1 : v);
 
 /**
@@ -302,6 +319,7 @@ export function dealDamage(battle, source, target, dmgIn) {
   let mul = dmg.mul * (type === 'elemental' ? 1 : ts.dmgTakenMul);
   if (ss) mul *= ss.dmgDealtMul * (type === 'phys' ? ss.physDealtMul : type === 'arts' ? ss.artsDealtMul : 1);
   mul *= type === 'phys' ? ts.physTakenMul : type === 'arts' ? ts.artsTakenMul : type === 'elemental' ? ts.elementalTakenMul : ts.trueTakenMul;
+  mul *= flyingSanctuaryRatio(target.buffs, hs, type);
   final *= mul;
   // Fixed damage resistance is a final HP-damage cut, before shields. It is
   // opt-in (Friston-3); element gauge accumulation and HP loss bypass it.

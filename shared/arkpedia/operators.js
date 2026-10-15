@@ -92,6 +92,7 @@ import { TRAGODIA_OPERATORS } from './tragodia-operators.js';
 import { MON3TR_OPERATORS } from './mon3tr-operators.js';
 import { AKKORD_OPERATORS } from './akkord-operators.js';
 import { WINTIM_OPERATORS } from './wintim-operators.js';
+import { JCINTA_OPERATORS } from './jcinta-operators.js';
 import { NECRASS_OPERATORS } from './necrass-operators.js';
 import { MUELSYSE_OPERATORS } from './muelsyse-operators.js';
 import { MARCIL_OPERATORS } from './marcil-operators.js';
@@ -401,6 +402,7 @@ export const REGULAR_OPERATORS = Object.freeze({
     .filter(([id]) => ['char_272_strong', 'char_4107_vrdant', 'char_4165_ctrail', 'char_110_deepcl', 'char_484_robrta', 'char_452_bstalk'].includes(id))),
   ...AKKORD_OPERATORS,
   ...WINTIM_OPERATORS,
+  ...JCINTA_OPERATORS,
 });
 
 export function assertRegularOperator(op) {
