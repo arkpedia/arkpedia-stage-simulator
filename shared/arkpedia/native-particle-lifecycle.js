@@ -10,10 +10,11 @@ import {createParticleAngularMotion} from './native-particle-angular-motion.js';
 // Shared source emission clocks, capacity and lifetime/color/size sampling.
 // Callers whitelist the active modules they actually implement. Event ordering
 // and the deterministic preview random stream are not Unity RNG/frame parity.
-export function createParticleLifecycle(source,{seed=1,modules=[],spaces=[0],allowInitialSpeed=false,allowDistanceEmission=false,particleTrails=null}={}){
+export function createParticleLifecycle(source,{seed=1,modules=[],spaces=[0],allowInitialSpeed=false,allowDistanceEmission=false,particleTrails=null,subEmitterSchedule=null}={}){
   const initial=source.InitialModule,emission=source.EmissionModule;
   if(!initial?.enabled||!emission)throw new Error('Missing native particle initial/emission module');
   const managedTrails=source.TrailModule?.enabled&&particleTrails?.ownsSource(source,seed)===true;
+  const managedParent=source.SubModule?.enabled&&subEmitterSchedule?.ownsParent(source,seed)===true;
   const supported=new Set(['InitialModule','EmissionModule','ColorModule','SizeModule','CustomDataModule','RotationModule',...modules,...(managedTrails?['TrailModule']:[])]);
   for(const [name,module] of Object.entries(source))if(module?.enabled&&!supported.has(name))throw new Error(name+' lifecycle not playing');
   const constant=(curve,label)=>{
@@ -29,9 +30,10 @@ export function createParticleLifecycle(source,{seed=1,modules=[],spaces=[0],all
   const angularMotion=createParticleAngularMotion(source.RotationModule);
   const random=(id,salt)=>particleRandom(id,salt,seed);
   const customData=createParticleCustomData(source.CustomDataModule);
-  function sampleRecords(records,{scheduled=false,time,trailHistory=false}={}){
+  function sampleRecords(records,{scheduled=false,time,trailHistory=false,parentHistory=false}={}){
     if(!Array.isArray(records)||records.length>100000||typeof scheduled!=='boolean')throw Error('Invalid native particle birth records');
-    const prewarmHistory=trailHistory&&managedTrails&&source.prewarm&&source.looping;
+    const prewarmHistory=(trailHistory&&managedTrails||parentHistory&&managedParent)
+      &&source.prewarm&&source.looping;
     const minimum=prewarmHistory?(source.startDelay.scalar-source.lengthInSec)/source.simulationSpeed:0;
     if(scheduled&&(!Number.isFinite(time)||time<minimum-(prewarmHistory?1e-10:0)||records.length>initial.maxNumParticles))throw Error('Invalid native scheduled particle clock/capacity');
     const ids=new Set();
@@ -67,6 +69,20 @@ export function createParticleLifecycle(source,{seed=1,modules=[],spaces=[0],all
   // the child-local phase; `birthTime` and `time` are real effect seconds.
   return {sample,births:clock.births,sampleRecords(records,time){return sampleRecords(records,{scheduled:true,time});},
     sampleTrailRecords(records,time,owner){if(!managedTrails||owner!==particleTrails||!owner.ownsSource(source,seed))throw Error('Particle trail history requires its source owner');return sampleRecords(records,{scheduled:true,time,trailHistory:true});},
+    withParentHistory(owner,callback){
+      if(!managedParent||owner!==subEmitterSchedule||!owner.ownsParent(source,seed)
+        ||!source.prewarm||!source.looping||source.startDelay.minMaxState!==0||source.startDelay.scalar!==0
+        ||typeof callback!=='function')throw Error('Prewarm parent history requires its source scheduler');
+      let active=true;
+      try{
+        const result=callback((records,time)=>{
+          if(!active)throw Error('Prewarm parent history scope has ended');
+          return sampleRecords(records,{scheduled:true,time,parentHistory:true});
+        });
+        if(result?.then)throw Error('Prewarm parent history must be synchronous');
+        return result;
+      }finally{active=false;}
+    },
     withTrailHistory(owner,callback){
       if(!managedTrails||owner!==particleTrails||!owner.ownsSource(source,seed)||typeof callback!=='function')throw Error('Particle trail history requires its source owner');
       let active=true;try{const result=callback((records,time)=>{if(!active)throw Error('Particle trail history scope has ended');return sampleRecords(records,{scheduled:true,time,trailHistory:true});});if(result?.then)throw Error('Particle trail history must be synchronous');return result;}finally{active=false;}

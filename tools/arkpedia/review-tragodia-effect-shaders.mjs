@@ -83,11 +83,9 @@ try{
    }});
    let cage,diagnosticImage,scheduledImage;
    try{
-    let strictRejected=false;
-    try{await library.create('phatm2_skill_03_prison_01');}
-    catch(error){if(!error.message.includes('unplayed components'))throw error;strictRejected=true;}
-    if(!strictRejected||library.instanceCount!==0)throw Error('Partial cage was accepted as strict playback');
-    const instance=await library.create('phatm2_skill_03_prison_01',{allowBlocked:true});
+    const instance=await library.create('phatm2_skill_03_prison_01');
+    const strictAccepted=instance.blocked.length===0;
+    if(!strictAccepted||library.instanceCount!==1)throw Error('Original cage did not enter strict playback');
     const camera=new T.PerspectiveCamera(35,1,.001,100);camera.position.set(0,2,3);camera.lookAt(0,0,0);camera.updateMatrixWorld(true);
     const scene=new T.Scene();scene.background=new T.Color('#142027');scene.add(instance.group);
     const times=[0,.25,16/30,1],clip='battle/prefabs/effects/phatm2.ab:7379801640911501129';
@@ -223,9 +221,33 @@ try{
     instance.update(.75,{camera,clip});instance.update(captureTime,{camera,clip});instance.group.updateMatrixWorld(true);
     if(rotationSnapshot()!==rotationBefore)throw Error('Source start rotation did not reverse exactly');
     if(coneSnapshot()!==coneBefore)throw Error('Local cone replay did not reverse exactly');
-    if(instance.draws.some(d=>d.component==='battle/prefabs/effects/phatm2.ab:7172346969955047659')
-      ||!instance.blocked.some(b=>b.component==='battle/prefabs/effects/phatm2.ab:7172346969955047659'&&/parent dispatch/.test(b.reason)))
-      throw Error('Blocked parent allowed an orphan cage sub-emitter');
+    const nativeParent=instance.draws.find(d=>d.particleId==='battle/prefabs/effects/phatm2.ab:1554873112122431723');
+    const nativeChild=instance.draws.find(d=>d.component==='battle/prefabs/effects/phatm2.ab:7172346969955047659');
+    const nativeTrail=instance.draws.find(d=>d.sourceEntry===nativeParent&&d.materialSlot===1);
+    if(!nativeParent||!nativeChild||!nativeTrail||!instance.parentMotion.parentReady(nativeParent.particleId))
+      throw Error('Original prewarm parent/child/trail did not enter dispatch');
+    instance.update(0,{camera,clip});instance.group.updateMatrixWorld(true);
+    if(!nativeParent.lastParticles.some(p=>p.birthTime<0)||!nativeChild.lastParticles.some(p=>p.parentBirthTime<0))
+      throw Error('Original cage did not retain prewarm particle history');
+    const nativeSnapshot=()=>JSON.stringify([nativeParent,nativeChild].map(d=>({particles:d.lastParticles,
+      matrices:d.pool.filter(p=>p.visible).map(p=>Array.from(p.matrixWorld.elements))})));
+    const nativeAtZero=nativeSnapshot();instance.update(2,{camera,clip});instance.update(0,{camera,clip});
+    instance.group.updateMatrixWorld(true);
+    if(nativeSnapshot()!==nativeAtZero)throw Error('Prewarm parent/child did not reverse exactly');
+    // The original short trail is often below its minimum vertex distance.
+    // Use a source clock with an actual admitted trail, without adding points.
+    const nativeRenderTime=6;instance.update(nativeRenderTime,{camera,clip});instance.group.updateMatrixWorld(true);
+    let nativeParentRenderPasses=0,nativeChildRenderPasses=0,nativeTrailRenderPasses=0;
+    for(const [d,count]of [[nativeParent,()=>nativeParentRenderPasses++],[nativeChild,()=>nativeChildRenderPasses++]])
+      for(const part of d.pool){part.frustumCulled=false;const original=part.onBeforeRender;
+        part.onBeforeRender=function(...args){count();return original.apply(this,args);};}
+    nativeTrail.mesh.frustumCulled=false;const trailBeforeRender=nativeTrail.mesh.onBeforeRender;
+    nativeTrail.mesh.onBeforeRender=function(...args){nativeTrailRenderPasses++;return trailBeforeRender.apply(this,args);};
+    renderer.render(scene,camera);
+    if(!nativeParentRenderPasses||!nativeChildRenderPasses||!nativeTrailRenderPasses)
+      throw Error('Original parent, child or trail missed GPU rendering: '+[nativeParentRenderPasses,nativeChildRenderPasses,nativeTrailRenderPasses]);
+    const nativeSamplesVerified=nativeChild.lastParticles.length;
+    if(!nativeSamplesVerified||!nativeTrail.trailData?.indices.length)throw Error('Missing native child/trail geometry');
     const inheritedInstance=await library.inspectParticle('battle/prefabs/effects/phatm2.ab:4040094038318586091');
     if(inheritedInstance.inspection?.fullEffect!==false||inheritedInstance.inspection.parents.length!==1)
       throw Error('Missing explicit original particle inspection scope');
@@ -334,7 +356,7 @@ try{
     inheritedInstance.update(captureTime,{camera,trajectory});inheritedInstance.group.updateMatrixWorld(true);
     if(inheritedSnapshot()!==inheritedBefore)throw Error('Scheduled inspection changed ordinary source sampling');
     inheritedInstance.dispose();
-    // The image retains the original cage, with the unsupported child held.
+    // The image retains the complete original cage and its source-driven child.
     instance.update(captureTime,{camera,clip});instance.group.updateMatrixWorld(true);
     const bounds=new T.Box3().setFromObject(instance.group);
     const centre=bounds.getCenter(new T.Vector3()),span=Math.max(1,bounds.getSize(new T.Vector3()).length());
@@ -343,10 +365,10 @@ try{
     diagnosticImage=renderer.domElement.toDataURL('image/png');
     cage={root:instance.name,draws:instance.draws.map(d=>d.component),blocked:instance.blocked,times,
      nodes:instance.pose.nodes.size,renderers:instance.pose.renderers.size,rendered:true,
-     diagnosticOnly:true,strictRejected,captureTime,customDraws:customDraws.length,checkedCustomDraws,gpuBuffersVerified,builtinGpuBuffersVerified,builtinRenderPasses,
+     diagnosticOnly:true,strictAccepted,captureTime,customDraws:customDraws.length,checkedCustomDraws,gpuBuffersVerified,builtinGpuBuffersVerified,builtinRenderPasses,
      reverseStable:true,gpuAttributesVerified:true,rotationMatricesVerified,rotationReverseStable:true,
      coneSamplesVerified,coneReverseStable:true,nativeEmissionParity:false,
-     inheritedSamplesVerified,inheritedRenderPasses:ordinaryInheritedPasses,birthsBeforeStop,birthsAfterStop,inheritedReverseStable:true,inheritedInspectionOnly:true,orphanChildBlocked:true,
+     inheritedSamplesVerified,inheritedRenderPasses:ordinaryInheritedPasses,birthsBeforeStop,birthsAfterStop,inheritedReverseStable:true,inheritedInspectionOnly:true,nativeParentPlaying:true,nativeRenderTime,nativeParentRenderPasses,nativeChildRenderPasses,nativeTrailRenderPasses,nativeSamplesVerified,prewarmReverseStable:true,
      scheduledSamplesVerified,scheduledRenderPasses,scheduledParentBranches:parents.size,scheduledReverseStable:true,scheduledInspectionOnly:true,syntheticParentMotion:true};
    }finally{library.dispose();}
    const debug=gl.getExtension('WEBGL_debug_renderer_info');
@@ -359,9 +381,9 @@ try{
  assert.equal(result.materials.length,91);assert.equal(result.glError,0);assert.deepEqual(errors,[]);
  assert.match(result.driver,/SwiftShader/i);
  assert.equal(result.cage.nodes,22);assert.equal(result.cage.renderers,20);
- assert.equal(result.cage.draws.length,16);assert.equal(result.cage.blocked.length,2);
+ assert.equal(result.cage.draws.length,19);assert.equal(result.cage.blocked.length,0);
  assert.equal(result.cage.builtinGpuBuffersVerified,3);assert.ok(result.cage.builtinRenderPasses>0);
- assert.equal(result.cage.orphanChildBlocked,true);assert.equal(result.cage.inheritedInspectionOnly,true);assert.ok(result.cage.inheritedRenderPasses>0);
+ assert.equal(result.cage.nativeParentPlaying,true);assert.ok(result.cage.nativeParentRenderPasses>0);assert.ok(result.cage.nativeChildRenderPasses>0);assert.ok(result.cage.nativeTrailRenderPasses>0);assert.ok(result.cage.nativeSamplesVerified>0);assert.equal(result.cage.prewarmReverseStable,true);assert.equal(result.cage.inheritedInspectionOnly,true);assert.ok(result.cage.inheritedRenderPasses>0);
  assert.ok(result.cage.inheritedSamplesVerified>0);assert.equal(result.cage.inheritedReverseStable,true);
  assert.ok(result.cage.scheduledSamplesVerified>0);assert.ok(result.cage.scheduledRenderPasses>0);assert.ok(result.cage.scheduledParentBranches>1);
  assert.equal(result.cage.scheduledReverseStable,true);assert.equal(result.cage.scheduledInspectionOnly,true);assert.equal(result.cage.syntheticParentMotion,true);
@@ -372,7 +394,7 @@ try{
  assert.equal(result.cage.customDraws,8);assert.equal(result.cage.reverseStable,true);
  assert.equal(result.cage.checkedCustomDraws,8);
  assert.equal(result.cage.gpuBuffersVerified,24);
- assert.equal(result.cage.strictRejected,true);
+ assert.equal(result.cage.strictAccepted,true);
  await writeFile(path.join(directory,'cage-custom-stream-diagnostic.png'),Buffer.from(result.diagnosticImage.split(',')[1],'base64'));
  delete result.diagnosticImage;
  await writeFile(path.join(directory,'scheduled-child-motion-diagnostic.png'),Buffer.from(result.scheduledImage.split(',')[1],'base64'));

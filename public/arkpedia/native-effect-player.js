@@ -3,6 +3,7 @@
 // It owns no renderer, DOM, combat clock, camera framing or Animator FSM.
 import {webglEffectProgram,selectEffectProgram,effectUniformDeclarations} from '../../shared/arkpedia/native-effect-shader.js';
 import {createStationaryParticles} from '../../shared/arkpedia/native-stationary-particles.js';
+import {DISCRETE_CONE_ARC_CONTRACT} from '../../shared/arkpedia/native-particle-cone.js';
 import {createMovingParticles} from '../../shared/arkpedia/native-moving-particles.js';
 import {createParentParticleMotion} from '../../shared/arkpedia/native-parent-particle-motion.js';
 import {createBuiltinMeshResolver} from '../../shared/arkpedia/native-builtin-mesh.js';
@@ -125,7 +126,13 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false}={}){
     const frame=particleMatrices(particleFrame(transform,state),pack.records[id].data.scalingMode);
     return{birth:frame.birth.elements,movement:frame.movement.elements};
   };
-  const parentMotion=createParentParticleMotion(pack,{parentIds:[...particleTransforms.keys()].filter(id=>pack.records[id].data.SubModule?.enabled),frameAt:sourceFrameAt});
+  const parentMotion=createParentParticleMotion(pack,{parentIds:[...particleTransforms.keys()].filter(id=>pack.records[id].data.SubModule?.enabled),frameAt:sourceFrameAt,
+    // Before visible time zero, retain the original effect's start Transform
+    // pose. This explicit local history matches existing world-particle prewarm;
+    // it does not loop an Animator backward or claim native frame parity.
+    prewarmFrameAt:(id,_time)=>sourceFrameAt(id,0),
+    trailForParent:id=>createParticleTrails(pack.records[id].data),
+    discreteArcContract:DISCRETE_CONE_ARC_CONTRACT});
   const draws=[],blocked=[],geometries=new Set(),materials=new Set(),nodeObjects=new Map();
   let disposed=false;
   const assertOpen=()=>{library.assertOpen();if(disposed)throw Error('Native effect instance is disposed');};
@@ -445,7 +452,7 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false}={}){
           }else if(r.materials.some(m=>m?.id!==r.materials[0]?.id))
             throw Error('Native particle trail/multi-material renderer needs review');
           const moving=['ShapeModule','VelocityModule','UVModule','ClampVelocityModule','NoiseModule','InheritVelocityModule','ForceModule'].some(k=>particleSource[k]?.enabled)||particleSource.moveWithTransform===1;
-          emitter=moving?createMovingParticles(particleSource,{particleTrails,subEmitterSchedule:parentMotion.parentReady(ps)?parentMotion.schedule:null}):createStationaryParticles(particleSource);
+          emitter=moving?createMovingParticles(particleSource,{particleTrails,discreteArcContract:DISCRETE_CONE_ARC_CONTRACT,subEmitterSchedule:parentMotion.parentReady(ps)?parentMotion.schedule:null}):createStationaryParticles(particleSource);
           if(![0,1,2].includes(particleSource.scalingMode))throw Error('Native particle scaling mode needs review');
           if(particleSource.moveWithTransform===1&&!emitter.worldMotion){
             const ancestors=new Set();let n=r.transform;while(n){const d=pose.nodes.get(n);ancestors.add(d.gameObject);n=d.parent;}
