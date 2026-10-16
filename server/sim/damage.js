@@ -225,6 +225,39 @@ export function absorbShields(battle, target, amount, damageType = null, applica
       break;
     }
   }
+  // Reviewed native barrier responses can consume an entire overflowing hit
+  // or create a replacement barrier. Freeze this packet's original HP-barrier
+  // identities so reentrant replacements never absorb the same packet again.
+  // Hit-count barriers above still resolve first; ordinary shields below keep
+  // their existing path when no source callback is present.
+  if (target.buffs.some(b => typeof b.onShieldAbsorb === 'function')) {
+    const original = target.buffs.slice(), life = target.deploySeq;
+    for (const b of original) {
+      if (!(rest > 0) || !target.alive || !target.deployed || target.deploySeq !== life) break;
+      if (!target.buffs.includes(b) || !(b.shield > 0)) continue;
+      if (b.shieldTypes && !b.shieldTypes.includes(damageType)) continue;
+      if (b.shieldApplyWays && !b.shieldApplyWays.includes(application.applyWay ?? 'none')) continue;
+      if (b.shieldSourceSides && !b.shieldSourceSides.includes(application.source?.side)) continue;
+      const absorbed = Math.min(b.shield, rest);
+      b.shield -= absorbed; rest -= absorbed; changed = true;
+      if (b.shield <= 1e-9) b.shield = 0;
+      if (typeof b.onShieldAbsorb === 'function') {
+        const ctx = { battle, unit: target, buff: b, absorbed, remaining: rest,
+          depleted: b.shield === 0, damageType, source: application.source ?? null,
+          applyWay: application.applyWay ?? 'none' };
+        battle._safe(() => b.onShieldAbsorb(ctx), 'buff.onShieldAbsorb', b.source ?? target);
+        // A response may only reduce this packet's remainder. Invalid values
+        // cannot amplify or poison otherwise accepted damage.
+        if (Number.isFinite(ctx.remaining) && ctx.remaining >= 0 && ctx.remaining <= rest)
+          rest = ctx.remaining;
+        if (!target.alive || !target.deployed || target.deploySeq !== life) { rest = 0; break; }
+      }
+      if (b.shield === 0 && !b.mods && !b.flags && !(b.shieldHits > 0)
+        && target.buffs.includes(b)) battle.removeBuff(target, b);
+    }
+    if (changed) target.markDirty();
+    return rest;
+  }
   for (let i = 0; i < target.buffs.length && rest > 0; i++) {
     const b = target.buffs[i];
     if (b.shieldTypes && !b.shieldTypes.includes(damageType)) continue;
