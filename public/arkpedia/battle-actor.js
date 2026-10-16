@@ -44,7 +44,7 @@ export class BattleActor extends SpineActor {
     // An opted-in source ability may repeat the same literal clip. Its stable
     // per-ability identity restarts that clip once, never on every render frame.
     const playId = typeof visual?.playId === 'string' ? visual.playId : '';
-    const key = visual ? `${visual.clip}|${!!visual.loop}|${visual.idle || ''}|${visual.attack || ''}|${visual.die || ''}|${playId}` : null;
+    const key = visual ? `${visual.clip}|${!!visual.loop}|${visual.idle || ''}|${visual.attack || ''}|${visual.die || ''}|${playId}|${visual.replace === true}` : null;
     if (key === this.regularVisualKey) {
       const previousSpeed = this.regularVisualSpeed ?? 1;
       this.regularVisualSpeed = speed;
@@ -75,6 +75,14 @@ export class BattleActor extends SpineActor {
       ...(this.has(visual.die) ? { die: visual.die } : {}),
       skill: null,
     };
+    // An explicit source FSM transition can cancel an unfinished one-shot.
+    // Other loops retain the previous form/attack deadline; controls and death
+    // remain authoritative even for an opted-in replacement.
+    if (visual.loop && visual.replace === true && this.has(visual.clip)
+      && !this.dead && !this.frozen && !this.stunWanted && this.mode !== 'stun') {
+      this.mode = 'base'; this.attackBeginPending = null;
+      this.windUntil = null; this.wound = false; this.stunWanted = false;
+    }
     this.setForm(roles, !visual.loop && this.has(visual.clip) ? visual.clip : null);
     if (!visual.loop && this.mode === 'change' && this.current === visual.clip)
       this.changeUntil = this.clock + this.dur(visual.clip) / speed;

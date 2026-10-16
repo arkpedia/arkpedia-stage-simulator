@@ -17,7 +17,7 @@
       "script": "tools/arkpedia/review-closur-public.mjs",
       "scriptSha256": "012c636a359b6432e3762e19a0534e00cd5f186821eaa4a8ed6e3494f33f8ebb",
       "driver": "tools/arkpedia/public-review-driver.mjs",
-      "driverSha256": "1ef20a71f4982799d1368e61d0b2e2eac9eb36efe1aaad45294150566246359f",
+      "driverSha256": "2e52cd4007ae553e30f773104626f9b5c2be7c15f717b61ca9063517fbdc51c8",
       "cases": 6,
       "captures": 36,
       "viewports": [
@@ -35,7 +35,12 @@
         "Natural time SP, automatic S1, manual S2/S3, skill use and end",
         "Point withdrawal, recovery readout, native OnStart restoration and owner removal"
       ],
-      "visualReview": "Desktop S3 active, desktop/phone point recharge and phone S2 Back active captures inspected. No native particle or original pixel/frame parity is claimed."
+      "visualReview": "Replayed all six cases and 36 captures with the loopback fixture transport. Desktop S3 active and emulated-phone S2 Back active inspected; zero browser errors or failed resources. No physical-device, native particle or original pixel/frame parity is claimed.",
+      "fixtureServer": "tools/arkpedia/public-review-server.mjs",
+      "fixtureServerSha256": "127fb1b74be89d0a35e6bfa4e3d35927d170fa4d3129287f6c523114c5bcaa22",
+      "browserVersion": "Chrome/153.0.8010.12",
+      "cacheDisabled": true,
+      "fixtureTransport": "loopback app/data overrides; external HTTPS unintercepted"
     },
     "runtime": "All 48 public-path cases pass on Node 22, including all thirty source skill ranks, carried squad/support talent, exact-floor payment, command-center card/withdrawal/redeployment and all three skills on original 0-1 waves. The earlier 331-case selected Closure/source/renderer/adjacent-public set passes on Node 22 and 24; the final full regression is recorded separately."
   },

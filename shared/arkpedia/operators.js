@@ -99,6 +99,7 @@ import { KICHI_OPERATORS } from './kichi-operators.js';
 import { CAIRN_OPERATORS } from './cairn-operators.js';
 import { TANYA_OPERATORS } from './tanya-operators.js';
 import { THUMPY_OPERATORS } from './thumpy-operators.js';
+import { TMSLOT_OPERATORS } from './tmslot-operators.js';
 import { BRANCH_OPERATORS } from './branch-operators.js';
 import { RECKPR_OPERATORS } from './reckpr-operators.js';
 import { CLOSUR_OPERATORS } from './closur-operators.js';
@@ -422,6 +423,7 @@ export const REGULAR_OPERATORS = Object.freeze({
   ...CAIRN_OPERATORS,
   ...TANYA_OPERATORS,
   ...THUMPY_OPERATORS,
+  ...TMSLOT_OPERATORS,
   ...BRANCH_OPERATORS,
 });
 

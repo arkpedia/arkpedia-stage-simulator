@@ -1,0 +1,115 @@
+{
+  "operator": "char_4236_tmslot",
+  "name": "Timeslot",
+  "foundationSha256": "8faaa4d95957d4db73907351051b8d8b5ffacf4edf22f63ee695e052afb7a7c2",
+  "artCommit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+  "output": "data/arkpedia-tmslot-art.json",
+  "sdReview": "source-reviews/timeslot.json",
+  "scope": "Original owner files unchanged; native pointers, decoded pixels and PMA verified. Common S1 retains ordinary Attack, S2 uses Skill_2; four literal native overload mix edges and asymmetric Front/Back Begin clocks remain distinct from skill activation. Back has no death clip. No combat/public approval.",
+  "roles": {
+    "Front": {
+      "idle": "Idle",
+      "deploy": "Start",
+      "attack": {
+        "begin": null,
+        "loop": "Attack",
+        "end": null
+      },
+      "attackDown": null,
+      "skill": {
+        "begin": null,
+        "loop": "Attack",
+        "end": null,
+        "index": 0,
+        "via": "attack"
+      },
+      "skills": {
+        "0": {
+          "begin": null,
+          "loop": "Attack",
+          "end": null,
+          "index": 0,
+          "via": "attack"
+        },
+        "1": {
+          "begin": null,
+          "loop": "Skill_2",
+          "end": null,
+          "index": 1,
+          "via": "skill"
+        }
+      },
+      "die": "Die",
+      "stun": null,
+      "move": null
+    },
+    "Back": {
+      "idle": "Idle",
+      "deploy": "Start",
+      "attack": {
+        "begin": null,
+        "loop": "Attack",
+        "end": null
+      },
+      "attackDown": null,
+      "skill": {
+        "begin": null,
+        "loop": "Attack",
+        "end": null,
+        "index": 0,
+        "via": "attack"
+      },
+      "skills": {
+        "0": {
+          "begin": null,
+          "loop": "Attack",
+          "end": null,
+          "index": 0,
+          "via": "attack"
+        },
+        "1": {
+          "begin": null,
+          "loop": "Skill_2",
+          "end": null,
+          "index": 1,
+          "via": "skill"
+        }
+      },
+      "die": null,
+      "stun": null,
+      "move": null
+    }
+  },
+  "nativeMixes": [
+    {
+      "sourceAnimName": "Skill_2",
+      "targetAnimName": "Skill_2_Overload_Loop",
+      "mixAnimName": "Skill_2_Overload_Begin"
+    },
+    {
+      "sourceAnimName": "Idle",
+      "targetAnimName": "Skill_2_Overload_Loop",
+      "mixAnimName": "Skill_2_Overload_Begin"
+    },
+    {
+      "sourceAnimName": "Skill_2_Overload_Loop",
+      "targetAnimName": "Idle",
+      "mixAnimName": "Skill_2_Overload_End"
+    },
+    {
+      "sourceAnimName": "Skill_2_Overload_Loop",
+      "targetAnimName": "Attack",
+      "mixAnimName": "Skill_2_Overload_End"
+    }
+  ],
+  "reviewPhases": [
+    "Start",
+    "Idle",
+    "Die",
+    "Attack",
+    "Skill_2",
+    "Skill_2_Overload_Begin",
+    "Skill_2_Overload_Loop",
+    "Skill_2_Overload_End"
+  ]
+}

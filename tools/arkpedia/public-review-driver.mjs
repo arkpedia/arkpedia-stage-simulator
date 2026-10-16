@@ -3,6 +3,7 @@
 import puppeteer from 'puppeteer-core';
 import assert from 'node:assert/strict';
 import { readFile, mkdir } from 'node:fs/promises';
+import {createPublicReviewServer} from './public-review-server.mjs';
 export async function publicReviewDriver({ origin, out, data, hook }) {
   const executablePath = process.env.ARKPEDIA_REVIEW_CHROME;
   if (!executablePath) throw Error('Set ARKPEDIA_REVIEW_CHROME and start the requested local preview');
@@ -10,24 +11,26 @@ export async function publicReviewDriver({ origin, out, data, hook }) {
   await mkdir(out, { recursive: true });
   const browser = await puppeteer.launch({ executablePath, headless: true,
     args: ['--no-sandbox', '--enable-unsafe-swiftshader', '--use-gl=angle', '--use-angle=swiftshader'] });
+  let fixture;
+  try { fixture = await createPublicReviewServer({origin, app, data, hook}); } catch (error) { await browser.close(); throw error; }
   const errors = [], failedResources = []; let captures = 0;
-  return { errors, failedResources, get captures() { return captures; },
-    close: () => browser.close(),
+  return { errors, failedResources, browserVersion: await browser.version(), cacheDisabled: true, sourceOrigin: origin, fixtureOrigin: fixture.origin, get captures() { return captures; },
+    close: async () => { try { await browser.close(); } finally { await fixture.close(); } },
     async open({ label, mobile, operators, skillId }) {
-      const page = await browser.newPage();
+      const page = await browser.newPage(), network = new Map(), messages = [];
+      page.on('console', m => { if (['error', 'warn'].includes(m.type())) messages.push(m.text().slice(0, 400)); });
+      page.on('request', r => { if (/\.(skel|atlas|png)(?:\?|$)/.test(new URL(r.url()).pathname)) network.set(r.url(), { start: Date.now(), phase: 'request' }); });
+      page.on('response', r => { const n = network.get(r.url()); if (n) { n.status = r.status(); n.cached = r.fromCache(); } });
+      page.on('requestfinished', r => { const n = network.get(r.url()); if (n) { n.phase = 'complete'; n.elapsed = Date.now() - n.start; } });
       page.on('pageerror', e => errors.push({ label, error: String(e) }));
       page.on('requestfailed', r => failedResources.push({ label, url: r.url(), error: r.failure()?.errorText }));
       page.on('response', r => { if (r.status() >= 400) failedResources.push({ label, url: r.url(), status: r.status() }); });
       await page.setViewport(mobile ? { width: 844, height: 390, isMobile: true, hasTouch: true } : { width: 1280, height: 800 });
-      await page.setRequestInterception(true);
-      page.on('request', r => {
-        const path = new URL(r.url()).pathname;
-        if (path === '/favicon.ico') return r.respond({ status: 204 });
-        if (r.url().startsWith(origin) && path === '/arkpedia/app.js') return r.respond({ status: 200, contentType: 'text/javascript', body: app + hook });
-        if (r.url().startsWith(origin) && path === '/data/arkpedia-mvp.json') return r.respond({ status: 200, contentType: 'application/json', body: JSON.stringify(data) });
-        return r.continue();
-      });
-      await page.goto(origin + '/arkpedia/', { waitUntil: 'domcontentloaded' });
+      await page.bringToFront();
+      // Live external assets use the normal browser transport; fixture overrides
+      // are served only by the loopback app/data server. TLS checks stay enabled.
+      await page.setCacheEnabled(false);
+      await page.goto(fixture.origin + '/arkpedia/', { waitUntil: 'domcontentloaded' });
       await page.waitForSelector('.roster-item.chosen');
       for (const id of await page.$$eval('.roster-item.chosen', es => es.map(e => e.dataset.id))) {
         await page.click(`.roster-item[data-id="${id}"]`); await page.click('#toggle');
@@ -38,7 +41,14 @@ export async function publicReviewDriver({ origin, out, data, hook }) {
         if (skillId && data.operators[id].skills.some(s => s.id === skillId)) await page.select('#skillId', skillId);
       }
       await page.click('#start');
-      await page.waitForFunction(() => window.cnReview?.battle && document.querySelector('#deployment button'), { timeout: 60000 });
+      try {
+        await page.waitForFunction(() => window.cnReview?.battle && document.querySelector('#deployment button'), { timeout: 60000 });
+      } catch (error) {
+        const state = await page.evaluate(() => document.body.innerText.slice(-1200));
+        console.error(JSON.stringify({ label, browserVersion: await browser.version(), state,
+          errors, messages: messages.slice(-8), network: [...network].map(([url, n]) => ({ url, ...n, elapsed: n.elapsed ?? Date.now() - n.start })), failedResources: failedResources.slice(0, 4), failedCount: failedResources.length }));
+        throw error;
+      }
       const capture = async suffix => { await page.screenshot({ path: out + label + '-' + suffix + '.png' }); captures++; };
       const drag = async (from, to) => {
         if (mobile) { await page.touchscreen.touchStart(from.x, from.y); await page.touchscreen.touchMove(to.x, to.y); await page.touchscreen.touchEnd(); }
