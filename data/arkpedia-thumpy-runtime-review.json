@@ -1,0 +1,326 @@
+{
+  "schemaVersion": 1,
+  "operatorId": "char_4235_thumpy",
+  "enabledOperators": [
+    "char_4235_thumpy"
+  ],
+  "frameParity": false,
+  "moduleSupport": false,
+  "nativePixelParity": false,
+  "nativeParticleSupport": false,
+  "sourceFoundationSha256": "9a727b44984f8286d4dd8921a0c2e4e6f47e1ac62f8407bca6be0a7b421e69da",
+  "ownerArtworkSha256": "d4bfb05c001fa9f09b15d6845d6699b6b709b0d4ca121f985d7e9ccf7be935ce",
+  "sourceClocksSha256": "92829bc8bca1d3e56ffd16bb3ec1ad23b16b58acf4eb507fbeebe06af28252ab",
+  "mechanicsPolicy": "source-cn-three-modes-erosion-glue-conveyor-v1",
+  "scope": "Selected original CN Thumpy attacks, three timed modes, blocked-target attacks, radial S1 push, captured S2 glue/S3 conveyor, elemental protection and burst resources through the regular-stage squad path.",
+  "verification": {
+    "source": "Five bundles, 123 owner/skill components and fifteen templates; seven outputs reproduced and 29 altered claims rejected on Node 22 and 24.",
+    "artwork": "Recipe-bound original files, decoded pixels and PMA; 33 altered claims rejected on both Node versions. Thirty-one clips per viewport and 32 desktop/emulated-phone captures without errors.",
+    "runtime": "444 selected source/clock/resource/combat/tile/public and adjacent checks pass on Node 22 and 24. All three original 0-1 builds use natural DP and unchanged terrain with Melantha: eleven kills, zero leaks and full life. S1/S2/S3 record 10/12/18 attributed damage receipts and one activation each. Full local and hosted verification remain separate.",
+    "browser": {
+      "status": "passed",
+      "script": "tools/arkpedia/review-thumpy-public.mjs",
+      "driver": "tools/arkpedia/public-review-driver.mjs",
+      "cases": 12,
+      "captures": 96,
+      "viewports": [
+        "1280x800 desktop mouse",
+        "844x390 emulated landscape phone touch"
+      ],
+      "originalWaves": false,
+      "fixture": "Original 0-1 terrain, empty waves, 99 DP, two pinned nonattacking/nondisplaceable targets and an explicit injected Melantha physical receipt for S2; original waves/natural DP tested separately.",
+      "checks": [
+        "Public squad/skill choice and separate drag/drop/direction swipe for Thumpy and Melantha",
+        "Natural SP and manual activation with original Front/Back Begin/Loop tracks for all three skills",
+        "Immediate selected stat modes; single-target S2 and grouped own-blocked S1/S3 attacks",
+        "Marker-time captured glue/conveyor fields, periodic pulses and S2 other-operator injury",
+        "Natural finish clears fields and mode; public retreat clears all owner resources and controller handles"
+      ],
+      "browserErrors": 0,
+      "failedResources": 0,
+      "visualReview": "Desktop S3 Back attack and emulated-phone S2 Front resources inspected. Physical-device, native effects and original game-frame/pixel parity remain unverified.",
+      "scriptSha256": "9072557b606bdf01ead2e00dd01bfa2b73494f038319bbe3ebc6eb3892404cfb",
+      "driverSha256": "1ef20a71f4982799d1368e61d0b2e2eac9eb36efe1aaad45294150566246359f"
+    }
+  },
+  "originalArtwork": {
+    "operator/char_4235_thumpy/default/back": {
+      "kind": "operator",
+      "id": "char_4235_thumpy",
+      "variant": "default",
+      "facing": "back",
+      "spineVersion": "3.8.99",
+      "source": {
+        "key": "operators",
+        "repository": "fexli/ArknightsResource",
+        "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+        "directory": "spine/char_4235_thumpy/char_4235_thumpy/Back"
+      },
+      "skeleton": {
+        "path": "models/operator/char_4235_thumpy/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4235_thumpy.skel",
+        "bytes": 685819,
+        "sha256": "d3dc8a7b8f5e85208935662f759c9808eb3a15167ed6f9d8b355f97c0e1fbd11"
+      },
+      "atlas": {
+        "path": "models/operator/char_4235_thumpy/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4235_thumpy.atlas",
+        "bytes": 7357,
+        "sha256": "5072283b7cffa7078b5c6c4e09e7f90a516a0741bee17efe1cf3db58b150015d"
+      },
+      "textures": [
+        {
+          "path": "models/operator/char_4235_thumpy/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4235_thumpy.png",
+          "bytes": 241425,
+          "sha256": "33fbbe96107f05425a2f7aa7d57cab030fc5c5393e5b01bffa6e9c79490b240c"
+        }
+      ],
+      "premultipliedAlpha": true,
+      "animations": {
+        "Attack": 1.6,
+        "Default": 0,
+        "Idle": 4,
+        "Skill_1_Begin": 0.167,
+        "Skill_1_End": 0.167,
+        "Skill_1_Idle": 4,
+        "Skill_1_Loop": 1.6,
+        "Skill_2_Begin": 0.667,
+        "Skill_2_End": 0.167,
+        "Skill_2_Idle": 4,
+        "Skill_2_Loop": 1.6,
+        "Skill_3_Begin": 1,
+        "Skill_3_End": 0.167,
+        "Skill_3_Idle": 4,
+        "Skill_3_Loop": 1.6,
+        "Start": 1
+      },
+      "hits": {
+        "Attack": [
+          0.3
+        ],
+        "Skill_1_Loop": [
+          0.267
+        ],
+        "Skill_2_Begin": [
+          0.233
+        ],
+        "Skill_2_Loop": [
+          0.233
+        ],
+        "Skill_3_Begin": [
+          0.367
+        ],
+        "Skill_3_Loop": [
+          0.3
+        ]
+      },
+      "bounds": null,
+      "animationRoles": {
+        "idle": "Idle",
+        "deploy": "Start",
+        "attack": {
+          "begin": null,
+          "loop": "Attack",
+          "end": null
+        },
+        "attackDown": null,
+        "skill": {
+          "begin": "Skill_1_Begin",
+          "loop": "Skill_1_Loop",
+          "end": "Skill_1_End",
+          "idle": "Skill_1_Idle",
+          "index": 0,
+          "via": "skill"
+        },
+        "skills": {
+          "0": {
+            "begin": "Skill_1_Begin",
+            "loop": "Skill_1_Loop",
+            "end": "Skill_1_End",
+            "idle": "Skill_1_Idle",
+            "index": 0,
+            "via": "skill"
+          },
+          "1": {
+            "begin": "Skill_2_Begin",
+            "loop": "Skill_2_Loop",
+            "end": "Skill_2_End",
+            "idle": "Skill_2_Idle",
+            "index": 1,
+            "via": "skill"
+          },
+          "2": {
+            "begin": "Skill_3_Begin",
+            "loop": "Skill_3_Loop",
+            "end": "Skill_3_End",
+            "idle": "Skill_3_Idle",
+            "index": 2,
+            "via": "skill"
+          }
+        },
+        "die": null,
+        "stun": null,
+        "move": null
+      }
+    },
+    "operator/char_4235_thumpy/default/front": {
+      "kind": "operator",
+      "id": "char_4235_thumpy",
+      "variant": "default",
+      "facing": "front",
+      "spineVersion": "3.8.99",
+      "source": {
+        "key": "operators",
+        "repository": "fexli/ArknightsResource",
+        "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+        "directory": "spine/char_4235_thumpy/char_4235_thumpy/Front"
+      },
+      "skeleton": {
+        "path": "models/operator/char_4235_thumpy/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4235_thumpy.skel",
+        "bytes": 909483,
+        "sha256": "0d009eb9a505d553587adfa26cdc66fd4be20ff72576e38859c5f9f05fe68a65"
+      },
+      "atlas": {
+        "path": "models/operator/char_4235_thumpy/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4235_thumpy.atlas",
+        "bytes": 11863,
+        "sha256": "7fabaa60d831e36dc492e77b1c0627040ac671ae55c0f01e7e66b4696d91996b"
+      },
+      "textures": [
+        {
+          "path": "models/operator/char_4235_thumpy/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4235_thumpy.png",
+          "bytes": 214405,
+          "sha256": "73fded82c74d247ccbf73e07e2362409f78af761760bb80a064eaaf9fdab2995"
+        }
+      ],
+      "premultipliedAlpha": true,
+      "animations": {
+        "Attack": 1.6,
+        "Default": 0,
+        "Die": 1,
+        "Idle": 4,
+        "Skill_1_Begin": 0.167,
+        "Skill_1_End": 0.167,
+        "Skill_1_Idle": 4,
+        "Skill_1_Loop": 1.6,
+        "Skill_2_Begin": 0.667,
+        "Skill_2_End": 0.167,
+        "Skill_2_Idle": 4,
+        "Skill_2_Loop": 1.6,
+        "Skill_3_Begin": 1,
+        "Skill_3_End": 0.167,
+        "Skill_3_Idle": 4,
+        "Skill_3_Loop": 1.6,
+        "Start": 1
+      },
+      "hits": {
+        "Attack": [
+          0.3
+        ],
+        "Skill_1_Loop": [
+          0.267
+        ],
+        "Skill_2_Begin": [
+          0.233
+        ],
+        "Skill_2_Loop": [
+          0.233
+        ],
+        "Skill_3_Begin": [
+          0.367
+        ],
+        "Skill_3_Loop": [
+          0.3
+        ]
+      },
+      "bounds": null,
+      "animationRoles": {
+        "idle": "Idle",
+        "deploy": "Start",
+        "attack": {
+          "begin": null,
+          "loop": "Attack",
+          "end": null
+        },
+        "attackDown": null,
+        "skill": {
+          "begin": "Skill_1_Begin",
+          "loop": "Skill_1_Loop",
+          "end": "Skill_1_End",
+          "idle": "Skill_1_Idle",
+          "index": 0,
+          "via": "skill"
+        },
+        "skills": {
+          "0": {
+            "begin": "Skill_1_Begin",
+            "loop": "Skill_1_Loop",
+            "end": "Skill_1_End",
+            "idle": "Skill_1_Idle",
+            "index": 0,
+            "via": "skill"
+          },
+          "1": {
+            "begin": "Skill_2_Begin",
+            "loop": "Skill_2_Loop",
+            "end": "Skill_2_End",
+            "idle": "Skill_2_Idle",
+            "index": 1,
+            "via": "skill"
+          },
+          "2": {
+            "begin": "Skill_3_Begin",
+            "loop": "Skill_3_Loop",
+            "end": "Skill_3_End",
+            "idle": "Skill_3_Idle",
+            "index": 2,
+            "via": "skill"
+          }
+        },
+        "die": "Die",
+        "stun": null,
+        "move": null
+      }
+    }
+  },
+  "interfaceAssets": [
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "six-star-icons/Thumpy - Base.webp",
+      "bytes": 9090,
+      "sha256": "114324028f81eb9350c8e9205849ac7cbc3f83d2fee660c77e62ca8ae7f75af7"
+    },
+    {
+      "repository": "arkpedia/arkpedia-skin-assets",
+      "commit": "6fb723692d89c4a08d9a7aa4015e19c0753dd270",
+      "path": "six-star-skins/Thumpy - Base.webp",
+      "bytes": 178930,
+      "sha256": "8a7981acc418f482198311095c39fa3565df1263cf22eca3c4a5eeee19dc8b15"
+    },
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "skill-icons/Thumpy - Aren't You Going.webp",
+      "bytes": 3998,
+      "sha256": "c2781fbf023e48fcb70c7896235d96cd1d72e47b8811bb6db62865f1523bcab4"
+    },
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "skill-icons/Thumpy - Take It Slow~.webp",
+      "bytes": 6828,
+      "sha256": "cd24b866ecf235165199d519ce257e3070ad2a3c24d082698cdc827627964fec"
+    },
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "skill-icons/Thumpy - You Can't Leave!.webp",
+      "bytes": 5266,
+      "sha256": "73ae8e175fbbd7d47b60e9030e0d7855b29bf2affa27204ceeab245be2c45528"
+    }
+  ],
+  "limitations": [
+    "The selected table DEF cap is 30 while the retained native generated buff cap is 20; this adapter selects 30. One selected shield increment is coalesced per burst, capped at three times current maximum HP; compiled initial-grant/forced-burst priority is unverified.",
+    "S2 traversal enum, feet seed, forward/side breadth-first expansion and valid-tile masks are explicit local mappings. S3 captures independently filtered source 4-1 range cells. Conveyor uses the shared movement primitive, with its force/static-body/boss limits.",
+    "Attack blackboard prefix scope, block-only/base-input fallback, source input-time clocks, radial push reduction, marks-before-rider ordering, cancellation filters, world-time field clocks and compiled dispatch are local interpretations.",
+    "Modules, native particles/shaders/audio, physical-device behavior and original game-frame/pixel parity remain unverified."
+  ]
+}
