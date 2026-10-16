@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Diagnostic S1/S2 summon lifecycle. Attack and skill adapters are separate gates.
+import {mcgrafAttackKit,MCGRAF_ATTACK_CONTRACT} from './arkpedia-mcnist-attacks.js';
 import {selectedMcGrafBuild} from './arkpedia-mcgraf-source.js';
 import {MCNIST_ID as ID,MCGRAF_ID as TOKEN,mechanistNativeInputs,mechanistSourceComponent} from './arkpedia-mcnist-source.js';
 import {normalizeToken} from '../simdata.js';
@@ -14,9 +15,10 @@ export const MCGRAF_LIFECYCLE_CONTRACT=Object.freeze({
 });
 const present=t=>t?.alive&&t.deployed&&!t._removing;
 const due=(b,t)=>b.time+1e-8>=t;
-export function prepareMcGrafLifecycle(b,u,{contract,barriers}={}){
+export function prepareMcGrafLifecycle(b,u,{contract,barriers,combatContract}={}){
  if(contract!==MCGRAF_LIFECYCLE_CONTRACT||u.def.charId!==ID||u.deploySeq!==0||u.mem.mcgrafLifecycle||barriers!==u.mem.mcnistBarriers
   ||barriers?.u!==u||barriers.b!==b||!barriers.handles.length||barriers.stopped)throw Error('Fresh Mechanist with installed selected barriers and explicit McGraf lifecycle contract required');
+ if(combatContract!=null&&combatContract!==MCGRAF_ATTACK_CONTRACT)throw Error('Unreviewed McGraf combat binding');
  const r=selectedMcGrafBuild(barriers.record.build);
  if(r.ownerIndex===2)throw Error('McGraf S3 requires a reviewed charge/mark lifecycle adapter');
  const n=mechanistNativeInputs().templates,passive=mechanistSourceComponent('tokens',TOKEN,'5608835379773326643')._buffs;
@@ -27,16 +29,16 @@ export function prepareMcGrafLifecycle(b,u,{contract,barriers}={}){
   ||n.mcgraf_t_suicide.eventToActions.ON_BUFF_FINISH[2]._switchToDeadState!==true
   ||passive[1].attributes.abnormalFlags.join(',')!=='7'||passive[0].templateKey!=='charge_token[finish]'
   ||r.stats.maxDeployCount!==1||r.stats.maxDeckStackCnt!==0)throw Error('Changed original McGraf lifecycle graph');
- const deck=new McGrafLifecycle(b,u,barriers,r);u.mem.mcgrafLifecycle=deck;return deck;
+ const deck=new McGrafLifecycle(b,u,barriers,r,combatContract);u.mem.mcgrafLifecycle=deck;return deck;
 }
 export class McGrafLifecycle{
- constructor(b,u,barriers,record){
-  Object.assign(this,{b,u,barriers,record,point:null,stock:0,readyAt:Infinity,placing:false,stopped:false,handles:[]});
+ constructor(b,u,barriers,record,combatContract){
+  Object.assign(this,{b,u,barriers,record,combatContract,point:null,stock:0,readyAt:Infinity,placing:false,stopped:false,handles:[]});
   const def=normalizeToken(TOKEN,{name:record.source.appellation,position:record.source.position,profession:record.source.profession,
    stats:record.stats,rangeGrid:record.rangeGrid,talents:record.talents,arkpedia:{...record.build},skill:null});
   this.def=def;const d=this;
   this.state={key:`summon:${ID}`,ownerId:ID,owner:u,tokenId:TOKEN,record:def,deck:this,
-   config:Object.freeze({deploymentSlotCost:0,chooseFacing:true,refundRatio:0,healFree:true,noAttack:true}),
+   config:Object.freeze({deploymentSlotCost:0,chooseFacing:true,refundRatio:0,healFree:true,noAttack:combatContract==null}),
    get stock(){return d.stock;},get readyAt(){return d.readyAt;}};
  }
  valid(){return !this.stopped&&this.barriers.valid()&&present(this.u);}
@@ -65,12 +67,13 @@ export class McGrafLifecycle{
   if(!['UP','DOWN','LEFT','RIGHT'].includes(dir))throw Error('Choose a facing direction.');
   const b=this.b,paid=this.record.stats.cost,oldReady=this.readyAt;this.placing=true;this.stock=0;b.addDp(this.u.ownerId,-paid);let token,created;
   try{
-   token=b.spawnToken(this.u,TOKEN,row,col,{dir,def:this.def,kit:{trait:{noAttack:true},talents:[],skill:null,
+   const combat=this.combatContract?mcgrafAttackKit(b,this.u,this.barriers,{contract:this.combatContract}):null;
+   token=b.spawnToken(this.u,TOKEN,row,col,{dir,def:this.def,kit:{trait:combat?.trait??{noAttack:true},talents:[],skill:null,
     install:(_b,t)=>{created=t;t.deploymentSlotCost=0;t.mem.regularSummonCard=this.state.key;
-     b.addBuff(t,{key:'mcgraf:heal-free',source:t,persist:true,allowDead:true,flags:{healFree:true}});this.barriers.registerToken(t);}}});
+     b.addBuff(t,{key:'mcgraf:heal-free',source:t,persist:true,allowDead:true,flags:{healFree:true}});this.barriers.registerToken(t);combat?.install(b,t);}}});
    if(!token||!present(token)||!this.valid())throw Error('McGraf deployment failed.');
    this.point={unit:token,seq:token.deploySeq,bornAt:b.time,expiresAt:b.time+this.record.skillOverlay.duration,finished:false,mode:'born'};
-   this.readyAt=Infinity;this.visual(this.point,'Start');return token;
+   this.readyAt=Infinity;if(!token.mem.mcgrafAttacks)this.visual(this.point,'Start');return token;
   }catch(e){token??=created;if(present(token))b._remove(token,'mcgraf-placement-cancelled',null,true);else if(token){this.barriers.removeToken(token);b.offOwner(token);token.removed=true;}b.addDp(this.u.ownerId,paid);
    if(this.valid()){this.stock=1;this.readyAt=oldReady;}throw e;
   }finally{this.placing=false;}
@@ -86,7 +89,7 @@ export class McGrafLifecycle{
  tick(){if(this.barriers.seq===null&&!this.barriers.stopped&&!this.b.finished)return;if(!this.valid()){this.stop();return;}const s=this.point;if(!s)return;
   if(!present(s.unit)||s.unit.deploySeq!==s.seq){this.finish(s);return;}
   if(due(this.b,s.expiresAt)){this.finish(s,{remove:true,reason:'expired'});return;}
-  if(s.mode==='born'&&due(this.b,s.bornAt+clocks.tokens[TOKEN].models.Front.exactDurations.Start)){s.mode='idle';this.visual(s,'Idle',true);}
+  if(s.mode==='born'&&due(this.b,s.bornAt+clocks.tokens[TOKEN].models.Front.exactDurations.Start)){s.mode='idle';if(!s.unit.mem.mcgrafAttacks)this.visual(s,'Idle',true);}
  }
  install(){if(this.stopped||this.handles.length)throw Error('McGraf lifecycle cannot be reinstalled');
   const map=this.b.regularSummons??=new Map();if(map.has(this.state.key))throw Error('A current Mechanist summon deck already exists');map.set(this.state.key,this.state);
