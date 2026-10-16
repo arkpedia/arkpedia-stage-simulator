@@ -62,7 +62,7 @@ test('Pedro S2 compares accepted heal snapshots, holds a one-use infinite mark a
  const n=inputs(),a=n.templates.pedro_s2.eventToActions.ON_BUFF_START[0],start=n.templates.pedro_s2_buff.eventToActions.ON_BUFF_START;
  assert.equal(a._conditionsNode[0]._buffKeys[0],'pedro_s2_buff');assert.equal(a._succeedNodes[1]._attributeType,'ATK');assert.equal(a._succeedNodes[1]._scaleVar,'atk_scale');
  assert.equal(a._succeedNodes[3]._condType,'GE');assert.ok(a._succeedNodes[4].$type.includes('FinishBuffsById'));
- for(const x of[a._succeedNodes[5],a._failNodes[0]]){assert.equal(x._buff.lifeTimeType,'INFINITY');near(x._buff.triggerInterval,.20000000298023224);assert.equal(x._buff.independentCharacterSource,false);}
+ for(const x of[a._succeedNodes[5],a._failNodes[0]]){assert.equal(x._buff.lifeTimeType,'INFINITY');near(x._buff.triggerInterval,.20000000298023224);assert.equal(x._buff.waitFirstTriggerInterval,false);assert.equal(x._buff.independentCharacterSource,false);}
  assert.equal(start[0]._attributeType,'ATK');assert.equal(start[0]._blackboardKey,'dynamic');
  const t=n.templates.pedro_s2_buff.eventToActions.ON_BUFF_TRIGGER;assert.equal(t[0]._condType,'LE');near(t[0]._value,.5);assert.ok(t[1].$type.includes('FinishBuff'));assert.equal(t[2]._useDynamicVar,true);
  assert.equal(t[4]._buff.buffKey,'pedro_s2_buff[taunt]');assert.equal(t[4]._buff.lifeTimeType,'LIMITED');assert.equal(t[4]._buff.durationKey,'duration');assert.equal(t[4]._buff.attributes.attributeModifiers[0].attributeType,'TAUNT_LEVEL');
