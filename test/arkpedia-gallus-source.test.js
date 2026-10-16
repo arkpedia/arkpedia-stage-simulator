@@ -5,7 +5,7 @@ import e from '../data/arkpedia-native-operators/char_4227_gallus.json' with {ty
 import {GALLUS_ID as ID,selectedGallusBuild as select,gallusNativeInputs as inputs,gallusSourceComponent} from '../server/sim/content/arkpedia-gallus-source.js';
 import {selectedCNSourceBuild,selectedCNPassiveSourceBuild} from '../server/sim/content/arkpedia-selected-cn-source.js';
 import active from '../data/arkpedia-native-operators/char_4230_mcnist.json' with {type:'json'};
-const build=(more={})=>({elite:0,level:30,skillId:null,skillRank:1,potential:1,trust:0,module:'none',...more});
+const build=(more={})=>({elite:0,level:30,skillId:null,skillRank:null,potential:1,trust:0,module:'none',...more});
 const near=(a,b)=>assert.ok(Math.abs(a-b)<1e-6,`${a} != ${b}`);
 for(let potential=1;potential<=6;potential++)for(const trust of[0,100,200])test(`GALLUS² P${potential}/trust ${trust} selects literal skillless source stats and talent`,()=>{
  const r=select(build({potential,trust}));assert.equal(r.index,-1);assert.equal(r.source,null);assert.deepEqual(r.bb,{});assert.deepEqual(r.skillRangeGrid,[]);assert.equal(r.talents.length,1);

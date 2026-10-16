@@ -22,12 +22,12 @@ function selectedSourceBuild(e, id, build, passiveOnly) {
     || !Number.isInteger(build.level) || build.level < 1 || build.level > c.phases[build.elite].maxLevel
     || !Number.isInteger(build.potential) || build.potential < 1 || build.potential > 6
     || !Number.isInteger(build.trust ?? 0) || (build.trust ?? 0) < 0 || (build.trust ?? 0) > 200
-    || !Number.isInteger(build.skillRank) || build.skillRank < 1 || build.skillRank > [4, 7, 10][build.elite]
+    || (passiveOnly ? build.skillRank != null : !Number.isInteger(build.skillRank) || build.skillRank < 1 || build.skillRank > [4, 7, 10][build.elite])
     || build.module != null && build.module !== 'none') throw Error('Invalid selected CN source build');
   const index = c.skills.findIndex(s => s.skillId === build.skillId), unlock = c.skills[index]?.unlockCond;
   if (passiveOnly) {
     if (c.skills.length || Object.keys(e.tables.skills).length || Object.keys(e.skills).length
-      || build.skillId != null || build.skillRank !== 1) throw Error('Expected an original skillless CN source build');
+      || build.skillId != null || build.skillRank != null) throw Error('Expected an original skillless CN source build');
   } else if (index < 0 || !unlock || build.elite < Number(unlock.phase.replace('PHASE_', ''))
     || build.elite === Number(unlock.phase.replace('PHASE_', '')) && build.level < unlock.level)
     throw Error('Locked selected CN source skill');
