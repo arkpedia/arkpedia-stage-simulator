@@ -1,0 +1,99 @@
+{
+  "operator": "char_4234_pedro",
+  "name": "Pedro",
+  "foundationSha256": "7439d18a99868fb6aeb5a664588e1d4745c5a7b7bd116817980e1befd373528c",
+  "artCommit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+  "output": "data/arkpedia-pedro-art.json",
+  "sdReview": "source-reviews/pedro.json",
+  "scope": "Original owner files unchanged; native pointers, decoded pixels and PMA verified. Ordinary Attack, S1 and S2 one-shot tracks, with Front-only downward variants. No native mixes; Back has no death or downward clips. No combat/public approval.",
+  "roles": {
+    "Front": {
+      "idle": "Idle",
+      "deploy": "Start",
+      "attack": {
+        "begin": null,
+        "loop": "Attack",
+        "end": null
+      },
+      "attackDown": {
+        "begin": null,
+        "loop": "Attack_Down",
+        "end": null
+      },
+      "skill": {
+        "begin": null,
+        "loop": "Skill_1",
+        "end": null,
+        "index": 0,
+        "via": "skill"
+      },
+      "skills": {
+        "0": {
+          "begin": null,
+          "loop": "Skill_1",
+          "end": null,
+          "index": 0,
+          "via": "skill"
+        },
+        "1": {
+          "begin": null,
+          "loop": "Skill_2",
+          "end": null,
+          "index": 1,
+          "via": "skill"
+        }
+      },
+      "die": "Die",
+      "stun": null,
+      "move": null
+    },
+    "Back": {
+      "idle": "Idle",
+      "deploy": "Start",
+      "attack": {
+        "begin": null,
+        "loop": "Attack",
+        "end": null
+      },
+      "attackDown": null,
+      "skill": {
+        "begin": null,
+        "loop": "Skill_1",
+        "end": null,
+        "index": 0,
+        "via": "skill"
+      },
+      "skills": {
+        "0": {
+          "begin": null,
+          "loop": "Skill_1",
+          "end": null,
+          "index": 0,
+          "via": "skill"
+        },
+        "1": {
+          "begin": null,
+          "loop": "Skill_2",
+          "end": null,
+          "index": 1,
+          "via": "skill"
+        }
+      },
+      "die": null,
+      "stun": null,
+      "move": null
+    }
+  },
+  "nativeMixes": [],
+  "reviewPhases": [
+    "Start",
+    "Idle",
+    "Die",
+    "Attack",
+    "Attack_Down",
+    "Skill_1",
+    "Skill_Down_1",
+    "Skill_2",
+    "Skill_Down_2"
+  ]
+}
