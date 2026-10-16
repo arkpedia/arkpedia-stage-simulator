@@ -58,11 +58,11 @@ const round3 = (x) => Math.round(Number(x) * 1000) / 1000;
  * Parse a Spine 3.8 binary skeleton.
  * @param {Uint8Array} bytes .skel file contents
  * @param {Set<string>} [atlasRegions] region names of the matching atlas (optional, for validation)
- * @param {{includeEventPayloads?: boolean, includeExactDurations?: boolean}} [options] retain exact clocks for source audits
+ * @param {{includeEventPayloads?: boolean, includeExactDurations?: boolean, includeAttachmentTimelines?: boolean}} [options] retain original clocks/attachments for source audits
  * @returns {SkelInfo}
  * @throws on malformed data
  */
-export function parseSkel(bytes, atlasRegions, { includeEventPayloads = false, includeExactDurations = false } = {}) {
+export function parseSkel(bytes, atlasRegions, { includeEventPayloads = false, includeExactDurations = false, includeAttachmentTimelines = false } = {}) {
   const r = loadRuntime();
   const missing = new Set();
   const bin = new r.SkeletonBinary(makeLoader(r, atlasRegions, missing));
@@ -75,9 +75,21 @@ export function parseSkel(bytes, atlasRegions, { includeEventPayloads = false, i
   const exactDurations = {};
   const hits = {};
   const eventPayloads = {};
+  const attachmentTimelines = {};
+  const attachment = (slot, name) => {
+    if (name == null) return null;
+    const value = data.defaultSkin?.getAttachment(slot, name);
+    return { name, type: value instanceof r.RegionAttachment ? 'region' : value instanceof r.MeshAttachment ? 'mesh'
+      : value instanceof r.ClippingAttachment ? 'clipping' : value instanceof r.BoundingBoxAttachment ? 'bounding-box'
+      : value instanceof r.PointAttachment ? 'point' : value instanceof r.PathAttachment ? 'path' : 'missing' };
+  };
   for (const a of data.animations) {
     durations[a.name] = round3(a.duration);
     if (includeExactDurations) exactDurations[a.name] = Number(a.duration);
+    if (includeAttachmentTimelines) attachmentTimelines[a.name] = a.timelines
+      .filter(t => t instanceof r.AttachmentTimeline).map(t => ({ slot: t.slotIndex, name: data.slots[t.slotIndex].name,
+        setup: attachment(t.slotIndex, data.slots[t.slotIndex].attachmentName),
+        frames: [...t.frames].map((time, i) => ({ time: Number(time), attachment: attachment(t.slotIndex, t.attachmentNames[i]) })) }));
     for (const t of a.timelines) {
       if (!t || !Array.isArray(t.events)) continue;
       for (const e of t.events) {
@@ -103,6 +115,7 @@ export function parseSkel(bytes, atlasRegions, { includeEventPayloads = false, i
     events: data.events.map((e) => e.name),
     hits,
     ...(includeEventPayloads ? { eventPayloads } : {}),
+    ...(includeAttachmentTimelines ? { attachmentTimelines, setupAttachments: data.slots.map((s, slot) => ({ slot, name: s.name, attachment: attachment(slot, s.attachmentName) })) } : {}),
     bounds,
     missingRegions: [...missing].sort(),
   };

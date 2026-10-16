@@ -4,6 +4,8 @@ import puppeteer from 'puppeteer-core';
 import assert from 'node:assert/strict';
 import {readFile,writeFile,mkdir} from 'node:fs/promises';
 import {fileURLToPath} from 'node:url';
+import {createHash} from 'node:crypto';
+import {verifyOriginalVisibility} from './original-visibility.mjs';
 import {parseArgs} from 'node:util';
 process.chdir(fileURLToPath(new URL('../../',import.meta.url)));
 const {values}=parseArgs({options:{recipe:{type:'string'},clocks:{type:'string'}}});
@@ -18,6 +20,14 @@ const rows=['front','back'].map(face=>{const r=manifest.models[`operator/${id}/d
  const empty=recipe.emptyClips?.[face==='front'?'Front':'Back']??[];assert.ok(Array.isArray(empty)&&new Set(empty).size===empty.length&&empty.every(k=>r.animations[k]===0));
  return {id,face,empty,pma:r.premultipliedAlpha,durations:r.animations,files:Object.fromEntries([r.skeleton,r.atlas,...r.textures].map(f=>[f.path.split('/').at(-1),'../arkpedia-sd-assets/'+f.path])),
   hashes:[r.skeleton,r.atlas,...r.textures].map(({path,sha256})=>({path,sha256}))};});
+if(recipe.visibilityProof){
+ assert.equal(id,owner,'Visibility proof must bind an original owner');assert.match(recipe.visibilityProof.path,/^data\/arkpedia-[a-z0-9-]+-visibility\.json$/);assert.match(recipe.visibilityProof.sha256,/^[a-f0-9]{64}$/);
+ const raw=await readFile(recipe.visibilityProof.path),proof=JSON.parse(raw);assert.equal(createHash('sha256').update(raw).digest('hex'),recipe.visibilityProof.sha256);
+ const front=proof.models.Front;assert.deepEqual(front.samples.map(s=>s.time),proof.models.Back.samples.map(s=>s.time));assert.equal(front.clip,proof.models.Back.clip);
+ const recovered=await verifyOriginalVisibility(proof,{id:owner,receipt:`data/arkpedia-native-operators/${owner}.json`,sha256:recipe.foundationSha256,clip:front.clip,sampleTimes:front.samples.map(s=>s.time),skeleton:face=>Object.values(rows.find(r=>r.face===face.toLowerCase()).files).find(path=>path.endsWith('.skel'))});
+ assert.deepEqual(proof,recovered,'Visibility proof must reproduce the exact original attachment schedules');
+ for(const row of rows){const model=proof.models[row.face==='front'?'Front':'Back'];assert.equal(model.sha256,row.hashes.find(h=>h.path.endsWith('.skel')).sha256);row.visibility={clip:model.clip,samples:model.samples};}
+}
 await mkdir(out,{recursive:true});
 const html=`<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <script src="/vendor/pixi.min.js"></script><script src="/vendor/pixi-spine.js"></script>
@@ -34,8 +44,8 @@ const html=`<!doctype html><meta charset="utf-8"><meta name="viewport" content="
  function draw(phase='Idle',age=.35){app.renderer.resize(innerWidth,host.clientHeight);const w=innerWidth/2,h=host.clientHeight;
   return actors.map((a,i)=>{const cx=(i+.5)*w,clip=Object.hasOwn(a.durations,phase)?phase:null;a.s.visible=clip!=null;a.label.text=name+' · '+a.face+' · '+(clip??'absent '+phase);a.label.position.set(cx,h-18);
    if(clip==null)return {id:a.id,face:a.face,clip,age,absent:true};
-   a.s.skeleton.setToSetupPose();a.s.state.clearTracks();a.s.state.setAnimation(0,clip,phase==='Idle');a.s.scale.set(1);a.s.position.set(0);a.s.update(Math.min(age,a.durations[clip]/2));
-   const b=a.s.getLocalBounds();if(b.width===0&&b.height===0&&a.durations[clip]===0&&a.empty.includes(clip)){a.s.visible=false;a.label.text+=' · empty original track';return{id:a.id,face:a.face,clip,age,empty:true,width:0,height:0};}if(!(b.width>0&&b.height>0))throw Error('Undeclared empty original clip '+a.face+'/'+clip);const scale=Math.min((w-40)/b.width,(h-44)/b.height);a.s.scale.set(scale);a.s.position.set(cx-(b.x+b.width/2)*scale,(h-24)/2-(b.y+b.height/2)*scale);
+   a.s.skeleton.setToSetupPose();a.s.state.clearTracks();a.s.state.setAnimation(0,clip,phase==='Idle');a.s.scale.set(1);a.s.position.set(0);const expected=a.visibility?.clip===clip?a.visibility.samples.find(s=>s.time===age):null;const sampleTime=expected?age:Math.min(age,a.durations[clip]/2);a.s.update(sampleTime);
+   const b=a.s.getLocalBounds();if(b.width===0&&b.height===0&&a.durations[clip]===0&&a.empty.includes(clip)){a.s.visible=false;a.label.text+=' · empty original track';return{id:a.id,face:a.face,clip,age,empty:true,width:0,height:0};}if(expected?.drawableAttachments===0){if(b.width!==0||b.height!==0)throw Error('Original attachment schedule expected hidden body');a.s.visible=false;a.label.text+=' · original body hidden at '+age+'s';return{id:a.id,face:a.face,clip,age,hidden:true,width:0,height:0};}if(!(b.width>0&&b.height>0))throw Error('Undeclared empty original clip '+a.face+'/'+clip);const scale=Math.min((w-40)/b.width,(h-44)/b.height);a.s.scale.set(scale);a.s.position.set(cx-(b.x+b.width/2)*scale,(h-24)/2-(b.y+b.height/2)*scale);
    return {id:a.id,face:a.face,clip,age,width:b.width,height:b.height,scale};});}
  window.ownerArtReview={actors,app,draw,ready:true};draw();app.renderer.render(app.stage);
 })().catch(e=>{window.reviewError=e.stack;console.error(e)});</script>`;
@@ -53,12 +63,15 @@ try{
  for(const phase of phases)assert.ok(typeof phase==='string'&&rows.some(r=>Object.hasOwn(r.durations,phase))||!recipe.reviewPhases,'Invalid declared review phase');
  for(const[name,width,height,touch]of[['desktop',1280,720,false],['landscape-phone',844,390,true]]){
   await page.setViewport({width,height,hasTouch:touch,isMobile:touch,deviceScaleFactor:1});await page.goto(origin+route,{waitUntil:'domcontentloaded'});await page.waitForFunction(()=>window.ownerArtReview?.ready||window.reviewError,{timeout:60000});assert.equal(await page.evaluate(()=>window.reviewError),undefined);
-  const clips=await page.evaluate(()=>ownerArtReview.actors.flatMap(a=>a.s.spineData.animations.filter(c=>c.name!=='Default').map(c=>{a.s.skeleton.setToSetupPose();a.s.state.clearTracks();a.s.state.setAnimation(0,c.name,false);a.s.update(Math.min(.5,c.duration/2));const b=a.s.getLocalBounds();return {id:a.id,face:a.face,clip:c.name,duration:c.duration,width:b.width,height:b.height};})));
-  assert.equal(clips.length,rows.reduce((n,r)=>n+Object.keys(r.durations).filter(c=>c!=='Default').length,0));
-  for(const c of clips){const declared=rows.find(r=>r.face===c.face).empty.includes(c.clip);if(declared){assert.equal(c.duration,0);assert.equal(c.width,0);assert.equal(c.height,0);c.empty=true;}else assert.ok(Number.isFinite(c.width+c.height)&&c.width>0&&c.height>0,JSON.stringify(c));assert.equal(c.duration,modelClocks.models[c.face==='front'?'Front':'Back'].exactDurations[c.clip]);}
+  const clips=await page.evaluate(()=>ownerArtReview.actors.flatMap(a=>a.s.spineData.animations.filter(c=>c.name!=='Default').flatMap(c=>{
+   const samples=a.visibility?.clip===c.name?a.visibility.samples:[{time:Math.min(.5,c.duration/2)}];return samples.map(sample=>{a.s.skeleton.setToSetupPose();a.s.state.clearTracks();a.s.state.setAnimation(0,c.name,false);a.s.update(sample.time);const b=a.s.getLocalBounds();return{id:a.id,face:a.face,clip:c.name,duration:c.duration,sampleTime:sample.time,...(sample.drawableAttachments!=null?{expectedDrawableAttachments:sample.drawableAttachments}:{}),width:b.width,height:b.height};});})));
+  assert.equal(clips.length,rows.reduce((n,r)=>n+Object.keys(r.durations).filter(c=>c!=='Default').reduce((sum,c)=>sum+(r.visibility?.clip===c?r.visibility.samples.length:1),0),0));
+  for(const c of clips){const declared=rows.find(r=>r.face===c.face).empty.includes(c.clip);if(c.expectedDrawableAttachments===0){assert.equal(c.width,0);assert.equal(c.height,0);c.hidden=true;}else if(declared){assert.equal(c.duration,0);assert.equal(c.width,0);assert.equal(c.height,0);c.empty=true;}else assert.ok(Number.isFinite(c.width+c.height)&&c.width>0&&c.height>0,JSON.stringify(c));assert.equal(c.duration,modelClocks.models[c.face==='front'?'Front':'Back'].exactDurations[c.clip]);}
   report.clips.push(...clips.map(c=>({viewport:name,...c})));
-  for(const phase of phases){const states=await page.evaluate(phase=>{const s=ownerArtReview.draw(phase);ownerArtReview.app.renderer.render(ownerArtReview.app.stage);return s;},phase);assert.ok(states.every(s=>s.absent||s.empty||s.scale>0&&Number.isFinite(s.scale)));
-   const file=out+name+'-'+phase.toLowerCase()+'.png';await page.screenshot({path:file});report.captures.push({name,width,height,touch,phase,file,states});}
+  for(const phase of phases){const times=[...new Set(rows.flatMap(r=>r.visibility?.clip===phase?r.visibility.samples.map(s=>s.time):[]))];if(!times.length)times.push(.35);
+   for(const time of times){const states=await page.evaluate((phase,time)=>{const s=ownerArtReview.draw(phase,time);ownerArtReview.app.renderer.render(ownerArtReview.app.stage);return s;},phase,time);assert.ok(states.every(s=>s.absent||s.empty||s.hidden||s.scale>0&&Number.isFinite(s.scale)));
+    const file=out+name+'-'+phase.toLowerCase()+(times.length>1?'-'+time:'')+'.png';await page.screenshot({path:file});report.captures.push({name,width,height,touch,phase,time,file,states});}
+  }
  }
- assert.deepEqual(errors,[]);assert.deepEqual(failed,[]);await writeFile(out+'report.json',JSON.stringify({...report,errors,failed},null,2)+'\n');console.log(JSON.stringify({clipsPerViewport:report.clips.length/2,captures:report.captures.length,errors,failed}));
+ assert.deepEqual(errors,[]);assert.deepEqual(failed,[]);await writeFile(out+'report.json',JSON.stringify({...report,errors,failed},null,2)+'\n');console.log(JSON.stringify({clipsPerViewport:new Set(report.clips.filter(c=>c.viewport==='desktop').map(c=>c.face+'/'+c.clip)).size,samplesPerViewport:report.clips.length/2,captures:report.captures.length,errors,failed}));
 }finally{await browser.close();}
