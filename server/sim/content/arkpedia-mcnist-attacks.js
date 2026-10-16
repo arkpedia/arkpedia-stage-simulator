@@ -90,11 +90,13 @@ export class MechanistAttackClock{
  }
 }
 export function prepareMechanistAttacks(b,u,{contract}={}){
- if(contract!==MCNIST_ATTACK_CONTRACT||u.mem.mcnistAttacks)throw Error('Explicit ordinary Mechanist attack contract required');verify();
- const resources=prepareMechanistBarriers(b,u,{contract:MCNIST_BARRIER_CONTRACT}),controller=new MechanistAttackClock(b,u,{resources});u.mem.mcnistAttacks=controller;
+ if(contract!==MCNIST_ATTACK_CONTRACT||u.mem.mcnistAttacks)throw Error('Explicit ordinary Mechanist attack contract required');
+ const resources=prepareMechanistAttackInputs(b,u),controller=new MechanistAttackClock(b,u,{resources});u.mem.mcnistAttacks=controller;
  const install=controller.install.bind(controller);controller.install=()=>{resources.install();install();};
  return{resources,record:resources.record,controller,kit:{talents:[],trait:controller.profile(),skill:{kind:'duration',trigger:{rule:'NEVER'},canActivate:()=>false}}};
 }
+// Shared source validation for the separately contracted selected skill adapters.
+export function prepareMechanistAttackInputs(b,u){verify();return prepareMechanistBarriers(b,u,{contract:MCNIST_BARRIER_CONTRACT});}
 export function mcgrafAttackKit(b,owner,barriers,{contract}={}){
  if(contract!==MCGRAF_ATTACK_CONTRACT||barriers!==owner.mem.mcnistBarriers||!barriers.valid()||selectedMcGrafBuild(barriers.record.build).ownerIndex===2)throw Error('Explicit selected ordinary McGraf attack contract required');verify(true);
  // _setupUnit asks for a kit before its token exists; callbacks capture the
