@@ -22,3 +22,8 @@ The owner-art recipe independently binds original skeleton/atlas/material/textur
 
 
 Artwork audits reproduce the owner receipt and reject thirty-three altered claims per Node version without changing any of its six raw files. Seventy-two SD checks and validation of all 3,013 models, scenery and native effect packages pass on Node 22 and 24. Only the two Mechanist owner metadata rows change; all other model rows and raw files remain unchanged. SD publication is separate from this source preparation and leaves the regular preview untouched.
+
+
+Owner metadata is merged through SD PR 32 at `76f4cef6c8d0b92ef5af84b5c56c6644eec71e9a`. Both hosted checks pass at reviewed head `1e20f643e3af4b2e7f339faee5f1d5ae21414794`; tested/proposed/final tree `d48661c7c3a0df96da840ea0e4e3333c06e460c2` matches. The regular preview remains pinned to its previously reviewed SD revision.
+
+McGraf has no model rows in the pinned SD manifest and no `mcgraf` path in the pinned fexli Spine tree. Its original skeletons/atlas and native pointers are nevertheless present in the verified `pkgrps/btl_pfb_tokens_5.ab` source bundle, including animator `3830167749147247923`. Delivery must be exported and independently checked from that original bundle, rather than substituting another summon or assuming owner artwork covers it. The next review should preserve the token’s exact native Front/Back pointers, pixels, PMA and zero-duration Skill_Loop before admitting summon runtime.
