@@ -1,0 +1,574 @@
+{
+  "schemaVersion": 1,
+  "operatorId": "char_4230_mcnist",
+  "enabledOperators": [
+    "char_4230_mcnist"
+  ],
+  "frameParity": false,
+  "moduleSupport": false,
+  "nativePixelParity": false,
+  "nativeParticleSupport": false,
+  "sourceFoundationSha256": "951f971e410a0ddea6b08424363a07627bb398d1efbe2d8971b90cdd3dd88317",
+  "ownerArtworkSha256": "ab32f1354d3f0fea9217dc357b983d44ef52d307bed87a171734311858318a52",
+  "tokenArtworkSha256": "de3a635c1a274de77234f2473dd1bca6b1ea4120e1f19905f8e2dce9a1dd8d06",
+  "sourceClocksSha256": "2dae476dd3d6eb0a34ffab063cd06b7c6c2de29193cfcff993bb11e6b3d39ada",
+  "mechanicsPolicy": "source-cn-owner-mcgraf-barriers-ammo-cross-and-fresh-charge-v1",
+  "scope": "Selected original CN Mechanist and McGraf, all three source skills, ordinary melee/projectile clocks, source barriers, fresh S3 charge/replacement and decaying aura through regular-stage squad/support paths.",
+  "verification": {
+    "source": "Six pinned bundles, 307 components, 22 transitive templates and ten projectile graphs; all original owner/token inputs and clocks retain separate provenance receipts.",
+    "artwork": "Original owner/McGraf Front and Back plus exact named native Sprite portrait. Avatar reproduction rejects twenty altered claims; SD PR 34 merged at 442e1a70cb09d8452b39a7a3746e03c025a456a1 with both hosted validation checks.",
+    "runtime": "Selected complete combat snapshot fc0881a5c9462c32305a9824d4c83fcdd1d52461 passes the isolated Node 22 full suite: 16432 passed, 81 optional/platform skips, zero failures. 697 selected/public and adjacent checks pass on Node 22 and 24. Public path adds 43 checks for all thirty ranks, source SP, support, E0 token absence and redeployment. All three original 0-1 builds use natural DP and unchanged terrain with Melantha: eleven kills, zero leaks and full life. Final public/HUD/preload full regression remains separate.",
+    "browser": {
+      "status": "passed",
+      "script": "tools/arkpedia/review-mcnist-public.mjs",
+      "driver": "tools/arkpedia/public-review-driver.mjs",
+      "cases": 6,
+      "captures": 44,
+      "browserVersion": "Chrome/153.0.8010.12",
+      "cacheDisabled": true,
+      "fixtureTransport": "loopback app/data overrides; external HTTPS unintercepted",
+      "viewports": [
+        "1280x800 desktop mouse",
+        "844x390 emulated landscape phone touch"
+      ],
+      "originalWaves": false,
+      "fixture": "Original 0-1 terrain, legal low-ground tiles, empty waves, 99 DP and a pinned nonattacking target. An explicit damage packet breaks an S2 shield; original waves and natural DP are tested separately.",
+      "checks": [
+        "Real card drag/drop followed by a separate centre-to-direction swipe; neither pointer hold deploys early",
+        "Original owner Front/Back, McGraf model and exact deployment portrait loaded from published immutable HTTPS assets",
+        "Natural offensive S1 and time-recovery S2/S3, ready/active controls and selected source work",
+        "McGraf native lifetime gauge, no false ready icon and zero deployment slots",
+        "S3 quarter-second transport hold, hidden charging card and fresh full-HP/token-lifetime replacement with aura",
+        "Retirement removes source-linked card/token and preserves explicit finite-work rules"
+      ],
+      "browserErrors": 0,
+      "failedResources": 0,
+      "visualReview": "Desktop S3 fresh replacement and emulated-phone S1 selected McGraf lifetime captures inspected. Native models, visible bars, readable sidebar and portrait are present; physical-device and game-frame parity remain unverified.",
+      "scriptSha256": "157358e532ca1a3751dfeda887a4f4005e26448782a62066532ee69f8133e1d1",
+      "driverSha256": "2e52cd4007ae553e30f773104626f9b5c2be7c15f717b61ca9063517fbdc51c8",
+      "fixtureServerSha256": "127fb1b74be89d0a35e6bfa4e3d35927d170fa4d3129287f6c523114c5bcaa22"
+    }
+  },
+  "originalArtwork": {
+    "operator/char_4230_mcnist/default/front": {
+      "kind": "operator",
+      "id": "char_4230_mcnist",
+      "variant": "default",
+      "facing": "front",
+      "spineVersion": "3.8.99",
+      "source": {
+        "key": "operators",
+        "repository": "fexli/ArknightsResource",
+        "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+        "directory": "spine/char_4230_mcnist/char_4230_mcnist/Front"
+      },
+      "skeleton": {
+        "path": "models/operator/char_4230_mcnist/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4230_mcnist.skel",
+        "bytes": 282902,
+        "sha256": "7bf239e6c39baeb75f1f95692e364a4fd3edd0ee9e2bdbfb986a8932b5101a32"
+      },
+      "atlas": {
+        "path": "models/operator/char_4230_mcnist/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4230_mcnist.atlas",
+        "bytes": 6980,
+        "sha256": "6cb58e181ddf537d8966c426580fe08566bb8888d653f1d1a2cecb2cc9ed1cc9"
+      },
+      "textures": [
+        {
+          "path": "models/operator/char_4230_mcnist/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4230_mcnist.png",
+          "bytes": 112792,
+          "sha256": "967e8d3650f0d28221eb22637159b09a2e94a8eb71d845c792ed53cee3bdd233"
+        }
+      ],
+      "premultipliedAlpha": true,
+      "animations": {
+        "Attack_A": 1.2,
+        "Attack_B": 1.2,
+        "Attack_Down": 1.2,
+        "Default": 0,
+        "Die": 1,
+        "Idle": 1.2,
+        "Skill_1": 1.8,
+        "Skill_2_Begin": 0.267,
+        "Skill_2_End": 0.267,
+        "Skill_2_Idle": 1.2,
+        "Skill_2_Loop": 1.2,
+        "Skill_3_Begin": 0.267,
+        "Skill_3_End": 0.267,
+        "Skill_3_Idle": 1.333,
+        "Skill_3_Loop": 3,
+        "Skill_Down_1": 1.8,
+        "Skill_Down_2_Begin": 0.267,
+        "Skill_Down_2_End": 0.267,
+        "Skill_Down_2_Idle": 1.2,
+        "Skill_Down_2_Loop": 1.2,
+        "Start": 1
+      },
+      "hits": {
+        "Attack_A": [
+          0.433
+        ],
+        "Attack_B": [
+          0.433
+        ],
+        "Attack_Down": [
+          0.433
+        ],
+        "Skill_1": [
+          1
+        ],
+        "Skill_2_Loop": [
+          0.433
+        ],
+        "Skill_3_Loop": [
+          0.433
+        ],
+        "Skill_Down_1": [
+          1
+        ],
+        "Skill_Down_2_Loop": [
+          0.433
+        ]
+      },
+      "bounds": {
+        "x": -343.054,
+        "y": -1.784,
+        "width": 564.515,
+        "height": 564.882
+      },
+      "animationRoles": {
+        "idle": "Idle",
+        "deploy": "Start",
+        "attack": {
+          "begin": null,
+          "loop": "Attack_A",
+          "end": null
+        },
+        "attackDown": {
+          "begin": null,
+          "loop": "Attack_Down",
+          "end": null
+        },
+        "skill": {
+          "begin": null,
+          "loop": "Skill_1",
+          "end": null,
+          "index": 0,
+          "via": "skill"
+        },
+        "skills": {
+          "0": {
+            "begin": null,
+            "loop": "Skill_1",
+            "end": null,
+            "index": 0,
+            "via": "skill"
+          },
+          "1": {
+            "begin": "Skill_2_Begin",
+            "loop": "Skill_2_Loop",
+            "end": "Skill_2_End",
+            "index": 1,
+            "via": "skill",
+            "idle": "Skill_2_Idle"
+          },
+          "2": {
+            "begin": "Skill_3_Begin",
+            "loop": "Skill_3_Loop",
+            "end": "Skill_3_End",
+            "index": 2,
+            "via": "skill",
+            "idle": "Skill_3_Idle"
+          }
+        },
+        "die": "Die",
+        "stun": null,
+        "move": null
+      }
+    },
+    "operator/char_4230_mcnist/default/back": {
+      "kind": "operator",
+      "id": "char_4230_mcnist",
+      "variant": "default",
+      "facing": "back",
+      "spineVersion": "3.8.99",
+      "source": {
+        "key": "operators",
+        "repository": "fexli/ArknightsResource",
+        "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+        "directory": "spine/char_4230_mcnist/char_4230_mcnist/Back"
+      },
+      "skeleton": {
+        "path": "models/operator/char_4230_mcnist/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4230_mcnist.skel",
+        "bytes": 195035,
+        "sha256": "86bc68e28ae0b7aebc5bf49e7576f599ed0c5727e014346821a234d33ad3dbfb"
+      },
+      "atlas": {
+        "path": "models/operator/char_4230_mcnist/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4230_mcnist.atlas",
+        "bytes": 6902,
+        "sha256": "da128f1132ed085834410872412bc2b86a03e097c9df32e3ceed64c8faad9d46"
+      },
+      "textures": [
+        {
+          "path": "models/operator/char_4230_mcnist/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4230_mcnist.png",
+          "bytes": 107476,
+          "sha256": "f360c9ad28c8a32e9fdbbefc7be2d09976d9f5ae0eef2a8fb563ac7a8b695ced"
+        }
+      ],
+      "premultipliedAlpha": true,
+      "animations": {
+        "Attack_A": 1.2,
+        "Attack_B": 1.2,
+        "Default": 0,
+        "Idle": 1.2,
+        "Skill_1": 1.8,
+        "Skill_2_Begin": 0.267,
+        "Skill_2_End": 0.267,
+        "Skill_2_Idle": 1.2,
+        "Skill_2_Loop": 1.2,
+        "Skill_3_Begin": 0.267,
+        "Skill_3_End": 0.267,
+        "Skill_3_Idle": 1.333,
+        "Skill_3_Loop": 3,
+        "Start": 1
+      },
+      "hits": {
+        "Attack_A": [
+          0.433
+        ],
+        "Attack_B": [
+          0.433
+        ],
+        "Skill_1": [
+          1
+        ],
+        "Skill_2_Loop": [
+          0.433
+        ],
+        "Skill_3_Loop": [
+          0.433
+        ]
+      },
+      "bounds": {
+        "x": -343.054,
+        "y": -1.782,
+        "width": 564.515,
+        "height": 564.88
+      },
+      "animationRoles": {
+        "idle": "Idle",
+        "deploy": "Start",
+        "attack": {
+          "begin": null,
+          "loop": "Attack_A",
+          "end": null
+        },
+        "attackDown": null,
+        "skill": {
+          "begin": null,
+          "loop": "Skill_1",
+          "end": null,
+          "index": 0,
+          "via": "skill"
+        },
+        "skills": {
+          "0": {
+            "begin": null,
+            "loop": "Skill_1",
+            "end": null,
+            "index": 0,
+            "via": "skill"
+          },
+          "1": {
+            "begin": "Skill_2_Begin",
+            "loop": "Skill_2_Loop",
+            "end": "Skill_2_End",
+            "index": 1,
+            "via": "skill",
+            "idle": "Skill_2_Idle"
+          },
+          "2": {
+            "begin": "Skill_3_Begin",
+            "loop": "Skill_3_Loop",
+            "end": "Skill_3_End",
+            "index": 2,
+            "via": "skill",
+            "idle": "Skill_3_Idle"
+          }
+        },
+        "die": null,
+        "stun": null,
+        "move": null
+      }
+    },
+    "operator/token_10069_mcnist_mcgraf/default/front": {
+      "kind": "operator",
+      "id": "token_10069_mcnist_mcgraf",
+      "variant": "default",
+      "facing": "front",
+      "source": {
+        "key": "cn-client",
+        "kind": "assetbundle",
+        "bundle": {
+          "path": "pkgrps/btl_pfb_tokens_5.ab",
+          "bytes": 2183454,
+          "md5": "1c4224582e2e540c2c1c96419fb6d38d",
+          "sha256": "1da6347c10575ac922ef1ceeade662ebfb785b0653ef13266ab48f03d1828af9",
+          "url": "https://ak.hycdn.cn/assetbundle/official/Android/assets/26-09-22-07-47-20_6c71fa/pkgrps_btl_pfb_tokens_5.dat",
+          "client": "cn",
+          "resourceVersion": "26-09-22-07-47-20_6c71fa",
+          "transforms": [
+            "Original embedded premultiplied RGBA texture decoded with every decoded pixel unchanged",
+            "Atlas page dimensions normalized and pma: true recorded; native regions unchanged",
+            "Distinct original Front/Back skeletons and zero-duration clips retained; no missing clip invented"
+          ]
+        },
+        "directory": "pkgrps/btl_pfb_tokens_5.ab",
+        "extractedSkeleton": "token_10069_mcnist_mcgraf.skel",
+        "originalPathIds": {
+          "rootPathId": "-7832074744968755917",
+          "controllerPathId": "1311138106172917043",
+          "animatorPathId": "3830167749147247923",
+          "faceSwitcherPathId": "894667047100958003",
+          "skeletonAnimationPathId": "7077693720433018163",
+          "skeletonDataAssetPathId": "-3239441113444061980",
+          "textAssetPathId": "6173028442988676066",
+          "atlasAssetPathId": "-4900500795942453475",
+          "atlasTextAssetPathId": "2873292334559918825",
+          "materialPathId": "-942015258751744317",
+          "texturePathId": "7998002062082615826"
+        },
+        "transforms": [
+          "Original embedded premultiplied RGBA texture decoded with every decoded pixel unchanged",
+          "Atlas page dimensions normalized and pma: true recorded; native regions unchanged",
+          "Distinct original Front/Back skeletons and zero-duration clips retained; no missing clip invented"
+        ]
+      },
+      "spineVersion": "3.8.99",
+      "skeleton": {
+        "path": "models/operator/token_10069_mcnist_mcgraf/default/front/1da6347c10575ac922ef1ceeade662ebfb785b0653ef13266ab48f03d1828af9/token_10069_mcnist_mcgraf.skel",
+        "bytes": 50820,
+        "sha256": "098147d02b97341bcd0548d69d9fc755ddd8720323ec28befeea393e397c3cbe"
+      },
+      "atlas": {
+        "path": "models/operator/token_10069_mcnist_mcgraf/default/front/1da6347c10575ac922ef1ceeade662ebfb785b0653ef13266ab48f03d1828af9/token_10069_mcnist_mcgraf.atlas",
+        "bytes": 3303,
+        "sha256": "5712009448861b7b4e33539c2f53669960d2c2481382cefefd304396850d1c62"
+      },
+      "textures": [
+        {
+          "path": "models/operator/token_10069_mcnist_mcgraf/default/front/1da6347c10575ac922ef1ceeade662ebfb785b0653ef13266ab48f03d1828af9/token_10069_mcnist_mcgraf.png",
+          "bytes": 57526,
+          "sha256": "a045f73cfe6aa0b55831abb1af2d3363513b7b06fe3fbc46821a02791103677a"
+        }
+      ],
+      "premultipliedAlpha": true,
+      "animations": {
+        "Attack": 1.5,
+        "Default": 0,
+        "Die": 1,
+        "Idle": 1.333,
+        "Skill_Begin": 0.267,
+        "Skill_End": 1.233,
+        "Skill_Loop": 0,
+        "Start": 1
+      },
+      "animationRoles": {
+        "idle": "Idle",
+        "deploy": "Start",
+        "attack": {
+          "begin": null,
+          "loop": "Attack",
+          "end": null
+        },
+        "skill": null,
+        "die": "Die",
+        "stun": null,
+        "move": null
+      },
+      "hits": {
+        "Attack": [
+          0.667
+        ],
+        "Skill_End": [
+          0.4
+        ]
+      },
+      "bounds": {
+        "x": -124.804,
+        "y": -2.196,
+        "width": 250.009,
+        "height": 390.019
+      },
+      "avatar": {
+        "path": "models/operator/token_10069_mcnist_mcgraf/default/front/1da6347c10575ac922ef1ceeade662ebfb785b0653ef13266ab48f03d1828af9/avatar.png",
+        "bytes": 24576,
+        "sha256": "d665f457f1eb8233b410ce1e971eac123a04721adba1dbacf12d29a74cd21871",
+        "source": {
+          "kind": "cn-native-sprite",
+          "resourceVersion": "26-09-22-07-47-20_6c71fa",
+          "bundleSha256": "e5c3889ce7efb39ebb30edc382a7f16724369618335427f7c496ce4cff221c28",
+          "spritePathId": "-97459599149998769",
+          "texturePathId": "-1509622144603693745",
+          "proof": "source-reviews/mechanist-mcgraf-avatar.json",
+          "proofSha256": "50776abdeafeb93862fd95f98942a3ce466a3a224c2c3c3d1d92f79b648b0445"
+        }
+      }
+    },
+    "operator/token_10069_mcnist_mcgraf/default/back": {
+      "kind": "operator",
+      "id": "token_10069_mcnist_mcgraf",
+      "variant": "default",
+      "facing": "back",
+      "source": {
+        "key": "cn-client",
+        "kind": "assetbundle",
+        "bundle": {
+          "path": "pkgrps/btl_pfb_tokens_5.ab",
+          "bytes": 2183454,
+          "md5": "1c4224582e2e540c2c1c96419fb6d38d",
+          "sha256": "1da6347c10575ac922ef1ceeade662ebfb785b0653ef13266ab48f03d1828af9",
+          "url": "https://ak.hycdn.cn/assetbundle/official/Android/assets/26-09-22-07-47-20_6c71fa/pkgrps_btl_pfb_tokens_5.dat",
+          "client": "cn",
+          "resourceVersion": "26-09-22-07-47-20_6c71fa",
+          "transforms": [
+            "Original embedded premultiplied RGBA texture decoded with every decoded pixel unchanged",
+            "Atlas page dimensions normalized and pma: true recorded; native regions unchanged",
+            "Distinct original Front/Back skeletons and zero-duration clips retained; no missing clip invented"
+          ]
+        },
+        "directory": "pkgrps/btl_pfb_tokens_5.ab",
+        "extractedSkeleton": "token_10069_mcnist_mcgraf.skel",
+        "originalPathIds": {
+          "rootPathId": "-7832074744968755917",
+          "controllerPathId": "1311138106172917043",
+          "animatorPathId": "3830167749147247923",
+          "faceSwitcherPathId": "894667047100958003",
+          "skeletonAnimationPathId": "-6018818784573176525",
+          "skeletonDataAssetPathId": "8554973703665780539",
+          "textAssetPathId": "-325951955814050698",
+          "atlasAssetPathId": "638323428707351044",
+          "atlasTextAssetPathId": "606886953647724479",
+          "materialPathId": "-2486842277239809532",
+          "texturePathId": "-2703697758200296805"
+        },
+        "transforms": [
+          "Original embedded premultiplied RGBA texture decoded with every decoded pixel unchanged",
+          "Atlas page dimensions normalized and pma: true recorded; native regions unchanged",
+          "Distinct original Front/Back skeletons and zero-duration clips retained; no missing clip invented"
+        ]
+      },
+      "spineVersion": "3.8.99",
+      "skeleton": {
+        "path": "models/operator/token_10069_mcnist_mcgraf/default/back/1da6347c10575ac922ef1ceeade662ebfb785b0653ef13266ab48f03d1828af9/token_10069_mcnist_mcgraf.skel",
+        "bytes": 40996,
+        "sha256": "3a78eba0d55724382947f945b92fadb23364f94727b19710eb06ba0ca1e131ff"
+      },
+      "atlas": {
+        "path": "models/operator/token_10069_mcnist_mcgraf/default/back/1da6347c10575ac922ef1ceeade662ebfb785b0653ef13266ab48f03d1828af9/token_10069_mcnist_mcgraf.atlas",
+        "bytes": 2740,
+        "sha256": "e9ca044edd588754515c462d7359e9abe11e2d9cbc056508d1ae0eb1520b5b8b"
+      },
+      "textures": [
+        {
+          "path": "models/operator/token_10069_mcnist_mcgraf/default/back/1da6347c10575ac922ef1ceeade662ebfb785b0653ef13266ab48f03d1828af9/token_10069_mcnist_mcgraf.png",
+          "bytes": 52326,
+          "sha256": "43cb2012bb44c829633663ad116ea7eb4938c2a1976670a2d1b1820db19366f9"
+        }
+      ],
+      "premultipliedAlpha": true,
+      "animations": {
+        "Attack": 1.5,
+        "Default": 0,
+        "Idle": 1.333,
+        "Skill_Begin": 0.267,
+        "Skill_End": 1.233,
+        "Skill_Loop": 0,
+        "Start": 1
+      },
+      "animationRoles": {
+        "idle": "Idle",
+        "deploy": "Start",
+        "attack": {
+          "begin": null,
+          "loop": "Attack",
+          "end": null
+        },
+        "skill": null,
+        "die": null,
+        "stun": null,
+        "move": null
+      },
+      "hits": {
+        "Attack": [
+          0.667
+        ],
+        "Skill_End": [
+          0.4
+        ]
+      },
+      "bounds": {
+        "x": -124.614,
+        "y": -2.201,
+        "width": 250.009,
+        "height": 389.524
+      },
+      "avatar": {
+        "path": "models/operator/token_10069_mcnist_mcgraf/default/back/1da6347c10575ac922ef1ceeade662ebfb785b0653ef13266ab48f03d1828af9/avatar.png",
+        "bytes": 24576,
+        "sha256": "d665f457f1eb8233b410ce1e971eac123a04721adba1dbacf12d29a74cd21871",
+        "source": {
+          "kind": "cn-native-sprite",
+          "resourceVersion": "26-09-22-07-47-20_6c71fa",
+          "bundleSha256": "e5c3889ce7efb39ebb30edc382a7f16724369618335427f7c496ce4cff221c28",
+          "spritePathId": "-97459599149998769",
+          "texturePathId": "-1509622144603693745",
+          "proof": "source-reviews/mechanist-mcgraf-avatar.json",
+          "proofSha256": "50776abdeafeb93862fd95f98942a3ce466a3a224c2c3c3d1d92f79b648b0445"
+        }
+      }
+    }
+  },
+  "interfaceAssets": [
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "six-star-icons/Mechanist - Base.webp",
+      "bytes": 8846,
+      "sha256": "ed8a25e10faddcc041e9150f0080d7bba8382b6666ee8ff7d631d6ee99cf137b"
+    },
+    {
+      "repository": "arkpedia/arkpedia-skin-assets",
+      "commit": "6fb723692d89c4a08d9a7aa4015e19c0753dd270",
+      "path": "six-star-skins/Mechanist - Base.webp",
+      "bytes": 158250,
+      "sha256": "1e062fa28d802dbcd96e1f60d2f78214642313fffe0a611ba06858a49e55d603"
+    },
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "skill-icons/Mechanist - Cluster Analysis.webp",
+      "bytes": 6034,
+      "sha256": "84d3d986b192dd894c0f34a75afdce6af5eb5d6d67dd3a73bdbe119ea8d2a0e1"
+    },
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "skill-icons/Mechanist - Co-operative Defense Techniques.webp",
+      "bytes": 6376,
+      "sha256": "7f13a990fbbfdb393d023114afb4c93a25b48dd83f719115229a27ea6e5a3a7a"
+    },
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "skill-icons/Mechanist - Star of Engineering.webp",
+      "bytes": 7858,
+      "sha256": "23d7aafa6bba7b96ec712f62988a0621ab7e5456d597bb8d709ccb4c48e46c43"
+    }
+  ],
+  "limitations": [
+    "Native custom charge tile filter 46 and AssignMcgrafTile map to a deployment-facing tile ray and arrival-time preceding free low-ground tile. Compiled collision/selection and alternate-landing priority remain unverified.",
+    "S1 arrival-first five-pulse fields, S2 shield/counter overflow priority and final replacement, S3 release-time cross sampling, source/birth ATK transport, command/cooldown pause, passive aura timing and callback ordering are explicit local interpretations.",
+    "Modules, native particles/shaders/audio, physical-device behavior and original game-frame/pixel parity remain unverified."
+  ],
+  "tokenAvatarSha256": "50776abdeafeb93862fd95f98942a3ce466a3a224c2c3c3d1d92f79b648b0445"
+}

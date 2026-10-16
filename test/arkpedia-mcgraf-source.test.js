@@ -23,9 +23,9 @@ test('McGraf interpolates its own source phase and rounds only HP/ATK/DEF',()=>{
 test('McGraf retains the hidden S3 weaken operands as separate talent inputs',()=>{
  const r=selectedMcGrafBuild(build({skillId:'skchr_mcnist_3'}));assert.deepEqual(r.talentBb.at(-1),{atk:-.5,range_radius:1.5,interval:1,atk_interval:.025,atk_min:0});
 });
-test('McGraf source binding keeps original full-width pointers and does not add any public summon deck',()=>{
+test('McGraf source binding keeps original full-width pointers and preloads original artwork without a generic summon deck',()=>{
  const r=selectedMcGrafBuild(build());assert.equal(r.sourceBinding.rootPathId,'-7832074744968755917');assert.equal(r.sourceBinding.animatorPathId,'3830167749147247923');
- assert.equal(r.sourceBinding.bundle,'pkgrps/btl_pfb_tokens_5.ab');assert.ok(r.skeletonBinding);assert.equal(REGULAR_SUMMONS.char_4230_mcnist,undefined);assert.equal(REGULAR_AUTOMATIC_TOKENS.char_4230_mcnist,undefined);
+ assert.equal(r.sourceBinding.bundle,'pkgrps/btl_pfb_tokens_5.ab');assert.ok(r.skeletonBinding);assert.equal(REGULAR_SUMMONS.char_4230_mcnist,undefined);assert.deepEqual(REGULAR_AUTOMATIC_TOKENS.char_4230_mcnist,['token_10069_mcnist_mcgraf']);
 });
 test('McGraf rejects E0, locked owner skills, invalid ranks and unreviewed modules',()=>{
  for(const more of[{elite:0,level:50,skillRank:4},{elite:1,level:80,skillRank:7,skillId:'skchr_mcnist_3'},{skillRank:11},{level:91},{potential:0},{trust:201},{module:'mcnist-x'}])assert.throws(()=>selectedMcGrafBuild(build(more)));

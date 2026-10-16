@@ -59,7 +59,7 @@ export function prepareMcGrafS3Lifecycle(b,u,{contract,owner}={}){
 }
 export class McGrafS3Lifecycle extends McGrafLifecycle{
  constructor(b,u,barriers,record,owner){super(b,u,barriers,record,MCGRAF_S3_ATTACK_CONTRACT);Object.assign(this,{owner,flight:null,transports:new Set(),transportHandles:[],commandSeq:0,arrivals:0,bursts:0});
-  Object.defineProperties(this.state,{hidden:{get:()=>!!this.flight&&!this.flight.commandEnded},respawnStopped:{get:()=>!!this.flight&&!this.flight.commandEnded}});
+  Object.defineProperties(this.state,{hidden:{enumerable:true,get:()=>!!this.flight&&!this.flight.commandEnded},respawnStopped:{enumerable:true,get:()=>!!this.flight&&!this.flight.commandEnded}});
  }
  placementError(row,col){if(this.flight)return 'McGraf is charging.';return super.placementError(row,col);}
  place(row,col,dir='RIGHT'){const t=super.place(row,col,dir);if(this.owner.inMode()&&present(t))this.charge(t);return t;}
@@ -98,7 +98,7 @@ export class McGrafS3Lifecycle extends McGrafLifecycle{
  }
  spawnReplacement(f,at){const b=this.b;let token,created;this.placing=true;
   try{const combat=mcgrafAttackKit(b,this.u,this.barriers,{contract:MCGRAF_S3_ATTACK_CONTRACT});
-   token=b.spawnToken(this.u,TOKEN,at.row,at.col,{dir:f.dir,def:this.def,kit:{trait:combat.trait,talents:[],skill:null,install:(_b,t)=>{
+   token=b.spawnToken(this.u,TOKEN,at.row,at.col,{dir:f.dir,def:this.def,kit:{trait:combat.trait,talents:[],skill:this.lifetimeSpec(),install:(_b,t)=>{
     created=t;t.deploymentSlotCost=0;t.mem.regularSummonCard=this.state.key;b.addBuff(t,{key:'mcgraf:heal-free',source:t,persist:true,allowDead:true,flags:{healFree:true}});this.barriers.registerToken(t);combat.install(b,t);
    }}});
    if(!token||!present(token)||!this.valid()||this.point||this.flight)throw Error('McGraf replacement admission failed');

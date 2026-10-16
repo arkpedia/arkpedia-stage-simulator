@@ -9,7 +9,7 @@ import {canDeployInViewport} from '../../../shared/arkpedia/squad.js';
 import clocks from '../../../data/arkpedia-mcnist-clocks.json' with {type:'json'};
 export const MCGRAF_LIFECYCLE_CONTRACT=Object.freeze({
  scope:'Selected S1/S2 original McGraf deployment card, independent stats, lifetime and deployment barriers; diagnostic only',
- mapping:'One ten-DP low-ground token with chosen facing, no host-range restriction, no slot cost and no withdrawal refund. Birth consumes the only card. Removal replenishes it after the source forty-second independent redeployment timer. Owner retirement kills the linked token and removes the card. The selected token talent transfers twenty/thirty-second skill duration. Timeout counts from accepted deployment; Start completion changes only the visual pose. Native passive HealFree is retained. Control does not pause this lifetime. Selected E2 barriers compose through their separately reviewed controller.',
+ mapping:'One ten-DP low-ground token with chosen facing, no host-range restriction, no slot cost and no withdrawal refund. Birth consumes the only card. Removal replenishes it after the source forty-second independent redeployment timer. Owner retirement kills the linked token and removes the card. The selected token talent transfers twenty/thirty-second skill duration. Timeout counts from accepted deployment; Start completion changes only the visual pose. Native passive HealFree is retained. SpShowBuff presents a nonactivatable deployment-lifetime gauge through the existing form-countdown HUD; it does not invent recharge, readiness or an empty Skill_Loop animation. Control does not pause this lifetime. Selected E2 barriers compose through their separately reviewed controller.',
  limits:'The missing cnt operand in RechargeToken maps to one card using maxDeployCount and the owner talent description; compiled recharge defaults, born/skill-start dispatch, native card timing, timeout priority and transactional refund ordering remain local policies. S3 charge/mark postponement is refused here. Ordinary attacks, owner S1/S2 effects, modules, native effects/audio and game-frame parity remain unverified. No public roster or summon approval.',
  frameParity:false,
 });
@@ -37,7 +37,7 @@ export class McGrafLifecycle{
   const def=normalizeToken(TOKEN,{name:record.source.appellation,position:record.source.position,profession:record.source.profession,
    stats:record.stats,rangeGrid:record.rangeGrid,talents:record.talents,arkpedia:{...record.build},skill:null});
   this.def=def;const d=this;
-  this.state={key:`summon:${ID}`,ownerId:ID,owner:u,tokenId:TOKEN,record:def,deck:this,
+  this.state={key:`summon:${ID}`,ownerId:ID,owner:u,tokenId:TOKEN,record:{...def.raw,id:TOKEN},deck:this,
    config:Object.freeze({deploymentSlotCost:0,chooseFacing:true,refundRatio:0,healFree:true,noAttack:combatContract==null}),
    get stock(){return d.stock;},get readyAt(){return d.readyAt;}};
  }
@@ -62,13 +62,20 @@ export class McGrafLifecycle{
   // to play a missing clip or claiming an unsupported death-facing switch.
   s.unit.mem.regularDeathVisual=back?{hide:true,duration:1}:{clip:'Die',die:'Die',duration:clocks.tokens[TOKEN].models.Front.exactDurations.Die};
  }
+ lifetimeSpec(){const show=mechanistNativeInputs().templates.mcgraf_t_suicide.eventToActions.ON_BUFF_START[0];
+  if(show._isSelf!==true||show._isSkillCountDown!==false)throw Error('Changed original McGraf SpShowBuff presentation');
+  let bound;return{id:this.record.skillId,kind:'passive',duration:this.record.skillOverlay.duration,onStart:({unit})=>{bound={unit,life:unit.deploySeq};},formCountdown:()=>{
+   const s=this.point;return this.valid()&&s&&!s.finished&&present(s.unit)&&s.seq===s.unit.deploySeq&&s.unit===bound?.unit&&s.seq===bound.life
+    ?{remaining:Math.max(0,s.expiresAt-this.b.time),duration:this.record.skillOverlay.duration,label:'Deployment remaining'}:null;
+  }};
+ }
  place(row,col,dir='RIGHT'){
   const error=this.placementError(row,col);if(error)throw Error(error);
   if(!['UP','DOWN','LEFT','RIGHT'].includes(dir))throw Error('Choose a facing direction.');
   const b=this.b,paid=this.record.stats.cost,oldReady=this.readyAt;this.placing=true;this.stock=0;b.addDp(this.u.ownerId,-paid);let token,created;
   try{
    const combat=this.combatContract?mcgrafAttackKit(b,this.u,this.barriers,{contract:this.combatContract}):null;
-   token=b.spawnToken(this.u,TOKEN,row,col,{dir,def:this.def,kit:{trait:combat?.trait??{noAttack:true},talents:[],skill:null,
+   token=b.spawnToken(this.u,TOKEN,row,col,{dir,def:this.def,kit:{trait:combat?.trait??{noAttack:true},talents:[],skill:this.lifetimeSpec(),
     install:(_b,t)=>{created=t;t.deploymentSlotCost=0;t.mem.regularSummonCard=this.state.key;
      b.addBuff(t,{key:'mcgraf:heal-free',source:t,persist:true,allowDead:true,flags:{healFree:true}});this.barriers.registerToken(t);combat?.install(b,t);}}});
    if(!token||!present(token)||!this.valid())throw Error('McGraf deployment failed.');

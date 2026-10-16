@@ -721,6 +721,8 @@ function drawHud() {
       button.remove();
       continue;
     }
+    button.hidden = b.hidden === true;
+    if (button.hidden && selected === id) cancelPlacement();
     const alive = b.unit?.alive,
       cool = Number.isFinite(b.readyAt) ? Math.max(0, Math.ceil(b.readyAt - battle.time)) : 0;
     const cost = b.kind === 'summon'
