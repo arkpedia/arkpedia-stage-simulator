@@ -48,6 +48,7 @@ export class MechanistS2Shields{
  }
  install(){if(this.stopped||this.handles.length)throw Error('Mechanist S2 shields cannot be reinstalled');const b=this.b;
   this.handles=[b.on('beforeBuff',c=>{const e=this.pendingAdmissions.get(c.buff.onShieldAbsorb);if(e&&(!this.targetValid(e.target,e.life)||e.sourceLife!==this.u.deploySeq||e.activation!==this.u.skill.activations||this.admissions.get(e.target)!==e.admission))c.cancel=true;},{owner:this.u,priority:-1000000}),
+   b.on('deploy',({unit,move})=>{if(!move&&unit!==this.u&&this.core.inMode()&&this.base.tokens.get(unit)?.life===unit.deploySeq)this.attach(unit,unit.deploySeq);},{owner:this.u,priority:-1000}),
    b.on('removed',({unit})=>this.clear(unit),{owner:this.u}),b.on('death',({unit})=>this.clear(unit),{owner:this.u}),
    b.on('tick',()=>{for(const[t,e]of this.entries)if(!this.targetValid(t,e.life))this.clear(t);},{owner:this.u}),b.on('battleEnd',()=>this.stop(),{owner:this.u})];
  }
