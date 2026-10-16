@@ -30,7 +30,7 @@ export class TimeslotController{
  model(){const face=this.facing==='UP'?'Back':'Front';return {...evidence.models[ID][face],...clocks.models[face]};}
  rate(){return this.u.base.bat/this.u.s.interval;}
  visual(clip,speed=1,loop=false){if(this.model().exactDurations[clip]==null)throw Error('Missing original Timeslot animation');this.lastClip=clip;
-  this.u.mem.regularVisualDirection=this.facing;this.u.mem.regularFormVisual={clip,speed,loop,...(!loop?{playId:`tmslot:${this.seq}:${++this.visualSeq}`}:{})};}
+  this.u.mem.regularVisualDirection=this.facing;this.u.mem.regularFormVisual={clip,speed,loop,...(loop?{replace:true}:{}),...(!loop?{playId:`tmslot:${this.seq}:${++this.visualSeq}`}:{})};}
  hasOverload(){return this.mode===3&&this.statBuff!=null&&this.u.findBuff(this.skillKey)===this.statBuff;}
  idle(){this.visual(this.hasOverload()?'Skill_2_Overload_Loop':'Idle',1,true);}
  face(t){const x=t.x-this.u.x,y=t.y-this.u.y;if(Math.hypot(x,y)>1e-8)this.facing=Math.abs(y)>Math.abs(x)?y>0?'UP':'DOWN':x<0?'LEFT':'RIGHT';}
@@ -97,7 +97,7 @@ export class TimeslotController{
  }
  pulse(s,index){const t=s.target;if(!this.valid()||this.mode<2||!present(t)||t.deploySeq!==s.life||!canTargetEnemy(this.u,t,air))return;
   const scale=this.ramp(s,t);s.pulses++;
-  this.b._ev(['atk',this.u.id,t.id,'drone']);this.b.dealDamage(this.u,t,{amount:this.u.s.atk*this.u.s.atkScaleMul*scale,type:'arts',
+  this.b._ev(['atk',this.u.id,t.id,'drone',{animation:'none'}]);this.b.dealDamage(this.u,t,{amount:this.u.s.atk*this.u.s.atkScaleMul*scale,type:'arts',
    isAttack:true,isSkill:true,applyWay:'none',attackId:++this.b._attackSeq,tags:[`tmslot:S2Funnel_${index+1}`]});
  }
  drones(dt){if(!this.valid()||this.mode<2)return;const rate=this.rate();

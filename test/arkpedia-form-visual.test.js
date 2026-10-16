@@ -296,3 +296,20 @@ test('a Ling higher attack settles into its original higher idle without replayi
   assert.equal(a.current, 'Attack_02'); a.update(2); assert.equal(a.current, 'Idle_02');
   assert.equal(a.roles.die, 'Die_02'); a.destroy();
 });
+
+
+test('an opted-in source loop replaces an unfinished one-shot once without changing shared roles',()=>{
+ const entry={anims:{idle:'Idle',attack:{loop:'Attack'}},animations:{Idle:4,Attack:1.3},hits:{Attack:[.633]}};
+ const shared=structuredClone(entry),a=new BattleActor({animations:Object.keys(entry.animations).map(name=>({name}))},entry);
+ a.setRegularVisual({clip:'Attack',playId:'strike:1'});a.update(.2);assert.equal(a.current,'Attack');
+ a.setRegularVisual({clip:'Idle',loop:true,replace:true});assert.equal(a.current,'Idle');assert.equal(a.mode,'base');assert.equal(a.windUntil,null);
+ const track=a.spine.state.tracks[0];a.update(.1);a.setRegularVisual({clip:'Idle',loop:true,replace:true});assert.equal(a.spine.state.tracks[0],track);
+ assert.deepEqual(entry,shared);a.destroy();
+});
+test('source loop replacement preserves active control, frozen poses and death',()=>{
+ const entry={anims:{idle:'Idle',attack:{loop:'Attack'},die:'Die'},animations:{Idle:4,Attack:1.3,Die:1}};
+ for(const how of['stun','death']){const a=new BattleActor({animations:Object.keys(entry.animations).map(name=>({name}))},entry);
+  a.setRegularVisual({clip:'Attack',playId:'strike:1'});if(how==='stun')a.setBase('stun');else a.die();const track=a.spine.state.tracks[0],mode=a.mode,frozen=a.frozen,wanted=a.stunWanted;
+  a.setRegularVisual({clip:'Idle',loop:true,replace:true});assert.equal(a.spine.state.tracks[0],track);assert.equal(a.mode,mode);assert.equal(a.frozen,frozen);assert.equal(a.stunWanted,wanted);a.destroy();
+ }
+});

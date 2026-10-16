@@ -1,0 +1,271 @@
+{
+  "schemaVersion": 1,
+  "operatorId": "char_4236_tmslot",
+  "enabledOperators": [
+    "char_4236_tmslot"
+  ],
+  "frameParity": false,
+  "moduleSupport": false,
+  "nativePixelParity": false,
+  "nativeParticleSupport": false,
+  "sourceFoundationSha256": "8faaa4d95957d4db73907351051b8d8b5ffacf4edf22f63ee695e052afb7a7c2",
+  "ownerArtworkSha256": "197e2fb1676c0abe0eb75eac773b5e19e985b3f52f1b91bc8ca8b333c520b232",
+  "sourceClocksSha256": "374b8543bc1917cfc618beeee10a9b3181f11b0f02613f02a619d1bee1873f4d",
+  "sourceOverdriveSha256": "a1c7079f95e35c6422ca466a675a6ebd2c92ff5e2a5e79524025d2bab4cc795d",
+  "mechanicsPolicy": "source-cn-owner-and-independent-drones-range-forced-overload-v1",
+  "scope": "Selected original CN Timeslot owner/ordinary drone attacks, common S1, independent S2 locks/ramps and marked range-forced overload through the regular-stage squad path.",
+  "verification": {
+    "source": "Five bundles, 102 components, seven templates and five projectile graphs; seven outputs reproduced and 30 altered claims rejected on Node 22 and 24.",
+    "artwork": "Recipe-bound original files, decoded pixels and PMA; 33 altered claims rejected on both Node versions. Fifteen original clips per viewport and sixteen desktop/emulated-phone captures without errors.",
+    "runtime": "473 combined source/controller/public/presentation and adjacent checks pass on Node 22 and 24, with no failures. Thirty-two public checks include both original 0-1 builds using legal ranged deployment, natural DP and unchanged terrain with Melantha: eleven kills, zero leaks and full life. S1 records 17 attributed damage receipts and S2 records 33; both activate once. Manual stop in either S2 phase is verified through the public API. All 891 pinned skeleton inputs verify. Full local/hosted verification remains separate.",
+    "browser": {
+      "status": "passed",
+      "script": "tools/arkpedia/review-tmslot-public.mjs",
+      "driver": "tools/arkpedia/public-review-driver.mjs",
+      "cases": 12,
+      "captures": 100,
+      "browserVersion": "Chrome/153.0.8010.12",
+      "cacheDisabled": true,
+      "fixtureTransport": "loopback app/data overrides; external HTTPS unintercepted",
+      "viewports": [
+        "1280x800 desktop mouse",
+        "844x390 emulated landscape phone touch"
+      ],
+      "originalWaves": false,
+      "fixture": "Original 0-1 terrain, legal ranged tiles, empty waves, 99 DP and two pinned nonattacking/nondisplaceable targets. Forced-overload cases explicitly relocate one marked target outside range. Original waves/natural DP are tested separately.",
+      "checks": [
+        "Public common S1/operator S2 selection and separate drag/drop/direction swipe on legal ranged tiles",
+        "Natural SP/readiness, selected original Front/Back attack tracks and additive attributes",
+        "Independent S2 target locks and ramps; natural halfway and marked range-forced overload",
+        "Overload holds its original pose while existing drones continue, without new owner attack receipts",
+        "Natural finish and public retreat clear source resources and controller handles"
+      ],
+      "browserErrors": 0,
+      "failedResources": 0,
+      "visualReview": "Desktop S2 Front natural-overload pose and emulated-phone S2 Back forced-overload pose inspected. Physical-device, native effects and original game-frame/pixel parity remain unverified.",
+      "scriptSha256": "ab0711885b5339672042a4c5bbc0b7d9de0718775947e5b6804b3f0ca374e17d",
+      "driverSha256": "2e52cd4007ae553e30f773104626f9b5c2be7c15f717b61ca9063517fbdc51c8",
+      "fixtureServerSha256": "127fb1b74be89d0a35e6bfa4e3d35927d170fa4d3129287f6c523114c5bcaa22"
+    }
+  },
+  "originalArtwork": {
+    "operator/char_4236_tmslot/default/back": {
+      "kind": "operator",
+      "id": "char_4236_tmslot",
+      "variant": "default",
+      "facing": "back",
+      "spineVersion": "3.8.99",
+      "source": {
+        "key": "operators",
+        "repository": "fexli/ArknightsResource",
+        "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+        "directory": "spine/char_4236_tmslot/char_4236_tmslot/Back"
+      },
+      "skeleton": {
+        "path": "models/operator/char_4236_tmslot/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4236_tmslot.skel",
+        "bytes": 117243,
+        "sha256": "1a535bb95cede6e1455bda3c43f98db74f29ed62f89e3b4d7b80f46c30b010c8"
+      },
+      "atlas": {
+        "path": "models/operator/char_4236_tmslot/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4236_tmslot.atlas",
+        "bytes": 6461,
+        "sha256": "09ccc35ff3e5b220eb57b60aec3e7f27486b22068c481f222a7f06dfc1e47d5a"
+      },
+      "textures": [
+        {
+          "path": "models/operator/char_4236_tmslot/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4236_tmslot.png",
+          "bytes": 160379,
+          "sha256": "14f6998fdef7a2e62cc51ea6f82f8fa908f846afe588f7fd9aa57ee8f24321b0"
+        }
+      ],
+      "premultipliedAlpha": true,
+      "animations": {
+        "Attack": 1.3,
+        "Default": 0,
+        "Idle": 2.667,
+        "Skill_2": 1.3,
+        "Skill_2_Overload_Begin": 0.833,
+        "Skill_2_Overload_End": 0.567,
+        "Skill_2_Overload_Loop": 1,
+        "Start": 1
+      },
+      "hits": {
+        "Attack": [
+          0.633
+        ],
+        "Skill_2": [
+          0.5
+        ]
+      },
+      "bounds": {
+        "x": -212.552,
+        "y": -1.296,
+        "width": 490.467,
+        "height": 375.313
+      },
+      "animationRoles": {
+        "idle": "Idle",
+        "deploy": "Start",
+        "attack": {
+          "begin": null,
+          "loop": "Attack",
+          "end": null
+        },
+        "attackDown": null,
+        "skill": {
+          "begin": null,
+          "loop": "Attack",
+          "end": null,
+          "index": 0,
+          "via": "attack"
+        },
+        "skills": {
+          "0": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null,
+            "index": 0,
+            "via": "attack"
+          },
+          "1": {
+            "begin": null,
+            "loop": "Skill_2",
+            "end": null,
+            "index": 1,
+            "via": "skill"
+          }
+        },
+        "die": null,
+        "stun": null,
+        "move": null
+      }
+    },
+    "operator/char_4236_tmslot/default/front": {
+      "kind": "operator",
+      "id": "char_4236_tmslot",
+      "variant": "default",
+      "facing": "front",
+      "spineVersion": "3.8.99",
+      "source": {
+        "key": "operators",
+        "repository": "fexli/ArknightsResource",
+        "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+        "directory": "spine/char_4236_tmslot/char_4236_tmslot/Front"
+      },
+      "skeleton": {
+        "path": "models/operator/char_4236_tmslot/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4236_tmslot.skel",
+        "bytes": 250790,
+        "sha256": "543ec770fcf2622833bda838fa1cfafb1f4125a67736b9b8626c473c165cb7d9"
+      },
+      "atlas": {
+        "path": "models/operator/char_4236_tmslot/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4236_tmslot.atlas",
+        "bytes": 12486,
+        "sha256": "c12066f43f6b27ac010362ce32fa4ee51fa4e5d4c52ca8ec2c46fd5f9ecb2e05"
+      },
+      "textures": [
+        {
+          "path": "models/operator/char_4236_tmslot/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4236_tmslot.png",
+          "bytes": 224344,
+          "sha256": "b0686b61189daa2d33232b07d33c26b119d8cb22221337db5420abc5a236bf85"
+        }
+      ],
+      "premultipliedAlpha": true,
+      "animations": {
+        "Attack": 1.3,
+        "Default": 0,
+        "Die": 1,
+        "Idle": 2.667,
+        "Skill_2": 1.3,
+        "Skill_2_Overload_Begin": 1,
+        "Skill_2_Overload_End": 0.567,
+        "Skill_2_Overload_Loop": 1,
+        "Start": 1
+      },
+      "hits": {
+        "Attack": [
+          0.633
+        ],
+        "Skill_2": [
+          0.5
+        ]
+      },
+      "bounds": {
+        "x": -177.559,
+        "y": -2.502,
+        "width": 479.913,
+        "height": 373.496
+      },
+      "animationRoles": {
+        "idle": "Idle",
+        "deploy": "Start",
+        "attack": {
+          "begin": null,
+          "loop": "Attack",
+          "end": null
+        },
+        "attackDown": null,
+        "skill": {
+          "begin": null,
+          "loop": "Attack",
+          "end": null,
+          "index": 0,
+          "via": "attack"
+        },
+        "skills": {
+          "0": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null,
+            "index": 0,
+            "via": "attack"
+          },
+          "1": {
+            "begin": null,
+            "loop": "Skill_2",
+            "end": null,
+            "index": 1,
+            "via": "skill"
+          }
+        },
+        "die": "Die",
+        "stun": null,
+        "move": null
+      }
+    }
+  },
+  "interfaceAssets": [
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "five-star-icons/Timeslot - Base.webp",
+      "bytes": 11438,
+      "sha256": "61c958a8754716b2d716a030070766abad0920d10176d3f11294c71a4b53b38f"
+    },
+    {
+      "repository": "arkpedia/arkpedia-skin-assets",
+      "commit": "6fb723692d89c4a08d9a7aa4015e19c0753dd270",
+      "path": "five-star-skins/Timeslot - Base.webp",
+      "bytes": 126768,
+      "sha256": "ebf7fddb176b3cbb7c41819ba6411a183125fd09472003293a329a62e91610c9"
+    },
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "skill-icons/Timeslot - ATK Up γ.webp",
+      "bytes": 3830,
+      "sha256": "bb0455eff231cf3fe547d6e2423f742abc478f87aaa5b6766ce30acaa7ecf7b4"
+    },
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "skill-icons/Timeslot - Technology and Traditional Rituals.webp",
+      "bytes": 7366,
+      "sha256": "6943c944f459f35dc2ac044eb11b9cbf22004330db4b99a0481122636f2e086e"
+    }
+  ],
+  "limitations": [
+    "The selected forty-second S2 account maps to two twenty-second bars; marked range exit skips remaining first-half time. Compiled ForceEnterSkillOverloadProgress and duration-to-bar dispatch remain explicit local mappings.",
+    "Independent overload reacquisition, per-emission ramp progression, live/birth-cached projectile damage, source mark/recipient priority, input-time owner clocks and current-rate drone clocks are local interpretations.",
+    "Modules, native particles/shaders/audio, physical-device behavior and original game-frame/pixel parity remain unverified."
+  ]
+}

@@ -169,7 +169,7 @@ function renderPrep() {
   document.querySelector("#roster").innerHTML = ops
     .map(
       (o) =>
-        `<button class="roster-item ${chosen.has(o.id) ? "chosen" : ""} ${editing === o.id ? "editing" : ""}" data-id="${o.id}" aria-label="Edit ${o.name}, ${chosen.has(o.id) ? "in squad" : "not in squad"}" aria-pressed="${editing === o.id}"><img src="${icon(o)}" alt=""><span>${o.name}<br><small>${chosen.has(o.id) ? "In squad" : "Not selected"}</small></span></button>`,
+        `<button class="roster-item ${chosen.has(o.id) ? "chosen" : ""} ${editing === o.id ? "editing" : ""}" data-id="${o.id}" aria-label="Edit ${o.name}, ${chosen.has(o.id) ? "in squad" : "not in squad"}" aria-pressed="${editing === o.id}"><img src="${icon(o)}" alt="" loading="lazy" decoding="async" fetchpriority="low"><span>${o.name}<br><small>${chosen.has(o.id) ? "In squad" : "Not selected"}</small></span></button>`,
     )
     .join("") + '<p class="roster-empty" hidden>No operators match this search.</p>';
   document.querySelectorAll(".roster-item").forEach(
