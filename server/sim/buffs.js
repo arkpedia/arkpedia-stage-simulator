@@ -161,6 +161,14 @@ export function makeBuff(b) {
     tags: b.tags ?? [],
     shield: b.shield ?? (b.mods && b.mods.shield) ?? 0,
     shieldHits: b.shieldHits ?? 0,
+    // Source barriers may cap the remainder after their accepted absorption.
+    // Ownership stays with this buff instance, like onTick/onRemove.
+    // A native reentrant guard may remain at zero until its producer finishes
+    // the response. Both empty-packet dispatch and retention require opt-in.
+    ...(typeof b.onShieldAbsorb === 'function' ? { onShieldAbsorb: b.onShieldAbsorb,
+      ...(b.onShieldAbsorbWhenEmpty === true ? { onShieldAbsorbWhenEmpty: true } : {}),
+      ...(b.keepDepletedShield === true ? { keepDepletedShield: true } : {}),
+    } : {}),
     // Explicit source barriers can accept only certain HP-damage kinds. Empty
     // or unknown type sets absorb nothing; absence preserves ordinary shields.
     shieldTypes: b.shieldTypes == null ? null : [...new Set(b.shieldTypes.filter(type =>

@@ -67,10 +67,11 @@ const candidateSnhunt = process.argv.includes('--review-candidate-snhunt');
 const candidateKichi = process.argv.includes('--review-candidate-kichi');
 const candidateCairn = process.argv.includes('--review-candidate-cairn');
 const candidatePedro = process.argv.includes('--review-candidate-pedro');
+const candidateMcnist = process.argv.includes('--review-candidate-mcnist');
 const candidateTmslot = process.argv.includes('--review-candidate-tmslot');
 const candidateThumpy = process.argv.includes('--review-candidate-thumpy');
 const candidateTanya = process.argv.includes('--review-candidate-tanya');
-if ([candidatePedro,candidateTmslot,candidateThumpy,candidateClosur,candidateReckpr,candidateBranch,candidateVarkis,candidateSnhunt,candidateKichi,candidateCairn,candidateTanya].filter(Boolean).length>1) throw Error('Review one candidate snapshot at a time');
+if ([candidateMcnist,candidatePedro,candidateTmslot,candidateThumpy,candidateClosur,candidateReckpr,candidateBranch,candidateVarkis,candidateSnhunt,candidateKichi,candidateCairn,candidateTanya].filter(Boolean).length>1) throw Error('Review one candidate snapshot at a time');
 const ids = Object.keys(REGULAR_OPERATORS);
 if (ids.includes('char_4179_monstr')) {
   const review = JSON.parse(await readFile(new URL('../../data/arkpedia-mon3tr-runtime-review.json', import.meta.url)));
@@ -457,6 +458,29 @@ if (ids.includes('char_4236_tmslot')) {
     || review.interfaceAssets.some(a => pins[a.repository] !== a.commit || !/^[a-f0-9]{64}$/.test(a.sha256)
       || !Number.isSafeInteger(a.bytes) || a.bytes < 1)) throw Error('Tmslot lacks pinned interface assets');
 }
+const mcnistSource = ids.includes('char_4230_mcnist') ? JSON.parse(await readFile(new URL('../../data/arkpedia-native-operators/char_4230_mcnist.json', import.meta.url))) : null;
+if (mcnistSource) {
+  const id='char_4230_mcnist',review=JSON.parse(await readFile(new URL('../../data/arkpedia-mcnist-runtime-review.json',import.meta.url)));
+  const approved=JSON.stringify(review.enabledOperators)===JSON.stringify([id])&&review.verification.browser.status==='passed';
+  const pending=candidateMcnist&&review.enabledOperators.length===0&&review.verification.browser.status==='pending';
+  const artifacts=Object.fromEntries(await Promise.all([
+    ['foundation','native-operators/char_4230_mcnist'],['owner','mcnist-art'],['ownerRecipe','mcnist-art-recipe'],
+    ['token','mcnist-token-art'],['tokenRecipe','mcnist-token-art-recipe'],['clocks','mcnist-clocks'],
+    ['avatar','mcnist-token-avatar'],['avatarRecipe','mcnist-token-avatar-recipe']
+  ].map(async([key,path])=>[key,await readFile(new URL(`../../data/arkpedia-${path}.json`,import.meta.url))])));
+  const sha=key=>createHash('sha256').update(artifacts[key]).digest('hex');
+  if((!approved&&!pending)||review.frameParity!==false||review.moduleSupport!==false||review.nativeParticleSupport!==false||review.nativePixelParity!==false
+    ||review.mechanicsPolicy!=='source-cn-owner-mcgraf-barriers-ammo-cross-and-fresh-charge-v1'
+    ||review.sourceFoundationSha256!==sha('foundation')||review.ownerArtworkSha256!==sha('owner')||review.tokenArtworkSha256!==sha('token')||review.sourceClocksSha256!==sha('clocks')
+    ||review.tokenAvatarSha256!==sha('avatar')||JSON.parse(artifacts.avatar).recipeSha256!==sha('avatarRecipe')
+    ||JSON.parse(artifacts.avatar).foundation.sha256!==sha('foundation')
+    ||JSON.parse(artifacts.owner).recipeSha256!==sha('ownerRecipe')||JSON.parse(artifacts.token).recipeSha256!==sha('tokenRecipe')
+    ||mcnistSource.source.commit!==cnEvidence?.source.commit||JSON.stringify(mcnistSource.tables.character)!==JSON.stringify(cnEvidence.tables.characters[id])
+    ||Object.entries(mcnistSource.tables.skills).some(([key,value])=>JSON.stringify(value)!==JSON.stringify(cnEvidence.tables.skills[key])))
+    throw Error('Mechanist lacks matching original owner/token source, artwork, clocks and public browser review');
+  const expected=['six-star-icons/Mechanist - Base.webp','six-star-skins/Mechanist - Base.webp','skill-icons/Mechanist - Cluster Analysis.webp','skill-icons/Mechanist - Co-operative Defense Techniques.webp','skill-icons/Mechanist - Star of Engineering.webp'].sort();
+  if(JSON.stringify(review.interfaceAssets.map(a=>a.path).sort())!==JSON.stringify(expected)||review.interfaceAssets.some(a=>pins[a.repository]!==a.commit||!/^[a-f0-9]{64}$/.test(a.sha256)||!Number.isSafeInteger(a.bytes)||a.bytes<1))throw Error('Mechanist lacks five pinned interface assets');
+}
 if (ids.includes('char_4234_pedro')) {
   const id = 'char_4234_pedro';
   const review = JSON.parse(await readFile(new URL('../../data/arkpedia-pedro-runtime-review.json', import.meta.url)));
@@ -625,17 +649,19 @@ if(ids.includes('char_1042_phatm2'))tokenIds.unshift('token_10054_phatm2_encdool
 if (ids.includes('char_4179_monstr')) tokenIds.unshift('token_10050_monstr_prosts');
 if (ids.includes('char_450_necras')) tokenIds.unshift('token_10043_necras_skeltn');
 if (ids.includes('char_4228_closur')) tokenIds.unshift('token_10066_closur_ourbase');
+if (mcnistSource) tokenIds.unshift('token_10069_mcnist_mcgraf');
 const closurSource = ids.includes('char_4228_closur')
   ? JSON.parse(await readFile(new URL('../../data/arkpedia-native-operators/char_4228_closur.json', import.meta.url))) : null;
 const tokens = Object.fromEntries(tokenIds.map(id => {
   const closurToken = id === 'token_10066_closur_ourbase';
-  const c = closurToken ? closurSource.tables.tokens[id] : characters[id];
-  const tokenRanges = closurToken ? closurSource.tables.ranges : ranges;
-  const tokenSkills = closurToken ? closurSource.tables.tokenSkills : skills;
+  const sourceToken=closurToken?closurSource:id==='token_10069_mcnist_mcgraf'?mcnistSource:null;
+  const c = sourceToken ? sourceToken.tables.tokens[id] : characters[id];
+  const tokenRanges = sourceToken ? sourceToken.tables.ranges : ranges;
+  const tokenSkills = sourceToken ? sourceToken.tables.tokenSkills : skills;
   if (!c) throw Error(`Missing original token: ${id}`);
   const candidate = v => v.rangeId
     ? { ...v, rangeGrid: tokenRanges[v.rangeId].grids.map(p => [p.row, p.col]) } : v;
-  return [id, { id, name: closurToken ? c.appellation : c.name, profession: c.profession,
+  return [id, { id, name: sourceToken ? c.appellation : c.name, profession: c.profession,
     subProfessionId: c.subProfessionId, position: c.position,
     phases: c.phases.map(p => ({ maxLevel: p.maxLevel,
       attributesKeyFrames: p.attributesKeyFrames,
@@ -833,6 +859,22 @@ if (ids.includes('char_4234_pedro')) {
   for (const key of keys) if (JSON.stringify(models[key]) !== JSON.stringify(review.originalArtwork[key]))
     throw Error('Changed Pedro original artwork: ' + key);
 }
+if(mcnistSource){
+  const review=JSON.parse(await readFile(new URL('../../data/arkpedia-mcnist-runtime-review.json',import.meta.url)));
+  const keys=['char_4230_mcnist','token_10069_mcnist_mcgraf'].flatMap(id=>['front','back'].map(face=>`operator/${id}/default/${face}`)).sort();
+  if(JSON.stringify(Object.keys(review.originalArtwork).sort())!==JSON.stringify(keys))throw Error('Incomplete original Mechanist/McGraf artwork review');
+  for(const key of keys)if(JSON.stringify(models[key])!==JSON.stringify(review.originalArtwork[key]))throw Error('Changed original Mechanist/McGraf artwork: '+key);
+  const portrait=JSON.parse(await readFile(new URL('../../data/arkpedia-mcnist-token-avatar.json',import.meta.url)));
+  for(const face of ['front','back']){
+    const avatar=models[`operator/token_10069_mcnist_mcgraf/default/${face}`].avatar;
+    if(avatar?.sha256!==portrait.avatar.sha256||avatar.bytes!==portrait.avatar.bytes
+      ||avatar.source?.kind!=='cn-native-sprite'||avatar.source.proofSha256!==review.tokenAvatarSha256
+      ||avatar.source.resourceVersion!==portrait.source.resourceVersion||avatar.source.proof!==portrait.sdReview
+      ||avatar.source.bundleSha256!==portrait.sprite.bundle.sha256
+      ||avatar.source.spritePathId!==portrait.sprite.spritePathId||avatar.source.texturePathId!==portrait.sprite.texturePathId)
+      throw Error('Mechanist token portrait lacks its exact native Sprite/hub proof');
+  }
+}
 if (ids.includes('char_4207_branch')) {
   const review = JSON.parse(await readFile(new URL('../../data/arkpedia-branch-runtime-review.json', import.meta.url)));
   const keys = ['front', 'back'].map(face => `operator/char_4207_branch/default/${face}`).sort();
@@ -978,7 +1020,7 @@ for (const token of Object.values(tokens)) {
 }
 const output = {
   schemaVersion: 1,
-  ...(candidatePedro ? { reviewCandidates: ['char_4234_pedro'] } : candidateTmslot ? { reviewCandidates: ['char_4236_tmslot'] } : candidateThumpy ? { reviewCandidates: ['char_4235_thumpy'] } : candidateTanya ? { reviewCandidates: ['char_4225_tanya'] } : candidateCairn ? { reviewCandidates: ['char_4214_cairn'] } : candidateKichi ? { reviewCandidates: ['char_4203_kichi'] } : candidateSnhunt ? { reviewCandidates: ['char_4211_snhunt'] } : candidateVarkis ? { reviewCandidates: ['char_4166_varkis'] } : candidateReckpr ? { reviewCandidates: ['char_4196_reckpr'] } : candidateBranch ? { reviewCandidates: ['char_4207_branch'] } : {}),
+  ...(candidateMcnist ? { reviewCandidates: ['char_4230_mcnist'] } : candidatePedro ? { reviewCandidates: ['char_4234_pedro'] } : candidateTmslot ? { reviewCandidates: ['char_4236_tmslot'] } : candidateThumpy ? { reviewCandidates: ['char_4235_thumpy'] } : candidateTanya ? { reviewCandidates: ['char_4225_tanya'] } : candidateCairn ? { reviewCandidates: ['char_4214_cairn'] } : candidateKichi ? { reviewCandidates: ['char_4203_kichi'] } : candidateSnhunt ? { reviewCandidates: ['char_4211_snhunt'] } : candidateVarkis ? { reviewCandidates: ['char_4166_varkis'] } : candidateReckpr ? { reviewCandidates: ['char_4196_reckpr'] } : candidateBranch ? { reviewCandidates: ['char_4207_branch'] } : {}),
   ...(formSource ? { globalAlternateFormSource: formSource } : {}),
   sources: cnEvidence ? { ...pins, [cnEvidence.source.repository]: cnEvidence.source.commit } : pins,
   ...(cnEvidence ? { operatorSourceChannels: Object.fromEntries(ids.map(id => [id, operatorChannel(id, REGULAR_OPERATORS[id])])) } : {}),
@@ -1046,7 +1088,7 @@ for (const [id,support] of Object.entries(REGULAR_OPERATORS)) {
 output.skillEffects = {repository:"arkpedia/arkpedia-sd-assets",commit:sdCommit,
   pack:stageAssets.effects.chargeCost,bindings};
 await writeJSONAtomic(
-  candidatePedro ? new URL("arkpedia-pedro-candidate.json", cache) : candidateTmslot ? new URL("arkpedia-tmslot-candidate.json", cache) : candidateThumpy ? new URL("arkpedia-thumpy-candidate.json", cache) : candidateTanya ? new URL("arkpedia-tanya-candidate.json", cache) : candidateCairn ? new URL("arkpedia-cairn-candidate.json", cache) : candidateKichi ? new URL("arkpedia-kichi-candidate.json", cache) : candidateSnhunt ? new URL("arkpedia-snhunt-candidate.json", cache) : candidateVarkis ? new URL("arkpedia-varkis-candidate.json", cache) : candidateBranch ? new URL("arkpedia-branch-candidate.json", cache) : candidateReckpr ? new URL("arkpedia-reckpr-candidate.json", cache) : candidateClosur ? new URL("arkpedia-closur-candidate.json", cache) : new URL("../../data/arkpedia-mvp.json", import.meta.url),
+  candidateMcnist ? new URL("arkpedia-mcnist-candidate.json", cache) : candidatePedro ? new URL("arkpedia-pedro-candidate.json", cache) : candidateTmslot ? new URL("arkpedia-tmslot-candidate.json", cache) : candidateThumpy ? new URL("arkpedia-thumpy-candidate.json", cache) : candidateTanya ? new URL("arkpedia-tanya-candidate.json", cache) : candidateCairn ? new URL("arkpedia-cairn-candidate.json", cache) : candidateKichi ? new URL("arkpedia-kichi-candidate.json", cache) : candidateSnhunt ? new URL("arkpedia-snhunt-candidate.json", cache) : candidateVarkis ? new URL("arkpedia-varkis-candidate.json", cache) : candidateBranch ? new URL("arkpedia-branch-candidate.json", cache) : candidateReckpr ? new URL("arkpedia-reckpr-candidate.json", cache) : candidateClosur ? new URL("arkpedia-closur-candidate.json", cache) : new URL("../../data/arkpedia-mvp.json", import.meta.url),
   output,
 );
 console.log(

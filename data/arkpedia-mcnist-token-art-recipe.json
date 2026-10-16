@@ -1,0 +1,62 @@
+{
+  "operator": "char_4230_mcnist",
+  "model": "token_10069_mcnist_mcgraf",
+  "name": "McGraf",
+  "foundationSha256": "951f971e410a0ddea6b08424363a07627bb398d1efbe2d8971b90cdd3dd88317",
+  "bundle": "pkgrps/btl_pfb_tokens_5.ab",
+  "output": "data/arkpedia-mcnist-token-art.json",
+  "sdReview": "source-reviews/mechanist-mcgraf.json",
+  "scope": "Original McGraf artwork only. Distinct native Front/Back skeleton/atlas/material/texture pointers, unchanged decoded pixels and PMA. Exact native zero-duration Skill_Loop retained without fabricating events. Skill phase roles, summon combat, public admission, native effects/audio and game-frame/pixel parity are separate.",
+  "roles": {
+    "Front": {
+      "idle": "Idle",
+      "deploy": "Start",
+      "attack": {
+        "begin": null,
+        "loop": "Attack",
+        "end": null
+      },
+      "skill": null,
+      "die": "Die",
+      "stun": null,
+      "move": null
+    },
+    "Back": {
+      "idle": "Idle",
+      "deploy": "Start",
+      "attack": {
+        "begin": null,
+        "loop": "Attack",
+        "end": null
+      },
+      "skill": null,
+      "die": null,
+      "stun": null,
+      "move": null
+    }
+  },
+  "missingOptionalAliases": {
+    "Front": [],
+    "Back": [
+      "Die"
+    ]
+  },
+  "nativeMixes": [],
+  "reviewPhases": [
+    "Start",
+    "Idle",
+    "Attack",
+    "Skill_Begin",
+    "Skill_Loop",
+    "Skill_End",
+    "Die"
+  ],
+  "emptyClips": {
+    "Front": [
+      "Skill_Loop"
+    ],
+    "Back": [
+      "Skill_Loop"
+    ]
+  }
+}
