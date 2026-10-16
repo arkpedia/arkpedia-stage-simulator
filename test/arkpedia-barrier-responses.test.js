@@ -42,3 +42,25 @@ test('typed barrier filters stay authoritative on the callback path',()=>{
 test('ordinary earlier shields retain ordering before a source callback and later foreign barriers remain untouched after cancellation',()=>{
  const f=make();f.b.addBuff(f.u,{key:'qa:earlier',shield:50});f.b.addBuff(f.u,{key:'qa:native',shield:10,onShieldAbsorb:c=>c.remaining=0});const last=f.b.addBuff(f.u,{key:'qa:later',shield:1000});near(hit(f,100),0);assert.equal(f.u.findBuff('qa:earlier'),null);near(last.shield,1000);
 });
+test('source-owned empty barrier keeps its exact position while cancelling nested reentrant damage',()=>{
+ const f=make(),hp=f.u.hp;let responding=false,outer=0,nested=0;
+ const shield=f.b.addBuff(f.u,{key:'qa:guard',shield:10,onShieldAbsorbWhenEmpty:true,keepDepletedShield:true,onShieldAbsorb:c=>{
+  c.remaining=0;if(responding){nested++;near(c.absorbed,0);return;}outer++;responding=true;hit(f,100);responding=false;f.b.removeBuff(f.u,c.buff);
+ }});near(hit(f,100),0);near(f.u.hp,hp);assert.equal(outer,1);assert.equal(nested,1);assert.equal(f.u.buffs.includes(shield),false);assert.deepEqual(f.b.errors,[]);
+});
+test('an empty source guard does not bypass an earlier positive shield for the nested packet',()=>{
+ const f=make();let nested=false,first;
+ f.b.addBuff(f.u,{key:'qa:guard',shield:10,onShieldAbsorbWhenEmpty:true,keepDepletedShield:true,onShieldAbsorb:c=>{
+  c.remaining=0;if(nested)return;nested=true;first=f.b.addBuff(f.u,{key:'qa:first',shield:50});f.u.buffs.splice(f.u.buffs.indexOf(first),1);f.u.buffs.unshift(first);hit(f,100);f.b.removeBuff(f.u,c.buff);
+ }});near(hit(f,100),0);assert.equal(f.u.findBuff('qa:first'),null);assert.deepEqual(f.b.errors,[]);
+});
+test('empty source guard still applies type and application filters before its callback',()=>{
+ const f=make();let n=0;f.b.addBuff(f.u,{key:'qa:guard',shield:0,onShieldAbsorbWhenEmpty:true,keepDepletedShield:true,shieldTypes:['arts'],shieldApplyWays:['ranged'],onShieldAbsorb:c=>{n++;c.remaining=0;}});
+ near(hit(f,100,'true',{applyWay:'ranged'}),100);near(hit(f,100,'arts',{applyWay:'melee'}),80);assert.equal(n,0);near(hit(f,100,'arts',{applyWay:'ranged'}),0);assert.equal(n,1);
+});
+test('ordinary exhausted callback barriers retain automatic cleanup without source-lifecycle opt-in',()=>{
+ const f=make();let n=0;f.b.addBuff(f.u,{key:'qa:ordinary',shield:10,onShieldAbsorb:()=>n++});hit(f,10);hit(f,10);assert.equal(n,1);assert.equal(f.u.findBuff('qa:ordinary'),null);
+});
+test('an explicitly empty callback barrier normalizes invalid negative/NaN budgets without poisoning a packet',()=>{
+ for(const value of[-1,NaN]){const f=make();f.b.addBuff(f.u,{key:'qa:guard',shield:value,onShieldAbsorbWhenEmpty:true,onShieldAbsorb:c=>{near(c.absorbed,0);c.remaining=0;}});near(hit(f,100),0);assert.deepEqual(f.b.errors,[]);}
+});

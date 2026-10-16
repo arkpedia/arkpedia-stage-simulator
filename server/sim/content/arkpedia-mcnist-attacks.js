@@ -59,12 +59,12 @@ export class MechanistAttackClock{
   this.b.on('battleEnd',()=>{this.b.projectiles.remove(p=>this.flights.has(p));this.flights.clear();this.unwatchFlights();})];}
  unwatchFlights(){for(const h of this.flightHandles)this.b.off(h);this.flightHandles=[];}
  release(ts,info){if(!this.admit(ts))return false;this.phase.accepted=true;const t=ts[0],u=this.u,b=this.b;
-  if(this.token){b.dealDamage(u,t,{amount:u.s.atk*u.s.atkScaleMul,type:'phys',isAttack:true,isSkill:false,attackId:info.attackId,applyWay:'melee',tags:['mcgraf:ordinary']});return true;}
+  if(this.token){b.dealDamage(u,t,{amount:u.s.atk*u.s.atkScaleMul,type:'phys',isAttack:true,isSkill:info.isSkill,attackId:info.attackId,applyWay:'melee',tags:['mcgraf:ordinary']});return true;}
   const life=t.deploySeq,sourceLife=u.deploySeq,birthAtk=u.s.atk*u.s.atkScaleMul;
   const p=b.addProjectile({from:u,target:t,source:u,speed:20,maxAge:10,visual:'bolt',data:{arkpediaTrackedVisual:true,mcnistOwner:u.id},onHit:({target})=>{
    this.flights.delete(p);if(!this.flights.size)this.unwatchFlights();if(b.finished||!target||target.deploySeq!==life||!canTargetEnemy(u,target,{canHitFly:true}))return;
    const atk=present(u)&&u.deploySeq===sourceLife?u.s.atk*u.s.atkScaleMul:birthAtk;
-   b.dealDamage(u,target,{amount:atk,type:'phys',isAttack:true,isSkill:false,attackId:info.attackId,applyWay:'ranged',tags:['mcnist:ordinary']});
+   b.dealDamage(u,target,{amount:atk,type:'phys',isAttack:true,isSkill:info.isSkill,attackId:info.attackId,applyWay:'ranged',tags:['mcnist:ordinary']});
   }});this.flights.add(p);this.watchFlights();return true;
  }
  tick(){if(!this.valid())return;const{b,u}=this;let p=this.phase;
@@ -73,12 +73,13 @@ export class MechanistAttackClock{
   if(p?.kind==='attack'){
    p.age+=sourceAbilityDelta(u,Math.max(0,b.time-p.lastAt),true)*p.speed;p.lastAt=b.time;u.mem.regularFormVisual.speed=p.speed*u.s.slowDownRate;
    if(!p.released&&p.age+1e-7>=p.releaseAge){p.released=true;if(p.target.deploySeq===p.life&&this.legal(p.target)){
-    this.accepting=true;try{b.forceAttack(u,[p.target]);}finally{this.accepting=false;}}}
+    this.accepting=true;try{this.performReceipt([p.target]);}finally{this.accepting=false;}}}
    if(!this.valid()||this.phase!==p||p.age+1e-7<p.untilAge)return;this.phase=p=null;
   }
   if(u.atkCd>1e-9)return;const t=this.choices()[0];if(!t){this.idle();return;}this.begin(t);
  }
  profile(){return attackProfile(this.token,ts=>this.admit(ts),(ts,info)=>this.release(ts,info));}
+ performReceipt(targets){return this.b.forceAttack(this.u,targets);}
  install(){if(this.stopped||this.handles.length)throw Error('Ordinary Mechanist/McGraf clock cannot be reinstalled');const b=this.b,u=this.u;
   this.handles=[b.on('deploy',({unit,move})=>{if(unit!==u||move)return;this.seq=u.deploySeq;this.facing=u.dir;const until=b.time+this.model().exactDurations.Start;this.phase={kind:'born',until};u.mem.regularBornUntil=until;this.visual('Start');},{owner:u}),
    b.on('tick',()=>{if(this.seq!==null&&!this.valid())this.stop();else this.tick();},{owner:u}),b.on('removed',({unit})=>{if(unit===u)this.stop();},{owner:u}),

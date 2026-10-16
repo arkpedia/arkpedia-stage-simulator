@@ -234,12 +234,14 @@ export function absorbShields(battle, target, amount, damageType = null, applica
     const original = target.buffs.slice(), life = target.deploySeq;
     for (const b of original) {
       if (!(rest > 0) || !target.alive || !target.deployed || target.deploySeq !== life) break;
-      if (!target.buffs.includes(b) || !(b.shield > 0)) continue;
+      if (!target.buffs.includes(b) || !(b.shield > 0) &&
+        !(b.onShieldAbsorbWhenEmpty === true && typeof b.onShieldAbsorb === 'function')) continue;
       if (b.shieldTypes && !b.shieldTypes.includes(damageType)) continue;
       if (b.shieldApplyWays && !b.shieldApplyWays.includes(application.applyWay ?? 'none')) continue;
       if (b.shieldSourceSides && !b.shieldSourceSides.includes(application.source?.side)) continue;
-      const absorbed = Math.min(b.shield, rest);
-      b.shield -= absorbed; rest -= absorbed; changed = true;
+      const budget = b.shield > 0 ? b.shield : 0;
+      const absorbed = Math.min(budget, rest);
+      b.shield = budget - absorbed; rest -= absorbed; changed = true;
       if (b.shield <= 1e-9) b.shield = 0;
       if (typeof b.onShieldAbsorb === 'function') {
         const ctx = { battle, unit: target, buff: b, absorbed, remaining: rest,
@@ -252,7 +254,7 @@ export function absorbShields(battle, target, amount, damageType = null, applica
           rest = ctx.remaining;
         if (!target.alive || !target.deployed || target.deploySeq !== life) { rest = 0; break; }
       }
-      if (b.shield === 0 && !b.mods && !b.flags && !(b.shieldHits > 0)
+      if (b.shield === 0 && !b.keepDepletedShield && !b.mods && !b.flags && !(b.shieldHits > 0)
         && target.buffs.includes(b)) battle.removeBuff(target, b);
     }
     if (changed) target.markDirty();
