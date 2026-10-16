@@ -32,8 +32,8 @@ before = hashes()
 checked('extract-cn-operator')
 assert hashes() == before, 'Non-reproducible original CN source'
 original = json.loads(source.read_bytes())
-skill = next(iter(original['tables']['skills']))
-prefab = next(iter(original['skills']))
+skill = next(iter(original['tables']['skills']), None)
+prefab = next(iter(original['skills']), None)
 template = next(iter(original['templates']))
 face = next(iter(original['models'][ID]))
 range_id = next(iter(original['tables']['ranges']))
@@ -66,9 +66,6 @@ cases = [
     ('changed native component type', change(['characters', ID, 0, 'components', 0, 'type'], 'Unknown')),
     ('missing artwork hierarchy', delete(['artworkHierarchy', ID])),
     ('duplicate owner object', lambda e: e['characters'][ID].append(copy.deepcopy(e['characters'][ID][0]))),
-    ('missing source skill', delete(['skills', prefab])),
-    ('missing source rank', delete(['tables', 'skills', skill, 'levels', 9])),
-    ('changed literal skill-prefab binding', change(['skillBindings', skill], ['invented'])),
     ('invented owner mode', change(['ownerModeSkills'], ['invented'])),
     ('missing JSON template', delete(['templates', template])),
     ('missing native template', delete(['originalTemplates', template])),
@@ -81,6 +78,20 @@ cases = [
     ('unsupported native particles', change(['nativeParticleSupport'], True)),
     ('unsupported modules', change(['moduleSupport'], True)),
 ]
+if prefab is not None:
+    cases.append(('missing source skill', delete(['skills', prefab])))
+else:
+    cases.append(('invented source skill graph', change(['skills'], {'invented': []})))
+if skill is not None:
+    cases.extend([
+        ('missing source rank', delete(['tables', 'skills', skill, 'levels', 9])),
+        ('changed literal skill-prefab binding', change(['skillBindings', skill], ['invented'])),
+    ])
+else:
+    cases.extend([
+        ('invented source skill table', change(['tables', 'skills'], {'invented': {}})),
+        ('invented literal skill-prefab binding', change(['skillBindings'], {'invented': ['invented']})),
+    ])
 if original['projectiles']:
     cases.append(('missing native projectile', delete(['projectiles', next(iter(original['projectiles']))])))
 if original['buffDatabase']:
