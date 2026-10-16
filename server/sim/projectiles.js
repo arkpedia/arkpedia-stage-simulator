@@ -82,6 +82,7 @@ export class ProjectileSystem {
     // non-finite coordinates would never "arrive" (NaN distance) and leak the projectile for maxAge
     const fx = fin(from.x, 0), fy = fin(from.y, 0);
     const target = p.target && typeof p.target === 'object' ? p.target : null;
+    const startDelay = Number.isFinite(p.startDelay) && p.startDelay > 0 ? p.startDelay : 0;
     const proj = {
       id: ++seq,
       x: fx,
@@ -96,6 +97,7 @@ export class ProjectileSystem {
       speed: p.speed > 0 ? p.speed : PROJECTILE_SPEED,
       flightTime: Number.isFinite(p.flightTime) && p.flightTime > 0 ? p.flightTime : null,
       attached: p.attached === true,
+      ...(startDelay > 0 ? { startDelay } : {}),
       onHit: p.onHit ?? null,
       // Opt-in moving colliders (piercing shots). Existing point impacts keep
       // their original arrival behavior; finite colliders expire where they are.
@@ -106,7 +108,7 @@ export class ProjectileSystem {
       hitDead: !!p.hitDead,
       data: p.data ?? null,
       age: 0,
-      maxAge: p.maxAge > 0 ? p.maxAge : Math.max(10, fin(p.flightTime, 0)),
+      maxAge: p.maxAge > 0 ? p.maxAge : Math.max(10, fin(p.flightTime, 0) + startDelay),
     };
     this.list.push(proj);
     return proj;
@@ -125,15 +127,21 @@ export class ProjectileSystem {
         else if (!p.hitDead) continue; // fizzle
         else p.target = null;
       }
+      // Native delay-to-start consumes lifespan but no travel time. A step
+      // crossing that boundary advances only its post-delay portion. Existing
+      // projectiles have no delay property and retain their original clock.
+      if (p.startDelay != null && p.age < p.startDelay && p.age < p.maxAge) { keep.push(p); continue; }
       const dx = p.tx - p.x, dy = p.ty - p.y;
       const d = Math.hypot(dx, dy);
-      const motionDt = p.expireInPlace ? Math.min(dt, Math.max(0, p.maxAge - previous.age)) : dt;
+      const motionEnd = p.expireInPlace ? Math.min(p.age, p.maxAge) : p.age;
+      const motionDt = p.startDelay != null ? Math.max(0, motionEnd - Math.max(previous.age, p.startDelay))
+        : p.expireInPlace ? Math.min(dt, Math.max(0, p.maxAge - previous.age)) : dt;
       const step = p.speed * this.speedScale(p) * motionDt;
       // Some original Arts projectiles use a fixed travel duration instead of
       // speed. Follow the live destination from the saved origin, even when the
       // target crosses the projectile; only the duration boundary can impact.
       if (p.flightTime !== null) {
-        const progress = Math.min(1, p.age / p.flightTime);
+        const progress = Math.min(1, Math.max(0, p.age - (p.startDelay ?? 0)) / p.flightTime);
         p.x = p.attached ? p.tx : p.fromX + (p.tx - p.fromX) * progress;
         p.y = p.attached ? p.ty : p.fromY + (p.ty - p.fromY) * progress;
         if (this.intercept(p, previous)) continue;

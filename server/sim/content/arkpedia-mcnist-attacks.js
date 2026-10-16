@@ -18,6 +18,11 @@ export const MCGRAF_ATTACK_CONTRACT=Object.freeze({
  mapping:'Captured legal ground target life and blocked-first ordinary selection. Release uses original _waitForAttackEvent=0 and _preDelay=0.699999988079071, separate from the artwork OnAttack marker. Input-time interval scales capped ability/animation playback, with live native slow-down applied once to elapsed ability time. Source physical damage is direct at release with one accepted ordinary receipt, not a homing projectile or splash. Start holds attacks for its original duration. Interrupted pending work preserves positive cooldown. Current facing selects original Front/Back; missing Back death is explicitly hidden.',
  limits:'Compiled predelay/ASPD/slow-down interaction, target capture, blocked-first post-filter, birth and interruption order are local mappings. Source S3 charge/mark behavior, owner skills, native effects/audio, modules and game-frame parity are not implemented by this ordinary attack adapter. No public summon approval.',frameParity:false,
 });
+export const MCGRAF_S3_ATTACK_CONTRACT=Object.freeze({
+ scope:'The original ordinary ground-only single-target McGraf attack clock for a caller-registered selected S3 token life',
+ mapping:MCGRAF_ATTACK_CONTRACT.mapping,
+ limits:'Requires its own explicit S3 binding. This only supplies the unchanged original ordinary melee clock, including birth and literal native predelay. S3 charge, replacement, affecting marker, aura and lifetime require their separate reviewed controllers. Modules, native effects/audio and game-frame parity remain unverified. No public summon approval.',frameParity:false,
+});
 const present=u=>u?.alive&&u.deployed&&!u._removing;
 const due=(b,t)=>b.time+1e-7>=t;
 function verify(token=false){const n=mechanistNativeInputs(),as=token?n.tokenAttacks:[n.ordinary,n.combat];
@@ -99,7 +104,9 @@ export function prepareMechanistAttacks(b,u,{contract}={}){
 // Shared source validation for the separately contracted selected skill adapters.
 export function prepareMechanistAttackInputs(b,u){verify();return prepareMechanistBarriers(b,u,{contract:MCNIST_BARRIER_CONTRACT});}
 export function mcgrafAttackKit(b,owner,barriers,{contract}={}){
- if(contract!==MCGRAF_ATTACK_CONTRACT||barriers!==owner.mem.mcnistBarriers||!barriers.valid()||selectedMcGrafBuild(barriers.record.build).ownerIndex===2)throw Error('Explicit selected ordinary McGraf attack contract required');verify(true);
+ if(barriers!==owner.mem.mcnistBarriers||!barriers?.valid())throw Error('Explicit selected ordinary McGraf attack contract required');
+ const index=selectedMcGrafBuild(barriers.record.build).ownerIndex;
+ if(!(contract===MCGRAF_ATTACK_CONTRACT&&index!==2||contract===MCGRAF_S3_ATTACK_CONTRACT&&index===2))throw Error('Explicit selected ordinary McGraf attack contract required');verify(true);
  // _setupUnit asks for a kit before its token exists; callbacks capture the
  // clock installed on that exact newly created source-linked instance.
  let c;return{talents:[],skill:null,trait:attackProfile(true,ts=>c?.admit(ts)===true,(ts,info)=>c?.release(ts,info)===true),
