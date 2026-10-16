@@ -36,7 +36,7 @@ export function prepareMcGrafS3Aura(b,t,{contract,barriers}={}){
 }
 export class McGrafS3Aura{
  constructor(b,t,barriers,bb){Object.assign(this,{b,t,u:t.ownerUnit,barriers,bb,life:t.deploySeq,ownerLife:t.ownerUnit.deploySeq,activation:t.ownerUnit.skill.activations,
-  bornAt:b.time,steps:0,value:bb.atk,stopped:false,installed:false,marker:null,entries:new Map(),pending:new Map(),handles:[],serial:0});
+  bornAt:null,steps:0,value:bb.atk,stopped:false,installed:false,marker:null,entries:new Map(),pending:new Map(),handles:[],serial:0});
   t.mem.mcgrafS3AuraSeq=(t.mem.mcgrafS3AuraSeq??0)+1;this.key=`mcgraf:s3:${t.id}:${this.life}:${this.activation}:${t.mem.mcgrafS3AuraSeq}`;
  }
  valid(){return !this.stopped&&!this.b.finished&&this.barriers.valid()&&this.u.deploySeq===this.ownerLife&&this.u.skill.active&&this.u.skill.activations===this.activation
@@ -84,7 +84,7 @@ export class McGrafS3Aura{
    b.on('death',({unit})=>{if(unit===this.t||unit===this.u)this.stop();else{const e=this.entries.get(unit);if(e)this.remove(e);}},{owner:this.t}),
    b.on('skillEnd',({unit})=>{if(unit===this.u)this.stop();},{owner:this.t}),b.on('battleEnd',()=>this.stop(),{owner:this.t})];
   const marker=b.addBuff(this.t,{key:this.key,source:this.t,onRemove:({buff})=>{if(this.marker===buff)this.stop();}});
-  if(!marker||!this.valid()){if(marker)b.removeBuff(this.t,marker);this.stop();return false;}this.marker=marker;this.tick();return this.active();
+  if(!marker||!this.valid()){if(marker)b.removeBuff(this.t,marker);this.stop();return false;}this.marker=marker;this.bornAt=b.time;this.tick();return this.active();
  }
  stop(){if(this.stopped)return;this.stopped=true;for(const h of this.handles)this.b.off(h);this.handles=[];
   for(const e of [...this.entries.values()])this.remove(e);const old=this.marker;this.marker=null;if(old)this.b.removeBuff(this.t,old);

@@ -28,6 +28,10 @@ test('Exact world-time boundaries wait the first period and account for every el
  const f=make();f.b.time=.999999;f.aura.tick();near(amount(f),.5);f.b.time=1;f.aura.tick();near(amount(f),.525);
  f.aura.tick();near(amount(f),.525);f.b.time=17;f.aura.tick();near(amount(f),.925);assert.equal(f.aura.steps,17);
 });
+test('Preparing an aura early does not age it before the native affecting marker is accepted',()=>{
+ const f=make({install:false});f.aura=prepareMcGrafS3Aura(f.b,f.t,{contract:CONTRACT,barriers:f.resources});advance(f.b,4);
+ assert.equal(f.aura.install(),true);near(amount(f),.5);assert.equal(f.aura.steps,0);near(f.aura.bornAt,4);advance(f.b,1.05);near(amount(f),.525);
+});
 test('A rejected derived application retries on the next source interval, not every rendering tick',()=>{
  const f=make({install:false});let attempts=0;const hook=f.b.on('beforeBuff',c=>{if(c.buff.status==='weaken'){attempts++;c.cancel=true;}});f.aura=attach(f);
  advance(f.b,.9);assert.equal(attempts,1);near(amount(f),1);f.b.off(hook);advance(f.b,.15);near(amount(f),.525);
