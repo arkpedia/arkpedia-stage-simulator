@@ -117,6 +117,7 @@ import { customizePublicCairnKit, installPublicCairn } from './content/arkpedia-
 import { customizePublicCrackborneKit, installPublicCrackborne } from './content/arkpedia-tanya-public.js';
 import { customizePublicThumpyKit, installPublicThumpy } from './content/arkpedia-thumpy-public.js';
 import { customizePublicTimeslotKit, installPublicTimeslot } from './content/arkpedia-tmslot-public.js';
+import { customizePublicPedroKit, installPublicPedro } from './content/arkpedia-pedro-public.js';
 import { customizePublicBranchKit, installPublicBranch } from './content/arkpedia-branch-public.js';
 import { customizePublicReckprKit, installPublicReckpr } from './content/arkpedia-reckpr-public.js';
 import { customizePublicLieselKit, installPublicLiesel } from './content/arkpedia-liesel-public.js';
@@ -584,6 +585,7 @@ export class StandardBattle extends Battle {
     customizePublicCrackborneKit({ battle: this, id, unit, kit });
     customizePublicThumpyKit({ battle: this, id, unit, kit });
     customizePublicTimeslotKit({ battle: this, id, unit, kit });
+    customizePublicPedroKit({ battle: this, id, unit, kit });
     customizePublicBranchKit({ battle: this, id, unit, kit });
     customizeNarantKit({ battle: this, id, def, unit, kit });
     customizeElaKit({ battle: this, id, def, unit, kit });
@@ -807,6 +809,7 @@ export class StandardBattle extends Battle {
     installPublicCrackborne({ battle: this, unit, def });
     installPublicThumpy({ battle: this, unit, def });
     installPublicTimeslot({ battle: this, unit, def });
+    installPublicPedro({ battle: this, unit, def });
     installPublicBranch({ battle: this, unit, def });
     installNarant({ battle: this, unit, def });
     installEla({ battle: this, unit, def });

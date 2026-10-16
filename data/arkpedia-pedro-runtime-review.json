@@ -1,0 +1,289 @@
+{
+  "schemaVersion": 1,
+  "operatorId": "char_4234_pedro",
+  "enabledOperators": [
+    "char_4234_pedro"
+  ],
+  "frameParity": false,
+  "moduleSupport": false,
+  "nativePixelParity": false,
+  "nativeParticleSupport": false,
+  "sourceFoundationSha256": "7439d18a99868fb6aeb5a664588e1d4745c5a7b7bd116817980e1befd373528c",
+  "ownerArtworkSha256": "353ef590936ae0fd5592649142bed2ff5abbb98a2b1e237605a42bd0da002e16",
+  "sourceClocksSha256": "72f25b08b2fb33092dbafa2712ad443a49040b37d7cbe861595e6e6a5a9147de",
+  "mechanicsPolicy": "source-cn-cached-arts-trigger-and-snapshot-ally-protection-v1",
+  "scope": "Selected source CN Pedro ordinary Arts shots, offensive-auto S1 trigger marks, conditional ally-count talent and two-charge manual S2 protection through the regular-stage squad/support paths.",
+  "verification": {
+    "source": "Five bundles, sixty components, six templates and two projectile graphs. Seven outputs reproduced and twenty-nine altered claims rejected on Node 22 and 24.",
+    "artwork": "Recipe-bound original files, decoded pixels and PMA; thirty-three altered claims rejected on both Node versions. Fourteen available original clips per viewport and eighteen desktop/emulated-phone captures pass without errors or failed resources. SD PR 31 merged with both hosted checks.",
+    "runtime": "519 combined selected/public and adjacent tests pass on Node 22 and 24. Thirty public checks cover all twenty skill ranks, promotion/potential/trust/support, source SP and cleanup. Both original 0-1 builds use legal ranged deployment, natural DP and unchanged terrain with Melantha: eleven kills, zero leaks and full life. S1 records eleven attributed damage receipts and two automatic activations; S2 records twelve damage receipts and three manual activations. Full local/hosted verification remains separate.",
+    "browser": {
+      "status": "passed",
+      "script": "tools/arkpedia/review-pedro-public.mjs",
+      "driver": "tools/arkpedia/public-review-driver.mjs",
+      "cases": 8,
+      "captures": 52,
+      "browserVersion": "Chrome/153.0.8010.12",
+      "cacheDisabled": true,
+      "fixtureTransport": "loopback app/data overrides; external HTTPS unintercepted",
+      "viewports": [
+        "1280x800 desktop mouse",
+        "844x390 emulated landscape phone touch"
+      ],
+      "originalWaves": false,
+      "fixture": "Original 0-1 terrain, legal ranged tiles, empty waves, 99 DP and two pinned nonattacking/nondisplaceable targets. An explicit half-HP assignment exercises protected-owner recovery; original waves/natural DP are tested separately.",
+      "checks": [
+        "Public S1/S2 selection and separate drag/drop/direction swipe on legal ranged tiles",
+        "Natural offensive S1 and time-recovery two-charge S2 SP; manual S2 button and automatic S1",
+        "Literal original Front/Back/downward attack and skill tracks",
+        "S1 one two-target receipt, independent marked recipients and no skill attack SP",
+        "S2 retained protection after cast, consumed half-HP heal and eight-second taunt",
+        "Public retreat, recipient cleanup and finite independent flight/field watchers"
+      ],
+      "browserErrors": 0,
+      "failedResources": 0,
+      "visualReview": "Desktop Front downward S1 released and emulated-phone Back S2 triggered-heal captures inspected. Physical-device, native effects/audio and original game-frame/pixel parity remain unverified.",
+      "scriptSha256": "a34d3b3108d097d008473bfb71fbac1982d198da249581ef69213050b5872a6f",
+      "driverSha256": "2e52cd4007ae553e30f773104626f9b5c2be7c15f717b61ca9063517fbdc51c8",
+      "fixtureServerSha256": "127fb1b74be89d0a35e6bfa4e3d35927d170fa4d3129287f6c523114c5bcaa22"
+    }
+  },
+  "originalArtwork": {
+    "operator/char_4234_pedro/default/back": {
+      "kind": "operator",
+      "id": "char_4234_pedro",
+      "variant": "default",
+      "facing": "back",
+      "spineVersion": "3.8.99",
+      "source": {
+        "key": "operators",
+        "repository": "fexli/ArknightsResource",
+        "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+        "directory": "spine/char_4234_pedro/char_4234_pedro/Back"
+      },
+      "skeleton": {
+        "path": "models/operator/char_4234_pedro/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4234_pedro.skel",
+        "bytes": 202309,
+        "sha256": "a5775260e70fb55b1eb4915a3ff6a73259de0a0c12922bf76c69f5377d915ad6"
+      },
+      "atlas": {
+        "path": "models/operator/char_4234_pedro/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4234_pedro.atlas",
+        "bytes": 5765,
+        "sha256": "6c24d8cfe3ffebce6ef10561209b202f3a18830952770da2b04bf3967ea853c1"
+      },
+      "textures": [
+        {
+          "path": "models/operator/char_4234_pedro/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4234_pedro.png",
+          "bytes": 122388,
+          "sha256": "3afda754f37700ff2689d8c45db0584ac093aef419f25cd0eb095b7380fd72d9"
+        }
+      ],
+      "premultipliedAlpha": true,
+      "animations": {
+        "Attack": 2.1,
+        "Default": 0,
+        "Idle": 1.333,
+        "Skill_1": 2.1,
+        "Skill_2": 2.1,
+        "Start": 1
+      },
+      "hits": {
+        "Attack": [
+          0.6
+        ],
+        "Skill_1": [
+          0.533
+        ],
+        "Skill_2": [
+          0.733
+        ]
+      },
+      "bounds": {
+        "x": -172.21,
+        "y": -18.981,
+        "width": 279.479,
+        "height": 379.014
+      },
+      "animationRoles": {
+        "idle": "Idle",
+        "deploy": "Start",
+        "attack": {
+          "begin": null,
+          "loop": "Attack",
+          "end": null
+        },
+        "attackDown": null,
+        "skill": {
+          "begin": null,
+          "loop": "Skill_1",
+          "end": null,
+          "index": 0,
+          "via": "skill"
+        },
+        "skills": {
+          "0": {
+            "begin": null,
+            "loop": "Skill_1",
+            "end": null,
+            "index": 0,
+            "via": "skill"
+          },
+          "1": {
+            "begin": null,
+            "loop": "Skill_2",
+            "end": null,
+            "index": 1,
+            "via": "skill"
+          }
+        },
+        "die": null,
+        "stun": null,
+        "move": null
+      }
+    },
+    "operator/char_4234_pedro/default/front": {
+      "kind": "operator",
+      "id": "char_4234_pedro",
+      "variant": "default",
+      "facing": "front",
+      "spineVersion": "3.8.99",
+      "source": {
+        "key": "operators",
+        "repository": "fexli/ArknightsResource",
+        "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+        "directory": "spine/char_4234_pedro/char_4234_pedro/Front"
+      },
+      "skeleton": {
+        "path": "models/operator/char_4234_pedro/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4234_pedro.skel",
+        "bytes": 499218,
+        "sha256": "a07cdf465f1e3f18af4c55b5e7cb5028f2a7e3d900b2d22aaf98429967c85374"
+      },
+      "atlas": {
+        "path": "models/operator/char_4234_pedro/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4234_pedro.atlas",
+        "bytes": 9602,
+        "sha256": "15efea7b8691d4ce1f53529fbf89c1ddd226a722234b608a595358a0c141fee8"
+      },
+      "textures": [
+        {
+          "path": "models/operator/char_4234_pedro/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4234_pedro.png",
+          "bytes": 153637,
+          "sha256": "d2faa20d78a2fc6b19a8b2f0eae2715c05d256c944ac10c5754411d70d56f73c"
+        }
+      ],
+      "premultipliedAlpha": true,
+      "animations": {
+        "Attack": 2.1,
+        "Attack_Down": 2.1,
+        "Default": 0,
+        "Die": 1,
+        "Idle": 6.667,
+        "Skill_1": 2.1,
+        "Skill_2": 2.1,
+        "Skill_Down_1": 2.1,
+        "Skill_Down_2": 2.1,
+        "Start": 1
+      },
+      "hits": {
+        "Attack": [
+          0.6
+        ],
+        "Attack_Down": [
+          0.6
+        ],
+        "Skill_1": [
+          0.533
+        ],
+        "Skill_2": [
+          0.733
+        ],
+        "Skill_Down_1": [
+          0.533
+        ],
+        "Skill_Down_2": [
+          0.733
+        ]
+      },
+      "bounds": {
+        "x": -170.165,
+        "y": -15.974,
+        "width": 272.962,
+        "height": 375.498
+      },
+      "animationRoles": {
+        "idle": "Idle",
+        "deploy": "Start",
+        "attack": {
+          "begin": null,
+          "loop": "Attack",
+          "end": null
+        },
+        "attackDown": {
+          "begin": null,
+          "loop": "Attack_Down",
+          "end": null
+        },
+        "skill": {
+          "begin": null,
+          "loop": "Skill_1",
+          "end": null,
+          "index": 0,
+          "via": "skill"
+        },
+        "skills": {
+          "0": {
+            "begin": null,
+            "loop": "Skill_1",
+            "end": null,
+            "index": 0,
+            "via": "skill"
+          },
+          "1": {
+            "begin": null,
+            "loop": "Skill_2",
+            "end": null,
+            "index": 1,
+            "via": "skill"
+          }
+        },
+        "die": "Die",
+        "stun": null,
+        "move": null
+      }
+    }
+  },
+  "interfaceAssets": [
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "five-star-icons/Pedro - Base.webp",
+      "bytes": 12794,
+      "sha256": "54fabef54c5d052d14a6875689b8be0d9477fc2bc62ec83bc4de4a55789d50d1"
+    },
+    {
+      "repository": "arkpedia/arkpedia-skin-assets",
+      "commit": "6fb723692d89c4a08d9a7aa4015e19c0753dd270",
+      "path": "five-star-skins/Pedro - Base.webp",
+      "bytes": 160218,
+      "sha256": "27b73af7703bddfda0c7ed2c8fe83d3c656ab78ef688b8b465000cbca5b33938"
+    },
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "skill-icons/Pedro - Marking Shot.webp",
+      "bytes": 5914,
+      "sha256": "3b2d9447d5ed7333b23a8647f11c9a4612e9b2a5090020a7d46f6b216d1366ae"
+    },
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "skill-icons/Pedro - Alternate Evacuation.webp",
+      "bytes": 6176,
+      "sha256": "00b311ad27d4f2af7aa777d1fc0c4fbc94c9f5dc99ae8e7e0de0e2d0998ebf0c"
+    }
+  ],
+  "limitations": [
+    "The selected forty-second S2 account maps to two twenty-second bars; marked range exit skips remaining first-half time. Compiled ForceEnterSkillOverloadProgress and duration-to-bar dispatch remain explicit local mappings.",
+    "Independent overload reacquisition, per-emission ramp progression, live/birth-cached projectile damage, source mark/recipient priority, input-time owner clocks and current-rate drone clocks are local interpretations.",
+    "Modules, native particles/shaders/audio, physical-device behavior and original game-frame/pixel parity remain unverified."
+  ]
+}

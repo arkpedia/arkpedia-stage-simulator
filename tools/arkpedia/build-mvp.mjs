@@ -66,10 +66,11 @@ const candidateVarkis = process.argv.includes('--review-candidate-varkis');
 const candidateSnhunt = process.argv.includes('--review-candidate-snhunt');
 const candidateKichi = process.argv.includes('--review-candidate-kichi');
 const candidateCairn = process.argv.includes('--review-candidate-cairn');
+const candidatePedro = process.argv.includes('--review-candidate-pedro');
 const candidateTmslot = process.argv.includes('--review-candidate-tmslot');
 const candidateThumpy = process.argv.includes('--review-candidate-thumpy');
 const candidateTanya = process.argv.includes('--review-candidate-tanya');
-if ([candidateTmslot,candidateThumpy,candidateClosur,candidateReckpr,candidateBranch,candidateVarkis,candidateSnhunt,candidateKichi,candidateCairn,candidateTanya].filter(Boolean).length>1) throw Error('Review one candidate snapshot at a time');
+if ([candidatePedro,candidateTmslot,candidateThumpy,candidateClosur,candidateReckpr,candidateBranch,candidateVarkis,candidateSnhunt,candidateKichi,candidateCairn,candidateTanya].filter(Boolean).length>1) throw Error('Review one candidate snapshot at a time');
 const ids = Object.keys(REGULAR_OPERATORS);
 if (ids.includes('char_4179_monstr')) {
   const review = JSON.parse(await readFile(new URL('../../data/arkpedia-mon3tr-runtime-review.json', import.meta.url)));
@@ -456,6 +457,32 @@ if (ids.includes('char_4236_tmslot')) {
     || review.interfaceAssets.some(a => pins[a.repository] !== a.commit || !/^[a-f0-9]{64}$/.test(a.sha256)
       || !Number.isSafeInteger(a.bytes) || a.bytes < 1)) throw Error('Tmslot lacks pinned interface assets');
 }
+if (ids.includes('char_4234_pedro')) {
+  const id = 'char_4234_pedro';
+  const review = JSON.parse(await readFile(new URL('../../data/arkpedia-pedro-runtime-review.json', import.meta.url)));
+  const foundation = await readFile(new URL('../../data/arkpedia-native-operators/char_4234_pedro.json', import.meta.url));
+  const art = await readFile(new URL('../../data/arkpedia-pedro-art.json', import.meta.url));
+  const recipe = await readFile(new URL('../../data/arkpedia-pedro-art-recipe.json', import.meta.url));
+  const clocks = await readFile(new URL('../../data/arkpedia-pedro-clocks.json', import.meta.url));
+  const e = JSON.parse(foundation);
+  const approved = JSON.stringify(review.enabledOperators) === JSON.stringify([id]) && review.verification.browser.status === 'passed';
+  const pending = candidatePedro && review.enabledOperators.length === 0 && review.verification.browser.status === 'pending';
+  if ((!approved && !pending) || review.frameParity !== false || review.nativeParticleSupport !== false
+    || review.moduleSupport !== false || review.nativePixelParity !== false
+    || review.mechanicsPolicy !== 'source-cn-cached-arts-trigger-and-snapshot-ally-protection-v1'
+    || review.sourceFoundationSha256 !== createHash('sha256').update(foundation).digest('hex')
+    || review.ownerArtworkSha256 !== createHash('sha256').update(art).digest('hex')
+    || JSON.parse(art).recipeSha256 !== createHash('sha256').update(recipe).digest('hex')
+    || review.sourceClocksSha256 !== createHash('sha256').update(clocks).digest('hex')
+    || e.source.commit !== cnEvidence?.source.commit
+    || JSON.stringify(e.tables.character) !== JSON.stringify(cnEvidence.tables.characters[id])
+    || Object.entries(e.tables.skills).some(([key,value]) => JSON.stringify(value) !== JSON.stringify(cnEvidence.tables.skills[key])))
+    throw Error('Pedro lacks matching source/artwork and completed public browser review');
+  const expected = ["five-star-icons/Pedro - Base.webp", "five-star-skins/Pedro - Base.webp", "skill-icons/Pedro - Marking Shot.webp", "skill-icons/Pedro - Alternate Evacuation.webp"].sort();
+  if (JSON.stringify(review.interfaceAssets.map(a => a.path).sort()) !== JSON.stringify(expected)
+    || review.interfaceAssets.some(a => pins[a.repository] !== a.commit || !/^[a-f0-9]{64}$/.test(a.sha256)
+      || !Number.isSafeInteger(a.bytes) || a.bytes < 1)) throw Error('Pedro lacks pinned interface assets');
+}
 if (ids.includes('char_4207_branch')) {
   const id = 'char_4207_branch';
   const review = JSON.parse(await readFile(new URL('../../data/arkpedia-branch-runtime-review.json', import.meta.url)));
@@ -799,6 +826,13 @@ if (ids.includes('char_4236_tmslot')) {
   for (const key of keys) if (JSON.stringify(models[key]) !== JSON.stringify(review.originalArtwork[key]))
     throw Error('Changed Timeslot original artwork: ' + key);
 }
+if (ids.includes('char_4234_pedro')) {
+  const review = JSON.parse(await readFile(new URL('../../data/arkpedia-pedro-runtime-review.json', import.meta.url)));
+  const keys = ['front', 'back'].map(face => `operator/char_4234_pedro/default/${face}`).sort();
+  if (JSON.stringify(Object.keys(review.originalArtwork).sort()) !== JSON.stringify(keys)) throw Error('Incomplete Pedro artwork review');
+  for (const key of keys) if (JSON.stringify(models[key]) !== JSON.stringify(review.originalArtwork[key]))
+    throw Error('Changed Pedro original artwork: ' + key);
+}
 if (ids.includes('char_4207_branch')) {
   const review = JSON.parse(await readFile(new URL('../../data/arkpedia-branch-runtime-review.json', import.meta.url)));
   const keys = ['front', 'back'].map(face => `operator/char_4207_branch/default/${face}`).sort();
@@ -944,7 +978,7 @@ for (const token of Object.values(tokens)) {
 }
 const output = {
   schemaVersion: 1,
-  ...(candidateTmslot ? { reviewCandidates: ['char_4236_tmslot'] } : candidateThumpy ? { reviewCandidates: ['char_4235_thumpy'] } : candidateTanya ? { reviewCandidates: ['char_4225_tanya'] } : candidateCairn ? { reviewCandidates: ['char_4214_cairn'] } : candidateKichi ? { reviewCandidates: ['char_4203_kichi'] } : candidateSnhunt ? { reviewCandidates: ['char_4211_snhunt'] } : candidateVarkis ? { reviewCandidates: ['char_4166_varkis'] } : candidateReckpr ? { reviewCandidates: ['char_4196_reckpr'] } : candidateBranch ? { reviewCandidates: ['char_4207_branch'] } : {}),
+  ...(candidatePedro ? { reviewCandidates: ['char_4234_pedro'] } : candidateTmslot ? { reviewCandidates: ['char_4236_tmslot'] } : candidateThumpy ? { reviewCandidates: ['char_4235_thumpy'] } : candidateTanya ? { reviewCandidates: ['char_4225_tanya'] } : candidateCairn ? { reviewCandidates: ['char_4214_cairn'] } : candidateKichi ? { reviewCandidates: ['char_4203_kichi'] } : candidateSnhunt ? { reviewCandidates: ['char_4211_snhunt'] } : candidateVarkis ? { reviewCandidates: ['char_4166_varkis'] } : candidateReckpr ? { reviewCandidates: ['char_4196_reckpr'] } : candidateBranch ? { reviewCandidates: ['char_4207_branch'] } : {}),
   ...(formSource ? { globalAlternateFormSource: formSource } : {}),
   sources: cnEvidence ? { ...pins, [cnEvidence.source.repository]: cnEvidence.source.commit } : pins,
   ...(cnEvidence ? { operatorSourceChannels: Object.fromEntries(ids.map(id => [id, operatorChannel(id, REGULAR_OPERATORS[id])])) } : {}),
@@ -1012,7 +1046,7 @@ for (const [id,support] of Object.entries(REGULAR_OPERATORS)) {
 output.skillEffects = {repository:"arkpedia/arkpedia-sd-assets",commit:sdCommit,
   pack:stageAssets.effects.chargeCost,bindings};
 await writeJSONAtomic(
-  candidateTmslot ? new URL("arkpedia-tmslot-candidate.json", cache) : candidateThumpy ? new URL("arkpedia-thumpy-candidate.json", cache) : candidateTanya ? new URL("arkpedia-tanya-candidate.json", cache) : candidateCairn ? new URL("arkpedia-cairn-candidate.json", cache) : candidateKichi ? new URL("arkpedia-kichi-candidate.json", cache) : candidateSnhunt ? new URL("arkpedia-snhunt-candidate.json", cache) : candidateVarkis ? new URL("arkpedia-varkis-candidate.json", cache) : candidateBranch ? new URL("arkpedia-branch-candidate.json", cache) : candidateReckpr ? new URL("arkpedia-reckpr-candidate.json", cache) : candidateClosur ? new URL("arkpedia-closur-candidate.json", cache) : new URL("../../data/arkpedia-mvp.json", import.meta.url),
+  candidatePedro ? new URL("arkpedia-pedro-candidate.json", cache) : candidateTmslot ? new URL("arkpedia-tmslot-candidate.json", cache) : candidateThumpy ? new URL("arkpedia-thumpy-candidate.json", cache) : candidateTanya ? new URL("arkpedia-tanya-candidate.json", cache) : candidateCairn ? new URL("arkpedia-cairn-candidate.json", cache) : candidateKichi ? new URL("arkpedia-kichi-candidate.json", cache) : candidateSnhunt ? new URL("arkpedia-snhunt-candidate.json", cache) : candidateVarkis ? new URL("arkpedia-varkis-candidate.json", cache) : candidateBranch ? new URL("arkpedia-branch-candidate.json", cache) : candidateReckpr ? new URL("arkpedia-reckpr-candidate.json", cache) : candidateClosur ? new URL("arkpedia-closur-candidate.json", cache) : new URL("../../data/arkpedia-mvp.json", import.meta.url),
   output,
 );
 console.log(

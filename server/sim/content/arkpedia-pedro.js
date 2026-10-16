@@ -77,7 +77,7 @@ export class PedroController{
   if(u.atkCd>1e-9)return;const ts=this.enemies(false);if(!ts.length){this.idle();return;}
   if(this.record.index===0&&u.skill.ready&&this.canCast()){u.skill.activate('DEFAULT');return;}this.beginAttack(ts);
  }
- spec(){return {kind:this.record.index===1?'charges':'instant',silenceable:false,trigger:{rule:'NEVER'},flags:{noSp:true},attack:{},completeOnAttack:false,
+ spec(){return {kind:this.record.index===1?'charges':'instant',silenceable:false,trigger:{rule:'NEVER'},flags:{noSp:true},attack:{},completeOnAttack:false,pendingText:this.record.index===0?'Skill active · Marking shot':'Skill active · Protection',
   canActivate:()=>this.canCast(),onStart:()=>this.start(),onEnd:()=>this.ended()};}
  install(){if(this.handles.length||this.stopped)throw Error('Pedro cannot be reinstalled');this.resources.install();const{b,u}=this;
   this.handles.push(b.on('deploy',({unit,move})=>{if(unit!==u||move)return;this.seq=u.deploySeq;this.facing=u.dir;const until=b.time+this.model().exactDurations.Start;
