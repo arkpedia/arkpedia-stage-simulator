@@ -10,8 +10,8 @@ export function gallusSourceComponent(group,key,pathId){
 }
 export function gallusNativeInputs(){
  const c=id=>gallusSourceComponent('characters',GALLUS_ID,id);
- return {root:c('7641070790203612752'),ordinary:c('6850085078635388496'),preferred:c('-145074444227699120'),
-  normalMode:c('6018605635336543824'),markedMode:c('-2730423305923453360'),
+ return {root:c('7641070790203612752'),ordinary:c('-145074444227699120'),preferred:c('6850085078635388496'),
+  normalMode:c('-2730423305923453360'),markedMode:c('6018605635336543824'),
   selector:c('3083082046790049360'),preferredSelector:c('-6942653288404476336'),
   talent:c('-4902288651014758832'),mark:c('1450427431489183312'),templates:e.templates};
 }

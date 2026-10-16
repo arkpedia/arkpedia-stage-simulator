@@ -22,7 +22,7 @@ test('GALLUS² retains original source closure, both literal facing clocks and n
  assert.equal(e.models[ID].Back.durations.Die,undefined);assert.equal(e.frameParity,false);assert.equal(e.moduleSupport,false);
 });
 test('GALLUS² keeps both native modes and mark-avoiding selector separate',()=>{
- const n=inputs();assert.equal(n.root._modes.length,2);assert.equal(n.normalMode._attack.m_PathID,'6850085078635388496');assert.equal(n.markedMode._attack.m_PathID,'-145074444227699120');
+ const n=inputs();assert.equal(n.root._modes.length,2);assert.equal(n.normalMode._attack.m_PathID,'-145074444227699120');assert.equal(n.markedMode._attack.m_PathID,'6850085078635388496');
  for(const a of[n.ordinary,n.preferred]){assert.equal(a._waitForAttackEvent,1);assert.equal(a._animKey,'Attack');assert.equal(a._projectileKey,'projectile_chr_gallus');assert.equal(a._damageType,2);assert.equal(a._affectedBySlowDown,1);near(a._maxAnimScale,1.2999999523162842);}
  assert.equal(n.preferredSelector._buffKey,'gallus_t_1[buff]');assert.equal(n.preferredSelector._withoutThisBuff,1);assert.equal(n.preferredSelector._targetMotion,3);assert.equal(n.talent._influenceSkillBlackboard,0);
 });
