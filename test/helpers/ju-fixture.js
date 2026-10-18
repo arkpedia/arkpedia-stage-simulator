@@ -13,7 +13,7 @@ export {near, advance, until} from './mon3tr-fixture.js';
 export function make({elite = 2, level = evidence.tables.character.phases[elite].maxLevel,
   skill = 1, rank = [4, 7, 10][elite], potential = 1, trust = 0, defer = false,
   mutate, beforeInstall, contract = JU_WOUND_CONTRACT, ordinary = false, mayBegin = () => true,
-  ordinaryContract = JU_ORDINARY_CONTRACT, dir = 'RIGHT'} = {}) {
+  ordinaryContract = JU_ORDINARY_CONTRACT, dir = 'RIGHT', prepare} = {}) {
   const d = structuredClone(data);
   d.stage.geometry.waves[0].spawns = []; d.stage.battle.dp_per_second = 0;
   d.stage.geometry.rows = 19; d.stage.geometry.cols = 21;
@@ -30,16 +30,18 @@ export function make({elite = 2, level = evidence.tables.character.phases[elite]
       rangeGrid: record.skillRangeGrid, trigger: {rule: 'NEVER'}}, arkpedia: build});
   mutate?.(def);
   const u = b._makeAlly(b.getPlayer('arkpedia'), def, 'op', 5, 5, {dir});
-  const wounds = new JuWounds(b, u, {contract});
-  const attacks = ordinary ? new JuOrdinaryAttacks(b, u, {contract: ordinaryContract, mayBegin}) : null;
-  b._setupUnit(u, {trait: attacks?.trait() ?? {noAttack: true}, talents: [], skill: {kind: 'passive'}});
-  beforeInstall?.(b, u, wounds, attacks); wounds.install(); attacks?.install();
+  const prepared = prepare?.(b, u);
+  const wounds = prepared?.wounds ?? new JuWounds(b, u, {contract});
+  const attacks = prepared?.controller ?? (ordinary ? new JuOrdinaryAttacks(b, u, {contract: ordinaryContract, mayBegin}) : null);
+  b._setupUnit(u, prepared?.kit ?? {trait: attacks?.trait() ?? {noAttack: true}, talents: [], skill: {kind: 'passive'}});
+  beforeInstall?.(b, u, wounds, attacks);
+  if (prepared) attacks.install(); else { wounds.install(); attacks?.install(); }
   const hits = [], receipts = [];
   b.on('damaged', ctx => hits.push({...ctx, time: b.time}));
   b.on('attack', ctx => { if (ctx.attacker === u) receipts.push({...ctx, time: b.time}); });
   const deploy = () => { u.player.dp = 99; assert.ok(b._deploy(u, {initial: false})); };
   if (!defer) deploy();
-  return {b, u, record, wounds, attacks, receipts, build, hits, deploy};
+  return {b, u, record, wounds, attacks, receipts, build, hits, deploy, ...prepared};
 }
 
 export function enemy(f, {row = 5, col = 7, hp = 100, flags = {}} = {}) {

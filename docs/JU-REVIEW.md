@@ -1,6 +1,6 @@
 # Ju review
 
-Ju (`char_4221_ju`) has held source selection, exact animation clocks, a selected wound component and an ordinary attack component. Both skill controllers, original artwork delivery and public squad admission remain pending. The local playable roster stays at 396/431 pinned forms, with 35 remaining. Arkpedia app dev and production remain held.
+Ju (`char_4221_ju`) has held source selection, exact animation clocks, a selected wound component an ordinary attack component and selected S1. S2, original artwork delivery and public squad admission remain pending. The local playable roster stays at 396/431 pinned forms, with 35 remaining. Arkpedia app dev and production remain held.
 
 The original foundation is 299,728 bytes, SHA-256 `1a17ccfc1b76330814f9e7a660303ce4061df6c8afe50290ddc88a0e53a32011`, from CN table revision `a550f5e048bb94e7cdefc6eb97a4091f0c4c7add` and native client `26-09-22-07-47-20_6c71fa`. Five pinned bundles retain owner/default-art/skill graphs, three distinct projectiles and eight transitive templates, with no native/JSON template gaps. Original pointers remain strings. On each Node 22 and 24, the independent audit reproduces seven outputs and rejects 29 altered source/approval claims. The source receipt retains empty enabled operators and false module/native-particle/frame-parity flags.
 
@@ -10,7 +10,7 @@ Both original skeletons reproduce exact clocks without changing the rounded defa
 
 Twenty-nine combined source/clock/importer checks pass on each Node 22 and 24, including raw-byte corruption rejection. These are source checks, not playable combat or game-frame validation.
 
-Next work is S1's target-gated attack consumption/refund/interruption behavior and S2's once-per-recipient delayed damage/source gate. Each needs source-driven ordering, recipient/source life checks and finite cleanup tests before original artwork, public controls, original-wave and full-regression acceptance. Modules, native effects/audio/shaders and compiled-client/frame/pixel parity remain unverified.
+Next work is S2's once-per-recipient delayed damage/source gate. It needs source-driven ordering, recipient/source life checks and finite cleanup tests before original artwork, public controls, original-wave and full-regression acceptance. Modules, native effects/audio/shaders and compiled-client/frame/pixel parity remain unverified.
 
 ## Selected wound component
 
@@ -35,3 +35,11 @@ ASPD can shorten the attack cycle while source max-animation-scale one caps the 
 Born arrows survive caster withdrawal with finite watchers and launch-ATK fallback. A still-present matching source life supplies live impact ATK. Native compiled source-invalid attribute dispatch remains a documented local mapping. External projectile removal, recipient replacement and battle end release tracked flights/watchers. A natural lethal ordinary hit creates one wound, and subsequent acquisition ignores that critically wounded enemy.
 
 The ordinary component passes 24 selected checks, including all four directions, original clocks, acquisition exclusions, capped/sampled timing, transient control, receipt veto/reentrancy, live/fallback ATK, finite transport and wound integration. Combined source/clocks/wound/ordinary and adjacent Saga/Ukusik/HP-floor/barrier/damage coverage passes 279 cases on each Node 22 and 24. The full isolated checkpoint above covers the wound/shared changes only. The normal data remains unchanged at 396 forms; no public Ju registration, SD metadata publication or extra draft PR is created.
+
+## Selected S1
+
+The original automatic two-charge selector independently acquires a legal recipient at or below half HP. Healthy enemies still receive ordinary shots when no eligible S1 input exists. Activation retains one recipient life before buff callbacks; Skill_1 releases at its original marker into speed-fifteen transport with the selected rank's scale. A healed captured input is retained. Source selector and attack-finished ordering remain explicit local mappings.
+
+The selected instant account holds all ordinary SP recovery through its sampled cycle, even if the convenience no-SP buff is vetoed or removed. A narrow opt-in `holdSpWhileActive` field extends the existing timed-account hold; default instant skills retain their existing behavior. Explicit initialization and charge refunds remain distinct from ordinary recovery. An interrupted unfired phase retains the account until its existing deadline and cannot emit a late shot. An input lost before projectile acceptance refunds one charge while preserving partial SP. A living input rejected by an attack callback does not refund, and a born projectile never refunds. Source withdrawal, callback replacement and external skill end isolate old phases from new lives.
+
+Thirty-eight selected S1 checks and five shared SP-hold checks cover all ten ranks, both charges, health boundaries, original directions, sampled/capped clocks, callback veto/reentrancy, interruptions, refunds, withdrawal and recipient/source replacement. Combined Ju, SP-hold, general skill, Turdus and Saga checks pass 287 cases on each Node 22 and 24. A complete isolated regression of this S1/shared-skill checkpoint remains pending. Ju remains absent from normal public data; S2, original art delivery and public/browser admission are unfinished.

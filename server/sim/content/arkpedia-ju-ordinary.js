@@ -16,6 +16,7 @@ const present = u => u?.alive && u.deployed && !u.removed;
 const due = (a, z) => a >= z - 1e-8;
 const legal = (u, t) => present(t) && canTargetEnemy(u, t, {canHitFly: true, groundOnly: false});
 const retained = t => present(t) && !t.hidden && t.side === 'enemy';
+const ordinaryShot = Object.freeze({clip: 'Attack', scale: 1, projectileSpeed: 10, isSkill: false, tag: 'ju:ordinary'});
 
 export function verifyJuOrdinarySource(n = juNativeInputs()) {
   const a = n.ordinary, s = n.ordinarySelector, p = n.ordinaryProjectile;
@@ -51,25 +52,26 @@ export class JuOrdinaryAttacks {
   idle() { this.facing = this.u.dir; this.visual('Idle', 1, true); }
   face(t) { const x = t.x - this.u.x, y = t.y - this.u.y;
     if (Math.hypot(x, y) > 1e-8) this.facing = Math.abs(y) > Math.abs(x) ? y > 0 ? 'UP' : 'DOWN' : x < 0 ? 'LEFT' : 'RIGHT'; }
-  choices() {
+  choices({hpAtMost = Infinity} = {}) {
     if (this.b.rangeChanged(this.u)) this.b._refreshRange(this.u);
-    const candidates = this.b.enemies.filter(t => legal(this.u, t) && !t.findBuff('cripple')
+    const eligible = t => legal(this.u, t) && !t.findBuff('cripple') && t.hp / t.s.maxHp <= hpAtMost + 1e-9;
+    const candidates = this.b.enemies.filter(t => eligible(t)
       && bodyInKeys(t, this.u.rangeKeySet));
     // The shared regular-stage rule keeps an attacker able to hit its own
     // blocker even when the source's long-range grid omits adjacent tiles.
-    for (const t of this.b.blockedTargets(this.u, {canHitFly: true, canTarget: (_u, e) => !e.findBuff('cripple')}))
+    for (const t of this.b.blockedTargets(this.u, {canHitFly: true, canTarget: (_u, e) => eligible(e)}))
       if (!candidates.includes(t)) candidates.push(t);
     return sortEnemyTargets(this.b, this.u, candidates, 'heaviest').slice(0, 1);
   }
-  begin(target) {
+  begin(target, shot = ordinaryShot) {
     this.face(target);
     const speed = Math.min(1, this.u.base.bat / this.u.s.interval);
-    const releaseAge = this.model().eventPayloads.Attack[0].time;
+    const releaseAge = this.model().eventPayloads[shot.clip][0].time;
     const period = Math.max(this.u.s.interval, releaseAge / speed);
-    this.phase = {target, life: target.deploySeq, epoch: this.u.attackControlEpoch,
+    this.phase = {target, life: target.deploySeq, epoch: this.u.attackControlEpoch, shot,
       speed, releaseAge, age: 0, lastAt: this.b.time, untilAge: period * speed,
       released: false, accepted: false};
-    this.u.atkCd = period; this.visual('Attack', speed);
+    this.u.atkCd = period; this.visual(shot.clip, speed);
   }
   admit(targets) {
     const p = this.phase;
@@ -83,15 +85,15 @@ export class JuOrdinaryAttacks {
     p.accepted = true;
     const launchAtk = this.u.s.atk * this.u.s.atkScaleMul;
     let projectile;
-    projectile = this.b.addProjectile({from: this.u, target, source: this.u, speed: 10, maxAge: 10,
-      visual: 'arrow', data: {arkpediaTrackedVisual: true, juOrdinary: true},
+    projectile = this.b.addProjectile({from: this.u, target, source: this.u, speed: p.shot.projectileSpeed, maxAge: 10,
+      visual: 'arrow', data: {arkpediaTrackedVisual: true, juOrdinary: !p.shot.isSkill, juSkillOne: p.shot.isSkill},
       onHit: () => {
         this.flights.delete(projectile);
         if (!this.ended && !this.b.finished && target.deploySeq === p.life && retained(target)) {
           const atk = present(this.u) && this.u.deploySeq === sourceLife
             ? this.u.s.atk * this.u.s.atkScaleMul : launchAtk;
-          this.b.dealDamage(this.u, target, {amount: atk, type: 'phys', isAttack: true,
-            isProjectile: true, isSkill: false, attackId: info.attackId, applyWay: 'ranged', tags: ['ju:ordinary']});
+          this.b.dealDamage(this.u, target, {amount: atk * p.shot.scale, type: 'phys', isAttack: true,
+            isProjectile: true, isSkill: p.shot.isSkill, attackId: info.attackId, applyWay: 'ranged', tags: [p.shot.tag]});
         }
         this.unwatch();
       }});
@@ -105,7 +107,7 @@ export class JuOrdinaryAttacks {
     if (!due(this.b.time, this.bornUntil)) return;
     const u = this.u; let p = this.phase;
     if (!u.canAct || u.s.flags.disarm || p && p.epoch !== u.attackControlEpoch) {
-      this.phase = null; this.idle(); return;
+      this.interrupted(p); this.phase = null; if (this.valid()) this.idle(); return;
     }
     if (p) {
       p.age += Math.max(0, this.b.time - p.lastAt) * p.speed; p.lastAt = this.b.time;
@@ -114,11 +116,15 @@ export class JuOrdinaryAttacks {
         try { this.b.forceAttack(u, [p.target]); } finally { this.accepting = false; }
       }
       if (!this.valid() || this.phase !== p || !due(p.age, p.untilAge)) return;
+      this.completed(p);
+      if (!this.valid() || this.phase !== p) return;
       this.phase = null;
     }
     if (u.atkCd > 1e-8) return;
     const target = this.choices()[0]; if (target) this.begin(target); else this.idle();
   }
+  interrupted(_phase) {}
+  completed(_phase) {}
   trait() { return {noAttack: true, attackDrivenSkill: true, attack: 'ranged', dmgType: 'phys', canHitFly: true,
     groundOnly: false, heal: null, projectile: 'none', priority: 'heaviest', maxTargets: 1, maxTargetsByBlock: false,
     hitAllBlocked: false, allInRange: false, hits: 1, hitsFn: null, chain: null, splashRadius: 0, windup: 0,
