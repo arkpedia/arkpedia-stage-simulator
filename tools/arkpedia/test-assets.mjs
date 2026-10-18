@@ -19,7 +19,22 @@ export function reviewedSkeletons(snapshot){
  }
  if(!files.size)throw Error('No reviewed skeletons in snapshot');return[...files.values()];
 }
-export async function prepareTestAssets({snapshot,destination,fetcher=fetch}){
+const retryStatus=new Set([429,500,502,503,504]);
+async function fetchReviewedBytes(url,e,fetcher,pause){
+ for(let attempt=0;attempt<3;attempt++){
+  try{
+   const response=await fetcher(url,{signal:AbortSignal.timeout(20000)});
+   if(!response.ok){
+    if(!retryStatus.has(response.status)||attempt===2)throw Error(`Reviewed skeleton unavailable (${response.status}): ${e.path}`);
+    await response.body?.cancel();
+   }else return Buffer.from(await response.arrayBuffer());
+  }catch(error){
+   if(attempt===2||!(error instanceof TypeError||['TimeoutError','AbortError'].includes(error.name)))throw error;
+  }
+  await pause([500,1500][attempt]);
+ }
+}
+export async function prepareTestAssets({snapshot,destination,fetcher=fetch,pause=ms=>new Promise(resolve=>setTimeout(resolve,ms))}){
  const entries=reviewedSkeletons(snapshot);let next=0,downloaded=0,verified=0;
  const check=(bytes,e)=>{if(bytes.length!==e.bytes||createHash('sha256').update(bytes).digest('hex')!==e.sha256)
   throw Error('Changed reviewed skeleton: '+e.path);};
@@ -28,9 +43,7 @@ export async function prepareTestAssets({snapshot,destination,fetcher=fetch}){
    const e=entries[next++],file=path.join(destination,e.path);let bytes;
    try{bytes=await readFile(file);}catch(error){if(error.code!=='ENOENT')throw error;}
    if(bytes){check(bytes,e);verified++;continue;}
-   const response=await fetcher(`https://raw.githubusercontent.com/${snapshot.sd.repository}/${snapshot.sd.commit}/${e.path}`);
-   if(!response.ok)throw Error(`Reviewed skeleton unavailable (${response.status}): ${e.path}`);
-   bytes=Buffer.from(await response.arrayBuffer());check(bytes,e);
+   bytes=await fetchReviewedBytes(`https://raw.githubusercontent.com/${snapshot.sd.repository}/${snapshot.sd.commit}/${e.path}`,e,fetcher,pause);check(bytes,e);
    await mkdir(path.dirname(file),{recursive:true});await writeFile(file,bytes,{flag:'wx'});downloaded++;
   }
  }));
