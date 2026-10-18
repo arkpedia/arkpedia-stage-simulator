@@ -32,3 +32,8 @@ export function makotoSourceComponent(group, key, pathId) {
   if (!part) throw Error('Missing original Makoto component');
   return part.data;
 }
+export function makotoDefaultInputs(){
+ const read=id=>makotoSourceComponent('characters',MAKOTO_ID,id);
+ return{root:read('-1218499832398557659'),mode:read('-3985492384108261851'),attack:read('-7239676370760577499'),
+  trigger:read('3975289686999354917'),selector:read('5884809055292018213'),replacement:read('-6088048823850840539'),art:evidence.chararts[MAKOTO_ID][0].data};
+}
