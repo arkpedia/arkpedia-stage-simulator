@@ -2,7 +2,7 @@
 //
 // dealDamage order: (element → gauge path) | invulnerable? / 对地规避 (a ground enemy's damage to an airborne 起飞 ally —
 //   targeting.js evadesGround; not `ignoreSelect` damage: no selection, e.g. a debuff's tick) → 'hit' hook (mutable DamageInfo, may set cancel)
-//   → attacker hit rate → dodge (phys/arts, canDodge) → mitigation (phys: DEF, arts: RES, true: none)
+//   → attacker hit rate → dodge (phys/arts, canDodge) → optional beforeTargetModifier receipt → mitigation (phys: DEF, arts: RES, true: none)
 //   → × source dmgDealtMul (× phys/artsDealtMul) × target dmgTakenMul (not for 元素伤害) × type-taken mul × dmg.mul
 //   → optional 'damageFinal' hook (mutable final amount after mitigation and flat resistance)
 //   → 限伤 (leaders in boss / hidden battles: a hit of ceil(final) ≥ BOSS_HIT_LIMIT is cancelled, see leaderHitCancelled)
@@ -284,9 +284,18 @@ export function absorbShields(battle, target, amount, damageType = null, applica
   return rest;
 }
 
-/**
- * Full damage pipeline. Returns the HP actually removed (0 when dodged/cancelled/absorbed).
- */
+// A retained or fabricated event object is not a new native modifier attempt.
+const modifierReceipts = new WeakSet();
+export const isCurrentTargetModifierReceipt = ctx => modifierReceipts.has(ctx);
+function beforeTargetModifier(battle, source, credit, target, dmg, targetLife, outcome = 'accepted') {
+  if (!battle._hooks.beforeTargetModifier) return true;
+  const ctx = Object.freeze({ source, target, dmg, credit, outcome, targetLife });
+  modifierReceipts.add(ctx);
+  try { battle.emit('beforeTargetModifier', ctx); } finally { modifierReceipts.delete(ctx); }
+  return retainsDamageLife(target, targetLife);
+}
+
+/** Full damage pipeline. Returns HP actually removed (0 when dodged/cancelled/absorbed). */
 export function dealDamage(battle, source, target, dmgIn) {
   if (!target || !target.alive || target.removed || target.hidden || !target.deployed) return 0;
   const targetLife = target.deploySeq;
@@ -296,6 +305,11 @@ export function dealDamage(battle, source, target, dmgIn) {
   // tag, 伤害提升 items / bonds / modules, reflect, "受到来自…的伤害") can recognise it; `credit` names the unit that still
   // gets the stats and the kill (PRTS 伤害分类 无来源 ③)
   const hs = dmg.sourceless ? null : source;
+  // Native ON_BEFORE_TARGET_APPLY_MODIFIER consumers need the result of
+  // accuracy/evasion separately from HP mitigation. A missable status and an
+  // unmissable bookkeeping buff can belong to the same original action list.
+  // No receipt is emitted for an absent/hidden/replaced recipient. Terminal
+  // protection/cancellation remains terminal even if a consumer changes it.
   // Opt-in output effects can count an issued HP-damage instance before the
   // recipient prevents it. Existing modifier and damage-receipt hooks retain
   // their order; elemental buildup uses its separate pipeline above.
@@ -304,15 +318,18 @@ export function dealDamage(battle, source, target, dmgIn) {
     if (!retainsDamageLife(target, targetLife)) return 0;
   }
   let ts = target.s;
-  if (ts.flags.invulnerable || sleepBlocks(target, hs, dmg) || liftoffEvades(target, hs, dmg)) return 0;
+  if (ts.flags.invulnerable || sleepBlocks(target, hs, dmg) || liftoffEvades(target, hs, dmg)) {
+    beforeTargetModifier(battle, hs, source, target, dmg, targetLife, 'protected'); return 0;
+  }
   if (battle._hooks.hit) {
     // Recipient-only cancellation must not poison a DamageInfo shared by an
     // area attack. Existing dmg.cancel keeps its original global semantics.
     const ctx = battle.emit('hit', { source: hs, target, dmg, credit: source, cancel: false });
-    if (ctx.cancel || dmg.cancel || !retainsDamageLife(target, targetLife)) return 0;
+    if (!retainsDamageLife(target, targetLife)) return 0;
+    if (ctx.cancel || dmg.cancel) { beforeTargetModifier(battle, hs, source, target, dmg, targetLife, 'cancelled'); return 0; }
     if (dmg.type === 'element') return applyElement(battle, source, target, dmg);
     ts = target.s; // handlers may have changed the target's buffs (fragile, invulnerable, dodge…): never use stale stats
-    if (ts.flags.invulnerable || sleepBlocks(target, hs, dmg)) return 0;
+    if (ts.flags.invulnerable || sleepBlocks(target, hs, dmg)) { beforeTargetModifier(battle, hs, source, target, dmg, targetLife, 'protected'); return 0; }
   }
   const type = dmg.type;
   // Native DAMAGE_HITRATE attributes belong to the attacker. A failed hit
@@ -323,6 +340,7 @@ export function dealDamage(battle, source, target, dmgIn) {
     if (p < 1 && (p <= 0 || battle.rng() >= p)) {
       battle.fx('dodge', { x: target.x, y: target.y, id: target.id });
       if (battle._hooks.hitFailed) battle.emit('hitFailed', { source: hs, target, dmg });
+      if (retainsDamageLife(target, targetLife)) beforeTargetModifier(battle, hs, source, target, dmg, targetLife, 'missed');
       return 0;
     }
   }
@@ -332,8 +350,14 @@ export function dealDamage(battle, source, target, dmgIn) {
     if (p > 0 && battle.rng() < p) {
       battle.fx('dodge', { x: target.x, y: target.y, id: target.id });
       if (battle._hooks.dodge) battle.emit('dodge', { source, target, dmg });
+      if (retainsDamageLife(target, targetLife)) beforeTargetModifier(battle, hs, source, target, dmg, targetLife, 'missed');
       return 0;
     }
+  }
+  if (!beforeTargetModifier(battle, hs, source, target, dmg, targetLife)) return 0;
+  if (battle._hooks.beforeTargetModifier) {
+    ts = target.s;
+    if (ts.flags.invulnerable || sleepBlocks(target, hs, dmg) || liftoffEvades(target, hs, dmg)) return 0;
   }
   // 频次 units (flags hitCount / hitCountArts): every damage instance removes exactly 1 HP (maxHp = hits needed);
   // hitCountArts ignores physical instances. The instance keeps its own DamageInfo, so `damaged` handlers still
