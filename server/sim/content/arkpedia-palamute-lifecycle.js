@@ -56,7 +56,7 @@ export class PalamuteLifecycle{
  }
  place(row,col){const error=this.placementError(row,col);if(error)throw Error(error);this.placing=true;this.stock=0;let token,created,resourcesOK=false;const resources=new Set();
   try{
-   token=this.b.spawnToken(this.u,TOKEN,row,col,{dir:'RIGHT',def:this.def,kit:{trait:{noAttack:true},talents:[],skill:null,install:(b,t)=>{
+   token=this.b.spawnToken(this.u,TOKEN,row,col,{dir:'RIGHT',def:this.def,kit:{trait:this.combat?.trait??{noAttack:true},talents:[],skill:null,install:(b,t)=>{
     created=t;t.deploymentSlotCost=0;t.mem.regularSummonCard=this.state.key;
     const und=b.addBuff(t,{key:'palamute:undeadable',source:t,persist:true,allowDead:true,flags:{undeadable:true}}),heal=b.addBuff(t,{key:'palamute:heal-free',source:t,persist:true,allowDead:true,flags:{healFree:true}}),block=b.addBuff(t,{key:'palamute:active-block',source:t,persist:true,allowDead:true,mods:{blockCnt:1}});for(const r of[und,heal,block])if(r)resources.add(r);resourcesOK=!!und&&!!heal&&!!block;
    }}});
@@ -68,7 +68,7 @@ export class PalamuteLifecycle{
  onLethal({unit}){const p=this.point;if(!this.current(p)||unit!==p.unit||!['active','born'].includes(p.mode)||!unit.findBuff('palamute:undeadable'))return;
   const previous=p.mode;p.mode='transition';const rest=this.b.addBuff(unit,{key:'palamute:rest',source:unit,flags:{noBlock:true,untargetable:true,disarm:true}});
   if(rest)p.resources.add(rest);if(!this.current(p)){if(rest)this.b.removeBuff(unit,rest);return;}if(!rest){p.mode=previous;return;}
-  p.mode='rest';p.recoverAt=this.b.time+this.record.duration;p.originalKind=unit.kind;unit.kind='device';unit.atkCd=0;
+  p.mode='rest';this.combat?.clear(p);p.recoverAt=this.b.time+this.record.duration;p.originalKind=unit.kind;unit.kind='device';unit.atkCd=0;
   const retained=new Set(this.record.native._retainedBuffsWhenDead);
   for(const buff of unit.buffs.slice()){
    if(!buff.persist&&!p.resources.has(buff)&&!retained.has(buff.data?.nativeKey))this.b.removeBuff(unit,buff);
@@ -82,7 +82,7 @@ export class PalamuteLifecycle{
   t.deploySeq=++this.b._deploySeq;t.aggroSeq=t.deploySeq;p.seq=t.deploySeq;t.deployedAt=this.b.time;t.hp=t.s.maxHp;t.atkCd=0;p.mode='active';p.recoverAt=Infinity;this.pose(p,'Idle',true);
  }
  retreat(t){if(!canDeployInViewport(this.b.viewport)||this.b.finished||!this.current()||this.point.unit!==t)throw Error('Select the current Palamute point in fullscreen.');this.finish(this.point,{remove:true,reason:'withdrawal'});return true;}
- finish(p,{remove=false,reason='removed'}={}){if(!p||p.finished)return;p.finished=true;if(this.point===p)this.point=null;this.stock=0;
+ finish(p,{remove=false,reason='removed'}={}){if(!p||p.finished)return;p.finished=true;this.combat?.clear(p);if(this.point===p)this.point=null;this.stock=0;
   for(const buff of p.resources)this.b.removeBuff(p.unit,buff);p.resources.clear();
   if(remove&&present(p.unit)&&p.unit.deploySeq===p.seq)this.b._remove(p.unit,`palamute-${reason}`,null,true);
  }
@@ -95,6 +95,7 @@ export class PalamuteLifecycle{
  install(){if(this.stopped||this.handles.length)throw Error('Recon point lifecycle cannot be reinstalled');const map=this.b.regularSummons??=new Map();if(map.has(this.state.key))throw Error('A Recon point deck already exists');map.set(this.state.key,this.state);
   const{b,u}=this;this.handles=[b.on('deploy',({unit,move})=>{if(unit===u&&!move){this.seq=u.deploySeq;this.stock=1;}},{owner:u}),b.on('tick',()=>this.tick(),{owner:u}),
    b.on('hpZeroAttempt',c=>this.onLethal(c),{owner:u}),b.on('death',({unit})=>{if(unit===u)this.stop();else if(unit===this.point?.unit)this.finish(this.point);},{owner:u}),b.on('removed',({unit})=>{if(unit===u)this.stop();else if(unit===this.point?.unit)this.finish(this.point);},{owner:u}),b.on('battleEnd',()=>this.stop(),{owner:u})];
+  this.combat?.install();
  }
- stop(){if(this.stopped)return;this.stopped=true;this.stock=0;this.finish(this.point,{remove:true,reason:'owner-finished'});if(this.b.regularSummons?.get(this.state.key)===this.state)this.b.regularSummons.delete(this.state.key);for(const h of this.handles)this.b.off(h);this.handles=[];}
+ stop(){if(this.stopped)return;this.stopped=true;this.stock=0;this.finish(this.point,{remove:true,reason:'owner-finished'});this.combat?.stop();if(this.b.regularSummons?.get(this.state.key)===this.state)this.b.regularSummons.delete(this.state.key);for(const h of this.handles)this.b.off(h);this.handles=[];}
 }
