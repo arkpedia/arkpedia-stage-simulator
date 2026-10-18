@@ -1,6 +1,6 @@
 # Ju review
 
-Ju (`char_4221_ju`) is enabled in the reviewed local feature-branch simulator with ordinary attacks, its wound talent and both selected skills. Original artwork and public squad/skill controls pass desktop and landscape-touch review. The normal snapshot has 397/431 pinned forms, 860 source skills and 909 runtime models; 34 forms remain. Final complete public regression, hosted validation and simulator merge are separate gates. Arkpedia app dev and production remain held.
+Ju (`char_4221_ju`) is enabled in the reviewed local feature-branch simulator with ordinary attacks, its wound talent and both selected skills. Original artwork and public squad/skill controls pass desktop and landscape-touch review. The normal snapshot has 397/431 pinned forms, 860 source skills and 909 runtime models; 34 forms remain. The complete isolated public regression passes; hosted validation and simulator merge remain separate gates. Arkpedia app dev and production remain held.
 
 The original foundation is 299,728 bytes, SHA-256 `1a17ccfc1b76330814f9e7a660303ce4061df6c8afe50290ddc88a0e53a32011`, from CN table revision `a550f5e048bb94e7cdefc6eb97a4091f0c4c7add` and native client `26-09-22-07-47-20_6c71fa`. Five pinned bundles retain owner/default-art/skill graphs, three distinct projectiles and eight transitive templates, with no native/JSON template gaps. Original pointers remain strings. On each Node 22 and 24, the independent audit reproduces seven outputs and rejects 29 altered source/approval claims. The source receipt retains empty enabled operators and false module/native-particle/frame-parity flags.
 
@@ -10,7 +10,7 @@ Both original skeletons reproduce exact clocks without changing the rounded defa
 
 Twenty-nine combined source/clock/importer checks pass on each Node 22 and 24, including raw-byte corruption rejection. These are source checks, not playable combat or game-frame validation.
 
-The final complete public regression and hosted validation are the remaining publication gates. Modules, native effects/audio/shaders and compiled-client/frame/pixel parity remain unverified.
+Hosted Linux/Windows validation on Node22/24 and the simulator merge are the remaining publication gates. Modules, native effects/audio/shaders and compiled-client/frame/pixel parity remain unverified.
 
 ## Selected wound component
 
@@ -69,3 +69,5 @@ Twenty-two public checks cover selected ranks, potential/trust, maxed support, o
 Actual desktop and landscape-touch public controls pass all four skill/viewport cases and 30 captures with zero browser/resource errors. Selection, legal portrait drop and a separate release-to-deploy direction swipe are exercised. The original portrait, both skill icons and Front/Back models load over immutable HTTPS with normal TLS. Two S1 charges recover naturally and remain unspent on healthy inputs before actual conditional casts. S2 shows its SP bar/ready diamond, original Begin, two-recipient attack and gated once-only extra hits. Natural expiry restores ATK/mode, and retreat preserves the finite target-owned wound while draining source/flight/extra/wound watchers. The raw normal snapshot is loaded directly for this check so the preview's local asset convenience URLs cannot stand in for HTTPS delivery.
 
 The browser fixture retains original terrain but uses 99 DP, empty waves, pinned enemies and scripted HP boundaries. It is explicitly separate from the original-wave/natural-DP checks above. Native effects/audio/shaders, physical-device behavior and compiled-client/frame/pixel parity remain unverified.
+
+The frozen normal public snapshot `aba96e21e8bc057a1373cfbfdeff03a30d184206` (tree `d934e2b4deb61b6ecb083e094bc24607de8a72fe`) passes the complete isolated Node24 suite: 17,302 passed, 92 optional-source/platform skips and zero failures (17,394 tests, 325 suites, 470.707 seconds). All 909 original runtime skeletons verify; 907 were already cached and two Ju skeletons were fetched from the pinned SD revision and checked. The following checkpoint updates review records only. Hosted checks and merging this separate simulator do not release Arkpedia app dev or production.
