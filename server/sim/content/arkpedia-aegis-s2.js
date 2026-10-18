@@ -90,7 +90,7 @@ export class AegisSkillTwo extends AegisOrdinaryAttacks{
   else if(due(p.age,this.model().exactDurations.Skill_2_End))this.finishAccount('NORMAL_EXIT');
  }
  trait(){return{...super.trait(),acceptAttackInput:t=>this.phase?.kind?.startsWith('s2-')?t===this.phase.target:!!t.alive};}
- spec(){return{kind:'instant',silenceable:false,completeOnAttack:false,trigger:{rule:'NEVER'},flags:{noSp:true},holdSpWhileActive:true,attack:{isSkill:true},
+ spec(){return{kind:'instant',silenceable:false,completeOnAttack:false,pendingText:'Skill active',trigger:{rule:'NEVER'},flags:{noSp:true},holdSpWhileActive:true,attack:{isSkill:true},
   canActivate:()=>this.canCast(),onStart:()=>this.startSkill(),onEnd:()=>this.skillEnded()};}
  install(){this.talent.install();this.flight.install();this.accountHandles=[this.b.on('deploy',({unit,move})=>{if(unit===this.u&&!move&&this.payload.seq===null)this.payload.bind();},{owner:this.u}),
   this.b.on('palsyTriggered',({unit})=>{if(unit===this.u&&this.phase?.kind?.startsWith('s2-'))this.finishAccount('INTERRUPTED');},{owner:this.u})];super.install();}
