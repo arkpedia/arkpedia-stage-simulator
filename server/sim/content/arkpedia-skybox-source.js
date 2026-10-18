@@ -40,6 +40,6 @@ export function skyboxNativeInputs() {
   }),s1:skyboxSourceComponent('skills',SKYBOX_SKILLS[0],'-2486689608233139802'),
     s1Attack:skyboxSourceComponent('skills',SKYBOX_SKILLS[0],'-5325103701835529818'),
     s2:skyboxSourceComponent('skills',SKYBOX_SKILLS[1],'1354464068243986088'),
-    talent:owner('-7954768745154806513'),takeoff:owner('8417449659153054991'),buffDatabase:evidence.buffDatabase,
+    ordinarySelector:owner('-9196354041877037809'),talent:owner('-7954768745154806513'),takeoff:owner('8417449659153054991'),buffDatabase:evidence.buffDatabase,
     artController:evidence.chararts[SKYBOX_ID][0].data,templates:evidence.templates,projectiles:evidence.projectiles};
 }
