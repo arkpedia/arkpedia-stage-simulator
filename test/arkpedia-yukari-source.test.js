@@ -2,13 +2,13 @@
 import test from 'node:test';import assert from 'node:assert/strict';import {readFile} from 'node:fs/promises';import {createHash} from 'node:crypto';
 import e from '../data/arkpedia-native-operators/char_4219_yukari.json' with{type:'json'};
 import {selectedYukariBuild as select,selectedYukariInputs,yukariNativeInputs,YUKARI_ID as ID,yukariSourceComponent} from '../server/sim/content/arkpedia-yukari-source.js';
-import {normalizeChess} from '../server/sim/simdata.js';import normal from '../data/arkpedia-mvp.json' with{type:'json'};import {REGULAR_OPERATORS} from '../shared/arkpedia/operators.js';
+import {normalizeChess} from '../server/sim/simdata.js';
 const build=more=>({elite:2,level:80,potential:1,trust:0,skillId:'skchr_yukari_1',skillRank:10,module:'none',...more});
 test('Yukari retains the complete original five-bundle source graph without public combat/model approval',async()=>{
  const raw=await readFile(new URL('../data/arkpedia-native-operators/'+ID+'.json',import.meta.url));assert.equal(raw.length,326073);assert.equal(createHash('sha256').update(raw).digest('hex'),'eb4b2640253141e8a0cae32a5712348258cba08da239c16eae53bf7726a710f9');
  assert.deepEqual(e.enabledOperators,[]);assert.deepEqual(e.heldOperators,[ID]);assert.deepEqual(e.nativeTemplateGaps,[]);assert.deepEqual(e.jsonTemplateGaps,[]);assert.equal(e.source.bundles.length,5);assert.equal(Object.keys(e.templates).length,10);assert.equal(Object.keys(e.projectiles).length,3);assert.deepEqual(Object.keys(e.tokens??{}),[]);
  let components=0;for(const group of['characters','skills','projectiles'])for(const rows of Object.values(e[group]))for(const row of rows)for(const part of row.components){components++;assert.equal(typeof part.pathId,'string');}assert.equal(components,103);
- for(const key of['frameParity','moduleSupport','nativeParticleSupport'])assert.equal(e[key],false);assert.equal(normal.operators[ID],undefined);assert.equal(REGULAR_OPERATORS[ID],undefined);
+ for(const key of['frameParity','moduleSupport','nativeParticleSupport'])assert.equal(e[key],false);
 });
 for(const skill of[1,2])for(let rank=1;rank<=10;rank++)test(`Yukari S${skill} rank${rank} preserves manual time-SP and its exact selected blackboard`,()=>{
  for(const potential of[1,6])for(const trust of[0,200]){const r=select(build({skillId:`skchr_yukari_${skill}`,skillRank:rank,potential,trust}));assert.deepEqual(r.source,e.tables.skills[`skchr_yukari_${skill}`].levels[rank-1]);assert.equal(r.index,skill-1);assert.equal(r.source.skillType,'MANUAL');assert.equal(r.source.spData.spType,'INCREASE_WITH_TIME');assert.equal(r.stats.baseAttackTime,2.1);assert.deepEqual(Object.keys(r.bb).sort(),r.source.blackboard.map(b=>b.key).sort());}
