@@ -2,10 +2,30 @@
 // Original table selection only. This does not register a playable operator.
 import evidence from '../../../data/arkpedia-native-operators/char_4221_ju.json' with {type: 'json'};
 import {selectedCNSourceBuild} from './arkpedia-selected-cn-source.js';
+import {normalizeChess, normSpType} from '../simdata.js';
 
 export const JU_ID = 'char_4221_ju';
 export const JU_SKILLS = Object.freeze(['skchr_ju_1', 'skchr_ju_2']);
 export const selectedJuBuild = build => selectedCNSourceBuild(evidence, JU_ID, build);
+
+export function selectedJuInputs(unit) {
+  const skill = unit.def.skill;
+  if (!skill) throw Error('Incomplete original selected Ju inputs');
+  const build = unit.def.raw.arkpedia;
+  const selected = selectedJuBuild({...build, skillId: skill.id});
+  const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+  if ((build.skillId != null && build.skillId !== skill.id) || unit.def.charId !== JU_ID
+    || !same(unit.def.stats, normalizeChess({stats: selected.stats}).stats)
+    || !same(unit.rangeGrid, selected.rangeGrid) || !same(unit.def.tags, selected.tags)
+    || !same(unit.def.talents.map(t => t.bb), selected.talentBb)
+    || !same(skill.bb, selected.bb) || !same(skill.rangeGrid ?? [], selected.skillRangeGrid)
+    || skill.skillType !== selected.source.skillType || skill.durationType !== selected.source.durationType
+    || skill.spType !== normSpType(selected.source.spData.spType)
+    || skill.spCost !== selected.source.spData.spCost || skill.initSp !== selected.source.spData.initSp
+    || skill.duration !== selected.source.duration || skill.maxCharges !== selected.source.spData.maxChargeTime)
+    throw Error('Incomplete original selected Ju inputs');
+  return selected;
+}
 
 export function juSourceComponent(group, key, pathId) {
   const component = evidence[group]?.[key]?.flatMap(row => row.components)

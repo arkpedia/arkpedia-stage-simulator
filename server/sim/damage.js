@@ -210,6 +210,7 @@ export function leaderHitCancelled(battle, target, amount) {
 /** Absorb damage with shields on `target`. Returns the remaining amount. */
 export function absorbShields(battle, target, amount, damageType = null, application = {}) {
   if (amount <= 0) return 0;
+  const life = target.deploySeq;
   let changed = false;
   let rest = amount;
   for (let i = 0; i < target.buffs.length && rest > 0; i++) {
@@ -221,6 +222,7 @@ export function absorbShields(battle, target, amount, damageType = null, applica
       b.shieldHits--;
       rest = 0;
       if (b.shieldHits <= 0 && !(b.shield > 0) && !b.mods && !b.flags) { battle._removeBuffAt(target, i); i--; }
+      if (!retainsDamageLife(target, life)) return 0;
       changed = true;
       break;
     }
@@ -231,7 +233,7 @@ export function absorbShields(battle, target, amount, damageType = null, applica
   // Hit-count barriers above still resolve first; ordinary shields below keep
   // their existing path when no source callback is present.
   if (target.buffs.some(b => typeof b.onShieldAbsorb === 'function')) {
-    const original = target.buffs.slice(), life = target.deploySeq;
+    const original = target.buffs.slice();
     for (const b of original) {
       if (!(rest > 0) || !target.alive || !target.deployed || target.deploySeq !== life) break;
       if (!target.buffs.includes(b) || !(b.shield > 0) &&
@@ -256,6 +258,7 @@ export function absorbShields(battle, target, amount, damageType = null, applica
       }
       if (b.shield === 0 && !b.keepDepletedShield && !b.mods && !b.flags && !(b.shieldHits > 0)
         && target.buffs.includes(b)) battle.removeBuff(target, b);
+      if (!retainsDamageLife(target, life)) return 0;
     }
     if (changed) target.markDirty();
     return rest;
@@ -273,6 +276,7 @@ export function absorbShields(battle, target, amount, damageType = null, applica
       if (b.shield <= 1e-9) {
         b.shield = 0;
         if (!b.mods && !b.flags && !(b.shieldHits > 0)) { battle._removeBuffAt(target, i); i--; }
+        if (!retainsDamageLife(target, life)) return 0;
       }
     }
   }
@@ -285,6 +289,7 @@ export function absorbShields(battle, target, amount, damageType = null, applica
  */
 export function dealDamage(battle, source, target, dmgIn) {
   if (!target || !target.alive || target.removed || target.hidden || !target.deployed) return 0;
+  const targetLife = target.deploySeq;
   const dmg = dmgIn && dmgIn._norm ? dmgIn : makeDamageInfo(dmgIn);
   if (dmg.type === 'element') return applyElement(battle, source, target, dmg);
   // 无来源 (dmg.sourceless, element bursts): hooks see no source — nothing keyed on "damage dealt by X" (ATK-up vs a
@@ -294,14 +299,17 @@ export function dealDamage(battle, source, target, dmgIn) {
   // Opt-in output effects can count an issued HP-damage instance before the
   // recipient prevents it. Existing modifier and damage-receipt hooks retain
   // their order; elemental buildup uses its separate pipeline above.
-  if (battle._hooks.outputDamage) battle.emit('outputDamage', { source: hs, target, dmg, credit: source });
+  if (battle._hooks.outputDamage) {
+    battle.emit('outputDamage', { source: hs, target, dmg, credit: source });
+    if (!retainsDamageLife(target, targetLife)) return 0;
+  }
   let ts = target.s;
   if (ts.flags.invulnerable || sleepBlocks(target, hs, dmg) || liftoffEvades(target, hs, dmg)) return 0;
   if (battle._hooks.hit) {
     // Recipient-only cancellation must not poison a DamageInfo shared by an
     // area attack. Existing dmg.cancel keeps its original global semantics.
     const ctx = battle.emit('hit', { source: hs, target, dmg, credit: source, cancel: false });
-    if (ctx.cancel || dmg.cancel || !target.alive || !target.deployed) return 0;
+    if (ctx.cancel || dmg.cancel || !retainsDamageLife(target, targetLife)) return 0;
     if (dmg.type === 'element') return applyElement(battle, source, target, dmg);
     ts = target.s; // handlers may have changed the target's buffs (fragile, invulnerable, dodge…): never use stale stats
     if (ts.flags.invulnerable || sleepBlocks(target, hs, dmg)) return 0;
@@ -334,8 +342,11 @@ export function dealDamage(battle, source, target, dmgIn) {
     const counts = !(ts.flags.hitCountArts && !ts.flags.hitCount && type === 'phys');
     if (battle._hooks.calculatedDamage) battle.emit('calculatedDamage',
       { source: hs, target, dmg, credit: source, amount: counts ? 1 : 0 });
-    return applyHpLoss(battle, source, target, absorbShields(battle, target, counts ? 1 : 0, type,
-      { source: hs, applyWay: dmg.applyWay }), dmg);
+    if (!retainsDamageLife(target, targetLife)) return 0;
+    const amount = absorbShields(battle, target, counts ? 1 : 0, type,
+      { source: hs, applyWay: dmg.applyWay });
+    if (!retainsDamageLife(target, targetLife)) return 0;
+    return applyHpLoss(battle, source, target, amount, dmg);
   }
   // 无来源 damage (element bursts) takes nothing from its source's stats; the source still gets the credit below
   const ss = source && source.s && !dmg.sourceless ? source.s : null;
@@ -368,7 +379,7 @@ export function dealDamage(battle, source, target, dmgIn) {
     battle.emit('damageFinal', ctx);
     // Recipient cancellation does not poison a shared DamageInfo used for
     // subsequent targets of the same area attack.
-    if (ctx.cancel || dmg.cancel || !target.alive || !target.deployed) return 0;
+    if (ctx.cancel || dmg.cancel || !retainsDamageLife(target, targetLife)) return 0;
     final = Number.isFinite(ctx.amount) ? Math.max(0, ctx.amount) : 0;
   }
   // 限伤: a leader's hit of ≥ BOSS_HIT_LIMIT in a boss / hidden battle is cancelled before it reaches shields / HP — what
@@ -378,21 +389,37 @@ export function dealDamage(battle, source, target, dmgIn) {
   // independently of shields, HP floors and overkill. They cannot modify it.
   if (battle._hooks.calculatedDamage) battle.emit('calculatedDamage',
     { source: hs, target, dmg, credit: source, amount: final });
+  if (!retainsDamageLife(target, targetLife)) return 0;
   final = absorbShields(battle, target, final, type, { source: hs, applyWay: dmg.applyWay });
+  if (!retainsDamageLife(target, targetLife)) return 0;
   // Native damage-only HP floor (Blaze): limit the actual post-shield loss.
   // This never raises already-low HP. Scripted kill and loseHp call their own
   // paths and therefore bypass this modifier, unlike ordinary undeadable.
   const floor = Math.max(target.s.maxHp * (target.s.damageHpFloorRatio ?? 0),
     Number.isFinite(dmg.hpFloor) ? Math.max(0, dmg.hpFloor) : 0);
-  if (floor > 0 && !target.bossPool)
+  let hpFloorReceipt = null;
+  if (floor > 0 && !target.bossPool) {
+    const before = target.hp, unflooredAmount = final;
     final = Math.min(final, Math.max(0, target.hp - floor));
-  return applyHpLoss(battle, source, target, final, dmg);
+    // Source after-output actions can distinguish a lethal attempt from a hit
+    // absorbed by shields. This observes the existing floor without adding a
+    // callback or changing mitigation, shield, HP or damage-credit ordering.
+    hpFloorReceipt = Object.freeze({ before, unflooredAmount, amount: final,
+      floor, lethal: before > 0 && unflooredAmount >= before, life: target.deploySeq });
+  }
+  return applyHpLoss(battle, source, target, final, dmg, hpFloorReceipt);
+}
+
+// A modifier or barrier callback can replace the same Unit object's life.
+// Remaining work belongs to the captured recipient, never its replacement.
+function retainsDamageLife(target, life) {
+  return target.alive && target.deployed && !target.removed && target.deploySeq === life;
 }
 
 /**
  * Remove HP (after mitigation) and run damaged/fatal/kill bookkeeping. Also used by `battle.loseHp` (流失).
  */
-export function applyHpLoss(battle, source, target, amount, dmg) {
+export function applyHpLoss(battle, source, target, amount, dmg, hpFloorReceipt = null) {
   if (!target.alive) return 0;
   let dealt = 0;
   const hs = dmg && dmg.sourceless ? null : source; // the source hooks see (无来源: none; `credit` keeps it)
@@ -463,7 +490,8 @@ export function applyHpLoss(battle, source, target, amount, dmg) {
     const shown = dmg.type === 'element' ? dmg.element : dmg.type === 'elemental' ? (dmg.element || 'true') : dmg.type;
     battle._ev(['dmg', target.id, Math.round(amount), shown]);
   }
-  if (battle._hooks.damaged) battle.emit('damaged', { source: hs, target, amount, hpLoss: dealt, type: dmg ? dmg.type : 'true', dmg, credit: source });
+  if (battle._hooks.damaged) battle.emit('damaged', { source: hs, target, amount, hpLoss: dealt, type: dmg ? dmg.type : 'true', dmg, credit: source,
+    ...(hpFloorReceipt ? { hpFloor: hpFloorReceipt } : {}) });
   if (target.side === 'ally' && target.skill && dmg && !dmg.noSp && dmg.type !== 'element') battle._skills.onDamaged(target);
   const dead = target.bossPool ? target.bossPool.hp <= 0 : target.hp <= 0;
   if (dead && target.alive) battle.kill(target, source);
