@@ -22,8 +22,8 @@ export function addOwner(b,{skill=1,elite=2,level=[50,70,80][elite],rank=[4,7,10
 }
 export function ally(f,options={}){
  const i=f.nextAlly??0;f.nextAlly=i+1;const pos=[[5,6],[5,7],[6,6],[4,6],[6,7],[4,7],[3,5],[7,5]][i]??[10,i];
- const{row=pos[0],col=pos[1],hpRatio=.1,kind='op',flags={},id='fixture:'+i}=options;
- const def=normalizeChess({chessId:id,charId:id,name:id,profession:'GUARD',position:'MELEE',stats:{maxHp:10000,atk:100,def:0,cost:0,baseAttackTime:1,blockCnt:1}}),u=f.b._makeAlly(f.u.player,def,kind,row,col,{dir:'RIGHT'});f.b._setupUnit(u,{trait:{noAttack:true},talents:[],skill:{kind:'passive'}});assert.ok(f.b._deploy(u,{initial:false}));u.hp=u.s.maxHp*hpRatio;if(Object.keys(flags).length)f.b.addBuff(u,{key:'fixture:flags',flags});return u;
+ const{row=pos[0],col=pos[1],hpRatio=.1,kind='op',flags={},id='fixture:'+i,charId=id,profession='WARRIOR',atk=100}=options;
+ const def=normalizeChess({chessId:id,charId,name:id,profession,position:'MELEE',stats:{maxHp:10000,atk,def:0,cost:0,baseAttackTime:1,blockCnt:1}}),u=f.b._makeAlly(f.u.player,def,kind,row,col,{dir:'RIGHT'});f.b._setupUnit(u,{trait:{noAttack:true},talents:[],skill:{kind:'passive'}});assert.ok(f.b._deploy(u,{initial:false}));u.hp=u.s.maxHp*hpRatio;if(Object.keys(flags).length)f.b.addBuff(u,{key:'fixture:flags',flags});return u;
 }
 export function finish(f,reason='fixture'){f.u.skill.setSpTotal(f.u.skill.spCost);assert.equal(f.u.skill.activate('fixture'),true);f.u.skill.end(reason);assert.deepEqual(f.b.errors,[]);}
 export function enemy(f,{row=5,col=7,hp=1e7,flags={},motion='WALK'}={}){
