@@ -1,0 +1,110 @@
+{
+  "operator": "char_4224_turdus",
+  "name": "Ukusik",
+  "foundationSha256": "e2d258828ebfc9d6c7752cea5c26ad3857ac74fd056ec45d810fbc8810cea6d6",
+  "artCommit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+  "output": "data/arkpedia-turdus-art.json",
+  "sdReview": "source-reviews/ukusik.json",
+  "scope": "Original Front/Back owner files unchanged; native pointers, decoded pixels and PMA verified. Literal Start/Attack, S1 Begin/Loop/Idle/End and one-shot Skill_2. Only the two original S1-to-Idle End mixes are retained. No Back death, modules, combat/public admission or native shader/frame parity is invented.",
+  "roles": {
+    "Front": {
+      "idle": "Idle",
+      "deploy": "Start",
+      "attack": {
+        "begin": null,
+        "loop": "Attack",
+        "end": null
+      },
+      "attackDown": null,
+      "skill": {
+        "begin": "Skill_1_Begin",
+        "loop": "Skill_1_Loop",
+        "end": "Skill_1_End",
+        "idle": "Skill_1_Idle",
+        "index": 0,
+        "via": "skill"
+      },
+      "skills": {
+        "0": {
+          "begin": "Skill_1_Begin",
+          "loop": "Skill_1_Loop",
+          "end": "Skill_1_End",
+          "idle": "Skill_1_Idle",
+          "index": 0,
+          "via": "skill"
+        },
+        "1": {
+          "begin": null,
+          "loop": "Skill_2",
+          "end": null,
+          "index": 1,
+          "via": "skill"
+        }
+      },
+      "die": "Die",
+      "stun": null,
+      "move": null
+    },
+    "Back": {
+      "idle": "Idle",
+      "deploy": "Start",
+      "attack": {
+        "begin": null,
+        "loop": "Attack",
+        "end": null
+      },
+      "attackDown": null,
+      "skill": {
+        "begin": "Skill_1_Begin",
+        "loop": "Skill_1_Loop",
+        "end": "Skill_1_End",
+        "idle": "Skill_1_Idle",
+        "index": 0,
+        "via": "skill"
+      },
+      "skills": {
+        "0": {
+          "begin": "Skill_1_Begin",
+          "loop": "Skill_1_Loop",
+          "end": "Skill_1_End",
+          "idle": "Skill_1_Idle",
+          "index": 0,
+          "via": "skill"
+        },
+        "1": {
+          "begin": null,
+          "loop": "Skill_2",
+          "end": null,
+          "index": 1,
+          "via": "skill"
+        }
+      },
+      "die": null,
+      "stun": null,
+      "move": null
+    }
+  },
+  "nativeMixes": [
+    {
+      "sourceAnimName": "Skill_1_Idle",
+      "targetAnimName": "Idle",
+      "mixAnimName": "Skill_1_End"
+    },
+    {
+      "sourceAnimName": "Skill_1_Loop",
+      "targetAnimName": "Idle",
+      "mixAnimName": "Skill_1_End"
+    }
+  ],
+  "reviewPhases": [
+    "Start",
+    "Idle",
+    "Attack",
+    "Skill_1_Begin",
+    "Skill_1_Loop",
+    "Skill_1_Idle",
+    "Skill_1_End",
+    "Skill_2",
+    "Die"
+  ]
+}
