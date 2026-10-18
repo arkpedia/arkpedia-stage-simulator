@@ -71,6 +71,7 @@ export class Unit {
     this.atkCd = 0;
     this.lastAttackAt = -Infinity;
     this.attackControlEpoch = 0; // accepted action-stopping effects, including those expiring between ticks
+    this.actionControlEpoch = 0; // skill interruption excludes ordinary-attack-only disarm
     this.lastHitAt = -Infinity;
     this.deployedAt = -Infinity;
     this.deathAt = -Infinity;

@@ -253,3 +253,25 @@ test('stack and extend refreshes replace shield filters consistently with ordina
     assert.equal(b.dealDamage(null, unit, { amount: 20, type: 'true' }), 0);
   }
 });
+
+test('skill action epoch records brief accepted control without equating ordinary-only disarm with it', () => {
+  const { b, unit } = make();
+  assert.equal(unit.actionControlEpoch, 0);
+  for (const flag of ['stun', 'freeze', 'sleep', 'levitate']) {
+    const epoch = unit.actionControlEpoch;
+    const buff = b.addBuff(unit, { key: 'test:action:' + flag, flags: { [flag]: true }, duration: .001 });
+    assert.equal(unit.actionControlEpoch, epoch + 1);
+    b.removeBuff(unit, buff);
+    assert.equal(unit.canAct, true);
+    assert.equal(unit.actionControlEpoch, epoch + 1);
+  }
+  const epoch = unit.actionControlEpoch, attack = unit.attackControlEpoch;
+  b.addBuff(unit, { key: 'test:disarm-only', flags: { disarm: true } });
+  assert.equal(unit.actionControlEpoch, epoch); assert.equal(unit.attackControlEpoch, attack + 1);
+  b.on('beforeBuff', c => { if (c.buff.key === 'test:reject-action') c.cancel = true; });
+  assert.equal(b.addBuff(unit, { key: 'test:reject-action', flags: { stun: true } }), null);
+  b.addBuff(unit, { key: 'test:keep-action', refresh: 'keep' });
+  b.addBuff(unit, { key: 'test:keep-action', flags: { stun: true }, refresh: 'keep' });
+  assert.equal(unit.actionControlEpoch, epoch);
+  assert.deepEqual(b.errors, []);
+});

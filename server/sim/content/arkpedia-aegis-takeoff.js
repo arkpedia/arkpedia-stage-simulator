@@ -60,7 +60,7 @@ export class AegisTakeoff{
  stop(){if(this.stopped)return;this.stopped=true;const p=this.parent;this.parent=null;if(p){p.finished=true;this.removeParent(p);}
   const c=this.command;this.command=null;clearBlockMode(this.b,this.u,c);for(const h of this.handles)this.b.off(h);this.handles=[];
   if(this.u.deploySeq===this.seq&&this.visuals.has(this.u.mem.regularFormVisual)){
-   const next={...this.u.mem.regularFormVisual};delete next.height;delete next.heightOffset;this.u.mem.regularFormVisual=next;}
+   const owned=this.u.mem.regularFormVisual;delete owned.height;delete owned.heightOffset;}
   this.height=null;this.heightOffset=0;
  }
 }

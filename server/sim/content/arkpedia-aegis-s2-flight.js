@@ -31,9 +31,9 @@ export class AegisSkillTwoFlight extends AegisTakeoff{
  phaseLive(p){return !!p&&this.valid()&&this.skillPhase===p;}
  grantLive(p){return !!p&&!p.finished&&p.buff?.source===this.u&&p.buff.key===p.key&&p.buff.data?.aegisS2Flight===p&&this.u.buffs.includes(p.buff);}
  removeGrant(p){if(p?.buff?.source===this.u&&p.buff.key===p.key&&p.buff.data?.aegisS2Flight===p&&this.u.buffs.includes(p.buff))this.b.removeBuff(this.u,p.buff);}
- grant(raw,phase,{duration=0,flags=null,onFinish=()=>{}}={}){
+ grant(raw,phase,{duration=0,flags=null,onFinish=()=>{},permit=()=>true}={}){
   const p={key:`${raw.buffKey}:${this.u.id}:${this.seq}:${++this.serial}`,phase,buff:null,finished:false,admitted:false},flagJson=JSON.stringify(flags);let descriptor;
-  const admit=(_u,buff)=>this.phaseLive(phase)&&!p.finished&&(!buff||buff.key===p.key&&buff.source===this.u&&buff.data?.aegisS2Flight===p
+  const admit=(_u,buff)=>this.phaseLive(phase)&&permit()&&!p.finished&&(!buff||buff.key===p.key&&buff.source===this.u&&buff.data?.aegisS2Flight===p
    &&JSON.stringify(buff.flags??null)===flagJson&&Object.keys(buff.mods??{}).length===0&&buff.status==null
    &&(buff===descriptor||buff.stacks===1&&buff.duration===duration&&buff.timeLeft===duration))
    &&(!this.u.findBuff(p.key)||this.u.findBuff(p.key).data?.aegisS2Flight===p);
@@ -41,8 +41,9 @@ export class AegisSkillTwoFlight extends AegisTakeoff{
   descriptor={key:p.key,duration,flags,source:this.u,refresh:'keep',data:{aegisS2Flight:p},admit,onRemove:finish,onExpire:finish};p.buff=this.b.addBuff(this.u,descriptor);
   if(!admit()||!this.grantLive(p)){p.finished=true;this.removeGrant(p);return null;}p.admitted=true;this.grants.add(p);return p;
  }
- beginSkillTwo(){if(!this.valid()||this.skillPhase)return false;const phase={ending:false,finishReason:null};this.skillPhase=phase;
-  const p=this.grant(this.s2.owner,phase,{duration:Infinity,flags:{groundEvadeImmune:true},onFinish:()=>this.walkFinished(p,phase)});
+ beginSkillTwo({permit=()=>true}={}){if(typeof permit!=='function')throw Error('Explicit Aegis S2 admission predicate required');
+  if(!this.valid()||this.skillPhase||!permit())return false;const phase={ending:false,finishReason:null};this.skillPhase=phase;
+  const p=this.grant(this.s2.owner,phase,{duration:Infinity,flags:{groundEvadeImmune:true},permit,onFinish:()=>this.walkFinished(p,phase)});
   if(!p){if(this.skillPhase===phase)this.skillPhase=null;return false;}this.walkParent=p;
   this.heightCommand(0,bb(this.s2.owner).height_duration);if(!this.phaseLive(phase)||!this.grantLive(p))return false;
   this.blockCommand('WALK');return this.phaseLive(phase)&&this.grantLive(p);
