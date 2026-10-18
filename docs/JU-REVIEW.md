@@ -1,6 +1,6 @@
 # Ju review
 
-Ju (`char_4221_ju`) has held source selection, exact animation clocks and a selected wound component. Ordinary attacks, both skill controllers, original artwork delivery and public squad admission remain pending. The local playable roster stays at 396/431 pinned forms, with 35 remaining. Arkpedia app dev and production remain held.
+Ju (`char_4221_ju`) has held source selection, exact animation clocks, a selected wound component and an ordinary attack component. Both skill controllers, original artwork delivery and public squad admission remain pending. The local playable roster stays at 396/431 pinned forms, with 35 remaining. Arkpedia app dev and production remain held.
 
 The original foundation is 299,728 bytes, SHA-256 `1a17ccfc1b76330814f9e7a660303ce4061df6c8afe50290ddc88a0e53a32011`, from CN table revision `a550f5e048bb94e7cdefc6eb97a4091f0c4c7add` and native client `26-09-22-07-47-20_6c71fa`. Five pinned bundles retain owner/default-art/skill graphs, three distinct projectiles and eight transitive templates, with no native/JSON template gaps. Original pointers remain strings. On each Node 22 and 24, the independent audit reproduces seven outputs and rejects 29 altered source/approval claims. The source receipt retains empty enabled operators and false module/native-particle/frame-parity flags.
 
@@ -10,7 +10,7 @@ Both original skeletons reproduce exact clocks without changing the rounded defa
 
 Twenty-nine combined source/clock/importer checks pass on each Node 22 and 24, including raw-byte corruption rejection. These are source checks, not playable combat or game-frame validation.
 
-Next work is the ordinary attack controller, damage-only HP floor and target-owned wound lifecycle, S1's target-gated attack consumption, and S2's once-per-recipient delayed damage/source gate. Each needs source-driven ordering, recipient/source life checks and finite cleanup tests before original artwork, public controls, original-wave and full-regression acceptance. Modules, native effects/audio/shaders and compiled-client/frame/pixel parity remain unverified.
+Next work is S1's target-gated attack consumption/refund/interruption behavior and S2's once-per-recipient delayed damage/source gate. Each needs source-driven ordering, recipient/source life checks and finite cleanup tests before original artwork, public controls, original-wave and full-regression acceptance. Modules, native effects/audio/shaders and compiled-client/frame/pixel parity remain unverified.
 
 ## Selected wound component
 
@@ -23,3 +23,15 @@ Owned marks, finite target watchers and source-marker handles are isolated acros
 Wound tests exposed an existing general damage callback bug: output/hit/final/calculated callbacks could move an old hit into a fresh life of the same Unit object. Shield-removal callbacks could also spend the fresh life's barrier. The damage gateway now retains recipient life through those phases; barrier loops stop before touching new-life resources. Immutable floor metadata adds no callback and keeps ordinary mitigation/shield/HP/credit ordering. Direct HP-loss and element-gauge paths retain their existing separate semantics.
 
 The selected wound, source/clocks and adjacent Saga/Ukusik/HP-floor/barrier/damage checks pass 255 cases on each Node 22 and 24. Four replacement-life regressions and the ordinary shield-replacement case were observed failing before the guard fixes. A complete isolated regression is the next gate; this checkpoint does not enable Ju publicly or create a draft PR.
+
+The frozen wound/shared-damage checkpoint `08d95bb417e68abdd043755d2880c53c6cc5903a` (tree `60007da310a04bbedeaadb15b703ebc4551b3bfb`) passes the complete isolated Node 24 suite: 17,141 passed, 92 optional-source/platform skips and zero failures (17,233 tests, 325 suites, 460.032 seconds). All 907 public runtime skeletons verify. This complete check precedes the ordinary component described below; it does not certify Ju's unfinished skill controllers or public admission.
+
+## Ordinary attack component
+
+The ordinary component retains one original input, the exact .533333 marker, speed-ten homing transport, one physical ranged attack receipt and the native ten-second projectile lifetime. New acquisition follows the local heaviest-first alias for selector27 and excludes shared `cripple` marks; the existing regular-stage blocked-target rule permits attacking Ju's own blocker outside its long-range grid. Captured input and born transport do not reselect after stealth/TargetFree changes, and a replaced recipient life cannot inherit the old projectile. Native `alwaysHitTraceTargetInTheEnd` remains distinct from an invented new target.
+
+ASPD can shorten the attack cycle while source max-animation-scale one caps the release playback; slower attack stats are sampled without a second slowdown multiplier. Transient control cancels an unfired phase while preserving positive cooldown. An explicit skill-composition predicate yields attack/presentation ownership to the future skill controllers; this component does not manufacture a passive replacement for either original skill. Original Start, Attack and Idle tracks and missing Back Die remain explicit.
+
+Born arrows survive caster withdrawal with finite watchers and launch-ATK fallback. A still-present matching source life supplies live impact ATK. Native compiled source-invalid attribute dispatch remains a documented local mapping. External projectile removal, recipient replacement and battle end release tracked flights/watchers. A natural lethal ordinary hit creates one wound, and subsequent acquisition ignores that critically wounded enemy.
+
+The ordinary component passes 24 selected checks, including all four directions, original clocks, acquisition exclusions, capped/sampled timing, transient control, receipt veto/reentrancy, live/fallback ATK, finite transport and wound integration. Combined source/clocks/wound/ordinary and adjacent Saga/Ukusik/HP-floor/barrier/damage coverage passes 279 cases on each Node 22 and 24. The full isolated checkpoint above covers the wound/shared changes only. The normal data remains unchanged at 396 forms; no public Ju registration, SD metadata publication or extra draft PR is created.
