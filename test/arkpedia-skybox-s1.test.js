@@ -113,3 +113,10 @@ test('Owner replacement inside beforeAttack cannot issue an old-life bomb or ove
  cast(f);advance(f.b,1);assert.equal(f.controller.stopped,true);assert.equal(f.payload.flights.size,0);assert.equal(hits(f).length,0);
  assert.equal(f.u.mem.regularFormVisual.playId,'replacement');assert.equal(f.flight.skillTimers.size,0);
 });
+
+for(const replaced of[false,true])test(`End re-faces the ${replaced?'original input position instead of a replacement life':'current captured input after it moves'}`,()=>{
+ const f=make(),a=enemy(f);cast(f);assert.equal(f.u.mem.regularVisualDirection,'RIGHT');
+ a.x=5;a.y=8;if(replaced)a.deploySeq++;
+ until(f,()=>f.u.mem.regularFormVisual.clip==='Skill_1_End');assert.equal(f.u.mem.regularVisualDirection,replaced?'RIGHT':'UP');
+ assert.equal(f.u.mem.regularFormVisual.clip,'Skill_1_End');until(f,()=>!f.u.skill.active);
+});

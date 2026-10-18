@@ -8,7 +8,7 @@ import {canTargetEnemy,sortEnemyTargets} from '../targeting.js';
 import {bodyInKeys} from '../body.js';
 export const SKYBOX_S1_CONTRACT=Object.freeze({
  scope:'Selected original Skybox automatic S1, source charge ranks, Begin/End clocks, landing/return, cached bomb, first-modifier talent and ordinary aerial attacks; no S2 or public admission.',
- mapping:'A ready time-SP account captures one legal ground/air input with own-block priority. Begin and End each use their original one-second fixed clocks, independent of ASPD and slowdown. Begin releases at0.5333333611488342 into the separate finite radius-two cached bomb. One charge stays committed once the valid input is captured; losing it before release uses the original input-position emission instead of refunding a born/point projectile. A search with no legal input preserves the charge. SP is held through both phases; positive ordinary cooldown is retained. Brief control/hiding before release invalidates that unborn output while the End/flight/account cleanup still completes. A born projectile survives account/end/source departure. Rank1-6 has one charge and rank7-10 two.',
+ mapping:'A ready time-SP account captures one legal ground/air input with own-block priority. Begin and End each use their original one-second fixed clocks, independent of ASPD and slowdown; End faces the retained current input or its captured position if that life is gone. Begin releases at0.5333333611488342 into the separate finite radius-two cached bomb. One charge stays committed once the valid input is captured; losing it before release uses the original input-position emission instead of refunding a born/point projectile. A search with no legal input preserves the charge. SP is held through both phases; positive ordinary cooldown is retained. Brief control/hiding before release invalidates that unborn output while the End/flight/account cleanup still completes. A born projectile survives account/end/source departure. Rank1-6 has one charge and rank7-10 two.',
  limitations:'Native selector aliases, cast/search/refund boundary, interrupt/End ordering, fixed sequence versus ordinary cooldown and source/recipient snapshots remain explicit local mappings. The original recoverSpIfTargetDead flag is retained; its compiled interaction with emitToInputPos is not recovered. The flight/transport/talent contracts retain their stated limits. S2, public build/runtime/browser approval, modules and native FX/audio/frame parity remain separate.',frameParity:false,
 });
 const present=t=>t?.alive&&t.deployed&&!t.removed&&!t._removing;
@@ -21,7 +21,7 @@ export function verifySkyboxS1(n=skyboxNativeInputs(),read=skyboxSourceComponent
   ||JSON.stringify(seq._abilities.map(p=>p.m_PathID))!==JSON.stringify(['-5325103701835529818','2441541390163886502'])
   ||seq._alwaysNext!==1||seq._timeMode!==1||seq._enableLoop!==0||seq._interruptIfTargetDead!==0
   ||a._animKey!=='Skill_1_Begin'||a._selectTargetSource!==2||a._timeMode!==1||a._maxAnimScale!==-1||a._affectedBySlowDown!==0
-  ||end._animKey!=='Skill_1_End'||end._timeMode!==1||end._maxAnimScale!==-1||end._affectedBySlowDown!==0
+  ||end._animKey!=='Skill_1_End'||end._faceToTarget!==1||end._timeMode!==1||end._maxAnimScale!==-1||end._affectedBySlowDown!==0
   ||sel._targetSide!==2||sel._targetMotion!==3||sel._maxNum!==1||sel._postFilter!==4||sel._ignoreTargetFree!==0)
   throw Error('Changed original selected Skybox S1 sequence inputs');
 }
@@ -63,7 +63,8 @@ export class SkyboxSkillOne extends SkyboxOrdinaryAttacks{
  }
  trait(){return{...super.trait(),acceptAttackInput:t=>this.phase?.kind==='s1-begin'?t===this.phase.target:!!t.alive};}
  startEnd(p){if(!this.valid()||this.phase!==p||p.kind!=='s1-begin')return;
-  p.kind='s1-end';p.endsAt=this.b.time+p.endDuration;this.flight.endSkillOne();
+  p.kind='s1-end';p.endsAt=this.b.time+p.endDuration;
+  this.face(p.target.deploySeq===p.life&&present(p.target)&&!p.target.hidden?p.target:{x:p.x,y:p.y});this.flight.endSkillOne();
   if(this.valid()&&this.phase===p)this.visual('Skill_1_End');
  }
  endAccount(reason){this.finishing=true;try{if(this.u.skill.active)this.u.skill.end(reason);}finally{this.finishing=false;}}
