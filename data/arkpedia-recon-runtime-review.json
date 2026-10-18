@@ -1,0 +1,461 @@
+{
+  "schemaVersion": 1,
+  "operatorId": "char_4215_buddy",
+  "enabledOperators": [
+    "char_4215_buddy"
+  ],
+  "frameParity": false,
+  "moduleSupport": false,
+  "nativePixelParity": false,
+  "nativeParticleSupport": false,
+  "mechanicsPolicy": "source-cn-passive-bombs-owner-modes-and-palamute-point-v1",
+  "scope": "Original passive Recon owner bomb/ordinary modes, three source-owned bomb resources and independent zero-slot Palamute tactical point, birth/ordinary attacks and sixty-second rest recovery.",
+  "verification": {
+    "source": "Six pinned native bundles; complete owner/token/template/projectile closure; canonical null skills.",
+    "artwork": "Original owner Front/Back and one Single companion skeleton, unchanged native pixels/PMA, original token portrait; SD PR37 merge 7b4a113c3afadd3bf114eb70dbda113bd0671d4b.",
+    "runtime": "281 integrated public/source/companion/engine/deployment checks pass on each Node 22 and 24, including 24 public cases. Original 0-1 with natural DP and unchanged waves/terrain clears eleven kills, zero leaks, full life and three natural bomb detonations. Frozen public commit a922f371cd3e0471d2b1a685b705ecd9662771a5 (tree b04c2e45f07058e364ddda858d182d15ec05dde5) passes the isolated complete Node24 suite: 16,948 passed, 88 optional-source/platform skips, zero failures; 17,036 tests, 325 suites, 570.647 seconds. All 905 original runtime skeletons verify. Hosted checks and simulator merge remain separate.",
+    "browser": {
+      "status": "passed",
+      "script": "tools/arkpedia/review-recon-public.mjs",
+      "scriptSha256": "47a0415a478f11f9da191c784e786a050710a20ee7a99a6db975571ac263d586",
+      "driverSha256": "2e52cd4007ae553e30f773104626f9b5c2be7c15f717b61ca9063517fbdc51c8",
+      "fixtureServerSha256": "127fb1b74be89d0a35e6bfa4e3d35927d170fa4d3129287f6c523114c5bcaa22",
+      "browserVersion": "Chrome/153.0.8010.12",
+      "cacheDisabled": true,
+      "externalAssetTransport": "Unintercepted original HTTPS at immutable source commits; normal TLS verification.",
+      "originalWaves": false,
+      "scope": "Controlled public UI scenario with empty waves, pinned targets, 99 DP and a scripted fatal companion hit; original-wave completion verified separately.",
+      "viewports": [
+        {
+          "width": 1280,
+          "height": 800,
+          "touch": false
+        },
+        {
+          "width": 844,
+          "height": 390,
+          "touch": true
+        }
+      ],
+      "cases": 2,
+      "captures": 12,
+      "browserErrors": 0,
+      "failedResources": 0,
+      "reportSha256": "3233ac96a5fd9a7eaba108bab5f28a02a8d39a68dac189ea1ead38ef57fb3980",
+      "verified": [
+        "Actual owner drag/drop and separate direction swipe with no early deployment",
+        "Companion drop on a legal in-range low tile without a direction picker",
+        "Original owner Front/Back, one native Single companion and original card portrait loaded over HTTPS",
+        "Three natural source bomb throws, ordinary-mode switch, independent ally detonation and DP",
+        "Skillless owner/token UI without invented SP/skill-ready controls; zero deployment slots",
+        "Fatal-hit rest countdown, no blocking while recovering, sixty-second full-HP fresh-life recovery",
+        "Owner withdrawal drains its deck, point, derived resources and callbacks"
+      ],
+      "normalSnapshot": true
+    }
+  },
+  "originalArtwork": {
+    "operator/char_4215_buddy/default/back": {
+      "kind": "operator",
+      "id": "char_4215_buddy",
+      "variant": "default",
+      "facing": "back",
+      "spineVersion": "3.8.99",
+      "source": {
+        "key": "operators",
+        "repository": "fexli/ArknightsResource",
+        "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+        "directory": "spine/char_4215_buddy/char_4215_buddy/Back"
+      },
+      "skeleton": {
+        "path": "models/operator/char_4215_buddy/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4215_buddy.skel",
+        "bytes": 238120,
+        "sha256": "c6bc57d3f404eaca04031fd21171411073a732d76e40fc947ef9dcdc346bfdb0"
+      },
+      "atlas": {
+        "path": "models/operator/char_4215_buddy/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4215_buddy.atlas",
+        "bytes": 11965,
+        "sha256": "522c250f15b817723fada2b55ea966aab6e29128eae41e093510f3fb3b6fcfa0"
+      },
+      "textures": [
+        {
+          "path": "models/operator/char_4215_buddy/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4215_buddy.png",
+          "bytes": 367486,
+          "sha256": "dced1a427bea013af5dffc8f31ce2938481ecc18094d754ef99919534ea48111"
+        }
+      ],
+      "premultipliedAlpha": true,
+      "animations": {
+        "Attack_A": 1.067,
+        "Attack_B": 1.067,
+        "Attack_Begin": 0.1,
+        "Attack_End": 0.167,
+        "Default": 0,
+        "Idle": 4,
+        "Skill": 1.367,
+        "Skill_Begin": 0.1,
+        "Skill_End": 0.167,
+        "Start": 1
+      },
+      "hits": {
+        "Attack_A": [
+          0.433
+        ],
+        "Attack_B": [
+          0.433
+        ],
+        "Skill": [
+          0.8
+        ]
+      },
+      "bounds": null,
+      "animationRoles": {
+        "idle": "Idle",
+        "deploy": "Start",
+        "attack": {
+          "begin": "Attack_Begin",
+          "loop": "Attack_A",
+          "end": "Attack_End"
+        },
+        "attackDown": null,
+        "skill": null,
+        "die": null,
+        "stun": null,
+        "move": null
+      }
+    },
+    "operator/char_4215_buddy/default/front": {
+      "kind": "operator",
+      "id": "char_4215_buddy",
+      "variant": "default",
+      "facing": "front",
+      "spineVersion": "3.8.99",
+      "source": {
+        "key": "operators",
+        "repository": "fexli/ArknightsResource",
+        "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+        "directory": "spine/char_4215_buddy/char_4215_buddy/Front"
+      },
+      "skeleton": {
+        "path": "models/operator/char_4215_buddy/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4215_buddy.skel",
+        "bytes": 375643,
+        "sha256": "ef81a9c5cc2656bd5985fe835046187108e6357f2e59ae36120ef475bc494866"
+      },
+      "atlas": {
+        "path": "models/operator/char_4215_buddy/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4215_buddy.atlas",
+        "bytes": 20968,
+        "sha256": "18179f58443435a2e59579c0c1c9fb8e467868ffaab43f6cc9d0c0394b29525f"
+      },
+      "textures": [
+        {
+          "path": "models/operator/char_4215_buddy/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4215_buddy.png",
+          "bytes": 408710,
+          "sha256": "812dc80ecf529278576489883e839144f3693e554eae173fc21b6f000c7242ea"
+        }
+      ],
+      "premultipliedAlpha": true,
+      "animations": {
+        "Attack_A": 1.067,
+        "Attack_B": 1.067,
+        "Attack_Begin": 0.1,
+        "Attack_End": 0.167,
+        "Default": 0,
+        "Die": 1,
+        "Idle": 4,
+        "Skill": 1.367,
+        "Skill_Begin": 0.1,
+        "Skill_End": 0.167,
+        "Start": 1
+      },
+      "hits": {
+        "Attack_A": [
+          0.433
+        ],
+        "Attack_B": [
+          0.433
+        ],
+        "Skill": [
+          0.8
+        ]
+      },
+      "bounds": null,
+      "animationRoles": {
+        "idle": "Idle",
+        "deploy": "Start",
+        "attack": {
+          "begin": "Attack_Begin",
+          "loop": "Attack_A",
+          "end": "Attack_End"
+        },
+        "attackDown": null,
+        "skill": null,
+        "die": "Die",
+        "stun": null,
+        "move": null
+      }
+    },
+    "operator/token_10063_buddy_bddg/default/back": {
+      "kind": "operator",
+      "id": "token_10063_buddy_bddg",
+      "variant": "default",
+      "facing": "back",
+      "source": {
+        "key": "cn-client",
+        "kind": "assetbundle",
+        "bundle": {
+          "path": "pkgrps/btl_pfb_tokens_5.ab",
+          "bytes": 2183454,
+          "md5": "1c4224582e2e540c2c1c96419fb6d38d",
+          "sha256": "1da6347c10575ac922ef1ceeade662ebfb785b0653ef13266ab48f03d1828af9",
+          "url": "https://ak.hycdn.cn/assetbundle/official/Android/assets/26-09-22-07-47-20_6c71fa/pkgrps_btl_pfb_tokens_5.dat",
+          "client": "cn",
+          "resourceVersion": "26-09-22-07-47-20_6c71fa",
+          "transforms": [
+            "Original embedded premultiplied RGBA texture decoded with every decoded pixel unchanged",
+            "Atlas page dimensions normalized and pma: true recorded; native regions unchanged",
+            "One native Single skeleton retained; front/back manifest slots are explicit compatibility aliases, not distinct original facings"
+          ]
+        },
+        "directory": "pkgrps/btl_pfb_tokens_5.ab",
+        "extractedSkeleton": "token_10063_buddy_bddg.skel",
+        "facingAlias": "single-original-model",
+        "originalPathIds": {
+          "rootPathId": "-24625540907109892",
+          "controllerPathId": "7721478156889190908",
+          "animatorPathId": "7173132144346362364",
+          "faceSwitcherPathId": "-6861270519998680580",
+          "skeletonAnimationPathId": "-4538936699278233092",
+          "skeletonDataAssetPathId": "879360656205598691",
+          "textAssetPathId": "6442872620876332428",
+          "atlasAssetPathId": "4470095928019151795",
+          "atlasTextAssetPathId": "-1613642665742011779",
+          "materialPathId": "1719060956823152150",
+          "texturePathId": "-8412659039788277696"
+        },
+        "transforms": [
+          "Original embedded premultiplied RGBA texture decoded with every decoded pixel unchanged",
+          "Atlas page dimensions normalized and pma: true recorded; native regions unchanged",
+          "One native Single skeleton retained; front/back manifest slots are explicit compatibility aliases, not distinct original facings"
+        ]
+      },
+      "spineVersion": "3.8.99",
+      "skeleton": {
+        "path": "models/operator/token_10063_buddy_bddg/default/back/1da6347c10575ac922ef1ceeade662ebfb785b0653ef13266ab48f03d1828af9/token_10063_buddy_bddg.skel",
+        "bytes": 327750,
+        "sha256": "21ac3dc5dc8140f4997a00b318e46b860221e0e79d87604b2c3a47bb9c15e19d"
+      },
+      "atlas": {
+        "path": "models/operator/token_10063_buddy_bddg/default/back/1da6347c10575ac922ef1ceeade662ebfb785b0653ef13266ab48f03d1828af9/token_10063_buddy_bddg.atlas",
+        "bytes": 15810,
+        "sha256": "566fb71f08d765efb91cf5dae9ebca3d3cfc83dcb74b1d4311ec5f56d0b340c7"
+      },
+      "textures": [
+        {
+          "path": "models/operator/token_10063_buddy_bddg/default/back/1da6347c10575ac922ef1ceeade662ebfb785b0653ef13266ab48f03d1828af9/token_10063_buddy_bddg.png",
+          "bytes": 287841,
+          "sha256": "20e186201460c6c130997acbe39159c54eb07f3406d9838c238acc0d480056af"
+        }
+      ],
+      "premultipliedAlpha": true,
+      "animations": {
+        "Attack_A": 1,
+        "Attack_B": 1,
+        "Default": 0,
+        "Die": 1,
+        "Idle": 2,
+        "Start": 1,
+        "Stun": 1,
+        "Stun_Begin": 1,
+        "Stun_End": 1
+      },
+      "animationRoles": {
+        "idle": "Idle",
+        "deploy": "Start",
+        "attack": {
+          "begin": null,
+          "loop": "Attack_A",
+          "end": null
+        },
+        "skill": null,
+        "die": "Die",
+        "stun": "Stun",
+        "move": null
+      },
+      "hits": {
+        "Attack_A": [
+          0.4
+        ],
+        "Attack_B": [
+          0.4
+        ],
+        "Start": [
+          0.2
+        ]
+      },
+      "bounds": {
+        "x": -1351.701,
+        "y": -323.894,
+        "width": 2286.875,
+        "height": 1286.905
+      },
+      "avatar": {
+        "path": "models/operator/token_10063_buddy_bddg/default/back/1da6347c10575ac922ef1ceeade662ebfb785b0653ef13266ab48f03d1828af9/avatar.png",
+        "bytes": 27144,
+        "sha256": "0ca576b973a1eb0f8c4fb2df65a4ffbe5d65fc2b815ad4c7fef34ed09a232520",
+        "source": {
+          "kind": "cn-native-sprite",
+          "resourceVersion": "26-09-22-07-47-20_6c71fa",
+          "bundleSha256": "e5c3889ce7efb39ebb30edc382a7f16724369618335427f7c496ce4cff221c28",
+          "spritePathId": "-4172056749865363402",
+          "texturePathId": "4013812163793655862",
+          "proof": "source-reviews/palamute-avatar.json",
+          "proofSha256": "85c5a5eb3a43b9ff182726162deb65affb280bf3dc94ebf3a3c99aa86aa646e4"
+        }
+      }
+    },
+    "operator/token_10063_buddy_bddg/default/front": {
+      "kind": "operator",
+      "id": "token_10063_buddy_bddg",
+      "variant": "default",
+      "facing": "front",
+      "source": {
+        "key": "cn-client",
+        "kind": "assetbundle",
+        "bundle": {
+          "path": "pkgrps/btl_pfb_tokens_5.ab",
+          "bytes": 2183454,
+          "md5": "1c4224582e2e540c2c1c96419fb6d38d",
+          "sha256": "1da6347c10575ac922ef1ceeade662ebfb785b0653ef13266ab48f03d1828af9",
+          "url": "https://ak.hycdn.cn/assetbundle/official/Android/assets/26-09-22-07-47-20_6c71fa/pkgrps_btl_pfb_tokens_5.dat",
+          "client": "cn",
+          "resourceVersion": "26-09-22-07-47-20_6c71fa",
+          "transforms": [
+            "Original embedded premultiplied RGBA texture decoded with every decoded pixel unchanged",
+            "Atlas page dimensions normalized and pma: true recorded; native regions unchanged",
+            "One native Single skeleton retained; front/back manifest slots are explicit compatibility aliases, not distinct original facings"
+          ]
+        },
+        "directory": "pkgrps/btl_pfb_tokens_5.ab",
+        "extractedSkeleton": "token_10063_buddy_bddg.skel",
+        "facingAlias": "single-original-model",
+        "originalPathIds": {
+          "rootPathId": "-24625540907109892",
+          "controllerPathId": "7721478156889190908",
+          "animatorPathId": "7173132144346362364",
+          "faceSwitcherPathId": "-6861270519998680580",
+          "skeletonAnimationPathId": "-4538936699278233092",
+          "skeletonDataAssetPathId": "879360656205598691",
+          "textAssetPathId": "6442872620876332428",
+          "atlasAssetPathId": "4470095928019151795",
+          "atlasTextAssetPathId": "-1613642665742011779",
+          "materialPathId": "1719060956823152150",
+          "texturePathId": "-8412659039788277696"
+        },
+        "transforms": [
+          "Original embedded premultiplied RGBA texture decoded with every decoded pixel unchanged",
+          "Atlas page dimensions normalized and pma: true recorded; native regions unchanged",
+          "One native Single skeleton retained; front/back manifest slots are explicit compatibility aliases, not distinct original facings"
+        ]
+      },
+      "spineVersion": "3.8.99",
+      "skeleton": {
+        "path": "models/operator/token_10063_buddy_bddg/default/front/1da6347c10575ac922ef1ceeade662ebfb785b0653ef13266ab48f03d1828af9/token_10063_buddy_bddg.skel",
+        "bytes": 327750,
+        "sha256": "21ac3dc5dc8140f4997a00b318e46b860221e0e79d87604b2c3a47bb9c15e19d"
+      },
+      "atlas": {
+        "path": "models/operator/token_10063_buddy_bddg/default/front/1da6347c10575ac922ef1ceeade662ebfb785b0653ef13266ab48f03d1828af9/token_10063_buddy_bddg.atlas",
+        "bytes": 15810,
+        "sha256": "566fb71f08d765efb91cf5dae9ebca3d3cfc83dcb74b1d4311ec5f56d0b340c7"
+      },
+      "textures": [
+        {
+          "path": "models/operator/token_10063_buddy_bddg/default/front/1da6347c10575ac922ef1ceeade662ebfb785b0653ef13266ab48f03d1828af9/token_10063_buddy_bddg.png",
+          "bytes": 287841,
+          "sha256": "20e186201460c6c130997acbe39159c54eb07f3406d9838c238acc0d480056af"
+        }
+      ],
+      "premultipliedAlpha": true,
+      "animations": {
+        "Attack_A": 1,
+        "Attack_B": 1,
+        "Default": 0,
+        "Die": 1,
+        "Idle": 2,
+        "Start": 1,
+        "Stun": 1,
+        "Stun_Begin": 1,
+        "Stun_End": 1
+      },
+      "animationRoles": {
+        "idle": "Idle",
+        "deploy": "Start",
+        "attack": {
+          "begin": null,
+          "loop": "Attack_A",
+          "end": null
+        },
+        "skill": null,
+        "die": "Die",
+        "stun": "Stun",
+        "move": null
+      },
+      "hits": {
+        "Attack_A": [
+          0.4
+        ],
+        "Attack_B": [
+          0.4
+        ],
+        "Start": [
+          0.2
+        ]
+      },
+      "bounds": {
+        "x": -1351.701,
+        "y": -323.894,
+        "width": 2286.875,
+        "height": 1286.905
+      },
+      "avatar": {
+        "path": "models/operator/token_10063_buddy_bddg/default/front/1da6347c10575ac922ef1ceeade662ebfb785b0653ef13266ab48f03d1828af9/avatar.png",
+        "bytes": 27144,
+        "sha256": "0ca576b973a1eb0f8c4fb2df65a4ffbe5d65fc2b815ad4c7fef34ed09a232520",
+        "source": {
+          "kind": "cn-native-sprite",
+          "resourceVersion": "26-09-22-07-47-20_6c71fa",
+          "bundleSha256": "e5c3889ce7efb39ebb30edc382a7f16724369618335427f7c496ce4cff221c28",
+          "spritePathId": "-4172056749865363402",
+          "texturePathId": "4013812163793655862",
+          "proof": "source-reviews/palamute-avatar.json",
+          "proofSha256": "85c5a5eb3a43b9ff182726162deb65affb280bf3dc94ebf3a3c99aa86aa646e4"
+        }
+      }
+    }
+  },
+  "interfaceAssets": [
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "one-star-icons/Rhodes Island Recon - Base.webp",
+      "bytes": 12438,
+      "sha256": "61b71b8b323b48222eb4cd50907352f2295ddd89c32f0a9c30f213a5e27aaada"
+    },
+    {
+      "repository": "arkpedia/arkpedia-skin-assets",
+      "commit": "6fb723692d89c4a08d9a7aa4015e19c0753dd270",
+      "path": "one-star-skins/Rhodes Island Recon - Base.webp",
+      "bytes": 208010,
+      "sha256": "37d189ad76fecbfa41815f0a7ab4272e8a75ecac800cdbd645618f3f33b6e338"
+    }
+  ],
+  "limitations": [
+    "Selected native enum/dispatch/FSM/identity/marker comparison mappings remain explicit; exceptional source-parent dispel body-mode parity is unverified.",
+    "Native effects/audio, modules, shaders, physical devices and game-frame/pixel parity remain unverified."
+  ],
+  "sourceFoundationSha256": "6079b999b374af72232b70f30f79fb37b0c121e61797716bb5a63aa0b0259c21",
+  "ownerArtworkSha256": "e5d825afeea90848ec56ccee827db0e7fd2a1e631e21b759e3d3217ef8f75566",
+  "tokenArtworkSha256": "2fc2724af732fa4dadbf7afb090b004c6b915d8fc5e15903193e2945a2c074c8",
+  "tokenAvatarSha256": "85c5a5eb3a43b9ff182726162deb65affb280bf3dc94ebf3a3c99aa86aa646e4",
+  "sourceClocksSha256": "d21af7bdfee5649091e37c2ecb664044ad55a5350829dc1dc471d0cf37102464"
+}

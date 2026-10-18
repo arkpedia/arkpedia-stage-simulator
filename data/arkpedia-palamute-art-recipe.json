@@ -1,0 +1,71 @@
+{
+  "operator": "char_4215_buddy",
+  "model": "token_10063_buddy_bddg",
+  "name": "Palamute",
+  "nativeFacing": "Single",
+  "foundationSha256": "6079b999b374af72232b70f30f79fb37b0c121e61797716bb5a63aa0b0259c21",
+  "bundle": "pkgrps/btl_pfb_tokens_5.ab",
+  "output": "data/arkpedia-palamute-art.json",
+  "sdReview": "source-reviews/palamute.json",
+  "scope": "One original Single skeleton and original pixels/PMA/pointers retained. Front/back manifest slots are explicit compatibility aliases of that same Single input, never invented native facings. Literal Born-to-Start and authored Stun_Begin/Stun_End mixes. Artwork-only delivery; combat/public admission, effects/audio and native game-frame/pixel parity are separate.",
+  "roles": {
+    "Single": {
+      "idle": "Idle",
+      "deploy": "Start",
+      "attack": {
+        "begin": null,
+        "loop": "Attack_A",
+        "end": null
+      },
+      "skill": null,
+      "die": "Die",
+      "stun": "Stun",
+      "move": null
+    }
+  },
+  "missingOptionalAliases": {
+    "Single": []
+  },
+  "nativeMixes": [
+    {
+      "sourceAnimName": "Idle",
+      "targetAnimName": "Stun",
+      "mixAnimName": "Stun_Begin"
+    },
+    {
+      "sourceAnimName": "Attack_A",
+      "targetAnimName": "Stun",
+      "mixAnimName": "Stun_Begin"
+    },
+    {
+      "sourceAnimName": "Attack_B",
+      "targetAnimName": "Stun",
+      "mixAnimName": "Stun_Begin"
+    },
+    {
+      "sourceAnimName": "Stun",
+      "targetAnimName": "Idle",
+      "mixAnimName": "Stun_End"
+    },
+    {
+      "sourceAnimName": "Stun",
+      "targetAnimName": "Attack_A",
+      "mixAnimName": "Stun_End"
+    },
+    {
+      "sourceAnimName": "Stun",
+      "targetAnimName": "Attack_B",
+      "mixAnimName": "Stun_End"
+    }
+  ],
+  "reviewPhases": [
+    "Start",
+    "Idle",
+    "Attack_A",
+    "Attack_B",
+    "Stun_Begin",
+    "Stun",
+    "Stun_End",
+    "Die"
+  ]
+}

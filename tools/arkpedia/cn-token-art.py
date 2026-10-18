@@ -47,10 +47,13 @@ cs=[(ptr(c['component']),objects[ptr(c['component'])])for c in root['m_Component
 controller_id,controller=cs[0];animator_id=ptr(controller['_animator']);assert str(animator_id)==binding['animatorPathId'];animator=objects[animator_id].read_typetree()
 assert exact(animator)==e['tokenArtworkControllers'][token][0]['data'];switcher_id=ptr(animator['_faceSwitcher']);switcher=exact(objects[switcher_id].read_typetree())
 assert [{k:m[k]for k in ['sourceAnimName','targetAnimName','mixAnimName']}for m in animator['_mixSettings']]==recipe['nativeMixes']
-assert set(recipe['roles'])==set(e['officialSkeletonBindings'][token])=={'Front','Back'}
+native_faces=set(e['officialSkeletonBindings'][token]);single=native_faces=={'Single'}
+assert set(recipe['roles'])==native_faces
+assert native_faces=={'Front','Back'}or(single and recipe.get('nativeFacing')=='Single')
+assert recipe.get('nativeFacing')==('Single'if single else None)
 node=os.environ.get('ARKPEDIA_SOURCE_NODE','node');files={};facings={}
 for face,n in e['officialSkeletonBindings'][token].items():
- ids={'rootPathId':roots[0],'controllerPathId':controller_id,'animatorPathId':animator_id,'faceSwitcherPathId':switcher_id,'skeletonAnimationPathId':ptr(animator['_'+face.lower()]['skeleton'])}
+ ids={'rootPathId':roots[0],'controllerPathId':controller_id,'animatorPathId':animator_id,'faceSwitcherPathId':switcher_id,'skeletonAnimationPathId':ptr(animator['_skeleton']if single else animator['_'+face.lower()]['skeleton'])}
  skeleton=objects[ids['skeletonAnimationPathId']].read_typetree();assert skeleton['initialSkinName']=='default'and skeleton['pmaVertexColors']==1
  ids['skeletonDataAssetPathId']=ptr(skeleton['skeletonDataAsset']);data=objects[ids['skeletonDataAssetPathId']].read_typetree();ids['textAssetPathId']=ptr(data['skeletonJSON']);assert len(data['atlasAssets'])==1
  ids['atlasAssetPathId']=ptr(data['atlasAssets'][0]);atlas=objects[ids['atlasAssetPathId']].read_typetree();ids['atlasTextAssetPathId']=ptr(atlas['atlasFile']);assert len(atlas['materials'])==1
@@ -74,8 +77,9 @@ for face,n in e['officialSkeletonBindings'][token].items():
  directory=f'{token}/{face.lower()}';files.update({f'{directory}/{name}':b for name,b in contents.items()})
  facings[face.lower()]={'directory':directory,'files':{name:{'bytes':len(b),'sha256':sha(b)}for name,b in contents.items()},'originalPathIds':{k:str(v)for k,v in ids.items()},'textureDimensions':list(image.size),'emptyClips':empty,'decodedPixelSha256':sha(pixels),'materialFloats':floats,'nativeFaceSwitcher':switcher,'nativeAnimationBindings':exact(animator['_animations']),'nativeAnimationAliases':{a['animKey']:a['animName']for a in animator['_animations']},'missingOptionalAliases':missing,'missingRequiredAliases':[],'spineVersion':parsed['version'],**{k:parsed[k]for k in ['durations','hits','eventPayloads','bounds']},'animationRoles':roles}
  print('Recovered',token,face,'original pointers, skeleton, regions, exact decoded pixels and PMA',flush=True)
-source={**{k:bundle[k]for k in ['path','bytes','md5','sha256','url']},'client':'cn','resourceVersion':hot['versionId'],'transforms':['Original embedded premultiplied RGBA texture decoded with every decoded pixel unchanged','Atlas page dimensions normalized and pma: true recorded; native regions unchanged','Distinct original Front/Back skeletons and zero-duration clips retained; no missing clip invented']}
-expected={'schemaVersion':1,'owner':owner,'artworkOnly':True,'enabledOperators':[],'frameParity':False,'moduleSupport':False,'nativeParticleSupport':False,'nativeShaderParity':False,'foundation':{'path':str(foundation.relative_to(ROOT)),'sha256':recipe['foundationSha256']},'recipeSha256':sha(recipe_raw),'scope':recipe['scope'],'sourceBundle':source,'models':{token:{'facings':facings}}}
+source={**{k:bundle[k]for k in ['path','bytes','md5','sha256','url']},'client':'cn','resourceVersion':hot['versionId'],'transforms':['Original embedded premultiplied RGBA texture decoded with every decoded pixel unchanged','Atlas page dimensions normalized and pma: true recorded; native regions unchanged','One native Single skeleton retained; front/back manifest slots are explicit compatibility aliases, not distinct original facings'if single else'Distinct original Front/Back skeletons and zero-duration clips retained; no missing clip invented']}
+record={**facings['single'],'nativeFacing':'Single'}if single else{'facings':facings}
+expected={'schemaVersion':1,'owner':owner,'artworkOnly':True,'enabledOperators':[],'frameParity':False,'moduleSupport':False,'nativeParticleSupport':False,'nativeShaderParity':False,'foundation':{'path':str(foundation.relative_to(ROOT)),'sha256':recipe['foundationSha256']},'recipeSha256':sha(recipe_raw),'scope':recipe['scope'],'sourceBundle':source,'models':{token:record}}
 output=ROOT/recipe['output'];assert output.resolve().is_relative_to(ROOT/'data');out=Path(args.extracted_root)if args.extracted_root else ROOT/'.cache/arkpedia/cn-operators'/owner/'token-art'
 if args.mode=='bind':
  for name,b in files.items():atomic(out/name,b)
@@ -85,8 +89,11 @@ else:
  for name,b in files.items():assert (out/name).read_bytes()==b
  if args.assets:
   assets=ROOT.parent/'arkpedia-sd-assets';manifest=json.loads((assets/'manifest.json').read_bytes());assert json.loads((assets/recipe['sdReview']).read_bytes())==expected
-  for face,r in facings.items():
-   key=f'operator/{token}/default/{face}';d=manifest['models'][key];assert d['source']=={'key':'cn-client','kind':'assetbundle','bundle':source,'directory':source['path'],'extractedSkeleton':next(v for v in r['files']if v.endswith('.skel')),'originalPathIds':r['originalPathIds'],'transforms':source['transforms']}
+  delivered=[(face,facings['single'])for face in ['front','back']]if single else list(facings.items())
+  for face,r in delivered:
+   key=f'operator/{token}/default/{face}';d=manifest['models'][key];expected_source={'key':'cn-client','kind':'assetbundle','bundle':source,'directory':source['path'],'extractedSkeleton':next(v for v in r['files']if v.endswith('.skel')),'originalPathIds':r['originalPathIds'],'transforms':source['transforms']}
+   if single:expected_source['facingAlias']='single-original-model'
+   assert d['source']==expected_source
    for k,v in {'spineVersion':r['spineVersion'],'premultipliedAlpha':True,'animations':r['durations'],'animationRoles':r['animationRoles'],'hits':r['hits'],'bounds':r['bounds']}.items():assert d[k]==v
    for f in [d['skeleton'],d['atlas'],*d['textures']]:
     name=Path(f['path']).name;b=files[r['directory']+'/'+name];assert (assets/f['path']).read_bytes()==b and f['bytes']==len(b)and f['sha256']==sha(b)
