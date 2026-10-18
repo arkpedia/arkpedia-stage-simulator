@@ -10,7 +10,7 @@ export const selectedBotanyBuild = build => selectedCNSourceBuild(evidence, BOTA
 
 export function selectedBotanyInputs(unit) {
   const skill = unit.def.skill;
-  if (!skill) throw Error('Incomplete original selected Botanycum inputs');
+  if (!skill) throw Error('Incomplete original selected Botany inputs');
   const build = unit.def.raw.arkpedia;
   const selected = selectedBotanyBuild({...build, skillId: skill.id});
   const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
@@ -23,13 +23,13 @@ export function selectedBotanyInputs(unit) {
     || skill.spType !== normSpType(selected.source.spData.spType)
     || skill.spCost !== selected.source.spData.spCost || skill.initSp !== selected.source.spData.initSp
     || skill.duration !== selected.source.duration || skill.maxCharges !== selected.source.spData.maxChargeTime)
-    throw Error('Incomplete original selected Botanycum inputs');
+    throw Error('Incomplete original selected Botany inputs');
   return selected;
 }
 
 export function botanySourceComponent(group, key, pathId) {
   const part = evidence[group]?.[key]?.flatMap(row => row.components).find(p => p.pathId === pathId);
-  if (!part) throw Error('Missing original Botanycum component');
+  if (!part) throw Error('Missing original Botany component');
   return part.data;
 }
 export function botanyNativeInputs() {

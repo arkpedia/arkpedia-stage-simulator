@@ -8,16 +8,23 @@ import {normalizeChess} from '../../server/sim/simdata.js';
 import {defaultBuild} from '../../shared/arkpedia/loadout.js';
 import {selectedBotanyBuild,BOTANY_ID as ID} from '../../server/sim/content/arkpedia-botany-source.js';
 import {BotanyBurstTalent,BOTANY_TALENT_CONTRACT} from '../../server/sim/content/arkpedia-botany-talent.js';
+import {BotanyOrdinaryAttacks,BOTANY_ORDINARY_CONTRACT} from '../../server/sim/content/arkpedia-botany-ordinary.js';
 export{near,advance,until}from'./mon3tr-fixture.js';
 export function addOwner(b,{skill=1,elite=2,level=e.tables.character.phases[elite].maxLevel,rank=[4,7,10][elite],potential=1,trust=0,
- row=5,col=5,dir='RIGHT',defer=false,contract=BOTANY_TALENT_CONTRACT,beforeInstall}={}){
+ row=5,col=5,dir='RIGHT',defer=false,contract=BOTANY_TALENT_CONTRACT,beforeInstall,ordinary=false,
+ ordinaryContract=BOTANY_ORDINARY_CONTRACT,mayBegin=()=>true,prepare}={}){
  const build={elite,level,potential,trust,skillId:`skchr_botany_${skill}`,skillRank:rank,module:'none'},record=selectedBotanyBuild(build),c=e.tables.character;
  const def=normalizeChess({chessId:ID,charId:ID,name:c.appellation,profession:c.profession,position:c.position,subProfessionId:c.subProfessionId,
   stats:record.stats,rangeGrid:record.rangeGrid,tags:record.tags,talents:record.talents,
   skill:{...record.source,...record.source.spData,skillId:build.skillId,rangeGrid:record.skillRangeGrid,trigger:{rule:'NEVER'}},arkpedia:build});
- const u=b._makeAlly(b.getPlayer('arkpedia'),def,'op',row,col,{dir}),talent=new BotanyBurstTalent(b,u,{contract});
- b._setupUnit(u,{trait:{noAttack:true},talents:[],skill:{kind:'passive'}});beforeInstall?.(b,u,talent);talent.install();
- const deploy=()=>{u.player.dp=99;assert.ok(b._deploy(u,{initial:false}));};if(!defer)deploy();return{b,u,talent,record,build,deploy};
+ const u=b._makeAlly(b.getPlayer('arkpedia'),def,'op',row,col,{dir}),prepared=prepare?.(b,u);
+ const talent=prepared?.talent??new BotanyBurstTalent(b,u,{contract});
+ const attacks=prepared?.controller??(ordinary?new BotanyOrdinaryAttacks(b,u,{contract:ordinaryContract,mayBegin}):null);
+ b._setupUnit(u,prepared?.kit??{trait:attacks?.trait()??{noAttack:true},talents:[],skill:{kind:'passive'}});
+ beforeInstall?.(b,u,talent,attacks);if(prepared)attacks.install();else{talent.install();attacks?.install();}
+ const hits=[],receipts=[];b.on('damaged',ctx=>hits.push({...ctx,time:b.time}));
+ b.on('attack',ctx=>{if(ctx.attacker===u)receipts.push({...ctx,time:b.time});});
+ const deploy=()=>{u.player.dp=99;assert.ok(b._deploy(u,{initial:false}));};if(!defer)deploy();return{b,u,talent,attacks,record,build,deploy,hits,receipts,...prepared};
 }
 export function make(opts={}){
  const d=structuredClone(data);d.stage.geometry.waves[0].spawns=[];d.stage.battle.dp_per_second=0;
