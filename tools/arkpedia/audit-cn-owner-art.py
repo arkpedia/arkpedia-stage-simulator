@@ -17,12 +17,15 @@ cases=[('public approval',['enabledOperators'],[recipe['operator']]),('frame par
  ('particle parity',['nativeParticleSupport'],True),('wrong owner',['owner'],'char_0_other'),('wrong foundation',['foundation','sha256'],'0'*64),('wrong recipe',['recipeSha256'],'0'*64)]
 for face in ['front','back']:
  p=['ownerModels',face]
+ roles=receipt['ownerModels'][face]['metadata']['animationRoles']
+ skill_path=['skills','0','loop'] if '0' in roles.get('skills',{}) else ['skill']
+ skill_value='Default' if len(skill_path)>1 else {'begin':None,'loop':'Default','end':None}
  cases.extend([(face+' moving source',p+['source','commit'],'main'),(face+' skeleton hash',p+['files','skeleton','sha256'],'0'*64),
   (face+' file length',p+['files','atlas','bytes'],1),(face+' bundle identity',p+['nativeBundle','sha256'],'0'*64),
   (face+' wrong original pointer',p+['originalBindings','textAssetPathId'],'123'),(face+' wrong material',p+['materialPathId'],'123'),
   (face+' wrong texture',p+['texturePathId'],'123'),(face+' forged material',p+['materialFloats','_StraightAlphaInput'],1),
   (face+' wrong pixels',p+['decodedPixelSha256'],'0'*64),(face+' wrong dimensions',p+['textureDimensions'],[1,1]),
-  (face+' wrong PMA',p+['metadata','premultipliedAlpha'],False),(face+' wrong skill role',p+['metadata','animationRoles','skills','0','loop'],'Default'),
+  (face+' wrong PMA',p+['metadata','premultipliedAlpha'],False),(face+' wrong skill role',p+['metadata','animationRoles']+skill_path,skill_value),
   (face+' invented clip duration',p+['metadata','animations','Attack'],999)])
 for name,path,value in cases:
  v=copy.deepcopy(receipt);row=v

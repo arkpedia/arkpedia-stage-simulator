@@ -1,0 +1,188 @@
+{
+  "schemaVersion": 1,
+  "operatorId": "char_4227_gallus",
+  "enabledOperators": [
+    "char_4227_gallus"
+  ],
+  "frameParity": false,
+  "moduleSupport": false,
+  "nativePixelParity": false,
+  "nativeParticleSupport": false,
+  "sourceFoundationSha256": "d60dfa34633bb87cb2297a18ae84a3968eab9b6c38822f3b01a0c93428b4f252",
+  "ownerArtworkSha256": "2ac942227ca5676f850e8c607ed5a4fa18484ecda9985a0cb79528523a82c2d7",
+  "sourceClocksSha256": "812f524d41f21f9a7a754880b93948ee63cdde70a0c76cf9707acd06262a01f9",
+  "mechanicsPolicy": "source-cn-passive-window-and-source-res-reduction-v1",
+  "scope": "Selected original skillless GALLUS², ordinary Arts projectiles, twenty-second deployment mark, source-aware preference and independent ten-second RES reductions.",
+  "verification": {
+    "source": "Five bundles, 73 owner/art/projectile components, three templates and one projectile; seven outputs reproduced and 29 altered claims rejected on both Node versions.",
+    "artwork": "Original pointers, six unchanged files, decoded pixels and PMA verified; 33 altered claims rejected on both Node versions. Seven original clips per viewport and eight desktop/emulated-phone captures pass; SD PR35 merged at ec5819cd40241165f9473427f106582da249b8ff.",
+    "runtime": "247 selected/public and adjacent checks pass on Node 22 and 24, including 33 runtime, 22 public and 29 source/clock checks. All six potentials, trust, maxed passive support, zero slots, fresh redeployment after 200 seconds and canonical null skill/rank are checked. Original 0-1 with Melantha uses natural DP and unchanged terrain/waves: eleven kills, zero leaks and full life. Final public full suite remains separate.",
+    "browser": {
+      "status": "passed",
+      "script": "tools/arkpedia/review-gallus-public.mjs",
+      "driver": "tools/arkpedia/public-review-driver.mjs",
+      "cases": 2,
+      "captures": 12,
+      "browserVersion": "Chrome/153.0.8010.12",
+      "cacheDisabled": true,
+      "fixtureTransport": "loopback app/data overrides; external HTTPS unintercepted",
+      "viewports": [
+        "1280x800 desktop mouse",
+        "844x390 emulated landscape phone touch"
+      ],
+      "originalWaves": false,
+      "fixture": "Original 0-1 terrain, legal ranged tiles, empty waves, 99 DP and two pinned nonattacking targets. Original waves/natural DP are tested separately.",
+      "checks": [
+        "Real card drag/drop and separate centre-to-direction swipe, no early deployment",
+        "Original owner art, portrait and rendered Front/Back chibis through immutable live HTTPS",
+        "Passive-only UI: no active skill, SP bar or ready icon; zero deployment slots",
+        "Source preference spreads reductions across two targets during its twenty-second mark",
+        "Window and independent ten-second recipient effects expire naturally",
+        "Source retreat and finite born projectile/recipient work clean up"
+      ],
+      "browserErrors": 0,
+      "failedResources": 0,
+      "visualReview": "Desktop spread and emulated-phone Back first-mark captures inspected: actual original chibi, artwork, HP bar, passive UI and deployment readouts visible. Physical devices and native shader/particle/frame/pixel parity remain unverified.",
+      "scriptSha256": "f9802620c4cc054422d4f8c0371180991d1f06ffb2a2dfde96f0bb601adcccf4",
+      "driverSha256": "2e52cd4007ae553e30f773104626f9b5c2be7c15f717b61ca9063517fbdc51c8",
+      "fixtureServerSha256": "127fb1b74be89d0a35e6bfa4e3d35927d170fa4d3129287f6c523114c5bcaa22"
+    }
+  },
+  "originalArtwork": {
+    "operator/char_4227_gallus/default/front": {
+      "kind": "operator",
+      "id": "char_4227_gallus",
+      "variant": "default",
+      "facing": "front",
+      "spineVersion": "3.8.99",
+      "source": {
+        "key": "operators",
+        "repository": "fexli/ArknightsResource",
+        "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+        "directory": "spine/char_4227_gallus/char_4227_gallus/Front"
+      },
+      "skeleton": {
+        "path": "models/operator/char_4227_gallus/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4227_gallus.skel",
+        "bytes": 74718,
+        "sha256": "80b3298353f7981fa55bbe821e6be26e944ca07b02b17ddeb27acf220a7f2c29"
+      },
+      "atlas": {
+        "path": "models/operator/char_4227_gallus/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4227_gallus.atlas",
+        "bytes": 6355,
+        "sha256": "b8085d9f49620efbc4095c8066a52516bc17cf9313e368795fa520ca44f22a73"
+      },
+      "textures": [
+        {
+          "path": "models/operator/char_4227_gallus/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4227_gallus.png",
+          "bytes": 164909,
+          "sha256": "06586021c8f27e2e100fb3dc0075051327c8e18b3bbf4637df4f19e60c54fda6"
+        }
+      ],
+      "premultipliedAlpha": true,
+      "animations": {
+        "Attack": 1.6,
+        "Default": 0,
+        "Die": 1,
+        "Idle": 1.333,
+        "Start": 1
+      },
+      "hits": {
+        "Attack": [
+          0.6
+        ]
+      },
+      "bounds": null,
+      "animationRoles": {
+        "idle": "Idle",
+        "deploy": "Start",
+        "attack": {
+          "begin": null,
+          "loop": "Attack",
+          "end": null
+        },
+        "attackDown": null,
+        "skill": null,
+        "die": "Die",
+        "stun": null,
+        "move": null
+      }
+    },
+    "operator/char_4227_gallus/default/back": {
+      "kind": "operator",
+      "id": "char_4227_gallus",
+      "variant": "default",
+      "facing": "back",
+      "spineVersion": "3.8.99",
+      "source": {
+        "key": "operators",
+        "repository": "fexli/ArknightsResource",
+        "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+        "directory": "spine/char_4227_gallus/char_4227_gallus/Back"
+      },
+      "skeleton": {
+        "path": "models/operator/char_4227_gallus/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4227_gallus.skel",
+        "bytes": 76910,
+        "sha256": "da8be21f926508d107eb5d31f416d478444aa979e76844a2133699b5ee87243f"
+      },
+      "atlas": {
+        "path": "models/operator/char_4227_gallus/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4227_gallus.atlas",
+        "bytes": 6292,
+        "sha256": "47ac8998d0f99b59dd1b5e1eeba7932f5d9622e9837c5ff4c6036c2d501720d4"
+      },
+      "textures": [
+        {
+          "path": "models/operator/char_4227_gallus/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4227_gallus.png",
+          "bytes": 165946,
+          "sha256": "2466839e976c4edfe84e6d9bd2280ec0fcd0ca8eac280507957c9552bf092f4c"
+        }
+      ],
+      "premultipliedAlpha": true,
+      "animations": {
+        "Attack": 1.6,
+        "Default": 0,
+        "Idle": 1.333,
+        "Start": 1
+      },
+      "hits": {
+        "Attack": [
+          0.6
+        ]
+      },
+      "bounds": null,
+      "animationRoles": {
+        "idle": "Idle",
+        "deploy": "Start",
+        "attack": {
+          "begin": null,
+          "loop": "Attack",
+          "end": null
+        },
+        "attackDown": null,
+        "skill": null,
+        "die": null,
+        "stun": null,
+        "move": null
+      }
+    }
+  },
+  "interfaceAssets": [
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "one-star-icons/Gallus² - Base.webp",
+      "bytes": 14750,
+      "sha256": "b1d15eb95d4e74f64f35e743675faaadf378e64e2321b710f497ea5f44af9bc6"
+    },
+    {
+      "repository": "arkpedia/arkpedia-skin-assets",
+      "commit": "6fb723692d89c4a08d9a7aa4015e19c0753dd270",
+      "path": "one-star-skins/Gallus² - Base.webp",
+      "bytes": 137928,
+      "sha256": "41db21363f6118caed79f890c61ec9f0198d86235aa90333114124fdf251dd9b"
+    }
+  ],
+  "limitations": [
+    "Native target-preference fallback/filterBuffSource aliases, direct damage before receiver-buff ordering, current/birth ATK transport, accepted resource callback order, source/recipient life identities and animation/FSM clock mapping are explicit local interpretations.",
+    "Modules, native particles/audio/shaders, physical devices and original game-frame/pixel parity remain unverified."
+  ]
+}
