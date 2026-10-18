@@ -25,3 +25,9 @@ test('Battle end removes all finite flights, chain watchers and owned markers',(
 
 test('Native lifetime expiration does not invent a final homing heal or leave its watcher',()=>{const f=make({elite:0}),a=ally(f);assert.ok(f.chain.launch(a));for(const p of f.chain.flights.keys())p.speed=1e-6;advance(f.b,10.1);assert.equal(f.heals.length,0);assert.equal(f.chain.flights.size,0);assert.equal(f.chain.chains.size,0);assert.equal(f.chain.watchers.length,0);});
 for(const event of['heal','calculatedHeal'])test(`A ${event} callback replacing the receiver life cannot transfer a chain heal or its S2 attachments`,()=>{let attached=0;const f=make({onRecipient:()=>attached++,skill:2}),a=ally(f),hp=a.hp;f.b.on(event,h=>{if(h.target===a)a.deploySeq++;});assert.ok(f.chain.launch(a,{s2:true}));done(f);near(a.hp,hp);assert.equal(attached,0);assert.equal(f.chain.chains.size,0);});
+
+for(const multiplier of[0,9])test(`An independent old chain cannot borrow source healing multiplier ${multiplier} from a new life`,()=>{
+ const f=make({elite:0}),a=ally(f);f.b.addBuff(f.u,{key:'qa:old-output',mods:{healingDealtMul:1.5}});const atk=f.u.s.atk;
+ assert.ok(f.chain.launch(a));f.u.deploySeq++;f.b.removeBuff(f.u,'qa:old-output');f.b.addBuff(f.u,{key:'qa:new-output',mods:{healingDealtMul:multiplier}});
+ done(f);assert.ok(f.heals.length>=1);assert.equal(f.heals[0].target,a);near(f.heals[0].amount,atk*1.5);
+});

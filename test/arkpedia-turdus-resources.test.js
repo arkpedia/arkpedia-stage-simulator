@@ -25,3 +25,10 @@ test('Battle end drains source-independent healing, checkers and all global watc
 
 test('Two source producers keep independent healing while the native camouflage family is shared',()=>{const f=make(),t=ally(f),u=f.b._makeAlly(f.u.player,f.u.def,'op',6,5,{dir:'RIGHT'});f.b._setupUnit(u,{trait:{noAttack:true},talents:[],skill:null});assert.ok(f.b._deploy(u,{initial:false}));const other=new Resources2(f.b,u,{contract:CONTRACT});other.install();attach(f,t);other.attach(t,{sourceLife:u.deploySeq,atk:u.s.atk});assert.equal(f.resources.regens.size,1);assert.equal(other.regens.size,1);advance(f.b,.11);assert.equal(t.s.flags.camou,true);f.resources.stop();assert.equal(t.findBuff(CAMOU),null);advance(f.b,.11);assert.equal(t.s.flags.camou,true);const hp=t.hp;advance(f.b,.8);near(t.hp,hp+(f.u.s.atk+u.s.atk)*.35);f.b._finish('cleared');assert.equal(f.resources.watchers.length,0);assert.equal(other.watchers.length,0);});
 for(const event of['heal','calculatedHeal'])test(`Independent S2 healing refuses a receiver replaced during its ${event} modifier callbacks`,()=>{const f=make(),t=ally(f),hp=t.hp;attach(f,t);f.b.on(event,h=>{if(h.target===t)t.deploySeq++;});advance(f.b,1.1);near(t.hp,hp);assert.equal(f.resources.regens.size,0);assert.equal(f.resources.parents.size,0);});
+
+for(const multiplier of[0,9])test(`Independent periodic healing retains the old source output after replacement with multiplier ${multiplier}`,()=>{
+ const f=make(),t=ally(f);f.b.addBuff(f.u,{key:'qa:old-output',mods:{healingDealtMul:1.5}});const atk=f.u.s.atk;
+ attach(f,t);f.u.deploySeq++;f.b.removeBuff(f.u,'qa:old-output');f.b.addBuff(f.u,{key:'qa:new-output',mods:{healingDealtMul:multiplier}});
+ advance(f.b,1.05);const pulse=f.heals.find(h=>h.opts.tags?.includes('turdus:s2-periodic'));
+ assert.ok(pulse);near(pulse.amount,atk*f.record.bb['turdus_s2[continues_heal].heal_scale']*1.5);
+});

@@ -5,7 +5,7 @@ import {turdusNativeInputs,selectedTurdusInputs} from './arkpedia-turdus-source.
 export const TURDUS_FREE='turdus[free_jump]',TURDUS_UP='turdus[atk_scale_up]';
 export const TURDUS_CHAIN_CONTRACT=Object.freeze({
  scope:'Selected source speed-ten, ten-second independent heal chain with distinct free-bounce and carried attack-scale validators; not public admission',
- mapping:'One accepted source healing ability creates a finite moving chain. The original x-4 nine-cell selector searches around the last receiver, includes full-HP eligible allies, excludes already visited entities, and orders lowest HP ratio then latest deployment. Ordinary acquisition separately requires missing HP. A receiver with the accepted native atk_scale_up marker multiplies the current projectile scale by the selected producer talent value; that multiplication remains in later hops. A free_jump receiver adds one bounce and suppresses decay on the following hop, including when actual healing is zero. Its own arriving hop still has the preceding decay. Both native validators ignore marker source, so another genuinely marked Ukusik is eligible. Each receiver life is captured; an already-emitted receiver is not selected again. Source loss preserves finite born transport, with launch ATK fallback; a later source life cannot supply new ATK. All chain hops retain one ten-second transport budget and one original attack receipt.',
+ mapping:'One accepted source healing ability creates a finite moving chain. The original x-4 nine-cell selector searches around the last receiver, includes full-HP eligible allies, excludes already visited entities, and orders lowest HP ratio then latest deployment. Ordinary acquisition separately requires missing HP. A receiver with the accepted native atk_scale_up marker multiplies the current projectile scale by the selected producer talent value; that multiplication remains in later hops. A free_jump receiver adds one bounce and suppresses decay on the following hop, including when actual healing is zero. Its own arriving hop still has the preceding decay. Both native validators ignore marker source, so another genuinely marked Ukusik is eligible. Each receiver life is captured; an already-emitted receiver is not selected again. Source loss preserves finite born transport, with launch ATK/output-healing multiplier fallback; a later source life cannot supply new ATK. All chain hops retain one ten-second transport budget and one original attack receipt.',
  corroboration:'The original two validators and blackboard keys are retained. Firsthand ChainLightningHitBehaviour analysis and algebra at https://prts.wiki/w/话题:Zkfsc0tkcmgr7a8s (2026-08-28, authors 调零修罗 and Enko) corroborate carried scaling and next-hop suppression; this community analysis does not establish identical compiled-client provenance.',
  limits:'Numeric selector/filter and cached-versus-live ATK dispatch, target acquisition timing, renewed-life selection, segmented presentation of one native transport and tie order remain local mappings. Native effects/audio, modules, physical-device and game-frame/pixel parity and public art/data acceptance remain unverified.',frameParity:false,
 });
@@ -41,7 +41,7 @@ export class TurdusChains{
  launch(t,{s2=false,extra=0,attackId=null}={}){
   if(this.ended||this.b.finished||!present(this.u)||this.u.deploySeq!==this.seq||!turdusHealable(this.b,this.u,t))return false;
   if(!Number.isInteger(extra)||extra<0||extra>1)throw Error('Unreviewed Ukusik chain allowance');
-  const ctx={sourceLife:this.seq,atk:this.u.s.atk,expires:this.b.time+10,remaining:2+extra,scale:1,skipDecay:false,visited:new Set(),s2,attackId};this.chains.add(ctx);this.send(ctx,this.u,t);return true;
+  const ctx={sourceLife:this.seq,atk:this.u.s.atk,healingDealtMul:this.u.s.healingDealtMul,expires:this.b.time+10,remaining:2+extra,scale:1,skipDecay:false,visited:new Set(),s2,attackId};this.chains.add(ctx);this.send(ctx,this.u,t);return true;
  }
  next(ctx,at){if(ctx.remaining<=0)return null;const r=Math.round(at.y),c=Math.round(at.x),keys=new Set(e.tables.ranges['x-4'].grids.map(p=>`${r+p.row}:${c+p.col}`));
   return sortTurdusAllies(this.b.allyUnits.filter(t=>!ctx.visited.has(t)&&turdusHealable(this.b,this.u,t)&&keys.has(`${t.tileR}:${t.tileC}`)))[0]??null;
@@ -54,7 +54,7 @@ export class TurdusChains{
    ctx.visited.add(t);const free=!!t.findBuff(TURDUS_FREE),up=!!t.findBuff(TURDUS_UP);
    if(up)ctx.scale*=this.record.talentBb[0]?.['chain.atk_scale_2']??1;
    if(free){ctx.remaining++;ctx.skipDecay=true;}
-   this.b.heal(this.u,t,this.sourceAtk(ctx)*ctx.scale,{isSkill:ctx.s2,isAttack:true,attackId:ctx.attackId,tags:['turdus:chain',...(ctx.s2?['turdus:s2']:[])]});
+   this.b.heal(this.u,t,this.sourceAtk(ctx)*ctx.scale,{isSkill:ctx.s2,isAttack:true,attackId:ctx.attackId,tags:['turdus:chain',...(ctx.s2?['turdus:s2']:[])],...(!(present(this.u)&&this.u.deploySeq===ctx.sourceLife)?{sourceHealingDealtMul:ctx.healingDealtMul}:{})});
    if(!this.ended&&!this.b.finished&&present(t)&&t.deploySeq===life&&ctx.s2)this.onRecipient(t,ctx);
    if(this.ended||this.b.finished||!present(t)||t.deploySeq!==life){this.finish(ctx);return;}
    const next=this.next(ctx,t);if(!next){this.finish(ctx);return;}

@@ -702,8 +702,13 @@ export function heal(battle, source, target, amount, opts = {}) {
   // Native HealViaMaxHpRatio can explicitly skip modifier events. Keep
   // heal-free checks, HP clamping, credit and presentation for that path.
   const skipModifierEvent = !!opts.skipModifierEvent || !!opts.regen;
-  let amt = skipModifierEvent ? amount
-    : amount * (source && source.s ? source.s.healingDealtMul : 1) * target.s.healingTakenMul;
+  // Independent source-owned transport may retain its old life's output
+  // multiplier. Keep ordinary live-source behavior and every recipient/modifier
+  // phase; this opt-in never bypasses heal-free or incoming-heal multipliers.
+  const suppliedOutput = opts.sourceHealingDealtMul;
+  if (suppliedOutput !== undefined && (!Number.isFinite(suppliedOutput) || suppliedOutput < 0)) return 0;
+  const output = suppliedOutput ?? (source && source.s ? source.s.healingDealtMul : 1);
+  let amt = skipModifierEvent ? amount : amount * output * target.s.healingTakenMul;
   if (!(amt > 0) || !Number.isFinite(amt)) return 0;
   if (battle._hooks.heal && !skipModifierEvent) {
     const ctx = { source, target, amount: amt, opts };

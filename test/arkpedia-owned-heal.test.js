@@ -89,3 +89,27 @@ test('a new no-heal prohibition also wins when it appears after selection', () =
   b.addBuff(t, { key: 'late-denial', flags: { noHeal: true } });
   advance(.4); assert.equal(t.hp, 1);
 });
+
+test('An explicit old-source output multiplier preserves recipient modifiers, callback identity and HP credit',()=>{
+ const {b,u,t}=make();b.removeBuff(t,'owned-heal-fixture');
+ b.addBuff(u,{key:'fixture:live-healing',mods:{healingDealtMul:3}});b.addBuff(t,{key:'fixture:incoming',mods:{healingTakenMul:2}});
+ let before=0,calculated=0;b.on('heal',h=>{assert.equal(h.source,u);before++;h.amount*=1.25;});
+ b.on('calculatedHeal',h=>{assert.equal(h.source,u);calculated++;});
+ const hp=t.hp;assert.equal(b.heal(u,t,100,{sourceHealingDealtMul:1.5}),375);assert.equal(t.hp-hp,375);
+ assert.equal(before,1);assert.equal(calculated,1);assert.equal(u.stats.heal,375);
+});
+test('Ordinary healing still reads the live source output multiplier when no snapshot is supplied',()=>{
+ const {b,u,t}=make();b.removeBuff(t,'owned-heal-fixture');b.addBuff(u,{key:'fixture:live-healing',mods:{healingDealtMul:3}});
+ assert.equal(b.heal(u,t,100),300);
+});
+test('A supplied output multiplier cannot bypass heal-free, incoming zero, or callback recipient-life guards',()=>{
+ const {b,u,t}=make();assert.equal(b.heal(u,t,100,{sourceHealingDealtMul:9}),0);assert.equal(t.hp,1);
+ b.removeBuff(t,'owned-heal-fixture');b.addBuff(t,{key:'fixture:no-incoming',mods:{healingTakenMul:0}});
+ assert.equal(b.heal(u,t,100,{sourceHealingDealtMul:9}),0);b.removeBuff(t,'fixture:no-incoming');
+ b.on('heal',h=>{if(h.target===t)t.deploySeq++;});assert.equal(b.heal(u,t,100,{sourceHealingDealtMul:9}),0);assert.equal(t.hp,1);
+});
+test('Zero and invalid explicit output multipliers create no healing or modifier callbacks',()=>{
+ const {b,u,t}=make();b.removeBuff(t,'owned-heal-fixture');let calls=0;b.on('heal',()=>calls++);
+ for(const m of[0,-1,NaN,Infinity,'2',null])assert.equal(b.heal(u,t,100,{sourceHealingDealtMul:m}),0);
+ assert.equal(calls,0);assert.equal(t.hp,1);
+});
