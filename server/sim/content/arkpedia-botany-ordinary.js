@@ -94,19 +94,22 @@ export class BotanyOrdinaryAttacks {
     const snapshot=captureSource(this.u),flight={target,life:p.life,sourceLife,snapshot,retired:false};
     let projectile,claimed=false;
     projectile=this.b.addProjectile({from:this.u,target,source:this.u,speed:p.shot.projectileSpeed,maxAge:10,
-      visual:'orb',data:{arkpediaTrackedVisual:true,projectileKey:'projectile_chr_botany',botanyOrdinary:true},
+      visual:'orb',data:{arkpediaTrackedVisual:true,projectileKey:p.shot.projectileKey??'projectile_chr_botany',botanyOrdinary:!p.shot.isSkill},
       onHit:()=>{
         if(claimed)return;claimed=true;this.flights.delete(projectile);
         if(!this.ended&&!this.b.finished&&target.deploySeq===p.life&&retained(target)){
-          const source=!flight.retired&&present(this.u)&&this.u.deploySeq===sourceLife?this.u:snapshot;
-          this.b.dealDamage(source,target,{amount:source.s.atk*source.s.atkScaleMul*p.shot.scale,type:'arts',isAttack:true,
-            isProjectile:true,isSkill:p.shot.isSkill,attackId:info.attackId,applyWay:'ranged',tags:[p.shot.tag]});
+          const source=()=>!flight.retired&&present(this.u)&&this.u.deploySeq===sourceLife?this.u:snapshot;
+          this.impact({source,target,life:p.life,shot:p.shot,info});
         }
         this.unwatch();
       }});
     this.flights.set(projectile,flight);
     if (this.b.finished) this.drain(); else this.watch();
     return true;
+  }
+  impact({source,target,shot,info}){
+    const u=source();this.b.dealDamage(u,target,{amount:u.s.atk*u.s.atkScaleMul*shot.scale,type:'arts',isAttack:true,
+      isProjectile:true,isSkill:shot.isSkill,attackId:info.attackId,applyWay:'ranged',tags:[shot.tag]});
   }
   tick() {
     if (!this.valid()) return;
