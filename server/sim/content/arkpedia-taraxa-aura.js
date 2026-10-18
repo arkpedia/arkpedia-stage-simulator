@@ -2,13 +2,14 @@
 import evidence from '../../../data/arkpedia-native-operators/char_4222_taraxa.json' with {type:'json'};
 import {selectedTaraxaInputs, taraxaNativeInputs, taraxaSourceComponent, TARAXA_ID as ID} from './arkpedia-taraxa-source.js';
 import {COLS} from '../constants.js';
+import {airBlockMode} from '../targeting.js';
 export const TARAXA_AURA_CONTRACT=Object.freeze({
   scope:'Selected Taraxacum derived flying-recipient Sanctuary and shared nonstacking block bonus; no healing/flight controller or public admission.',
-  mapping:'Original aura entry and block-mode notifications map to living friendly recipients on the current attack grid, refreshed on world ticks and immediately after controller-owned block-mode changes. Native FLY block mode maps to the existing ally liftoff flag; flight motion alone does not imply air blocking. Each accepted parent owns one ordinary physical/Arts Sanctuary instance; the common taraxa_t[block] family admits at most one +block buff across sources. Rejected or foreign children are never adopted. Parent loss, range exit, landing and source/recipient life changes remove owned children.',
+  mapping:'Original aura entry and block-mode notifications map to living friendly recipients on the current attack grid, refreshed on world ticks and immediately after controller-owned block-mode changes. Native FLY block mode maps to the current explicit block-mode command or the existing ally liftoff flag unless a WALK override is active; flight motion alone does not imply air blocking. Each accepted parent owns one ordinary physical/Arts Sanctuary instance; the common taraxa_t[block] family admits at most one +block buff across sources. Rejected or foreign children are never adopted. Parent loss, range exit, landing and source/recipient life changes remove owned children.',
   limitations:'Native selector masks, per-source parent identity, notification scheduling and buff-family arbitration use explicit local mappings. Compiled-client/frame parity, modules, native particles/audio/shaders and public admission remain unverified.',frameParity:false,
 });
 const alive=u=>u?.alive&&u.deployed&&!u.removed&&!u._removing;
-export const taraxaAirBlocking=t=>!!t?.s.flags.liftoff;
+export const taraxaAirBlocking=airBlockMode;
 export function verifyTaraxaAura(n=taraxaNativeInputs()){
  const events=n.templates['taraxa_t[aura]']?.eventToActions,check=events?.ON_BUFF_TRIGGER?.[0];
  const shield=check?._succeedNodes?.[0],block=check?._succeedNodes?.[2];
@@ -84,6 +85,7 @@ export class TaraxaAura{
  }
  install(){if(this.stopped||this.handles.length)throw Error('Taraxacum aura cannot be reinstalled');const{b,u}=this;
   this.handles=[b.on('deploy',({unit,move})=>{if(unit===u&&!move){this.seq=u.deploySeq;this.tick();}},{owner:u}),
+   b.on('blockModeChanged',()=>this.tick(),{owner:u}),
    b.on('tick',()=>{if(this.seq!==null&&!this.presentSource())this.stop();else if(this.u.hidden)this.clear();else this.tick();},{owner:u}),
    b.on('removed',({unit})=>{if(unit===u)this.stop();else{const p=this.records.get(unit);if(p)this.finish(p);}},{owner:u}),
    b.on('death',({unit})=>{if(unit===u)this.stop();else{const p=this.records.get(unit);if(p)this.finish(p);}},{owner:u}),

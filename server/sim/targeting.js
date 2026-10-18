@@ -17,6 +17,7 @@
 import { COLS, ROWS } from './constants.js';
 import { normDir, rotateOffset } from './dir.js';
 import { bodyDist } from './body.js';
+import {explicitBlockMode} from './block-mode.js';
 
 /**
  * Build the absolute tile-key list of a grid for a unit standing at (r,c) facing `dir` ('UP'|'RIGHT'|'DOWN'|'LEFT';
@@ -151,6 +152,10 @@ export function auraSelectable(src, a) {
   return true;
 }
 
+/** Current source FLY-block state. An explicit WALK command overrides the held takeoff passive. */
+export const airBlockMode = u => explicitBlockMode(u)==='FLY'
+  || explicitBlockMode(u)!=='WALK' && !!u?.s.flags.liftoff;
+
 /**
  * 对地规避 of an airborne ally (起飞, buff flag `liftoff` — 蒂比's skills): true when `src` is an enemy whose 行动方式 is
  * ground, which then cannot select `a` (gamedata_const ba.liftoff "不阻挡地面敌人且不会被地面敌人攻击，可以阻挡飞行敌人";
@@ -168,7 +173,8 @@ export function auraSelectable(src, a) {
  * nobody). A shot already in flight is refused [ASSUMED] (damage.js).
  */
 export function evadesGround(src, a) {
-  return !!(a && a.s && a.s.flags.liftoff && src && src.side === 'enemy' && !src.isFlying);
+  return !!(a && a.s && a.s.flags.liftoff && explicitBlockMode(a)!=='WALK' && !a.s.flags.groundEvadeImmune
+    && src && src.side === 'enemy' && !src.isFlying);
 }
 
 const PRIORITY_FNS = {

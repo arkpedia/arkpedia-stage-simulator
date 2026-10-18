@@ -419,6 +419,7 @@
     "char_4221_ju": "cn",
     "char_4222_taraxa": "cn",
     "char_4223_botany": "cn",
+    "char_4213_skybx": "cn",
     "char_4207_branch": "cn"
   },
   "behaviors": {
@@ -450,7 +451,7 @@
   "nativeEffects": {
     "tragodia": {
       "repository": "arkpedia/arkpedia-sd-assets",
-      "commit": "c305885b331427b9a78d5f8ffb938aae719c6bc1",
+      "commit": "3c669260a0de9eb1c13f11f905f6a4c4d522daac",
       "manifest": {
         "path": "effects/native/tragodia/26-09-23-17-49-43_b9cc4a/e39769c56a91f5d483632808082a05a3dbe0b71d5a5c99b3ade9ebdee68fd0ff/manifest.json",
         "bytes": 44646,
@@ -460,7 +461,7 @@
   },
   "sd": {
     "repository": "arkpedia/arkpedia-sd-assets",
-    "commit": "c305885b331427b9a78d5f8ffb938aae719c6bc1",
+    "commit": "3c669260a0de9eb1c13f11f905f6a4c4d522daac",
     "models": {
       "operator/char_123_fang/default/front": {
         "kind": "operator",
@@ -78054,6 +78055,222 @@
           "move": null
         }
       },
+      "operator/char_4213_skybx/default/front": {
+        "kind": "operator",
+        "id": "char_4213_skybx",
+        "variant": "default",
+        "facing": "front",
+        "spineVersion": "3.8.99",
+        "source": {
+          "key": "operators",
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "spine/char_4213_skybx/char_4213_skybx/Front"
+        },
+        "skeleton": {
+          "path": "models/operator/char_4213_skybx/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4213_skybx.skel",
+          "bytes": 232365,
+          "sha256": "d7733d036068c0859459c52739927568891253f657adde294737a05716801848"
+        },
+        "atlas": {
+          "path": "models/operator/char_4213_skybx/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4213_skybx.atlas",
+          "bytes": 7017,
+          "sha256": "a000af98a308309f2f100814785052297f1110b79c450bf75680e115b8e78373"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_4213_skybx/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4213_skybx.png",
+            "bytes": 280340,
+            "sha256": "1c165a27a81e416ab9acc3c7d6c389244b123be0952a63ce3f1079fdd7c623a8"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Attack": 2.1,
+          "Attack_Down": 2.1,
+          "Default": 0,
+          "Die": 1,
+          "Die_2": 1,
+          "Idle": 4,
+          "Skill_1_Begin": 1,
+          "Skill_1_End": 1,
+          "Skill_2_Begin": 1,
+          "Skill_2_Close": 1,
+          "Skill_2_End": 1,
+          "Skill_2_Idle": 4,
+          "Skill_2_Loop": 2.1,
+          "Skill_Down_2_Loop": 2.1,
+          "Start": 1
+        },
+        "hits": {
+          "Attack": [
+            0.333
+          ],
+          "Attack_Down": [
+            0.333
+          ],
+          "Skill_1_Begin": [
+            0.533
+          ],
+          "Skill_2_Close": [
+            0.267
+          ],
+          "Skill_2_Loop": [
+            0.267
+          ],
+          "Skill_Down_2_Loop": [
+            0.267
+          ]
+        },
+        "bounds": {
+          "x": -315.648,
+          "y": -7.032,
+          "width": 502.695,
+          "height": 468.78
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null
+          },
+          "attackDown": {
+            "begin": null,
+            "loop": "Attack_Down",
+            "end": null
+          },
+          "skill": {
+            "begin": "Skill_1_Begin",
+            "loop": null,
+            "end": "Skill_1_End",
+            "index": 0,
+            "via": "skill"
+          },
+          "skills": {
+            "0": {
+              "begin": "Skill_1_Begin",
+              "loop": null,
+              "end": "Skill_1_End",
+              "index": 0,
+              "via": "skill"
+            },
+            "1": {
+              "begin": "Skill_2_Begin",
+              "loop": "Skill_2_Loop",
+              "idle": "Skill_2_Idle",
+              "end": "Skill_2_End",
+              "index": 1,
+              "via": "skill"
+            }
+          },
+          "die": "Die",
+          "stun": null,
+          "move": null
+        }
+      },
+      "operator/char_4213_skybx/default/back": {
+        "kind": "operator",
+        "id": "char_4213_skybx",
+        "variant": "default",
+        "facing": "back",
+        "spineVersion": "3.8.99",
+        "source": {
+          "key": "operators",
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "spine/char_4213_skybx/char_4213_skybx/Back"
+        },
+        "skeleton": {
+          "path": "models/operator/char_4213_skybx/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4213_skybx.skel",
+          "bytes": 171216,
+          "sha256": "ae0bf94811d237950c20440b6a76143e6d5bc6d54f0863a996050f6729f13988"
+        },
+        "atlas": {
+          "path": "models/operator/char_4213_skybx/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4213_skybx.atlas",
+          "bytes": 7401,
+          "sha256": "dc0188bb7d3fb7286cad08d90140ca9fd67ea723024e0f319a82a534eed33a46"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_4213_skybx/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4213_skybx.png",
+            "bytes": 301215,
+            "sha256": "16338e7fc1b2e0e640a190884da7e8a523ee66936e846692e248d6699a853190"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Attack": 2.1,
+          "Default": 0,
+          "Idle": 4,
+          "Skill_1_Begin": 1,
+          "Skill_1_End": 1,
+          "Skill_2_Begin": 1,
+          "Skill_2_Close": 1,
+          "Skill_2_End": 1,
+          "Skill_2_Idle": 4,
+          "Skill_2_Loop": 2.1,
+          "Start": 1
+        },
+        "hits": {
+          "Attack": [
+            0.333
+          ],
+          "Skill_1_Begin": [
+            0.533
+          ],
+          "Skill_2_Close": [
+            0.267
+          ],
+          "Skill_2_Loop": [
+            0.267
+          ]
+        },
+        "bounds": {
+          "x": -315.648,
+          "y": -7.032,
+          "width": 502.695,
+          "height": 468.78
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null
+          },
+          "attackDown": null,
+          "skill": {
+            "begin": "Skill_1_Begin",
+            "loop": null,
+            "end": "Skill_1_End",
+            "index": 0,
+            "via": "skill"
+          },
+          "skills": {
+            "0": {
+              "begin": "Skill_1_Begin",
+              "loop": null,
+              "end": "Skill_1_End",
+              "index": 0,
+              "via": "skill"
+            },
+            "1": {
+              "begin": "Skill_2_Begin",
+              "loop": "Skill_2_Loop",
+              "idle": "Skill_2_Idle",
+              "end": "Skill_2_End",
+              "index": 1,
+              "via": "skill"
+            }
+          },
+          "die": null,
+          "stun": null,
+          "move": null
+        }
+      },
       "operator/char_4207_branch/default/front": {
         "kind": "operator",
         "id": "char_4207_branch",
@@ -89957,7 +90174,7 @@
     },
     "art": {
       "repository": "arkpedia/arkpedia-sd-assets",
-      "commit": "c305885b331427b9a78d5f8ffb938aae719c6bc1",
+      "commit": "3c669260a0de9eb1c13f11f905f6a4c4d522daac",
       "scene": {
         "path": "stages/0-1/26-09-23-17-49-43_b9cc4a/scene.json",
         "bytes": 4479,
@@ -89966,7 +90183,7 @@
     },
     "gates": {
       "repository": "arkpedia/arkpedia-sd-assets",
-      "commit": "c305885b331427b9a78d5f8ffb938aae719c6bc1",
+      "commit": "3c669260a0de9eb1c13f11f905f6a4c4d522daac",
       "pack": {
         "path": "effects/standard-gates/26-09-23-17-49-43_b9cc4a/gates.json",
         "bytes": 3507,
@@ -688444,6 +688661,1713 @@
         "ursus"
       ]
     },
+    "char_4213_skybx": {
+      "id": "char_4213_skybx",
+      "name": "Skybox",
+      "description": "部署后<$ba.liftoff>起飞</>，<$ba.liftoff>起飞</>后只攻击空中敌人；技能开启时降落且攻击造成<@ba.kw>群体物理伤害</>",
+      "rarity": 5,
+      "profession": "SNIPER",
+      "subProfessionId": "skybreaker",
+      "position": "RANGED",
+      "nationId": "columbia",
+      "groupId": null,
+      "teamId": null,
+      "phases": [
+        {
+          "maxLevel": 50,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 691,
+                "atk": 409,
+                "def": 107,
+                "magicResistance": 0,
+                "cost": 22,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 2.1,
+                "respawnTime": 80,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false,
+                "teleportImmune": false,
+                "groundBoundImmune": false
+              }
+            },
+            {
+              "level": 50,
+              "data": {
+                "maxHp": 922,
+                "atk": 585,
+                "def": 139,
+                "magicResistance": 0,
+                "cost": 22,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 2.1,
+                "respawnTime": 80,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false,
+                "teleportImmune": false,
+                "groundBoundImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              -1,
+              0
+            ],
+            [
+              -1,
+              1
+            ],
+            [
+              -1,
+              2
+            ]
+          ]
+        },
+        {
+          "maxLevel": 70,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 922,
+                "atk": 585,
+                "def": 139,
+                "magicResistance": 0,
+                "cost": 24,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 2.1,
+                "respawnTime": 80,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false,
+                "teleportImmune": false,
+                "groundBoundImmune": false
+              }
+            },
+            {
+              "level": 70,
+              "data": {
+                "maxHp": 1168,
+                "atk": 755,
+                "def": 177,
+                "magicResistance": 0,
+                "cost": 24,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 2.1,
+                "respawnTime": 80,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false,
+                "teleportImmune": false,
+                "groundBoundImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              0,
+              3
+            ],
+            [
+              -1,
+              0
+            ],
+            [
+              -1,
+              1
+            ],
+            [
+              -1,
+              2
+            ]
+          ]
+        },
+        {
+          "maxLevel": 80,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 1168,
+                "atk": 755,
+                "def": 177,
+                "magicResistance": 0,
+                "cost": 24,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 2.1,
+                "respawnTime": 80,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false,
+                "teleportImmune": false,
+                "groundBoundImmune": false
+              }
+            },
+            {
+              "level": 80,
+              "data": {
+                "maxHp": 1558,
+                "atk": 899,
+                "def": 197,
+                "magicResistance": 0,
+                "cost": 24,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 2.1,
+                "respawnTime": 80,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false,
+                "teleportImmune": false,
+                "groundBoundImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              0,
+              3
+            ],
+            [
+              -1,
+              0
+            ],
+            [
+              -1,
+              1
+            ],
+            [
+              -1,
+              2
+            ]
+          ]
+        }
+      ],
+      "favorKeyFrames": [
+        {
+          "level": 0,
+          "data": {
+            "maxHp": 0,
+            "atk": 0,
+            "def": 0,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false,
+            "teleportImmune": false,
+            "groundBoundImmune": false
+          }
+        },
+        {
+          "level": 50,
+          "data": {
+            "maxHp": 0,
+            "atk": 85,
+            "def": 0,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false,
+            "teleportImmune": false,
+            "groundBoundImmune": false
+          }
+        }
+      ],
+      "potentialRanks": [
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "RESPAWN_TIME",
+            "formulaItem": "ADDITION",
+            "value": -10,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "ATK",
+            "formulaItem": "ADDITION",
+            "value": 35,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ]
+      ],
+      "trait": null,
+      "talents": [
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "开门！管理局",
+              "description": "对每个敌人首次造成伤害后，使目标的特殊能力失效，持续4秒",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "silence",
+                  "value": 4,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "开门！管理局",
+              "description": "对每个敌人首次造成伤害后，使目标的特殊能力失效，持续7秒",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "silence",
+                  "value": 7,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            }
+          ]
+        },
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_0",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "-1",
+              "name": null,
+              "description": null,
+              "rangeId": null,
+              "blackboard": [],
+              "tokenKey": null,
+              "isHideTalent": true
+            }
+          ]
+        }
+      ],
+      "skills": [
+        {
+          "id": "skchr_skybx_1",
+          "unlockCondition": {
+            "phase": "PHASE_0",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "源石火药驾临",
+              "rangeId": null,
+              "description": "下次攻击变为投掷源石炸弹，爆炸范围<@ba.vup>扩大</>，造成相当于攻击力<@ba.vup>{atk_scale:0%}</>的物理伤害\\n<@ba.rem>可充能1次</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 11,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_skybx_1",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 1.8,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "源石火药驾临",
+              "rangeId": null,
+              "description": "下次攻击变为投掷源石炸弹，爆炸范围<@ba.vup>扩大</>，造成相当于攻击力<@ba.vup>{atk_scale:0%}</>的物理伤害\\n<@ba.rem>可充能1次</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 11,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_skybx_1",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 1.9,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "源石火药驾临",
+              "rangeId": null,
+              "description": "下次攻击变为投掷源石炸弹，爆炸范围<@ba.vup>扩大</>，造成相当于攻击力<@ba.vup>{atk_scale:0%}</>的物理伤害\\n<@ba.rem>可充能1次</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 11,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_skybx_1",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 2,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "源石火药驾临",
+              "rangeId": null,
+              "description": "下次攻击变为投掷源石炸弹，爆炸范围<@ba.vup>扩大</>，造成相当于攻击力<@ba.vup>{atk_scale:0%}</>的物理伤害\\n<@ba.rem>可充能1次</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 10,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_skybx_1",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 2.1,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "源石火药驾临",
+              "rangeId": null,
+              "description": "下次攻击变为投掷源石炸弹，爆炸范围<@ba.vup>扩大</>，造成相当于攻击力<@ba.vup>{atk_scale:0%}</>的物理伤害\\n<@ba.rem>可充能1次</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 10,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_skybx_1",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 2.2,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "源石火药驾临",
+              "rangeId": null,
+              "description": "下次攻击变为投掷源石炸弹，爆炸范围<@ba.vup>扩大</>，造成相当于攻击力<@ba.vup>{atk_scale:0%}</>的物理伤害\\n<@ba.rem>可充能1次</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 10,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_skybx_1",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 2.3,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "源石火药驾临",
+              "rangeId": null,
+              "description": "下次攻击变为投掷源石炸弹，爆炸范围<@ba.vup>扩大</>，造成相当于攻击力<@ba.vup>{atk_scale:0%}</>的物理伤害\\n<@ba.rem>可充能2次</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 2,
+                "spCost": 9,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_skybx_1",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 2.4,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "源石火药驾临",
+              "rangeId": null,
+              "description": "下次攻击变为投掷源石炸弹，爆炸范围<@ba.vup>扩大</>，造成相当于攻击力<@ba.vup>{atk_scale:0%}</>的物理伤害\\n<@ba.rem>可充能2次</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 2,
+                "spCost": 9,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_skybx_1",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 2.6,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "源石火药驾临",
+              "rangeId": null,
+              "description": "下次攻击变为投掷源石炸弹，爆炸范围<@ba.vup>扩大</>，造成相当于攻击力<@ba.vup>{atk_scale:0%}</>的物理伤害\\n<@ba.rem>可充能2次</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 2,
+                "spCost": 9,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_skybx_1",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 2.8,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "源石火药驾临",
+              "rangeId": null,
+              "description": "下次攻击变为投掷源石炸弹，爆炸范围<@ba.vup>扩大</>，造成相当于攻击力<@ba.vup>{atk_scale:0%}</>的物理伤害\\n<@ba.rem>可充能2次</>",
+              "skillType": "AUTO",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 2,
+                "spCost": 8,
+                "initSp": 0,
+                "increment": 1
+              },
+              "prefabId": "skchr_skybx_1",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 3,
+                  "valueStr": null
+                }
+              ]
+            }
+          ],
+          "assetIcon": "skill-icons/Skybox - Gunpowder Soiree.webp"
+        },
+        {
+          "id": "skchr_skybx_2",
+          "unlockCondition": {
+            "phase": "PHASE_1",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "电磁脉冲恩宠",
+              "rangeId": "3-10",
+              "description": "攻击范围<@ba.vup>扩大</>，攻击时攻击力提升至<@ba.vup>{attack@atk_scale:0%}</>\\n<$ba.overdrive>过载</>：主动关闭时发射剩余全部弹药攻击随机敌人\\n<@ba.rem>技能拥有<@ba.vup>{attack@trigger_time}</>枚弹药，可随时主动关闭</>",
+              "skillType": "MANUAL",
+              "durationType": "AMMO",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 42,
+                "initSp": 10,
+                "increment": 1
+              },
+              "prefabId": "skchr_skybx_2",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "attack@atk_scale",
+                  "value": 1.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@trigger_time",
+                  "value": 10,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  1,
+                  3
+                ],
+                [
+                  1,
+                  4
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  0,
+                  3
+                ],
+                [
+                  0,
+                  4
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ],
+                [
+                  -1,
+                  3
+                ],
+                [
+                  -1,
+                  4
+                ]
+              ]
+            },
+            {
+              "name": "电磁脉冲恩宠",
+              "rangeId": "3-10",
+              "description": "攻击范围<@ba.vup>扩大</>，攻击时攻击力提升至<@ba.vup>{attack@atk_scale:0%}</>\\n<$ba.overdrive>过载</>：主动关闭时发射剩余全部弹药攻击随机敌人\\n<@ba.rem>技能拥有<@ba.vup>{attack@trigger_time}</>枚弹药，可随时主动关闭</>",
+              "skillType": "MANUAL",
+              "durationType": "AMMO",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 40,
+                "initSp": 11,
+                "increment": 1
+              },
+              "prefabId": "skchr_skybx_2",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "attack@atk_scale",
+                  "value": 1.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@trigger_time",
+                  "value": 10,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  1,
+                  3
+                ],
+                [
+                  1,
+                  4
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  0,
+                  3
+                ],
+                [
+                  0,
+                  4
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ],
+                [
+                  -1,
+                  3
+                ],
+                [
+                  -1,
+                  4
+                ]
+              ]
+            },
+            {
+              "name": "电磁脉冲恩宠",
+              "rangeId": "3-10",
+              "description": "攻击范围<@ba.vup>扩大</>，攻击时攻击力提升至<@ba.vup>{attack@atk_scale:0%}</>\\n<$ba.overdrive>过载</>：主动关闭时发射剩余全部弹药攻击随机敌人\\n<@ba.rem>技能拥有<@ba.vup>{attack@trigger_time}</>枚弹药，可随时主动关闭</>",
+              "skillType": "MANUAL",
+              "durationType": "AMMO",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 38,
+                "initSp": 12,
+                "increment": 1
+              },
+              "prefabId": "skchr_skybx_2",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "attack@atk_scale",
+                  "value": 1.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@trigger_time",
+                  "value": 10,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  1,
+                  3
+                ],
+                [
+                  1,
+                  4
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  0,
+                  3
+                ],
+                [
+                  0,
+                  4
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ],
+                [
+                  -1,
+                  3
+                ],
+                [
+                  -1,
+                  4
+                ]
+              ]
+            },
+            {
+              "name": "电磁脉冲恩宠",
+              "rangeId": "3-10",
+              "description": "攻击范围<@ba.vup>扩大</>，攻击时攻击力提升至<@ba.vup>{attack@atk_scale:0%}</>\\n<$ba.overdrive>过载</>：主动关闭时发射剩余全部弹药攻击随机敌人\\n<@ba.rem>技能拥有<@ba.vup>{attack@trigger_time}</>枚弹药，可随时主动关闭</>",
+              "skillType": "MANUAL",
+              "durationType": "AMMO",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 36,
+                "initSp": 13,
+                "increment": 1
+              },
+              "prefabId": "skchr_skybx_2",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "attack@atk_scale",
+                  "value": 1.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@trigger_time",
+                  "value": 10,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  1,
+                  3
+                ],
+                [
+                  1,
+                  4
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  0,
+                  3
+                ],
+                [
+                  0,
+                  4
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ],
+                [
+                  -1,
+                  3
+                ],
+                [
+                  -1,
+                  4
+                ]
+              ]
+            },
+            {
+              "name": "电磁脉冲恩宠",
+              "rangeId": "3-10",
+              "description": "攻击范围<@ba.vup>扩大</>，攻击时攻击力提升至<@ba.vup>{attack@atk_scale:0%}</>\\n<$ba.overdrive>过载</>：主动关闭时发射剩余全部弹药攻击随机敌人\\n<@ba.rem>技能拥有<@ba.vup>{attack@trigger_time}</>枚弹药，可随时主动关闭</>",
+              "skillType": "MANUAL",
+              "durationType": "AMMO",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 34,
+                "initSp": 14,
+                "increment": 1
+              },
+              "prefabId": "skchr_skybx_2",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "attack@atk_scale",
+                  "value": 1.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@trigger_time",
+                  "value": 10,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  1,
+                  3
+                ],
+                [
+                  1,
+                  4
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  0,
+                  3
+                ],
+                [
+                  0,
+                  4
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ],
+                [
+                  -1,
+                  3
+                ],
+                [
+                  -1,
+                  4
+                ]
+              ]
+            },
+            {
+              "name": "电磁脉冲恩宠",
+              "rangeId": "3-10",
+              "description": "攻击范围<@ba.vup>扩大</>，攻击时攻击力提升至<@ba.vup>{attack@atk_scale:0%}</>\\n<$ba.overdrive>过载</>：主动关闭时发射剩余全部弹药攻击随机敌人\\n<@ba.rem>技能拥有<@ba.vup>{attack@trigger_time}</>枚弹药，可随时主动关闭</>",
+              "skillType": "MANUAL",
+              "durationType": "AMMO",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 32,
+                "initSp": 15,
+                "increment": 1
+              },
+              "prefabId": "skchr_skybx_2",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "attack@atk_scale",
+                  "value": 1.7,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@trigger_time",
+                  "value": 10,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  1,
+                  3
+                ],
+                [
+                  1,
+                  4
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  0,
+                  3
+                ],
+                [
+                  0,
+                  4
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ],
+                [
+                  -1,
+                  3
+                ],
+                [
+                  -1,
+                  4
+                ]
+              ]
+            },
+            {
+              "name": "电磁脉冲恩宠",
+              "rangeId": "3-10",
+              "description": "攻击范围<@ba.vup>扩大</>，攻击时攻击力提升至<@ba.vup>{attack@atk_scale:0%}</>\\n<$ba.overdrive>过载</>：主动关闭时发射剩余全部弹药攻击随机敌人\\n<@ba.rem>技能拥有<@ba.vup>{attack@trigger_time}</>枚弹药，可随时主动关闭</>",
+              "skillType": "MANUAL",
+              "durationType": "AMMO",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 30,
+                "initSp": 16,
+                "increment": 1
+              },
+              "prefabId": "skchr_skybx_2",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "attack@atk_scale",
+                  "value": 1.8,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@trigger_time",
+                  "value": 10,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  1,
+                  3
+                ],
+                [
+                  1,
+                  4
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  0,
+                  3
+                ],
+                [
+                  0,
+                  4
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ],
+                [
+                  -1,
+                  3
+                ],
+                [
+                  -1,
+                  4
+                ]
+              ]
+            },
+            {
+              "name": "电磁脉冲恩宠",
+              "rangeId": "3-10",
+              "description": "攻击范围<@ba.vup>扩大</>，攻击时攻击力提升至<@ba.vup>{attack@atk_scale:0%}</>\\n<$ba.overdrive>过载</>：主动关闭时发射剩余全部弹药攻击随机敌人\\n<@ba.rem>技能拥有<@ba.vup>{attack@trigger_time}</>枚弹药，可随时主动关闭</>",
+              "skillType": "MANUAL",
+              "durationType": "AMMO",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 29,
+                "initSp": 17,
+                "increment": 1
+              },
+              "prefabId": "skchr_skybx_2",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "attack@atk_scale",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@trigger_time",
+                  "value": 10,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  1,
+                  3
+                ],
+                [
+                  1,
+                  4
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  0,
+                  3
+                ],
+                [
+                  0,
+                  4
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ],
+                [
+                  -1,
+                  3
+                ],
+                [
+                  -1,
+                  4
+                ]
+              ]
+            },
+            {
+              "name": "电磁脉冲恩宠",
+              "rangeId": "3-10",
+              "description": "攻击范围<@ba.vup>扩大</>，攻击时攻击力提升至<@ba.vup>{attack@atk_scale:0%}</>\\n<$ba.overdrive>过载</>：主动关闭时发射剩余全部弹药攻击随机敌人\\n<@ba.rem>技能拥有<@ba.vup>{attack@trigger_time}</>枚弹药，可随时主动关闭</>",
+              "skillType": "MANUAL",
+              "durationType": "AMMO",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 27,
+                "initSp": 18,
+                "increment": 1
+              },
+              "prefabId": "skchr_skybx_2",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "attack@atk_scale",
+                  "value": 2.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@trigger_time",
+                  "value": 10,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  1,
+                  3
+                ],
+                [
+                  1,
+                  4
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  0,
+                  3
+                ],
+                [
+                  0,
+                  4
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ],
+                [
+                  -1,
+                  3
+                ],
+                [
+                  -1,
+                  4
+                ]
+              ]
+            },
+            {
+              "name": "电磁脉冲恩宠",
+              "rangeId": "3-10",
+              "description": "攻击范围<@ba.vup>扩大</>，攻击时攻击力提升至<@ba.vup>{attack@atk_scale:0%}</>\\n<$ba.overdrive>过载</>：主动关闭时发射剩余全部弹药攻击随机敌人\\n<@ba.rem>技能拥有<@ba.vup>{attack@trigger_time}</>枚弹药，可随时主动关闭</>",
+              "skillType": "MANUAL",
+              "durationType": "AMMO",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 25,
+                "initSp": 20,
+                "increment": 1
+              },
+              "prefabId": "skchr_skybx_2",
+              "duration": -1,
+              "blackboard": [
+                {
+                  "key": "attack@atk_scale",
+                  "value": 2.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@trigger_time",
+                  "value": 10,
+                  "valueStr": null
+                }
+              ],
+              "rangeGrid": [
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  1,
+                  3
+                ],
+                [
+                  1,
+                  4
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  0,
+                  3
+                ],
+                [
+                  0,
+                  4
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ],
+                [
+                  -1,
+                  2
+                ],
+                [
+                  -1,
+                  3
+                ],
+                [
+                  -1,
+                  4
+                ]
+              ]
+            }
+          ],
+          "assetIcon": "skill-icons/Skybox - EMP Benefaction.webp"
+        }
+      ],
+      "sourceName": "天空盒",
+      "sourceChannel": "cn",
+      "sourceAppellation": "Skybox",
+      "factionTags": [
+        "columbia"
+      ]
+    },
     "char_4207_branch": {
       "id": "char_4207_branch",
       "name": "Vetochki",
@@ -690137,7 +692061,7 @@
         }
       ],
       "skills": [],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/c305885b331427b9a78d5f8ffb938aae719c6bc1/models/operator/token_10063_buddy_bddg/default/front/1da6347c10575ac922ef1ceeade662ebfb785b0653ef13266ab48f03d1828af9/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3c669260a0de9eb1c13f11f905f6a4c4d522daac/models/operator/token_10063_buddy_bddg/default/front/1da6347c10575ac922ef1ceeade662ebfb785b0653ef13266ab48f03d1828af9/avatar.png"
     },
     "token_10069_mcnist_mcgraf": {
       "id": "token_10069_mcnist_mcgraf",
@@ -691038,7 +692962,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/c305885b331427b9a78d5f8ffb938aae719c6bc1/models/operator/token_10069_mcnist_mcgraf/default/front/1da6347c10575ac922ef1ceeade662ebfb785b0653ef13266ab48f03d1828af9/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3c669260a0de9eb1c13f11f905f6a4c4d522daac/models/operator/token_10069_mcnist_mcgraf/default/front/1da6347c10575ac922ef1ceeade662ebfb785b0653ef13266ab48f03d1828af9/avatar.png"
     },
     "token_10066_closur_ourbase": {
       "id": "token_10066_closur_ourbase",
@@ -691505,7 +693429,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/c305885b331427b9a78d5f8ffb938aae719c6bc1/models/operator/token_10066_closur_ourbase/default/front/af23c7f497862f38be2cdca0cd4079d44753bde8d61b97398e5a2777a54281e4/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3c669260a0de9eb1c13f11f905f6a4c4d522daac/models/operator/token_10066_closur_ourbase/default/front/af23c7f497862f38be2cdca0cd4079d44753bde8d61b97398e5a2777a54281e4/avatar.png"
     },
     "token_10043_necras_skeltn": {
       "id": "token_10043_necras_skeltn",
@@ -691888,7 +693812,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/c305885b331427b9a78d5f8ffb938aae719c6bc1/models/operator/token_10043_necras_skeltn/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3c669260a0de9eb1c13f11f905f6a4c4d522daac/models/operator/token_10043_necras_skeltn/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10050_monstr_prosts": {
       "id": "token_10050_monstr_prosts",
@@ -693726,7 +695650,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/c305885b331427b9a78d5f8ffb938aae719c6bc1/models/operator/token_10050_monstr_prosts/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3c669260a0de9eb1c13f11f905f6a4c4d522daac/models/operator/token_10050_monstr_prosts/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10054_phatm2_encdool": {
       "id": "token_10054_phatm2_encdool",
@@ -695930,7 +697854,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/c305885b331427b9a78d5f8ffb938aae719c6bc1/models/operator/token_10054_phatm2_encdool/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3c669260a0de9eb1c13f11f905f6a4c4d522daac/models/operator/token_10054_phatm2_encdool/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10055_phatm2_mndclv": {
       "id": "token_10055_phatm2_mndclv",
@@ -697201,7 +699125,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/c305885b331427b9a78d5f8ffb938aae719c6bc1/models/operator/token_10030_mlyss_wtrman/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3c669260a0de9eb1c13f11f905f6a4c4d522daac/models/operator/token_10030_mlyss_wtrman/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10037_mitm_trshrb": {
       "id": "token_10037_mitm_trshrb",
@@ -697628,7 +699552,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/c305885b331427b9a78d5f8ffb938aae719c6bc1/models/operator/token_10037_mitm_trshrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3c669260a0de9eb1c13f11f905f6a4c4d522daac/models/operator/token_10037_mitm_trshrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10027_ironmn_pile1": {
       "id": "token_10027_ironmn_pile1",
@@ -698724,7 +700648,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/c305885b331427b9a78d5f8ffb938aae719c6bc1/models/operator/token_10027_ironmn_pile1/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3c669260a0de9eb1c13f11f905f6a4c4d522daac/models/operator/token_10027_ironmn_pile1/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10027_ironmn_pile2": {
       "id": "token_10027_ironmn_pile2",
@@ -699994,7 +701918,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/c305885b331427b9a78d5f8ffb938aae719c6bc1/models/operator/token_10027_ironmn_pile2/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3c669260a0de9eb1c13f11f905f6a4c4d522daac/models/operator/token_10027_ironmn_pile2/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10027_ironmn_pile3": {
       "id": "token_10027_ironmn_pile3",
@@ -702502,7 +704426,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/c305885b331427b9a78d5f8ffb938aae719c6bc1/models/operator/token_10027_ironmn_pile3/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3c669260a0de9eb1c13f11f905f6a4c4d522daac/models/operator/token_10027_ironmn_pile3/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10020_ling_soul1": {
       "id": "token_10020_ling_soul1",
@@ -703394,7 +705318,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/c305885b331427b9a78d5f8ffb938aae719c6bc1/models/operator/token_10020_ling_soul1/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3c669260a0de9eb1c13f11f905f6a4c4d522daac/models/operator/token_10020_ling_soul1/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10020_ling_soul2": {
       "id": "token_10020_ling_soul2",
@@ -704730,7 +706654,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/c305885b331427b9a78d5f8ffb938aae719c6bc1/models/operator/token_10020_ling_soul2/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3c669260a0de9eb1c13f11f905f6a4c4d522daac/models/operator/token_10020_ling_soul2/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10020_ling_soul3": {
       "id": "token_10020_ling_soul3",
@@ -706570,7 +708494,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/c305885b331427b9a78d5f8ffb938aae719c6bc1/models/operator/token_10020_ling_soul3/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3c669260a0de9eb1c13f11f905f6a4c4d522daac/models/operator/token_10020_ling_soul3/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10005_mgllan_drone1": {
       "id": "token_10005_mgllan_drone1",
@@ -707662,7 +709586,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/c305885b331427b9a78d5f8ffb938aae719c6bc1/models/operator/token_10005_mgllan_drone1/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3c669260a0de9eb1c13f11f905f6a4c4d522daac/models/operator/token_10005_mgllan_drone1/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10005_mgllan_drone2": {
       "id": "token_10005_mgllan_drone2",
@@ -708658,7 +710582,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/c305885b331427b9a78d5f8ffb938aae719c6bc1/models/operator/token_10005_mgllan_drone2/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3c669260a0de9eb1c13f11f905f6a4c4d522daac/models/operator/token_10005_mgllan_drone2/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10005_mgllan_drone3": {
       "id": "token_10005_mgllan_drone3",
@@ -709750,7 +711674,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/c305885b331427b9a78d5f8ffb938aae719c6bc1/models/operator/token_10005_mgllan_drone3/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3c669260a0de9eb1c13f11f905f6a4c4d522daac/models/operator/token_10005_mgllan_drone3/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10056_angel2_target": {
       "id": "token_10056_angel2_target",
@@ -710550,7 +712474,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/c305885b331427b9a78d5f8ffb938aae719c6bc1/models/operator/token_10056_angel2_target/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3c669260a0de9eb1c13f11f905f6a4c4d522daac/models/operator/token_10056_angel2_target/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10035_wisdel_wward": {
       "id": "token_10035_wisdel_wward",
@@ -713209,7 +715133,7 @@
         }
       ],
       "automaticOnly": true,
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/c305885b331427b9a78d5f8ffb938aae719c6bc1/models/operator/token_10031_swire2_gdtrap/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3c669260a0de9eb1c13f11f905f6a4c4d522daac/models/operator/token_10031_swire2_gdtrap/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10033_ela_grzmot": {
       "id": "token_10033_ela_grzmot",
@@ -715008,7 +716932,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/c305885b331427b9a78d5f8ffb938aae719c6bc1/models/operator/token_10033_ela_grzmot/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3c669260a0de9eb1c13f11f905f6a4c4d522daac/models/operator/token_10033_ela_grzmot/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10034_ray_sndbst": {
       "id": "token_10034_ray_sndbst",
@@ -715642,7 +717566,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/c305885b331427b9a78d5f8ffb938aae719c6bc1/models/operator/token_10034_ray_sndbst/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3c669260a0de9eb1c13f11f905f6a4c4d522daac/models/operator/token_10034_ray_sndbst/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10028_vigil_wolf": {
       "id": "token_10028_vigil_wolf",
@@ -716381,7 +718305,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/c305885b331427b9a78d5f8ffb938aae719c6bc1/models/operator/token_10028_vigil_wolf/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3c669260a0de9eb1c13f11f905f6a4c4d522daac/models/operator/token_10028_vigil_wolf/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10026_bgsnow_subbow": {
       "id": "token_10026_bgsnow_subbow",
@@ -717946,7 +719870,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/c305885b331427b9a78d5f8ffb938aae719c6bc1/models/operator/token_10026_bgsnow_subbow/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3c669260a0de9eb1c13f11f905f6a4c4d522daac/models/operator/token_10026_bgsnow_subbow/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10017_skadi2_dedant": {
       "id": "token_10017_skadi2_dedant",
@@ -719543,7 +721467,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/c305885b331427b9a78d5f8ffb938aae719c6bc1/models/operator/token_10017_skadi2_dedant/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3c669260a0de9eb1c13f11f905f6a4c4d522daac/models/operator/token_10017_skadi2_dedant/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10025_doroth_recttp": {
       "id": "token_10025_doroth_recttp",
@@ -721403,7 +723327,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/c305885b331427b9a78d5f8ffb938aae719c6bc1/models/operator/token_10025_doroth_recttp/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3c669260a0de9eb1c13f11f905f6a4c4d522daac/models/operator/token_10025_doroth_recttp/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10036_lasher_mcbird": {
       "id": "token_10036_lasher_mcbird",
@@ -722327,7 +724251,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/c305885b331427b9a78d5f8ffb938aae719c6bc1/models/operator/token_10036_lasher_mcbird/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3c669260a0de9eb1c13f11f905f6a4c4d522daac/models/operator/token_10036_lasher_mcbird/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10032_jesca2_jckshd": {
       "id": "token_10032_jesca2_jckshd",
@@ -722664,7 +724588,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/c305885b331427b9a78d5f8ffb938aae719c6bc1/models/operator/token_10032_jesca2_jckshd/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3c669260a0de9eb1c13f11f905f6a4c4d522daac/models/operator/token_10032_jesca2_jckshd/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10040_siege2_vlion": {
       "id": "token_10040_siege2_vlion",
@@ -724096,7 +726020,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/c305885b331427b9a78d5f8ffb938aae719c6bc1/models/operator/token_10009_weedy_cannon/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3c669260a0de9eb1c13f11f905f6a4c4d522daac/models/operator/token_10009_weedy_cannon/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10024_ebnhlz_rcube": {
       "id": "token_10024_ebnhlz_rcube",
@@ -724669,7 +726593,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/c305885b331427b9a78d5f8ffb938aae719c6bc1/models/operator/token_10024_ebnhlz_rcube/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3c669260a0de9eb1c13f11f905f6a4c4d522daac/models/operator/token_10024_ebnhlz_rcube/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10044_wulfen_mine": {
       "id": "token_10044_wulfen_mine",
@@ -725870,7 +727794,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/c305885b331427b9a78d5f8ffb938aae719c6bc1/models/operator/token_10044_wulfen_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3c669260a0de9eb1c13f11f905f6a4c4d522daac/models/operator/token_10044_wulfen_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10042_tecno_puppet": {
       "id": "token_10042_tecno_puppet",
@@ -726119,7 +728043,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/c305885b331427b9a78d5f8ffb938aae719c6bc1/models/operator/token_10042_tecno_puppet/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3c669260a0de9eb1c13f11f905f6a4c4d522daac/models/operator/token_10042_tecno_puppet/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10041_cathy_catsld": {
       "id": "token_10041_cathy_catsld",
@@ -726677,7 +728601,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/c305885b331427b9a78d5f8ffb938aae719c6bc1/models/operator/token_10041_cathy_catsld/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3c669260a0de9eb1c13f11f905f6a4c4d522daac/models/operator/token_10041_cathy_catsld/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10022_kazema_shadow": {
       "id": "token_10022_kazema_shadow",
@@ -727147,7 +729071,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/c305885b331427b9a78d5f8ffb938aae719c6bc1/models/operator/token_10022_kazema_shadow/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3c669260a0de9eb1c13f11f905f6a4c4d522daac/models/operator/token_10022_kazema_shadow/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10001_deepcl_tentac": {
       "id": "token_10001_deepcl_tentac",
@@ -727461,7 +729385,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/c305885b331427b9a78d5f8ffb938aae719c6bc1/models/operator/token_10001_deepcl_tentac/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3c669260a0de9eb1c13f11f905f6a4c4d522daac/models/operator/token_10001_deepcl_tentac/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10018_robrta_mach": {
       "id": "token_10018_robrta_mach",
@@ -727951,7 +729875,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/c305885b331427b9a78d5f8ffb938aae719c6bc1/models/operator/token_10018_robrta_mach/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3c669260a0de9eb1c13f11f905f6a4c4d522daac/models/operator/token_10018_robrta_mach/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10014_bstalk_crab": {
       "id": "token_10014_bstalk_crab",
@@ -728280,7 +730204,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/c305885b331427b9a78d5f8ffb938aae719c6bc1/models/operator/token_10014_bstalk_crab/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3c669260a0de9eb1c13f11f905f6a4c4d522daac/models/operator/token_10014_bstalk_crab/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10011_beewax_oblisk": {
       "id": "token_10011_beewax_oblisk",
@@ -729225,7 +731149,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/c305885b331427b9a78d5f8ffb938aae719c6bc1/models/operator/token_10011_beewax_oblisk/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3c669260a0de9eb1c13f11f905f6a4c4d522daac/models/operator/token_10011_beewax_oblisk/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10006_vodfox_doll": {
       "id": "token_10006_vodfox_doll",
@@ -729861,7 +731785,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/c305885b331427b9a78d5f8ffb938aae719c6bc1/models/operator/token_10006_vodfox_doll/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3c669260a0de9eb1c13f11f905f6a4c4d522daac/models/operator/token_10006_vodfox_doll/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10003_cgbird_bird": {
       "id": "token_10003_cgbird_bird",
@@ -730156,7 +732080,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/c305885b331427b9a78d5f8ffb938aae719c6bc1/models/operator/token_10003_cgbird_bird/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3c669260a0de9eb1c13f11f905f6a4c4d522daac/models/operator/token_10003_cgbird_bird/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10000_silent_healrb": {
       "id": "token_10000_silent_healrb",
@@ -730539,7 +732463,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/c305885b331427b9a78d5f8ffb938aae719c6bc1/models/operator/token_10000_silent_healrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3c669260a0de9eb1c13f11f905f6a4c4d522daac/models/operator/token_10000_silent_healrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10015_dusk_drgn": {
       "id": "token_10015_dusk_drgn",
@@ -730953,7 +732877,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/c305885b331427b9a78d5f8ffb938aae719c6bc1/models/operator/token_10015_dusk_drgn/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3c669260a0de9eb1c13f11f905f6a4c4d522daac/models/operator/token_10015_dusk_drgn/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10007_phatom_twin": {
       "id": "token_10007_phatom_twin",
@@ -732732,7 +734656,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/c305885b331427b9a78d5f8ffb938aae719c6bc1/models/operator/token_10007_phatom_twin/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3c669260a0de9eb1c13f11f905f6a4c4d522daac/models/operator/token_10007_phatom_twin/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10008_cqbw_box": {
       "id": "token_10008_cqbw_box",
@@ -733305,7 +735229,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/c305885b331427b9a78d5f8ffb938aae719c6bc1/models/operator/token_10008_cqbw_box/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3c669260a0de9eb1c13f11f905f6a4c4d522daac/models/operator/token_10008_cqbw_box/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10029_slent2_protrb": {
       "id": "token_10029_slent2_protrb",
@@ -734050,7 +735974,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/c305885b331427b9a78d5f8ffb938aae719c6bc1/models/operator/token_10029_slent2_protrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3c669260a0de9eb1c13f11f905f6a4c4d522daac/models/operator/token_10029_slent2_protrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10019_nearl2_sword": {
       "id": "token_10019_nearl2_sword",
@@ -734837,7 +736761,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/c305885b331427b9a78d5f8ffb938aae719c6bc1/models/operator/token_10019_nearl2_sword/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3c669260a0de9eb1c13f11f905f6a4c4d522daac/models/operator/token_10019_nearl2_sword/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10002_kalts_mon3tr": {
       "id": "token_10002_kalts_mon3tr",
@@ -735255,7 +737179,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/c305885b331427b9a78d5f8ffb938aae719c6bc1/models/operator/token_10002_kalts_mon3tr/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3c669260a0de9eb1c13f11f905f6a4c4d522daac/models/operator/token_10002_kalts_mon3tr/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10010_folivo_car": {
       "id": "token_10010_folivo_car",
@@ -736876,7 +738800,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/c305885b331427b9a78d5f8ffb938aae719c6bc1/models/operator/token_10010_folivo_car/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3c669260a0de9eb1c13f11f905f6a4c4d522daac/models/operator/token_10010_folivo_car/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10021_blkngt_hypnos": {
       "id": "token_10021_blkngt_hypnos",
@@ -737291,7 +739215,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/c305885b331427b9a78d5f8ffb938aae719c6bc1/models/operator/token_10021_blkngt_hypnos/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3c669260a0de9eb1c13f11f905f6a4c4d522daac/models/operator/token_10021_blkngt_hypnos/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10023_windft_wrench": {
       "id": "token_10023_windft_wrench",
@@ -738455,7 +740379,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/c305885b331427b9a78d5f8ffb938aae719c6bc1/models/operator/token_10023_windft_wrench/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3c669260a0de9eb1c13f11f905f6a4c4d522daac/models/operator/token_10023_windft_wrench/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10045_alanna_crane": {
       "id": "token_10045_alanna_crane",
@@ -738855,7 +740779,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/c305885b331427b9a78d5f8ffb938aae719c6bc1/models/operator/token_10045_alanna_crane/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3c669260a0de9eb1c13f11f905f6a4c4d522daac/models/operator/token_10045_alanna_crane/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10013_robin_mine": {
       "id": "token_10013_robin_mine",
@@ -739786,7 +741710,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/c305885b331427b9a78d5f8ffb938aae719c6bc1/models/operator/token_10013_robin_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3c669260a0de9eb1c13f11f905f6a4c4d522daac/models/operator/token_10013_robin_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10016_rfrost_mine": {
       "id": "token_10016_rfrost_mine",
@@ -740717,7 +742641,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/c305885b331427b9a78d5f8ffb938aae719c6bc1/models/operator/token_10016_rfrost_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3c669260a0de9eb1c13f11f905f6a4c4d522daac/models/operator/token_10016_rfrost_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10004_otter_motter": {
       "id": "token_10004_otter_motter",
@@ -742066,7 +743990,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/c305885b331427b9a78d5f8ffb938aae719c6bc1/models/operator/token_10004_otter_motter/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/3c669260a0de9eb1c13f11f905f6a4c4d522daac/models/operator/token_10004_otter_motter/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     }
   },
   "enemies": {
@@ -742117,7 +744041,7 @@
   },
   "skillEffects": {
     "repository": "arkpedia/arkpedia-sd-assets",
-    "commit": "c305885b331427b9a78d5f8ffb938aae719c6bc1",
+    "commit": "3c669260a0de9eb1c13f11f905f6a4c4d522daac",
     "pack": {
       "path": "effects/charge-cost/26-09-23-17-49-43_b9cc4a/effect.json",
       "bytes": 15311,

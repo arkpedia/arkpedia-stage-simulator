@@ -1,0 +1,106 @@
+{
+  "operator": "char_4213_skybx",
+  "name": "Skybox",
+  "foundationSha256": "0aec7d8b76cb41f690498414047b829c29662703a1244abc57ea018496387100",
+  "artCommit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+  "output": "data/arkpedia-skybox-art.json",
+  "sdReview": "source-reviews/skybox.json",
+  "scope": "Original Front/Back files unchanged. Native skeleton/atlas/material/texture pointers, decoded pixels and premultiplied alpha are checked. Literal airborne/ground Attack tracks, S1 Begin/End, S2 Begin/Loop/Idle/Close/End and Front Die/Die_2 are retained; Back lacks down/death tracks. Native art controller has no End mixes. Height/mode/death-alias dispatch, combat, public delivery, modules, native effects/audio/shaders and compiled/frame/pixel parity remain separate.",
+  "roles": {
+    "Front": {
+      "idle": "Idle",
+      "deploy": "Start",
+      "attack": {
+        "begin": null,
+        "loop": "Attack",
+        "end": null
+      },
+      "attackDown": {
+        "begin": null,
+        "loop": "Attack_Down",
+        "end": null
+      },
+      "skill": {
+        "begin": "Skill_1_Begin",
+        "loop": null,
+        "end": "Skill_1_End",
+        "index": 0,
+        "via": "skill"
+      },
+      "skills": {
+        "0": {
+          "begin": "Skill_1_Begin",
+          "loop": null,
+          "end": "Skill_1_End",
+          "index": 0,
+          "via": "skill"
+        },
+        "1": {
+          "begin": "Skill_2_Begin",
+          "loop": "Skill_2_Loop",
+          "idle": "Skill_2_Idle",
+          "end": "Skill_2_End",
+          "index": 1,
+          "via": "skill"
+        }
+      },
+      "die": "Die",
+      "stun": null,
+      "move": null
+    },
+    "Back": {
+      "idle": "Idle",
+      "deploy": "Start",
+      "attack": {
+        "begin": null,
+        "loop": "Attack",
+        "end": null
+      },
+      "attackDown": null,
+      "skill": {
+        "begin": "Skill_1_Begin",
+        "loop": null,
+        "end": "Skill_1_End",
+        "index": 0,
+        "via": "skill"
+      },
+      "skills": {
+        "0": {
+          "begin": "Skill_1_Begin",
+          "loop": null,
+          "end": "Skill_1_End",
+          "index": 0,
+          "via": "skill"
+        },
+        "1": {
+          "begin": "Skill_2_Begin",
+          "loop": "Skill_2_Loop",
+          "idle": "Skill_2_Idle",
+          "end": "Skill_2_End",
+          "index": 1,
+          "via": "skill"
+        }
+      },
+      "die": null,
+      "stun": null,
+      "move": null
+    }
+  },
+  "nativeMixes": [],
+  "reviewPhases": [
+    "Start",
+    "Idle",
+    "Attack",
+    "Attack_Down",
+    "Skill_1_Begin",
+    "Skill_1_End",
+    "Skill_2_Begin",
+    "Skill_2_Loop",
+    "Skill_Down_2_Loop",
+    "Skill_2_Idle",
+    "Skill_2_Close",
+    "Skill_2_End",
+    "Die",
+    "Die_2"
+  ]
+}

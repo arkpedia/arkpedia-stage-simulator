@@ -29,6 +29,7 @@ import { TICK, ROWS, COLS, BLOCK_RADIUS_SQ, DP_DEFAULTS, DOWN_STATE, FORCED_EXIT
 import { GEO, layerGainRoom } from '../../shared/constants.js';
 import { createRng } from './rng.js';
 import { Grid } from './grid.js';
+import {explicitBlockMode} from './block-mode.js';
 import { Unit } from './units.js';
 import { makeBuff, STATUS, RESIST_STATUSES } from './buffs.js';
 import { dealDamage as pipeDamage, heal as pipeHeal, applyHpLoss, makeDamageInfo, reduceElement, palsyBuff, elementView, leaderHitCancelled } from './damage.js';
@@ -1210,10 +1211,11 @@ export class Battle {
    */
   _blockerFor(u, e, w) {
     if (!u.alive || !u.deployed || u.hidden || u.s.flags.noBlock || u.s.flags.sleep) return false;
-    if (e.isFlying && !(u.s.flags.blockFly || (u.profile && u.profile.blockFly))) return false;
+    const mode = explicitBlockMode(u);
+    if (e.isFlying && (mode === 'WALK' || mode !== 'FLY' && !(u.s.flags.blockFly || (u.profile && u.profile.blockFly)))) return false;
     // ground enemies: only a ground unit that has not taken off (起飞 "不阻挡地面敌人": flag `liftoff`), standing on a tile
     // ground units can pass (not a fenced 围墙 / 围栏 tile)
-    if (!e.isFlying && (!u.ground || u.s.flags.liftoff || this.grid.tile(u.tileR, u.tileC).pass !== 'ALL')) return false;
+    if (!e.isFlying && (!u.ground || mode === 'FLY' || mode !== 'WALK' && u.s.flags.liftoff || this.grid.tile(u.tileR, u.tileC).pass !== 'ALL')) return false;
     const cap = u.s.blockCnt;
     if (cap <= 0) return false;
     let used = 0;
@@ -1266,10 +1268,12 @@ export class Battle {
     // describe the effect semantically; arbitrary display keys stay unrelated.
     if (unit?.mem?.noInspire && (b?.status === 'inspire' || b?.tags?.includes('inspire'))) return null;
     if (!unit || (!unit.alive && !b.allowDead)) return null;
+    if (typeof b.admit === 'function' && !b.admit(unit, b)) return null;
     const buff = makeBuff(b);
     if (this._hooks.beforeBuff) {
       const ctx = this.emit('beforeBuff', { unit, buff, cancel: false });
-      if (ctx.cancel || (!unit.alive && !b.allowDead)) return null;
+      if (ctx.cancel || (!unit.alive && !b.allowDead)
+        || typeof b.admit === 'function' && !b.admit(unit, buff)) return null;
     }
     const accepted = applied => {
       const f = applied.flags;
@@ -1435,8 +1439,11 @@ export class Battle {
 
   /**
    * Apply a catalogue status. opts: { duration, source, value, force, refresh, point, resistApplied } — returns true
-   * when applied. Honours enemy immunities (stun/silence/sleep/frozen/levitate/feared) unless `force`. `beforeStatus`
-   * handlers may cancel it or change `duration` / `value`. Official rules (buffs.js STATUS): 抵抗 (the `resist` status)
+   * when applied. Honours enemy immunities (stun/silence/sleep/frozen/levitate/feared) unless `force`.
+   * Independently keyed non-valued statuses may pass `admit(target, buff?)` to recheck ownership/life before admission and
+   * after beforeStatus/beforeBuff, plus `buffData` and `onBuffRemove` for exact instance ownership. Valued/palsy
+   * aggregation does not silently accept this optional path. The predicate must be side-effect free.
+   * `beforeStatus` handlers may cancel it or change `duration` / `value`. Official rules (buffs.js STATUS): 抵抗 (the `resist` status)
    * shortens the RESIST_STATUSES by its value (default half; applied after `beforeStatus`; `resistApplied` skips that
    * pass — the cold-on-cold 冻结 below already used post-抵抗 lengths). A second 寒冷 while 寒冷 remains applies 冻结 for
    * max(remaining, this cold after 抵抗) (PRTS 术语释义 寒冷 「持续时间取双方之中最高」). 浮空 lasts half as long on units heavier
@@ -1454,10 +1461,17 @@ export class Battle {
    */
   applyStatus(target, key, opts = {}) {
     if (!target || !target.alive) return false;
+    const admitted = () => typeof opts.admit !== 'function' || opts.admit(target);
+    if (!admitted()) return false;
     const src = opts.source;
     if (src && src.side && src.side !== target.side && target.s.flags.invulnerable && target.s.flags.untargetable) return false;
     if (!opts.ignoreSelect && target.s.flags.liftoff && evadesGround(src, target)) return false;
     const tpl = STATUS[key] || { flags: { [key]: true } };
+    // Optional ownership/admission is currently defined for the ordinary,
+    // independently keyed status branch, never silently for valued/palsy paths.
+    if ((opts.admit || opts.buffData || opts.onBuffRemove)
+      && (tpl.palsy || tpl.valued != null && typeof tpl.mods === 'function' && opts.refresh == null))
+      throw Error('Owned status admission requires an explicit non-valued status path');
     let duration = opts.duration == null ? Infinity : Number(opts.duration);
     let value = opts.value;
     if (!(duration > 0)) return false;
@@ -1470,7 +1484,7 @@ export class Battle {
     if (this._hooks.beforeStatus) {
       const c = this.emit('beforeStatus', { source: opts.source ?? null, target, status: key, duration, value, cancel: false,
         sourceStatusResistable: opts.sourceStatusResistable });
-      if (c.cancel || !target.alive) return false;
+      if (c.cancel || !target.alive || !admitted()) return false;
       const d = Number(c.duration);
       if (d === Infinity || (Number.isFinite(d) && d > 0)) duration = d;
       else if (Number.isFinite(d) && d <= 0) return false;
@@ -1481,7 +1495,7 @@ export class Battle {
       if (rv > 0) duration *= 1 - rv;
     }
     if (key === 'levitate' && target.s.massLevel > LEVITATE_HALF_WEIGHT) duration /= 2;
-    if (!(duration > 0)) return false;
+    if (!(duration > 0) || !admitted()) return false;
     // Original c2e_cold producers can retain independent one-trigger layers.
     // Their adapter pairs accepted, post-resistance lifetimes itself.
     if (key === 'cold' && opts.coldPairing !== 'independent' && target.findBuff('cold') && !(immune && immune.has('frozen'))) {
@@ -1522,7 +1536,8 @@ export class Battle {
       // Owned non-valued status instances let a zone remove its own effects
       // without erasing another source's status. Status identity stays `key`.
       const b = this.addBuff(target, { key: ownedKey, duration, refresh: opts.refresh ?? 'extend', mods, flags: tpl.flags || null, status: key, visible: true, source,
-        sourceStatusResistable: opts.sourceStatusResistable });
+        sourceStatusResistable: opts.sourceStatusResistable,
+        admit: opts.admit, data: opts.buffData, onRemove: opts.onBuffRemove });
       if (!b) return false;
       if (tpl.attract && b) {
         this._setAttractPoint(target, b, opts.point ?? value, source);
