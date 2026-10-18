@@ -110,3 +110,6 @@ test('Stopping never strips a foreign visual with coincidentally matching height
  const f=make();advance(f.b,.4);const foreign={clip:'Idle',height:{...f.takeoff.height}};f.u.mem.regularFormVisual=foreign;
  f.takeoff.stop();assert.equal(f.u.mem.regularFormVisual,foreign);
 });
+test('Float32 source delay does not add a whole extra combat tick to the intended 0.2-second rise command',()=>{
+ const f=make();advance(f.b,.2);assert.ok(f.takeoff.height);near(f.takeoff.height.start,.2);
+});

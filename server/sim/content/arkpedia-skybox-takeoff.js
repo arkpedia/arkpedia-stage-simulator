@@ -5,7 +5,7 @@ import {SKYBOX_ID as ID,selectedSkyboxInputs,skyboxNativeInputs} from './arkpedi
 export const SKYBOX_TAKEOFF_CONTRACT=Object.freeze({
  scope:'Original selected Skybox deployment passive, air blocking and delayed graphic rise only; no attacks, skill landing or public admission.',
  mapping:'Native ON_BUFF_START maps to accepted deployment-parent admission and ON_OWNER_BORN to this deployment event. An independently admitted parent-derived 0.20000000298023224-second height timer releases its original 0.4000000059604645 rise over 0.800000011920929 seconds. The parent maps block FLY and ground-target evasion to blockFly/liftoff without changing motion or deployment tile height. Clock and original graphic height remain separate from combat state. Refused/removed/retired resources never synthesize a later command. Each component owns one deployment life.',
- limitations:'Compiled passive attachment/born/derived-buff-finish ordering and cancelled timer behavior remain explicit local mappings. Graphic interpolation is linear on the world clock. S1/S2 ground-evasion immunity, block-mode commands, landing, original attack/born/death clip dispatch, native effects/audio and frame parity remain unfinished. Parent retirement cancels its pending derived height command; an already issued graphic tween may finish while that owner life remains.',
+ limitations:'Compiled passive attachment/born/derived-buff-finish ordering and cancelled timer behavior remain explicit local mappings. Graphic interpolation is linear on the world clock; the original float32 timer uses the existing source-marker tolerance1e-7 and end-of-buff-step timestamp to avoid an extra30Hz tick. S1/S2 ground-evasion immunity, block-mode commands, landing, original attack/born/death clip dispatch, native effects/audio and frame parity remain unfinished. Parent retirement cancels its pending derived height command; an already issued graphic tween may finish while that owner life remains.',
  frameParity:false,
 });
 const present=u=>u?.alive&&u.deployed&&!u.removed&&!u._removing;
@@ -44,7 +44,11 @@ export class SkyboxTakeoff{
     &&(kind!=='parent'||buff.flags?.liftoff===true&&buff.flags?.blockFly===true))
    &&(!this.u.findBuff(key)||this.u.findBuff(key).data?.skyboxTakeoff===p);
   p.buff=this.b.addBuff(this.u,{key,duration,flags,source:this.u,refresh:'keep',data:{skyboxTakeoff:p},admit,
-   onRemove:()=>{p.finished=true;onRemove(p);},onExpire:()=>{p.finished=true;onExpire(p);}});
+   onRemove:()=>{p.finished=true;(p.releasing?onExpire:onRemove)(p);},onExpire:()=>{p.finished=true;onExpire(p);},
+   // Native float32 0.2 differs from six 30Hz ticks by about3e-9. Use the
+   // same1e-7 source-marker tolerance rather than issuing the rise a tick late.
+   onTick:({buff,dt})=>{if(kind==='height'&&this.timer===p&&!p.finished&&buff.timeLeft>0&&buff.timeLeft<=dt+1e-7){
+    p.releasing=true;p.commandAt=this.b.time+dt;this.b.removeBuff(this.u,buff);}}});
   if(!admit()||!this.owns(p)){this.remove(p);return null;}return p;
  }
  start(){
@@ -55,7 +59,7 @@ export class SkyboxTakeoff{
   this.timer=this.attach('height',this.source.delay,null,finish,p=>{
    if(this.timer!==p)return;this.timer=null;
    if(this.parentLive()){
-    this.height={start:this.b.time,from:this.heightNow(),to:this.source.height_offset,duration:this.source.height_duration};this.syncVisual();
+    this.height={start:p.commandAt??this.b.time,from:this.heightNow(),to:this.source.height_offset,duration:this.source.height_duration};this.syncVisual();
    }
   });
  }
