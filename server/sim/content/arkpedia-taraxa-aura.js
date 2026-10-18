@@ -4,11 +4,11 @@ import {selectedTaraxaInputs, taraxaNativeInputs, taraxaSourceComponent, TARAXA_
 import {COLS} from '../constants.js';
 export const TARAXA_AURA_CONTRACT=Object.freeze({
   scope:'Selected Taraxacum derived flying-recipient Sanctuary and shared nonstacking block bonus; no healing/flight controller or public admission.',
-  mapping:'Original aura entry and block-mode notifications map to living friendly recipients on the current attack grid, refreshed on world ticks. FLY maps to original FLY motion or the existing ally liftoff flag. Each accepted parent owns one ordinary physical/Arts Sanctuary instance; the common taraxa_t[block] family admits at most one +block buff across sources. Rejected or foreign children are never adopted. Parent loss, range exit, landing and source/recipient life changes remove owned children.',
+  mapping:'Original aura entry and block-mode notifications map to living friendly recipients on the current attack grid, refreshed on world ticks. Native FLY block mode maps to the existing ally liftoff flag; flight motion alone does not imply air blocking. Each accepted parent owns one ordinary physical/Arts Sanctuary instance; the common taraxa_t[block] family admits at most one +block buff across sources. Rejected or foreign children are never adopted. Parent loss, range exit, landing and source/recipient life changes remove owned children.',
   limitations:'Native selector masks, per-source parent identity, notification scheduling and buff-family arbitration use explicit local mappings. Compiled-client/frame parity, modules, native particles/audio/shaders and public admission remain unverified.',frameParity:false,
 });
 const alive=u=>u?.alive&&u.deployed&&!u.removed&&!u._removing;
-export const taraxaFlying=t=>t?.motion==='FLY'||!!t?.s.flags.liftoff;
+export const taraxaAirBlocking=t=>!!t?.s.flags.liftoff;
 export function verifyTaraxaAura(n=taraxaNativeInputs()){
  const events=n.templates['taraxa_t[aura]']?.eventToActions,check=events?.ON_BUFF_TRIGGER?.[0];
  const shield=check?._succeedNodes?.[0],block=check?._succeedNodes?.[2];
@@ -60,13 +60,13 @@ export class TaraxaAura{
  child(p,key,fields){
   const buff=this.b.addBuff(p.target,{key,source:this.u,refresh:'keep',...fields,data:{taraxaChild:p}});
   if(buff?.data?.taraxaChild!==p)return null;
-  if(!this.valid()||!this.identity(p)||!this.eligible(p.target)||!taraxaFlying(p.target)){
+  if(!this.valid()||!this.identity(p)||!this.eligible(p.target)||!taraxaAirBlocking(p.target)){
    this.removeOwned(p.target,buff,p);
    if(!this.valid()||!this.identity(p)||!this.eligible(p.target))this.finish(p);else this.clearChildren(p);return null;}
   return buff;
  }
  refresh(p){
-  if(!taraxaFlying(p.target)){this.clearChildren(p);return;}
+  if(!taraxaAirBlocking(p.target)){this.clearChildren(p);return;}
   if(p.shield&&p.target.findBuff(p.shield.key)!==p.shield)p.shield=null;
   if(p.block&&p.target.findBuff(p.block.key)!==p.block)p.block=null;
   if(!p.shield)p.shield=this.child(p,`damage_resistance:taraxa:${this.u.id}:${this.seq}`,{status:'sanctuary',

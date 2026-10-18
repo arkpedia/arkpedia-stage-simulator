@@ -27,7 +27,7 @@ export function verifyTaraxaOrdinarySource(n = taraxaNativeInputs()) {
   if(a._animKey!=='Attack'||a._endAnimKey!=='Idle'||a._waitForAttackEvent!==1||a._selectTargetTiming!==0
     ||a._selectTargetSource!==2||a._affectedBySlowDown!==0||a._maxAnimScale!==1||a._timeMode!==0
     ||a._projectileKey!=='projectile_chr_taraxa_a'||a._useCachedAtkOnly!==0||a._ignoreHealFree!==0
-    ||p._managedBySource!==0||p._stopWhenSourceInvalid!==0||p._lifeTime!==10||p._alwaysHitTraceTargetInTheEnd!==1
+    ||p._canHitSameTargetMultipleTimes!==0||p._maxHitNum!==1||p._managedBySource!==0||p._stopWhenSourceInvalid!==0||p._lifeTime!==10||p._alwaysHitTraceTargetInTheEnd!==1
     ||m._speed!==11)throw Error('Changed original Taraxacum ordinary inputs');
 }
 
@@ -80,10 +80,11 @@ export class TaraxaOrdinaryHeals {
     const p = this.phase, target = targets[0], sourceLife = this.seq;
     p.accepted = true;
     const launchAtk = this.u.s.atk * this.u.s.atkScaleMul, launchHealingDealtMul = this.u.s.healingDealtMul;
-    let projectile;
+    let projectile, claimed = false;
     projectile = this.b.addProjectile({from: this.u, target, source: this.u, speed: p.shot.projectileSpeed, maxAge: 10,
       visual: 'orb', data: {arkpediaTrackedVisual: true, taraxaOrdinary: !p.shot.isSkill},
       onHit: () => {
+        if (claimed) return; claimed = true;
         this.flights.delete(projectile);
         if (!this.ended && !this.b.finished && target.deploySeq === p.life && retained(target)) {
           const matchingSource = present(this.u) && this.u.deploySeq === sourceLife;

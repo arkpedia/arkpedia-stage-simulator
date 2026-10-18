@@ -129,3 +129,9 @@ test('Hiding the grounded source cancels pending healing and resumes on its orig
  const f=make();ally(f);phase(f);f.u.hidden=true;advance(f.b,1);assert.equal(f.receipts.length,0);assert.equal(f.attacks.stopped,false);
  f.u.hidden=false;until(f,()=>f.heals.length===1);
 });
+
+test('A recursive ordinary projectile callback cannot exceed its source one-hit cap',()=>{
+ const f=make();ally(f);phase(f);airborne(f);const p=[...f.attacks.flights.keys()][0];let entered=false;
+ f.b.on('heal',h=>{if(!entered&&h.source===f.u){entered=true;p.onHit();}});until(f,()=>f.heals.length===1);
+ p.onHit();assert.equal(f.heals.length,1);assert.equal(f.attacks.flights.size,0);
+});

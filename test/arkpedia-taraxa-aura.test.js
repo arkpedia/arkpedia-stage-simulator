@@ -2,7 +2,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import{make,addOwner,ally,advance,near}from'./helpers/taraxa-fixture.js';
-import{verifyTaraxaAura,taraxaFlying}from'../server/sim/content/arkpedia-taraxa-aura.js';
+import{verifyTaraxaAura,taraxaAirBlocking}from'../server/sim/content/arkpedia-taraxa-aura.js';
 import{taraxaNativeInputs}from'../server/sim/content/arkpedia-taraxa-source.js';
 const fly=f=>f.b.addBuff(f.u,{key:'fixture:owner-flight',flags:{liftoff:true}});
 const refresh=f=>advance(f.b,f.b.dt);
@@ -23,10 +23,12 @@ for(const [elite,potential,value]of[[0,1,.03],[0,5,.05],[1,1,.07],[1,5,.09],[2,1
  const f=make({elite,rank:[4,7,10][elite],potential}),t=ally(f,{flags:{liftoff:true}});refresh(f);
  near(t.s.physTakenMul,1-value);near(t.s.artsTakenMul,1-value);near(t.s.blockCnt,1);
  });
-test('Real FLY motion and liftoff count independently from the ally isFlying getter',()=>{
+test('Air-blocking liftoff is distinct from actual FLY motion and the ally isFlying getter',()=>{
  const f=make(),t=ally(f,{flags:{liftoff:true}}),m=ally(f,{col:7,motion:'FLY'});refresh(f);
- assert.equal(t.isFlying,false);assert.equal(taraxaFlying(t),true);assert.equal(taraxaFlying(m),true);
- near(t.s.blockCnt,1);near(m.s.blockCnt,1);
+ assert.equal(t.isFlying,false);assert.equal(taraxaAirBlocking(t),true);assert.equal(taraxaAirBlocking(m),false);
+ near(t.s.blockCnt,1);near(m.s.blockCnt,0);near(m.s.physTakenMul,1);
+ const buff=f.b.addBuff(m,{key:'fixture:air-block',flags:{liftoff:true}});refresh(f);near(m.s.blockCnt,1);
+ f.b.removeBuff(m,buff);refresh(f);near(m.s.blockCnt,0);
 });
 test('A flying owner receives its own talent without modifying base attributes',()=>{
  const f=make();fly(f);refresh(f);near(f.u.s.blockCnt,f.u.base.blockCnt+1);near(f.u.s.physTakenMul,.9);
