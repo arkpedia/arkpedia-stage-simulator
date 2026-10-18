@@ -1,0 +1,68 @@
+{
+  "operator": "char_4215_buddy",
+  "name": "Rhodes Island Recon",
+  "foundationSha256": "6079b999b374af72232b70f30f79fb37b0c121e61797716bb5a63aa0b0259c21",
+  "artCommit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+  "output": "data/arkpedia-recon-art.json",
+  "sdReview": "source-reviews/rhodes-island-recon.json",
+  "scope": "Original Front/Back owner files unchanged; original pointers, decoded pixels and PMA verified. Literal Start, alternating Attack_A/Attack_B and passive Skill clips with their authored Begin/End bindings. No invented active skill, Back death, combat/public approval or native frame parity.",
+  "roles": {
+    "Front": {
+      "idle": "Idle",
+      "deploy": "Start",
+      "attack": {
+        "begin": "Attack_Begin",
+        "loop": "Attack_A",
+        "end": "Attack_End"
+      },
+      "attackDown": null,
+      "skill": null,
+      "die": "Die",
+      "stun": null,
+      "move": null
+    },
+    "Back": {
+      "idle": "Idle",
+      "deploy": "Start",
+      "attack": {
+        "begin": "Attack_Begin",
+        "loop": "Attack_A",
+        "end": "Attack_End"
+      },
+      "attackDown": null,
+      "skill": null,
+      "die": null,
+      "stun": null,
+      "move": null
+    }
+  },
+  "nativeMixes": [
+    {
+      "sourceAnimName": "Attack_A",
+      "targetAnimName": "Idle",
+      "mixAnimName": "Attack_End"
+    },
+    {
+      "sourceAnimName": "Attack_B",
+      "targetAnimName": "Idle",
+      "mixAnimName": "Attack_End"
+    },
+    {
+      "sourceAnimName": "Skill",
+      "targetAnimName": "Idle",
+      "mixAnimName": "Skill_End"
+    }
+  ],
+  "reviewPhases": [
+    "Start",
+    "Idle",
+    "Attack_A",
+    "Attack_B",
+    "Attack_Begin",
+    "Attack_End",
+    "Skill_Begin",
+    "Skill",
+    "Skill_End",
+    "Die"
+  ]
+}

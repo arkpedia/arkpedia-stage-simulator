@@ -15,9 +15,11 @@ assert.equal(clocks.operator,owner);assert.ok(modelClocks?.models);assert.equal(
 assert.match(owner,/^char_\d+_[a-z0-9]+$/);assert.match(id,/^(?:char|token)_\d+_[a-z0-9_]+$/);assert.ok(!/[<>]/.test(recipe.name));
 const origin=process.env.ARKPEDIA_REVIEW_ORIGIN??'http://127.0.0.1:3182',route='/arkpedia/original-owner-art-review.html';
 const out=`.cache/arkpedia/cn-operators/${owner}/${id===owner?'':'tokens/'+id+'/'}art-browser/`,manifest=JSON.parse(await readFile('../arkpedia-sd-assets/manifest.json'));
-const rows=['front','back'].map(face=>{const r=manifest.models[`operator/${id}/default/${face}`];
- assert.equal(r.premultipliedAlpha,true);assert.deepEqual(r.animationRoles,recipe.roles[face==='front'?'Front':'Back']);
- const empty=recipe.emptyClips?.[face==='front'?'Front':'Back']??[];assert.ok(Array.isArray(empty)&&new Set(empty).size===empty.length&&empty.every(k=>r.animations[k]===0));
+const single=recipe.nativeFacing==='Single';if(single){assert.notEqual(id,owner);assert.deepEqual(Object.keys(modelClocks.models),['Single']);assert.deepEqual(Object.keys(recipe.roles),['Single']);}
+const rows=['front','back'].map(face=>{const r=manifest.models[`operator/${id}/default/${face}`],nativeFace=single?'Single':face==='front'?'Front':'Back';
+ if(single)assert.equal(r.source.facingAlias,'single-original-model');
+ assert.equal(r.premultipliedAlpha,true);assert.deepEqual(r.animationRoles,recipe.roles[nativeFace]);
+ const empty=recipe.emptyClips?.[nativeFace]??[];assert.ok(Array.isArray(empty)&&new Set(empty).size===empty.length&&empty.every(k=>r.animations[k]===0));
  return {id,face,empty,pma:r.premultipliedAlpha,durations:r.animations,files:Object.fromEntries([r.skeleton,r.atlas,...r.textures].map(f=>[f.path.split('/').at(-1),'../arkpedia-sd-assets/'+f.path])),
   hashes:[r.skeleton,r.atlas,...r.textures].map(({path,sha256})=>({path,sha256}))};});
 if(recipe.visibilityProof){
@@ -34,7 +36,7 @@ const html=`<!doctype html><meta charset="utf-8"><meta name="viewport" content="
 <style>body{margin:0;background:#10191d;color:#dae9ed;font:14px sans-serif}header{padding:12px}#scene{height:calc(100dvh - 52px)}canvas{display:block}</style>
 <header></header><div id="scene"></div><script>(async()=>{
  const name=${JSON.stringify(recipe.name)},P=PIXI,rows=${JSON.stringify(rows.map(({files,...r})=>({...r,names:Object.keys(files)})))},host=document.querySelector('#scene');
- document.querySelector('header').textContent='CONTROLLED ART REVIEW · '+name+' · original Front / Back clips · not a battle';
+ document.querySelector('header').textContent='CONTROLLED ART REVIEW · '+name+${JSON.stringify(single?' · one original Single skeleton in both compatibility slots · not a battle':' · original Front / Back clips · not a battle')};
  const app=new P.Application({width:innerWidth,height:host.clientHeight,backgroundColor:0x10191d,autoStart:false,antialias:true});host.append(app.view);const actors=[];
  for(const[i,a]of rows.entries()){
   const skel=a.names.find(k=>k.endsWith('.skel')),atlas=a.names.find(k=>k.endsWith('.atlas')),prefix='/owner-art-review-assets/'+i+'/';
@@ -66,7 +68,7 @@ try{
   const clips=await page.evaluate(()=>ownerArtReview.actors.flatMap(a=>a.s.spineData.animations.filter(c=>c.name!=='Default').flatMap(c=>{
    const samples=a.visibility?.clip===c.name?a.visibility.samples:[{time:Math.min(.5,c.duration/2)}];return samples.map(sample=>{a.s.skeleton.setToSetupPose();a.s.state.clearTracks();a.s.state.setAnimation(0,c.name,false);a.s.update(sample.time);const b=a.s.getLocalBounds();return{id:a.id,face:a.face,clip:c.name,duration:c.duration,sampleTime:sample.time,...(sample.drawableAttachments!=null?{expectedDrawableAttachments:sample.drawableAttachments}:{}),width:b.width,height:b.height};});})));
   assert.equal(clips.length,rows.reduce((n,r)=>n+Object.keys(r.durations).filter(c=>c!=='Default').reduce((sum,c)=>sum+(r.visibility?.clip===c?r.visibility.samples.length:1),0),0));
-  for(const c of clips){const declared=rows.find(r=>r.face===c.face).empty.includes(c.clip);if(c.expectedDrawableAttachments===0){assert.equal(c.width,0);assert.equal(c.height,0);c.hidden=true;}else if(declared){assert.equal(c.duration,0);assert.equal(c.width,0);assert.equal(c.height,0);c.empty=true;}else assert.ok(Number.isFinite(c.width+c.height)&&c.width>0&&c.height>0,JSON.stringify(c));assert.equal(c.duration,modelClocks.models[c.face==='front'?'Front':'Back'].exactDurations[c.clip]);}
+  for(const c of clips){const declared=rows.find(r=>r.face===c.face).empty.includes(c.clip);if(c.expectedDrawableAttachments===0){assert.equal(c.width,0);assert.equal(c.height,0);c.hidden=true;}else if(declared){assert.equal(c.duration,0);assert.equal(c.width,0);assert.equal(c.height,0);c.empty=true;}else assert.ok(Number.isFinite(c.width+c.height)&&c.width>0&&c.height>0,JSON.stringify(c));assert.equal(c.duration,modelClocks.models[single?'Single':c.face==='front'?'Front':'Back'].exactDurations[c.clip]);}
   report.clips.push(...clips.map(c=>({viewport:name,...c})));
   for(const phase of phases){const times=[...new Set(rows.flatMap(r=>r.visibility?.clip===phase?r.visibility.samples.map(s=>s.time):[]))];if(!times.length)times.push(.35);
    for(const time of times){const states=await page.evaluate((phase,time)=>{const s=ownerArtReview.draw(phase,time);ownerArtReview.app.renderer.render(ownerArtReview.app.stage);return s;},phase,time);assert.ok(states.every(s=>s.absent||s.empty||s.hidden||s.scale>0&&Number.isFinite(s.scale)));

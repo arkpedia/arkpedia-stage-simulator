@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Adversarially verify avatar provenance against immutable original bundles."""
-import copy,hashlib,json,pathlib,subprocess,sys,tempfile
+import argparse,copy,hashlib,json,pathlib,subprocess,sys,tempfile
 from PIL import Image
-ROOT=pathlib.Path(__file__).resolve().parents[2];recipe=ROOT/'data/arkpedia-mcnist-token-avatar-recipe.json';metadata=ROOT/'data/arkpedia-mcnist-token-avatar.json';image=ROOT/'.cache/arkpedia/cn-operators/char_4230_mcnist/token-avatar/avatar.png';tool=ROOT/'tools/arkpedia/cn-token-avatar.py';base=json.loads(metadata.read_bytes());sha=lambda b:hashlib.sha256(b).hexdigest()
+ROOT=pathlib.Path(__file__).resolve().parents[2]
+parser=argparse.ArgumentParser();parser.add_argument('--recipe',default='data/arkpedia-mcnist-token-avatar-recipe.json');args=parser.parse_args()
+recipe=ROOT/args.recipe;r=json.loads(recipe.read_bytes());metadata=ROOT/r['output'];image=ROOT/'.cache/arkpedia/cn-operators'/r['operator']/'token-avatar/avatar.png';tool=ROOT/'tools/arkpedia/cn-token-avatar.py';base=json.loads(metadata.read_bytes());sha=lambda b:hashlib.sha256(b).hexdigest()
 def run(meta,img=image,rec=recipe):return subprocess.run([sys.executable,str(tool),'verify','--recipe',str(rec),'--metadata',str(meta),'--image',str(img)],cwd=ROOT,stdout=subprocess.PIPE,stderr=subprocess.PIPE).returncode
 assert run(metadata)==0
 mutations=[('approved',lambda x:x['enabledOperators'].append(x['operator'])),('frame parity',lambda x:x.update(frameParity=True)),
