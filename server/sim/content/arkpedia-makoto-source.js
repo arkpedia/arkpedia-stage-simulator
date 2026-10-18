@@ -54,3 +54,11 @@ export function makotoS2Inputs() {
     templates:Object.fromEntries(['makoto_s2_fear_possibility','makoto_s2_fear_impl','makoto_s2_fear_damage','makoto_s2_fear_aura_inst_kill'].map(k=>[k,evidence.templates[k]])),
     fear:evidence.buffDatabase.fear};
 }
+export function makotoS3AssaultInputs() {
+  const read=id=>makotoSourceComponent('characters',MAKOTO_ID,id);
+  return {mode:read('-2027711911729967579'),attack:read('-9190855073522201051'),
+    trigger:read('5322279708059291173'),selector:read('-8827268357953565147'),
+    replacement:read('-4074059883568574939'),hook:read('-7104469595420307931'),
+    templates:Object.fromEntries(['makoto_s3_1_standin','common_weak_damage_buff','common_weak_damage_flag'].map(k=>[k,evidence.templates[k]])),
+    weakBuff:evidence.buffDatabase.common_weak_damage};
+}
