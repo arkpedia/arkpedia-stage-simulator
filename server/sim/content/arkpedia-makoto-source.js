@@ -46,3 +46,11 @@ export function makotoS1Inputs() {
     heal: read('-3514085099072598491'), attack: read('7294260590432538149'), hook: read('1623256020376145445'),
     projectile: evidence.projectiles.projectile_chr_makoto_s1};
 }
+export function makotoS2Inputs() {
+  const read = id => makotoSourceComponent('characters', MAKOTO_ID, id);
+  return {mode:read('-2876292474294186459'),attack:read('3635927784782679589'),
+    trigger:read('-8248912276883583451'),selector:read('-1874532089215594971'),
+    hook:read('-6711020895938949595'),aura:read('2200664464637021733'),validator:read('-9173143548894851547'),
+    templates:Object.fromEntries(['makoto_s2_fear_possibility','makoto_s2_fear_impl','makoto_s2_fear_damage','makoto_s2_fear_aura_inst_kill'].map(k=>[k,evidence.templates[k]])),
+    fear:evidence.buffDatabase.fear};
+}

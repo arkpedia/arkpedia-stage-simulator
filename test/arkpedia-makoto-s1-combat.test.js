@@ -107,6 +107,9 @@ test('Air, camouflage and target-free enemies are not acquired; range is the sel
   assert.equal(f.combat.choices(),null); f.b.removeBuff(c,'fixture:pin'); assert.equal(f.combat.choices().target===c,true);
   assert.equal(f.combat.choices().target===a,false); assert.equal(f.combat.choices().target===z,false); assert.equal(f.combat.choices().target===far,false);
 });
+test('Native target-free selection does not acquire an invulnerable enemy for an S1 attack',()=>{
+  const f=make(),t=enemy(f,{flags:{invulnerable:true}});assert.equal(f.combat.choices(),null);advance(f.b,1);assert.equal(f.receipts.length,0);near(t.hp,t.s.maxHp);
+});
 test('A newly low-HP ally during enemy windup does not steal its already selected projectile',()=>{
   const f=make(),e=enemy(f),a=ally(f,{ratio:.9}); until(f,()=>!!f.combat.phase); a.hp=100;
   until(f,()=>f.hits.length===1); f.allow=false; assert.equal(f.hits[0].target===e,true); assert.equal(f.heals.length,0);
@@ -228,6 +231,10 @@ for(const how of ['stun','freeze','sleep','palsyTriggered','retreat','death','st
 test('Stored palsy and silence do not invent an interruption',()=>{
   const f=make(); ally(f); until(f,()=>!!f.combat.phase); f.b.applyStatus(f.u,'palsy',{duration:3,value:1}); f.b.applyStatus(f.u,'silence',{duration:3});
   until(f,()=>f.heals.length===1); f.allow=false; assert.equal(f.receipts.length,1);
+});
+test('A fresh explicit S1 begin cannot skip the positive cooldown left by a real interruption',()=>{
+  const f=make();enemy(f);until(f,()=>!!f.combat.phase);f.b.emit('palsyTriggered',{unit:f.u});assert.ok(f.u.atkCd>0);
+  assert.equal(f.combat.begin(f.combat.choices()),false);assert.equal(f.combat.phase===null,true);
 });
 test('Battle end drains born transport and all listeners without a late impact',()=>{
   const f=make(); enemy(f,{col:7}); until(f,()=>f.combat.flights.size===1); f.b.finished=true; f.b.emit('battleEnd',{});

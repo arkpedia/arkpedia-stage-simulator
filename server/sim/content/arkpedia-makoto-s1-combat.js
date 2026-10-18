@@ -71,7 +71,7 @@ export class MakotoSkillOneCombat {
   keys() {return new Set(absoluteRangeKeys(this.record.skillRangeGrid,this.u.tileR,this.u.tileC,this.u.dir));}
   healable(t) {return present(t) && !t.hidden && t.side==='ally' && t.kind!=='device' && !t.s.flags.untargetable
     && !t.s.flags.healFree && this.b.allySelectable(t,this.u) && (t===this.u || !t.s.flags.noHeal && !t.profile?.noHeal);}
-  enemyLegal(t) {return present(t) && !t.hidden && t.side==='enemy' && canTargetEnemy(this.u,t,{canHitFly:false,groundOnly:true})
+  enemyLegal(t) {return present(t) && !t.hidden && t.side==='enemy' && !t.s.flags.invulnerable && canTargetEnemy(this.u,t,{canHitFly:false,groundOnly:true})
     && (!t.s.flags.camou || !!t.blockedBy);}
   choices() {
     const keys=this.keys(), heals=this.b.allyUnits.filter(t=>this.healable(t) && t.hp/t.s.maxHp<=.5 && bodyInKeys(t,keys))
@@ -88,7 +88,7 @@ export class MakotoSkillOneCombat {
   }
   idle() {this.facing=this.u.dir; this.visual('Doll_Skill_1_Idle',1,true);}
   begin(choice) {
-    if(this.busy || this.phase || !this.valid() || !choice || !['heal','attack'].includes(choice.kind)) return false;
+    if(this.busy || this.phase || !this.valid() || this.u.atkCd>1e-8 || !choice || !['heal','attack'].includes(choice.kind)) return false;
     this.busy=true;
     try {
       const {u}=this,t=choice.target,life=t?.deploySeq,epoch=u.attackControlEpoch;
