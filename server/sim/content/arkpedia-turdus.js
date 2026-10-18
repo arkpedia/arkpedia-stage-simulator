@@ -36,7 +36,7 @@ export class TurdusController{
  canCast(){return this.valid()&&!this.u.hidden&&this.u.canAct&&!this.u.s.flags.disarm&&!this.u.skill.active&&!['begin','end','s2'].includes(this.phase?.kind);}
  start(){this.phase=null;this.facing=this.u.dir;
   if(this.record.index===0){this.phase={kind:'begin',until:this.b.time+this.model().exactDurations.Skill_1_Begin};this.visual('Skill_1_Begin');}
-  else{this.resources.selfCost();if(!this.valid())return;const speed=Math.min(1,this.u.base.bat/this.u.s.interval);this.phase={kind:'s2',age:0,lastAt:this.b.time,speed,epoch:this.u.attackControlEpoch,released:false,accepted:false,releaseAge:this.model().eventPayloads.Skill_2[0].time,untilAge:this.model().exactDurations.Skill_2};this.visual('Skill_2',speed);}
+  else{this.resources.selfCost();if(!this.valid())return;const facingTarget=this.targets(true)[0];if(facingTarget)this.face(facingTarget);const speed=Math.min(1,this.u.base.bat/this.u.s.interval);this.phase={kind:'s2',age:0,lastAt:this.b.time,speed,epoch:this.u.attackControlEpoch,released:false,accepted:false,releaseAge:this.model().eventPayloads.Skill_2[0].time,untilAge:this.model().exactDurations.Skill_2};this.visual('Skill_2',speed);}
  }
  grantS1(){if(!this.valid()||!this.u.skill.active)return;const{b,u}=this,duration=u.skill.timeLeft;
   this.aspd=b.addBuff(u,{key:`turdus:s1:aspd:${u.id}`,source:u,duration,mods:{aspd:this.record.bb.attack_speed}});

@@ -122,6 +122,7 @@ import { customizePublicMechanistKit, installPublicMechanist } from './content/a
 import { customizePublicGallusKit, installPublicGallus } from './content/arkpedia-gallus-public.js';
 import { customizePublicKoromaruKit, installPublicKoromaru } from './content/arkpedia-koromaru-public.js';
 import { customizePublicReconKit, installPublicRecon } from './content/arkpedia-recon-public.js';
+import { customizePublicTurdusKit, installPublicTurdus } from './content/arkpedia-turdus-public.js';
 import { customizePublicBranchKit, installPublicBranch } from './content/arkpedia-branch-public.js';
 import { customizePublicReckprKit, installPublicReckpr } from './content/arkpedia-reckpr-public.js';
 import { customizePublicLieselKit, installPublicLiesel } from './content/arkpedia-liesel-public.js';
@@ -594,6 +595,7 @@ export class StandardBattle extends Battle {
     customizePublicGallusKit({ battle: this, id, unit, kit });
     customizePublicKoromaruKit({ battle: this, id, unit, kit });
     customizePublicReconKit({ battle: this, id, unit, kit });
+    customizePublicTurdusKit({ battle: this, id, unit, kit });
     customizePublicBranchKit({ battle: this, id, unit, kit });
     customizeNarantKit({ battle: this, id, def, unit, kit });
     customizeElaKit({ battle: this, id, def, unit, kit });
@@ -822,6 +824,7 @@ export class StandardBattle extends Battle {
     installPublicGallus({ battle: this, unit, def });
     installPublicKoromaru({ battle: this, unit, def });
     installPublicRecon({ battle: this, unit, def });
+    installPublicTurdus({ battle: this, unit, def });
     installPublicBranch({ battle: this, unit, def });
     installNarant({ battle: this, unit, def });
     installEla({ battle: this, unit, def });

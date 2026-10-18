@@ -1,0 +1,290 @@
+{
+  "schemaVersion": 1,
+  "operatorId": "char_4224_turdus",
+  "enabledOperators": [
+    "char_4224_turdus"
+  ],
+  "frameParity": false,
+  "moduleSupport": false,
+  "nativeParticleSupport": false,
+  "nativePixelParity": false,
+  "mechanicsPolicy": "source-cn-chain-free-bounce-carried-scale-and-independent-heal-camouflage-v1",
+  "scope": "Original ordinary chain healing, accepted marker talent, timed ASPD/extra-target S1 and one-shot S2 self-cost, independent snapshot healing and source-dependent camouflage.",
+  "verification": {
+    "source": "Five original bundles, 113 owner/art/skill/projectile components and six complete transitive templates; both Node22/24 independent audits reproduce seven outputs and reject 29 altered claims.",
+    "artwork": "Original Front/Back files/pointers/pixels/PMA verified; art audits reject 33 altered claims per Node version; 17 original clips per viewport pass desktop/phone review. SD PR38 publishes metadata at 28fa923094dc49875a0d6d751c8a23d117c4599c.",
+    "runtime": "183 integrated public/source/chain/resource/adjacent-healing checks pass on each Node22/24, including 22 public cases. Both selected skills clear original 0-1 with natural DP, unchanged waves/terrain, eleven kills, no leaks and actual healing. Complete final isolated regression remains pending.",
+    "browser": {
+      "status": "passed",
+      "script": "tools/arkpedia/review-turdus-public.mjs",
+      "browserVersion": "Chrome/153.0.8010.12",
+      "cacheDisabled": true,
+      "externalAssetTransport": "Unintercepted original HTTPS at immutable source commits; normal TLS verification.",
+      "originalWaves": false,
+      "scope": "Controlled public UI scenario with five actual squad deployments, empty waves, 99 DP, scripted ally HP and a pinned blocking enemy; original-wave completion verified separately.",
+      "viewports": [
+        {
+          "width": 1280,
+          "height": 800,
+          "touch": false
+        },
+        {
+          "width": 844,
+          "height": 390,
+          "touch": true
+        }
+      ],
+      "cases": 4,
+      "captures": 26,
+      "browserErrors": 0,
+      "failedResources": 0,
+      "reportSha256": "059a1ef403883e3f64f68f646aed47329fa2413e683cbee8542f280375f3f8b9",
+      "verified": [
+        "Actual operator and four ally drops with separate direction swipes and no early deployment",
+        "Original Front/Back skeletons, portrait and both selected skill icons over HTTPS",
+        "Natural SP readiness, ready icon, skill account and S1 original Begin/Loop/End modes",
+        "Chain healing through the actual accepted talent markers with carried scaling and next-hop free bounce",
+        "S2 nonlethal HP cost, independent periodic healing and block-dependent camouflage removal/restoration",
+        "Expiry and retreat drain owned phases, buff parents, chain flights and watchers"
+      ],
+      "scriptSha256": "1d7080c2842dd95e485ce2cc5887168e263ef51da5383acdecec1dfd1c0ab875",
+      "driverSha256": "2e52cd4007ae553e30f773104626f9b5c2be7c15f717b61ca9063517fbdc51c8",
+      "fixtureServerSha256": "127fb1b74be89d0a35e6bfa4e3d35927d170fa4d3129287f6c523114c5bcaa22",
+      "normalSnapshot": true
+    }
+  },
+  "originalArtwork": {
+    "operator/char_4224_turdus/default/back": {
+      "kind": "operator",
+      "id": "char_4224_turdus",
+      "variant": "default",
+      "facing": "back",
+      "spineVersion": "3.8.99",
+      "source": {
+        "key": "operators",
+        "repository": "fexli/ArknightsResource",
+        "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+        "directory": "spine/char_4224_turdus/char_4224_turdus/Back"
+      },
+      "skeleton": {
+        "path": "models/operator/char_4224_turdus/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4224_turdus.skel",
+        "bytes": 183550,
+        "sha256": "741c854747b869a6263fe1b7922fbeff7239456f91e9b60db63dde1da917563b"
+      },
+      "atlas": {
+        "path": "models/operator/char_4224_turdus/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4224_turdus.atlas",
+        "bytes": 5973,
+        "sha256": "50ae36f25a7f769c33f95e1a43ec188ec65261227fee5cc9286951e7aa580730"
+      },
+      "textures": [
+        {
+          "path": "models/operator/char_4224_turdus/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4224_turdus.png",
+          "bytes": 148700,
+          "sha256": "5f9bcdd07fd8a8b4012e55aece78197c74bbb2d1158f07f39bc86d1a69c49c74"
+        }
+      ],
+      "premultipliedAlpha": true,
+      "animations": {
+        "Attack": 2.833,
+        "Default": 0,
+        "Idle": 1.333,
+        "Skill_1_Begin": 0.533,
+        "Skill_1_End": 0.533,
+        "Skill_1_Idle": 1.333,
+        "Skill_1_Loop": 2.833,
+        "Skill_2": 1.5,
+        "Start": 1
+      },
+      "hits": {
+        "Attack": [
+          0.6
+        ],
+        "Skill_1_Loop": [
+          0.6
+        ],
+        "Skill_2": [
+          0.6
+        ]
+      },
+      "bounds": {
+        "x": 203.234,
+        "y": -4.551,
+        "width": 341.549,
+        "height": 471.639
+      },
+      "animationRoles": {
+        "idle": "Idle",
+        "deploy": "Start",
+        "attack": {
+          "begin": null,
+          "loop": "Attack",
+          "end": null
+        },
+        "attackDown": null,
+        "skill": {
+          "begin": "Skill_1_Begin",
+          "loop": "Skill_1_Loop",
+          "end": "Skill_1_End",
+          "idle": "Skill_1_Idle",
+          "index": 0,
+          "via": "skill"
+        },
+        "skills": {
+          "0": {
+            "begin": "Skill_1_Begin",
+            "loop": "Skill_1_Loop",
+            "end": "Skill_1_End",
+            "idle": "Skill_1_Idle",
+            "index": 0,
+            "via": "skill"
+          },
+          "1": {
+            "begin": null,
+            "loop": "Skill_2",
+            "end": null,
+            "index": 1,
+            "via": "skill"
+          }
+        },
+        "die": null,
+        "stun": null,
+        "move": null
+      }
+    },
+    "operator/char_4224_turdus/default/front": {
+      "kind": "operator",
+      "id": "char_4224_turdus",
+      "variant": "default",
+      "facing": "front",
+      "spineVersion": "3.8.99",
+      "source": {
+        "key": "operators",
+        "repository": "fexli/ArknightsResource",
+        "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+        "directory": "spine/char_4224_turdus/char_4224_turdus/Front"
+      },
+      "skeleton": {
+        "path": "models/operator/char_4224_turdus/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4224_turdus.skel",
+        "bytes": 339998,
+        "sha256": "f30983a1e910a301521e9feb1ace2b06df8e53670e348905150378f474519702"
+      },
+      "atlas": {
+        "path": "models/operator/char_4224_turdus/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4224_turdus.atlas",
+        "bytes": 9141,
+        "sha256": "9370b156b7e076f0896adbed490ef2de7c832c641eb01bc55fb45ccf990228b4"
+      },
+      "textures": [
+        {
+          "path": "models/operator/char_4224_turdus/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4224_turdus.png",
+          "bytes": 173690,
+          "sha256": "e396564272fc502e8dbcd33ef730b285860283a511173ac15a66bc914926cc4c"
+        }
+      ],
+      "premultipliedAlpha": true,
+      "animations": {
+        "Attack": 2.833,
+        "Default": 0,
+        "Die": 1,
+        "Idle": 5.333,
+        "Skill_1_Begin": 0.533,
+        "Skill_1_End": 0.533,
+        "Skill_1_Idle": 5.333,
+        "Skill_1_Loop": 2.833,
+        "Skill_2": 1.5,
+        "Start": 1
+      },
+      "hits": {
+        "Attack": [
+          0.6
+        ],
+        "Skill_1_Loop": [
+          0.6
+        ],
+        "Skill_2": [
+          0.6
+        ]
+      },
+      "bounds": {
+        "x": -238.046,
+        "y": -4.551,
+        "width": 782.829,
+        "height": 477.415
+      },
+      "animationRoles": {
+        "idle": "Idle",
+        "deploy": "Start",
+        "attack": {
+          "begin": null,
+          "loop": "Attack",
+          "end": null
+        },
+        "attackDown": null,
+        "skill": {
+          "begin": "Skill_1_Begin",
+          "loop": "Skill_1_Loop",
+          "end": "Skill_1_End",
+          "idle": "Skill_1_Idle",
+          "index": 0,
+          "via": "skill"
+        },
+        "skills": {
+          "0": {
+            "begin": "Skill_1_Begin",
+            "loop": "Skill_1_Loop",
+            "end": "Skill_1_End",
+            "idle": "Skill_1_Idle",
+            "index": 0,
+            "via": "skill"
+          },
+          "1": {
+            "begin": null,
+            "loop": "Skill_2",
+            "end": null,
+            "index": 1,
+            "via": "skill"
+          }
+        },
+        "die": "Die",
+        "stun": null,
+        "move": null
+      }
+    }
+  },
+  "interfaceAssets": [
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "five-star-icons/Ukusik - Base.webp",
+      "bytes": 12658,
+      "sha256": "7b7e9d94e44d01710ad42256cf29fd8dd67bf392307b0dafdce4cb07a909fe59"
+    },
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "skill-icons/Ukusik - Secret Spell of Tongs.webp",
+      "bytes": 5660,
+      "sha256": "221fd95667f615b2d9df8522bcda4a5d8015cb51a27904253841043a97ee7dd4"
+    },
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "skill-icons/Ukusik - 'Peekaboo!'.webp",
+      "bytes": 7422,
+      "sha256": "6a5757af88711401698c4160a86824ada92fd92f2f894ce2f6b17b47fafd161f"
+    },
+    {
+      "repository": "arkpedia/arkpedia-skin-assets",
+      "commit": "6fb723692d89c4a08d9a7aa4015e19c0753dd270",
+      "path": "five-star-skins/Ukusik - Base.webp",
+      "bytes": 145470,
+      "sha256": "ee45dc431cbb79950f95861c31bccef6c3bbcf32d4599a96e466080554cc946b"
+    }
+  ],
+  "limitations": [
+    "Selector enum aliases, acquisition/FSM/mode timing, S1 account/Begin/buff boundaries, S2 self-cost event 2, override type 3, callbacks and source-invalid attachment dispatch are explicit local mappings.",
+    "The original inputs and firsthand chain-mechanism analysis are retained separately; matching compiled-client provenance, modules, native effects/audio/shaders, physical devices and game-frame/pixel parity remain unverified."
+  ],
+  "sourceFoundationSha256": "e2d258828ebfc9d6c7752cea5c26ad3857ac74fd056ec45d810fbc8810cea6d6",
+  "ownerArtworkSha256": "36d6ab2fdf141d70021c419d7f75e77b10e5e5ba5c0c56a8da396a263c2a6379",
+  "sourceClocksSha256": "dfeed703527d93ce2dc9943f0b16f7a99f49f2640b96284c37e00988905c71c7"
+}

@@ -14,8 +14,9 @@ export function turdusNativeInputs(){const c=id=>turdusSourceComponent('characte
 }
 
 export function selectedTurdusInputs(u){
- const r=selectedTurdusBuild(u.def.raw.arkpedia),s=u.def.skill,same=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
- if(u.def.charId!==TURDUS_ID||!s||s.id!==r.build.skillId||!same(u.def.stats,normalizeChess({stats:r.stats}).stats)
+ const s=u.def.skill;if(!s)throw Error('Incomplete original selected Ukusik inputs');
+ const r=selectedTurdusBuild({...u.def.raw.arkpedia,skillId:s.id}),same=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
+ if(u.def.raw.arkpedia.skillId!=null&&u.def.raw.arkpedia.skillId!==s.id||u.def.charId!==TURDUS_ID||s.id!==r.build.skillId||!same(u.def.stats,normalizeChess({stats:r.stats}).stats)
   ||!same(u.rangeGrid,r.rangeGrid)||!same(u.def.tags,r.tags)||!same(u.def.talents.map(t=>t.bb),r.talentBb)||!same(s.bb,r.bb)
   ||s.skillType!==r.source.skillType||s.durationType!==r.source.durationType||s.spType!==normSpType(r.source.spData.spType)
   ||s.spCost!==r.source.spData.spCost||s.initSp!==r.source.spData.initSp||s.duration!==r.source.duration||s.maxCharges!==r.source.spData.maxChargeTime
