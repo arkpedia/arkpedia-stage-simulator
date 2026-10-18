@@ -270,7 +270,7 @@ export class SkillRuntime {
     if (changesRange(this.spec.targeting)) this.battle._refreshRange(this.unit);
   }
 
-  /** Add SP (fires the `spGain` hook). Ignored while a duration/ammo/toggle skill runs (its bar shows the skill). */
+  /** Add SP (fires `spGain`). Timed and explicitly held source accounts reject ordinary recovery while active. */
   gainSp(amount, reason = 'time', silent = false) {
     if (this.noSkill || this.kind === 'passive' || !(amount > 0)) return 0;
     if (this.holdsSp && reason !== 'init') return 0;

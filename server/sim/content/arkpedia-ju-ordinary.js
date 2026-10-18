@@ -52,7 +52,7 @@ export class JuOrdinaryAttacks {
   idle() { this.facing = this.u.dir; this.visual('Idle', 1, true); }
   face(t) { const x = t.x - this.u.x, y = t.y - this.u.y;
     if (Math.hypot(x, y) > 1e-8) this.facing = Math.abs(y) > Math.abs(x) ? y > 0 ? 'UP' : 'DOWN' : x < 0 ? 'LEFT' : 'RIGHT'; }
-  choices({hpAtMost = Infinity} = {}) {
+  choices({hpAtMost = Infinity, limit = 1} = {}) {
     if (this.b.rangeChanged(this.u)) this.b._refreshRange(this.u);
     const eligible = t => legal(this.u, t) && !t.findBuff('cripple') && t.hp / t.s.maxHp <= hpAtMost + 1e-9;
     const candidates = this.b.enemies.filter(t => eligible(t)
@@ -61,7 +61,7 @@ export class JuOrdinaryAttacks {
     // blocker even when the source's long-range grid omits adjacent tiles.
     for (const t of this.b.blockedTargets(this.u, {canHitFly: true, canTarget: (_u, e) => eligible(e)}))
       if (!candidates.includes(t)) candidates.push(t);
-    return sortEnemyTargets(this.b, this.u, candidates, 'heaviest').slice(0, 1);
+    return sortEnemyTargets(this.b, this.u, candidates, 'heaviest').slice(0, limit);
   }
   begin(target, shot = ordinaryShot) {
     this.face(target);

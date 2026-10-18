@@ -58,5 +58,6 @@ export function juNativeInputs() {
     s2Projectile: projectile('projectile_chr_ju_s2', '6731274324302738297'),
     templates: evidence.templates,
     animator: evidence.chararts[JU_ID][0].data,
+    artController: juSourceComponent('artworkHierarchy', JU_ID, '-2922912604820152915'),
   };
 }
