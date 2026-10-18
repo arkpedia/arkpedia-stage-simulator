@@ -36,7 +36,7 @@ export class TaraxaSkillOne extends TaraxaOrdinaryHeals{
  idle(){if(this.flight.mode===2){if(this.u.mem.regularFormVisual?.clip!=='Skill_1_Loop')this.flight.visual('Skill_1_Loop',true);}
   else super.idle();}
  modeChanged(mode){this.phase=null;
-  if(mode!==2){const buff=this.batBuff;this.batBuff=null;if(buff?.data?.taraxaS1===this&&this.u.buffs.includes(buff))this.b.removeBuff(this.u,buff);return;}
+  if(mode!==2){const buff=this.batBuff;this.batBuff=null;if(buff?.data?.taraxaS1===this&&this.u.buffs.includes(buff))this.b.removeBuff(this.u,buff);if(mode===0)this.aura.tick();return;}
   const buff=this.b.addBuff(this.u,{key:`taraxa_s1[atk_time]:${this.seq}`,source:this.u,refresh:'keep',
    mods:{batMul:this.record.bb['attack@base_attack_time']},data:{taraxaS1:this}});
   if(buff?.data?.taraxaS1!==this)return;
@@ -68,7 +68,7 @@ export class TaraxaSkillOne extends TaraxaOrdinaryHeals{
    onRemove:()=>{token.finished=true;if(this.modeBuff?.data?.taraxaS1Mode===token){this.modeBuff=null;this.flight.land();}}});
   if(buff?.data?.taraxaS1Mode!==token)return;
   if(token.finished||!this.u.buffs.includes(buff)||!this.valid()||!this.u.skill.active||this.castSerial!==serial){if(this.u.buffs.includes(buff))this.b.removeBuff(this.u,buff);return;}
-  this.modeBuff=buff;this.flight.start();
+  this.modeBuff=buff;this.flight.start();if(this.valid())this.aura.tick();
  }
  skillEnded(){const buff=this.modeBuff;this.modeBuff=null;
   if(buff?.data?.taraxaS1Mode?.owner===this&&this.u.buffs.includes(buff))this.b.removeBuff(this.u,buff);

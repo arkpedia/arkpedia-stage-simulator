@@ -47,7 +47,7 @@ export class TaraxaFlight{
  decorate(visual){return {...visual,...(this.height?{height:{...this.height}}:{heightOffset:this.heightOffset})};}
  visual(clip,loop=false){if(!this.valid())return;
   this.u.mem.regularVisualDirection=this.u.dir;
-  this.u.mem.regularFormVisual=this.decorate({clip,speed:1,loop,...(!loop?{playId:`taraxa:flight:${this.seq}:${++this.visualSeq}`}:{})});
+  this.u.mem.regularFormVisual=this.decorate({clip,speed:1,loop,...(loop?{replace:true}:{}),...(!loop?{playId:`taraxa:flight:${this.seq}:${++this.visualSeq}`}:{})});
   this.u.mem.regularDeathVisual=this.u.dir==='UP'?{hide:true,duration:1}:{clip:this.mode?'Skill_Die':'Die',duration:1};
  }
  setMode(mode){this.mode=mode;this.onMode(mode);}

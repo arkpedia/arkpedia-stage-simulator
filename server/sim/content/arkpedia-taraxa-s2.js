@@ -40,11 +40,12 @@ export class TaraxaSkillTwo extends TaraxaOrdinaryHeals{
   this.atkBuff=this.secondaryBuff=null;}
  visual(clip,speed=1,loop=false){if(clip==='Skill_2_Loop')loop=true;
   if(this.flight?.mode===5&&clip==='Idle')clip='Skill_2_Idle';super.visual(clip,speed,loop);
+  if(clip==='Skill_2_Loop')this.u.mem.regularFormVisual.playId=`taraxa:s2:${this.seq}:${++this.visualSeq}`;
   if(this.flight?.mode){this.u.mem.regularFormVisual=this.flight.decorate(this.u.mem.regularFormVisual);
    this.u.mem.regularDeathVisual=this.facing==='UP'?{hide:true,duration:1}:{clip:'Skill_Die',duration:1};}}
  modeResource(key,mods){const buff=this.b.addBuff(this.u,{key:`${key}:${this.seq}`,source:this.u,refresh:'keep',mods,data:{taraxaS2:this}});
   if(!this.owns(buff))return null;if(!this.valid()||this.flight.mode!==5){this.b.removeBuff(this.u,buff);return null;}return buff;}
- modeChanged(mode){this.phase=null;if(mode!==5){this.clearModeResources();return;}
+ modeChanged(mode){this.phase=null;if(mode!==5){this.clearModeResources();if(mode===0)this.aura.tick();return;}
   this.atkBuff=this.modeResource('taraxa_s2[atk]',{atkPct:this.record.bb['attack@atk']});
   if(this.valid()&&this.flight.mode===5)this.secondaryBuff=this.modeResource('taraxa_s2[second_heal]');
  }
@@ -66,7 +67,7 @@ export class TaraxaSkillTwo extends TaraxaOrdinaryHeals{
    onRemove:()=>{token.finished=true;if(this.modeBuff?.data?.taraxaS2Mode===token){this.modeBuff=null;this.flight.land();}}});
   if(buff?.data?.taraxaS2Mode!==token)return;
   if(token.finished||!this.u.buffs.includes(buff)||!this.valid()||!this.u.skill.active||this.castSerial!==serial){if(this.u.buffs.includes(buff))this.b.removeBuff(this.u,buff);return;}
-  this.modeBuff=buff;this.flight.start();
+  this.modeBuff=buff;this.flight.start();if(this.valid())this.aura.tick();
  }
  skillEnded(){const buff=this.modeBuff;this.modeBuff=null;
   if(buff?.data?.taraxaS2Mode?.owner===this&&this.u.buffs.includes(buff))this.b.removeBuff(this.u,buff);

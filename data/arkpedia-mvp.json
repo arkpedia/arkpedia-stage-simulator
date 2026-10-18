@@ -417,6 +417,7 @@
     "char_4215_buddy": "cn",
     "char_4224_turdus": "cn",
     "char_4221_ju": "cn",
+    "char_4222_taraxa": "cn",
     "char_4207_branch": "cn"
   },
   "behaviors": {
@@ -448,7 +449,7 @@
   "nativeEffects": {
     "tragodia": {
       "repository": "arkpedia/arkpedia-sd-assets",
-      "commit": "a65e88a57ed0376ef29f8645937a63eedb0cd5c7",
+      "commit": "d83e6b07b1e97cb10fc0b2d5eadf0e3d834373ed",
       "manifest": {
         "path": "effects/native/tragodia/26-09-23-17-49-43_b9cc4a/e39769c56a91f5d483632808082a05a3dbe0b71d5a5c99b3ade9ebdee68fd0ff/manifest.json",
         "bytes": 44646,
@@ -458,7 +459,7 @@
   },
   "sd": {
     "repository": "arkpedia/arkpedia-sd-assets",
-    "commit": "a65e88a57ed0376ef29f8645937a63eedb0cd5c7",
+    "commit": "d83e6b07b1e97cb10fc0b2d5eadf0e3d834373ed",
     "models": {
       "operator/char_123_fang/default/front": {
         "kind": "operator",
@@ -77637,6 +77638,228 @@
           "move": null
         }
       },
+      "operator/char_4222_taraxa/default/front": {
+        "kind": "operator",
+        "id": "char_4222_taraxa",
+        "variant": "default",
+        "facing": "front",
+        "spineVersion": "3.8.99",
+        "source": {
+          "key": "operators",
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "spine/char_4222_taraxa/char_4222_taraxa/Front"
+        },
+        "skeleton": {
+          "path": "models/operator/char_4222_taraxa/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4222_taraxa.skel",
+          "bytes": 403187,
+          "sha256": "2136160bcd2e302f3538ebe4fedd28507785447612127473be3b29033e65d3f0"
+        },
+        "atlas": {
+          "path": "models/operator/char_4222_taraxa/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4222_taraxa.atlas",
+          "bytes": 15616,
+          "sha256": "355d3222a9bad4cf91c8ccfa25b3d3dd3cc38e03e78fbcb210da7bb1b656d7e9"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_4222_taraxa/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4222_taraxa.png",
+            "bytes": 282959,
+            "sha256": "fb8feb3e9d776dab689f3bfbe762f6d84dbb6431d821ff00a05b6dfdd7504d5d"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Attack": 2.833,
+          "Default": 0,
+          "Die": 1,
+          "Idle": 2.667,
+          "Skill_1_Begin": 1,
+          "Skill_1_End": 1,
+          "Skill_1_Loop": 0.533,
+          "Skill_2_Begin": 1,
+          "Skill_2_End": 1,
+          "Skill_2_Idle": 2.667,
+          "Skill_2_Loop": 1.5,
+          "Skill_Die": 1,
+          "Start": 1
+        },
+        "hits": {
+          "Attack": [
+            0.6
+          ],
+          "Skill_1_Begin": [
+            0.333
+          ],
+          "Skill_1_End": [
+            0.167
+          ],
+          "Skill_1_Loop": [
+            0
+          ],
+          "Skill_2_Begin": [
+            0.333
+          ],
+          "Skill_2_End": [
+            0.167
+          ],
+          "Skill_2_Loop": [
+            0.6
+          ]
+        },
+        "bounds": {
+          "x": -293.387,
+          "y": -67.7,
+          "width": 430.337,
+          "height": 487.019
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null
+          },
+          "attackDown": null,
+          "skill": {
+            "begin": "Skill_1_Begin",
+            "loop": "Skill_1_Loop",
+            "end": "Skill_1_End",
+            "index": 0,
+            "via": "skill"
+          },
+          "skills": {
+            "0": {
+              "begin": "Skill_1_Begin",
+              "loop": "Skill_1_Loop",
+              "end": "Skill_1_End",
+              "index": 0,
+              "via": "skill"
+            },
+            "1": {
+              "begin": "Skill_2_Begin",
+              "loop": "Skill_2_Loop",
+              "idle": "Skill_2_Idle",
+              "end": "Skill_2_End",
+              "index": 1,
+              "via": "skill"
+            }
+          },
+          "die": "Die",
+          "stun": null,
+          "move": null
+        }
+      },
+      "operator/char_4222_taraxa/default/back": {
+        "kind": "operator",
+        "id": "char_4222_taraxa",
+        "variant": "default",
+        "facing": "back",
+        "spineVersion": "3.8.99",
+        "source": {
+          "key": "operators",
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "spine/char_4222_taraxa/char_4222_taraxa/Back"
+        },
+        "skeleton": {
+          "path": "models/operator/char_4222_taraxa/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4222_taraxa.skel",
+          "bytes": 241556,
+          "sha256": "975b95e9d97a2571c0b31d9991f7e065375c1220345fb0c2518fb9da9dff932e"
+        },
+        "atlas": {
+          "path": "models/operator/char_4222_taraxa/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4222_taraxa.atlas",
+          "bytes": 9389,
+          "sha256": "c04e3de20460b3803103ccca5429394365720b5c7c81d3d3152204ce1e2dc4ff"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_4222_taraxa/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4222_taraxa.png",
+            "bytes": 243663,
+            "sha256": "aab04db052be2dd8d260cf7490261971629b6dd056ad74dbd7eb22c88d4c304d"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Attack": 2.833,
+          "Default": 0,
+          "Idle": 2.667,
+          "Skill_1_Begin": 1,
+          "Skill_1_End": 1,
+          "Skill_1_Loop": 0.533,
+          "Skill_2_Begin": 1,
+          "Skill_2_End": 1,
+          "Skill_2_Idle": 2.667,
+          "Skill_2_Loop": 1.5,
+          "Start": 1
+        },
+        "hits": {
+          "Attack": [
+            0.6
+          ],
+          "Skill_1_Begin": [
+            0.333
+          ],
+          "Skill_1_End": [
+            0.167
+          ],
+          "Skill_1_Loop": [
+            0
+          ],
+          "Skill_2_Begin": [
+            0.333
+          ],
+          "Skill_2_End": [
+            0.167
+          ],
+          "Skill_2_Loop": [
+            0.6
+          ]
+        },
+        "bounds": {
+          "x": -298.141,
+          "y": -67.7,
+          "width": 437.991,
+          "height": 471.93
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": null,
+            "loop": "Attack",
+            "end": null
+          },
+          "attackDown": null,
+          "skill": {
+            "begin": "Skill_1_Begin",
+            "loop": "Skill_1_Loop",
+            "end": "Skill_1_End",
+            "index": 0,
+            "via": "skill"
+          },
+          "skills": {
+            "0": {
+              "begin": "Skill_1_Begin",
+              "loop": "Skill_1_Loop",
+              "end": "Skill_1_End",
+              "index": 0,
+              "via": "skill"
+            },
+            "1": {
+              "begin": "Skill_2_Begin",
+              "loop": "Skill_2_Loop",
+              "idle": "Skill_2_Idle",
+              "end": "Skill_2_End",
+              "index": 1,
+              "via": "skill"
+            }
+          },
+          "die": null,
+          "stun": null,
+          "move": null
+        }
+      },
       "operator/char_4207_branch/default/front": {
         "kind": "operator",
         "id": "char_4207_branch",
@@ -89540,7 +89763,7 @@
     },
     "art": {
       "repository": "arkpedia/arkpedia-sd-assets",
-      "commit": "a65e88a57ed0376ef29f8645937a63eedb0cd5c7",
+      "commit": "d83e6b07b1e97cb10fc0b2d5eadf0e3d834373ed",
       "scene": {
         "path": "stages/0-1/26-09-23-17-49-43_b9cc4a/scene.json",
         "bytes": 4479,
@@ -89549,7 +89772,7 @@
     },
     "gates": {
       "repository": "arkpedia/arkpedia-sd-assets",
-      "commit": "a65e88a57ed0376ef29f8645937a63eedb0cd5c7",
+      "commit": "d83e6b07b1e97cb10fc0b2d5eadf0e3d834373ed",
       "pack": {
         "path": "effects/standard-gates/26-09-23-17-49-43_b9cc4a/gates.json",
         "bytes": 3507,
@@ -684312,6 +684535,1702 @@
         "yan"
       ]
     },
+    "char_4222_taraxa": {
+      "id": "char_4222_taraxa",
+      "name": "Taraxacum",
+      "description": "恢复友方单位生命，并且可以<$ba.liftoff>起飞</>",
+      "rarity": 5,
+      "profession": "MEDIC",
+      "subProfessionId": "watchman",
+      "position": "RANGED",
+      "nationId": "yan",
+      "groupId": null,
+      "teamId": null,
+      "phases": [
+        {
+          "maxLevel": 50,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 993,
+                "atk": 161,
+                "def": 81,
+                "magicResistance": 0,
+                "cost": 16,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 2.85,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false,
+                "teleportImmune": false,
+                "groundBoundImmune": false
+              }
+            },
+            {
+              "level": 50,
+              "data": {
+                "maxHp": 1307,
+                "atk": 264,
+                "def": 118,
+                "magicResistance": 0,
+                "cost": 16,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 2.85,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false,
+                "teleportImmune": false,
+                "groundBoundImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              1,
+              -1
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              0,
+              -1
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              -1,
+              -1
+            ],
+            [
+              -1,
+              0
+            ],
+            [
+              -1,
+              1
+            ],
+            [
+              -1,
+              2
+            ]
+          ]
+        },
+        {
+          "maxLevel": 70,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 1307,
+                "atk": 264,
+                "def": 118,
+                "magicResistance": 0,
+                "cost": 18,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 2.85,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false,
+                "teleportImmune": false,
+                "groundBoundImmune": false
+              }
+            },
+            {
+              "level": 70,
+              "data": {
+                "maxHp": 1556,
+                "atk": 368,
+                "def": 148,
+                "magicResistance": 0,
+                "cost": 18,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 2.85,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false,
+                "teleportImmune": false,
+                "groundBoundImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              2,
+              0
+            ],
+            [
+              2,
+              1
+            ],
+            [
+              1,
+              -1
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              0,
+              -1
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              -1,
+              -1
+            ],
+            [
+              -1,
+              0
+            ],
+            [
+              -1,
+              1
+            ],
+            [
+              -1,
+              2
+            ],
+            [
+              -2,
+              0
+            ],
+            [
+              -2,
+              1
+            ]
+          ]
+        },
+        {
+          "maxLevel": 80,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 1556,
+                "atk": 368,
+                "def": 148,
+                "magicResistance": 0,
+                "cost": 18,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 2.85,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false,
+                "teleportImmune": false,
+                "groundBoundImmune": false
+              }
+            },
+            {
+              "level": 80,
+              "data": {
+                "maxHp": 1810,
+                "atk": 460,
+                "def": 185,
+                "magicResistance": 0,
+                "cost": 18,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 2.85,
+                "respawnTime": 70,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false,
+                "teleportImmune": false,
+                "groundBoundImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              2,
+              0
+            ],
+            [
+              2,
+              1
+            ],
+            [
+              1,
+              -1
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              0,
+              -1
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              -1,
+              -1
+            ],
+            [
+              -1,
+              0
+            ],
+            [
+              -1,
+              1
+            ],
+            [
+              -1,
+              2
+            ],
+            [
+              -2,
+              0
+            ],
+            [
+              -2,
+              1
+            ]
+          ]
+        }
+      ],
+      "favorKeyFrames": [
+        {
+          "level": 0,
+          "data": {
+            "maxHp": 0,
+            "atk": 0,
+            "def": 0,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false,
+            "teleportImmune": false,
+            "groundBoundImmune": false
+          }
+        },
+        {
+          "level": 50,
+          "data": {
+            "maxHp": 0,
+            "atk": 45,
+            "def": 20,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false,
+            "teleportImmune": false,
+            "groundBoundImmune": false
+          }
+        }
+      ],
+      "potentialRanks": [
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "RESPAWN_TIME",
+            "formulaItem": "ADDITION",
+            "value": -4,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [
+          {
+            "attributeType": "DEF",
+            "formulaItem": "ADDITION",
+            "value": 20,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ],
+        [],
+        [
+          {
+            "attributeType": "COST",
+            "formulaItem": "ADDITION",
+            "value": -1,
+            "loadFromBlackboard": false,
+            "fetchBaseValueFromSourceEntity": false
+          }
+        ]
+      ],
+      "trait": {
+        "candidates": [
+          {
+            "unlockCondition": {
+              "phase": "PHASE_0",
+              "level": 1
+            },
+            "requiredPotentialRank": 0,
+            "blackboard": [],
+            "overrideDescripton": "恢复友方单位生命，并且可以<$ba.liftoff>起飞</>",
+            "prefabKey": null,
+            "rangeId": null
+          }
+        ]
+      },
+      "talents": [
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_0",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "定风絮",
+              "description": "攻击范围内飞行的友方单位获得3%的<$ba.protect>庇护</>，阻挡数+1",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "damage_resistance",
+                  "value": 0.03,
+                  "valueStr": null
+                },
+                {
+                  "key": "block_cnt",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_0",
+                "level": 1
+              },
+              "requiredPotentialRank": 4,
+              "prefabKey": "1",
+              "name": "定风絮",
+              "description": "攻击范围内飞行的友方单位获得5%<@ba.talpu>（+2%）</>的<$ba.protect>庇护</>，阻挡数+1",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "damage_resistance",
+                  "value": 0.05,
+                  "valueStr": null
+                },
+                {
+                  "key": "block_cnt",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "定风絮",
+              "description": "攻击范围内飞行的友方单位获得7%的<$ba.protect>庇护</>，阻挡数+1",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "damage_resistance",
+                  "value": 0.07,
+                  "valueStr": null
+                },
+                {
+                  "key": "block_cnt",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_1",
+                "level": 1
+              },
+              "requiredPotentialRank": 4,
+              "prefabKey": "1",
+              "name": "定风絮",
+              "description": "攻击范围内飞行的友方单位获得9%<@ba.talpu>（+2%）</>的<$ba.protect>庇护</>，阻挡数+1",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "damage_resistance",
+                  "value": 0.09,
+                  "valueStr": null
+                },
+                {
+                  "key": "block_cnt",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": "定风絮",
+              "description": "攻击范围内飞行的友方单位获得10%的<$ba.protect>庇护</>，阻挡数+1",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "damage_resistance",
+                  "value": 0.1,
+                  "valueStr": null
+                },
+                {
+                  "key": "block_cnt",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_2",
+                "level": 1
+              },
+              "requiredPotentialRank": 4,
+              "prefabKey": "1",
+              "name": "定风絮",
+              "description": "攻击范围内飞行的友方单位获得12%<@ba.talpu>（+2%）</>的<$ba.protect>庇护</>，阻挡数+1",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "damage_resistance",
+                  "value": 0.12,
+                  "valueStr": null
+                },
+                {
+                  "key": "block_cnt",
+                  "value": 1,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            }
+          ]
+        }
+      ],
+      "skills": [
+        {
+          "id": "skchr_taraxa_1",
+          "unlockCondition": {
+            "phase": "PHASE_0",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "何处着",
+              "rangeId": null,
+              "description": "立刻<$ba.liftoff>起飞</>，攻击间隔<@ba.vup>大幅度缩短</>，每次随机回复攻击范围内已受伤的一名单位相当于攻击力<@ba.vup>{attack@heal_scale:0%}</>的生命",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 66,
+                "initSp": 30,
+                "increment": 1
+              },
+              "prefabId": "skchr_taraxa_1",
+              "duration": 40,
+              "blackboard": [
+                {
+                  "key": "attack@base_attack_time",
+                  "value": 0.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@heal_scale",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@fly_height",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@fly_duration",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@fly_end_duration",
+                  "value": 0.35,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "何处着",
+              "rangeId": null,
+              "description": "立刻<$ba.liftoff>起飞</>，攻击间隔<@ba.vup>大幅度缩短</>，每次随机回复攻击范围内已受伤的一名单位相当于攻击力<@ba.vup>{attack@heal_scale:0%}</>的生命",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 65,
+                "initSp": 30,
+                "increment": 1
+              },
+              "prefabId": "skchr_taraxa_1",
+              "duration": 40,
+              "blackboard": [
+                {
+                  "key": "attack@base_attack_time",
+                  "value": 0.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@heal_scale",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@fly_height",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@fly_duration",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@fly_end_duration",
+                  "value": 0.35,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "何处着",
+              "rangeId": null,
+              "description": "立刻<$ba.liftoff>起飞</>，攻击间隔<@ba.vup>大幅度缩短</>，每次随机回复攻击范围内已受伤的一名单位相当于攻击力<@ba.vup>{attack@heal_scale:0%}</>的生命",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 64,
+                "initSp": 30,
+                "increment": 1
+              },
+              "prefabId": "skchr_taraxa_1",
+              "duration": 40,
+              "blackboard": [
+                {
+                  "key": "attack@base_attack_time",
+                  "value": 0.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@heal_scale",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@fly_height",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@fly_duration",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@fly_end_duration",
+                  "value": 0.35,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "何处着",
+              "rangeId": null,
+              "description": "立刻<$ba.liftoff>起飞</>，攻击间隔<@ba.vup>大幅度缩短</>，每次随机回复攻击范围内已受伤的一名单位相当于攻击力<@ba.vup>{attack@heal_scale:0%}</>的生命",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 63,
+                "initSp": 30,
+                "increment": 1
+              },
+              "prefabId": "skchr_taraxa_1",
+              "duration": 43,
+              "blackboard": [
+                {
+                  "key": "attack@base_attack_time",
+                  "value": 0.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@heal_scale",
+                  "value": 0.45,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@fly_height",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@fly_duration",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@fly_end_duration",
+                  "value": 0.35,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "何处着",
+              "rangeId": null,
+              "description": "立刻<$ba.liftoff>起飞</>，攻击间隔<@ba.vup>大幅度缩短</>，每次随机回复攻击范围内已受伤的一名单位相当于攻击力<@ba.vup>{attack@heal_scale:0%}</>的生命",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 62,
+                "initSp": 30,
+                "increment": 1
+              },
+              "prefabId": "skchr_taraxa_1",
+              "duration": 43,
+              "blackboard": [
+                {
+                  "key": "attack@base_attack_time",
+                  "value": 0.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@heal_scale",
+                  "value": 0.45,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@fly_height",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@fly_duration",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@fly_end_duration",
+                  "value": 0.35,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "何处着",
+              "rangeId": null,
+              "description": "立刻<$ba.liftoff>起飞</>，攻击间隔<@ba.vup>大幅度缩短</>，每次随机回复攻击范围内已受伤的一名单位相当于攻击力<@ba.vup>{attack@heal_scale:0%}</>的生命",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 61,
+                "initSp": 30,
+                "increment": 1
+              },
+              "prefabId": "skchr_taraxa_1",
+              "duration": 43,
+              "blackboard": [
+                {
+                  "key": "attack@base_attack_time",
+                  "value": 0.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@heal_scale",
+                  "value": 0.45,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@fly_height",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@fly_duration",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@fly_end_duration",
+                  "value": 0.35,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "何处着",
+              "rangeId": null,
+              "description": "立刻<$ba.liftoff>起飞</>，攻击间隔<@ba.vup>大幅度缩短</>，每次随机回复攻击范围内已受伤的一名单位相当于攻击力<@ba.vup>{attack@heal_scale:0%}</>的生命",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 60,
+                "initSp": 30,
+                "increment": 1
+              },
+              "prefabId": "skchr_taraxa_1",
+              "duration": 45,
+              "blackboard": [
+                {
+                  "key": "attack@base_attack_time",
+                  "value": 0.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@heal_scale",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@fly_height",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@fly_duration",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@fly_end_duration",
+                  "value": 0.35,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "何处着",
+              "rangeId": null,
+              "description": "立刻<$ba.liftoff>起飞</>，攻击间隔<@ba.vup>大幅度缩短</>，每次随机回复攻击范围内已受伤的一名单位相当于攻击力<@ba.vup>{attack@heal_scale:0%}</>的生命",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 58,
+                "initSp": 30,
+                "increment": 1
+              },
+              "prefabId": "skchr_taraxa_1",
+              "duration": 45,
+              "blackboard": [
+                {
+                  "key": "attack@base_attack_time",
+                  "value": 0.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@heal_scale",
+                  "value": 0.53,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@fly_height",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@fly_duration",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@fly_end_duration",
+                  "value": 0.35,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "何处着",
+              "rangeId": null,
+              "description": "立刻<$ba.liftoff>起飞</>，攻击间隔<@ba.vup>大幅度缩短</>，每次随机回复攻击范围内已受伤的一名单位相当于攻击力<@ba.vup>{attack@heal_scale:0%}</>的生命",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 56,
+                "initSp": 30,
+                "increment": 1
+              },
+              "prefabId": "skchr_taraxa_1",
+              "duration": 45,
+              "blackboard": [
+                {
+                  "key": "attack@base_attack_time",
+                  "value": 0.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@heal_scale",
+                  "value": 0.56,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@fly_height",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@fly_duration",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@fly_end_duration",
+                  "value": 0.35,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "何处着",
+              "rangeId": null,
+              "description": "立刻<$ba.liftoff>起飞</>，攻击间隔<@ba.vup>大幅度缩短</>，每次随机回复攻击范围内已受伤的一名单位相当于攻击力<@ba.vup>{attack@heal_scale:0%}</>的生命",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 55,
+                "initSp": 30,
+                "increment": 1
+              },
+              "prefabId": "skchr_taraxa_1",
+              "duration": 45,
+              "blackboard": [
+                {
+                  "key": "attack@base_attack_time",
+                  "value": 0.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@heal_scale",
+                  "value": 0.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@fly_height",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@fly_duration",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@fly_end_duration",
+                  "value": 0.35,
+                  "valueStr": null
+                }
+              ]
+            }
+          ],
+          "assetIcon": "skill-icons/Taraxacum - Where To.webp"
+        },
+        {
+          "id": "skchr_taraxa_2",
+          "unlockCondition": {
+            "phase": "PHASE_1",
+            "level": 1
+          },
+          "levels": [
+            {
+              "name": "扶风起",
+              "rangeId": null,
+              "description": "立刻<$ba.liftoff>起飞</>，攻击力<@ba.vup>+{attack@atk:0%}</>，可以额外治疗一名<$ba.liftoff>起飞</>的干员，治疗目标时对目标周围的至多<@ba.vup>{attack@splash_num}</>名单位造成攻击力<@ba.vup>{attack@heal_scale_2:0%}</>的治疗效果",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 50,
+                "initSp": 20,
+                "increment": 1
+              },
+              "prefabId": "skchr_taraxa_2",
+              "duration": 20,
+              "blackboard": [
+                {
+                  "key": "attack@atk",
+                  "value": 0.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@splash_num",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@heal_scale",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@heal_scale_2",
+                  "value": 0.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@fly_height",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@fly_duration",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@fly_end_duration",
+                  "value": 0.35,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "扶风起",
+              "rangeId": null,
+              "description": "立刻<$ba.liftoff>起飞</>，攻击力<@ba.vup>+{attack@atk:0%}</>，可以额外治疗一名<$ba.liftoff>起飞</>的干员，治疗目标时对目标周围的至多<@ba.vup>{attack@splash_num}</>名单位造成攻击力<@ba.vup>{attack@heal_scale_2:0%}</>的治疗效果",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 48,
+                "initSp": 20,
+                "increment": 1
+              },
+              "prefabId": "skchr_taraxa_2",
+              "duration": 20,
+              "blackboard": [
+                {
+                  "key": "attack@atk",
+                  "value": 0.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@splash_num",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@heal_scale",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@heal_scale_2",
+                  "value": 0.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@fly_height",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@fly_duration",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@fly_end_duration",
+                  "value": 0.35,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "扶风起",
+              "rangeId": null,
+              "description": "立刻<$ba.liftoff>起飞</>，攻击力<@ba.vup>+{attack@atk:0%}</>，可以额外治疗一名<$ba.liftoff>起飞</>的干员，治疗目标时对目标周围的至多<@ba.vup>{attack@splash_num}</>名单位造成攻击力<@ba.vup>{attack@heal_scale_2:0%}</>的治疗效果",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 45,
+                "initSp": 20,
+                "increment": 1
+              },
+              "prefabId": "skchr_taraxa_2",
+              "duration": 20,
+              "blackboard": [
+                {
+                  "key": "attack@atk",
+                  "value": 0.8,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@splash_num",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@heal_scale",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@heal_scale_2",
+                  "value": 0.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@fly_height",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@fly_duration",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@fly_end_duration",
+                  "value": 0.35,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "扶风起",
+              "rangeId": null,
+              "description": "立刻<$ba.liftoff>起飞</>，攻击力<@ba.vup>+{attack@atk:0%}</>，可以额外治疗一名<$ba.liftoff>起飞</>的干员，治疗目标时对目标周围的至多<@ba.vup>{attack@splash_num}</>名单位造成攻击力<@ba.vup>{attack@heal_scale_2:0%}</>的治疗效果",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 45,
+                "initSp": 20,
+                "increment": 1
+              },
+              "prefabId": "skchr_taraxa_2",
+              "duration": 22,
+              "blackboard": [
+                {
+                  "key": "attack@atk",
+                  "value": 0.8,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@splash_num",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@heal_scale",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@heal_scale_2",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@fly_height",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@fly_duration",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@fly_end_duration",
+                  "value": 0.35,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "扶风起",
+              "rangeId": null,
+              "description": "立刻<$ba.liftoff>起飞</>，攻击力<@ba.vup>+{attack@atk:0%}</>，可以额外治疗一名<$ba.liftoff>起飞</>的干员，治疗目标时对目标周围的至多<@ba.vup>{attack@splash_num}</>名单位造成攻击力<@ba.vup>{attack@heal_scale_2:0%}</>的治疗效果",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 42,
+                "initSp": 20,
+                "increment": 1
+              },
+              "prefabId": "skchr_taraxa_2",
+              "duration": 22,
+              "blackboard": [
+                {
+                  "key": "attack@atk",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@splash_num",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@heal_scale",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@heal_scale_2",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@fly_height",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@fly_duration",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@fly_end_duration",
+                  "value": 0.35,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "扶风起",
+              "rangeId": null,
+              "description": "立刻<$ba.liftoff>起飞</>，攻击力<@ba.vup>+{attack@atk:0%}</>，可以额外治疗一名<$ba.liftoff>起飞</>的干员，治疗目标时对目标周围的至多<@ba.vup>{attack@splash_num}</>名单位造成攻击力<@ba.vup>{attack@heal_scale_2:0%}</>的治疗效果",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 40,
+                "initSp": 20,
+                "increment": 1
+              },
+              "prefabId": "skchr_taraxa_2",
+              "duration": 22,
+              "blackboard": [
+                {
+                  "key": "attack@atk",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@splash_num",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@heal_scale",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@heal_scale_2",
+                  "value": 0.45,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@fly_height",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@fly_duration",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@fly_end_duration",
+                  "value": 0.35,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "扶风起",
+              "rangeId": null,
+              "description": "立刻<$ba.liftoff>起飞</>，攻击力<@ba.vup>+{attack@atk:0%}</>，可以额外治疗一名<$ba.liftoff>起飞</>的干员，治疗目标时对目标周围的至多<@ba.vup>{attack@splash_num}</>名单位造成攻击力<@ba.vup>{attack@heal_scale_2:0%}</>的治疗效果",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 40,
+                "initSp": 20,
+                "increment": 1
+              },
+              "prefabId": "skchr_taraxa_2",
+              "duration": 25,
+              "blackboard": [
+                {
+                  "key": "attack@atk",
+                  "value": 1.05,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@splash_num",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@heal_scale",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@heal_scale_2",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@fly_height",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@fly_duration",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@fly_end_duration",
+                  "value": 0.35,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "扶风起",
+              "rangeId": null,
+              "description": "立刻<$ba.liftoff>起飞</>，攻击力<@ba.vup>+{attack@atk:0%}</>，可以额外治疗一名<$ba.liftoff>起飞</>的干员，治疗目标时对目标周围的至多<@ba.vup>{attack@splash_num}</>名单位造成攻击力<@ba.vup>{attack@heal_scale_2:0%}</>的治疗效果",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 39,
+                "initSp": 20,
+                "increment": 1
+              },
+              "prefabId": "skchr_taraxa_2",
+              "duration": 25,
+              "blackboard": [
+                {
+                  "key": "attack@atk",
+                  "value": 1.11,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@splash_num",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@heal_scale",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@heal_scale_2",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@fly_height",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@fly_duration",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@fly_end_duration",
+                  "value": 0.35,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "扶风起",
+              "rangeId": null,
+              "description": "立刻<$ba.liftoff>起飞</>，攻击力<@ba.vup>+{attack@atk:0%}</>，可以额外治疗一名<$ba.liftoff>起飞</>的干员，治疗目标时对目标周围的至多<@ba.vup>{attack@splash_num}</>名单位造成攻击力<@ba.vup>{attack@heal_scale_2:0%}</>的治疗效果",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 37,
+                "initSp": 20,
+                "increment": 1
+              },
+              "prefabId": "skchr_taraxa_2",
+              "duration": 25,
+              "blackboard": [
+                {
+                  "key": "attack@atk",
+                  "value": 1.16,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@splash_num",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@heal_scale",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@heal_scale_2",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@fly_height",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@fly_duration",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@fly_end_duration",
+                  "value": 0.35,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "name": "扶风起",
+              "rangeId": null,
+              "description": "立刻<$ba.liftoff>起飞</>，攻击力<@ba.vup>+{attack@atk:0%}</>，可以额外治疗一名<$ba.liftoff>起飞</>的干员，治疗目标时对目标周围的至多<@ba.vup>{attack@splash_num}</>名单位造成攻击力<@ba.vup>{attack@heal_scale_2:0%}</>的治疗效果",
+              "skillType": "MANUAL",
+              "durationType": "NONE",
+              "spData": {
+                "spType": "INCREASE_WITH_TIME",
+                "levelUpCost": null,
+                "maxChargeTime": 1,
+                "spCost": 35,
+                "initSp": 20,
+                "increment": 1
+              },
+              "prefabId": "skchr_taraxa_2",
+              "duration": 25,
+              "blackboard": [
+                {
+                  "key": "attack@atk",
+                  "value": 1.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@splash_num",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@heal_scale",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@heal_scale_2",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@fly_height",
+                  "value": 0.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@fly_duration",
+                  "value": 0.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@fly_end_duration",
+                  "value": 0.35,
+                  "valueStr": null
+                }
+              ]
+            }
+          ],
+          "assetIcon": "skill-icons/Taraxacum - Upon the Wind.webp"
+        }
+      ],
+      "sourceName": "风絮",
+      "sourceChannel": "cn",
+      "sourceAppellation": "Taraxacum",
+      "factionTags": [
+        "yan",
+        "sargon"
+      ]
+    },
     "char_4207_branch": {
       "id": "char_4207_branch",
       "name": "Vetochki",
@@ -686005,7 +687924,7 @@
         }
       ],
       "skills": [],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a65e88a57ed0376ef29f8645937a63eedb0cd5c7/models/operator/token_10063_buddy_bddg/default/front/1da6347c10575ac922ef1ceeade662ebfb785b0653ef13266ab48f03d1828af9/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d83e6b07b1e97cb10fc0b2d5eadf0e3d834373ed/models/operator/token_10063_buddy_bddg/default/front/1da6347c10575ac922ef1ceeade662ebfb785b0653ef13266ab48f03d1828af9/avatar.png"
     },
     "token_10069_mcnist_mcgraf": {
       "id": "token_10069_mcnist_mcgraf",
@@ -686906,7 +688825,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a65e88a57ed0376ef29f8645937a63eedb0cd5c7/models/operator/token_10069_mcnist_mcgraf/default/front/1da6347c10575ac922ef1ceeade662ebfb785b0653ef13266ab48f03d1828af9/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d83e6b07b1e97cb10fc0b2d5eadf0e3d834373ed/models/operator/token_10069_mcnist_mcgraf/default/front/1da6347c10575ac922ef1ceeade662ebfb785b0653ef13266ab48f03d1828af9/avatar.png"
     },
     "token_10066_closur_ourbase": {
       "id": "token_10066_closur_ourbase",
@@ -687373,7 +689292,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a65e88a57ed0376ef29f8645937a63eedb0cd5c7/models/operator/token_10066_closur_ourbase/default/front/af23c7f497862f38be2cdca0cd4079d44753bde8d61b97398e5a2777a54281e4/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d83e6b07b1e97cb10fc0b2d5eadf0e3d834373ed/models/operator/token_10066_closur_ourbase/default/front/af23c7f497862f38be2cdca0cd4079d44753bde8d61b97398e5a2777a54281e4/avatar.png"
     },
     "token_10043_necras_skeltn": {
       "id": "token_10043_necras_skeltn",
@@ -687756,7 +689675,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a65e88a57ed0376ef29f8645937a63eedb0cd5c7/models/operator/token_10043_necras_skeltn/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d83e6b07b1e97cb10fc0b2d5eadf0e3d834373ed/models/operator/token_10043_necras_skeltn/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10050_monstr_prosts": {
       "id": "token_10050_monstr_prosts",
@@ -689594,7 +691513,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a65e88a57ed0376ef29f8645937a63eedb0cd5c7/models/operator/token_10050_monstr_prosts/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d83e6b07b1e97cb10fc0b2d5eadf0e3d834373ed/models/operator/token_10050_monstr_prosts/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10054_phatm2_encdool": {
       "id": "token_10054_phatm2_encdool",
@@ -691798,7 +693717,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a65e88a57ed0376ef29f8645937a63eedb0cd5c7/models/operator/token_10054_phatm2_encdool/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d83e6b07b1e97cb10fc0b2d5eadf0e3d834373ed/models/operator/token_10054_phatm2_encdool/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10055_phatm2_mndclv": {
       "id": "token_10055_phatm2_mndclv",
@@ -693069,7 +694988,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a65e88a57ed0376ef29f8645937a63eedb0cd5c7/models/operator/token_10030_mlyss_wtrman/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d83e6b07b1e97cb10fc0b2d5eadf0e3d834373ed/models/operator/token_10030_mlyss_wtrman/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10037_mitm_trshrb": {
       "id": "token_10037_mitm_trshrb",
@@ -693496,7 +695415,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a65e88a57ed0376ef29f8645937a63eedb0cd5c7/models/operator/token_10037_mitm_trshrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d83e6b07b1e97cb10fc0b2d5eadf0e3d834373ed/models/operator/token_10037_mitm_trshrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10027_ironmn_pile1": {
       "id": "token_10027_ironmn_pile1",
@@ -694592,7 +696511,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a65e88a57ed0376ef29f8645937a63eedb0cd5c7/models/operator/token_10027_ironmn_pile1/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d83e6b07b1e97cb10fc0b2d5eadf0e3d834373ed/models/operator/token_10027_ironmn_pile1/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10027_ironmn_pile2": {
       "id": "token_10027_ironmn_pile2",
@@ -695862,7 +697781,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a65e88a57ed0376ef29f8645937a63eedb0cd5c7/models/operator/token_10027_ironmn_pile2/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d83e6b07b1e97cb10fc0b2d5eadf0e3d834373ed/models/operator/token_10027_ironmn_pile2/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10027_ironmn_pile3": {
       "id": "token_10027_ironmn_pile3",
@@ -698370,7 +700289,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a65e88a57ed0376ef29f8645937a63eedb0cd5c7/models/operator/token_10027_ironmn_pile3/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d83e6b07b1e97cb10fc0b2d5eadf0e3d834373ed/models/operator/token_10027_ironmn_pile3/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10020_ling_soul1": {
       "id": "token_10020_ling_soul1",
@@ -699262,7 +701181,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a65e88a57ed0376ef29f8645937a63eedb0cd5c7/models/operator/token_10020_ling_soul1/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d83e6b07b1e97cb10fc0b2d5eadf0e3d834373ed/models/operator/token_10020_ling_soul1/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10020_ling_soul2": {
       "id": "token_10020_ling_soul2",
@@ -700598,7 +702517,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a65e88a57ed0376ef29f8645937a63eedb0cd5c7/models/operator/token_10020_ling_soul2/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d83e6b07b1e97cb10fc0b2d5eadf0e3d834373ed/models/operator/token_10020_ling_soul2/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10020_ling_soul3": {
       "id": "token_10020_ling_soul3",
@@ -702438,7 +704357,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a65e88a57ed0376ef29f8645937a63eedb0cd5c7/models/operator/token_10020_ling_soul3/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d83e6b07b1e97cb10fc0b2d5eadf0e3d834373ed/models/operator/token_10020_ling_soul3/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10005_mgllan_drone1": {
       "id": "token_10005_mgllan_drone1",
@@ -703530,7 +705449,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a65e88a57ed0376ef29f8645937a63eedb0cd5c7/models/operator/token_10005_mgllan_drone1/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d83e6b07b1e97cb10fc0b2d5eadf0e3d834373ed/models/operator/token_10005_mgllan_drone1/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10005_mgllan_drone2": {
       "id": "token_10005_mgllan_drone2",
@@ -704526,7 +706445,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a65e88a57ed0376ef29f8645937a63eedb0cd5c7/models/operator/token_10005_mgllan_drone2/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d83e6b07b1e97cb10fc0b2d5eadf0e3d834373ed/models/operator/token_10005_mgllan_drone2/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10005_mgllan_drone3": {
       "id": "token_10005_mgllan_drone3",
@@ -705618,7 +707537,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a65e88a57ed0376ef29f8645937a63eedb0cd5c7/models/operator/token_10005_mgllan_drone3/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d83e6b07b1e97cb10fc0b2d5eadf0e3d834373ed/models/operator/token_10005_mgllan_drone3/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10056_angel2_target": {
       "id": "token_10056_angel2_target",
@@ -706418,7 +708337,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a65e88a57ed0376ef29f8645937a63eedb0cd5c7/models/operator/token_10056_angel2_target/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d83e6b07b1e97cb10fc0b2d5eadf0e3d834373ed/models/operator/token_10056_angel2_target/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10035_wisdel_wward": {
       "id": "token_10035_wisdel_wward",
@@ -709077,7 +710996,7 @@
         }
       ],
       "automaticOnly": true,
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a65e88a57ed0376ef29f8645937a63eedb0cd5c7/models/operator/token_10031_swire2_gdtrap/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d83e6b07b1e97cb10fc0b2d5eadf0e3d834373ed/models/operator/token_10031_swire2_gdtrap/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10033_ela_grzmot": {
       "id": "token_10033_ela_grzmot",
@@ -710876,7 +712795,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a65e88a57ed0376ef29f8645937a63eedb0cd5c7/models/operator/token_10033_ela_grzmot/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d83e6b07b1e97cb10fc0b2d5eadf0e3d834373ed/models/operator/token_10033_ela_grzmot/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10034_ray_sndbst": {
       "id": "token_10034_ray_sndbst",
@@ -711510,7 +713429,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a65e88a57ed0376ef29f8645937a63eedb0cd5c7/models/operator/token_10034_ray_sndbst/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d83e6b07b1e97cb10fc0b2d5eadf0e3d834373ed/models/operator/token_10034_ray_sndbst/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10028_vigil_wolf": {
       "id": "token_10028_vigil_wolf",
@@ -712249,7 +714168,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a65e88a57ed0376ef29f8645937a63eedb0cd5c7/models/operator/token_10028_vigil_wolf/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d83e6b07b1e97cb10fc0b2d5eadf0e3d834373ed/models/operator/token_10028_vigil_wolf/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10026_bgsnow_subbow": {
       "id": "token_10026_bgsnow_subbow",
@@ -713814,7 +715733,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a65e88a57ed0376ef29f8645937a63eedb0cd5c7/models/operator/token_10026_bgsnow_subbow/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d83e6b07b1e97cb10fc0b2d5eadf0e3d834373ed/models/operator/token_10026_bgsnow_subbow/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10017_skadi2_dedant": {
       "id": "token_10017_skadi2_dedant",
@@ -715411,7 +717330,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a65e88a57ed0376ef29f8645937a63eedb0cd5c7/models/operator/token_10017_skadi2_dedant/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d83e6b07b1e97cb10fc0b2d5eadf0e3d834373ed/models/operator/token_10017_skadi2_dedant/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10025_doroth_recttp": {
       "id": "token_10025_doroth_recttp",
@@ -717271,7 +719190,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a65e88a57ed0376ef29f8645937a63eedb0cd5c7/models/operator/token_10025_doroth_recttp/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d83e6b07b1e97cb10fc0b2d5eadf0e3d834373ed/models/operator/token_10025_doroth_recttp/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10036_lasher_mcbird": {
       "id": "token_10036_lasher_mcbird",
@@ -718195,7 +720114,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a65e88a57ed0376ef29f8645937a63eedb0cd5c7/models/operator/token_10036_lasher_mcbird/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d83e6b07b1e97cb10fc0b2d5eadf0e3d834373ed/models/operator/token_10036_lasher_mcbird/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10032_jesca2_jckshd": {
       "id": "token_10032_jesca2_jckshd",
@@ -718532,7 +720451,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a65e88a57ed0376ef29f8645937a63eedb0cd5c7/models/operator/token_10032_jesca2_jckshd/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d83e6b07b1e97cb10fc0b2d5eadf0e3d834373ed/models/operator/token_10032_jesca2_jckshd/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10040_siege2_vlion": {
       "id": "token_10040_siege2_vlion",
@@ -719964,7 +721883,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a65e88a57ed0376ef29f8645937a63eedb0cd5c7/models/operator/token_10009_weedy_cannon/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d83e6b07b1e97cb10fc0b2d5eadf0e3d834373ed/models/operator/token_10009_weedy_cannon/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10024_ebnhlz_rcube": {
       "id": "token_10024_ebnhlz_rcube",
@@ -720537,7 +722456,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a65e88a57ed0376ef29f8645937a63eedb0cd5c7/models/operator/token_10024_ebnhlz_rcube/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d83e6b07b1e97cb10fc0b2d5eadf0e3d834373ed/models/operator/token_10024_ebnhlz_rcube/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10044_wulfen_mine": {
       "id": "token_10044_wulfen_mine",
@@ -721738,7 +723657,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a65e88a57ed0376ef29f8645937a63eedb0cd5c7/models/operator/token_10044_wulfen_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d83e6b07b1e97cb10fc0b2d5eadf0e3d834373ed/models/operator/token_10044_wulfen_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10042_tecno_puppet": {
       "id": "token_10042_tecno_puppet",
@@ -721987,7 +723906,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a65e88a57ed0376ef29f8645937a63eedb0cd5c7/models/operator/token_10042_tecno_puppet/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d83e6b07b1e97cb10fc0b2d5eadf0e3d834373ed/models/operator/token_10042_tecno_puppet/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10041_cathy_catsld": {
       "id": "token_10041_cathy_catsld",
@@ -722545,7 +724464,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a65e88a57ed0376ef29f8645937a63eedb0cd5c7/models/operator/token_10041_cathy_catsld/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d83e6b07b1e97cb10fc0b2d5eadf0e3d834373ed/models/operator/token_10041_cathy_catsld/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10022_kazema_shadow": {
       "id": "token_10022_kazema_shadow",
@@ -723015,7 +724934,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a65e88a57ed0376ef29f8645937a63eedb0cd5c7/models/operator/token_10022_kazema_shadow/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d83e6b07b1e97cb10fc0b2d5eadf0e3d834373ed/models/operator/token_10022_kazema_shadow/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10001_deepcl_tentac": {
       "id": "token_10001_deepcl_tentac",
@@ -723329,7 +725248,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a65e88a57ed0376ef29f8645937a63eedb0cd5c7/models/operator/token_10001_deepcl_tentac/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d83e6b07b1e97cb10fc0b2d5eadf0e3d834373ed/models/operator/token_10001_deepcl_tentac/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10018_robrta_mach": {
       "id": "token_10018_robrta_mach",
@@ -723819,7 +725738,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a65e88a57ed0376ef29f8645937a63eedb0cd5c7/models/operator/token_10018_robrta_mach/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d83e6b07b1e97cb10fc0b2d5eadf0e3d834373ed/models/operator/token_10018_robrta_mach/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10014_bstalk_crab": {
       "id": "token_10014_bstalk_crab",
@@ -724148,7 +726067,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a65e88a57ed0376ef29f8645937a63eedb0cd5c7/models/operator/token_10014_bstalk_crab/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d83e6b07b1e97cb10fc0b2d5eadf0e3d834373ed/models/operator/token_10014_bstalk_crab/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10011_beewax_oblisk": {
       "id": "token_10011_beewax_oblisk",
@@ -725093,7 +727012,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a65e88a57ed0376ef29f8645937a63eedb0cd5c7/models/operator/token_10011_beewax_oblisk/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d83e6b07b1e97cb10fc0b2d5eadf0e3d834373ed/models/operator/token_10011_beewax_oblisk/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10006_vodfox_doll": {
       "id": "token_10006_vodfox_doll",
@@ -725729,7 +727648,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a65e88a57ed0376ef29f8645937a63eedb0cd5c7/models/operator/token_10006_vodfox_doll/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d83e6b07b1e97cb10fc0b2d5eadf0e3d834373ed/models/operator/token_10006_vodfox_doll/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10003_cgbird_bird": {
       "id": "token_10003_cgbird_bird",
@@ -726024,7 +727943,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a65e88a57ed0376ef29f8645937a63eedb0cd5c7/models/operator/token_10003_cgbird_bird/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d83e6b07b1e97cb10fc0b2d5eadf0e3d834373ed/models/operator/token_10003_cgbird_bird/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10000_silent_healrb": {
       "id": "token_10000_silent_healrb",
@@ -726407,7 +728326,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a65e88a57ed0376ef29f8645937a63eedb0cd5c7/models/operator/token_10000_silent_healrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d83e6b07b1e97cb10fc0b2d5eadf0e3d834373ed/models/operator/token_10000_silent_healrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10015_dusk_drgn": {
       "id": "token_10015_dusk_drgn",
@@ -726821,7 +728740,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a65e88a57ed0376ef29f8645937a63eedb0cd5c7/models/operator/token_10015_dusk_drgn/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d83e6b07b1e97cb10fc0b2d5eadf0e3d834373ed/models/operator/token_10015_dusk_drgn/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10007_phatom_twin": {
       "id": "token_10007_phatom_twin",
@@ -728600,7 +730519,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a65e88a57ed0376ef29f8645937a63eedb0cd5c7/models/operator/token_10007_phatom_twin/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d83e6b07b1e97cb10fc0b2d5eadf0e3d834373ed/models/operator/token_10007_phatom_twin/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10008_cqbw_box": {
       "id": "token_10008_cqbw_box",
@@ -729173,7 +731092,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a65e88a57ed0376ef29f8645937a63eedb0cd5c7/models/operator/token_10008_cqbw_box/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d83e6b07b1e97cb10fc0b2d5eadf0e3d834373ed/models/operator/token_10008_cqbw_box/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10029_slent2_protrb": {
       "id": "token_10029_slent2_protrb",
@@ -729918,7 +731837,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a65e88a57ed0376ef29f8645937a63eedb0cd5c7/models/operator/token_10029_slent2_protrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d83e6b07b1e97cb10fc0b2d5eadf0e3d834373ed/models/operator/token_10029_slent2_protrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10019_nearl2_sword": {
       "id": "token_10019_nearl2_sword",
@@ -730705,7 +732624,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a65e88a57ed0376ef29f8645937a63eedb0cd5c7/models/operator/token_10019_nearl2_sword/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d83e6b07b1e97cb10fc0b2d5eadf0e3d834373ed/models/operator/token_10019_nearl2_sword/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10002_kalts_mon3tr": {
       "id": "token_10002_kalts_mon3tr",
@@ -731123,7 +733042,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a65e88a57ed0376ef29f8645937a63eedb0cd5c7/models/operator/token_10002_kalts_mon3tr/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d83e6b07b1e97cb10fc0b2d5eadf0e3d834373ed/models/operator/token_10002_kalts_mon3tr/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10010_folivo_car": {
       "id": "token_10010_folivo_car",
@@ -732744,7 +734663,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a65e88a57ed0376ef29f8645937a63eedb0cd5c7/models/operator/token_10010_folivo_car/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d83e6b07b1e97cb10fc0b2d5eadf0e3d834373ed/models/operator/token_10010_folivo_car/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10021_blkngt_hypnos": {
       "id": "token_10021_blkngt_hypnos",
@@ -733159,7 +735078,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a65e88a57ed0376ef29f8645937a63eedb0cd5c7/models/operator/token_10021_blkngt_hypnos/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d83e6b07b1e97cb10fc0b2d5eadf0e3d834373ed/models/operator/token_10021_blkngt_hypnos/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10023_windft_wrench": {
       "id": "token_10023_windft_wrench",
@@ -734323,7 +736242,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a65e88a57ed0376ef29f8645937a63eedb0cd5c7/models/operator/token_10023_windft_wrench/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d83e6b07b1e97cb10fc0b2d5eadf0e3d834373ed/models/operator/token_10023_windft_wrench/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10045_alanna_crane": {
       "id": "token_10045_alanna_crane",
@@ -734723,7 +736642,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a65e88a57ed0376ef29f8645937a63eedb0cd5c7/models/operator/token_10045_alanna_crane/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d83e6b07b1e97cb10fc0b2d5eadf0e3d834373ed/models/operator/token_10045_alanna_crane/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10013_robin_mine": {
       "id": "token_10013_robin_mine",
@@ -735654,7 +737573,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a65e88a57ed0376ef29f8645937a63eedb0cd5c7/models/operator/token_10013_robin_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d83e6b07b1e97cb10fc0b2d5eadf0e3d834373ed/models/operator/token_10013_robin_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10016_rfrost_mine": {
       "id": "token_10016_rfrost_mine",
@@ -736585,7 +738504,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a65e88a57ed0376ef29f8645937a63eedb0cd5c7/models/operator/token_10016_rfrost_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d83e6b07b1e97cb10fc0b2d5eadf0e3d834373ed/models/operator/token_10016_rfrost_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10004_otter_motter": {
       "id": "token_10004_otter_motter",
@@ -737934,7 +739853,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/a65e88a57ed0376ef29f8645937a63eedb0cd5c7/models/operator/token_10004_otter_motter/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/d83e6b07b1e97cb10fc0b2d5eadf0e3d834373ed/models/operator/token_10004_otter_motter/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     }
   },
   "enemies": {
@@ -737985,7 +739904,7 @@
   },
   "skillEffects": {
     "repository": "arkpedia/arkpedia-sd-assets",
-    "commit": "a65e88a57ed0376ef29f8645937a63eedb0cd5c7",
+    "commit": "d83e6b07b1e97cb10fc0b2d5eadf0e3d834373ed",
     "pack": {
       "path": "effects/charge-cost/26-09-23-17-49-43_b9cc4a/effect.json",
       "bytes": 15311,

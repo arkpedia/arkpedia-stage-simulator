@@ -47,7 +47,7 @@ export class TaraxaOrdinaryHeals {
   visual(clip, speed = 1, loop = false) {
     if (this.model().exactDurations[clip] == null) throw Error('Missing original Taraxacum clip: ' + clip);
     this.u.mem.regularVisualDirection = this.facing;
-    this.u.mem.regularFormVisual = {clip, speed, loop,
+    this.u.mem.regularFormVisual = {clip, speed, loop, ...(loop ? {replace:true} : {}),
       ...(!loop ? {playId: `taraxa:ordinary:${this.seq}:${++this.visualSeq}`} : {})};
     this.u.mem.regularDeathVisual = this.facing === 'UP' ? {hide: true, duration: 1} : {clip: 'Die', die: 'Die', duration: 1};
   }
@@ -125,7 +125,7 @@ export class TaraxaOrdinaryHeals {
   completed(_phase) {}
   trait() { return {noAttack: true, attackDrivenSkill: true, attack: 'ranged', dmgType: 'heal', canHitFly: true,
     groundOnly: false, heal: {mode:'single'}, projectile: 'none', priority: 'normal', maxTargets: 1, maxTargetsByBlock: false,
-    hitAllBlocked: false, allInRange: false, hits: 1, hitsFn: null, chain: null, splashRadius: 0, windup: 0,
+    hitAllBlocked: false, allInRange: false, hits: 1, hitsFn: null, chain: null, splashRadius: 0, windup: 0, attackVisual:'none',
     requiresAcceptedLaunch: true, acceptAreaAttack: (_b, _u, _p, ts) => this.admit(ts),
     launchAreaAttack: (_b, _u, _p, ts, info) => this.release(ts, info)}; }
   watch() {
