@@ -124,3 +124,8 @@ for(const multiplier of[0,9])test(`A new source life's healing multiplier ${mult
  f.u.deploySeq++;f.b.removeBuff(f.u,'fixture:birth-healing');f.b.addBuff(f.u,{key:'fixture:new-life-healing',mods:{healingDealtMul:multiplier}});
  advance(f.b,.5);assert.equal(f.heals.length,1);near(f.heals[0].amount,atk*1.5);
 });
+
+test('Hiding the grounded source cancels pending healing and resumes on its original life',()=>{
+ const f=make();ally(f);phase(f);f.u.hidden=true;advance(f.b,1);assert.equal(f.receipts.length,0);assert.equal(f.attacks.stopped,false);
+ f.u.hidden=false;until(f,()=>f.heals.length===1);
+});

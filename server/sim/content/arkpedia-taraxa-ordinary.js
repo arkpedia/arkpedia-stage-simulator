@@ -71,7 +71,7 @@ export class TaraxaOrdinaryHeals {
   }
   admit(targets) {
     const p = this.phase;
-    return this.accepting && this.valid() && this.mayBegin() && this.u.canAct && !this.u.s.flags.disarm
+    return this.accepting && this.valid() && !this.u.hidden && this.mayBegin() && this.u.canAct && !this.u.s.flags.disarm
       && p && !p.accepted && p.epoch === this.u.attackControlEpoch && due(p.age, p.releaseAge)
       && targets.length === 1 && targets[0] === p.target && targets[0].deploySeq === p.life && retained(targets[0]);
   }
@@ -103,7 +103,7 @@ export class TaraxaOrdinaryHeals {
     if (!this.mayBegin()) { this.phase = null; return; }
     if (!due(this.b.time, this.bornUntil)) return;
     const u = this.u; let p = this.phase;
-    if (!u.canAct || u.s.flags.disarm || p && p.epoch !== u.attackControlEpoch) {
+    if (u.hidden || !u.canAct || u.s.flags.disarm || p && p.epoch !== u.attackControlEpoch) {
       this.interrupted(p); this.phase = null; if (this.valid()) this.idle(); return;
     }
     if (p) {
