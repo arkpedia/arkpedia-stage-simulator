@@ -44,6 +44,8 @@
 // ctx passed to spec callbacks: { battle, unit, skill, bb, target?, dealt?, targets?, dt?, reason? }; onAttack's ctx
 //   also carries `noAmmo` (set it to true: this attack spends no ammo). onEnd runs while the skill's mods / range are
 //   still applied (`active` is already false); they are removed right after it (unless onEnd re-activated the skill).
+// Emitted skillStart/skillEnd receipts retain their numeric `activation` before
+// callbacks; their shared SkillRuntime may already hold a later reentrant cast.
 
 import { absoluteRangeKeys, canTargetEnemy } from './targeting.js';
 import { AUTO_OP_COOLDOWN, COLS, ROWS } from './constants.js';
@@ -468,6 +470,7 @@ export class SkillRuntime {
       if (this.maxCharges === 1 || wasFull) this.sp = 0;
     }
     this.activations++;
+    const activation = this.activations;
     this.lastStart = this.battle.time;
     const b = this.battle;
     if (this.manual) this.opReadyAt = b.time + AUTO_OP_COOLDOWN;
@@ -492,7 +495,7 @@ export class SkillRuntime {
     this._loadingAmmo = this.kind === 'ammo';
     try {
       this._call('onStart', { reason });
-      if (b._hooks.skillStart) b.emit('skillStart', { unit: u, skill: this, reason });
+      if (b._hooks.skillStart) b.emit('skillStart', { unit: u, skill: this, reason, activation });
     } finally { this._loadingAmmo = wasLoadingAmmo; }
     // bullets added in skillStart (拉特兰's ×(1.05 + 0.015 × layers), 逃犯引渡手续, talents): the bar's full mark
     // (community report #35: the extra bullets sat above a full bar until fewer than the base count were left)
@@ -555,7 +558,7 @@ export class SkillRuntime {
     const n = this.activations;
     this._call('onEnd', { reason });
     if (!this.active && this.activations === n) this._removeMods();
-    if (b._hooks.skillEnd) b.emit('skillEnd', { unit: u, skill: this, reason });
+    if (b._hooks.skillEnd) b.emit('skillEnd', { unit: u, skill: this, reason, activation: n });
     if (this.kind !== 'passive') b._ev(['skill', u.id, 0]);
   }
 
