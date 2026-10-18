@@ -1,0 +1,354 @@
+{
+  "schemaVersion": 1,
+  "operatorId": "char_4213_skybx",
+  "enabledOperators": [
+    "char_4213_skybx"
+  ],
+  "frameParity": false,
+  "moduleSupport": false,
+  "nativeParticleSupport": false,
+  "nativePixelParity": false,
+  "mechanicsPolicy": "source-cn-skybox-flight-independent-silence-and-remaining-ammo-burst-v1",
+  "scope": "Selected original S1/S2, independent flight/block/height, Silence/mark and finite area payloads. Candidate and normal public UI passed; final integrated regression and hosted publication remain separate.",
+  "verification": {
+    "source": "Pinned original source and original-byte clocks; independent Node22/24 audits reject altered claims.",
+    "artwork": "SD PR42 merged at3c669260a0de9eb1c13f11f905f6a4c4d522daac. Original Front/Back bytes and PMA metadata reviewed separately; this is not public battle delivery approval.",
+    "runtime": "Frozen held commit825b17623eef8a7a98122e086c100d82833b8f3d passes the complete isolated Node24 suite:18256 passed,98 optional skips,zero failures. Node22/24 each pass758 selected/shared/adjacent checks. Public squad/support/build/original-wave/browser gates pending. Public candidate adds45 source/build/squad/support/redeployment/original-wave cases. Both skills clear unchanged0-1 with natural DP, eleven kills,zero leaks,twenty life (S1four automatic casts4655 damage; S2one manual cast5500 damage). All830 selected/shared/adjacent checks pass on each Node22/24. Final integrated regression and normal replay remain pending. Normal snapshot replay passes all830 selected/shared/adjacent checks on each Node22/24. Node22/24 produce identical candidate and identical normal bytes. All915 runtime skeletons verify. Final frozen public regression and hosted publication remain pending.",
+    "browser": {
+      "status": "passed",
+      "script": "tools/arkpedia/review-skybox-public.mjs",
+      "browserVersion": "Chrome/153.0.8010.12",
+      "cacheDisabled": true,
+      "externalAssetTransport": "Unintercepted original HTTPS at immutable source commits; normal TLS verification.",
+      "originalWaves": false,
+      "scope": "Controlled public UI scenario with original terrain, legal drop/swipe, empty waves,99DP and pinned healthy targets; original-wave tests are separate.",
+      "viewports": [
+        {
+          "width": 1280,
+          "height": 800,
+          "touch": false
+        },
+        {
+          "width": 844,
+          "height": 390,
+          "touch": true
+        }
+      ],
+      "cases": 4,
+      "captures": 38,
+      "browserErrors": 0,
+      "failedResources": 0,
+      "reportSha256": "46383f60a21f84e1ce7e8457989fe3904af429d913021da8f1ae3aca09367cf7",
+      "normalSnapshot": true,
+      "verified": [
+        "Actual squad skill controls and legal drop followed by separate swipe; no deployment before release",
+        "Original Front/Back skeletons, portrait/E0 and skill icons use immutable HTTPS with normal TLS",
+        "Air-only ordinary attack, natural SP and source automatic S1 Begin/bomb/End",
+        "Manual S2 Begin, ground loop, independent WALK/FLY/height, real ammo and half-ammo overload HUD",
+        "Manual Close fires five actual remaining rounds, original Close/End tracks and two-victim explosions",
+        "Source retirement drains owned account, mode, talent, ordinary and skill projectile listeners"
+      ],
+      "scriptSha256": "c314d5e130e035caa61351072cea19bb9c065d16c95d657b6156ed9a37933c57",
+      "driverSha256": "2e52cd4007ae553e30f773104626f9b5c2be7c15f717b61ca9063517fbdc51c8",
+      "fixtureServerSha256": "127fb1b74be89d0a35e6bfa4e3d35927d170fa4d3129287f6c523114c5bcaa22",
+      "candidateReportSha256": "0e67be0c1dcedc96190faed8b84312811f020df50f3ec6669ef146edc1c2fee4"
+    }
+  },
+  "sourceFoundationSha256": "0aec7d8b76cb41f690498414047b829c29662703a1244abc57ea018496387100",
+  "ownerArtworkSha256": "13072cbd99236aeb5a6c7304cb8e3be1c5e649c4d20151fce350cea079c0dc49",
+  "sourceClocksSha256": "5b18dc4abc532fd0007386a796a09956feb0794038988cc733aa38ccbcb752de",
+  "originalArtwork": {
+    "operator/char_4213_skybx/default/front": {
+      "kind": "operator",
+      "id": "char_4213_skybx",
+      "variant": "default",
+      "facing": "front",
+      "spineVersion": "3.8.99",
+      "source": {
+        "key": "operators",
+        "repository": "fexli/ArknightsResource",
+        "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+        "directory": "spine/char_4213_skybx/char_4213_skybx/Front"
+      },
+      "skeleton": {
+        "path": "models/operator/char_4213_skybx/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4213_skybx.skel",
+        "bytes": 232365,
+        "sha256": "d7733d036068c0859459c52739927568891253f657adde294737a05716801848"
+      },
+      "atlas": {
+        "path": "models/operator/char_4213_skybx/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4213_skybx.atlas",
+        "bytes": 7017,
+        "sha256": "a000af98a308309f2f100814785052297f1110b79c450bf75680e115b8e78373"
+      },
+      "textures": [
+        {
+          "path": "models/operator/char_4213_skybx/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4213_skybx.png",
+          "bytes": 280340,
+          "sha256": "1c165a27a81e416ab9acc3c7d6c389244b123be0952a63ce3f1079fdd7c623a8"
+        }
+      ],
+      "premultipliedAlpha": true,
+      "animations": {
+        "Attack": 2.1,
+        "Attack_Down": 2.1,
+        "Default": 0,
+        "Die": 1,
+        "Die_2": 1,
+        "Idle": 4,
+        "Skill_1_Begin": 1,
+        "Skill_1_End": 1,
+        "Skill_2_Begin": 1,
+        "Skill_2_Close": 1,
+        "Skill_2_End": 1,
+        "Skill_2_Idle": 4,
+        "Skill_2_Loop": 2.1,
+        "Skill_Down_2_Loop": 2.1,
+        "Start": 1
+      },
+      "hits": {
+        "Attack": [
+          0.333
+        ],
+        "Attack_Down": [
+          0.333
+        ],
+        "Skill_1_Begin": [
+          0.533
+        ],
+        "Skill_2_Close": [
+          0.267
+        ],
+        "Skill_2_Loop": [
+          0.267
+        ],
+        "Skill_Down_2_Loop": [
+          0.267
+        ]
+      },
+      "bounds": {
+        "x": -315.648,
+        "y": -7.032,
+        "width": 502.695,
+        "height": 468.78
+      },
+      "animationRoles": {
+        "idle": "Idle",
+        "deploy": "Start",
+        "attack": {
+          "begin": null,
+          "loop": "Attack",
+          "end": null
+        },
+        "attackDown": {
+          "begin": null,
+          "loop": "Attack_Down",
+          "end": null
+        },
+        "skill": {
+          "begin": "Skill_1_Begin",
+          "loop": null,
+          "end": "Skill_1_End",
+          "index": 0,
+          "via": "skill"
+        },
+        "skills": {
+          "0": {
+            "begin": "Skill_1_Begin",
+            "loop": null,
+            "end": "Skill_1_End",
+            "index": 0,
+            "via": "skill"
+          },
+          "1": {
+            "begin": "Skill_2_Begin",
+            "loop": "Skill_2_Loop",
+            "idle": "Skill_2_Idle",
+            "end": "Skill_2_End",
+            "index": 1,
+            "via": "skill"
+          }
+        },
+        "die": "Die",
+        "stun": null,
+        "move": null
+      }
+    },
+    "operator/char_4213_skybx/default/back": {
+      "kind": "operator",
+      "id": "char_4213_skybx",
+      "variant": "default",
+      "facing": "back",
+      "spineVersion": "3.8.99",
+      "source": {
+        "key": "operators",
+        "repository": "fexli/ArknightsResource",
+        "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+        "directory": "spine/char_4213_skybx/char_4213_skybx/Back"
+      },
+      "skeleton": {
+        "path": "models/operator/char_4213_skybx/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4213_skybx.skel",
+        "bytes": 171216,
+        "sha256": "ae0bf94811d237950c20440b6a76143e6d5bc6d54f0863a996050f6729f13988"
+      },
+      "atlas": {
+        "path": "models/operator/char_4213_skybx/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4213_skybx.atlas",
+        "bytes": 7401,
+        "sha256": "dc0188bb7d3fb7286cad08d90140ca9fd67ea723024e0f319a82a534eed33a46"
+      },
+      "textures": [
+        {
+          "path": "models/operator/char_4213_skybx/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4213_skybx.png",
+          "bytes": 301215,
+          "sha256": "16338e7fc1b2e0e640a190884da7e8a523ee66936e846692e248d6699a853190"
+        }
+      ],
+      "premultipliedAlpha": true,
+      "animations": {
+        "Attack": 2.1,
+        "Default": 0,
+        "Idle": 4,
+        "Skill_1_Begin": 1,
+        "Skill_1_End": 1,
+        "Skill_2_Begin": 1,
+        "Skill_2_Close": 1,
+        "Skill_2_End": 1,
+        "Skill_2_Idle": 4,
+        "Skill_2_Loop": 2.1,
+        "Start": 1
+      },
+      "hits": {
+        "Attack": [
+          0.333
+        ],
+        "Skill_1_Begin": [
+          0.533
+        ],
+        "Skill_2_Close": [
+          0.267
+        ],
+        "Skill_2_Loop": [
+          0.267
+        ]
+      },
+      "bounds": {
+        "x": -315.648,
+        "y": -7.032,
+        "width": 502.695,
+        "height": 468.78
+      },
+      "animationRoles": {
+        "idle": "Idle",
+        "deploy": "Start",
+        "attack": {
+          "begin": null,
+          "loop": "Attack",
+          "end": null
+        },
+        "attackDown": null,
+        "skill": {
+          "begin": "Skill_1_Begin",
+          "loop": null,
+          "end": "Skill_1_End",
+          "index": 0,
+          "via": "skill"
+        },
+        "skills": {
+          "0": {
+            "begin": "Skill_1_Begin",
+            "loop": null,
+            "end": "Skill_1_End",
+            "index": 0,
+            "via": "skill"
+          },
+          "1": {
+            "begin": "Skill_2_Begin",
+            "loop": "Skill_2_Loop",
+            "idle": "Skill_2_Idle",
+            "end": "Skill_2_End",
+            "index": 1,
+            "via": "skill"
+          }
+        },
+        "die": null,
+        "stun": null,
+        "move": null
+      }
+    }
+  },
+  "interfaceAssets": [
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "five-star-icons/Skybox - Base.webp",
+      "bytes": 11212,
+      "sha256": "643094b436735f7f35091f517a2de40aef4c5ec63db1ad5b012b896fe7ee3bea"
+    },
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "skill-icons/Skybox - Gunpowder Soiree.webp",
+      "bytes": 6286,
+      "sha256": "1cb316ded81b69e5b2770c27e00c5ea11e8f7481b8bcf6faac6e1504ee9c8a62"
+    },
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "skill-icons/Skybox - EMP Benefaction.webp",
+      "bytes": 6748,
+      "sha256": "94b0d3bfeca5dba027bd1d80b54e2a78d43fa30e9f85571bfa451d10a0026220"
+    },
+    {
+      "repository": "arkpedia/arkpedia-skin-assets",
+      "commit": "6fb723692d89c4a08d9a7aa4015e19c0753dd270",
+      "path": "five-star-skins/Skybox - Base.webp",
+      "bytes": 203376,
+      "sha256": "15201f0835611912a7f26eece95dd0e9c425f112371a63a4e91f889bf72ea54f"
+    }
+  ],
+  "interfaceProvenance": [
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "five-star-icons/Skybox - Base.webp",
+      "sourceMap": "asset-source-map.json",
+      "sourceMapSha256": "17a7cf616bf82e4225c09ca42c082cc89db54768232044f57250f9f2135f6fad",
+      "binding": {
+        "sourcePath": "avatar/char_4213_skybx.png",
+        "sourceBlob": "c13bb631a00c411888f6b9fd9c33a8b2760e2b1b",
+        "maxWidth": 180
+      }
+    },
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "skill-icons/Skybox - Gunpowder Soiree.webp",
+      "sourceMap": "asset-source-map.json",
+      "sourceMapSha256": "17a7cf616bf82e4225c09ca42c082cc89db54768232044f57250f9f2135f6fad",
+      "binding": {
+        "sourcePath": "skill/skill_icon_skchr_skybx_1.png",
+        "maxWidth": 128,
+        "sourceBlob": "95ede154e78ad0ba1ea5ce2d74d78c570d316c99"
+      }
+    },
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "skill-icons/Skybox - EMP Benefaction.webp",
+      "sourceMap": "asset-source-map.json",
+      "sourceMapSha256": "17a7cf616bf82e4225c09ca42c082cc89db54768232044f57250f9f2135f6fad",
+      "binding": {
+        "sourcePath": "skill/skill_icon_skchr_skybx_2.png",
+        "maxWidth": 128,
+        "sourceBlob": "2b875a2c62841fe1d7f041c0193d21c53bdf65b0"
+      }
+    },
+    {
+      "repository": "arkpedia/arkpedia-skin-assets",
+      "commit": "6fb723692d89c4a08d9a7aa4015e19c0753dd270",
+      "path": "five-star-skins/Skybox - Base.webp",
+      "sourceMap": "asset-source-map.json",
+      "sourceMapSha256": "c2e7d027519aac45895e4adca651a12af10cffde45c8ea2df3972193fcbbea98",
+      "binding": "skin/char_4213_skybx_1b.png"
+    }
+  ]
+}

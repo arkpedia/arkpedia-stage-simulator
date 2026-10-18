@@ -108,6 +108,7 @@ import { RECON_OPERATORS } from './recon-operators.js';
 import { JU_OPERATORS } from './ju-operators.js';
 import { TARAXA_OPERATORS } from './taraxa-operators.js';
 import { BOTANY_OPERATORS } from './botany-operators.js';
+import { SKYBOX_OPERATORS } from './skybox-operators.js';
 import { TURDUS_OPERATORS } from './turdus-operators.js';
 import { BRANCH_OPERATORS } from './branch-operators.js';
 import { RECKPR_OPERATORS } from './reckpr-operators.js';
@@ -442,6 +443,7 @@ export const REGULAR_OPERATORS = Object.freeze({
   ...JU_OPERATORS,
   ...TARAXA_OPERATORS,
   ...BOTANY_OPERATORS,
+  ...SKYBOX_OPERATORS,
   ...BRANCH_OPERATORS,
 });
 
