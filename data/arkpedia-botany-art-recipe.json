@@ -1,0 +1,108 @@
+{
+  "operator": "char_4223_botany",
+  "name": "Botany",
+  "foundationSha256": "dd8f7cccb8e291d0598ea8a4972377c967f790aa05820b3734eba9aeb2dfd6c7",
+  "artCommit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+  "output": "data/arkpedia-botany-art.json",
+  "sdReview": "source-reviews/botany.json",
+  "scope": "Original Front/Back files unchanged. Independently checked native skeleton/atlas/material/texture pointers, decoded pixels and premultiplied alpha. Literal Start/Attack, single Skill_1 and S2 Begin/Loop/Idle/End; both original S2-to-ordinary End mixes retained. Front has Die and Back has none. Combat/public admission, modules, effects/audio/shaders and compiled/frame/pixel parity remain separate.",
+  "roles": {
+    "Front": {
+      "idle": "Idle",
+      "deploy": "Start",
+      "attack": {
+        "begin": null,
+        "loop": "Attack",
+        "end": null
+      },
+      "attackDown": null,
+      "skill": {
+        "begin": null,
+        "loop": "Skill_1",
+        "end": null,
+        "index": 0,
+        "via": "skill"
+      },
+      "skills": {
+        "0": {
+          "begin": null,
+          "loop": "Skill_1",
+          "end": null,
+          "index": 0,
+          "via": "skill"
+        },
+        "1": {
+          "begin": "Skill_2_Begin",
+          "loop": "Skill_2_Loop",
+          "idle": "Skill_2_Idle",
+          "end": "Skill_2_End",
+          "index": 1,
+          "via": "skill"
+        }
+      },
+      "die": "Die",
+      "stun": null,
+      "move": null
+    },
+    "Back": {
+      "idle": "Idle",
+      "deploy": "Start",
+      "attack": {
+        "begin": null,
+        "loop": "Attack",
+        "end": null
+      },
+      "attackDown": null,
+      "skill": {
+        "begin": null,
+        "loop": "Skill_1",
+        "end": null,
+        "index": 0,
+        "via": "skill"
+      },
+      "skills": {
+        "0": {
+          "begin": null,
+          "loop": "Skill_1",
+          "end": null,
+          "index": 0,
+          "via": "skill"
+        },
+        "1": {
+          "begin": "Skill_2_Begin",
+          "loop": "Skill_2_Loop",
+          "idle": "Skill_2_Idle",
+          "end": "Skill_2_End",
+          "index": 1,
+          "via": "skill"
+        }
+      },
+      "die": null,
+      "stun": null,
+      "move": null
+    }
+  },
+  "nativeMixes": [
+    {
+      "sourceAnimName": "Skill_2_Idle",
+      "targetAnimName": "Idle",
+      "mixAnimName": "Skill_2_End"
+    },
+    {
+      "sourceAnimName": "Skill_2_Loop",
+      "targetAnimName": "Attack",
+      "mixAnimName": "Skill_2_End"
+    }
+  ],
+  "reviewPhases": [
+    "Start",
+    "Idle",
+    "Attack",
+    "Skill_1",
+    "Skill_2_Begin",
+    "Skill_2_Loop",
+    "Skill_2_Idle",
+    "Skill_2_End",
+    "Die"
+  ]
+}
