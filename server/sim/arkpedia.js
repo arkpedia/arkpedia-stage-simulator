@@ -126,6 +126,7 @@ import { customizePublicJuKit, installPublicJu } from './content/arkpedia-ju-pub
 import { customizePublicTaraxaKit, installPublicTaraxa } from './content/arkpedia-taraxa-public.js';
 import { customizePublicBotanyKit, installPublicBotany } from './content/arkpedia-botany-public.js';
 import { customizePublicSkyboxKit, installPublicSkybox } from './content/arkpedia-skybox-public.js';
+import { customizePublicAegisKit, installPublicAegis } from './content/arkpedia-aegis-public.js';
 import { customizePublicTurdusKit, installPublicTurdus } from './content/arkpedia-turdus-public.js';
 import { customizePublicBranchKit, installPublicBranch } from './content/arkpedia-branch-public.js';
 import { customizePublicReckprKit, installPublicReckpr } from './content/arkpedia-reckpr-public.js';
@@ -604,6 +605,7 @@ export class StandardBattle extends Battle {
     customizePublicTaraxaKit({ battle: this, id, unit, kit });
     customizePublicBotanyKit({ battle: this, id, unit, kit });
     customizePublicSkyboxKit({ battle: this, id, unit, kit });
+    customizePublicAegisKit({ battle: this, id, unit, kit });
     customizePublicBranchKit({ battle: this, id, unit, kit });
     customizeNarantKit({ battle: this, id, def, unit, kit });
     customizeElaKit({ battle: this, id, def, unit, kit });
@@ -837,6 +839,7 @@ export class StandardBattle extends Battle {
     installPublicTaraxa({ battle: this, unit, def });
     installPublicBotany({ battle: this, unit, def });
     installPublicSkybox({ battle: this, unit, def });
+    installPublicAegis({ battle: this, unit, def });
     installPublicBranch({ battle: this, unit, def });
     installNarant({ battle: this, unit, def });
     installEla({ battle: this, unit, def });

@@ -15,6 +15,7 @@ import { swipeFacing } from "/shared/arkpedia/placement.js";
 import { marcilBenchMana } from '/sim/content/arkpedia-marcil.js';
 import { skillHud, skillSourceFor, ammunitionHud } from "/shared/arkpedia/skill-hud.js";
 import { battleHud } from "/shared/arkpedia/battle-hud.js";
+import { interfaceAssetUrl } from "/shared/arkpedia/interface-assets.js";
 import { requiresLandscape } from "/shared/arkpedia/viewport.js";
 import { flowingShapeDeck, FlowingShapeCopyInteraction } from './muelsyse-copy.js';
 import { summonUnitId } from "/shared/arkpedia/summons.js";
@@ -56,9 +57,9 @@ const catalogue = catalogueFor(data);
 const ops = Object.values(data.operators);
 const rarityFolder = (op) => ["one", "two", "three", "four", "five", "six"][op.rarity - 1];
 const icon = (op) =>
-  `https://raw.githubusercontent.com/arkpedia/arkpedia-image-assets/${data.sources["arkpedia/arkpedia-image-assets"]}/${rarityFolder(op)}-star-icons/${encodeURIComponent(operatorAssetName(op.name) + " - Base.webp")}`;
+  interfaceAssetUrl(data,"arkpedia/arkpedia-image-assets",`${rarityFolder(op)}-star-icons/${operatorAssetName(op.name)} - Base.webp`);
 const artwork = (op) =>
-  `https://raw.githubusercontent.com/arkpedia/arkpedia-skin-assets/${data.sources["arkpedia/arkpedia-skin-assets"]}/${rarityFolder(op)}-star-skins/${encodeURIComponent(operatorAssetName(op.name) + " - Base.webp")}`;
+  interfaceAssetUrl(data,"arkpedia/arkpedia-skin-assets",`${rarityFolder(op)}-star-skins/${operatorAssetName(op.name)} - Base.webp`);
 const summonIcon = id => {
   const avatar = data.tokens?.[id]?.avatar;
   if (typeof avatar === 'string' && (avatar.startsWith('https://') ||
@@ -81,16 +82,16 @@ function placementError(id, row, col) {
 }
 const statIcon = (name) =>
   `https://raw.githubusercontent.com/arkpedia/arkpedia-image-assets/${data.sources["arkpedia/arkpedia-image-assets"]}/stat-icons/${name}.webp`;
-const imageAsset = path => `https://raw.githubusercontent.com/arkpedia/arkpedia-image-assets/${data.sources["arkpedia/arkpedia-image-assets"]}/${path}`;
+const imageAsset = path => interfaceAssetUrl(data,"arkpedia/arkpedia-image-assets",path);
 const classIcon = record => classNames[record.profession] ? imageAsset(`class-icons/${classNames[record.profession]}.webp`) : null;
 const classImage = (record, css = '') => classIcon(record) ? `<img class="${css}" src="${classIcon(record)}" alt="">` : '';
 function skillIcon(build) {
   const op = data.operators[build.id];
   const skill = op.skills.find(s => s.id === build.skillId);
-  if (skill?.assetIcon) return imageAsset(skill.assetIcon.split('/').map(encodeURIComponent).join('/'));
+  if (skill?.assetIcon) return imageAsset(skill.assetIcon);
   const level = skill?.levels[build.skillRank - 1];
   const file = skillIconFile(op.name, level?.name);
-  return file ? imageAsset(`skill-icons/${encodeURIComponent(file)}`) : null;
+  return file ? imageAsset(`skill-icons/${file}`) : null;
 }
 function battleReadouts() {
   const digits = String(battle.total).length * 2 + 1;

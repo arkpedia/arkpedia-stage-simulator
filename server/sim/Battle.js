@@ -1281,6 +1281,8 @@ export class Battle {
       // sampled flag. A short control can expire before the next combat tick.
       if (f && (f.stun || f.freeze || f.sleep || f.levitate || f.disarm))
         unit.attackControlEpoch = (unit.attackControlEpoch ?? 0) + 1;
+      if (f && (f.stun || f.freeze || f.sleep || f.levitate))
+        unit.actionControlEpoch = (unit.actionControlEpoch ?? 0) + 1;
       return applied;
     };
     const list = unit.buffs;

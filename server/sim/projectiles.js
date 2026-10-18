@@ -98,6 +98,10 @@ export class ProjectileSystem {
       flightTime: Number.isFinite(p.flightTime) && p.flightTime > 0 ? p.flightTime : null,
       attached: p.attached === true,
       ...(startDelay > 0 ? { startDelay } : {}),
+      // Reviewed source controllers may replace only the motion step. Shared
+      // target-life tracking, interception, finite expiry and hit dispatch stay
+      // in this system; existing projectiles retain their original shape/path.
+      ...(typeof p.advanceMotion === 'function' ? { advanceMotion: p.advanceMotion } : {}),
       onHit: p.onHit ?? null,
       // Opt-in moving colliders (piercing shots). Existing point impacts keep
       // their original arrival behavior; finite colliders expire where they are.
@@ -133,10 +137,29 @@ export class ProjectileSystem {
       if (p.startDelay != null && p.age < p.startDelay && p.age < p.maxAge) { keep.push(p); continue; }
       const dx = p.tx - p.x, dy = p.ty - p.y;
       const d = Math.hypot(dx, dy);
-      const motionEnd = p.expireInPlace ? Math.min(p.age, p.maxAge) : p.age;
+      const motionEnd = p.expireInPlace || p.advanceMotion ? Math.min(p.age, p.maxAge) : p.age;
       const motionDt = p.startDelay != null ? Math.max(0, motionEnd - Math.max(previous.age, p.startDelay))
-        : p.expireInPlace ? Math.min(dt, Math.max(0, p.maxAge - previous.age)) : dt;
-      const step = p.speed * this.speedScale(p) * motionDt;
+        : p.expireInPlace || p.advanceMotion ? Math.min(dt, Math.max(0, p.maxAge - previous.age)) : dt;
+      const speedScale = this.speedScale(p), step = p.speed * speedScale * motionDt;
+      if (p.advanceMotion) {
+        const state = this.battle._safe(() => p.advanceMotion({ battle: this.battle, projectile: p, previous,
+          dt: motionDt, speedScale, expires: p.age >= p.maxAge }), 'projectile.advanceMotion', p.source);
+        if (p.removed) continue;
+        // A failed/invalid source mover must fizzle instead of leaking NaN
+        // coordinates or turning its expiry into an invented target impact.
+        if (!state || !Number.isFinite(state.x) || !Number.isFinite(state.y) || typeof state.reached !== 'boolean') {
+          p.removed = true; continue;
+        }
+        p.x = state.x; p.y = state.y;
+        if (this.intercept(p, previous)) continue;
+        if (p.onMove) this.battle._safe(() => p.onMove({ battle: this.battle, projectile: p, previous,
+          x: p.x, y: p.y }), 'projectile.onMove', p.source);
+        if (p.removed) continue;
+        if (state.reached) arrived.push(p);
+        else if (p.age < p.maxAge) keep.push(p);
+        else p.removed = true;
+        continue;
+      }
       // Some original Arts projectiles use a fixed travel duration instead of
       // speed. Follow the live destination from the saved origin, even when the
       // target crosses the projectile; only the duration boundary can impact.
@@ -172,5 +195,10 @@ export class ProjectileSystem {
     this.arriving = [];
   }
 
-  clear() { this.list = []; this.arriving = []; this.speedAuras.clear(); this.interceptors.clear(); }
+  clear() {
+    // A mover/onMove/arrival callback may clear this system mid-update. Retire
+    // the captured objects too, so the old iteration cannot dispatch them later.
+    for (const p of [...this.list, ...this.arriving]) p.removed = true;
+    this.list = []; this.arriving = []; this.speedAuras.clear(); this.interceptors.clear();
+  }
 }

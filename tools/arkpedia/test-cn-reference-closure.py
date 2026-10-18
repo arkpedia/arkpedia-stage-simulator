@@ -4,18 +4,33 @@
 import ast
 import copy
 import json
+from functools import lru_cache
 from pathlib import Path
 import unittest
 
 ROOT = Path(__file__).resolve().parents[2]
 
 
-def dependency_walk(kind, source, assets):
-    """Run the actual walkers, replacing only their original-bundle readers."""
+@lru_cache(maxsize=2)
+def walker_code(kind):
+    """Compile each real source walker once; every fixture still gets fresh state."""
     path = ROOT / 'tools/arkpedia' / f'{kind}-cn-operator.py'
     tree = ast.parse(path.read_text())
     parameters = next(n for n in tree.body if isinstance(n, ast.Assign)
                       and any(isinstance(t, ast.Name) and t.id == 'parameters' for t in n.targets))
+    nodes = [parameters]
+    if kind == 'extract':
+        nodes.append(next(n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name == 'scan'))
+    else:
+        nodes.extend(n for n in tree.body if
+                     (isinstance(n, ast.Assign) and any(isinstance(t, ast.Name) and t.id == 'stack'
+                                                      for t in n.targets)) or
+                     (isinstance(n, ast.While) and isinstance(n.test, ast.Name) and n.test.id == 'stack'))
+    return compile(ast.Module(body=nodes, type_ignores=[]), str(path), 'exec')
+
+
+def dependency_walk(kind, source, assets):
+    """Run the actual walkers, replacing only their original-bundle readers."""
     resolved = []
 
     def graph(bundle, container):
@@ -30,15 +45,7 @@ def dependency_walk(kind, source, assets):
                graph=graph, original_graph=graph, queue=[copy.deepcopy(source)],
                projectile_bundle={'roots': {f'dyn/battle/prefabs/[uc]projectiles/{k}.prefab': 1
                                             for k in assets}})
-    nodes = [parameters]
-    if kind == 'extract':
-        nodes.append(next(n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name == 'scan'))
-    else:
-        nodes.extend(n for n in tree.body if
-                     (isinstance(n, ast.Assign) and any(isinstance(t, ast.Name) and t.id == 'stack'
-                                                      for t in n.targets)) or
-                     (isinstance(n, ast.While) and isinstance(n.test, ast.Name) and n.test.id == 'stack'))
-    exec(compile(ast.Module(body=nodes, type_ignores=[]), str(path), 'exec'), env)
+    exec(walker_code(kind), env)
     if kind == 'extract':
         env['scan'](copy.deepcopy(source))
     return set(resolved)
