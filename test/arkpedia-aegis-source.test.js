@@ -51,6 +51,18 @@ test('S2 retains six separately awaited missile events and an uncached distinct 
  assert.equal(n.s2Kick._animKey,'Skill_2_Loop');assert.equal(n.s2Kick._projectileKey,'projectile_chr_aigis_s2_kick');assert.equal(n.s2Kick._useCachedAtkOnly,0);
  assert.equal(n.s2End._animKey,'Skill_2_End');assert.equal(n.s2End._endAnimKey,'Idle');
 });
+test('Native stun aliases and four transition mixes retain their original literal names and missing Back tracks',()=>{
+ const n=aegisNativeInputs(),aliases=n.artController._animations;
+ for(const [key,loop]of[['Skill_1_Stun',1],['Skill_1_Stun_Begin',0],['Skill_1_Stun_End',0]]){
+  const a=aliases.find(a=>a.animKey===key);assert.deepEqual([a.animName,a.loop,a.speed,a.ignoreMissing],['n'+key,loop,1,1]);
+  assert.ok(e.models[ID].Front.durations[a.animName]>0);assert.equal(e.models[ID].Back.durations[a.animName],undefined);
+ }
+ assert.deepEqual(n.artController._mixSettings.map(m=>[m.sourceAnimName,m.targetAnimName,m.mixAnimName]),[
+  ['Skill_1_Idle','nSkill_1_Stun','nSkill_1_Stun_Begin'],['Skill_1_Loop','nSkill_1_Stun','nSkill_1_Stun_Begin'],
+  ['nSkill_1_Stun','Idle','nSkill_1_Stun_End'],['Skill_Down_1_Loop','nSkill_1_Stun','nSkill_1_Stun_Begin']]);
+ for(const mode of n.modes.slice(1))assert.deepEqual(mode.hook._replaceAnimPairs.slice(-1),[{fromAnimKey:'Stun',toAnimKey:'Skill_1_Stun'}]);
+ assert.equal(n.modes[3].attack._faceToFront,0);assert.equal(n.modes[3].attack._forceFaceToDirection,0);
+});
 test('Takeoff and talent retain separate parent ownership, direct block command and typed output/incoming actions',()=>{
  const n=aegisNativeInputs(),trait=n.takeoff._buffs[0],talent=n.talent._buffs[0];assert.equal(trait.buffKey,'aigis_tr');assert.deepEqual(trait.attributes.abnormalFlags,[35]);
  assert.equal(trait.lifeTimeType,2);assert.equal(talent.buffKey,'aigis_t_1');assert.equal(talent.lifeTimeType,2);
