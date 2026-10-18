@@ -43,5 +43,6 @@ export function botanyNativeInputs() {
     s1: botanySourceComponent('skills', BOTANY_SKILLS[0], '-7153721279235102625'),
     s1Attack: botanySourceComponent('skills', BOTANY_SKILLS[0], '7417283066513778783'),
     s2: botanySourceComponent('skills', BOTANY_SKILLS[1], '7015122995996678919'),
+    artController:evidence.chararts[BOTANY_ID][0].data,
     templates: evidence.templates, projectiles: evidence.projectiles};
 }

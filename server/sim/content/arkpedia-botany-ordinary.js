@@ -89,17 +89,20 @@ export class BotanyOrdinaryAttacks {
   }
   release(targets, info) {
     if (!this.admit(targets)) return false;
-    const p = this.phase, target = targets[0], sourceLife = this.seq;
+    const p = this.phase, target = targets[0];
     p.accepted = true;
-    const snapshot=captureSource(this.u),flight={target,life:p.life,sourceLife,snapshot,retired:false};
+    this.emit(target,p.life,p.shot,info);return true;
+  }
+  emit(target,life,shot,info){
+    const sourceLife=this.seq,snapshot=captureSource(this.u),flight={target,life,sourceLife,snapshot,retired:false};
     let projectile,claimed=false;
-    projectile=this.b.addProjectile({from:this.u,target,source:this.u,speed:p.shot.projectileSpeed,maxAge:10,
-      visual:'orb',data:{arkpediaTrackedVisual:true,projectileKey:p.shot.projectileKey??'projectile_chr_botany',botanyOrdinary:!p.shot.isSkill},
+    projectile=this.b.addProjectile({from:this.u,target,source:this.u,speed:shot.projectileSpeed,maxAge:10,
+      visual:'orb',data:{arkpediaTrackedVisual:true,projectileKey:shot.projectileKey??'projectile_chr_botany',botanyOrdinary:!shot.isSkill},
       onHit:()=>{
         if(claimed)return;claimed=true;this.flights.delete(projectile);
-        if(!this.ended&&!this.b.finished&&target.deploySeq===p.life&&retained(target)){
+        if(!this.ended&&!this.b.finished&&target.deploySeq===life&&retained(target)){
           const source=()=>!flight.retired&&present(this.u)&&this.u.deploySeq===sourceLife?this.u:snapshot;
-          this.impact({source,target,life:p.life,shot:p.shot,info});
+          this.impact({source,target,life,shot,info});
         }
         this.unwatch();
       }});
@@ -167,7 +170,7 @@ export class BotanyOrdinaryAttacks {
     this.stopped = true; this.phase = null; this.accepting = false;
     for(const f of this.flights.values())f.retired=true;
     for (const h of this.handles) this.b.off(h); this.handles = [];
-    delete this.u.mem.regularFormVisual; delete this.u.mem.regularVisualDirection;
+    if(this.u.deploySeq===this.seq){delete this.u.mem.regularFormVisual;delete this.u.mem.regularVisualDirection;}
     if (this.b.finished) this.drain();
   }
 }
