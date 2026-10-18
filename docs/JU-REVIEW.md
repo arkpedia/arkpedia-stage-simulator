@@ -1,6 +1,6 @@
 # Ju review
 
-Ju (`char_4221_ju`) has held source selection, exact animation clocks, a selected wound component an ordinary attack component and both selected skills. Original artwork delivery and public squad admission remain pending. The local playable roster stays at 396/431 pinned forms, with 35 remaining. Arkpedia app dev and production remain held.
+Ju (`char_4221_ju`) has held source selection, exact animation clocks, a selected wound component an ordinary attack component and both selected skills. Original artwork metadata is verified and published. Public artwork wiring, squad admission and battle-browser acceptance remain pending. The local playable roster stays at 396/431 pinned forms, with 35 remaining. Arkpedia app dev and production remain held.
 
 The original foundation is 299,728 bytes, SHA-256 `1a17ccfc1b76330814f9e7a660303ce4061df6c8afe50290ddc88a0e53a32011`, from CN table revision `a550f5e048bb94e7cdefc6eb97a4091f0c4c7add` and native client `26-09-22-07-47-20_6c71fa`. Five pinned bundles retain owner/default-art/skill graphs, three distinct projectiles and eight transitive templates, with no native/JSON template gaps. Original pointers remain strings. On each Node 22 and 24, the independent audit reproduces seven outputs and rejects 29 altered source/approval claims. The source receipt retains empty enabled operators and false module/native-particle/frame-parity flags.
 
@@ -10,7 +10,7 @@ Both original skeletons reproduce exact clocks without changing the rounded defa
 
 Twenty-nine combined source/clock/importer checks pass on each Node 22 and 24, including raw-byte corruption rejection. These are source checks, not playable combat or game-frame validation.
 
-Next work is original artwork delivery, public controls, original-wave and complete final-regression acceptance. Modules, native effects/audio/shaders and compiled-client/frame/pixel parity remain unverified.
+Next work is public artwork wiring, public controls, original-wave and complete final-regression acceptance. Modules, native effects/audio/shaders and compiled-client/frame/pixel parity remain unverified.
 
 ## Selected wound component
 
@@ -52,4 +52,10 @@ The separate range aura polls at the original .20000000298023224 interval and ad
 
 Done tags survive aura exit, skill end and caster withdrawal and suppress admission across sources. Removing a tag permits a later trigger. A retired source cancels pre-damage waiting stages; already accepted damage retains its recipient life and finite fallback ATK. Target-free/hidden checks still apply at final output. Owned aura, delay, trigger, damage and source-gate resources are guarded against admission vetoes, foreign replacements, reentrant polling, life replacement and battle end. External stage removal cancels that chain; native finish-reason dispatch and source-invalid attribute lookup remain explicit local mappings. No native particle/audio alternation is fabricated.
 
-Thirty-four delayed-damage checks and 38 S2 controller checks cover all ten ranks, both targets, original directions, Begin/control/expiry, selectors, callback admission, retained transport, talent integration and cleanup. Combined Ju, shared SP-hold, general skill, Turdus and Saga checks pass 359 cases on each Node 22 and 24. The complete isolated regression for this S2 checkpoint is pending. Original artwork, public/browser admission and game-wave acceptance remain separate gates; normal data stays at 396/431 forms.
+Thirty-four delayed-damage checks and 38 S2 controller checks cover all ten ranks, both targets, original directions, Begin/control/expiry, selectors, callback admission, retained transport, talent integration and cleanup. Combined Ju, shared SP-hold, general skill, Turdus and Saga checks pass 359 cases on each Node 22 and 24. The frozen S2 checkpoint `62ef08f2e663f7526c628dd13f8d65b85683b87b` (tree `29c354809a0a34dadec85784dddd64d3c9621bbc`) passes the complete isolated Node 24 suite: 17,280 passed, 92 optional-source/platform skips, zero failures (17,372 tests, 325 suites, 467.478 seconds). All 907 original runtime skeletons verify. Subsequent artwork-recipe/receipt and review-document changes do not change runtime code. Original artwork, public/browser admission and game-wave acceptance remain separate gates; normal data stays at 396/431 forms.
+
+## Original artwork
+
+The reviewed recipe and source receipt bind the original Front/Back files at upstream commit `d0b5af0b004b044d322397ce5ae79632b6d9fcdd`. Independent native pointer/material/atlas/texture traversal, decoded pixels and premultiplied alpha match. Literal Start/Attack, one-shot Skill_1 and S2 Begin/Loop/Idle/End are retained, including only the original Skill_2_Idle-to-Idle End mix. Back has no invented death clip. Separate Node 22 and 24 audits reproduce the receipt and reject 33 altered claims each. All six original files and the other 3,024 SD model records remain unchanged.
+
+Desktop and landscape-touch artwork review loads all 17 original facing/clip combinations and records 18 inspected captures, with no browser/resource errors. This is artwork compatibility, not a playable battle review. SD tests pass 88 cases on each Node 22 and 24; both versions validate all 3,026 models, scenery and the existing native effect package. SD PR39 publishes the metadata only. Both hosted checks passed; reviewed head `ca707665118d77951e8dd59a7488c6b2b6571f1c` and proposed/published merge tree `7fb177d76a04c87bccc0428578c4f77c9dbead1b` match. It merged as `a65e88a57ed0376ef29f8645937a63eedb0cd5c7`. Native effects/audio/shaders and compiled-client/frame/pixel parity remain unverified.
