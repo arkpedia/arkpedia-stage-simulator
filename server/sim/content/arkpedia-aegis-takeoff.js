@@ -33,7 +33,9 @@ export class AegisTakeoff{
  heightNow(){return regularVisualHeight(this,this.b.time);}
  decorate(visual){const v={...visual,...(this.height?{height:{...this.height}}:{heightOffset:this.heightOffset})};this.visuals.add(v);return v;}
  syncVisual(){if(!this.valid())return;const v=this.u.mem.regularFormVisual;
-  if(v==null||this.visuals.has(v))this.u.mem.regularFormVisual=this.decorate(v);}
+  if(v==null)this.u.mem.regularFormVisual=this.decorate(v);
+  else if(this.visuals.has(v)){delete v.height;delete v.heightOffset;
+   Object.assign(v,this.height?{height:{...this.height}}:{heightOffset:this.heightOffset});}}
  heightCommand(to,duration=0,at=this.b.time){if(!this.valid()||![to,duration,at].every(Number.isFinite)||duration<0)return false;
   if(duration===0){this.height=null;this.heightOffset=to;}else this.height={start:at,from:regularVisualHeight(this,at),to,duration};this.syncVisual();return true;}
  blockCommand(mode){if(!this.valid())return false;const p=commandBlockMode(this.b,this.u,mode,this);this.command=p;

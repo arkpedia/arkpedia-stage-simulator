@@ -40,10 +40,10 @@ export function verifyAegisS1Flight(n=aegisNativeInputs(),read=aegisSourceCompon
  return{holder,stun,landingBegin:parts[0]._buffs[0],landingEnd:parts[1]._buffs[0],takeoffBegin:parts[2]._buffs[0],takeoffEnd:parts[3]._buffs[0]};
 }
 export class AegisSkillOneFlight extends AegisTakeoff{
- constructor(b,u,{contract,onMode=()=>{}}={}){
-  if(contract!==AEGIS_S1_FLIGHT_CONTRACT||selectedAegisInputs(u).index!==0||typeof onMode!=='function')throw Error('Fresh selected S1 and exact Aegis state contract required');
+ constructor(b,u,{contract,onMode=()=>{},onHolderFinish=()=>{}}={}){
+  if(contract!==AEGIS_S1_FLIGHT_CONTRACT||selectedAegisInputs(u).index!==0||typeof onMode!=='function'||typeof onHolderFinish!=='function')throw Error('Fresh selected S1 and exact Aegis state contract required');
   super(b,u,{contract:AEGIS_TAKEOFF_CONTRACT});this.record=selectedAegisInputs(u);this.s1=verifyAegisS1Flight();
-  Object.assign(this,{mode:0,onMode,phase:null,holder:null,stun:null,grants:new Set(),serial:0});
+  Object.assign(this,{mode:0,onMode,onHolderFinish,phase:null,holder:null,stun:null,grants:new Set(),serial:0});
  }
  phaseLive(p){return !!p&&this.valid()&&this.phase===p;}
  grantLive(p){return !!p&&!p.finished&&p.buff?.source===this.u&&p.buff.key===p.key&&p.buff.data?.aegisS1State===p&&this.u.buffs.includes(p.buff);}
@@ -67,11 +67,14 @@ export class AegisSkillOneFlight extends AegisTakeoff{
  }
  beginSkillOne(){if(!this.valid()||this.mode!==0||this.phase)return false;const phase={kind:'landing',takeoffStarted:false};this.phase=phase;
   const p=this.grant(this.s1.holder,phase,{duration:this.record.source.duration,mods:{atkPct:this.record.bb.atk,defPct:this.record.bb.def},flags:{groundEvadeImmune:true},
-   onFinish:()=>{if(this.holder===p)this.holder=null;this.createStun(phase);}});
+   onFinish:()=>{if(this.holder===p)this.holder=null;this.onHolderFinish();this.createStun(phase);}});
   if(!p){if(this.phase===phase)this.phase=null;return false;}this.holder=p;
   if(!this.modeTo(1)||!this.phaseLive(phase)||!this.grantLive(p))return false;
-  this.instant(this.s1.landingBegin,phase,()=>{const x=bb(this.s1.landingBegin);this.heightCommand(x.height_offset,x.height_duration);});
+  this.beginLanding();
   return this.phaseLive(phase)&&this.grantLive(p);
+ }
+ beginLanding(){const phase=this.phase;if(!this.phaseLive(phase)||phase.kind!=='landing'||this.mode!==1||!this.grantLive(this.holder))return false;
+  return this.instant(this.s1.landingBegin,phase,()=>{const x=bb(this.s1.landingBegin);this.heightCommand(x.height_offset,x.height_duration);});
  }
  completeLanding(){const phase=this.phase;if(!this.phaseLive(phase)||phase.kind!=='landing'||this.mode!==1||!this.grantLive(this.holder))return false;
   let done=false;this.instant(this.s1.landingEnd,phase,()=>{if(!this.blockCommand('WALK')||!this.phaseLive(phase))return;
@@ -92,7 +95,7 @@ export class AegisSkillOneFlight extends AegisTakeoff{
   return this.grantLive(p)?p:null;
  }
  triggerStun(){if(!this.valid()||!this.grantLive(this.stun))return false;return this.blockCommand('WALK');}
- beginTakeoff(){const phase=this.phase;if(!this.phaseLive(phase)||phase.kind!=='return'||phase.takeoffStarted||this.mode!==3)return false;
+ beginTakeoff({restart=false}={}){const phase=this.phase;if(!this.phaseLive(phase)||phase.kind!=='return'||phase.takeoffStarted&&!restart||this.mode!==3)return false;
   let done=false;this.instant(this.s1.takeoffBegin,phase,()=>{if(!this.blockCommand('FLY')||!this.phaseLive(phase))return;
    if(this.grantLive(this.stun))this.triggerStun();if(!this.phaseLive(phase))return;
    const x=bb(this.s1.takeoffBegin);this.heightCommand(x.height_offset,x.height_duration);phase.takeoffStarted=true;done=true;});return done;

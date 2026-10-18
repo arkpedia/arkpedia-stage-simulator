@@ -62,6 +62,11 @@ test('Owned height cleanup retains the clip, while foreign presentation is neith
  const f=make();f.u.mem.regularFormVisual=f.flight.decorate({clip:'Attack',playId:'ours'});f.flight.stop();assert.deepEqual(f.u.mem.regularFormVisual,{clip:'Attack',playId:'ours'});
  const g=make(),v={clip:'Idle',heightOffset:.9,playId:'foreign'};g.u.mem.regularFormVisual=v;g.flight.heightCommand(.2);assert.equal(g.u.mem.regularFormVisual,v);g.flight.stop();assert.equal(g.u.mem.regularFormVisual,v);
 });
+test('Height commands preserve an owned animation identity for its live speed and cleanup owner',()=>{
+ const f=make(),v=f.flight.decorate({clip:'Attack',playId:'owned',speed:1});f.u.mem.regularFormVisual=v;
+ f.flight.heightCommand(0,.3);assert.equal(f.u.mem.regularFormVisual===v,true);assert.ok(v.height);assert.equal(v.heightOffset,undefined);
+ v.speed=.5;f.flight.heightCommand(.4);assert.equal(f.u.mem.regularFormVisual===v,true);assert.equal(v.height,undefined);near(v.heightOffset,.4);assert.equal(v.speed,.5);
+});
 test('Foreign same-key admission collision retains its own lifetime and is never adopted',()=>{
  let once=false,foreign;const f=make({beforeInstall:(b,u)=>b.on('beforeBuff',c=>{if(once||!c.buff.key.startsWith('aigis_tr:'))return;once=true;
   foreign=b.addBuff(u,{key:c.buff.key,source:{},duration:5,data:{foreign:true}});})});advance(f.b,.1);assert.equal(f.u.findBuff(foreign.key),foreign);
