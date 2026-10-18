@@ -1,0 +1,132 @@
+{
+  "operator": "char_4219_yukari",
+  "name": "Yukari Takeba",
+  "foundationSha256": "eb4b2640253141e8a0cae32a5712348258cba08da239c16eae53bf7726a710f9",
+  "artCommit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+  "output": "data/arkpedia-yukari-art.json",
+  "sdReview": "source-reviews/yukari.json",
+  "scope": "Original Front/Back source files unchanged. Native skeleton/atlas/material/texture pointers, decoded pixels and premultiplied alpha are independently checked. Literal ordinary Begin/Loop/End, Front Down Begin/Loop/End, both single-clip skill tracks and six original mixes are retained. Back has no Down/death track. Artwork roles do not grant combat/public admission, native mix pixels, FX/audio/shaders/modules or compiled/frame/pixel parity.",
+  "roles": {
+    "Front": {
+      "idle": "Idle",
+      "deploy": "Start",
+      "attack": {
+        "begin": "Attack_Begin",
+        "loop": "Attack_Loop",
+        "end": "Attack_End"
+      },
+      "attackDown": {
+        "begin": "Attack_Down_Begin",
+        "loop": "Attack_Down_Loop",
+        "end": "Attack_Down_End"
+      },
+      "skill": {
+        "begin": null,
+        "loop": "Skill_1",
+        "end": null,
+        "index": 0,
+        "via": "skill"
+      },
+      "skills": {
+        "0": {
+          "begin": null,
+          "loop": "Skill_1",
+          "end": null,
+          "index": 0,
+          "via": "skill"
+        },
+        "1": {
+          "begin": null,
+          "loop": "Skill_2",
+          "end": null,
+          "index": 1,
+          "via": "skill"
+        }
+      },
+      "die": "Die",
+      "stun": null,
+      "move": null
+    },
+    "Back": {
+      "idle": "Idle",
+      "deploy": "Start",
+      "attack": {
+        "begin": "Attack_Begin",
+        "loop": "Attack_Loop",
+        "end": "Attack_End"
+      },
+      "attackDown": null,
+      "skill": {
+        "begin": null,
+        "loop": "Skill_1",
+        "end": null,
+        "index": 0,
+        "via": "skill"
+      },
+      "skills": {
+        "0": {
+          "begin": null,
+          "loop": "Skill_1",
+          "end": null,
+          "index": 0,
+          "via": "skill"
+        },
+        "1": {
+          "begin": null,
+          "loop": "Skill_2",
+          "end": null,
+          "index": 1,
+          "via": "skill"
+        }
+      },
+      "die": null,
+      "stun": null,
+      "move": null
+    }
+  },
+  "nativeMixes": [
+    {
+      "sourceAnimName": "Idle",
+      "targetAnimName": "Attack_Loop",
+      "mixAnimName": "Attack_Begin"
+    },
+    {
+      "sourceAnimName": "Idle",
+      "targetAnimName": "Attack_Down_Loop",
+      "mixAnimName": "Attack_Down_Begin"
+    },
+    {
+      "sourceAnimName": "Attack_Loop",
+      "targetAnimName": "Idle",
+      "mixAnimName": "Attack_End"
+    },
+    {
+      "sourceAnimName": "Attack_Down_Loop",
+      "targetAnimName": "Idle",
+      "mixAnimName": "Attack_Down_End"
+    },
+    {
+      "sourceAnimName": "Born",
+      "targetAnimName": "Attack_Loop",
+      "mixAnimName": "Attack_Begin"
+    },
+    {
+      "sourceAnimName": "Born",
+      "targetAnimName": "Attack_Down_Loop",
+      "mixAnimName": "Attack_Down_Begin"
+    }
+  ],
+  "reviewPhases": [
+    "Start",
+    "Idle",
+    "Attack_Begin",
+    "Attack_Loop",
+    "Attack_End",
+    "Attack_Down_Begin",
+    "Attack_Down_Loop",
+    "Attack_Down_End",
+    "Skill_1",
+    "Skill_2",
+    "Die"
+  ]
+}
