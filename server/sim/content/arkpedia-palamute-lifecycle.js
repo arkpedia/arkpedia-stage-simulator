@@ -61,7 +61,7 @@ export class PalamuteLifecycle{
     const und=b.addBuff(t,{key:'palamute:undeadable',source:t,persist:true,allowDead:true,flags:{undeadable:true}}),heal=b.addBuff(t,{key:'palamute:heal-free',source:t,persist:true,allowDead:true,flags:{healFree:true}}),block=b.addBuff(t,{key:'palamute:active-block',source:t,persist:true,allowDead:true,mods:{blockCnt:1}});for(const r of[und,heal,block])if(r)resources.add(r);resourcesOK=!!und&&!!heal&&!!block;
    }}});
    if(!token||!present(token)||!this.valid()||!resourcesOK)throw Error('Original Palamute point deployment failed.');
-   const p=this.point={unit:token,seq:token.deploySeq,row,col,mode:'born',bornUntil:this.b.time+clocks.tokens[TOKEN].models.Single.exactDurations.Start,recoverAt:Infinity,finished:false,visualSeq:0,resources};this.visual(p,'Start');return token;
+   const p=this.point={unit:token,seq:token.deploySeq,row,col,mode:'born',bornUntil:this.b.time+clocks.tokens[TOKEN].models.Single.exactDurations.Start,recoverAt:Infinity,finished:false,visualSeq:0,resources};this.visual(p,'Start');this.combat?.placed?.(p);return token;
   }catch(error){token??=created;if(present(token))this.b._remove(token,'palamute-placement-cancelled',null,true);else if(token){this.b.offOwner(token);token.removed=true;}if(this.valid())this.stock=1;throw error;}
   finally{this.placing=false;}
  }
@@ -90,7 +90,9 @@ export class PalamuteLifecycle{
   if(!present(p.unit)||p.unit.deploySeq!==p.seq){this.finish(p);return;}
   for(const buff of p.resources)if(!p.unit.buffs.includes(buff))p.resources.delete(buff);
   if(p.visualPending&&due(this.b.time,p.visualPending.until)){const v=p.visualPending;p.visualPending=null;this.visual(p,v.clip,v.loop);}
-  if(p.mode==='born'&&due(this.b.time,p.bornUntil)){p.mode='active';this.pose(p,'Idle',true);}else if(p.mode==='rest'&&due(this.b.time,p.recoverAt))this.recover(p);
+  if(p.mode==='born'&&(this.combat?.bornComplete?this.combat.bornComplete(p):due(this.b.time,p.bornUntil))){
+   if(this.current(p)&&p.mode==='born'){p.mode='active';this.pose(p,'Idle',true);}
+  }else if(p.mode==='rest'&&due(this.b.time,p.recoverAt))this.recover(p);
  }
  install(){if(this.stopped||this.handles.length)throw Error('Recon point lifecycle cannot be reinstalled');const map=this.b.regularSummons??=new Map();if(map.has(this.state.key))throw Error('A Recon point deck already exists');map.set(this.state.key,this.state);
   const{b,u}=this;this.handles=[b.on('deploy',({unit,move})=>{if(unit===u&&!move){this.seq=u.deploySeq;this.stock=1;}},{owner:u}),b.on('tick',()=>this.tick(),{owner:u}),
