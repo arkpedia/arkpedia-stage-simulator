@@ -1,0 +1,298 @@
+{
+  "schemaVersion": 1,
+  "operatorId": "char_4222_taraxa",
+  "enabledOperators": [
+    "char_4222_taraxa"
+  ],
+  "frameParity": false,
+  "moduleSupport": false,
+  "nativeParticleSupport": false,
+  "nativePixelParity": false,
+  "mechanicsPolicy": "source-cn-taraxa-air-block-aura-and-two-flight-heal-modes-v1",
+  "scope": "Selected original grounded healing, conditional air-blocking Sanctuary/block aura, owned flight transitions, manual random direct-heal S1 and primary/secondary/splash S2.",
+  "verification": {
+    "source": "Pinned original foundation; independent Node22/24 audits reproduce seven outputs and reject 30 altered claims.",
+    "artwork": "Original pointers, six files, decoded pixels and PMA verified. Node22/24 art audits reject 33 altered claims each. All 22 original facing/clip combinations load per desktop/phone viewport with 24 inspected captures. SD PR40 merged at d83e6b07b1e97cb10fc0b2d5eadf0e3d834373ed.",
+    "runtime": "561 selected/related normal-snapshot checks pass on Node22/24. Both unchanged original 0-1 wave cases clear with natural DP, 11 kills, no leaks and actual S1/S2 healing. Frozen public checkpoint 5c66d2978043dbd4ee4dfdc3539de3234a299768, tree bc2f6f19b32197f020d86422369dd890a3250796, passes the complete isolated Node24 suite: 17,582 passed, 94 optional-source/platform skips, zero failures; all 911 original runtime skeletons verify. Including merged simulator master at 7ae8bb13c0a8c1fc585be044b169187015f64897 preserves exactly that tested tree.",
+    "browser": {
+      "status": "passed",
+      "script": "tools/arkpedia/review-taraxa-public.mjs",
+      "normalSnapshot": true,
+      "scope": "Four controlled public-UI cases repeated on both candidate and normal snapshots, desktop and touch landscape, both selected original skills. Empty waves, 99 DP and scripted ally HP are explicit fixture conditions; unchanged original-wave clears are tested independently.",
+      "browserVersion": "Chrome/153.0.8010.12",
+      "cacheDisabled": true,
+      "externalAssetTransport": "Original immutable HTTPS, unintercepted external requests and normal TLS verification",
+      "cases": 4,
+      "captures": 30,
+      "visualInspection": "All 30 captures from each candidate and normal run inspected in desktop/phone contact sheets. Full phone S1 ready, desktop S2 healing, phone S2 healing and desktop S1 grounded captures inspected for art, bars, ready glyph and layout.",
+      "errors": [],
+      "failedResources": [],
+      "scriptSha256": "d67560e3cf0a2727371c692961ca5c5fb2dd7328f31ae42b1662ca923dcce3bb",
+      "driverSha256": "2e52cd4007ae553e30f773104626f9b5c2be7c15f717b61ca9063517fbdc51c8",
+      "fixtureServerSha256": "127fb1b74be89d0a35e6bfa4e3d35927d170fa4d3129287f6c523114c5bcaa22",
+      "candidateReportSha256": "847d03938542bb2aeb67150bc4040bfd742baff5ed6b7815644f1339dea5a763",
+      "normalReportSha256": "e2c8c6ec5e02bbde3d39deca4da79a8cf64d27827133ad08463c2ce571e7400d"
+    }
+  },
+  "originalArtwork": {
+    "operator/char_4222_taraxa/default/back": {
+      "kind": "operator",
+      "id": "char_4222_taraxa",
+      "variant": "default",
+      "facing": "back",
+      "spineVersion": "3.8.99",
+      "source": {
+        "key": "operators",
+        "repository": "fexli/ArknightsResource",
+        "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+        "directory": "spine/char_4222_taraxa/char_4222_taraxa/Back"
+      },
+      "skeleton": {
+        "path": "models/operator/char_4222_taraxa/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4222_taraxa.skel",
+        "bytes": 241556,
+        "sha256": "975b95e9d97a2571c0b31d9991f7e065375c1220345fb0c2518fb9da9dff932e"
+      },
+      "atlas": {
+        "path": "models/operator/char_4222_taraxa/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4222_taraxa.atlas",
+        "bytes": 9389,
+        "sha256": "c04e3de20460b3803103ccca5429394365720b5c7c81d3d3152204ce1e2dc4ff"
+      },
+      "textures": [
+        {
+          "path": "models/operator/char_4222_taraxa/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4222_taraxa.png",
+          "bytes": 243663,
+          "sha256": "aab04db052be2dd8d260cf7490261971629b6dd056ad74dbd7eb22c88d4c304d"
+        }
+      ],
+      "premultipliedAlpha": true,
+      "animations": {
+        "Attack": 2.833,
+        "Default": 0,
+        "Idle": 2.667,
+        "Skill_1_Begin": 1,
+        "Skill_1_End": 1,
+        "Skill_1_Loop": 0.533,
+        "Skill_2_Begin": 1,
+        "Skill_2_End": 1,
+        "Skill_2_Idle": 2.667,
+        "Skill_2_Loop": 1.5,
+        "Start": 1
+      },
+      "hits": {
+        "Attack": [
+          0.6
+        ],
+        "Skill_1_Begin": [
+          0.333
+        ],
+        "Skill_1_End": [
+          0.167
+        ],
+        "Skill_1_Loop": [
+          0
+        ],
+        "Skill_2_Begin": [
+          0.333
+        ],
+        "Skill_2_End": [
+          0.167
+        ],
+        "Skill_2_Loop": [
+          0.6
+        ]
+      },
+      "bounds": {
+        "x": -298.141,
+        "y": -67.7,
+        "width": 437.991,
+        "height": 471.93
+      },
+      "animationRoles": {
+        "idle": "Idle",
+        "deploy": "Start",
+        "attack": {
+          "begin": null,
+          "loop": "Attack",
+          "end": null
+        },
+        "attackDown": null,
+        "skill": {
+          "begin": "Skill_1_Begin",
+          "loop": "Skill_1_Loop",
+          "end": "Skill_1_End",
+          "index": 0,
+          "via": "skill"
+        },
+        "skills": {
+          "0": {
+            "begin": "Skill_1_Begin",
+            "loop": "Skill_1_Loop",
+            "end": "Skill_1_End",
+            "index": 0,
+            "via": "skill"
+          },
+          "1": {
+            "begin": "Skill_2_Begin",
+            "loop": "Skill_2_Loop",
+            "idle": "Skill_2_Idle",
+            "end": "Skill_2_End",
+            "index": 1,
+            "via": "skill"
+          }
+        },
+        "die": null,
+        "stun": null,
+        "move": null
+      }
+    },
+    "operator/char_4222_taraxa/default/front": {
+      "kind": "operator",
+      "id": "char_4222_taraxa",
+      "variant": "default",
+      "facing": "front",
+      "spineVersion": "3.8.99",
+      "source": {
+        "key": "operators",
+        "repository": "fexli/ArknightsResource",
+        "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+        "directory": "spine/char_4222_taraxa/char_4222_taraxa/Front"
+      },
+      "skeleton": {
+        "path": "models/operator/char_4222_taraxa/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4222_taraxa.skel",
+        "bytes": 403187,
+        "sha256": "2136160bcd2e302f3538ebe4fedd28507785447612127473be3b29033e65d3f0"
+      },
+      "atlas": {
+        "path": "models/operator/char_4222_taraxa/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4222_taraxa.atlas",
+        "bytes": 15616,
+        "sha256": "355d3222a9bad4cf91c8ccfa25b3d3dd3cc38e03e78fbcb210da7bb1b656d7e9"
+      },
+      "textures": [
+        {
+          "path": "models/operator/char_4222_taraxa/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4222_taraxa.png",
+          "bytes": 282959,
+          "sha256": "fb8feb3e9d776dab689f3bfbe762f6d84dbb6431d821ff00a05b6dfdd7504d5d"
+        }
+      ],
+      "premultipliedAlpha": true,
+      "animations": {
+        "Attack": 2.833,
+        "Default": 0,
+        "Die": 1,
+        "Idle": 2.667,
+        "Skill_1_Begin": 1,
+        "Skill_1_End": 1,
+        "Skill_1_Loop": 0.533,
+        "Skill_2_Begin": 1,
+        "Skill_2_End": 1,
+        "Skill_2_Idle": 2.667,
+        "Skill_2_Loop": 1.5,
+        "Skill_Die": 1,
+        "Start": 1
+      },
+      "hits": {
+        "Attack": [
+          0.6
+        ],
+        "Skill_1_Begin": [
+          0.333
+        ],
+        "Skill_1_End": [
+          0.167
+        ],
+        "Skill_1_Loop": [
+          0
+        ],
+        "Skill_2_Begin": [
+          0.333
+        ],
+        "Skill_2_End": [
+          0.167
+        ],
+        "Skill_2_Loop": [
+          0.6
+        ]
+      },
+      "bounds": {
+        "x": -293.387,
+        "y": -67.7,
+        "width": 430.337,
+        "height": 487.019
+      },
+      "animationRoles": {
+        "idle": "Idle",
+        "deploy": "Start",
+        "attack": {
+          "begin": null,
+          "loop": "Attack",
+          "end": null
+        },
+        "attackDown": null,
+        "skill": {
+          "begin": "Skill_1_Begin",
+          "loop": "Skill_1_Loop",
+          "end": "Skill_1_End",
+          "index": 0,
+          "via": "skill"
+        },
+        "skills": {
+          "0": {
+            "begin": "Skill_1_Begin",
+            "loop": "Skill_1_Loop",
+            "end": "Skill_1_End",
+            "index": 0,
+            "via": "skill"
+          },
+          "1": {
+            "begin": "Skill_2_Begin",
+            "loop": "Skill_2_Loop",
+            "idle": "Skill_2_Idle",
+            "end": "Skill_2_End",
+            "index": 1,
+            "via": "skill"
+          }
+        },
+        "die": "Die",
+        "stun": null,
+        "move": null
+      }
+    }
+  },
+  "interfaceAssets": [
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "five-star-icons/Taraxacum - Base.webp",
+      "bytes": 13086,
+      "sha256": "576e4ed458b8655a29c796ecae8cde8d435e8550be4afdb3e0a9049be2013be8"
+    },
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "skill-icons/Taraxacum - Where To.webp",
+      "bytes": 6684,
+      "sha256": "b63d3e1d6bddc8e544dbb713959d2160a605a7e2272ff0e8a73f9892a698e211"
+    },
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "skill-icons/Taraxacum - Upon the Wind.webp",
+      "bytes": 7892,
+      "sha256": "eb5987ade86cd8e2379e34d91505a59774728c6c4b9042938088e385f74fd31a"
+    },
+    {
+      "repository": "arkpedia/arkpedia-skin-assets",
+      "commit": "6fb723692d89c4a08d9a7aa4015e19c0753dd270",
+      "path": "five-star-skins/Taraxacum - Base.webp",
+      "bytes": 241932,
+      "sha256": "bf5ddd151eb4a93d1bc7f3334f52419ab1e508680f69f44ae4c62bb8a15ea670"
+    }
+  ],
+  "limitations": [
+    "Native selector aliases, no-animation/marker/FSM/account/attribute/control ordering and source-invalid lookup are explicit local mappings.",
+    "Native splash parabola is mapped to two-dimensional homing transport. Modules, native effects/audio/shaders, physical devices and compiled/frame/pixel parity remain unverified."
+  ],
+  "sourceFoundationSha256": "828005a80a067e4f3d92c857ffdf8350fd64dc504c409b17656df7ab73dd8750",
+  "ownerArtworkSha256": "d325174a44da70d0911dfb12c2842b8b4ca252a1fd578d38c641713f00bf8c17",
+  "sourceClocksSha256": "52497aba85084c95b0e740e8ba0dd305a2207b714b2969ad11f7290d2b7a6697"
+}
