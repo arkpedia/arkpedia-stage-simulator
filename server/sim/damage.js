@@ -410,6 +410,12 @@ export function applyHpLoss(battle, source, target, amount, dmg) {
   } else {
     const before = target.hp;
     let nextHp = before - amount;
+    // Native rally points observe a lethal HP-set attempt even when their
+    // persistent UNDEADABLE subsequently clamps it. This opt-in observation
+    // is separate from beforeHpZero guards, whose existing post-floor order
+    // and cancellation semantics remain unchanged.
+    if(nextHp<=0&&battle._hooks.hpZeroAttempt)
+      battle.emit('hpZeroAttempt',{unit:target,source:hs,credit:source,dmg,amount,before});
     // Original UNDEADABLE affects fractional and fatal HP loss alike; it is
     // neither damage immunity nor protection against scripted removal.
     if (target.s.flags.undeadable)
