@@ -144,7 +144,8 @@ holders = [r.read_typetree()['_templates'] for r in holder_bundle['objects'].val
 assert len(holders) == 1
 native = {r['templateKey']: r for r in holders[0]}
 parameters = {'key', '_blackboardKey', '_blackboardKeys', '_fromBlackboardKeys', '_sourceBlackboardKey',
-              '_targetBlackboardKey', '_inputKey', '_outputKey', '_maxValueKey', '_anotherKeyToCompare', '_addParamKey'}
+              '_targetBlackboardKey', '_inputKey', '_outputKey', '_maxValueKey', '_anotherKeyToCompare', '_addParamKey',
+              '_projectileIndexKey', '_multiplyParamKey', '_atkScaleKey'}
 needed, db_keys, projectiles, tokens, token_sources = set(), set(), {}, {}, {}
 token_containers = None
 def resolve_token(key):

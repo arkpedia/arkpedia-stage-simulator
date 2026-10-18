@@ -80,6 +80,18 @@ class ClosureTests(unittest.TestCase):
         incomplete = {k: v for k, v in FORMULA.items() if k != '_formulaType'}
         self.missing(incomplete)
 
+    def test_numeric_index_multiplier_and_scale_bindings_do_not_name_prefabs(self):
+        # Native Leizi Alter index lookup, Orchid Alter arithmetic and Ch'en
+        # Alter current-HP damage all read named numeric blackboard operands.
+        nodes = [{'_projectileIndexKey': 'projectile_index'},
+                 {'_inputKey': 'atk_scale', '_outputKey': 'atk_scale_temp',
+                  '_multiplyParamKey': 'projectile_atk_scale'},
+                 {'_targetType': 'TARGET', '_damageType': 'MAGICAL',
+                  '_damageNoLessThanValueBasedOnSourceAtk': True,
+                  '_atkScaleKey': 'projectile_min_atk_scale'}]
+        self.both(nodes, {}, [])
+        self.missing([*nodes, {'_projectileKey': 'projectile_missing'}])
+
     def test_genuine_projectile_reference_inside_formula_still_fails(self):
         self.missing({**FORMULA, '_projectileKey': 'projectile_missing'})
 

@@ -12,5 +12,5 @@ test('Both CN source walkers distinguish formula variables from required project
   if (result.error?.code === 'ENOENT') return t.skip('Python source-audit runtime unavailable');
   assert.ifError(result.error);
   assert.equal(result.status, 0, result.stdout + result.stderr);
-  assert.match(result.stderr, /Ran 6 tests/);
+  assert.match(result.stderr, /Ran 7 tests/);
 });

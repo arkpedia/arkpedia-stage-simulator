@@ -185,7 +185,8 @@ def original_token(key):
                           'animatorPathId': pointer['m_PathID']}
     return rows
 parameters = {'key', '_blackboardKey', '_blackboardKeys', '_fromBlackboardKeys', '_sourceBlackboardKey',
-              '_targetBlackboardKey', '_inputKey', '_outputKey', '_maxValueKey', '_anotherKeyToCompare', '_addParamKey'}
+              '_targetBlackboardKey', '_inputKey', '_outputKey', '_maxValueKey', '_anotherKeyToCompare', '_addParamKey',
+              '_projectileIndexKey', '_multiplyParamKey', '_atkScaleKey'}
 stack = [(item, '') for item in queue]
 while stack:
     value, field = stack.pop()
