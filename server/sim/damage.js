@@ -666,6 +666,8 @@ export function reduceElement(target, amount, el = null) {
 export function heal(battle, source, target, amount, opts = {}) {
   if (!target || !target.alive || target.removed || !target.deployed || target.bossPool) return 0;
   if (opts.regen && target.s.flags.noHpRecovery) return 0;
+  // Healing belongs to the receiver life observed before modifier callbacks.
+  const targetLife = target.deploySeq;
   const self = source === target || !!opts.self;
   if (!self && !opts.regen && (target.s.flags.noHeal || (target.profile && target.profile.noHeal))) return 0;
   if (target.s.flags.healFree && !opts.regen && !opts.ignoreHealFree) return 0;
@@ -680,11 +682,11 @@ export function heal(battle, source, target, amount, opts = {}) {
     battle.emit('heal', ctx);
     amt = Number.isFinite(ctx.amount) ? Math.max(0, ctx.amount) : 0;
     // a handler may have killed / retreated the target: healing a dead unit would leave it "dead with hp > 0"
-    if (!target.alive || !target.deployed) return 0;
+    if (!target.alive || !target.deployed || target.removed || target.deploySeq !== targetLife) return 0;
   }
   if (battle._hooks.calculatedHeal && !skipModifierEvent)
     battle.emit('calculatedHeal', { source, target, amount: amt, opts });
-  if (!target.alive || !target.deployed) return 0;
+  if (!target.alive || !target.deployed || target.removed || target.deploySeq !== targetLife) return 0;
   const max = target.s.maxHp;
   const actual = Math.max(0, Math.min(amt, max - target.hp));
   target.hp = Math.min(max, target.hp + actual);
