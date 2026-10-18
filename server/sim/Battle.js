@@ -29,6 +29,7 @@ import { TICK, ROWS, COLS, BLOCK_RADIUS_SQ, DP_DEFAULTS, DOWN_STATE, FORCED_EXIT
 import { GEO, layerGainRoom } from '../../shared/constants.js';
 import { createRng } from './rng.js';
 import { Grid } from './grid.js';
+import {explicitBlockMode} from './block-mode.js';
 import { Unit } from './units.js';
 import { makeBuff, STATUS, RESIST_STATUSES } from './buffs.js';
 import { dealDamage as pipeDamage, heal as pipeHeal, applyHpLoss, makeDamageInfo, reduceElement, palsyBuff, elementView, leaderHitCancelled } from './damage.js';
@@ -1210,10 +1211,11 @@ export class Battle {
    */
   _blockerFor(u, e, w) {
     if (!u.alive || !u.deployed || u.hidden || u.s.flags.noBlock || u.s.flags.sleep) return false;
-    if (e.isFlying && !(u.s.flags.blockFly || (u.profile && u.profile.blockFly))) return false;
+    const mode = explicitBlockMode(u);
+    if (e.isFlying && (mode === 'WALK' || mode !== 'FLY' && !(u.s.flags.blockFly || (u.profile && u.profile.blockFly)))) return false;
     // ground enemies: only a ground unit that has not taken off (起飞 "不阻挡地面敌人": flag `liftoff`), standing on a tile
     // ground units can pass (not a fenced 围墙 / 围栏 tile)
-    if (!e.isFlying && (!u.ground || u.s.flags.liftoff || this.grid.tile(u.tileR, u.tileC).pass !== 'ALL')) return false;
+    if (!e.isFlying && (!u.ground || mode === 'FLY' || mode !== 'WALK' && u.s.flags.liftoff || this.grid.tile(u.tileR, u.tileC).pass !== 'ALL')) return false;
     const cap = u.s.blockCnt;
     if (cap <= 0) return false;
     let used = 0;
