@@ -37,3 +37,12 @@ export function makotoDefaultInputs(){
  return{root:read('-1218499832398557659'),mode:read('-3985492384108261851'),attack:read('-7239676370760577499'),
   trigger:read('3975289686999354917'),selector:read('5884809055292018213'),replacement:read('-6088048823850840539'),art:evidence.chararts[MAKOTO_ID][0].data};
 }
+export function makotoS1Inputs() {
+  const read = id => makotoSourceComponent('characters', MAKOTO_ID, id);
+  return {mode: read('2113126334119661093'), wrapper: read('-8120082265187824091'),
+    trigger: read('2913041643974151717'), union: read('6199264337010609701'),
+    healTrigger: read('-6308989604904907227'), attackTrigger: read('-2938589107860353499'),
+    healSelector: read('86534097072016933'), attackSelector: read('8685380368023277093'),
+    heal: read('-3514085099072598491'), attack: read('7294260590432538149'), hook: read('1623256020376145445'),
+    projectile: evidence.projectiles.projectile_chr_makoto_s1};
+}
