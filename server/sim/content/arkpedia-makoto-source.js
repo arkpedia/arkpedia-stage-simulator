@@ -68,3 +68,8 @@ export function makotoS3HealingInputs() {
     producer:read('-2770134745049084379'),hook:read('-7234846479611671003'),
     templates:Object.fromEntries(['makoto_s3_2_heal_others','makoto_s3_2_be_healed'].map(k=>[k,evidence.templates[k]]))};
 }
+export function makotoS3EvasionInputs() {
+  const read=id=>makotoSourceComponent('characters',MAKOTO_ID,id);
+  return {mode:read('4051779512619945509'),aura:read('-6508989524430762459'),validator:read('-2311411998879199707'),
+    templates:Object.fromEntries(['makoto_s3_2_aura','evade'].map(k=>[k,evidence.templates[k]]))};
+}
