@@ -116,6 +116,8 @@ export const REGULAR_AUTOMATIC_TOKENS = Object.freeze({
   char_4147_mitm: Object.freeze(['token_10037_mitm_trshrb']),
   // Mechanist's selected controller owns McGraf's card and fresh S3 lives.
   char_4230_mcnist: Object.freeze(['token_10069_mcnist_mcgraf']),
+  // Recon's dedicated point deck owns Palamute; preload its original Single art.
+  char_4215_buddy: Object.freeze(['token_10063_buddy_bddg']),
   char_391_rosmon: Object.freeze(['token_10012_rosmon_shield']),
   char_1035_wisdel: Object.freeze(['token_10035_wisdel_wward']),
   char_1033_swire2: Object.freeze(['token_10031_swire2_gdtrap']),

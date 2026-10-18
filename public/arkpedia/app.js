@@ -516,7 +516,11 @@ function summonDetails(entry) {
   const numbers = [['ATK', stats?.atk ?? raw.atk], ['DEF', stats?.def ?? raw.def],
     ['RES', stats?.res ?? raw.magicResistance], ['Block', stats?.blockCnt ?? raw.blockCnt]];
   const point = unit?.mem.closurPoint;
-  const recovery = point?.mode === 'recharge'
+  const palamute = entry.ownerId === 'char_4215_buddy' && entry.deck?.point?.unit === unit ? entry.deck.point : null;
+  const recovery = palamute?.mode === 'rest'
+    ? `<p class="sp-readout">Palamute recovering · ${Math.max(0, Math.ceil(palamute.recoverAt - battle.time))}s</p>`
+    : palamute?.mode === 'born' ? '<p class="sp-readout">Palamute deploying</p>'
+    : point?.mode === 'recharge'
     ? `<p class="sp-readout">Command center recovering · ${Math.max(0, Math.ceil(point.readyAt - battle.time))}s</p>`
     : point?.mode === 'born' ? '<p class="sp-readout">Command center activating</p>'
     : unit?.mem.crabMode && unit.mem.crabMode !== 'active'

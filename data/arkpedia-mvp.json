@@ -414,6 +414,7 @@
     "char_4230_mcnist": "cn",
     "char_4227_gallus": "cn",
     "char_4220_kormr": "cn",
+    "char_4215_buddy": "cn",
     "char_4207_branch": "cn"
   },
   "behaviors": {
@@ -445,7 +446,7 @@
   "nativeEffects": {
     "tragodia": {
       "repository": "arkpedia/arkpedia-sd-assets",
-      "commit": "4cf36a6eea637aeaa8db9ba0282dc866b9df243c",
+      "commit": "7b4a113c3afadd3bf114eb70dbda113bd0671d4b",
       "manifest": {
         "path": "effects/native/tragodia/26-09-23-17-49-43_b9cc4a/e39769c56a91f5d483632808082a05a3dbe0b71d5a5c99b3ade9ebdee68fd0ff/manifest.json",
         "bytes": 44646,
@@ -455,7 +456,7 @@
   },
   "sd": {
     "repository": "arkpedia/arkpedia-sd-assets",
-    "commit": "4cf36a6eea637aeaa8db9ba0282dc866b9df243c",
+    "commit": "7b4a113c3afadd3bf114eb70dbda113bd0671d4b",
     "models": {
       "operator/char_123_fang/default/front": {
         "kind": "operator",
@@ -77107,6 +77108,145 @@
           "move": null
         }
       },
+      "operator/char_4215_buddy/default/front": {
+        "kind": "operator",
+        "id": "char_4215_buddy",
+        "variant": "default",
+        "facing": "front",
+        "spineVersion": "3.8.99",
+        "source": {
+          "key": "operators",
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "spine/char_4215_buddy/char_4215_buddy/Front"
+        },
+        "skeleton": {
+          "path": "models/operator/char_4215_buddy/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4215_buddy.skel",
+          "bytes": 375643,
+          "sha256": "ef81a9c5cc2656bd5985fe835046187108e6357f2e59ae36120ef475bc494866"
+        },
+        "atlas": {
+          "path": "models/operator/char_4215_buddy/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4215_buddy.atlas",
+          "bytes": 20968,
+          "sha256": "18179f58443435a2e59579c0c1c9fb8e467868ffaab43f6cc9d0c0394b29525f"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_4215_buddy/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4215_buddy.png",
+            "bytes": 408710,
+            "sha256": "812dc80ecf529278576489883e839144f3693e554eae173fc21b6f000c7242ea"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Attack_A": 1.067,
+          "Attack_B": 1.067,
+          "Attack_Begin": 0.1,
+          "Attack_End": 0.167,
+          "Default": 0,
+          "Die": 1,
+          "Idle": 4,
+          "Skill": 1.367,
+          "Skill_Begin": 0.1,
+          "Skill_End": 0.167,
+          "Start": 1
+        },
+        "hits": {
+          "Attack_A": [
+            0.433
+          ],
+          "Attack_B": [
+            0.433
+          ],
+          "Skill": [
+            0.8
+          ]
+        },
+        "bounds": null,
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": "Attack_Begin",
+            "loop": "Attack_A",
+            "end": "Attack_End"
+          },
+          "attackDown": null,
+          "skill": null,
+          "die": "Die",
+          "stun": null,
+          "move": null
+        }
+      },
+      "operator/char_4215_buddy/default/back": {
+        "kind": "operator",
+        "id": "char_4215_buddy",
+        "variant": "default",
+        "facing": "back",
+        "spineVersion": "3.8.99",
+        "source": {
+          "key": "operators",
+          "repository": "fexli/ArknightsResource",
+          "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+          "directory": "spine/char_4215_buddy/char_4215_buddy/Back"
+        },
+        "skeleton": {
+          "path": "models/operator/char_4215_buddy/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4215_buddy.skel",
+          "bytes": 238120,
+          "sha256": "c6bc57d3f404eaca04031fd21171411073a732d76e40fc947ef9dcdc346bfdb0"
+        },
+        "atlas": {
+          "path": "models/operator/char_4215_buddy/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4215_buddy.atlas",
+          "bytes": 11965,
+          "sha256": "522c250f15b817723fada2b55ea966aab6e29128eae41e093510f3fb3b6fcfa0"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_4215_buddy/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4215_buddy.png",
+            "bytes": 367486,
+            "sha256": "dced1a427bea013af5dffc8f31ce2938481ecc18094d754ef99919534ea48111"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Attack_A": 1.067,
+          "Attack_B": 1.067,
+          "Attack_Begin": 0.1,
+          "Attack_End": 0.167,
+          "Default": 0,
+          "Idle": 4,
+          "Skill": 1.367,
+          "Skill_Begin": 0.1,
+          "Skill_End": 0.167,
+          "Start": 1
+        },
+        "hits": {
+          "Attack_A": [
+            0.433
+          ],
+          "Attack_B": [
+            0.433
+          ],
+          "Skill": [
+            0.8
+          ]
+        },
+        "bounds": null,
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": "Attack_Begin",
+            "loop": "Attack_A",
+            "end": "Attack_End"
+          },
+          "attackDown": null,
+          "skill": null,
+          "die": null,
+          "stun": null,
+          "move": null
+        }
+      },
       "operator/char_4207_branch/default/front": {
         "kind": "operator",
         "id": "char_4207_branch",
@@ -77300,6 +77440,244 @@
           "die": null,
           "stun": null,
           "move": null
+        }
+      },
+      "operator/token_10063_buddy_bddg/default/front": {
+        "kind": "operator",
+        "id": "token_10063_buddy_bddg",
+        "variant": "default",
+        "facing": "front",
+        "source": {
+          "key": "cn-client",
+          "kind": "assetbundle",
+          "bundle": {
+            "path": "pkgrps/btl_pfb_tokens_5.ab",
+            "bytes": 2183454,
+            "md5": "1c4224582e2e540c2c1c96419fb6d38d",
+            "sha256": "1da6347c10575ac922ef1ceeade662ebfb785b0653ef13266ab48f03d1828af9",
+            "url": "https://ak.hycdn.cn/assetbundle/official/Android/assets/26-09-22-07-47-20_6c71fa/pkgrps_btl_pfb_tokens_5.dat",
+            "client": "cn",
+            "resourceVersion": "26-09-22-07-47-20_6c71fa",
+            "transforms": [
+              "Original embedded premultiplied RGBA texture decoded with every decoded pixel unchanged",
+              "Atlas page dimensions normalized and pma: true recorded; native regions unchanged",
+              "One native Single skeleton retained; front/back manifest slots are explicit compatibility aliases, not distinct original facings"
+            ]
+          },
+          "directory": "pkgrps/btl_pfb_tokens_5.ab",
+          "extractedSkeleton": "token_10063_buddy_bddg.skel",
+          "facingAlias": "single-original-model",
+          "originalPathIds": {
+            "rootPathId": "-24625540907109892",
+            "controllerPathId": "7721478156889190908",
+            "animatorPathId": "7173132144346362364",
+            "faceSwitcherPathId": "-6861270519998680580",
+            "skeletonAnimationPathId": "-4538936699278233092",
+            "skeletonDataAssetPathId": "879360656205598691",
+            "textAssetPathId": "6442872620876332428",
+            "atlasAssetPathId": "4470095928019151795",
+            "atlasTextAssetPathId": "-1613642665742011779",
+            "materialPathId": "1719060956823152150",
+            "texturePathId": "-8412659039788277696"
+          },
+          "transforms": [
+            "Original embedded premultiplied RGBA texture decoded with every decoded pixel unchanged",
+            "Atlas page dimensions normalized and pma: true recorded; native regions unchanged",
+            "One native Single skeleton retained; front/back manifest slots are explicit compatibility aliases, not distinct original facings"
+          ]
+        },
+        "spineVersion": "3.8.99",
+        "skeleton": {
+          "path": "models/operator/token_10063_buddy_bddg/default/front/1da6347c10575ac922ef1ceeade662ebfb785b0653ef13266ab48f03d1828af9/token_10063_buddy_bddg.skel",
+          "bytes": 327750,
+          "sha256": "21ac3dc5dc8140f4997a00b318e46b860221e0e79d87604b2c3a47bb9c15e19d"
+        },
+        "atlas": {
+          "path": "models/operator/token_10063_buddy_bddg/default/front/1da6347c10575ac922ef1ceeade662ebfb785b0653ef13266ab48f03d1828af9/token_10063_buddy_bddg.atlas",
+          "bytes": 15810,
+          "sha256": "566fb71f08d765efb91cf5dae9ebca3d3cfc83dcb74b1d4311ec5f56d0b340c7"
+        },
+        "textures": [
+          {
+            "path": "models/operator/token_10063_buddy_bddg/default/front/1da6347c10575ac922ef1ceeade662ebfb785b0653ef13266ab48f03d1828af9/token_10063_buddy_bddg.png",
+            "bytes": 287841,
+            "sha256": "20e186201460c6c130997acbe39159c54eb07f3406d9838c238acc0d480056af"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Attack_A": 1,
+          "Attack_B": 1,
+          "Default": 0,
+          "Die": 1,
+          "Idle": 2,
+          "Start": 1,
+          "Stun": 1,
+          "Stun_Begin": 1,
+          "Stun_End": 1
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": null,
+            "loop": "Attack_A",
+            "end": null
+          },
+          "skill": null,
+          "die": "Die",
+          "stun": "Stun",
+          "move": null
+        },
+        "hits": {
+          "Attack_A": [
+            0.4
+          ],
+          "Attack_B": [
+            0.4
+          ],
+          "Start": [
+            0.2
+          ]
+        },
+        "bounds": {
+          "x": -1351.701,
+          "y": -323.894,
+          "width": 2286.875,
+          "height": 1286.905
+        },
+        "avatar": {
+          "path": "models/operator/token_10063_buddy_bddg/default/front/1da6347c10575ac922ef1ceeade662ebfb785b0653ef13266ab48f03d1828af9/avatar.png",
+          "bytes": 27144,
+          "sha256": "0ca576b973a1eb0f8c4fb2df65a4ffbe5d65fc2b815ad4c7fef34ed09a232520",
+          "source": {
+            "kind": "cn-native-sprite",
+            "resourceVersion": "26-09-22-07-47-20_6c71fa",
+            "bundleSha256": "e5c3889ce7efb39ebb30edc382a7f16724369618335427f7c496ce4cff221c28",
+            "spritePathId": "-4172056749865363402",
+            "texturePathId": "4013812163793655862",
+            "proof": "source-reviews/palamute-avatar.json",
+            "proofSha256": "85c5a5eb3a43b9ff182726162deb65affb280bf3dc94ebf3a3c99aa86aa646e4"
+          }
+        }
+      },
+      "operator/token_10063_buddy_bddg/default/back": {
+        "kind": "operator",
+        "id": "token_10063_buddy_bddg",
+        "variant": "default",
+        "facing": "back",
+        "source": {
+          "key": "cn-client",
+          "kind": "assetbundle",
+          "bundle": {
+            "path": "pkgrps/btl_pfb_tokens_5.ab",
+            "bytes": 2183454,
+            "md5": "1c4224582e2e540c2c1c96419fb6d38d",
+            "sha256": "1da6347c10575ac922ef1ceeade662ebfb785b0653ef13266ab48f03d1828af9",
+            "url": "https://ak.hycdn.cn/assetbundle/official/Android/assets/26-09-22-07-47-20_6c71fa/pkgrps_btl_pfb_tokens_5.dat",
+            "client": "cn",
+            "resourceVersion": "26-09-22-07-47-20_6c71fa",
+            "transforms": [
+              "Original embedded premultiplied RGBA texture decoded with every decoded pixel unchanged",
+              "Atlas page dimensions normalized and pma: true recorded; native regions unchanged",
+              "One native Single skeleton retained; front/back manifest slots are explicit compatibility aliases, not distinct original facings"
+            ]
+          },
+          "directory": "pkgrps/btl_pfb_tokens_5.ab",
+          "extractedSkeleton": "token_10063_buddy_bddg.skel",
+          "facingAlias": "single-original-model",
+          "originalPathIds": {
+            "rootPathId": "-24625540907109892",
+            "controllerPathId": "7721478156889190908",
+            "animatorPathId": "7173132144346362364",
+            "faceSwitcherPathId": "-6861270519998680580",
+            "skeletonAnimationPathId": "-4538936699278233092",
+            "skeletonDataAssetPathId": "879360656205598691",
+            "textAssetPathId": "6442872620876332428",
+            "atlasAssetPathId": "4470095928019151795",
+            "atlasTextAssetPathId": "-1613642665742011779",
+            "materialPathId": "1719060956823152150",
+            "texturePathId": "-8412659039788277696"
+          },
+          "transforms": [
+            "Original embedded premultiplied RGBA texture decoded with every decoded pixel unchanged",
+            "Atlas page dimensions normalized and pma: true recorded; native regions unchanged",
+            "One native Single skeleton retained; front/back manifest slots are explicit compatibility aliases, not distinct original facings"
+          ]
+        },
+        "spineVersion": "3.8.99",
+        "skeleton": {
+          "path": "models/operator/token_10063_buddy_bddg/default/back/1da6347c10575ac922ef1ceeade662ebfb785b0653ef13266ab48f03d1828af9/token_10063_buddy_bddg.skel",
+          "bytes": 327750,
+          "sha256": "21ac3dc5dc8140f4997a00b318e46b860221e0e79d87604b2c3a47bb9c15e19d"
+        },
+        "atlas": {
+          "path": "models/operator/token_10063_buddy_bddg/default/back/1da6347c10575ac922ef1ceeade662ebfb785b0653ef13266ab48f03d1828af9/token_10063_buddy_bddg.atlas",
+          "bytes": 15810,
+          "sha256": "566fb71f08d765efb91cf5dae9ebca3d3cfc83dcb74b1d4311ec5f56d0b340c7"
+        },
+        "textures": [
+          {
+            "path": "models/operator/token_10063_buddy_bddg/default/back/1da6347c10575ac922ef1ceeade662ebfb785b0653ef13266ab48f03d1828af9/token_10063_buddy_bddg.png",
+            "bytes": 287841,
+            "sha256": "20e186201460c6c130997acbe39159c54eb07f3406d9838c238acc0d480056af"
+          }
+        ],
+        "premultipliedAlpha": true,
+        "animations": {
+          "Attack_A": 1,
+          "Attack_B": 1,
+          "Default": 0,
+          "Die": 1,
+          "Idle": 2,
+          "Start": 1,
+          "Stun": 1,
+          "Stun_Begin": 1,
+          "Stun_End": 1
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": {
+            "begin": null,
+            "loop": "Attack_A",
+            "end": null
+          },
+          "skill": null,
+          "die": "Die",
+          "stun": "Stun",
+          "move": null
+        },
+        "hits": {
+          "Attack_A": [
+            0.4
+          ],
+          "Attack_B": [
+            0.4
+          ],
+          "Start": [
+            0.2
+          ]
+        },
+        "bounds": {
+          "x": -1351.701,
+          "y": -323.894,
+          "width": 2286.875,
+          "height": 1286.905
+        },
+        "avatar": {
+          "path": "models/operator/token_10063_buddy_bddg/default/back/1da6347c10575ac922ef1ceeade662ebfb785b0653ef13266ab48f03d1828af9/avatar.png",
+          "bytes": 27144,
+          "sha256": "0ca576b973a1eb0f8c4fb2df65a4ffbe5d65fc2b815ad4c7fef34ed09a232520",
+          "source": {
+            "kind": "cn-native-sprite",
+            "resourceVersion": "26-09-22-07-47-20_6c71fa",
+            "bundleSha256": "e5c3889ce7efb39ebb30edc382a7f16724369618335427f7c496ce4cff221c28",
+            "spritePathId": "-4172056749865363402",
+            "texturePathId": "4013812163793655862",
+            "proof": "source-reviews/palamute-avatar.json",
+            "proofSha256": "85c5a5eb3a43b9ff182726162deb65affb280bf3dc94ebf3a3c99aa86aa646e4"
+          }
         }
       },
       "operator/token_10069_mcnist_mcgraf/default/front": {
@@ -88772,7 +89150,7 @@
     },
     "art": {
       "repository": "arkpedia/arkpedia-sd-assets",
-      "commit": "4cf36a6eea637aeaa8db9ba0282dc866b9df243c",
+      "commit": "7b4a113c3afadd3bf114eb70dbda113bd0671d4b",
       "scene": {
         "path": "stages/0-1/26-09-23-17-49-43_b9cc4a/scene.json",
         "bytes": 4479,
@@ -88781,7 +89159,7 @@
     },
     "gates": {
       "repository": "arkpedia/arkpedia-sd-assets",
-      "commit": "4cf36a6eea637aeaa8db9ba0282dc866b9df243c",
+      "commit": "7b4a113c3afadd3bf114eb70dbda113bd0671d4b",
       "pack": {
         "path": "effects/standard-gates/26-09-23-17-49-43_b9cc4a/gates.json",
         "bytes": 3507,
@@ -680461,6 +680839,600 @@
         "laterano"
       ]
     },
+    "char_4215_buddy": {
+      "id": "char_4215_buddy",
+      "name": "Rhodes Island Recon",
+      "description": "可以在攻击范围内选择一次<@ba.kw>战术点</>来召唤援军，自身攻击援军阻挡的敌人时攻击力提升至150%；不受<@ba.kw>部署数量</>限制，但再部署时间极长",
+      "rarity": 1,
+      "profession": "PIONEER",
+      "subProfessionId": "tactician",
+      "position": "RANGED",
+      "nationId": "rhodes",
+      "groupId": null,
+      "teamId": null,
+      "phases": [
+        {
+          "maxLevel": 30,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 442,
+                "atk": 74,
+                "def": 36,
+                "magicResistance": 0,
+                "cost": 3,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 200,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false,
+                "teleportImmune": false,
+                "groundBoundImmune": false
+              }
+            },
+            {
+              "level": 30,
+              "data": {
+                "maxHp": 590,
+                "atk": 107,
+                "def": 45,
+                "magicResistance": 0,
+                "cost": 3,
+                "blockCnt": 1,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1,
+                "respawnTime": 200,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false,
+                "teleportImmune": false,
+                "groundBoundImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              0,
+              3
+            ],
+            [
+              -1,
+              0
+            ],
+            [
+              -1,
+              1
+            ],
+            [
+              -1,
+              2
+            ]
+          ]
+        }
+      ],
+      "favorKeyFrames": [
+        {
+          "level": 0,
+          "data": {
+            "maxHp": 0,
+            "atk": 0,
+            "def": 0,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false,
+            "teleportImmune": false,
+            "groundBoundImmune": false
+          }
+        },
+        {
+          "level": 50,
+          "data": {
+            "maxHp": 100,
+            "atk": 15,
+            "def": 0,
+            "magicResistance": 0,
+            "cost": 0,
+            "blockCnt": 0,
+            "moveSpeed": 0,
+            "attackSpeed": 0,
+            "baseAttackTime": 0,
+            "respawnTime": 0,
+            "hpRecoveryPerSec": 0,
+            "spRecoveryPerSec": 0,
+            "maxDeployCount": 0,
+            "maxDeckStackCnt": 0,
+            "tauntLevel": 0,
+            "massLevel": 0,
+            "baseForceLevel": 0,
+            "stunImmune": false,
+            "silenceImmune": false,
+            "sleepImmune": false,
+            "frozenImmune": false,
+            "levitateImmune": false,
+            "disarmedCombatImmune": false,
+            "fearedImmune": false,
+            "palsyImmune": false,
+            "attractImmune": false,
+            "teleportImmune": false,
+            "groundBoundImmune": false
+          }
+        }
+      ],
+      "potentialRanks": [
+        [],
+        [],
+        [],
+        [],
+        []
+      ],
+      "trait": {
+        "candidates": [
+          {
+            "unlockCondition": {
+              "phase": "PHASE_0",
+              "level": 1
+            },
+            "requiredPotentialRank": 0,
+            "blackboard": [
+              {
+                "key": "atk_scale",
+                "value": 1.5,
+                "valueStr": null
+              }
+            ],
+            "overrideDescripton": null,
+            "prefabKey": null,
+            "rangeId": null
+          }
+        ]
+      },
+      "talents": [
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_0",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "1",
+              "name": null,
+              "description": null,
+              "rangeId": null,
+              "blackboard": [],
+              "tokenKey": "token_10063_buddy_bddg",
+              "isHideTalent": true
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_0",
+                "level": 1
+              },
+              "requiredPotentialRank": 1,
+              "prefabKey": "1",
+              "name": null,
+              "description": null,
+              "rangeId": null,
+              "blackboard": [],
+              "tokenKey": "token_10063_buddy_bddg",
+              "isHideTalent": true
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_0",
+                "level": 1
+              },
+              "requiredPotentialRank": 2,
+              "prefabKey": "1",
+              "name": null,
+              "description": null,
+              "rangeId": null,
+              "blackboard": [],
+              "tokenKey": "token_10063_buddy_bddg",
+              "isHideTalent": true
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_0",
+                "level": 1
+              },
+              "requiredPotentialRank": 3,
+              "prefabKey": "1",
+              "name": null,
+              "description": null,
+              "rangeId": null,
+              "blackboard": [],
+              "tokenKey": "token_10063_buddy_bddg",
+              "isHideTalent": true
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_0",
+                "level": 1
+              },
+              "requiredPotentialRank": 4,
+              "prefabKey": "1",
+              "name": null,
+              "description": null,
+              "rangeId": null,
+              "blackboard": [],
+              "tokenKey": "token_10063_buddy_bddg",
+              "isHideTalent": true
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_0",
+                "level": 1
+              },
+              "requiredPotentialRank": 5,
+              "prefabKey": "1",
+              "name": null,
+              "description": null,
+              "rangeId": null,
+              "blackboard": [],
+              "tokenKey": "token_10063_buddy_bddg",
+              "isHideTalent": true
+            }
+          ]
+        },
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_0",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "2",
+              "name": "猫式起爆龙弹·I",
+              "description": "对前三个敌人首次进行攻击时改为使用“猫式起爆龙弹”。来自我方其他单位的伤害会将其引爆，造成罗德岛隐秘队150%攻击力的伤害和2秒晕眩，并回复1点部署费用。“猫式起爆龙弹”在被引爆后或30秒后消失",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "max_cnt",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_boom_cnt",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@stun_duration",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@atk_scale_boom",
+                  "value": 1.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@boom_duration",
+                  "value": 30,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": "token_10063_buddy_bddg",
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_0",
+                "level": 1
+              },
+              "requiredPotentialRank": 1,
+              "prefabKey": "2",
+              "name": "猫式起爆龙弹·II",
+              "description": "对前三个敌人首次进行攻击时改为使用“猫式起爆龙弹”。来自我方其他单位的伤害会将其引爆，造成罗德岛隐秘队230%攻击力的伤害和2.2秒晕眩，并回复1点部署费用。“猫式起爆龙弹”在被引爆后或30秒后消失",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "max_cnt",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_boom_cnt",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@stun_duration",
+                  "value": 2.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@atk_scale_boom",
+                  "value": 2.3,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@boom_duration",
+                  "value": 30,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": "token_10063_buddy_bddg",
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_0",
+                "level": 1
+              },
+              "requiredPotentialRank": 2,
+              "prefabKey": "2",
+              "name": "猫式起爆龙弹·III",
+              "description": "对前三个敌人首次进行攻击时改为使用“猫式起爆龙弹”。来自我方其他单位的伤害会将其引爆，造成罗德岛隐秘队280%攻击力的伤害和2.4秒晕眩，并回复1点部署费用。“猫式起爆龙弹”在被引爆后或30秒后消失",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "max_cnt",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_boom_cnt",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@stun_duration",
+                  "value": 2.4,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@atk_scale_boom",
+                  "value": 2.8,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@boom_duration",
+                  "value": 30,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": "token_10063_buddy_bddg",
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_0",
+                "level": 1
+              },
+              "requiredPotentialRank": 3,
+              "prefabKey": "2",
+              "name": "猫式起爆龙弹·IV",
+              "description": "对前三个敌人首次进行攻击时改为使用“猫式起爆龙弹”。来自我方其他单位的伤害会将其引爆，造成罗德岛隐秘队350%攻击力的伤害和2.6秒晕眩，并回复1点部署费用。“猫式起爆龙弹”在被引爆后或30秒后消失",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "max_cnt",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_boom_cnt",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@stun_duration",
+                  "value": 2.6,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@atk_scale_boom",
+                  "value": 3.5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@boom_duration",
+                  "value": 30,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": "token_10063_buddy_bddg",
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_0",
+                "level": 1
+              },
+              "requiredPotentialRank": 4,
+              "prefabKey": "2",
+              "name": "猫式起爆龙弹·V",
+              "description": "对前三个敌人首次进行攻击时改为使用“猫式起爆龙弹”。来自我方其他单位的伤害会将其引爆，造成罗德岛隐秘队420%攻击力的伤害和2.8秒晕眩，并回复1点部署费用。“猫式起爆龙弹”在被引爆后或30秒后消失",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "max_cnt",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_boom_cnt",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@stun_duration",
+                  "value": 2.8,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@atk_scale_boom",
+                  "value": 4.2,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@boom_duration",
+                  "value": 30,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": "token_10063_buddy_bddg",
+              "isHideTalent": false
+            },
+            {
+              "unlockCondition": {
+                "phase": "PHASE_0",
+                "level": 1
+              },
+              "requiredPotentialRank": 5,
+              "prefabKey": "2",
+              "name": "猫式起爆龙弹·VI",
+              "description": "对前三个敌人首次进行攻击时改为使用“猫式起爆龙弹”。来自我方其他单位的伤害会将其引爆，造成罗德岛隐秘队500%攻击力的伤害和3秒晕眩，并回复1点部署费用。“猫式起爆龙弹”在被引爆后或30秒后消失",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "max_cnt",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@max_boom_cnt",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@stun_duration",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@cost",
+                  "value": 1,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@atk_scale_boom",
+                  "value": 5,
+                  "valueStr": null
+                },
+                {
+                  "key": "attack@boom_duration",
+                  "value": 30,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": "token_10063_buddy_bddg",
+              "isHideTalent": false
+            }
+          ]
+        }
+      ],
+      "skills": [],
+      "sourceName": "罗德岛隐秘队",
+      "sourceChannel": "cn",
+      "sourceAppellation": "Rhodes Island Recon",
+      "factionTags": [
+        "rhodes"
+      ]
+    },
     "char_4207_branch": {
       "id": "char_4207_branch",
       "name": "Vetochki",
@@ -681940,6 +682912,222 @@
     }
   },
   "tokens": {
+    "token_10063_buddy_bddg": {
+      "id": "token_10063_buddy_bddg",
+      "name": "Palamute",
+      "profession": "TOKEN",
+      "subProfessionId": "notchar1",
+      "position": "MELEE",
+      "phases": [
+        {
+          "maxLevel": 30,
+          "attributesKeyFrames": [
+            {
+              "level": 1,
+              "data": {
+                "maxHp": 865,
+                "atk": 131,
+                "def": 135,
+                "magicResistance": 0,
+                "cost": 0,
+                "blockCnt": 0,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.25,
+                "respawnTime": 60,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false,
+                "teleportImmune": false,
+                "groundBoundImmune": false
+              }
+            },
+            {
+              "level": 30,
+              "data": {
+                "maxHp": 1095,
+                "atk": 175,
+                "def": 180,
+                "magicResistance": 0,
+                "cost": 0,
+                "blockCnt": 0,
+                "moveSpeed": 1,
+                "attackSpeed": 100,
+                "baseAttackTime": 1.25,
+                "respawnTime": 60,
+                "hpRecoveryPerSec": 0,
+                "spRecoveryPerSec": 1,
+                "maxDeployCount": 1,
+                "maxDeckStackCnt": 0,
+                "tauntLevel": 0,
+                "massLevel": 0,
+                "baseForceLevel": 0,
+                "stunImmune": false,
+                "silenceImmune": false,
+                "sleepImmune": false,
+                "frozenImmune": false,
+                "levitateImmune": false,
+                "disarmedCombatImmune": false,
+                "fearedImmune": false,
+                "palsyImmune": false,
+                "attractImmune": false,
+                "teleportImmune": false,
+                "groundBoundImmune": false
+              }
+            }
+          ],
+          "rangeGrid": [
+            [
+              0,
+              0
+            ]
+          ]
+        }
+      ],
+      "trait": null,
+      "talents": [
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_0",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "0",
+              "name": "疾如闪电",
+              "description": "部署时对周围8格的最多3个敌人进行相当于200%攻击力的斩击，并将其小力地拉向自身方向；被击倒后回到艾露猫身边休息，60秒后重新在战术点的位置部署",
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "interval",
+                  "value": 60,
+                  "valueStr": null
+                },
+                {
+                  "key": "ability_name",
+                  "value": 0,
+                  "valueStr": "bddg_switch"
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": false
+            }
+          ]
+        },
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_0",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "bddg_switch",
+              "name": null,
+              "description": null,
+              "rangeId": null,
+              "blackboard": [
+                {
+                  "key": "duration",
+                  "value": 60,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": true
+            }
+          ]
+        },
+        {
+          "candidates": [
+            {
+              "unlockCondition": {
+                "phase": "PHASE_0",
+                "level": 1
+              },
+              "requiredPotentialRank": 0,
+              "prefabKey": "2",
+              "name": null,
+              "description": null,
+              "rangeId": "x-4",
+              "blackboard": [
+                {
+                  "key": "atk_scale",
+                  "value": 2,
+                  "valueStr": null
+                },
+                {
+                  "key": "max_target",
+                  "value": 3,
+                  "valueStr": null
+                },
+                {
+                  "key": "force",
+                  "value": 0,
+                  "valueStr": null
+                }
+              ],
+              "tokenKey": null,
+              "isHideTalent": true,
+              "rangeGrid": [
+                [
+                  1,
+                  -1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  -1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  -1,
+                  -1
+                ],
+                [
+                  -1,
+                  0
+                ],
+                [
+                  -1,
+                  1
+                ]
+              ]
+            }
+          ]
+        }
+      ],
+      "skills": [],
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/7b4a113c3afadd3bf114eb70dbda113bd0671d4b/models/operator/token_10063_buddy_bddg/default/front/1da6347c10575ac922ef1ceeade662ebfb785b0653ef13266ab48f03d1828af9/avatar.png"
+    },
     "token_10069_mcnist_mcgraf": {
       "id": "token_10069_mcnist_mcgraf",
       "name": "Structural Principle",
@@ -682839,7 +684027,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/4cf36a6eea637aeaa8db9ba0282dc866b9df243c/models/operator/token_10069_mcnist_mcgraf/default/front/1da6347c10575ac922ef1ceeade662ebfb785b0653ef13266ab48f03d1828af9/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/7b4a113c3afadd3bf114eb70dbda113bd0671d4b/models/operator/token_10069_mcnist_mcgraf/default/front/1da6347c10575ac922ef1ceeade662ebfb785b0653ef13266ab48f03d1828af9/avatar.png"
     },
     "token_10066_closur_ourbase": {
       "id": "token_10066_closur_ourbase",
@@ -683306,7 +684494,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/4cf36a6eea637aeaa8db9ba0282dc866b9df243c/models/operator/token_10066_closur_ourbase/default/front/af23c7f497862f38be2cdca0cd4079d44753bde8d61b97398e5a2777a54281e4/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/7b4a113c3afadd3bf114eb70dbda113bd0671d4b/models/operator/token_10066_closur_ourbase/default/front/af23c7f497862f38be2cdca0cd4079d44753bde8d61b97398e5a2777a54281e4/avatar.png"
     },
     "token_10043_necras_skeltn": {
       "id": "token_10043_necras_skeltn",
@@ -683689,7 +684877,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/4cf36a6eea637aeaa8db9ba0282dc866b9df243c/models/operator/token_10043_necras_skeltn/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/7b4a113c3afadd3bf114eb70dbda113bd0671d4b/models/operator/token_10043_necras_skeltn/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10050_monstr_prosts": {
       "id": "token_10050_monstr_prosts",
@@ -685527,7 +686715,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/4cf36a6eea637aeaa8db9ba0282dc866b9df243c/models/operator/token_10050_monstr_prosts/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/7b4a113c3afadd3bf114eb70dbda113bd0671d4b/models/operator/token_10050_monstr_prosts/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10054_phatm2_encdool": {
       "id": "token_10054_phatm2_encdool",
@@ -687731,7 +688919,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/4cf36a6eea637aeaa8db9ba0282dc866b9df243c/models/operator/token_10054_phatm2_encdool/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/7b4a113c3afadd3bf114eb70dbda113bd0671d4b/models/operator/token_10054_phatm2_encdool/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10055_phatm2_mndclv": {
       "id": "token_10055_phatm2_mndclv",
@@ -689002,7 +690190,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/4cf36a6eea637aeaa8db9ba0282dc866b9df243c/models/operator/token_10030_mlyss_wtrman/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/7b4a113c3afadd3bf114eb70dbda113bd0671d4b/models/operator/token_10030_mlyss_wtrman/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10037_mitm_trshrb": {
       "id": "token_10037_mitm_trshrb",
@@ -689429,7 +690617,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/4cf36a6eea637aeaa8db9ba0282dc866b9df243c/models/operator/token_10037_mitm_trshrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/7b4a113c3afadd3bf114eb70dbda113bd0671d4b/models/operator/token_10037_mitm_trshrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10027_ironmn_pile1": {
       "id": "token_10027_ironmn_pile1",
@@ -690525,7 +691713,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/4cf36a6eea637aeaa8db9ba0282dc866b9df243c/models/operator/token_10027_ironmn_pile1/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/7b4a113c3afadd3bf114eb70dbda113bd0671d4b/models/operator/token_10027_ironmn_pile1/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10027_ironmn_pile2": {
       "id": "token_10027_ironmn_pile2",
@@ -691795,7 +692983,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/4cf36a6eea637aeaa8db9ba0282dc866b9df243c/models/operator/token_10027_ironmn_pile2/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/7b4a113c3afadd3bf114eb70dbda113bd0671d4b/models/operator/token_10027_ironmn_pile2/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10027_ironmn_pile3": {
       "id": "token_10027_ironmn_pile3",
@@ -694303,7 +695491,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/4cf36a6eea637aeaa8db9ba0282dc866b9df243c/models/operator/token_10027_ironmn_pile3/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/7b4a113c3afadd3bf114eb70dbda113bd0671d4b/models/operator/token_10027_ironmn_pile3/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10020_ling_soul1": {
       "id": "token_10020_ling_soul1",
@@ -695195,7 +696383,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/4cf36a6eea637aeaa8db9ba0282dc866b9df243c/models/operator/token_10020_ling_soul1/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/7b4a113c3afadd3bf114eb70dbda113bd0671d4b/models/operator/token_10020_ling_soul1/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10020_ling_soul2": {
       "id": "token_10020_ling_soul2",
@@ -696531,7 +697719,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/4cf36a6eea637aeaa8db9ba0282dc866b9df243c/models/operator/token_10020_ling_soul2/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/7b4a113c3afadd3bf114eb70dbda113bd0671d4b/models/operator/token_10020_ling_soul2/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10020_ling_soul3": {
       "id": "token_10020_ling_soul3",
@@ -698371,7 +699559,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/4cf36a6eea637aeaa8db9ba0282dc866b9df243c/models/operator/token_10020_ling_soul3/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/7b4a113c3afadd3bf114eb70dbda113bd0671d4b/models/operator/token_10020_ling_soul3/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10005_mgllan_drone1": {
       "id": "token_10005_mgllan_drone1",
@@ -699463,7 +700651,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/4cf36a6eea637aeaa8db9ba0282dc866b9df243c/models/operator/token_10005_mgllan_drone1/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/7b4a113c3afadd3bf114eb70dbda113bd0671d4b/models/operator/token_10005_mgllan_drone1/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10005_mgllan_drone2": {
       "id": "token_10005_mgllan_drone2",
@@ -700459,7 +701647,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/4cf36a6eea637aeaa8db9ba0282dc866b9df243c/models/operator/token_10005_mgllan_drone2/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/7b4a113c3afadd3bf114eb70dbda113bd0671d4b/models/operator/token_10005_mgllan_drone2/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10005_mgllan_drone3": {
       "id": "token_10005_mgllan_drone3",
@@ -701551,7 +702739,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/4cf36a6eea637aeaa8db9ba0282dc866b9df243c/models/operator/token_10005_mgllan_drone3/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/7b4a113c3afadd3bf114eb70dbda113bd0671d4b/models/operator/token_10005_mgllan_drone3/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10056_angel2_target": {
       "id": "token_10056_angel2_target",
@@ -702351,7 +703539,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/4cf36a6eea637aeaa8db9ba0282dc866b9df243c/models/operator/token_10056_angel2_target/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/7b4a113c3afadd3bf114eb70dbda113bd0671d4b/models/operator/token_10056_angel2_target/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10035_wisdel_wward": {
       "id": "token_10035_wisdel_wward",
@@ -705010,7 +706198,7 @@
         }
       ],
       "automaticOnly": true,
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/4cf36a6eea637aeaa8db9ba0282dc866b9df243c/models/operator/token_10031_swire2_gdtrap/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/7b4a113c3afadd3bf114eb70dbda113bd0671d4b/models/operator/token_10031_swire2_gdtrap/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10033_ela_grzmot": {
       "id": "token_10033_ela_grzmot",
@@ -706809,7 +707997,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/4cf36a6eea637aeaa8db9ba0282dc866b9df243c/models/operator/token_10033_ela_grzmot/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/7b4a113c3afadd3bf114eb70dbda113bd0671d4b/models/operator/token_10033_ela_grzmot/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10034_ray_sndbst": {
       "id": "token_10034_ray_sndbst",
@@ -707443,7 +708631,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/4cf36a6eea637aeaa8db9ba0282dc866b9df243c/models/operator/token_10034_ray_sndbst/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/7b4a113c3afadd3bf114eb70dbda113bd0671d4b/models/operator/token_10034_ray_sndbst/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10028_vigil_wolf": {
       "id": "token_10028_vigil_wolf",
@@ -708182,7 +709370,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/4cf36a6eea637aeaa8db9ba0282dc866b9df243c/models/operator/token_10028_vigil_wolf/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/7b4a113c3afadd3bf114eb70dbda113bd0671d4b/models/operator/token_10028_vigil_wolf/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10026_bgsnow_subbow": {
       "id": "token_10026_bgsnow_subbow",
@@ -709747,7 +710935,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/4cf36a6eea637aeaa8db9ba0282dc866b9df243c/models/operator/token_10026_bgsnow_subbow/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/7b4a113c3afadd3bf114eb70dbda113bd0671d4b/models/operator/token_10026_bgsnow_subbow/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10017_skadi2_dedant": {
       "id": "token_10017_skadi2_dedant",
@@ -711344,7 +712532,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/4cf36a6eea637aeaa8db9ba0282dc866b9df243c/models/operator/token_10017_skadi2_dedant/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/7b4a113c3afadd3bf114eb70dbda113bd0671d4b/models/operator/token_10017_skadi2_dedant/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10025_doroth_recttp": {
       "id": "token_10025_doroth_recttp",
@@ -713204,7 +714392,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/4cf36a6eea637aeaa8db9ba0282dc866b9df243c/models/operator/token_10025_doroth_recttp/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/7b4a113c3afadd3bf114eb70dbda113bd0671d4b/models/operator/token_10025_doroth_recttp/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10036_lasher_mcbird": {
       "id": "token_10036_lasher_mcbird",
@@ -714128,7 +715316,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/4cf36a6eea637aeaa8db9ba0282dc866b9df243c/models/operator/token_10036_lasher_mcbird/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/7b4a113c3afadd3bf114eb70dbda113bd0671d4b/models/operator/token_10036_lasher_mcbird/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10032_jesca2_jckshd": {
       "id": "token_10032_jesca2_jckshd",
@@ -714465,7 +715653,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/4cf36a6eea637aeaa8db9ba0282dc866b9df243c/models/operator/token_10032_jesca2_jckshd/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/7b4a113c3afadd3bf114eb70dbda113bd0671d4b/models/operator/token_10032_jesca2_jckshd/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10040_siege2_vlion": {
       "id": "token_10040_siege2_vlion",
@@ -715897,7 +717085,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/4cf36a6eea637aeaa8db9ba0282dc866b9df243c/models/operator/token_10009_weedy_cannon/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/7b4a113c3afadd3bf114eb70dbda113bd0671d4b/models/operator/token_10009_weedy_cannon/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10024_ebnhlz_rcube": {
       "id": "token_10024_ebnhlz_rcube",
@@ -716470,7 +717658,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/4cf36a6eea637aeaa8db9ba0282dc866b9df243c/models/operator/token_10024_ebnhlz_rcube/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/7b4a113c3afadd3bf114eb70dbda113bd0671d4b/models/operator/token_10024_ebnhlz_rcube/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10044_wulfen_mine": {
       "id": "token_10044_wulfen_mine",
@@ -717671,7 +718859,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/4cf36a6eea637aeaa8db9ba0282dc866b9df243c/models/operator/token_10044_wulfen_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/7b4a113c3afadd3bf114eb70dbda113bd0671d4b/models/operator/token_10044_wulfen_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10042_tecno_puppet": {
       "id": "token_10042_tecno_puppet",
@@ -717920,7 +719108,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/4cf36a6eea637aeaa8db9ba0282dc866b9df243c/models/operator/token_10042_tecno_puppet/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/7b4a113c3afadd3bf114eb70dbda113bd0671d4b/models/operator/token_10042_tecno_puppet/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10041_cathy_catsld": {
       "id": "token_10041_cathy_catsld",
@@ -718478,7 +719666,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/4cf36a6eea637aeaa8db9ba0282dc866b9df243c/models/operator/token_10041_cathy_catsld/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/7b4a113c3afadd3bf114eb70dbda113bd0671d4b/models/operator/token_10041_cathy_catsld/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10022_kazema_shadow": {
       "id": "token_10022_kazema_shadow",
@@ -718948,7 +720136,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/4cf36a6eea637aeaa8db9ba0282dc866b9df243c/models/operator/token_10022_kazema_shadow/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/7b4a113c3afadd3bf114eb70dbda113bd0671d4b/models/operator/token_10022_kazema_shadow/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10001_deepcl_tentac": {
       "id": "token_10001_deepcl_tentac",
@@ -719262,7 +720450,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/4cf36a6eea637aeaa8db9ba0282dc866b9df243c/models/operator/token_10001_deepcl_tentac/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/7b4a113c3afadd3bf114eb70dbda113bd0671d4b/models/operator/token_10001_deepcl_tentac/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10018_robrta_mach": {
       "id": "token_10018_robrta_mach",
@@ -719752,7 +720940,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/4cf36a6eea637aeaa8db9ba0282dc866b9df243c/models/operator/token_10018_robrta_mach/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/7b4a113c3afadd3bf114eb70dbda113bd0671d4b/models/operator/token_10018_robrta_mach/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10014_bstalk_crab": {
       "id": "token_10014_bstalk_crab",
@@ -720081,7 +721269,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/4cf36a6eea637aeaa8db9ba0282dc866b9df243c/models/operator/token_10014_bstalk_crab/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/7b4a113c3afadd3bf114eb70dbda113bd0671d4b/models/operator/token_10014_bstalk_crab/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10011_beewax_oblisk": {
       "id": "token_10011_beewax_oblisk",
@@ -721026,7 +722214,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/4cf36a6eea637aeaa8db9ba0282dc866b9df243c/models/operator/token_10011_beewax_oblisk/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/7b4a113c3afadd3bf114eb70dbda113bd0671d4b/models/operator/token_10011_beewax_oblisk/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10006_vodfox_doll": {
       "id": "token_10006_vodfox_doll",
@@ -721662,7 +722850,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/4cf36a6eea637aeaa8db9ba0282dc866b9df243c/models/operator/token_10006_vodfox_doll/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/7b4a113c3afadd3bf114eb70dbda113bd0671d4b/models/operator/token_10006_vodfox_doll/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10003_cgbird_bird": {
       "id": "token_10003_cgbird_bird",
@@ -721957,7 +723145,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/4cf36a6eea637aeaa8db9ba0282dc866b9df243c/models/operator/token_10003_cgbird_bird/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/7b4a113c3afadd3bf114eb70dbda113bd0671d4b/models/operator/token_10003_cgbird_bird/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10000_silent_healrb": {
       "id": "token_10000_silent_healrb",
@@ -722340,7 +723528,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/4cf36a6eea637aeaa8db9ba0282dc866b9df243c/models/operator/token_10000_silent_healrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/7b4a113c3afadd3bf114eb70dbda113bd0671d4b/models/operator/token_10000_silent_healrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10015_dusk_drgn": {
       "id": "token_10015_dusk_drgn",
@@ -722754,7 +723942,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/4cf36a6eea637aeaa8db9ba0282dc866b9df243c/models/operator/token_10015_dusk_drgn/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/7b4a113c3afadd3bf114eb70dbda113bd0671d4b/models/operator/token_10015_dusk_drgn/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10007_phatom_twin": {
       "id": "token_10007_phatom_twin",
@@ -724533,7 +725721,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/4cf36a6eea637aeaa8db9ba0282dc866b9df243c/models/operator/token_10007_phatom_twin/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/7b4a113c3afadd3bf114eb70dbda113bd0671d4b/models/operator/token_10007_phatom_twin/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10008_cqbw_box": {
       "id": "token_10008_cqbw_box",
@@ -725106,7 +726294,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/4cf36a6eea637aeaa8db9ba0282dc866b9df243c/models/operator/token_10008_cqbw_box/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/7b4a113c3afadd3bf114eb70dbda113bd0671d4b/models/operator/token_10008_cqbw_box/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10029_slent2_protrb": {
       "id": "token_10029_slent2_protrb",
@@ -725851,7 +727039,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/4cf36a6eea637aeaa8db9ba0282dc866b9df243c/models/operator/token_10029_slent2_protrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/7b4a113c3afadd3bf114eb70dbda113bd0671d4b/models/operator/token_10029_slent2_protrb/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10019_nearl2_sword": {
       "id": "token_10019_nearl2_sword",
@@ -726638,7 +727826,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/4cf36a6eea637aeaa8db9ba0282dc866b9df243c/models/operator/token_10019_nearl2_sword/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/7b4a113c3afadd3bf114eb70dbda113bd0671d4b/models/operator/token_10019_nearl2_sword/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10002_kalts_mon3tr": {
       "id": "token_10002_kalts_mon3tr",
@@ -727056,7 +728244,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/4cf36a6eea637aeaa8db9ba0282dc866b9df243c/models/operator/token_10002_kalts_mon3tr/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/7b4a113c3afadd3bf114eb70dbda113bd0671d4b/models/operator/token_10002_kalts_mon3tr/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10010_folivo_car": {
       "id": "token_10010_folivo_car",
@@ -728677,7 +729865,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/4cf36a6eea637aeaa8db9ba0282dc866b9df243c/models/operator/token_10010_folivo_car/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/7b4a113c3afadd3bf114eb70dbda113bd0671d4b/models/operator/token_10010_folivo_car/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10021_blkngt_hypnos": {
       "id": "token_10021_blkngt_hypnos",
@@ -729092,7 +730280,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/4cf36a6eea637aeaa8db9ba0282dc866b9df243c/models/operator/token_10021_blkngt_hypnos/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/7b4a113c3afadd3bf114eb70dbda113bd0671d4b/models/operator/token_10021_blkngt_hypnos/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10023_windft_wrench": {
       "id": "token_10023_windft_wrench",
@@ -730256,7 +731444,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/4cf36a6eea637aeaa8db9ba0282dc866b9df243c/models/operator/token_10023_windft_wrench/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/7b4a113c3afadd3bf114eb70dbda113bd0671d4b/models/operator/token_10023_windft_wrench/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10045_alanna_crane": {
       "id": "token_10045_alanna_crane",
@@ -730656,7 +731844,7 @@
           "levels": []
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/4cf36a6eea637aeaa8db9ba0282dc866b9df243c/models/operator/token_10045_alanna_crane/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/7b4a113c3afadd3bf114eb70dbda113bd0671d4b/models/operator/token_10045_alanna_crane/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10013_robin_mine": {
       "id": "token_10013_robin_mine",
@@ -731587,7 +732775,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/4cf36a6eea637aeaa8db9ba0282dc866b9df243c/models/operator/token_10013_robin_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/7b4a113c3afadd3bf114eb70dbda113bd0671d4b/models/operator/token_10013_robin_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10016_rfrost_mine": {
       "id": "token_10016_rfrost_mine",
@@ -732518,7 +733706,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/4cf36a6eea637aeaa8db9ba0282dc866b9df243c/models/operator/token_10016_rfrost_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/7b4a113c3afadd3bf114eb70dbda113bd0671d4b/models/operator/token_10016_rfrost_mine/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     },
     "token_10004_otter_motter": {
       "id": "token_10004_otter_motter",
@@ -733867,7 +735055,7 @@
           ]
         }
       ],
-      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/4cf36a6eea637aeaa8db9ba0282dc866b9df243c/models/operator/token_10004_otter_motter/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
+      "avatar": "https://raw.githubusercontent.com/arkpedia/arkpedia-sd-assets/7b4a113c3afadd3bf114eb70dbda113bd0671d4b/models/operator/token_10004_otter_motter/default/front/eb82b7f36d14b08e833f8effd2f39608a67676959cf42bcd4aae372f9010df8f/avatar.png"
     }
   },
   "enemies": {
@@ -733918,7 +735106,7 @@
   },
   "skillEffects": {
     "repository": "arkpedia/arkpedia-sd-assets",
-    "commit": "4cf36a6eea637aeaa8db9ba0282dc866b9df243c",
+    "commit": "7b4a113c3afadd3bf114eb70dbda113bd0671d4b",
     "pack": {
       "path": "effects/charge-cost/26-09-23-17-49-43_b9cc4a/effect.json",
       "bytes": 15311,

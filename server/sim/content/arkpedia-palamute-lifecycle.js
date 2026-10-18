@@ -36,7 +36,7 @@ export class PalamuteLifecycle{
  constructor(b,u,ownerRecord){Object.assign(this,{b,u,ownerRecord,record:selectedPalamuteBuild(ownerRecord.build),seq:null,stopped:false,stock:0,point:null,placing:false,handles:[]});
   const r=this.record;this.def=normalizeToken(TOKEN,{name:r.source.appellation.trim(),position:r.source.position,profession:r.source.profession,stats:r.stats,rangeGrid:r.rangeGrid,talents:r.talents,skill:null,arkpedia:{...r.build}});
   const d=this;this.state={key:`summon:${ID}`,ownerId:ID,owner:u,tokenId:TOKEN,record:{...this.def.raw,id:TOKEN},deck:this,
-   config:Object.freeze({deploymentSlotCost:0,chooseFacing:false,refundRatio:0,healFree:true,noAttack:true}),get stock(){return d.stock;},get readyAt(){return d.valid()&&d.stock?d.b.time:Infinity;}};
+   config:Object.freeze({deploymentSlotCost:0,chooseFacing:false,refundRatio:0,healFree:true,noAttack:true,tacticalPoint:true,limitByHostAttackRange:true}),get stock(){return d.stock;},get readyAt(){return d.valid()&&d.stock?d.b.time:Infinity;}};
  }
  valid(){return !this.stopped&&!this.b.finished&&present(this.u)&&this.u.deploySeq===this.seq;}
  current(p=this.point){return this.valid()&&p&&!p.finished&&present(p.unit)&&p.unit.deploySeq===p.seq;}
