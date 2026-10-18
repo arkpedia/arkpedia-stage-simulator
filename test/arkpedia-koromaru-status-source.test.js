@@ -1,0 +1,18 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {readFile} from 'node:fs/promises';
+import {existsSync} from 'node:fs';
+import proof from '../data/arkpedia-koromaru-status-source.json' with {type:'json'};
+import e from '../data/arkpedia-native-operators/char_4220_kormr.json' with {type:'json'};
+import {STATUS_DUMP_PIN,parseAbnormalFlags,recoverStatus} from '../tools/arkpedia/koromaru-status-source.mjs';
+import {koromaruNativeInputs} from '../server/sim/content/arkpedia-koromaru-source.js';
+const definition=body=>`// Namespace: Torappu\r\npublic enum AbnormalFlag\r\n{\r\n${body}\r\n}`;
+const tiny=' public const AbnormalFlag STUNNED = 0;\r\n public const AbnormalFlag TARGET_FREE = 1;\r\n public const AbnormalFlag E_NUM = 2;';
+test('Enum recovery handles native CRLF without altering bytes or inferring an unrecorded client version',()=>{assert.deepEqual(parseAbnormalFlags(definition(tiny)),{STUNNED:0,TARGET_FREE:1,E_NUM:2});assert.equal(proof.source.gitBlob,STATUS_DUMP_PIN.gitBlob);assert.equal(proof.source.sha256,STATUS_DUMP_PIN.sha256);assert.match(proof.source.versionLimit,/without a client version/);assert.equal(proof.frameParity,false);assert.deepEqual(proof.enabledOperators,[]);});
+test('Enum recovery rejects duplicate definitions, duplicate fields and nonliteral values',()=>{for(const s of[definition(tiny)+definition(tiny),definition(tiny+'\npublic const AbnormalFlag STUNNED = 3;'),definition(tiny.replace('TARGET_FREE = 1','TARGET_FREE = 0')),definition(tiny.replace('TARGET_FREE = 1','TARGET_FREE = 1 + 0')),definition(tiny.replace('E_NUM = 2','E_NUM = 4'))])assert.throws(()=>parseAbnormalFlags(s));});
+test('Pinned status facts decode Koromaru own startup flags and immunities, not unrelated operators or enum guesses',()=>{const d=proof.definitions,n=koromaruNativeInputs(),s=n.start._buffs[0];assert.deepEqual(s.attributes.abnormalFlags,proof.startup.flags);assert.deepEqual(s.attributes.abnormalImmunes,proof.startup.immunes);assert.deepEqual(proof.startup.flagNames.map(x=>d[x]),[5,2,3]);assert.deepEqual(proof.startup.immuneNames.map(x=>d[x]),[0,16]);assert.equal(d.FEARED,33);assert.equal(d.E_NUM,n.selector._abnormalFlag);assert.equal(n.templates.kormr_in_start.eventToActions.ON_BUFF_START[0]._target,proof.startup.releaseBlockerTarget);});
+test('Non-missable parent and final invocation remain separate from the fear database missable bit',()=>{const n=koromaruNativeInputs(),branch=n.templates['kormr_t[attack]'].eventToActions.ON_BUFF_START[0],child=branch._succeedNodes[0]._buff,final=n.templates['kormr_t[final_attack]'].eventToActions.ON_BUFF_TRIGGER;assert.equal(n.talentAttack._activeBuffs[0].isDamageMissable,0);assert.equal(child.isDamageMissable,false);assert.equal(branch._failNodes[0]._ignoreCancelReasonMask,'MISS');assert.equal(final[1]._ignoreCancelReasonMask,'MISS');assert.equal(e.buffDatabase.fear.isDamageMissable,true);assert.equal(final.at(-1)._isDerivedBuff,false);});
+const cached=existsSync(new URL('../.cache/arkpedia/cn-native-source/status-enums-dump.cs',import.meta.url));
+test('Original cached reference bytes independently reproduce the committed startup receipt',{skip:!cached},async()=>{assert.deepEqual(await recoverStatus(),proof);});
+test('Original-byte verification refuses line-ending normalization and numeric edits',{skip:!cached},async()=>{for(const edit of[b=>Buffer.from(b.toString().replaceAll('\r\n','\n')),b=>Buffer.from(b.toString().replace('TARGET_FREE = 2','TARGET_FREE = 3'))])await assert.rejects(recoverStatus({read:async(path,...args)=>{const b=await readFile(path,...args);return String(path).endsWith('status-enums-dump.cs')?edit(b):b;}}));});
