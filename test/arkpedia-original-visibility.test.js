@@ -1,0 +1,20 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {readFile,access} from 'node:fs/promises';
+import {drawableAttachmentsAt,verifyOriginalVisibility} from '../tools/arkpedia/original-visibility.mjs';
+import {recoverVisibility} from '../tools/arkpedia/koromaru-visibility.mjs';
+import {parseSkel} from '../tools/assets/skel.mjs';
+import proof from '../data/arkpedia-koromaru-visibility.json' with {type:'json'};
+const region={name:'body',type:'region'},model={duration:2,setupAttachments:[{slot:0,name:'body',attachment:region},{slot:1,name:'clip',attachment:{name:'mask',type:'clipping'}}],attachmentTimelines:[{slot:0,frames:[{time:0,attachment:null},{time:1.25,attachment:region}]}]};
+test('Source visibility follows the exact attachment boundary, preserving non-drawable masks',()=>{assert.equal(drawableAttachmentsAt(model,0),0);assert.equal(drawableAttachmentsAt(model,1.249999),0);assert.equal(drawableAttachmentsAt(model,1.25),1);assert.equal(drawableAttachmentsAt(model,2),1);assert.equal(model.setupAttachments[0].attachment,region);});
+test('Source visibility refuses invalid times and unresolved default-skin attachments',()=>{for(const t of[-1,2.1,Infinity,NaN])assert.throws(()=>drawableAttachmentsAt(model,t));const m=structuredClone(model);m.setupAttachments.push({slot:2,name:'unknown',attachment:{name:'unknown',type:'missing'}});assert.throws(()=>drawableAttachmentsAt(m,.5));});
+test('Koromaru original loop proof records a hidden body and its actual later body attachment frame',()=>{assert.deepEqual(proof.enabledOperators,[]);assert.equal(proof.frameParity,false);assert.equal(proof.nativePixelParity,false);for(const face of['Front','Back']){const m=proof.models[face],count=face==='Front'?71:67;assert.equal(m.clip,'Skill_Loop');assert.equal(m.duration,2.200000047683716);assert.deepEqual(m.samples,[{time:.35,drawableAttachments:0},{time:1.8,drawableAttachments:count}]);assert.equal(drawableAttachmentsAt(m,1.3333333),0);assert.equal(drawableAttachmentsAt(m,1.3333333730697632),count);}});
+const root=new URL('../.cache/arkpedia/cn-operators/char_4220_kormr/',import.meta.url);let native=false;try{await access(new URL('front.skel',root));native=true;}catch{}
+const optional={skip:!native&&'Optional original-source cache not installed'};
+test('Original visibility reproduces both exact native skeletons and preserves legacy parser metadata',optional,async()=>{assert.deepEqual(await recoverVisibility(),proof);for(const face of['front','back']){const bytes=await readFile(new URL(face+'.skel',root));const {attachmentTimelines,setupAttachments,...legacy}=parseSkel(bytes,undefined,{includeAttachmentTimelines:true,includeExactDurations:true,includeEventPayloads:true});assert.deepEqual(legacy,parseSkel(bytes,undefined,{includeExactDurations:true,includeEventPayloads:true}));assert.ok(attachmentTimelines.Skill_Loop.length>0);assert.ok(setupAttachments.length>0);}
+ for(const suffix of['front.skel','back.skel','char_4220_kormr.json'])await assert.rejects(()=>recoverVisibility({read:async path=>{const b=await readFile(path);if(path.pathname.endsWith(suffix)){const v=Buffer.from(b);v[v.length-1]^=1;return v;}return b;}}));
+});
+test('Visibility verifier rejects forged samples, attachment frames, source hashes and unsupported parity',optional,async()=>{const options={id:proof.operator,receipt:new URL('../data/arkpedia-native-operators/char_4220_kormr.json',import.meta.url),sha256:proof.foundationSha256,clip:'Skill_Loop',sampleTimes:[.35,1.8],skeleton:face=>new URL(face.toLowerCase()+'.skel',root)};
+ await verifyOriginalVisibility(proof,options);for(const mutate of[p=>p.models.Front.samples[0].drawableAttachments=71,p=>p.models.Front.attachmentTimelines[0].frames[0].time=.8,p=>p.models.Back.sha256='0'.repeat(64),p=>p.frameParity=true,p=>p.nativePixelParity=true,p=>p.models.Back.setupAttachments.pop()]){const p=structuredClone(proof);mutate(p);await assert.rejects(()=>verifyOriginalVisibility(p,options));}
+});

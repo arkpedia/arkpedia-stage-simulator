@@ -69,10 +69,11 @@ const candidateCairn = process.argv.includes('--review-candidate-cairn');
 const candidatePedro = process.argv.includes('--review-candidate-pedro');
 const candidateMcnist = process.argv.includes('--review-candidate-mcnist');
 const candidateGallus = process.argv.includes('--review-candidate-gallus');
+const candidateKoromaru = process.argv.includes('--review-candidate-koromaru');
 const candidateTmslot = process.argv.includes('--review-candidate-tmslot');
 const candidateThumpy = process.argv.includes('--review-candidate-thumpy');
 const candidateTanya = process.argv.includes('--review-candidate-tanya');
-if ([candidateGallus,candidateMcnist,candidatePedro,candidateTmslot,candidateThumpy,candidateClosur,candidateReckpr,candidateBranch,candidateVarkis,candidateSnhunt,candidateKichi,candidateCairn,candidateTanya].filter(Boolean).length>1) throw Error('Review one candidate snapshot at a time');
+if ([candidateKoromaru,candidateGallus,candidateMcnist,candidatePedro,candidateTmslot,candidateThumpy,candidateClosur,candidateReckpr,candidateBranch,candidateVarkis,candidateSnhunt,candidateKichi,candidateCairn,candidateTanya].filter(Boolean).length>1) throw Error('Review one candidate snapshot at a time');
 const ids = Object.keys(REGULAR_OPERATORS);
 if (ids.includes('char_4179_monstr')) {
   const review = JSON.parse(await readFile(new URL('../../data/arkpedia-mon3tr-runtime-review.json', import.meta.url)));
@@ -482,6 +483,40 @@ if (mcnistSource) {
   const expected=['six-star-icons/Mechanist - Base.webp','six-star-skins/Mechanist - Base.webp','skill-icons/Mechanist - Cluster Analysis.webp','skill-icons/Mechanist - Co-operative Defense Techniques.webp','skill-icons/Mechanist - Star of Engineering.webp'].sort();
   if(JSON.stringify(review.interfaceAssets.map(a=>a.path).sort())!==JSON.stringify(expected)||review.interfaceAssets.some(a=>pins[a.repository]!==a.commit||!/^[a-f0-9]{64}$/.test(a.sha256)||!Number.isSafeInteger(a.bytes)||a.bytes<1))throw Error('Mechanist lacks five pinned interface assets');
 }
+if (ids.includes('char_4220_kormr')) {
+  const id = 'char_4220_kormr';
+  const review = JSON.parse(await readFile(new URL('../../data/arkpedia-koromaru-runtime-review.json', import.meta.url)));
+  const foundation = await readFile(new URL('../../data/arkpedia-native-operators/char_4220_kormr.json', import.meta.url));
+  const art = await readFile(new URL('../../data/arkpedia-koromaru-art.json', import.meta.url));
+  const recipe = await readFile(new URL('../../data/arkpedia-koromaru-art-recipe.json', import.meta.url));
+  const clocks = await readFile(new URL('../../data/arkpedia-koromaru-clocks.json', import.meta.url));
+  const statuses = await readFile(new URL('../../data/arkpedia-koromaru-status-source.json', import.meta.url));
+  const visibility = await readFile(new URL('../../data/arkpedia-koromaru-visibility.json', import.meta.url));
+  const e = JSON.parse(foundation);
+  const approved = JSON.stringify(review.enabledOperators) === JSON.stringify([id]) && review.verification.browser.status === 'passed';
+  const pending = candidateKoromaru && review.enabledOperators.length === 0 && review.verification.browser.status === 'pending';
+  if(approved){for(const [path,key]of[['tools/arkpedia/review-koromaru-public.mjs','scriptSha256'],['tools/arkpedia/public-review-driver.mjs','driverSha256'],['tools/arkpedia/public-review-server.mjs','fixtureServerSha256']]){
+    const bytes=await readFile(new URL('../../'+path,import.meta.url));if(createHash('sha256').update(bytes).digest('hex')!==review.verification.browser[key])throw Error('Changed Koromaru browser review tooling');
+  }}
+  if ((!approved && !pending) || review.frameParity !== false || review.nativeParticleSupport !== false
+    || review.moduleSupport !== false || review.nativePixelParity !== false
+    || review.mechanicsPolicy !== 'source-cn-passive-six-slash-and-startup-protection-v1'
+    || review.sourceFoundationSha256 !== createHash('sha256').update(foundation).digest('hex')
+    || review.ownerArtworkSha256 !== createHash('sha256').update(art).digest('hex')
+    || JSON.parse(art).recipeSha256 !== createHash('sha256').update(recipe).digest('hex')
+    || review.sourceClocksSha256 !== createHash('sha256').update(clocks).digest('hex')
+    || review.statusSourceSha256 !== createHash('sha256').update(statuses).digest('hex')
+    || review.visibilitySourceSha256 !== createHash('sha256').update(visibility).digest('hex')
+    || JSON.parse(recipe).visibilityProof.sha256 !== review.visibilitySourceSha256
+    || e.source.commit !== cnEvidence?.source.commit
+    || JSON.stringify(e.tables.character) !== JSON.stringify(cnEvidence.tables.characters[id])
+    || Object.entries(e.tables.skills).some(([key,value]) => JSON.stringify(value) !== JSON.stringify(cnEvidence.tables.skills[key])))
+    throw Error('Koromaru lacks matching source/artwork and completed public browser review');
+  const expected = ["one-star-icons/Koromaru - Base.webp", "one-star-skins/Koromaru - Base.webp"].sort();
+  if (JSON.stringify(review.interfaceAssets.map(a => a.path).sort()) !== JSON.stringify(expected)
+    || review.interfaceAssets.some(a => pins[a.repository] !== a.commit || !/^[a-f0-9]{64}$/.test(a.sha256)
+      || !Number.isSafeInteger(a.bytes) || a.bytes < 1)) throw Error('Koromaru lacks pinned interface assets');
+}
 if (ids.includes('char_4227_gallus')) {
   const id = 'char_4227_gallus';
   const review = JSON.parse(await readFile(new URL('../../data/arkpedia-gallus-runtime-review.json', import.meta.url)));
@@ -879,6 +914,13 @@ if (ids.includes('char_4236_tmslot')) {
   for (const key of keys) if (JSON.stringify(models[key]) !== JSON.stringify(review.originalArtwork[key]))
     throw Error('Changed Timeslot original artwork: ' + key);
 }
+if (ids.includes('char_4220_kormr')) {
+  const review = JSON.parse(await readFile(new URL('../../data/arkpedia-koromaru-runtime-review.json', import.meta.url)));
+  const keys = ['front', 'back'].map(face => `operator/char_4220_kormr/default/${face}`).sort();
+  if (JSON.stringify(Object.keys(review.originalArtwork).sort()) !== JSON.stringify(keys)) throw Error('Incomplete Koromaru artwork review');
+  for (const key of keys) if (JSON.stringify(models[key]) !== JSON.stringify(review.originalArtwork[key]))
+    throw Error('Changed Koromaru original artwork: ' + key);
+}
 if (ids.includes('char_4227_gallus')) {
   const review = JSON.parse(await readFile(new URL('../../data/arkpedia-gallus-runtime-review.json', import.meta.url)));
   const keys = ['front', 'back'].map(face => `operator/char_4227_gallus/default/${face}`).sort();
@@ -1054,7 +1096,7 @@ for (const token of Object.values(tokens)) {
 }
 const output = {
   schemaVersion: 1,
-  ...(candidateGallus ? { reviewCandidates: ['char_4227_gallus'] } : candidateMcnist ? { reviewCandidates: ['char_4230_mcnist'] } : candidatePedro ? { reviewCandidates: ['char_4234_pedro'] } : candidateTmslot ? { reviewCandidates: ['char_4236_tmslot'] } : candidateThumpy ? { reviewCandidates: ['char_4235_thumpy'] } : candidateTanya ? { reviewCandidates: ['char_4225_tanya'] } : candidateCairn ? { reviewCandidates: ['char_4214_cairn'] } : candidateKichi ? { reviewCandidates: ['char_4203_kichi'] } : candidateSnhunt ? { reviewCandidates: ['char_4211_snhunt'] } : candidateVarkis ? { reviewCandidates: ['char_4166_varkis'] } : candidateReckpr ? { reviewCandidates: ['char_4196_reckpr'] } : candidateBranch ? { reviewCandidates: ['char_4207_branch'] } : {}),
+  ...(candidateKoromaru ? { reviewCandidates: ['char_4220_kormr'] } : candidateGallus ? { reviewCandidates: ['char_4227_gallus'] } : candidateMcnist ? { reviewCandidates: ['char_4230_mcnist'] } : candidatePedro ? { reviewCandidates: ['char_4234_pedro'] } : candidateTmslot ? { reviewCandidates: ['char_4236_tmslot'] } : candidateThumpy ? { reviewCandidates: ['char_4235_thumpy'] } : candidateTanya ? { reviewCandidates: ['char_4225_tanya'] } : candidateCairn ? { reviewCandidates: ['char_4214_cairn'] } : candidateKichi ? { reviewCandidates: ['char_4203_kichi'] } : candidateSnhunt ? { reviewCandidates: ['char_4211_snhunt'] } : candidateVarkis ? { reviewCandidates: ['char_4166_varkis'] } : candidateReckpr ? { reviewCandidates: ['char_4196_reckpr'] } : candidateBranch ? { reviewCandidates: ['char_4207_branch'] } : {}),
   ...(formSource ? { globalAlternateFormSource: formSource } : {}),
   sources: cnEvidence ? { ...pins, [cnEvidence.source.repository]: cnEvidence.source.commit } : pins,
   ...(cnEvidence ? { operatorSourceChannels: Object.fromEntries(ids.map(id => [id, operatorChannel(id, REGULAR_OPERATORS[id])])) } : {}),
@@ -1122,7 +1164,7 @@ for (const [id,support] of Object.entries(REGULAR_OPERATORS)) {
 output.skillEffects = {repository:"arkpedia/arkpedia-sd-assets",commit:sdCommit,
   pack:stageAssets.effects.chargeCost,bindings};
 await writeJSONAtomic(
-  candidateGallus ? new URL("arkpedia-gallus-candidate.json", cache) : candidateMcnist ? new URL("arkpedia-mcnist-candidate.json", cache) : candidatePedro ? new URL("arkpedia-pedro-candidate.json", cache) : candidateTmslot ? new URL("arkpedia-tmslot-candidate.json", cache) : candidateThumpy ? new URL("arkpedia-thumpy-candidate.json", cache) : candidateTanya ? new URL("arkpedia-tanya-candidate.json", cache) : candidateCairn ? new URL("arkpedia-cairn-candidate.json", cache) : candidateKichi ? new URL("arkpedia-kichi-candidate.json", cache) : candidateSnhunt ? new URL("arkpedia-snhunt-candidate.json", cache) : candidateVarkis ? new URL("arkpedia-varkis-candidate.json", cache) : candidateBranch ? new URL("arkpedia-branch-candidate.json", cache) : candidateReckpr ? new URL("arkpedia-reckpr-candidate.json", cache) : candidateClosur ? new URL("arkpedia-closur-candidate.json", cache) : new URL("../../data/arkpedia-mvp.json", import.meta.url),
+  candidateKoromaru ? new URL("arkpedia-koromaru-candidate.json", cache) : candidateGallus ? new URL("arkpedia-gallus-candidate.json", cache) : candidateMcnist ? new URL("arkpedia-mcnist-candidate.json", cache) : candidatePedro ? new URL("arkpedia-pedro-candidate.json", cache) : candidateTmslot ? new URL("arkpedia-tmslot-candidate.json", cache) : candidateThumpy ? new URL("arkpedia-thumpy-candidate.json", cache) : candidateTanya ? new URL("arkpedia-tanya-candidate.json", cache) : candidateCairn ? new URL("arkpedia-cairn-candidate.json", cache) : candidateKichi ? new URL("arkpedia-kichi-candidate.json", cache) : candidateSnhunt ? new URL("arkpedia-snhunt-candidate.json", cache) : candidateVarkis ? new URL("arkpedia-varkis-candidate.json", cache) : candidateBranch ? new URL("arkpedia-branch-candidate.json", cache) : candidateReckpr ? new URL("arkpedia-reckpr-candidate.json", cache) : candidateClosur ? new URL("arkpedia-closur-candidate.json", cache) : new URL("../../data/arkpedia-mvp.json", import.meta.url),
   output,
 );
 console.log(

@@ -23,6 +23,7 @@ test('original skeleton inspection respects pooled Buffer and Uint8Array slice b
   const slice = pool.subarray(37, 37 + original.length);
   assert.ok(slice.byteOffset > 0);
   assert.deepEqual(parseSkel(slice), expected);
+  assert.deepEqual(parseSkel(slice,undefined,{includeAttachmentTimelines:true}),{...expected,attachmentTimelines:{},setupAttachments:[]});
   assert.deepEqual(parseSkel(new Uint8Array(pool.buffer, slice.byteOffset, slice.length)), expected);
   // Changing adjacent pooled bytes must not change the selected skeleton.
   pool.fill(0, 0, 37); pool.fill(0, 37 + original.length);
