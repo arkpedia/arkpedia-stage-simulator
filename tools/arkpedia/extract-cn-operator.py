@@ -144,7 +144,8 @@ holders = [r.read_typetree()['_templates'] for r in holder_bundle['objects'].val
 assert len(holders) == 1
 native = {r['templateKey']: r for r in holders[0]}
 parameters = {'key', '_blackboardKey', '_blackboardKeys', '_fromBlackboardKeys', '_sourceBlackboardKey',
-              '_targetBlackboardKey', '_inputKey', '_outputKey', '_maxValueKey', '_anotherKeyToCompare', '_addParamKey'}
+              '_targetBlackboardKey', '_inputKey', '_outputKey', '_maxValueKey', '_anotherKeyToCompare', '_addParamKey',
+              '_projectileIndexKey', '_multiplyParamKey', '_atkScaleKey'}
 needed, db_keys, projectiles, tokens, token_sources = set(), set(), {}, {}, {}
 token_containers = None
 def resolve_token(key):
@@ -178,10 +179,13 @@ def scan(v, field=''):
     if field in ['_overrideAudioSignal', 'audioSignal']:
         return
     if isinstance(v, dict):
+        # Native blackboard formulas assign variable names, not prefab keys.
+        # Keep arbitrary _targetKey fields subject to the missing-asset guard.
+        formula = {'_formulaType', '_source', '_target', '_type', '_sourceKey', '_targetKey'} <= v.keys()
         for key, value in list(v.items()):
             if key.startswith('token_') and key in ct:
                 scan(key)
-            scan(value, key)
+            scan(value, 'key' if formula and key in {'_sourceKey', '_sourceKey2', '_targetKey'} else key)
     elif isinstance(v, (list, tuple)):
         for value in v:
             scan(value, field)

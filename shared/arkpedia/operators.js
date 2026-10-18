@@ -105,6 +105,7 @@ import { MCNIST_OPERATORS } from './mcnist-operators.js';
 import { GALLUS_OPERATORS } from './gallus-operators.js';
 import { KOROMARU_OPERATORS } from './koromaru-operators.js';
 import { RECON_OPERATORS } from './recon-operators.js';
+import { JU_OPERATORS } from './ju-operators.js';
 import { TURDUS_OPERATORS } from './turdus-operators.js';
 import { BRANCH_OPERATORS } from './branch-operators.js';
 import { RECKPR_OPERATORS } from './reckpr-operators.js';
@@ -436,6 +437,7 @@ export const REGULAR_OPERATORS = Object.freeze({
   ...KOROMARU_OPERATORS,
   ...RECON_OPERATORS,
   ...TURDUS_OPERATORS,
+  ...JU_OPERATORS,
   ...BRANCH_OPERATORS,
 });
 

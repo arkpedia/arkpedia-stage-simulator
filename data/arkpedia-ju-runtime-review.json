@@ -1,0 +1,288 @@
+{
+  "schemaVersion": 1,
+  "operatorId": "char_4221_ju",
+  "enabledOperators": [
+    "char_4221_ju"
+  ],
+  "frameParity": false,
+  "moduleSupport": false,
+  "nativeParticleSupport": false,
+  "nativePixelParity": false,
+  "mechanicsPolicy": "source-cn-ju-wounds-conditional-charges-and-serialized-extra-v1",
+  "scope": "Selected original ordinary attacks, accepted wound talent, automatic two-charge conditional S1 and manual S2 mode with two retained inputs and serialized delayed damage.",
+  "verification": {
+    "source": "Pinned original foundation; independent Node22/24 audits reproduce seven outputs and reject 29 altered claims.",
+    "artwork": "Original native pointers, six files, pixels and PMA verified; independent Node22/24 art audits reject 33 altered claims each. All 17 original facing/clip combinations load on desktop/phone. SD PR39 merged at a65e88a57ed0376ef29f8645937a63eedb0cd5c7.",
+    "runtime": "381 integrated public/selected-source/skill/wound/adjacent checks pass on each Node22/24, including 22 public cases. Both selected skills clear original 0-1 with natural DP, unchanged waves/terrain, eleven kills, no leaks and actual Ju damage; S1 has no legal automatic trigger on that wave. Frozen public commit aba96e21e8bc057a1373cfbfdeff03a30d184206 (tree d934e2b4deb61b6ecb083e094bc24607de8a72fe) passes the complete isolated Node24 suite: 17,302 passed, 92 optional-source/platform skips, zero failures; 17,394 tests, 325 suites, 470.707 seconds. All 909 original runtime skeletons verify; two Ju originals were fetched and checked. Hosted validation and simulator merge remain separate.",
+    "browser": {
+      "status": "passed",
+      "script": "tools/arkpedia/review-ju-public.mjs",
+      "browserVersion": "Chrome/153.0.8010.12",
+      "cacheDisabled": true,
+      "externalAssetTransport": "Unintercepted original HTTPS at immutable source commits; normal TLS verification.",
+      "originalWaves": false,
+      "scope": "Controlled public UI scenario with actual legal squad drop/swipe, empty waves, 99 DP, pinned targets and scripted HP boundaries; original-wave clears are separate.",
+      "viewports": [
+        {
+          "width": 1280,
+          "height": 800,
+          "touch": false
+        },
+        {
+          "width": 844,
+          "height": 390,
+          "touch": true
+        }
+      ],
+      "cases": 4,
+      "captures": 30,
+      "browserErrors": 0,
+      "failedResources": 0,
+      "reportSha256": "3c2282732df95130b5fbda8d45a27b8fd45cf82667af635c55ce6a24bc89d139",
+      "verified": [
+        "Actual squad selection and legal drop followed by a separate direction swipe; no early deployment",
+        "Original Front/Back skeletons, base portrait and both selected skill icons over HTTPS",
+        "Natural two-charge S1 recovery; healthy inputs preserve charges and half-HP input triggers automatic original Skill_1",
+        "S2 manual readiness, ready diamond/SP bar and original Begin/Loop/Idle/End",
+        "One S2 attack receipt retains two recipients; the separate once-only extra hits follow their caster-wide gate",
+        "Lethal damage leaves one HP with the selected wound; retreat preserves its finite target-owned timeout and drains owned callbacks"
+      ],
+      "normalSnapshot": true,
+      "scriptSha256": "052cc7fb1eb834fd12333788f4e3ad87c2bb44977068458d0dda58b62cb31516",
+      "driverSha256": "2e52cd4007ae553e30f773104626f9b5c2be7c15f717b61ca9063517fbdc51c8",
+      "fixtureServerSha256": "127fb1b74be89d0a35e6bfa4e3d35927d170fa4d3129287f6c523114c5bcaa22"
+    }
+  },
+  "originalArtwork": {
+    "operator/char_4221_ju/default/back": {
+      "kind": "operator",
+      "id": "char_4221_ju",
+      "variant": "default",
+      "facing": "back",
+      "spineVersion": "3.8.99",
+      "source": {
+        "key": "operators",
+        "repository": "fexli/ArknightsResource",
+        "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+        "directory": "spine/char_4221_ju/char_4221_ju/Back"
+      },
+      "skeleton": {
+        "path": "models/operator/char_4221_ju/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4221_ju.skel",
+        "bytes": 273336,
+        "sha256": "3e9ae810ee91f3d6a7bd078129c5bc9e24e58d8c8e5c344933f917f548a544d3"
+      },
+      "atlas": {
+        "path": "models/operator/char_4221_ju/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4221_ju.atlas",
+        "bytes": 8464,
+        "sha256": "a55315a21fda99ffd921f48645c70d61a0cd957c41eb5b8b0cecbf59ddd8bcc9"
+      },
+      "textures": [
+        {
+          "path": "models/operator/char_4221_ju/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4221_ju.png",
+          "bytes": 305009,
+          "sha256": "9e6abdbb03c96d8f96dfff72ec48cc8ae73e0aa4129c85d9e3dc23cc3f4670a8"
+        }
+      ],
+      "premultipliedAlpha": true,
+      "animations": {
+        "Attack": 2.4,
+        "Default": 0,
+        "Idle": 2.667,
+        "Skill_1": 2.4,
+        "Skill_2_Begin": 0.5,
+        "Skill_2_End": 0.167,
+        "Skill_2_Idle": 2.667,
+        "Skill_2_Loop": 2.4,
+        "Start": 1
+      },
+      "hits": {
+        "Attack": [
+          0.533
+        ],
+        "Skill_1": [
+          0.533
+        ],
+        "Skill_2_Loop": [
+          0.533
+        ]
+      },
+      "bounds": {
+        "x": -328.412,
+        "y": -1.744,
+        "width": 544.488,
+        "height": 647.138
+      },
+      "animationRoles": {
+        "idle": "Idle",
+        "deploy": "Start",
+        "attack": {
+          "begin": null,
+          "loop": "Attack",
+          "end": null
+        },
+        "attackDown": null,
+        "skill": {
+          "begin": null,
+          "loop": "Skill_1",
+          "end": null,
+          "index": 0,
+          "via": "skill"
+        },
+        "skills": {
+          "0": {
+            "begin": null,
+            "loop": "Skill_1",
+            "end": null,
+            "index": 0,
+            "via": "skill"
+          },
+          "1": {
+            "begin": "Skill_2_Begin",
+            "loop": "Skill_2_Loop",
+            "idle": "Skill_2_Idle",
+            "end": "Skill_2_End",
+            "index": 1,
+            "via": "skill"
+          }
+        },
+        "die": null,
+        "stun": null,
+        "move": null
+      }
+    },
+    "operator/char_4221_ju/default/front": {
+      "kind": "operator",
+      "id": "char_4221_ju",
+      "variant": "default",
+      "facing": "front",
+      "spineVersion": "3.8.99",
+      "source": {
+        "key": "operators",
+        "repository": "fexli/ArknightsResource",
+        "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+        "directory": "spine/char_4221_ju/char_4221_ju/Front"
+      },
+      "skeleton": {
+        "path": "models/operator/char_4221_ju/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4221_ju.skel",
+        "bytes": 327369,
+        "sha256": "edb327e2a751c9a870f4d511ae27d9ddf927f97808a9b87ae0c0aed050728d90"
+      },
+      "atlas": {
+        "path": "models/operator/char_4221_ju/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4221_ju.atlas",
+        "bytes": 10765,
+        "sha256": "65491eb0951b585e201ed137713670e8a48f51d14843b45bc1827a81ff8cf92b"
+      },
+      "textures": [
+        {
+          "path": "models/operator/char_4221_ju/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4221_ju.png",
+          "bytes": 342967,
+          "sha256": "7a0a7dd9daaa17be884eb3c7bc64ee4266e9785a9324bbdec9fc0a70567ed815"
+        }
+      ],
+      "premultipliedAlpha": true,
+      "animations": {
+        "Attack": 2.4,
+        "Default": 0,
+        "Die": 1,
+        "Idle": 2.667,
+        "Skill_1": 2.4,
+        "Skill_2_Begin": 0.5,
+        "Skill_2_End": 0.167,
+        "Skill_2_Idle": 2.667,
+        "Skill_2_Loop": 2.4,
+        "Start": 1
+      },
+      "hits": {
+        "Attack": [
+          0.533
+        ],
+        "Skill_1": [
+          0.533
+        ],
+        "Skill_2_Loop": [
+          0.533
+        ]
+      },
+      "bounds": {
+        "x": -328.412,
+        "y": -1.745,
+        "width": 601.924,
+        "height": 647.14
+      },
+      "animationRoles": {
+        "idle": "Idle",
+        "deploy": "Start",
+        "attack": {
+          "begin": null,
+          "loop": "Attack",
+          "end": null
+        },
+        "attackDown": null,
+        "skill": {
+          "begin": null,
+          "loop": "Skill_1",
+          "end": null,
+          "index": 0,
+          "via": "skill"
+        },
+        "skills": {
+          "0": {
+            "begin": null,
+            "loop": "Skill_1",
+            "end": null,
+            "index": 0,
+            "via": "skill"
+          },
+          "1": {
+            "begin": "Skill_2_Begin",
+            "loop": "Skill_2_Loop",
+            "idle": "Skill_2_Idle",
+            "end": "Skill_2_End",
+            "index": 1,
+            "via": "skill"
+          }
+        },
+        "die": "Die",
+        "stun": null,
+        "move": null
+      }
+    }
+  },
+  "interfaceAssets": [
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "five-star-icons/Ju - Base.webp",
+      "bytes": 9548,
+      "sha256": "5350205db12b3c5dc8b06eff6269915bf4441717360020edf41b1db282e2d1a4"
+    },
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "skill-icons/Ju - Fine Bow, Difficult Draw.webp",
+      "bytes": 6546,
+      "sha256": "5e7af896046d7a145cb0244e4e0561b5f01c8b70a1312afd76b4909ebb8ffe28"
+    },
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "skill-icons/Ju - Fine Wings, Difficult Flight.webp",
+      "bytes": 7526,
+      "sha256": "2cb7fe8accfa1b0b76ac6229a1911b9331a68ed6a46ed50124c925f944e357aa"
+    },
+    {
+      "repository": "arkpedia/arkpedia-skin-assets",
+      "commit": "6fb723692d89c4a08d9a7aa4015e19c0753dd270",
+      "path": "five-star-skins/Ju - Base.webp",
+      "bytes": 165450,
+      "sha256": "517aa3bd188d7603ded86d16117e32112e84115cb564c691cc63dd7e73586682"
+    }
+  ],
+  "limitations": [
+    "Native selector, FSM/account/Begin/attack-finished/SP-window/finish-reason ordering and source-invalid attribute lookup are explicit local mappings.",
+    "Modules, native effects/audio/shaders, physical devices and compiled-client/frame/pixel parity remain unverified."
+  ],
+  "sourceFoundationSha256": "1a17ccfc1b76330814f9e7a660303ce4061df6c8afe50290ddc88a0e53a32011",
+  "ownerArtworkSha256": "abcf8f93d48db28ddc2c73acd788aea87fa8c051054f2b89cfc42cc55012ee40",
+  "sourceClocksSha256": "186806d18971464fbc0b1752402f8330aa1ded8d5479fded189f7662e42c5295"
+}

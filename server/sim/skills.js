@@ -40,6 +40,7 @@
 //   isExhausted() (no uses remain), onStart(ctx), onEnd(ctx), onHit(ctx), onAttack(ctx), onTick(ctx),
 //   onAmmoReplenish(ctx) mirrors an accepted external grant into a controller-owned ammo account.
 //   completeOnAttack: false lets a source ability controller end its multi-event instant cast itself.
+//   holdSpWhileActive: true keeps a source-controlled instant account locked independently of dispellable buffs.
 // ctx passed to spec callbacks: { battle, unit, skill, bb, target?, dealt?, targets?, dt?, reason? }; onAttack's ctx
 //   also carries `noAmmo` (set it to true: this attack spends no ammo). onEnd runs while the skill's mods / range are
 //   still applied (`active` is already false); they are removed right after it (unless onEnd re-activated the skill).
@@ -172,6 +173,7 @@ export class SkillRuntime {
   get silenceBlocked() { return !!this.unit.s.flags.silence && this.spec.silenceable !== false; }
 
   get isTimed() { return this.kind === 'duration' || this.kind === 'ammo' || this.kind === 'toggle'; }
+  get holdsSp() { return this.active && (this.isTimed || this.spec.holdSpWhileActive === true); }
 
   _ctx(extra) { return { battle: this.battle, unit: this.unit, skill: this, bb: this.bb, ...extra }; }
 
@@ -268,10 +270,10 @@ export class SkillRuntime {
     if (changesRange(this.spec.targeting)) this.battle._refreshRange(this.unit);
   }
 
-  /** Add SP (fires the `spGain` hook). Ignored while a duration/ammo/toggle skill runs (its bar shows the skill). */
+  /** Add SP (fires `spGain`). Timed and explicitly held source accounts reject ordinary recovery while active. */
   gainSp(amount, reason = 'time', silent = false) {
     if (this.noSkill || this.kind === 'passive' || !(amount > 0)) return 0;
-    if (this.active && this.isTimed && reason !== 'init') return 0;
+    if (this.holdsSp && reason !== 'init') return 0;
     // 阻回 (the operators' 凋亡 burst, damage.js): "停止并阻止任意形式的技力回复" — no SP of any kind (time, attack, hurt, gifts)
     if (reason !== 'init' && this.unit.s.flags.noSp) return 0;
     let cost = this.spCost;
@@ -328,7 +330,7 @@ export class SkillRuntime {
     // natural SP recovery stops only under 阻回 (noSp; a running timed skill holds it too) — not while 晕眩 / 冻结 / 浮空
     // keep the unit from acting: PRTS 技能 "在阻回状态或技力条已满时，保留剩余冷却时间，计时暂停"; PRTS 异常效果 STUNNED
     // "无法攻击、释放技能、阻挡敌人类单位" says nothing of SP (community report #18: 洛洛's S2 self-stun froze her SP)
-    if (this.spType === 'time' && !(this.active && this.isTimed) && !u.s.flags.noSp && u.alive && u.deployed && !u.hidden) {
+    if (this.spType === 'time' && !this.holdsSp && !u.s.flags.noSp && u.alive && u.deployed && !u.hidden) {
       const rate = u.s.spRecovery;
       if (rate > 0) this.gainSp(rate * dt, 'time');
     }

@@ -185,7 +185,8 @@ def original_token(key):
                           'animatorPathId': pointer['m_PathID']}
     return rows
 parameters = {'key', '_blackboardKey', '_blackboardKeys', '_fromBlackboardKeys', '_sourceBlackboardKey',
-              '_targetBlackboardKey', '_inputKey', '_outputKey', '_maxValueKey', '_anotherKeyToCompare', '_addParamKey'}
+              '_targetBlackboardKey', '_inputKey', '_outputKey', '_maxValueKey', '_anotherKeyToCompare', '_addParamKey',
+              '_projectileIndexKey', '_multiplyParamKey', '_atkScaleKey'}
 stack = [(item, '') for item in queue]
 while stack:
     value, field = stack.pop()
@@ -193,7 +194,10 @@ while stack:
         continue
     if isinstance(value, dict):
         stack.extend((k, '') for k in value if k.startswith('token_') and k in ct)
-        stack.extend((v, k) for k, v in value.items())
+        # Reconstruct native formula bindings independently of claimed assets.
+        formula = all(k in value for k in ('_formulaType', '_source', '_target', '_type', '_sourceKey', '_targetKey'))
+        stack.extend((v, 'key' if formula and k in ('_sourceKey', '_sourceKey2', '_targetKey') else k)
+                     for k, v in value.items())
     elif isinstance(value, (list, tuple)):
         stack.extend((v, field) for v in value)
     elif isinstance(value, str):

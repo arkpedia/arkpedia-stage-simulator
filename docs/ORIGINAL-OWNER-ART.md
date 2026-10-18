@@ -2,7 +2,7 @@
 
 The reusable path covers owners with the reviewed two-model Front/Back layout and matching files already in `arkpedia-sd-assets`. It does not infer gameplay support, role semantics, native effects or game-frame parity. Other layouts must use their own native binding review.
 
-1. Recover and independently audit the original operator foundation with `extract-cn-operator.py` and `audit-cn-operator.py`.
+1. Recover and independently audit the original operator foundation with `extract-cn-operator.py` and `audit-cn-operator.py`; see [source import and dependency guards](CN-SOURCE-IMPORT.md).
 2. Write a reviewed recipe with the owner ID, exact foundation SHA-256, immutable art Git commit, literal Front/Back roles, native End mixes, receipt path and SD review path. Kichisei's recipe is `data/arkpedia-kichi-art-recipe.json`. Optional `reviewPhases` lists unique literal clips to capture; Cairn uses this for its one-shot `Skill_2`. Every original clip is still loaded and checked regardless of the selected captures.
 3. Recover unrounded skeleton clocks with the shared `original-clocks.mjs` helper. Verify the original receipt bytes and keep the default parser output unchanged.
 4. Run `cn-owner-art.py bind --recipe data/arkpedia-kichi-art-recipe.json --hydrate` with the source Python environment and a Node 22/24 `ARKPEDIA_SOURCE_NODE`. This changes metadata only; all original source files must remain identical.
