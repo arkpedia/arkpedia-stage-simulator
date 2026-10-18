@@ -62,3 +62,9 @@ export function makotoS3AssaultInputs() {
     templates:Object.fromEntries(['makoto_s3_1_standin','common_weak_damage_buff','common_weak_damage_flag'].map(k=>[k,evidence.templates[k]])),
     weakBuff:evidence.buffDatabase.common_weak_damage};
 }
+export function makotoS3HealingInputs() {
+  const read=id=>makotoSourceComponent('characters',MAKOTO_ID,id);
+  return {mode:read('4051779512619945509'),heal:read('7398850004267028005'),selector:read('-7680531105110897115'),
+    producer:read('-2770134745049084379'),hook:read('-7234846479611671003'),
+    templates:Object.fromEntries(['makoto_s3_2_heal_others','makoto_s3_2_be_healed'].map(k=>[k,evidence.templates[k]]))};
+}
