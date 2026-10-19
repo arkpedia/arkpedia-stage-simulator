@@ -6,8 +6,10 @@ import {StandardBattle} from '../../server/sim/arkpedia.js';
 import {normalizeChess} from '../../server/sim/simdata.js';
 import {defaultBuild} from '../../shared/arkpedia/loadout.js';
 import {APHRISSA_ID as ID, selectedAphrissaBuild} from '../../server/sim/content/arkpedia-aphrissa-source.js';
-import {prepareAphrissaRelay, APHRISSA_RELAY_CONTRACT} from '../../server/sim/content/arkpedia-aphrissa-relay.js';
-import {prepareAphrissaOrdinary, APHRISSA_ORDINARY_CONTRACT} from '../../server/sim/content/arkpedia-aphrissa-ordinary.js';
+import {prepareAphrissaRelay, APHRISSA_RELAY_CONTRACT,
+  prepareAphrissaS3Relay, APHRISSA_S3_RELAY_CONTRACT} from '../../server/sim/content/arkpedia-aphrissa-relay.js';
+import {prepareAphrissaOrdinary, APHRISSA_ORDINARY_CONTRACT,
+  prepareAphrissaS3Attacks, APHRISSA_S3_ATTACK_CONTRACT} from '../../server/sim/content/arkpedia-aphrissa-ordinary.js';
 import {prepareAphrissaResistance, APHRISSA_RESISTANCE_CONTRACT} from '../../server/sim/content/arkpedia-aphrissa-resistance.js';
 import {prepareAphrissaRelayBonus, APHRISSA_RELAY_BONUS_CONTRACT} from '../../server/sim/content/arkpedia-aphrissa-relay-bonus.js';
 export {near, advance} from './mon3tr-fixture.js';
@@ -23,23 +25,24 @@ export function make(options = {}) {
   return addOwner(b, options);
 }
 
-export function addOwner(b, {elite = 2, skill = 1, potential = 1, trust = 0, defer = false,
-  contract = APHRISSA_RELAY_CONTRACT, relay = true, ordinary = false,
+export function addOwner(b, {elite = 2, skill = 1, potential = 1, trust = 0, defer = false, rank = [4, 7, 10][elite],
+  s3Relay = false, contract = s3Relay ? APHRISSA_S3_RELAY_CONTRACT : APHRISSA_RELAY_CONTRACT, relay = true, ordinary = false,
+  s3Attacks = false, s3AttackContract = APHRISSA_S3_ATTACK_CONTRACT,
   ordinaryContract = APHRISSA_ORDINARY_CONTRACT, resistance = false,
   resistanceContract = APHRISSA_RESISTANCE_CONTRACT, bonus = false,
   bonusContract = APHRISSA_RELAY_BONUS_CONTRACT, row = 5, col = 5, dir = 'RIGHT', mutate} = {}) {
   const c = evidence.tables.character, build = {elite, level: c.phases[elite].maxLevel,
-    potential, trust, skillId: `skchr_aphris_${skill}`, skillRank: [4, 7, 10][elite], module: 'none'};
+    potential, trust, skillId: `skchr_aphris_${skill}`, skillRank: rank, module: 'none'};
   const r = selectedAphrissaBuild(build);
   const def = normalizeChess({chessId: ID, charId: ID, name: c.appellation, profession: c.profession,
     position: c.position, stats: r.stats, rangeGrid: r.rangeGrid, tags: r.tags, talents: r.talents,
     skill: {...r.source, ...r.source.spData, skillId: build.skillId, rangeGrid: r.skillRangeGrid}, arkpedia: build});
   mutate?.(def);
   const u = b._makeAlly(b.getPlayer('arkpedia'), def, 'op', row, col, {dir});
-  const deck = relay ? prepareAphrissaRelay(b, u, {contract}) : null;
+  const deck = relay ? (s3Relay ? prepareAphrissaS3Relay : prepareAphrissaRelay)(b, u, {contract}) : null;
   const mode = {ordinary: true, ray: 'normal'};
-  const attacks = ordinary ? prepareAphrissaOrdinary(b, u, {contract: ordinaryContract,
-    mayBegin: () => mode.ordinary}) : null;
+  const attacks = s3Attacks ? prepareAphrissaS3Attacks(b, u, {contract: s3AttackContract, mayBegin: () => mode.ordinary})
+    : ordinary ? prepareAphrissaOrdinary(b, u, {contract: ordinaryContract, mayBegin: () => mode.ordinary}) : null;
   const aura = resistance ? prepareAphrissaResistance(b, u, {contract: resistanceContract,
     rangeMode: () => mode.ray}) : null;
   // This fixture chooses actual owned summons explicitly. It does not claim

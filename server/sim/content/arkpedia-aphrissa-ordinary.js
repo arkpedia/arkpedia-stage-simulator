@@ -7,6 +7,7 @@ import {aphrissaRayCells, APHRISSA_RAY_CONTRACT} from './arkpedia-aphrissa-ray.j
 import {sourceAbilityDelta} from './arkpedia-slow-down.js';
 import {canTargetEnemy} from '../targeting.js';
 import {bodyOnTile} from '../body.js';
+import {createAphrissaS3Payload} from './arkpedia-aphrissa-s3-payload.js';
 
 export const APHRISSA_ORDINARY_CONTRACT = Object.freeze({
   scope: 'Diagnostic default-mode original Arts line attack and attack receipts only; not a playable kit.',
@@ -18,6 +19,12 @@ export const APHRISSA_S1_ATTACK_CONTRACT = Object.freeze({
   scope: 'Selected original S1 Arts line attack clock with explicit active-mode and native clip dispatchers.',
   mapping: APHRISSA_ORDINARY_CONTRACT.mapping,
   limits: 'Requires separately owned S1 activation, stats and permanence. The caller selects one literal source A/B or down-facing clip; native loopType1 dispatch is not inferred here. Ray traversal, retained batch, hit ordering, clocks and frame parity retain the ordinary contract limits. No public admission.',
+  frameParity: false,
+});
+export const APHRISSA_S3_ATTACK_CONTRACT = Object.freeze({
+  scope: 'Held original S3 attack markers, selected Arts scale and separate relay-count Slow/extra damage producer; no owner skill account or public admission.',
+  mapping: 'Uses the shared owned attack clock with the literal Skill_3_Loop or downward variant and original OnAttack marker. The strike captures current distinct enemy lives and retains the original hit stagger. Before each main hit, the non-missable instantaneous aphris_sk3 producer samples that recipient on the current finite relay ray, clamps extension count by selected max_times, applies independent common Slow and emits one selected extra Arts hit per clamped extension. Its nonderived Slow keeps its accepted lifetime after producer or source removal. Extra hits use live ATK, the existing damage pipeline and the same attack ID, with native NORMAL attack type and NONE application way. Producer rejection does not fabricate rejection of the independent main hit.',
+  limits: 'Shared sampled BAT/playback and tick/selection/stagger policies remain local. Producer-before-main order, fresh ray metadata at producer admission, first-arrival overlap, out-of-ray count zero, current-recipient legality, primitive buff admission and ordinary damage-miss dispatch are local mappings rather than compiled action/frame proof. The caller supplies active-mode permission and owns charge/ammunition/final-batch/end behavior. Native prefab default forty is not treated as selected ammo twenty here. Stats, relay lease, account, native particles/audio, modules and public admission compose separately.',
   frameParity: false,
 });
 const present = unit => unit?.alive && unit.deployed && !unit.removed && !unit._removing;
@@ -62,12 +69,36 @@ export function prepareAphrissaS1Attacks(b, u, {contract, mayBegin, pickClip} = 
   return controller;
 }
 
+export function prepareAphrissaS3Attacks(b, u, {contract, mayBegin} = {}) {
+  if (contract !== APHRISSA_S3_ATTACK_CONTRACT || typeof mayBegin !== 'function'
+    || u.def.charId !== ID || u.deploySeq !== 0 || u.mem.aphrissaS3Attacks)
+    throw Error('Fresh selected Aphrissa S3, exact attack contract and explicit mode predicate required');
+  const selected = selectedAphrissaInputs(u), n = aphrissaNativeInputs(), a = n.s3Attack, s = n.s3Target;
+  if (selected.index !== 2 || a._animKey !== 'Skill_3_Loop' || a._downAnimKey !== 'Skill_Down_3_Loop'
+    || a._endAnimKey !== 'Skill_3_Idle' || a._waitForAttackEvent !== 1 || a._selectTargetTiming !== 3
+    || a._timeMode !== 0 || a._maxAnimScale !== 1 || a._affectedBySlowDown !== 1
+    || a._hitInterval !== n.ordinary._hitInterval || a._damageType !== 2 || a._attackType !== 1
+    || a._faceToDefault !== 1 || a._faceToTarget !== 0 || s._targetMotion !== 3 || s._targetSide !== 2
+    || s._limitTargetNum !== 0 || n.s3Counter._triggerTimeCount !== 40 || n.s3Counter._expendPerTrigger !== 1
+    || n.s3DownCounter._triggerTimeCount !== 40 || n.s3Counter._countEvent !== 4)
+    throw Error('Changed original Aphrissa S3 attack inputs');
+  const payload = createAphrissaS3Payload(b, u);
+  const controller = new AphrissaOrdinary(b, u, mayBegin, a, {
+    slot: 'aphrissaS3Attacks', skill: true, scale: selected.bb['attack@atk_scale'], tag: 'aphrissa:s3', beforeHit: payload,
+    pickClip: () => u.dir === 'DOWN' ? 'Skill_Down_3_Loop' : 'Skill_3_Loop',
+    idleClip: () => u.dir === 'DOWN' ? 'Skill_Down_3_Idle' : 'Skill_3_Idle',
+    clips: ['Skill_3_Loop', 'Skill_Down_3_Loop'],
+  });
+  u.mem.aphrissaS3Attacks = controller;
+  return controller;
+}
+
 class AphrissaOrdinary {
   constructor(b, u, mayBegin, native, {slot = 'aphrissaOrdinary', pickClip = null,
-    skill = false, idleClip = () => 'Idle', clips = ['Attack', 'Attack_Down']} = {}) {
+    skill = false, idleClip = () => 'Idle', clips = ['Attack', 'Attack_Down'], scale = 1, tag = null, beforeHit = null} = {}) {
     Object.assign(this, {b, u, mayBegin, native, seq: null, stopped: false, phase: null,
       accepting: false, selecting: false, bornUntil: Infinity, visualSeq: 0, visuals: new WeakSet(), handles: [],
-      slot, pickClip, isSkill: skill, idleClip, clips});
+      slot, pickClip, isSkill: skill, idleClip, clips, scale, tag, beforeHit});
   }
   valid() { return !this.stopped && !this.b.finished && present(this.u) && this.seq === this.u.deploySeq
     && this.u.mem[this.slot] === this; }
@@ -142,9 +173,18 @@ class AphrissaOrdinary {
       && p.next < p.pending.length && due(p.age, p.pending[p.next].at)) {
       const input = p.pending[p.next++]; // Claim before damage callbacks.
       if (input.unit.deploySeq !== input.life || !this.legal(input.unit)) continue;
-      this.b.dealDamage(this.u, input.unit, {amount: this.u.s.atk * this.u.s.atkScaleMul,
-        type: 'arts', isAttack: true, isSkill: this.isSkill, attackId: p.attackId,
-        applyWay: 'ranged', tags: [this.isSkill ? 'aphrissa:s1' : 'aphrissa:ordinary']});
+      p.delivering = input;
+      try {
+        if (this.beforeHit) {
+          const permit = () => this.phase === p && this.allowed() && this.phase === p
+            && p.epoch === this.u.attackControlEpoch && input.unit.deploySeq === input.life && this.legal(input.unit);
+          this.beforeHit(input.unit, {attackId: p.attackId, permit});
+          if (!permit()) continue;
+        }
+        this.b.dealDamage(this.u, input.unit, {amount: this.u.s.atk * this.u.s.atkScaleMul * this.scale,
+          type: 'arts', isAttack: true, isSkill: this.isSkill, attackId: p.attackId,
+          applyWay: 'ranged', tags: [this.tag ?? (this.isSkill ? 'aphrissa:s1' : 'aphrissa:ordinary')]});
+      } finally { p.delivering = null; }
     }
   }
   tick() {
