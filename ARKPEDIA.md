@@ -4847,3 +4847,7 @@ Angelina the Mellow Wish joins with her Skywalker trait, talent Arts riders by w
 ### Raidian
 
 Raidian joins with his three original towers, one per skill (token art and card avatars from the CN client): the talent's five summons with inspiration, one more summon on every skill start, the S1 melee blocker with DEF and barrier, the S2 piercing bullet tower that fires three longer lanes while S2 runs, and the S3 ranged Arts tower with prism links, sluggish and Arts fragility. `REGULAR_SUMMONS` gains `tokenBySkill`. See docs/RADIAN-REVIEW.md. Coverage: 428/431 forms.
+
+### In progress: Kal'tsit·Esperanta (paused 2026-10-20)
+
+Branch `claude/batch3`, WIP commit "WIP: Kal'tsit·Esperanta module and engine hooks". She is registered and her module (`server/sim/content/arkpedia-kalts2.js`) plus two engine hooks (`blockRadiusScale`, `regularPlacementDeny`) are written but never run; the build fails until `data/arkpedia-kalts2-runtime-review.json` exists. Next: bind her art and the anchor token art/avatar, add the pending review with `tokenArtwork`, build the candidate, write `test/arkpedia-kalts2.test.js` and `tools/arkpedia/review-kalts2-public.mjs`, admit, document. After her: SilverAsh the Reignfrost, Nasti, the Viy pronoun fix, then merge #133, rebase this branch, the SD PR (`claude/sd-batch3`) and the batch 3 PR.
