@@ -12,11 +12,14 @@ export function drawableAttachmentsAt(model,time){
  assert.ok(slots.every(s=>s.attachment?.type!=='missing'),'Original attachment unresolved in default skin');
  return slots.filter(s=>['region','mesh'].includes(s.attachment?.type)).length;
 }
-export async function recoverOriginalVisibility({id,receipt,sha256,clip,sampleTimes,skeleton,read=readFile}){
+export async function recoverOriginalVisibility({id,receipt,sha256,clip,sampleTimes,skeleton,faces=['Front','Back'],read=readFile}){
  const raw=await read(receipt);assert.equal(sha(raw),sha256);const e=JSON.parse(raw);assert.equal(e.operatorId,id);assert.deepEqual(e.enabledOperators,[]);
  assert.ok(typeof clip==='string'&&Array.isArray(sampleTimes)&&sampleTimes.length>0&&new Set(sampleTimes).size===sampleTimes.length);
+ assert.ok(Array.isArray(faces)&&faces.length>0&&new Set(faces).size===faces.length&&faces.every(f=>['Front','Back'].includes(f)));
  const models={};for(const face of['Front','Back']){const bytes=await read(skeleton(face)),binding=e.officialSkeletonBindings[id][face];assert.equal(bytes.length,binding.bytes);assert.equal(sha(bytes),binding.sha256);
-  const p=parseSkel(bytes,undefined,{includeExactDurations:true,includeAttachmentTimelines:true});assert.deepEqual(p.durations,e.models[id][face].durations);assert.ok(p.attachmentTimelines[clip]?.length>0);
+  const p=parseSkel(bytes,undefined,{includeExactDurations:true,includeAttachmentTimelines:true});assert.deepEqual(p.durations,e.models[id][face].durations);
+  if(!faces.includes(face)){assert.equal(p.exactDurations[clip],undefined,'A proof cannot omit a facing that contains the original clip');continue;}
+  assert.ok(p.attachmentTimelines[clip]?.length>0);
   const model={sha256:binding.sha256,bytes:binding.bytes,clip,duration:p.exactDurations[clip],setupAttachments:p.setupAttachments,attachmentTimelines:p.attachmentTimelines[clip]};
   model.samples=sampleTimes.map(time=>({time,drawableAttachments:drawableAttachmentsAt(model,time)}));models[face]=model;
  }

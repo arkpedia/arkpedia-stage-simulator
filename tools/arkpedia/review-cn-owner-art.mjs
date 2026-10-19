@@ -25,10 +25,11 @@ const rows=['front','back'].map(face=>{const r=manifest.models[`operator/${id}/d
 if(recipe.visibilityProof){
  assert.equal(id,owner,'Visibility proof must bind an original owner');assert.match(recipe.visibilityProof.path,/^data\/arkpedia-[a-z0-9-]+-visibility\.json$/);assert.match(recipe.visibilityProof.sha256,/^[a-f0-9]{64}$/);
  const raw=await readFile(recipe.visibilityProof.path),proof=JSON.parse(raw);assert.equal(createHash('sha256').update(raw).digest('hex'),recipe.visibilityProof.sha256);
- const front=proof.models.Front;assert.deepEqual(front.samples.map(s=>s.time),proof.models.Back.samples.map(s=>s.time));assert.equal(front.clip,proof.models.Back.clip);
- const recovered=await verifyOriginalVisibility(proof,{id:owner,receipt:`data/arkpedia-native-operators/${owner}.json`,sha256:recipe.foundationSha256,clip:front.clip,sampleTimes:front.samples.map(s=>s.time),skeleton:face=>Object.values(rows.find(r=>r.face===face.toLowerCase()).files).find(path=>path.endsWith('.skel'))});
+ const faces=Object.keys(proof.models);assert.ok(faces.length>0&&faces.every(f=>['Front','Back'].includes(f)));const first=proof.models[faces[0]];
+ for(const model of Object.values(proof.models)){assert.deepEqual(first.samples.map(s=>s.time),model.samples.map(s=>s.time));assert.equal(first.clip,model.clip);}
+ const recovered=await verifyOriginalVisibility(proof,{id:owner,receipt:`data/arkpedia-native-operators/${owner}.json`,sha256:recipe.foundationSha256,clip:first.clip,sampleTimes:first.samples.map(s=>s.time),faces,skeleton:face=>Object.values(rows.find(r=>r.face===face.toLowerCase()).files).find(path=>path.endsWith('.skel'))});
  assert.deepEqual(proof,recovered,'Visibility proof must reproduce the exact original attachment schedules');
- for(const row of rows){const model=proof.models[row.face==='front'?'Front':'Back'];assert.equal(model.sha256,row.hashes.find(h=>h.path.endsWith('.skel')).sha256);row.visibility={clip:model.clip,samples:model.samples};}
+ for(const row of rows){const model=proof.models[row.face==='front'?'Front':'Back'];if(!model){assert.equal(row.durations[first.clip],undefined);continue;}assert.equal(model.sha256,row.hashes.find(h=>h.path.endsWith('.skel')).sha256);row.visibility={clip:model.clip,samples:model.samples};}
 }
 await mkdir(out,{recursive:true});
 const html=`<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
