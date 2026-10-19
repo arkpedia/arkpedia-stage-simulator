@@ -79,3 +79,8 @@ export function makotoAllOutInputs() {
     templates:Object.fromEntries(['makoto_on_enter_normal','makoto_allout_attack_damage','makoto_talent_2'].map(k=>[k,evidence.templates[k]])),
     ranges:evidence.tables.ranges};
 }
+export function makotoS3PermissionInputs() {
+  const read=id=>makotoSourceComponent('characters',MAKOTO_ID,id);
+  return {mode:read('-2027711911729967579'),producer:read('-1855292784249942491'),
+    templates:Object.fromEntries(['makoto_s3_1_create_allow_cast_skill','makoto_s3_1_allow_cast_skill'].map(k=>[k,evidence.templates[k]]))};
+}

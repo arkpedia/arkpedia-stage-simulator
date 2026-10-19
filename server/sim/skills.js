@@ -171,7 +171,14 @@ export class SkillRuntime {
   // A target condition can prevent a cast without consuming SP or hiding the
   // full-SP ready indicator. Battle-wide use limits are distinct exhaustion.
   get castEligible() { return !this.exhausted && (typeof this.spec.canActivate !== 'function' || !!this.spec.canActivate()); }
-  get ready() { return !this.noSkill && !this.exhausted && this.kind !== 'passive' && this.charges >= 1; }
+  // Native SetSkillCastWithNoSp is a casting permission, not recovered SP.
+  // Keep the real account untouched and expose readiness to the ordinary HUD.
+  get manualCastWithoutSp() {
+    if (!this.manual || typeof this.spec.manualCastWithoutSp !== 'function') return false;
+    const u = this.unit, life = u.deploySeq;
+    return this.spec.manualCastWithoutSp() === true && u.deploySeq === life && u.skill === this;
+  }
+  get ready() { return !this.noSkill && !this.exhausted && this.kind !== 'passive' && (this.charges >= 1 || this.manualCastWithoutSp); }
   get silenceBlocked() { return !!this.unit.s.flags.silence && this.spec.silenceable !== false; }
 
   get isTimed() { return this.kind === 'duration' || this.kind === 'ammo' || this.kind === 'toggle'; }
@@ -457,14 +464,25 @@ export class SkillRuntime {
     }
   }
 
-  /** Activate now (consumes one charge). Returns true on success. */
+  /** Activate now; spend a charge unless explicitly free or native manual permission applies. */
   activate(reason = 'manual', { free = false } = {}) {
+    const u = this.unit, life = u.deploySeq;
     if (this.noSkill || !this.castEligible || this.kind === 'passive') return false;
-    if (!free && !this.ready) return false;
+    const permissionAware = typeof this.spec.manualCastWithoutSp === 'function' || typeof this.spec.manualTriggerOnly === 'function';
+    const manualOnly = typeof this.spec.manualTriggerOnly === 'function' && this.spec.manualTriggerOnly() === true;
+    if (permissionAware && (u.deploySeq !== life || u.skill !== this)) return false;
+    if (manualOnly && reason !== 'manual') return false;
+    const withoutSp = reason === 'manual' && this.manualCastWithoutSp;
+    if (permissionAware && (u.deploySeq !== life || u.skill !== this)) return false;
+    if (!free && !withoutSp && (this.charges < 1 || !this.ready)) return false;
+    // Native permission predicates are an additional callback boundary. They
+    // cannot lend readiness to a replaced account/life or bypass a control or
+    // eligibility change occurring during that query.
+    if (permissionAware && ((!u.canAct && !this.spec.allowAbnormalCast) || this.silenceBlocked
+      || !this.castEligible || u.deploySeq !== life || u.skill !== this)) return false;
     if (this.active && this.isTimed) return false;
-    const u = this.unit;
     if (!u.alive || !u.deployed) return false;
-    if (!free) {
+    if (!free && !withoutSp) {
       const wasFull = this.charges >= this.maxCharges;
       this.charges--;
       if (this.maxCharges === 1 || wasFull) this.sp = 0;
