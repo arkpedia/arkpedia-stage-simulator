@@ -4795,3 +4795,7 @@ Titi joins with her Incantation Medic trait, her two talents and all three sleep
 ### Astgenne the Lightchaser
 
 Astgenne the Lightchaser joins with her Decel Binder trait, two talents (ASPD stacks from sluggish and in-range fragile) and all three skills: S1 repeating chain jumps, S2 pull links and S3 damage-sharing locked targets. See docs/HALO2-REVIEW.md. Coverage: 415/431 forms.
+
+### Zinogre S Catapult
+
+Zinogre S Catapult joins with Mercenary DP-paid casts, talent charge layers that extend her skills, S1 morph slash and alternating five/ten-hit combos with Arts riders, and S2 morph slash with the paid Equipment Adaptation. See docs/CATAP2-REVIEW.md. Coverage: 416/431 forms.
