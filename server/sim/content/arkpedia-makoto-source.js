@@ -73,3 +73,9 @@ export function makotoS3EvasionInputs() {
   return {mode:read('4051779512619945509'),aura:read('-6508989524430762459'),validator:read('-2311411998879199707'),
     templates:Object.fromEntries(['makoto_s3_2_aura','evade'].map(k=>[k,evidence.templates[k]]))};
 }
+export function makotoAllOutInputs() {
+  const read=id=>makotoSourceComponent('characters',MAKOTO_ID,id);
+  return {selectorAbility:read('1984554138926501413'),selector:read('7710524458763865637'),range:read('7382482586649415205'),
+    templates:Object.fromEntries(['makoto_on_enter_normal','makoto_allout_attack_damage','makoto_talent_2'].map(k=>[k,evidence.templates[k]])),
+    ranges:evidence.tables.ranges};
+}
