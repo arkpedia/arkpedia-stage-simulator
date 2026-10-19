@@ -1,0 +1,42 @@
+{
+  "operator": "char_4195_radian",
+  "model": "token_10051_radian_tower1",
+  "name": "Raidian tower 1",
+  "nativeFacing": "Single",
+  "foundationSha256": "c8f114a01a67f02ddd67b0bb6e30c09dba2cda87da0be693ca4298b1f29d3317",
+  "bundle": "pkgrps/btl_pfb_tokens_0.ab",
+  "output": "data/arkpedia-radian-tower1-token-art.json",
+  "sdReview": "source-reviews/radian-tower1.json",
+  "scope": "Original Raidian summon artwork only: native skeleton(s), unchanged decoded pixels, PMA and pointers. Combat, public admission, effects/audio and game-frame/pixel parity are separate.",
+  "roles": {
+    "Single": {
+      "idle": "C_Skill1_Idle",
+      "deploy": "C_Skill1_Start",
+      "attack": {
+        "begin": null,
+        "loop": "C_Skill1_Attack",
+        "end": null
+      },
+      "skill": null,
+      "die": "C_Skill1_Die",
+      "stun": null,
+      "move": null
+    }
+  },
+  "missingOptionalAliases": {
+    "Single": []
+  },
+  "nativeMixes": [],
+  "reviewPhases": [
+    "C_Default",
+    "C_Skill1_Attack",
+    "C_Skill1_Die",
+    "C_Skill1_Idle",
+    "C_Skill1_Start"
+  ],
+  "emptyClips": {
+    "Single": [
+      "C_Default"
+    ]
+  }
+}

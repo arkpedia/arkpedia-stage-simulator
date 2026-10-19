@@ -49,7 +49,8 @@ assert exact(animator)==e['tokenArtworkControllers'][token][0]['data'];switcher_
 assert [{k:m[k]for k in ['sourceAnimName','targetAnimName','mixAnimName']}for m in animator['_mixSettings']]==recipe['nativeMixes']
 native_faces=set(e['officialSkeletonBindings'][token]);single=native_faces=={'Single'}
 assert set(recipe['roles'])==native_faces
-assert native_faces=={'Front','Back'}or(single and recipe.get('nativeFacing')=='Single')
+# Front/Back, optionally with a native Down skeleton, or one Single skeleton.
+assert native_faces in({'Front','Back'},{'Front','Back','Down'})or(single and recipe.get('nativeFacing')=='Single')
 assert recipe.get('nativeFacing')==('Single'if single else None)
 node=os.environ.get('ARKPEDIA_SOURCE_NODE','node');files={};facings={}
 for face,n in e['officialSkeletonBindings'][token].items():

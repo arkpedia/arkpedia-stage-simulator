@@ -4843,3 +4843,7 @@ Pramanix the Prerita joins with her Phalanx trait, talent snow layers that strik
 ### Angelina the Mellow Wish
 
 Angelina the Mellow Wish joins with her Skywalker trait, talent Arts riders by weight and the weightless field, lifted-off ally ATK and blocking regeneration, the S1 passive liftoff, the S2 glide that levitates or ground-binds before Arts volleys, and the S3 ammo liftoff with air protection, slowed fliers and moves. See docs/AGLNA2-REVIEW.md. Coverage: 427/431 forms.
+
+### Raidian
+
+Raidian joins with his three original towers, one per skill (token art and card avatars from the CN client): the talent's five summons with inspiration, one more summon on every skill start, the S1 melee blocker with DEF and barrier, the S2 piercing bullet tower that fires three longer lanes while S2 runs, and the S3 ranged Arts tower with prism links, sluggish and Arts fragility. `REGULAR_SUMMONS` gains `tokenBySkill`. See docs/RADIAN-REVIEW.md. Coverage: 428/431 forms.
