@@ -235,7 +235,9 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false}={}){
     const worlds=new Map();
     function world(id){
       if(worlds.has(id))return worlds.get(id);
-      const n=state.nodes.get(id),q=n.euler?new T.Quaternion().setFromEuler(new T.Euler(...n.euler.map(v=>v*Math.PI/180),'ZXY')):new T.Quaternion().fromArray(n.rotation);
+      // Unity's fixed-axis Z,X,Y order is Three's intrinsic Y,X,Z order,
+      // matching the particle start-rotation conversion below.
+      const n=state.nodes.get(id),q=n.euler?new T.Quaternion().setFromEuler(new T.Euler(...n.euler.map(v=>v*Math.PI/180),'YXZ')):new T.Quaternion().fromArray(n.rotation);
       const scale=new T.Vector3().fromArray(n.scale),m=new T.Matrix4().compose(new T.Vector3().fromArray(n.position),q,scale);
       if(n.parent){const parent=world(n.parent);m.premultiply(parent.matrix);q.premultiply(parent.rotation);scale.multiply(parent.scale);}
       const result={matrix:m,rotation:q,scale};worlds.set(id,result);return result;
@@ -272,7 +274,7 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false}={}){
     activeClip=clip;activeTrajectory=trajectory;
     const state=samplePose(clock,clip,trajectory);
     for(const [id,n] of state.nodes){const o=nodeObjects.get(id);o.position.fromArray(n.position);o.scale.fromArray(n.scale);
-      if(n.euler)o.quaternion.setFromEuler(new T.Euler(...n.euler.map(v=>v*Math.PI/180),'ZXY'));else o.quaternion.fromArray(n.rotation);
+      if(n.euler)o.quaternion.setFromEuler(new T.Euler(...n.euler.map(v=>v*Math.PI/180),'YXZ'));else o.quaternion.fromArray(n.rotation);
       o.visible=n.visible;
     }
     group.updateMatrixWorld(true);camera.updateMatrixWorld(true);

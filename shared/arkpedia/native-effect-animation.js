@@ -15,6 +15,7 @@ const count = (value, label) => {
 };
 
 export function decodeEffectClip(source) {
+  if (source.m_Legacy === true) return decodeLegacyEulerClip(source);
   for (const name of ['m_RotationCurves', 'm_CompressedRotationCurves', 'm_EulerCurves',
     'm_PositionCurves', 'm_ScaleCurves', 'm_FloatCurves', 'm_PPtrCurves']) {
     if (!Array.isArray(source[name]) || source[name].length) fail(`unsupported ${name}`);
@@ -103,6 +104,63 @@ export function decodeEffectClip(source) {
   }
   return {name:source.m_Name, start, stop, loop:muscle.m_LoopTime, bindings:decodedBindings,
     channels, sourceFrames:frames, streamedWords:stream.data.length};
+}
+
+// The recovered legacy wing clip stores unweighted Euler keys directly, with
+// no stripped bindings or muscle curves. Its muscle clock is an unused stub.
+// Keep literal hierarchy paths and use the authored key extent instead.
+function decodeLegacyEulerClip(source) {
+  for (const name of ['m_RotationCurves', 'm_CompressedRotationCurves', 'm_PositionCurves',
+    'm_ScaleCurves', 'm_FloatCurves', 'm_PPtrCurves']) {
+    if (!Array.isArray(source[name]) || source[name].length) fail(`unsupported legacy ${name}`);
+  }
+  const clip = source.m_MuscleClip?.m_Clip?.data, binding = source.m_ClipBindingConstant;
+  if (source.m_Compressed !== false || source.m_MuscleClipSize !== 0 || !clip
+    || clip.m_StreamedClip?.curveCount !== 0 || clip.m_StreamedClip.data?.length !== 0
+    || clip.m_DenseClip?.m_CurveCount !== 0 || clip.m_DenseClip.m_SampleArray?.length !== 0
+    || clip.m_ConstantClip?.data?.length !== 0
+    || binding?.genericBindings?.length !== 0 || binding.pptrCurveMapping?.length !== 0) {
+    fail('unsupported mixed legacy clip');
+  }
+  if (source.m_WrapMode !== 2) fail('unsupported legacy wrap mode');
+  if (!Array.isArray(source.m_EulerCurves) || !source.m_EulerCurves.length) fail('missing legacy Euler curves');
+  const channels = [], bindings = [], paths = new Set();
+  let stop = null;
+  for (const {path, curve} of source.m_EulerCurves) {
+    if (typeof path !== 'string' || paths.has(path)) fail('invalid or duplicate legacy path');
+    paths.add(path);
+    // Unity's RotationOrder enum maps 4 to ZXY. Other orders and weighted
+    // Bezier keys require a separately reviewed source input and evaluator.
+    if (curve?.m_RotationOrder !== 4 || curve.m_PreInfinity !== 2 || curve.m_PostInfinity !== 2
+      || !Array.isArray(curve.m_Curve) || curve.m_Curve.length < 2) fail('unsupported legacy Euler curve');
+    const keys = curve.m_Curve;
+    let previous = -Infinity;
+    for (const key of keys) {
+      if (finite(key.time, 'legacy key time') <= previous || key.weightedMode !== 0)
+        fail('invalid legacy key order or weighting');
+      previous = key.time;
+      for (const field of ['value', 'inSlope', 'outSlope', 'inWeight', 'outWeight'])
+        for (const axis of ['x', 'y', 'z']) finite(key[field]?.[axis], `legacy ${field}.${axis}`);
+    }
+    const end = keys.at(-1).time;
+    if (keys[0].time !== 0 || end <= 0 || (stop !== null && stop !== end))
+      fail('unsupported legacy Euler clock');
+    stop = end;
+    const bindingIndex = bindings.length, offset = channels.length;
+    bindings.push({path, typeID:4, attribute:4, rotationOrder:'ZXY', offset, size:3});
+    for (const [component, axis] of ['x', 'y', 'z'].entries()) {
+      channels.push({bindingIndex, component, kind:'legacy-euler', keys:keys.map((key, index) => {
+        const d = key.value[axis], c = key.outSlope[axis], next = keys[index + 1];
+        if (!next) return {time:key.time, coefficients:[0,0,0,d]};
+        const dt = next.time - key.time, delta = next.value[axis] - d, endSlope = next.inSlope[axis];
+        const a = ((c + endSlope) * dt - 2 * delta) / (dt * dt * dt);
+        const b = (3 * delta - (2 * c + endSlope) * dt) / (dt * dt);
+        return {time:key.time, coefficients:[a,b,c,d].map(v => finite(v, 'legacy coefficient'))};
+      })});
+    }
+  }
+  return {name:source.m_Name, format:'legacy-euler', start:0, stop, loop:true,
+    bindings, channels, sourceFrames:0, streamedWords:0};
 }
 
 export function sampleEffectClip(clip, time, {loop = clip.loop} = {}) {

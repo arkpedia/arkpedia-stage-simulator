@@ -23,15 +23,16 @@ export function createEffectPose(pack, animations, rootName) {
       position:['x','y','z'].map(k=>d.m_LocalPosition[k]),
       rotation:['x','y','z','w'].map(k=>d.m_LocalRotation[k]),
       scale:['x','y','z'].map(k=>d.m_LocalScale[k]), active:records[go].data.m_IsActive});
-    for(const component of components)if(['MeshRenderer','ParticleSystemRenderer','TrailRenderer'].includes(records[component]?.type)){
+    for(const component of components)if(['MeshRenderer','ParticleSystemRenderer','TrailRenderer','LineRenderer'].includes(records[component]?.type)){
       const r=records[component];
       renderers.set(component,{gameObject:go, transform:tr[0], enabled:r.data.m_Enabled,
-        materials:refs(component,'m_Materials').map(id=>id?{id,properties:materialProperties(records[id].data)}:null)});
+        materials:refs(component,'m_Materials').map(id=>id?{id,properties:materialProperties(records[id].data)}:null),
+        ...(r.type==='LineRenderer'?{widthMultiplier:r.data.m_Parameters.widthMultiplier}:{})});
     }
     for(const child of refs(tr[0],'m_Children'))walk(one(child,'m_GameObject'),tr[0]);
   }
   walk(root);
-  const instances=animations.instances.filter(i=>visited.has(one(i.animator,'m_GameObject')));
+  const instances=animations.instances.filter(i=>visited.has(one(i.animation??i.animator,'m_GameObject')));
   const baseNodes=structuredClone(nodes), baseRenderers=structuredClone(renderers);
   function sample(time, clipId=null) {
     const currentNodes=structuredClone(baseNodes), currentRenderers=structuredClone(baseRenderers);
@@ -50,6 +51,12 @@ export function createEffectPose(pack, animations, rootName) {
           case 'm_LocalScale':node.scale=v;break;
           case 'localEulerAnglesRaw':node.euler=v;break;
           case 'm_IsActive':node.active=v[0]!==0;break;
+          case 'm_Parameters.widthMultiplier':{
+            const renderer=currentRenderers.get(target.component);
+            if(records[target.component]?.type!=='LineRenderer'||!renderer||binding.size!==1||!Number.isFinite(v[0]))
+              throw new Error('Invalid original animated line width');
+            renderer.widthMultiplier=v[0];break;
+          }
           default:{
             const renderer=currentRenderers.get(target.component);
             if(!renderer)throw new Error('Missing original animated renderer');

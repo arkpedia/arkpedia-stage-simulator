@@ -52,6 +52,29 @@ test('closed libraries and invalid roots do not register orphan instances',async
   const a=await lib.create('empty'),b=await lib.create('empty');lib.dispose();assert.equal(lib.instanceCount,0);
   assert.equal(a.disposed,true);assert.equal(b.disposed,true);assert.throws(()=>lib.create('empty'),/disposed/);lib.dispose();
 });
+test('legacy Euler poses apply fixed-axis Z then X then Y and reset on reverse inspection',async()=>{
+  const source=structuredClone(empty),r=source.pack.records;
+  r.animation={type:'Animation',data:{},references:[{field:'m_GameObject',target:'root'}]};
+  r.root.references.push({field:'component',target:'animation'});
+  source.animations={clips:{wing:{start:0,stop:3.3333332538604736,loop:true,
+    bindings:[{offset:0,size:3}],channels:[30,55,70].map(value=>({kind:'constant',value}))}},
+    instances:[{animation:'animation',clip:'wing',bindings:[{gameObject:'root',component:'tr',property:'localEulerAnglesRaw'}]}]};
+  const before=structuredClone(source),lib=library(source),cam=camera();
+  try{
+    const i=await lib.create('empty');i.update(.8,{camera:cam,clip:'wing'});i.group.updateMatrixWorld(true);
+    const authored=new T.Matrix4().makeRotationY(55*Math.PI/180)
+      .multiply(new T.Matrix4().makeRotationX(30*Math.PI/180))
+      .multiply(new T.Matrix4().makeRotationZ(70*Math.PI/180));
+    const actual=i.group.children[0].matrixWorld;
+    actual.elements.forEach((v,n)=>assert.ok(Math.abs(v-authored.elements[n])<1e-12));
+    i.update(0,{camera:cam});i.group.updateMatrixWorld(true);
+    assert.deepEqual(i.group.children[0].quaternion.toArray(),[0,0,0,1]);
+    i.update(.2,{camera:cam,clip:'wing'});i.group.updateMatrixWorld(true);
+    i.group.children[0].matrixWorld.elements.forEach((v,n)=>assert.ok(Math.abs(v-authored.elements[n])<1e-12));
+    i.dispose();
+  }finally{lib.dispose();}
+  assert.deepEqual(source,before);
+});
 test('six original hit roots dispatch child records from supported parent physics without isolated overrides',native,async()=>{
  const lib=library(original),cam=camera();
  try{for(let root=1;root<=6;root++){
