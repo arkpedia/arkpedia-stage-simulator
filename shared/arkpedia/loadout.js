@@ -34,7 +34,7 @@ export function skillRankCap(op, skillId, elite) {
 export function catalogueFor(data) {
   return Object.fromEntries(
     Object.values(data.operators).map((op) => {
-      assertRegularOperator(op);
+      assertRegularOperator(op, data.reviewCandidates);
       return [
         op.id,
         {
@@ -137,7 +137,7 @@ export function recordFor(build, data) {
     )
     .filter(Boolean)
     .map((t) => ({ ...t, bb: bb(t.blackboard) }));
-  const support = assertRegularOperator(op);
+  const support = assertRegularOperator(op, data.reviewCandidates);
   const trait = op.trait?.candidates?.filter((candidate) => {
     const elite = phaseNumber(candidate.unlockCondition.phase);
     return (build.elite > elite || (build.elite === elite && build.level >= candidate.unlockCondition.level))

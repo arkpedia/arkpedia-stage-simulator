@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import {aphrissaReviewSupport} from './aphrissa-review-operator.js';
 // Regular-stage adapters are opt-in. Stronghold's mode kits are migration candidates,
 // not evidence that a character is supported in ordinary Arknights stages.
 import { MEDIC_OPERATORS } from './medic-operators.js';
@@ -453,8 +454,11 @@ export const REGULAR_OPERATORS = Object.freeze({
   ...BRANCH_OPERATORS,
 });
 
-export function assertRegularOperator(op) {
-  const support = REGULAR_OPERATORS[op?.id];
+export function regularOperatorSupport(id, reviewCandidates) {
+  return REGULAR_OPERATORS[id] ?? aphrissaReviewSupport(id, reviewCandidates);
+}
+export function assertRegularOperator(op, reviewCandidates) {
+  const support = regularOperatorSupport(op?.id, reviewCandidates);
   const skillIds = support?.skillIds ?? (support?.skillId == null ? [] : [support.skillId]);
   if (!support || !Array.isArray(op.skills) || op.skills.length !== skillIds.length
     || op.skills.some((skill, index) => skill.id !== skillIds[index]))

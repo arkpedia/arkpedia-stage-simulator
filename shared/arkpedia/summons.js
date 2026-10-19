@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import {aphrissaReviewSupport} from './aphrissa-review-operator.js';
 // Only explicitly reviewed regular-stage tokens may enter the deployment deck.
 export const REGULAR_SUMMONS = Object.freeze({
   char_4123_ela: Object.freeze({ tokenId: 'token_10033_ela_grzmot',
@@ -131,10 +132,11 @@ export const REGULAR_AUTOMATIC_TOKENS = Object.freeze({
   char_1014_nearl2: Object.freeze(['token_10019_nearl2_sword']),
 });
 
-export function regularTokenIdsFor(ownerIds) {
+export function regularTokenIdsFor(ownerIds, reviewCandidates) {
   return [...new Set(ownerIds.flatMap(id => [
     ...(REGULAR_SUMMONS[id] ? [REGULAR_SUMMONS[id].tokenId] : []),
     ...(REGULAR_AUTOMATIC_TOKENS[id] ?? []),
+    ...(aphrissaReviewSupport(id, reviewCandidates) ? ['token_10070_aphris_pc'] : []),
   ]))];
 }
 
