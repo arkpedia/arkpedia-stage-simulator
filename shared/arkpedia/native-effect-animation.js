@@ -56,6 +56,7 @@ export function decodeEffectClip(source) {
     if (!Number.isInteger(word) || word < 0 || word > 0xffffffff) fail('invalid streamed word');
     view.setUint32(index * 4, word, true);
   });
+  const initial = [];
   let offset = 0, previousTime = -Infinity, frames = 0, terminal = false;
   while (offset < bytes.byteLength) {
     if (offset + 8 > bytes.byteLength || terminal) fail('truncated or trailing stream');
@@ -80,14 +81,25 @@ export function decodeEffectClip(source) {
       offset += 20;
       if (index < 0 || index >= streamedCount || seen.has(index)) fail('invalid or duplicate channel index');
       seen.add(index);
-      if (!sentinel) channels[index].keys.push({time, coefficients});
+      if (sentinel) initial[index] = coefficients;
+      else channels[index].keys.push({time, coefficients});
     }
     previousTime = time;
     frames++;
   }
   if (!terminal || frames < 3) fail('incomplete stream');
-  for (const channel of channels.slice(0, streamedCount)) {
-    if (!channel.keys.length || channel.keys[0].time !== start) fail('missing initial channel key');
+  for (const [index, channel] of channels.slice(0, streamedCount).entries()) {
+    if (!channel.keys.length || channel.keys[0].time > start) {
+      // Native streamed channels may retain their constant sentinel value until
+      // a later authored key, or for the whole clip. Preserve that source value
+      // without inventing a key at the clip start or extrapolating a future key.
+      const coefficients = initial[index];
+      if (!coefficients || coefficients.slice(0, 3).some(value => value !== 0))
+        fail('unsupported initial sentinel polynomial');
+      const authored = muscle.m_ValueArrayDelta?.[index]?.m_Start;
+      if (!Number.isFinite(authored) || authored !== coefficients[3]) fail('initial value differs from authored channel start');
+      channel.initialValue = coefficients[3];
+    }
   }
   return {name:source.m_Name, start, stop, loop:muscle.m_LoopTime, bindings:decodedBindings,
     channels, sourceFrames:frames, streamedWords:stream.data.length};
@@ -102,6 +114,7 @@ export function sampleEffectClip(clip, time, {loop = clip.loop} = {}) {
   return clip.channels.map(channel => {
     if (channel.kind === 'constant') return channel.value;
     const keys = channel.keys;
+    if (!keys.length || t < keys[0].time) return finite(channel.initialValue, 'initial channel value');
     let lo = 0, hi = keys.length;
     while (lo + 1 < hi) {
       const mid = (lo + hi) >> 1;
