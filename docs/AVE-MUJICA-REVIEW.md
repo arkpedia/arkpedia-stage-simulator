@@ -69,3 +69,23 @@ Declared mappings:
 Validation:
 - `test/arkpedia-tmoris-public.test.js` (29 cases): source types and events, stats/cost/charges at all ranks, all-in-range Physical attack and dodge, the sluggish rate over ~119 hits with exactly +2 Fever each, the S1 burst and its extra release on Nyamu's cast, S2 fear and ticks, the members' damage bonus against a sluggish target, and both 0-1 clears.
 - `review-tmoris-public.mjs`: 4 cases and 28 captures on both the candidate and normal builds.
+
+## Misumi Uika (`char_4184_dolris`)
+
+Uika has a single original model (native binding `Single`). `cn-owner-art.py` gained an explicit single-model mode for her (`"single": true` in the recipe). It verifies that model once as Front and requires Back to be a byte-identical `fixed-original-front` alias, the form Heidi already uses in SD; the Back alias is added in SD.
+
+From data:
+- **Trait.** Bard: no attack; heals every injured ally in range for 10% of ATK each second; not inspired herself.
+- **Talent 1.** A 35% ATK heal on the lowest-HP ally every 4 s while no skill is active.
+- **Talent 2.** Fever +5 per heal of an Ave Mujica member, and a 30% ATK Arts add-on to each target of a member attacking inside her range.
+- **S1.** x-2 range; ATK inspiration (55% of her ATK) and DEF inspiration (55% of her DEF); 100 HP heal per hit an inspired ally takes.
+- **S2.** The trait stops healing. Every 0.3 s she deals 100% Arts to a random enemy in range and heals an ally for 25% of ATK. The other allies are inspired for 100% of her ATK.
+
+Declared mappings:
+- "Lowest HP" means the lowest HP ratio among injured allies; during a skill the heal prefers Togawa Sakiko.
+- Talent 1's cooldown starts at its heal, so it fires as soon as someone is hurt.
+- The talent 2 add-on is credited to her.
+
+Validation:
+- `test/arkpedia-dolris-public.test.js` (27 cases): stats/cost at all ranks; trait and talent 1 heals; Fever only from member heals; the talent 2 add-on value; S1 inspiration and heal-on-hit; S2 trait stop, pulse count and inspiration; both 0-1 clears.
+- `review-dolris-public.mjs`: 4 cases and 28 captures on both the candidate and normal builds.

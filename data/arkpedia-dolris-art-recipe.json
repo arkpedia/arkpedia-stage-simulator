@@ -1,0 +1,56 @@
+{
+  "operator": "char_4184_dolris",
+  "name": "Misumi Uika",
+  "foundationSha256": "e64a1171e91bb883428fb1a743e55ad20feb3d1d3b3d500df5f46f5b0b7a6d2b",
+  "artCommit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+  "single": true,
+  "output": "data/arkpedia-dolris-art.json",
+  "sdReview": "source-reviews/dolris.json",
+  "scope": "One original model (native binding Single) checked once: skeleton/atlas/material/texture pointers, decoded pixels and premultiplied alpha. Back is a byte-identical fixed-original-front alias, like other single-model operators. Literal Idle/Start/Die roles; no attack clip. Her owner plays the S1/S2 Begin/Loop/End clips itself. Combat/public admission, modules, effects/audio/shaders and compiled/frame/pixel parity remain separate.",
+  "roles": {
+    "Front": {
+      "idle": "Idle",
+      "deploy": "Start",
+      "attack": null,
+      "attackDown": null,
+      "skill": null,
+      "skills": {},
+      "die": "Die",
+      "stun": null,
+      "move": null
+    },
+    "Back": {
+      "idle": "Idle",
+      "deploy": "Start",
+      "attack": null,
+      "attackDown": null,
+      "skill": null,
+      "skills": {},
+      "die": "Die",
+      "stun": null,
+      "move": null
+    }
+  },
+  "nativeMixes": [
+    {
+      "sourceAnimName": "Skill_1_Loop",
+      "targetAnimName": "Idle",
+      "mixAnimName": "Skill_1_End"
+    },
+    {
+      "sourceAnimName": "Skill_2_Loop",
+      "targetAnimName": "Idle",
+      "mixAnimName": "Skill_2_End"
+    },
+    {
+      "sourceAnimName": "Idle",
+      "targetAnimName": "Skill_1_Loop",
+      "mixAnimName": "Skill_1_Begin"
+    },
+    {
+      "sourceAnimName": "Start",
+      "targetAnimName": "Skill_1_Loop",
+      "mixAnimName": "Skill_1_Begin"
+    }
+  ]
+}
