@@ -4831,3 +4831,7 @@ Haruka joins with her Abjurer trait, talent Sanctuary bubbles that burst into he
 ### Wang
 
 Wang joins with his original stones (token art and card avatar from the CN client): placement with a free neighbour, linked triggers with line damage and RES penetration, S1/S2 stone gains with sluggish damage over time or line strips, and S3 enlarged stones placed onto enemies. CN owners can now declare tokens in `CN_OWNER_REVIEWS` (records from their own foundation, art and avatar receipts checked by hash). See docs/WANG-REVIEW.md. Coverage: 424/431 forms.
+
+### Bellone
+
+Bellone joins with talent DEF shred and missing-HP damage, decaying deployment evasion, the S1 double hit, S2 three targets with sluggish at full shred, and the S3 pursuit that moves him onto enemies and ends in an undying return home. See docs/DEMETR-REVIEW.md. Coverage: 425/431 forms.

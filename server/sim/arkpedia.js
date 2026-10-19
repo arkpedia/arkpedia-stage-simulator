@@ -151,6 +151,7 @@ import { customizeVeenKit, installVeen } from './content/arkpedia-veen.js';
 import { customizeMantraKit, installMantra } from './content/arkpedia-mantra.js';
 import { customizeHarukaKit, installHaruka } from './content/arkpedia-haruka.js';
 import { customizeWangKit, installWang } from './content/arkpedia-wang.js';
+import { customizeDemetrKit, installDemetr } from './content/arkpedia-demetr.js';
 import { customizePublicBranchKit, installPublicBranch } from './content/arkpedia-branch-public.js';
 import { customizePublicReckprKit, installPublicReckpr } from './content/arkpedia-reckpr-public.js';
 import { customizePublicLieselKit, installPublicLiesel } from './content/arkpedia-liesel-public.js';
@@ -661,6 +662,7 @@ export class StandardBattle extends Battle {
     customizeMantraKit({ battle: this, id, unit, kit });
     customizeHarukaKit({ battle: this, id, unit, kit });
     customizeWangKit({ battle: this, id, unit, kit });
+    customizeDemetrKit({ battle: this, id, unit, kit });
     customizePublicBranchKit({ battle: this, id, unit, kit });
     customizeNarantKit({ battle: this, id, def, unit, kit });
     customizeElaKit({ battle: this, id, def, unit, kit });
@@ -918,6 +920,7 @@ export class StandardBattle extends Battle {
     installMantra({ battle: this, unit, def });
     installHaruka({ battle: this, unit, def });
     installWang({ battle: this, unit, def });
+    installDemetr({ battle: this, unit, def });
     installPublicBranch({ battle: this, unit, def });
     installNarant({ battle: this, unit, def });
     installEla({ battle: this, unit, def });
