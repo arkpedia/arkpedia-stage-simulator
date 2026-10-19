@@ -131,7 +131,15 @@ import { customizePublicYukariKit, installPublicYukari } from './content/arkpedi
 import {customizePublicAphrissaKit, installPublicAphrissa} from './content/arkpedia-aphrissa-public.js';
 import { customizePublicMakotoKit, installPublicMakoto } from './content/arkpedia-makoto-public.js';
 import { customizePublicHadiyaKit, installPublicHadiya } from './content/arkpedia-hadiya-public.js';
+import { customizeAmorisKit, installAmoris } from './content/arkpedia-amoris.js';
+import { customizeTmorisKit, installTmoris } from './content/arkpedia-tmoris.js';
+import { customizeDolrisKit, installDolris } from './content/arkpedia-dolris.js';
+import { customizeMortisKit, installMortis } from './content/arkpedia-mortis.js';
+import { customizeOblvnsKit, installOblvns } from './content/arkpedia-oblvns.js';
+import { customizeMakiriKit, installMakiri } from './content/arkpedia-makiri.js';
+import { customizeFlwr2Kit, installFlwr2 } from './content/arkpedia-flwr2.js';
 import { customizePublicTurdusKit, installPublicTurdus } from './content/arkpedia-turdus-public.js';
+import { customizeHeadb2Kit, installHeadb2 } from './content/arkpedia-headb2.js';
 import { customizePublicBranchKit, installPublicBranch } from './content/arkpedia-branch-public.js';
 import { customizePublicReckprKit, installPublicReckpr } from './content/arkpedia-reckpr-public.js';
 import { customizePublicLieselKit, installPublicLiesel } from './content/arkpedia-liesel-public.js';
@@ -359,6 +367,8 @@ export class StandardBattle extends Battle {
     this.regularReviewCandidates = Object.freeze([...(data.reviewCandidates ?? [])]);
     this.life = config.max_life;
     this.regularModels = data.sd?.models ?? {};
+    // Source team membership (e.g. Ursus Student Self-Governing Group) for team-scoped effects.
+    this.regularTeams = Object.freeze(Object.fromEntries(Object.values(data.operators ?? {}).map(o => [o.id, o.teamId ?? null])));
     this.regularSkillUses = new Map();
     this.addDp('arkpedia', startingVanguardDp);
     installMedicSquad({ battle: this, records: chess });
@@ -430,7 +440,8 @@ export class StandardBattle extends Battle {
       * Math.min(2, 1 + entry.deployments * 0.5));
     const vanguard = adjustFiveStarVanguardSecondCost(this, id, ordinary);
     const discounted = adjustInesCost(this, id, adjustAshCost(this, id, adjustFangFireSharpenedCost(this, id, adjustSaileachCost(this, id, adjustJieyunCost(this, id, vanguard)))));
-    return adjustMuelsyseSquadCost(this, id, discounted);
+    // Content card discounts (e.g. Matsukiri): a per-card delta kept until that operator deploys.
+    return Math.max(0, adjustMuelsyseSquadCost(this, id, discounted) + (entry.costDelta ?? 0));
   }
   placementError(id, row, col) {
     return this._placementError(id, row, col);
@@ -469,7 +480,9 @@ export class StandardBattle extends Battle {
     return null;
   }
   deployOperator(id, row, col, dir) {
-    return this._deployOperator(id, row, col, dir);
+    const unit = this._deployOperator(id, row, col, dir);
+    if (unit && this.bench[id]) this.bench[id].costDelta = 0;
+    return unit;
   }
   // Engine-owned delivery: reuse selected builds, kits and deployment hooks;
   // bypass card cooldown/payment, but retain tile and unit-limit validation.
@@ -614,6 +627,14 @@ export class StandardBattle extends Battle {
     customizePublicMakotoKit({ battle: this, id, unit, kit });
     customizePublicAphrissaKit({battle: this, id, unit, kit});
     customizePublicHadiyaKit({ battle: this, id, unit, kit });
+    customizeAmorisKit({ battle: this, id, unit, kit });
+    customizeTmorisKit({ battle: this, id, unit, kit });
+    customizeDolrisKit({ battle: this, id, unit, kit });
+    customizeMortisKit({ battle: this, id, unit, kit });
+    customizeOblvnsKit({ battle: this, id, unit, kit });
+    customizeMakiriKit({ battle: this, id, unit, kit });
+    customizeFlwr2Kit({ battle: this, id, unit, kit });
+    customizeHeadb2Kit({ battle: this, id, unit, kit });
     customizePublicBranchKit({ battle: this, id, unit, kit });
     customizeNarantKit({ battle: this, id, def, unit, kit });
     customizeElaKit({ battle: this, id, def, unit, kit });
@@ -852,6 +873,14 @@ export class StandardBattle extends Battle {
     installPublicMakoto({ battle: this, unit, def });
     installPublicAphrissa({battle: this, unit, def});
     installPublicHadiya({ battle: this, unit, def });
+    installAmoris({ battle: this, unit, def });
+    installTmoris({ battle: this, unit, def });
+    installDolris({ battle: this, unit, def });
+    installMortis({ battle: this, unit, def });
+    installOblvns({ battle: this, unit, def });
+    installMakiri({ battle: this, unit, def });
+    installFlwr2({ battle: this, unit, def });
+    installHeadb2({ battle: this, unit, def });
     installPublicBranch({ battle: this, unit, def });
     installNarant({ battle: this, unit, def });
     installEla({ battle: this, unit, def });

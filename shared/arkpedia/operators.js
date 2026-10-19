@@ -114,7 +114,15 @@ import { YUKARI_OPERATORS } from './yukari-operators.js';
 import { MAKOTO_OPERATORS } from './makoto-operators.js';
 import { APHRISSA_OPERATORS } from './aphrissa-operators.js';
 import { HADIYA_OPERATORS } from './hadiya-operators.js';
+import { AMORIS_OPERATORS } from './amoris-operators.js';
+import { TMORIS_OPERATORS } from './tmoris-operators.js';
+import { DOLRIS_OPERATORS } from './dolris-operators.js';
+import { MORTIS_OPERATORS } from './mortis-operators.js';
+import { OBLVNS_OPERATORS } from './oblvns-operators.js';
+import { MAKIRI_OPERATORS } from './makiri-operators.js';
+import { FLWR2_OPERATORS } from './flwr2-operators.js';
 import { TURDUS_OPERATORS } from './turdus-operators.js';
+import { HEADB2_OPERATORS } from './headb2-operators.js';
 import { BRANCH_OPERATORS } from './branch-operators.js';
 import { RECKPR_OPERATORS } from './reckpr-operators.js';
 import { CLOSUR_OPERATORS } from './closur-operators.js';
@@ -454,6 +462,14 @@ export const REGULAR_OPERATORS = Object.freeze({
   ...MAKOTO_OPERATORS,
   ...APHRISSA_OPERATORS,
   ...HADIYA_OPERATORS,
+  ...AMORIS_OPERATORS,
+  ...TMORIS_OPERATORS,
+  ...DOLRIS_OPERATORS,
+  ...MORTIS_OPERATORS,
+  ...OBLVNS_OPERATORS,
+  ...MAKIRI_OPERATORS,
+  ...FLWR2_OPERATORS,
+  ...HEADB2_OPERATORS,
   ...BRANCH_OPERATORS,
 });
 

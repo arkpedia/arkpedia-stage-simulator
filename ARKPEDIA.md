@@ -4767,3 +4767,23 @@ ARKPEDIA_REVIEW_CHROME=/absolute/path/to/chromium ARKPEDIA_REVIEW_ORIGIN=http://
 ### Hadiya public squad integration
 
 Hadiya (`char_394_hadiya`) joins the normal roster with both source skills, DP-paid casts and her Equipment Adaptation (装备应变) as a new generic field action. Any owner can expose it through `unit.mem.regularSecondaryAction`, and the field panel renders it as a third button. Her original art is verified against the CN bundle (SD `ba72a790`). See docs/HADIYA-REVIEW.md. Coverage: 405/431 forms.
+
+
+### Ave Mujica Fever and Yūtenji Nyamu
+
+The shared Ave Mujica Fever gauge (`env_033_fever`) is built from the official `gamedata_const` values and each member skill's Fever component (`data/arkpedia-fever-source.json`), and is shown in the HUD. All five members (Togawa Sakiko, Wakaba Mutsumi, Misumi Uika, Yūtenji Nyamu, Yahata Umiri) are admitted. CN-sourced owners can now be admitted through one shared `checkCnOwnerReview` gate in `build-mvp.mjs` (`--review-candidate-id=<charId>`), instead of a hand-copied block each. See docs/AVE-MUJICA-REVIEW.md. Coverage: 410/431 forms.
+
+
+### Matsukiri
+
+Matsukiri joins with both skills, DP generation and deployment-zone card discounts. `StandardBattle.cost()` gained a generic per-card `costDelta`. See docs/MAKIRI-REVIEW.md. Coverage: 411/431 forms.
+
+
+### Perfumer the Distilled
+
+Perfumer the Distilled joins with her Abjurer trait, Sanctuary talent, auto S1 heal and passive S2. See docs/FLWR2-REVIEW.md. Coverage: 412/431 forms.
+
+
+### Zima the Raging Tide
+
+Zima the Raging Tide joins with her Earthshaker splash, high-ground pulses and all three skills. The battle now records source `teamId`s (`regularTeams`) for team-scoped effects. See docs/HEADB2-REVIEW.md. Coverage: 413/431 forms.

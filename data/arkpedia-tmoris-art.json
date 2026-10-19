@@ -1,0 +1,252 @@
+{
+  "schemaVersion": 1,
+  "owner": "char_4186_tmoris",
+  "artworkOnly": true,
+  "enabledOperators": [],
+  "frameParity": false,
+  "nativeParticleSupport": false,
+  "nativeShaderParity": false,
+  "foundation": {
+    "path": "data/arkpedia-native-operators/char_4186_tmoris.json",
+    "sha256": "6decdfc650f79732bd889e44e2083182a28f4027ad62b9270db49dcf303c6475"
+  },
+  "recipeSha256": "be9a2786c156d0142ec104c5264598694f90f2f377223ac6c7b8332398d8ade7",
+  "scope": "Original Front/Back files unchanged. Independently checked native skeleton/atlas/material/texture pointers, decoded pixels and premultiplied alpha. Literal Idle/Start/Attack roles; Front has Die, Back has none. Her owner plays Skill_1 (5 hit events) and the S2 Loop/End clips itself; the original S2-to-Idle End mix is retained. Combat/public admission, modules, effects/audio/shaders and compiled/frame/pixel parity remain separate.",
+  "ownerModels": {
+    "front": {
+      "modelKey": "operator/char_4186_tmoris/default/front",
+      "source": {
+        "key": "operators",
+        "repository": "fexli/ArknightsResource",
+        "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+        "directory": "spine/char_4186_tmoris/char_4186_tmoris/Front"
+      },
+      "files": {
+        "skeleton": {
+          "path": "models/operator/char_4186_tmoris/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4186_tmoris.skel",
+          "bytes": 208277,
+          "sha256": "40dbd12bda928b6ee014e3a356abb1a64dda3b25839d1f1d65655f13cde861fa"
+        },
+        "atlas": {
+          "path": "models/operator/char_4186_tmoris/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4186_tmoris.atlas",
+          "bytes": 7816,
+          "sha256": "506901b07fb49bdededce463a502f5b6b0a18c745a526d76f2a93f18fa62c2bd"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_4186_tmoris/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4186_tmoris.png",
+            "bytes": 105026,
+            "sha256": "ab2f1e7304768d8e0d896bb70a4d30cfe747cfa015d07fb8316c1c86b5a873b0"
+          }
+        ]
+      },
+      "nativeBundle": {
+        "path": "chararts/char_4186_tmoris.ab",
+        "bytes": 3816935,
+        "md5": "3478f1a4b9ad37799de7ddc097d280eb",
+        "archive": "chararts_char_4186_tmoris.dat",
+        "url": "https://ak.hycdn.cn/assetbundle/official/Android/assets/26-09-22-07-47-20_6c71fa/chararts_char_4186_tmoris.dat",
+        "sha256": "7adc6fbc4041b71a6772ed9e2a0d9883c7e8c7c81cc03f325230fd6456b2aa53"
+      },
+      "originalBindings": {
+        "animatorPathId": "-6206628511387579527",
+        "skeletonAnimationPathId": "5894923347631836025",
+        "skeletonDataAssetPathId": "-8486364040184861967",
+        "textAssetPathId": "-1343879447754723588",
+        "atlasAssetPathId": "-5811748351176415102",
+        "atlasTextAssetPathId": "1465655421916373941",
+        "sha256": "40dbd12bda928b6ee014e3a356abb1a64dda3b25839d1f1d65655f13cde861fa",
+        "bytes": 208277,
+        "atlasSha256": "2debba88dd408b3def0c4586eaee5a1193047e77f90f59f2bb760eca3ce042e0",
+        "atlasBytes": 7831
+      },
+      "materialPathId": "-2239606478550746664",
+      "texturePathId": "-2074509438550361872",
+      "materialFloats": {
+        "_BaselineZ": 0.0,
+        "_Cutoff": 0.10000000149011612,
+        "_DitherIntensity": 0.0,
+        "_OutlineMipLevel": 0.0,
+        "_OutlineReferenceTexWidth": 1024.0,
+        "_OutlineSmoothness": 1.0,
+        "_OutlineWidth": 3.0,
+        "_StencilComp": 8.0,
+        "_StencilRef": 1.0,
+        "_StraightAlphaInput": 0.0,
+        "_ThresholdEnd": 0.25,
+        "_Use8Neighbourhood": 1.0,
+        "_UseAlphaTex": 0.0,
+        "_UseBleed": 1.0,
+        "_UseDither": 0.0,
+        "_UseFixedFormula": 0.0,
+        "_UseTintBlack": 0.0
+      },
+      "decodedPixelSha256": "8ab281c452c0d4e2133878776a5fd50f24cf860639ca2af360d1682b6d9c94fe",
+      "textureDimensions": [
+        264,
+        264
+      ],
+      "metadata": {
+        "spineVersion": "3.8.99",
+        "premultipliedAlpha": true,
+        "animations": {
+          "Attack": 1,
+          "Default": 0,
+          "Die": 1,
+          "Idle": 4,
+          "Skill_1": 1.5,
+          "Skill_2_Begin": 0.333,
+          "Skill_2_End": 0.667,
+          "Skill_2_Loop": 2,
+          "Start": 1
+        },
+        "hits": {
+          "Attack": [
+            0.467
+          ],
+          "Skill_1": [
+            0.367,
+            0.5,
+            0.633,
+            0.767,
+            0.9
+          ]
+        },
+        "bounds": {
+          "x": -201.437,
+          "y": -1.159,
+          "width": 388.26,
+          "height": 361.572
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": "Attack",
+          "attackDown": null,
+          "skill": null,
+          "skills": {},
+          "die": "Die",
+          "stun": null,
+          "move": null
+        }
+      }
+    },
+    "back": {
+      "modelKey": "operator/char_4186_tmoris/default/back",
+      "source": {
+        "key": "operators",
+        "repository": "fexli/ArknightsResource",
+        "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+        "directory": "spine/char_4186_tmoris/char_4186_tmoris/Back"
+      },
+      "files": {
+        "skeleton": {
+          "path": "models/operator/char_4186_tmoris/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4186_tmoris.skel",
+          "bytes": 138257,
+          "sha256": "3d8634d27f3ed65771b6ea00bfd2c251f5fe2655239e290eef47ccb084b343ea"
+        },
+        "atlas": {
+          "path": "models/operator/char_4186_tmoris/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4186_tmoris.atlas",
+          "bytes": 4683,
+          "sha256": "c0b1c5bc0811375761cb7f0f16d08a054a465b578b19ed6ed6ecfaa34ee121f3"
+        },
+        "textures": [
+          {
+            "path": "models/operator/char_4186_tmoris/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4186_tmoris.png",
+            "bytes": 82165,
+            "sha256": "8d128063ba4a9f8b1b06d65959e132649e74e56d34f2ff2c0222f140ea057307"
+          }
+        ]
+      },
+      "nativeBundle": {
+        "path": "chararts/char_4186_tmoris.ab",
+        "bytes": 3816935,
+        "md5": "3478f1a4b9ad37799de7ddc097d280eb",
+        "archive": "chararts_char_4186_tmoris.dat",
+        "url": "https://ak.hycdn.cn/assetbundle/official/Android/assets/26-09-22-07-47-20_6c71fa/chararts_char_4186_tmoris.dat",
+        "sha256": "7adc6fbc4041b71a6772ed9e2a0d9883c7e8c7c81cc03f325230fd6456b2aa53"
+      },
+      "originalBindings": {
+        "animatorPathId": "-6206628511387579527",
+        "skeletonAnimationPathId": "5459300361122646905",
+        "skeletonDataAssetPathId": "5804832731665181989",
+        "textAssetPathId": "3817159220966337970",
+        "atlasAssetPathId": "-2886645407363750700",
+        "atlasTextAssetPathId": "-7303124563683076604",
+        "sha256": "3d8634d27f3ed65771b6ea00bfd2c251f5fe2655239e290eef47ccb084b343ea",
+        "bytes": 138257,
+        "atlasSha256": "394803f97b11c3491da1f09531ea12f47391ca98c45fab4e863e633fe84868bb",
+        "atlasBytes": 4698
+      },
+      "materialPathId": "-9083315313425787248",
+      "texturePathId": "4824322939644173771",
+      "materialFloats": {
+        "_BaselineZ": 0.0,
+        "_Cutoff": 0.10000000149011612,
+        "_DitherIntensity": 0.0,
+        "_OutlineMipLevel": 0.0,
+        "_OutlineReferenceTexWidth": 1024.0,
+        "_OutlineSmoothness": 1.0,
+        "_OutlineWidth": 3.0,
+        "_StencilComp": 8.0,
+        "_StencilRef": 1.0,
+        "_StraightAlphaInput": 0.0,
+        "_ThresholdEnd": 0.25,
+        "_Use8Neighbourhood": 1.0,
+        "_UseAlphaTex": 0.0,
+        "_UseBleed": 1.0,
+        "_UseDither": 0.0,
+        "_UseFixedFormula": 0.0,
+        "_UseTintBlack": 0.0
+      },
+      "decodedPixelSha256": "4ab9cacee52300b022970ea995046bfe1aa6a69a31cbe2d66b0a63e153fa5875",
+      "textureDimensions": [
+        228,
+        228
+      ],
+      "metadata": {
+        "spineVersion": "3.8.99",
+        "premultipliedAlpha": true,
+        "animations": {
+          "Attack": 1,
+          "Default": 0,
+          "Idle": 4,
+          "Skill_1": 1.5,
+          "Skill_2_Begin": 0.333,
+          "Skill_2_End": 0.667,
+          "Skill_2_Loop": 2,
+          "Start": 1
+        },
+        "hits": {
+          "Attack": [
+            0.467
+          ],
+          "Skill_1": [
+            0.367,
+            0.5,
+            0.633,
+            0.767,
+            0.9
+          ]
+        },
+        "bounds": {
+          "x": -201.437,
+          "y": -1.144,
+          "width": 298.711,
+          "height": 360.55
+        },
+        "animationRoles": {
+          "idle": "Idle",
+          "deploy": "Start",
+          "attack": "Attack",
+          "attackDown": null,
+          "skill": null,
+          "skills": {},
+          "die": null,
+          "stun": null,
+          "move": null
+        }
+      }
+    }
+  }
+}

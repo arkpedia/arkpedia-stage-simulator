@@ -56,10 +56,14 @@ def clips(roles):
  if isinstance(roles,str):return [roles]
  if isinstance(roles,dict):return [v for k,x in roles.items() if k not in ['via'] for v in clips(x)]
  return []
-for face in ['Front','Back']:
- n=e['officialSkeletonBindings'][ID][face];key=f'operator/{ID}/default/{face.lower()}';d=manifest['models'][key]
+# A single-model owner (one native `_skeleton`, binding "Single") is verified once as
+# Front; Back must then be a byte-identical fixed-original-front alias of it.
+single=recipe.get('single') is True
+assert single==(list(e['officialSkeletonBindings'][ID])==['Single'])
+for face in (['Front'] if single else ['Front','Back']):
+ n=e['officialSkeletonBindings'][ID]['Single' if single else face];key=f'operator/{ID}/default/{face.lower()}';d=manifest['models'][key]
  # Independent original pointer traversal, not a claimed cached file identity.
- skeleton_id=ptr(controller['_'+face.lower()]['skeleton']);assert str(skeleton_id)==n['skeletonAnimationPathId']
+ skeleton_id=ptr(controller['_skeleton'] if single else controller['_'+face.lower()]['skeleton']);assert str(skeleton_id)==n['skeletonAnimationPathId']
  skeleton=objects[skeleton_id].read_typetree();data_id=ptr(skeleton['skeletonDataAsset']);assert str(data_id)==n['skeletonDataAssetPathId']
  data=objects[data_id].read_typetree();text_id=ptr(data['skeletonJSON']);assert str(text_id)==n['textAssetPathId'];assert len(data['atlasAssets'])==1
  atlas_id=ptr(data['atlasAssets'][0]);assert str(atlas_id)==n['atlasAssetPathId'];atlas=objects[atlas_id].read_typetree()
@@ -81,7 +85,7 @@ for face in ['Front','Back']:
   "import{readFile}from'node:fs/promises';import{parseSkel}from'./tools/assets/skel.mjs';import{atlasInfo}from'./tools/assets/atlas.mjs';console.log(JSON.stringify(parseSkel(await readFile(process.argv[1]),atlasInfo(await readFile(process.argv[2],'utf8')).regions,{includeEventPayloads:true})));",
   str(assets/d['skeleton']['path']),str(assets/d['atlas']['path'])],cwd=ROOT))
  assert p['missingRegions']==[]
- for k in ['durations','hits','eventPayloads']:assert p[k]==e['models'][ID][face][k]
+ for k in ['durations','hits','eventPayloads']:assert p[k]==e['models'][ID]['Single' if single else face][k]
  roles=recipe['roles'][face];assert all(v in p['durations'] for v in clips(roles))
  metadata={'spineVersion':p['version'],'premultipliedAlpha':True,'animations':p['durations'],'hits':p['hits'],'bounds':p['bounds'],'animationRoles':roles}
  rows[face.lower()]={'modelKey':key,'source':source,'files':{k:d[k] for k in ['skeleton','atlas','textures']},'nativeBundle':bundle,
@@ -89,6 +93,17 @@ for face in ['Front','Back']:
   'decodedPixelSha256':sha(native.tobytes()),'textureDimensions':list(native.size),'metadata':metadata}
  if args.mode=='verify' and args.assets:assert {k:d[k] for k in metadata}==metadata
  print('Verified',ID,face,'original pointers, bytes, pixels, PMA and literal roles',flush=True)
+if single:
+ front=rows['front'];key=f'operator/{ID}/default/back';d=manifest['models'][key]
+ alias={**front['source'],'facingAlias':'fixed-original-front'}
+ assert d['source']==alias and d['facing']=='back' and d['id']==ID
+ for a,b in zip([d['skeleton'],d['atlas'],*d['textures']],[front['files']['skeleton'],front['files']['atlas'],*front['files']['textures']]):
+  assert a['sha256']==b['sha256'] and a['bytes']==b['bytes'] and Path(a['path']).name==Path(b['path']).name
+  assert (assets/a['path']).read_bytes()==(assets/b['path']).read_bytes()
+ rows['back']={**front,'modelKey':key,'source':alias,'files':{k:d[k] for k in ['skeleton','atlas','textures']},
+  'metadata':{**front['metadata'],'animationRoles':recipe['roles']['Back']}}
+ if args.mode=='verify' and args.assets:assert {k:d[k] for k in rows['back']['metadata']}==rows['back']['metadata']
+ print('Verified',ID,'Back as a byte-identical fixed-original-front alias',flush=True)
 expected={'schemaVersion':1,'owner':ID,'artworkOnly':True,'enabledOperators':[],'frameParity':False,'nativeParticleSupport':False,'nativeShaderParity':False,
  'foundation':{'path':str(foundation.relative_to(ROOT)),'sha256':recipe['foundationSha256']},'recipeSha256':sha(recipe_raw),'scope':recipe['scope'],'ownerModels':rows}
 output=ROOT/recipe['output'];output.relative_to(ROOT/'data')

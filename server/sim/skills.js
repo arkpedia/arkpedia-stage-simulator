@@ -354,7 +354,8 @@ export class SkillRuntime {
     if (this.active && this.kind !== 'passive') {
       if (this.spec.onTick) this._call('onTick', { dt });
       if (this.kind === 'duration' || (this.kind === 'ammo' && Number.isFinite(this.timeLeft))) {
-        this.timeLeft -= dt;
+        // An external owner (e.g. Ave Mujica Fever) may hold the timer; it resumes when released.
+        if (!this.timerHolds?.size) this.timeLeft -= dt;
         if (this.timeLeft <= 1e-9) { this.end('duration'); }
       }
     } else if (this.active && this.kind === 'passive' && this.spec.onTick) {

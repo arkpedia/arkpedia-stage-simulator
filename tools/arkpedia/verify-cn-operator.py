@@ -196,7 +196,7 @@ parameters = {'key', '_blackboardKey', '_blackboardKeys', '_fromBlackboardKeys',
 stack = [(item, '') for item in queue]
 while stack:
     value, field = stack.pop()
-    if field in ['_overrideAudioSignal', 'audioSignal']:
+    if field in ['_overrideAudioSignal', 'audioSignal', '_audioSignal']:
         continue
     if isinstance(value, dict):
         stack.extend((k, '') for k in value if k.startswith('token_') and k in ct)

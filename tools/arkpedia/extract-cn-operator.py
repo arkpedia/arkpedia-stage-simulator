@@ -182,7 +182,7 @@ def resolve_token(key):
                           'animatorPathId': pointer['m_PathID']}
     return rows
 def scan(v, field=''):
-    if field in ['_overrideAudioSignal', 'audioSignal']:
+    if field in ['_overrideAudioSignal', 'audioSignal', '_audioSignal']:
         return
     if isinstance(v, dict):
         # Native blackboard formulas assign variable names, not prefab keys.

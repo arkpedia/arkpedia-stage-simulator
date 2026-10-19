@@ -388,6 +388,11 @@ export function dealDamage(battle, source, target, dmgIn) {
   // 脆弱 / "受到的伤害±" (dmgTakenMul) scale 物理、法术、真实 only; 元素伤害 takes 元素脆弱 alone (header)
   let mul = dmg.mul * (type === 'elemental' ? 1 : ts.dmgTakenMul);
   if (ss) mul *= ss.dmgDealtMul * (type === 'phys' ? ss.physDealtMul : type === 'arts' ? ss.artsDealtMul : 1);
+  // Per-recipient conditional output multipliers (e.g. Umiri's "Ave Mujica members deal more damage to
+  // sluggish/feared enemies"): each fn(source, target, dmg) returns a factor, evaluated per damage instance.
+  if (ss && battle._dealtMultipliers?.size) for (const f of battle._dealtMultipliers.values()) {
+    const m = f(source, target, dmg); if (Number.isFinite(m) && m > 0) mul *= m;
+  }
   mul *= type === 'phys' ? ts.physTakenMul : type === 'arts' ? ts.artsTakenMul : type === 'elemental' ? ts.elementalTakenMul : ts.trueTakenMul;
   mul *= flyingSanctuaryRatio(target.buffs, hs, type);
   final *= mul;
