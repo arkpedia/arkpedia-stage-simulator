@@ -104,12 +104,19 @@ try{
   assert.equal(setup.draws,19);assert.equal(setup.blocked,0);assert.equal(setup.hudActor,'EffectOnlyActor');assert.equal(setup.hudChildren,0);
   await page.evaluate(()=>cageReview.advance(.5));await page.screenshot({path:path.join(out,label+'-cage.png')});
   const paused=await page.evaluate(async()=>{const a=cageReview.snapshot();await cageReview.draw();const b=cageReview.snapshot();if(a.sourceClock!==b.sourceClock)throw Error('Paused clock advanced');return b;});
+  const resized=await page.evaluate(async()=>{
+   const before=cageReview.snapshot(),instance=cageReview.pass.inspect()[0].instance;
+   cageReview.stage.resize();await cageReview.draw();const after=cageReview.snapshot();
+   if(cageReview.pass.inspect()[0]?.instance!==instance||before.sourceClock!==after.sourceClock||before.time!==after.time)
+    throw Error('Resize replaced the live cage or restarted its effect clock');
+   return {...after,sameInstance:true};
+  });
   const late=await page.evaluate(async()=>{await cageReview.advance(32);return cageReview.snapshot();});
   assert.equal(late.glError,0);assert.equal(late.sourceClock,late.time-setup.time);assert.equal(late.effectCount,1);assert.equal(late.draws,19);assert.deepEqual(late.errors,[]);
   await page.screenshot({path:path.join(out,label+'-late.png')});
   const retired=await page.evaluate(async()=>{await cageReview.retire();return cageReview.snapshot();});
   assert.equal(retired.effectCount,0);assert.equal(retired.libraryInstances,0);assert.equal(retired.cageAlive,false);
-  assert.deepEqual(retired.errors,[]);reports.push({label,setup,paused,late,retired});
+  assert.deepEqual(retired.errors,[]);reports.push({label,setup,paused,resized,late,retired});
   await page.evaluate(()=>{cageReview.stage.destroy();cageReview.library.dispose();});await page.close();
  }
  assert.deepEqual(errors,[]);assert.deepEqual(failed,[]);

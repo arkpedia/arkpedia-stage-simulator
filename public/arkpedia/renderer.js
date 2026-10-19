@@ -37,6 +37,7 @@ export class StageRenderer {
     this.host = host;
     this.data = data;
     this.views = new Map();
+    this.currentBattle = null;
     this.preloaded = new Map();
     this.effects = [];
     this.nativeEffects = nativeEffects;
@@ -254,7 +255,7 @@ export class StageRenderer {
           clipPath: `polygon(${points.map((p) => `${((p.x - x) / width) * 100}% ${((p.y - y) / height) * 100}%`).join(",")})`,
         });
       }
-    this.render(null, 0, []);
+    this.render(this.currentBattle, 0, []);
   }
   pickAt(clientX, clientY) {
     const rect = this.host.getBoundingClientRect(),
@@ -412,6 +413,7 @@ export class StageRenderer {
     spine.zIndex = 2000;
   }
   clear() {
+    this.currentBattle = null;
     this.highlight();
     this.preview?.actor.destroy();
     this.preview = null;
@@ -425,7 +427,11 @@ export class StageRenderer {
     this.nativeEffects?.clear();
   }
   render(battle, dt, events, realDt = 0) {
-    this.nativeEffects?.update(battle);
+    this.currentBattle = battle;
+    // A non-actor effect pass may need the current visible Spine pose. Legacy
+    // passes keep their existing update order unless they explicitly opt in.
+    const effectsAfterActors=this.nativeEffects?.updateAfterActors===true;
+    if(!effectsAfterActors)this.nativeEffects?.update(battle);
     this.drawSurface();
     this.drawPreview();
     this.onLayout?.();
@@ -452,7 +458,8 @@ export class StageRenderer {
           if (this.preloaded.get(front)?.entry.animations?.[formVisual.clip]) key = front;
         }
         let view = this.views.get(u.id);
-        const replacing = !!view && view.key !== key;
+        const sameLife=!!view&&view.unit===u&&view.life===u.deploySeq;
+        const replacing = !!view && (view.key !== key || !sameLife);
         if (replacing) {
           view.actor.destroy(); view.hp.destroy(); this.views.delete(u.id); view = null;
         }
@@ -468,8 +475,8 @@ export class StageRenderer {
             { attackDrivenSkill: u.profile?.attackDrivenSkill === true });
           const hp = new P.Graphics();
           this.pixi.stage.addChild(actor.spine, hp);
-          if (!replacing) actor.deploy();
-          view = { actor, hp, key };
+          if (!sameLife) actor.deploy();
+          view = { actor, hp, key, unit:u, life:u.deploySeq };
           this.views.set(u.id, view);
         }
         view.unit = u;
@@ -655,6 +662,7 @@ export class StageRenderer {
         this.heightAt(Math.round(projectile.y), Math.round(projectile.x)) + 0.5);
       this.fx.beginFill(projectile.color ?? 0xfbd29a, 0.85).drawCircle(point.x, point.y, 3).endFill();
     }
+    if(effectsAfterActors)this.nativeEffects?.update(battle);
     this.gates?.update(battle?.time ?? 0);
     this.skillParticles?.render(battle?.time ?? 0, this.projection, this.heightAt);
     this.three.render(this.scene, this.camera);

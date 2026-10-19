@@ -113,7 +113,7 @@ export function createAphrissaStageBeams({three:T,library,sourcePackSha256,contr
     const autoClear=renderer.autoClear;renderer.autoClear=false;
     try{renderer.render(scene,camera);}finally{renderer.autoClear=autoClear;}
   }
-  return {scene,camera:bridge.camera,scope:APHRISSA_BEAM_CONTRACT,update,ready,render,clear,
+  return {scene,camera:bridge.camera,scope:APHRISSA_BEAM_CONTRACT,updateAfterActors:true,update,ready,render,clear,
     isActor(){return false;},
     get instanceCount(){return [...entries.values()].filter(e=>e.instance).length;},get pendingCount(){return pending.size;},
     inspect(){return [...entries.values()].map(e=>({key:e.key,kind:e.kind,root:e.root,point:structuredClone(e.point),track:structuredClone(e.track),positions:structuredClone(e.positions),
