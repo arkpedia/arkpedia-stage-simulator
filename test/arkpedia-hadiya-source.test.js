@@ -12,7 +12,7 @@ import {HADIYA_ID as ID, HADIYA_SKILLS, selectedHadiyaBuild as select, selectedH
 const build = more => ({elite: 2, level: 80, potential: 1, trust: 0, skillId: 'skchr_hadiya_1',
   skillRank: 10, module: 'none', ...more});
 
-test('Hadiya complete source graph remains held without public gameplay or art approval', async () => {
+test('Hadiya complete source graph keeps its original receipt and fidelity limits', async () => {
   const raw = await readFile(new URL('../data/arkpedia-native-operators/' + ID + '.json', import.meta.url));
   assert.equal(raw.length, 316545);
   assert.equal(createHash('sha256').update(raw).digest('hex'), 'ffeebf810b1f0260d6062d57c1d9a7f00d3cab87650ae592fe175ca203aed27f');
@@ -25,7 +25,8 @@ test('Hadiya complete source graph remains held without public gameplay or art a
     for (const row of rows) for (const c of row.components) { count++; assert.equal(typeof c.pathId, 'string'); }
   assert.equal(count, 73);
   for (const k of ['frameParity', 'moduleSupport', 'nativeParticleSupport']) assert.equal(evidence[k], false);
-  assert.equal(normal.operators[ID], undefined); assert.equal(REGULAR_OPERATORS[ID], undefined);
+  // Admission is gated by data/arkpedia-hadiya-runtime-review.json, not by this source receipt.
+  assert.ok(normal.operators[ID]); assert.ok(REGULAR_OPERATORS[ID]);
 });
 
 for (const skill of [1, 2]) for (let rank = 1; rank <= 10; rank++)
