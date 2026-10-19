@@ -51,3 +51,21 @@ Validation:
 - `review-amoris-public.mjs`: 4 desktop/touch cases and 28 captures on both the candidate and normal builds, with no errors. It includes the Fever HUD and a Fever start from the skill button.
 
 Still unapproved: native finish/FSM/control, effects/audio, modules, compiled frame/pixel parity.
+
+## Yahata Umiri (`char_4186_tmoris`)
+
+From data:
+- **Trait and ordinary attack.** Stalker trait (all enemies in range, 50% Physical/Arts dodge, low threat). Ordinary Physical hit (`_damageType` 1) at the Attack clip's OnAttack event, after her deployment clip.
+- **Talent 1.** 21% sluggish for 3 s at E2. The E2 candidate (`mark` 1) carries range y-3, used while a skill is active.
+- **Talent 2.** Fever +2 for every sluggish or fear she inflicts. While she is deployed, Ave Mujica members deal ×1.10/×1.15 (by potential) to sluggish or feared enemies. This uses a new per-recipient output multiplier hook in `dealDamage` (`battle._dealtMultipliers`), so a shared area damage object is never mutated.
+- **S1.** Two charges, 4 SP per attack. Five Arts hits (`_damageType` 2) on ground enemies in range at the Skill_1 events.
+- **S2.** Fears everything in range for 1.5 s on start, deals 100% Arts every second, and multiplies the talent chance by 2.2.
+
+Declared mappings:
+- Talent 1 rolls after each damage instance she deals.
+- When another Ave Mujica member starts a skill, S1 releases its five-hit burst once more, free, without spending a charge.
+- S2 replaces her ordinary attack.
+
+Validation:
+- `test/arkpedia-tmoris-public.test.js` (29 cases): source types and events, stats/cost/charges at all ranks, all-in-range Physical attack and dodge, the sluggish rate over ~119 hits with exactly +2 Fever each, the S1 burst and its extra release on Nyamu's cast, S2 fear and ticks, the members' damage bonus against a sluggish target, and both 0-1 clears.
+- `review-tmoris-public.mjs`: 4 cases and 28 captures on both the candidate and normal builds.

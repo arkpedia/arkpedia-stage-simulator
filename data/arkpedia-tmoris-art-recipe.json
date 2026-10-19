@@ -1,0 +1,40 @@
+{
+  "operator": "char_4186_tmoris",
+  "name": "Yahata Umiri",
+  "foundationSha256": "6decdfc650f79732bd889e44e2083182a28f4027ad62b9270db49dcf303c6475",
+  "artCommit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+  "output": "data/arkpedia-tmoris-art.json",
+  "sdReview": "source-reviews/tmoris.json",
+  "scope": "Original Front/Back files unchanged. Independently checked native skeleton/atlas/material/texture pointers, decoded pixels and premultiplied alpha. Literal Idle/Start/Attack roles; Front has Die, Back has none. Her owner plays Skill_1 (5 hit events) and the S2 Loop/End clips itself; the original S2-to-Idle End mix is retained. Combat/public admission, modules, effects/audio/shaders and compiled/frame/pixel parity remain separate.",
+  "roles": {
+    "Front": {
+      "idle": "Idle",
+      "deploy": "Start",
+      "attack": "Attack",
+      "attackDown": null,
+      "skill": null,
+      "skills": {},
+      "die": "Die",
+      "stun": null,
+      "move": null
+    },
+    "Back": {
+      "idle": "Idle",
+      "deploy": "Start",
+      "attack": "Attack",
+      "attackDown": null,
+      "skill": null,
+      "skills": {},
+      "die": null,
+      "stun": null,
+      "move": null
+    }
+  },
+  "nativeMixes": [
+    {
+      "sourceAnimName": "Skill_2_Loop",
+      "targetAnimName": "Idle",
+      "mixAnimName": "Skill_2_End"
+    }
+  ]
+}

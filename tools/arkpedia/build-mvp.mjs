@@ -86,7 +86,8 @@ const candidateHadiya = process.argv.includes('--review-candidate-hadiya');
 // Generic admission (checkCnOwnerReview): --review-candidate-id=<charId>.
 const candidateGeneric = process.argv.find(a => a.startsWith('--review-candidate-id='))?.slice('--review-candidate-id='.length) ?? null;
 // charId -> data slug for operators admitted through checkCnOwnerReview.
-const CN_OWNER_REVIEWS = Object.freeze({char_4185_amoris: {slug: 'amoris', policy: 'source-cn-amoris-continuous-splash-fever-v1'}});
+const CN_OWNER_REVIEWS = Object.freeze({char_4185_amoris: {slug: 'amoris', policy: 'source-cn-amoris-continuous-splash-fever-v1'},
+  char_4186_tmoris: {slug: 'tmoris', policy: 'source-cn-tmoris-stalker-sluggish-fear-fever-v1'}});
 const candidateTurdus = process.argv.includes('--review-candidate-turdus');
 const candidateTmslot = process.argv.includes('--review-candidate-tmslot');
 const candidateThumpy = process.argv.includes('--review-candidate-thumpy');
