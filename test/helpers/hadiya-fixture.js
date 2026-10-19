@@ -8,11 +8,12 @@ import {normalizeChess} from '../../server/sim/simdata.js';
 import {defaultBuild} from '../../shared/arkpedia/loadout.js';
 import {selectedHadiyaBuild, HADIYA_ID as ID} from '../../server/sim/content/arkpedia-hadiya-source.js';
 import {HadiyaPayments, HADIYA_PAYMENT_CONTRACT} from '../../server/sim/content/arkpedia-hadiya-payments.js';
+import {prepareHadiya, HADIYA_OWNER_CONTRACT} from '../../server/sim/content/arkpedia-hadiya-owner.js';
 export {advance, near, until} from './mon3tr-fixture.js';
 
 export function make({skill = 1, elite = 2, level = [50, 70, 80][elite], rank = [4, 7, 10][elite],
   potential = 1, trust = 0, dir = 'RIGHT', defer = false, spec = {}, guard,
-  prepare, payments = true} = {}) {
+  prepare, payments = true, owner = false, contract = HADIYA_OWNER_CONTRACT} = {}) {
   const d = structuredClone(data);
   d.stage.geometry.waves[0].spawns = [];
   d.stage.battle.dp_per_second = 0;
@@ -32,10 +33,12 @@ export function make({skill = 1, elite = 2, level = [50, 70, 80][elite], rank = 
     skill: {...record.source, ...record.source.spData, skillId: build.skillId, rangeGrid: record.skillRangeGrid},
     arkpedia: build});
   const u = b._makeAlly(b.getPlayer('arkpedia'), def, 'op', 5, 5, {dir});
-  b._setupUnit(u, {trait: {noAttack: true}, talents: [],
+  const composed = owner ? prepareHadiya(b, u, {contract}) : null;
+  b._setupUnit(u, composed?.kit ?? {trait: {noAttack: true}, talents: [],
     skill: {kind: 'toggle', trigger: {rule: 'NEVER'}, manualTriggerOnly: () => true, ...spec}});
   const f = {b, u, build, record, statuses: []};
-  if (payments) {
+  if (composed) { Object.assign(f, composed); composed.controller.install(); }
+  else if (payments) {
     f.payment = new HadiyaPayments(b, u, {contract: HADIYA_PAYMENT_CONTRACT, guard});
     f.payment.install();
   }
