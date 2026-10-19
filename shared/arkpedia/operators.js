@@ -131,6 +131,7 @@ import { HSGMA2_OPERATORS } from './hsgma2-operators.js';
 import { ORCHD2_OPERATORS } from './orchd2-operators.js';
 import { LEIZI2_OPERATORS } from './leizi2-operators.js';
 import { VEEN_OPERATORS } from './veen-operators.js';
+import { MANTRA_OPERATORS } from './mantra-operators.js';
 import { BRANCH_OPERATORS } from './branch-operators.js';
 import { RECKPR_OPERATORS } from './reckpr-operators.js';
 import { CLOSUR_OPERATORS } from './closur-operators.js';
@@ -486,6 +487,7 @@ export const REGULAR_OPERATORS = Object.freeze({
   ...ORCHD2_OPERATORS,
   ...LEIZI2_OPERATORS,
   ...VEEN_OPERATORS,
+  ...MANTRA_OPERATORS,
   ...BRANCH_OPERATORS,
 });
 

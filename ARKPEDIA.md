@@ -4819,3 +4819,7 @@ Leizi the Thunderbringer joins with her Liberator trait, idle liftoff with per-s
 ### Viy
 
 Viy (Вий) joins with Mystic energy stored with no target and merged into transposed energy, her talent ATK/ASPD by what she holds, the stacking damage over time she avoids targeting, S1 ASPD, S2 attack and release stacks, and S3 bouncing energy shots on an ammo count. See docs/VEEN-REVIEW.md. Coverage: 421/431 forms.
+
+### Mantra
+
+Mantra joins with palsy-trigger elemental damage with layer retention, spawn-point palsy, the S1 neural next attack, the S2 neural chain, and S3's palsy cap with skill-start palsy and overflow element jumps. See docs/MANTRA-REVIEW.md. Coverage: 422/431 forms.
