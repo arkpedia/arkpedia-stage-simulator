@@ -325,6 +325,9 @@ a {
 .dp-recovery span { display: block; width: 100%; height: 100%; background: #fff; transform-origin: left; }
 .dp-rate { display: block; font-size: 10px; line-height: 1.6; text-align: right; color: #dce2e6; }
 .deployment-limit { padding: 5px 8px; background: #202326bc; color: #fff; font-size: 13px; min-width: 12ch; text-align: right; }
+.fever-reading { padding: 5px 8px; background: #202326bc; color: #f2b8dd; font-size: 13px; min-width: 12ch; text-align: right; }
+.fever-reading.full { color: #fff; background: #8a2c6bcc; }
+.fever-reading.active { color: #fff; background: #b8338fe0; font-weight: 600; }
 .pause-label { position: absolute; z-index: 5; top: 86px; right: 22px; padding: 3px 8px; background: #202326ca; color: #fff; font: 600 15px Rajdhani, sans-serif; pointer-events: none; }
 .command { position: absolute; z-index: 6; left: 0; top: 0; bottom: calc(var(--shelf-height) + 18px); width: var(--inspector-width); display: flex; flex-direction: column; padding: 110px 22px 0; color: #fff; background: linear-gradient(90deg,#0a1016eb,#0a101698 80%,transparent); }
 .command.placing { pointer-events: none; }
@@ -594,6 +597,7 @@ footer {
   .dp-reading strong { font-size: 32px; }
   .dp-reading img { width: 22px; height: 22px; }
   .deployment-limit { font-size: 11px; }
+  .fever-reading { font-size: 11px; }
   .deployment-wrap { gap: 4px; grid-template-columns: 44px minmax(0,1fr) 44px; }
   .deployment .cost { font-size: 19px; }
   .bench-class { width: 23px; height: 23px; }

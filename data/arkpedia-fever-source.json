@@ -1,0 +1,318 @@
+{
+  "schemaVersion": 1,
+  "feverKey": "env_033_fever",
+  "source": {
+    "repository": "Kengxxiao/ArknightsGameData",
+    "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+    "path": "zh_CN/gamedata/excel/gamedata_const.json",
+    "cachedBytes": 57764,
+    "cachedSha256": "93335d6a78fe1673d7c7662d2f88d4bdc355de7347233aca4b94a12642df8f44"
+  },
+  "feverNeed": 450,
+  "feverDuration": 20,
+  "terms": {
+    "fever": {
+      "termId": "ba.fever",
+      "termName": "Fever",
+      "description": "Fever累计至450点时，任意一位<$ba.mujica>Ave Mujica</>成员手动触发技能后，在场所有<$ba.mujica>Ave Mujica</>成员20秒内会持续释放当前技能"
+    },
+    "mujica": {
+      "termId": "ba.mujica",
+      "termName": "Ave Mujica",
+      "description": "包括丰川祥子、八幡海铃、三角初华、祐天寺若麦、若叶睦"
+    }
+  },
+  "members": {
+    "char_4182_oblvns": {
+      "name": "丰川祥子",
+      "foundationSha256": "b01d98c4d024cb874e5534a4aac9fab2deb44f9eb6bc7a2cf15a1d34de551d17",
+      "feverActions": {
+        "fever_ensure": [
+          "EnsureFeverSystem"
+        ],
+        "fever_skill_cast_progress_buff": [
+          "CalculateFeverSpShowBuffRemainingProgress"
+        ],
+        "oblvns_s_1[clear_full]": [
+          "IsInFever",
+          "IsFeverFull"
+        ],
+        "oblvns_s_2[switch]": [
+          "IsFeverFull",
+          "IsInFever",
+          "IsFeverFull",
+          "TryActiveFeverIfFull",
+          "IsFeverFull",
+          "IsInFever",
+          "IsFeverFull",
+          "TryActiveFeverIfFull",
+          "IsInFever",
+          "IsFeverFull",
+          "IsInFever",
+          "IsFeverFull",
+          "TryActiveFeverIfFull",
+          "IsFeverFull",
+          "IsInFever",
+          "IsFeverFull",
+          "TryActiveFeverIfFull",
+          "IsInFever"
+        ],
+        "oblvns_s_3[switch_mode]": [
+          "IsInFever",
+          "IsFeverFull"
+        ],
+        "oblvns_t_2[fever]": [
+          "AddFeverBySourceIfNotFull"
+        ]
+      }
+    },
+    "char_4183_mortis": {
+      "name": "若叶睦",
+      "foundationSha256": "6aae3940caf1f8aed45a919fe41754699beae0a6d623502db250773ee150d7d3",
+      "feverActions": {
+        "fever_ensure": [
+          "EnsureFeverSystem"
+        ],
+        "fever_skill_cast_progress_buff": [
+          "CalculateFeverSpShowBuffRemainingProgress"
+        ],
+        "mortis_s_audio": [
+          "IsInFever",
+          "IsFeverFull"
+        ],
+        "mortis_t2[fever]": [
+          "AddFeverBySourceIfNotFull",
+          "AddFeverBySourceIfNotFull"
+        ]
+      }
+    },
+    "char_4184_dolris": {
+      "name": "三角初华",
+      "foundationSha256": "e64a1171e91bb883428fb1a743e55ad20feb3d1d3b3d500df5f46f5b0b7a6d2b",
+      "feverActions": {
+        "dolris_s_1[audio]": [
+          "IsInFever",
+          "IsFeverFull"
+        ],
+        "dolris_s_2[audio]": [
+          "IsInFever",
+          "IsFeverFull"
+        ],
+        "dolris_t_2[passive]": [
+          "AddFeverBySourceIfNotFull"
+        ],
+        "fever_ensure": [
+          "EnsureFeverSystem"
+        ],
+        "fever_skill_cast_progress_buff": [
+          "CalculateFeverSpShowBuffRemainingProgress"
+        ]
+      }
+    },
+    "char_4185_amoris": {
+      "name": "祐天寺若麦",
+      "foundationSha256": "275ad8828f0d01f8a8b059742ef9e2baf5ce25c9d21577b54c356e515ae65b95",
+      "feverActions": {
+        "amoris_s_audio": [
+          "IsInFever",
+          "IsFeverFull"
+        ],
+        "amoris_t_2[fever]": [
+          "AddFeverBySourceIfNotFull"
+        ],
+        "fever_ensure": [
+          "EnsureFeverSystem"
+        ],
+        "fever_skill_cast_progress_buff": [
+          "CalculateFeverSpShowBuffRemainingProgress"
+        ]
+      }
+    },
+    "char_4186_tmoris": {
+      "name": "八幡海铃",
+      "foundationSha256": "6decdfc650f79732bd889e44e2083182a28f4027ad62b9270db49dcf303c6475",
+      "feverActions": {
+        "fever_ensure": [
+          "EnsureFeverSystem"
+        ],
+        "fever_skill_cast_progress_buff": [
+          "CalculateFeverSpShowBuffRemainingProgress"
+        ],
+        "tmoris_s_1[audio]": [
+          "IsInFever"
+        ],
+        "tmoris_s_2[audio]": [
+          "IsInFever",
+          "IsFeverFull"
+        ],
+        "tmoris_t_2[fear]": [
+          "AddFeverBySourceIfNotFull"
+        ],
+        "tmoris_t_2[sluggish]": [
+          "AddFeverBySourceIfNotFull"
+        ]
+      }
+    }
+  },
+  "skills": {
+    "skchr_oblvns_1": {
+      "pathId": "-3349291737652062889",
+      "_feverKey": "env_033_fever",
+      "_tryJoinFeverOnSkillStart": 1,
+      "_continusCastWhenInFever": 1,
+      "_leaveFeverWhenSkillEnd": 0,
+      "_skipSkillStateTickJoinFever": 1,
+      "buffs": [
+        {
+          "key": "oblvns_s_1[fever]",
+          "flags": [
+            1
+          ],
+          "templateKey": "oblvns_s_1[fever]"
+        },
+        {
+          "key": "fever_skill_cast_progress_buff",
+          "flags": [],
+          "templateKey": "fever_skill_cast_progress_buff"
+        }
+      ],
+      "buffAfterFever": 0
+    },
+    "skchr_oblvns_2": {
+      "pathId": "-4311067092811501357",
+      "_feverKey": "env_033_fever",
+      "_tryJoinFeverOnSkillStart": 1,
+      "_continusCastWhenInFever": 0,
+      "_leaveFeverWhenSkillEnd": 0,
+      "_skipSkillStateTickJoinFever": 1,
+      "buffs": [
+        {
+          "key": "oblvns_s_2[fever_eff]",
+          "flags": [
+            24
+          ],
+          "templateKey": "oblvns_s_2[switch][in_fever]"
+        }
+      ],
+      "buffAfterFever": 1
+    },
+    "skchr_oblvns_3": {
+      "pathId": "-5377320831656744270",
+      "_feverKey": "env_033_fever",
+      "_tryJoinFeverOnSkillStart": 1,
+      "_continusCastWhenInFever": 0,
+      "_leaveFeverWhenSkillEnd": 0,
+      "_skipSkillStateTickJoinFever": 1,
+      "buffs": [
+        {
+          "key": "oblvns_s_3[fever]",
+          "flags": [],
+          "templateKey": "oblvns_s_3[fever]"
+        }
+      ],
+      "buffAfterFever": 0
+    },
+    "skchr_mortis_1": {
+      "pathId": "6052952230982506290",
+      "_feverKey": "env_033_fever",
+      "_tryJoinFeverOnSkillStart": 1,
+      "_continusCastWhenInFever": 0,
+      "_leaveFeverWhenSkillEnd": 1,
+      "_skipSkillStateTickJoinFever": 1,
+      "buffs": [],
+      "buffAfterFever": 0
+    },
+    "skchr_mortis_2": {
+      "pathId": "-7788941006478189186",
+      "_feverKey": "env_033_fever",
+      "_tryJoinFeverOnSkillStart": 1,
+      "_continusCastWhenInFever": 0,
+      "_leaveFeverWhenSkillEnd": 1,
+      "_skipSkillStateTickJoinFever": 1,
+      "buffs": [],
+      "buffAfterFever": 0
+    },
+    "skchr_dolris_1": {
+      "pathId": "-1860968596648359169",
+      "_feverKey": "env_033_fever",
+      "_tryJoinFeverOnSkillStart": 1,
+      "_continusCastWhenInFever": 0,
+      "_leaveFeverWhenSkillEnd": 0,
+      "_skipSkillStateTickJoinFever": 1,
+      "buffs": [],
+      "buffAfterFever": 0
+    },
+    "skchr_dolris_2": {
+      "pathId": "2592022969644245976",
+      "_feverKey": "env_033_fever",
+      "_tryJoinFeverOnSkillStart": 1,
+      "_continusCastWhenInFever": 0,
+      "_leaveFeverWhenSkillEnd": 0,
+      "_skipSkillStateTickJoinFever": 1,
+      "buffs": [],
+      "buffAfterFever": 0
+    },
+    "skchr_amoris_1": {
+      "pathId": "17566326337756952",
+      "_feverKey": "env_033_fever",
+      "_tryJoinFeverOnSkillStart": 1,
+      "_continusCastWhenInFever": 0,
+      "_leaveFeverWhenSkillEnd": 0,
+      "_skipSkillStateTickJoinFever": 1,
+      "buffs": [
+        {
+          "key": "amoris_s_1_fever",
+          "flags": [
+            1
+          ],
+          "templateKey": "empty"
+        }
+      ],
+      "buffAfterFever": 0
+    },
+    "skchr_amoris_2": {
+      "pathId": "-3322865626845168419",
+      "_feverKey": "env_033_fever",
+      "_tryJoinFeverOnSkillStart": 1,
+      "_continusCastWhenInFever": 0,
+      "_leaveFeverWhenSkillEnd": 0,
+      "_skipSkillStateTickJoinFever": 1,
+      "buffs": [
+        {
+          "key": "amoris_s_2_fever",
+          "flags": [
+            1
+          ],
+          "templateKey": "empty"
+        }
+      ],
+      "buffAfterFever": 0
+    },
+    "skchr_tmoris_1": {
+      "pathId": "-8053196661172006868",
+      "_feverKey": "env_033_fever",
+      "_tryJoinFeverOnSkillStart": 1,
+      "_continusCastWhenInFever": 1,
+      "_leaveFeverWhenSkillEnd": 0,
+      "_skipSkillStateTickJoinFever": 1,
+      "buffs": [
+        {
+          "key": "fever_skill_cast_progress_buff",
+          "flags": [],
+          "templateKey": "fever_skill_cast_progress_buff"
+        }
+      ],
+      "buffAfterFever": 0
+    },
+    "skchr_tmoris_2": {
+      "pathId": "-8144144414337868350",
+      "_feverKey": "env_033_fever",
+      "_tryJoinFeverOnSkillStart": 1,
+      "_continusCastWhenInFever": 0,
+      "_leaveFeverWhenSkillEnd": 0,
+      "_skipSkillStateTickJoinFever": 1,
+      "buffs": [],
+      "buffAfterFever": 0
+    }
+  }
+}

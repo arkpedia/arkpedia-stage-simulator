@@ -106,6 +106,7 @@ function battleReadouts() {
         <span class="dp-rate" id="dp-rate"></span>
       </div>
       <span class="deployment-limit" id="deployment-limit"></span>
+      <span class="fever-reading" id="fever-reading" role="status" hidden></span>
     </div>
   </div>`;
 }
@@ -623,6 +624,15 @@ function drawHud() {
     "deployment-limit": `Unit Limit: ${reading.slots}`,
   })) workspace.querySelector("#" + id).textContent = value;
   workspace.querySelector("#enemy-reading").title = `Enemies resolved: ${reading.enemies} · ${battle.killed} defeated, ${battle.leakedCount} escaped`;
+  // Ave Mujica Fever: shown only once a member has created the battle's gauge.
+  const fever = battle._aveMujicaFever, feverReading = workspace.querySelector("#fever-reading");
+  feverReading.hidden = !fever;
+  if (fever) {
+    feverReading.textContent = fever.active ? `FEVER · ${Math.ceil(fever.remaining)}s` : `Fever ${Math.floor(fever.value)}/${fever.need}`;
+    feverReading.classList.toggle("active", fever.active); feverReading.classList.toggle("full", fever.full);
+    feverReading.title = fever.active ? "Ave Mujica Fever: members keep casting their current skill" : fever.full
+      ? "Fever full: an Ave Mujica member's manual skill starts Fever" : "Ave Mujica Fever gauge";
+  }
   workspace.querySelector("#deployment-limit").setAttribute("aria-label", `${reading.slots} deployment slots available of ${battle.unitLimit}; ${reading.deployed} deployed`);
   const recovery = workspace.querySelector("#dp-recovery");
   recovery.setAttribute("aria-valuenow", Math.round(reading.recoveryFraction * 100));

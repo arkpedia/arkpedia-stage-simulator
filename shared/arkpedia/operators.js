@@ -114,6 +114,7 @@ import { YUKARI_OPERATORS } from './yukari-operators.js';
 import { MAKOTO_OPERATORS } from './makoto-operators.js';
 import { APHRISSA_OPERATORS } from './aphrissa-operators.js';
 import { HADIYA_OPERATORS } from './hadiya-operators.js';
+import { AMORIS_OPERATORS } from './amoris-operators.js';
 import { TURDUS_OPERATORS } from './turdus-operators.js';
 import { BRANCH_OPERATORS } from './branch-operators.js';
 import { RECKPR_OPERATORS } from './reckpr-operators.js';
@@ -454,6 +455,7 @@ export const REGULAR_OPERATORS = Object.freeze({
   ...MAKOTO_OPERATORS,
   ...APHRISSA_OPERATORS,
   ...HADIYA_OPERATORS,
+  ...AMORIS_OPERATORS,
   ...BRANCH_OPERATORS,
 });
 

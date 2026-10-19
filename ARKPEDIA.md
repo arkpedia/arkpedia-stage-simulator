@@ -4767,3 +4767,8 @@ ARKPEDIA_REVIEW_CHROME=/absolute/path/to/chromium ARKPEDIA_REVIEW_ORIGIN=http://
 ### Hadiya public squad integration
 
 Hadiya (`char_394_hadiya`) joins the normal roster with both source skills, DP-paid casts and her Equipment Adaptation (装备应变) as a new generic field action. Any owner can expose it through `unit.mem.regularSecondaryAction`, and the field panel renders it as a third button. Her original art is verified against the CN bundle (SD `ba72a790`). See docs/HADIYA-REVIEW.md. Coverage: 405/431 forms.
+
+
+### Ave Mujica Fever and Yūtenji Nyamu
+
+The shared Ave Mujica Fever gauge (`env_033_fever`) is built from the official `gamedata_const` values and each member skill's Fever component (`data/arkpedia-fever-source.json`), and is shown in the HUD. Yūtenji Nyamu is the first admitted member. CN-sourced owners can now be admitted through one shared `checkCnOwnerReview` gate in `build-mvp.mjs` (`--review-candidate-id=<charId>`), instead of a hand-copied block each. See docs/AVE-MUJICA-REVIEW.md. Coverage: 406/431 forms.
