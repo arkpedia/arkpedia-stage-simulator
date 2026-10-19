@@ -4799,3 +4799,7 @@ Astgenne the Lightchaser joins with her Decel Binder trait, two talents (ASPD st
 ### Zinogre S Catapult
 
 Zinogre S Catapult joins with Mercenary DP-paid casts, talent charge layers that extend her skills, S1 morph slash and alternating five/ten-hit combos with Arts riders, and S2 morph slash with the paid Equipment Adaptation. See docs/CATAP2-REVIEW.md. Coverage: 416/431 forms.
+
+### Ch'en the Dawnstreak
+
+Ch'en the Dawnstreak joins with weakness damage, her quiet-time heal and evade, S1 double hits with silence, the S2 away-window slashes that move her onto a surviving target, and the S3 bouncing sword wave. The renderer gains `mem.regularHidden` for an owner that takes its unit off the field visually. See docs/CHEN3-REVIEW.md. Coverage: 417/431 forms.

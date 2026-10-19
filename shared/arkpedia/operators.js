@@ -126,6 +126,7 @@ import { HEADB2_OPERATORS } from './headb2-operators.js';
 import { TITI_OPERATORS } from './titi-operators.js';
 import { HALO2_OPERATORS } from './halo2-operators.js';
 import { CATAP2_OPERATORS } from './catap2-operators.js';
+import { CHEN3_OPERATORS } from './chen3-operators.js';
 import { BRANCH_OPERATORS } from './branch-operators.js';
 import { RECKPR_OPERATORS } from './reckpr-operators.js';
 import { CLOSUR_OPERATORS } from './closur-operators.js';
@@ -476,6 +477,7 @@ export const REGULAR_OPERATORS = Object.freeze({
   ...TITI_OPERATORS,
   ...HALO2_OPERATORS,
   ...CATAP2_OPERATORS,
+  ...CHEN3_OPERATORS,
   ...BRANCH_OPERATORS,
 });
 

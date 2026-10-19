@@ -143,6 +143,7 @@ import { customizeHeadb2Kit, installHeadb2 } from './content/arkpedia-headb2.js'
 import { customizeTitiKit, installTiti } from './content/arkpedia-titi.js';
 import { customizeHalo2Kit, installHalo2 } from './content/arkpedia-halo2.js';
 import { customizeCatap2Kit, installCatap2 } from './content/arkpedia-catap2.js';
+import { customizeChen3Kit, installChen3 } from './content/arkpedia-chen3.js';
 import { customizePublicBranchKit, installPublicBranch } from './content/arkpedia-branch-public.js';
 import { customizePublicReckprKit, installPublicReckpr } from './content/arkpedia-reckpr-public.js';
 import { customizePublicLieselKit, installPublicLiesel } from './content/arkpedia-liesel-public.js';
@@ -642,6 +643,7 @@ export class StandardBattle extends Battle {
     customizeTitiKit({ battle: this, id, unit, kit });
     customizeHalo2Kit({ battle: this, id, unit, kit });
     customizeCatap2Kit({ battle: this, id, unit, kit });
+    customizeChen3Kit({ battle: this, id, unit, kit });
     customizePublicBranchKit({ battle: this, id, unit, kit });
     customizeNarantKit({ battle: this, id, def, unit, kit });
     customizeElaKit({ battle: this, id, def, unit, kit });
@@ -891,6 +893,7 @@ export class StandardBattle extends Battle {
     installTiti({ battle: this, unit, def });
     installHalo2({ battle: this, unit, def });
     installCatap2({ battle: this, unit, def });
+    installChen3({ battle: this, unit, def });
     installPublicBranch({ battle: this, unit, def });
     installNarant({ battle: this, unit, def });
     installEla({ battle: this, unit, def });

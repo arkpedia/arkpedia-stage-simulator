@@ -1,0 +1,243 @@
+{
+  "schemaVersion": 1,
+  "operatorId": "char_1050_chen3",
+  "enabledOperators": [
+    "char_1050_chen3"
+  ],
+  "frameParity": false,
+  "moduleSupport": false,
+  "nativeParticleSupport": false,
+  "nativePixelParity": false,
+  "mechanicsPolicy": "source-cn-chen3-weakness-dawnstreak-v1",
+  "scope": "Ch'en the Dawnstreak: Arts Fighter trait, talent ATK/ASPD with weakness damage, quiet-time heal and evade, S1 double hits with silence, S2 away-window slashes with kill transfer, move-or-return and respawn ATK/evasion, S3 multi-target triple hits and the bouncing current-HP sword wave, read from the pinned CN tables, her own templates, the original projectile prefab and Spine clip events.",
+  "sourceFoundationSha256": "7b501b584ea75d333c6e4d8fe7479501beba96e8b18fac3b3a980269c5ab35a8",
+  "ownerArtworkSha256": "930a1887c9adddc2bc85b616fb6a80ed281d8fb5bce8810b473f172d23ceb225",
+  "extraSources": {},
+  "verification": {
+    "browser": {
+      "status": "passed",
+      "script": "tools/arkpedia/review-chen3-public.mjs",
+      "scriptSha256": "4dd6b31f3aaaefd2d4dfa33822bca9bd963fe367ab5388e51c6ff06bce3afdad",
+      "driverSha256": "2e52cd4007ae553e30f773104626f9b5c2be7c15f717b61ca9063517fbdc51c8",
+      "fixtureServerSha256": "127fb1b74be89d0a35e6bfa4e3d35927d170fa4d3129287f6c523114c5bcaa22",
+      "browserVersion": "Chrome/153.0.8010.12",
+      "cacheDisabled": true,
+      "externalAssetTransport": "Unintercepted original immutable HTTPS; normal TLS verification.",
+      "originalWaves": false,
+      "candidate": {
+        "cases": 6,
+        "captures": 26,
+        "errors": 0,
+        "failedResources": 0
+      },
+      "normal": {
+        "cases": 6,
+        "captures": 26,
+        "errors": 0,
+        "failedResources": 0
+      }
+    }
+  },
+  "originalArtwork": {
+    "operator/char_1050_chen3/default/back": {
+      "kind": "operator",
+      "id": "char_1050_chen3",
+      "variant": "default",
+      "facing": "back",
+      "spineVersion": "3.8.99",
+      "source": {
+        "key": "operators",
+        "repository": "fexli/ArknightsResource",
+        "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+        "directory": "spine/char_1050_chen3/char_1050_chen3/Back"
+      },
+      "skeleton": {
+        "path": "models/operator/char_1050_chen3/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_1050_chen3.skel",
+        "bytes": 669821,
+        "sha256": "590c3558a156d4556dc9b6261b3055ad1d7337b8a873d62c4fcacfd9a7627ca6"
+      },
+      "atlas": {
+        "path": "models/operator/char_1050_chen3/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_1050_chen3.atlas",
+        "bytes": 17809,
+        "sha256": "3c48c7fea9c2460cd9fd166a6ad4dfb8d7c3845e0e0112ac61a35f54d63d7490"
+      },
+      "textures": [
+        {
+          "path": "models/operator/char_1050_chen3/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_1050_chen3.png",
+          "bytes": 335828,
+          "sha256": "80244809889f652f2dd645d985475e8de5f9e765010004227a3515c3a837b875"
+        }
+      ],
+      "premultipliedAlpha": true,
+      "animations": {
+        "Attack": 1.233,
+        "Default": 0,
+        "Idle": 4,
+        "Skill_1_Begin": 0.2,
+        "Skill_1_End": 0.2,
+        "Skill_1_Idle": 2.667,
+        "Skill_1_Loop": 1.233,
+        "Skill_2_Begin": 0.567,
+        "Skill_2_Disappear": 0.167,
+        "Skill_3_Begin": 0.433,
+        "Skill_3_End": 0.267,
+        "Skill_3_Idle": 1.333,
+        "Skill_3_Loop": 1.233,
+        "Start": 1,
+        "Start_2": 1
+      },
+      "hits": {
+        "Attack": [
+          0.433
+        ],
+        "Skill_1_Loop": [
+          0.433,
+          0.667
+        ],
+        "Skill_3_Loop": [
+          0.533,
+          0.6,
+          0.667
+        ]
+      },
+      "bounds": {
+        "x": -219.881,
+        "y": -15.438,
+        "width": 1226.132,
+        "height": 435.013
+      },
+      "animationRoles": {
+        "idle": "Idle",
+        "deploy": "Start",
+        "attack": "Attack",
+        "attackDown": null,
+        "skill": null,
+        "skills": {},
+        "die": null,
+        "stun": null,
+        "move": null
+      }
+    },
+    "operator/char_1050_chen3/default/front": {
+      "kind": "operator",
+      "id": "char_1050_chen3",
+      "variant": "default",
+      "facing": "front",
+      "spineVersion": "3.8.99",
+      "source": {
+        "key": "operators",
+        "repository": "fexli/ArknightsResource",
+        "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+        "directory": "spine/char_1050_chen3/char_1050_chen3/Front"
+      },
+      "skeleton": {
+        "path": "models/operator/char_1050_chen3/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_1050_chen3.skel",
+        "bytes": 759966,
+        "sha256": "ffb1cf1cad8b55780efe4d900f551da75d811dd7a8f101ffc53c118000732e9a"
+      },
+      "atlas": {
+        "path": "models/operator/char_1050_chen3/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_1050_chen3.atlas",
+        "bytes": 17809,
+        "sha256": "3c48c7fea9c2460cd9fd166a6ad4dfb8d7c3845e0e0112ac61a35f54d63d7490"
+      },
+      "textures": [
+        {
+          "path": "models/operator/char_1050_chen3/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_1050_chen3.png",
+          "bytes": 335828,
+          "sha256": "80244809889f652f2dd645d985475e8de5f9e765010004227a3515c3a837b875"
+        }
+      ],
+      "premultipliedAlpha": true,
+      "animations": {
+        "Attack": 1.233,
+        "Default": 0,
+        "Die": 1,
+        "Idle": 4,
+        "Skill_1_Begin": 0.2,
+        "Skill_1_End": 0.2,
+        "Skill_1_Idle": 2.667,
+        "Skill_1_Loop": 1.233,
+        "Skill_2_Begin": 0.567,
+        "Skill_2_Disappear": 0.167,
+        "Skill_3_Begin": 0.433,
+        "Skill_3_End": 0.267,
+        "Skill_3_Idle": 2.667,
+        "Skill_3_Loop": 1.233,
+        "Start": 1,
+        "Start_2": 1
+      },
+      "hits": {
+        "Attack": [
+          0.433
+        ],
+        "Skill_1_Loop": [
+          0.433,
+          0.667
+        ],
+        "Skill_3_Loop": [
+          0.533,
+          0.6,
+          0.667
+        ],
+        "Start_2": [
+          0.567
+        ]
+      },
+      "bounds": {
+        "x": -219.881,
+        "y": -15.438,
+        "width": 1226.132,
+        "height": 435.013
+      },
+      "animationRoles": {
+        "idle": "Idle",
+        "deploy": "Start",
+        "attack": "Attack",
+        "attackDown": null,
+        "skill": null,
+        "skills": {},
+        "die": "Die",
+        "stun": null,
+        "move": null
+      }
+    }
+  },
+  "interfaceAssets": [
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "six-star-icons/Ch'en the Dawnstreak - Base.webp",
+      "bytes": 15728,
+      "sha256": "0c8f5af1c78a2be413f9ba6317adc41721bf009047657ce69f31185c006799da"
+    },
+    {
+      "repository": "arkpedia/arkpedia-skin-assets",
+      "commit": "6fb723692d89c4a08d9a7aa4015e19c0753dd270",
+      "path": "six-star-skins/Ch'en the Dawnstreak - Base.webp",
+      "bytes": 235924,
+      "sha256": "3b9e7da37151b10c47065dd7eee883492e7c65c9036bc137e8502da40a8721ba"
+    },
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "skill-icons/Ch'en the Dawnstreak - Chi Xiao - Fleeting Night.webp",
+      "bytes": 7070,
+      "sha256": "ef278eb9c782b25b270dac3bdcbc4a06a84ad9cceb066f41a8ce87f528d421db"
+    },
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "skill-icons/Ch'en the Dawnstreak - Chi Xiao - Shadowless Speed.webp",
+      "bytes": 6474,
+      "sha256": "10431de7d899c9ccb52221127cefa1c39ebd651df3e7ae80469b90a5e562aa1b"
+    },
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "skill-icons/Ch'en the Dawnstreak - Chi Xiao - Heaven's Plaint.webp",
+      "bytes": 8962,
+      "sha256": "ac21794e3ada87c0c38b2f9911922cd9f88c9710e0f74fa1d854c92e2e1452d1"
+    }
+  ],
+  "publishedSdCommit": "dd52bdc9afea4032631f0519482d85c29af40e7e"
+}
