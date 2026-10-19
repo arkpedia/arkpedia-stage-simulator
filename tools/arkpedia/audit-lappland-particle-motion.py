@@ -94,6 +94,22 @@ def trajectory(source, field, probe):
     while elapsed < particle['age']-1e-12:
         dt = min(1/60,particle['age']-elapsed)
         normalized = (elapsed+dt)/particle['lifetime']
+        force = source['ForceModule']
+        if force['enabled']:
+            assert force['inWorldSpace'] is False and force['randomizePerFrame'] is False
+            # The original four force/noise profiles were added after this
+            # oracle. Integrate their authored acceleration rather than
+            # comparing actual force motion with a force-free reference.
+            for i, axis in enumerate(['x','y','z']):
+                curve = force[axis];a = elapsed/particle['lifetime'];b = normalized
+                edges = {a,b}
+                for name in ['minCurve','maxCurve']:
+                    edges.update(k['time'] for k in curve.get(name,{}).get('m_Curve',[]) if a<k['time']<b)
+                edges = sorted(edges);factor = random_factor(particle['id'],40+i,seed)
+                impulse = 0
+                for lo, hi in zip(edges,edges[1:]):
+                    impulse += (hi-lo)/6*(curves.scalar(curve,lo,factor)+4*curves.scalar(curve,(lo+hi)/2,factor)+curves.scalar(curve,hi,factor))
+                velocity[i] += particle['lifetime']*impulse
         drift = flow(source,field,position,particle['born']+elapsed,normalized,particle['id'],seed)
         total = [v+d for v,d in zip(velocity,drift)]
         if clamp['enabled']:
@@ -173,7 +189,7 @@ def main():
     before = OUT.read_bytes()
     subprocess.run(cmd,cwd=ROOT,check=True,capture_output=True)
     assert OUT.read_bytes() == before
-    alterations=('changed-perlin','changed-curl','changed-flow','changed-motion','missing-source','false-parity','changed-space','changed-world-origin','changed-world-velocity','changed-world-motion')
+    alterations=('changed-perlin','changed-curl','changed-flow','changed-motion','missing-source','false-parity','changed-space','changed-world-origin','changed-world-velocity','changed-world-motion','omitted-force-motion')
     for alteration in alterations:
         changed = copy.deepcopy(report)
         if alteration == 'changed-perlin': changed['fields'][0]['probes'][0]['perlin'][0]['gradient'][0] += .1
@@ -181,6 +197,10 @@ def main():
         elif alteration == 'missing-source': changed['components'].pop()
         elif alteration == 'false-parity': changed['scope']['compiledFrameParity'] = True
         elif alteration == 'changed-space': changed['components'][0]['simulationSpace'] = 'wrong'
+        elif alteration == 'omitted-force-motion':
+            row = next(c for c in changed['components'] if pack['records'][c['record']]['data']['ForceModule']['enabled'])
+            no_force = copy.deepcopy(pack['records'][row['record']]['data']);no_force['ForceModule']['enabled'] = False
+            probe = row['probes'][0];probe['displacement'] = trajectory(no_force,Field(probe['seed']),probe)
         elif alteration.startswith('changed-world-'):
             probe=next(c for c in changed['components'] if c['worldFrames'])['worldFrames'][0]
             probe[{'changed-world-origin':'worldOrigin','changed-world-velocity':'worldVelocity','changed-world-motion':'displacement'}[alteration]][0]+=.1
@@ -190,7 +210,7 @@ def main():
         try: verify(changed,pack,digest)
         except AssertionError: continue
         raise AssertionError('Accepted changed particle motion mapping: '+alteration)
-    print(json.dumps(dict(sourceNoiseComponents=35,localSimulationComponents=25,worldSimulationComponents=10,replayControls=35,worldFrameProbes=80,blocked=0,scalarValues=count,reproducedFiles=1,rejectedFixtures=len(alterations),compiledFrameParity=False)))
+    print(json.dumps(dict(sourceNoiseComponents=35,localSimulationComponents=25,worldSimulationComponents=10,replayControls=35,forceCoupledProfiles=4,worldFrameProbes=80,blocked=0,scalarValues=count,reproducedFiles=1,rejectedFixtures=len(alterations),compiledFrameParity=False)))
 
 
 if __name__ == '__main__':

@@ -11,6 +11,7 @@ import hashlib
 import importlib.util
 import json
 import math
+import os
 from pathlib import Path
 import subprocess
 
@@ -68,8 +69,9 @@ def reference(source, time, seed):
         frame = math.floor((frame_phase % 1)*uv['tilesX']*uv['tilesY'])
         particles.append(dict(id=index, born=born, lifetime=lifetime, age=age, size=[size]*3,
                               rotation=curves.scalar(initial['startRotation'], phase, factor(4)), color=color,
-                              origin=origin, displacement=delta, position=[a+b for a,b in zip(origin,delta)],
-                              velocitySpace='local', simulationSpace='world', birthTime=time-age,
+                              origin=origin, direction=[0,0,1], initialVelocity=[0,0,0],
+                              displacement=delta, position=[a+b for a,b in zip(origin,delta)], worldPosition=[a+b for a,b in zip(origin,delta)],
+                              velocitySpace='world', simulationSpace='world', birthTime=time-age,
                               sheet=dict(frame=frame, scale=[1/uv['tilesX'],1/uv['tilesY']],
                                          offset=[(frame%uv['tilesX'])/uv['tilesX'],1-(frame//uv['tilesX']+1)/uv['tilesY']], mask=uv['uvChannelMask'])))
     return particles
@@ -91,7 +93,7 @@ def compare(actual, expected):
 
 def verify(report, pack, digest):
     assert report['sourcePackSha256'] == digest and report['schemaVersion'] == 1
-    assert report['scope'] == dict(boxSourceSamplingOnly=True, rendererVerified=False, compiledFrameParity=False, enabledOperators=[])
+    assert report['scope'] == dict(boxSourceSamplingOnly=True, explicitIdentityFrame=True, rendererVerified=False, compiledFrameParity=False, enabledOperators=[])
     expected = [k for k,r in pack['records'].items() if r['type']=='ParticleSystem' and r['data']['ShapeModule']['enabled'] and r['data']['ShapeModule']['type']==5]
     assert [e['record'] for e in report['emitters']] == expected and len(expected) == 10
     count = 0
@@ -108,7 +110,7 @@ def main():
     digest = hashlib.sha256(raw).hexdigest()
     assert digest == meta['sha256'] and len(raw) == meta['bytes']
     pack = json.loads(gzip.decompress(raw))
-    cmd = ['node','tools/arkpedia/review-lappland-moving-particles.mjs']
+    cmd = [os.environ.get('ARKPEDIA_REVIEW_NODE','node'),'tools/arkpedia/review-lappland-moving-particles.mjs']
     subprocess.run(cmd,cwd=ROOT,check=True,capture_output=True)
     report = json.loads(OUT.read_text())
     count = verify(report,pack,digest)

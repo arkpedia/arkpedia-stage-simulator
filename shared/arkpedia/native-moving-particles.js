@@ -3,7 +3,7 @@ import {createParticleLifecycle,particleRandom} from './native-particle-lifecycl
 import {sampleParticleCurve,integrateParticleCurve} from './native-particle-curves.js';
 export {integrateParticleCurve} from './native-particle-curves.js';
 import {createParticleMotion} from './native-particle-motion.js';
-import {particleBirthFrame} from './native-particle-render.js';
+import {particleBirthFrame,particleLocalVelocity} from './native-particle-render.js';
 import {createParticleCone} from './native-particle-cone.js';
 import {createParticleConeVolume} from './native-particle-cone-volume.js';
 import {createParticleInheritance} from './native-particle-inheritance.js';
@@ -31,24 +31,16 @@ export function createMovingParticles(source,{seed=1,subEmitterSchedule=null,par
     }
     for(const field of ['m_Position','m_Rotation','m_Scale'])for(const axis of ['x','y','z'])if(!Number.isFinite(shape[field]?.[axis]))throw Error('Invalid native shape transform');
   }
-  if(velocity?.enabled){
-    if(typeof velocity.inWorldSpace!=='boolean')throw Error('Invalid native velocity space');
-    if(velocity.inWorldSpace&&source.moveWithTransform===0)throw Error('World velocity in a local simulation frame needs integration');
-    for(const field of ['orbitalX','orbitalY','orbitalZ','orbitalOffsetX','orbitalOffsetY','orbitalOffsetZ','radial']){
-      if(velocity[field]?.minMaxState!==0||velocity[field].scalar!==0)throw Error('Native orbital/radial velocity needs review');
-    }
-    if(velocity.speedModifier?.minMaxState!==0||velocity.speedModifier.scalar!==1)throw Error('Native particle speed multiplier needs review');
-    // Validate all active curves now rather than fail halfway through a draw.
-    for(const axis of ['x','y','z'])integrateParticleCurve(velocity[axis],0,1,.5);
-  }
   if(uv?.enabled){
     if(uv.mode!==0||uv.animationType!==0||uv.timeMode!==0||uv.flipU!==0||uv.flipV!==0||!Number.isInteger(uv.tilesX)||!Number.isInteger(uv.tilesY)||uv.tilesX<1||uv.tilesY<1||!Number.isFinite(uv.cycles)||uv.cycles<0||!Number.isInteger(uv.uvChannelMask))throw Error('Native texture-sheet mode needs review');
     if(![0,3].includes(uv.startFrame.minMaxState))throw Error('Native initial texture frame clock needs review');
     sampleParticleCurve(uv.frameOverTime,0);sampleParticleCurve(uv.frameOverTime,1);
   }
   const worldMotion=!!motion&&source.moveWithTransform===1;
+  const crossLinearFrame=!!motion&&velocity?.enabled&&(source.moveWithTransform===1?!velocity.inWorldSpace:velocity.inWorldSpace);
   function sampleParticles(particles,time,{frameAt,emitterVelocityAt}={}){
     if(worldMotion&&typeof frameAt!=='function')throw Error('World turbulence requires an explicit particle birth frame');
+    if(crossLinearFrame&&typeof frameAt!=='function')throw Error('Linear particle velocity requires an explicit simulation frame');
     if(inheritance&&typeof emitterVelocityAt!=='function')throw Error('Inherited velocity requires explicit world emitter velocity');
     return particles.map(p=>{
       const random=salt=>particleRandom(p.id,salt,seed),birthPhase=(p.born%source.lengthInSec)/source.lengthInSec;
@@ -70,6 +62,14 @@ export function createMovingParticles(source,{seed=1,subEmitterSchedule=null,par
       const t=p.age/p.lifetime;
       const speed=sampleParticleCurve(source.InitialModule.startSpeed,birthPhase,random(18)),initialVelocity=direction.map(v=>v*speed);
       const birthTime=p.birthTime??time-p.age/source.simulationSpeed;
+      const linearVelocityTransform=crossLinearFrame?(value,age)=>{
+        // The owner supplies the current source Transform at each bounded
+        // replay tick. Native ordering/frame phase is still unverified.
+        const frame=frameAt(birthTime+age/source.simulationSpeed,p);
+        if(!frame?.movement)throw Error('Missing linear particle movement frame');
+        return source.moveWithTransform===1?particleBirthFrame([0,0,0],value,frame.movement).velocity:
+          particleLocalVelocity(value,frame.movement);
+      }:undefined;
       let displacement,worldPosition,inheritedVelocity;
       if(worldMotion){
         const frame=frameAt(birthTime,p);
@@ -77,8 +77,8 @@ export function createMovingParticles(source,{seed=1,subEmitterSchedule=null,par
         const born=particleBirthFrame(origin,initialVelocity,frame.birth,frame.movement);
         const inheritedVelocityAt=inheritance?.sample(p,time,t=>emitterVelocityAt(t,p));
         inheritedVelocity=inheritedVelocityAt?.(0);
-        displacement=motion.sample(p,born.origin,born.velocity,{inheritedVelocityAt,inheritanceMode:source.InheritVelocityModule?.m_Mode});worldPosition=born.origin.map((v,i)=>v+displacement[i]);
-      }else displacement=motion?motion.sample(p,origin,initialVelocity):['x','y','z'].map((axis,i)=>initialVelocity[i]*p.age+(velocity?.enabled?p.lifetime*integrateParticleCurve(velocity[axis],0,t,random(13+i)):0));
+        displacement=motion.sample(p,born.origin,born.velocity,{inheritedVelocityAt,inheritanceMode:source.InheritVelocityModule?.m_Mode,linearVelocityTransform});worldPosition=born.origin.map((v,i)=>v+displacement[i]);
+      }else displacement=motion?motion.sample(p,origin,initialVelocity,{linearVelocityTransform}):['x','y','z'].map((axis,i)=>initialVelocity[i]*p.age+(velocity?.enabled?p.lifetime*integrateParticleCurve(velocity[axis],0,t,random(13+i)):0));
       let sheet=null;
       if(uv?.enabled){
         // Serialized native fields are normalized. Unity's editor remaps both
@@ -88,7 +88,7 @@ export function createMovingParticles(source,{seed=1,subEmitterSchedule=null,par
         sheet={frame,scale:[1/uv.tilesX,1/uv.tilesY],offset:[(frame%uv.tilesX)/uv.tilesX,1-(Math.floor(frame/uv.tilesX)+1)/uv.tilesY],mask:uv.uvChannelMask};
       }
       return {...p,origin,direction,initialVelocity,displacement,position:worldPosition??origin.map((v,i)=>v+displacement[i]),
-        ...(worldPosition?{worldPosition}:{}),...(inheritedVelocity?{inheritedVelocity}:{}),velocitySpace:worldMotion||velocity?.enabled&&velocity.inWorldSpace?'world':'local',simulationSpace:source.moveWithTransform===1?'world':'local',birthTime,sheet};
+        ...(worldPosition?{worldPosition}:{}),...(inheritedVelocity?{inheritedVelocity}:{}),velocitySpace:worldMotion?'world':'local',simulationSpace:source.moveWithTransform===1?'world':'local',birthTime,sheet};
     });
   }
   function sample(time,options={}){return sampleParticles(lifecycle.sample(time,{history:options.history}),time,options);}

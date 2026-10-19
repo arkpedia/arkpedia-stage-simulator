@@ -3,6 +3,7 @@ import {particleRandom} from './native-particle-lifecycle.js';
 import {sampleParticleCurve,integrateParticleCurve} from './native-particle-curves.js';
 import {createParticleNoise} from './native-particle-noise.js';
 import {particleForceImpulse} from './native-particle-force.js';
+import {createParticleLinearVelocity} from './native-particle-linear-velocity.js';
 
 // Original magnitude-limit/high-quality noise controls with an explicit local
 // 60 Hz replay. Native module ordering, damping timestep, field scroll axis and
@@ -10,8 +11,10 @@ import {particleForceImpulse} from './native-particle-force.js';
 export function createParticleMotion(source,{seed=1}={}){
   const clamp=source.ClampVelocityModule,noise=source.NoiseModule,force=source.ForceModule;
   const inherited=!!source.InheritVelocityModule?.enabled&&source.moveWithTransform===1;
-  if(!clamp?.enabled&&!noise?.enabled&&!inherited&&!force?.enabled)return null;
-  if(![0,1].includes(source.moveWithTransform)||source.VelocityModule?.enabled)throw Error('Native simulation space/linear velocity with particle turbulence needs review');
+  const linear=createParticleLinearVelocity(source,{seed});
+  if(!clamp?.enabled&&!noise?.enabled&&!inherited&&!force?.enabled&&!(linear&&(source.moveWithTransform===1||linear.inWorldSpace)))return null;
+  if(![0,1].includes(source.moveWithTransform))throw Error('Native simulation space with particle turbulence needs review');
+  const crossLinearFrame=!!linear&&(source.moveWithTransform===1?!linear.inWorldSpace:linear.inWorldSpace);
   if(force?.enabled){
     if(force.inWorldSpace!==false||force.randomizePerFrame!==false||source.moveWithTransform!==0)throw Error('Native force space/per-frame randomness needs review');
     for(const axis of['x','y','z'])for(const factor of[0,1])integrateParticleCurve(force[axis],0,1,factor);
@@ -44,12 +47,13 @@ export function createParticleMotion(source,{seed=1}={}){
     }
     return result;
   }
-  function sample(particle,origin,initialVelocity,{inheritedVelocityAt,inheritanceMode=0}={}){
+  function sample(particle,origin,initialVelocity,{inheritedVelocityAt,inheritanceMode=0,linearVelocityTransform}={}){
     if(![origin,initialVelocity].every(v=>Array.isArray(v)&&v.length===3&&v.every(Number.isFinite))
       ||!Number.isFinite(particle.born)||!Number.isFinite(particle.lifetime)||particle.lifetime<=0
       ||!Number.isInteger(particle.id)||particle.id<0)throw Error('Invalid native particle motion frame');
     const position=origin.slice();let velocity=initialVelocity.slice(),elapsed=0;
     if(inheritedVelocityAt&&(typeof inheritedVelocityAt!=='function'||![0,1].includes(inheritanceMode)))throw Error('Invalid inherited particle motion mode');
+    if(crossLinearFrame&&typeof linearVelocityTransform!=='function')throw Error('Linear particle velocity requires an explicit simulation frame');
     let inheritedAttenuation=1;
     if(!Number.isFinite(particle.age)||particle.age<0||particle.age/step>10000)throw Error('Native motion review clock exceeds step budget');
     while(elapsed<particle.age-1e-12){
@@ -66,6 +70,13 @@ export function createParticleMotion(source,{seed=1}={}){
       const inheritedDrift=inherited.map(v=>v*(inheritanceMode===0?inheritedAttenuation:1));
       const drift=flow(position,particle.born+elapsed,normalized,particle.id);
       const total=velocity.map((v,i)=>v+drift[i]+inheritedDrift[i]);let ratio=1;
+      let linearDrift;
+      if(linear){
+        linearDrift=linear.average(particle,elapsed,elapsed+dt);
+        if(crossLinearFrame)linearDrift=linearVelocityTransform(linearDrift,elapsed+dt);
+        if(!Array.isArray(linearDrift)||linearDrift.length!==3||!linearDrift.every(Number.isFinite))throw Error('Invalid transformed linear particle velocity');
+        total.forEach((v,i)=>total[i]=v+linearDrift[i]);
+      }
       if(clamp?.enabled){
         const limit=sampleParticleCurve(clamp.magnitude,normalized,particleRandom(particle.id,19,seed));
         if(limit<0)throw Error('Invalid native particle speed limit');
@@ -76,6 +87,10 @@ export function createParticleMotion(source,{seed=1}={}){
       // Re-evaluate the curl field each step; do not accumulate it as an
       // invented acceleration. The limited residual retains base momentum.
       velocity=total.map((v,i)=>v-drift[i]-inheritedDrift[i]*ratio);
+      // The lifetime module is a velocity contribution, not acceleration.
+      // Retain the limited residual for the next existing replay tick rather
+      // than adding the authored lifetime velocity to momentum repeatedly.
+      if(linear)velocity=velocity.map((v,i)=>v-linearDrift[i]);
       if(inheritanceMode===0)inheritedAttenuation*=ratio;
       elapsed+=dt;
     }

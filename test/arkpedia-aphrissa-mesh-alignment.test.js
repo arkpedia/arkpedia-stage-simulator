@@ -26,8 +26,6 @@ try{
 const native={skip:source===null?'Original effect cache unavailable':false};
 const library=()=>createNativeEffectLibrary({three:T,...source,builtinMeshes,shaderGlobals:{_HG_UV_ROTATION:0},loadTexture:async()=>new T.Texture()});
 const held=new Map([
-  ['battle/prefabs/effects/aphris.ab:-3544383229651196007','Native simulation space/linear velocity with particle turbulence needs review'],
-  ['battle/prefabs/effects/aphris.ab:5184321320175593346','Native simulation space/linear velocity with particle turbulence needs review'],
   ['battle/prefabs/effects/aphris.ab:2685626582646413221','Animated world particle velocity frame needs integration']
 ]);
 const camera=(x,y,z)=>{const c=new T.PerspectiveCamera(35,1,.001,100);c.position.set(x,y,z);c.lookAt(0,0,0);c.updateMatrixWorld(true);return c;};
@@ -56,7 +54,7 @@ test('all original mesh/view layers reach their actual remaining motion gates or
         i.update(.15,{camera:camera(1,2,5)});
         for(const [key,row] of Object.entries(profiles).filter(([,r])=>r.root===root)){
           seen.add(key);const draw=i.draws.find(d=>d.component===key),blocked=i.blocked.find(b=>b.component===key);
-          if(held.has(key)){assert.equal(draw,undefined);assert.equal(blocked?.reason,held.get(key));continue;}
+          if(held.has(key)){assert.equal(!!draw,false,key+' must remain motion-blocked');assert.equal(blocked?.reason,held.get(key));continue;}
           assert.ok(draw,key);assert.equal(blocked,undefined);assert.equal(draw.alignment,0);assert.ok(draw.emitter);
           const meshRef=row.references.find(r=>r.field==='m_Mesh').target,original=source.pack.meshes[meshRef];
           assert.ok(original);assert.deepEqual([...draw.mesh.geometry.getAttribute('in_POSITION0').array],Array.from(new Float32Array(original.positions.flat())));
@@ -113,4 +111,26 @@ test('the original three-axis end-ring rotates around fixed Z, X then Y after ca
       assert.ok(length>0);near(column.map(v=>v/length),expected);
     }
   }finally{i.dispose();lib.dispose();}
+});
+
+test('selected particles retain their original ancestors and authored inactivity without bypassing root ownership',native,async()=>{
+  const lib=library(),id='battle/prefabs/effects/aphris.ab:-2723189773097744130',root='aphris_skill_03_start_01';
+  try{
+    assert.throws(()=>lib.inspectParticles(root,{particles:[]}),/selection/);
+    assert.throws(()=>lib.inspectParticles(root,{particles:[id,id]}),/selection/);
+    await assert.rejects(lib.inspectParticles('aphris_skill_03_charge_01',{particles:[id]}),/outside/);
+    assert.equal(lib.instanceCount,0);
+    const i=await lib.inspectParticles(root,{particles:[id]});
+    assert.deepEqual(i.inspection,{particles:[id],fullEffect:false});assert.equal(i.draws.length,1);
+    assert.ok(i.pose.nodes.size>1);assert.ok(i.pose.renderers.size>i.draws.length);assert.equal(i.pose.instances.length,0);
+    const go=source.pack.records[id].references.find(r=>r.field==='m_GameObject').target;
+    assert.equal(source.pack.records[go].data.m_IsActive,false);
+    const visible=part=>{for(let o=part;o;o=o.parent)if(!o.visible)return false;return true;};
+    for(const time of [.15,.6,.15]){
+      i.update(time,{camera:camera(1,2,5)});i.group.updateMatrixWorld(true);
+      assert.ok(i.draws[0].lastParticles.length>0);assert.ok(i.draws[0].pool.every(p=>!visible(p)));
+      assert.equal(source.pack.records[go].data.m_IsActive,false);
+    }
+    i.dispose();assert.equal(lib.instanceCount,0);
+  }finally{lib.dispose();}
 });

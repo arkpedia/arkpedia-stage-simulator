@@ -121,6 +121,14 @@ export function createNativeEffectLibrary({three:T,pack,animations,shaders,loadT
       // this diagnostic; full-root create() still enforces every component.
       return createNativeEffectInstance({...context,inspectionMeshParticles:true},name,options);
     },
+    inspectParticles(name,{particles,...options}={}){
+      assertOpen();
+      if(!Array.isArray(particles)||!particles.length||new Set(particles).size!==particles.length
+        ||particles.some(id=>pack.records[id]?.type!=='ParticleSystem'))throw Error('Invalid original particle selection');
+      // Keep source ancestors and their clip-driven activation. Selecting a
+      // child must not activate an originally inactive GameObject by hand.
+      return createNativeEffectInstance({...context,inspectionParticles:new Set(particles)},name,options);
+    },
     get instanceCount(){return instances.size;},
     dispose(){
       if(closed)return;closed=true;
@@ -146,6 +154,8 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false,lineP
   const particleTransforms=new Map();
   for(const[id,n]of pose.nodes)for(const ref of pack.records[n.gameObject].references??[])
     if(pack.records[ref.target]?.type==='ParticleSystem')particleTransforms.set(ref.target,id);
+  if(library.inspectionParticles&&[...library.inspectionParticles].some(id=>!particleTransforms.has(id)))
+    throw Error('Selected original particle is outside the effect root');
   let activeClip=null,activeTrajectory=null;
   const sourceFrameAt=(id,t)=>{
     const transform=particleTransforms.get(id);if(!transform)throw Error('Parent particle transform is outside original source root');
@@ -482,7 +492,8 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false,lineP
   const timeWindow=Math.max(3,...periods,...pose.instances.map(i=>animations.clips[i.clip].stop));
   const inspection=library.inspectionSource?{particle:library.inspectionSource,parents:subEmitters.parents(library.inspectionSource),fullEffect:false}
     :library.inspectionLines?{lines:true,explicitEndpoints:true,fullEffect:false}
-    :library.inspectionMeshParticles?{meshParticles:true,fullEffect:false}:null;
+    :library.inspectionMeshParticles?{meshParticles:true,fullEffect:false}
+    :library.inspectionParticles?{particles:[...library.inspectionParticles],fullEffect:false}:null;
   const instance={name,pose,group,draws,blocked,timeWindow,inspection,parentMotion,shaderGlobals:library.shaderGlobals,
     update,dispose,get disposed(){return disposed;}};
   library.register(instance);
@@ -492,6 +503,11 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false,lineP
       const record=pack.records[component];if(!r.enabled)continue;
       if(library.inspectionLines&&record.type!=='LineRenderer')continue;
       if(library.inspectionMeshParticles&&(record.type!=='ParticleSystemRenderer'||record.data.m_RenderMode!==4))continue;
+      if(library.inspectionParticles){
+        if(record.type!=='ParticleSystemRenderer')continue;
+        const ps=(pack.records[r.gameObject].references??[]).find(ref=>pack.records[ref.target]?.type==='ParticleSystem')?.target;
+        if(!library.inspectionParticles.has(ps))continue;
+      }
       const beforeGeometry=new Set(geometries),beforeMaterial=new Set(materials);
       try{
         assertOpen();
