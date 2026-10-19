@@ -4,7 +4,7 @@ import assert from 'node:assert/strict';
 import * as T from 'three';
 import {createAphrissaStageBeams} from '../public/arkpedia/aphrissa-stage-beams.js';
 import {APHRISSA_BEAM_OWNER as ID,APHRISSA_BEAM_PACK as PACK,APHRISSA_BEAM_CONTRACT as contract,APHRISSA_BEAM_STYLES as styles} from '../shared/arkpedia/aphrissa-beam-presentation.js';
-function fixture(create,pointFrameAt=({position})=>({position,rotation:[0,0,0,1],scale:[1,1,1]})){
+function fixture(create,pointFrameAt=({position})=>({position,rotation:[0,0,0,1],scale:[1,1,1]}),hitFrameAt){
  const instances=[],calls=[],track={id:'1:1:beam:attack:1',ownerId:1,ownerLife:1,mode:'normal',root:styles.normal.root,clip:styles.normal.clip.id,
   startedAt:5,clipStartedAt:5,stage:'active',points:[{role:'start',row:2,col:3,unitId:1,life:1,mountType:2},
   {role:'waypoint',row:2,col:5,unitId:2,life:1,mountType:1,fixedHeight:styles.normal.waypointFixedHeight},{role:'end',row:5,col:5}]};
@@ -14,7 +14,7 @@ function fixture(create,pointFrameAt=({position})=>({position,rotation:[0,0,0,1]
  const owner={id:1,def:{charId:ID},side:'ally',alive:true,deployed:true,deploySeq:1,mem:{aphrissaLinePresentation:{snapshot:()=>[structuredClone(track)]}}};
  const relay={id:2,alive:true,deployed:true,deploySeq:1,side:'ally'},battle={time:5,regularReviewCandidates:[ID],units:[owner,relay]};
  const anchorAt=({point})=>[point.col,.4,point.row];
- const pass=createAphrissaStageBeams({three:T,library,sourcePackSha256:PACK,contract,heightAt:()=>.6,anchorAt,pointFrameAt,shaderGlobals:{_HG_UV_ROTATION:0}});
+ const pass=createAphrissaStageBeams({three:T,library,sourcePackSha256:PACK,contract,heightAt:()=>.6,anchorAt,pointFrameAt,hitFrameAt,shaderGlobals:{_HG_UV_ROTATION:0}});
  const camera=new T.PerspectiveCamera(40,1,.1,100);camera.up.set(0,0,1);camera.position.set(7,-6,8);camera.lookAt(3,2,0);camera.updateMatrixWorld(true);
  const renderer={autoClear:true,render(){}};
  return{pass,track,owner,relay,battle,instances,calls,camera,renderer};
@@ -96,4 +96,35 @@ test('partial prefabs, blocked source components and changed shader globals neve
   f.pass.update(f.battle);await assert.rejects(f.pass.ready(),/Unreviewed Aphrissa beam renderer/);
   assert.equal(f.pass.scene.children.length,0);assert.equal(f.pass.instanceCount,0);assert.ok(instances.every(i=>i.disposed===1));f.pass.dispose();
  }
+});
+function hitFixture(create,frame=({hit})=>({position:[hit.x,.4,hit.y],rotation:[0,0,0,1],scale:[1,1,1]})){
+ const f=fixture(create,undefined,frame);f.hit={id:'1:1:hit:normal:2:enemy:1',ownerId:1,ownerLife:1,targetId:'enemy',targetLife:1,
+  mode:'normal',attackId:2,root:'aphris_attack_01_hit_01',startedAt:4.8,x:3.2,y:2.1,row:2,col:3};
+ f.owner.mem.aphrissaHitPresentation={snapshot:()=>[structuredClone(f.hit)]};return f;
+}
+test('a complete hit prefab retains its receipt clock and target position independently from the ray and camera',async()=>{
+ const f=hitFixture();f.pass.update(f.battle);await f.pass.ready();f.pass.render(f.renderer,f.camera);
+ let hit=f.pass.inspect().find(e=>e.kind==='hit');const instance=hit.instance;
+ assert.ok(Math.abs(hit.time-.2)<1e-12);assert.equal(hit.bornAt,4.8);assert.deepEqual(hit.placement.position,[3.2,.4,2.1]);
+ assert.equal(hit.clip.clip,null);assert.equal(f.calls.filter(c=>c.root===f.hit.root).length,1);
+ f.camera.aspect=2;f.camera.updateProjectionMatrix();f.pass.update(f.battle);f.pass.render(f.renderer,f.camera);
+ hit=f.pass.inspect().find(e=>e.kind==='hit');assert.equal(hit.instance,instance);assert.ok(Math.abs(hit.time-.2)<1e-12);
+ f.battle.time=6;f.pass.update(f.battle);f.pass.render(f.renderer,f.camera);
+ assert.equal(f.pass.inspect().find(e=>e.kind==='hit').instance,instance);assert.deepEqual(f.pass.inspect().find(e=>e.kind==='hit').placement.position,[3.2,.4,2.1]);
+ f.owner.mem.aphrissaHitPresentation.snapshot=()=>[];f.pass.update(f.battle);assert.equal(instance.disposed,1);assert.equal(f.pass.inspect().some(e=>e.kind==='hit'),false);f.pass.dispose();
+});
+test('invalid hit identities and caller mounts cannot partially mutate an existing scene',async()=>{
+ let bad=false;const f=hitFixture(null,({hit})=>({position:[hit.x,.4,hit.y],rotation:bad?[0,0,0,0]:[0,0,0,1],scale:[1,1,1]}));
+ f.pass.update(f.battle);await f.pass.ready();const before=f.pass.inspect().map(e=>e.instance);
+ for(const edit of [h=>h.root='invented',h=>h.ownerLife=2,h=>h.startedAt=6,h=>h.x=NaN,h=>h.targetLife=0]){
+  const copy=structuredClone(f.hit);edit(f.hit);assert.throws(()=>f.pass.update(f.battle));f.hit=copy;
+  assert.ok(f.pass.inspect().every((e,i)=>e.instance===before[i]&&!e.instance.disposed));
+ }
+ bad=true;assert.throws(()=>f.pass.update(f.battle));assert.ok(f.pass.inspect().every((e,i)=>e.instance===before[i]));f.pass.dispose();
+});
+test('late hit loads cannot resurrect effects after source owner retirement',async()=>{
+ const waiting=[],f=hitFixture(()=>new Promise(resolve=>waiting.push(resolve)));f.pass.update(f.battle);await Promise.resolve();
+ assert.equal(f.pass.pendingCount,6);f.owner.alive=false;f.pass.update(f.battle);
+ const items=waiting.map(resolve=>{const i={group:new T.Group(),disposed:0,dispose(){this.disposed++;}};resolve(i);return i;});
+ await f.pass.ready();assert.ok(items.every(i=>i.disposed===1));assert.equal(f.pass.scene.children.length,0);f.pass.dispose();
 });

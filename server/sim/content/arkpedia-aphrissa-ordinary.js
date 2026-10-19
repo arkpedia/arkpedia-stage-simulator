@@ -7,6 +7,7 @@ import {aphrissaRayCells, APHRISSA_RAY_CONTRACT} from './arkpedia-aphrissa-ray.j
 import {sourceAbilityDelta} from './arkpedia-slow-down.js';
 import {canTargetEnemy} from '../targeting.js';
 import {bodyOnTile} from '../body.js';
+import {makeDamageInfo} from '../damage.js';
 import {createAphrissaS3Payload} from './arkpedia-aphrissa-s3-payload.js';
 
 export const APHRISSA_ORDINARY_CONTRACT = Object.freeze({
@@ -184,10 +185,11 @@ class AphrissaOrdinary {
           this.beforeHit(input.unit, {attackId: p.attackId, permit});
           if (!permit()) continue;
         }
-        this.b.dealDamage(this.u, input.unit, {amount: this.u.s.atk * this.u.s.atkScaleMul * this.scale,
+        const damage = p.deliveringDamage = makeDamageInfo({amount: this.u.s.atk * this.u.s.atkScaleMul * this.scale,
           type: 'arts', isAttack: true, isSkill: this.isSkill, attackId: p.attackId,
           applyWay: 'ranged', tags: [this.tag ?? (this.isSkill ? 'aphrissa:s1' : 'aphrissa:ordinary')]});
-      } finally { p.delivering = null; }
+        this.b.dealDamage(this.u, input.unit, damage);
+      } finally { p.delivering = null; p.deliveringDamage = null; }
     }
   }
   tick() {

@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Held S2 damage ability. The owner FSM, mode buff and animation wrapper are separate.
+import {makeDamageInfo} from '../damage.js';
 import {APHRISSA_ID as ID, selectedAphrissaInputs, aphrissaNativeInputs} from './arkpedia-aphrissa-source.js';
 import {aphrissaRayCells, APHRISSA_RAY_CONTRACT} from './arkpedia-aphrissa-ray.js';
 import {canTargetEnemy} from '../targeting.js';
@@ -97,13 +98,17 @@ class S2Beam {
   release(targets, info) {
     if (!this.admit(targets)) return false;
     const p = this.phase, batch = p.batch;
-    batch.accepted = true; // Claim before damage hooks or reentrant forceAttack.
+    batch.accepted = true; batch.attackId = info.attackId; // Claim before damage hooks or reentrant forceAttack.
     for (const input of batch.inputs) {
       if (!this.permitted(p) || this.phase !== p || p.batch !== batch) break;
       if (input.unit.deploySeq !== input.life || !this.legal(input.unit)) continue;
-      this.b.dealDamage(this.u, input.unit, {amount: this.u.s.atk * this.record.bb.atk_scale * this.u.s.atkScaleMul,
-        type: 'arts', isAttack: true, isSkill: true, attackId: info.attackId,
-        applyWay: 'ranged', tags: ['aphrissa:s2']});
+      batch.delivering = input;
+      try {
+        const damage = batch.deliveringDamage = makeDamageInfo({amount: this.u.s.atk * this.record.bb.atk_scale * this.u.s.atkScaleMul,
+          type: 'arts', isAttack: true, isSkill: true, attackId: info.attackId,
+          applyWay: 'ranged', tags: ['aphrissa:s2']});
+        this.b.dealDamage(this.u, input.unit, damage);
+      } finally { batch.delivering = null; batch.deliveringDamage = null; }
     }
     return true;
   }

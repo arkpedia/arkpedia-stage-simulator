@@ -6,10 +6,11 @@ import shaderMeta from '../../data/arkpedia-aphrissa-effect-shaders.json' with {
 import builtinMeshes from '../../data/arkpedia-aphrissa-builtin-meshes.json' with {type:'json'};
 import {APHRISSA_BEAM_CONTRACT} from '../../shared/arkpedia/aphrissa-beam-presentation.js';
 import {validateAphrissaPointSources} from '../../shared/arkpedia/aphrissa-point-sources.js';
+import {validateAphrissaHitSources} from '../../shared/arkpedia/aphrissa-hit-presentation.js';
 import {createNativeEffectLibrary,compileNativeEffectPrograms} from './native-effect-player.js';
 import {createAphrissaStageBeams} from './aphrissa-stage-beams.js';
 const hash=async b=>[...new Uint8Array(await crypto.subtle.digest('SHA-256',b))].map(v=>v.toString(16).padStart(2,'0')).join('');
-export async function loadAphrissaReviewBeams({three:T,renderer,heightAt,anchorAt,pointFrameAt,shaderGlobals}){
+export async function loadAphrissaReviewBeams({three:T,renderer,heightAt,anchorAt,pointFrameAt,hitFrameAt,shaderGlobals}){
   if(!['127.0.0.1','localhost','[::1]'].includes(location.hostname))throw Error('Aphrissa effect inputs are held for loopback review');
   const bytes=async e=>{
     if(!Number.isSafeInteger(e.bytes)||e.bytes<1||e.bytes>64*1024*1024||!/^[a-f0-9]{64}$/.test(e.sha256)
@@ -24,13 +25,14 @@ export async function loadAphrissaReviewBeams({three:T,renderer,heightAt,anchorA
   if(animations.sourcePackSha256!==effects.pack.sha256||pack.operator!==effects.operator||pack.version!==effects.version
     ||shaders.operator!==effects.operator||shaders.version!==effects.version)throw Error('Changed Aphrissa effect source bindings');
   validateAphrissaPointSources(pack,animations);
+  validateAphrissaHitSources(pack,animations);
   compileNativeEffectPrograms(renderer,shaders);
   const library=createNativeEffectLibrary({three:T,pack,animations,shaders,builtinMeshes,shaderGlobals,loadTexture:async e=>{
     const url=URL.createObjectURL(new Blob([await bytes(e)],{type:'image/webp'}));
     try{return await new T.TextureLoader().loadAsync(url);}finally{URL.revokeObjectURL(url);}
   }});
   try{
-    const pass=createAphrissaStageBeams({three:T,library,sourcePackSha256:effects.pack.sha256,contract:APHRISSA_BEAM_CONTRACT,heightAt,anchorAt,pointFrameAt,shaderGlobals});
+    const pass=createAphrissaStageBeams({three:T,library,sourcePackSha256:effects.pack.sha256,contract:APHRISSA_BEAM_CONTRACT,heightAt,anchorAt,pointFrameAt,hitFrameAt,shaderGlobals});
     const dispose=pass.dispose;pass.dispose=()=>{dispose();library.dispose();};return pass;
   }catch(error){library.dispose();throw error;}
 }

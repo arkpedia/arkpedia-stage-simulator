@@ -17,7 +17,8 @@ globalThis.cnReview={get battle(){return battle;},get renderer(){return renderer
   endAt:({point})=>[point.col,renderer.heightAt(point.row,point.col)+.6499999761581421,point.row],
   orientationAt:()=>({rotation:[0,0,0,1],scale:[1,1,1]})});
  this.pass=await loadAphrissaReviewBeams({three:T,renderer:renderer.three,heightAt:(r,c)=>renderer.heightAt(r,c),
-  anchorAt:this.mounts.anchorAt,pointFrameAt:this.mounts.pointFrameAt,shaderGlobals:{_HG_UV_ROTATION:0}});
+  anchorAt:this.mounts.anchorAt,pointFrameAt:this.mounts.pointFrameAt,
+  hitFrameAt:({hit})=>({position:[hit.x,renderer.heightAt(hit.row,hit.col)+.4,hit.y],rotation:[0,0,0,1],scale:[1,1,1]}),shaderGlobals:{_HG_UV_ROTATION:0}});
  const dispose=this.pass.dispose;this.pass.dispose=()=>{dispose();this.mounts.dispose();};
  renderer.nativeEffects=this.pass;renderer.externalNativeEffects=true;
  battle.on('damaged',h=>{if(h.source===this.owner)this.hits.push({time:battle.time,amount:h.amount,tags:h.dmg.tags});});
@@ -42,7 +43,7 @@ globalThis.cnReview={get battle(){return battle;},get renderer(){return renderer
  for(let n=0;n<4;n++){view.actor.spine.update(0);samples.push(sample());}
  return {before,samples,maxChange:Math.max(...samples.flatMap(p=>p.map((v,i)=>Math.abs(v-before[i]))))};},
  instanceId(value){if(!value)return null;if(!this.instanceIds.has(value))this.instanceIds.set(value,++this.instanceSequence);return this.instanceIds.get(value);},
- snapshot(){return {time:battle.time,mounts:this.mountCheck(),tracks:this.owner.mem.aphrissaLinePresentation.snapshot(),segments:this.pass.inspect().map(e=>({key:e.key,instanceId:this.instanceId(e.instance),kind:e.kind,point:e.point,mode:e.track.mode,root:e.root,clip:e.clip,positions:e.positions,placement:e.placement,time:e.time,bornAt:e.bornAt,layers:e.instance?.draws.length,
+ snapshot(){return {time:battle.time,mounts:this.mountCheck(),tracks:this.owner.mem.aphrissaLinePresentation.snapshot(),segments:this.pass.inspect().map(e=>({key:e.key,instanceId:this.instanceId(e.instance),kind:e.kind,hit:e.hit,point:e.point,mode:e.track.mode,root:e.root,clip:e.clip,positions:e.positions,placement:e.placement,time:e.time,bornAt:e.bornAt,layers:e.instance?.draws.length,
   complete:e.instance?.inspection===null&&e.instance.blocked.length===0,sourceRenderers:e.instance?[...e.instance.pose.renderers].filter(([,r])=>r.enabled).map(([id])=>id).sort():[],playedRenderers:e.instance?.draws.map(d=>d.component).sort()})),
  instances:this.pass.instanceCount,hits:this.hits,ammo:this.owner.skill.ammoLeft,sp:this.owner.skill.spTotal,errors:battle.errors,glError:renderer.three.getContext().getError(),nativeFrameParity:false,nativeMountMappingVerified:false,nativeProgressiveDrawVerified:false};}
 };`;
@@ -84,6 +85,8 @@ try{for(const {mobile,skill,dir,row,col,relayRow,relayCol,extra}of scenarios){
  for(const view of [ordinary,output]){
   for(const segment of view.segments){if(segment.kind==='line')assert.equal(segment.layers,9);else assert.ok(segment.layers>0);
    assert.equal(segment.complete,true);assert.deepEqual(segment.playedRenderers,segment.sourceRenderers);}
+  assert.ok(view.segments.some(s=>s.kind==='hit'));
+  for(const hit of view.segments.filter(s=>s.kind==='hit')){assert.equal(hit.time,view.time-hit.hit.startedAt);assert.equal(hit.layers,hit.mode==='s3'?27:19);assert.equal(hit.placement.position[0],hit.hit.x);assert.equal(hit.placement.position[2],hit.hit.y);}
   assert.ok(view.segments.some(s=>s.point?.role==='start'));assert.ok(view.segments.some(s=>s.point?.role==='end'));
   for(const track of view.tracks){const mount=view.mounts.find(m=>m.ownerId===track.ownerId),line=view.segments.find(s=>s.key===track.id+':0');
    assert.ok(mount&&line);assert.deepEqual(line.positions[0],mount.position);}

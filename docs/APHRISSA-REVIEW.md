@@ -372,3 +372,58 @@ The resize review exposed a separate renderer issue: `resize()` redrew with a nu
 The broader native/Aphrissa/particle/Lappland/attack/animation/rendering regression passes 2,060 checks on each of Node22 and Node24; three optional checks are skipped, with zero failures. Final focused mount/beam checks pass twelve tests on each version. Pure projection tests cover perspective and orthographic cameras, off-axis lenses, three viewport sizes and both horizontal signs. The actual Aphrissa battle review passes eight cases and twenty-nine captures across all three skills and all four deployment directions, including both source bones, mirrored artwork, paused desktop/phone resizing, original point End clips and retirement. Beam starts agree with the current source bone pixels within 1.14e-13 CSS pixels in the recorded output snapshots. Browser/resource/GL errors are zero. The existing cage review adds two viewport cases and four captures with no errors. Representative front/back, left-facing and resized downward captures were visually inspected.
 
 This replaces the start-point tile-centre fixture with a source-bone position on the existing rendered actor. The actor-plane depth is an explicit local projection policy. Native mount-type mapping, complete Unity follower transforms/rotation/depth, endpoint height semantics, point orientation, progressive staging, finish tails, remaining hit/charge/wing/audio dispatch and compiled/frame/pixel parity remain unverified or incomplete. Endpoints, point orientation and UV-rotation0 still require the declared review fixtures. Aphrissa stays outside the normal roster; full-suite/exact-head hosted admission checks and Arkpedia app dev/production promotion remain pending.
+
+## Accepted main-hit effects in the held battle
+
+- Ordinary attacks and S1 now play `aphris_attack_01_hit_01`; S2 plays
+  `aphris_skill_02_hit_01`; S3 plays `aphris_skill_03_hit_01`. The six original
+  ordinary/S1/down/S2/S3/down attack components bind those exact roots. The
+  same enabled component owns the attack GameObject in every case. The original
+  `_hitEffects` entries retain oneshot 1, end event 3, only-once 0 and every
+  direction/input-target switch 0. Those numeric inputs do not establish their
+  compiled enum or dispatch semantics.
+- A presentation-only owner observes the existing `damaged` receipt for the
+  **exact normalized descriptor** currently held by the accepted recipient
+  delivery. It checks owner/controller identity, attack ID, recipient object
+  and deployment life before claiming the descriptor once. Separate S3 producer
+  damage, unrelated damage carrying copied tags/attack IDs, missed/protected/
+  cancelled hits and empty S2 pulses do not create this main-hit effect.
+  Shield-absorbed, zero-loss and lethal accepted receipts do. Enabling this
+  observer leaves damage, attack counts, SP and ammunition unchanged.
+- Each accepted hit captures its own world-clock birth and recipient position.
+  Later target motion, death or replacement does not relocate or erase that
+  one-shot. Owner retirement and battle teardown clear the review effects;
+  delayed asynchronous loads cannot restore them. Complete original prefabs
+  render all 19/19/27 source particle renderers through the existing strict
+  native player and source shaders, with no generated substitute artwork.
+- The three roots have no Animator clips. Their original effect components are
+  nonlooping, do not hold by owner, use numeric spawn location 2 / rotation 0,
+  and retain delay-to-finish 0.5 and max-lifetime -1. All original particle
+  systems are nonlooping. The review uses a conservative **eight-second**
+  retention bound covering delay + duration + maximum lifetime even for
+  inactive/non-emitting helpers; this is not an execution of native Finish.
+  The loader rejects changed source bindings or an unsupported lifetime bound.
+- **Still explicit local mappings:** the `damaged`-receipt policy, fixed target
+  position, caller-provided mount/orientation, default particle RNG, shader
+  globals and bounded cleanup. The browser fixture uses target x/y, tile height
+  + 0.4 and identity rotation/scale. Numeric spawn location 2 has not been
+  reinterpreted as a verified target bone. Native immunity/miss effect dispatch,
+  target mounting, finish tails and compiled frame parity remain unverified.
+  This checkpoint does not admit Aphrissa to the public roster or Arkpedia dev.
+
+Validation:
+
+- `tools/arkpedia/audit-aphrissa-hit-bindings.py` directly reads the six original
+  attack/effect pairs and three root effect components from three SHA-checked
+  Unity bundles and compares their full exported component data.
+- Focused receipt and stage-pass coverage: 28 tests, including staggered targets,
+  zero/shield loss, misses, cancellation, lethal hits, duplicate callbacks,
+  target replacement, S2 empty pulses, S3 producer separation, paused cameras,
+  invalid mounts and late load cleanup.
+- Node 22.23.3 and Node 24.21.0 related regression scope: **2,083 tests each;
+  2,080 passed, 3 optional skips, no failures**.
+- `review-aphrissa-stage-beams.mjs`: **8 actual-battle desktop/touch cases,
+  29 captures, no browser/resource/GL errors**. Checks the exact source hit
+  roots/layer counts and captured clocks alongside source muzzle alignment,
+  relay paths, point End clips, all four deployment directions, paused resizing
+  and retreat cleanup. Desktop S3 and touch S2 captures were visually inspected.

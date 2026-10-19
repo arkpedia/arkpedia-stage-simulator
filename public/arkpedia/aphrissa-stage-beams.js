@@ -1,12 +1,13 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Held battle rays -> complete original line/point prefabs. No combat ownership.
+// Held battle receipts -> complete original line/point/hit prefabs. No combat ownership.
 import {APHRISSA_BEAM_OWNER as ID,APHRISSA_BEAM_PACK,APHRISSA_BEAM_CONTRACT,validateAphrissaBeamTrack} from '../../shared/arkpedia/aphrissa-beam-presentation.js';
 import {aphrissaReviewSupport} from '../../shared/arkpedia/aphrissa-review-operator.js';
 import {createNativeStageCamera} from './native-stage-camera.js';
 import {createEffectPlacement} from '../../shared/arkpedia/native-effect-placement.js';
 import {createEffectTimeline} from '../../shared/arkpedia/native-effect-timeline.js';
+import {APHRISSA_HIT_CONTRACT,validateAphrissaHit} from '../../shared/arkpedia/aphrissa-hit-presentation.js';
 const vector=p=>Array.isArray(p)&&p.length===3&&p.every(Number.isFinite);
-export function createAphrissaStageBeams({three:T,library,sourcePackSha256,contract,heightAt,anchorAt,pointFrameAt,shaderGlobals}){
+export function createAphrissaStageBeams({three:T,library,sourcePackSha256,contract,heightAt,anchorAt,pointFrameAt,hitFrameAt,shaderGlobals}){
   if(contract!==APHRISSA_BEAM_CONTRACT||sourcePackSha256!==APHRISSA_BEAM_PACK
     ||typeof library?.create!=='function'||typeof heightAt!=='function'||typeof anchorAt!=='function'||typeof pointFrameAt!=='function'
     ||!shaderGlobals||Object.keys(shaderGlobals).length!==1||![0,1].includes(shaderGlobals._HG_UV_ROTATION))
@@ -49,14 +50,23 @@ export function createAphrissaStageBeams({three:T,library,sourcePackSha256,contr
           segments.push({key:track.id+':point:'+identity,kind:'point',root:binding.root,unit,track,binding,frame,point:structuredClone(point)});
         }
       }
+      for(const hit of unit.mem.aphrissaHitPresentation?.snapshot()??[]){
+        const binding=validateAphrissaHit(hit);
+        if(hit.ownerId!==unit.id||hit.ownerLife!==unit.deploySeq||hit.startedAt>next.time||seen.has(hit.id)
+          ||typeof hitFrameAt!=='function')throw Error('Invalid held Aphrissa hit ownership/mount');
+        seen.add(hit.id);
+        const raw=hitFrameAt({hit:structuredClone(hit),owner:unit,battle:next}),frame=createEffectPlacement([{...raw,time:0}]).sample(0);
+        segments.push({key:hit.id,kind:'hit',root:binding.root,unit,hit,frame,binding:{clip:null},
+          track:{...hit,clipStartedAt:hit.startedAt,stage:'active'}});
+      }
     }
     // Validate the complete new view before changing an existing scene.
     if(next===battle)for(const segment of segments){const entry=entries.get(segment.key);
       if(entry&&(entry.unit!==segment.unit||entry.track.ownerLife!==segment.track.ownerLife||entry.track.mode!==segment.track.mode
         ||entry.root!==segment.root||entry.track.startedAt!==segment.track.startedAt))throw Error('Changed original Aphrissa beam identity');}
-    for(const segment of segments)if(segment.kind==='point'){
+    for(const segment of segments)if(segment.kind!=='line'){
       const old=next===battle?entries.get(segment.key):null,
-        bornAt=old?.bornAt??(next===battle&&tracks.has(segment.track.id)&&segment.track.stage==='active'?next.time:segment.track.startedAt),time=next.time-bornAt;
+        bornAt=segment.kind==='hit'?segment.hit.startedAt:old?.bornAt??(next===battle&&tracks.has(segment.track.id)&&segment.track.stage==='active'?next.time:segment.track.startedAt),time=next.time-bornAt;
       if(time<0)throw Error('Point-effect clock predates its captured birth');
       const frames=(old?.frames??[]).filter(f=>f.time<time),frame={...segment.frame,time};
       if(!frames.length&&time!==0)frames.push({...segment.frame,time:0});frames.push(frame);
@@ -113,10 +123,10 @@ export function createAphrissaStageBeams({three:T,library,sourcePackSha256,contr
     const autoClear=renderer.autoClear;renderer.autoClear=false;
     try{renderer.render(scene,camera);}finally{renderer.autoClear=autoClear;}
   }
-  return {scene,camera:bridge.camera,scope:APHRISSA_BEAM_CONTRACT,updateAfterActors:true,update,ready,render,clear,
+  return {scene,camera:bridge.camera,scope:APHRISSA_BEAM_CONTRACT,hitScope:APHRISSA_HIT_CONTRACT,updateAfterActors:true,update,ready,render,clear,
     isActor(){return false;},
     get instanceCount(){return [...entries.values()].filter(e=>e.instance).length;},get pendingCount(){return pending.size;},
-    inspect(){return [...entries.values()].map(e=>({key:e.key,kind:e.kind,root:e.root,point:structuredClone(e.point),track:structuredClone(e.track),positions:structuredClone(e.positions),
+    inspect(){return [...entries.values()].map(e=>({key:e.key,kind:e.kind,root:e.root,hit:structuredClone(e.hit),point:structuredClone(e.point),track:structuredClone(e.track),positions:structuredClone(e.positions),
       time:e.time,bornAt:e.bornAt,clip:e.timeline?.sample(e.time)??{clip:e.clip,time:e.time},placement:e.placement?.sample(e.time),instance:e.instance}));},
     dispose(){if(disposed)return;clear();disposed=true;}
   };
