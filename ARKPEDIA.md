@@ -4803,3 +4803,7 @@ Zinogre S Catapult joins with Mercenary DP-paid casts, talent charge layers that
 ### Ch'en the Dawnstreak
 
 Ch'en the Dawnstreak joins with weakness damage, her quiet-time heal and evade, S1 double hits with silence, the S2 away-window slashes that move her onto a surviving target, and the S3 bouncing sword wave. The renderer gains `mem.regularHidden` for an owner that takes its unit off the field visually. See docs/CHEN3-REVIEW.md. Coverage: 417/431 forms.
+
+### Hoshiguma the Breacher
+
+Hoshiguma the Breacher joins with her minus-HP 我执 state and HP-scaled berserk, S1 permanent ATK/DEF with Arts returned to attackers, the S2 throw and circling shield, and the S3 manual last stand that keeps allies in range from falling before her forced defeat. See docs/HSGMA2-REVIEW.md. Coverage: 418/431 forms.
