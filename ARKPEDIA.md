@@ -4839,3 +4839,7 @@ Bellone joins with talent DEF shred and missing-HP damage, decaying deployment e
 ### Pramanix the Prerita
 
 Pramanix the Prerita joins with her Phalanx trait, talent snow layers that strike, slow and clear, cold on attackers with a one-time freezing escape, the S1 strike with push and forward snow, S2 infinite attacks with spreading, damaging and freezing snow, and S3 attraction with faster snow. Snow layers are simulated but not yet drawn. See docs/SBELL2-REVIEW.md. Coverage: 426/431 forms.
+
+### Angelina the Mellow Wish
+
+Angelina the Mellow Wish joins with her Skywalker trait, talent Arts riders by weight and the weightless field, lifted-off ally ATK and blocking regeneration, the S1 passive liftoff, the S2 glide that levitates or ground-binds before Arts volleys, and the S3 ammo liftoff with air protection, slowed fliers and moves. See docs/AGLNA2-REVIEW.md. Coverage: 427/431 forms.
