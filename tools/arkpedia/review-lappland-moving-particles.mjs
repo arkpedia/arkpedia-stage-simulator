@@ -10,13 +10,16 @@ const meta=JSON.parse(await readFile(path.join(root,'data/arkpedia-lappland-effe
 const digest=createHash('sha256').update(raw).digest('hex');
 if(digest!==meta.pack.sha256||raw.length!==meta.pack.bytes)throw Error('Changed original particle input pack');
 const pack=JSON.parse(gunzipSync(raw)),emitters=[];
+// Isolated component samples have no owning scene Transform. Bind an explicit
+// identity birth/movement frame instead of implying native world coordinates.
+const identity=[1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1],frameAt=()=>({birth:identity,movement:identity});
 for(const [record,r] of Object.entries(pack.records))if(r.type==='ParticleSystem'&&r.data.ShapeModule?.enabled&&r.data.ShapeModule.type===5){
   const samples=[1,17].flatMap(seed=>{
     const emitter=createMovingParticles(r.data,{seed});
-    return [-1,0,.1,.25,.5,1,2,5,10].map(time=>({seed,time,particles:emitter.sample(time)}));
+    return [-1,0,.1,.25,.5,1,2,5,10].map(time=>({seed,time,particles:emitter.sample(time,{frameAt})}));
   });
   emitters.push({record,samples});
 }
-const report={schemaVersion:1,sourcePackSha256:digest,scope:{boxSourceSamplingOnly:true,rendererVerified:false,compiledFrameParity:false,enabledOperators:[]},emitters};
+const report={schemaVersion:1,sourcePackSha256:digest,scope:{boxSourceSamplingOnly:true,explicitIdentityFrame:true,rendererVerified:false,compiledFrameParity:false,enabledOperators:[]},emitters};
 await writeFile(path.join(directory,'native-moving-particle-samples.json'),JSON.stringify(report)+'\n');
 console.log(JSON.stringify({emitters:emitters.length,snapshots:emitters.reduce((n,e)=>n+e.samples.length,0)}));

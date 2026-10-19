@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-import {sampleEffectClip} from './native-effect-animation.js';
+import {sampleEffectClip,effectChannelZeroRoundoff} from './native-effect-animation.js';
 
-// An explicit clip inspection pose, not an implementation of Unity Animator
+// An explicit source clip/set pose, not an implementation of Unity Animator
 // state transitions. All properties reset before sampling, so reverse scrubbing
 // and changing clips cannot retain changes from a previous inspection frame.
 export function createEffectPose(pack, animations, rootName) {
@@ -23,19 +23,32 @@ export function createEffectPose(pack, animations, rootName) {
       position:['x','y','z'].map(k=>d.m_LocalPosition[k]),
       rotation:['x','y','z','w'].map(k=>d.m_LocalRotation[k]),
       scale:['x','y','z'].map(k=>d.m_LocalScale[k]), active:records[go].data.m_IsActive});
-    for(const component of components)if(['MeshRenderer','ParticleSystemRenderer','TrailRenderer'].includes(records[component]?.type)){
+    for(const component of components)if(['MeshRenderer','ParticleSystemRenderer','TrailRenderer','LineRenderer'].includes(records[component]?.type)){
       const r=records[component];
       renderers.set(component,{gameObject:go, transform:tr[0], enabled:r.data.m_Enabled,
-        materials:refs(component,'m_Materials').map(id=>id?{id,properties:materialProperties(records[id].data)}:null)});
+        materials:refs(component,'m_Materials').map(id=>id?{id,properties:materialProperties(records[id].data)}:null),
+        ...(r.type==='LineRenderer'?{widthMultiplier:r.data.m_Parameters.widthMultiplier}:{})});
     }
     for(const child of refs(tr[0],'m_Children'))walk(one(child,'m_GameObject'),tr[0]);
   }
   walk(root);
-  const instances=animations.instances.filter(i=>visited.has(one(i.animator,'m_GameObject')));
+  const instances=animations.instances.filter(i=>visited.has(one(i.animation??i.animator,'m_GameObject')));
   const baseNodes=structuredClone(nodes), baseRenderers=structuredClone(renderers);
   function sample(time, clipId=null) {
     const currentNodes=structuredClone(baseNodes), currentRenderers=structuredClone(baseRenderers);
-    if(clipId!==null){
+    const selected=clipId===null?[]:Array.isArray(clipId)?clipId:[clipId];
+    if(Array.isArray(clipId)&&(!selected.length||new Set(selected).size!==selected.length
+      ||selected.some(id=>typeof id!=='string'||!id)))throw Error('Invalid original effect clip set');
+    // Separate source Animators / legacy Animation may control disjoint parts
+    // of one prefab. Compose only explicit, non-overlapping clip bindings.
+    const written=new Map();
+    if(selected.length>1)for(const id of selected)for(const instance of instances.filter(i=>i.clip===id))for(const target of instance.bindings){
+      const property=target.property==='localEulerAnglesRaw'?'m_LocalRotation':target.property,
+        key=(target.component??target.gameObject)+':'+property;
+      if(written.has(key)&&written.get(key)!==id)throw Error('Overlapping original effect clips require native blending');
+      written.set(key,id);
+    }
+    for(const clipId of selected){
       if(!instances.some(i=>i.clip===clipId))throw new Error('Clip is outside the selected original effect');
       if(instances.some(i=>i.clip===clipId&&i.bindings.some(b=>b.unresolved)))
         throw new Error('Selected clip has unresolved original animation bindings');
@@ -50,6 +63,13 @@ export function createEffectPose(pack, animations, rootName) {
           case 'm_LocalScale':node.scale=v;break;
           case 'localEulerAnglesRaw':node.euler=v;break;
           case 'm_IsActive':node.active=v[0]!==0;break;
+          case 'm_Parameters.widthMultiplier':{
+            const renderer=currentRenderers.get(target.component);
+            if(records[target.component]?.type!=='LineRenderer'||!renderer||binding.size!==1||!Number.isFinite(v[0]))
+              throw new Error('Invalid original animated line width');
+            renderer.widthMultiplier=v[0];
+            renderer.widthZeroTolerance=effectChannelZeroRoundoff(clip,clip.channels[binding.offset],time);break;
+          }
           default:{
             const renderer=currentRenderers.get(target.component);
             if(!renderer)throw new Error('Missing original animated renderer');

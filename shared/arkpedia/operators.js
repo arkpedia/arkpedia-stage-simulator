@@ -112,6 +112,7 @@ import { SKYBOX_OPERATORS } from './skybox-operators.js';
 import { AEGIS_OPERATORS } from './aegis-operators.js';
 import { YUKARI_OPERATORS } from './yukari-operators.js';
 import { MAKOTO_OPERATORS } from './makoto-operators.js';
+import { APHRISSA_OPERATORS } from './aphrissa-operators.js';
 import { TURDUS_OPERATORS } from './turdus-operators.js';
 import { BRANCH_OPERATORS } from './branch-operators.js';
 import { RECKPR_OPERATORS } from './reckpr-operators.js';
@@ -450,6 +451,7 @@ export const REGULAR_OPERATORS = Object.freeze({
   ...AEGIS_OPERATORS,
   ...YUKARI_OPERATORS,
   ...MAKOTO_OPERATORS,
+  ...APHRISSA_OPERATORS,
   ...BRANCH_OPERATORS,
 });
 

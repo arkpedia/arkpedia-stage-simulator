@@ -1,0 +1,985 @@
+{
+  "counts": {
+    "Animation": 2,
+    "AnimationClip": 14,
+    "Animator": 15,
+    "AnimatorController": 10,
+    "GameObject": 537,
+    "LineRenderer": 24,
+    "Material": 69,
+    "Mesh": 36,
+    "MeshFilter": 11,
+    "MeshRenderer": 10,
+    "MonoBehaviour": 39,
+    "ParticleSystem": 459,
+    "ParticleSystemRenderer": 459,
+    "Shader": 8,
+    "Texture2D": 89,
+    "Transform": 537
+  },
+  "operator": "char_4229_aphris",
+  "pack": {
+    "bytes": 1797284,
+    "decodedBytes": 19790327,
+    "decodedSha256": "a7c19a5622b5169d3b9f50f5e8c15ffdd4f0838603fd3e274e129fa918fc0b1d",
+    "encoding": "gzip-json",
+    "path": "native-effects.bin",
+    "sha256": "57feaeef6ee48b966eb80cf564c9c4093ad6a4f19265ef974402c69f457c0b22"
+  },
+  "roots": {
+    "aphris_attack_01_hit_01": "battle/prefabs/effects/aphris.ab:-2345548387465214894",
+    "aphris_attack_01_line_01": "battle/prefabs/effects/aphris.ab:-3438492680840242085",
+    "aphris_attack_01_start_01": "battle/prefabs/effects/aphris.ab:5330019326497332589",
+    "aphris_attack_line_point_01": "battle/prefabs/effects/aphris.ab:1994181185883542352",
+    "aphris_skill_01_buff_01": "battle/prefabs/effects/aphris.ab:2520416782289921945",
+    "aphris_skill_02_hit_01": "battle/prefabs/effects/aphris.ab:2668154387582553756",
+    "aphris_skill_02_line_01": "battle/prefabs/effects/aphris.ab:1957047330165215709",
+    "aphris_skill_02_line_point_01": "battle/prefabs/effects/aphris.ab:103543273552432799",
+    "aphris_skill_02_start_01": "battle/prefabs/effects/aphris.ab:-6118598000831641495",
+    "aphris_skill_03_buff_01": "battle/prefabs/effects/aphris.ab:-7961636314854201470",
+    "aphris_skill_03_buff_02_back": "battle/prefabs/effects/aphris.ab:-2814331844499869620",
+    "aphris_skill_03_buff_02_front": "battle/prefabs/effects/aphris.ab:-5846340042404037232",
+    "aphris_skill_03_charge_01": "battle/prefabs/effects/aphris.ab:3620018894185322405",
+    "aphris_skill_03_charge_01_end": "battle/prefabs/effects/aphris.ab:381757109056559643",
+    "aphris_skill_03_hit_01": "battle/prefabs/effects/aphris.ab:-2967231731997411",
+    "aphris_skill_03_line_01": "battle/prefabs/effects/aphris.ab:8223542306651109001",
+    "aphris_skill_03_line_point_01": "battle/prefabs/effects/aphris.ab:-7868072273990840408",
+    "aphris_skill_03_start_01": "battle/prefabs/effects/aphris.ab:3438511910301812990",
+    "common_char_birth_01_delay_01": "battle/prefabs/effects/common.ab:1562596150436080293",
+    "token_aphris_pc_attack_01_buff_01": "pkgrps/btl_pfb_fx_token_3.ab:-1634699225705776859",
+    "token_aphris_pc_skill_02_buff_01": "pkgrps/btl_pfb_fx_token_3.ab:-5030446652270726118",
+    "token_aphris_pc_skill_03_buff_01": "pkgrps/btl_pfb_fx_token_3.ab:-3741747860603684574"
+  },
+  "schemaVersion": 1,
+  "scope": {
+    "compiledFrameParity": false,
+    "enabledOperators": [],
+    "pending": [
+      "Resolve remaining foreign/builtin inputs",
+      "Implement original shaders, particle/trail and animator dispatch",
+      "Connect owner/projectile lifecycle and review all skills in browser"
+    ],
+    "rendererVerified": false,
+    "sourceInputsOnly": true
+  },
+  "sources": [
+    {
+      "bytes": 1070246,
+      "md5": "3ccf410b937a9dd8c7eb08c1d1fd334c",
+      "path": "[uc]shaders.ab",
+      "sha256": "d6db1fef7d6e30b2f41e8cddc83201e3462cb4457b04f61e8a4f3870e9a2e71f"
+    },
+    {
+      "bytes": 6551323,
+      "checksumProof": {
+        "kind": "pinned-official-archive",
+        "nativeManifestShortTagVerified": false,
+        "nativeManifestTag": "7fda",
+        "recipe": "data/arkpedia-aphrissa-material-source.json",
+        "sha256": "707efb307b640aa50e885efe1ea4f5092db3da2bdd9f415fb5df5ff641bc2d15"
+      },
+      "md5": "ecf5b1c2ef7091eac75a3fdba3daf340",
+      "path": "anon/a90f86ed9fd93b2c2af4fd0571371829.bin",
+      "sha256": "893e3d6a00fda9426959d75dceb9a4b43629e664fa8d26bd0eadb2eebdaa4340"
+    },
+    {
+      "bytes": 34330,
+      "md5": "f67f8b8bf15fec32df8676bda53cd87a",
+      "path": "arts/[pack]common.ab",
+      "sha256": "b4a6a829c0a83c0c5efb999e218262a4c78898396fa00eca65054fe93979badf"
+    },
+    {
+      "bytes": 1025969,
+      "md5": "f2c2514f8e45a84eace81cd64c7efd06",
+      "path": "battle/[pack]common.ab",
+      "sha256": "7b54b0ad600e909b011a30a1badfdfaf665f2b9523512be0f17928f87b206c16"
+    },
+    {
+      "bytes": 914754,
+      "md5": "fcf5a7c75d5e48b54e674f02fbb25b42",
+      "path": "battle/prefabs/effects/aphris.ab",
+      "sha256": "c102747eafd41d85d18327a0e8e6f43612f8247250a51b3e2c3c547577010be1"
+    },
+    {
+      "bytes": 2299292,
+      "md5": "96c776176e0ffd3f95d56f5a5e2c227d",
+      "path": "battle/prefabs/effects/common.ab",
+      "sha256": "7640151f2ac7652e211edbd2d53fddf29808b1df6e464187542a15fde62e241b"
+    },
+    {
+      "bytes": 3119397,
+      "md5": "1988d5c9551273e1fb242b5df08da792",
+      "path": "pkgrps/btl_pfb_fx_token_3.ab",
+      "sha256": "291b94f20ee75b27d95d59990bf056b2242ad10de6006eb34e53b2bb101966f9"
+    },
+    {
+      "bytes": 61319,
+      "md5": "be423874b684fcc852af2bd5424a89ed",
+      "path": "refs/fx/material.ab",
+      "sha256": "766322ed6f92ab0051c0330be3472fceacb5ebe8bf6fb9cafad41fbc69c40f33"
+    },
+    {
+      "bytes": 15862,
+      "md5": "d3f16af67413ee70ef5074ce43c4eb0b",
+      "path": "refs/fx/model/special.ab",
+      "sha256": "49466e217a5c735c6605c4648604ed5d361871090e15b438be093ca15ae8396e"
+    },
+    {
+      "bytes": 2982252,
+      "md5": "561222eb6616262081307409d50e8cb4",
+      "path": "refs/fx/sharedbattle.ab",
+      "sha256": "e89fffcc65325712a06f9b825df15ed328213b7852771b7d603fcc37d51f411c"
+    },
+    {
+      "bytes": 211716,
+      "md5": "32e34d771281e16c0be664ee783a3241",
+      "path": "refs/fx/texture/blood.ab",
+      "sha256": "f482e94594e0613fea45429c70e9b10484ba2e03a602ade1320b97a885530fd8"
+    },
+    {
+      "bytes": 1863800,
+      "md5": "7c190c3534ffe7daf330b34afc7340e7",
+      "path": "refs/fx/texture/color.ab",
+      "sha256": "13d0a3c804b06166039f78a93552b7857d6e7c4e9a4733a7060c7de7b6104067"
+    },
+    {
+      "bytes": 1695760,
+      "md5": "bb8b867f8b9ae362d6c24768e1d436e4",
+      "path": "refs/fx/texture/fire.ab",
+      "sha256": "4859e7791898eb6cb3eeec055bc91fd984ae995425494786a9065a07eb0a9391"
+    },
+    {
+      "bytes": 2520080,
+      "md5": "f738655de107d246ebb1d4fe72c3aa24",
+      "path": "refs/fx/texture/flipbook.ab",
+      "sha256": "b649dca8e076028dcd0ff65c2c94b9fb74183f78c9b841f3d0c024e296bc9d2b"
+    },
+    {
+      "bytes": 11822726,
+      "md5": "d85eb7f380e72539083d34b8b41d4219",
+      "path": "refs/fx/texture/flow.ab",
+      "sha256": "bbb79618489bac61a440dbaac3f757472233d6e7af83615f6cea352617f23575"
+    },
+    {
+      "bytes": 1063135,
+      "md5": "44dd6faf6f95fcafc47ce2a3df1a827e",
+      "path": "refs/fx/texture/lighting.ab",
+      "sha256": "633df9bcaad97bda3546a35fcca280007868cb3daaf9edc4b29d3d68025232d8"
+    },
+    {
+      "bytes": 3942668,
+      "md5": "fc0b032efce20d45787defb6a467c203",
+      "path": "refs/fx/texture/mask.ab",
+      "sha256": "61910bdb40f1545c7aee34634f512f11c197207156eef766bf322168a6c44b01"
+    },
+    {
+      "bytes": 7903605,
+      "md5": "60669ca722decf8e3f70f0900935d69b",
+      "path": "refs/fx/texture/object.ab",
+      "sha256": "d1a8129591e4bcec315d5a733564a95c60fd27821bc115eca4084a55505cc05a"
+    },
+    {
+      "bytes": 1073339,
+      "md5": "d6b441808ae5dc6cde98498f5b5b291d",
+      "path": "refs/fx/texture/overseas/char_010_chen_sale#10.ab",
+      "sha256": "d624df87459820f51e9bc38af592d87acddf659ed6e765b4fa62b47b66ee78a1"
+    },
+    {
+      "bytes": 428320,
+      "md5": "958c08a8fc6ac25bc605e34e19f24b8d",
+      "path": "refs/fx/texture/pattern.ab",
+      "sha256": "03a76fc32468ea876c611a96065e3fda72ca0c08d9e4f40368e0fd055deb3dab"
+    },
+    {
+      "bytes": 3895142,
+      "md5": "b70dcf31d39558b04759b64061544b27",
+      "path": "refs/fx/texture/ray.ab",
+      "sha256": "f08cae39fc357caefd0c8e5f630247925c80a9c6b96f6634970cf7ba311899a6"
+    },
+    {
+      "bytes": 3203044,
+      "md5": "103a04d14f96100977d97c7bcac884bb",
+      "path": "refs/fx/texture/smoke.ab",
+      "sha256": "66b099a73a7df6fb8f9d1a8305a697303bd1487cb3668135bce1384959c67130"
+    },
+    {
+      "bytes": 5507378,
+      "md5": "37f45cd80cea6fc265fec9dc30fe339d",
+      "path": "refs/fx/texture/star.ab",
+      "sha256": "db2d27cc06c865a5b02aa1e6d55afebf9f388192df2cfa02e8a8e65848dea551"
+    },
+    {
+      "bytes": 8833102,
+      "md5": "aa7e3c629259c44e2463b09e1be46f6d",
+      "path": "refs/fx/texture/trail.ab",
+      "sha256": "aaba977257bc6337d222e8e68e78dcdf4025e7a3f9b67604b06b3b9bf7314f0d"
+    },
+    {
+      "bytes": 66434,
+      "md5": "de2edc6db924006fb54e69e5c4edf6c4",
+      "path": "refs/fx/texture/ui.ab",
+      "sha256": "a165728653cbcb4c1cb1f1eae08c49554dc2a302edea9238374c7452532609a5"
+    },
+    {
+      "bytes": 1813685,
+      "md5": "f0f5b2d118671554ab46792b81fae1a0",
+      "path": "refs/fx/texture/vein.ab",
+      "sha256": "3800c93ee0acbed1a0a213e1754d1c921020b83c2ece04d0a3b05e7da22aa220"
+    },
+    {
+      "bytes": 2412530,
+      "md5": "516b3d1d246e85e7fc4a7663fc30a38b",
+      "path": "refs/fx/texture/water.ab",
+      "sha256": "6d1aab39000fda02e0978f1f7887c92698178a7d6ce39e60a9f83ea7a49e95c7"
+    }
+  ],
+  "textures": {
+    "anon/a90f86ed9fd93b2c2af4fd0571371829.bin:5681093337556782924": {
+      "bytes": 2968,
+      "height": 64,
+      "path": "textures/f4ffd4699639d9fbfa95c32d.webp",
+      "pixelSha256": "889596bcaf9e14de7a7181f53f3f07415c22c065cae5fa9c564b1a0c172a3c63",
+      "sha256": "22af5cfb3e4f1372f8fdda252ea3064f9143e177564bf84d1d3ee327798c96bd",
+      "width": 64
+    },
+    "battle/prefabs/effects/aphris.ab:-1870936373213222880": {
+      "bytes": 250,
+      "height": 64,
+      "path": "textures/ef4dfa55b8cca168dd2ec4d0.webp",
+      "pixelSha256": "2de9e50925f98524ed640532843e40493fba3ea668cac14a03c6a95d5ef243d1",
+      "sha256": "da6f40944a832bd14a7379b3bff3433bd33b79d51d08bed0c6d29f68f30085fe",
+      "width": 64
+    },
+    "battle/prefabs/effects/aphris.ab:-4592577305239850585": {
+      "bytes": 34090,
+      "height": 256,
+      "path": "textures/4b09c89a12d6ed3b326a4087.webp",
+      "pixelSha256": "22e4eacccda1d7bb0e94740fd415e76c7ef990a9b025d944561bb38a935006f0",
+      "sha256": "fbbd0a08d95bcc986c637a4966d99f82d33ab6b3a7c184ea0bf059d110e980e1",
+      "width": 256
+    },
+    "battle/prefabs/effects/aphris.ab:-7866653825643614774": {
+      "bytes": 10240,
+      "height": 256,
+      "path": "textures/ba1e5d306c456752af3b66ec.webp",
+      "pixelSha256": "7aaa43f9ceea56fb7639fb81f4fd61668d25a676b9d691623c0a96c455649f75",
+      "sha256": "b4a859e417eb6b1be738f3819585cb630bd6e61b43140de3afbab980cf4c4b11",
+      "width": 256
+    },
+    "battle/prefabs/effects/aphris.ab:-8375882616439031325": {
+      "bytes": 49048,
+      "height": 512,
+      "path": "textures/22a76a82d693afeca3d79d49.webp",
+      "pixelSha256": "faec20a1c3862fe31fc28938962678bc075d93f0db34bf2d1bdc67e165d151b8",
+      "sha256": "7abb3628db80db7da701819e01789ee2032ccf469077f08c6214546a8ccda30d",
+      "width": 512
+    },
+    "battle/prefabs/effects/aphris.ab:-8440634962711030523": {
+      "bytes": 97288,
+      "height": 256,
+      "path": "textures/d4a5cdfa693661e5e0f0f855.webp",
+      "pixelSha256": "c4f17f74b41aa6e5e4552d233245b876e3421b9efa40a27f93807e64f6f9e1b5",
+      "sha256": "a70fdea543cf0daf449d25c3617b2051815ae7a70d19ad60fcf6ae52ae2f1c8c",
+      "width": 512
+    },
+    "battle/prefabs/effects/aphris.ab:-8624026707349587391": {
+      "bytes": 250,
+      "height": 64,
+      "path": "textures/97e330b66209079d2e5ee668.webp",
+      "pixelSha256": "2de9e50925f98524ed640532843e40493fba3ea668cac14a03c6a95d5ef243d1",
+      "sha256": "da6f40944a832bd14a7379b3bff3433bd33b79d51d08bed0c6d29f68f30085fe",
+      "width": 64
+    },
+    "battle/prefabs/effects/aphris.ab:2629802221127390261": {
+      "bytes": 72074,
+      "height": 256,
+      "path": "textures/62937320e9ff6e9932365e7d.webp",
+      "pixelSha256": "b28cbe9c9d7d63c0164e7bd71813db4a42a19cb516e79f3b294b844b90b4fa08",
+      "sha256": "1100130b613e8abbb0f16f8bdb24e514c3c1f1fcb078e10b8dfdb0e379d0d377",
+      "width": 256
+    },
+    "battle/prefabs/effects/aphris.ab:3644015068277638959": {
+      "bytes": 41628,
+      "height": 256,
+      "path": "textures/f892265ed2138107d96f9d16.webp",
+      "pixelSha256": "5eca4905eb75b151fd27a9edaa95edf9a9e1910b6a1b60cbc28144ade9d158fb",
+      "sha256": "a9fee73f222af0cfade55592868f3ab43ba146093d87359677916ffb53eb5948",
+      "width": 256
+    },
+    "battle/prefabs/effects/aphris.ab:4992433731010961578": {
+      "bytes": 120452,
+      "height": 512,
+      "path": "textures/0abfffee6fbe86e46dad5eaa.webp",
+      "pixelSha256": "048fd473b9cfe2d1b4c684d5630b66b3855c88b0392c8dd862fcf1a3324623ba",
+      "sha256": "4ea8da78945af9c5e6302d81acc9b55f7daa5b2314dc37f3b317a89ca4cafca8",
+      "width": 512
+    },
+    "battle/prefabs/effects/aphris.ab:5452687283541344665": {
+      "bytes": 142230,
+      "height": 512,
+      "path": "textures/019e05084657ec733adcf637.webp",
+      "pixelSha256": "63c2d77d0901637d330dd2a27a542a0b98811e91ed5252561fc05cfd83a4fdaf",
+      "sha256": "086e04d13b3b3cb3bfd6ab39c67cc3612d01970bf47be70408a7b8cc60a3b47d",
+      "width": 512
+    },
+    "battle/prefabs/effects/aphris.ab:7513792900817422388": {
+      "bytes": 14938,
+      "height": 256,
+      "path": "textures/d14d9b38abcf41ecabc4659b.webp",
+      "pixelSha256": "16d28084f55c13e010e106277facaeb33ea67e99402b5cef37b25bdab2a0c1d9",
+      "sha256": "3441d881c46dafb886fb5593ee59f5a282bc2974d86c4741f11dd8de0fd0b481",
+      "width": 256
+    },
+    "battle/prefabs/effects/aphris.ab:8320324453605633257": {
+      "bytes": 33692,
+      "height": 256,
+      "path": "textures/00e0a5b7b41a6d517f456a87.webp",
+      "pixelSha256": "c80dacc194846cddbf37aaffc8ec049dc404cb42c1b6411eb6c0690effa991d8",
+      "sha256": "47a1dc93b5f1eeeace6a9b2aae3485d4d7db709b57b9b84a653f001403b55aae",
+      "width": 512
+    },
+    "refs/fx/sharedbattle.ab:-659179094101666798": {
+      "bytes": 2130,
+      "height": 128,
+      "path": "textures/43fe386d75f1d6d9805fa6b4.webp",
+      "pixelSha256": "cec6e059ae5e3797be86b34cb60b1ade9eec5db7d1135942586a3d79e5bac08f",
+      "sha256": "06d2c52fa95cb5efc17bce9a798f31568056953d2fe006d45b358c250e055150",
+      "width": 128
+    },
+    "refs/fx/texture/color.ab:5729856018163281279": {
+      "bytes": 1164,
+      "height": 64,
+      "path": "textures/402abedcae7a4a4b9279de6f.webp",
+      "pixelSha256": "7a487ee94abaafed06e9f1aa7a183c30a909729f967297a67d1fa0eed860aa16",
+      "sha256": "419096944d61b60b249cd06b76c1a8263ebd4aed2c88034a93c6525e25951ebc",
+      "width": 64
+    },
+    "refs/fx/texture/flipbook.ab:-7767498743109691302": {
+      "bytes": 13046,
+      "height": 256,
+      "path": "textures/1e176d70b7652609e0422880.webp",
+      "pixelSha256": "800953dfcbe60ab007db4e7e2365ed078ac70660798687d16c86457eac02ae08",
+      "sha256": "6eec07dc112e8991a616a8f229b320fe44d5c0f861d811395b509254c099abe9",
+      "width": 256
+    },
+    "refs/fx/texture/flow.ab:-1563330994022049089": {
+      "bytes": 42118,
+      "height": 512,
+      "path": "textures/57361720d2f0694495c9604c.webp",
+      "pixelSha256": "c8b25cf613ff1f3fa8eb873e1de79b42e05b506ba57a91975f3ef05527af1df1",
+      "sha256": "829a566176b65a0343d09511b8a66291827a5635a9a5aec0b9f78a5593e74c68",
+      "width": 512
+    },
+    "refs/fx/texture/flow.ab:-2108770030101995052": {
+      "bytes": 17438,
+      "height": 256,
+      "path": "textures/8a8655cd79142e6b10d7cdd5.webp",
+      "pixelSha256": "0cb90bec9b6321ccc81d094fbd9d91de1a51022dd01873d60b9a1f091b20fca8",
+      "sha256": "0da7abfc8e2b643f8958099559dffc0caad4b2cc4a66998208484586c14c77ba",
+      "width": 256
+    },
+    "refs/fx/texture/flow.ab:-2120772828790436590": {
+      "bytes": 17604,
+      "height": 128,
+      "path": "textures/6f7de39daef8698c94771ea3.webp",
+      "pixelSha256": "e82a961c8bc49e9ac0d87be513ba2cfc58e48487f75fc1544db48b7692c6df98",
+      "sha256": "aa03486aa93dbea1594b3802859ff6d49a0b6f4c23cd3f5798bc03910edd7b42",
+      "width": 128
+    },
+    "refs/fx/texture/flow.ab:-3124442051778038484": {
+      "bytes": 404,
+      "height": 128,
+      "path": "textures/7484fa3a269ecf1623843613.webp",
+      "pixelSha256": "263fbc6d240cdc150107f9a1997aa8a20ce8178845b5309877797c7cc3b6dd0f",
+      "sha256": "aaa50f487eab8841031e8ffa51df6069650d40fcfbab0cee5a3e857c2dfdaaa5",
+      "width": 128
+    },
+    "refs/fx/texture/flow.ab:-3127997048841047794": {
+      "bytes": 77252,
+      "height": 256,
+      "path": "textures/926834f3937f88e8e6c6411a.webp",
+      "pixelSha256": "2b40ab68062cb52545f1183ce5ca4fa4c746ed49fc2420747c387755d14978bb",
+      "sha256": "6eb60966f993651ffa391b5b1b7d75a65db0388306151614dbe01ab7b82665c1",
+      "width": 256
+    },
+    "refs/fx/texture/flow.ab:-3243282150588022651": {
+      "bytes": 5964,
+      "height": 128,
+      "path": "textures/23952c2db8db78de72ee06ec.webp",
+      "pixelSha256": "da2d765fb2d53b94a686b3d0ee39ac1a56716ffabe1feb0b734d8c666a416e7c",
+      "sha256": "da7f26e2d2d10c39d5590147dda3ff66b2c24457ca89d580e23559b2610c3469",
+      "width": 128
+    },
+    "refs/fx/texture/flow.ab:-4236690998125349351": {
+      "bytes": 8550,
+      "height": 256,
+      "path": "textures/841e95b1d2d2d4a79fac87dd.webp",
+      "pixelSha256": "078c4c8412b0fa32cdf73c12feca4108870ed1c004bdf67955d6f69e4c7a8478",
+      "sha256": "a97b394013e905779a0a081a0f30e4d659fefdc203304950bfe24366599d58f1",
+      "width": 256
+    },
+    "refs/fx/texture/flow.ab:-4964363631302793203": {
+      "bytes": 39050,
+      "height": 256,
+      "path": "textures/6c69f8157f9aa2b70aa38093.webp",
+      "pixelSha256": "f2e043c50b4dd618722b7f4bcc9813a62a753e74390d92f6c76cde4dc19b9f92",
+      "sha256": "5c97c784ca2d0a8edc2aef5a5a249bea92b5a6f9de8476b99cfea1fd133cd384",
+      "width": 256
+    },
+    "refs/fx/texture/flow.ab:-515439467106562996": {
+      "bytes": 6032,
+      "height": 128,
+      "path": "textures/034f7d88ec30e477055edacc.webp",
+      "pixelSha256": "f8b447c3bf289726359943f63e1716cad7945fd0078448bff4f026ed61fca57e",
+      "sha256": "0a4adc396005139854929f30e3e343a3fdf1064f0e9dcf137fc1cc8f1714b2ce",
+      "width": 128
+    },
+    "refs/fx/texture/flow.ab:-5503769956404692889": {
+      "bytes": 11114,
+      "height": 128,
+      "path": "textures/61ea2dde47c4d3d596a6deec.webp",
+      "pixelSha256": "a1b28dd638b1712617ef7dca7548d37c2ed5f2ae9836a3dde10099897dd29ae0",
+      "sha256": "0bcc5450fd2e579a8da26a90bcd5610e04da1540417fd120b2c11d9e9e28ebed",
+      "width": 128
+    },
+    "refs/fx/texture/flow.ab:-6294045187650345199": {
+      "bytes": 36140,
+      "height": 256,
+      "path": "textures/29629a89d04bc87b694432ed.webp",
+      "pixelSha256": "90ae6ec9cd3581afb3c9d2b46680fdf284dbddafadd12d6ff63b76e84c325c04",
+      "sha256": "6aaa97891e8885afd854f25b5540c2c63da6e49a45371c74a4bff779f0ca698c",
+      "width": 256
+    },
+    "refs/fx/texture/flow.ab:-7806861116693802319": {
+      "bytes": 37188,
+      "height": 256,
+      "path": "textures/d9e304010ff0b2774f602a46.webp",
+      "pixelSha256": "c2f63b5f653fd75354a20ca0f5a043aa34b6914c0b987f14210ab655be2472a4",
+      "sha256": "81009276cb1f3f47b1d6b33353648b09f28950d15164d7eb97798535aa2a9e6a",
+      "width": 256
+    },
+    "refs/fx/texture/flow.ab:-9111417395588083054": {
+      "bytes": 57594,
+      "height": 256,
+      "path": "textures/715f59e01792264076dd2bd4.webp",
+      "pixelSha256": "ebe9422631200d5936a7b3ceb7926ae7690c2674f160e7c04764772ca2193894",
+      "sha256": "5f11cfde2924993ebf0759b12946e9acb810acf3b140b852b9e442bb91c0359b",
+      "width": 256
+    },
+    "refs/fx/texture/flow.ab:1405532575406939152": {
+      "bytes": 22912,
+      "height": 256,
+      "path": "textures/76ac5255076857059cadbcb9.webp",
+      "pixelSha256": "4df756efb9e2eef76544c1fcc1f6a4567a73772419eb9f19202c96b410e5f0d6",
+      "sha256": "f6c45bf427b8a93cc8b988cefc318d7d2070cb72064392295b6e71d9fdde4eba",
+      "width": 256
+    },
+    "refs/fx/texture/flow.ab:1460620802288648485": {
+      "bytes": 43828,
+      "height": 256,
+      "path": "textures/e73939d437f0b5284f13c411.webp",
+      "pixelSha256": "a61da3e2198c844051f35c153ce085f38374c552e2e378a562d28ba0fd95ff18",
+      "sha256": "40addcac2ead410ad3955a14ff306f181c45e93b2aaaab2fbab217ce2bbfc91d",
+      "width": 256
+    },
+    "refs/fx/texture/flow.ab:1476324212294208525": {
+      "bytes": 41448,
+      "height": 256,
+      "path": "textures/ca3173e60a4e952b1e67dec4.webp",
+      "pixelSha256": "81f1894ac96c2e48f3cef7f33106165595fa98d17ef53bc57cd0ffb17e930fd5",
+      "sha256": "03a510d7cf489e03d769665907c600e32392eee4c386038ee053682b96ff9490",
+      "width": 256
+    },
+    "refs/fx/texture/flow.ab:184057856629215471": {
+      "bytes": 18506,
+      "height": 256,
+      "path": "textures/944160632478b162833ec135.webp",
+      "pixelSha256": "bf456ebfb8014bc0c6a207ac20293f55b305da86c98ac73a3f0c2ea003f6c68a",
+      "sha256": "7a5a884be4a7d8082a71ee6e2058c1fe7be3af81f173a2c895867ecbe8139d33",
+      "width": 256
+    },
+    "refs/fx/texture/flow.ab:185014967225819231": {
+      "bytes": 16022,
+      "height": 256,
+      "path": "textures/fea8e3eb576953a413cf3b97.webp",
+      "pixelSha256": "4d6b3a4aed8b1dc8ba547b0d57ecf3a046b1f9775ea944024ceff08e96e07651",
+      "sha256": "aeccbfe16037c34b115bc927dae4d7040d251f3f216856a4dba379b038ab5f94",
+      "width": 256
+    },
+    "refs/fx/texture/flow.ab:2829897644596248744": {
+      "bytes": 12456,
+      "height": 256,
+      "path": "textures/a5770a2b4427ea12cb14f0c3.webp",
+      "pixelSha256": "fc019fa66d4ea08f8ea6cf031aa56e4884d2df1e85f1a1a2fd19259c871e36ef",
+      "sha256": "4e075f13ab7d109ca8ad0c6ab3cd495f235e399d9c047ecb9ae361dc5ef1a254",
+      "width": 256
+    },
+    "refs/fx/texture/flow.ab:3266127543813571043": {
+      "bytes": 17900,
+      "height": 256,
+      "path": "textures/49e5ac4d79609dd533d6ff19.webp",
+      "pixelSha256": "b6dc7d9a1b5074f14f41d21194b4c56f6061b7bbf77078a528551392a88d84ca",
+      "sha256": "b6fdf44bce00653048e3a995fbb46c12015c30dcc54cd412c5d249cd9b251a1f",
+      "width": 256
+    },
+    "refs/fx/texture/flow.ab:3290307498704296944": {
+      "bytes": 17388,
+      "height": 256,
+      "path": "textures/833f3befde84484910dac512.webp",
+      "pixelSha256": "87e23fc96318af8aac4dd29ee46e47b8a545a5feb46f0eec073742dc639657e3",
+      "sha256": "41e24e4ca2945880bae227b68cd8554bb312199f1867bd4e55519d34696890bd",
+      "width": 256
+    },
+    "refs/fx/texture/flow.ab:4052597790129252363": {
+      "bytes": 44582,
+      "height": 256,
+      "path": "textures/7e67d0614e03f33f5dbd47f0.webp",
+      "pixelSha256": "ef5f8bf3b74128b2039ea474ab9b513f90bc17d8ebf59bce00f618dc85a78326",
+      "sha256": "2ec85534d54be070495385fc042e8f5a4a3b409fc1850769db87fed8c23f2ef0",
+      "width": 256
+    },
+    "refs/fx/texture/flow.ab:4249621393576650867": {
+      "bytes": 5628,
+      "height": 128,
+      "path": "textures/bad4402f4051486cd0a3a858.webp",
+      "pixelSha256": "203303b6725641649ccb01f27c20812ffbf903b91eea061cac4e7ee44b8d9093",
+      "sha256": "b3f240872547ca0f04c809c0008125a042b7bd6c2b30f448503f27cfe2b4b6a9",
+      "width": 128
+    },
+    "refs/fx/texture/flow.ab:5761913403349647876": {
+      "bytes": 73376,
+      "height": 256,
+      "path": "textures/cf58db022adb59fdc2bd73db.webp",
+      "pixelSha256": "7fffbb2eb3b85592ac4b45b2612f2f0346c5a87e588d8c7284901b4750f7fdd6",
+      "sha256": "f56561e77fdc70d2b6bc0996ce3f045512ffdff0a994ea94343c9a11cc670ac7",
+      "width": 256
+    },
+    "refs/fx/texture/flow.ab:5968577057785773881": {
+      "bytes": 2606,
+      "height": 128,
+      "path": "textures/ba836a030d8ab78896c7622f.webp",
+      "pixelSha256": "a9bd98be76db3f3773d6754eccc16d238201534e12bb29a80f4ba5f09bbb97a1",
+      "sha256": "7fbc172c212055f5a20822e378537a300bf574921d6087fc5c18094d0e29401c",
+      "width": 128
+    },
+    "refs/fx/texture/flow.ab:5989693971123367887": {
+      "bytes": 25080,
+      "height": 256,
+      "path": "textures/9273d9a3e0f1cf7395959cb3.webp",
+      "pixelSha256": "22961ca240523d6924f052322b6b6b6e3b813a65dc05a546d47cd0ef2acac420",
+      "sha256": "7131a958f5c4bad47e2f9381efc256fc6ccf2b5d4a7a740fad92b6893a01540d",
+      "width": 256
+    },
+    "refs/fx/texture/flow.ab:637517831270182590": {
+      "bytes": 18004,
+      "height": 256,
+      "path": "textures/095b92b60028991f66c79f57.webp",
+      "pixelSha256": "3e0bcbc90776336990a0a9cf06ed13d868302acd5f6f205a791abaac277e58b9",
+      "sha256": "c6c92d26f1d7baa2131d50ad796280695886d8d66298f180d58ee1b5e345c389",
+      "width": 256
+    },
+    "refs/fx/texture/flow.ab:7293443467724262188": {
+      "bytes": 56730,
+      "height": 512,
+      "path": "textures/d70ac8fa5c5360c08fd549d0.webp",
+      "pixelSha256": "66738fbeb1f758b2811d56a718f9d9fe668fc9ca1aa56ef3b86dce3a8a8f948d",
+      "sha256": "155e64f27e5269c9f8b00bc0f0a7e8937208a51b2e925b2cb0fc9094309edcd9",
+      "width": 512
+    },
+    "refs/fx/texture/flow.ab:7589496291476291190": {
+      "bytes": 53382,
+      "height": 512,
+      "path": "textures/760fcdf542b9ad8195d0bd72.webp",
+      "pixelSha256": "7f047ee3140a9af1935a549a1883c7ecae1c1dfbf93bfe68a411e411a0c66127",
+      "sha256": "7921d7a2173a5d8b05c4502d9e9e0cc3f2fa0529fd268eb53be00e6482f54842",
+      "width": 512
+    },
+    "refs/fx/texture/flow.ab:9011115242677523224": {
+      "bytes": 47476,
+      "height": 256,
+      "path": "textures/7ba1533b99597612b55c43af.webp",
+      "pixelSha256": "dd73f0214c419c67a081cc19cfc66bea2c7948a78b6951ae38637bc454d7804f",
+      "sha256": "38561f6117e865ceb989ef90aede8316eac5950ab5aa722d15bf70eb3601b345",
+      "width": 256
+    },
+    "refs/fx/texture/flow.ab:9192749268993603338": {
+      "bytes": 43046,
+      "height": 256,
+      "path": "textures/2b9675aabd9f8931979f94eb.webp",
+      "pixelSha256": "5e20bf77e156bbb0a9eeb4555e52927692cac66fba514f705b848a2b4655fc9c",
+      "sha256": "0b8223f9f0438cec27aaceb346bbd61c6d932566f0d6ebb57679c25cb5b60a25",
+      "width": 256
+    },
+    "refs/fx/texture/flow.ab:927022772978999307": {
+      "bytes": 33654,
+      "height": 256,
+      "path": "textures/35c55120de1ab91fc06e5eaa.webp",
+      "pixelSha256": "4e2fe13255384a7f7bbcca9e7cd9b7b24d3fec5250916e2ebcf5c49bab16d506",
+      "sha256": "c958f3b3c6c0e37ec98be4e9366b6a93d51f7a517a34c3260db30f411ff1a771",
+      "width": 256
+    },
+    "refs/fx/texture/mask.ab:-2368407900836383578": {
+      "bytes": 1090,
+      "height": 128,
+      "path": "textures/5a57c95fce050fa823d2fd2c.webp",
+      "pixelSha256": "847da61acadc5f822ee924b641962a76b5171816677b13be31e4a34bd4992ffd",
+      "sha256": "7063507f24ca7db1443303678a3a3ebcd7eead0eb1a77d5908e3d79ca432b4d2",
+      "width": 128
+    },
+    "refs/fx/texture/mask.ab:-2536682978034248705": {
+      "bytes": 430,
+      "height": 256,
+      "path": "textures/fcff0109aa253bc6ccbbc332.webp",
+      "pixelSha256": "c061466c20ecf0a60013fd21126e66f59dd1a0a44430780a8c51ac4a4d917dc7",
+      "sha256": "582759bf343a0ba070d41094d11de4afdba587153cf07f4101ccfa98f110c0c2",
+      "width": 256
+    },
+    "refs/fx/texture/mask.ab:-3945524484591595131": {
+      "bytes": 18218,
+      "height": 256,
+      "path": "textures/916ac5baceb976d118d1342e.webp",
+      "pixelSha256": "3f416e021d3a2f4e9799bd9390fe03c9011ae94f61ea76ab31ce47e6cbfa44d0",
+      "sha256": "cd454a00ddfe14b9b536f748258c9600ad26f88c0d5cdcbae71ac438d41f9004",
+      "width": 256
+    },
+    "refs/fx/texture/mask.ab:-6141317099499778955": {
+      "bytes": 2840,
+      "height": 128,
+      "path": "textures/8a32073d33a98ca519117253.webp",
+      "pixelSha256": "7c97b9a3e5fb32be98edd6ea1b9e5c997720fc2d413e56b443e861bb112c8a5b",
+      "sha256": "5332b8d1e7dfd9662632368833deb93bbdd3d22cd792081c7f79a6690adbb8cb",
+      "width": 128
+    },
+    "refs/fx/texture/mask.ab:-6447515858909802726": {
+      "bytes": 776,
+      "height": 64,
+      "path": "textures/cd1d214e566f1de86d28b22a.webp",
+      "pixelSha256": "2aab16761ca44a6f587097c4ff1c9e4ff60922100651366b5fb26c159fea40a2",
+      "sha256": "46c5e82583afa857489577c7c74a69243f8978bc52ff7863eb9f781c1416bed0",
+      "width": 64
+    },
+    "refs/fx/texture/mask.ab:-6725190585852722216": {
+      "bytes": 12832,
+      "height": 256,
+      "path": "textures/1c91c6467127ef28eb28d772.webp",
+      "pixelSha256": "0aad408ee57aac2e5f2c9ea5e7f66b3b1838cca229a54078168d09e9f1ed8d95",
+      "sha256": "fdf987a4d299bc8023d4ebeffdc11b0612d917d0e429897c0014fa8c6ca83236",
+      "width": 256
+    },
+    "refs/fx/texture/mask.ab:-6775778530799460712": {
+      "bytes": 44,
+      "height": 64,
+      "path": "textures/b72d29bd589c7f3cd59efe71.webp",
+      "pixelSha256": "0fbba07a833d4dcfc7024eaf313661a0ba8f80a05c6d29b8801c612e10e60dee",
+      "sha256": "77ef814e716841e989025a0eccfa64e2c881ec3580d564383b00e524ce6da271",
+      "width": 64
+    },
+    "refs/fx/texture/mask.ab:-8874397191988828489": {
+      "bytes": 2396,
+      "height": 128,
+      "path": "textures/327a4a566e1ea7c01ce8d3d1.webp",
+      "pixelSha256": "b26815af54e4a07b046c75ac70cbbdc82632f64f78cdbeab8b560763c531d397",
+      "sha256": "d6b9fc4fe10fe51a38eed6462f852be4633a722ca29381c5e97a1d2b18fe133a",
+      "width": 128
+    },
+    "refs/fx/texture/mask.ab:1293282390858831949": {
+      "bytes": 716,
+      "height": 256,
+      "path": "textures/b959428683193cbae1909197.webp",
+      "pixelSha256": "97545f87f9da26327edde3bbf2ac443e1eab1bfe2f2942653b011a64279b6e39",
+      "sha256": "040b4239ca74dd47db141245e44d221de0130de383ab24ecd55a5f86e57f5044",
+      "width": 256
+    },
+    "refs/fx/texture/mask.ab:1475945865705079393": {
+      "bytes": 8400,
+      "height": 256,
+      "path": "textures/6cc0f4d87b192e7cdbf3fe39.webp",
+      "pixelSha256": "7ae7dcc3e31947ad6ad3b882753407be1400585044d83b723de7b803d2f7de02",
+      "sha256": "df01ab7d0a7e1cc0531604765279beb03a7d8ad6ce70ff83741c4df26d4f6298",
+      "width": 256
+    },
+    "refs/fx/texture/mask.ab:1643612638130865000": {
+      "bytes": 514,
+      "height": 64,
+      "path": "textures/2d45df48e6e751f5ae355470.webp",
+      "pixelSha256": "1c563c549ac1f558eaad62fb4a5abca349a8061d44bf67a59b61dc4cac4d829f",
+      "sha256": "d8713b005f91e009a1b0ea9a16a0ba784c8f0c692a96c00217bfeb71785d21f8",
+      "width": 64
+    },
+    "refs/fx/texture/mask.ab:1808507132332538560": {
+      "bytes": 6742,
+      "height": 128,
+      "path": "textures/0a807b11e3133cb1149ee970.webp",
+      "pixelSha256": "b5ff1c6b12752055d33ef113994ac8c9fd040e7c50170615a43121367d7294b9",
+      "sha256": "c1250676fc756a2a58591b951a9605a3b2d9c9e3758db97ed24dd83695255c80",
+      "width": 128
+    },
+    "refs/fx/texture/mask.ab:2744111543284256367": {
+      "bytes": 6312,
+      "height": 128,
+      "path": "textures/33b449ad99c5a26cabc3596c.webp",
+      "pixelSha256": "3b011e5a2ee7bfe98981f3fc671ce77c634ad1792f00dec8a45fc53c0f4443df",
+      "sha256": "3b68cd3b21a60779f54af2c351fe6215078530cd679dfc3160f37cb0281ce6e0",
+      "width": 128
+    },
+    "refs/fx/texture/mask.ab:4955066349185562243": {
+      "bytes": 12696,
+      "height": 256,
+      "path": "textures/59850d500c67ac76c5a3c6d3.webp",
+      "pixelSha256": "e2434228c813e4a364cc3ac2e4ffe884b8a305fe412dd97c348d1edfab7451d9",
+      "sha256": "cfde8d4b2d3db26ee98f0d06f83df971a86ace38d14ab4183010007e27461556",
+      "width": 256
+    },
+    "refs/fx/texture/mask.ab:8544619192640545639": {
+      "bytes": 5750,
+      "height": 128,
+      "path": "textures/6354a481578becd0f6918942.webp",
+      "pixelSha256": "422a028266e3128b250e9c07ee3ed375d8edbbf1d15c0bd7f56959b2b2cc86cf",
+      "sha256": "e760f906fda431396c65b733de4981cc8fc6c2aeaa9cf72610681b5a5472449a",
+      "width": 128
+    },
+    "refs/fx/texture/overseas/char_010_chen_sale#10.ab:889733377192429604": {
+      "bytes": 50222,
+      "height": 512,
+      "path": "textures/e16599adeb633e1f83481671.webp",
+      "pixelSha256": "dc8a36c5fbf7fa9bcdf0509f11963b6fcdc74fdba28b267ef66aae21affa3912",
+      "sha256": "c81963560deee80888f30a7fe71da50365b685f0a64f0ea9b644147583b76ae2",
+      "width": 512
+    },
+    "refs/fx/texture/ray.ab:4401085805155442283": {
+      "bytes": 1880,
+      "height": 128,
+      "path": "textures/81dc74520cfedb98af466870.webp",
+      "pixelSha256": "e4906c5ad4d70760544f15755d646b2dfe640127cc2f5b002b6bd9a8479994ce",
+      "sha256": "f1f1164a64fe0844764d1bdc2a730f7f604eebeb3e4cf67982a4e30fc3ea2df4",
+      "width": 128
+    },
+    "refs/fx/texture/star.ab:-1074696917881622342": {
+      "bytes": 3702,
+      "height": 128,
+      "path": "textures/923eac76ca78d000e9aacdbd.webp",
+      "pixelSha256": "5993b1d8deb60313730a796a00903d0b4d6b7def3d69077ad30f45c21148fab1",
+      "sha256": "ddb4902630068947e370c09be98448515e0d7b8f935c7f0e190bcf4cfac77eaa",
+      "width": 128
+    },
+    "refs/fx/texture/star.ab:-2837235076904816243": {
+      "bytes": 4262,
+      "height": 128,
+      "path": "textures/e0c146203ae7ca2862ef1547.webp",
+      "pixelSha256": "6aceb660abe3714b4f1cd9d9b28b372e9cb7087c3cef790b72024c4a841af11a",
+      "sha256": "9de21949792b31edc20b79151b4d6c904221ae688a0a844c64da71fc014c3410",
+      "width": 128
+    },
+    "refs/fx/texture/star.ab:-2933034572760096045": {
+      "bytes": 3150,
+      "height": 256,
+      "path": "textures/fb9789ff28aca4f131852540.webp",
+      "pixelSha256": "0c0f4b50e0bbeafb2c5260780b3a97e1a3ad9a9d743b1c6e9563339130c63ac8",
+      "sha256": "271895ad5513c8b92b843660c9b761bf42730d1cec3e6b777f5438cc9cc244d0",
+      "width": 256
+    },
+    "refs/fx/texture/star.ab:-4426613522788370064": {
+      "bytes": 4890,
+      "height": 64,
+      "path": "textures/619eb87ed9317cb460ef4b07.webp",
+      "pixelSha256": "bf55ca4f21af0cdafaa88568f1ffc0611db6458b2726e1dad96ab7d23769d513",
+      "sha256": "4697d97b2ce46371ea50f35ebbdd859ca7ebfb165db35360c147d22af4927173",
+      "width": 64
+    },
+    "refs/fx/texture/star.ab:-4774246021205867889": {
+      "bytes": 12032,
+      "height": 256,
+      "path": "textures/1589e6acb5e6fe4bfbf007b1.webp",
+      "pixelSha256": "99cfa570419012ca20da3d326cfbde75819dba723668b9c65dd602bb417e6834",
+      "sha256": "6a6a6800d8fbfcaf4cde47df940d82d3724f4b78492d386b5a629ed3d8e87e02",
+      "width": 256
+    },
+    "refs/fx/texture/star.ab:-5447052886849102454": {
+      "bytes": 4458,
+      "height": 128,
+      "path": "textures/4d9c78def8019d3080bca300.webp",
+      "pixelSha256": "5ff977ed3280878d56f10694c7b5498cf587bbd17df08048e78fcf14cb173223",
+      "sha256": "5966c45372113d1c641c7347fbb167806d3a9a8e23a90111ddb495d73ac6765d",
+      "width": 128
+    },
+    "refs/fx/texture/star.ab:-5818384798351013209": {
+      "bytes": 8348,
+      "height": 256,
+      "path": "textures/e4e3df24f14d1053caa28f5f.webp",
+      "pixelSha256": "4e138a0f65f3f3a9264ed46863b2526742f058315c8655ed5f8d3038a6b7c270",
+      "sha256": "2934a14c3e010b9cbd5a9e4b5fa514c47b537b13f8fde66dba8b926dd68fa2d2",
+      "width": 256
+    },
+    "refs/fx/texture/star.ab:-6797389979207213377": {
+      "bytes": 3420,
+      "height": 128,
+      "path": "textures/3b3ae62aaec1e4a89b57fb25.webp",
+      "pixelSha256": "2fcf657ed45d825b8e677d6bc4ae46fa175abf42498d34de6e0ab9b680993280",
+      "sha256": "37aff02cd19ef7e6639bfb176d2cbc55049645a054b90e5434ea67d9a9ff42d8",
+      "width": 128
+    },
+    "refs/fx/texture/star.ab:-8854836799318084146": {
+      "bytes": 12032,
+      "height": 256,
+      "path": "textures/831c4bed63b688e95a68c320.webp",
+      "pixelSha256": "99cfa570419012ca20da3d326cfbde75819dba723668b9c65dd602bb417e6834",
+      "sha256": "6a6a6800d8fbfcaf4cde47df940d82d3724f4b78492d386b5a629ed3d8e87e02",
+      "width": 256
+    },
+    "refs/fx/texture/star.ab:2192912870374613899": {
+      "bytes": 3002,
+      "height": 128,
+      "path": "textures/a1263e90fadcdfac493a20d6.webp",
+      "pixelSha256": "085256a6d49d98c5f0845b01113fb635ea178ad27e17cdea4aef44be76e2f631",
+      "sha256": "9ed16955f50fb57f3fd1e60831e492408c8ec88b14d2f6b870ad5eaf90bc0b4b",
+      "width": 128
+    },
+    "refs/fx/texture/star.ab:2405299555118905582": {
+      "bytes": 7190,
+      "height": 256,
+      "path": "textures/8ac8c7386f86d13a3fbf6e07.webp",
+      "pixelSha256": "925bff2c365e7b01351f4f77cbc68b5d950916ad4893ef9e25e1efa219f160f9",
+      "sha256": "6b654f803a28f8a0aabf67dd0f85d5d10e3e89ebfff0ca80309aa9c0e25ad47b",
+      "width": 256
+    },
+    "refs/fx/texture/star.ab:6989283930697380654": {
+      "bytes": 44432,
+      "height": 256,
+      "path": "textures/8bde0c6dcf9d04e7d83a3af8.webp",
+      "pixelSha256": "48e7020ba04adb4775049a415e47a59a5a466d8232777d663681d562da65cf87",
+      "sha256": "229827f07dcaa31ce34e9a005aadd5a871c087d73ef243f0bcce005817bdf2e2",
+      "width": 256
+    },
+    "refs/fx/texture/star.ab:774886417499732795": {
+      "bytes": 3270,
+      "height": 256,
+      "path": "textures/d48c7e7af46a4dc08c989c76.webp",
+      "pixelSha256": "0a2c4bd0d056b06c22b706d1dcd1f4fc549b8c76c86bf4d64103ea437b766904",
+      "sha256": "b63c45fe3c988882a0d10a769dc8721ea813702f1c7b1f2520d2d385730b6e51",
+      "width": 256
+    },
+    "refs/fx/texture/star.ab:8003118900832761050": {
+      "bytes": 28404,
+      "height": 256,
+      "path": "textures/e2d399c6ec0178f142b20167.webp",
+      "pixelSha256": "979b4a046cbc11284e33bdda3d0780c6aab66af2e1c33d7f97353c81d253f8af",
+      "sha256": "3b59e9db44db614860d42dcba51e3487273fc5a7f8ad3fda8f59b181e74252ce",
+      "width": 256
+    },
+    "refs/fx/texture/star.ab:80133884131010309": {
+      "bytes": 1454,
+      "height": 64,
+      "path": "textures/c164dac78366ab4ec1940c70.webp",
+      "pixelSha256": "449c2254510d25ace285da53fe00780eaace03670f3a0bbf85b133674bd4a072",
+      "sha256": "05c323062cb62e88b310ea0733d590362a0974ecf5147f08786d9f1aa7589641",
+      "width": 64
+    },
+    "refs/fx/texture/star.ab:8717749647335727006": {
+      "bytes": 4174,
+      "height": 64,
+      "path": "textures/e11b3472f7cf0cd3f1d602f5.webp",
+      "pixelSha256": "34f856d8cfdb61decc85e76ecf42713fbf54b9745260a021e379afd01166123f",
+      "sha256": "b902891c15ae85320b6317a7b6773228af7f97a9edb67588f92ab4bf5e9266f0",
+      "width": 64
+    },
+    "refs/fx/texture/trail.ab:-1127867239235936233": {
+      "bytes": 5452,
+      "height": 128,
+      "path": "textures/d1032ba49b9ab0f472d987d5.webp",
+      "pixelSha256": "158a8807f83ffee68f5467ed782e84f1f416ebd110240950779179bfb71f8f4c",
+      "sha256": "eaf3c4256e93bc705e9fc340c62682ca8fd43d29e247ea2bbaae36ff82028b64",
+      "width": 128
+    },
+    "refs/fx/texture/trail.ab:-3017416542273276595": {
+      "bytes": 210,
+      "height": 128,
+      "path": "textures/7ae0e467d6d8a1317d41d774.webp",
+      "pixelSha256": "5bac929049ffffa0ba5070b7e442683b3656275dcd0339406f4b2b127c73776c",
+      "sha256": "6c0be2b9a3ed0a20d9eb1273c85a418186dd4f524cb0d45e81a5ad7fac8c04a3",
+      "width": 512
+    },
+    "refs/fx/texture/trail.ab:-5437207082711415253": {
+      "bytes": 10014,
+      "height": 128,
+      "path": "textures/d8888c38bb91b8858688cc58.webp",
+      "pixelSha256": "6e4ab167eafd0c83348c0012c1879c6c9e597edee36762771bbda40b8f655d55",
+      "sha256": "2b94dbfc7001bf2a11b273340953295f368640f0426bb83634705e4eed3ea8d8",
+      "width": 128
+    },
+    "refs/fx/texture/trail.ab:-7316043933471853005": {
+      "bytes": 28036,
+      "height": 290,
+      "path": "textures/48e9c9c6b16bb174454f98b1.webp",
+      "pixelSha256": "f5c806c035e3a5a270f774ee356fa2e008a4b08a1670298dbb473db2ce42f1db",
+      "sha256": "e285167bd8af0181b6e39bdbbadda40c9450dd27722ebfad01b8784734571098",
+      "width": 512
+    },
+    "refs/fx/texture/trail.ab:-7824191086867548184": {
+      "bytes": 288,
+      "height": 64,
+      "path": "textures/d3527b42d19fbcc8d60f406c.webp",
+      "pixelSha256": "1fd9f76b88e593155b787ec52de45cfcb96373a356bd489e5da630ea8790d0c9",
+      "sha256": "8e954cdf7cad5020814c3084c4cd671b71d78bd223570cfbe6aeff58141073bc",
+      "width": 64
+    },
+    "refs/fx/texture/trail.ab:-7887427954279609538": {
+      "bytes": 1616,
+      "height": 128,
+      "path": "textures/18f784a4df4b363826a4645f.webp",
+      "pixelSha256": "201c6e8830518174740af3364a936185768ce68173643655e9a994ad8d0e7030",
+      "sha256": "fe77df0dab80035251573d8eb6b7ac8453befad3cb242a3ebc0941d3844f6152",
+      "width": 128
+    },
+    "refs/fx/texture/trail.ab:-7906899804224193716": {
+      "bytes": 7656,
+      "height": 128,
+      "path": "textures/54fcd086a3b37abe24457dd7.webp",
+      "pixelSha256": "cd8e42d9a77366f6a59bf182893d77bfdeb989911d16cc1f25d9108ae1a05b4e",
+      "sha256": "fc6e76518b1eaf769ffcb4cc8ec4abb4a5faa96c19c07ce05df09fed1194a70a",
+      "width": 128
+    },
+    "refs/fx/texture/trail.ab:107599779245278937": {
+      "bytes": 14626,
+      "height": 256,
+      "path": "textures/0903cc3a09d51112799a8fba.webp",
+      "pixelSha256": "b986f1d60d1081e71e0045e8fc304c1bef3cbb5f67347ff5569eb3da7b7e0084",
+      "sha256": "6022fbb5dafc267aa20b628db21d2897d2e163fdffbba8fdbaa0ebd65f3c3fe0",
+      "width": 256
+    }
+  },
+  "unresolvedReferences": {
+    "Library/unity default resources:10202": {
+      "foreignFile": "Library/unity default resources",
+      "pathId": "10202",
+      "references": [
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/common.ab:7181836904565025445"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/common.ab:1313535970331634341"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/common.ab:-5965698880401593691"
+        }
+      ]
+    },
+    "Library/unity default resources:10210": {
+      "foreignFile": "Library/unity default resources",
+      "pathId": "10210",
+      "references": [
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/aphris.ab:3204834981101823897"
+        },
+        {
+          "field": "m_Mesh",
+          "record": "battle/prefabs/effects/aphris.ab:4320972231848224642"
+        }
+      ]
+    }
+  },
+  "version": "26-09-22-07-47-20_6c71fa"
+}

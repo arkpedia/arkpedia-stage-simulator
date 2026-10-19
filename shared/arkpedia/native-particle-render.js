@@ -9,6 +9,18 @@ export function particleBirthFrame(origin,velocity,birth,movement=birth){
   // Spawn scaling and movement scaling are distinct for Shape-only scaling.
   return {origin:point(birth,origin),velocity:direction(movement,velocity)};
 }
+export function particleLocalVelocity(velocity,movement){
+  validate(movement);vector(velocity);
+  const [a,d,g,b,e,h,c,f,i]=[0,1,2,4,5,6,8,9,10].map(k=>movement[k]);
+  const determinant=a*(e*i-f*h)-b*(d*i-f*g)+c*(d*h-e*g);
+  if(!Number.isFinite(determinant)||determinant===0)throw Error('Singular native particle velocity frame');
+  const [x,y,z]=velocity,result=[
+    ((e*i-f*h)*x+(c*h-b*i)*y+(b*f-c*e)*z)/determinant,
+    ((f*g-d*i)*x+(a*i-c*g)*y+(c*d-a*f)*z)/determinant,
+    ((d*h-e*g)*x+(b*g-a*h)*y+(a*e-b*d)*z)/determinant
+  ];
+  vector(result);return result;
+}
 export function particleWorldPosition(particle,birth,current,movement=current){
   validate(birth);validate(current);validate(movement);
   if(particle.simulationSpace==='world'){

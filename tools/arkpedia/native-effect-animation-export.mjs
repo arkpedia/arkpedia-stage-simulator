@@ -39,11 +39,17 @@ export async function decodeNativeEffectAnimations(spec) {
     assert(found.length === 1, `Missing/ambiguous transform on ${go}`);
     return found[0];
   };
-  const types = {1:'GameObject',4:'Transform',23:'MeshRenderer',96:'TrailRenderer',199:'ParticleSystemRenderer'};
+  const types = {1:'GameObject',4:'Transform',23:'MeshRenderer',96:'TrailRenderer',120:'LineRenderer',199:'ParticleSystemRenderer'};
   const transforms = {1:'m_LocalPosition',2:'m_LocalRotation',3:'m_LocalScale',4:'localEulerAnglesRaw'};
   function property(component, binding) {
     if (binding.typeID === 4) return transforms[binding.attribute];
     if (binding.typeID === 1 && binding.customType === 0 && binding.attribute === crc32('m_IsActive')) return 'm_IsActive';
+    if (binding.typeID === 120 && binding.customType === 29
+      && binding.attribute === crc32('m_Parameters.widthMultiplier')) {
+      assert(records[component]?.type === 'LineRenderer'
+        && Number.isFinite(records[component].data.m_Parameters?.widthMultiplier), 'Missing original line width');
+      return 'm_Parameters.widthMultiplier';
+    }
     assert(binding.customType === 22, 'Unsupported native property binding');
     const names = new Set();
     for (const material of refs(component, 'm_Materials')) {
@@ -74,42 +80,59 @@ export async function decodeNativeEffectAnimations(spec) {
     return slots;
   }
 
-  const clips = {}, fixtures = {}, instances = [], unresolvedBindings = [], materialSlotBindings = [];
+  const clips = {}, fixtures = {}, instances = [], unresolvedBindings = [], materialSlotBindings = [], unboundAmbiguousPaths = [];
   for (const [key, record] of Object.entries(records)) {
     if (record.type !== 'AnimationClip') continue;
-    const d = record.data, m = d.m_MuscleClip;
+    const d = record.data, m = d.m_MuscleClip, decodedClip = decodeEffectClip(d);
     const fixture = Object.fromEntries(['m_Name', 'm_RotationCurves', 'm_CompressedRotationCurves',
       'm_EulerCurves', 'm_PositionCurves', 'm_ScaleCurves', 'm_FloatCurves', 'm_PPtrCurves',
       'm_ClipBindingConstant'].map(k => [k,d[k]]));
     fixture.m_MuscleClip = {m_StartTime:m.m_StartTime, m_StopTime:m.m_StopTime,
       m_LoopTime:m.m_LoopTime, m_Clip:m.m_Clip};
+    if (decodedClip.channels.some(c => Object.hasOwn(c, 'initialValue')))
+      fixture.m_MuscleClip.m_ValueArrayDelta = m.m_ValueArrayDelta;
+    if (d.m_Legacy === true) for (const field of ['m_Legacy', 'm_Compressed', 'm_MuscleClipSize', 'm_WrapMode'])
+      fixture[field] = d[field];
     fixtures[key] = {sourceSha256:record.serializedSha256, data:fixture};
     clips[key] = {sourceSha256:record.serializedSha256,
-      ...decodeEffectClip(record.data), events:record.data.m_Events};
+      ...decodedClip, events:record.data.m_Events};
   }
   assert(Object.keys(clips).length === spec.clips, 'Incomplete native clip inventory');
   for (const [key, record] of Object.entries(records)) {
-    if (record.type !== 'Animator') continue;
-    const controllers = refs(key, 'm_Controller');
+    if (!['Animator', 'Animation'].includes(record.type)) continue;
+    const legacy = record.type === 'Animation', controllers = legacy ? [] : refs(key, 'm_Controller');
     // Preserve animators without a controller in the original source pack.
-    if (!controllers.length) continue;
-    const controller = one(key, 'm_Controller'), go = one(key, 'm_GameObject'), paths = new Map();
+    if (!legacy && !controllers.length) continue;
+    const controller = legacy ? null : one(key, 'm_Controller'), go = one(key, 'm_GameObject'), paths = new Map(), literalPaths = new Map();
     function walk(tr, relative, ancestors) {
       assert(!ancestors.has(tr), 'Cyclic animation hierarchy');
       const hash = crc32(relative), childGo = one(tr, 'm_GameObject');
-      assert(!paths.has(hash), 'Ambiguous animation path hash');
-      paths.set(hash, {path:relative, gameObject:childGo});
+      const node = {path:relative, gameObject:childGo};
+      paths.set(hash, [...(paths.get(hash) ?? []), node]);
+      literalPaths.set(relative, [...(literalPaths.get(relative) ?? []), node]);
       for (const child of refs(tr, 'm_Children')) {
         const childName = records[one(child, 'm_GameObject')].data.m_Name;
         walk(child, relative ? relative + '/' + childName : childName, new Set([...ancestors, tr]));
       }
     }
     walk(transform(go), '', new Set());
-    for (const clipKey of refs(controller, 'm_AnimationClips')) {
+    for (const [path, nodes] of legacy ? literalPaths : paths) if (nodes.length > 1)
+      unboundAmbiguousPaths.push({driver:key, path, nodes});
+    const clipKeys = legacy ? refs(key, 'm_Animations') : refs(controller, 'm_AnimationClips');
+    if (legacy) {
+      assert(record.data.m_WrapMode === 0, 'Unsupported legacy driver wrap override');
+      assert(typeof record.data.m_PlayAutomatically === 'boolean', 'Missing legacy autoplay flag');
+      assert(clipKeys.includes(one(key, 'm_Animation')), 'Missing legacy default clip');
+      assert(new Set(clipKeys).size === clipKeys.length, 'Duplicate legacy clip binding');
+    }
+    for (const clipKey of clipKeys) {
       const clip = clips[clipKey];
       assert(clip, `Missing native clip ${clipKey}`);
+      assert(legacy === (clip.format === 'legacy-euler'), 'Mismatched native animation driver');
       const bindings = clip.bindings.map((binding, bindingIndex) => {
-        const node = paths.get(binding.path);
+        const nodes = (legacy ? literalPaths : paths).get(binding.path);
+        assert(!nodes || nodes.length === 1, `Ambiguous bound animation path ${binding.path} in ${key}`);
+        const node = nodes?.[0];
         if (!node && spec.missingPaths?.includes(`${key}:${clipKey}:${binding.path}`)) {
           const unresolved = {reason:'missing-original-path', pathHash:binding.path, typeID:binding.typeID,
             attribute:binding.attribute};
@@ -131,13 +154,17 @@ export async function decodeNativeEffectAnimations(spec) {
         }
         return resolved;
       });
-      instances.push({animator:key, controller, clip:clipKey, bindings});
+      instances.push(legacy ? {animation:key, defaultClip:one(key, 'm_Animation'),
+        playAutomatically:record.data.m_PlayAutomatically, enabled:record.data.m_Enabled,
+        wrapMode:record.data.m_WrapMode, clip:clipKey, bindings} : {animator:key, controller, clip:clipKey, bindings});
     }
   }
   assert(new Set(instances.map(i => i.clip)).size === spec.clips, 'Unbound native animation clip');
   assert(unresolvedBindings.length === (spec.unresolvedBindings ?? 0), 'Changed unresolved animation bindings');
   assert(materialSlotBindings.length === (spec.materialSlotBindings ?? 0),
     `Changed native material slot bindings: recovered ${materialSlotBindings.length}, expected ${spec.materialSlotBindings ?? 0}`);
+  assert(unboundAmbiguousPaths.length === (spec.unboundAmbiguousPaths ?? 0),
+    `Changed unbound ambiguous paths: recovered ${unboundAmbiguousPaths.length}, expected ${spec.unboundAmbiguousPaths ?? 0}`);
   const decoded = {schemaVersion:1, operator:native.operator, version:native.version,
     sourcePackSha256:sha(raw), coordinates:'original-unity', clips, instances};
   const decodedBytes = encode(decoded);
@@ -147,11 +174,15 @@ export async function decodeNativeEffectAnimations(spec) {
   // Independent verifier probes every sparse segment, all keys, and loop seams.
   const samples = Object.fromEntries(Object.entries(clips).map(([key, clip]) => {
     const times = new Set([clip.start - 1, clip.start, clip.stop, clip.stop + .125]);
-    for (const channel of clip.channels) for (let i = 0; i < (channel.keys?.length ?? 0); i++) {
-      const t = channel.keys[i].time;
-      times.add(t);
-      if (i + 1 < channel.keys.length) for (const fraction of [.25,.5,.75]) {
-        times.add(t + (channel.keys[i+1].time - t) * fraction);
+    for (const channel of clip.channels) {
+      if (channel.keys?.length && channel.keys[0].time > clip.start)
+        times.add((channel.keys[0].time + clip.start) / 2);
+      for (let i = 0; i < (channel.keys?.length ?? 0); i++) {
+        const t = channel.keys[i].time;
+        times.add(t);
+        if (i + 1 < channel.keys.length) for (const fraction of [.25,.5,.75]) {
+          times.add(t + (channel.keys[i+1].time - t) * fraction);
+        }
       }
     }
     return [key, [...times].sort((a,b) => a-b).flatMap(time => [false,true].map(loop =>
@@ -176,6 +207,13 @@ export async function decodeNativeEffectAnimations(spec) {
       'https://github.com/mafaca/UtinyRipper/blob/master/uTinyRipperCore/Converters/Classes/AnimationClip/CustomCurveResolver.cs']};
   if (unresolvedBindings.length) manifest.unresolvedBindings = unresolvedBindings;
   if (materialSlotBindings.length) manifest.materialSlotBindings = materialSlotBindings;
+  if (unboundAmbiguousPaths.length) manifest.unboundAmbiguousPaths = unboundAmbiguousPaths;
+  if (instances.some(i => i.animation)) {
+    manifest.scope.pending[0] = 'Animator/legacy Animation dispatch; renderer geometry and property application';
+    manifest.formatReferences.push('https://docs.unity3d.com/2021.3/Documentation/ScriptReference/AnimationClip-wrapMode.html',
+      'https://github.com/Unity-Technologies/UnityCsReference/blob/master/Runtime/Transform/ScriptBindings/Transform.bindings.cs',
+      'https://docs.unity3d.com/2021.3/Documentation/ScriptReference/LineRenderer-widthMultiplier.html');
+  }
   await fs.writeFile(path.join(ROOT, spec.manifestPath), JSON.stringify(manifest,null,2)+'\n');
   console.log(JSON.stringify({counts:manifest.counts, properties:manifest.properties, bytes:manifest.artifact.bytes}));
   return manifest;

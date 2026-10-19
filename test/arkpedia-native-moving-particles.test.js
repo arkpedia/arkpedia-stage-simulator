@@ -22,6 +22,7 @@ function source(){return {lengthInSec:1,looping:true,prewarm:false,moveWithTrans
  ...Object.fromEntries(['orbitalX','orbitalY','orbitalZ','orbitalOffsetX','orbitalOffsetY','orbitalOffsetZ','radial'].map(k=>[k,constant(0)]))},
  UVModule:{enabled:true,mode:0,animationType:0,timeMode:0,flipU:0,flipV:0,tilesX:2,tilesY:2,cycles:1,uvChannelMask:-1,startFrame:constant(0),
  frameOverTime:{minMaxState:1,scalar:1,maxCurve:keys([key(0,0,1,1),key(1,1,1,1)])}}};}
+const still={frameAt:()=>({birth:matrix(),movement:matrix()})};
 const near=(a,b)=>assert.ok(Math.abs(a-b)<1e-9,`${a} != ${b}`);
 test('lifetime velocity integral preserves Hermite tangents, min/max factors and clamped tails',()=>{
  const c={minMaxState:1,scalar:2,maxCurve:keys([key(.2,1,-2,4),key(.6,3,-2,1),key(.9,-1,3,2)])};
@@ -41,38 +42,38 @@ test('lifetime velocity integral preserves Hermite tangents, min/max factors and
  assert.throws(()=>integrateParticleCurve(c,0,NaN));
 });
 test('box births stay within original volume; velocity is integrated over particle age',()=>{
- const s=source(),baseline=structuredClone(s),e=createMovingParticles(s),p=e.sample(.5);
+ const s=source(),baseline=structuredClone(s),e=createMovingParticles(s),p=e.sample(.5,still);
  assert.equal(p.length,2);assert.equal(p[0].born,.2);near(p[0].age,.3);
  for(const part of p){
   assert.ok(part.origin[0]>=-1&&part.origin[0]<=1);assert.ok(part.origin[1]>=-2&&part.origin[1]<=2);assert.equal(part.origin[2],0);
   near(part.displacement[0],-.5*part.age);near(part.displacement[1],.25*part.age);near(part.position[0],part.origin[0]+part.displacement[0]);
   near(part.birthTime,part.born);assert.equal(part.simulationSpace,'world');
  }
- e.sample(5);assert.deepEqual(e.sample(.5),p);assert.deepEqual(s,baseline);
+ e.sample(5,still);assert.deepEqual(e.sample(.5,still),p);assert.deepEqual(s,baseline);
 });
 test('shape rotation and offset affect births without rotating lifetime velocity axes',()=>{
  const a=source(),b=structuredClone(a);b.ShapeModule.m_Rotation.z=90;b.ShapeModule.m_Position={x:10,y:20,z:30};
- const p=createMovingParticles(a).sample(.25)[0],q=createMovingParticles(b).sample(.25)[0];
+ const p=createMovingParticles(a).sample(.25,still)[0],q=createMovingParticles(b).sample(.25,still)[0];
  near(q.origin[0],10-p.origin[1]);near(q.origin[1],20+p.origin[0]);near(q.origin[2],30);
- assert.deepEqual(q.displacement,p.displacement);
+ q.displacement.forEach((v,i)=>near(v,p.displacement[i]));
 });
 test('prewarm and simulation speed retain physical birth times for world emission',()=>{
  const s=source();s.prewarm=true;s.simulationSpeed=2;s.startDelay=constant(.5);
- const e=createMovingParticles(s);assert.deepEqual(e.sample(.249),[]);
- for(const p of e.sample(.5))near(p.birthTime,.5-p.age/2);
- assert.ok(e.sample(.5).some(p=>p.birthTime<0));
+ const e=createMovingParticles(s);assert.deepEqual(e.sample(.249,still),[]);
+ for(const p of e.sample(.5,still))near(p.birthTime,.5-p.age/2);
+ assert.ok(e.sample(.5,still).some(p=>p.birthTime<0));
 });
 test('normalized grid clocks select top-to-bottom frames and wrap cycles',()=>{
  const s=source();s.EmissionModule.rateOverTime=constant(0);s.EmissionModule.m_BurstCount=1;
  s.EmissionModule.m_Bursts=[{time:0,cycleCount:1,repeatInterval:.1,probability:1,countCurve:constant(1)}];
  const e=createMovingParticles(s);
  for(const [t,frame,offset] of [[0,0,[0,.5]],[.5,1,[.5,.5]],[1,2,[0,0]],[1.5,3,[.5,0]]]){
-  const p=e.sample(t)[0];assert.equal(p.sheet.frame,frame);assert.deepEqual(p.sheet.offset,offset);
+  const p=e.sample(t,still)[0];assert.equal(p.sheet.frame,frame);assert.deepEqual(p.sheet.offset,offset);
  }
- const firstRow=e.sample(.5)[0].sheet;
+ const firstRow=e.sample(.5,still)[0].sheet;
  s.UVModule.startFrame=constant(.9999);const shifted=createMovingParticles(s);
- assert.equal(shifted.sample(0)[0].sheet.frame,3);assert.equal(shifted.sample(.5)[0].sheet.frame,0);
- s.UVModule.startFrame=constant(0);s.UVModule.cycles=2;assert.equal(createMovingParticles(s).sample(1)[0].sheet.frame,0);
+ assert.equal(shifted.sample(0,still)[0].sheet.frame,3);assert.equal(shifted.sample(.5,still)[0].sheet.frame,0);
+ s.UVModule.startFrame=constant(0);s.UVModule.cycles=2;assert.equal(createMovingParticles(s).sample(1,still)[0].sheet.frame,0);
  assert.deepEqual([...particleSheetUV([0,1,1,1,0,0,1,0],firstRow)],[.5,1,1,1,.5,.5,1,.5]);
 });
 const matrix=(x=0,y=0,z=0)=>[1,0,0,0,0,1,0,0,0,0,1,0,x,y,z,1];
@@ -90,7 +91,7 @@ test('world particles remain at their birth origin when the emitter translates; 
 test('unimplemented modules and source formats stay explicit instead of losing their behavior',()=>{
  for(const patch of [{NoiseModule:{enabled:true}},{ClampVelocityModule:{enabled:true}},{TrailModule:{enabled:true}}])assert.throws(()=>createMovingParticles({...source(),...patch}));
  const changes=[s=>s.ShapeModule.type=4,s=>s.ShapeModule.randomPositionAmount=.1,s=>s.ShapeModule.m_Texture.m_PathID='123',
-  s=>s.VelocityModule.radial=constant(1),s=>s.VelocityModule.speedModifier=constant(2),s=>{s.moveWithTransform=0;s.VelocityModule.inWorldSpace=true;},
+  s=>s.VelocityModule.radial=constant(1),s=>s.VelocityModule.speedModifier=constant(2),
   s=>s.UVModule.timeMode=2,s=>s.UVModule.tilesX=0,s=>s.UVModule.flipU=1,s=>s.UVModule.animationType=1];
  for(const change of changes){const s=source();change(s);assert.throws(()=>createMovingParticles(s));}
  assert.throws(()=>particleWorldPosition({origin:[0,0,0]},[],matrix()));
@@ -103,7 +104,7 @@ test('pinned original wolf motes use source ranges, lifespan, color, UV grid and
  const pack=JSON.parse(gunzipSync(bytes));
  const s=pack.records['battle/prefabs/effects/whitw2.ab:-4709374192333049107'].data,baseline=structuredClone(s);
  assert.equal(s.VelocityModule.x.minScalar,-.25);assert.equal(s.VelocityModule.x.scalar,-.5);
- const e=createMovingParticles(s),snapshot=e.sample(.5);assert.ok(snapshot.length>0);
+ const e=createMovingParticles(s),snapshot=e.sample(.5,still);assert.ok(snapshot.length>0);
  for(const p of snapshot){
   assert.ok(p.lifetime>=.1&&p.lifetime<=2);assert.equal(p.origin[2],0);
   assert.ok(Math.abs(p.origin[0])<=.6700000166893005/2);assert.ok(Math.abs(p.origin[1])<=.23000000417232513/2);
@@ -111,5 +112,5 @@ test('pinned original wolf motes use source ranges, lifespan, color, UV grid and
   assert.ok(p.displacement[1]>=.25*p.age-1e-9&&p.displacement[1]<=.5*p.age+1e-9);
   assert.ok(p.sheet.frame>=0&&p.sheet.frame<4);assert.ok(p.color.every(Number.isFinite));assert.equal(p.simulationSpace,'world');
  }
- e.sample(10);assert.deepEqual(e.sample(.5),snapshot);assert.deepEqual(s,baseline);
+ e.sample(10,still);assert.deepEqual(e.sample(.5,still),snapshot);assert.deepEqual(s,baseline);
 });

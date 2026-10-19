@@ -25,7 +25,10 @@ export function createParticleLifecycle(source,{seed=1,modules=[],spaces=[0],all
   if((!allowInitialSpeed&&(![0,3].includes(initial.startSpeed.minMaxState)||sampleParticleCurve(initial.startSpeed,0,0)!==0||sampleParticleCurve(initial.startSpeed,0,1)!==0))||constant(initial.gravityModifier,'gravity')!==0)throw new Error('Moving particle lifecycle not playing');
   if(allowInitialSpeed)for(const time of [0,1])for(const factor of [0,1])sampleParticleCurve(initial.startSpeed,time,factor);
   const clock=createParticleBirthClock(source,{seed,allowDistanceEmission}),length=source.lengthInSec;
-  if(![0,2].includes(initial.startColor.minMaxState))throw new Error('Initial gradient clock needs review');
+  // RandomColor samples one immutable per-particle factor, not an emitter or
+  // lifetime clock. Time-varying birth Gradient/TwoGradients remain held.
+  if(![0,2,4].includes(initial.startColor.minMaxState))throw new Error('Initial gradient clock needs review');
+  for(const factor of [0,1])sampleParticleGradient(initial.startColor,0,factor);
   const startRotation=createParticleStartRotation(initial);
   const angularMotion=createParticleAngularMotion(source.RotationModule);
   const random=(id,salt)=>particleRandom(id,salt,seed);
@@ -52,7 +55,11 @@ export function createParticleLifecycle(source,{seed=1,modules=[],spaces=[0],all
         throw Error('Scheduled particle lifetime differs from authored source');
       const size=initial.size3D?[startSize,sampleParticleCurve(initial.startSizeY,phase,random(p.id,2)),sampleParticleCurve(initial.startSizeZ,phase,random(p.id,3))]:[startSize,startSize,startSize];
       const rotation=startRotation.sample(phase,[random(p.id,32),random(p.id,33),random(p.id,4)]);
-      const color=sampleParticleGradient(initial.startColor,phase,random(p.id,5)),age=p.age,t=age/p.lifetime;
+      // The birth ledger admits a boundary within its existing 1e-10 guard.
+      // That can leave a tiny negative subtraction residue; physical age is
+      // zero, including for angular/custom-data consumers that reject negatives.
+      // Keep the authored birth identity/time and reject larger negatives above.
+      const color=sampleParticleGradient(initial.startColor,phase,random(p.id,5)),age=Math.max(0,p.age),t=age/p.lifetime;
       if(source.SizeModule?.enabled){
         const m=source.SizeModule;
         const factors=m.separateAxes?[m.curve,m.y,m.z].map((c,i)=>sampleParticleCurve(c,t,random(p.id,6+i))):Array(3).fill(sampleParticleCurve(m.curve,t,random(p.id,6)));
@@ -64,10 +71,10 @@ export function createParticleLifecycle(source,{seed=1,modules=[],spaces=[0],all
         (stream,channel)=>random(p.id,24+stream*4+channel))}:{})};
     });
   }
-  function sample(time,{history}={}){return sampleRecords(clock.sample(time,{history}));}
+  function sample(time,{history,emissionUntil=null}={}){return sampleRecords(clock.sample(time,{history,emissionUntil}));}
   // External schedulers own emission windows/capacity admission. `born` keeps
   // the child-local phase; `birthTime` and `time` are real effect seconds.
-  return {sample,births:clock.births,sampleRecords(records,time){return sampleRecords(records,{scheduled:true,time});},
+  return {sample,births:clock.births,cohort:clock.cohort,sampleRecords(records,time){return sampleRecords(records,{scheduled:true,time});},
     sampleTrailRecords(records,time,owner){if(!managedTrails||owner!==particleTrails||!owner.ownsSource(source,seed))throw Error('Particle trail history requires its source owner');return sampleRecords(records,{scheduled:true,time,trailHistory:true});},
     withParentHistory(owner,callback){
       if(!managedParent||owner!==subEmitterSchedule||!owner.ownsParent(source,seed)

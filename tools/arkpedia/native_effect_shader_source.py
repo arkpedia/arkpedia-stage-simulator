@@ -83,18 +83,24 @@ def extract(spec):
         raise ValueError('Wrong original effect operator')
     if sha((out / 'native-effects.bin').read_bytes()) != manifest['pack']['sha256']:
         raise ValueError('Changed audited effect pack')
-    entry = next(r for r in manifest['sources'] if r['path'] == '[uc]shaders.ab')
-    raw = (ROOT / '.cache/arkpedia/map-source/ab/[uc]shaders.ab').read_bytes()
-    if len(raw) != entry['bytes'] or sha(raw) != entry['sha256']:
-        raise ValueError('Wrong pinned original shader bundle')
-    env = UnityPy.Environment()
-    env.load_file(raw)
-    originals = {o.path_id: o for o in env.objects if o.type.name == 'Shader'}
+    sources = {'[uc]shaders.ab': spec.get('shader_bundle', 'map-source/ab/[uc]shaders.ab'),
+               **spec.get('additional_shader_bundles', {})}
+    entries, originals = [], {}
+    for name, local_path in sources.items():
+        entry = next(r for r in manifest['sources'] if r['path'] == name)
+        raw = (ROOT / '.cache/arkpedia' / local_path).read_bytes()
+        if len(raw) != entry['bytes'] or sha(raw) != entry['sha256']:
+            raise ValueError('Wrong pinned original shader bundle')
+        env = UnityPy.Environment()
+        env.load_file(raw)
+        originals.update({name + ':' + str(o.path_id): o for o in env.objects if o.type.name == 'Shader'})
+        entries.append(entry)
+    entry = entries[0]
     shaders = {}
     for key, record in original['records'].items():
         if record['type'] != 'Shader':
             continue
-        obj = originals[int(record['pathId'])]
+        obj = originals[record['bundle'] + ':' + record['pathId']]
         if sha(obj.get_raw_data()) != record['serializedSha256']:
             raise ValueError('Changed original shader object')
         tree = obj.read_typetree()
@@ -135,6 +141,8 @@ def extract(spec):
         raise ValueError('Incomplete original effect shader inventory')
     pack = {'schemaVersion':1, 'operator':original['operator'], 'version':original['version'],
             'sourceBundle':entry, 'shaders':shaders}
+    if spec.get('additional_shader_bundles'):
+        pack['sourceBundles'] = entries
     raw_pack = (json.dumps(pack, separators=(',', ':'), sort_keys=True) + '\n').encode()
     (out / 'native-shaders.json').write_bytes(raw_pack)
     metadata = {'schemaVersion':1, 'operator':original['operator'], 'version':original['version'],
@@ -145,6 +153,8 @@ def extract(spec):
             'glesBlobSha256':s['glesBlobSha256'], 'programs':{i:{x:p[x] for x in
             ['blobIndex','entryOffset','entryBytes','entrySha256','gpuProgramType','keywords','sourceBytes','sourceSha256','trailer']}
             for i,p in s['programs'].items()}} for k,s in shaders.items()}}
+    if spec.get('additional_shader_bundles'):
+        metadata['sourceBundles'] = entries
     (ROOT / spec['manifest']).write_text(json.dumps(metadata, indent=2) + '\n')
     print(json.dumps(dict(spec['counts'], bytes=len(raw_pack))))
     return metadata

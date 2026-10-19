@@ -1,0 +1,445 @@
+{
+  "schemaVersion": 1,
+  "operatorId": "char_4229_aphris",
+  "enabledOperators": [
+    "char_4229_aphris"
+  ],
+  "frameParity": false,
+  "moduleSupport": false,
+  "nativeParticleSupport": false,
+  "nativePixelParity": false,
+  "mechanicsPolicy": "source-cn-aphrissa-relay-rays-owned-skills-v1",
+  "scope": "Public selected original S1/S2/S3 kit, passive relay, original Front/Back and relay art, and the published original beam/hit/aura package drawn by the public renderer. Beam endpoints (+0.65 above the end tile), hit height (+0.4) and identity orientation are explicit local mappings. Native finish/FSM/control, audio, modules and compiled/frame/pixel parity are unapproved.",
+  "sourceFoundationSha256": "77207d3d44737940e6bc4aee4a4a57abea27a1490d3870168e9f1615527ca254",
+  "ownerArtworkSha256": "8f3633b17f4e25bc754e16a6b497729bfbb567ddbe1977ed63a0b9ffb4aae308",
+  "tokenArtworkSha256": "5a02df8e5b2fa9c72cc3ecc659ad5fcc443c99b5294355695e8272465ea0f8e6",
+  "tokenAvatarSha256": "db2d28edbb5ef2b341941c2c5e2baf75d4de6b7248f2f90b9214aa2aa1a03748",
+  "interfaceArtworkSha256": "23e2309448f9fcd688a4accd80bc6120481329a595b7d7914866fababf5cf6b1",
+  "sourceClocksSha256": "1ac0dcc29517f2e933d6dd80d5a4056a58d698dbce3ec09abde29a69780fb923",
+  "verification": {
+    "browser": {
+      "status": "passed",
+      "script": "tools/arkpedia/review-aphrissa-public.mjs",
+      "scriptSha256": "49e63099fda46fd93f5372f4f9a192513e57f6d63e608974e5629e37978d5986",
+      "driverSha256": "2e52cd4007ae553e30f773104626f9b5c2be7c15f717b61ca9063517fbdc51c8",
+      "fixtureServerSha256": "127fb1b74be89d0a35e6bfa4e3d35927d170fa4d3129287f6c523114c5bcaa22",
+      "browserVersion": "Chrome/153.0.8010.12",
+      "cacheDisabled": true,
+      "externalAssetTransport": "Unintercepted original immutable HTTPS; normal TLS verification.",
+      "originalWaves": false,
+      "scope": "Controlled actual squad/deploy/manual UI on desktop 1280x800 and touch 844x390 against the normal snapshot: legal owner drop then separate swipe, relay drop/swipe, original terrain, empty waves, 99 DP and pinned targets. The renderer's own Aphrissa pass (no injected review pass) must draw the original ordinary/S2/S3 beams and S1/S3 auras with no blocked components; one desktop case also loads Tragodia's pass in the same squad. Original-wave clears are separate battle tests.",
+      "normal": {
+        "cases": 6,
+        "captures": 46,
+        "errors": 0,
+        "failedResources": 0
+      }
+    }
+  },
+  "originalArtwork": {
+    "operator/char_4229_aphris/default/back": {
+      "kind": "operator",
+      "id": "char_4229_aphris",
+      "variant": "default",
+      "facing": "back",
+      "spineVersion": "3.8.99",
+      "source": {
+        "key": "operators",
+        "repository": "fexli/ArknightsResource",
+        "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+        "directory": "spine/char_4229_aphris/char_4229_aphris/Back"
+      },
+      "skeleton": {
+        "path": "models/operator/char_4229_aphris/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4229_aphris.skel",
+        "bytes": 419147,
+        "sha256": "49190b8f2fd157adf5d572a73bcec7bcd323c0744d694d6b1a5962aac23522a3"
+      },
+      "atlas": {
+        "path": "models/operator/char_4229_aphris/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4229_aphris.atlas",
+        "bytes": 7981,
+        "sha256": "e00ec7b98b41e10cd8c0565ae1e72f9fc34b28e120db99850d55410f61dd5c36"
+      },
+      "textures": [
+        {
+          "path": "models/operator/char_4229_aphris/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4229_aphris.png",
+          "bytes": 195893,
+          "sha256": "3c82f0bab03991da22a7307cbe9088f62a2b8bb7082b7d90510f3ca588b2be89"
+        }
+      ],
+      "premultipliedAlpha": true,
+      "animations": {
+        "Attack": 2.9,
+        "Default": 0,
+        "Idle": 4,
+        "Skill_1_Begin": 0.167,
+        "Skill_1_Idle": 4,
+        "Skill_1_Loop_A": 2.9,
+        "Skill_1_Loop_B": 2.9,
+        "Skill_2_Begin": 0.167,
+        "Skill_2_End": 0.167,
+        "Skill_2_Loop": 2,
+        "Skill_3_Charge_Begin": 0.167,
+        "Skill_3_Charge_End": 0.267,
+        "Skill_3_Charge_Loop": 1,
+        "Skill_3_End": 0.167,
+        "Skill_3_Idle": 2,
+        "Skill_3_Loop": 4,
+        "Start": 1
+      },
+      "hits": {
+        "Attack": [
+          0.433
+        ],
+        "Skill_1_Loop_A": [
+          0.433
+        ],
+        "Skill_1_Loop_B": [
+          0.433
+        ],
+        "Skill_3_Loop": [
+          0.5
+        ]
+      },
+      "bounds": null,
+      "animationRoles": {
+        "idle": "Idle",
+        "deploy": "Start",
+        "attack": "Attack",
+        "attackDown": null,
+        "skill": null,
+        "skills": {},
+        "die": null,
+        "stun": null,
+        "move": null
+      }
+    },
+    "operator/char_4229_aphris/default/front": {
+      "kind": "operator",
+      "id": "char_4229_aphris",
+      "variant": "default",
+      "facing": "front",
+      "spineVersion": "3.8.99",
+      "source": {
+        "key": "operators",
+        "repository": "fexli/ArknightsResource",
+        "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+        "directory": "spine/char_4229_aphris/char_4229_aphris/Front"
+      },
+      "skeleton": {
+        "path": "models/operator/char_4229_aphris/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4229_aphris.skel",
+        "bytes": 1152803,
+        "sha256": "6b2fb032f5af531c9bcda5fa915328c6efc6ece328ae34b29f785ad26c6319ac"
+      },
+      "atlas": {
+        "path": "models/operator/char_4229_aphris/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4229_aphris.atlas",
+        "bytes": 13248,
+        "sha256": "ba06bd7acea6d210ef71c50df833eed46fee28ebdbb779f910d5292bcbe108a9"
+      },
+      "textures": [
+        {
+          "path": "models/operator/char_4229_aphris/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4229_aphris.png",
+          "bytes": 259654,
+          "sha256": "ade00b94a6a2979dbbbb620384235bbede3abafffa59141e09f007afe6032bfd"
+        }
+      ],
+      "premultipliedAlpha": true,
+      "animations": {
+        "Attack": 2.9,
+        "Attack_Down": 2.9,
+        "Default": 0,
+        "Die": 1,
+        "Idle": 4,
+        "Skill_1_Begin": 0.167,
+        "Skill_1_Idle": 4,
+        "Skill_1_Loop_A": 2.9,
+        "Skill_1_Loop_B": 2.9,
+        "Skill_2_Begin": 0.167,
+        "Skill_2_End": 0.167,
+        "Skill_2_Loop": 2,
+        "Skill_3_Charge_Begin": 0.167,
+        "Skill_3_Charge_End": 0.267,
+        "Skill_3_Charge_Loop": 1,
+        "Skill_3_End": 0.167,
+        "Skill_3_Idle": 2,
+        "Skill_3_Loop": 4,
+        "Skill_Down_1_Begin": 0.167,
+        "Skill_Down_1_Idle": 4,
+        "Skill_Down_1_Loop_A": 2.9,
+        "Skill_Down_1_Loop_B": 2.9,
+        "Skill_Down_2_Begin": 0.167,
+        "Skill_Down_2_End": 0.167,
+        "Skill_Down_2_Loop": 2,
+        "Skill_Down_3_Charge_Begin": 0.167,
+        "Skill_Down_3_Charge_End": 0.267,
+        "Skill_Down_3_Charge_Loop": 1,
+        "Skill_Down_3_End": 0.167,
+        "Skill_Down_3_Idle": 2,
+        "Skill_Down_3_Loop": 4,
+        "Start": 1
+      },
+      "hits": {
+        "Attack": [
+          0.433
+        ],
+        "Attack_Down": [
+          0.433
+        ],
+        "Skill_1_Loop_A": [
+          0.433
+        ],
+        "Skill_1_Loop_B": [
+          0.433
+        ],
+        "Skill_3_Loop": [
+          0.5
+        ],
+        "Skill_Down_1_Loop_A": [
+          0.433
+        ],
+        "Skill_Down_1_Loop_B": [
+          0.433
+        ],
+        "Skill_Down_3_Loop": [
+          0.5
+        ]
+      },
+      "bounds": null,
+      "animationRoles": {
+        "idle": "Idle",
+        "deploy": "Start",
+        "attack": "Attack",
+        "attackDown": "Attack_Down",
+        "skill": null,
+        "skills": {},
+        "die": "Die",
+        "stun": null,
+        "move": null
+      }
+    },
+    "operator/token_10070_aphris_pc/default/back": {
+      "kind": "operator",
+      "id": "token_10070_aphris_pc",
+      "variant": "default",
+      "facing": "back",
+      "source": {
+        "key": "cn-client",
+        "kind": "assetbundle",
+        "bundle": {
+          "path": "pkgrps/btl_pfb_tokens_5.ab",
+          "bytes": 2183454,
+          "md5": "1c4224582e2e540c2c1c96419fb6d38d",
+          "sha256": "1da6347c10575ac922ef1ceeade662ebfb785b0653ef13266ab48f03d1828af9",
+          "url": "https://ak.hycdn.cn/assetbundle/official/Android/assets/26-09-22-07-47-20_6c71fa/pkgrps_btl_pfb_tokens_5.dat",
+          "client": "cn",
+          "resourceVersion": "26-09-22-07-47-20_6c71fa",
+          "transforms": [
+            "Original embedded premultiplied RGBA texture decoded with every decoded pixel unchanged",
+            "Atlas page dimensions normalized and pma: true recorded; native regions unchanged",
+            "One native Single skeleton retained; front/back manifest slots are explicit compatibility aliases, not distinct original facings"
+          ]
+        },
+        "directory": "pkgrps/btl_pfb_tokens_5.ab",
+        "extractedSkeleton": "token_10070_aphris_pc.skel",
+        "facingAlias": "single-original-model",
+        "originalPathIds": {
+          "rootPathId": "-8689840424411047361",
+          "controllerPathId": "-8739687973461992897",
+          "animatorPathId": "-4478606290929755585",
+          "faceSwitcherPathId": "-3284469987124028865",
+          "skeletonAnimationPathId": "2570755867927140927",
+          "skeletonDataAssetPathId": "-5987739642600788218",
+          "textAssetPathId": "-6931788733146496522",
+          "atlasAssetPathId": "3701537429198839570",
+          "atlasTextAssetPathId": "3690827992599142947",
+          "materialPathId": "191957690762960601",
+          "texturePathId": "2748108503535774305"
+        },
+        "transforms": [
+          "Original embedded premultiplied RGBA texture decoded with every decoded pixel unchanged",
+          "Atlas page dimensions normalized and pma: true recorded; native regions unchanged",
+          "One native Single skeleton retained; front/back manifest slots are explicit compatibility aliases, not distinct original facings"
+        ]
+      },
+      "spineVersion": "3.8.99",
+      "skeleton": {
+        "path": "models/operator/token_10070_aphris_pc/default/back/1da6347c10575ac922ef1ceeade662ebfb785b0653ef13266ab48f03d1828af9/token_10070_aphris_pc.skel",
+        "bytes": 26849,
+        "sha256": "e88364fe0f36243cf631979b0ecc8326d4950a11cffe8be55ad82db4823b9f28"
+      },
+      "atlas": {
+        "path": "models/operator/token_10070_aphris_pc/default/back/1da6347c10575ac922ef1ceeade662ebfb785b0653ef13266ab48f03d1828af9/token_10070_aphris_pc.atlas",
+        "bytes": 2687,
+        "sha256": "f7cc74f91840a18627bac44a6fbfbb4ccaba28ec22380a448cef2e8139229467"
+      },
+      "textures": [
+        {
+          "path": "models/operator/token_10070_aphris_pc/default/back/1da6347c10575ac922ef1ceeade662ebfb785b0653ef13266ab48f03d1828af9/token_10070_aphris_pc.png",
+          "bytes": 23544,
+          "sha256": "4cdff7e5e0c0148b5372ce474cdb7af5ea95271c7f9f8cfaffa8d673256d6ca8"
+        }
+      ],
+      "premultipliedAlpha": true,
+      "animations": {
+        "Default": 0,
+        "Die": 1,
+        "Idle": 3,
+        "Start": 1
+      },
+      "animationRoles": {
+        "idle": "Idle",
+        "deploy": "Start",
+        "attack": null,
+        "skill": null,
+        "die": "Die",
+        "stun": null,
+        "move": null
+      },
+      "hits": {},
+      "bounds": null,
+      "avatar": {
+        "path": "models/operator/token_10070_aphris_pc/default/back/1da6347c10575ac922ef1ceeade662ebfb785b0653ef13266ab48f03d1828af9/avatar.png",
+        "bytes": 28781,
+        "sha256": "759ffb7fff911285fbf65f18de94164dcdd7445bcb6db251c791fadd82c4912f",
+        "source": {
+          "kind": "cn-native-sprite",
+          "resourceVersion": "26-09-22-07-47-20_6c71fa",
+          "bundleSha256": "e5c3889ce7efb39ebb30edc382a7f16724369618335427f7c496ce4cff221c28",
+          "spritePathId": "-2736994961306546766",
+          "texturePathId": "-8547731725446410830",
+          "proof": "source-reviews/aphrissa-relay-avatar.json",
+          "proofSha256": "db2d28edbb5ef2b341941c2c5e2baf75d4de6b7248f2f90b9214aa2aa1a03748"
+        }
+      }
+    },
+    "operator/token_10070_aphris_pc/default/front": {
+      "kind": "operator",
+      "id": "token_10070_aphris_pc",
+      "variant": "default",
+      "facing": "front",
+      "source": {
+        "key": "cn-client",
+        "kind": "assetbundle",
+        "bundle": {
+          "path": "pkgrps/btl_pfb_tokens_5.ab",
+          "bytes": 2183454,
+          "md5": "1c4224582e2e540c2c1c96419fb6d38d",
+          "sha256": "1da6347c10575ac922ef1ceeade662ebfb785b0653ef13266ab48f03d1828af9",
+          "url": "https://ak.hycdn.cn/assetbundle/official/Android/assets/26-09-22-07-47-20_6c71fa/pkgrps_btl_pfb_tokens_5.dat",
+          "client": "cn",
+          "resourceVersion": "26-09-22-07-47-20_6c71fa",
+          "transforms": [
+            "Original embedded premultiplied RGBA texture decoded with every decoded pixel unchanged",
+            "Atlas page dimensions normalized and pma: true recorded; native regions unchanged",
+            "One native Single skeleton retained; front/back manifest slots are explicit compatibility aliases, not distinct original facings"
+          ]
+        },
+        "directory": "pkgrps/btl_pfb_tokens_5.ab",
+        "extractedSkeleton": "token_10070_aphris_pc.skel",
+        "facingAlias": "single-original-model",
+        "originalPathIds": {
+          "rootPathId": "-8689840424411047361",
+          "controllerPathId": "-8739687973461992897",
+          "animatorPathId": "-4478606290929755585",
+          "faceSwitcherPathId": "-3284469987124028865",
+          "skeletonAnimationPathId": "2570755867927140927",
+          "skeletonDataAssetPathId": "-5987739642600788218",
+          "textAssetPathId": "-6931788733146496522",
+          "atlasAssetPathId": "3701537429198839570",
+          "atlasTextAssetPathId": "3690827992599142947",
+          "materialPathId": "191957690762960601",
+          "texturePathId": "2748108503535774305"
+        },
+        "transforms": [
+          "Original embedded premultiplied RGBA texture decoded with every decoded pixel unchanged",
+          "Atlas page dimensions normalized and pma: true recorded; native regions unchanged",
+          "One native Single skeleton retained; front/back manifest slots are explicit compatibility aliases, not distinct original facings"
+        ]
+      },
+      "spineVersion": "3.8.99",
+      "skeleton": {
+        "path": "models/operator/token_10070_aphris_pc/default/front/1da6347c10575ac922ef1ceeade662ebfb785b0653ef13266ab48f03d1828af9/token_10070_aphris_pc.skel",
+        "bytes": 26849,
+        "sha256": "e88364fe0f36243cf631979b0ecc8326d4950a11cffe8be55ad82db4823b9f28"
+      },
+      "atlas": {
+        "path": "models/operator/token_10070_aphris_pc/default/front/1da6347c10575ac922ef1ceeade662ebfb785b0653ef13266ab48f03d1828af9/token_10070_aphris_pc.atlas",
+        "bytes": 2687,
+        "sha256": "f7cc74f91840a18627bac44a6fbfbb4ccaba28ec22380a448cef2e8139229467"
+      },
+      "textures": [
+        {
+          "path": "models/operator/token_10070_aphris_pc/default/front/1da6347c10575ac922ef1ceeade662ebfb785b0653ef13266ab48f03d1828af9/token_10070_aphris_pc.png",
+          "bytes": 23544,
+          "sha256": "4cdff7e5e0c0148b5372ce474cdb7af5ea95271c7f9f8cfaffa8d673256d6ca8"
+        }
+      ],
+      "premultipliedAlpha": true,
+      "animations": {
+        "Default": 0,
+        "Die": 1,
+        "Idle": 3,
+        "Start": 1
+      },
+      "animationRoles": {
+        "idle": "Idle",
+        "deploy": "Start",
+        "attack": null,
+        "skill": null,
+        "die": "Die",
+        "stun": null,
+        "move": null
+      },
+      "hits": {},
+      "bounds": null,
+      "avatar": {
+        "path": "models/operator/token_10070_aphris_pc/default/front/1da6347c10575ac922ef1ceeade662ebfb785b0653ef13266ab48f03d1828af9/avatar.png",
+        "bytes": 28781,
+        "sha256": "759ffb7fff911285fbf65f18de94164dcdd7445bcb6db251c791fadd82c4912f",
+        "source": {
+          "kind": "cn-native-sprite",
+          "resourceVersion": "26-09-22-07-47-20_6c71fa",
+          "bundleSha256": "e5c3889ce7efb39ebb30edc382a7f16724369618335427f7c496ce4cff221c28",
+          "spritePathId": "-2736994961306546766",
+          "texturePathId": "-8547731725446410830",
+          "proof": "source-reviews/aphrissa-relay-avatar.json",
+          "proofSha256": "db2d28edbb5ef2b341941c2c5e2baf75d4de6b7248f2f90b9214aa2aa1a03748"
+        }
+      }
+    }
+  },
+  "interfaceAssets": [
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "path": "six-star-icons/Aphrissa - Base.webp",
+      "commit": "262df16bed8ee859ead687c25e472b830a30f96e",
+      "bytes": 39576,
+      "sha256": "afec4e42cc4de65d1bbe3d609e48130e03f37bf2046baf64b153648d6197200c"
+    },
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "path": "skill-icons/Aphrissa - Continuous Mapping.webp",
+      "commit": "262df16bed8ee859ead687c25e472b830a30f96e",
+      "bytes": 15028,
+      "sha256": "dabc721433ace2ec3d063c5f486ee90ba092c8d422e478cbd76e5d77c0c48eb5"
+    },
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "path": "skill-icons/Aphrissa - Critical Burst.webp",
+      "commit": "262df16bed8ee859ead687c25e472b830a30f96e",
+      "bytes": 14212,
+      "sha256": "50b01379ad31f79846c11d2efd7257f6c029e7f08cfcd4a10d228004f9dc5e35"
+    },
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "path": "skill-icons/Aphrissa - The Essence of Chaos.webp",
+      "commit": "262df16bed8ee859ead687c25e472b830a30f96e",
+      "bytes": 15082,
+      "sha256": "b2bb97c0d1652e28ded3b949cd42c46a5e6c64a85406fbb9ec08b1dc5a7a5ab1"
+    }
+  ],
+  "nativeEffectManifest": {
+    "path": "effects/native/aphrissa/26-09-22-07-47-20_6c71fa/57feaeef6ee48b966eb80cf564c9c4093ad6a4f19265ef974402c69f457c0b22/manifest.json",
+    "bytes": 42817,
+    "sha256": "db00c363ad8518b966da0c704df5d3f8f09478bba7193e300fabaa2c0e7eb672"
+  }
+}

@@ -45,12 +45,17 @@ def verify(pack, meta, native, blob_by_id, spec):
     expected_keys = {k for k,r in records.items() if r['type'] == 'Shader'}
     assert set(pack['shaders']) == set(meta['shaders']) == expected_keys
     assert pack['sourceBundle'] == meta['sourceBundle'] == next(s for s in source['sources'] if s['path'] == '[uc]shaders.ab')
+    if spec.get('additional_shader_bundles'):
+        names = ['[uc]shaders.ab', *spec['additional_shader_bundles']]
+        assert pack['sourceBundles'] == meta['sourceBundles'] == [next(s for s in source['sources'] if s['path'] == n) for n in names]
+    else:
+        assert 'sourceBundles' not in pack and 'sourceBundles' not in meta
     count = 0
     for key, shader in pack['shaders'].items():
-        obj = native[int(key.rsplit(':', 1)[1])]
+        obj = native[key]
         tree = obj.read_typetree()
         form = tree['m_ParsedForm']
-        blob = blob_by_id[obj.path_id]
+        blob = blob_by_id[key]
         assert shader['sourceObjectSha256'] == digest(obj.get_raw_data()) == records[key]['serializedSha256']
         assert shader['glesBlobSha256'] == digest(blob)
         assert shader['name'] == form['m_Name']
@@ -114,22 +119,26 @@ def audit(spec):
     directory = ROOT / '.cache/arkpedia' / spec['source_directory'] / 'effects'
     manifest = ROOT / spec['manifest']
     source = json.loads((ROOT / spec['source_manifest']).read_text())
-    bundle = next(s for s in source['sources'] if s['path'] == '[uc]shaders.ab')
-    raw = (ROOT / '.cache/arkpedia/map-source/ab/[uc]shaders.ab').read_bytes()
-    assert len(raw) == bundle['bytes'] and digest(raw) == bundle['sha256']
-    env = UnityPy.Environment()
-    env.load_file(raw)
-    native = {o.path_id: o for o in env.objects if o.type.name == 'Shader'}
+    paths = {'[uc]shaders.ab': spec.get('shader_bundle', 'map-source/ab/[uc]shaders.ab'),
+             **spec.get('additional_shader_bundles', {})}
+    native = {}
+    for name, path in paths.items():
+        bundle = next(s for s in source['sources'] if s['path'] == name)
+        raw = (ROOT / '.cache/arkpedia' / path).read_bytes()
+        assert len(raw) == bundle['bytes'] and digest(raw) == bundle['sha256']
+        env = UnityPy.Environment()
+        env.load_file(raw)
+        native.update({name + ':' + str(o.path_id): o for o in env.objects if o.type.name == 'Shader'})
     blobs = {}
     for key in json.loads(manifest.read_text())['shaders']:
-        obj = native[int(key.rsplit(':', 1)[1])]
+        obj = native[key]
         t = obj.read_typetree()
         p = t['platforms'].index(9)
         assert t['platforms'].count(9) == 1
         off, length, size = [t[k][p][0] for k in ['offsets', 'compressedLengths', 'decompressedLengths']]
         assert all(len(t[k][p]) == 1 for k in ['offsets', 'compressedLengths', 'decompressedLengths'])
-        blobs[obj.path_id] = CompressionHelper.decompress_lz4(bytes(t['compressedBlob'])[off:off + length], size)
-        assert len(blobs[obj.path_id]) == size
+        blobs[key] = CompressionHelper.decompress_lz4(bytes(t['compressedBlob'])[off:off + length], size)
+        assert len(blobs[key]) == size
     before = {p: digest(p.read_bytes()) for p in [manifest, directory / 'native-shaders.json']}
     subprocess.run([sys.executable, spec['exporter']], cwd=ROOT, check=True, capture_output=True)
     assert all(digest(p.read_bytes()) == value for p, value in before.items()), 'Shader export is not reproducible'
@@ -139,6 +148,8 @@ def audit(spec):
     mutations = ['source-equation', 'keyword', 'player-link', 'pass-state', 'property-default',
                  'trailer', 'missing-program', 'premature-enable', 'false-renderer-parity',
                  'wrong-source-object', 'missing-shader', 'gpu-program-type']
+    if spec.get('additional_shader_bundles'):
+        mutations += ['missing-source-bundle', 'changed-source-bundle', 'additional-source-equation']
     for mutation in mutations:
         p, m = copy.deepcopy(pack), copy.deepcopy(meta)
         s = next(iter(p['shaders'].values()))
@@ -158,6 +169,13 @@ def audit(spec):
             del p['shaders'][key]
             del m['shaders'][key]
         elif mutation == 'gpu-program-type': program['gpuProgramType'] = 0
+        elif mutation == 'missing-source-bundle':
+            p['sourceBundles'].pop();m['sourceBundles'].pop()
+        elif mutation == 'changed-source-bundle':
+            p['sourceBundles'][-1]['sha256'] = m['sourceBundles'][-1]['sha256'] = '0' * 64
+        elif mutation == 'additional-source-equation':
+            key = next(k for k in p['shaders'] if k.rsplit(':', 1)[0] in spec['additional_shader_bundles'])
+            next(iter(p['shaders'][key]['programs'].values()))['source'] += '\n// altered original anonymous source\n'
         altered = encoded(p)
         m['artifact'].update(bytes=len(altered), sha256=digest(altered))
         try:

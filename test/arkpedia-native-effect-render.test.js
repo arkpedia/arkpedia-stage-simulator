@@ -143,3 +143,24 @@ test('shader recovery does not prematurely enable battle support or claim frame 
   assert.deepEqual(meta.scope,{nativeSourceOnly:true,rendererVerified:false,compiledFrameParity:false,enabledOperators:[]});
   assert.equal(Object.hasOwn(mvp.operators,'char_1038_whitw2'),true);
 });
+test('legacy Animation inspection and line width reset independently from materials and transforms',()=>{
+  const {pack,animations}=fixture();
+  pack.records.animator.type='Animation';
+  const instance=animations.instances[0];instance.animation=instance.animator;delete instance.animator;
+  pack.records.ra.type='LineRenderer';pack.records.ra.data.m_Parameters={widthMultiplier:.12};
+  instance.bindings[2].property='m_Parameters.widthMultiplier';
+  instance.bindings[1].property='localEulerAnglesRaw';
+  const before=structuredClone({pack,animations}),pose=createEffectPose(pack,animations,'effect');
+  const sampled=pose.sample(.2,'clip');
+  assert.equal(sampled.renderers.get('ra').widthMultiplier,90);
+  assert.equal(sampled.renderers.get('ra').materials[0].properties._Amount,.2);
+  assert.equal(sampled.renderers.get('rb').widthMultiplier,undefined);
+  assert.deepEqual(sampled.nodes.get('ta').euler,[1,2,3]);
+  assert.equal(pose.sample(0).renderers.get('ra').widthMultiplier,.12);
+  assert.equal(pose.sample(0).nodes.get('ta').euler,undefined);
+  sampled.renderers.get('ra').widthMultiplier=-100;
+  assert.equal(pose.sample(.2,'clip').renderers.get('ra').widthMultiplier,90);
+  assert.deepEqual({pack,animations},before);
+  instance.bindings[2].component='rb';
+  assert.throws(()=>createEffectPose(pack,animations,'effect').sample(.2,'clip'),/Invalid original animated line width/);
+});

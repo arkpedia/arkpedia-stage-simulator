@@ -170,8 +170,14 @@ def original_token(key):
     matches = [part for row in rows for part in row['components']
                if part['pathId'] == pointer['m_PathID'] and '_animations' in part['data']]
     assert len(matches) == 1
-    bindings = {r['skillId']: list(dict.fromkeys(level['prefabId'] for level in st[r['skillId']]['levels'])) for r in ct[key]['skills']}
-    overrides = {r['skillId']: r['overridePrefabKey'] for r in ct[key]['skills'] if r['overridePrefabKey'] is not None}
+    named_slots = []
+    for slot in ct[key]['skills']:
+        if slot['skillId'] is None:
+            assert slot['overridePrefabKey'] is None and slot['overrideTokenKey'] is None, 'Unresolved null token skill override'
+        else:
+            named_slots.append(slot)
+    bindings = {r['skillId']: list(dict.fromkeys(level['prefabId'] for level in st[r['skillId']]['levels'])) for r in named_slots}
+    overrides = {r['skillId']: r['overridePrefabKey'] for r in named_slots if r['overridePrefabKey'] is not None}
     assert all(isinstance(v, str) and v for v in overrides.values())
     modes = []
     for skill, prefabs in bindings.items():
@@ -205,7 +211,7 @@ while stack:
         if value in ct and value.startswith('token_') and field not in parameters and value not in token_graphs:
             token_graphs[value] = original_token(value)
             stack.extend([(token_graphs[value], ''), (ct[value], ''),
-                          ([st[row['skillId']] for row in ct[value]['skills']], ''), (original_skills, '')])
+                          ([st[row['skillId']] for row in ct[value]['skills'] if row['skillId'] is not None], ''), (original_skills, '')])
         if value.startswith('projectile_') and field not in parameters and value not in projectile_graphs:
             g = original_graph(projectile_path, f'dyn/battle/prefabs/[uc]projectiles/{value}.prefab')
             projectile_graphs[value] = g; stack.append((g, ''))

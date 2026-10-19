@@ -14,6 +14,9 @@ import json
 import math
 from pathlib import Path
 import sys
+import io
+import zipfile
+import zlib
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / 'tools/local-extract'))
@@ -57,29 +60,75 @@ def refs(v, field=''):
 def verify(cache, directory, manifest, spec):
     meta = json.loads(manifest.read_text())
     assert meta['schemaVersion'] == 1 and meta['operator'] == spec['operator']
-    assert meta['version'] == '26-09-23-17-49-43_b9cc4a'
+    assert meta['version'] == spec.get('version', '26-09-23-17-49-43_b9cc4a')
     scope = meta['scope']
     assert scope['sourceInputsOnly'] is True and scope['enabledOperators'] == []
     assert scope['rendererVerified'] is False and scope['compiledFrameParity'] is False
     assert len(scope['pending']) == 3
-    hot = json.loads((cache / 'map-source/hot_update_list.json').read_text())
+    hot_bytes = (cache / spec.get('manifest', 'map-source/hot_update_list.json')).read_bytes()
+    if spec.get('manifest_sha256'):
+        assert digest(hot_bytes) == spec['manifest_sha256'], 'Changed pinned native resource manifest'
+    hot = json.loads(hot_bytes)
     assert hot['versionId'] == meta['version']
     expected = {spec['bundle'], '[uc]shaders.ab',
                 'arts/[pack]common.ab', 'battle/[pack]common.ab'}
     expected |= {r['name'] for r in hot['abInfos']
                  if r['name'].startswith('refs/fx/') and '/overseas/' not in r['name']}
-    assert len(meta['sources']) == len(expected) == 23
+    additional = spec.get('additional_roots', {})
+    expected.update(additional)
+    expected.update(spec.get('extra_dependencies', []))
+    assert len(meta['sources']) == len(expected) == spec.get('source_count', 23)
     assert {r['path'] for r in meta['sources']} == expected
     env, source_files, foreign_files = UnityPy.Environment(), {}, {}
     for r in meta['sources']:
         name = r['path']
-        file = cache / (spec['local_bundle'] if name == spec['bundle'] else 'map-source/ab/' + name)
+        file = cache / (spec['local_bundle'] if name == spec['bundle'] else spec.get('dependencies_directory', 'map-source/ab/') + name)
         raw = file.read_bytes()
         pinned = next(x for x in hot['abInfos'] if x['name'] == name)
         assert len(raw) == pinned['abSize'] == r['bytes']
-        assert hashlib.md5(raw).hexdigest() == pinned['md5'] == r['md5']
+        recipe_path = spec.get('anonymous_sources', {}).get(name)
+        if recipe_path:
+            # Independent of the fetch/export validator: read the full original
+            # ZIP, compare both full digests, CRC and the unchanged manifest row.
+            recipe_bytes = (ROOT / recipe_path).read_bytes();recipe = json.loads(recipe_bytes)
+            assert recipe['nativeRow'] == pinned and recipe['version'] == meta['version']
+            assert recipe['manifestSha256'] == digest(hot_bytes)
+            assert recipe['scope'] == {'sourceInputsOnly': True, 'officialArchiveContentMd5Recorded': True,
+                'nativeManifestShortTagVerified': False, 'rendererVerified': False,
+                'compiledFrameParity': False, 'enabledOperators': []}
+            archive, bundle = recipe['archive'], recipe['bundle']
+            assert archive['name'] == name.replace('/', '_')[:-4] + '.dat'
+            zipped = (cache / 'cn-native-source/archives' / archive['name']).read_bytes()
+            assert len(zipped) == archive['bytes'] == pinned['totalSize']
+            assert digest(zipped) == archive['sha256'] and hashlib.md5(zipped).hexdigest() == archive['md5']
+            with zipfile.ZipFile(io.BytesIO(zipped)) as z:
+                assert z.namelist() == [name]
+                info = z.getinfo(name)
+                assert info.file_size == bundle['bytes'] and info.CRC == bundle['zipCrc32']
+                assert z.read(info) == raw
+            assert zlib.crc32(raw) == bundle['zipCrc32'] and digest(raw) == bundle['sha256']
+            assert hashlib.md5(raw).hexdigest() == bundle['md5']
+            assert r == {'path': name, 'bytes': len(raw), 'md5': bundle['md5'], 'sha256': bundle['sha256'],
+                'checksumProof': {'kind': 'pinned-official-archive', 'recipe': recipe_path, 'sha256': digest(recipe_bytes),
+                                  'nativeManifestTag': pinned['md5'], 'nativeManifestShortTagVerified': False}}
+        else:
+            assert hashlib.md5(raw).hexdigest() == pinned['md5'] == r['md5']
         assert digest(raw) == r['sha256']
         bundle = env.load_file(raw, name=name)
+        if recipe_path:
+            assets = [f for f in bundle.files.values() if hasattr(f, 'objects')]
+            assert len(assets) == 1
+            f, identity = assets[0], recipe['identity']
+            assert f.name == identity['serializedFile'] and f.unity_version == identity['unityVersion']
+            assert int(f.target_platform) == identity['platform'] and not f.externals
+            m = f.objects[int(identity['materialPathId'])]
+            assert m.type.name == 'Material' and m.read_typetree()['m_Name'] == identity['materialName']
+            assert len(m.get_raw_data()) == identity['materialBytes'] and digest(m.get_raw_data()) == identity['materialSha256']
+            assert m.read_typetree()['m_Shader'] == {'m_FileID': 0, 'm_PathID': int(identity['shaderPathId'])}
+            assert dict(m.read_typetree()['m_SavedProperties']['m_TexEnvs'])['_MainTex']['m_Texture'] == {
+                'm_FileID': 0, 'm_PathID': int(identity['texturePathId'])}
+            assert f.objects[int(identity['shaderPathId'])].type.name == 'Shader'
+            assert f.objects[int(identity['texturePathId'])].type.name == 'Texture2D'
         for f in bundle.files.values():
             if hasattr(f, 'objects'):
                 assert name not in source_files and f.name not in foreign_files
@@ -92,16 +141,21 @@ def verify(cache, directory, manifest, spec):
     pack = json.loads(raw)
     assert pack['schemaVersion'] == 1 and pack['operator'] == meta['operator']
     assert pack['version'] == meta['version'] and pack['coordinates'] == 'original-unity'
-    main = source_files[spec['bundle']]
     roots = {}
-    for o in main.objects.values():
-        if o.type.name == 'Transform':
-            tr = o.read()
-            if tr.m_Father.path_id == 0:
-                go = tr.m_GameObject.read()
-                if '#' not in go.m_Name:
-                    assert go.m_Name.startswith(spec['root_prefix']) and go.m_Name not in roots
-                    roots[go.m_Name] = spec['bundle'] + ':' + str(go.object_reader.path_id)
+    for bundle_name, selected in {spec['bundle']: None, **additional}.items():
+        main = source_files[bundle_name]
+        found = set()
+        for o in main.objects.values():
+            if o.type.name == 'Transform':
+                tr = o.read()
+                if tr.m_Father.path_id == 0:
+                    go = tr.m_GameObject.read()
+                    if '#' not in go.m_Name and (selected is None or go.m_Name in selected):
+                        assert go.m_Name.startswith(spec['root_prefix']) and go.m_Name not in roots
+                        roots[go.m_Name] = bundle_name + ':' + str(go.object_reader.path_id)
+                        found.add(go.m_Name)
+        if selected is not None:
+            assert found == set(selected), 'Missing selected original dependency effect root'
     assert len(roots) == spec['roots'] and meta['roots'] == pack['roots'] == roots
     assert all('#' not in n for n in roots)
     assert meta['textures'] == pack['textures']

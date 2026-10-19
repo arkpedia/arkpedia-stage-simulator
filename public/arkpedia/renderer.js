@@ -4,6 +4,7 @@ import { fitCamera, syncThreeCamera, pickTile } from "/js/render/projection.js";
 import { BattleActor } from "./battle-actor.js";
 import { HeartCandleActor } from "./heart-candle.js";
 import { loadTragodiaStageEffects } from "./tragodia-assets.js";
+import { loadAphrissaStageEffects } from "./aphrissa-assets.js";
 import { EffectOnlyActor } from "./effect-only-actor.js";
 import { regularVisualHeight } from "./regular-form-visual.js";
 import { createAssets } from "/js/assets.js";
@@ -37,10 +38,14 @@ export class StageRenderer {
     this.host = host;
     this.data = data;
     this.views = new Map();
+    this.currentBattle = null;
     this.preloaded = new Map();
     this.effects = [];
     this.nativeEffects = nativeEffects;
     this.externalNativeEffects = nativeEffects !== null;
+    // Further owner-loaded passes beside the legacy Tragodia slot above; an
+    // external pass (previews/reviews) replaces them all.
+    this.ownedNativeEffects = new Map();
     this.scene = new THREE.Scene();
     this.scene.background = new THREE.Color("#10191d");
     this.camera = new THREE.PerspectiveCamera();
@@ -182,6 +187,19 @@ export class StageRenderer {
       bounds: m.bounds,
     };
   }
+  nativeEffectPasses() {
+    return [this.nativeEffects, ...(this.externalNativeEffects ? [] : this.ownedNativeEffects.values())].filter(Boolean);
+  }
+  async ownNativeEffects(key, wanted, load) {
+    const current = this.ownedNativeEffects.get(key);
+    if (wanted && !current) {
+      const pass = await load();
+      if (this.destroyed) { pass.dispose(); throw Error(`Stage renderer was closed while loading ${key} effects`); }
+      this.ownedNativeEffects.set(key, pass);
+    } else if (!wanted && current) {
+      current.dispose(); this.ownedNativeEffects.delete(key);
+    }
+  }
   async preload(ids, onProgress) {
     if (!this.externalNativeEffects) {
       if (ids.includes('char_1042_phatm2') && !this.nativeEffects) {
@@ -192,6 +210,8 @@ export class StageRenderer {
       } else if (!ids.includes('char_1042_phatm2') && this.nativeEffects) {
         this.nativeEffects.dispose(); this.nativeEffects = null;
       }
+      await this.ownNativeEffects('aphrissa', ids.includes('char_4229_aphris'), () => loadAphrissaStageEffects({three: THREE,
+        stage: this, descriptor: this.data.nativeEffects?.aphrissa}));
     }
     const tokenIds = regularTokenIdsFor(ids);
     const keys = [
@@ -254,7 +274,7 @@ export class StageRenderer {
           clipPath: `polygon(${points.map((p) => `${((p.x - x) / width) * 100}% ${((p.y - y) / height) * 100}%`).join(",")})`,
         });
       }
-    this.render(null, 0, []);
+    this.render(this.currentBattle, 0, []);
   }
   pickAt(clientX, clientY) {
     const rect = this.host.getBoundingClientRect(),
@@ -412,6 +432,7 @@ export class StageRenderer {
     spine.zIndex = 2000;
   }
   clear() {
+    this.currentBattle = null;
     this.highlight();
     this.preview?.actor.destroy();
     this.preview = null;
@@ -422,10 +443,14 @@ export class StageRenderer {
     this.views.clear();
     this.effects = [];
     this.skillParticles?.clear();
-    this.nativeEffects?.clear();
+    for (const pass of this.nativeEffectPasses()) pass.clear();
   }
   render(battle, dt, events, realDt = 0) {
-    this.nativeEffects?.update(battle);
+    this.currentBattle = battle;
+    // A non-actor effect pass may need the current visible Spine pose. Legacy
+    // passes keep their existing update order unless they explicitly opt in.
+    const nativePasses=this.nativeEffectPasses();
+    for(const pass of nativePasses)if(pass.updateAfterActors!==true)pass.update(battle);
     this.drawSurface();
     this.drawPreview();
     this.onLayout?.();
@@ -452,14 +477,15 @@ export class StageRenderer {
           if (this.preloaded.get(front)?.entry.animations?.[formVisual.clip]) key = front;
         }
         let view = this.views.get(u.id);
-        const replacing = !!view && view.key !== key;
+        const sameLife=!!view&&view.unit===u&&view.life===u.deploySeq;
+        const replacing = !!view && (view.key !== key || !sameLife);
         if (replacing) {
           view.actor.destroy(); view.hp.destroy(); this.views.delete(u.id); view = null;
         }
         if (!view) {
           const loaded = this.preloaded.get(key);
           const heartCandle = u.defId === 'enemy_5601_entlec' && u.mem?.entelechiaHost;
-          const effectOnly = this.nativeEffects?.isActor?.(u) === true;
+          const effectOnly = nativePasses.some(pass => pass.isActor?.(u) === true);
           if (!loaded && !heartCandle && !effectOnly) continue;
           const skillIndex = this.data.operators[u.defId]?.skills.findIndex(skill => skill.id === u.skill?.id);
           const actor = effectOnly ? new EffectOnlyActor(P, { gaugeHeight: 280 })
@@ -468,8 +494,8 @@ export class StageRenderer {
             { attackDrivenSkill: u.profile?.attackDrivenSkill === true });
           const hp = new P.Graphics();
           this.pixi.stage.addChild(actor.spine, hp);
-          if (!replacing) actor.deploy();
-          view = { actor, hp, key };
+          if (!sameLife) actor.deploy();
+          view = { actor, hp, key, unit:u, life:u.deploySeq };
           this.views.set(u.id, view);
         }
         view.unit = u;
@@ -655,10 +681,11 @@ export class StageRenderer {
         this.heightAt(Math.round(projectile.y), Math.round(projectile.x)) + 0.5);
       this.fx.beginFill(projectile.color ?? 0xfbd29a, 0.85).drawCircle(point.x, point.y, 3).endFill();
     }
+    for(const pass of nativePasses)if(pass.updateAfterActors===true)pass.update(battle);
     this.gates?.update(battle?.time ?? 0);
     this.skillParticles?.render(battle?.time ?? 0, this.projection, this.heightAt);
     this.three.render(this.scene, this.camera);
-    this.nativeEffects?.render(this.three, this.camera);
+    for(const pass of nativePasses)pass.render(this.three, this.camera);
     this.pixi.renderer.render(this.pixi.stage);
   }
   destroy() {
@@ -670,7 +697,7 @@ export class StageRenderer {
     this.artStatus.remove();
     this.observer.disconnect();
     this.clear();
-    this.nativeEffects?.dispose();
+    for (const pass of this.nativeEffectPasses()) pass.dispose();
     this.skillParticles?.dispose();
     for (const v of this.preloaded.values()) models.spine.release(v.entry);
     this.preloaded.clear();

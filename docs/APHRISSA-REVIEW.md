@@ -1,0 +1,586 @@
+# Aphrissa source and held runtime review
+
+Aphrissa (`char_4229_aphris`) remains outside the playable registry and normal snapshot. This branch contains original source recovery, selected build validation, exact animation clocks, normal/S3 relay lifecycle, ray geometry, ordinary Arts attacks, held talent controllers, composed S1/S2/S3 and independently reviewed original artwork. Native finish/control/FSM fidelity, gameplay effect dispatch and normal admission remain incomplete. The isolated complete-kit browser review is recorded below. Makoto is published in separate simulator master at `ceda89d2358f6d52f9fde168dfa3b8d60f8e7814`, complete tree `24ed78046beab5bc10bc55a6f15bc05aca9dbe81`, after all eight exact-head Linux/Windows Node22/24 jobs passed; its later master workflow also completed successfully. The local normal preview still serves that reviewed 403-form tree. Arkpedia app dev and production remain held.
+
+## Original source
+
+The foundation is 576,304 bytes, SHA256 `77207d3d44737940e6bc4aee4a4a57abea27a1490d3870168e9f1615527ca254`. It retains table commit `a550f5e048bb94e7cdefc6eb97a4091f0c4c7add` and native client resource `26-09-22-07-47-20_6c71fa`. Six original bundles supply 220 owner, artwork, skill and relay components, sixteen transitive templates, and three original skeleton facings. There are no referenced projectile prefabs or native/JSON template gaps. Full-width pointer IDs remain strings.
+
+The relay `token_10070_aphris_pc` has three original promotion skill slots with literal null skill and override keys. These rows remain intact. There is no token skill table, named token skill binding, mode skill or inferred prefab. The generic extractor now avoids named-skill lookups for these literal placeholders; the independent verifier reconstructs their original table rows and rejects nonempty overrides. A named skill with a null prefab is still a different source case and is not removed by this change.
+
+Sequential source audits on Node 22 and 24 each reproduce eleven original outputs and reject fifty altered source or approval claims, including missing/changed null slots and an invented null-key skill binding. The same generic change independently reproduces Mechanist's thirteen original outputs and rejects fifty-two altered claims while retaining its three named token skills. None of these source receipts approves public gameplay, modules, native particles or frame parity.
+
+All thirty owner skill ranks retain their exact SP, duration, blackboard, promotion locks, potential and trust inputs. E0 Lv50/P1/trust0 has 970 HP, 567 ATK, 78 DEF and 31 DP with one relay. E1 Lv80 has 1261 HP, 727 ATK, 107 DEF and 34 DP, with the relay talent's 15% ATK value. E2 Lv90/P6/trust200 has 1660 HP, 1021 ATK, 128 DEF, 32 DP and 66-second redeployment, with 25% relay ATK and 13 fixed RES penetration. The ordinary source range includes five cells at E0 and six at E1/E2, including the owner's cell.
+
+## Original clocks and modes
+
+The six original modes are Default, S1, S3, S3 Down, S2 and S1 Down. Both owner facings preserve the 2.9000000953674316-second ordinary/S1 attack loops and their 0.4333333373069763-second OnAttack marker. S3's original loop is four seconds with its marker at 0.5 seconds; its selected BAT modifier is a separate input. S2 has no invented Spine OnAttack marker: the native ability uses its own time-driven damage clock, with 0.16699999570846558 predelay and a 0.5-second trigger delta. S3 charges for the selected three seconds before its separate active ability; selected `attack@trigger_time` is twenty even though the prefab counter's default is forty.
+
+The relay has only Single-facing Default, Start, Idle and Die, with unrounded durations 0, 1, 3 and 1 seconds. The original Back owner skeleton has no Die or downward tracks. The clock tool independently hashes and parses all three original skeletons, reproduces the retained events and rounded metadata, and refuses changed receipt or skeleton bytes. Animation durations do not establish compiled action timing or native frame parity.
+
+## Held normal relay lifecycle
+
+The relay uses its own fixed 500 HP, zero ATK/block, three-DP cost and thirty-second redeployment time. Its promotion talent supplies a 15/20/25-second normal lifetime. The source slot cost is zero; chosen facing is required, with no host-range restriction. The source passive flags map locally to invulnerability, ally isolation and heal prohibition; the source zero-block modifier is retained. The card, payment and cooldown remain separate from the operator's own card and skill SP.
+
+The diagnostic controller supports low/high deployable tiles, original single-facing Start/Idle/Die, a passive lifetime gauge, expiry, manual withdrawal and owner retirement. It binds the original deployment life. It claims placement before callbacks, rolls back interrupted or failed births, prevents reentrant double spending, ignores stale removal callbacks, and preserves foreign resources and replacement deck entries. Owner death, withdrawal, replacement or battle end drains owned hooks and removes the linked relay. Control and hiding do not pause a previously deployed relay lifetime.
+
+These are explicit local mappings: integer withdrawal refund uses `floor(3 × 0.5)`, matching StandardBattle's policy; timeout callbacks run at the tick's start timestamp; card recovery and cooldown dispatch use the existing simulator lifecycle. Native card/refund ordering, alias decoding and compiled timeout behavior are not proven. The relay-only fixture supplies no active owner skill. Composed owner fixtures are separate. The S3 card lease extends this controller below; normal-only preparation cannot enable it.
+
+## Held ray geometry
+
+The geometry adapter emits no damage, attacks or skill activations. It retains the ordinary finite straight source grid, ID-only friendly relay validator and two-cell extension. S2 separately retains its infinite ray, OR validator for relay or operator mask639, and relay-only extension validator. It uses the simulator's existing cardinal directions and current grid occupants. It does not invent a same-host restriction for the native relay ID validator.
+
+Grid-centre occupancy, operator mask639 mapping, relay isolation exception, rectangular map boundaries, first-arrival per-cell metadata and repeated-directed-arrival cycle termination are explicit local policies. Tests exercise real diagnostic relay placement, actual Beagle deployment, current facing changes, finite last-cell extension, other-source relays, hidden/enemy/removed exclusions and bounded cycles. These checks validate this bounded adapter; they are not independent proof of the native custom range class's traversal, continuous hit bodies or tie order.
+
+## Held ordinary Arts attack
+
+The ordinary controller requires an explicit owner-mode predicate. It retains original Start, facing-specific Attack/Attack_Down, the original 0.4333333373069763 OnAttack marker, native maximum animation scale one, and affectedBySlowDown. The marker resamples the diagnostic ray and captures each distinct legal ground/air recipient life. One shared ordinary attack receipt owns the batch. Separate Arts hits use live ATK and source hitInterval 0.05000000074505806 on the same ability clock; ordinary damage ignores DEF and retains normal RES and damage hooks. A recipient moving after acceptance stays captured; a later entrant or replacement life cannot join the batch. Control, hiding, mode departure and owner retirement cancel unborn work. Reentrant forceAttack and target replacement are refused; cleanup preserves foreign presentation state.
+
+The source custom range and selectTargetTiming3 aliases, first-path-cell/stable-ID target order, retained recipient batch, sampled BAT/interval clock, same-clock hit stagger, initial birth hold and same-tick callbacks remain explicit local mappings. These are not compiled hit-order or native frame-parity proof. No native beam particles or effect assets are substituted. The fixture supplies no active owner skill, relay ATK buff or RES aura.
+
+The initial selected source, clocks, relay, ray, ordinary attack and shared CN/summon/HUD/slow-down/Mechanist set passes 346 checks on each of Node 22 and Node 24. Frozen commit `3ee5e01c30c3d62f10ccb688b9aa2dd387ca1708`, tree `13f586e2577f82a35edeea370af05f45ecc4cfa5`, then passes the complete local Node 24 suite: 20,658 passed, 29 optional skips, zero failures/cancellations, 20,687 tests across 325 suites in 630.598 seconds. All 921 original skeletons verify. The first attempt lacked generated ignored browser vendor files; the normal vendor/setup scripts restored them before that successful full run. Tracked source was unchanged between attempts.
+
+A later ownership review reproduces four further failures before correction: replacing the ordinary controller or relay controller did not retire the stale owner, a mode predicate clearing the phase during hit admission could still deliver a stale hit, and a throwing mode query retained the pending phase. Both controllers now require their exact current memory-slot identity. Staggered delivery rechecks phase identity after the mode predicate; query errors clear pending work before propagation. The updated related set passes 350 checks on each Node version without failures or skips. This executable follow-up is separate from the frozen complete-suite result above. A fresh complete and hosted release gate remains required after the full kit is composed.
+
+## Remaining gates
+
+- Review the held ordinary/ray, relationship and aura arbitration mappings against the native custom classes before public admission.
+- S2 native finish/FSM/control semantics and faceToTarget1 presentation. The held periodic damage and local owner composition are reviewed below.
+- S3 compiled charge/wrapper window, counter/last-batch finish, card actions and producer/miss dispatch. Held implementations and their explicit local limits are reviewed below.
+- Recover the remaining original effect resources, native shader/particle/animation dispatch and audio, then review actual effect playback. Complete-kit desktop/touch controls, original-wave clears and independently published artwork/interface pixels have passed their separately scoped checks below.
+- Preserve complete regression evidence after executable changes; finish all exact-head hosted checks and reviewed-tree publication before a ready PR. The held complete battle regression below has passed locally.
+
+Modules, native particles/audio and compiled/frame/pixel parity remain unapproved. The source checkpoint creates no public roster admission or Arkpedia app release.
+
+## Held talent composition
+
+The RES talent grants fixed penetration to actual friendly operators, including self, on the explicitly dispatched current normal/S2 ray. It does not lower enemy RES. E0/E1 have no invented talent; E2 uses ten, or thirteen at potential six. Purpose0 selection ignores healing prohibition and ordinary control while retaining target-free/ally-isolation exclusions. A shared nonstacking `aphris[t2]` family uses an explicit local highest-power, earliest-deployment/stable-ID arbitration with fallback. Owned instances retire on range/source/recipient changes, and foreign replacements are not adopted or removed. A reproduced late-admission failure required a final ownership sweep: replacing the source inside a later child callback cannot leave earlier grants alive in that pass. The thirty-two aura cases cover that failure, fresh recipient lives, rejected/forged grants and actual shared damage calculations.
+
+The relay-presence component retains the separate original parent and derived owner ATK child. The native relationship validator's numeric fields are retained, but its compiled meaning remains unrecovered. The component requires an explicit related-set adapter; the S1 composition supplies actual `ownerUnit` relays. It does not silently reuse the ray ID-only selector. Multiple eligible parents grant at most one fifteen/twenty-five-percent owner bonus, with an explicit earliest-relay fallback; E0 invents no missing coefficient. Parent/child cleanup preserves foreign replacements and accepted life identity. Its twenty-five cases separately test relation selection, nonstacking, no-range presence, control, reentrancy and retirement. These adapters are local mappings, not compiled-validator proof.
+
+## Held composed S1
+
+The actual selected time-SP AUTO account activates without targets and remains active indefinitely, with no manual cancel or fabricated SP recharge. Original Begin has no OnAttack marker. This local composition completes its literal full Begin duration on world time, then admits the independent infinite `aphris_sk1` ATK parent and `aphris_sk1_switch_mode` parent in producer order. Rejecting one grant does not fabricate rejection of the other. The mode parent selects mode1/5 and actual ordinary/S1 profiles. Its removal restores ordinary combat without ending the independent ATK parent or account. Native loopType1 uses explicit local A/B alternation with the original down variants; the separate attack component refuses foreign mode clips, premature entry and reentrant clip dispatch.
+
+The original ATK parent's CreateBuffToToken action emits nonderived infinite `aphris_sk1_token` markers to existing owned relays. Newly born relays separately check their host's active parent and receive a self-sourced marker. Existing same-key markers are preserved by disableOverride. Ending the owner ATK/mode parents does not retract accepted nonderived token markers. Each relay's original finite withdrawal timer still reaches its original deadline; it checks the literal marker once and suppresses that withdrawal if present. Removing the marker after this finish cannot restart the already-resolved timer. Marker removal before the deadline still permits normal withdrawal. The original SpShowBuff NONE maps to hiding the passive lifetime gauge without inventing readiness.
+
+The thirty-nine S1 cases cover all ten ranks, natural automatic SP, lower promotions, separate parents, actual ground/air Arts damage with both talents, original facing clips, permanence and one-time expiry, control and full owner cleanup. The combined Aphrissa/source/clock/relay/ray/talent/S1 and shared CN/summon/HUD/slow-down/Mechanist set passes 446 checks on each of Node22 and Node24, with zero failures or skips. S1 Begin/FSM/dispatcher timing, host relation, attribute buckets, aura ties, native effects and compiled/frame/pixel parity remain explicitly local or unapproved. The earlier frozen full-suite result does not cover this later executable composition.
+
+## Held S2 timed damage ability
+
+The separate beam component requires the original selected S2 build, its exact active SkillRuntime account/activation, and explicit channel-current and release-permission adapters. Native `_waitForAttackEvent=0` supplies no Spine hit marker. The local clock starts at original predelay `0.16699999570846558`, repeats every original trigger delta `0.5`, and stops before the selected eight-second duration. It does not infer additional tail damage from `_postDelayChecker=0.6669999957084656`. Native `_affectedBySlowDown=0` keeps this clock independent of slow_down and ASPD.
+
+Each pulse traces the current infinite S2 ray, including newly deployed, withdrawn or turned operators/relays. It captures distinct current enemy lives on that path, including ground and air units, and releases one nonempty skill attack receipt. Hits use current ATK, selected rank scale and current RES through the shared damage pipeline. Target-free, camouflage, stealth and sleep exclusions remain active. A captured recipient may move within its accepted pulse; a replacement life or newly arriving enemy waits for a later pulse. Empty, vetoed or permission-rejected pulses consume their clock positions without inventing attack SP or accumulating a burst. Callback reentry cannot repeat the receipt; account, activation, mode, controller or life replacement prevents stale releases.
+
+The ability-only test harness explicitly uses a timed account and a skip-on-control permission policy. This is not recovered native interruption/resumption behavior: the original `_ignorePalsyInterrupt=0`, `_stopAffectOnInterrupt=0`, custom timeMode3 and restartFSM0 semantics are not established by the local owner composition. First-pulse phase, the duration boundary, target timing alias, first-path-cell/stable-ID ordering and same-tick recipient batches are declared local mappings. The component itself supplies no animation wrapper, facing override, native beam effects or public admission.
+
+All fifty-five focused cases pass, covering all ten ranks, real operator/relay turns and withdrawal, cycles, changing targets, live damage modifiers, empty/vetoed pulses, control permission, reentrant hooks and retirement. The expanded related Aphrissa/CN source/Mechanist/summon/selection/HUD/slow-down set passes 525 checks on each of Node22 and Node24 with zero failures or skips. The foundation hash remains unchanged. These targeted results do not replace a fresh complete-suite and exact-head hosted publication gate after the full kit is ready.
+
+## Held composed S2
+
+The owner composition uses selected manual time-SP, blocks recharge while active and can cast without enemies during original Start. It maps the selected eight-second value to a local duration account despite the original durationType NONE. Original Begin completes at `0.1666666716337204`; the independent beam predelay remains `0.16699999570846558`. Literal Loop and End, including original downward variants and the Back-facing default family, are retained without fabricating hit markers. On account end the beam detaches, its owned parent retires and the literal End completes before ordinary combat or another cast. SP recovery resumes after account end. This account/ability/wrapper completion policy is explicit local behavior, not recovered native timing.
+
+The separate infinite `aphris_sk2_switch_mode4` parent maps the original loaded mode4 and default-restoring finish. Both template edges have restartFSM false, and positive ordinary cooldown is preserved. Mode admission/removal is independent of the beam account: a rejected or removed parent leaves the owned beam running, while the RES aura returns to normal attack range. It never adopts a foreign same-key parent or accepts modified flags/stats. The relay-presence ATK talent and current normal/S2 RES aura compose through their independently held contracts. S2 invents no S1 permanence marker or S3 extra relay stock.
+
+The local control policy skips beam damage during action prohibition, disarm or hiding, preserving the account clock and original Loop. Silence does not disable this nonsilenceable skill. It neither replays Begin nor accumulates skipped pulses. Native interruption, continuation, postDelayChecker, FSM finish order and faceToTarget1 remain unresolved. Presentation stays anchored to deployed facing rather than claiming recovered target-facing rotation.
+
+Two presentation ownership bugs were reproduced and corrected: ending the account could overwrite another controller's replacement visual, and completing Begin could overwrite a replacement during the transition to Loop. End and Loop transitions now check their owned presentation; retiring the controller preserves foreign mode and presentation state. Source/account/life replacement drains all owned component hooks, aura grants and relays, including replacement during the first damage callback.
+
+The forty-eight composition cases include all ten ranks, natural/manual SP, E1 and P6/trust selection, actual damage with both talents, ordinary-to-skill transitions, mode-parent rejection/removal, current paths, original facing clips, SP/HUD behavior, control and callback cleanup. The final related set passes 573 checks on each of Node22 and Node24 with zero failures or skips. The original foundation remains unchanged and the earlier complete-suite checkpoint predates this composition. No normal-roster admission, ready PR or Arkpedia app release is granted.
+
+## Held S3 relay resources
+
+The exact S3 resource contract permits two extra card slots, retaining the selected `token_recharge_cnt=2`. Its source start sequence grants charges, force-withdraws tracked current relays without refund, and resets deployment cooldowns without a first-period wait. Each slot keeps its own thirty-second recovery; another ready slot remains deployable while one recovers. The exact lease ticket ends by removing the extras, withdrawing all tracked relay lives and restoring one immediately ready baseline card. A stale ticket cannot end a later lease. Normal-only preparation retains one card and cannot invoke S3 resource changes.
+
+Each relay's original host-birth OR check accepts `aphris_sk1`, `aphris_sk3[sheltering]`, `aphris_sk3[on_finish]` or `aphris_sk3[mark]`. An accepted check grants a self-sourced, nonderived, infinite `aphris_sk1_token`, preserving disableOverride. S3 reuses that original marker rather than inventing a new permanence key. Each point owns its own lifetime gauge and one-time expiry check. Extra-card preparation alone does not invent a host marker or permanent lifetime. Untracked same-ID summons, other owners' relays and replacement deck entries are preserved.
+
+Card-slot representation, per-card recovery, tracked ownership, atomic placement/action guards and callback rollback are local mappings. The selected description supports extra simultaneous deployment and withdrawal/reset, but compiled ForceRechargeToken/ResetTokenRespawnTime ordering is not proven. Charge-cancel versus ON_OWNER_FINISH dispatch remains unresolved. A reproduced race refused lease closure during marker admission; closure now invalidates the pending placement generation, refunds its exact payment and restores one usable baseline card. Another reproduced race cancelled the account inside the start withdrawal before its lease ticket returned; the owner now closes that late ticket instead of orphaning three cards. Thirty-four resource cases cover all ranks, multiple points, stale tickets, cooldowns, markers, transactions and retirement.
+
+## Held S3 attacks and payload
+
+The shared attack clock separately binds original `Skill_3_Loop`/`Skill_Down_3_Loop`, their `0.5` OnAttack marker, native maximum animation scale one, affectedBySlowDown and original `0.05000000074505806` recipient stagger. Selected `attack@atk_scale` applies to the main Arts hit. The normal and downward native counters retain their default forty; neither overrides the selected twenty-round account.
+
+Before each main hit, the separate non-missable instantaneous `aphris_sk3` producer executes its retained template: assign current recipient ray extension metadata; cap/round by selected `max_times`; calculate `origin_sluggish + extra_sluggish × extendTimes`; create nonderived common Sluggish; and loop independent extra Arts damage by the capped count. Selected max_times is one, so traversing two or three relays does not fabricate two or three extra hits. Each extra hit retains live source ATK, NORMAL attack type, NONE application way and the batch attack ID. Slow rejection does not cancel the independent damage loop; producer rejection does not fabricate rejection of the separate main hit. The nonderived Slow keeps its accepted lifetime after producer/source retirement.
+
+Fresh ray metadata at producer admission, first-arrival overlap, zero extension for a retained target moved off the current ray, producer-before-main ordering, primitive buff admission, shared attribute buckets and ordinary miss dispatch are explicit local mappings. Compiled custom range, native producer/normal damage interleaving and game-frame parity are not established. Twenty-five attack cases cover all ranks, per-target extension/capping, live damage modifiers, original facings, status resistance, independent rejection and callback/target-life ownership.
+
+## Held composed S3
+
+The real manual time-SP ammunition account uses the selected twenty rounds. It cannot cast during original Start, holds SP while active, exposes the existing ammunition HUD and permits manual discard. Charge uses selected three seconds of world time. The literal original Begin and End are included within that local window with Loop between; this is an explicit local completion policy, not recovered native wrapper/sequence timing. Source FORCE_DISARMED18 maps to disarm, corroborated by the separately pinned Android enum reference retained in `data/arkpedia-makoto-status-source.json`; that reference does not identify an identical client version. The owner also gates ordinary/S3 attacks directly during charge.
+
+The charge's independent mark, shelter and withdrawal parents admit the relay lease only when the withdrawal parent is accepted. Active stat and mode parents independently supply selected ATK/BAT and mode2/3, retaining downward dispatch and original End. Rejection of one parent does not fabricate rejection of another. A missing mode parent suppresses S3 attacks instead of spending a mode-specific counter through ordinary attacks. Native particles, charge/wing/finish VFX and audio are not substituted. Charge clock through control, manual charge cancellation, restartFSM cooldown preservation, parent rejection/removal and account-versus-presentation end remain declared local policies.
+
+One accepted nonempty multi-target attack spends one actual runtime round, independent of target count, extra damage and Slow. The complete twenty-round regression includes a final staggered batch: the account exhausts, but its accepted remaining inputs retain owned stats and relays until delivery finishes. A reproduced bug treated the last already-claimed input as finished and dropped its extra/main damage. The shared clock now records its currently delivering input, so last-batch permission lasts through that recipient and ends immediately afterward. Manual cancel or source retirement still cancels unborn work. Full cleanup removes the owned parents, withdraws relays, restores one normal card and waits for the original End before ordinary combat. Thirty-two owner cases include all ranks, natural/manual SP, charge clips, both talents, actual twenty-round exhaustion, cancellation and retirement.
+
+The combined Aphrissa and shared CN/Mechanist/summon/selection/HUD/slow-down set passes 664 checks on each of Node22 and Node24 with zero failures or skips. The foundation bytes/hash remain unchanged. Original art/interface/browser review, native fidelity decisions and all exact-head hosted checks remain required before a ready PR or public roster admission. Later executable changes require a fresh complete regression beyond the frozen checkpoint below.
+
+## Complete frozen S3 checkpoint
+
+Commit `a68bbdeb4f410b72764b786d3a1146158d9ca007`, complete tree `b4362818330b144f8c610db3a624d399c711f8c6`, passes the complete local Node24 suite with `SP_E2E=0 SP_REAL_E2E=0 RENDER_E2E=0`: 20,985 tests across 325 suites, 20,956 passed, 29 optional skips, zero failures/cancellations, in 493.021 seconds. All 921 existing skeletons verify with zero downloads. The generated vendor/setup check passed before the run; optional inherited Stronghold art/audio was absent. No tracked file changed during the frozen run. This result addition changes documentation only; it is not an exact-head hosted publication gate or artwork/native fidelity approval.
+
+A subsequent read-only native component crosscheck confirms that both S3 selectors match the ordinary enemy-selector fields, and their finite custom ranges retain the same two-cell extension and ID-only relay-validator parameters. This supports the shared finite adapter inputs, not its unverified compiled traversal. Original owner skeleton bytes already match delivered SD files, but their manifest animation metadata is absent and the relay has no manifest entry. Original full-size interface dimensions are present; pixel provenance still needs verification. The source art controller also retains twelve literal mixes, including the Down S2 Loop-to-Idle mix using `Skill_2_End` and the S3 Charge-to-Idle `Charge_End` mix. These source facts must be preserved and reviewed against the held completion policies before admission.
+
+## Independently published original artwork
+
+SD assets PR [#46](https://github.com/arkpedia/arkpedia-sd-assets/pull/46) publishes complete tree `14489d3db489f7ad81668c5efdf4deb346d25981` at main commit `27341cba520c7612eb874d1b0f946715b95498d6`. Both exact-head hosted push/PR checks passed; the reviewed head, proposed merge and published complete tree matched. Aphrissa's Front/Back metadata now records original premultiplied alpha, parsed animation durations, hit events, bounds and literal roles. Its six preexisting source files remain byte-identical. The new relay model retains one native Single skeleton, with explicitly declared Front/Back compatibility aliases and the separately traced native 180px card Sprite. The other 3,024 model entries are unchanged; all 3,028 complete models validate. All 88 SD tests pass on Node22 and Node24.
+
+`data/arkpedia-aphrissa-art*.json`, `data/arkpedia-aphrissa-token-art*.json` and `data/arkpedia-aphrissa-token-avatar*.json` retain original bundle hashes, full-width pointers, decoded texture pixels and material/source facts. Owner audits reproduce the six unchanged files and reject 33 changed claims on each Node version. Relay audits reproduce four original outputs and reject 36 changed claims on each Node version, including invented attack events/roles for the passive relay. The generic token audit now handles a missing attack role without weakening the original verifier. The attacking McGraf regression still reproduces seven outputs and rejects all 52 alterations on both Node versions. The independent card-Sprite audit rejects 20 altered pointer/provenance/pixel claims.
+
+Actual artwork-only browser review uses desktop 1280×720 and touch landscape-phone 844×390. Owner review samples 47 face/clip pairs per viewport and captures all 32 declared phases per viewport; relay review samples six alias/clip pairs per viewport and captures four phases per viewport. The 72 captures produce no console errors or failed requests. Representative S3, downward S2, relay Idle and relay Start captures were visually inspected. Missing Back downward tracks remain explicitly absent; relay Default retains its actual empty zero-duration clip. These are art compatibility checks, not complete-kit battle or native effect/frame-parity approval.
+
+## Independently published interface pixels
+
+Image assets PR [#53](https://github.com/arkpedia/arkpedia-image-assets/pull/53) publishes complete tree `4f4fc09721a4948b7edb07324a1f3bde61a31fcf` at main commit `262df16bed8ee859ead687c25e472b830a30f96e`. Its exact-head hosted check passed and reviewed/proposed/published complete trees matched. The old 180px portrait and three 128px skill icons had lossy visible-pixel differences. Their lossless WebP replacements match every RGBA pixel from named upstream PNGs at `yuanyan3060/ArknightsGameResource` commit `66dc23ad2208f14e2e3c31401ca9ce8d40b95550`, with Git blob IDs matching the existing source map. `data/arkpedia-aphrissa-interface-art.json` records source/output hashes, dimensions and the published asset pin.
+
+Only these four source-map entries opt into the new lossless codec setting. Real refresh tests preserve visible and transparent pixels; invalid settings cannot replace an existing image. All 58 image tests pass. Local checks validate the complete 15,936-path inventory and all four changed files; hosted Linux validates every published image. The preexisting local Gallus case-collision change was neither staged nor altered. No app dev/production promotion or normal simulator admission occurred. The simulator's related set remains 664 passing checks on both Node versions after artwork recovery.
+
+The published SD postmerge run `39207256232` and image postmerge run `39207278249` both completed successfully at their recorded main commits.
+
+## Isolated complete-kit battle review
+
+`tools/arkpedia/aphrissa-review-data.mjs` creates only `.cache/arkpedia/arkpedia-aphrissa-candidate.json`. The normal registry and tracked normal snapshot retain 403 forms and 921 models, with no Aphrissa admission. The explicitly selected held snapshot adds Aphrissa and its original relay: 404 forms and 925 models. Node22 and Node24 generate byte-identical candidate output. The builder checks the unchanged foundation hash, source channel, independent original artwork receipts, passive relay metadata and exact published interface bindings. Existing operator/model records and original terrain, waves and enemies are preserved.
+
+An explicit one-owner review marker permits the held support record through actual loadout/selection and battle dispatch. Missing, duplicated or conflicting markers fail closed. S1/S2/S3 install their already held composed owners; they cannot fall back to generic caster behavior. This mechanism grants no normal roster, native fidelity, module or effects approval. Renderer dependencies retain the same explicit scope. The first browser review exposed an omitted dependency: a correctly deployed relay had no preloaded model. Adding its original Single-model compatibility aliases to the selected held owner's preload dependencies fixes the missing actor without allocating it for normal or unselected operators.
+
+Forty battle/integration checks cover all thirty selected skill ranks, original DP/stats, support P6/trust, ordinary and skill damage, natural SP, S1 automatic activation, S2 timed return, S3 ammunition/manual discard, relay card/slot ownership, retreat/redeployment, rejection of altered selected inputs and changed original art. All three skill selections clear unchanged original 0-1 with natural DP: eleven kills, zero leaks, twenty life and 3,850 actual Aphrissa damage each. This short stage does not naturally reach S1 activation; its automatic transition and skill damage are independently covered by controlled battle/browser cases. The S2 and S3 original-wave cases record two and one manual casts respectively; stage clearance alone does not establish skill-specific hit fidelity.
+
+`tools/arkpedia/review-aphrissa-held.mjs` passes six actual Chromium cases across desktop1280×800 and emulated touch landscape844×390, producing 46 captures with no browser errors or failed resources. Cache is disabled, and external immutable HTTPS assets use ordinary TLS without interception. The controlled fixture retains original terrain with empty waves,99DP and healthy pinned enemies; original-wave checks are separate. Actual squad skill selection, operator drop then separate direction swipe, original Front/Back art, natural SP, ordinary/skill damage, S3 charge/ammo/manual discard, original relay portrait/actor and its separate drop/swipe, zero-slot deployment, permanence and retirement are exercised. Representative desktop S3 charge, touch S2 output and touch S1 relay captures were visually inspected. This verifies the declared held adapter, not native effects/audio, physical devices or compiled/frame/pixel parity.
+
+The broader Aphrissa/CN/native/roster/token/selection/SP-HUD/slow-down/Mechanist/Makoto regression passes 1,524 checks on each Node22 and Node24 with no failures or skips. The frozen complete regression below remains separate from the earlier S3-only checkpoint. Full native finish/transition/custom-validator fidelity and ready-PR/exact-head hosted publication gates remain pending. No Arkpedia app dev or production merge occurred.
+
+## Frozen complete battle-review regression
+
+Commit `a5550b4389ca3043972bad0ba99e10982e062357`, complete tree `ccca20ecc0b55955110545df2ddc12da3c498075`, passes the complete local Node24.21.0 suite with `SP_E2E=0 SP_REAL_E2E=0 RENDER_E2E=0`: 21,025 tests across 325 suites, 20,996 passed, 29 optional skips, zero failures/cancellations, in 494.833 seconds. All 921 normal-roster skeletons verify with zero downloads; the unchanged heavy two-player battle performance limit passes. The working tree remained clean throughout the frozen run. The separate 46-capture held browser review and independent original-art audits cover the added candidate artwork. This documentation-only result update does not grant normal admission, native fidelity or exact-head hosted publication approval.
+
+## Original effect input recovery
+
+The effect tools now support an explicitly pinned resource version, manifest hash, source directory and selected dependency roots. Existing Global defaults remain unchanged. `fetch-aphrissa-effects.mjs` verifies the exact CN manifest SHA256 and 26 ordinary bundle lengths/MD5/SHA256 values and the full digests of the recovered anonymous material archive. Its opaque four-character manifest tag is retained without claiming that its algorithm is verified. It downloads only absent bundles and refuses changed cached inputs. The selected closure contains eighteen owner effects, three relay effects from `pkgrps/btl_pfb_fx_token_3.ab` and original `common_char_birth_01_delay_01`. Aphrissa's star texture resolves through the exact native CAB pointer into the same client's `refs/fx/texture/overseas/char_010_chen_sale#10.ab`; the directory label does not justify excluding that actual dependency.
+
+`data/arkpedia-aphrissa-effects.json` retains 22 roots, 2,319 original objects, 36 meshes, 89 exact RGBA textures, 459 particle systems and 24 line renderers. `extract-aphrissa-effects.py` reproduces 92 files byte for byte, and the independent native verifier compares each original serialized object, full-width pointer, mesh channels, texture pixels, root membership and reference closure. The shared semantic audit rejects eighteen modified claims, including removal of a selected relay effect and a changed native client. All 30 nonempty literal visual references from the retained owner, skill, token, buff and art graphs bind to eighteen recovered keys in `data/arkpedia-aphrissa-effect-bindings.json`. Four further recovered roots are retained rather than declared unused merely because the scanned string fields do not name them. The retained S2 loop-audio reference is identified but not recovered.
+
+Two unresolved resource identities remain explicit in the source pack: built-in meshes `Library/unity default resources:10202` and `:10210`, with their separate official-player bindings described below. The previously missing material `CAB-967586173c51ac60f86de17c3e4b1a32:-1258035316725772468` now resolves all 56 original renderer slots through the exact same-client anonymous resource. The complete archive and object proof are recorded below. No replacement material, mesh or particle effect is invented. The native effect bundle reports Unity2021.3.39f1 with Android platform code13; that header alone does not approve another player's built-in resource file.
+
+`extract-aphrissa-effect-shaders.py` recovers the eight original linked shaders and all fourteen linked GLES3 player programs, including equations, keyword/player links, pass states, property defaults and trailing metadata. `data/arkpedia-aphrissa-effect-shaders.json` binds their original bytes; the shader audit reproduces both outputs and rejects fifteen altered-source/approval cases, including the additional source-bundle receipt and program equations. This is original shader-source recovery, not browser shader or particle playback certification.
+
+The existing Global Lappland effect audit still reproduces all 93 files and rejects sixteen corruptions; its shader audit reproduces both outputs and rejects twelve corruptions across twelve shaders/twenty-three programs. The unchanged Tragodia verifier independently checks 33 roots, 1,844 objects, 32 meshes and 72 textures. The related effect/shader/held-battle checks pass 88 cases on both Node22 and Node24 with no failures or skips. Both Node versions also reproduce byte-identical source inventories and literal-effect bindings. These tools and metadata are source preparation only: no runtime effect connection, normal roster admission, ready asset/simulator PR or Arkpedia app dev/production promotion is granted.
+
+## Original built-in mesh bindings
+
+`data/arkpedia-aphrissa-builtin-meshes.json` separately binds all five original built-in references from the 22-effect source pack: three Cube (`10202`) pointers and two Quad (`10210`) pointers. The resources come from the pinned official Android APK ZIP entries already recorded by the original built-in-resource pipeline. The effect bundles and official player report Unity2021.3.39f1/Android platform13; that player's resource file reports Unity2021.3.38f1. Whole-package integrity, the exact Aphrissa game-client release and compiled frame parity are explicitly unverified. This is a recorded official-player/engine binding, not an invented primitive or exact-client certification.
+
+The original Cube object is 1,816 bytes with SHA256 `7d33190c6a48d8788035f8ff076090a8579e111cbef2268cbf6e88262df943f4`. Its 24 vertices use a 56-byte stride and retain a second UV channel, with 36 original indices. Quad retains its original 604-byte object, 48-byte vertex stride, four vertices and six indices. The independent audit decodes all 28 vertices and 42 indices directly from the native buffers, verifies each original foreign-file pointer and reproduces both output files. Seventeen altered geometry/provenance cases are rejected. The existing 133-pointer/Quad audit still reproduces its original outputs and rejects ten alterations. The shared resolver accepts only these two named/raw-hash identities and the exact recorded source-pack/component pointers; unknown primitives and invalid secondary UVs remain rejected.
+
+The original effect pack still records its three external resource identities. The separate binding resolves both mesh identities for this source pack; material `CAB-967586173c51ac60f86de17c3e4b1a32:-1258035316725772468` remains unresolved. Six renderer components using it are enabled in the source data, so it is not discarded based on the fifty other disabled renderer components. Effect playback and normal admission remain held.
+
+## Bounded native dependency discovery
+
+`probe-cn-bundle-headers.py` reads at most 16KiB per remote ZIP prefix and decodes the original UnityFS directory. It verifies the pinned manifest SHA, requested ZIP entry, native declared size, bounded block/directory structure and original CAB names. Cached results are immutable-version discovery hints; matching full bundles still require complete source verification before use. Atomic checkpoints, cached hints, an explicit scan limit and stop-on-match support avoid repeated whole-asset downloads. Partial checkpoint files are ignored during hint loading. Every result retains `headerOnly:true` and `fullBundleVerified:false`.
+
+An independent audit matches the directories and engine headers of all 200 then-cached checksum-verified original bundles against UnityPy full-file reads, exercises stored/deflated ZIP prefixes and rejects fourteen invalid/truncated headers. The cached-hint/stop-on-match path also passes with a known original Aphrissa bundle and an intentionally incomplete temporary checkpoint. The remaining material lookup continues against the pinned index; individual probe failures and unsupported resource formats are retained as errors, not interpreted as proof that the material does not exist. Header discovery grants no renderer or gameplay approval.
+
+## Authored initial streamed values
+
+Five original effect clips contain streamed channels whose first finite key occurs after the clip start. The former channel decoder discarded the initial sentinel and refused these clips. It now retains the original constant sentinel value until the first authored key, including channels with no later finite key. The three leading sentinel coefficients must be zero, and the initial value must exactly match that channel's original `m_ValueArrayDelta.m_Start`. No zero/default transform or synthetic start key is substituted. Existing clips with authored keys at the start preserve their previous decoded output.
+
+`data/arkpedia-aphrissa-streamed-initial-values.json` and its raw native fixture retain the five original clip identities. Independent native reads verify 70 authored starts and 26,964 sampled scalar values; both Node22 and Node24 reproduce the two outputs. The related mesh/stream/held-battle set passes 230 checks on each Node version with no failures or skips. The existing Tragodia nine-clip/476-channel and Lappland ten-clip/375-channel exports remain byte-identical and pass their independent native verifiers. This verifies source channel decoding, not Animator/legacy Animation dispatch, line width application or native effect playback. At this checkpoint, one remaining legacy Euler clip and LineRenderer custom bindings still required their own source-backed implementation; their subsequent recovery is recorded below. The prior full-suite result belongs to the earlier frozen tree; a fresh complete regression and exact-head hosted gates remain required before publication/admission.
+
+## Complete original animation channels and explicit poses
+
+`data/arkpedia-aphrissa-effect-animations.json` now records all fourteen original clips, twenty-one driver/clip instances, 568 bindings, 584 scalar channels and 537 finite keys. The two original legacy `Animation` components retain their own identities, default clip, enabled/autoplay flags and wrap mode; neither is invented as an Animator controller. Their shared wing clip uses its authored 0–3.3333332538604736-second loop, literal `wing_L`/`wing_R` paths, unweighted incoming/outgoing tangents and source rotation order. Its unused muscle 0–1 clock is not used. Weighted, mixed, compressed, differently ordered or differently wrapped legacy inputs remain rejected.
+
+The original LineRenderer custom property hash resolves exactly to `m_Parameters.widthMultiplier`, with 32 width bindings and 64 material-channel bindings across the clip inventory. Explicit inspection poses retain line renderers, animate each source width independently from material properties and reset width/Euler changes when scrubbing or deselecting a clip. The shared effect player now applies Unity's fixed-axis Z/X/Y Euler sequence through Three's intrinsic Y/X/Z sequence, matching its existing particle rotation conversion. A multi-axis matrix-product regression verifies this mapping. Beam geometry, native endpoint-script motion and automatic animation dispatch remain unimplemented; an enabled LineRenderer is explicitly blocked by the player instead of silently omitted.
+
+One original Animator hierarchy contains two identically named `sanjiao_mask_01` children at the same literal path/hash. No recovered animation binds to that path. Both original nodes remain recorded in `unboundAmbiguousPaths`; a binding to an ambiguous path is rejected rather than choosing either node. No missing animation binding is omitted or remapped.
+
+The independent animation audit rereads all original serialized clip bytes and the verified effect hierarchy, reconstructs source bindings and samples 58,792 scalar values. Legacy values are checked using the Hermite basis directly from original key values/tangents, independently of the exported polynomial evaluator. Both Node22 and Node24 reproduce all four output files and reject twenty-one altered timing, tangent, angle, path, width, driver, sample and approval claims. The existing Lappland and Tragodia exports remain byte-identical and their original native verifiers still pass. The expanded Aphrissa/effect/player/built-in regression passes 712 tests on each Node version with no failures or skips. These are related checks, not a new complete-suite or hosted release result.
+
+The bounded dependency scan completed all 15,298 pinned resource rows: 15,134 original `.ab` directory headers were readable and none matched the missing material CAB. The 164 other probes failed, including the anonymous `.bin` resources; a separate corrected anonymous-resource filename probe also failed. This narrows discovery without establishing material absence. Full source verification is still required for any future candidate. No placeholder material, normal Aphrissa admission, ready simulator PR or Arkpedia app dev/production merge is granted.
+
+## Original line rendering with explicit endpoint ownership
+
+`data/arkpedia-aphrissa-lines.json` and its original native fixture retain all 24 LineRenderers in three complete eight-layer beam roots: ordinary attack, S2 and S3. Their source profile is two world-space points, view alignment, tiled world-distance UVs, one constant width-curve key, two endpoint color/alpha keys, no loop, no caps/corners and no generated lighting. `native-effect-line.js` implements that profile without substituting a mesh for a missing asset. Additional point counts, curve/gradient tessellation, local-space/alignment variants and custom vertex streams remain rejected. The native shader continues to apply each original material's texture scale/offset, colors, dissolve controls, scrolling speeds and render state.
+
+The shared effect player accepts an explicit per-component/per-clock endpoint owner. It never uses saved editor positions as an implicit gameplay trajectory. Returning null clears an ended/unowned segment. A missing or invalid endpoint clears every line layer before reporting an error, so prior-frame beam geometry cannot remain visible. Each instance owns its geometry/materials while verified textures are shared. World-space lines attach to the identity effect group, retaining source activation but ignoring editor transforms, including zero-scale transforms. Widths and material channels use the recovered source clip. Reverse scrubbing, independent instances, source-inactive layers and retirement/reset behavior are covered.
+
+The pinned CN beam shader also declares the game-supplied `_HG_UV_ROTATION` switch. The source does not establish its gameplay value. The player therefore requires an explicit environment input when this global is declared; missing/invalid inputs stay blocked. The inspection fixture supplies zero, which selects the original shader's unrotated-UV branch. Its unused rotation uniforms keep zero initial values; no identity rotation or missing native script is invented. Selecting the rotation-enabled branch still requires an independently verified original rotation script. Arbitrary material overrides are not accepted. This environment contract is not native global-state certification.
+
+`inspectLines` retains the complete original hierarchy and animation drivers while explicitly selecting only line draws. Its metadata states `fullEffect:false`; it does not approve the unplayed particle roots, native endpoint scripts, UV-rotation gameplay state or complete effect dispatch. The ordinary full-effect API still reports missing endpoint ownership and other unresolved components.
+
+Independent reads compare every LineRenderer's original serialized bytes, parameter values, full-width pointers and root membership. Both Node22 and Node24 reproduce both output files. The audit independently measures 144 generated ribbons and rejects ten altered source/approval claims. The expanded Aphrissa/effect/player regression passes 754 tests on each Node version with no failures or skips.
+
+`preview-aphrissa-effects.mjs` serves only the checksum-pinned original files on isolated loopback port3185; it does not expose the source cache through the normal battle server. `review-aphrissa-lines.mjs` verifies original bytes before decoding the pack, shader programs and textures, compiles all fourteen recovered original GLES3 programs in Chromium software WebGL2, and reviews the three beam roots with two independent instances each. Six desktop1280×800 and emulated touch-landscape844×390 captures show the original animated beam layers, with no overflow, browser errors or failed resources. Reverse scrubbing and owner release preserve the other instance. Removing one instance reduces GPU geometries from sixteen to eight with sixteen shared textures retained; final cleanup returns both geometries and textures to zero. Representative ordinary-attack desktop and S3 touch captures were visually inspected. Endpoints and the disabled UV-rotation switch are explicit test inputs; physical-device, compiled-frame and full gameplay dispatch parity remain unverified.
+
+The normal 403-form preview remains separate. No normal Aphrissa admission, ready simulator PR, or Arkpedia app dev/production merge occurs at this checkpoint. Remaining effect work includes the missing material, native environment/endpoint dispatch and complete effect/battle presentation, followed by fresh complete-suite and exact-head hosted publication gates.
+
+## Held battle beam integration
+
+The held owner now installs a separate presentation owner as one of its owned parts. Accepted ordinary, S1 and S3 attacks publish their actual attack identity and the same ray snapshot used to select recipients at the original OnAttack marker. Finite beams use the original world-time clip extent and retain captured waypoints; a later relay rotation does not silently retarget an already accepted shot. Relay/owner retirement revokes the corresponding presentation. Source control/mode changes do not spend extra ammunition or fabricate a second attack. Presentation callbacks have a separate error boundary from damage delivery.
+
+The optional ordered path returned by the existing ray tracer preserves repeated directed arrivals until its original cycle boundary, while its default unique-cell recipient output remains unchanged. This supplies the actual sequence of relay turns, including cycles, without hitting an enemy again merely because the visual path revisits a tile. Only the explicit path request changes the output shape.
+
+S2 creates its reusable beam at a permitted actual pulse, including an empty pulse permitted by the source `allowNoTarget` input. Empty presentation does not create an attack, damage or ammunition event. Its current ray updates through live operators/relays without restarting the beam clock. Channel departure samples the original S2 End clip against the last path. New activation, concealment, participant removal and owner retirement retain separate life/activation ownership. These pulse/account/End dispatch policies are local held mappings, not compiled native helper execution.
+
+`createAphrissaStageBeams` maps each actual polyline segment to an original eight-layer line instance. It retains the stage camera's projection/depth through the existing coordinate bridge, reuses S2 segment instances as endpoints change, and keeps loading/retirement generations separate. Late loads cannot resurrect a retired owner or replaced scene. Rendering while paused changes neither the battle clock nor instance identity. Explicit null endpoint ownership clears all layers. Original operator and relay actors remain visible; this pass never replaces them with an effect-only actor.
+
+The loopback-only review loader verifies the original pack, decoded pack, animation, shader and texture bytes before rendering. It requires explicit shader-global and start/end anchor inputs. The review uses tile-centre start/end anchors at the source waypoint-height offset; this is an explicit fixture, not a verified muzzle mount. The waypoint value is mapped above the original tile height; native absolute-versus-relative height semantics remain unverified. All segments currently begin at their accepted marker together: native `progressiveDraw` staging remains unimplemented/unverified. Ordinary/S1/S3 finite-clip lifetime and S2 persistent/End dispatch remain local presentation policies. Normal roster admission and full particle/effect dispatch remain held.
+
+The actual-browser review uses the existing squad and separate drop/direction-swipe controls on the original 0-1 terrain, with empty waves, one healthy pinned enemy, 99 starting DP and an explicit SP-fill fixture. All S1/S2/S3 cases pass on desktop1280×800 and emulated touch844×390: six cases and eighteen captures, zero browser errors and zero failed resources. They verify accepted ordinary/skill beam births, real relay turns, source line layers/shaders, unchanged paused clocks and complete retirement. Representative desktop S3 and touch S2 relay captures were visually inspected. The broader related suite passes 778 checks on both Node22 and Node24 with no failures or skips, including direct comparisons showing identical damage, SP and ammunition with presentation enabled/disabled. This remains separate from a complete-suite, physical-device, native progressive/muzzle/global-state or hosted release approval.
+
+## Anonymous material source located
+
+The prior anonymous-resource failures came from the archive filename, not missing source data. The official CDN stores both `.ab` and anonymous `.bin` entries in `.dat` ZIP archives while retaining the original entry name inside the ZIP. With that corrected mapping, the bounded lookup found the exact missing serialized-file identity in `anon/a90f86ed9fd93b2c2af4fd0571371829.bin`. The stop-on-match run read 107 anonymous bundle headers with zero errors and stopped at the matching CAB; it did not need to finish the remaining anonymous rows.
+
+The complete official archive is 5,427,765 bytes, SHA256 `22a494e193a210697d1c0060cb2fa7a2c26947704f5d44d0f2d3ab72170702b8`, with full Content-MD5 `e0a0f2c2147c776d54f80a8a4ff7616d` verified against the response. ZIP CRC and the pinned manifest's entry/archive lengths also match. Its 6,551,323-byte native entry has SHA256 `893e3d6a00fda9426959d75dceb9a4b43629e664fa8d26bd0eadb2eebdaa4340` and declares `CAB-967586173c51ac60f86de17c3e4b1a32`, Unity2021.3.39f1, Android platform13. Object `-1258035316725772468` is the original 216-byte `Default-Particle` material, serialized SHA256 `bb6e00fa8850214575fd6c4eb9591f15d00b82bfeb54dd259eed8814a3f79300`. It references shader `1291840640910692172` and texture `5681093337556782924` in that same serialized file, with no foreign asset dependencies.
+
+These original bytes and their receipt are retained in the ignored native-source cache. The resource manifest's short `7fda` tag is preserved but its algorithm is not inferred or claimed verified; full official archive Content-MD5, ZIP CRC, lengths and the recorded SHA256 values establish the stated transport/content checks. At this discovery checkpoint the canonical 22-root effect pack had not yet been rebuilt. The subsequent recovery and dependent export/audit results are recorded below; discovery alone did not grant rendering or admission approval.
+
+
+## Original anonymous material recovery
+
+The official same-client `anon/a90f86ed9fd93b2c2af4fd0571371829.bin` supplies the exact missing serialized file, Unity2021.3.39f1/Android13 and no external dependencies. `data/arkpedia-aphrissa-material-source.json` pins the immutable native manifest row, complete official archive and uncompressed bundle lengths/SHA256/MD5, ZIP entry CRC and exact material/shader/texture identities. The HTTP200 archive's original full Content-MD5 matches the pinned archive bytes. The native manifest's short `7fda` tag is opaque; neither fetcher nor audit treats it as a complete MD5 or claims its algorithm is verified.
+
+`fetch-aphrissa-material.py` downloads only missing inputs and rejects changed cached archives or bundles. The source exporter and independent verifier both check the original material identity and its local shader/texture pointers. The recovered `Default-Particle` material is 216 original bytes; its linked shader is `Legacy Shaders/Particles/Alpha Blended Premultiply` and its original texture is 64×64. The complete graph adds only these three objects and one texture. Comparison with the preceding pack preserves every existing object's raw data/digest, all 22 roots, 36 meshes and 88 earlier texture entries; exactly 56 existing material references change from unresolved CAB pointers to their original target, including six enabled renderer slots.
+
+The shader pipeline now identifies objects by full bundle/pathID across explicitly pinned sources. Existing Global Lappland and Tragodia shader exports stay byte-identical and pass their independent audits. The new shader contributes two original GLES3 programs; Aphrissa's eight shaders/fourteen programs reproduce both output files and reject fifteen altered-evidence cases. The dedicated material audit checks all 56 users and rejects sixteen altered manifest, archive, bundle, CRC and approval fixtures without editing canonical inputs.
+
+After regenerating all dependent bindings, mesh receipts, raw clip fixtures, decoded animations and line profiles, the independent effect audit reproduces 92 outputs and rejects eighteen semantic corruptions. The unchanged fourteen clips retain 584 channels and 537 finite keys, with 58,792 independently sampled values and twenty-one altered-evidence rejections. Both Node22 and Node24 pass 778 related tests with no failures/skips. The isolated desktop/touch line review compiles all 14 original programs, reports no browser/resource errors and releases all GPU resources. This is source recovery and held beam regression; the recovered default material's full particle usage, native dispatch, progressive draw, muzzle mounting and runtime global inputs still require their own fidelity review. Normal roster admission and Arkpedia app dev/production promotion remain held.
+
+The refreshed held battle review passes all three skills on desktop and touch: six cases, eighteen captures, zero browser/resource errors. Actual drop/swipe deployment, accepted attack markers, relay turns, paused clocks and retirement continue to pass after the source graph update. Representative desktop S3 and touch S2 relay captures were visually inspected. Global Lappland and Tragodia reproduce all 93 and 75 source outputs unchanged and pass independent native verification after the shared exporter/verifier changes.
+
+
+## Original mesh particles aligned to the camera plane
+
+The shared player and pivot guard now accept the original Mesh/View combination as well as the existing Mesh/Local combination. The original Mesh assets, particle rotations, transforms, custom streams, material properties, textures and shaders are retained. Unity's [pinned 2021.3 enum definitions](https://github.com/Unity-Technologies/UnityCsReference/blob/b052b1fe38b45d5aefa609a115c626ed2e74f3a6/Modules/ParticleSystem/Managed/ParticleSystemEnums.cs) identify the serialized values; its [renderer editor](https://github.com/Unity-Technologies/UnityCsReference/blob/b052b1fe38b45d5aefa609a115c626ed2e74f3a6/Modules/ParticleSystemEditor/ParticleSystemModules/RendererModuleUI.cs) exposes alignment for both Billboard and Mesh modes. These are reference-only inputs for identifying settings; no Unity reference implementation is copied into the simulator. `fetch-mesh-alignment-reference.py` checks the pinned revision and both original file lengths/SHA256 values, rejecting changed cached inputs. Cold and cached receipts match.
+
+`export-aphrissa-mesh-alignment.mjs` records all 82 enabled Mesh/View renderers across 16 original roots. The independent native audit checks each original renderer object, associated particle object, full-width mesh pointer and original mesh bytes, and reconstructs its owning root from native parent transforms. No selected shape forces a different alignment. Both outputs reproduce on Node22/Node24; twelve altered source/approval fixtures are rejected. Existing Global pivot metadata and fixtures remain byte-identical.
+
+Seventy-nine newly accepted mesh layers render through the actual shared player, adding original flow, ring, glow and relay layers across fourteen roots. At that checkpoint, three retained independent source motion gates: the S1/S3 small-ring systems needed lifetime-velocity/limit integration, and the S3 charge loop needed animated world-particle velocity-frame integration. The two small-ring gates are resolved by the subsequent motion work below. Every other pre-existing unsupported module remains explicit. Camera orbit, the actual reflected stage-camera bridge, original vertex/index arrays, particle state, colors/UVs, reverse clocks and disposal are checked. The original three-axis S3 end-ring is independently compared with scalar fixed-axis Z then X then Y rotation, rather than flattening it to a camera quad.
+
+`inspectMeshParticles` retains each complete original hierarchy and clip pose while isolating Mesh particle draws. Its `fullEffect:false` label is explicit; complete-root `create()` continues to reject any unplayed components. This diagnostic never bypasses an unresolved particle motion gate. The original desktop/touch WebGL review covers all 16 source roots with 32 captures, compiles all 14 original GLES3 programs, verifies reverse state and hidden spare particle pools, and reports zero browser/resource errors. The two roots whose sole View profiles remain motion-blocked are accounted for explicitly rather than reported as newly rendered View layers. Final GPU geometry/texture counts return to zero. Representative desktop S3 charge and touch S2 relay captures were visually inspected.
+
+This supports camera-plane mesh presentation in the held source player. It does not certify native RNG/frame/pixel parity, full prefab particle dispatch, the remaining local/world motion, shape, start-gradient or lifecycle cases, or normal roster admission. Arkpedia app dev/production promotion remains held.
+
+The final related regression passes 1,423 tests on each Node22 and Node24 with zero failures/skips, covering Aphrissa, shared native/particle handling, original pose/stream/geometry fixtures and existing Tragodia stage effects. This is a related-suite/source/browser checkpoint; a fresh complete-suite and exact-head hosted release audit remain required before normal admission.
+
+
+## Combined lifetime velocity and speed damping
+
+`native-particle-linear-velocity.js` retains the original linear lifetime curves, per-particle factors and module axes. Supported unweighted Hermite curves use exact interval averages before the existing bounded 60Hz damping replay. Linear velocity is a velocity contribution; it is not repeatedly added as acceleration. The previous limited residual carries between ticks under the explicitly local replay policy. Native module ordering and frame parity remain unverified. The [Unity2021.3 lifetime-velocity](https://docs.unity3d.com/2021.3/Documentation/Manual/PartSysVelOverLifeModule.html) and [speed-limit](https://docs.unity3d.com/2021.3/Documentation/Manual/PartSysLimitVelOverLifeModule.html) controls establish the source property meanings, not closed-engine update ordering.
+
+Cross-space velocity uses explicit owner-supplied movement frames at the bounded replay ticks. World simulation converts local lifetime velocity into world direction; Local simulation converts world lifetime velocity through the inverse linear frame. Translation is excluded from velocity, and nonuniform scale, reflection and shear retain their separate direction mapping. Singular frames fail explicitly. World lifetime motion now requires an explicit birth frame even for otherwise straight particles. The existing source-only Lappland component probes supply a declared identity frame; its independent ten-emitter/180-snapshot audit passes 18,278 scalar checks on both Node22 and Node24. No silent scene-frame default is introduced.
+
+`data/arkpedia-aphrissa-linear-motion.json` and its full original fixture retain all 11 combined profiles across six roots: ten Local simulations and one World simulation. All 11 use a velocity module and magnitude limiter with noise disabled. Three original GameObjects serialize inactive. Independent native reads check particle, renderer and GameObject hashes, activation flags and owning root from parent transforms. The separate Simpson oracle checks 352 controlled trajectory probes/1,056 scalar values, reproduces three outputs on Node22/Node24 and rejects twelve altered source, motion, approval or forced-activation claims. Probe origins, speeds, frames, seeds and clocks are explicit component-test inputs; these are not compiled native trajectories.
+
+Nine renderer paths now accept the source controls, including both S1/S3 small rings that previously failed the Mesh/View review. Two still reject their separate Shape10 controls. The motion changes preserve zero-linear force/noise/limit behavior. Comparison with the preceding committed implementation reproduces all 220 original Lappland noise probes exactly. That audit's older numerical oracle omitted four already-implemented force/noise profiles; it now independently integrates their original acceleration. All 35 noise profiles, including the four force-coupled profiles and 80 World-frame probes, pass 1,920 scalar checks and eleven tamper rejections on Node22/Node24. This repairs the verifier; the existing noise runtime is unchanged.
+
+`inspectParticles` selects original particle IDs within a complete original root. It preserves source ancestors, original clip bindings and authored activation; duplicate, invalid or foreign-root selections fail. Complete-root playback still rejects unplayed components. The nine-case desktop/touch review produces 18 captures with zero browser/resource errors and complete GPU cleanup: eight components are visibly sampled, and the originally inactive S3 splash remains hidden on both viewports. That splash has no recovered activation clip; its runtime activation remains unverified. The two Shape10 systems remain explicit rejections. Representative desktop S1 ring and touch S3 startup-line captures were visually inspected. Full effect dispatch, other shapes/start gradients/lifecycle controls, the remaining animated World-frame case, native RNG/frame/pixel parity and normal admission remain held.
+
+The final related suite passes 1,432 tests on both Node22 and Node24 with zero failures/skips. The refreshed sixteen-effect mesh review passes 32 desktop/touch captures in addition to the eighteen motion-component captures, with no browser/resource errors and zero GPU resources after cleanup. Full-suite, native-fidelity and exact-head hosted admission/release gates remain separate.
+
+## Straight World particles retain their birth frame
+
+World particles without a force/noise/limit/lifetime-velocity replay now use their explicit original birth frame as well. Their initial point and velocity are transformed once at the physical birth time; straight displacement is birth velocity multiplied by particle age. Later emitter translation, rotation or scale no longer reprojects that path. Spawn and movement matrices remain separate for Shape-only scaling. Collapsed birth transforms need no inverse, and missing/non-affine owner frames fail explicitly. This follows the meaning of [Unity2021.3 World simulation space](https://docs.unity3d.com/2021.3/Documentation/ScriptReference/ParticleSystemSimulationSpace.World.html); it does not certify closed-engine ordering or pixel parity.
+
+`data/arkpedia-aphrissa-world-birth.json` retains all six original World systems with those motion modules disabled. Two have their Shape module disabled and now run through the shared player; the other four retain their independent initial-gradient/shape holds. Original particle, renderer and GameObject hashes, activation flags and root ownership are independently checked against the native bundle. The separate Python birth ledger verifies 32 seeded snapshots/1,920 scalar values, reproduces three outputs on Node22/Node24 and rejects twelve altered source, trajectory or approval fixtures. Prewarm predates the supplied movement history, so negative birth times explicitly hold the start pose. No unrecorded animation or actor motion is invented.
+
+The active S3 charge loop retains its complete original hierarchy and recovered charge-start clip. An independent matrix-chain test checks each particle's original clip pose at its own birth, including the actual reflected stage camera, an explicit moving-owner fixture, old prewarm particles, fresh births, reverse scrubbing, finite transforms and retirement. Its End counterpart is authored inactive. The recovered End clip changes transforms/materials but contains no activation binding for that object; it stays hidden through every inspected clip/clock. Runtime activation is still unverified.
+
+The component browser review (`review-aphrissa-mesh-alignment.mjs --world-birth`) produces four desktop/touch captures: the original charge loop renders with its recovered clip, while the inactive End loop remains blank. Both keep repeated particle identities at the same original World birth positions as the explicit emitter fixture moves, including reverse clocks. Four independently held profiles still reject their original initial-gradient controls. The refreshed mesh review accepts all 82 original Mesh/View renderer profiles across 16 roots, removing the last motion hold from that selected set. This is geometry/component acceptance, not a claim that every layer is active or every prefab is playable. Both browser runs report no browser/resource errors and return GPU geometry/texture counts to zero; representative desktop component and touch charge-root captures were visually inspected.
+
+The expanded related suite passes 1,678 tests on each Node22 and Node24, with zero failures/skips. The existing ten-emitter/180-snapshot Global box-particle oracle also remains reproducible. Full prefab dispatch, native frame/RNG parity, other shape/gradient/lifecycle cases and normal Aphrissa admission remain held. The normal preview remains on the reviewed 403-form tree, and Arkpedia app dev/production remain untouched.
+
+## Original Circle and BoxShell emission
+
+`native-particle-surface.js` adds the original Circle and BoxShell shapes to the shared particle player. The pinned Unity2021.3 enum identifies Circle10 and BoxShell15; Rectangle is a distinct value18. All 24 original Aphrissa box shells have zero Z depth, so their two finite-area faces coincide in a plane. They retain BoxShell semantics rather than being relabeled as Rectangle. The [Unity shape documentation](https://docs.unity3d.com/2021.3/Documentation/Manual/PartSysShapeModule.html) establishes circular planar/radial movement, radius thickness and forward-Z box movement. The geometry uses an explicit uniform-area local mapping; native RNG, face selection and compiled distribution/frame parity remain unverified.
+
+Circle sampling retains the authored disc/annulus/edge radius and thickness. Shape scale changes the spawn ellipse without scaling the radial direction. Box-shell face selection uses normalized face areas, retaining forward direction, signed dimensions and zero-depth surfaces. Nondegenerate boxes are covered by an independent six-face area-frequency check. Normalizing areas avoids unnecessary overflow/underflow for uniformly large/small dimensions. Zero-area lines/points, unsupported direction/resource/arc controls and invalid coordinates remain explicit errors. Original shape rotation/position, separate World birth frames and the existing lifetime-velocity/force/noise/limit replay remain composed through the shared player.
+
+`data/arkpedia-aphrissa-surfaces.json` records all 28 original profiles across 16 roots: four circles and 24 box shells, with 26 enabled renderers and eight inactive GameObjects. The independent audit reads the original bundle objects, full particle/renderer/GameObject hashes, activation, owning roots and pinned enum bytes. It verifies 756 geometric probes/4,536 scalar values, reproduces three outputs on Node22/Node24 and rejects fifteen altered source, geometry, reference or approval fixtures. Full source controls are retained, including dormant fields; no source particle or activation flag is rewritten.
+
+Twenty-two enabled renderers now accept their original shapes. Eighteen box-shell layers render visibly in the component review; four circles remain authored inactive. Two other renderers stay disabled, and the four original start-gradient profiles still reject their independent controls. The actual player tests retain complete ancestors, original clips, moving-owner fixtures, the reflected stage camera, reverse clocks, finite matrices and disposal. All eleven combined lifetime-velocity/limit paths now construct, including the two previously blocked circles; their authored inactivity is retained.
+
+Both complete S3 charge prefabs now construct through strict `create()` with no component filter, partial-playback option or blocked renderer. Each retains all 17 enabled source renderers. The dedicated `--charge-roots` browser mode checks original charge-start/End clips, complete renderer membership, reverse state and desktop/touch rendering. Native gameplay activation, automatic prefab dispatch and pixel parity are still unverified. Other complete roots continue to reject remaining unsupported components.
+
+The browser reviews produce 44 surface-component captures, 22 combined-motion captures, 32 mesh-root captures and four complete-charge-root captures. All compile the fourteen original GLES programs, report zero browser/resource errors and return GPU geometry/texture counts to zero. Representative desktop box-shell and complete-charge captures and touch relay/End captures were visually inspected. The expanded related suite passes 1,686 tests on both Node22 and Node24, with zero failures/skips. Fresh full-suite/exact-head hosted gates and remaining source fidelity work are still required before normal admission. The normal local preview stays on the reviewed 403-form tree; Arkpedia app dev/production remain held.
+
+## Hemisphere and Burst Spread hit emission
+
+The shared player now accepts Hemisphere2 and the original Cone4/BurstSpread3 combination. The original Unity2021.3 enum bytes identify both shape values and `ParticleSystemShapeMultiModeValue.BurstSpread`. The [shape documentation](https://docs.unity3d.com/2021.3/Documentation/Manual/PartSysShapeModule.html) establishes hemisphere emission on one side of a plane and evenly distributed burst emission. Positive local Z, the preview random stream and equal angular bins starting at positive X are explicit local mappings; native hemisphere-axis, angular phase, RNG/distribution and compiled frame parity remain unverified. Existing Sphere sampling is unchanged.
+
+The source birth clock can resolve a particle's original emission cohort. It retains the original attempted count and slot, including attempts rejected at capacity, instead of re-spacing only the surviving particles. Lookup validates accepted birth identity/lifetime and handles delayed starts, looping/prewarm, expiry, repeated bursts and reverse clocks. A small lookup-only floating-clock guard preserves exact event membership; it does not change emission timestamps. Burst Spread requires an explicit contract and source burst-only emission. Missing/foreign cohorts, unsupported modes and continuous/distance variants remain rejected. No random-angle fallback or guessed native phase is supplied.
+
+The player also classifies nonzero/varying initial speed as moving particle input even when no motion module is enabled. Six original enabled helper renderers have disabled emission and dormant speed5. They now construct without discarding that control, and still emit no particles at any inspected clock. Their native emission flags, activation and source objects remain unchanged; no runtime trigger is invented.
+
+`data/arkpedia-aphrissa-hit-shapes.json` records all twelve enabled profiles across six original roots: three hemispheres, three Burst Spread cones and six dormant points. The independent audit checks native particle/renderer/GameObject bytes and hashes, activation, owning roots and pinned enum bytes. Its separate birth/curve/RNG/geometry oracle verifies 120 snapshots/6,019 scalar values, reproduces three outputs on Node22/Node24 and rejects fourteen altered source, geometry, cohort, emission or approval fixtures. The hemispheres retain their original 0.10000000149011612-second delay and reversed speed range; each cone retains its twelve-particle burst. Explicit identity frames are declared for the component probes rather than inferred as gameplay transforms.
+
+All three complete ordinary/S2/S3 hit prefabs now construct through strict `create()` with all 19/19/27 enabled original renderers. The three complete line prefabs also construct when given explicit endpoint ownership; each retains its eight source line layers and dormant helper. The browser's `--hit-roots` mode supplies a declared source-coordinate endpoint fixture, not native muzzle/target mounts. Tests retain full original hierarchies/clips, finite matrices, unchanged empty helpers, reverse state and cleanup. The existing Global built-in-mesh case gains its original hemisphere layer while preserving the remaining 3D-billboard gate and original mesh arrays/pointers.
+
+The twelve-component review produces 24 desktop/touch captures: six original hit emitters render and six dormant helpers remain blank. Complete hit/line review adds twelve captures across six roots, with fourteen original GLES programs, zero browser/resource errors and zero GPU geometry/textures after disposal. Representative burst/hemisphere and complete S3 hit/line captures were visually inspected. The related suite passes 1,692 tests on both Node22 and Node24 with no failures/skips. Original gradient and 3D-billboard cases, automatic gameplay dispatch/mounts, native frame/pixel parity and normal roster admission remain held. The normal 403-form preview and Arkpedia app dev/production remain unchanged.
+
+## Fixed random birth colors and ordinary three-axis billboards
+
+The four remaining palette systems use RandomColor4 with Fixed1 interpolation. RandomColor samples one stable particle factor and does not require a changing emitter-time clock. The shared gradient sampler now handles Fixed interpolation using the [documented first strictly later key](https://docs.unity3d.com/2021.3/Documentation/ScriptReference/GradientMode.html), clamping to the last key when no later key exists. Color and alpha clocks remain independent, including exact-key, duplicate-key and endpoint behavior. Existing Blend interpolation is unchanged. Start Gradient/TwoGradients clocks remain held; no emitter-time policy is inferred. Preview random factors are still local mappings, not native RNG parity.
+
+Ordinary Billboard0 renderers now retain the same three-axis Z/X/Y particle rotation used by original mesh particles. View alignment uses the camera plane; Local alignment retains the source quaternion chain, consistent with the [renderer alignment documentation](https://docs.unity3d.com/2021.3/Documentation/Manual/PartSysRendererModule.html). Pitch/yaw are applied to the generated billboard quad rather than discarded. The four original common-deployment layers use Local alignment. Scalar rotation checks multiply their original quaternion ancestors directly, retaining source precision instead of normalizing it through matrix decomposition. Camera orbit, a controlled View case, the reflected stage-camera bridge, original quad geometry and all source axes are checked. Three-axis Stretched Billboard rotation remains separately rejected because its velocity-oriented mapping still needs integration.
+
+`data/arkpedia-aphrissa-birth-controls.json` retains all eight original profiles: four palettes and four ordinary 3D billboards. Native particle, renderer and GameObject bytes/hashes, activation, owning roots, renderer properties and pinned Unity enum/binding definitions are independently checked. The native bundle data is unchanged. Four reference-only files retain their exact lengths/SHA256 values, including the versioned gradient and alignment documentation. Cold and cached fetch receipts match, and a changed cached document is rejected. No Unity reference implementation is copied into runtime code.
+
+The independent oracle verifies 192 palette-boundary/three-axis probes and 1,092 scalar values, reproduces three outputs on Node22/Node24 and rejects seventeen altered source, geometry, reference or approval cases. The four palette objects remain authored inactive. Their actual player buffers retain their source birth colors and lifetime behavior without forcing activation. The ordinary deployment layers now render their original pitched/rolled geometry. Existing World/surface reviews expand to all six World profiles and 26 enabled surface profiles, preserving inactive and disabled objects.
+
+All 22 original effect roots now construct through strict `create()` when the three beam roots receive explicit endpoint ownership. Every enabled original renderer is retained, with no component filter, partial-playback option or omitted unsupported renderer. Tests check the complete root inventory, original clips, all renderer IDs, reverse state, finite matrices and disposal. The all-root browser review produces 44 desktop/touch captures with the original fourteen GLES programs. The eight-component review adds sixteen captures; refreshed World/surface reviews add twelve and 52. All report zero browser/resource errors and zero GPU geometry/textures after cleanup. Representative deployment-component and complete deployment-root captures were visually inspected.
+
+The related suite passes 1,699 tests on both Node22 and Node24 with zero failures/skips. This establishes complete source-library playback under the declared clock, RNG, camera, shader-global and endpoint fixtures. It does not establish native activation/FSM dispatch, gameplay mounts, shader global values, RNG/frame/pixel parity or normal Aphrissa admission. Fresh complete-suite/exact-head hosted checks remain required for eventual admission. The normal 403-form local preview and Arkpedia app dev/production remain unchanged.
+
+## Explicit effect placement and complete battle beams
+
+`createEffectPlacement` accepts caller-owned position, unit-quaternion and signed-scale histories. It uses linear position/scale and shortest-arc quaternion interpolation, clamps outside the supplied history and preserves a start frame for prewarm. These are explicit local interpolation policies; native mount mapping is still unverified. Histories are copied and immutable, malformed/sparse/nonfinite frames are rejected, and a branded factory object is required. Placement and the older translation-only trajectory cannot be supplied together.
+
+Placement acts above the original prefab hierarchy without rewriting any source transforms. Local particles follow the current owner frame; World particles retain their own birth frames. Original Hierarchy/Local/Shape scaling modes remain distinct. Original quaternion chains, recovered animation clips, reflection and collapsed axes remain supported. The effect scene/group stays in original coordinates, and caller-owned World line endpoints are not transformed a second time. Trail and distance-emission paths sample the supplied history knots; this does not certify native frame integration.
+
+The held battle beam pass now calls strict `create()` rather than the line-only diagnostic selector. Each ordinary/S1/S2/S3 segment contains all nine enabled original renderers: eight line layers and the authored dormant particle helper. Partial prefabs, blocked components and changed shader globals are rejected before entering the scene. The loopback loader also supplies the original builtin-mesh bindings. Combat ownership, accepted attack/pulse clocks, S2 reuse/End clips, relay-life checks, paused rendering and asynchronous retirement remain unchanged. Muzzle/endpoint mappings are still explicit review fixtures; this does not establish native mount or progressive dispatch semantics.
+
+Expanded clip inspection exposed a roughly -1e-8 streamed width residue just before an original zero-width key. Raw source curve/pose values remain unchanged. Only the rendered width may snap to zero, within one float32 relative epsilon times that segment's absolute polynomial terms, and only for a streamed segment with nonnegative starting value and an exactly zero following value. Negative authored endpoints, other curve types and larger negative excursions retain the strict rejection. This is an explicit local rendering tolerance, not a claim about the native engine's setter or arithmetic. Full ordinary-clip playback and the original near-zero clocks now have regression coverage.
+
+Placement tests check original animated World birth poses against a separately composed source matrix chain, source immutability, all three scaling modes, Local/World movement, prewarm, reflection, zero axes, reverse playback, all 22 complete root inventories and resource cleanup. The related native/Aphrissa/particle/Lappland suites pass 1,624 tests on both Node22 and Node24 with zero failures/skips. This is the selected regression scope, not a replacement for a fresh full-suite admission run.
+
+The actual battle browser review passes six desktop/touch cases and eighteen captures across all three skills, including separate drop/direction swipe, relay turns, complete renderer membership, paused clocks and retirement. The placement browser review passes all 22 complete roots and 44 desktop/touch captures using original shaders/textures, explicit moving/rotating/scaling frames and unchanged World line endpoints. World birth cohorts and reverse state remain stable. Both reviews report zero browser/resource/GL errors; the isolated placement library returns geometry/texture counts to zero. Representative battle beams, charge and deployment captures were visually inspected. Native activation/FSM dispatch, hit/muzzle integration, frame/pixel parity and normal Aphrissa admission remain held. The normal local preview remains available; Arkpedia app dev/production remain untouched.
+
+## Complete beam point effects and continuing particle clocks
+
+The held beam pass now plays all nine source-bound start, relay and endpoint prefabs alongside the complete line prefabs. Ordinary/S1 share their literal source keys; S2 and S3 retain their own keys. All six original LineFx components, including downward variants, are checked against these bindings before the held combat controller installs. The loopback loader checks each point prefab's original enabled Animator, default state, actual clip pointer, speed and direct blend leaf. The three S2 controllers retain their original zero-duration `OnEnd` value1 edges and separate End clips. The source Effect components retain their original loop, owner-hold, delay-to-finish, rotation and spawn-location fields. No native method body or finished state-machine implementation is inferred from those fields.
+
+`createEffectTimeline` supplies explicit clip transitions on one continuing particle clock. S2 End changes the source animation phase without restarting emission, reusing particle IDs or evaluating earlier World births through a later clip. The player uses the historical clip phase for birth/parent frames and the current phase for rendering. Timelines are copied, immutable and factory-owned; unknown/foreign clips and competing direct clip inputs are rejected. Original particle lifetime, source pose values and shader clocks remain separate from the selected animation phase.
+
+Each ordered point is owned by its captured beam, role and deployment life. Repeated S2 observations retain existing clocks; a newly observed relay starts a fresh point clock, and a replacement deployment cannot adopt a retired relay's particles. Endpoints keep their clock when the ray changes. Explicit frame histories retain translation/rotation/scale and prewarm policy through the shared placement API. Every frame must agree with its line anchor. Invalid frames and clocks are checked before changing the existing scene. Paused observations keep instance/render identities stable; removed owners, hidden tracks and late asynchronous loads cannot leave or resurrect effects.
+
+Actual playback exposed an existing birth-ledger boundary issue: the ledger's finite tolerance can admit a birth whose subtraction leaves a tiny negative age. Lifecycle consumers now use zero physical age within that existing accepted boundary. Authored birth times, identities, admission tolerance and random factors are unchanged; larger negative or invalid scheduled records remain rejected. The original angular and World-birth audits reproduce their three outputs on Node22/Node24: 57 angular profiles/1,368 sampled values and six World profiles/32 snapshots/1,920 scalar values, with twelve altered-evidence rejections in each audit.
+
+The related native/Aphrissa/particle/Lappland suites pass 1,630 tests on both Node22 and Node24 with zero failures/skips. Coverage includes all nine source controllers, changed controller/finish inputs, immutable transition clocks, continuing particle identities through End, renderer properties, reverse playback, invalid point frames, asynchronous retirement and fresh relay deployment lives. The actual battle browser review passes six desktop/touch cases and twenty captures, including original point renderers, all three skills, S2 point End clips, separate drop/swipe, relay turns, paused clocks and retreat cleanup. It reports zero browser/resource/GL errors. Representative desktop S3, touch S2 and S2 End captures were visually inspected.
+
+The review still supplies explicit tile-centre mounts, identity point orientation and UV-rotation0. The original artwork names front/back muzzle bones `F_Muzzle` and `B_Muzzle`; following those bones through the native mount/rotation system is not implemented by this fixture. Progressive staging, native activation/finish dispatch, post-finish particle tails, hit/charge/wing effects, audio and compiled/frame/pixel parity remain incomplete. Point instances currently share their captured beam's lifetime and cancel on retirement. These limits remain in the held contract; normal Aphrissa admission, full-suite/exact-head hosted release checks and Arkpedia app dev/production promotion are still pending.
+
+## Source muzzle bones in the rendered actor plane
+
+`data/arkpedia-aphrissa-mounts.json` now retains both original default-skin muzzle pointers, their follower fields, the eight source ancestor transforms and the matching original front/back skeleton identities. `aphrissa-mount-source.mjs` follows the actual `_front`/`_back.muzzlaTransform` references rather than guessing a bone from a name prefix. The selected source bones are `F_Muzzle` and `B_Muzzle`. The independent UnityPy audit reads the original artwork bundle, controller, follower, transforms and skeleton TextAssets directly; both Node22 and Node24 reproduce the metadata twice and reject fourteen altered source/approval cases. Full-width pointers and source file hashes remain explicit. This is source binding evidence, not a recovered mount-type enum or native follower implementation.
+
+`createAphrissaActorMounts` resolves the current loaded actor's source bone. Its bone position passes through Pixi's display transform, including horizontal mirroring, and is embedded in the actor's camera-facing depth plane through the current stage camera. The source/board Y/Z bridge then preserves that rendered pixel. The loaded facing selects the bone, including force-front presentation; deployment direction alone does not choose it. Missing/inactive bones, foreign loaded actors, changed source keys, stale deployment lives and nonfinite/singular projections fail explicitly. Current receipts expire when their frame, actor, facing, source load or deployment life changes. No tile-centre fallback is supplied for the muzzle.
+
+The held beam pass opts into updating after actor animation and event handling, so its mounts sample the visible pose in the same rendered frame. Existing effect passes retain their prior update order. Renderer views retain their unit/deployment identity; a replacement life gets a new actor, while a same-life facing change does not replay deployment. The browser harness now advances actors by actual elapsed battle time and uses zero elapsed time for paused observations. Separate repeated zero-time Spine probes remain stable in all eight cases; the actor animation wrapper itself is unchanged.
+
+The resize review exposed a separate renderer issue: `resize()` redrew with a null battle, clearing native effects and restarting their point clocks. Resizing now redraws the retained current battle at zero elapsed time. Explicit clear/destroy releases that reference. Desktop and phone viewport changes retain the exact effect instances, birth times, animation phases and battle/actor clocks while recomputing bone/camera alignment. The existing nineteen-renderer cage pass independently retains its original live instance and source clock through resizing on both viewports.
+
+The broader native/Aphrissa/particle/Lappland/attack/animation/rendering regression passes 2,060 checks on each of Node22 and Node24; three optional checks are skipped, with zero failures. Final focused mount/beam checks pass twelve tests on each version. Pure projection tests cover perspective and orthographic cameras, off-axis lenses, three viewport sizes and both horizontal signs. The actual Aphrissa battle review passes eight cases and twenty-nine captures across all three skills and all four deployment directions, including both source bones, mirrored artwork, paused desktop/phone resizing, original point End clips and retirement. Beam starts agree with the current source bone pixels within 1.14e-13 CSS pixels in the recorded output snapshots. Browser/resource/GL errors are zero. The existing cage review adds two viewport cases and four captures with no errors. Representative front/back, left-facing and resized downward captures were visually inspected.
+
+This replaces the start-point tile-centre fixture with a source-bone position on the existing rendered actor. The actor-plane depth is an explicit local projection policy. Native mount-type mapping, complete Unity follower transforms/rotation/depth, endpoint height semantics, point orientation, progressive staging, finish tails, remaining hit/charge/wing/audio dispatch and compiled/frame/pixel parity remain unverified or incomplete. Endpoints, point orientation and UV-rotation0 still require the declared review fixtures. Aphrissa stays outside the normal roster; full-suite/exact-head hosted admission checks and Arkpedia app dev/production promotion remain pending.
+
+## Accepted main-hit effects in the held battle
+
+- Ordinary attacks and S1 now play `aphris_attack_01_hit_01`; S2 plays
+  `aphris_skill_02_hit_01`; S3 plays `aphris_skill_03_hit_01`. The six original
+  ordinary/S1/down/S2/S3/down attack components bind those exact roots. The
+  same enabled component owns the attack GameObject in every case. The original
+  `_hitEffects` entries retain oneshot 1, end event 3, only-once 0 and every
+  direction/input-target switch 0. Those numeric inputs do not establish their
+  compiled enum or dispatch semantics.
+- A presentation-only owner observes the existing `damaged` receipt for the
+  **exact normalized descriptor** currently held by the accepted recipient
+  delivery. It checks owner/controller identity, attack ID, recipient object
+  and deployment life before claiming the descriptor once. Separate S3 producer
+  damage, unrelated damage carrying copied tags/attack IDs, missed/protected/
+  cancelled hits and empty S2 pulses do not create this main-hit effect.
+  Shield-absorbed, zero-loss and lethal accepted receipts do. Enabling this
+  observer leaves damage, attack counts, SP and ammunition unchanged.
+- Each accepted hit captures its own world-clock birth and recipient position.
+  Later target motion, death or replacement does not relocate or erase that
+  one-shot. Owner retirement and battle teardown clear the review effects;
+  delayed asynchronous loads cannot restore them. Complete original prefabs
+  render all 19/19/27 source particle renderers through the existing strict
+  native player and source shaders, with no generated substitute artwork.
+- The three roots have no Animator clips. Their original effect components are
+  nonlooping, do not hold by owner, use numeric spawn location 2 / rotation 0,
+  and retain delay-to-finish 0.5 and max-lifetime -1. All original particle
+  systems are nonlooping. The review uses a conservative **eight-second**
+  retention bound covering delay + duration + maximum lifetime even for
+  inactive/non-emitting helpers; this is not an execution of native Finish.
+  The loader rejects changed source bindings or an unsupported lifetime bound.
+- **Still explicit local mappings:** the `damaged`-receipt policy, fixed target
+  position, caller-provided mount/orientation, default particle RNG, shader
+  globals and bounded cleanup. The browser fixture uses target x/y, tile height
+  + 0.4 and identity rotation/scale. Numeric spawn location 2 has not been
+  reinterpreted as a verified target bone. Native immunity/miss effect dispatch,
+  target mounting, finish tails and compiled frame parity remain unverified.
+  This checkpoint does not admit Aphrissa to the public roster or Arkpedia dev.
+
+Validation:
+
+- `tools/arkpedia/audit-aphrissa-hit-bindings.py` directly reads the six original
+  attack/effect pairs and three root effect components from three SHA-checked
+  Unity bundles and compares their full exported component data.
+- Focused receipt and stage-pass coverage: 28 tests, including staggered targets,
+  zero/shield loss, misses, cancellation, lethal hits, duplicate callbacks,
+  target replacement, S2 empty pulses, S3 producer separation, paused cameras,
+  invalid mounts and late load cleanup.
+- Node 22.23.3 and Node 24.21.0 related regression scope: **2,083 tests each;
+  2,080 passed, 3 optional skips, no failures**.
+- `review-aphrissa-stage-beams.mjs`: **8 actual-battle desktop/touch cases,
+  29 captures, no browser/resource/GL errors**. Checks the exact source hit
+  roots/layer counts and captured clocks alongside source muzzle alignment,
+  relay paths, point End clips, all four deployment directions, paused resizing
+  and retreat cleanup. Desktop S3 and touch S2 captures were visually inspected.
+
+## Owned charge, aura and wing presentation
+
+The held battle now renders six additional original prefabs: S1's permanent aura,
+S3 charge and charge-end, S3's active stat aura, and both front/back wing roots.
+The selected S1 stat parent supplies its actual admission time. S3 now creates
+its original independent charge-vfx, wing-vfx and finish-vfx parents alongside
+the existing stat/mode parents. Rejection of one parent does not manufacture
+rejection of the others. Removing finish-vfx finishes the exact owned wing parent;
+wing admission finishes the exact owned charge parent. Mapping the charge
+ability's numeric event 6 to the charge-to-active boundary remains an explicit
+local policy, including its order relative to timed expiry. Cross-source
+FinishBuffsById/override semantics are not inferred.
+
+A reproduced expiry gap prevented charge-end presentation: the shared buff
+runtime invokes `onExpire`, rather than `onRemove`, for timed expiry. Both paths
+now invoke the same identity-guarded S3 parent-finish handler. Charge expiry,
+early removal and manual cancellation can therefore start the original separate
+`aphris_skill_03_charge_01_end` clock once. Rejected or replaced parents cannot
+claim that finish. The review retains this root for its finite original
+0.6666666865348816-second animation window. Its particle systems include authored
+loops, so this cutoff is expressly **not** verified native Finish/emission-tail
+behaviour. Other buff effects end with their exact parent; normal/native tail
+work remains held.
+
+The two wing prefabs each contain an Animator opening/material clip and a
+separate legacy rotation clip. `createEffectPose.sample` now accepts an explicit
+set of disjoint source clips. It samples both at the retained effect age, resets
+the source pose on every observation and rejects duplicate, foreign, unresolved
+or overlapping bindings requiring blending. Single-clip behaviour is retained.
+The stage pass preserves placement history and the parent birth time when the
+actual rendered actor changes between original front/back wing roots. A delayed
+load of the replaced root cannot reappear.
+
+The mount helper reads the original artwork controller's literal `specialPoint0`
+and `specialPoint1` BoneFollower pointers. Front/back chest followers are
+`F_Chest` and `B_Chest3`; the two drone followers use `C_Drone_B2` on their own
+skeletons. Source follower rotation is disabled for these four points. The
+browser supplies an explicit policy: chest for wings, drone for charge/end,
+actor foot for the two auras, and identity owner orientation/scale. Each source
+bone is projected into the current visible actor plane through the stage camera;
+missing/stale actors or bones fail rather than falling back to a tile centre.
+The native numeric mount types 5/6 and spawn locations 8/9 are preserved and
+source-checked, **without** claiming that their compiled enum/depth/rotation
+mapping has been recovered. Native face prediction/switch timing, particle RNG,
+finish tails, audio, modules and compiled frame/pixel parity remain unverified.
+
+Validation:
+
+- `audit-aphrissa-state-bindings.py` independently reads four complete original
+  skill buff components, three serialized template action lists, four special
+  point followers and six effect hierarchies/controllers: **505 original
+  hierarchy/controller objects across four SHA-checked bundles**.
+- Source validation retains all six complete renderer sets (19/20/20/24/72/72),
+  actual Animator defaults and the autoplay legacy rotation binding. The loader
+  samples both disjoint wing clips together; no partial effect is admitted.
+- Related Node 22.23.3/24.21.0 regression scope: **2,100 tests each; 2,097 passed,
+  3 optional skips, no failures**. Final focused state/mount/stage-pass checks:
+  **28/28 on each version**, including controller replacement, independent
+  parent rejection/removal, timed/manual charge finish, repeated observations,
+  source material/rotation composition, reverse sampling and face-change clocks.
+- Actual-battle browser review: **8 desktop/touch cases and 38 captures**, with
+  no browser/resource/GL errors. Checks the literal live-bone pixel alignment,
+  charge, both wing roots, fully opened wings after the opening clip, paused
+  resizing, manual skill discard and owner retreat, alongside all earlier
+  beam/point/hit checks. Desktop charge/opened-wing and touch S3 captures were
+  visually inspected.
+
+Aphrissa remains an isolated review candidate. This checkpoint does not increase
+the normal roster or promote simulator work into Arkpedia app dev/production.
+
+## Explicit emission cutoff and particle retirement
+
+The shared particle birth scheduler now accepts an explicit `emissionUntil` in
+real effect seconds. The window is half-open: attempts at or after the cutoff
+cannot become new particles. Accepted earlier particles keep their original
+attempt IDs, lifetimes, cohort membership and deterministic random inputs. Their
+age, source animation/shader clock, custom data, size/color, motion and World
+birth frames continue at the current effect time. The scheduler truncates only
+emission, rather than freezing the entire effect clock. Delay, simulation speed,
+capacity rejection, repeated bursts and distance history retain their existing
+source-local meaning. Prewarm is exposed only if the delayed emitter start
+precedes the cutoff; its original virtual births then remain unchanged. Reverse
+sampling is pure, and the existing unrestricted behaviour remains the default.
+
+`native-effect-player` forwards this window to its actual particle emitters.
+Invalid cutoff values fail before scene mutation. Explicit cutoff with authored
+sub-emitter dispatch, particle trails or TrailRenderer is rejected pending a
+separate finish policy; those sources retain their existing unrestricted paths.
+A root cutoff does not infer geometry or descendant lifecycle semantics.
+
+`data/arkpedia-aphrissa-retirement.json` records conservative bounds for all
+22 original roots. Each root's bound is the maximum authored constant or
+two-constant particle lifetime divided by that system's simulation speed, plus
+the root's original `_delayToFinish`. Inactive and non-emitting helpers remain in
+the bound. The metadata also records non-particle renderer and derived-emission
+gates, and literal source witnesses for each maximum. The review loader checks
+reproduction against the complete pinned pack before use.
+
+The particle-only charge, charge-end and both wing roots use this local draining
+policy. Exact S3 parent-finish callbacks retain the original record and set its
+cutoff once. Charge-end emission stops at its original finite clip window.
+Those records keep their existing GPU instance, source birth clock, both wing
+clips and placement history while earlier particles expire. Cutoffs cannot be
+moved or removed, including during a front/back switch. Cleanup waits for the
+full bound without rounding to an earlier frame; source retirement or battle
+teardown still clears all owned review resources immediately. The maximum bound
+for these four original roots is five real seconds after cutoff, including the
+empty five-second helper systems.
+
+The S1 aura has three mesh renderers and the S3 active aura has two. They retain
+the earlier immediate cleanup policy until their geometry finish behaviour is
+verified. This avoids leaving an authored looping mesh alive merely because
+particle ages are draining. The literal source delay contributes conservative
+cleanup slack; it is not treated as proof of when native Finish stops emission.
+Mounts continue through the caller's explicit actor-frame policy; native Finish,
+owner-hold/detachment, cross-source actions, geometry fade, child/trail retirement,
+RNG and compiled frame/pixel parity remain unverified. This checkpoint adds no
+normal roster admission and no Arkpedia app dev/production promotion.
+
+Validation:
+
+- The independent Unity reader `audit-aphrissa-retirement.py` checks all
+  **22 roots and 459 original particle systems across three SHA-checked bundles**,
+  including lifetime curves, simulation speeds, finish delays, geometry gates
+  and maximum witnesses. The Node exporter reproduces the committed metadata.
+- Independent clock cases cover half-open boundaries, delay/speed conversion,
+  delayed prewarm, repeated bursts and cohorts, capacity-one scheduling, World
+  distance emission, moving birth frames, invalid inputs and reverse replay.
+- Complete original charge/charge-end/front-wing/back-wing instances are compared
+  against an unrestricted reference with later births removed. Surviving source
+  particle records match; the same instance drains fully, reverses deterministically
+  and restores its unrestricted output. A real source trail rejects an unsupported
+  cutoff without changing its previous rendered data.
+- Node 22.23.3 and 24.21.0 related regression scope: **2,117 tests each;
+  2,114 passed, 3 optional skips, no failures**.
+- Actual-battle browser review: **8 desktop/touch cases and 41 captures** with
+  no browser/resource/GL errors. Cancelling S3 keeps the wing instance and birth
+  clock, records no births at/after each cutoff, preserves the cutoff while
+  existing particles age, and removes all drained state effects by their bounds.
+  Owner retreat still disposes all effect instances. Desktop draining and touch
+  post-drain captures were visually inspected.
+
+## Public admission and published effects (2026-10-20)
+
+Aphrissa is now in the normal roster. The candidate snapshot built by `build-mvp.mjs --review-candidate-aphrissa` matches the former held builder's output exactly, apart from the SD revision in asset URLs. The normal snapshot equals that candidate minus its marker. All 403 prior operator records and 921 prior models are unchanged apart from that revision, and so are the stage, waves and enemies. The held-only plumbing is gone: `aphrissaReviewSupport`, the review-candidate parameters on `regularOperatorSupport`/`regularTokenIdsFor`, and `aphrissa-review-data.mjs`. Its artwork checks live on as `tools/arkpedia/aphrissa-artwork.mjs`, which `build-mvp` calls.
+
+Her original effect package is published in `arkpedia-sd-assets` as `native-effect-manifest.json` entry `aphrissa`: 96 files, 89 textures, 21 prepared roots. `common_char_birth_01_delay_01` is inventory only. `public/arkpedia/aphrissa-assets.js` loads it from the pinned commit (or the loopback blob server), checks every hash and source binding, and builds every prepared root once before battle. It then creates the existing beam/hit/state pass with the actor and special-point mounts. The renderer keeps Tragodia's single legacy slot and holds Aphrissa's pass beside it. Each pass updates in its own phase (before or after actors). The positions the isolated review used as fixtures are now the public mapping: beam end +0.65 above the end tile, hit +0.4 above the hit cell, identity orientation. They are recorded as local mappings, not native behaviour.
+
+Validation:
+
+- `test/arkpedia-aphrissa-*.test.js` on the normal snapshot: all pass. The candidate path (`ARKPEDIA_REVIEW_APHRISSA=1`) passed before approval. Held-only assertions were removed or rewritten: no regular-operator entry, missing candidate marker.
+- `review-aphrissa-public.mjs` on the normal build: 6 desktop/touch cases and 46 captures, no browser/resource/GL errors. Each case requires the renderer's own pass to draw the ordinary beam plus S1 aura, S2 beam or S3 beam, with no blocked components. One desktop case also loads Tragodia in the same squad. The isolated `review-aphrissa-stage-beams.mjs` (port 3185 preview) still passes its 8 cases.
+- Tragodia's public review, run with only its historical SD-commit pin relaxed, still passes all 6 cases with the multi-pass renderer.
+- Node 22 byte-identity was not checked locally (no Node 22 here); the hosted Node 22 jobs cover it.
+
+Still unapproved: native finish/FSM/control, audio, modules, compiled frame/pixel parity, and the S1/S3 aura geometry finish (they keep immediate cleanup).

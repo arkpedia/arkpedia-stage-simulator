@@ -68,3 +68,14 @@ test('unsupported axes, weighted curves, birth angles and angular clocks cannot 
  for(const change of [{age:-1},{lifetime:0},{age:3},{rotation:NaN},{rotation3D:[0,Infinity,0]}])assert.throws(()=>m.sample({...particle,...change},[0,0,0]));
  for(const factor of [[],[0,NaN,0],[0,2,0]])assert.throws(()=>m.sample(particle,factor));
 });
+test('an admitted floating birth boundary has zero physical age before angular and custom-data sampling',()=>{
+ const s=structuredClone(Object.values(inherited)[0].data);
+ for(const[k,v]of Object.entries(s))if(v?.enabled&&!['InitialModule','EmissionModule'].includes(k))v.enabled=false;
+ Object.assign(s,{moveWithTransform:0,simulationSpeed:1,prewarm:false,looping:false,lengthInSec:2,startDelay:c(0)});
+ Object.assign(s.InitialModule,{startSpeed:c(0),startLifetime:c(1),startRotation:c(.2)});
+ Object.assign(s.EmissionModule,{rateOverTime:c(10),rateOverDistance:c(0),m_BurstCount:0,m_Bursts:[]});
+ s.RotationModule={enabled:true,separateAxes:false,curve:c(2)};
+ const lifecycle=createParticleLifecycle(s),at=lifecycle.sample(.1),before=lifecycle.sample(.1-1e-12);
+ assert.equal(before.length,at.length);assert.equal(before.length,1);assert.equal(before[0].age,0);assert.equal(before[0].rotation,.2);
+ assert.equal(before[0].born,at[0].born);assert.deepEqual(lifecycle.sample(.1-1e-8),[]);
+});

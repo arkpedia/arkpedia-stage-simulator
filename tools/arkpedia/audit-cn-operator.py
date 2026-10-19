@@ -126,6 +126,14 @@ if original.get('tokens'):
         ('invented token attack animation', change(['models', token, token_face, 'durations', 'Attack'], 1)),
     ])
     token_skill = next(iter(original['tokenSkillBindings'][token]), None)
+    null_slot = next((i for i, row in enumerate(original['tables']['tokens'][token]['skills']) if row['skillId'] is None), None)
+    if null_slot is not None:
+        cases.extend([
+            ('missing original null token skill slot', delete(['tables', 'tokens', token, 'skills', null_slot])),
+            ('invented skill in original null token slot', change(['tables', 'tokens', token, 'skills', null_slot, 'skillId'], 'invented')),
+            ('invented null token slot override', change(['tables', 'tokens', token, 'skills', null_slot, 'overridePrefabKey'], 'invented')),
+            ('invented null-key token skill binding', change(['tokenSkillBindings', token, 'null'], [])),
+        ])
     if token_skill:
         cases.extend([
             ('missing token-owned skill table', delete(['tables', 'tokenSkills', token_skill])),

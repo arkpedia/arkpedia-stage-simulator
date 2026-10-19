@@ -52,6 +52,29 @@ test('closed libraries and invalid roots do not register orphan instances',async
   const a=await lib.create('empty'),b=await lib.create('empty');lib.dispose();assert.equal(lib.instanceCount,0);
   assert.equal(a.disposed,true);assert.equal(b.disposed,true);assert.throws(()=>lib.create('empty'),/disposed/);lib.dispose();
 });
+test('legacy Euler poses apply fixed-axis Z then X then Y and reset on reverse inspection',async()=>{
+  const source=structuredClone(empty),r=source.pack.records;
+  r.animation={type:'Animation',data:{},references:[{field:'m_GameObject',target:'root'}]};
+  r.root.references.push({field:'component',target:'animation'});
+  source.animations={clips:{wing:{start:0,stop:3.3333332538604736,loop:true,
+    bindings:[{offset:0,size:3}],channels:[30,55,70].map(value=>({kind:'constant',value}))}},
+    instances:[{animation:'animation',clip:'wing',bindings:[{gameObject:'root',component:'tr',property:'localEulerAnglesRaw'}]}]};
+  const before=structuredClone(source),lib=library(source),cam=camera();
+  try{
+    const i=await lib.create('empty');i.update(.8,{camera:cam,clip:'wing'});i.group.updateMatrixWorld(true);
+    const authored=new T.Matrix4().makeRotationY(55*Math.PI/180)
+      .multiply(new T.Matrix4().makeRotationX(30*Math.PI/180))
+      .multiply(new T.Matrix4().makeRotationZ(70*Math.PI/180));
+    const actual=i.group.children[0].matrixWorld;
+    actual.elements.forEach((v,n)=>assert.ok(Math.abs(v-authored.elements[n])<1e-12));
+    i.update(0,{camera:cam});i.group.updateMatrixWorld(true);
+    assert.deepEqual(i.group.children[0].quaternion.toArray(),[0,0,0,1]);
+    i.update(.2,{camera:cam,clip:'wing'});i.group.updateMatrixWorld(true);
+    i.group.children[0].matrixWorld.elements.forEach((v,n)=>assert.ok(Math.abs(v-authored.elements[n])<1e-12));
+    i.dispose();
+  }finally{lib.dispose();}
+  assert.deepEqual(source,before);
+});
 test('six original hit roots dispatch child records from supported parent physics without isolated overrides',native,async()=>{
  const lib=library(original),cam=camera();
  try{for(let root=1;root<=6;root++){
@@ -71,7 +94,10 @@ test('recovered original built-in mesh binds exact positions, normals, UVs and w
  const before=structuredClone(original.pack.unresolvedReferences);
  try{
   const i=await lib.create('whitw2_token_hit_05',{allowBlocked:true});i.update(.1,{camera:cam});i.group.updateMatrixWorld(true);
-  assert.equal(i.draws.length,25);assert.equal(i.blocked.length,2);assert.ok(i.blocked.every(b=>!/mesh/.test(b.reason)));
+  assert.equal(i.draws.length,26);assert.equal(i.blocked.length,1);assert.ok(i.blocked.every(b=>!/mesh/.test(b.reason)));
+  const hemisphere=i.draws.find(d=>d.particleSource?.ShapeModule.enabled&&d.particleSource.ShapeModule.type===2);
+  assert.ok(!!hemisphere);assert.ok(hemisphere.lastParticles.length>0);
+  assert.ok(hemisphere.lastParticles.every(p=>p.direction[2]>=0&&p.position.every(Number.isFinite)));
   const parent=i.draws.find(d=>d.particleId&&d.particleSource.SubModule.enabled);assert.ok(parent);assert.equal(parent.lastParticles.length,1);
   const mesh=builtinMeshes.meshes['10210'].data,g=parent.mesh.geometry;
   assert.deepEqual([...g.index.array],mesh.submeshTriangles.flat(2));
@@ -290,14 +316,13 @@ test('distinct particle material slots cannot be silently reduced to the first s
   probe.dispose();const lib=library(altered);
   try{await assert.rejects(lib.create(ROOT),/trail\/multi-material renderer/);assert.equal(lib.instanceCount,0);}finally{lib.dispose();}
 });
-test('3D billboard start angles remain rejected instead of being flattened to a camera quad',native,async()=>{
-  const altered=structuredClone(original),probe=library(altered),instance=await probe.create(ROOT);
-  const draw=instance.draws.find(d=>altered.pack.records[d.component].type==='ParticleSystemRenderer'
-    &&altered.pack.records[d.component].data.m_RenderMode===0);
-  assert.ok(draw);
-  const go=altered.pack.records[draw.component].references.find(r=>r.field==='m_GameObject').target;
-  const particle=altered.pack.records[go].references.find(r=>altered.pack.records[r.target]?.type==='ParticleSystem').target;
-  altered.pack.records[particle].data.InitialModule.rotation3D=true;
-  probe.dispose();const lib=library(altered);
-  try{await assert.rejects(lib.create(ROOT),/3D billboard start rotation needs review/);assert.equal(lib.instanceCount,0);}finally{lib.dispose();}
+test('original 3D stretched-billboard angles remain rejected instead of losing X/Y rotation',native,async()=>{
+  const lib=library(original,async()=>new T.Texture(),builtinMeshes);
+  try{await assert.rejects(lib.create('whitw2_token_hit_05'),/3D stretched billboard rotation needs review/);assert.equal(lib.instanceCount,0);}finally{lib.dispose();}
+});
+test('explicit particle cutoffs cannot silently bypass a source trail finish policy',native,async()=>{
+ const lib=library(original),i=await lib.create(ROOT),cam=camera();
+ try{i.update(.5,{camera:cam,trajectory:trajectory()});const before=state(i);
+  assert.throws(()=>i.update(.7,{camera:cam,trajectory:trajectory(),emissionUntil:.5}),/trail dispatch/);assert.deepEqual(state(i),before);
+ }finally{i.dispose();lib.dispose();}
 });

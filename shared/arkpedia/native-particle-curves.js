@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Source particle MinMaxCurve / MinMaxGradient sampling. The pinned effects use
-// clamp curves with unweighted tangents and blend gradients. Unsupported curve
+// clamp curves with unweighted tangents and blend/fixed gradients. Unsupported curve
 // formats fail explicitly; these JS results are not compiled Unity parity.
 const finite=(v,label)=>{if(!Number.isFinite(v))throw new Error('Invalid native particle '+label);return v;};
 const clamp=v=>Math.max(0,Math.min(1,v));
@@ -45,13 +45,16 @@ export function sampleParticleGradient(gradient,time,factor=1){
   }
 }
 function sampleGradientKeys(g,time){
-  if(g.m_Mode!==0)throw new Error('Nonblend native particle gradient needs review');
+  if(![0,1].includes(g.m_Mode))throw new Error('Unsupported native particle gradient interpolation');
   function channel(type,component,count){
     if(!Number.isInteger(count)||count<1||count>8)throw new Error('Invalid native particle gradient count');
     const keys=Array.from({length:count},(_,i)=>({time:g[type+'time'+i]/65535,value:finite(g['key'+i][component],'gradient value')}));
     for(let i=0;i<keys.length;i++){
       if(!Number.isInteger(g[type+'time'+i])||keys[i].time<0||keys[i].time>1||i&&keys[i].time<keys[i-1].time)throw new Error('Invalid native particle gradient clock');
     }
+    // Unity Fixed mode chooses the first key strictly after the clock, with
+    // the last key retained when none follows. RGB/alpha clocks stay separate.
+    if(g.m_Mode===1)return (keys.find(k=>k.time>time)??keys.at(-1)).value;
     if(time<=keys[0].time)return keys[0].value;
     if(time>=keys.at(-1).time)return keys.at(-1).value;
     const i=keys.findIndex(k=>k.time>time),a=keys[i-1],b=keys[i];
