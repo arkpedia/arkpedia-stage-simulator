@@ -6,7 +6,7 @@ import models from '../data/arkpedia-aphrissa-review-models.json' with {type:'js
 import {aphrissaReviewData} from '../tools/arkpedia/aphrissa-review-data.mjs';
 import {StandardBattle} from '../server/sim/arkpedia.js';
 import {defaultBuild} from '../shared/arkpedia/loadout.js';
-import {APHRISSA_STATE_STYLES as styles,validateAphrissaStateSources} from '../shared/arkpedia/aphrissa-state-presentation.js';
+import {APHRISSA_STATE_STYLES as styles,APHRISSA_STATE_DRAIN as drain,validateAphrissaStateSources} from '../shared/arkpedia/aphrissa-state-presentation.js';
 import {createEffectPose} from '../shared/arkpedia/native-effect-pose.js';
 import {readFile} from 'node:fs/promises';
 import {gunzipSync} from 'node:zlib';
@@ -59,12 +59,12 @@ test('S1 rejected stat parent never fabricates an aura for its accepted mode',()
 test('S3 charge removal creates its separate original End clock; active aura and wings own distinct parents',()=>{
  const f=make(3);advance(f,1.1);cast(f);const [charge]=f.p.snapshot();assert.equal(charge.kind,'charge');assert.equal(charge.startedAt,f.b.time);
  advance(f,1);assert.equal(f.p.snapshot()[0].startedAt,charge.startedAt);until(f,()=>f.c.state?.stage==='active',4);
- const effects=f.p.snapshot();assert.deepEqual(effects.map(s=>s.kind).sort(),['active','chargeEnd','wing']);
+ const effects=f.p.snapshot();assert.deepEqual(effects.map(s=>s.kind).sort(),['active','charge','chargeEnd','wing']);
  const end=effects.find(s=>s.kind==='chargeEnd');assert.ok(end.startedAt>charge.startedAt);
  const copied=f.p.snapshot();copied[0].root='foreign';assert.notDeepEqual(f.p.snapshot(),copied);
  f.b.removeBuff(f.u,f.c.parents.get(STATS).buff);assert.equal(f.p.snapshot().some(t=>t.kind==='active'),false);assert.equal(f.p.snapshot().some(t=>t.kind==='wing'),true);
- f.b.removeBuff(f.u,f.c.parents.get(FINISH).buff);assert.equal(f.u.findBuff(WING),null);assert.equal(f.p.snapshot().some(t=>t.kind==='wing'),false);
- advance(f,styles.chargeEnd.retention+.1);assert.deepEqual(f.p.snapshot(),[]);assert.equal(f.u.skill.active,true);
+ f.b.removeBuff(f.u,f.c.parents.get(FINISH).buff);assert.equal(f.u.findBuff(WING),null);assert.equal(f.p.snapshot().find(t=>t.kind==='wing').finishedAt,f.b.time);
+ advance(f,drain.wing+styles.chargeEnd.retention+.1);assert.deepEqual(f.p.snapshot(),[]);assert.equal(f.u.skill.active,true);
 });
 for(const key of [CHARGE,WING,STATS,FINISH])test(`S3 rejection of ${key} affects only its own original action path`,()=>{
  const f=make(3);f.b.on('beforeBuff',h=>{if(h.buff.key===key)h.cancel=true;});advance(f,1.1);cast(f);
@@ -74,9 +74,12 @@ for(const key of [CHARGE,WING,STATS,FINISH])test(`S3 rejection of ${key} affects
 });
 test('manual charge cancellation plays one End effect; hidden observation does not reset or duplicate its clock',()=>{
  const f=make(3);advance(f,1.1);cast(f);advance(f,.4);const record=f.c.parents.get(CHARGE);
- f.u.skill.end('manual');const [end]=f.p.snapshot();assert.equal(end.kind,'chargeEnd');assert.equal(end.startedAt,f.b.time);
- f.p.onChargeRemoved(f.c,record);assert.deepEqual(f.p.snapshot(),[end]);f.u.hidden=true;assert.deepEqual(f.p.snapshot(),[]);
- f.u.hidden=false;assert.deepEqual(f.p.snapshot(),[end]);advance(f,styles.chargeEnd.retention+.1);assert.deepEqual(f.p.snapshot(),[]);
+ f.u.skill.end('manual');const effects=f.p.snapshot(),end=effects.find(t=>t.kind==='chargeEnd'),tail=effects.find(t=>t.kind==='charge');
+ assert.equal(end.startedAt,f.b.time);assert.equal(tail.finishedAt,f.b.time);assert.ok(tail.startedAt<tail.finishedAt);
+ f.p.onChargeRemoved(f.c,record);assert.deepEqual(f.p.snapshot(),effects);f.u.hidden=true;assert.deepEqual(f.p.snapshot(),[]);
+ f.u.hidden=false;assert.deepEqual(f.p.snapshot(),effects);advance(f,styles.chargeEnd.retention+.1);
+ assert.equal(f.p.snapshot().find(t=>t.kind==='chargeEnd').finishedAt,end.startedAt+styles.chargeEnd.retention);
+ advance(f,drain.chargeEnd+.1);assert.deepEqual(f.p.snapshot(),[]);
 });
 test('owner replacement and retreat retire every state owner and callback',()=>{
  const f=make(3);advance(f,1.1);cast(f);assert.ok(f.p.snapshot().length);f.u.deploySeq++;assert.deepEqual(f.p.snapshot(),[]);
@@ -89,4 +92,10 @@ for(const skill of [1,3])test(`S${skill} repeated state observations leave gamep
   for(let n=0;n<180;n++){f.b.step();if(enabled){f.p.snapshot();f.p.snapshot();}}
   return{hits:f.hits,sp:f.u.skill.spTotal,ammo:f.u.skill.ammoLeft,attacks:f.u.stats.attacks,damage:f.u.stats.dmg};};
  assert.deepEqual(run(true),run(false));
+});
+test('particle retirement retains the authored bound without rounding it to an earlier finish',()=>{
+ const f=make(3);advance(f,1.1);cast(f);advance(f,.4);f.u.skill.end('manual');
+ const tail=f.p.snapshot().find(t=>t.kind==='charge'),deadline=tail.finishedAt+drain.charge;
+ f.b.time=deadline-1e-8;assert.ok(f.p.snapshot().some(t=>t.id===tail.id));
+ f.b.time=deadline;assert.equal(f.p.snapshot().some(t=>t.id===tail.id),false);
 });

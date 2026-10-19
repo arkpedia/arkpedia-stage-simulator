@@ -71,7 +71,7 @@ export function createParticleLifecycle(source,{seed=1,modules=[],spaces=[0],all
         (stream,channel)=>random(p.id,24+stream*4+channel))}:{})};
     });
   }
-  function sample(time,{history}={}){return sampleRecords(clock.sample(time,{history}));}
+  function sample(time,{history,emissionUntil=null}={}){return sampleRecords(clock.sample(time,{history,emissionUntil}));}
   // External schedulers own emission windows/capacity admission. `born` keeps
   // the child-local phase; `birthTime` and `time` are real effect seconds.
   return {sample,births:clock.births,cohort:clock.cohort,sampleRecords(records,time){return sampleRecords(records,{scheduled:true,time});},

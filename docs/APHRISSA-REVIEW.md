@@ -497,3 +497,75 @@ Validation:
 
 Aphrissa remains an isolated review candidate. This checkpoint does not increase
 the normal roster or promote simulator work into Arkpedia app dev/production.
+
+## Explicit emission cutoff and particle retirement
+
+The shared particle birth scheduler now accepts an explicit `emissionUntil` in
+real effect seconds. The window is half-open: attempts at or after the cutoff
+cannot become new particles. Accepted earlier particles keep their original
+attempt IDs, lifetimes, cohort membership and deterministic random inputs. Their
+age, source animation/shader clock, custom data, size/color, motion and World
+birth frames continue at the current effect time. The scheduler truncates only
+emission, rather than freezing the entire effect clock. Delay, simulation speed,
+capacity rejection, repeated bursts and distance history retain their existing
+source-local meaning. Prewarm is exposed only if the delayed emitter start
+precedes the cutoff; its original virtual births then remain unchanged. Reverse
+sampling is pure, and the existing unrestricted behaviour remains the default.
+
+`native-effect-player` forwards this window to its actual particle emitters.
+Invalid cutoff values fail before scene mutation. Explicit cutoff with authored
+sub-emitter dispatch, particle trails or TrailRenderer is rejected pending a
+separate finish policy; those sources retain their existing unrestricted paths.
+A root cutoff does not infer geometry or descendant lifecycle semantics.
+
+`data/arkpedia-aphrissa-retirement.json` records conservative bounds for all
+22 original roots. Each root's bound is the maximum authored constant or
+two-constant particle lifetime divided by that system's simulation speed, plus
+the root's original `_delayToFinish`. Inactive and non-emitting helpers remain in
+the bound. The metadata also records non-particle renderer and derived-emission
+gates, and literal source witnesses for each maximum. The review loader checks
+reproduction against the complete pinned pack before use.
+
+The particle-only charge, charge-end and both wing roots use this local draining
+policy. Exact S3 parent-finish callbacks retain the original record and set its
+cutoff once. Charge-end emission stops at its original finite clip window.
+Those records keep their existing GPU instance, source birth clock, both wing
+clips and placement history while earlier particles expire. Cutoffs cannot be
+moved or removed, including during a front/back switch. Cleanup waits for the
+full bound without rounding to an earlier frame; source retirement or battle
+teardown still clears all owned review resources immediately. The maximum bound
+for these four original roots is five real seconds after cutoff, including the
+empty five-second helper systems.
+
+The S1 aura has three mesh renderers and the S3 active aura has two. They retain
+the earlier immediate cleanup policy until their geometry finish behaviour is
+verified. This avoids leaving an authored looping mesh alive merely because
+particle ages are draining. The literal source delay contributes conservative
+cleanup slack; it is not treated as proof of when native Finish stops emission.
+Mounts continue through the caller's explicit actor-frame policy; native Finish,
+owner-hold/detachment, cross-source actions, geometry fade, child/trail retirement,
+RNG and compiled frame/pixel parity remain unverified. This checkpoint adds no
+normal roster admission and no Arkpedia app dev/production promotion.
+
+Validation:
+
+- The independent Unity reader `audit-aphrissa-retirement.py` checks all
+  **22 roots and 459 original particle systems across three SHA-checked bundles**,
+  including lifetime curves, simulation speeds, finish delays, geometry gates
+  and maximum witnesses. The Node exporter reproduces the committed metadata.
+- Independent clock cases cover half-open boundaries, delay/speed conversion,
+  delayed prewarm, repeated bursts and cohorts, capacity-one scheduling, World
+  distance emission, moving birth frames, invalid inputs and reverse replay.
+- Complete original charge/charge-end/front-wing/back-wing instances are compared
+  against an unrestricted reference with later births removed. Surviving source
+  particle records match; the same instance drains fully, reverses deterministically
+  and restores its unrestricted output. A real source trail rejects an unsupported
+  cutoff without changing its previous rendered data.
+- Node 22.23.3 and 24.21.0 related regression scope: **2,117 tests each;
+  2,114 passed, 3 optional skips, no failures**.
+- Actual-battle browser review: **8 desktop/touch cases and 41 captures** with
+  no browser/resource/GL errors. Cancelling S3 keeps the wing instance and birth
+  clock, records no births at/after each cutoff, preserves the cutoff while
+  existing particles age, and removes all drained state effects by their bounds.
+  Owner retreat still disposes all effect instances. Desktop draining and touch
+  post-drain captures were visually inspected.

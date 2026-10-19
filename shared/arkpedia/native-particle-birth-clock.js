@@ -23,10 +23,16 @@ export function createParticleBirthClock(source,{seed=1,allowDistanceEmission=fa
     if(!Number.isFinite(burst.time)||burst.time<0||burst.time>=length||!Number.isInteger(burst.cycleCount)||burst.cycleCount<1||!Number.isFinite(burst.repeatInterval)||burst.repeatInterval<=0||burst.probability!==1)throw Error('Native probabilistic/indefinite burst needs review');
   }
   const random=(id,salt)=>particleRandom(id,salt,seed);
-  function events(time,{history,optimizeCapacityOne=false,triggered=false}={}){
+  function events(time,{history,optimizeCapacityOne=false,triggered=false,emissionUntil=null}={}){
     if(!Number.isFinite(time)||typeof optimizeCapacityOne!=='boolean'||typeof triggered!=='boolean')throw Error('Invalid native particle birth clock');
+    if(emissionUntil!==null&&(!Number.isFinite(emissionUntil)||emissionUntil<0))throw Error('Invalid explicit particle emission cutoff');
     if(distanceRate>0&&!history)throw Error('Distance emission requires world-position history');
     const trajectory=distanceRate>0?createEffectTrajectory(history):null;
+    // Half-open real effect seconds. A stopped emitter still exposes the
+    // original accepted births; the caller samples their age at its live time.
+    // Prewarm becomes visible at the delayed start, never after an earlier stop.
+    if(emissionUntil!==null&&emissionUntil<=delay/speed)return [];
+    time=emissionUntil===null?time:Math.min(time,emissionUntil);
     const sinceStart=time*speed-delay;
     if(sinceStart<0||!emission.enabled||(!triggered&&!source.playOnAwake))return [];
     const elapsed=sinceStart+(source.prewarm&&source.looping?length:0);
@@ -76,11 +82,12 @@ export function createParticleBirthClock(source,{seed=1,allowDistanceEmission=fa
       events.push({born,count:n});
     }
     events.sort((a,b)=>a.born-b.born);
-    return events;
+    const prewarm=source.prewarm&&source.looping?length:0;
+    return emissionUntil===null?events:events.filter(e=>(e.born+delay-prewarm)/speed<emissionUntil);
   }
-  function sample(time,{history,includeExpired=false}={}){
+  function sample(time,{history,includeExpired=false,emissionUntil=null}={}){
     if(typeof includeExpired!=='boolean')throw Error('Invalid native accepted birth mode');
-    const scheduled=events(time,{history,optimizeCapacityOne:!includeExpired});
+    const scheduled=events(time,{history,optimizeCapacityOne:!includeExpired,emissionUntil});
     const elapsed=time*speed-delay+(source.prewarm&&source.looping?length:0);
     let alive=[],accepted=[],id=0,total=0;
     for(const event of scheduled){

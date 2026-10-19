@@ -317,10 +317,17 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false,lineP
     return {birth,movement,scale};
   }
 
-  function update(clock,{camera,clip=null,trajectory=null,placement=null,timeline=null,scheduledParticles=null}={}){
+  function update(clock,{camera,clip=null,trajectory=null,placement=null,timeline=null,scheduledParticles=null,emissionUntil=null}={}){
     assertOpen();
     if(!Number.isFinite(clock)||clock<0)throw Error('Invalid native effect clock');
     if(!camera?.isCamera)throw Error('Native effect update needs its render camera');
+    if(emissionUntil!==null&&(!Number.isFinite(emissionUntil)||emissionUntil<0))throw Error('Invalid explicit particle emission cutoff');
+    // Sub-emitter births and trail continuation need their own finish policy.
+    // Never silently apply a root cutoff to a different authored lifecycle.
+    if(emissionUntil!==null&&(scheduledParticles||[...particleTransforms.keys()].some(id=>
+      pack.records[id].data.SubModule?.enabled||pack.records[id].data.TrailModule?.enabled)
+      ||[...pose.renderers.keys()].some(id=>pack.records[id].type==='TrailRenderer')))
+      throw Error('Particle cutoff with child or trail dispatch needs an explicit finish policy');
     if(placement!==null&&!isEffectPlacement(placement)||placement&&trajectory)
       throw Error('Native effect needs one explicit placement or translation history');
     if(timeline!==null&&(!isEffectTimeline(timeline)||clip!==null
@@ -418,7 +425,7 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false,lineP
         const dispatch=subEmitters.parents(entry.particleId).length&&library.inspectionSource!==entry.particleId&&parentMotion.ready(entry.particleId);
         const scheduled=scheduledParticles&&entry.particleId===library.inspectionSource?scheduledParticles:dispatch
           ?{records:parentMotion.records(entry.particleId,clock),frames:parentMotion.childFrames(entry.particleId,sourceFrameAt)}:null;
-        const particles=scheduled?emitter.sampleRecords(scheduled.records,clock,scheduled.frames):emitter.sample(clock,{frameAt,history,emitterVelocityAt});
+        const particles=scheduled?emitter.sampleRecords(scheduled.records,clock,scheduled.frames):emitter.sample(clock,{frameAt,history,emitterVelocityAt,emissionUntil});
         entry.lastParticles=particles;
         const worldAt=(t,p)=>{
           const age=Math.max(0,(t-p.birthTime)*particleSource.simulationSpeed);

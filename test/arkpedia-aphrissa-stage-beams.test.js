@@ -149,3 +149,24 @@ test('state mounts require an explicitly bound face prefab before mutating the s
  root='aphris_skill_01_buff_01';f.pass.update(f.battle);await f.pass.ready();const state=f.pass.inspect().find(e=>e.kind==='state');assert.equal(state.time,1);
  f.owner.mem.aphrissaStatePresentation.snapshot=()=>[];f.pass.update(f.battle);assert.equal(state.instance.disposed,1);f.pass.dispose();
 });
+test('finishing a wing updates its emission window without replacing the instance or resetting its source clock',async()=>{
+ const {APHRISSA_STATE_STYLES:styles}=await import('../shared/arkpedia/aphrissa-state-presentation.js'),
+  f=fixture(null,undefined,undefined,()=>({root:styles.wing.root,position:[3,.4,2],rotation:[0,0,0,1],scale:[1,1,1]})),
+  s={id:'state:wing:retiring',kind:'wing',root:styles.wing.root,ownerId:1,ownerLife:1,activation:1,startedAt:4};
+ f.owner.mem.aphrissaStatePresentation={snapshot:()=>[structuredClone(s)]};f.pass.update(f.battle);await f.pass.ready();f.pass.render(f.renderer,f.camera);
+ const first=f.pass.inspect().find(e=>e.kind==='state'),instance=first.instance;assert.equal(first.emissionUntil,null);
+ s.finishedAt=5;f.pass.update(f.battle);f.pass.render(f.renderer,f.camera);
+ const ended=f.pass.inspect().find(e=>e.kind==='state');assert.equal(ended.instance,instance);assert.equal(ended.time,1);assert.equal(ended.emissionUntil,1);
+ assert.equal(instance.updates.at(-1).options.emissionUntil,1);f.battle.time=6;f.pass.update(f.battle);f.pass.render(f.renderer,f.camera);
+ assert.equal(f.pass.inspect().find(e=>e.kind==='state').instance,instance);assert.equal(instance.updates.at(-1).time,2);f.pass.dispose();
+});
+test('an owned state cutoff cannot be moved or removed, including while switching front/back roots',async()=>{
+ const {APHRISSA_STATE_STYLES:styles}=await import('../shared/arkpedia/aphrissa-state-presentation.js');let back=false;
+ const f=fixture(null,undefined,undefined,()=>({root:back?styles.wing.back:styles.wing.root,position:[3,.4,2],rotation:[0,0,0,1],scale:[1,1,1]})),
+  s={id:'state:wing:immutable-finish',kind:'wing',root:styles.wing.root,ownerId:1,ownerLife:1,activation:1,startedAt:4,finishedAt:5};
+ f.owner.mem.aphrissaStatePresentation={snapshot:()=>[structuredClone(s)]};f.pass.update(f.battle);await f.pass.ready();
+ const before=f.pass.inspect().map(e=>e.instance);for(const value of [5.1,undefined,4.9]){
+  s.finishedAt=value;back=!back;assert.throws(()=>f.pass.update(f.battle),/emission cutoff/);assert.ok(f.pass.inspect().every((e,i)=>e.instance===before[i]));
+ }
+ s.finishedAt=5;f.pass.update(f.battle);await f.pass.ready();f.pass.dispose();
+});

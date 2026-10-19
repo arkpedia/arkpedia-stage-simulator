@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import {APHRISSA_ID as ID,aphrissaNativeInputs} from './arkpedia-aphrissa-source.js';
 import {aphrissaReviewSupport} from '../../../shared/arkpedia/aphrissa-review-operator.js';
-import {APHRISSA_STATE_CONTRACT,APHRISSA_STATE_STYLES,validateAphrissaState} from '../../../shared/arkpedia/aphrissa-state-presentation.js';
+import {APHRISSA_STATE_CONTRACT,APHRISSA_STATE_STYLES,APHRISSA_STATE_DRAIN,validateAphrissaState} from '../../../shared/arkpedia/aphrissa-state-presentation.js';
 const CHARGE='aphris_sk3[charge-vfx]',WING='aphris_sk3[wing-vfx]',STATS='aphris_sk3[on_finish]';
 const present=u=>u?.alive&&u.deployed&&!u.removed&&!u._removing;
 export function prepareAphrissaStatePresentation(b,u,{contract}={}){
@@ -29,21 +29,31 @@ class StatePresentation{
   track(kind,record,startedAt=record.startedAt){const t={id:`${this.u.id}:${this.seq}:state:${kind}:${this.key(record)}`,kind,
     ownerId:this.u.id,ownerLife:this.seq,activation:record.activation,startedAt,root:APHRISSA_STATE_STYLES[kind].root};
     validateAphrissaState(t);return t;}
-  onChargeRemoved(owner,record){
-    if(!this.valid()||owner!==this.u.mem.aphrissaOwner||owner.parents?.get(CHARGE)!==record||record.key!==CHARGE
-      ||record.buff?.source!==this.u||record.buff.data?.aphrissaS3Parent!==record||this.ended.has(record))return;
-    this.ended.add(record);const t=this.track('chargeEnd',record,this.b.time);this.records.set(t.id,t);
+  onParentRemoved(owner,record){
+    if(!this.valid()||owner!==this.owner||this.ended.has(record)||record.buff?.source!==this.u)return;
+    const s1=owner.record.index===0,kind=s1&&owner.atkParent===record&&record.key==='aphris_sk1'?'s1'
+      :owner.record.index===2&&owner.parents?.get(record.key)===record?{[CHARGE]:'charge',[STATS]:'active',[WING]:'wing'}[record.key]:null;
+    if(!kind||record.buff.data?.[s1?'aphrissaS1Parent':'aphrissaS3Parent']!==record)return;
+    this.ended.add(record);const t=this.track(kind,record);
+    if(APHRISSA_STATE_DRAIN[kind]===null)this.records.delete(t.id);
+    else{t.finishedAt=this.b.time;validateAphrissaState(t);this.records.set(t.id,t);}
+    if(kind==='charge'){const end=this.track('chargeEnd',record,this.b.time);this.records.set(end.id,end);}
   }
+  onChargeRemoved(owner,record){this.onParentRemoved(owner,record);}
   snapshot(){
     if(!this.valid()){this.stop();return [];}
     const owner=this.u.mem.aphrissaOwner,active=[];
-    if(owner.record.index===0&&owner.owns(owner.atkParent))active.push(['s1',owner.atkParent]);
+    if(owner.record.index===0&&owner.owns(owner.atkParent)&&!this.ended.has(owner.atkParent))active.push(['s1',owner.atkParent]);
     if(owner.record.index===2)for(const [kind,key]of [['charge',CHARGE],['active',STATS],['wing',WING]]){
-      const record=owner.parents.get(key);if(owner.owns(record))active.push([kind,record]);
+      const record=owner.parents.get(key);if(owner.owns(record)&&!this.ended.has(record))active.push([kind,record]);
     }
     const current=new Set();for(const [kind,record]of active){const t=this.track(kind,record);current.add(t.id);this.records.set(t.id,t);}
-    for(const [id,t]of this.records)if(t.kind==='chargeEnd'
-      ?this.b.time-t.startedAt>=APHRISSA_STATE_STYLES.chargeEnd.retention-1e-7:!current.has(id))this.records.delete(id);
+    for(const [id,t]of this.records){
+      if(t.kind==='chargeEnd'&&t.finishedAt===undefined&&this.b.time>=t.startedAt+APHRISSA_STATE_STYLES.chargeEnd.retention-1e-7)
+        t.finishedAt=t.startedAt+APHRISSA_STATE_STYLES.chargeEnd.retention;
+      if(t.finishedAt!==undefined){if(this.b.time>=t.finishedAt+APHRISSA_STATE_DRAIN[t.kind])this.records.delete(id);}
+      else if(t.kind!=='chargeEnd'&&!current.has(id))this.records.delete(id);
+    }
     return this.u.hidden?[]:[...this.records.values()].map(t=>structuredClone(t));
   }
   install(){if(this.stopped||this.handles.length||this.seq!==null)throw Error('Aphrissa state presentation cannot be reinstalled');

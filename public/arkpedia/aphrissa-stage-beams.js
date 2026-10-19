@@ -69,10 +69,18 @@ export function createAphrissaStageBeams({three:T,library,sourcePackSha256,contr
           frame=createEffectPlacement([{...raw,time:0}]).sample(0);
         if(typeof root!=='string'||root!==binding.root&&root!==binding.back)throw Error('Unbound Aphrissa state face prefab');
         segments.push({key:state.id+':'+root,kind:'state',root,unit,state,frame,binding,
-          track:{...state,mode:state.kind,clipStartedAt:state.startedAt,stage:'active'}});
+          emissionUntil:state.finishedAt===undefined?null:state.finishedAt-state.startedAt,
+          track:{...state,mode:state.kind,clipStartedAt:state.startedAt,stage:state.finishedAt===undefined?'active':'draining'}});
       }
     }
     // Validate the complete new view before changing an existing scene.
+    if(next===battle)for(const segment of segments)if(segment.kind==='state'){
+      const old=[...entries.values()].find(e=>e.state?.id===segment.state.id);
+      if(old&&(old.unit!==segment.unit||old.state.ownerLife!==segment.state.ownerLife||old.state.kind!==segment.state.kind
+        ||old.state.activation!==segment.state.activation||old.state.startedAt!==segment.state.startedAt
+        ||old.state.finishedAt!==undefined&&old.state.finishedAt!==segment.state.finishedAt))
+        throw Error('Changed owned Aphrissa state life or emission cutoff');
+    }
     if(next===battle)for(const segment of segments){const entry=entries.get(segment.key);
       if(entry&&(entry.unit!==segment.unit||entry.track.ownerLife!==segment.track.ownerLife||entry.track.mode!==segment.track.mode
         ||entry.root!==segment.root||entry.track.startedAt!==segment.track.startedAt))throw Error('Changed original Aphrissa beam identity');}
@@ -126,9 +134,9 @@ export function createAphrissaStageBeams({three:T,library,sourcePackSha256,contr
     open();if(error)throw error;if(!entries.size)return;
     const camera=bridge.sync(stageCamera),frame=[...camera.matrixWorld.elements,...camera.projectionMatrix.elements];
     for(const entry of entries.values())if(entry.instance){
-      const signature=JSON.stringify([entry.time,entry.clip,entry.track.stage,entry.track.clipStartedAt,entry.positions,entry.frameVersion,frame]);
+      const signature=JSON.stringify([entry.time,entry.clip,entry.emissionUntil,entry.track.stage,entry.track.clipStartedAt,entry.positions,entry.frameVersion,frame]);
       if(signature!==entry.rendered){
-        try{entry.instance.update(entry.time,{camera,clip:entry.clip,timeline:entry.timeline??null,placement:entry.placement??null});}
+        try{entry.instance.update(entry.time,{camera,clip:entry.clip,timeline:entry.timeline??null,placement:entry.placement??null,emissionUntil:entry.emissionUntil??null});}
         catch(cause){throw Error(`Aphrissa source effect ${entry.root} at ${entry.time}: ${cause.message}`,{cause});}
         entry.rendered=signature;
       }
@@ -140,7 +148,7 @@ export function createAphrissaStageBeams({three:T,library,sourcePackSha256,contr
     isActor(){return false;},
     get instanceCount(){return [...entries.values()].filter(e=>e.instance).length;},get pendingCount(){return pending.size;},
     inspect(){return [...entries.values()].map(e=>({key:e.key,kind:e.kind,root:e.root,hit:structuredClone(e.hit),state:structuredClone(e.state),point:structuredClone(e.point),track:structuredClone(e.track),positions:structuredClone(e.positions),
-      time:e.time,bornAt:e.bornAt,clip:e.timeline?.sample(e.time)??{clip:e.clip,time:e.time},placement:e.placement?.sample(e.time),instance:e.instance}));},
+      emissionUntil:e.emissionUntil??null,time:e.time,bornAt:e.bornAt,clip:e.timeline?.sample(e.time)??{clip:e.clip,time:e.time},placement:e.placement?.sample(e.time),instance:e.instance}));},
     dispose(){if(disposed)return;clear();disposed=true;}
   };
 }

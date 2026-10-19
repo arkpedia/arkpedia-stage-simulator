@@ -107,8 +107,8 @@ class S3Owner {
       && buff.duration === duration && same(buff.mods, mods) && same(buff.flags, flags);
     const finished = () => {
       if (this.parents.get(key) !== record) return;
-      if (key === CHARGE_FX && this.u.mem.aphrissaStatePresentation)
-        this.b._safe(() => this.u.mem.aphrissaStatePresentation.onChargeRemoved(this, record), 'aphrissa.chargeEndPresentation', this.u);
+      if ([CHARGE_FX, STATS, WING_FX].includes(key) && this.u.mem.aphrissaStatePresentation)
+        this.b._safe(() => this.u.mem.aphrissaStatePresentation.onParentRemoved(this, record), 'aphrissa.stateFinishPresentation', this.u);
       this.parents.delete(key);
       if (key === FINISH_FX) this.remove(WING_FX);
       if (key === MODE) { this.mode = 'normal'; this.attacks.phase = null; this.profile(false); }

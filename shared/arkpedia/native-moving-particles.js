@@ -104,7 +104,7 @@ export function createMovingParticles(source,{seed=1,subEmitterSchedule=null,par
         ...(worldPosition?{worldPosition}:{}),...(inheritedVelocity?{inheritedVelocity}:{}),velocitySpace:worldMotion?'world':'local',simulationSpace:source.moveWithTransform===1?'world':'local',birthTime,sheet};
     });
   }
-  function sample(time,options={}){return sampleParticles(lifecycle.sample(time,{history:options.history}),time,options);}
+  function sample(time,options={}){return sampleParticles(lifecycle.sample(time,{history:options.history,emissionUntil:options.emissionUntil??null}),time,options);}
   const trailCache=new Map(),trailFields=new Set(['id','born','lifetime','age','birthTime']);
   return {sample,worldMotion,births:lifecycle.births,sampleRecords(records,time,options){return sampleParticles(lifecycle.sampleRecords(records,time),time,options);},
     sampleTrailRecords(records,time,options){return sampleParticles(lifecycle.sampleTrailRecords(records,time,particleTrails),time,options);},

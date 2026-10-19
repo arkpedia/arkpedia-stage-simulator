@@ -51,7 +51,9 @@ globalThis.cnReview={get battle(){return battle;},get renderer(){return renderer
  for(let n=0;n<4;n++){view.actor.spine.update(0);samples.push(sample());}
  return {before,samples,maxChange:Math.max(...samples.flatMap(p=>p.map((v,i)=>Math.abs(v-before[i]))))};},
  instanceId(value){if(!value)return null;if(!this.instanceIds.has(value))this.instanceIds.set(value,++this.instanceSequence);return this.instanceIds.get(value);},
- snapshot(){return {time:battle.time,mounts:this.mountCheck(),tracks:this.owner.mem.aphrissaLinePresentation.snapshot(),states:this.owner.mem.aphrissaStatePresentation.snapshot(),stateMounts:this.stateMountCheck(),segments:this.pass.inspect().map(e=>({key:e.key,instanceId:this.instanceId(e.instance),kind:e.kind,hit:e.hit,state:e.state,point:e.point,mode:e.track.mode,root:e.root,clip:e.clip,positions:e.positions,placement:e.placement,time:e.time,bornAt:e.bornAt,layers:e.instance?.draws.length,
+ snapshot(){return {time:battle.time,mounts:this.mountCheck(),tracks:this.owner.mem.aphrissaLinePresentation.snapshot(),states:this.owner.mem.aphrissaStatePresentation.snapshot(),stateMounts:this.stateMountCheck(),segments:this.pass.inspect().map(e=>({key:e.key,instanceId:this.instanceId(e.instance),kind:e.kind,hit:e.hit,state:e.state,point:e.point,mode:e.track.mode,root:e.root,clip:e.clip,positions:e.positions,placement:e.placement,time:e.time,bornAt:e.bornAt,emissionUntil:e.emissionUntil,
+  particleLedger:e.kind==='state'?e.instance?.draws.filter(d=>d.emitter).map(d=>({component:d.component,particles:(d.lastParticles??[]).map(p=>({id:p.id,age:p.age,life:p.lifetime,
+   birth:(p.born+d.particleSource.startDelay.scalar-(d.particleSource.prewarm&&d.particleSource.looping?d.particleSource.lengthInSec:0))/d.particleSource.simulationSpeed}))})):undefined,layers:e.instance?.draws.length,
   complete:e.instance?.inspection===null&&e.instance.blocked.length===0,sourceRenderers:e.instance?[...e.instance.pose.renderers].filter(([,r])=>r.enabled).map(([id])=>id).sort():[],playedRenderers:e.instance?.draws.map(d=>d.component).sort()})),
  instances:this.pass.instanceCount,hits:this.hits,ammo:this.owner.skill.ammoLeft,sp:this.owner.skill.spTotal,errors:battle.errors,glError:renderer.three.getContext().getError(),nativeFrameParity:false,nativeMountMappingVerified:false,nativeProgressiveDrawVerified:false};}
 };`;
@@ -133,13 +135,22 @@ try{for(const {mobile,skill,dir,row,col,relayRow,relayCol,extra}of scenarios){
  if(skill===3){await page.evaluate(()=>cnReview.advance(1.1));opened=await page.evaluate(()=>cnReview.snapshot());
   const wing=opened.segments.find(s=>s.kind==='state'&&s.state.kind==='wing');assert.ok(wing.time>.8333333134651184);assert.equal(wing.clip.clip.length,2);
   assert.deepEqual(opened.errors,[]);assert.equal(opened.glError,0);await capture('source-wing-open');}
- let cancelled=null;
+ let cancelled=null,draining=null,drained=null;
  if(skill===3){await page.click(`#deployment [data-id="${ID}"]`);await page.click('#skill');await page.evaluate(()=>cnReview.advance(.05));
-  cancelled=await page.evaluate(()=>cnReview.snapshot());assert.deepEqual(cancelled.states,[]);assert.equal(cancelled.segments.some(s=>s.kind==='state'),false);await capture('source-state-cleanup');}
+  cancelled=await page.evaluate(()=>cnReview.snapshot());assert.ok(cancelled.states.length>0);assert.ok(cancelled.states.every(s=>Number.isFinite(s.finishedAt)));
+  assert.equal(cancelled.states.some(s=>s.kind==='active'),false);
+  const oldWing=opened.segments.find(s=>s.kind==='state'&&s.state.kind==='wing'),wing=cancelled.segments.find(s=>s.kind==='state'&&s.state.kind==='wing');
+  assert.equal(wing.instanceId,oldWing.instanceId);assert.equal(wing.bornAt,oldWing.bornAt);assert.ok(wing.time>oldWing.time);
+  for(const effect of cancelled.segments.filter(s=>s.kind==='state'))for(const row of effect.particleLedger)for(const p of row.particles)assert.ok(p.birth<effect.emissionUntil);
+  await capture('source-particle-drain');await page.evaluate(()=>cnReview.advance(.25));draining=await page.evaluate(()=>cnReview.snapshot());
+  const later=draining.segments.find(s=>s.kind==='state'&&s.state.kind==='wing');assert.equal(later.instanceId,wing.instanceId);assert.equal(later.emissionUntil,wing.emissionUntil);
+  for(const effect of draining.segments.filter(s=>s.kind==='state'))for(const row of effect.particleLedger)for(const p of row.particles)assert.ok(p.birth<effect.emissionUntil);
+  await page.evaluate(()=>cnReview.advance(5.8));drained=await page.evaluate(()=>cnReview.snapshot());assert.deepEqual(drained.states,[]);
+  assert.equal(drained.segments.some(s=>s.kind==='state'),false);assert.deepEqual(drained.errors,[]);assert.equal(drained.glError,0);await capture('source-state-cleanup');}
  await page.click(`#deployment [data-id="${ID}"]`);await page.click('#retreat');await page.evaluate(()=>cnReview.advance(.1));
  const retired=await page.evaluate(()=>cnReview.snapshot());await capture('retired');assert.equal(retired.instances,0);assert.deepEqual(retired.tracks,[]);
  for(const s of [ordinary,output,retired]){assert.deepEqual(s.errors,[]);assert.equal(s.glError,0);}
- assert.deepEqual(driver.errors,[]);assert.deepEqual(driver.failedResources,[]);reports.push({label,ordinary,swept,charged,output,resized,ending,opened,cancelled,retired,rawZero});await page.close();
+ assert.deepEqual(driver.errors,[]);assert.deepEqual(driver.failedResources,[]);reports.push({label,ordinary,swept,charged,output,resized,ending,opened,cancelled,draining,drained,retired,rawZero});await page.close();
  console.log(label+': actual held attack markers, relay turns, source shaders and retirement passed');
 }
  await writeFile(out+'report.json',JSON.stringify({heldOnly:true,actualBattle:true,originalWaves:false,explicitShaderGlobals:{_HG_UV_ROTATION:0},

@@ -320,3 +320,9 @@ test('original 3D stretched-billboard angles remain rejected instead of losing X
   const lib=library(original,async()=>new T.Texture(),builtinMeshes);
   try{await assert.rejects(lib.create('whitw2_token_hit_05'),/3D stretched billboard rotation needs review/);assert.equal(lib.instanceCount,0);}finally{lib.dispose();}
 });
+test('explicit particle cutoffs cannot silently bypass a source trail finish policy',native,async()=>{
+ const lib=library(original),i=await lib.create(ROOT),cam=camera();
+ try{i.update(.5,{camera:cam,trajectory:trajectory()});const before=state(i);
+  assert.throws(()=>i.update(.7,{camera:cam,trajectory:trajectory(),emissionUntil:.5}),/trail dispatch/);assert.deepEqual(state(i),before);
+ }finally{i.dispose();lib.dispose();}
+});

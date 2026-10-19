@@ -100,7 +100,10 @@ class S1Owner {
     record.buff = this.b.addBuff(this.u, {key, source: this.u, duration: Infinity, mods,
       data: {aphrissaS1Parent: record, nativeKey: key}, admit,
       onRemove: () => {
-        if (this.atkParent === record) this.atkParent = null;
+        if (this.atkParent === record) {
+          if (this.u.mem.aphrissaStatePresentation) this.b._safe(() => this.u.mem.aphrissaStatePresentation.onParentRemoved(this, record), 'aphrissa.stateFinishPresentation', this.u);
+          this.atkParent = null;
+        }
         if (this.modeParent === record) {
           this.modeParent = null; this.s1Attacks.phase = null;
           if (this.valid()) this.profile('normal');
