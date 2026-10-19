@@ -5,12 +5,16 @@
 export function createBuiltinMeshResolver(artifact,sourcePackSha256){
  const source=artifact?.supportedEffectPacks?.[sourcePackSha256],scope=artifact?.scope;
  if(artifact?.schemaVersion!==1||!source||!scope?.originalBuiltinMesh||!scope.engineMatchedOfficialPlayer||scope.wholePackageVerified!==false
-  ||scope.compiledFrameParity!==false||scope.enabledOperators?.length!==0||artifact.client?.unityVersion!==source.unityVersion
+  ||scope.compiledFrameParity!==false||scope.exactGameClientVerified===true||scope.enabledOperators?.length!==0||artifact.client?.unityVersion!==source.unityVersion
   ||artifact.client?.platform!==source.platform||artifact.resource?.platform!==source.platform)
   throw Error('Unverified native built-in mesh/player identity');
- const meshes=artifact.meshes;
- if(!meshes||Object.keys(meshes).length!==1||meshes['10210']?.name!=='Quad'||meshes['10210'].serializedBytes!==604
-  ||meshes['10210'].serializedSha256!=='9c09568c3b080a71b9a6c6d7eb017b6de02ff8598e35c2decf389e9ebd9824f2')throw Error('Unreviewed original built-in mesh object');
+ const meshes=artifact.meshes,identities={
+  '10210':['Quad',604,'9c09568c3b080a71b9a6c6d7eb017b6de02ff8598e35c2decf389e9ebd9824f2'],
+  '10202':['Cube',1816,'7d33190c6a48d8788035f8ff076090a8579e111cbef2268cbf6e88262df943f4']};
+ const keys=Object.keys(meshes??{});
+ if(keys.length<1||keys.length>2||keys.some(key=>{const expected=Object.hasOwn(identities,key)?identities[key]:null,row=meshes[key];
+  return!expected||row?.name!==expected[0]||row.serializedBytes!==expected[1]||row.serializedSha256!==expected[2];}))
+  throw Error('Unreviewed original built-in mesh object');
  for(const row of Object.values(meshes??{})){
   const d=row.data,n=d?.positions?.length;
   if(!Number.isInteger(n)||n<1||!d.positions.every(v=>Array.isArray(v)&&v.length===3&&v.every(Number.isFinite))
