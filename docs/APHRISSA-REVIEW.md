@@ -569,3 +569,18 @@ Validation:
   existing particles age, and removes all drained state effects by their bounds.
   Owner retreat still disposes all effect instances. Desktop draining and touch
   post-drain captures were visually inspected.
+
+## Public admission and published effects (2026-10-20)
+
+Aphrissa is now in the normal roster. The candidate snapshot built by `build-mvp.mjs --review-candidate-aphrissa` matches the former held builder's output exactly, apart from the SD revision in asset URLs. The normal snapshot equals that candidate minus its marker. All 403 prior operator records and 921 prior models are unchanged apart from that revision, and so are the stage, waves and enemies. The held-only plumbing is gone: `aphrissaReviewSupport`, the review-candidate parameters on `regularOperatorSupport`/`regularTokenIdsFor`, and `aphrissa-review-data.mjs`. Its artwork checks live on as `tools/arkpedia/aphrissa-artwork.mjs`, which `build-mvp` calls.
+
+Her original effect package is published in `arkpedia-sd-assets` as `native-effect-manifest.json` entry `aphrissa`: 96 files, 89 textures, 21 prepared roots. `common_char_birth_01_delay_01` is inventory only. `public/arkpedia/aphrissa-assets.js` loads it from the pinned commit (or the loopback blob server), checks every hash and source binding, and builds every prepared root once before battle. It then creates the existing beam/hit/state pass with the actor and special-point mounts. The renderer keeps Tragodia's single legacy slot and holds Aphrissa's pass beside it. Each pass updates in its own phase (before or after actors). The positions the isolated review used as fixtures are now the public mapping: beam end +0.65 above the end tile, hit +0.4 above the hit cell, identity orientation. They are recorded as local mappings, not native behaviour.
+
+Validation:
+
+- `test/arkpedia-aphrissa-*.test.js` on the normal snapshot: all pass. The candidate path (`ARKPEDIA_REVIEW_APHRISSA=1`) passed before approval. Held-only assertions were removed or rewritten: no regular-operator entry, missing candidate marker.
+- `review-aphrissa-public.mjs` on the normal build: 6 desktop/touch cases and 46 captures, no browser/resource/GL errors. Each case requires the renderer's own pass to draw the ordinary beam plus S1 aura, S2 beam or S3 beam, with no blocked components. One desktop case also loads Tragodia in the same squad. The isolated `review-aphrissa-stage-beams.mjs` (port 3185 preview) still passes its 8 cases.
+- Tragodia's public review, run with only its historical SD-commit pin relaxed, still passes all 6 cases with the multi-pass renderer.
+- Node 22 byte-identity was not checked locally (no Node 22 here); the hosted Node 22 jobs cover it.
+
+Still unapproved: native finish/FSM/control, audio, modules, compiled frame/pixel parity, and the S1/S3 aura geometry finish (they keep immediate cleanup).

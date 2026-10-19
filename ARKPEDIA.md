@@ -4744,3 +4744,21 @@ The local playable integration passes a complete20,519-test Node24 regression wi
 ### Makoto local admission verified
 
 The final death-inclusive frozen1fc53d87 passes the complete Node24 suite:20,533 passed,29 optional skips,zero failures/cancellations,all921 original skeletons verified,with unchanged performance limits passing. Node22/24 each pass1,767 related checks with one optional external source-proof skip. Candidate and normal actual desktop/touch UI reviews each pass six cases and80 captures, including legal redeployment, lethal Persona forms and visual-clock cleanup. Localhost3182 now serves the reviewed403-form normal build;28 forms remain. Hosted exact-head jobs and the complete proposed/published-tree comparison remain required for simulator merge. Arkpedia app dev/production stay held. See docs/MAKOTO-REVIEW.md and the runtime review receipt for the exact frozen source/tree and fidelity limits.
+
+
+### Aphrissa public squad integration
+
+Aphrissa (`char_4229_aphris`) and her passive relay (`token_10070_aphris_pc`) are now in the normal roster: 404/431 forms, 925 models, 27 forms remaining. All three source skills install the held S1/S2/S3 owners Codex reviewed (see docs/APHRISSA-REVIEW.md); there is no generic caster fallback. `data/arkpedia-aphrissa-runtime-review.json` gates admission the same way as the other recent operators. The build checks the source foundation, owner/relay art, relay portrait, interface pixels and clocks against their receipts, and the browser-review tooling against the recorded hashes.
+
+The relay is an owner-controlled token, listed in `REGULAR_AUTOMATIC_TOKENS` so its model preloads with her. Its null skill slots come straight from the source table. Her original beam, hit and aura package is published as the second native effect package in `arkpedia-sd-assets` (`effects/native/aphrissa/…`, CN client `26-09-22-07-47-20_6c71fa`). The renderer loads it beside Tragodia's pass when she is in the squad and builds all 21 prepared roots at preload, so a broken input fails before battle. Beam end height (+0.65 above the end tile), hit height (+0.4) and identity orientation are explicit local mappings, not recovered native mount behaviour.
+
+Reproduce:
+
+```sh
+node tools/arkpedia/export-aphrissa-delivery.mjs   # package for arkpedia-sd-assets' import-native-effect.mjs
+node tools/arkpedia/build-mvp.mjs --sd-commit <published SD commit>
+node --test test/arkpedia-aphrissa-*.test.js
+ARKPEDIA_REVIEW_CHROME=/absolute/path/to/chromium ARKPEDIA_REVIEW_ORIGIN=http://127.0.0.1:3182 node tools/arkpedia/review-aphrissa-public.mjs
+```
+
+`--review-candidate-aphrissa` builds the held candidate (with `ARKPEDIA_REVIEW_APHRISSA=1` for the tests) while the review receipt is pending. Native finish/FSM/control behaviour, audio, modules and compiled frame/pixel parity remain unapproved.
