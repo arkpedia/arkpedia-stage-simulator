@@ -4787,3 +4787,7 @@ Perfumer the Distilled joins with her Abjurer trait, Sanctuary talent, auto S1 h
 ### Zima the Raging Tide
 
 Zima the Raging Tide joins with her Earthshaker splash, high-ground pulses and all three skills. The battle now records source `teamId`s (`regularTeams`) for team-scoped effects. See docs/HEADB2-REVIEW.md. Coverage: 413/431 forms.
+
+### Titi
+
+Titi joins with her Incantation Medic trait, her two talents and all three sleep skills. The battle now records source `nationId`s (`regularNations`) for nation-scoped effects. A skill that puts its own owner to sleep can declare `cancelWhileOwnSleep` so its manual stop still works. See docs/TITI-REVIEW.md. Coverage: 414/431 forms.

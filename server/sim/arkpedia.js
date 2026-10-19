@@ -140,6 +140,7 @@ import { customizeMakiriKit, installMakiri } from './content/arkpedia-makiri.js'
 import { customizeFlwr2Kit, installFlwr2 } from './content/arkpedia-flwr2.js';
 import { customizePublicTurdusKit, installPublicTurdus } from './content/arkpedia-turdus-public.js';
 import { customizeHeadb2Kit, installHeadb2 } from './content/arkpedia-headb2.js';
+import { customizeTitiKit, installTiti } from './content/arkpedia-titi.js';
 import { customizePublicBranchKit, installPublicBranch } from './content/arkpedia-branch-public.js';
 import { customizePublicReckprKit, installPublicReckpr } from './content/arkpedia-reckpr-public.js';
 import { customizePublicLieselKit, installPublicLiesel } from './content/arkpedia-liesel-public.js';
@@ -369,6 +370,7 @@ export class StandardBattle extends Battle {
     this.regularModels = data.sd?.models ?? {};
     // Source team membership (e.g. Ursus Student Self-Governing Group) for team-scoped effects.
     this.regularTeams = Object.freeze(Object.fromEntries(Object.values(data.operators ?? {}).map(o => [o.id, o.teamId ?? null])));
+    this.regularNations = Object.freeze(Object.fromEntries(Object.values(data.operators ?? {}).map(o => [o.id, o.nationId ?? null])));
     this.regularSkillUses = new Map();
     this.addDp('arkpedia', startingVanguardDp);
     installMedicSquad({ battle: this, records: chess });
@@ -635,6 +637,7 @@ export class StandardBattle extends Battle {
     customizeMakiriKit({ battle: this, id, unit, kit });
     customizeFlwr2Kit({ battle: this, id, unit, kit });
     customizeHeadb2Kit({ battle: this, id, unit, kit });
+    customizeTitiKit({ battle: this, id, unit, kit });
     customizePublicBranchKit({ battle: this, id, unit, kit });
     customizeNarantKit({ battle: this, id, def, unit, kit });
     customizeElaKit({ battle: this, id, def, unit, kit });
@@ -881,6 +884,7 @@ export class StandardBattle extends Battle {
     installMakiri({ battle: this, unit, def });
     installFlwr2({ battle: this, unit, def });
     installHeadb2({ battle: this, unit, def });
+    installTiti({ battle: this, unit, def });
     installPublicBranch({ battle: this, unit, def });
     installNarant({ battle: this, unit, def });
     installEla({ battle: this, unit, def });
@@ -1051,7 +1055,8 @@ export class StandardBattle extends Battle {
     const unit = typeof id === 'string' && id.startsWith('token:')
       ? selectedRegularSummon(this, id)?.unit : this.bench[id]?.unit;
     if (unit?.alive && unit.skill.active && unit.skill.spec.manualCancel) {
-      if (!unit.canAct || unit.skill.silenceBlocked) return false;
+      // A skill that puts its own owner to sleep (Titi S2) stays stoppable while that sleep lasts.
+      if ((!unit.canAct && !unit.skill.spec.cancelWhileOwnSleep?.()) || unit.skill.silenceBlocked) return false;
       if (unit.skill.spec.canManualCancel?.() === false) return false;
       if (unit.skill.spec.onManualCancel) return !!unit.skill.spec.onManualCancel();
       unit.skill.end('manual');

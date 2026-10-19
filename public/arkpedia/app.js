@@ -804,7 +804,8 @@ function drawHud() {
     const skillUnit = skillSourceFor(unit);
     const hud = skillUnit ? skillHud(skillUnit.skill) : null;
     const canActivate = !!((hud?.canActivate || hud?.canCancel)
-      && (skillUnit.canAct || skillUnit.skill?.spec.allowAbnormalCast) && !skillUnit.skill.silenceBlocked);
+      && (skillUnit.canAct || skillUnit.skill?.spec.allowAbnormalCast || (hud?.canCancel && skillUnit.skill?.spec.cancelWhileOwnSleep?.()))
+      && !skillUnit.skill.silenceBlocked);
     if (command.dataset.selection !== selected || command.dataset.alive !== String(!!unit)) {
       operatorTab = 'skill';
       command.innerHTML = `<div class="operator-portrait"><img src="${b.art}" alt="${escape(b.name)} ${b.kind === 'operator' ? 'base artwork' : 'original avatar'}" draggable="false"></div>
