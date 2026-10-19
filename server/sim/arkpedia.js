@@ -147,6 +147,7 @@ import { customizeChen3Kit, installChen3 } from './content/arkpedia-chen3.js';
 import { customizeHsgma2Kit, installHsgma2 } from './content/arkpedia-hsgma2.js';
 import { customizeOrchd2Kit, installOrchd2 } from './content/arkpedia-orchd2.js';
 import { customizeLeizi2Kit, installLeizi2 } from './content/arkpedia-leizi2.js';
+import { customizeVeenKit, installVeen } from './content/arkpedia-veen.js';
 import { customizePublicBranchKit, installPublicBranch } from './content/arkpedia-branch-public.js';
 import { customizePublicReckprKit, installPublicReckpr } from './content/arkpedia-reckpr-public.js';
 import { customizePublicLieselKit, installPublicLiesel } from './content/arkpedia-liesel-public.js';
@@ -653,6 +654,7 @@ export class StandardBattle extends Battle {
     customizeHsgma2Kit({ battle: this, id, unit, kit });
     customizeOrchd2Kit({ battle: this, id, unit, kit });
     customizeLeizi2Kit({ battle: this, id, unit, kit });
+    customizeVeenKit({ battle: this, id, unit, kit });
     customizePublicBranchKit({ battle: this, id, unit, kit });
     customizeNarantKit({ battle: this, id, def, unit, kit });
     customizeElaKit({ battle: this, id, def, unit, kit });
@@ -906,6 +908,7 @@ export class StandardBattle extends Battle {
     installHsgma2({ battle: this, unit, def });
     installOrchd2({ battle: this, unit, def });
     installLeizi2({ battle: this, unit, def });
+    installVeen({ battle: this, unit, def });
     installPublicBranch({ battle: this, unit, def });
     installNarant({ battle: this, unit, def });
     installEla({ battle: this, unit, def });

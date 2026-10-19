@@ -4815,3 +4815,7 @@ Violet Mizutsune Orchid joins with her three-arrow salvo, powered attacks after 
 ### Leizi the Thunderbringer
 
 Leizi the Thunderbringer joins with her Liberator trait, idle liftoff with per-second talent thunder, the skill-start ground strike with tremble, S1 three-direction strikes that keep the trait ATK while charges remain, S2 thunder ATK stacks over a ground-path range, and S3 splash attacks spawning trembling currents. See docs/LEIZI2-REVIEW.md. Coverage: 420/431 forms.
+
+### Viy
+
+Viy (Вий) joins with Mystic energy stored with no target and merged into transposed energy, her talent ATK/ASPD by what she holds, the stacking damage over time she avoids targeting, S1 ASPD, S2 attack and release stacks, and S3 bouncing energy shots on an ammo count. See docs/VEEN-REVIEW.md. Coverage: 421/431 forms.
