@@ -4823,3 +4823,7 @@ Viy (Вий) joins with Mystic energy stored with no target and merged into tran
 ### Mantra
 
 Mantra joins with palsy-trigger elemental damage with layer retention, spawn-point palsy, the S1 neural next attack, the S2 neural chain, and S3's palsy cap with skill-start palsy and overflow element jumps. See docs/MANTRA-REVIEW.md. Coverage: 422/431 forms.
+
+### Haruka
+
+Haruka joins with her Abjurer trait, talent Sanctuary bubbles that burst into heals, the S1 bubble hand-off, S2 extra heal and bubble targets with heal-scaled Arts strikes and an infinite second use, and S3 doubled bubbles that levitate attackers. See docs/HARUKA-REVIEW.md. Coverage: 423/431 forms.
