@@ -136,6 +136,7 @@ import { customizeTmorisKit, installTmoris } from './content/arkpedia-tmoris.js'
 import { customizeDolrisKit, installDolris } from './content/arkpedia-dolris.js';
 import { customizeMortisKit, installMortis } from './content/arkpedia-mortis.js';
 import { customizeOblvnsKit, installOblvns } from './content/arkpedia-oblvns.js';
+import { customizeMakiriKit, installMakiri } from './content/arkpedia-makiri.js';
 import { customizePublicTurdusKit, installPublicTurdus } from './content/arkpedia-turdus-public.js';
 import { customizePublicBranchKit, installPublicBranch } from './content/arkpedia-branch-public.js';
 import { customizePublicReckprKit, installPublicReckpr } from './content/arkpedia-reckpr-public.js';
@@ -435,7 +436,8 @@ export class StandardBattle extends Battle {
       * Math.min(2, 1 + entry.deployments * 0.5));
     const vanguard = adjustFiveStarVanguardSecondCost(this, id, ordinary);
     const discounted = adjustInesCost(this, id, adjustAshCost(this, id, adjustFangFireSharpenedCost(this, id, adjustSaileachCost(this, id, adjustJieyunCost(this, id, vanguard)))));
-    return adjustMuelsyseSquadCost(this, id, discounted);
+    // Content card discounts (e.g. Matsukiri): a per-card delta kept until that operator deploys.
+    return Math.max(0, adjustMuelsyseSquadCost(this, id, discounted) + (entry.costDelta ?? 0));
   }
   placementError(id, row, col) {
     return this._placementError(id, row, col);
@@ -474,7 +476,9 @@ export class StandardBattle extends Battle {
     return null;
   }
   deployOperator(id, row, col, dir) {
-    return this._deployOperator(id, row, col, dir);
+    const unit = this._deployOperator(id, row, col, dir);
+    if (unit && this.bench[id]) this.bench[id].costDelta = 0;
+    return unit;
   }
   // Engine-owned delivery: reuse selected builds, kits and deployment hooks;
   // bypass card cooldown/payment, but retain tile and unit-limit validation.
@@ -624,6 +628,7 @@ export class StandardBattle extends Battle {
     customizeDolrisKit({ battle: this, id, unit, kit });
     customizeMortisKit({ battle: this, id, unit, kit });
     customizeOblvnsKit({ battle: this, id, unit, kit });
+    customizeMakiriKit({ battle: this, id, unit, kit });
     customizePublicBranchKit({ battle: this, id, unit, kit });
     customizeNarantKit({ battle: this, id, def, unit, kit });
     customizeElaKit({ battle: this, id, def, unit, kit });
@@ -867,6 +872,7 @@ export class StandardBattle extends Battle {
     installDolris({ battle: this, unit, def });
     installMortis({ battle: this, unit, def });
     installOblvns({ battle: this, unit, def });
+    installMakiri({ battle: this, unit, def });
     installPublicBranch({ battle: this, unit, def });
     installNarant({ battle: this, unit, def });
     installEla({ battle: this, unit, def });

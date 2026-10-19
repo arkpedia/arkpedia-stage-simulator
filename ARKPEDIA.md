@@ -4772,3 +4772,8 @@ Hadiya (`char_394_hadiya`) joins the normal roster with both source skills, DP-p
 ### Ave Mujica Fever and Yūtenji Nyamu
 
 The shared Ave Mujica Fever gauge (`env_033_fever`) is built from the official `gamedata_const` values and each member skill's Fever component (`data/arkpedia-fever-source.json`), and is shown in the HUD. All five members (Togawa Sakiko, Wakaba Mutsumi, Misumi Uika, Yūtenji Nyamu, Yahata Umiri) are admitted. CN-sourced owners can now be admitted through one shared `checkCnOwnerReview` gate in `build-mvp.mjs` (`--review-candidate-id=<charId>`), instead of a hand-copied block each. See docs/AVE-MUJICA-REVIEW.md. Coverage: 410/431 forms.
+
+
+### Matsukiri
+
+Matsukiri joins with both skills, DP generation and deployment-zone card discounts. `StandardBattle.cost()` gained a generic per-card `costDelta`. See docs/MAKIRI-REVIEW.md. Coverage: 411/431 forms.
