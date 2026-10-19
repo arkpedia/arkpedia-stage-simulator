@@ -131,3 +131,24 @@ extension restoration, transient controls, callback reentrancy and cleanup.
 Private fixture clocks use the existing fixed-tick dispatch; the tests do not
 claim compiled game-frame parity. The existing preview still serves the reviewed
 403-form snapshot over HTTP 200, with Hadiya absent until public admission.
+
+## Public admission (2026-10-20)
+
+Hadiya is now in the normal roster (405/431 forms, 26 remaining).
+
+- **Art.** `tools/arkpedia/cn-owner-art.py` checks her existing Front/Back files against the original CN bundle. It matches pointers, bytes, decoded pixels and premultiplied alpha, records the literal default roles and keeps all seven S2-to-ordinary End mixes. The receipt is published as `source-reviews/hadiya.json` in arkpedia/arkpedia-sd-assets#48; the snapshot pins SD `ba72a790`. Her portrait, skin and skill icons already existed at the snapshot's image/skin pins.
+- **Equipment Adaptation.** The owner exposes it as `unit.mem.regularSecondaryAction`. `StandardBattle.secondaryActionOperator(id)` runs it only for a living, unstunned, unsilenced owner whose action reports itself available. The field panel shows it as a third button with its DP cost. The button's availability mirrors the owner's own preconditions; `adapt()` stays authoritative.
+- **Admission gate.** `data/arkpedia-hadiya-runtime-review.json` gates admission like the other recent operators.
+- **Validation.** `test/arkpedia-hadiya-public.test.js` has 33 cases:
+  - stats and cost at every rank;
+  - the free S1 cast and the 10 DP adaptation start;
+  - adaptation during S1;
+  - the 10 DP S2 cast and the 15 DP / +15 s extension;
+  - refusal for insufficient DP and under stun;
+  - Physical damage, retreat and redeployment, support build and altered inputs;
+  - clears of unchanged 0-1 with each skill (11 kills, no leaks).
+
+  `review-hadiya-public.mjs` passes 4 desktop/touch cases and 28 captures on both the candidate and normal builds, with no errors.
+- **Skill text.** Literal `\n` in game text now renders as a line break for every operator, guarded by a test over every rostered skill level.
+
+Still unapproved: native finish/FSM/control, effects/audio, modules, compiled frame/pixel parity.

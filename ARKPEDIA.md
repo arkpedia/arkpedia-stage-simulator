@@ -4762,3 +4762,8 @@ ARKPEDIA_REVIEW_CHROME=/absolute/path/to/chromium ARKPEDIA_REVIEW_ORIGIN=http://
 ```
 
 `--review-candidate-aphrissa` builds the held candidate (with `ARKPEDIA_REVIEW_APHRISSA=1` for the tests) while the review receipt is pending. Native finish/FSM/control behaviour, audio, modules and compiled frame/pixel parity remain unapproved.
+
+
+### Hadiya public squad integration
+
+Hadiya (`char_394_hadiya`) joins the normal roster with both source skills, DP-paid casts and her Equipment Adaptation (装备应变) as a new generic field action. Any owner can expose it through `unit.mem.regularSecondaryAction`, and the field panel renders it as a third button. Her original art is verified against the CN bundle (SD `ba72a790`). See docs/HADIYA-REVIEW.md. Coverage: 405/431 forms.
