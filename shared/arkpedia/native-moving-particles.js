@@ -12,7 +12,7 @@ import {createParticleInheritance} from './native-particle-inheritance.js';
 // Source sphere/box/cone/surface emission, lifetime velocity and grid animation.
 // RNG, event boundaries, native frame phase and renderer coordinates remain
 // explicit local mappings until compared with compiled Unity/game frames.
-export function createMovingParticles(source,{seed=1,subEmitterSchedule=null,particleTrails=null,discreteArcContract=null}={}){
+export function createMovingParticles(source,{seed=1,subEmitterSchedule=null,particleTrails=null,discreteArcContract=null,burstSpreadContract=null}={}){
   const managedSubModule=source.SubModule?.enabled&&subEmitterSchedule?.ownsParent(source,seed)===true;
   const lifecycle=createParticleLifecycle(source,{seed,particleTrails,subEmitterSchedule,modules:['ShapeModule','VelocityModule','UVModule','ClampVelocityModule','NoiseModule','InheritVelocityModule','ForceModule',...(managedSubModule?['SubModule']:[])],spaces:[0,1],allowInitialSpeed:true,allowDistanceEmission:true});
   const shape=source.ShapeModule,velocity=source.VelocityModule,uv=source.UVModule;
@@ -20,15 +20,19 @@ export function createMovingParticles(source,{seed=1,subEmitterSchedule=null,par
   const inheritance=createParticleInheritance(source,{seed});
   let cone=null,surface=null;
   if(shape?.enabled){
-    if(![0,4,5,8,10,15].includes(shape.type)||shape.alignToDirection||shape.randomDirectionAmount!==0||shape.sphericalDirectionAmount!==0||shape.randomPositionAmount!==0)throw Error('Native particle shape/direction needs review');
-    if(shape.type===4)cone=createParticleCone(shape,{discreteArcContract});
+    if(![0,2,4,5,8,10,15].includes(shape.type)||shape.alignToDirection||shape.randomDirectionAmount!==0||shape.sphericalDirectionAmount!==0||shape.randomPositionAmount!==0)throw Error('Native particle shape/direction needs review');
+    if(shape.type===4){
+      cone=createParticleCone(shape,{discreteArcContract,burstSpreadContract});
+      if(shape.arc.mode===3&&(['rateOverTime','rateOverDistance'].some(k=>source.EmissionModule[k].minMaxState!==0||source.EmissionModule[k].scalar!==0)))
+        throw Error('Burst Spread requires original burst-only emission');
+    }
     if(shape.type===8)cone=createParticleConeVolume(shape);
     if([10,15].includes(shape.type))surface=createParticleSurface(shape);
     if(![5,15].includes(shape.type)&&(shape.radius?.mode!==0||shape.radius.spread!==0||!Number.isFinite(shape.radius.value)||shape.radius.value<0||!Number.isFinite(shape.radiusThickness)||shape.radiusThickness<0||shape.radiusThickness>1))throw Error('Native shape radius mode needs review');
     for(const field of ['m_Texture','m_Mesh','m_MeshRenderer','m_SkinnedMeshRenderer','m_Sprite','m_SpriteRenderer']){
       // The Sphere shape does not consume the dormant authored mesh slot.
       // Keep its pointer in the source pack; mesh-based shapes stay rejected.
-      if(field==='m_Mesh'&&shape.type===0)continue;
+      if(field==='m_Mesh'&&[0,2].includes(shape.type))continue;
       if(shape[field]?.m_PathID!=='0')throw Error('Native shape resource needs review');
     }
     for(const field of ['m_Position','m_Rotation','m_Scale'])for(const axis of ['x','y','z'])if(!Number.isFinite(shape[field]?.[axis]))throw Error('Invalid native shape transform');
@@ -52,8 +56,8 @@ export function createMovingParticles(source,{seed=1,subEmitterSchedule=null,par
       let origin=[0,0,0],direction=[0,0,1];
       if(shape?.enabled){
         if(shape.type===5)origin=['x','y','z'].map((axis,i)=>(random(10+i)-.5)*shape.m_Scale[axis]);
-        else if(shape.type===0){
-          const z=2*random(10)-1,angle=random(11)*Math.PI*2,xy=Math.sqrt(Math.max(0,1-z*z));
+        else if([0,2].includes(shape.type)){
+          const z=shape.type===2?random(10):2*random(10)-1,angle=random(11)*Math.PI*2,xy=Math.sqrt(Math.max(0,1-z*z));
           direction=[xy*Math.cos(angle),xy*Math.sin(angle),z];
           const radius=shape.radius.value,inner=radius*(1-shape.radiusThickness);
           const r=Math.cbrt(inner**3+random(12)*(radius**3-inner**3));
@@ -61,7 +65,8 @@ export function createMovingParticles(source,{seed=1,subEmitterSchedule=null,par
         }else if(surface){
           ({origin,direction}=surface.sample(random(10),random(11),random(12)));
         }else{
-          ({origin,direction}=cone.sample(random(10),random(11),shape.type===8?random(12):undefined));
+          ({origin,direction}=shape.type===8?cone.sample(random(10),random(11),random(12)):
+            cone.sample(random(10),random(11),shape.arc.mode===3?{cohort:lifecycle.cohort(p)}:undefined));
         }
         origin=rotateShape(origin,shape.m_Rotation).map((v,i)=>v+shape.m_Position[['x','y','z'][i]]);
         direction=rotateShape(direction,shape.m_Rotation);

@@ -98,6 +98,25 @@ export function createParticleBirthClock(source,{seed=1,allowDistanceEmission=fa
     const prewarm=source.prewarm&&source.looping?length:0;
     return particles.map(p=>({...p,age:elapsed-p.born,birthTime:(p.born+delay-prewarm)/speed}));
   }
-  return {sample,events(time,options){return events(time,options);},births(time,options){return sample(time,{...options,includeExpired:true}).map(p=>({...p,age:0}));},
+  function cohort(p){
+    if(!Number.isSafeInteger(p?.id)||p.id<0||!Number.isFinite(p.born)||p.born<0||!Number.isFinite(p.lifetime)||p.lifetime<=0)
+      throw Error('Invalid native particle cohort identity');
+    // Source-local emission attempt IDs include attempts rejected at capacity.
+    // Resolve membership at birth, never from the currently surviving set.
+    // Prewarm is first exposed at the delayed start. A tiny lookup-only guard
+    // avoids losing an exact source event in a floating clock round-trip.
+    const time=Math.max(delay/speed,(p.born+delay-(source.prewarm&&source.looping?length:0))/speed)+1e-10/speed,
+      accepted=sample(time,{includeExpired:true}).find(b=>b.id===p.id);
+    if(!accepted||Math.abs(accepted.born-p.born)>1e-9||Math.abs(accepted.lifetime-p.lifetime)>1e-9)
+      throw Error('Particle cohort is outside the original birth clock');
+    let first=0;
+    for(const event of events(time)){
+      if(event.firstId!==undefined)first=event.firstId;
+      if(p.id>=first&&p.id<first+event.count)return {born:event.born,index:p.id-first,count:event.count};
+      first+=event.count;
+    }
+    throw Error('Missing original particle cohort');
+  }
+  return {sample,cohort,events(time,options){return events(time,options);},births(time,options){return sample(time,{...options,includeExpired:true}).map(p=>({...p,age:0}));},
     scope:{birthClocksOnly:true,compiledFrameParity:false}};
 }

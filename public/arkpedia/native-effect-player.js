@@ -3,7 +3,7 @@
 // It owns no renderer, DOM, combat clock, camera framing or Animator FSM.
 import {webglEffectProgram,selectEffectProgram,effectUniformDeclarations} from '../../shared/arkpedia/native-effect-shader.js';
 import {createStationaryParticles} from '../../shared/arkpedia/native-stationary-particles.js';
-import {DISCRETE_CONE_ARC_CONTRACT} from '../../shared/arkpedia/native-particle-cone.js';
+import {DISCRETE_CONE_ARC_CONTRACT,BURST_SPREAD_CONE_CONTRACT} from '../../shared/arkpedia/native-particle-cone.js';
 import {createMovingParticles} from '../../shared/arkpedia/native-moving-particles.js';
 import {createParentParticleMotion} from '../../shared/arkpedia/native-parent-particle-motion.js';
 import {createBuiltinMeshResolver} from '../../shared/arkpedia/native-builtin-mesh.js';
@@ -538,8 +538,10 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false,lineP
               throw Error('Native particle trail material/vertex stream needs review');
           }else if(r.materials.some(m=>m?.id!==r.materials[0]?.id))
             throw Error('Native particle trail/multi-material renderer needs review');
-          const moving=['ShapeModule','VelocityModule','UVModule','ClampVelocityModule','NoiseModule','InheritVelocityModule','ForceModule'].some(k=>particleSource[k]?.enabled)||particleSource.moveWithTransform===1;
-          emitter=moving?createMovingParticles(particleSource,{particleTrails,discreteArcContract:DISCRETE_CONE_ARC_CONTRACT,subEmitterSchedule:parentMotion.parentReady(ps)?parentMotion.schedule:null}):createStationaryParticles(particleSource);
+          const speed=particleSource.InitialModule?.startSpeed,
+            moving=['ShapeModule','VelocityModule','UVModule','ClampVelocityModule','NoiseModule','InheritVelocityModule','ForceModule'].some(k=>particleSource[k]?.enabled)||particleSource.moveWithTransform===1
+              ||![0,3].includes(speed?.minMaxState)||speed?.scalar!==0||speed.minMaxState===3&&speed.minScalar!==0;
+          emitter=moving?createMovingParticles(particleSource,{particleTrails,discreteArcContract:DISCRETE_CONE_ARC_CONTRACT,burstSpreadContract:BURST_SPREAD_CONE_CONTRACT,subEmitterSchedule:parentMotion.parentReady(ps)?parentMotion.schedule:null}):createStationaryParticles(particleSource);
           if(![0,1,2].includes(particleSource.scalingMode))throw Error('Native particle scaling mode needs review');
           billboard=[0,1].includes(record.data.m_RenderMode);
           if(!billboard){meshId=target(component,'m_Mesh');meshReferenceSource=component;}

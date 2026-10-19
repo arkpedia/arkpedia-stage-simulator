@@ -67,7 +67,7 @@ export function createParticleLifecycle(source,{seed=1,modules=[],spaces=[0],all
   function sample(time,{history}={}){return sampleRecords(clock.sample(time,{history}));}
   // External schedulers own emission windows/capacity admission. `born` keeps
   // the child-local phase; `birthTime` and `time` are real effect seconds.
-  return {sample,births:clock.births,sampleRecords(records,time){return sampleRecords(records,{scheduled:true,time});},
+  return {sample,births:clock.births,cohort:clock.cohort,sampleRecords(records,time){return sampleRecords(records,{scheduled:true,time});},
     sampleTrailRecords(records,time,owner){if(!managedTrails||owner!==particleTrails||!owner.ownsSource(source,seed))throw Error('Particle trail history requires its source owner');return sampleRecords(records,{scheduled:true,time,trailHistory:true});},
     withParentHistory(owner,callback){
       if(!managedParent||owner!==subEmitterSchedule||!owner.ownsParent(source,seed)

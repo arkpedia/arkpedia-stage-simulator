@@ -94,7 +94,10 @@ test('recovered original built-in mesh binds exact positions, normals, UVs and w
  const before=structuredClone(original.pack.unresolvedReferences);
  try{
   const i=await lib.create('whitw2_token_hit_05',{allowBlocked:true});i.update(.1,{camera:cam});i.group.updateMatrixWorld(true);
-  assert.equal(i.draws.length,25);assert.equal(i.blocked.length,2);assert.ok(i.blocked.every(b=>!/mesh/.test(b.reason)));
+  assert.equal(i.draws.length,26);assert.equal(i.blocked.length,1);assert.ok(i.blocked.every(b=>!/mesh/.test(b.reason)));
+  const hemisphere=i.draws.find(d=>d.particleSource?.ShapeModule.enabled&&d.particleSource.ShapeModule.type===2);
+  assert.ok(!!hemisphere);assert.ok(hemisphere.lastParticles.length>0);
+  assert.ok(hemisphere.lastParticles.every(p=>p.direction[2]>=0&&p.position.every(Number.isFinite)));
   const parent=i.draws.find(d=>d.particleId&&d.particleSource.SubModule.enabled);assert.ok(parent);assert.equal(parent.lastParticles.length,1);
   const mesh=builtinMeshes.meshes['10210'].data,g=parent.mesh.geometry;
   assert.deepEqual([...g.index.array],mesh.submeshTriangles.flat(2));
