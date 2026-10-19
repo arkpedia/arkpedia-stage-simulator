@@ -64,6 +64,9 @@ export const STATUS = Object.freeze({
   fragile: { mods: (v) => ({ dmgTakenMul: 1 + (v ?? 0.3) }), valued: 0.3 },
   artsFragile: { mods: (v) => ({ artsTakenMul: 1 + (v ?? 0.3) }), valued: 0.3 },
   physFragile: { mods: (v) => ({ physTakenMul: 1 + (v ?? 0.3) }), valued: 0.3 },
+  // Native damage_scale[out_mag] / damage_enhance_magical: strongest named
+  // Arts output bonus; independent owned sources can expire without stacking.
+  artsEnhance: { mods: (v) => ({ artsDealtMul: 1 + Math.max(0, v ?? 0) }), valued: 0 },
   // Source damage_resistance: PHYSICAL_AND_MAGICAL, isOneMinus and nonstacking.
   // Owned instances choose the strongest value per damage type. True damage
   // bypasses ordinary Sanctuary; includePure explicitly opts into that channel.

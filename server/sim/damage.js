@@ -717,6 +717,10 @@ export function reduceElement(target, amount, el = null) {
  */
 export function heal(battle, source, target, amount, opts = {}) {
   if (!target || !target.alive || target.removed || !target.deployed || target.bossPool) return 0;
+  // Accepted output belongs to the source life/team entering this call, even
+  // when modifier or overheal callbacks replace its ledger before credit.
+  const sourceStats = source?.stats;
+  const sourceCredit = source?.side === 'ally' && source.ownerId != null ? battle._pp(source.ownerId) : null;
   if (opts.regen && target.s.flags.noHpRecovery) return 0;
   // Healing belongs to the receiver life observed before modifier callbacks.
   const targetLife = target.deploySeq;
@@ -754,8 +758,8 @@ export function heal(battle, source, target, amount, opts = {}) {
     battle.addBuff(target, { key: 'overheal', shield: val, duration: opts.overhealDuration ?? Infinity });
   }
   if (source) {
-    source.stats.heal += actual;
-    if (source.side === 'ally' && source.ownerId != null) { const pp = battle._pp(source.ownerId); if (pp) pp.healingDone += actual; }
+    sourceStats.heal += actual;
+    if (sourceCredit) sourceCredit.healingDone += actual;
   }
   if (actual >= 0.5 && !opts.silent) battle._ev(['heal', target.id, Math.round(actual)]);
   // An observational receipt, after HP and credit settle; ordinary healing

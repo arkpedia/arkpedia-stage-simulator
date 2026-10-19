@@ -76,11 +76,12 @@ const candidateTaraxa = process.argv.includes('--review-candidate-taraxa');
 const candidateBotany = process.argv.includes('--review-candidate-botany');
 const candidateSkybox = process.argv.includes('--review-candidate-skybox');
 const candidateAegis = process.argv.includes('--review-candidate-aegis');
+const candidateYukari = process.argv.includes('--review-candidate-yukari');
 const candidateTurdus = process.argv.includes('--review-candidate-turdus');
 const candidateTmslot = process.argv.includes('--review-candidate-tmslot');
 const candidateThumpy = process.argv.includes('--review-candidate-thumpy');
 const candidateTanya = process.argv.includes('--review-candidate-tanya');
-if ([candidateAegis,candidateSkybox,candidateBotany,candidateTaraxa,candidateJu,candidateTurdus,candidateRecon,candidateKoromaru,candidateGallus,candidateMcnist,candidatePedro,candidateTmslot,candidateThumpy,candidateClosur,candidateReckpr,candidateBranch,candidateVarkis,candidateSnhunt,candidateKichi,candidateCairn,candidateTanya].filter(Boolean).length>1) throw Error('Review one candidate snapshot at a time');
+if ([candidateYukari,candidateAegis,candidateSkybox,candidateBotany,candidateTaraxa,candidateJu,candidateTurdus,candidateRecon,candidateKoromaru,candidateGallus,candidateMcnist,candidatePedro,candidateTmslot,candidateThumpy,candidateClosur,candidateReckpr,candidateBranch,candidateVarkis,candidateSnhunt,candidateKichi,candidateCairn,candidateTanya].filter(Boolean).length>1) throw Error('Review one candidate snapshot at a time');
 const ids = Object.keys(REGULAR_OPERATORS);
 if (ids.includes('char_4179_monstr')) {
   const review = JSON.parse(await readFile(new URL('../../data/arkpedia-mon3tr-runtime-review.json', import.meta.url)));
@@ -574,6 +575,29 @@ if(aegisReview){
     const p=review.interfaceProvenance.filter(p=>p.path===a.path);return p.length!==1||p[0].repository!==a.repository||p[0].commit!==a.commit||p[0].sourceMap!=='asset-source-map.json'
       ||!/^[a-f0-9]{64}$/.test(p[0].sourceMapSha256)||(typeof p[0].binding==='string'?p[0].binding:p[0].binding?.sourcePath)!==sourcePaths[a.path];
   }))throw Error('Aegis lacks exact original interface source IDs');
+}
+const yukariReview=ids.includes('char_4219_yukari')?JSON.parse(await readFile(new URL('../../data/arkpedia-yukari-runtime-review.json',import.meta.url))):null;
+if(yukariReview){
+  const id='char_4219_yukari',review=yukariReview;
+  const approved=JSON.stringify(review.enabledOperators)===JSON.stringify([id])&&review.verification.browser.status==='passed';
+  const pending=candidateYukari&&review.enabledOperators.length===0&&review.verification.browser.status==='pending';
+  const artifacts=Object.fromEntries(await Promise.all([['foundation','native-operators/char_4219_yukari'],['owner','yukari-art'],['recipe','yukari-art-recipe'],['clocks','yukari-clocks'],['selection','yukari-selection']].map(async([key,path])=>[key,await readFile(new URL(`../../data/arkpedia-${path}.json`,import.meta.url))])));
+  const sha=key=>createHash('sha256').update(artifacts[key]).digest('hex'),e=JSON.parse(artifacts.foundation);
+  if((!approved&&!pending)||review.frameParity!==false||review.moduleSupport!==false||review.nativeParticleSupport!==false||review.nativePixelParity!==false
+    ||review.mechanicsPolicy!=='source-cn-yukari-four-arrow-final-levitation-and-delayed-next-skill-arts-v1'
+    ||review.sourceSelectionSha256!==sha('selection')||review.sourceFoundationSha256!==sha('foundation')||review.ownerArtworkSha256!==sha('owner')||review.sourceClocksSha256!==sha('clocks')||JSON.parse(artifacts.owner).recipeSha256!==sha('recipe')
+    ||e.source.commit!==cnEvidence?.source.commit||JSON.stringify(e.tables.character)!==JSON.stringify(cnEvidence.tables.characters[id])
+    ||Object.entries(e.tables.skills).some(([key,value])=>JSON.stringify(value)!==JSON.stringify(cnEvidence.tables.skills[key])))throw Error('Yukari lacks matching original source, art, clocks and public browser review');
+  if(approved){for(const[path,key]of[['tools/arkpedia/review-yukari-public.mjs','scriptSha256'],['tools/arkpedia/public-review-driver.mjs','driverSha256'],['tools/arkpedia/public-review-server.mjs','fixtureServerSha256']]){
+    if(createHash('sha256').update(await readFile(new URL('../../'+path,import.meta.url))).digest('hex')!==review.verification.browser[key])throw Error('Changed Yukari browser review tooling');
+  }}
+  const expected=['five-star-icons/Yukari Takeba - Base.webp','five-star-skins/Yukari Takeba - Base.webp','skill-icons/Yukari Takeba - Cyclone Arrow.webp','skill-icons/Yukari Takeba - Tranquility.webp'].sort();
+  if(JSON.stringify(review.interfaceAssets.map(a=>a.path).sort())!==JSON.stringify(expected)||review.interfaceAssets.some(a=>a.repository!==(a.path.startsWith('five-star-skins/')?'arkpedia/arkpedia-skin-assets':'arkpedia/arkpedia-image-assets')||!/^[a-f0-9]{40}$/.test(a.commit)||!/^[a-f0-9]{64}$/.test(a.sha256)||!Number.isSafeInteger(a.bytes)||a.bytes<1))throw Error('Yukari lacks four pinned interface assets');
+  const sourcePaths={'five-star-icons/Yukari Takeba - Base.webp':'avatar/char_4219_yukari.png','five-star-skins/Yukari Takeba - Base.webp':'skin/char_4219_yukari_1b.png','skill-icons/Yukari Takeba - Cyclone Arrow.webp':'skill/skill_icon_skchr_yukari_1.png','skill-icons/Yukari Takeba - Tranquility.webp':'skill/skill_icon_skchr_yukari_2.png'};
+  if(review.interfaceProvenance?.length!==4||review.interfaceAssets.some(a=>{
+    const p=review.interfaceProvenance.filter(p=>p.path===a.path);return p.length!==1||p[0].repository!==a.repository||p[0].commit!==a.commit||p[0].sourceMap!=='asset-source-map.json'
+      ||!/^[a-f0-9]{64}$/.test(p[0].sourceMapSha256)||(typeof p[0].binding==='string'?p[0].binding:p[0].binding?.sourcePath)!==sourcePaths[a.path];
+  }))throw Error('Yukari lacks exact original interface source IDs');
 }
 const reconSource = ids.includes('char_4215_buddy') ? JSON.parse(await readFile(new URL('../../data/arkpedia-native-operators/char_4215_buddy.json', import.meta.url))) : null;
 if(reconSource){
@@ -1107,6 +1131,11 @@ if(ids.includes('char_4218_aigis')){
   if(JSON.stringify(Object.keys(review.originalArtwork).sort())!==JSON.stringify(keys))throw Error('Incomplete original Aegis artwork review');
   for(const key of keys)if(JSON.stringify(models[key])!==JSON.stringify(review.originalArtwork[key]))throw Error('Changed original Aegis artwork: '+key);
 }
+if(ids.includes('char_4219_yukari')){
+  const review=JSON.parse(await readFile(new URL('../../data/arkpedia-yukari-runtime-review.json',import.meta.url))),keys=['front','back'].map(face=>`operator/char_4219_yukari/default/${face}`).sort();
+  if(JSON.stringify(Object.keys(review.originalArtwork).sort())!==JSON.stringify(keys))throw Error('Incomplete original Yukari artwork review');
+  for(const key of keys)if(JSON.stringify(models[key])!==JSON.stringify(review.originalArtwork[key]))throw Error('Changed original Yukari artwork: '+key);
+}
 if(reconSource){
   const review=JSON.parse(await readFile(new URL('../../data/arkpedia-recon-runtime-review.json',import.meta.url)));
   const keys=['char_4215_buddy','token_10063_buddy_bddg'].flatMap(id=>['front','back'].map(face=>`operator/${id}/default/${face}`)).sort();
@@ -1284,9 +1313,9 @@ for (const token of Object.values(tokens)) {
 }
 const output = {
   schemaVersion: 1,
-  ...(candidateAegis ? {reviewCandidates:['char_4218_aigis']} : candidateSkybox ? {reviewCandidates:['char_4213_skybx']} : candidateBotany ? {reviewCandidates:['char_4223_botany']} : candidateTaraxa ? {reviewCandidates:['char_4222_taraxa']} : candidateJu ? { reviewCandidates: ['char_4221_ju'] } : candidateTurdus ? { reviewCandidates: ['char_4224_turdus'] } : candidateRecon ? { reviewCandidates: ['char_4215_buddy'] } : candidateKoromaru ? { reviewCandidates: ['char_4220_kormr'] } : candidateGallus ? { reviewCandidates: ['char_4227_gallus'] } : candidateMcnist ? { reviewCandidates: ['char_4230_mcnist'] } : candidatePedro ? { reviewCandidates: ['char_4234_pedro'] } : candidateTmslot ? { reviewCandidates: ['char_4236_tmslot'] } : candidateThumpy ? { reviewCandidates: ['char_4235_thumpy'] } : candidateTanya ? { reviewCandidates: ['char_4225_tanya'] } : candidateCairn ? { reviewCandidates: ['char_4214_cairn'] } : candidateKichi ? { reviewCandidates: ['char_4203_kichi'] } : candidateSnhunt ? { reviewCandidates: ['char_4211_snhunt'] } : candidateVarkis ? { reviewCandidates: ['char_4166_varkis'] } : candidateReckpr ? { reviewCandidates: ['char_4196_reckpr'] } : candidateBranch ? { reviewCandidates: ['char_4207_branch'] } : {}),
+  ...(candidateYukari ? {reviewCandidates:['char_4219_yukari']} : candidateAegis ? {reviewCandidates:['char_4218_aigis']} : candidateSkybox ? {reviewCandidates:['char_4213_skybx']} : candidateBotany ? {reviewCandidates:['char_4223_botany']} : candidateTaraxa ? {reviewCandidates:['char_4222_taraxa']} : candidateJu ? { reviewCandidates: ['char_4221_ju'] } : candidateTurdus ? { reviewCandidates: ['char_4224_turdus'] } : candidateRecon ? { reviewCandidates: ['char_4215_buddy'] } : candidateKoromaru ? { reviewCandidates: ['char_4220_kormr'] } : candidateGallus ? { reviewCandidates: ['char_4227_gallus'] } : candidateMcnist ? { reviewCandidates: ['char_4230_mcnist'] } : candidatePedro ? { reviewCandidates: ['char_4234_pedro'] } : candidateTmslot ? { reviewCandidates: ['char_4236_tmslot'] } : candidateThumpy ? { reviewCandidates: ['char_4235_thumpy'] } : candidateTanya ? { reviewCandidates: ['char_4225_tanya'] } : candidateCairn ? { reviewCandidates: ['char_4214_cairn'] } : candidateKichi ? { reviewCandidates: ['char_4203_kichi'] } : candidateSnhunt ? { reviewCandidates: ['char_4211_snhunt'] } : candidateVarkis ? { reviewCandidates: ['char_4166_varkis'] } : candidateReckpr ? { reviewCandidates: ['char_4196_reckpr'] } : candidateBranch ? { reviewCandidates: ['char_4207_branch'] } : {}),
   ...(formSource ? { globalAlternateFormSource: formSource } : {}),
-  ...(aegisReview?{interfaceAssets:Object.fromEntries(['arkpedia/arkpedia-image-assets','arkpedia/arkpedia-skin-assets'].map(repo=>[repo,Object.fromEntries(aegisReview.interfaceAssets.filter(a=>a.repository===repo).map(a=>[a.path,{commit:a.commit,bytes:a.bytes,sha256:a.sha256}]))]))}:{}),
+  ...((aegisReview||yukariReview)?{interfaceAssets:Object.fromEntries(['arkpedia/arkpedia-image-assets','arkpedia/arkpedia-skin-assets'].map(repo=>[repo,Object.fromEntries([...(aegisReview?.interfaceAssets??[]),...(yukariReview?.interfaceAssets??[])].filter(a=>a.repository===repo).map(a=>[a.path,{commit:a.commit,bytes:a.bytes,sha256:a.sha256}]))]))}:{}),
   sources: cnEvidence ? { ...pins, [cnEvidence.source.repository]: cnEvidence.source.commit } : pins,
   ...(cnEvidence ? { operatorSourceChannels: Object.fromEntries(ids.map(id => [id, operatorChannel(id, REGULAR_OPERATORS[id])])) } : {}),
   behaviors: {
@@ -1353,7 +1382,7 @@ for (const [id,support] of Object.entries(REGULAR_OPERATORS)) {
 output.skillEffects = {repository:"arkpedia/arkpedia-sd-assets",commit:sdCommit,
   pack:stageAssets.effects.chargeCost,bindings};
 await writeJSONAtomic(
-  candidateAegis ? new URL("arkpedia-aegis-candidate.json", cache) : candidateSkybox ? new URL("arkpedia-skybox-candidate.json", cache) : candidateBotany ? new URL("arkpedia-botany-candidate.json", cache) : candidateTaraxa ? new URL("arkpedia-taraxa-candidate.json", cache) : candidateJu ? new URL("arkpedia-ju-candidate.json", cache) : candidateTurdus ? new URL("arkpedia-turdus-candidate.json", cache) : candidateRecon ? new URL("arkpedia-recon-candidate.json", cache) : candidateKoromaru ? new URL("arkpedia-koromaru-candidate.json", cache) : candidateGallus ? new URL("arkpedia-gallus-candidate.json", cache) : candidateMcnist ? new URL("arkpedia-mcnist-candidate.json", cache) : candidatePedro ? new URL("arkpedia-pedro-candidate.json", cache) : candidateTmslot ? new URL("arkpedia-tmslot-candidate.json", cache) : candidateThumpy ? new URL("arkpedia-thumpy-candidate.json", cache) : candidateTanya ? new URL("arkpedia-tanya-candidate.json", cache) : candidateCairn ? new URL("arkpedia-cairn-candidate.json", cache) : candidateKichi ? new URL("arkpedia-kichi-candidate.json", cache) : candidateSnhunt ? new URL("arkpedia-snhunt-candidate.json", cache) : candidateVarkis ? new URL("arkpedia-varkis-candidate.json", cache) : candidateBranch ? new URL("arkpedia-branch-candidate.json", cache) : candidateReckpr ? new URL("arkpedia-reckpr-candidate.json", cache) : candidateClosur ? new URL("arkpedia-closur-candidate.json", cache) : new URL("../../data/arkpedia-mvp.json", import.meta.url),
+  candidateYukari ? new URL("arkpedia-yukari-candidate.json", cache) : candidateAegis ? new URL("arkpedia-aegis-candidate.json", cache) : candidateSkybox ? new URL("arkpedia-skybox-candidate.json", cache) : candidateBotany ? new URL("arkpedia-botany-candidate.json", cache) : candidateTaraxa ? new URL("arkpedia-taraxa-candidate.json", cache) : candidateJu ? new URL("arkpedia-ju-candidate.json", cache) : candidateTurdus ? new URL("arkpedia-turdus-candidate.json", cache) : candidateRecon ? new URL("arkpedia-recon-candidate.json", cache) : candidateKoromaru ? new URL("arkpedia-koromaru-candidate.json", cache) : candidateGallus ? new URL("arkpedia-gallus-candidate.json", cache) : candidateMcnist ? new URL("arkpedia-mcnist-candidate.json", cache) : candidatePedro ? new URL("arkpedia-pedro-candidate.json", cache) : candidateTmslot ? new URL("arkpedia-tmslot-candidate.json", cache) : candidateThumpy ? new URL("arkpedia-thumpy-candidate.json", cache) : candidateTanya ? new URL("arkpedia-tanya-candidate.json", cache) : candidateCairn ? new URL("arkpedia-cairn-candidate.json", cache) : candidateKichi ? new URL("arkpedia-kichi-candidate.json", cache) : candidateSnhunt ? new URL("arkpedia-snhunt-candidate.json", cache) : candidateVarkis ? new URL("arkpedia-varkis-candidate.json", cache) : candidateBranch ? new URL("arkpedia-branch-candidate.json", cache) : candidateReckpr ? new URL("arkpedia-reckpr-candidate.json", cache) : candidateClosur ? new URL("arkpedia-closur-candidate.json", cache) : new URL("../../data/arkpedia-mvp.json", import.meta.url),
   output,
 );
 console.log(
