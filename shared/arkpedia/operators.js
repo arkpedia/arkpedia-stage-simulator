@@ -117,6 +117,7 @@ import { HADIYA_OPERATORS } from './hadiya-operators.js';
 import { AMORIS_OPERATORS } from './amoris-operators.js';
 import { TMORIS_OPERATORS } from './tmoris-operators.js';
 import { DOLRIS_OPERATORS } from './dolris-operators.js';
+import { MORTIS_OPERATORS } from './mortis-operators.js';
 import { TURDUS_OPERATORS } from './turdus-operators.js';
 import { BRANCH_OPERATORS } from './branch-operators.js';
 import { RECKPR_OPERATORS } from './reckpr-operators.js';
@@ -460,6 +461,7 @@ export const REGULAR_OPERATORS = Object.freeze({
   ...AMORIS_OPERATORS,
   ...TMORIS_OPERATORS,
   ...DOLRIS_OPERATORS,
+  ...MORTIS_OPERATORS,
   ...BRANCH_OPERATORS,
 });
 

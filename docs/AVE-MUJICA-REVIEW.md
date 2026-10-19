@@ -89,3 +89,22 @@ Declared mappings:
 Validation:
 - `test/arkpedia-dolris-public.test.js` (27 cases): stats/cost at all ranks; trait and talent 1 heals; Fever only from member heals; the talent 2 add-on value; S1 inspiration and heal-on-hit; S2 trait stop, pulse count and inspiration; both 0-1 clears.
 - `review-dolris-public.mjs`: 4 cases and 28 captures on both the candidate and normal builds.
+
+## Wakaba Mutsumi (`char_4183_mortis`)
+
+Built on the generic Dollkeeper stand-in (20 s, switch windows). The stand-in does not attack (`dollNoAttack`).
+
+From data:
+- **Ordinary attack.** Physical melee at the Attack clip's event, after her deployment clip.
+- **Talent 1.** Physical/Arts taken ×(1 − 0.3), with 0.3 × 0.5 of the raw amount returned as her own Apoptosis. The stand-in gains +24% DEF. Members' attacks have a 20% chance per damage instance to cut the stand-in by 1 s.
+- **Talent 2.** Fever +3 per damage or element instance aimed at her, dodged ones included, and +10% max HP for members.
+- **S1.** +DEF, +2 block and +1 taunt.
+- **S2.** 2-1 range and −0.3 BAT. Three Arts shots per attack at random ground targets in range, with blocked enemies counted. Each successful hit costs her 20 Arts.
+
+Declared mappings (PRTS notes):
+- Talent 1 applies to her and the stand-in.
+- If she is knocked out during S1, S1 continues on the stand-in until it leaves, and the stand-in blocks with (skill block − 2) instead of 0.
+
+Validation:
+- `test/arkpedia-mortis-public.test.js` (28 cases): stats/cost at all ranks; ordinary timing and type; the exact 30%/15% Apoptosis split; Fever and the HP aura; stand-in entry, DEF and member shortening; S1 persisting into the stand-in with the block arithmetic; S2 shots and self-damage; both 0-1 clears.
+- `review-mortis-public.mjs`: 4 cases and 28 captures on both the candidate and normal builds.

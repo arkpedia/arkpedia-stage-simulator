@@ -134,6 +134,7 @@ import { customizePublicHadiyaKit, installPublicHadiya } from './content/arkpedi
 import { customizeAmorisKit, installAmoris } from './content/arkpedia-amoris.js';
 import { customizeTmorisKit, installTmoris } from './content/arkpedia-tmoris.js';
 import { customizeDolrisKit, installDolris } from './content/arkpedia-dolris.js';
+import { customizeMortisKit, installMortis } from './content/arkpedia-mortis.js';
 import { customizePublicTurdusKit, installPublicTurdus } from './content/arkpedia-turdus-public.js';
 import { customizePublicBranchKit, installPublicBranch } from './content/arkpedia-branch-public.js';
 import { customizePublicReckprKit, installPublicReckpr } from './content/arkpedia-reckpr-public.js';
@@ -620,6 +621,7 @@ export class StandardBattle extends Battle {
     customizeAmorisKit({ battle: this, id, unit, kit });
     customizeTmorisKit({ battle: this, id, unit, kit });
     customizeDolrisKit({ battle: this, id, unit, kit });
+    customizeMortisKit({ battle: this, id, unit, kit });
     customizePublicBranchKit({ battle: this, id, unit, kit });
     customizeNarantKit({ battle: this, id, def, unit, kit });
     customizeElaKit({ battle: this, id, def, unit, kit });
@@ -861,6 +863,7 @@ export class StandardBattle extends Battle {
     installAmoris({ battle: this, unit, def });
     installTmoris({ battle: this, unit, def });
     installDolris({ battle: this, unit, def });
+    installMortis({ battle: this, unit, def });
     installPublicBranch({ battle: this, unit, def });
     installNarant({ battle: this, unit, def });
     installEla({ battle: this, unit, def });
