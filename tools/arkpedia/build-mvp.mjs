@@ -82,11 +82,12 @@ const candidateAegis = process.argv.includes('--review-candidate-aegis');
 const candidateYukari = process.argv.includes('--review-candidate-yukari');
 const candidateMakoto = process.argv.includes('--review-candidate-makoto');
 const candidateAphrissa = process.argv.includes('--review-candidate-aphrissa');
+const candidateHadiya = process.argv.includes('--review-candidate-hadiya');
 const candidateTurdus = process.argv.includes('--review-candidate-turdus');
 const candidateTmslot = process.argv.includes('--review-candidate-tmslot');
 const candidateThumpy = process.argv.includes('--review-candidate-thumpy');
 const candidateTanya = process.argv.includes('--review-candidate-tanya');
-if ([candidateAphrissa,candidateMakoto,candidateYukari,candidateAegis,candidateSkybox,candidateBotany,candidateTaraxa,candidateJu,candidateTurdus,candidateRecon,candidateKoromaru,candidateGallus,candidateMcnist,candidatePedro,candidateTmslot,candidateThumpy,candidateClosur,candidateReckpr,candidateBranch,candidateVarkis,candidateSnhunt,candidateKichi,candidateCairn,candidateTanya].filter(Boolean).length>1) throw Error('Review one candidate snapshot at a time');
+if ([candidateHadiya,candidateAphrissa,candidateMakoto,candidateYukari,candidateAegis,candidateSkybox,candidateBotany,candidateTaraxa,candidateJu,candidateTurdus,candidateRecon,candidateKoromaru,candidateGallus,candidateMcnist,candidatePedro,candidateTmslot,candidateThumpy,candidateClosur,candidateReckpr,candidateBranch,candidateVarkis,candidateSnhunt,candidateKichi,candidateCairn,candidateTanya].filter(Boolean).length>1) throw Error('Review one candidate snapshot at a time');
 const ids = Object.keys(REGULAR_OPERATORS);
 if (ids.includes('char_4179_monstr')) {
   const review = JSON.parse(await readFile(new URL('../../data/arkpedia-mon3tr-runtime-review.json', import.meta.url)));
@@ -523,6 +524,23 @@ if(ids.includes('char_4221_ju')){
   }}
   const expected=['five-star-icons/Ju - Base.webp','five-star-skins/Ju - Base.webp','skill-icons/Ju - Fine Bow, Difficult Draw.webp','skill-icons/Ju - Fine Wings, Difficult Flight.webp'].sort();
   if(JSON.stringify(review.interfaceAssets.map(a=>a.path).sort())!==JSON.stringify(expected)||review.interfaceAssets.some(a=>pins[a.repository]!==a.commit||!/^[a-f0-9]{64}$/.test(a.sha256)||!Number.isSafeInteger(a.bytes)||a.bytes<1))throw Error('Ju lacks four pinned interface assets');
+}
+if(ids.includes('char_394_hadiya')){
+  const id='char_394_hadiya',review=JSON.parse(await readFile(new URL('../../data/arkpedia-hadiya-runtime-review.json',import.meta.url)));
+  const approved=JSON.stringify(review.enabledOperators)===JSON.stringify([id])&&review.verification.browser.status==='passed';
+  const pending=candidateHadiya&&review.enabledOperators.length===0&&review.verification.browser.status==='pending';
+  const artifacts=Object.fromEntries(await Promise.all([['foundation','native-operators/char_394_hadiya'],['owner','hadiya-art'],['recipe','hadiya-art-recipe'],['clocks','hadiya-clocks']].map(async([key,path])=>[key,await readFile(new URL(`../../data/arkpedia-${path}.json`,import.meta.url))])));
+  const sha=key=>createHash('sha256').update(artifacts[key]).digest('hex'),e=JSON.parse(artifacts.foundation);
+  if((!approved&&!pending)||review.frameParity!==false||review.moduleSupport!==false||review.nativeParticleSupport!==false||review.nativePixelParity!==false
+    ||review.mechanicsPolicy!=='source-cn-hadiya-dp-casts-adaptation-and-stacked-talent-v1'
+    ||review.sourceFoundationSha256!==sha('foundation')||review.ownerArtworkSha256!==sha('owner')||review.sourceClocksSha256!==sha('clocks')||JSON.parse(artifacts.owner).recipeSha256!==sha('recipe')
+    ||e.source.commit!==cnEvidence?.source.commit||!isDeepStrictEqual(e.tables.character,cnEvidence.tables.characters[id])
+    ||Object.entries(e.tables.skills).some(([key,value])=>!isDeepStrictEqual(value,cnEvidence.tables.skills[key])))throw Error('Hadiya lacks matching original source, art, clocks and public browser review');
+  if(approved){for(const[path,key]of[['tools/arkpedia/review-hadiya-public.mjs','scriptSha256'],['tools/arkpedia/public-review-driver.mjs','driverSha256'],['tools/arkpedia/public-review-server.mjs','fixtureServerSha256']]){
+    if(createHash('sha256').update(await readFile(new URL('../../'+path,import.meta.url))).digest('hex')!==review.verification.browser[key])throw Error('Changed Hadiya browser review tooling');
+  }}
+  const expected=['five-star-icons/Hadiya - Base.webp','five-star-skins/Hadiya - Base.webp','skill-icons/Hadiya - Enhanced Desert Tactics.webp','skill-icons/Hadiya - Blade of the Qarnsayf.webp'].sort();
+  if(JSON.stringify(review.interfaceAssets.map(a=>a.path).sort())!==JSON.stringify(expected)||review.interfaceAssets.some(a=>pins[a.repository]!==a.commit||!/^[a-f0-9]{64}$/.test(a.sha256)||!Number.isSafeInteger(a.bytes)||a.bytes<1))throw Error('Hadiya lacks four pinned interface assets');
 }
 if(ids.includes('char_4223_botany')){
   const id='char_4223_botany',review=JSON.parse(await readFile(new URL('../../data/arkpedia-botany-runtime-review.json',import.meta.url)));
@@ -1053,7 +1071,8 @@ const models = Object.fromEntries(
     // absent on Back. Its complete model record is checked against the original
     // artwork receipt below; generic per-skill aliases would invent those clips.
     // Aphrissa's skill owners likewise pick literal Begin/Loop/Down clips.
-    if (op?.skills.length > 1 && !['char_4228_closur','char_4217_makoto','char_4229_aphris'].includes(model.id) && op.skills.some((_, index) => !model.animationRoles.skills?.[index]))
+    // Hadiya's owner likewise selects her literal skill and S2 mode clips.
+    if (op?.skills.length > 1 && !['char_4228_closur','char_4217_makoto','char_4229_aphris','char_394_hadiya'].includes(model.id) && op.skills.some((_, index) => !model.animationRoles.skills?.[index]))
       throw new Error(`Missing per-skill SD animation roles: ${k}`);
     return [k, sd.models[k]];
   }),
@@ -1172,6 +1191,11 @@ if(ids.includes('char_4221_ju')){
   const review=JSON.parse(await readFile(new URL('../../data/arkpedia-ju-runtime-review.json',import.meta.url))),keys=['front','back'].map(face=>`operator/char_4221_ju/default/${face}`).sort();
   if(JSON.stringify(Object.keys(review.originalArtwork).sort())!==JSON.stringify(keys))throw Error('Incomplete original Ju artwork review');
   for(const key of keys)if(JSON.stringify(models[key])!==JSON.stringify(review.originalArtwork[key]))throw Error('Changed original Ju artwork: '+key);
+}
+if(ids.includes('char_394_hadiya')){
+  const review=JSON.parse(await readFile(new URL('../../data/arkpedia-hadiya-runtime-review.json',import.meta.url))),keys=['front','back'].map(face=>`operator/char_394_hadiya/default/${face}`).sort();
+  if(JSON.stringify(Object.keys(review.originalArtwork).sort())!==JSON.stringify(keys))throw Error('Incomplete original Hadiya artwork review');
+  for(const key of keys)if(JSON.stringify(models[key])!==JSON.stringify(review.originalArtwork[key]))throw Error('Changed original Hadiya artwork: '+key);
 }
 if(ids.includes('char_4223_botany')){
   const review=JSON.parse(await readFile(new URL('../../data/arkpedia-botany-runtime-review.json',import.meta.url))),keys=['front','back'].map(face=>`operator/char_4223_botany/default/${face}`).sort();
@@ -1394,7 +1418,7 @@ for (const token of Object.values(tokens)) {
 }
 const output = {
   schemaVersion: 1,
-  ...(candidateAphrissa ? {reviewCandidates:['char_4229_aphris']} : candidateMakoto ? {reviewCandidates:['char_4217_makoto']} : candidateYukari ? {reviewCandidates:['char_4219_yukari']} : candidateAegis ? {reviewCandidates:['char_4218_aigis']} : candidateSkybox ? {reviewCandidates:['char_4213_skybx']} : candidateBotany ? {reviewCandidates:['char_4223_botany']} : candidateTaraxa ? {reviewCandidates:['char_4222_taraxa']} : candidateJu ? { reviewCandidates: ['char_4221_ju'] } : candidateTurdus ? { reviewCandidates: ['char_4224_turdus'] } : candidateRecon ? { reviewCandidates: ['char_4215_buddy'] } : candidateKoromaru ? { reviewCandidates: ['char_4220_kormr'] } : candidateGallus ? { reviewCandidates: ['char_4227_gallus'] } : candidateMcnist ? { reviewCandidates: ['char_4230_mcnist'] } : candidatePedro ? { reviewCandidates: ['char_4234_pedro'] } : candidateTmslot ? { reviewCandidates: ['char_4236_tmslot'] } : candidateThumpy ? { reviewCandidates: ['char_4235_thumpy'] } : candidateTanya ? { reviewCandidates: ['char_4225_tanya'] } : candidateCairn ? { reviewCandidates: ['char_4214_cairn'] } : candidateKichi ? { reviewCandidates: ['char_4203_kichi'] } : candidateSnhunt ? { reviewCandidates: ['char_4211_snhunt'] } : candidateVarkis ? { reviewCandidates: ['char_4166_varkis'] } : candidateReckpr ? { reviewCandidates: ['char_4196_reckpr'] } : candidateBranch ? { reviewCandidates: ['char_4207_branch'] } : {}),
+  ...(candidateHadiya ? {reviewCandidates:['char_394_hadiya']} : candidateAphrissa ? {reviewCandidates:['char_4229_aphris']} : candidateMakoto ? {reviewCandidates:['char_4217_makoto']} : candidateYukari ? {reviewCandidates:['char_4219_yukari']} : candidateAegis ? {reviewCandidates:['char_4218_aigis']} : candidateSkybox ? {reviewCandidates:['char_4213_skybx']} : candidateBotany ? {reviewCandidates:['char_4223_botany']} : candidateTaraxa ? {reviewCandidates:['char_4222_taraxa']} : candidateJu ? { reviewCandidates: ['char_4221_ju'] } : candidateTurdus ? { reviewCandidates: ['char_4224_turdus'] } : candidateRecon ? { reviewCandidates: ['char_4215_buddy'] } : candidateKoromaru ? { reviewCandidates: ['char_4220_kormr'] } : candidateGallus ? { reviewCandidates: ['char_4227_gallus'] } : candidateMcnist ? { reviewCandidates: ['char_4230_mcnist'] } : candidatePedro ? { reviewCandidates: ['char_4234_pedro'] } : candidateTmslot ? { reviewCandidates: ['char_4236_tmslot'] } : candidateThumpy ? { reviewCandidates: ['char_4235_thumpy'] } : candidateTanya ? { reviewCandidates: ['char_4225_tanya'] } : candidateCairn ? { reviewCandidates: ['char_4214_cairn'] } : candidateKichi ? { reviewCandidates: ['char_4203_kichi'] } : candidateSnhunt ? { reviewCandidates: ['char_4211_snhunt'] } : candidateVarkis ? { reviewCandidates: ['char_4166_varkis'] } : candidateReckpr ? { reviewCandidates: ['char_4196_reckpr'] } : candidateBranch ? { reviewCandidates: ['char_4207_branch'] } : {}),
   ...(formSource ? { globalAlternateFormSource: formSource } : {}),
   ...((aegisReview||yukariReview||makotoReview||aphrissaReview)?{interfaceAssets:Object.fromEntries(['arkpedia/arkpedia-image-assets','arkpedia/arkpedia-skin-assets'].map(repo=>[repo,Object.fromEntries([...(aegisReview?.interfaceAssets??[]),...(yukariReview?.interfaceAssets??[]),...(makotoReview?.interfaceAssets??[]),...(aphrissaReview?.interfaceAssets??[])].filter(a=>a.repository===repo).map(a=>[a.path,{commit:a.commit,bytes:a.bytes,sha256:a.sha256}]))]))}:{}),
   sources: cnEvidence ? { ...pins, [cnEvidence.source.repository]: cnEvidence.source.commit } : pins,
@@ -1463,7 +1487,7 @@ for (const [id,support] of Object.entries(REGULAR_OPERATORS)) {
 output.skillEffects = {repository:"arkpedia/arkpedia-sd-assets",commit:sdCommit,
   pack:stageAssets.effects.chargeCost,bindings};
 await writeJSONAtomic(
-  candidateAphrissa ? new URL("arkpedia-aphrissa-candidate.json", cache) : candidateMakoto ? new URL("arkpedia-makoto-candidate.json", cache) : candidateYukari ? new URL("arkpedia-yukari-candidate.json", cache) : candidateAegis ? new URL("arkpedia-aegis-candidate.json", cache) : candidateSkybox ? new URL("arkpedia-skybox-candidate.json", cache) : candidateBotany ? new URL("arkpedia-botany-candidate.json", cache) : candidateTaraxa ? new URL("arkpedia-taraxa-candidate.json", cache) : candidateJu ? new URL("arkpedia-ju-candidate.json", cache) : candidateTurdus ? new URL("arkpedia-turdus-candidate.json", cache) : candidateRecon ? new URL("arkpedia-recon-candidate.json", cache) : candidateKoromaru ? new URL("arkpedia-koromaru-candidate.json", cache) : candidateGallus ? new URL("arkpedia-gallus-candidate.json", cache) : candidateMcnist ? new URL("arkpedia-mcnist-candidate.json", cache) : candidatePedro ? new URL("arkpedia-pedro-candidate.json", cache) : candidateTmslot ? new URL("arkpedia-tmslot-candidate.json", cache) : candidateThumpy ? new URL("arkpedia-thumpy-candidate.json", cache) : candidateTanya ? new URL("arkpedia-tanya-candidate.json", cache) : candidateCairn ? new URL("arkpedia-cairn-candidate.json", cache) : candidateKichi ? new URL("arkpedia-kichi-candidate.json", cache) : candidateSnhunt ? new URL("arkpedia-snhunt-candidate.json", cache) : candidateVarkis ? new URL("arkpedia-varkis-candidate.json", cache) : candidateBranch ? new URL("arkpedia-branch-candidate.json", cache) : candidateReckpr ? new URL("arkpedia-reckpr-candidate.json", cache) : candidateClosur ? new URL("arkpedia-closur-candidate.json", cache) : new URL("../../data/arkpedia-mvp.json", import.meta.url),
+  candidateHadiya ? new URL("arkpedia-hadiya-candidate.json", cache) : candidateAphrissa ? new URL("arkpedia-aphrissa-candidate.json", cache) : candidateMakoto ? new URL("arkpedia-makoto-candidate.json", cache) : candidateYukari ? new URL("arkpedia-yukari-candidate.json", cache) : candidateAegis ? new URL("arkpedia-aegis-candidate.json", cache) : candidateSkybox ? new URL("arkpedia-skybox-candidate.json", cache) : candidateBotany ? new URL("arkpedia-botany-candidate.json", cache) : candidateTaraxa ? new URL("arkpedia-taraxa-candidate.json", cache) : candidateJu ? new URL("arkpedia-ju-candidate.json", cache) : candidateTurdus ? new URL("arkpedia-turdus-candidate.json", cache) : candidateRecon ? new URL("arkpedia-recon-candidate.json", cache) : candidateKoromaru ? new URL("arkpedia-koromaru-candidate.json", cache) : candidateGallus ? new URL("arkpedia-gallus-candidate.json", cache) : candidateMcnist ? new URL("arkpedia-mcnist-candidate.json", cache) : candidatePedro ? new URL("arkpedia-pedro-candidate.json", cache) : candidateTmslot ? new URL("arkpedia-tmslot-candidate.json", cache) : candidateThumpy ? new URL("arkpedia-thumpy-candidate.json", cache) : candidateTanya ? new URL("arkpedia-tanya-candidate.json", cache) : candidateCairn ? new URL("arkpedia-cairn-candidate.json", cache) : candidateKichi ? new URL("arkpedia-kichi-candidate.json", cache) : candidateSnhunt ? new URL("arkpedia-snhunt-candidate.json", cache) : candidateVarkis ? new URL("arkpedia-varkis-candidate.json", cache) : candidateBranch ? new URL("arkpedia-branch-candidate.json", cache) : candidateReckpr ? new URL("arkpedia-reckpr-candidate.json", cache) : candidateClosur ? new URL("arkpedia-closur-candidate.json", cache) : new URL("../../data/arkpedia-mvp.json", import.meta.url),
   output,
 );
 console.log(

@@ -267,6 +267,13 @@ export class HadiyaOwner {
     if (this.valid() && this.state === s) this.talent.trigger(receipt, 'ON_SKILL_RETRIGGERED');
     return true;
   }
+  // Read-only mirror of adapt()'s preconditions for the UI; adapt() stays authoritative.
+  canAdapt() {
+    if (!this.valid() || this.finishing || this.phase?.kind === 'end' || this.payment.busy) return false;
+    if (this.b.getPlayer('arkpedia')?.dp < this.payment.adaptationCost) return false;
+    if (!this.account.active) return this.record.index === 0 && this.account.ready;
+    return !!this.state && !this.state.extraAttempted && !this.payment.used;
+  }
   adapt() {
     if (!this.valid() || this.finishing || this.phase?.kind === 'end') return false;
     if (!this.account.active) return this.payment.activateAdaptation();
@@ -357,6 +364,10 @@ export class HadiyaOwner {
     const {b, u} = this;
     this.installed = true; this.account = u.skill; this.skillSpec = u.skill.spec; u.mem.hadiyaOwner = this;
     this.payment.install(); this.talent.install();
+    // Source 装备应变 (Equipment Adaptation): the field's second action button.
+    this.secondary = {id: 'hadiya-adaptation', label: 'Equipment Adaptation', cost: () => this.payment.adaptationCost,
+      available: () => this.canAdapt(), run: () => this.adapt()};
+    u.mem.regularSecondaryAction = this.secondary;
     this.handles = [
       b.on('deploy', ({unit, move}) => {
         if (unit !== u || move) return;
@@ -389,6 +400,7 @@ export class HadiyaOwner {
       delete this.u.mem.regularFormVisual; delete this.u.mem.regularVisualDirection;
     }
     if (this.u.mem.hadiyaOwner === this) delete this.u.mem.hadiyaOwner;
+    if (this.u.mem.regularSecondaryAction === this.secondary) delete this.u.mem.regularSecondaryAction;
   }
 }
 

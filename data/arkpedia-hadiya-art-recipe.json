@@ -1,0 +1,70 @@
+{
+  "operator": "char_394_hadiya",
+  "name": "Hadiya",
+  "foundationSha256": "ffeebf810b1f0260d6062d57c1d9a7f00d3cab87650ae592fe175ca203aed27f",
+  "artCommit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+  "output": "data/arkpedia-hadiya-art.json",
+  "sdReview": "source-reviews/hadiya.json",
+  "scope": "Original Front/Back files unchanged. Independently checked native skeleton/atlas/material/texture pointers, decoded pixels and premultiplied alpha. Default roles are literal Idle/Start/Attack_A; her selected owner picks Attack_A/B, Skill_1, the S2 Begin/Loop/Idle/End family and the Front-only Skill_Down_2_Loop/Die/Skill_2_Die clips itself. All seven original S2-to-ordinary End mixes are retained. Back has no death clip. Combat/public admission, modules, effects/audio/shaders and compiled/frame/pixel parity remain separate.",
+  "roles": {
+    "Front": {
+      "idle": "Idle",
+      "deploy": "Start",
+      "attack": "Attack_A",
+      "attackDown": null,
+      "skill": null,
+      "skills": {},
+      "die": "Die",
+      "stun": null,
+      "move": null
+    },
+    "Back": {
+      "idle": "Idle",
+      "deploy": "Start",
+      "attack": "Attack_A",
+      "attackDown": null,
+      "skill": null,
+      "skills": {},
+      "die": null,
+      "stun": null,
+      "move": null
+    }
+  },
+  "nativeMixes": [
+    {
+      "sourceAnimName": "Skill_2_Idle",
+      "targetAnimName": "Idle",
+      "mixAnimName": "Skill_2_End"
+    },
+    {
+      "sourceAnimName": "Skill_2_Loop",
+      "targetAnimName": "Idle",
+      "mixAnimName": "Skill_2_End"
+    },
+    {
+      "sourceAnimName": "Skill_Down_2_Loop",
+      "targetAnimName": "Idle",
+      "mixAnimName": "Skill_2_End"
+    },
+    {
+      "sourceAnimName": "Skill_2_Loop",
+      "targetAnimName": "Attack_A",
+      "mixAnimName": "Skill_2_End"
+    },
+    {
+      "sourceAnimName": "Skill_2_Loop",
+      "targetAnimName": "Attack_B",
+      "mixAnimName": "Skill_2_End"
+    },
+    {
+      "sourceAnimName": "Skill_Down_2_Loop",
+      "targetAnimName": "Attack_A",
+      "mixAnimName": "Skill_2_End"
+    },
+    {
+      "sourceAnimName": "Skill_Down_2_Loop",
+      "targetAnimName": "Attack_B",
+      "mixAnimName": "Skill_2_End"
+    }
+  ]
+}
