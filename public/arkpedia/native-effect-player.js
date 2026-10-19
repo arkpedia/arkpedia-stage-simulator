@@ -114,6 +114,13 @@ export function createNativeEffectLibrary({three:T,pack,animations,shaders,loadT
       // line draws are inspected; this cannot approve a partially played FX.
       return createNativeEffectInstance({...context,inspectionLines:true},name,options);
     },
+    inspectMeshParticles(name,options){
+      assertOpen();
+      // Retain the full original hierarchy/clip pose while isolating mesh
+      // particles. Other renderers and unresolved motion are not approved by
+      // this diagnostic; full-root create() still enforces every component.
+      return createNativeEffectInstance({...context,inspectionMeshParticles:true},name,options);
+    },
     get instanceCount(){return instances.size;},
     dispose(){
       if(closed)return;closed=true;
@@ -133,6 +140,8 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false,lineP
   if(linePositions!==null&&typeof linePositions!=='function')throw Error('Invalid native line endpoint owner');
   if(library.inspectionLines&&![...pose.renderers.keys()].some(id=>pack.records[id].type==='LineRenderer'))
     throw Error('Selected original effect has no line renderers');
+  if(library.inspectionMeshParticles&&![...pose.renderers.keys()].some(id=>pack.records[id].type==='ParticleSystemRenderer'&&pack.records[id].data.m_RenderMode===4))
+    throw Error('Selected original effect has no mesh particles');
   const subEmitters=createSubEmitterGraph(pack);
   const particleTransforms=new Map();
   for(const[id,n]of pose.nodes)for(const ref of pack.records[n.gameObject].references??[])
@@ -472,7 +481,8 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false,lineP
     .map(r=>pack.records[r.target]).filter(r=>r?.type==='ParticleSystem').map(r=>r.data.lengthInSec*2));
   const timeWindow=Math.max(3,...periods,...pose.instances.map(i=>animations.clips[i.clip].stop));
   const inspection=library.inspectionSource?{particle:library.inspectionSource,parents:subEmitters.parents(library.inspectionSource),fullEffect:false}
-    :library.inspectionLines?{lines:true,explicitEndpoints:true,fullEffect:false}:null;
+    :library.inspectionLines?{lines:true,explicitEndpoints:true,fullEffect:false}
+    :library.inspectionMeshParticles?{meshParticles:true,fullEffect:false}:null;
   const instance={name,pose,group,draws,blocked,timeWindow,inspection,parentMotion,shaderGlobals:library.shaderGlobals,
     update,dispose,get disposed(){return disposed;}};
   library.register(instance);
@@ -481,6 +491,7 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false,lineP
     for(const [component,r] of pose.renderers){
       const record=pack.records[component];if(!r.enabled)continue;
       if(library.inspectionLines&&record.type!=='LineRenderer')continue;
+      if(library.inspectionMeshParticles&&(record.type!=='ParticleSystemRenderer'||record.data.m_RenderMode!==4))continue;
       const beforeGeometry=new Set(geometries),beforeMaterial=new Set(materials);
       try{
         assertOpen();
@@ -493,7 +504,9 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false,lineP
           meshReferenceSource=filter;
         }else if(record.type==='ParticleSystemRenderer'){
           if(record.data.m_RenderMode===1)stretch=createParticleStretch(record.data);
-          else if(![0,4].includes(record.data.m_RenderMode)||![0,2].includes(record.data.m_RenderAlignment)||record.data.m_RenderMode===4&&record.data.m_RenderAlignment!==2)throw Error('Particle alignment/render mode not playing');
+          // Unity 2021.3 exposes View and Local alignment for Mesh as well as
+          // Billboard mode. Both retain their original source Mesh geometry.
+          else if(![0,4].includes(record.data.m_RenderMode)||![0,2].includes(record.data.m_RenderAlignment))throw Error('Particle alignment/render mode not playing');
           pivot=createParticlePivot(record.data,{stretch});
           if(record.data.m_UseCustomVertexStreams)customLayout=createParticleVertexLayout(record.data.m_VertexStreams);
           const ps=(pack.records[r.gameObject].references??[]).map(r=>r.target).find(k=>pack.records[k]?.type==='ParticleSystem');
