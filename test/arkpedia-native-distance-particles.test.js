@@ -49,17 +49,18 @@ test('distance emission validates explicit history and preserves stationary life
 function sphere(thickness=1){const s=source();s.EmissionModule.rateOverDistance=constant(0);s.EmissionModule.m_BurstCount=1;s.EmissionModule.m_Bursts=[{time:0,cycleCount:1,repeatInterval:1,probability:1,countCurve:constant(100)}];s.InitialModule.startSpeed=constant(2);
  s.ShapeModule={enabled:true,type:0,radius:{mode:0,spread:0,value:3},radiusThickness:thickness,alignToDirection:false,randomDirectionAmount:0,sphericalDirectionAmount:0,randomPositionAmount:0,m_Position:{x:0,y:0,z:0},m_Rotation:{x:0,y:0,z:0},m_Scale:{x:1,y:1,z:1}};
  for(const field of ['m_Texture','m_Mesh','m_MeshRenderer','m_SkinnedMeshRenderer','m_Sprite','m_SpriteRenderer'])s.ShapeModule[field]={m_PathID:'0'};return s;}
+const still={frameAt:()=>({birth:matrix(0),movement:matrix(0)})};
 test('sphere births occupy the source volume or shell and move radially at original speed',()=>{
  for(const thickness of [0,.5,1]){
-  const s=sphere(thickness),before=structuredClone(s),e=createMovingParticles(s),particles=e.sample(.25);
+  const s=sphere(thickness),before=structuredClone(s),e=createMovingParticles(s),particles=e.sample(.25,still);
   assert.equal(particles.length,100);for(const p of particles){const radius=Math.hypot(...p.origin);assert.ok(radius>=3*(1-thickness)-1e-10&&radius<=3+1e-10);near(Math.hypot(...p.displacement),.5);near(p.origin.reduce((sum,v,i)=>sum+v*p.displacement[i],0),radius*.5);}
   if(thickness===1){const sorted=particles.map(p=>Math.hypot(...p.origin)**3/27).sort((a,b)=>a-b);assert.ok(sorted[25]>.1&&sorted[25]<.4&&sorted[75]>.6&&sorted[75]<.9);}
   assert.deepEqual(s,before);
  }
 });
 test('sphere shape scale changes spawn volume without changing radial speed or adding offset to velocity',()=>{
- const plain=createMovingParticles(sphere()).sample(.25),s=sphere();s.ShapeModule.m_Scale={x:2,y:3,z:4};s.ShapeModule.m_Position={x:10,y:20,z:30};s.ShapeModule.m_Rotation.z=90;
- const result=createMovingParticles(s).sample(.25);result.forEach((p,i)=>{const a=plain[i];[10-3*a.origin[1],20+2*a.origin[0],30+4*a.origin[2]].forEach((v,k)=>near(p.origin[k],v));[-a.displacement[1],a.displacement[0],a.displacement[2]].forEach((v,k)=>near(p.displacement[k],v));});
+ const plain=createMovingParticles(sphere()).sample(.25,still),s=sphere();s.ShapeModule.m_Scale={x:2,y:3,z:4};s.ShapeModule.m_Position={x:10,y:20,z:30};s.ShapeModule.m_Rotation.z=90;
+ const result=createMovingParticles(s).sample(.25,still);result.forEach((p,i)=>{const a=plain[i];[10-3*a.origin[1],20+2*a.origin[0],30+4*a.origin[2]].forEach((v,k)=>near(p.origin[k],v));[-a.displacement[1],a.displacement[0],a.displacement[2]].forEach((v,k)=>near(p.displacement[k],v));});
 });
 let pack=null;try{const raw=await readFile('.cache/arkpedia/lappland-alter-source/effects/native-effects.bin');assert.equal(createHash('sha256').update(raw).digest('hex'),'4b3f9646b38f84eee29667053d265bde63a3756bd600e3f558fb28d97b94dbc5');pack=JSON.parse(gunzipSync(raw));}catch(error){if(error.code!=='ENOENT')throw error;}
 test('all four original S3 distance layers replay source modules with recorded birth frames', {skip:pack===null?'Original native source cache unavailable':false},()=>{

@@ -7,6 +7,7 @@ import {gunzipSync} from 'node:zlib';
 import * as T from 'three';
 import {createNativeEffectLibrary} from '../public/arkpedia/native-effect-player.js';
 import {createNativeStageCamera} from '../public/arkpedia/native-stage-camera.js';
+import {createEffectTrajectory} from '../shared/arkpedia/native-effect-trail.js';
 import {createParticlePivot} from '../shared/arkpedia/native-particle-pivot.js';
 import meta from '../data/arkpedia-aphrissa-mesh-alignment.json' with {type:'json'};
 import profiles from './fixtures/arkpedia-aphrissa-mesh-alignment.json' with {type:'json'};
@@ -25,9 +26,6 @@ try{
 }catch(error){if(error.code!=='ENOENT')throw error;}
 const native={skip:source===null?'Original effect cache unavailable':false};
 const library=()=>createNativeEffectLibrary({three:T,...source,builtinMeshes,shaderGlobals:{_HG_UV_ROTATION:0},loadTexture:async()=>new T.Texture()});
-const held=new Map([
-  ['battle/prefabs/effects/aphris.ab:2685626582646413221','Animated world particle velocity frame needs integration']
-]);
 const camera=(x,y,z)=>{const c=new T.PerspectiveCamera(35,1,.001,100);c.position.set(x,y,z);c.lookAt(0,0,0);c.updateMatrixWorld(true);return c;};
 const localBasis=(mesh,c)=>new T.Matrix4().multiplyMatrices(c.matrixWorldInverse,mesh.matrixWorld).elements.filter((_,i)=>i<12);
 const near=(a,b)=>{assert.equal(a.length,b.length);a.forEach((v,i)=>assert.ok(Math.abs(v-b[i])<1e-8,`${v} != ${b[i]} at ${i}`));};
@@ -45,7 +43,7 @@ test('all 82 original mesh/view profiles retain source identity and explicit fid
   }
 });
 
-test('all original mesh/view layers reach their actual remaining motion gates or render original geometry',native,async()=>{
+test('all original mesh/view layers render original geometry with their source particle motion',native,async()=>{
   const lib=library(),seen=new Set(),before=structuredClone(source.pack.records);
   try{
     for(const root of new Set(Object.values(profiles).map(r=>r.root))){
@@ -54,8 +52,7 @@ test('all original mesh/view layers reach their actual remaining motion gates or
         i.update(.15,{camera:camera(1,2,5)});
         for(const [key,row] of Object.entries(profiles).filter(([,r])=>r.root===root)){
           seen.add(key);const draw=i.draws.find(d=>d.component===key),blocked=i.blocked.find(b=>b.component===key);
-          if(held.has(key)){assert.equal(!!draw,false,key+' must remain motion-blocked');assert.equal(blocked?.reason,held.get(key));continue;}
-          assert.ok(draw,key);assert.equal(blocked,undefined);assert.equal(draw.alignment,0);assert.ok(draw.emitter);
+          assert.ok(!!draw,key);assert.equal(blocked,undefined);assert.equal(draw.alignment,0);assert.ok(draw.emitter);
           const meshRef=row.references.find(r=>r.field==='m_Mesh').target,original=source.pack.meshes[meshRef];
           assert.ok(original);assert.deepEqual([...draw.mesh.geometry.getAttribute('in_POSITION0').array],Array.from(new Float32Array(original.positions.flat())));
           assert.deepEqual([...draw.mesh.geometry.index.array],original.submeshTriangles.flat(2));
@@ -133,4 +130,57 @@ test('selected particles retain their original ancestors and authored inactivity
     }
     i.dispose();assert.equal(lib.instanceCount,0);
   }finally{lib.dispose();}
+});
+
+test('the original animated S3 charge loop renders World particles at their own original clip/birth poses',native,async()=>{
+  const lib=library(),id='battle/prefabs/effects/aphris.ab:181594443170011045',
+    i=await lib.inspectParticles('aphris_skill_03_charge_01',{particles:[id]}),clip=i.pose.instances[0].clip,
+    trajectory=createEffectTrajectory([{time:0,position:[0,0,0]},{time:2,position:[4,1,2]}]),
+    cam=createNativeStageCamera(T).sync(camera(2,3,5)),d=i.draws[0];
+  assert.equal(source.animations.clips[clip].name,'aphris_skill_03_charge_start');
+  assert.equal(d.emitter.worldMotion,true);assert.equal(d.particleSource.moveWithTransform,1);
+  assert.equal(d.particleSource.InitialModule.startSpeed.scalar,0);
+  const expectedAt=time=>{
+    time=Math.max(0,time);const state=i.pose.sample(time,clip),chain=[];
+    for(let id=d.transform;id;id=state.nodes.get(id).parent)chain.unshift(id);
+    const matrix=new T.Matrix4(),offset=trajectory.sample(time);
+    for(const id of chain){
+      const n=state.nodes.get(id),position=n.position.map((v,axis)=>v+(n.parent?0:offset[axis])),
+        q=n.euler?new T.Quaternion().setFromEuler(new T.Euler(...n.euler.map(v=>v*Math.PI/180),'YXZ')):new T.Quaternion().fromArray(n.rotation);
+      matrix.multiply(new T.Matrix4().compose(new T.Vector3().fromArray(position),q,new T.Vector3().fromArray(n.scale)));
+    }
+    return new T.Vector3().setFromMatrixPosition(matrix).toArray();
+  };
+  const sample=time=>{
+    i.update(time,{camera:cam,clip,trajectory});i.group.updateMatrixWorld(true);
+    const pivot=source.pack.records[d.component].data.m_Pivot;
+    for(const [n,p] of d.lastParticles.entries()){
+      near(p.worldPosition,expectedAt(p.birthTime));near(p.displacement,[0,0,0]);
+      assert.ok(d.pool[n].matrixWorld.elements.every(Number.isFinite));
+      if(d.pool[n].visible)near(new T.Vector3(pivot.x,pivot.y,pivot.z).applyMatrix4(d.pool[n].matrixWorld).toArray(),p.worldPosition);
+    }
+    return d.lastParticles.map(p=>({id:p.id,birthTime:p.birthTime,position:p.worldPosition}));
+  };
+  try{
+    sample(0);const first=sample(.8);assert.ok(first.length>0);assert.ok(first.some(p=>p.birthTime<0)&&first.some(p=>p.birthTime>0));
+    sample(2);assert.deepEqual(sample(.8),first);assert.equal(i.inspection.fullEffect,false);
+    i.dispose();assert.equal(lib.instanceCount,0);
+  }finally{i.dispose();lib.dispose();}
+});
+
+test('the original World end-loop remains inactive through its recovered transform/material clip',native,async()=>{
+  const lib=library(),id='battle/prefabs/effects/aphris.ab:-3347359679414150629',
+    i=await lib.inspectParticles('aphris_skill_03_charge_01_end',{particles:[id]}),d=i.draws[0],
+    go=source.pack.records[id].references.find(r=>r.field==='m_GameObject').target;
+  const visible=part=>{for(let n=part;n;n=n.parent)if(!n.visible)return false;return true;};
+  try{
+    assert.equal(source.pack.records[go].data.m_IsActive,false);assert.ok(i.pose.instances.length>0);
+    assert.ok(i.pose.instances.every(c=>c.bindings.every(b=>b.gameObject!==go||b.property!=='m_IsActive')));
+    for(const clip of [null,...i.pose.instances.map(c=>c.clip)])for(const time of [0,.15,.6,2,.15]){
+      i.update(time,{camera:camera(1,2,5),clip});i.group.updateMatrixWorld(true);
+      assert.ok(d.lastParticles.length>0);assert.ok(d.pool.every(p=>!visible(p)));
+      assert.ok(d.lastParticles.every(p=>p.worldPosition.every(Number.isFinite)));
+    }
+    assert.equal(source.pack.records[go].data.m_IsActive,false);assert.equal(i.inspection.fullEffect,false);
+  }finally{i.dispose();lib.dispose();}
 });

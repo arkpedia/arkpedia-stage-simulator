@@ -36,10 +36,13 @@ export function createMovingParticles(source,{seed=1,subEmitterSchedule=null,par
     if(![0,3].includes(uv.startFrame.minMaxState))throw Error('Native initial texture frame clock needs review');
     sampleParticleCurve(uv.frameOverTime,0);sampleParticleCurve(uv.frameOverTime,1);
   }
-  const worldMotion=!!motion&&source.moveWithTransform===1;
+  // Every World simulation owns a birth-frame point and velocity, including
+  // straight particles with no turbulence/limit/force module. Emitter changes
+  // after birth must not reproject an already simulated particle path.
+  const worldMotion=source.moveWithTransform===1;
   const crossLinearFrame=!!motion&&velocity?.enabled&&(source.moveWithTransform===1?!velocity.inWorldSpace:velocity.inWorldSpace);
   function sampleParticles(particles,time,{frameAt,emitterVelocityAt}={}){
-    if(worldMotion&&typeof frameAt!=='function')throw Error('World turbulence requires an explicit particle birth frame');
+    if(worldMotion&&typeof frameAt!=='function')throw Error('World motion requires an explicit particle birth frame');
     if(crossLinearFrame&&typeof frameAt!=='function')throw Error('Linear particle velocity requires an explicit simulation frame');
     if(inheritance&&typeof emitterVelocityAt!=='function')throw Error('Inherited velocity requires explicit world emitter velocity');
     return particles.map(p=>{
@@ -73,11 +76,12 @@ export function createMovingParticles(source,{seed=1,subEmitterSchedule=null,par
       let displacement,worldPosition,inheritedVelocity;
       if(worldMotion){
         const frame=frameAt(birthTime,p);
-        if(!frame?.birth||!frame?.movement)throw Error('World turbulence requires spawn and movement matrices');
+        if(!frame?.birth||!frame?.movement)throw Error('World motion requires spawn and movement matrices');
         const born=particleBirthFrame(origin,initialVelocity,frame.birth,frame.movement);
         const inheritedVelocityAt=inheritance?.sample(p,time,t=>emitterVelocityAt(t,p));
         inheritedVelocity=inheritedVelocityAt?.(0);
-        displacement=motion.sample(p,born.origin,born.velocity,{inheritedVelocityAt,inheritanceMode:source.InheritVelocityModule?.m_Mode,linearVelocityTransform});worldPosition=born.origin.map((v,i)=>v+displacement[i]);
+        displacement=motion?motion.sample(p,born.origin,born.velocity,{inheritedVelocityAt,inheritanceMode:source.InheritVelocityModule?.m_Mode,linearVelocityTransform}):born.velocity.map(v=>v*p.age);
+        worldPosition=born.origin.map((v,i)=>v+displacement[i]);
       }else displacement=motion?motion.sample(p,origin,initialVelocity,{linearVelocityTransform}):['x','y','z'].map((axis,i)=>initialVelocity[i]*p.age+(velocity?.enabled?p.lifetime*integrateParticleCurve(velocity[axis],0,t,random(13+i)):0));
       let sheet=null;
       if(uv?.enabled){

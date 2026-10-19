@@ -541,10 +541,6 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false,lineP
           const moving=['ShapeModule','VelocityModule','UVModule','ClampVelocityModule','NoiseModule','InheritVelocityModule','ForceModule'].some(k=>particleSource[k]?.enabled)||particleSource.moveWithTransform===1;
           emitter=moving?createMovingParticles(particleSource,{particleTrails,discreteArcContract:DISCRETE_CONE_ARC_CONTRACT,subEmitterSchedule:parentMotion.parentReady(ps)?parentMotion.schedule:null}):createStationaryParticles(particleSource);
           if(![0,1,2].includes(particleSource.scalingMode))throw Error('Native particle scaling mode needs review');
-          if(particleSource.moveWithTransform===1&&!emitter.worldMotion){
-            const ancestors=new Set();let n=r.transform;while(n){const d=pose.nodes.get(n);ancestors.add(d.gameObject);n=d.parent;}
-            if(pose.instances.some(i=>i.bindings.some(b=>ancestors.has(b.gameObject)&&['m_LocalRotation','localEulerAnglesRaw','m_LocalScale'].includes(b.property))))throw Error('Animated world particle velocity frame needs integration');
-          }
           billboard=[0,1].includes(record.data.m_RenderMode);
           if(!billboard){meshId=target(component,'m_Mesh');meshReferenceSource=component;}
         }else if(record.type==='TrailRenderer'){

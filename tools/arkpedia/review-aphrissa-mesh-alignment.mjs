@@ -5,12 +5,16 @@ import assert from 'node:assert/strict';
 import {mkdir,readFile,writeFile} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
 const linearMotion=process.argv.includes('--linear-motion');
-const directory='.cache/arkpedia/aphrissa-source/effects/'+(linearMotion?'linear-motion-browser/':'mesh-alignment-browser/');
-const meta=JSON.parse(await readFile('data/arkpedia-aphrissa-'+(linearMotion?'linear-motion':'mesh-alignment')+'.json')),
+const worldBirth=process.argv.includes('--world-birth'),componentReview=linearMotion||worldBirth;
+assert.ok(!(linearMotion&&worldBirth),'Select one component review');
+const mode=worldBirth?'world-birth':linearMotion?'linear-motion':'mesh-alignment';
+const directory='.cache/arkpedia/aphrissa-source/effects/'+mode+'-browser/';
+const meta=JSON.parse(await readFile('data/arkpedia-aphrissa-'+mode+'.json')),
   bytes=await readFile(meta.fixture.path);
 assert.equal(bytes.length,meta.fixture.bytes);assert.equal(createHash('sha256').update(bytes).digest('hex'),meta.fixture.sha256);
-const profiles=JSON.parse(bytes),held=linearMotion?Object.keys(profiles).filter(k=>profiles[k].data.ShapeModule.type===10):[],
-  roots=linearMotion?Object.keys(profiles).filter(k=>!held.includes(k)):[...new Set(Object.values(profiles).map(r=>r.root))];
+const profiles=JSON.parse(bytes),held=worldBirth?Object.keys(profiles).filter(k=>profiles[k].data.ShapeModule.enabled):
+  linearMotion?Object.keys(profiles).filter(k=>profiles[k].data.ShapeModule.type===10):[],
+  roots=componentReview?Object.keys(profiles).filter(k=>!held.includes(k)):[...new Set(Object.values(profiles).map(r=>r.root))];
 const executablePath=process.env.ARKPEDIA_REVIEW_CHROME;
 if(!executablePath)throw Error('Set ARKPEDIA_REVIEW_CHROME; start preview-aphrissa-effects.mjs on port3185.');
 await mkdir(directory,{recursive:true});
@@ -21,8 +25,11 @@ page.on('requestfailed',r=>failed.push(r.url()));page.on('response',r=>{if(r.sta
 try{
   await page.setViewport({width:1280,height:800});await page.setCacheEnabled(false);
   await page.goto('http://127.0.0.1:3185/',{waitUntil:'networkidle0'});
-  const setup=await page.evaluate(async linearMotion=>{
+  const setup=await page.evaluate(async ({componentReview,worldBirth})=>{
     const T=await import('/vendor/three.module.js'),{createNativeEffectLibrary,compileNativeEffectPrograms}=await import('/arkpedia/native-effect-player.js');
+    const {createEffectTrajectory}=await import('/shared/arkpedia/native-effect-trail.js');
+    // Controlled external movement, not a recorded native actor trajectory.
+    const trajectory=worldBirth?createEffectTrajectory([{time:0,position:[0,0,0]},{time:2,position:[1,0,0]}]):null;
     const manifest=await(await fetch('/review-assets/manifest.json')).json();
     const checked=async entry=>{
       const response=await fetch('/review-assets/'+entry.path);if(!response.ok)throw Error('Original review asset unavailable');
@@ -53,35 +60,43 @@ try{
     };
     const render=()=>{
       const width=innerWidth,height=innerHeight-48;renderer.setSize(width,height);camera.aspect=width/height;camera.updateProjectionMatrix();
-      current.update(clock,{camera,clip});renderer.render(scene,camera);
+      current.update(clock,{camera,clip,trajectory});renderer.render(scene,camera);
       const gl=renderer.getContext(),pixels=new Uint8Array(width*height*4);gl.readPixels(0,0,width,height,gl.RGBA,gl.UNSIGNED_BYTE,pixels);
       let count=0;for(let i=0;i<pixels.length;i+=4)if(Math.abs(pixels[i]-11)+Math.abs(pixels[i+1]-17)+Math.abs(pixels[i+2]-22)>25)count++;
       if(gl.getError()!==gl.NO_ERROR)throw Error('Mesh inspection GL error');return count;
     };
     const select=async selection=>{
-      const name=linearMotion?selection.particle:selection;
-      current?.dispose();current=await (linearMotion?lib.inspectParticles(selection.root,{particles:[name]}):lib.inspectMeshParticles(name,{allowBlocked:true}));scene.add(current.group);
-      const clips=[null,...new Set(current.pose.instances.map(i=>i.clip))];let chosen=null;
+      const name=componentReview?selection.particle:selection;
+      current?.dispose();current=await (componentReview?lib.inspectParticles(selection.root,{particles:[name]}):lib.inspectMeshParticles(name,{allowBlocked:true}));scene.add(current.group);
+      const sourceClips=[...new Set(current.pose.instances.map(i=>i.clip))],
+        clips=worldBirth?[...sourceClips,null]:[null,...sourceClips],attempts=[];let chosen=null;
       for(const candidate of clips){
         clip=candidate;
         for(const time of [.05,.15,.3,.6,1,2,3]){
-          clock=time;current.update(clock,{camera,clip});const box=bounds();
-          if(box.isEmpty()||!Number.isFinite(box.min.length()+box.max.length()))continue;
+          clock=time;current.update(clock,{camera,clip,trajectory});const box=bounds();
+          if(box.isEmpty()||!Number.isFinite(box.min.length()+box.max.length())){attempts.push({clip,time,empty:true});continue;}
           const center=box.getCenter(new T.Vector3()),radius=Math.max(box.getSize(new T.Vector3()).length()/2,.01);
           camera.position.copy(center).add(new T.Vector3(.2,.15,1).normalize().multiplyScalar(radius*4));camera.lookAt(center);
-          const pixels=render();if(pixels>30){chosen={clock,clip,visiblePixels:pixels};break;}
+          const pixels=render();attempts.push({clip,time,pixels,size:box.getSize(new T.Vector3()).toArray()});if(pixels>30){chosen={clock,clip,visiblePixels:pixels};break;}
         }
         if(chosen)break;
       }
       let sourceInactive=false;
-      if(!chosen&&linearMotion&&current.pose.instances.length===0){
+      if(!chosen&&componentReview){
         const authored=current.pose.sample(0);
         sourceInactive=current.draws.length>0&&current.draws.every(d=>!authored.nodes.get(d.transform).visible);
+        const inactiveOwners=new Set();
+        for(const d of current.draws)for(let id=d.transform;id;id=authored.nodes.get(id).parent){
+          const n=authored.nodes.get(id);if(!n.active)inactiveOwners.add(n.gameObject);
+        }
+        // Other recovered transform/material clips do not establish activation.
+        // Never hide a potentially activating source binding behind this case.
+        if(current.pose.instances.some(i=>i.bindings.some(b=>b.property==='m_IsActive'&&inactiveOwners.has(b.gameObject))))sourceInactive=false;
         if(sourceInactive){clock=.15;clip=null;chosen={clock,clip,visiblePixels:render()};
           if(chosen.visiblePixels!==0)throw Error('Authored inactive particle became visible');}
       }
-      if(!chosen)throw Error('No visible original mesh particles in '+name);
-      document.querySelector('#status').textContent=name+' · original '+(linearMotion?'linear-motion component':'mesh-particle')+' inspection · full FX/native dispatch held';
+      if(!chosen)throw Error('No visible original mesh particles in '+name+' '+JSON.stringify(attempts));
+      document.querySelector('#status').textContent=name+' · original '+(componentReview?(worldBirth?'world-birth':'linear-motion')+' component':'mesh-particle')+' inspection · full FX/native dispatch held';
       const snapshot=()=>JSON.stringify(current.draws.map(d=>{
         // Pools retain spare geometry after later emissions. Compare live
         // particles; every spare must be hidden after a reverse scrub.
@@ -89,50 +104,68 @@ try{
         return {id:d.component,particles:d.lastParticles,matrices:d.pool?.slice(0,d.lastParticles?.length??0).map(p=>p.matrix.elements)};
       }));
       const before=snapshot(),saved=clock;clock+=.7;render();clock=saved;render();if(before!==snapshot())throw Error('Reverse mesh clock retained later state');
-      return {root:linearMotion?selection.root:name,...(linearMotion?{particle:name}:{}),...chosen,sourceInactive,
+      let birthHistory;
+      if(worldBirth){
+        const points=new Map();let retained=0,prewarmed=0,fresh=0;
+        birthHistory=[];
+        for(const time of [0,.8,2,.8]){
+          clock=time;render();const particles=current.draws.flatMap(d=>d.lastParticles??[]);
+          for(const p of particles){
+            if(!p.worldPosition?.every(Number.isFinite)||p.displacement.some(v=>v!==0))throw Error('Invalid straight World position');
+            const old=points.get(p.id);
+            if(old){if(old.some((v,axis)=>Math.abs(v-p.worldPosition[axis])>1e-9))throw Error('World particle followed its later emitter');retained++;}
+            else points.set(p.id,p.worldPosition.slice());
+            if(p.birthTime<0)prewarmed++;else fresh++;
+          }
+          if(current.draws.some(d=>d.pool.some(p=>!p.matrix.elements.every(Number.isFinite))))throw Error('Invalid World mesh transform');
+          birthHistory.push({time,particles:particles.map(p=>({id:p.id,birthTime:p.birthTime,worldPosition:p.worldPosition}))});
+        }
+        if(!retained||!prewarmed||!fresh)throw Error('Incomplete World birth history');
+        clock=saved;render();if(before!==snapshot())throw Error('World history retained later state');
+      }
+      return {root:componentReview?selection.root:name,...(componentReview?{particle:name}:{}),...chosen,sourceInactive,
         draws:current.draws.length,viewDraws:current.draws.filter(d=>d.alignment===0).length,
-        blocked:current.blocked,inspection:current.inspection,reverseStable:true};
+        blocked:current.blocked,inspection:current.inspection,reverseStable:true,...(birthHistory?{birthHistory}:{} )};
     };
     const verifyHeld=async ids=>{
       const result=[];
       for(const id of ids){
         let error=null;
         try{const i=await lib.inspectParticle(id);i.dispose();}catch(e){error=e.message;}
-        if(!error?.includes('Native particle shape/direction needs review'))throw Error('Changed source shape gate: '+id);
-        result.push({particle:id,reason:'Native particle shape/direction needs review'});
+        const reason=worldBirth?'Initial gradient clock needs review':'Native particle shape/direction needs review';
+        if(!error?.includes(reason))throw Error('Changed source hold: '+id+' '+error);
+        result.push({particle:id,reason});
       }
       return result;
     };
     window.meshReview={select,render,verifyHeld,dispose:async()=>{lib.dispose();await Promise.resolve();renderer.render(scene,camera);return {...renderer.info.memory};}};
     return {compiledPrograms:programs.length,sourcePackSha256:manifest.effects.pack.sha256};
-  },linearMotion);
+  },{componentReview,worldBirth});
   assert.equal(setup.compiledPrograms,14);assert.equal(setup.sourcePackSha256,meta.sourcePackSha256);
   const results=[],client=await page.createCDPSession();
   for(const root of roots){
     await client.send('Emulation.setTouchEmulationEnabled',{enabled:false});await page.setViewport({width:1280,height:800});
-    const desktop=await page.evaluate(selection=>meshReview.select(selection),linearMotion?{particle:root,root:profiles[root].root}:root);
-    if(linearMotion){assert.deepEqual(desktop.inspection.particles,[root]);assert.ok(desktop.draws>0);assert.deepEqual(desktop.blocked,[]);
+    const desktop=await page.evaluate(selection=>meshReview.select(selection),componentReview?{particle:root,root:profiles[root].root}:root);
+    if(componentReview){assert.deepEqual(desktop.inspection.particles,[root]);assert.ok(desktop.draws>0);assert.deepEqual(desktop.blocked,[]);
       assert.equal(desktop.sourceInactive,!profiles[root].gameObjectActive);}
     else{
       const original=Object.keys(profiles).filter(id=>profiles[id].root===root),heldViews=desktop.blocked.filter(b=>original.includes(b.component));
-      assert.equal(desktop.viewDraws+heldViews.length,original.length);
-      assert.ok(heldViews.every(b=>['Native simulation space/linear velocity with particle turbulence needs review',
-        'Animated world particle velocity frame needs integration'].includes(b.reason)));
+      assert.equal(desktop.viewDraws,original.length);assert.deepEqual(heldViews,[]);
       desktop.heldViewProfiles=heldViews;
     }
-    const label=linearMotion?'particle-'+root.split(':').at(-1):root;
+    const label=componentReview?'particle-'+root.split(':').at(-1):root;
     await page.screenshot({path:directory+'desktop-'+label+'.png'});
     await page.setViewport({width:844,height:390});await client.send('Emulation.setTouchEmulationEnabled',{enabled:true,maxTouchPoints:1});
     const touch=await page.evaluate(()=>({visiblePixels:meshReview.render(),overflow:document.documentElement.scrollWidth>innerWidth,touchPoints:navigator.maxTouchPoints}));
     if(desktop.sourceInactive)assert.equal(touch.visiblePixels,0);else assert.ok(touch.visiblePixels>20);
     assert.equal(touch.overflow,false);assert.ok(touch.touchPoints>0);
     await page.screenshot({path:directory+'touch-'+label+'.png'});results.push({...desktop,touch});
-    console.log(root+': original '+(linearMotion?'linear motion':'mesh/view particles')+' and reverse clock passed on desktop/touch');
+    console.log(root+': original '+(componentReview?mode:'mesh/view particles')+' and reverse clock passed on desktop/touch');
   }
   const heldProfiles=await page.evaluate(ids=>meshReview.verifyHeld(ids),held);
   const cleanup=await page.evaluate(()=>meshReview.dispose());assert.equal(cleanup.geometries,0);assert.equal(cleanup.textures,0);
   assert.deepEqual(errors,[]);assert.deepEqual(failed,[]);
-  const report={driver:'Chromium software WebGL2',originalMeshInspection:!linearMotion,originalLinearMotionInspection:linearMotion,nativeFrameParity:false,fullEffectDispatchVerified:false,
+  const report={driver:'Chromium software WebGL2',originalMeshInspection:!componentReview,originalLinearMotionInspection:linearMotion,originalWorldBirthInspection:worldBirth,nativeFrameParity:false,fullEffectDispatchVerified:false,
     explicitShaderGlobals:{_HG_UV_ROTATION:0},...setup,results,heldProfiles,captures:results.length*2,cleanup,errors,failed,
     playerSha256:createHash('sha256').update(await readFile('public/arkpedia/native-effect-player.js')).digest('hex')};
   await writeFile(directory+'report.json',JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify({cases:results.length,captures:report.captures,cleanup,errors,failed}));
