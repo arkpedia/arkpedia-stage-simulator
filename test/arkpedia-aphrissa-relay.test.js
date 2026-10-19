@@ -195,3 +195,14 @@ test('Cleanup cannot remove a replacement deck registered under the same public 
   f.b.regularSummons.set(f.deck.state.key, replacement); f.deck.stop();
   assert.equal(f.b.regularSummons.get(f.deck.state.key), replacement);
 });
+
+test('Replacing the current relay controller retires its old token and preserves replacement ownership', () => {
+  const f = make(), old = f.deck.place(5, 7);
+  const replacement = {owner: 'new-deck'};
+  f.u.mem.aphrissaRelay = replacement; f.b.regularSummons.set(f.deck.state.key, replacement);
+  advance(f.b, .1);
+  assert.equal(f.deck.stopped, true); assert.equal(f.deck.handles.length, 0);
+  assert.equal(old.deployed, false); assert.equal(f.deck.stock, 0);
+  assert.equal(f.u.mem.aphrissaRelay, replacement);
+  assert.equal(f.b.regularSummons.get(f.deck.state.key), replacement);
+});

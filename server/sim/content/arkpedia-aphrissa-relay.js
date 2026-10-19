@@ -50,7 +50,8 @@ class AphrissaRelay {
         healFree: true, noAttack: true}),
       get stock() { return deck.stock; }, get readyAt() { return deck.readyAt; }};
   }
-  valid() { return !this.stopped && this.seq === this.u.deploySeq && present(this.u); }
+  valid() { return !this.stopped && this.seq === this.u.deploySeq && present(this.u)
+    && this.u.mem.aphrissaRelay === this; }
   own() {
     const s = this.point;
     return s && !s.finished && present(s.unit) && s.seq === s.unit.deploySeq ? [s.unit] : [];

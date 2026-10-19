@@ -40,10 +40,14 @@ class AphrissaOrdinary {
     Object.assign(this, {b, u, mayBegin, native, seq: null, stopped: false, phase: null,
       accepting: false, bornUntil: Infinity, visualSeq: 0, visuals: new WeakSet(), handles: []});
   }
-  valid() { return !this.stopped && !this.b.finished && present(this.u) && this.seq === this.u.deploySeq; }
+  valid() { return !this.stopped && !this.b.finished && present(this.u) && this.seq === this.u.deploySeq
+    && this.u.mem.aphrissaOrdinary === this; }
   allowed() {
-    return this.valid() && this.mayBegin() === true && this.valid() && this.u.canAct
-      && !this.u.hidden && !this.u.s.flags.disarm;
+    if (!this.valid()) return false;
+    let allowed;
+    try { allowed = this.mayBegin() === true; }
+    catch (error) { this.phase = null; throw error; }
+    return allowed && this.valid() && this.u.canAct && !this.u.hidden && !this.u.s.flags.disarm;
   }
   model() { return this.u.dir === 'UP' ? 'Back' : 'Front'; }
   visual(clip, speed = 1, loop = false) {
@@ -94,7 +98,7 @@ class AphrissaOrdinary {
     return true;
   }
   flush(p) {
-    while (this.phase === p && this.allowed() && p.epoch === this.u.attackControlEpoch
+    while (this.phase === p && this.allowed() && this.phase === p && p.epoch === this.u.attackControlEpoch
       && p.next < p.pending.length && due(p.age, p.pending[p.next].at)) {
       const input = p.pending[p.next++]; // Claim before damage callbacks.
       if (input.unit.deploySeq !== input.life || !this.legal(input.unit)) continue;

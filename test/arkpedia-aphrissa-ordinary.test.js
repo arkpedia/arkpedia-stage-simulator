@@ -181,6 +181,38 @@ test('Explicit ordinary cleanup preserves a foreign presentation owner', () => {
   assert.equal(f.u.mem.regularFormVisual, foreign); assert.equal(f.attacks.handles.length, 0);
 });
 
+test('Replacing the current controller slot retires an old windup without touching its replacement', () => {
+  const f = make(); enemy(f); until(f, () => !!f.attacks.phase);
+  const replacement = {owner: 'new-controller'}, visual = {clip: 'replacement'};
+  f.u.mem.aphrissaOrdinary = replacement; f.u.mem.regularFormVisual = visual;
+  advance(f.b, 1);
+  assert.equal(f.attacks.stopped, true); assert.equal(f.attacks.handles.length, 0);
+  assert.deepEqual(f.hits, []); assert.deepEqual(f.receipts, []);
+  assert.equal(f.u.mem.aphrissaOrdinary, replacement); assert.equal(f.u.mem.regularFormVisual, visual);
+});
+
+test('A mode predicate clearing the phase during staggered-hit admission cancels the old pending hit', () => {
+  const f = make(); enemy(f); const later = enemy(f, {col: 7});
+  until(f, () => f.hits.length === 1);
+  f.attacks.mayBegin = () => {
+    // The first query observes the prior tick age. The flush queries again
+    // after advancing age, just as a reentrant owning mode dispatcher can.
+    if (f.attacks.phase?.age >= .48) f.attacks.phase = null;
+    return true;
+  };
+  advance(f.b, .2);
+  assert.equal(f.hits.length, 1); assert.equal(later.hp, later.s.maxHp);
+});
+
+test('A throwing mode query cancels the old pending phase before reporting the error', () => {
+  const f = make(); enemy(f); until(f, () => !!f.attacks.phase);
+  f.attacks.mayBegin = () => { throw Error('fixture:mode-query'); };
+  assert.throws(() => f.attacks.tick(), /fixture:mode-query/);
+  assert.equal(f.attacks.phase, null);
+  f.attacks.mayBegin = () => true;
+  advance(f.b, 1); assert.deepEqual(f.hits, []);
+});
+
 test('An unreviewed ordinary contract cannot install an attack fallback', () => {
   assert.throws(() => make({ordinaryContract: {}}), /explicit ordinary contract/);
 });
