@@ -124,6 +124,7 @@ import { FLWR2_OPERATORS } from './flwr2-operators.js';
 import { TURDUS_OPERATORS } from './turdus-operators.js';
 import { HEADB2_OPERATORS } from './headb2-operators.js';
 import { TITI_OPERATORS } from './titi-operators.js';
+import { HALO2_OPERATORS } from './halo2-operators.js';
 import { BRANCH_OPERATORS } from './branch-operators.js';
 import { RECKPR_OPERATORS } from './reckpr-operators.js';
 import { CLOSUR_OPERATORS } from './closur-operators.js';
@@ -472,6 +473,7 @@ export const REGULAR_OPERATORS = Object.freeze({
   ...FLWR2_OPERATORS,
   ...HEADB2_OPERATORS,
   ...TITI_OPERATORS,
+  ...HALO2_OPERATORS,
   ...BRANCH_OPERATORS,
 });
 

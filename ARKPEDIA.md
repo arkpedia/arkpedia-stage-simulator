@@ -4791,3 +4791,7 @@ Zima the Raging Tide joins with her Earthshaker splash, high-ground pulses and a
 ### Titi
 
 Titi joins with her Incantation Medic trait, her two talents and all three sleep skills. The battle now records source `nationId`s (`regularNations`) for nation-scoped effects. A skill that puts its own owner to sleep can declare `cancelWhileOwnSleep` so its manual stop still works. See docs/TITI-REVIEW.md. Coverage: 414/431 forms.
+
+### Astgenne the Lightchaser
+
+Astgenne the Lightchaser joins with her Decel Binder trait, two talents (ASPD stacks from sluggish and in-range fragile) and all three skills: S1 repeating chain jumps, S2 pull links and S3 damage-sharing locked targets. See docs/HALO2-REVIEW.md. Coverage: 415/431 forms.
