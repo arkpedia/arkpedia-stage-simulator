@@ -4777,3 +4777,8 @@ The shared Ave Mujica Fever gauge (`env_033_fever`) is built from the official `
 ### Matsukiri
 
 Matsukiri joins with both skills, DP generation and deployment-zone card discounts. `StandardBattle.cost()` gained a generic per-card `costDelta`. See docs/MAKIRI-REVIEW.md. Coverage: 411/431 forms.
+
+
+### Perfumer the Distilled
+
+Perfumer the Distilled joins with her Abjurer trait, Sanctuary talent, auto S1 heal and passive S2. See docs/FLWR2-REVIEW.md. Coverage: 412/431 forms.

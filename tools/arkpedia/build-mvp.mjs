@@ -91,7 +91,8 @@ const CN_OWNER_REVIEWS = Object.freeze({char_4185_amoris: {slug: 'amoris', polic
   char_4184_dolris: {slug: 'dolris', policy: 'source-cn-dolris-bard-inspire-fever-v1'},
   char_4183_mortis: {slug: 'mortis', policy: 'source-cn-mortis-dollkeeper-apoptosis-fever-v1'},
   char_4182_oblvns: {slug: 'oblvns', policy: 'source-cn-oblvns-notes-instruments-fever-v1'},
-  char_4199_makiri: {slug: 'makiri', policy: 'source-cn-makiri-dp-and-card-discounts-v1'}});
+  char_4199_makiri: {slug: 'makiri', policy: 'source-cn-makiri-dp-and-card-discounts-v1'},
+  char_1022_flwr2: {slug: 'flwr2', policy: 'source-cn-flwr2-abjurer-sanctuary-v1'}});
 const candidateTurdus = process.argv.includes('--review-candidate-turdus');
 const candidateTmslot = process.argv.includes('--review-candidate-tmslot');
 const candidateThumpy = process.argv.includes('--review-candidate-thumpy');
