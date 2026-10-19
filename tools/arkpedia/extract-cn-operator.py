@@ -117,7 +117,8 @@ chararts = {ID: [{'pathId': r['pathId'], 'data': r['data']} for r in art_parts]}
 skill_path = 'battle/prefabs/[uc]skills.ab'
 skill_bundle = load(skill_path)
 skills, skill_bindings, mode_skills, prefab_overrides = {}, {}, [], {}
-def skill_graphs(rows):
+absent_skill_prefabs = set()
+def skill_graphs(rows, token=False):
     bindings, overrides, modes = {}, {}, []
     for row in rows:
         key = row['skillId']
@@ -138,7 +139,12 @@ def skill_graphs(rows):
             if prefab is None:
                 modes.append(key)
             elif prefab not in skills:
-                skills[prefab] = graph(skill_path, f'dyn/battle/prefabs/[uc]skills/{prefab}.prefab')
+                container = f'dyn/battle/prefabs/[uc]skills/{prefab}.prefab'
+                # A token skill whose named prefab the client does not ship is
+                # driven by the token's own modes; record the absence explicitly.
+                if token and container not in load(skill_path)['roots']:
+                    absent_skill_prefabs.add(prefab); modes.append(key); continue
+                skills[prefab] = graph(skill_path, container)
     return bindings, overrides, modes
 skill_bindings, prefab_overrides, mode_skills = skill_graphs(ct[ID]['skills'])
 token_skill_bindings, token_prefab_overrides, token_mode_skills = {}, {}, {}
@@ -177,9 +183,13 @@ def resolve_token(key):
     assert pointer['m_FileID'] == 0 and pointer['m_PathID'] != '0', ('Unsupported external token artwork', key)
     controllers = [part for row in rows for part in row['components']
                    if part['pathId'] == pointer['m_PathID'] and '_animations' in part['data']]
-    assert len(controllers) == 1, ('Missing embedded original token artwork controller', key)
+    # An effect-only token animator (hit/head/muzzle mounts and an effect white
+    # list, no Spine clips) has no skeleton to export; it is recorded as such.
+    effect = [part for row in rows for part in row['components']
+              if part['pathId'] == pointer['m_PathID'] and '_effectWhiteList' in part['data'] and '_animations' not in part['data']]
+    assert len(controllers) + len(effect) == 1, ('Missing embedded original token artwork controller', key)
     token_sources[key] = {'bundle': path, 'container': container, 'rootPathId': str(root),
-                          'animatorPathId': pointer['m_PathID']}
+                          'animatorPathId': pointer['m_PathID'], **({'effectOnly': True} if effect else {})}
     return rows
 def scan(v, field=''):
     if field in ['_overrideAudioSignal', 'audioSignal', '_audioSignal']:
@@ -198,7 +208,7 @@ def scan(v, field=''):
     elif isinstance(v, str):
         if v.startswith('token_') and v in ct and field not in parameters and v not in tokens:
             tokens[v] = resolve_token(v)
-            token_skill_bindings[v], token_prefab_overrides[v], token_mode_skills[v] = skill_graphs(ct[v]['skills'])
+            token_skill_bindings[v], token_prefab_overrides[v], token_mode_skills[v] = skill_graphs(ct[v]['skills'], token=True)
             scan([tokens[v], ct[v], [st[row['skillId']] for row in ct[v]['skills'] if row['skillId'] is not None], skills])
         if v.startswith('projectile_') and field not in parameters and v not in projectiles:
             container = f'dyn/battle/prefabs/[uc]projectiles/{v}.prefab'
@@ -282,6 +292,8 @@ for key in sorted(tokens):
     controller = next(part for row in tokens[key] for part in row['components']
                       if part['pathId'] == source['animatorPathId'])
     token_art[key] = [{'pathId': controller['pathId'], 'data': controller['data']}]
+    if source.get('effectOnly'):
+        continue
     all_bindings[key], all_models[key] = export_artwork(source['bundle'], controller, OUT / 'tokens' / key, key)
 # Discovery may inspect all token groups; only referenced groups belong in evidence.
 base_paths = [owner_path, art_path, skill_path, projectile_path, 'config/buff_template_holder.ab']
@@ -309,6 +321,8 @@ if tokens:
     evidence['tables']['tokenSkills'] = {key: st[key] for key in sorted({row['skillId'] for t in tokens for row in ct[t]['skills'] if row['skillId'] is not None})}
     evidence['tokenSkillBindings'] = {key: token_skill_bindings[key] for key in sorted(tokens)}
     evidence['tokenSkillPrefabOverrides'] = {key: token_prefab_overrides[key] for key in sorted(tokens)}
+    if absent_skill_prefabs:
+        evidence['tokenAbsentSkillPrefabs'] = sorted(absent_skill_prefabs)
     evidence['tokenModeSkills'] = {key: token_mode_skills[key] for key in sorted(tokens)}
 if prefab_overrides:
     evidence['skillPrefabOverrides'] = prefab_overrides
