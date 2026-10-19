@@ -66,7 +66,7 @@ test('all original mesh/view layers render original geometry with their source p
 
 test('mesh/view particles keep their source rotation and size in the camera basis across orbit, reflection and reverse time',native,async()=>{
   const lib=library();
-  await assert.rejects(lib.create('aphris_skill_03_charge_01'),/unplayed components/);
+  await assert.rejects(lib.create('aphris_skill_01_buff_01'),/unplayed components/);
   const i=await lib.inspectMeshParticles('aphris_skill_03_charge_01',{allowBlocked:true}),cameras=[camera(1,2,5),camera(-4,1,3)];
   assert.deepEqual(i.inspection,{meshParticles:true,fullEffect:false});
   assert.ok(i.draws.every(d=>source.pack.records[d.component].type==='ParticleSystemRenderer'&&source.pack.records[d.component].data.m_RenderMode===4));

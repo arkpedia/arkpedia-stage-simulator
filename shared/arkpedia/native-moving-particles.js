@@ -6,9 +6,10 @@ import {createParticleMotion} from './native-particle-motion.js';
 import {particleBirthFrame,particleLocalVelocity} from './native-particle-render.js';
 import {createParticleCone} from './native-particle-cone.js';
 import {createParticleConeVolume} from './native-particle-cone-volume.js';
+import {createParticleSurface} from './native-particle-surface.js';
 import {createParticleInheritance} from './native-particle-inheritance.js';
 
-// Source sphere/box/cone-base emission, lifetime velocity and grid animation.
+// Source sphere/box/cone/surface emission, lifetime velocity and grid animation.
 // RNG, event boundaries, native frame phase and renderer coordinates remain
 // explicit local mappings until compared with compiled Unity/game frames.
 export function createMovingParticles(source,{seed=1,subEmitterSchedule=null,particleTrails=null,discreteArcContract=null}={}){
@@ -17,12 +18,13 @@ export function createMovingParticles(source,{seed=1,subEmitterSchedule=null,par
   const shape=source.ShapeModule,velocity=source.VelocityModule,uv=source.UVModule;
   const motion=createParticleMotion(source,{seed});
   const inheritance=createParticleInheritance(source,{seed});
-  let cone=null;
+  let cone=null,surface=null;
   if(shape?.enabled){
-    if(![0,4,5,8].includes(shape.type)||shape.alignToDirection||shape.randomDirectionAmount!==0||shape.sphericalDirectionAmount!==0||shape.randomPositionAmount!==0)throw Error('Native particle shape/direction needs review');
+    if(![0,4,5,8,10,15].includes(shape.type)||shape.alignToDirection||shape.randomDirectionAmount!==0||shape.sphericalDirectionAmount!==0||shape.randomPositionAmount!==0)throw Error('Native particle shape/direction needs review');
     if(shape.type===4)cone=createParticleCone(shape,{discreteArcContract});
     if(shape.type===8)cone=createParticleConeVolume(shape);
-    if(shape.type!==5&&(shape.radius?.mode!==0||shape.radius.spread!==0||!Number.isFinite(shape.radius.value)||shape.radius.value<0||!Number.isFinite(shape.radiusThickness)||shape.radiusThickness<0||shape.radiusThickness>1))throw Error('Native shape radius mode needs review');
+    if([10,15].includes(shape.type))surface=createParticleSurface(shape);
+    if(![5,15].includes(shape.type)&&(shape.radius?.mode!==0||shape.radius.spread!==0||!Number.isFinite(shape.radius.value)||shape.radius.value<0||!Number.isFinite(shape.radiusThickness)||shape.radiusThickness<0||shape.radiusThickness>1))throw Error('Native shape radius mode needs review');
     for(const field of ['m_Texture','m_Mesh','m_MeshRenderer','m_SkinnedMeshRenderer','m_Sprite','m_SpriteRenderer']){
       // The Sphere shape does not consume the dormant authored mesh slot.
       // Keep its pointer in the source pack; mesh-based shapes stay rejected.
@@ -56,6 +58,8 @@ export function createMovingParticles(source,{seed=1,subEmitterSchedule=null,par
           const radius=shape.radius.value,inner=radius*(1-shape.radiusThickness);
           const r=Math.cbrt(inner**3+random(12)*(radius**3-inner**3));
           origin=direction.map((v,i)=>v*r*shape.m_Scale[['x','y','z'][i]]);
+        }else if(surface){
+          ({origin,direction}=surface.sample(random(10),random(11),random(12)));
         }else{
           ({origin,direction}=cone.sample(random(10),random(11),shape.type===8?random(12):undefined));
         }

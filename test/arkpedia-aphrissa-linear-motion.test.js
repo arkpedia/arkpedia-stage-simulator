@@ -86,15 +86,14 @@ test('world-to-local velocity inversion preserves reflection and nonuniform/shea
   assert.throws(()=>particleLocalVelocity([NaN,0,0],identity),/vector/);
 });
 
-test('all nine supported render paths preserve both lifetime velocity and limiting while two source shapes stay held',()=>{
-  let ready=0,held=0;
+test('all eleven original render paths preserve both lifetime velocity and limiting with their source shapes',()=>{
+  let ready=0;
   for(const [id,row] of Object.entries(profiles)){
     const before=structuredClone(row.data);
-    if(row.data.ShapeModule.type===10){assert.throws(()=>createMovingParticles(row.data),/shape\/direction/);held++;continue;}
     const e=createMovingParticles(row.data,{discreteArcContract:DISCRETE_CONE_ARC_CONTRACT}),a=e.sample(.3,still);e.sample(1,still);assert.deepEqual(e.sample(.3,still),a);
     assert.ok(a.every(p=>p.position.every(Number.isFinite)));assert.deepEqual(row.data,before);ready++;
   }
-  assert.equal(ready,9);assert.equal(held,2);
+  assert.equal(ready,11);
   const replay=s=>createMovingParticles(s,{discreteArcContract:DISCRETE_CONE_ARC_CONTRACT});
   const s=structuredClone(profiles['battle/prefabs/effects/aphris.ab:7140871303917463449'].data),original=replay(s).sample(1,still);
   const noLinear=structuredClone(s);noLinear.VelocityModule.enabled=false;
