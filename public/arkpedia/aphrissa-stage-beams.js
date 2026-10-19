@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Held battle receipts -> complete original line/point/hit prefabs. No combat ownership.
 import {APHRISSA_BEAM_OWNER as ID,APHRISSA_BEAM_PACK,APHRISSA_BEAM_CONTRACT,validateAphrissaBeamTrack} from '../../shared/arkpedia/aphrissa-beam-presentation.js';
-import {aphrissaReviewSupport} from '../../shared/arkpedia/aphrissa-review-operator.js';
 import {createNativeStageCamera} from './native-stage-camera.js';
 import {createEffectPlacement} from '../../shared/arkpedia/native-effect-placement.js';
 import {createEffectTimeline} from '../../shared/arkpedia/native-effect-timeline.js';
@@ -19,8 +18,7 @@ export function createAphrissaStageBeams({three:T,library,sourcePackSha256,contr
   function clear(){generation++;battle=null;error=null;for(const e of entries.values())e.instance?.dispose();entries.clear();tracks.clear();}
   function update(next){
     open();if(!next){clear();return;}
-    if(!Number.isFinite(next.time)||next.time<0||!Array.isArray(next.units)
-      ||!aphrissaReviewSupport(ID,next.regularReviewCandidates))throw Error('Explicit held Aphrissa battle required');
+    if(!Number.isFinite(next.time)||next.time<0||!Array.isArray(next.units))throw Error('Explicit held Aphrissa battle required');
     const segments=[],seen=new Set();
     for(const unit of next.units){
       if(unit.def?.charId!==ID||!unit.alive||!unit.deployed||unit.removed||unit._removing||unit.hidden)continue;

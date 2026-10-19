@@ -1,12 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import {APHRISSA_ID as ID,aphrissaNativeInputs} from './arkpedia-aphrissa-source.js';
-import {aphrissaReviewSupport} from '../../../shared/arkpedia/aphrissa-review-operator.js';
 import {APHRISSA_STATE_CONTRACT,APHRISSA_STATE_STYLES,APHRISSA_STATE_DRAIN,validateAphrissaState} from '../../../shared/arkpedia/aphrissa-state-presentation.js';
 const CHARGE='aphris_sk3[charge-vfx]',WING='aphris_sk3[wing-vfx]',STATS='aphris_sk3[on_finish]';
 const present=u=>u?.alive&&u.deployed&&!u.removed&&!u._removing;
 export function prepareAphrissaStatePresentation(b,u,{contract}={}){
-  if(contract!==APHRISSA_STATE_CONTRACT||u.def.charId!==ID||u.deploySeq!==0||u.mem.aphrissaStatePresentation
-    ||!aphrissaReviewSupport(ID,b.regularReviewCandidates))throw Error('Explicit held Aphrissa state presentation required');
+  if(contract!==APHRISSA_STATE_CONTRACT||u.def.charId!==ID||u.deploySeq!==0||u.mem.aphrissaStatePresentation)throw Error('Explicit held Aphrissa state presentation required');
   const n=aphrissaNativeInputs(),charge=n.s3ChargeBuffs._buffs[2],wing=n.s3WingBuff._buffs[0],finish=n.s3Active._buffs[2],
     end=n.templates[CHARGE].eventToActions.ON_BUFF_FINISH,clearCharge=n.templates[WING].eventToActions.ON_BUFF_START,
     clearWing=n.templates.aphris_sk3_finishvfx.eventToActions.ON_BUFF_FINISH;

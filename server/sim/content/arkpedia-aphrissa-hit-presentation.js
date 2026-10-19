@@ -1,12 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Presentation observes existing damage receipts; it never applies combat work.
 import {APHRISSA_ID as ID,aphrissaNativeInputs} from './arkpedia-aphrissa-source.js';
-import {aphrissaReviewSupport} from '../../../shared/arkpedia/aphrissa-review-operator.js';
 import {APHRISSA_HIT_CONTRACT,APHRISSA_HIT_STYLES,validateAphrissaHit} from '../../../shared/arkpedia/aphrissa-hit-presentation.js';
 const present=u=>u?.alive&&u.deployed&&!u.removed&&!u._removing;
 export function prepareAphrissaHitPresentation(b,u,{contract}={}){
-  if(contract!==APHRISSA_HIT_CONTRACT||u.def.charId!==ID||u.deploySeq!==0||u.mem.aphrissaHitPresentation
-    ||!aphrissaReviewSupport(ID,b.regularReviewCandidates))throw Error('Explicit held Aphrissa hit presentation required');
+  if(contract!==APHRISSA_HIT_CONTRACT||u.def.charId!==ID||u.deploySeq!==0||u.mem.aphrissaHitPresentation)throw Error('Explicit held Aphrissa hit presentation required');
   const n=aphrissaNativeInputs();
   for(const [mode,attack,fx]of [['normal',n.ordinary,n.ordinaryHitFx],['s1',n.s1Attack,n.s1HitFx],
     ['s1',n.s1DownAttack,n.s1DownHitFx],['s2',n.s2Beam,n.s2HitFx],['s3',n.s3Attack,n.s3HitFx],['s3',n.s3DownAttack,n.s3DownHitFx]]){

@@ -1,14 +1,12 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import normal from '../data/arkpedia-mvp.json' with {type:'json'};
-import models from '../data/arkpedia-aphrissa-review-models.json' with {type:'json'};
-import {aphrissaReviewData} from '../tools/arkpedia/aphrissa-review-data.mjs';
+import {aphrissaData as data} from './helpers/aphrissa-data.js';
 import {StandardBattle} from '../server/sim/arkpedia.js';
 import {defaultBuild} from '../shared/arkpedia/loadout.js';
 import {APHRISSA_BEAM_STYLES as styles,validateAphrissaBeamTrack} from '../shared/arkpedia/aphrissa-beam-presentation.js';
 import {aphrissaRayCells,APHRISSA_RAY_CONTRACT} from '../server/sim/content/arkpedia-aphrissa-ray.js';
-const ID='char_4229_aphris',data=await aphrissaReviewData(normal,models),fixtures=[];
+const ID='char_4229_aphris',fixtures=[];
 test.afterEach(()=>{for(const f of fixtures.splice(0)){f.c.stop();assert.deepEqual(f.b.errors,[]);}});
 function make(skill=1){
  const d=structuredClone(data);d.stage.geometry.waves[0].spawns=[];d.stage.battle.dp_per_second=0;

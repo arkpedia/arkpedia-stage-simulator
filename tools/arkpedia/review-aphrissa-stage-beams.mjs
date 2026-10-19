@@ -5,8 +5,8 @@ import {readFile,writeFile} from 'node:fs/promises';
 import {publicReviewDriver} from './public-review-driver.mjs';
 import {APHRISSA_BEAM_STYLES} from '../../shared/arkpedia/aphrissa-beam-presentation.js';
 const ID='char_4229_aphris',KEY='summon:'+ID,out='.cache/arkpedia/cn-operators/'+ID+'/beam-battle-browser/';
-const data=JSON.parse(await readFile('.cache/arkpedia/arkpedia-aphrissa-candidate.json','utf8'));
-assert.deepEqual(data.reviewCandidates,[ID]);data.stage.geometry.waves[0].spawns=[];data.stage.battle.initial_dp=99;data.stage.battle.dp_per_second=0;
+const candidate=process.argv.includes('--candidate'),data=JSON.parse(await readFile(candidate?'.cache/arkpedia/arkpedia-aphrissa-candidate.json':'data/arkpedia-mvp.json','utf8'));
+assert.deepEqual(data.reviewCandidates,candidate?[ID]:undefined);assert.ok(data.operators[ID]);data.stage.geometry.waves[0].spawns=[];data.stage.battle.initial_dp=99;data.stage.battle.dp_per_second=0;
 const hook=`
 globalThis.cnReview={get battle(){return battle;},get renderer(){return renderer;},get owner(){return battle.bench['${ID}'].unit;},hits:[],
  async setup(){paused=true;battle.autoFinish=false;

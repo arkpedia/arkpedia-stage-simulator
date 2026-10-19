@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-import {aphrissaReviewSupport} from './aphrissa-review-operator.js';
 // Regular-stage adapters are opt-in. Stronghold's mode kits are migration candidates,
 // not evidence that a character is supported in ordinary Arknights stages.
 import { MEDIC_OPERATORS } from './medic-operators.js';
@@ -113,6 +112,7 @@ import { SKYBOX_OPERATORS } from './skybox-operators.js';
 import { AEGIS_OPERATORS } from './aegis-operators.js';
 import { YUKARI_OPERATORS } from './yukari-operators.js';
 import { MAKOTO_OPERATORS } from './makoto-operators.js';
+import { APHRISSA_OPERATORS } from './aphrissa-operators.js';
 import { TURDUS_OPERATORS } from './turdus-operators.js';
 import { BRANCH_OPERATORS } from './branch-operators.js';
 import { RECKPR_OPERATORS } from './reckpr-operators.js';
@@ -451,14 +451,12 @@ export const REGULAR_OPERATORS = Object.freeze({
   ...AEGIS_OPERATORS,
   ...YUKARI_OPERATORS,
   ...MAKOTO_OPERATORS,
+  ...APHRISSA_OPERATORS,
   ...BRANCH_OPERATORS,
 });
 
-export function regularOperatorSupport(id, reviewCandidates) {
-  return REGULAR_OPERATORS[id] ?? aphrissaReviewSupport(id, reviewCandidates);
-}
-export function assertRegularOperator(op, reviewCandidates) {
-  const support = regularOperatorSupport(op?.id, reviewCandidates);
+export function assertRegularOperator(op) {
+  const support = REGULAR_OPERATORS[op?.id];
   const skillIds = support?.skillIds ?? (support?.skillId == null ? [] : [support.skillId]);
   if (!support || !Array.isArray(op.skills) || op.skills.length !== skillIds.length
     || op.skills.some((skill, index) => skill.id !== skillIds[index]))

@@ -194,7 +194,7 @@ export class StageRenderer {
         this.nativeEffects.dispose(); this.nativeEffects = null;
       }
     }
-    const tokenIds = regularTokenIdsFor(ids, this.data.reviewCandidates);
+    const tokenIds = regularTokenIdsFor(ids);
     const keys = [
       ...[...ids, ...tokenIds].flatMap((id) =>
         ["front", "back"].map((f) => `operator/${id}/default/${f}`),

@@ -6,13 +6,12 @@ import {createHash} from 'node:crypto';
 import fixtures from './fixtures/arkpedia-aphrissa-effect-clips.json' with {type:'json'};
 import meta from '../data/arkpedia-aphrissa-effect-animations.json' with {type:'json'};
 import source from '../data/arkpedia-aphrissa-effects.json' with {type:'json'};
-import {REGULAR_OPERATORS} from '../shared/arkpedia/operators.js';
 import {decodeEffectClip, sampleEffectClip} from '../shared/arkpedia/native-effect-animation.js';
 
 const legacy = Object.values(fixtures).find(r => r.data.m_Legacy).data;
 const near = (a,b) => assert.ok(Math.abs(a-b) < 1e-9, `${a} differs from ${b}`);
 
-test('all fourteen Aphrissa clips remain complete original inputs without public admission',()=>{
+test('all fourteen Aphrissa clips remain complete original inputs',()=>{
   const bytes=readFileSync(new URL('./fixtures/arkpedia-aphrissa-effect-clips.json',import.meta.url));
   assert.equal(meta.fixture.bytes,bytes.length);
   assert.equal(meta.fixture.sha256,createHash('sha256').update(bytes).digest('hex'));
@@ -21,7 +20,6 @@ test('all fourteen Aphrissa clips remain complete original inputs without public
   assert.deepEqual(meta.counts,{clips:14,instances:21,bindings:568,channels:584,keys:537});
   assert.equal(meta.scope.sourceChannelsOnly,true);assert.equal(meta.scope.rendererVerified,false);
   assert.equal(meta.scope.compiledFrameParity,false);assert.deepEqual(meta.scope.enabledOperators,[]);
-  assert.equal(REGULAR_OPERATORS.char_4229_aphris,undefined);
   assert.equal(meta.unresolvedBindings,undefined);
   assert.deepEqual(meta.unboundAmbiguousPaths,[{
     driver:'battle/prefabs/effects/aphris.ab:-5063427460730075031',path:67329413,nodes:[

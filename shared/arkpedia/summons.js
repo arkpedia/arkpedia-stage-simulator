@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-import {aphrissaReviewSupport} from './aphrissa-review-operator.js';
 // Only explicitly reviewed regular-stage tokens may enter the deployment deck.
 export const REGULAR_SUMMONS = Object.freeze({
   char_4123_ela: Object.freeze({ tokenId: 'token_10033_ela_grzmot',
@@ -99,6 +98,8 @@ export const REGULAR_SUMMONS = Object.freeze({
 export const REGULAR_AUTOMATIC_TOKENS = Object.freeze({
   // Mon3tr's selected controller owns both the manual point and S3 marker.
   char_4179_monstr: Object.freeze(['token_10050_monstr_prosts']),
+  // Aphrissa's relay deck places this passive token; it is not a generic summon.
+  char_4229_aphris: Object.freeze(['token_10070_aphris_pc']),
   // The dedicated S2 deck owns the lure; S3 cages render as effects, not Spine.
   char_1042_phatm2: Object.freeze(['token_10054_phatm2_encdool']),
   // Enemy-death factory servants have no manual deployment card.
@@ -132,11 +133,10 @@ export const REGULAR_AUTOMATIC_TOKENS = Object.freeze({
   char_1014_nearl2: Object.freeze(['token_10019_nearl2_sword']),
 });
 
-export function regularTokenIdsFor(ownerIds, reviewCandidates) {
+export function regularTokenIdsFor(ownerIds) {
   return [...new Set(ownerIds.flatMap(id => [
     ...(REGULAR_SUMMONS[id] ? [REGULAR_SUMMONS[id].tokenId] : []),
     ...(REGULAR_AUTOMATIC_TOKENS[id] ?? []),
-    ...(aphrissaReviewSupport(id, reviewCandidates) ? ['token_10070_aphris_pc'] : []),
   ]))];
 }
 

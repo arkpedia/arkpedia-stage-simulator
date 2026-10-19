@@ -56,7 +56,6 @@ test('unknown sources and invalid mounts/lives are rejected without silently cha
  for(const mutate of [t=>t.mode='__proto__',t=>t.ownerLife=2,t=>t.points[1].life=2,t=>t.points[1].fixedHeight=.5,t=>t.clip='invented']){
   const before=structuredClone(f.track);mutate(f.track);assert.throws(()=>f.pass.update(f.battle));Object.assign(f.track,before);assert.equal(f.pass.instanceCount,5);
  }
- assert.throws(()=>f.pass.update({...f.battle,regularReviewCandidates:[]}),/held Aphrissa battle/);
  f.pass.clear();assert.equal(f.pass.instanceCount,0);f.pass.dispose();assert.throws(()=>f.pass.update(f.battle),/disposed/);
 });
 test('a newly introduced S2 relay receives its own point clock while existing endpoint particles retain theirs',async()=>{

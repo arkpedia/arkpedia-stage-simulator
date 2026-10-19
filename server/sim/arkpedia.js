@@ -128,7 +128,7 @@ import { customizePublicBotanyKit, installPublicBotany } from './content/arkpedi
 import { customizePublicSkyboxKit, installPublicSkybox } from './content/arkpedia-skybox-public.js';
 import { customizePublicAegisKit, installPublicAegis } from './content/arkpedia-aegis-public.js';
 import { customizePublicYukariKit, installPublicYukari } from './content/arkpedia-yukari-public.js';
-import {customizeReviewAphrissaKit, installReviewAphrissa} from './content/arkpedia-aphrissa-review.js';
+import {customizePublicAphrissaKit, installPublicAphrissa} from './content/arkpedia-aphrissa-public.js';
 import { customizePublicMakotoKit, installPublicMakoto } from './content/arkpedia-makoto-public.js';
 import { customizePublicTurdusKit, installPublicTurdus } from './content/arkpedia-turdus-public.js';
 import { customizePublicBranchKit, installPublicBranch } from './content/arkpedia-branch-public.js';
@@ -226,7 +226,7 @@ import { customizeEyjafjallaKit, installEyjafjalla } from './content/arkpedia-ey
 import { customizeFiveStarSupportFourthKit, installFiveStarSupportFourth } from './content/arkpedia-five-star-support-fourth.js';
 import { customizeFiveStarSpecialistExpansionKit, installFiveStarSpecialistExpansion } from './content/arkpedia-five-star-specialist-expansion.js';
 import { catalogueFor, recordFor } from "../../shared/arkpedia/loadout.js";
-import { regularOperatorSupport } from "../../shared/arkpedia/operators.js";
+import { REGULAR_OPERATORS } from "../../shared/arkpedia/operators.js";
 import { assertRegularEnemies } from "../../shared/arkpedia/enemies.js";
 import { compileBuffTemplate } from "../../shared/arkpedia/behavior.js";
 import {
@@ -321,7 +321,7 @@ export class StandardBattle extends Battle {
     // Compile and validate before the battle starts or any DP/SP is spent.
     const behaviors = new Map();
     for (const build of builds) {
-      const support = regularOperatorSupport(build.id, data.reviewCandidates);
+      const support = REGULAR_OPERATORS[build.id];
       if (!support.templateKey) continue;
       const level = data.operators[build.id].skills.find(skill => skill.id === build.skillId)?.levels[build.skillRank - 1];
       if (level.prefabId !== support.prefabId)
@@ -416,7 +416,7 @@ export class StandardBattle extends Battle {
   deploymentSlotCost(id) {
     if (id === 'char_4087_ines' && this.bench[id]?.build.skillId === 'skchr_ines_3'
       && !this.inesState?.firstUsed) return 0;
-    const config = regularOperatorSupport(id, this.regularReviewCandidates);
+    const config = REGULAR_OPERATORS[id];
     if (config?.deploymentSlotExemptSkillIds?.includes(this.bench[id]?.build.skillId)) return 0;
     return (this.bench[id]?.build.elite ?? 0) >= (config?.deploymentSlotExemptMinElite ?? 0)
       && config?.deploymentSlotExemptTags?.some(tag => this.mapTags.includes(tag))
@@ -454,7 +454,7 @@ export class StandardBattle extends Battle {
       return "Select a tile on the map.";
     const tile = this.grid.tile(row, col),
       position = this.data.getChess(id).position;
-    const rangedTrait = regularOperatorSupport(id, this.regularReviewCandidates)?.deployOnRanged && tile.build === 'RANGED';
+    const rangedTrait = REGULAR_OPERATORS[id]?.deployOnRanged && tile.build === 'RANGED';
     if (tile.build !== "ALL" && tile.build !== position && !rangedTrait)
       return position === "RANGED"
         ? "Choose a ranged tile."
@@ -611,7 +611,7 @@ export class StandardBattle extends Battle {
     customizePublicAegisKit({ battle: this, id, unit, kit });
     customizePublicYukariKit({ battle: this, id, unit, kit });
     customizePublicMakotoKit({ battle: this, id, unit, kit });
-    customizeReviewAphrissaKit({battle: this, id, unit, kit});
+    customizePublicAphrissaKit({battle: this, id, unit, kit});
     customizePublicBranchKit({ battle: this, id, unit, kit });
     customizeNarantKit({ battle: this, id, def, unit, kit });
     customizeElaKit({ battle: this, id, def, unit, kit });
@@ -701,7 +701,7 @@ export class StandardBattle extends Battle {
     customizeFiveStarCasterOverloadKit({ battle: this, id, def, unit, kit });
     customizeFiveStarSupportThirdKit({ battle: this, id, def, unit, kit });
     customizeFiveStarGuardFourthKit({ battle: this, id, def, unit, kit });
-    const mechanic = regularOperatorSupport(id, this.regularReviewCandidates).mechanic;
+    const mechanic = REGULAR_OPERATORS[id].mechanic;
     if (mechanic === "dp")
       kit.skill.onStart = ({ battle, unit }) =>
         this.behaviors.get(id).run("ON_BUFF_START", { battle, unit, blackboard: def.skill.bb });
@@ -848,7 +848,7 @@ export class StandardBattle extends Battle {
     installPublicAegis({ battle: this, unit, def });
     installPublicYukari({ battle: this, unit, def });
     installPublicMakoto({ battle: this, unit, def });
-    installReviewAphrissa({battle: this, unit, def});
+    installPublicAphrissa({battle: this, unit, def});
     installPublicBranch({ battle: this, unit, def });
     installNarant({ battle: this, unit, def });
     installEla({ battle: this, unit, def });
@@ -1007,7 +1007,7 @@ export class StandardBattle extends Battle {
       throw new Error("Battle workspace is inactive.");
     const entry = this.bench[id];
     if (!entry?.unit?.alive) throw new Error("Operator is not deployed.");
-    const support = regularOperatorSupport(id, this.regularReviewCandidates);
+    const support = REGULAR_OPERATORS[id];
     const refund = support.noRetreatRefund ? 0 : support.mechanic === "fang-fire-sharpened"
       ? fangFireSharpenedRefund(entry) : support.mechanic === "charger"
       ? entry.unit.base.cost : Math.floor(entry.lastCost / 2);

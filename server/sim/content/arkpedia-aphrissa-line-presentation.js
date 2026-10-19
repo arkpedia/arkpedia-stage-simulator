@@ -2,13 +2,11 @@
 // Visual receipts only. This owner never changes targets, damage, SP or ammo.
 import {APHRISSA_ID as ID,aphrissaNativeInputs} from './arkpedia-aphrissa-source.js';
 import {aphrissaRayCells,APHRISSA_RAY_CONTRACT} from './arkpedia-aphrissa-ray.js';
-import {aphrissaReviewSupport} from '../../../shared/arkpedia/aphrissa-review-operator.js';
 import {APHRISSA_BEAM_CONTRACT,APHRISSA_BEAM_STYLES,validateAphrissaBeamTrack} from '../../../shared/arkpedia/aphrissa-beam-presentation.js';
 const present=u=>u?.alive&&u.deployed&&!u.removed&&!u._removing;
 const due=(now,at)=>now+1e-7>=at;
 export function prepareAphrissaLinePresentation(b,u,{contract}={}){
-  if(contract!==APHRISSA_BEAM_CONTRACT||u.def.charId!==ID||u.deploySeq!==0||u.mem.aphrissaLinePresentation
-    ||!aphrissaReviewSupport(ID,b.regularReviewCandidates))throw Error('Explicit held Aphrissa beam presentation required');
+  if(contract!==APHRISSA_BEAM_CONTRACT||u.def.charId!==ID||u.deploySeq!==0||u.mem.aphrissaLinePresentation)throw Error('Explicit held Aphrissa beam presentation required');
   const n=aphrissaNativeInputs();
   for(const [mode,fx]of [['normal',n.ordinaryLineFx],['s1',n.s1LineFx],['s1',n.s1DownLineFx],
     ['s2',n.s2LineFx],['s3',n.s3LineFx],['s3',n.s3DownLineFx]]){
