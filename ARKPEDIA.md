@@ -4807,3 +4807,7 @@ Ch'en the Dawnstreak joins with weakness damage, her quiet-time heal and evade, 
 ### Hoshiguma the Breacher
 
 Hoshiguma the Breacher joins with her minus-HP 我执 state and HP-scaled berserk, S1 permanent ATK/DEF with Arts returned to attackers, the S2 throw and circling shield, and the S3 manual last stand that keeps allies in range from falling before her forced defeat. See docs/HSGMA2-REVIEW.md. Coverage: 418/431 forms.
+
+### Violet Mizutsune Orchid
+
+Violet Mizutsune Orchid joins with her three-arrow salvo, powered attacks after the first cast, the return deployment that admits melee tiles around her last tile without a cost increase, S1 charged arrows with the stunning 刚连射, the S2 deployment-cast liftoff volleys and the S3 piercing push arrow. The battle gains `regularPlacementAllow` (an owner-admitted tile type) and `entry.noCostIncrease`. See docs/ORCHD2-REVIEW.md. Coverage: 419/431 forms.

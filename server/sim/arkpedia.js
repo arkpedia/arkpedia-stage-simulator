@@ -145,6 +145,7 @@ import { customizeHalo2Kit, installHalo2 } from './content/arkpedia-halo2.js';
 import { customizeCatap2Kit, installCatap2 } from './content/arkpedia-catap2.js';
 import { customizeChen3Kit, installChen3 } from './content/arkpedia-chen3.js';
 import { customizeHsgma2Kit, installHsgma2 } from './content/arkpedia-hsgma2.js';
+import { customizeOrchd2Kit, installOrchd2 } from './content/arkpedia-orchd2.js';
 import { customizePublicBranchKit, installPublicBranch } from './content/arkpedia-branch-public.js';
 import { customizePublicReckprKit, installPublicReckpr } from './content/arkpedia-reckpr-public.js';
 import { customizePublicLieselKit, installPublicLiesel } from './content/arkpedia-liesel-public.js';
@@ -443,7 +444,8 @@ export class StandardBattle extends Battle {
     const entry = this.bench[id];
     if (!entry) return Infinity;
     const ordinary = Math.floor(this.data.getChess(id).stats.cost
-      * Math.min(2, 1 + entry.deployments * 0.5));
+      // An owner may keep its redeployment cost unchanged (Violet Mizutsune Orchid).
+      * Math.min(2, 1 + (entry.noCostIncrease ? 0 : entry.deployments) * 0.5));
     const vanguard = adjustFiveStarVanguardSecondCost(this, id, ordinary);
     const discounted = adjustInesCost(this, id, adjustAshCost(this, id, adjustFangFireSharpenedCost(this, id, adjustSaileachCost(this, id, adjustJieyunCost(this, id, vanguard)))));
     // Content card discounts (e.g. Matsukiri): a per-card delta kept until that operator deploys.
@@ -473,7 +475,9 @@ export class StandardBattle extends Battle {
     const tile = this.grid.tile(row, col),
       position = this.data.getChess(id).position;
     const rangedTrait = REGULAR_OPERATORS[id]?.deployOnRanged && tile.build === 'RANGED';
-    if (tile.build !== "ALL" && tile.build !== position && !rangedTrait)
+    // An owner may admit another build type on specific tiles (Violet Mizutsune Orchid's talent).
+    const ownerTile = this.regularPlacementAllow?.[id]?.(row, col, tile) === true;
+    if (tile.build !== "ALL" && tile.build !== position && !rangedTrait && !ownerTile)
       return position === "RANGED"
         ? "Choose a ranged tile."
         : "Choose a melee tile.";
@@ -646,6 +650,7 @@ export class StandardBattle extends Battle {
     customizeCatap2Kit({ battle: this, id, unit, kit });
     customizeChen3Kit({ battle: this, id, unit, kit });
     customizeHsgma2Kit({ battle: this, id, unit, kit });
+    customizeOrchd2Kit({ battle: this, id, unit, kit });
     customizePublicBranchKit({ battle: this, id, unit, kit });
     customizeNarantKit({ battle: this, id, def, unit, kit });
     customizeElaKit({ battle: this, id, def, unit, kit });
@@ -897,6 +902,7 @@ export class StandardBattle extends Battle {
     installCatap2({ battle: this, unit, def });
     installChen3({ battle: this, unit, def });
     installHsgma2({ battle: this, unit, def });
+    installOrchd2({ battle: this, unit, def });
     installPublicBranch({ battle: this, unit, def });
     installNarant({ battle: this, unit, def });
     installEla({ battle: this, unit, def });
