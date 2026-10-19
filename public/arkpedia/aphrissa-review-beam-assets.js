@@ -3,6 +3,7 @@
 import effects from '../../data/arkpedia-aphrissa-effects.json' with {type:'json'};
 import animationMeta from '../../data/arkpedia-aphrissa-effect-animations.json' with {type:'json'};
 import shaderMeta from '../../data/arkpedia-aphrissa-effect-shaders.json' with {type:'json'};
+import builtinMeshes from '../../data/arkpedia-aphrissa-builtin-meshes.json' with {type:'json'};
 import {APHRISSA_BEAM_CONTRACT} from '../../shared/arkpedia/aphrissa-beam-presentation.js';
 import {createNativeEffectLibrary,compileNativeEffectPrograms} from './native-effect-player.js';
 import {createAphrissaStageBeams} from './aphrissa-stage-beams.js';
@@ -22,7 +23,7 @@ export async function loadAphrissaReviewBeams({three:T,renderer,heightAt,anchorA
   if(animations.sourcePackSha256!==effects.pack.sha256||pack.operator!==effects.operator||pack.version!==effects.version
     ||shaders.operator!==effects.operator||shaders.version!==effects.version)throw Error('Changed Aphrissa effect source bindings');
   compileNativeEffectPrograms(renderer,shaders);
-  const library=createNativeEffectLibrary({three:T,pack,animations,shaders,shaderGlobals,loadTexture:async e=>{
+  const library=createNativeEffectLibrary({three:T,pack,animations,shaders,builtinMeshes,shaderGlobals,loadTexture:async e=>{
     const url=URL.createObjectURL(new Blob([await bytes(e)],{type:'image/webp'}));
     try{return await new T.TextureLoader().loadAsync(url);}finally{URL.revokeObjectURL(url);}
   }});

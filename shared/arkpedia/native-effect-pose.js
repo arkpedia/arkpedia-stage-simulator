@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-import {sampleEffectClip} from './native-effect-animation.js';
+import {sampleEffectClip,effectChannelZeroRoundoff} from './native-effect-animation.js';
 
 // An explicit clip inspection pose, not an implementation of Unity Animator
 // state transitions. All properties reset before sampling, so reverse scrubbing
@@ -55,7 +55,8 @@ export function createEffectPose(pack, animations, rootName) {
             const renderer=currentRenderers.get(target.component);
             if(records[target.component]?.type!=='LineRenderer'||!renderer||binding.size!==1||!Number.isFinite(v[0]))
               throw new Error('Invalid original animated line width');
-            renderer.widthMultiplier=v[0];break;
+            renderer.widthMultiplier=v[0];
+            renderer.widthZeroTolerance=effectChannelZeroRoundoff(clip,clip.channels[binding.offset],time);break;
           }
           default:{
             const renderer=currentRenderers.get(target.component);

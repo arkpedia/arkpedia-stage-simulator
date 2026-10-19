@@ -7,17 +7,17 @@ import {createHash} from 'node:crypto';
 const linearMotion=process.argv.includes('--linear-motion');
 const worldBirth=process.argv.includes('--world-birth'),surfaces=process.argv.includes('--surfaces'),chargeRoots=process.argv.includes('--charge-roots'),
   hitShapes=process.argv.includes('--hit-shapes'),hitRoots=process.argv.includes('--hit-roots'),
-  birthControls=process.argv.includes('--birth-controls'),allRoots=process.argv.includes('--all-roots'),
-  completeRoots=chargeRoots||hitRoots||allRoots,componentReview=linearMotion||worldBirth||surfaces||hitShapes||birthControls;
-assert.ok([linearMotion,worldBirth,surfaces,chargeRoots,hitShapes,hitRoots,birthControls,allRoots].filter(Boolean).length<=1,'Select one source review');
-const mode=birthControls||allRoots?'birth-controls':hitShapes?'hit-shapes':surfaces?'surfaces':worldBirth?'world-birth':linearMotion?'linear-motion':'mesh-alignment';
-const directory='.cache/arkpedia/aphrissa-source/effects/'+(allRoots?'all-roots':chargeRoots?'charge-roots':hitRoots?'hit-roots':mode)+'-browser/';
+  birthControls=process.argv.includes('--birth-controls'),allRoots=process.argv.includes('--all-roots'),placementReview=process.argv.includes('--placement'),
+  completeRoots=chargeRoots||hitRoots||allRoots||placementReview,componentReview=linearMotion||worldBirth||surfaces||hitShapes||birthControls;
+assert.ok([linearMotion,worldBirth,surfaces,chargeRoots,hitShapes,hitRoots,birthControls,allRoots,placementReview].filter(Boolean).length<=1,'Select one source review');
+const mode=birthControls||allRoots||placementReview?'birth-controls':hitShapes?'hit-shapes':surfaces?'surfaces':worldBirth?'world-birth':linearMotion?'linear-motion':'mesh-alignment';
+const directory='.cache/arkpedia/aphrissa-source/effects/'+(placementReview?'placement':allRoots?'all-roots':chargeRoots?'charge-roots':hitRoots?'hit-roots':mode)+'-browser/';
 const meta=JSON.parse(await readFile('data/arkpedia-aphrissa-'+mode+'.json')),
   bytes=await readFile(meta.fixture.path);
 assert.equal(bytes.length,meta.fixture.bytes);assert.equal(createHash('sha256').update(bytes).digest('hex'),meta.fixture.sha256);
 const profiles=JSON.parse(bytes),held=surfaces?Object.keys(profiles).filter(k=>![0,2,4].includes(profiles[k].data.InitialModule.startColor.minMaxState)):[],
   disabled=surfaces?Object.keys(profiles).filter(k=>!profiles[k].rendererEnabled):[],
-  roots=allRoots?meta.effectRoots:hitRoots?['aphris_attack_01_hit_01','aphris_skill_02_hit_01','aphris_skill_03_hit_01',
+  roots=allRoots||placementReview?meta.effectRoots:hitRoots?['aphris_attack_01_hit_01','aphris_skill_02_hit_01','aphris_skill_03_hit_01',
     'aphris_attack_01_line_01','aphris_skill_02_line_01','aphris_skill_03_line_01']:
     chargeRoots?['aphris_skill_03_charge_01','aphris_skill_03_charge_01_end']:
     componentReview?Object.keys(profiles).filter(k=>!held.includes(k)&&!disabled.includes(k)):[...new Set(Object.values(profiles).map(r=>r.root))];
@@ -31,11 +31,16 @@ page.on('requestfailed',r=>failed.push(r.url()));page.on('response',r=>{if(r.sta
 try{
   await page.setViewport({width:1280,height:800});await page.setCacheEnabled(false);
   await page.goto('http://127.0.0.1:3185/',{waitUntil:'networkidle0'});
-  const setup=await page.evaluate(async ({componentReview,worldBirth,surfaces,completeRoots,hitShapes,hitRoots,birthControls,allRoots})=>{
+  const setup=await page.evaluate(async ({componentReview,worldBirth,surfaces,completeRoots,hitShapes,hitRoots,birthControls,allRoots,placementReview})=>{
     const T=await import('/vendor/three.module.js'),{createNativeEffectLibrary,compileNativeEffectPrograms}=await import('/arkpedia/native-effect-player.js');
     const {createEffectTrajectory}=await import('/shared/arkpedia/native-effect-trail.js');
+    const {createEffectPlacement}=await import('/shared/arkpedia/native-effect-placement.js');
     // Controlled external movement, not a recorded native actor trajectory.
     const trajectory=worldBirth?createEffectTrajectory([{time:0,position:[0,0,0]},{time:2,position:[1,0,0]}]):null;
+    const placement=placementReview?createEffectPlacement([
+      {time:0,position:[2,1,-1],rotation:[0,Math.SQRT1_2,0,Math.SQRT1_2],scale:[1.2,1.2,1.2]},
+      {time:2,position:[4,2,1],rotation:[0,1,0,0],scale:[1.6,1.6,1.6]}
+    ]):null;
     const manifest=await(await fetch('/review-assets/manifest.json')).json();
     const checked=async entry=>{
       const response=await fetch('/review-assets/'+entry.path);if(!response.ok)throw Error('Original review asset unavailable');
@@ -66,14 +71,14 @@ try{
     };
     const render=()=>{
       const width=innerWidth,height=innerHeight-48;renderer.setSize(width,height);camera.aspect=width/height;camera.updateProjectionMatrix();
-      current.update(clock,{camera,clip,trajectory});renderer.render(scene,camera);
+      current.update(clock,{camera,clip,trajectory,placement});renderer.render(scene,camera);
       const gl=renderer.getContext(),pixels=new Uint8Array(width*height*4);gl.readPixels(0,0,width,height,gl.RGBA,gl.UNSIGNED_BYTE,pixels);
       let count=0;for(let i=0;i<pixels.length;i+=4)if(Math.abs(pixels[i]-11)+Math.abs(pixels[i+1]-17)+Math.abs(pixels[i+2]-22)>25)count++;
       if(gl.getError()!==gl.NO_ERROR)throw Error('Mesh inspection GL error');return count;
     };
     const select=async selection=>{
       const name=componentReview?selection.particle:selection;
-      const owner=hitRoots||allRoots?{linePositions:()=>[[-1,0,0],[1,0,0]]}:{}; // Explicit source-coordinate endpoint fixture.
+      const owner=hitRoots||allRoots||placementReview?{linePositions:()=>[[-1,0,0],[1,0,0]]}:{}; // Explicit source-coordinate endpoint fixture.
       current?.dispose();current=await (componentReview?lib.inspectParticles(selection.root,{particles:[name]}):completeRoots?lib.create(name,owner):lib.inspectMeshParticles(name,{allowBlocked:true}));scene.add(current.group);
       if(completeRoots){
         const enabled=[...current.pose.renderers].filter(([,r])=>r.enabled).map(([id])=>id).sort(),actual=current.draws.map(d=>d.component).sort();
@@ -84,13 +89,19 @@ try{
       for(const candidate of clips){
         clip=candidate;
         for(const time of [.05,.15,.3,.6,1,2,3]){
-          clock=time;current.update(clock,{camera,clip,trajectory});const box=bounds();
+          clock=time;current.update(clock,{camera,clip,trajectory,placement});const box=bounds();
           if(box.isEmpty()||!Number.isFinite(box.min.length()+box.max.length())){attempts.push({clip,time,empty:true});continue;}
           const center=box.getCenter(new T.Vector3()),radius=Math.max(box.getSize(new T.Vector3()).length()/2,.01);
           camera.position.copy(center).add(new T.Vector3(.2,.15,1).normalize().multiplyScalar(radius*4));camera.lookAt(center);
-          const pixels=render();attempts.push({clip,time,pixels,size:box.getSize(new T.Vector3()).toArray()});if(pixels>30){chosen={clock,clip,visiblePixels:pixels};break;}
+          const pixels=render();attempts.push({clip,time,pixels,size:box.getSize(new T.Vector3()).toArray()});
+          if(pixels>30&&(!chosen||pixels>chosen.visiblePixels)){chosen={clock,clip,visiblePixels:pixels};if(!placementReview)break;}
         }
-        if(chosen)break;
+        if(chosen&&!placementReview)break;
+      }
+      if(chosen&&placementReview){
+        clock=chosen.clock;clip=chosen.clip;current.update(clock,{camera,clip,placement});
+        const box=bounds(),center=box.getCenter(new T.Vector3()),radius=Math.max(box.getSize(new T.Vector3()).length()/2,.01);
+        camera.position.copy(center).add(new T.Vector3(.2,.15,1).normalize().multiplyScalar(radius*4));camera.lookAt(center);chosen.visiblePixels=render();
       }
       let sourceInactive=false;
       if(!chosen&&componentReview){
@@ -122,7 +133,24 @@ try{
         return {id:d.component,particles:d.lastParticles,matrices:d.pool?.slice(0,d.lastParticles?.length??0).map(p=>p.matrix.elements)};
       }));
       const before=snapshot(),saved=clock;clock+=.7;render();clock=saved;render();if(before!==snapshot())throw Error('Reverse mesh clock retained later state');
-      let birthHistory;
+      let birthHistory,placementHistory;
+      if(placementReview){
+        placementHistory=[];
+        const world=current.draws.find(d=>d.particleId==='battle/prefabs/effects/aphris.ab:181594443170011045');
+        let prewarm=0,fresh=0;
+        for(const time of [0,.8,2,.8]){
+          clock=time;render();
+          for(const d of current.draws)for(const part of d.pool??[d.mesh])if(!part.matrixWorld.elements.every(Number.isFinite))throw Error('Nonfinite placed effect');
+          for(const p of world?.lastParticles??[]){
+            const expected=placement.sample(Math.max(0,p.birthTime)).position;
+            if(p.worldPosition.some((v,axis)=>Math.abs(v-expected[axis])>1e-8))throw Error('Placed World particle followed its later emitter');
+            if(p.birthTime<0)prewarm++;else fresh++;
+          }
+          placementHistory.push({time,owner:placement.sample(time),worldParticles:world?.lastParticles.map(p=>({id:p.id,birthTime:p.birthTime,worldPosition:p.worldPosition}))??[]});
+        }
+        if(world&&(!prewarm||!fresh))throw Error('Missing placed World birth cohorts');
+        clock=saved;render();if(before!==snapshot())throw Error('Placement history retained later state');
+      }
       if(worldBirth){
         const points=new Map();let retained=0,prewarmed=0,fresh=0;
         birthHistory=[];
@@ -144,7 +172,7 @@ try{
       }
       return {root:componentReview?selection.root:name,...(componentReview?{particle:name}:{}),...chosen,sourceInactive,dormantEmission,
         draws:current.draws.length,viewDraws:current.draws.filter(d=>d.alignment===0).length,
-        blocked:current.blocked,inspection:current.inspection,reverseStable:true,...(birthHistory?{birthHistory}:{} )};
+        blocked:current.blocked,inspection:current.inspection,reverseStable:true,...(birthHistory?{birthHistory}:{}),...(placementHistory?{placementHistory}:{} )};
     };
     const verifyHeld=async ids=>{
       const result=[];
@@ -166,7 +194,7 @@ try{
     };
     window.meshReview={select,render,verifyHeld,verifyDisabled,dispose:async()=>{lib.dispose();await Promise.resolve();renderer.render(scene,camera);return {...renderer.info.memory};}};
     return {compiledPrograms:programs.length,sourcePackSha256:manifest.effects.pack.sha256};
-  },{componentReview,worldBirth,surfaces,completeRoots,hitShapes,hitRoots,birthControls,allRoots});
+  },{componentReview,worldBirth,surfaces,completeRoots,hitShapes,hitRoots,birthControls,allRoots,placementReview});
   assert.equal(setup.compiledPrograms,14);assert.equal(setup.sourcePackSha256,meta.sourcePackSha256);
   const results=[],client=await page.createCDPSession();
   for(const root of roots){
@@ -195,7 +223,8 @@ try{
   const cleanup=await page.evaluate(()=>meshReview.dispose());assert.equal(cleanup.geometries,0);assert.equal(cleanup.textures,0);
   assert.deepEqual(errors,[]);assert.deepEqual(failed,[]);
   const report={driver:'Chromium software WebGL2',originalMeshInspection:!componentReview&&!completeRoots,originalCompleteChargeRootInspection:chargeRoots,originalCompleteHitRootInspection:hitRoots,originalAllRootInspection:allRoots,originalBirthControlInspection:birthControls,originalHitShapeInspection:hitShapes,originalLinearMotionInspection:linearMotion,originalWorldBirthInspection:worldBirth,originalSurfaceInspection:surfaces,nativeFrameParity:false,fullEffectDispatchVerified:false,
-    ...(hitRoots||allRoots?{explicitLineEndpointFixture:[[-1,0,0],[1,0,0]]}:{}),
+    explicitPlacementInspection:placementReview,nativeMountMappingVerified:false,
+    ...(hitRoots||allRoots||placementReview?{explicitLineEndpointFixture:[[-1,0,0],[1,0,0]]}:{}),
     explicitShaderGlobals:{_HG_UV_ROTATION:0},...setup,results,heldProfiles,disabledProfiles,captures:results.length*2,cleanup,errors,failed,
     playerSha256:createHash('sha256').update(await readFile('public/arkpedia/native-effect-player.js')).digest('hex')};
   await writeFile(directory+'report.json',JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify({cases:results.length,captures:report.captures,cleanup,errors,failed}));

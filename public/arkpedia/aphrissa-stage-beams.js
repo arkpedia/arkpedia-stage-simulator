@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Held battle rays -> original line layers. No combat or clock ownership.
+// Held battle rays -> complete original beam prefabs. No combat/clock ownership.
 import {APHRISSA_BEAM_OWNER as ID,APHRISSA_BEAM_PACK,APHRISSA_BEAM_CONTRACT,validateAphrissaBeamTrack} from '../../shared/arkpedia/aphrissa-beam-presentation.js';
 import {aphrissaReviewSupport} from '../../shared/arkpedia/aphrissa-review-operator.js';
 import {createNativeStageCamera} from './native-stage-camera.js';
 const vector=p=>Array.isArray(p)&&p.length===3&&p.every(Number.isFinite);
 export function createAphrissaStageBeams({three:T,library,sourcePackSha256,contract,heightAt,anchorAt,shaderGlobals}){
   if(contract!==APHRISSA_BEAM_CONTRACT||sourcePackSha256!==APHRISSA_BEAM_PACK
-    ||typeof library?.inspectLines!=='function'||typeof heightAt!=='function'||typeof anchorAt!=='function'
+    ||typeof library?.create!=='function'||typeof heightAt!=='function'||typeof anchorAt!=='function'
     ||!shaderGlobals||Object.keys(shaderGlobals).length!==1||![0,1].includes(shaderGlobals._HG_UV_ROTATION))
     throw Error('Held Aphrissa beam pass requires original inputs and explicit mounts/globals');
   const expectedGlobals=JSON.stringify(shaderGlobals),scene=new T.Scene(),bridge=createNativeStageCamera(T),entries=new Map(),pending=new Set();
@@ -53,10 +53,11 @@ export function createAphrissaStageBeams({three:T,library,sourcePackSha256,contr
         const token=generation;
         const task=Promise.resolve().then(async()=>{
           if(disposed||generation!==token||entries.get(segment.key)!==entry)return;
-          const instance=await library.inspectLines(segment.track.root,{linePositions:()=>
+          const instance=await library.create(segment.track.root,{linePositions:()=>
             !disposed&&generation===token&&entries.get(segment.key)===entry?entry.positions.map(p=>p.slice()):null});
           if(disposed||generation!==token||entries.get(segment.key)!==entry){instance.dispose();return;}
-          if(instance.inspection?.fullEffect!==false||JSON.stringify(instance.shaderGlobals)!==expectedGlobals){
+          if(instance.inspection!==null||!Array.isArray(instance.blocked)||instance.blocked.length
+            ||JSON.stringify(instance.shaderGlobals)!==expectedGlobals){
             instance.dispose();throw Error('Unreviewed Aphrissa beam renderer/environment');
           }
           entry.instance=instance;scene.add(instance.group);

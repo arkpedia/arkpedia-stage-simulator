@@ -163,12 +163,31 @@ function decodeLegacyEulerClip(source) {
     bindings, channels, sourceFrames:0, streamedWords:0};
 }
 
-export function sampleEffectClip(clip, time, {loop = clip.loop} = {}) {
+function effectClipTime(clip,time,loop=clip.loop){
   finite(time, 'sample time');
   if (typeof loop !== 'boolean') fail('invalid loop override');
   let t = Math.max(clip.start, time);
   if (loop && t >= clip.stop) t = clip.start + (t - clip.start) % (clip.stop - clip.start);
   else t = Math.min(t, clip.stop);
+  return t;
+}
+
+// Local renderer policy only: float32 streamed coefficients can leave a tiny
+// negative residue on a width segment whose authored endpoints are >=0 and 0.
+// Keep the raw curve sample unchanged. Bound any zero snap by one float32
+// relative epsilon times the absolute polynomial terms; never admit a negative
+// authored endpoint, non-streamed curve, or larger negative excursion.
+export function effectChannelZeroRoundoff(clip,channel,time){
+  if(channel?.kind!=='streamed')return 0;
+  const t=effectClipTime(clip,time),keys=channel.keys;
+  let i=keys.length-1;while(i>=0&&keys[i].time>t)i--;
+  if(i<0||i===keys.length-1||keys[i].coefficients[3]<0||keys[i+1].coefficients[3]!==0)return 0;
+  const dt=t-keys[i].time,[a,b,c,d]=keys[i].coefficients;
+  return 2**-23*(Math.abs(a*dt**3)+Math.abs(b*dt**2)+Math.abs(c*dt)+Math.abs(d));
+}
+
+export function sampleEffectClip(clip, time, {loop = clip.loop} = {}) {
+  const t=effectClipTime(clip,time,loop);
   return clip.channels.map(channel => {
     if (channel.kind === 'constant') return channel.value;
     const keys = channel.keys;

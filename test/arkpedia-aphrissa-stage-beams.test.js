@@ -8,8 +8,8 @@ function fixture(create){
  const instances=[],calls=[],track={id:'1:1:beam:attack:1',ownerId:1,ownerLife:1,mode:'normal',root:styles.normal.root,clip:styles.normal.clip.id,
   startedAt:5,clipStartedAt:5,stage:'active',points:[{role:'start',row:2,col:3,unitId:1,life:1,mountType:2},
   {role:'waypoint',row:2,col:5,unitId:2,life:1,mountType:1,fixedHeight:styles.normal.waypointFixedHeight},{role:'end',row:5,col:5}]};
- const library={async inspectLines(root,options){calls.push({root,options});if(create)return create(root,options);
-  const i={group:new T.Group(),inspection:{fullEffect:false},shaderGlobals:{_HG_UV_ROTATION:0},updates:[],disposed:0,
+ const library={async create(root,options){calls.push({root,options});if(create)return create(root,options);
+  const i={group:new T.Group(),inspection:null,blocked:[],shaderGlobals:{_HG_UV_ROTATION:0},updates:[],disposed:0,
    update(time,options){this.updates.push({time,options});},dispose(){this.disposed++;this.group.removeFromParent();}};instances.push(i);return i;}};
  const owner={id:1,def:{charId:ID},side:'ally',alive:true,deployed:true,deploySeq:1,mem:{aphrissaLinePresentation:{snapshot:()=>[structuredClone(track)]}}};
  const relay={id:2,alive:true,deployed:true,deploySeq:1,side:'ally'},battle={time:5,regularReviewCandidates:[ID],units:[owner,relay]};
@@ -58,4 +58,14 @@ test('source load failure and render failure preserve resource and caller owners
  const failed=fixture(async()=>{throw Error('Original line unavailable');});failed.pass.update(failed.battle);await assert.rejects(failed.pass.ready(),/unavailable/);failed.pass.dispose();
  const f=fixture();f.pass.update(f.battle);await f.pass.ready();f.renderer.autoClear=false;f.renderer.render=()=>{throw Error('GPU failed');};
  assert.throws(()=>f.pass.render(f.renderer,f.camera),/GPU failed/);assert.equal(f.renderer.autoClear,false);f.pass.dispose();
+});
+test('partial prefabs, blocked source components and changed shader globals never enter the battle scene',async()=>{
+ for(const invalid of [{inspection:{fullEffect:false}},{blocked:['original helper']},{blocked:null},{shaderGlobals:{_HG_UV_ROTATION:1}}]){
+  const instances=[],f=fixture(async()=>{
+   const instance={group:new T.Group(),inspection:null,blocked:[],shaderGlobals:{_HG_UV_ROTATION:0},disposed:0,
+    dispose(){this.disposed++;}};Object.assign(instance,invalid);instances.push(instance);return instance;
+  });
+  f.pass.update(f.battle);await assert.rejects(f.pass.ready(),/Unreviewed Aphrissa beam renderer/);
+  assert.equal(f.pass.scene.children.length,0);assert.equal(f.pass.instanceCount,0);assert.ok(instances.every(i=>i.disposed===1));f.pass.dispose();
+ }
 });

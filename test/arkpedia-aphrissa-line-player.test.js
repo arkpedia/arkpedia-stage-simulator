@@ -79,6 +79,39 @@ test('missing endpoint owners and unknown game globals cannot silently enable be
     assert.throws(()=>library(globals),/Unreviewed native shader global/);
 });
 
+test('original streamed zero-width roundoff stays raw in the pose but cannot interrupt complete beam playback',native,async()=>{
+  const lib=library({_HG_UV_ROTATION:0}),cam=camera();let residues=0;
+  try{
+    for(const root of Object.keys(lines.roots)){
+      const i=await lib.create(root,{linePositions:endpoints});
+      try{
+        for(const clip of new Set(i.pose.instances.map(c=>c.clip)))for(const time of [0,.05,.15,.3,.5,.59999,.6,.60000002,.7,1,2,3,.6]){
+          const pose=i.pose.sample(time,clip);i.update(time,{camera:cam,clip});
+          for(const d of i.draws.filter(d=>d.line)){
+            const r=pose.renderers.get(d.component);
+            if(r.widthMultiplier<0){residues++;assert.ok(r.widthMultiplier>=-r.widthZeroTolerance);assert.deepEqual(d.lineData.indices,[]);}
+            assert.ok(d.lineData.positions.every(Number.isFinite));
+          }
+        }
+      }finally{i.dispose();}
+    }
+    assert.ok(residues>0);
+  }finally{lib.dispose();}
+  for(const mutate of [
+    c=>c.keys[0].coefficients=[0,0,0,-1], // Negative authored endpoint.
+    c=>{c.keys[0].coefficients=[0,0,-10,.1];c.keys[1].coefficients[3]=0;}, // Larger interior excursion.
+    c=>{c.kind='constant';c.value=-1;delete c.keys;},
+  ]){
+    const altered=structuredClone(source),root=Object.keys(lines.roots)[0],
+      instance=altered.animations.instances.find(i=>altered.animations.clips[i.clip].name===root),binding=instance.bindings.findIndex(b=>b.property==='m_Parameters.widthMultiplier'),
+      channel=altered.animations.clips[instance.clip].channels.find(c=>c.bindingIndex===binding);
+    mutate(channel);
+    const bad=createNativeEffectLibrary({three:T,...altered,shaderGlobals:{_HG_UV_ROTATION:0},loadTexture:async()=>new T.Texture()});
+    try{const i=await bad.create(root,{linePositions:endpoints});assert.throws(()=>i.update(.05,{camera:cam,clip:instance.clip}),/Negative native line width/);}
+    finally{bad.dispose();}
+  }
+});
+
 test('world-space beams ignore singular editor transforms while retaining original activation',native,async()=>{
   const root=Object.keys(lines.roots)[0],altered=structuredClone(source),records=altered.pack.records;
   const go=altered.pack.roots[root],tr=records[go].references.find(r=>r.field==='component'&&records[r.target].type==='Transform').target;

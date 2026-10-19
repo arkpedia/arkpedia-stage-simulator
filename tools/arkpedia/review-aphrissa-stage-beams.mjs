@@ -22,7 +22,8 @@ globalThis.cnReview={get battle(){return battle;},get renderer(){return renderer
  Object.assign(e.base,{maxHp:1e9,atk:0,def:0,res:0,moveSpeed:0});e.markDirty();void e.s;e.hp=e.s.maxHp;battle.addBuff(e,{key:'qa:pin',flags:{noMove:true,disarm:true}});battle._buildEnemyIndex();},
  async until(mode){const end=battle.time+50;while(!this.owner.mem.aphrissaLinePresentation.snapshot().some(t=>t.mode===mode)&&battle.time<end)battle.step();
  if(!this.owner.mem.aphrissaLinePresentation.snapshot().some(t=>t.mode===mode))throw Error('Missing held beam '+mode);await this.advance(.06);},
- snapshot(){return {time:battle.time,tracks:this.owner.mem.aphrissaLinePresentation.snapshot(),segments:this.pass.inspect().map(e=>({key:e.key,mode:e.track.mode,root:e.track.root,clip:e.track.clip,positions:e.positions,time:e.time,layers:e.instance?.draws.length})),
+ snapshot(){return {time:battle.time,tracks:this.owner.mem.aphrissaLinePresentation.snapshot(),segments:this.pass.inspect().map(e=>({key:e.key,mode:e.track.mode,root:e.track.root,clip:e.track.clip,positions:e.positions,time:e.time,layers:e.instance?.draws.length,
+  complete:e.instance?.inspection===null&&e.instance.blocked.length===0,sourceRenderers:e.instance?[...e.instance.pose.renderers].filter(([,r])=>r.enabled).map(([id])=>id).sort():[],playedRenderers:e.instance?.draws.map(d=>d.component).sort()})),
  instances:this.pass.instanceCount,hits:this.hits,ammo:this.owner.skill.ammoLeft,sp:this.owner.skill.spTotal,errors:battle.errors,glError:renderer.three.getContext().getError(),nativeFrameParity:false,nativeMountMappingVerified:false,nativeProgressiveDrawVerified:false};}
 };`;
 const driver=await publicReviewDriver({origin:'http://127.0.0.1:3185',out,data,hook}),reports=[];
@@ -32,6 +33,10 @@ try{for(const mobile of [false,true])for(const skill of [1,2,3]){
  await page.evaluate(()=>cnReview.setup());await deploy(ID,row,col,dir);
  await page.evaluate(async()=>{cnReview.target();await cnReview.until('normal');});await capture('ordinary');
  const ordinary=await page.evaluate(()=>cnReview.snapshot());assert.ok(ordinary.instances>0);assert.ok(ordinary.hits.length>0);
+ // Render the complete finite ordinary clip, including its near-zero width
+ // transition, rather than inspecting only the first visible attack frame.
+ const swept=await page.evaluate(async()=>{for(let n=0;n<9;n++)await cnReview.advance(.1);return cnReview.snapshot();});
+ assert.deepEqual(swept.errors,[]);assert.equal(swept.glError,0);
  await page.evaluate(()=>{cnReview.owner.skill.gainSp(cnReview.owner.skill.spCost,'fixture');});
  if(skill!==1){await page.click(`#deployment [data-id="${ID}"]`);await page.click('#skill');}
  await page.evaluate(mode=>cnReview.until(mode),`s${skill}`);
@@ -50,13 +55,14 @@ try{for(const mobile of [false,true])for(const skill of [1,2,3]){
  await page.waitForFunction(()=>cnReview.owner.mem.aphrissaOwner.deck.own().every(t=>cnReview.renderer.views.has(t.id)));
  const output=await page.evaluate(()=>cnReview.snapshot());await capture('relay-beam');
  const tracks=output.tracks.filter(t=>t.mode===`s${skill}`);assert.ok(tracks.length>0);assert.ok(tracks.some(t=>t.points.some(p=>p.role==='waypoint')));
- assert.ok(output.segments.length>=2);assert.ok(output.segments.every(s=>s.layers===8));assert.ok(output.hits.length>ordinary.hits.length);
+ assert.ok(output.segments.length>=2);assert.ok(output.hits.length>ordinary.hits.length);
+ for(const view of [ordinary,output])for(const segment of view.segments){assert.equal(segment.layers,9);assert.equal(segment.complete,true);assert.deepEqual(segment.playedRenderers,segment.sourceRenderers);}
  const paused=await page.evaluate(async()=>{const before=cnReview.snapshot();await cnReview.render();const after=cnReview.snapshot();return{before:before.segments,after:after.segments,timeBefore:before.time,timeAfter:after.time};});
  assert.deepEqual(paused.before,paused.after);assert.equal(paused.timeBefore,paused.timeAfter);
  await page.click(`#deployment [data-id="${ID}"]`);await page.click('#retreat');await page.evaluate(()=>cnReview.advance(.1));
  const retired=await page.evaluate(()=>cnReview.snapshot());await capture('retired');assert.equal(retired.instances,0);assert.deepEqual(retired.tracks,[]);
  for(const s of [ordinary,output,retired]){assert.deepEqual(s.errors,[]);assert.equal(s.glError,0);}
- assert.deepEqual(driver.errors,[]);assert.deepEqual(driver.failedResources,[]);reports.push({label,ordinary,output,retired});await page.close();
+ assert.deepEqual(driver.errors,[]);assert.deepEqual(driver.failedResources,[]);reports.push({label,ordinary,swept,output,retired});await page.close();
  console.log(label+': actual held attack markers, relay turns, source shaders and retirement passed');
 }
  await writeFile(out+'report.json',JSON.stringify({heldOnly:true,actualBattle:true,originalWaves:false,explicitShaderGlobals:{_HG_UV_ROTATION:0},

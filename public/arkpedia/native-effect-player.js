@@ -16,6 +16,7 @@ import {sampleParticleCurve} from '../../shared/arkpedia/native-particle-curves.
 import {effectMeshColors} from '../../shared/arkpedia/native-effect-mesh.js';
 import {createEffectPose} from '../../shared/arkpedia/native-effect-pose.js';
 import {createEffectTrail} from '../../shared/arkpedia/native-effect-trail.js';
+import {isEffectPlacement} from '../../shared/arkpedia/native-effect-placement.js';
 import {createEffectLine} from '../../shared/arkpedia/native-effect-line.js';
 import {createParticleVertexLayout} from '../../shared/arkpedia/native-particle-custom-data.js';
 import {createSubEmitterGraph} from '../../shared/arkpedia/native-sub-emitter-graph.js';
@@ -156,10 +157,10 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false,lineP
     if(pack.records[ref.target]?.type==='ParticleSystem')particleTransforms.set(ref.target,id);
   if(library.inspectionParticles&&[...library.inspectionParticles].some(id=>!particleTransforms.has(id)))
     throw Error('Selected original particle is outside the effect root');
-  let activeClip=null,activeTrajectory=null;
+  let activeClip=null,activeTrajectory=null,activePlacement=null;
   const sourceFrameAt=(id,t)=>{
     const transform=particleTransforms.get(id);if(!transform)throw Error('Parent particle transform is outside original source root');
-    const state=samplePose(Math.max(0,t),activeClip,activeTrajectory);
+    const state=samplePose(Math.max(0,t),activeClip,activeTrajectory,activePlacement);
     const frame=particleMatrices(particleFrame(transform,state),pack.records[id].data.scalingMode);
     return{birth:frame.birth.elements,movement:frame.movement.elements};
   };
@@ -264,9 +265,10 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false,lineP
       new T.Float32BufferAttribute(new Float32Array(uv.count*width),width)));
     return original;
   }
-  function samplePose(t,clip,trajectory){
+  function samplePose(t,clip,trajectory,placement){
     const state=pose.sample(t,clip);
     if(trajectory){const offset=trajectory.sample(t);for(const n of state.nodes.values())if(!n.parent)n.position=n.position.map((v,i)=>v+offset[i]);}
+    if(placement)state.placement=placement.sample(t);
     return state;
   }
   function updateTrailGeometry(g,data){
@@ -293,6 +295,11 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false,lineP
       const n=state.nodes.get(id),q=n.euler?new T.Quaternion().setFromEuler(new T.Euler(...n.euler.map(v=>v*Math.PI/180),'YXZ')):new T.Quaternion().fromArray(n.rotation);
       const scale=new T.Vector3().fromArray(n.scale),m=new T.Matrix4().compose(new T.Vector3().fromArray(n.position),q,scale);
       if(n.parent){const parent=world(n.parent);m.premultiply(parent.matrix);q.premultiply(parent.rotation);scale.multiply(parent.scale);}
+      else if(state.placement){
+        const p=state.placement,rotation=new T.Quaternion().fromArray(p.rotation),ownerScale=new T.Vector3().fromArray(p.scale),
+          matrix=new T.Matrix4().compose(new T.Vector3().fromArray(p.position),rotation,ownerScale);
+        m.premultiply(matrix);q.premultiply(rotation);scale.multiply(ownerScale);
+      }
       const result={matrix:m,rotation:q,scale};worlds.set(id,result);return result;
     }
     // Read rotation from the original quaternion chain, not matrix decomposition:
@@ -309,10 +316,12 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false,lineP
     return {birth,movement,scale};
   }
 
-  function update(clock,{camera,clip=null,trajectory=null,scheduledParticles=null}={}){
+  function update(clock,{camera,clip=null,trajectory=null,placement=null,scheduledParticles=null}={}){
     assertOpen();
     if(!Number.isFinite(clock)||clock<0)throw Error('Invalid native effect clock');
     if(!camera?.isCamera)throw Error('Native effect update needs its render camera');
+    if(placement!==null&&!isEffectPlacement(placement)||placement&&trajectory)
+      throw Error('Native effect needs one explicit placement or translation history');
     // External parent motion is allowed only in isolated source inspection.
     // It must never bypass the full effect's unsupported parent dispatch.
     if(scheduledParticles&&(!library.inspectionSource||!Array.isArray(scheduledParticles.records)
@@ -324,10 +333,15 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false,lineP
     group.updateWorldMatrix(true,false);
     if(group.matrixWorld.elements.some((v,i)=>!Number.isFinite(v)||Math.abs(v-(i%5===0?1:0))>1e-12))
       throw Error('Native effect group must remain in original coordinate space');
-    activeClip=clip;activeTrajectory=trajectory;
-    const state=samplePose(clock,clip,trajectory);
+    activeClip=clip;activeTrajectory=trajectory;activePlacement=placement;
+    const state=samplePose(clock,clip,trajectory,placement),motion=placement??trajectory;
     for(const [id,n] of state.nodes){const o=nodeObjects.get(id);o.position.fromArray(n.position);o.scale.fromArray(n.scale);
       if(n.euler)o.quaternion.setFromEuler(new T.Euler(...n.euler.map(v=>v*Math.PI/180),'YXZ'));else o.quaternion.fromArray(n.rotation);
+      o.matrixAutoUpdate=true;
+      if(!n.parent&&state.placement){
+        const p=state.placement,owner=new T.Matrix4().compose(new T.Vector3().fromArray(p.position),new T.Quaternion().fromArray(p.rotation),new T.Vector3().fromArray(p.scale));
+        o.matrixAutoUpdate=false;o.matrix.compose(o.position,o.quaternion,o.scale).premultiply(owner);o.matrixWorldNeedsUpdate=true;
+      }
       o.visible=n.visible;
     }
     group.updateMatrixWorld(true);camera.updateMatrixWorld(true);
@@ -340,9 +354,11 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false,lineP
     for(const entry of lineEntries){entry.mesh.visible=false;entry.lineData=null;}
     for(const entry of lineEntries){
       const endpoints=linePositions(entry.component,clock);
+      const r=state.renderers.get(entry.component),width=r.widthMultiplier,
+        renderedWidth=width<0&&width>=-(r.widthZeroTolerance??0)?0:width;
       lineSamples.set(entry.component,endpoints===null?{positions:[],colors:[],uvs:[],indices:[],widths:[]}:
         entry.line.sample(endpoints,new T.Vector3().setFromMatrixPosition(camera.matrixWorld).toArray(),
-          state.renderers.get(entry.component).widthMultiplier));
+          renderedWidth));
     }
     for(const entry of draws){
       const {component,mesh,emitter,trail,line,pool,baseColors,baseUVs,transform,particleSource,alignment,stretch}=entry;
@@ -354,8 +370,8 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false,lineP
         mesh.visible=data.indices.length>0&&state.nodes.get(transform).visible;
       }
       if(trail){
-        const history=trajectory?trajectory.times(clock).map(t=>{
-          if(!birthStates.has(t))birthStates.set(t,samplePose(t,clip,trajectory));
+        const history=motion?motion.times(clock).map(t=>{
+          if(!birthStates.has(t))birthStates.set(t,samplePose(t,clip,trajectory,placement));
           const s=birthStates.get(t);return {time:t,position:particleFrame(transform,s).position.toArray(),emitting:s.nodes.get(transform).visible};
         }):[];
         const data=trail.sample(clock,history,new T.Vector3().setFromMatrixPosition(camera.matrixWorld).toArray());entry.trailData=data;
@@ -381,7 +397,7 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false,lineP
         const {birth:frame,movement,scale}=particleMatrices(current,particleSource.scalingMode);
         const frameAt=t=>{
           // Prewarm predates the recorded path: retain the explicit start pose.
-          t=Math.max(0,t);if(!birthStates.has(t))birthStates.set(t,samplePose(t,clip,trajectory));
+          t=Math.max(0,t);if(!birthStates.has(t))birthStates.set(t,samplePose(t,clip,trajectory,placement));
           const matrices=particleMatrices(particleFrame(transform,birthStates.get(t)),particleSource.scalingMode);
           return {birth:matrices.birth.elements,movement:matrices.movement.elements};
         };
@@ -392,8 +408,8 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false,lineP
           const from=Math.max(0,t-1/60),a=frameAt(from).birth,b=frameAt(t).birth;
           return [0,1,2].map(i=>(b[12+i]-a[12+i])/(t-from));
         };
-        const history=(trajectory?trajectory.times(Math.max(0,clock)):[0]).map(t=>{
-          if(!birthStates.has(t))birthStates.set(t,samplePose(t,clip,trajectory));
+        const history=(motion?motion.times(Math.max(0,clock)):[0]).map(t=>{
+          if(!birthStates.has(t))birthStates.set(t,samplePose(t,clip,trajectory,placement));
           return {time:t,position:particleFrame(transform,birthStates.get(t)).position.toArray()};
         });
         const dispatch=subEmitters.parents(entry.particleId).length&&library.inspectionSource!==entry.particleId&&parentMotion.ready(entry.particleId);
