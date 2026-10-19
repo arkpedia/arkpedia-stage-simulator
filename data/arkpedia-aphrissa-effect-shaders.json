@@ -16,12 +16,12 @@
   },
   "artifact": {
     "path": "native-shaders.json",
-    "bytes": 122994,
-    "sha256": "1dd860647cb3cc6e604b60cf5060a857a52a467e1519b940b6deab8185b9d053"
+    "bytes": 135583,
+    "sha256": "6a2cceecf22031db2d1017ec3977a91d94d075cec6ec13ebf1571f1578266b66"
   },
   "counts": {
-    "shaders": 7,
-    "programs": 12
+    "shaders": 8,
+    "programs": 14
   },
   "shaders": {
     "[uc]shaders.ab:-2057019055204260810": {
@@ -250,6 +250,64 @@
           ]
         }
       }
+    },
+    "anon/a90f86ed9fd93b2c2af4fd0571371829.bin:1291840640910692172": {
+      "name": "Legacy Shaders/Particles/Alpha Blended Premultiply",
+      "sourceObjectSha256": "457c692844966b351b274a454881dc350a4ffcbc2a584707c818e3180da4ea3e",
+      "glesBlobSha256": "f6f94c5e842f1dedc1a93cb5fcfc23dc76ad496b2e9cebcf21d6caf143c8aa7d",
+      "programs": {
+        "2": {
+          "blobIndex": 2,
+          "entryOffset": 712,
+          "entryBytes": 2192,
+          "entrySha256": "b912b62533b111f0c07a7357aa09fd61299b49d2071e468a3b84e26fbdc2ebf1",
+          "gpuProgramType": 4,
+          "keywords": [],
+          "sourceBytes": 2152,
+          "sourceSha256": "416fc777d145c8e370db20ca6a7231ce9a0ba34693d786b69a83ac99d6cac271",
+          "trailer": [
+            25,
+            0
+          ]
+        },
+        "3": {
+          "blobIndex": 3,
+          "entryOffset": 2904,
+          "entryBytes": 3640,
+          "entrySha256": "ad7eda9c736ae6ad030065b4c0204a01a8641aa1b54654bb46825ba72a103e07",
+          "gpuProgramType": 4,
+          "keywords": [
+            "SOFTPARTICLES_ON"
+          ],
+          "sourceBytes": 3580,
+          "sourceSha256": "aa34efd3ae2d5b1387ce9d614d6e725bb8c3cd9ee4f0c9c380f33c70e8b1c161",
+          "trailer": [
+            25,
+            0
+          ]
+        }
+      }
     }
-  }
+  },
+  "sourceBundles": [
+    {
+      "bytes": 1070246,
+      "md5": "3ccf410b937a9dd8c7eb08c1d1fd334c",
+      "path": "[uc]shaders.ab",
+      "sha256": "d6db1fef7d6e30b2f41e8cddc83201e3462cb4457b04f61e8a4f3870e9a2e71f"
+    },
+    {
+      "bytes": 6551323,
+      "checksumProof": {
+        "kind": "pinned-official-archive",
+        "nativeManifestShortTagVerified": false,
+        "nativeManifestTag": "7fda",
+        "recipe": "data/arkpedia-aphrissa-material-source.json",
+        "sha256": "707efb307b640aa50e885efe1ea4f5092db3da2bdd9f415fb5df5ff641bc2d15"
+      },
+      "md5": "ecf5b1c2ef7091eac75a3fdba3daf340",
+      "path": "anon/a90f86ed9fd93b2c2af4fd0571371829.bin",
+      "sha256": "893e3d6a00fda9426959d75dceb9a4b43629e664fa8d26bd0eadb2eebdaa4340"
+    }
+  ]
 }

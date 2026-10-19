@@ -88,11 +88,38 @@ def export(cache, out, spec, manifest_out=None):
         path = cache / (spec["local_bundle"] if name == main_name else spec.get("dependencies_directory", "map-source/ab/") + name)
         raw = path.read_bytes()
         native = next(r for r in hot['abInfos'] if r['name'] == name)
-        if (len(raw) != native['abSize'] or hashlib.md5(raw).hexdigest() != native['md5']
-                or entry != {'path': name, 'bytes': len(raw), 'md5': native['md5'], 'sha256': sha(raw)}):
+        anonymous = spec.get('anonymous_sources', {}).get(name)
+        if anonymous:
+            from native_anonymous_source import read_anonymous_source
+            expected_entry = read_anonymous_source(cache, anonymous, hot_bytes, version)
+        else:
+            expected_entry = {'path': name, 'bytes': len(raw), 'md5': native['md5'], 'sha256': sha(raw)}
+        if (len(raw) != native['abSize'] or hashlib.md5(raw).hexdigest() != expected_entry['md5'] or sha(raw) != expected_entry['sha256']
+                or entry != expected_entry):
             raise ValueError('Native effect dependency checksum mismatch: ' + name)
         sources.append(entry)
         bundle = env.load_file(raw, name=name)
+        if anonymous:
+            identity = json.loads((ROOT / anonymous).read_text())['identity']
+            assets = [f for f in bundle.files.values() if hasattr(f, 'objects')]
+            if len(assets) != 1:
+                raise ValueError('Ambiguous anonymous serialized file')
+            asset = assets[0]
+            if (asset.name != identity['serializedFile'] or asset.unity_version != identity['unityVersion']
+                    or int(asset.target_platform) != identity['platform'] or asset.externals):
+                raise ValueError('Changed anonymous resource identity')
+            material = asset.objects[int(identity['materialPathId'])]
+            material_tree = material.read_typetree()
+            if (material.type.name != 'Material' or material_tree['m_Name'] != identity['materialName']
+                    or len(material.get_raw_data()) != identity['materialBytes']
+                    or sha(material.get_raw_data()) != identity['materialSha256']
+                    or material_tree['m_Shader'] != {'m_FileID': 0, 'm_PathID': int(identity['shaderPathId'])}):
+                raise ValueError('Changed original anonymous material')
+            textures = dict(material_tree['m_SavedProperties']['m_TexEnvs'])
+            if textures['_MainTex']['m_Texture'] != {'m_FileID': 0, 'm_PathID': int(identity['texturePathId'])}:
+                raise ValueError('Changed original anonymous material texture')
+            if asset.objects[int(identity['shaderPathId'])].type.name != 'Shader' or asset.objects[int(identity['texturePathId'])].type.name != 'Texture2D':
+                raise ValueError('Changed anonymous shader/texture identity')
         for f in bundle.files.values():
             if hasattr(f, 'objects'):
                 if f.name in files:

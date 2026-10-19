@@ -14,6 +14,9 @@ import json
 import math
 from pathlib import Path
 import sys
+import io
+import zipfile
+import zlib
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / 'tools/local-extract'))
@@ -83,9 +86,49 @@ def verify(cache, directory, manifest, spec):
         raw = file.read_bytes()
         pinned = next(x for x in hot['abInfos'] if x['name'] == name)
         assert len(raw) == pinned['abSize'] == r['bytes']
-        assert hashlib.md5(raw).hexdigest() == pinned['md5'] == r['md5']
+        recipe_path = spec.get('anonymous_sources', {}).get(name)
+        if recipe_path:
+            # Independent of the fetch/export validator: read the full original
+            # ZIP, compare both full digests, CRC and the unchanged manifest row.
+            recipe_bytes = (ROOT / recipe_path).read_bytes();recipe = json.loads(recipe_bytes)
+            assert recipe['nativeRow'] == pinned and recipe['version'] == meta['version']
+            assert recipe['manifestSha256'] == digest(hot_bytes)
+            assert recipe['scope'] == {'sourceInputsOnly': True, 'officialArchiveContentMd5Recorded': True,
+                'nativeManifestShortTagVerified': False, 'rendererVerified': False,
+                'compiledFrameParity': False, 'enabledOperators': []}
+            archive, bundle = recipe['archive'], recipe['bundle']
+            assert archive['name'] == name.replace('/', '_')[:-4] + '.dat'
+            zipped = (cache / 'cn-native-source/archives' / archive['name']).read_bytes()
+            assert len(zipped) == archive['bytes'] == pinned['totalSize']
+            assert digest(zipped) == archive['sha256'] and hashlib.md5(zipped).hexdigest() == archive['md5']
+            with zipfile.ZipFile(io.BytesIO(zipped)) as z:
+                assert z.namelist() == [name]
+                info = z.getinfo(name)
+                assert info.file_size == bundle['bytes'] and info.CRC == bundle['zipCrc32']
+                assert z.read(info) == raw
+            assert zlib.crc32(raw) == bundle['zipCrc32'] and digest(raw) == bundle['sha256']
+            assert hashlib.md5(raw).hexdigest() == bundle['md5']
+            assert r == {'path': name, 'bytes': len(raw), 'md5': bundle['md5'], 'sha256': bundle['sha256'],
+                'checksumProof': {'kind': 'pinned-official-archive', 'recipe': recipe_path, 'sha256': digest(recipe_bytes),
+                                  'nativeManifestTag': pinned['md5'], 'nativeManifestShortTagVerified': False}}
+        else:
+            assert hashlib.md5(raw).hexdigest() == pinned['md5'] == r['md5']
         assert digest(raw) == r['sha256']
         bundle = env.load_file(raw, name=name)
+        if recipe_path:
+            assets = [f for f in bundle.files.values() if hasattr(f, 'objects')]
+            assert len(assets) == 1
+            f, identity = assets[0], recipe['identity']
+            assert f.name == identity['serializedFile'] and f.unity_version == identity['unityVersion']
+            assert int(f.target_platform) == identity['platform'] and not f.externals
+            m = f.objects[int(identity['materialPathId'])]
+            assert m.type.name == 'Material' and m.read_typetree()['m_Name'] == identity['materialName']
+            assert len(m.get_raw_data()) == identity['materialBytes'] and digest(m.get_raw_data()) == identity['materialSha256']
+            assert m.read_typetree()['m_Shader'] == {'m_FileID': 0, 'm_PathID': int(identity['shaderPathId'])}
+            assert dict(m.read_typetree()['m_SavedProperties']['m_TexEnvs'])['_MainTex']['m_Texture'] == {
+                'm_FileID': 0, 'm_PathID': int(identity['texturePathId'])}
+            assert f.objects[int(identity['shaderPathId'])].type.name == 'Shader'
+            assert f.objects[int(identity['texturePathId'])].type.name == 'Texture2D'
         for f in bundle.files.values():
             if hasattr(f, 'objects'):
                 assert name not in source_files and f.name not in foreign_files

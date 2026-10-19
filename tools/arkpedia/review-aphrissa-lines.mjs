@@ -58,7 +58,7 @@ try{
   window.lineReview={renderer,lib,instances,select,render,snapshot,setOwner:v=>{owner=v;},dispose:async()=>{lib.dispose();await Promise.resolve();renderer.render(scene,camera);return {...renderer.info.memory};}};
   return {compiledPrograms:programs.length,roots:Object.keys(meta.lines.roots),sourcePackSha256:meta.effects.pack.sha256};
  });
- assert.equal(setup.compiledPrograms,12);
+ assert.equal(setup.compiledPrograms,14);
  const results=[];
  for(const root of setup.roots){
    await client.send('Emulation.setTouchEmulationEnabled',{enabled:false});

@@ -10,10 +10,16 @@ const cache=resolve('.cache/arkpedia'),dir=resolve(cache,'cn-native-source'),mai
 const hot=parsePinnedCNManifest(await readFile(resolve(dir,'hot_update_list.json')));
 const names=[main,'[uc]shaders.ab','arts/[pack]common.ab','battle/[pack]common.ab',
  'refs/fx/texture/overseas/char_010_chen_sale#10.ab', 'pkgrps/btl_pfb_fx_token_3.ab', 'battle/prefabs/effects/common.ab',
+ 'anon/a90f86ed9fd93b2c2af4fd0571371829.bin',
  ...hot.abInfos.filter(r=>r.name.startsWith('refs/fx/')&&!r.name.includes('/overseas/')).map(r=>r.name)];
-if(names.length!==26||new Set(names).size!==26)throw Error('Changed original CN effect inventory');
+if(names.length!==27||new Set(names).size!==27)throw Error('Changed original CN effect inventory');
 const digest=(algorithm,bytes)=>createHash(algorithm).update(bytes).digest('hex'),sources=[];
 for(const name of names){
+ if(name==='anon/a90f86ed9fd93b2c2af4fd0571371829.bin'){
+  const source=JSON.parse(execFileSync('python3',['tools/arkpedia/fetch-aphrissa-material.py','--cache',cache],{encoding:'utf8'}));
+  if(source.path!==name||source.checksumProof?.nativeManifestShortTagVerified!==false)throw Error('Changed anonymous source receipt');
+  sources.push(source);console.log('Verified original anonymous material archive');continue;
+ }
  const row=hot.abInfos.find(r=>r.name===name);if(!row)throw Error('Missing original CN dependency: '+name);
  const path=resolve(dir,'bundles',name),check=bytes=>{if(bytes.length!==row.abSize||digest('md5',bytes)!==row.md5)throw Error('Changed original effect bundle: '+name);return bytes;};
  let bytes;

@@ -11,11 +11,13 @@ SPEC = {'operator': 'char_4229_aphris', 'version': '26-09-22-07-47-20_6c71fa',
         'bundle': 'battle/prefabs/effects/aphris.ab',
         'local_bundle': 'cn-native-source/bundles/battle/prefabs/effects/aphris.ab',
         'dependencies_directory': 'cn-native-source/bundles/', 'root_prefix': ('aphris_', 'token_aphris_', 'common_char_'),
-        'source_count': 26, 'extra_dependencies': ['refs/fx/texture/overseas/char_010_chen_sale#10.ab'],
+        'source_count': 27, 'extra_dependencies': ['refs/fx/texture/overseas/char_010_chen_sale#10.ab',
+                                                 'anon/a90f86ed9fd93b2c2af4fd0571371829.bin'],
+        'anonymous_sources': {'anon/a90f86ed9fd93b2c2af4fd0571371829.bin': 'data/arkpedia-aphrissa-material-source.json'},
         'additional_roots': {'pkgrps/btl_pfb_fx_token_3.ab': ['token_aphris_pc_attack_01_buff_01',
                              'token_aphris_pc_skill_02_buff_01', 'token_aphris_pc_skill_03_buff_01'],
                              'battle/prefabs/effects/common.ab': ['common_char_birth_01_delay_01']},
-        'roots': 22, 'meshes': 36, 'textures': 88, 'unresolved': 3}
+        'roots': 22, 'meshes': 36, 'textures': 89, 'unresolved': 2}
 def verify(cache, directory, manifest):
     return verify_inputs(cache, directory, manifest, SPEC)
 if __name__ == '__main__':
