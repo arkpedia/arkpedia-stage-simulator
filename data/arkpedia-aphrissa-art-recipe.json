@@ -1,0 +1,129 @@
+{
+  "operator": "char_4229_aphris",
+  "name": "Aphrissa",
+  "foundationSha256": "77207d3d44737940e6bc4aee4a4a57abea27a1490d3870168e9f1615527ca254",
+  "artCommit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+  "output": "data/arkpedia-aphrissa-art.json",
+  "sdReview": "source-reviews/aphrissa.json",
+  "scope": "Original owner artwork only. Preserve Front/Back skeletons and literal original clips, decoded pixels and PMA; no Back death/down tracks, native FX/audio/modules or game-frame parity invented. Owner skill dispatch and public admission remain separate.",
+  "roles": {
+    "Front": {
+      "idle": "Idle",
+      "deploy": "Start",
+      "attack": "Attack",
+      "attackDown": "Attack_Down",
+      "skill": null,
+      "skills": {},
+      "die": "Die",
+      "stun": null,
+      "move": null
+    },
+    "Back": {
+      "idle": "Idle",
+      "deploy": "Start",
+      "attack": "Attack",
+      "attackDown": null,
+      "skill": null,
+      "skills": {},
+      "die": null,
+      "stun": null,
+      "move": null
+    }
+  },
+  "nativeMixes": [
+    {
+      "sourceAnimName": "Skill_2_Begin",
+      "targetAnimName": "Idle",
+      "mixAnimName": "Skill_2_End"
+    },
+    {
+      "sourceAnimName": "Skill_Down_2_Begin",
+      "targetAnimName": "Idle",
+      "mixAnimName": "Skill_Down_2_End"
+    },
+    {
+      "sourceAnimName": "Skill_2_Loop",
+      "targetAnimName": "Idle",
+      "mixAnimName": "Skill_2_End"
+    },
+    {
+      "sourceAnimName": "Skill_Down_2_Loop",
+      "targetAnimName": "Idle",
+      "mixAnimName": "Skill_2_End"
+    },
+    {
+      "sourceAnimName": "Skill_3_Charge_Begin",
+      "targetAnimName": "Skill_3_Idle",
+      "mixAnimName": "Skill_3_Charge_End"
+    },
+    {
+      "sourceAnimName": "Skill_3_Charge_Loop",
+      "targetAnimName": "Skill_3_Idle",
+      "mixAnimName": "Skill_3_Charge_End"
+    },
+    {
+      "sourceAnimName": "Skill_3_Idle",
+      "targetAnimName": "Idle",
+      "mixAnimName": "Skill_3_End"
+    },
+    {
+      "sourceAnimName": "Skill_3_Loop",
+      "targetAnimName": "Idle",
+      "mixAnimName": "Skill_3_End"
+    },
+    {
+      "sourceAnimName": "Skill_Down_3_Charge_Begin",
+      "targetAnimName": "Skill_Down_3_Idle",
+      "mixAnimName": "Skill_Down_3_Charge_End"
+    },
+    {
+      "sourceAnimName": "Skill_Down_3_Charge_Loop",
+      "targetAnimName": "Skill_Down_3_Idle",
+      "mixAnimName": "Skill_Down_3_Charge_End"
+    },
+    {
+      "sourceAnimName": "Skill_Down_3_Idle",
+      "targetAnimName": "Idle",
+      "mixAnimName": "Skill_Down_3_End"
+    },
+    {
+      "sourceAnimName": "Skill_Down_3_Loop",
+      "targetAnimName": "Idle",
+      "mixAnimName": "Skill_Down_3_End"
+    }
+  ],
+  "reviewPhases": [
+    "Attack",
+    "Attack_Down",
+    "Default",
+    "Die",
+    "Idle",
+    "Skill_1_Begin",
+    "Skill_1_Idle",
+    "Skill_1_Loop_A",
+    "Skill_1_Loop_B",
+    "Skill_2_Begin",
+    "Skill_2_End",
+    "Skill_2_Loop",
+    "Skill_3_Charge_Begin",
+    "Skill_3_Charge_End",
+    "Skill_3_Charge_Loop",
+    "Skill_3_End",
+    "Skill_3_Idle",
+    "Skill_3_Loop",
+    "Skill_Down_1_Begin",
+    "Skill_Down_1_Idle",
+    "Skill_Down_1_Loop_A",
+    "Skill_Down_1_Loop_B",
+    "Skill_Down_2_Begin",
+    "Skill_Down_2_End",
+    "Skill_Down_2_Loop",
+    "Skill_Down_3_Charge_Begin",
+    "Skill_Down_3_Charge_End",
+    "Skill_Down_3_Charge_Loop",
+    "Skill_Down_3_End",
+    "Skill_Down_3_Idle",
+    "Skill_Down_3_Loop",
+    "Start"
+  ]
+}
