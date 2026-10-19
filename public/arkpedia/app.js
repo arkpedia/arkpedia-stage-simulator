@@ -827,10 +827,14 @@ function drawHud() {
           selectTab(next); next.focus();
         };
       }
-      field.innerHTML = unit ? `<svg class="field-frame" aria-hidden="true" viewBox="-100 -100 200 200"><path d="M0 -95L95 0L0 95L-95 0Z"/></svg><button id="retreat" aria-label="Retreat ${escape(b.name)}" title="Retreat"><svg aria-hidden="true" viewBox="0 0 32 32"><circle cx="19" cy="5" r="3"/><path d="M7 12l6-3 5 3 5 3h6M18 12l-5 7 7 3 3 7M13 19l-5 9M4 5h7M4 5l3-3M4 5l3 3"/></svg></button>${!skillUnit.skill.noSkill && skillUnit.skill.kind !== "passive" ? `<button id="skill" aria-label="Activate skill"><img src="${skillIcon(b.kind === 'operator' ? b.build : battle.bench[b.ownerId].build)}" alt=""><span class="field-sp"></span></button>` : ''}` : '';
+      field.innerHTML = unit ? `<svg class="field-frame" aria-hidden="true" viewBox="-100 -100 200 200"><path d="M0 -95L95 0L0 95L-95 0Z"/></svg><button id="retreat" aria-label="Retreat ${escape(b.name)}" title="Retreat"><svg aria-hidden="true" viewBox="0 0 32 32"><circle cx="19" cy="5" r="3"/><path d="M7 12l6-3 5 3 5 3h6M18 12l-5 7 7 3 3 7M13 19l-5 9M4 5h7M4 5l3-3M4 5l3 3"/></svg></button>${!skillUnit.skill.noSkill && skillUnit.skill.kind !== "passive" ? `<button id="skill" aria-label="Activate skill"><img src="${skillIcon(b.kind === 'operator' ? b.build : battle.bench[b.ownerId].build)}" alt=""><span class="field-sp"></span></button>` : ''}${unit.mem?.regularSecondaryAction ? `<button id="secondary" aria-label="${escape(unit.mem.regularSecondaryAction.label)}"><span class="secondary-label">${escape(unit.mem.regularSecondaryAction.label)}</span><span class="field-sp"></span></button>` : ''}` : '';
       field.querySelector('#retreat')?.addEventListener('click', () => {
         if (b.kind === 'token') retreatRegularSummon(battle, selected); else battle.retreatOperator(selected);
         selected = null; drawHud();
+      });
+      field.querySelector('#secondary')?.addEventListener('click', () => {
+        try { battle.secondaryActionOperator(selected); } catch (e) { battleError = e.message; }
+        drawHud();
       });
       field.querySelector('#skill')?.addEventListener('click', () => {
         try {
@@ -849,6 +853,14 @@ function drawHud() {
       const scroll = panel.scrollTop;
       panel.innerHTML = copy;
       panel.scrollTop = scroll;
+    }
+    const secondaryButton = field.querySelector('#secondary'), secondary = unit?.mem?.regularSecondaryAction;
+    if (secondaryButton && secondary) {
+      const ready = unit.canAct && !unit.skill.silenceBlocked && secondary.available();
+      secondaryButton.disabled = !ready; secondaryButton.classList.toggle('ready', ready);
+      const label = `${secondary.label} · ${secondary.cost()} DP`;
+      secondaryButton.setAttribute('aria-label', label); secondaryButton.title = label;
+      secondaryButton.querySelector('.field-sp').textContent = `${secondary.cost()} DP`;
     }
     const skillButton = field.querySelector('#skill');
     if (skillButton) {
@@ -975,7 +987,7 @@ function layoutFacing() {
     field.style.left = `${p.x}px`; field.style.top = `${p.y}px`;
     field.style.width = field.style.height = `${size*2}px`;
     // Anchor actions to the unit, but keep their hit targets above the shelf and inside the board.
-    for (const [id, dx, dy] of [['retreat', -size*.55, -size*.55], ['skill', size*.5, size*.5]]) {
+    for (const [id, dx, dy] of [['retreat', -size*.55, -size*.55], ['skill', size*.5, size*.5], ['secondary', size*.55, -size*.55]]) {
       const button = field.querySelector('#'+id);
       if (!button) continue;
       const shelfTop = workspace.querySelector('.deployment-wrap').offsetTop;

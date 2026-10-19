@@ -55,3 +55,11 @@ test('pinned Robin and Justice Knight filenames remove only the source catalogue
   assert.equal(operatorAssetName("Kal'tsit"), "Kal'tsit");
   assert.equal(operatorAssetName("Ch'en the Holungday"), "Ch'en the Holungday");
 });
+
+test('skill descriptions turn the game text literal \\n into line breaks for every rostered skill', async () => {
+  const {skillDescriptionText} = await import('../shared/arkpedia/battle-ui.js');
+  const data = (await import('../data/arkpedia-mvp.json', {with: {type: 'json'}})).default;
+  assert.equal(skillDescriptionText({description: 'a\\nb <@ba.vup>{atk:0%}</>', blackboard: [{key: 'atk', value: 1.5}]}), 'a\nb 150%');
+  for (const op of Object.values(data.operators)) for (const skill of op.skills) for (const level of skill.levels)
+    assert.ok(!skillDescriptionText(level).includes('\\n'), `${op.id} ${skill.id}`);
+});

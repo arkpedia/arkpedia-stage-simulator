@@ -130,6 +130,7 @@ import { customizePublicAegisKit, installPublicAegis } from './content/arkpedia-
 import { customizePublicYukariKit, installPublicYukari } from './content/arkpedia-yukari-public.js';
 import {customizePublicAphrissaKit, installPublicAphrissa} from './content/arkpedia-aphrissa-public.js';
 import { customizePublicMakotoKit, installPublicMakoto } from './content/arkpedia-makoto-public.js';
+import { customizePublicHadiyaKit, installPublicHadiya } from './content/arkpedia-hadiya-public.js';
 import { customizePublicTurdusKit, installPublicTurdus } from './content/arkpedia-turdus-public.js';
 import { customizePublicBranchKit, installPublicBranch } from './content/arkpedia-branch-public.js';
 import { customizePublicReckprKit, installPublicReckpr } from './content/arkpedia-reckpr-public.js';
@@ -612,6 +613,7 @@ export class StandardBattle extends Battle {
     customizePublicYukariKit({ battle: this, id, unit, kit });
     customizePublicMakotoKit({ battle: this, id, unit, kit });
     customizePublicAphrissaKit({battle: this, id, unit, kit});
+    customizePublicHadiyaKit({ battle: this, id, unit, kit });
     customizePublicBranchKit({ battle: this, id, unit, kit });
     customizeNarantKit({ battle: this, id, def, unit, kit });
     customizeElaKit({ battle: this, id, def, unit, kit });
@@ -849,6 +851,7 @@ export class StandardBattle extends Battle {
     installPublicYukari({ battle: this, unit, def });
     installPublicMakoto({ battle: this, unit, def });
     installPublicAphrissa({battle: this, unit, def});
+    installPublicHadiya({ battle: this, unit, def });
     installPublicBranch({ battle: this, unit, def });
     installNarant({ battle: this, unit, def });
     installEla({ battle: this, unit, def });
@@ -1032,6 +1035,12 @@ export class StandardBattle extends Battle {
       (unit.skill.manual || unit.skill.spec.manualActivation?.() === true) &&
       unit.skill.activate("manual")
     );
+  }
+  // An owner-declared second field action (e.g. Hadiya's Equipment Adaptation).
+  secondaryActionOperator(id) {
+    if (!canDeployInViewport(this.viewport) || this.finished) return false;
+    const unit = this.bench[id]?.unit, action = unit?.mem.regularSecondaryAction;
+    return !!(unit?.alive && action && unit.canAct && !unit.skill.silenceBlocked && action.available() && action.run());
   }
   _remove(unit, reason, killer, permanent) {
     if (unit.side === "ally" && unit.kind === "op") {

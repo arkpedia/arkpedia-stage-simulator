@@ -368,7 +368,7 @@ a {
 .skill-tags .auto { background: #82a622; }
 .skill-tags .manual { background: #666d72; }
 .sp-readout { font-size: 11px; color: #c1e9fd; }
-.skill-description { margin-top: 8px; }
+.skill-description { margin-top: 8px; white-space: pre-line; }
 .field-command { position: absolute; transform: translate(-50%,-50%); z-index: 7; pointer-events: none; }
 .field-frame { width: 100%; height: 100%; overflow: visible; }
 .field-frame path { fill: #fff1; stroke: #ffffdf; stroke-width: 1.5; }
@@ -381,6 +381,10 @@ a {
 #skill.ready { background: #81b719; border-color: #d1f283; box-shadow: 0 0 0 3px #89b63166; }
 #skill.ready img { opacity: .8; }
 #skill:disabled { opacity: .7; }
+#secondary { width: 62px; height: 62px; color: #fff; }
+#secondary .secondary-label { display: block; padding: 3px; font: 600 11px/1.1 Rajdhani,sans-serif; text-align: center; }
+#secondary.ready { background: #2f6f8f; border-color: #9fd8f2; box-shadow: 0 0 0 3px #4aa6d466; }
+#secondary:disabled { opacity: .55; }
 .copy-symbol { display: grid; place-items: center; height: 100%; font: 700 19px Rajdhani, sans-serif; letter-spacing: .05em; }
 .field-sp { position: absolute; inset: auto -1px -21px; background: #161b21ec; padding: 2px; color: #fff; font: 600 13px Rajdhani,sans-serif; }
 .deployment-wrap { position: absolute; z-index: 8; bottom: max(6px,env(safe-area-inset-bottom)); left: max(12px,env(safe-area-inset-left)); right: max(12px,env(safe-area-inset-right)); display: grid; grid-template-columns: 44px minmax(0,1fr) 44px; gap: 8px; align-items: stretch; }
@@ -597,6 +601,8 @@ footer {
   .pause-label { top: 57px; right: 10px; font-size: 12px; }
   .field-command button { width: 44px; height: 44px; }
   #skill { width: 50px; height: 50px; }
+  #secondary { width: 50px; height: 50px; }
+  #secondary .secondary-label { font-size: 9px; }
   #retreat { font-size: 30px; }
   .field-sp { font-size: 11px; bottom: -18px; }
 }
