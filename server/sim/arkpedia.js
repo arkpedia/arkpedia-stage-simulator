@@ -139,6 +139,7 @@ import { customizeOblvnsKit, installOblvns } from './content/arkpedia-oblvns.js'
 import { customizeMakiriKit, installMakiri } from './content/arkpedia-makiri.js';
 import { customizeFlwr2Kit, installFlwr2 } from './content/arkpedia-flwr2.js';
 import { customizePublicTurdusKit, installPublicTurdus } from './content/arkpedia-turdus-public.js';
+import { customizeHeadb2Kit, installHeadb2 } from './content/arkpedia-headb2.js';
 import { customizePublicBranchKit, installPublicBranch } from './content/arkpedia-branch-public.js';
 import { customizePublicReckprKit, installPublicReckpr } from './content/arkpedia-reckpr-public.js';
 import { customizePublicLieselKit, installPublicLiesel } from './content/arkpedia-liesel-public.js';
@@ -366,6 +367,8 @@ export class StandardBattle extends Battle {
     this.regularReviewCandidates = Object.freeze([...(data.reviewCandidates ?? [])]);
     this.life = config.max_life;
     this.regularModels = data.sd?.models ?? {};
+    // Source team membership (e.g. Ursus Student Self-Governing Group) for team-scoped effects.
+    this.regularTeams = Object.freeze(Object.fromEntries(Object.values(data.operators ?? {}).map(o => [o.id, o.teamId ?? null])));
     this.regularSkillUses = new Map();
     this.addDp('arkpedia', startingVanguardDp);
     installMedicSquad({ battle: this, records: chess });
@@ -631,6 +634,7 @@ export class StandardBattle extends Battle {
     customizeOblvnsKit({ battle: this, id, unit, kit });
     customizeMakiriKit({ battle: this, id, unit, kit });
     customizeFlwr2Kit({ battle: this, id, unit, kit });
+    customizeHeadb2Kit({ battle: this, id, unit, kit });
     customizePublicBranchKit({ battle: this, id, unit, kit });
     customizeNarantKit({ battle: this, id, def, unit, kit });
     customizeElaKit({ battle: this, id, def, unit, kit });
@@ -876,6 +880,7 @@ export class StandardBattle extends Battle {
     installOblvns({ battle: this, unit, def });
     installMakiri({ battle: this, unit, def });
     installFlwr2({ battle: this, unit, def });
+    installHeadb2({ battle: this, unit, def });
     installPublicBranch({ battle: this, unit, def });
     installNarant({ battle: this, unit, def });
     installEla({ battle: this, unit, def });

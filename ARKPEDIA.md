@@ -4782,3 +4782,8 @@ Matsukiri joins with both skills, DP generation and deployment-zone card discoun
 ### Perfumer the Distilled
 
 Perfumer the Distilled joins with her Abjurer trait, Sanctuary talent, auto S1 heal and passive S2. See docs/FLWR2-REVIEW.md. Coverage: 412/431 forms.
+
+
+### Zima the Raging Tide
+
+Zima the Raging Tide joins with her Earthshaker splash, high-ground pulses and all three skills. The battle now records source `teamId`s (`regularTeams`) for team-scoped effects. See docs/HEADB2-REVIEW.md. Coverage: 413/431 forms.
