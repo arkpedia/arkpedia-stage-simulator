@@ -31,8 +31,8 @@ test('Both visibility recipe and original-art receipt retain their exact committ
  assert.equal(sha(await readFile(new URL('../data/arkpedia-makoto-visibility.json',import.meta.url))),recipe.visibilityProof.sha256);
  assert.equal(sha(await readFile(new URL('../data/arkpedia-makoto-art-recipe.json',import.meta.url))),art.recipeSha256);
 });
-test('Actual delivered native bytes reproduce the visibility proof',optional,async()=>{
- assert.deepEqual(await recoverMakotoVisibility(),proof);await verifyOriginalVisibility(proof,options);
+test('Actual delivered native bytes reproduce visibility without a separate asset manifest',optional,async()=>{
+ assert.deepEqual(await recoverMakotoVisibility({read:async(path,...args)=>{assert.ok(!String(path).endsWith('manifest.json'));return readFile(path,...args);}}),proof);await verifyOriginalVisibility(proof,options);
 });
 test('A proof cannot omit a facing which contains the clip or fabricate an absent Back loop',optional,async()=>{
  await assert.rejects(()=>recoverOriginalVisibility({...options,clip:'Attack_A',sampleTimes:[.5]}),/cannot omit/);

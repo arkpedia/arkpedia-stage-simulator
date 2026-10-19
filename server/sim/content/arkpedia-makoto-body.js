@@ -82,7 +82,7 @@ export class MakotoPersonaBody{
     this.buffs.add(buff);return buff;
   }
   countdown(){const p=this.phase;if(!this.valid()||!p||!this.owns(p.parent))return null;
-    return {remaining:Math.max(0,p.parent.timeLeft),duration:p.originalDuration,canActivate:p.mode===3};}
+    return {remaining:Math.max(0,p.parent.timeLeft),duration:p.originalDuration,label:'Persona',canActivate:p.mode===3};}
   castBlocked(){const p=this.phase;return this.valid()&&!!p&&this.owns(p.parent)&&p.mode!==3;}
   finish(p,buff){
     if(this.phase!==p||p.parent!==buff||p.finished)return;p.finished=true;this.phase=null;this.buffs.delete(buff);this.remove(p.hp);

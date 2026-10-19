@@ -51,7 +51,7 @@ for(const elite of [0,1,2])for(const potential of [1,5])test(`E${elite} P${poten
   b.addBuff(u,{key:'fixture:outside',mods:{atkPct:.25,hpPct:.2,batFlat:.15,blockCnt:3}});void u.s;
   enter(f);near(u.s.atk,u.base.atk*(1+.25+f.record.talentBb[0].atk));near(u.s.maxHp,u.base.maxHp*1.55);
   near(u.hp/u.s.maxHp,.4);near(u.s.bat,u.base.bat+.15+.4);assert.equal(u.s.blockCnt,0);assert.equal(u.s.flags.noSp,true);
-  assert.equal(body.castBlocked(),true);assert.deepEqual(body.countdown(),{remaining:20,duration:20,canActivate:false});
+  assert.equal(body.castBlocked(),true);assert.deepEqual(body.countdown(),{remaining:20,duration:20,label:'Persona',canActivate:false});
   const life=u.deploySeq,skill=u.skill;body.clear();near(u.s.atk,u.base.atk*1.25);near(u.s.maxHp,u.base.maxHp*1.2);
   near(u.hp/u.s.maxHp,.4);assert.equal(u.s.blockCnt,base.blockCnt+3);assert.equal(u.deploySeq,life);assert.equal(u.skill===skill,true);
   assert.equal(f.expired.length,0);assert.equal(body.countdown(),null);assert.equal(body.castBlocked(),false);
