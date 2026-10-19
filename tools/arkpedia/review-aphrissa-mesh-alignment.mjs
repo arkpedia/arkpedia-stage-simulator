@@ -7,17 +7,17 @@ import {createHash} from 'node:crypto';
 const linearMotion=process.argv.includes('--linear-motion');
 const worldBirth=process.argv.includes('--world-birth'),surfaces=process.argv.includes('--surfaces'),chargeRoots=process.argv.includes('--charge-roots'),
   hitShapes=process.argv.includes('--hit-shapes'),hitRoots=process.argv.includes('--hit-roots'),
-  completeRoots=chargeRoots||hitRoots,componentReview=linearMotion||worldBirth||surfaces||hitShapes;
-assert.ok([linearMotion,worldBirth,surfaces,chargeRoots,hitShapes,hitRoots].filter(Boolean).length<=1,'Select one source review');
-const mode=hitShapes?'hit-shapes':surfaces?'surfaces':worldBirth?'world-birth':linearMotion?'linear-motion':'mesh-alignment';
-const directory='.cache/arkpedia/aphrissa-source/effects/'+(chargeRoots?'charge-roots':hitRoots?'hit-roots':mode)+'-browser/';
+  birthControls=process.argv.includes('--birth-controls'),allRoots=process.argv.includes('--all-roots'),
+  completeRoots=chargeRoots||hitRoots||allRoots,componentReview=linearMotion||worldBirth||surfaces||hitShapes||birthControls;
+assert.ok([linearMotion,worldBirth,surfaces,chargeRoots,hitShapes,hitRoots,birthControls,allRoots].filter(Boolean).length<=1,'Select one source review');
+const mode=birthControls||allRoots?'birth-controls':hitShapes?'hit-shapes':surfaces?'surfaces':worldBirth?'world-birth':linearMotion?'linear-motion':'mesh-alignment';
+const directory='.cache/arkpedia/aphrissa-source/effects/'+(allRoots?'all-roots':chargeRoots?'charge-roots':hitRoots?'hit-roots':mode)+'-browser/';
 const meta=JSON.parse(await readFile('data/arkpedia-aphrissa-'+mode+'.json')),
   bytes=await readFile(meta.fixture.path);
 assert.equal(bytes.length,meta.fixture.bytes);assert.equal(createHash('sha256').update(bytes).digest('hex'),meta.fixture.sha256);
-const profiles=JSON.parse(bytes),held=surfaces?Object.keys(profiles).filter(k=>![0,2].includes(profiles[k].data.InitialModule.startColor.minMaxState)):
-  worldBirth?Object.keys(profiles).filter(k=>profiles[k].data.ShapeModule.enabled):[],
+const profiles=JSON.parse(bytes),held=surfaces?Object.keys(profiles).filter(k=>![0,2,4].includes(profiles[k].data.InitialModule.startColor.minMaxState)):[],
   disabled=surfaces?Object.keys(profiles).filter(k=>!profiles[k].rendererEnabled):[],
-  roots=hitRoots?['aphris_attack_01_hit_01','aphris_skill_02_hit_01','aphris_skill_03_hit_01',
+  roots=allRoots?meta.effectRoots:hitRoots?['aphris_attack_01_hit_01','aphris_skill_02_hit_01','aphris_skill_03_hit_01',
     'aphris_attack_01_line_01','aphris_skill_02_line_01','aphris_skill_03_line_01']:
     chargeRoots?['aphris_skill_03_charge_01','aphris_skill_03_charge_01_end']:
     componentReview?Object.keys(profiles).filter(k=>!held.includes(k)&&!disabled.includes(k)):[...new Set(Object.values(profiles).map(r=>r.root))];
@@ -31,7 +31,7 @@ page.on('requestfailed',r=>failed.push(r.url()));page.on('response',r=>{if(r.sta
 try{
   await page.setViewport({width:1280,height:800});await page.setCacheEnabled(false);
   await page.goto('http://127.0.0.1:3185/',{waitUntil:'networkidle0'});
-  const setup=await page.evaluate(async ({componentReview,worldBirth,surfaces,completeRoots,hitShapes,hitRoots})=>{
+  const setup=await page.evaluate(async ({componentReview,worldBirth,surfaces,completeRoots,hitShapes,hitRoots,birthControls,allRoots})=>{
     const T=await import('/vendor/three.module.js'),{createNativeEffectLibrary,compileNativeEffectPrograms}=await import('/arkpedia/native-effect-player.js');
     const {createEffectTrajectory}=await import('/shared/arkpedia/native-effect-trail.js');
     // Controlled external movement, not a recorded native actor trajectory.
@@ -73,7 +73,7 @@ try{
     };
     const select=async selection=>{
       const name=componentReview?selection.particle:selection;
-      const owner=hitRoots?{linePositions:()=>[[-1,0,0],[1,0,0]]}:{}; // Explicit source-coordinate endpoint fixture.
+      const owner=hitRoots||allRoots?{linePositions:()=>[[-1,0,0],[1,0,0]]}:{}; // Explicit source-coordinate endpoint fixture.
       current?.dispose();current=await (componentReview?lib.inspectParticles(selection.root,{particles:[name]}):completeRoots?lib.create(name,owner):lib.inspectMeshParticles(name,{allowBlocked:true}));scene.add(current.group);
       if(completeRoots){
         const enabled=[...current.pose.renderers].filter(([,r])=>r.enabled).map(([id])=>id).sort(),actual=current.draws.map(d=>d.component).sort();
@@ -114,7 +114,7 @@ try{
         if(chosen.visiblePixels!==0)throw Error('Dormant source emitter produced pixels');
       }
       if(!chosen)throw Error('No visible original mesh particles in '+name+' '+JSON.stringify(attempts));
-      document.querySelector('#status').textContent=name+' · original '+(componentReview?(hitShapes?'hit-shape':surfaces?'surface':worldBirth?'world-birth':'linear-motion')+' component':completeRoots?'complete effect root':'mesh-particle')+' inspection · native gameplay dispatch held';
+      document.querySelector('#status').textContent=name+' · original '+(componentReview?(birthControls?'birth-control':hitShapes?'hit-shape':surfaces?'surface':worldBirth?'world-birth':'linear-motion')+' component':completeRoots?'complete effect root':'mesh-particle')+' inspection · native gameplay dispatch held';
       const snapshot=()=>JSON.stringify(current.draws.map(d=>{
         // Pools retain spare geometry after later emissions. Compare live
         // particles; every spare must be hidden after a reverse scrub.
@@ -138,7 +138,8 @@ try{
           if(current.draws.some(d=>d.pool.some(p=>!p.matrix.elements.every(Number.isFinite))))throw Error('Invalid World mesh transform');
           birthHistory.push({time,particles:particles.map(p=>({id:p.id,birthTime:p.birthTime,worldPosition:p.worldPosition}))});
         }
-        if(!retained||!prewarmed||!fresh)throw Error('Incomplete World birth history');
+        const prewarm=current.draws.some(d=>d.particleSource.prewarm&&d.particleSource.looping);
+        if(!retained||!fresh||prewarm&&!prewarmed)throw Error('Incomplete World birth history');
         clock=saved;render();if(before!==snapshot())throw Error('World history retained later state');
       }
       return {root:componentReview?selection.root:name,...(componentReview?{particle:name}:{}),...chosen,sourceInactive,dormantEmission,
@@ -165,7 +166,7 @@ try{
     };
     window.meshReview={select,render,verifyHeld,verifyDisabled,dispose:async()=>{lib.dispose();await Promise.resolve();renderer.render(scene,camera);return {...renderer.info.memory};}};
     return {compiledPrograms:programs.length,sourcePackSha256:manifest.effects.pack.sha256};
-  },{componentReview,worldBirth,surfaces,completeRoots,hitShapes,hitRoots});
+  },{componentReview,worldBirth,surfaces,completeRoots,hitShapes,hitRoots,birthControls,allRoots});
   assert.equal(setup.compiledPrograms,14);assert.equal(setup.sourcePackSha256,meta.sourcePackSha256);
   const results=[],client=await page.createCDPSession();
   for(const root of roots){
@@ -193,8 +194,8 @@ try{
   const disabledProfiles=await page.evaluate(selections=>meshReview.verifyDisabled(selections),disabled.map(id=>({id,root:profiles[id].root})));
   const cleanup=await page.evaluate(()=>meshReview.dispose());assert.equal(cleanup.geometries,0);assert.equal(cleanup.textures,0);
   assert.deepEqual(errors,[]);assert.deepEqual(failed,[]);
-  const report={driver:'Chromium software WebGL2',originalMeshInspection:!componentReview&&!completeRoots,originalCompleteChargeRootInspection:chargeRoots,originalCompleteHitRootInspection:hitRoots,originalHitShapeInspection:hitShapes,originalLinearMotionInspection:linearMotion,originalWorldBirthInspection:worldBirth,originalSurfaceInspection:surfaces,nativeFrameParity:false,fullEffectDispatchVerified:false,
-    ...(hitRoots?{explicitLineEndpointFixture:[[-1,0,0],[1,0,0]]}:{}),
+  const report={driver:'Chromium software WebGL2',originalMeshInspection:!componentReview&&!completeRoots,originalCompleteChargeRootInspection:chargeRoots,originalCompleteHitRootInspection:hitRoots,originalAllRootInspection:allRoots,originalBirthControlInspection:birthControls,originalHitShapeInspection:hitShapes,originalLinearMotionInspection:linearMotion,originalWorldBirthInspection:worldBirth,originalSurfaceInspection:surfaces,nativeFrameParity:false,fullEffectDispatchVerified:false,
+    ...(hitRoots||allRoots?{explicitLineEndpointFixture:[[-1,0,0],[1,0,0]]}:{}),
     explicitShaderGlobals:{_HG_UV_ROTATION:0},...setup,results,heldProfiles,disabledProfiles,captures:results.length*2,cleanup,errors,failed,
     playerSha256:createHash('sha256').update(await readFile('public/arkpedia/native-effect-player.js')).digest('hex')};
   await writeFile(directory+'report.json',JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify({cases:results.length,captures:report.captures,cleanup,errors,failed}));

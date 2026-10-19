@@ -40,8 +40,24 @@ test('unsupported weighted/wrapped/invalid source curves fail visibly',()=>{
   {...c,maxCurve:curve([key(0,0),{...key(1,1),weightedMode:1}])},
   {...c,maxCurve:curve([key(0,0),key(0,1)])}])assert.throws(()=>sampleParticleCurve(bad,.5));
  assert.throws(()=>sampleParticleCurve(c,NaN));
- assert.throws(()=>sampleParticleGradient({minMaxState:1,maxGradient:{...gradient,m_Mode:1}},.5));
+ assert.throws(()=>sampleParticleGradient({minMaxState:1,maxGradient:{...gradient,m_Mode:2}},.5));
  assert.throws(()=>sampleParticleGradient(solid(color(0,0,0,1)),NaN));
+});
+test('Fixed gradients choose the first strictly later color/alpha key and preserve distinct boundary clocks',()=>{
+ const fixed={...gradient,m_Mode:1},g={minMaxState:1,maxGradient:fixed},middle=32768/65535;
+ assert.deepEqual(sampleParticleGradient(g,0),[0,0,1,1]);
+ assert.deepEqual(sampleParticleGradient(g,middle-1e-10),[0,0,1,1]);
+ assert.deepEqual(sampleParticleGradient(g,middle),[0,0,1,0]);
+ assert.deepEqual(sampleParticleGradient(g,1),[0,0,1,0]);
+ const three={...fixed,m_NumColorKeys:3,ctime0:10000,ctime1:30000,ctime2:50000,
+   key0:color(3,0,0,.1),key1:color(0,2,0,.4),key2:color(0,0,4,.9)};
+ assert.deepEqual(sampleParticleGradient({minMaxState:4,maxGradient:three},.9,0).slice(0,3),[3,0,0]);
+ assert.deepEqual(sampleParticleGradient({minMaxState:4,maxGradient:three},0,10000/65535).slice(0,3),[0,2,0]);
+ assert.deepEqual(sampleParticleGradient({minMaxState:4,maxGradient:three},0,30000/65535).slice(0,3),[0,0,4]);
+ assert.deepEqual(sampleParticleGradient({minMaxState:4,maxGradient:three},0,1).slice(0,3),[0,0,4]);
+ const duplicate={...three,ctime1:three.ctime0};
+ assert.deepEqual(sampleParticleGradient({minMaxState:4,maxGradient:duplicate},0,10000/65535-1e-10).slice(0,3),[3,0,0]);
+ assert.deepEqual(sampleParticleGradient({minMaxState:4,maxGradient:duplicate},0,10000/65535).slice(0,3),[0,0,4]);
 });
 function emitter(){return {lengthInSec:1,looping:true,prewarm:false,moveWithTransform:0,ringBufferMode:0,
  simulationSpeed:1,startDelay:constant(0),playOnAwake:true,
@@ -90,4 +106,10 @@ test('unsupported active particle behavior is explicit rather than replaced with
  const s=emitter();s.InitialModule.startSpeed=constant(1);assert.throws(()=>createStationaryParticles(s),/Moving/);
  const r=emitter();r.EmissionModule.rateOverTime={minMaxState:3,scalar:2,minScalar:1};assert.throws(()=>createStationaryParticles(r),/integration/);
  assert.throws(()=>createStationaryParticles(emitter()).sample(Infinity));
+});
+test('RandomColor retains one source color per particle while timed birth gradients remain held',()=>{
+ const s=emitter();s.InitialModule.maxNumParticles=100;s.InitialModule.startColor={minMaxState:4,maxGradient:{...gradient,m_Mode:1}};
+ const e=createStationaryParticles(s),first=e.sample(.2),later=e.sample(.6);
+ assert.ok(first.length>0);for(const p of first)assert.deepEqual(later.find(q=>q.id===p.id).color,p.color);
+ for(const mode of [1,3])assert.throws(()=>createStationaryParticles({...s,InitialModule:{...s.InitialModule,startColor:{...s.InitialModule.startColor,minMaxState:mode}}}),/Initial gradient clock/);
 });

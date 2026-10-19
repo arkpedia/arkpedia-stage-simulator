@@ -316,14 +316,7 @@ test('distinct particle material slots cannot be silently reduced to the first s
   probe.dispose();const lib=library(altered);
   try{await assert.rejects(lib.create(ROOT),/trail\/multi-material renderer/);assert.equal(lib.instanceCount,0);}finally{lib.dispose();}
 });
-test('3D billboard start angles remain rejected instead of being flattened to a camera quad',native,async()=>{
-  const altered=structuredClone(original),probe=library(altered),instance=await probe.create(ROOT);
-  const draw=instance.draws.find(d=>altered.pack.records[d.component].type==='ParticleSystemRenderer'
-    &&altered.pack.records[d.component].data.m_RenderMode===0);
-  assert.ok(draw);
-  const go=altered.pack.records[draw.component].references.find(r=>r.field==='m_GameObject').target;
-  const particle=altered.pack.records[go].references.find(r=>altered.pack.records[r.target]?.type==='ParticleSystem').target;
-  altered.pack.records[particle].data.InitialModule.rotation3D=true;
-  probe.dispose();const lib=library(altered);
-  try{await assert.rejects(lib.create(ROOT),/3D billboard start rotation needs review/);assert.equal(lib.instanceCount,0);}finally{lib.dispose();}
+test('original 3D stretched-billboard angles remain rejected instead of losing X/Y rotation',native,async()=>{
+  const lib=library(original,async()=>new T.Texture(),builtinMeshes);
+  try{await assert.rejects(lib.create('whitw2_token_hit_05'),/3D stretched billboard rotation needs review/);assert.equal(lib.instanceCount,0);}finally{lib.dispose();}
 });

@@ -530,8 +530,8 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false,lineP
           particleSource=pack.records[ps].data;
           if(subEmitters.parents(ps).length&&library.inspectionSource!==ps&&!parentMotion.ready(ps))
             throw Error('Original sub-emitter parent dispatch not playing');
-          if((particleSource.InitialModule.rotation3D||particleSource.RotationModule?.enabled&&particleSource.RotationModule.separateAxes)&&record.data.m_RenderMode!==4)
-            throw Error('Native 3D billboard start rotation needs review');
+          if((particleSource.InitialModule.rotation3D||particleSource.RotationModule?.enabled&&particleSource.RotationModule.separateAxes)&&record.data.m_RenderMode===1)
+            throw Error('Native 3D stretched billboard rotation needs review');
           if(particleSource.TrailModule?.enabled){
             particleTrails=createParticleTrails(particleSource);
             if(r.materials.length!==2||!r.materials[1]||record.data.m_UseCustomVertexStreams)

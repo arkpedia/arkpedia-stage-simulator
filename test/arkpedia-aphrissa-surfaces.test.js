@@ -34,7 +34,7 @@ test('all 28 original Circle and BoxShell sources retain full controls, activati
   let supported=0,gradient=0;
   for(const row of Object.values(rows)){
     const before=structuredClone(row.data);
-    if(![0,2].includes(row.data.InitialModule.startColor.minMaxState)){
+    if(![0,2,4].includes(row.data.InitialModule.startColor.minMaxState)){
       assert.throws(()=>createMovingParticles(row.data),/Initial gradient clock/);gradient++;
     }else{
       const e=createMovingParticles(row.data),a=e.sample(.3,still);e.sample(2,still);assert.deepEqual(e.sample(.3,still),a);
@@ -42,7 +42,7 @@ test('all 28 original Circle and BoxShell sources retain full controls, activati
     }
     assert.deepEqual(row.data,before);
   }
-  assert.equal(supported,24);assert.equal(gradient,4);
+  assert.equal(supported,28);assert.equal(gradient,0);
 });
 
 test('original surface components render through their full source hierarchy without enabling inactive or disabled objects',native,async()=>{
@@ -55,7 +55,7 @@ test('original surface components render through their full source hierarchy wit
       // JSON recipes canonicalize signed zero; the native byte hash remains
       // separately pinned and independently checked against the bundle.
       const record=source.pack.records[id];assert.equal(JSON.stringify(record.data),JSON.stringify(row.data));assert.equal(record.serializedSha256,row.serializedSha256);
-      if(![0,2].includes(row.data.InitialModule.startColor.minMaxState)){
+      if(![0,2,4].includes(row.data.InitialModule.startColor.minMaxState)){
         await assert.rejects(lib.inspectParticles(row.root,{particles:[id]}),/Initial gradient clock/);counts.gradient++;continue;
       }
       const i=await lib.inspectParticles(row.root,{particles:[id]});
@@ -76,7 +76,7 @@ test('original surface components render through their full source hierarchy wit
         counts.rendered++;
       }finally{i.dispose();}
     }
-    assert.deepEqual(counts,{rendered:22,disabled:2,gradient:4});assert.equal(lib.instanceCount,0);
+    assert.deepEqual(counts,{rendered:26,disabled:2,gradient:0});assert.equal(lib.instanceCount,0);
   }finally{lib.dispose();}
 });
 
@@ -94,6 +94,6 @@ test('the original complete charge root now retains every enabled renderer while
       return JSON.stringify(i.draws.map(d=>({id:d.component,particles:d.lastParticles})));
     };
     const first=sample(.15);sample(2);assert.equal(sample(.15),first);
-    await assert.rejects(lib.create('aphris_skill_01_buff_01'),/unplayed components/);
+    await assert.rejects(lib.create('aphris_attack_01_line_01'),/unplayed components/);
   }finally{i.dispose();lib.dispose();}
 });

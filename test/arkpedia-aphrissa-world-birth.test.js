@@ -29,8 +29,7 @@ test('all original straight World profiles preserve their source controls and ex
   for(const r of Object.values(rows)){
     assert.equal(r.data.moveWithTransform,1);
     for(const k of ['VelocityModule','ClampVelocityModule','NoiseModule','ForceModule','InheritVelocityModule'])assert.equal(r.data[k].enabled,false);
-    if(r.data.ShapeModule.enabled)assert.throws(()=>createMovingParticles(r.data),/Initial gradient clock/);
-    else assert.equal(createMovingParticles(r.data).worldMotion,true);
+    assert.equal(createMovingParticles(r.data).worldMotion,true);
   }
 });
 

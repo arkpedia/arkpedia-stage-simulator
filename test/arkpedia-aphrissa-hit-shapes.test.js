@@ -66,6 +66,6 @@ test('all complete ordinary/S2/S3 hit and explicitly owned line prefabs retain e
         }
       }finally{i.dispose();}
     }
-    assert.equal(lib.instanceCount,0);await assert.rejects(lib.create('aphris_skill_01_buff_01'),/unplayed components/);
+    assert.equal(lib.instanceCount,0);await assert.rejects(lib.create('aphris_attack_01_line_01'),/unplayed components/);
   }finally{lib.dispose();}
 });

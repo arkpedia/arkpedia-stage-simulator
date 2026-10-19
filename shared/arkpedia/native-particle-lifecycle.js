@@ -25,7 +25,10 @@ export function createParticleLifecycle(source,{seed=1,modules=[],spaces=[0],all
   if((!allowInitialSpeed&&(![0,3].includes(initial.startSpeed.minMaxState)||sampleParticleCurve(initial.startSpeed,0,0)!==0||sampleParticleCurve(initial.startSpeed,0,1)!==0))||constant(initial.gravityModifier,'gravity')!==0)throw new Error('Moving particle lifecycle not playing');
   if(allowInitialSpeed)for(const time of [0,1])for(const factor of [0,1])sampleParticleCurve(initial.startSpeed,time,factor);
   const clock=createParticleBirthClock(source,{seed,allowDistanceEmission}),length=source.lengthInSec;
-  if(![0,2].includes(initial.startColor.minMaxState))throw new Error('Initial gradient clock needs review');
+  // RandomColor samples one immutable per-particle factor, not an emitter or
+  // lifetime clock. Time-varying birth Gradient/TwoGradients remain held.
+  if(![0,2,4].includes(initial.startColor.minMaxState))throw new Error('Initial gradient clock needs review');
+  for(const factor of [0,1])sampleParticleGradient(initial.startColor,0,factor);
   const startRotation=createParticleStartRotation(initial);
   const angularMotion=createParticleAngularMotion(source.RotationModule);
   const random=(id,salt)=>particleRandom(id,salt,seed);
