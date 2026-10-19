@@ -89,7 +89,9 @@ def probe(row):
         with local.open('rb') as f:raw = f.read(65536)
         return {'bundle':name,'headerOnly':True,'fullBundleVerified':False,'transport':'local-prefix',**directory_names(raw,row['abSize'])}
     archive = name.replace('/','_').replace('#','__')
-    if archive.endswith('.ab'):archive = archive[:-3]+'.dat'
+    # Anonymous .bin entries also live inside .dat ZIP archives on the official
+    # CDN; the entry inside that archive retains its original .bin name.
+    if archive.endswith(('.ab','.bin')):archive = archive.rsplit('.',1)[0]+'.dat'
     url = 'https://ak.hycdn.cn/assetbundle/official/Android/assets/'+VERSION+'/'+quote(archive,safe='')
     with tempfile.TemporaryDirectory() as d:
         header,body = Path(d)/'headers',Path(d)/'body'

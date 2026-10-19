@@ -12,9 +12,9 @@ export const APHRISSA_RAY_CONTRACT = Object.freeze({
 });
 const present = unit => unit?.alive && unit.deployed && !unit._removing && !unit.hidden;
 
-export function aphrissaRayCells(b, u, {skill2 = false, contract} = {}) {
+export function aphrissaRayCells(b, u, {skill2 = false, includePath = false, contract} = {}) {
   if (contract !== APHRISSA_RAY_CONTRACT || u.def.charId !== ID || !present(u)
-    || !vectors[u.dir]) throw Error('Current Aphrissa and explicit ray geometry contract required');
+    || !vectors[u.dir] || typeof includePath !== 'boolean') throw Error('Current Aphrissa and explicit ray geometry contract required');
   const selected = selectedAphrissaInputs(u), n = aphrissaNativeInputs();
   if (skill2 && selected.index !== 1) throw Error('S2 ray requires the original selected second skill');
   if (n.ordinaryRange._infinite !== 0 || n.ordinaryRange._extendable !== 1
@@ -29,16 +29,18 @@ export function aphrissaRayCells(b, u, {skill2 = false, contract} = {}) {
     throw Error('Changed original Aphrissa straight source range');
   let row = u.tileR, col = u.tileC, dir = u.dir, remaining = skill2 ? Infinity : ordinary.length - 1;
   let extensionCount = 0, directionChanges = 0;
-  const arrivals = new Set(), cells = new Map(), turns = [];
+  const arrivals = new Set(), cells = new Map(), turns = [], path = includePath ? [] : null;
+  const result = cycle => ({cells: [...cells.values()], turns, cycle, ...(path ? {path} : {})});
   while (b.grid.inRect(row, col)) {
     const arrival = `${row},${col},${dir}`;
-    if (arrivals.has(arrival)) return {cells: [...cells.values()], turns, cycle: true};
+    if (arrivals.has(arrival)) return result(true);
     arrivals.add(arrival);
     const target = b.unitAt(row, col);
     const friendly = target !== u && present(target) && target.side === u.side;
     const relay = friendly && target.defId === TOKEN;
     const operator = friendly && target.kind === 'op' && !['TOKEN', 'TRAP', 'DEVICE'].includes(target.def.profession)
       && !target.s.flags.untargetable && !target.s.flags.isolated;
+    let turnIndex = null;
     if (relay || skill2 && operator) {
       if (!vectors[target.dir]) throw Error('Relay ray target has no cardinal direction');
       const incoming = dir;
@@ -50,12 +52,14 @@ export function aphrissaRayCells(b, u, {skill2 = false, contract} = {}) {
       }
       turns.push({row, col, sourceId: target.id, sourceLife: target.deploySeq, relay,
         incoming, outgoing: dir, extensionCount, directionChanges});
+      turnIndex = turns.length - 1;
     }
+    path?.push({row, col, dir, ...(turnIndex === null ? {} : {turnIndex})});
     const key = `${row},${col}`;
     if (!cells.has(key)) cells.set(key, {row, col, dir, extensionCount, directionChanges});
     if (remaining <= 0) break;
     remaining--;
     const [dr, dc] = vectors[dir]; row += dr; col += dc;
   }
-  return {cells: [...cells.values()], turns, cycle: false};
+  return result(false);
 }

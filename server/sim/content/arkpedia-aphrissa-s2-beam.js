@@ -69,13 +69,15 @@ class S2Beam {
   detach() { this.phase = null; this.accepting = false; }
   legal(target) { return present(target) && target.side === 'enemy' && !target.hidden
     && canTargetEnemy(this.u, target, {canHitFly: true}) && (!target.s.flags.camou || !!target.blockedBy); }
-  choices() {
-    const ray = aphrissaRayCells(this.b, this.u, {contract: APHRISSA_RAY_CONTRACT, skill2: true});
-    return this.b.enemies.filter(target => this.legal(target)).map(target => ({target,
+  selection() {
+    const ray = aphrissaRayCells(this.b, this.u, {contract: APHRISSA_RAY_CONTRACT, skill2: true, includePath: true});
+    const targets = this.b.enemies.filter(target => this.legal(target)).map(target => ({target,
       index: ray.cells.findIndex(cell => bodyOnTile(target, cell.row, cell.col))}))
       .filter(row => row.index >= 0).sort((a, z) => a.index - z.index || a.target.id.localeCompare(z.target.id))
       .map(row => ({unit: row.target, life: row.target.deploySeq}));
+    return {ray, targets};
   }
+  choices() { return this.selection().targets; }
   permitted(p) {
     if (!this.current(p) || this.querying || this.u.hidden) return false;
     this.querying = true;
@@ -116,7 +118,9 @@ class S2Beam {
       while (this.current(p) && this.phase === p && due(age, p.next) && p.next < this.record.source.duration - 1e-7) {
         p.next += this.native._triggerDelta; p.pulses++; // Consume even an empty/disallowed pulse.
         if (!this.permitted(p)) continue;
-        const inputs = this.choices();
+        const selection = this.selection(), inputs = selection.targets;
+        if(!this.current(p)||this.phase!==p)continue;
+        if(this.u.mem.aphrissaLinePresentation)this.b._safe(()=>this.u.mem.aphrissaLinePresentation.onPulse(this,p,selection.ray),'aphrissa.linePresentation',this.u);
         if (!this.current(p) || this.phase !== p || !inputs.length) continue;
         const batch = p.batch = {inputs, accepted: false};
         this.accepting = true;

@@ -118,13 +118,15 @@ class AphrissaOrdinary {
     this.u.mem.regularVisualDirection = this.u.dir;
     return visual;
   }
-  choices() {
-    const ray = aphrissaRayCells(this.b, this.u, {contract: APHRISSA_RAY_CONTRACT});
-    return this.b.enemies.filter(t => this.legal(t)).map(target => ({target,
+  selection() {
+    const ray = aphrissaRayCells(this.b, this.u, {contract: APHRISSA_RAY_CONTRACT, includePath: true});
+    const targets = this.b.enemies.filter(t => this.legal(t)).map(target => ({target,
       index: ray.cells.findIndex(cell => bodyOnTile(target, cell.row, cell.col))}))
       .filter(row => row.index >= 0).sort((a, z) => a.index - z.index || a.target.id.localeCompare(z.target.id))
       .map(row => row.target);
+    return {ray, targets};
   }
+  choices() { return this.selection().targets; }
   legal(target) {
     return present(target) && target.side === 'enemy' && !target.hidden
       && canTargetEnemy(this.u, target, {canHitFly: true}) && (!target.s.flags.camou || !!target.blockedBy);
@@ -165,6 +167,7 @@ class AphrissaOrdinary {
     p.accepted = true;
     p.pending = p.inputs.map((input, index) => ({...input, at: p.releaseAge + index * this.native._hitInterval}));
     p.attackId = info.attackId;
+    if(this.u.mem.aphrissaLinePresentation)this.b._safe(()=>this.u.mem.aphrissaLinePresentation.onAttack(this,p),'aphrissa.linePresentation',this.u);
     this.flush(p);
     return true;
   }
@@ -199,7 +202,9 @@ class AphrissaOrdinary {
       if (this.u.mem.regularFormVisual === p.visual) p.visual.speed = p.speed * this.u.s.slowDownRate;
       if (!p.released && due(p.age, p.releaseAge)) {
         p.released = true;
-        p.inputs = this.choices().map(unit => ({unit, life: unit.deploySeq}));
+        const selection = this.selection();
+        p.ray = selection.ray;
+        p.inputs = selection.targets.map(unit => ({unit, life: unit.deploySeq}));
         this.accepting = true;
         try { this.b.forceAttack(this.u, p.inputs.map(input => input.unit)); }
         finally { this.accepting = false; }
