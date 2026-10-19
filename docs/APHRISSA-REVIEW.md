@@ -427,3 +427,73 @@ Validation:
   roots/layer counts and captured clocks alongside source muzzle alignment,
   relay paths, point End clips, all four deployment directions, paused resizing
   and retreat cleanup. Desktop S3 and touch S2 captures were visually inspected.
+
+## Owned charge, aura and wing presentation
+
+The held battle now renders six additional original prefabs: S1's permanent aura,
+S3 charge and charge-end, S3's active stat aura, and both front/back wing roots.
+The selected S1 stat parent supplies its actual admission time. S3 now creates
+its original independent charge-vfx, wing-vfx and finish-vfx parents alongside
+the existing stat/mode parents. Rejection of one parent does not manufacture
+rejection of the others. Removing finish-vfx finishes the exact owned wing parent;
+wing admission finishes the exact owned charge parent. Mapping the charge
+ability's numeric event 6 to the charge-to-active boundary remains an explicit
+local policy, including its order relative to timed expiry. Cross-source
+FinishBuffsById/override semantics are not inferred.
+
+A reproduced expiry gap prevented charge-end presentation: the shared buff
+runtime invokes `onExpire`, rather than `onRemove`, for timed expiry. Both paths
+now invoke the same identity-guarded S3 parent-finish handler. Charge expiry,
+early removal and manual cancellation can therefore start the original separate
+`aphris_skill_03_charge_01_end` clock once. Rejected or replaced parents cannot
+claim that finish. The review retains this root for its finite original
+0.6666666865348816-second animation window. Its particle systems include authored
+loops, so this cutoff is expressly **not** verified native Finish/emission-tail
+behaviour. Other buff effects end with their exact parent; normal/native tail
+work remains held.
+
+The two wing prefabs each contain an Animator opening/material clip and a
+separate legacy rotation clip. `createEffectPose.sample` now accepts an explicit
+set of disjoint source clips. It samples both at the retained effect age, resets
+the source pose on every observation and rejects duplicate, foreign, unresolved
+or overlapping bindings requiring blending. Single-clip behaviour is retained.
+The stage pass preserves placement history and the parent birth time when the
+actual rendered actor changes between original front/back wing roots. A delayed
+load of the replaced root cannot reappear.
+
+The mount helper reads the original artwork controller's literal `specialPoint0`
+and `specialPoint1` BoneFollower pointers. Front/back chest followers are
+`F_Chest` and `B_Chest3`; the two drone followers use `C_Drone_B2` on their own
+skeletons. Source follower rotation is disabled for these four points. The
+browser supplies an explicit policy: chest for wings, drone for charge/end,
+actor foot for the two auras, and identity owner orientation/scale. Each source
+bone is projected into the current visible actor plane through the stage camera;
+missing/stale actors or bones fail rather than falling back to a tile centre.
+The native numeric mount types 5/6 and spawn locations 8/9 are preserved and
+source-checked, **without** claiming that their compiled enum/depth/rotation
+mapping has been recovered. Native face prediction/switch timing, particle RNG,
+finish tails, audio, modules and compiled frame/pixel parity remain unverified.
+
+Validation:
+
+- `audit-aphrissa-state-bindings.py` independently reads four complete original
+  skill buff components, three serialized template action lists, four special
+  point followers and six effect hierarchies/controllers: **505 original
+  hierarchy/controller objects across four SHA-checked bundles**.
+- Source validation retains all six complete renderer sets (19/20/20/24/72/72),
+  actual Animator defaults and the autoplay legacy rotation binding. The loader
+  samples both disjoint wing clips together; no partial effect is admitted.
+- Related Node 22.23.3/24.21.0 regression scope: **2,100 tests each; 2,097 passed,
+  3 optional skips, no failures**. Final focused state/mount/stage-pass checks:
+  **28/28 on each version**, including controller replacement, independent
+  parent rejection/removal, timed/manual charge finish, repeated observations,
+  source material/rotation composition, reverse sampling and face-change clocks.
+- Actual-battle browser review: **8 desktop/touch cases and 38 captures**, with
+  no browser/resource/GL errors. Checks the literal live-bone pixel alignment,
+  charge, both wing roots, fully opened wings after the opening clip, paused
+  resizing, manual skill discard and owner retreat, alongside all earlier
+  beam/point/hit checks. Desktop charge/opened-wing and touch S3 captures were
+  visually inspected.
+
+Aphrissa remains an isolated review candidate. This checkpoint does not increase
+the normal roster or promote simulator work into Arkpedia app dev/production.

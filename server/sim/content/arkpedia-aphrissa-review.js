@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Review-only battle dispatch. Native fidelity and public admission remain held.
+import {prepareAphrissaStatePresentation} from './arkpedia-aphrissa-state-presentation.js';
+import {APHRISSA_STATE_CONTRACT} from '../../../shared/arkpedia/aphrissa-state-presentation.js';
 import {prepareAphrissaHitPresentation} from './arkpedia-aphrissa-hit-presentation.js';
 import {APHRISSA_HIT_CONTRACT} from '../../../shared/arkpedia/aphrissa-hit-presentation.js';
 import {APHRISSA_ID as ID, APHRISSA_SKILLS} from './arkpedia-aphrissa-source.js';
@@ -29,5 +31,6 @@ export function installReviewAphrissa({battle, unit, def}) {
   if (!unit.mem.aphrissaOwner) throw Error('Missing selected Aphrissa review owner');
   unit.mem.aphrissaOwner.parts.push(prepareAphrissaLinePresentation(battle,unit,{contract:APHRISSA_BEAM_CONTRACT}));
   unit.mem.aphrissaOwner.parts.push(prepareAphrissaHitPresentation(battle,unit,{contract:APHRISSA_HIT_CONTRACT}));
+  unit.mem.aphrissaOwner.parts.push(prepareAphrissaStatePresentation(battle,unit,{contract:APHRISSA_STATE_CONTRACT}));
   unit.mem.aphrissaOwner.install();
 }

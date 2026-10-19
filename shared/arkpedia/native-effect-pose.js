@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import {sampleEffectClip,effectChannelZeroRoundoff} from './native-effect-animation.js';
 
-// An explicit clip inspection pose, not an implementation of Unity Animator
+// An explicit source clip/set pose, not an implementation of Unity Animator
 // state transitions. All properties reset before sampling, so reverse scrubbing
 // and changing clips cannot retain changes from a previous inspection frame.
 export function createEffectPose(pack, animations, rootName) {
@@ -36,7 +36,19 @@ export function createEffectPose(pack, animations, rootName) {
   const baseNodes=structuredClone(nodes), baseRenderers=structuredClone(renderers);
   function sample(time, clipId=null) {
     const currentNodes=structuredClone(baseNodes), currentRenderers=structuredClone(baseRenderers);
-    if(clipId!==null){
+    const selected=clipId===null?[]:Array.isArray(clipId)?clipId:[clipId];
+    if(Array.isArray(clipId)&&(!selected.length||new Set(selected).size!==selected.length
+      ||selected.some(id=>typeof id!=='string'||!id)))throw Error('Invalid original effect clip set');
+    // Separate source Animators / legacy Animation may control disjoint parts
+    // of one prefab. Compose only explicit, non-overlapping clip bindings.
+    const written=new Map();
+    if(selected.length>1)for(const id of selected)for(const instance of instances.filter(i=>i.clip===id))for(const target of instance.bindings){
+      const property=target.property==='localEulerAnglesRaw'?'m_LocalRotation':target.property,
+        key=(target.component??target.gameObject)+':'+property;
+      if(written.has(key)&&written.get(key)!==id)throw Error('Overlapping original effect clips require native blending');
+      written.set(key,id);
+    }
+    for(const clipId of selected){
       if(!instances.some(i=>i.clip===clipId))throw new Error('Clip is outside the selected original effect');
       if(instances.some(i=>i.clip===clipId&&i.bindings.some(b=>b.unresolved)))
         throw new Error('Selected clip has unresolved original animation bindings');

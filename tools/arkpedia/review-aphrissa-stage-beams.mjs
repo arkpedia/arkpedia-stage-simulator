@@ -11,15 +11,19 @@ const hook=`
 globalThis.cnReview={get battle(){return battle;},get renderer(){return renderer;},get owner(){return battle.bench['${ID}'].unit;},hits:[],
  async setup(){paused=true;battle.autoFinish=false;
  const T=await import('/vendor/three.module.js'),{loadAphrissaReviewBeams}=await import('/arkpedia/aphrissa-review-beam-assets.js'),
+  {createAphrissaStateMounts}=await import('/arkpedia/aphrissa-state-mounts.js'),{APHRISSA_STATE_CONTRACT}=await import('/shared/arkpedia/aphrissa-state-presentation.js'),
   {createAphrissaActorMounts}=await import('/arkpedia/aphrissa-actor-mounts.js'),{APHRISSA_BEAM_CONTRACT}=await import('/shared/arkpedia/aphrissa-beam-presentation.js');
  this.T=T;this.instanceIds=new WeakMap();this.instanceSequence=0;
  this.mounts=createAphrissaActorMounts({three:T,renderer,contract:APHRISSA_BEAM_CONTRACT,
   endAt:({point})=>[point.col,renderer.heightAt(point.row,point.col)+.6499999761581421,point.row],
   orientationAt:()=>({rotation:[0,0,0,1],scale:[1,1,1]})});
+ this.stateMounts=createAphrissaStateMounts({three:T,renderer,contract:APHRISSA_STATE_CONTRACT,
+  anchorFor:({state})=>state.kind.startsWith('charge')?'specialPoint1':state.kind==='wing'?'specialPoint0':'actorFoot',
+  orientationAt:()=>({rotation:[0,0,0,1],scale:[1,1,1]})});
  this.pass=await loadAphrissaReviewBeams({three:T,renderer:renderer.three,heightAt:(r,c)=>renderer.heightAt(r,c),
   anchorAt:this.mounts.anchorAt,pointFrameAt:this.mounts.pointFrameAt,
-  hitFrameAt:({hit})=>({position:[hit.x,renderer.heightAt(hit.row,hit.col)+.4,hit.y],rotation:[0,0,0,1],scale:[1,1,1]}),shaderGlobals:{_HG_UV_ROTATION:0}});
- const dispose=this.pass.dispose;this.pass.dispose=()=>{dispose();this.mounts.dispose();};
+  stateFrameAt:this.stateMounts.stateFrameAt,hitFrameAt:({hit})=>({position:[hit.x,renderer.heightAt(hit.row,hit.col)+.4,hit.y],rotation:[0,0,0,1],scale:[1,1,1]}),shaderGlobals:{_HG_UV_ROTATION:0}});
+ const dispose=this.pass.dispose;this.pass.dispose=()=>{dispose();this.mounts.dispose();this.stateMounts.dispose();};
  renderer.nativeEffects=this.pass;renderer.externalNativeEffects=true;
  battle.on('damaged',h=>{if(h.source===this.owner)this.hits.push({time:battle.time,amount:h.amount,tags:h.dmg.tags});});
  const label=document.createElement('div');label.textContent='HELD BEAM REVIEW · source muzzle bone in rendered actor plane · endpoint/orientation fixtures · native dispatch pending';label.style.cssText='position:fixed;bottom:0;left:0;z-index:99999;background:#142027;color:white;font:11px sans-serif;pointer-events:none';workspace.append(label);
@@ -38,12 +42,16 @@ globalThis.cnReview={get battle(){return battle;},get renderer(){return renderer
  if(error>1e-6||r.time!==battle.time)throw Error('Muzzle mount does not match the current visible source bone');
  return{...r,referencePixel:[pixel.x,pixel.y],projectedPixel:projected,error,facing:view.facing,actorClock:view.actor.clock};
  });},
+ stateMountCheck(){return this.stateMounts.inspect().map(r=>{if(!r.source)return r;const view=renderer.views.get(r.ownerId),bone=view.actor.spine.skeleton.findBone(r.source.bone),
+  pixel=view.actor.spine.toGlobal({x:bone.worldX,y:bone.worldY}),size=renderer.three.getSize(new this.T.Vector2()),p=new this.T.Vector3(r.position[0],r.position[2],r.position[1]).project(renderer.camera),
+  error=Math.max(Math.abs((p.x+1)*size.x/2-pixel.x),Math.abs((1-p.y)*size.y/2-pixel.y));
+  if(error>1e-6)throw Error('State mount does not match the original live bone');return{...r,error};});},
  rawZeroProbe(){const view=renderer.views.get(this.owner.id),receipt=this.mounts.inspect()[0],bone=view.actor.spine.skeleton.findBone(receipt.bone),
   sample=()=>[bone.worldX,bone.worldY],before=sample(),samples=[];
  for(let n=0;n<4;n++){view.actor.spine.update(0);samples.push(sample());}
  return {before,samples,maxChange:Math.max(...samples.flatMap(p=>p.map((v,i)=>Math.abs(v-before[i]))))};},
  instanceId(value){if(!value)return null;if(!this.instanceIds.has(value))this.instanceIds.set(value,++this.instanceSequence);return this.instanceIds.get(value);},
- snapshot(){return {time:battle.time,mounts:this.mountCheck(),tracks:this.owner.mem.aphrissaLinePresentation.snapshot(),segments:this.pass.inspect().map(e=>({key:e.key,instanceId:this.instanceId(e.instance),kind:e.kind,hit:e.hit,point:e.point,mode:e.track.mode,root:e.root,clip:e.clip,positions:e.positions,placement:e.placement,time:e.time,bornAt:e.bornAt,layers:e.instance?.draws.length,
+ snapshot(){return {time:battle.time,mounts:this.mountCheck(),tracks:this.owner.mem.aphrissaLinePresentation.snapshot(),states:this.owner.mem.aphrissaStatePresentation.snapshot(),stateMounts:this.stateMountCheck(),segments:this.pass.inspect().map(e=>({key:e.key,instanceId:this.instanceId(e.instance),kind:e.kind,hit:e.hit,state:e.state,point:e.point,mode:e.track.mode,root:e.root,clip:e.clip,positions:e.positions,placement:e.placement,time:e.time,bornAt:e.bornAt,layers:e.instance?.draws.length,
   complete:e.instance?.inspection===null&&e.instance.blocked.length===0,sourceRenderers:e.instance?[...e.instance.pose.renderers].filter(([,r])=>r.enabled).map(([id])=>id).sort():[],playedRenderers:e.instance?.draws.map(d=>d.component).sort()})),
  instances:this.pass.instanceCount,hits:this.hits,ammo:this.owner.skill.ammoLeft,sp:this.owner.skill.spTotal,errors:battle.errors,glError:renderer.three.getContext().getError(),nativeFrameParity:false,nativeMountMappingVerified:false,nativeProgressiveDrawVerified:false};}
 };`;
@@ -63,6 +71,9 @@ try{for(const {mobile,skill,dir,row,col,relayRow,relayCol,extra}of scenarios){
  assert.deepEqual(swept.errors,[]);assert.equal(swept.glError,0);
  await page.evaluate(()=>{cnReview.owner.skill.gainSp(cnReview.owner.skill.spCost,'fixture');});
  if(skill!==1){await page.click(`#deployment [data-id="${ID}"]`);await page.click('#skill');}
+ let charged=null;
+ if(skill===3){await page.evaluate(()=>cnReview.advance(.4));charged=await page.evaluate(()=>cnReview.snapshot());
+  assert.ok(charged.states.some(s=>s.kind==='charge'));assert.ok(charged.segments.some(s=>s.kind==='state'&&s.state.kind==='charge'));await capture('source-charge');}
  await page.evaluate(mode=>cnReview.until(mode),`s${skill}`);
  // Deploy the relay through the real drop + separate direction-swipe controls.
  const before=await page.evaluate(()=>cnReview.owner.mem.aphrissaOwner.deck.own().length),card=await page.$(`#deployment [data-id="${KEY}"]`),box=await card.boundingBox();
@@ -92,6 +103,12 @@ try{for(const {mobile,skill,dir,row,col,relayRow,relayCol,extra}of scenarios){
    assert.ok(mount&&line);assert.deepEqual(line.positions[0],mount.position);}
  }
  assert.ok(output.segments.some(s=>s.point?.role==='waypoint'));
+ const stateKinds=output.segments.filter(s=>s.kind==='state').map(s=>s.state.kind);
+ if(skill===1)assert.ok(stateKinds.includes('s1'));
+ if(skill===3){assert.ok(stateKinds.includes('active'));assert.ok(stateKinds.includes('wing'));
+  const wing=output.segments.find(s=>s.kind==='state'&&s.state.kind==='wing'),face=output.stateMounts.find(m=>m.stateId===wing.state.id).face;
+  assert.equal(wing.root,face==='back'?'aphris_skill_03_buff_02_back':'aphris_skill_03_buff_02_front');assert.equal(wing.clip.clip.length,2);}
+
  const paused=await page.evaluate(async()=>{const before=cnReview.snapshot();await cnReview.render();const after=cnReview.snapshot();return{before:before.segments,after:after.segments,timeBefore:before.time,timeAfter:after.time};});
  assert.deepEqual(paused.before,paused.after);assert.equal(paused.timeBefore,paused.timeAfter);
  let resized=null;
@@ -112,10 +129,17 @@ try{for(const {mobile,skill,dir,row,col,relayRow,relayCol,extra}of scenarios){
  }
  const rawZero=await page.evaluate(()=>cnReview.rawZeroProbe());
  assert.equal(rawZero.maxChange,0);
+ let opened=null;
+ if(skill===3){await page.evaluate(()=>cnReview.advance(1.1));opened=await page.evaluate(()=>cnReview.snapshot());
+  const wing=opened.segments.find(s=>s.kind==='state'&&s.state.kind==='wing');assert.ok(wing.time>.8333333134651184);assert.equal(wing.clip.clip.length,2);
+  assert.deepEqual(opened.errors,[]);assert.equal(opened.glError,0);await capture('source-wing-open');}
+ let cancelled=null;
+ if(skill===3){await page.click(`#deployment [data-id="${ID}"]`);await page.click('#skill');await page.evaluate(()=>cnReview.advance(.05));
+  cancelled=await page.evaluate(()=>cnReview.snapshot());assert.deepEqual(cancelled.states,[]);assert.equal(cancelled.segments.some(s=>s.kind==='state'),false);await capture('source-state-cleanup');}
  await page.click(`#deployment [data-id="${ID}"]`);await page.click('#retreat');await page.evaluate(()=>cnReview.advance(.1));
  const retired=await page.evaluate(()=>cnReview.snapshot());await capture('retired');assert.equal(retired.instances,0);assert.deepEqual(retired.tracks,[]);
  for(const s of [ordinary,output,retired]){assert.deepEqual(s.errors,[]);assert.equal(s.glError,0);}
- assert.deepEqual(driver.errors,[]);assert.deepEqual(driver.failedResources,[]);reports.push({label,ordinary,swept,output,resized,ending,retired,rawZero});await page.close();
+ assert.deepEqual(driver.errors,[]);assert.deepEqual(driver.failedResources,[]);reports.push({label,ordinary,swept,charged,output,resized,ending,opened,cancelled,retired,rawZero});await page.close();
  console.log(label+': actual held attack markers, relay turns, source shaders and retirement passed');
 }
  await writeFile(out+'report.json',JSON.stringify({heldOnly:true,actualBattle:true,originalWaves:false,explicitShaderGlobals:{_HG_UV_ROTATION:0},

@@ -17,6 +17,7 @@ export const APHRISSA_S3_CONTRACT = Object.freeze({
 });
 const MARK = 'aphris_sk3[mark]', SHELTER = 'aphris_sk3[sheltering]', WITHDRAW = 'aphris_sk3[token-withdraw]';
 const STATS = 'aphris_sk3[on_finish]', MODE = 'aphris_sk3_switch_mode';
+const CHARGE_FX = 'aphris_sk3[charge-vfx]', WING_FX = 'aphris_sk3[wing-vfx]', FINISH_FX = 'aphris_sk3_finishvfx';
 const present = u => u?.alive && u.deployed && !u.removed && !u._removing;
 const due = (b, at) => b.time + 1e-7 >= at;
 
@@ -99,18 +100,24 @@ class S3Owner {
     return {visual, until: this.b.time + duration};
   }
   parent(state, key, {duration = Infinity, mods = {}, flags = {}} = {}) {
-    const record = {key, buff: null, activation: state.activation};
+    const record = {key, buff: null, activation: state.activation, startedAt: this.b.time};
     const same = (a, z) => JSON.stringify(a ?? {}) === JSON.stringify(z);
     const admit = (unit, buff) => unit === this.u && this.current(state) && this.account.active && !this.u.findBuff(key)
       && buff.key === key && buff.source === this.u && buff.data?.aphrissaS3Parent === record
       && buff.duration === duration && same(buff.mods, mods) && same(buff.flags, flags);
+    const finished = () => {
+      if (this.parents.get(key) !== record) return;
+      if (key === CHARGE_FX && this.u.mem.aphrissaStatePresentation)
+        this.b._safe(() => this.u.mem.aphrissaStatePresentation.onChargeRemoved(this, record), 'aphrissa.chargeEndPresentation', this.u);
+      this.parents.delete(key);
+      if (key === FINISH_FX) this.remove(WING_FX);
+      if (key === MODE) { this.mode = 'normal'; this.attacks.phase = null; this.profile(false); }
+      if (key === STATS && state.lease) this.deck.endS3(state.lease);
+    };
+    // The shared buff runtime calls onExpire instead of onRemove on timeout.
+    // Both paths finish this exact source parent and its ON_BUFF_FINISH work.
     record.buff = this.b.addBuff(this.u, {key, source: this.u, duration, mods, flags,
-      data: {nativeKey: key, aphrissaS3Parent: record}, admit, onRemove: () => {
-        if (this.parents.get(key) !== record) return;
-        this.parents.delete(key);
-        if (key === MODE) { this.mode = 'normal'; this.attacks.phase = null; this.profile(false); }
-        if (key === STATS && state.lease) this.deck.endS3(state.lease);
-      }});
+      data: {nativeKey: key, aphrissaS3Parent: record}, admit, onRemove: finished, onExpire: finished});
     if (this.current(state) && this.owns(record)) { this.parents.set(key, record); return record; }
     if (this.owns(record)) this.b.removeBuff(this.u, record.buff);
     return null;
@@ -138,15 +145,24 @@ class S3Owner {
       if (state.lease) this.deck.endS3(state.lease);
       return;
     }
+    this.parent(state, CHARGE_FX, {duration: this.record.bb.charge_time});
+    if (!this.current(state) || !this.account.active) return;
     state.intro = this.clip('Skill_3_Charge_Begin'); this.bonus.sync(); this.resistance.sync();
   }
   activate(state) {
     if (!this.current(state) || !this.account.active) return;
     state.stage = 'active';
+    // Local mapping of the original charge ability's event-6 wing grant.
+    // Its ON_BUFF_START independently finishes the owned charge-vfx parent.
+    this.parent(state, WING_FX);
+    if (this.has(WING_FX)) this.remove(CHARGE_FX);
+    if (!this.current(state) || !this.account.active) return;
     this.remove(SHELTER); this.remove(WITHDRAW);
     this.parent(state, STATS, {mods: {atkPct: this.record.bb.atk, batFlat: this.record.bb.base_attack_time}});
     if (!this.current(state) || !this.account.active) return;
     this.parent(state, MODE);
+    if (!this.current(state) || !this.account.active) return;
+    this.parent(state, FINISH_FX);
     if (!this.current(state) || !this.account.active) return;
     this.mode = this.has(MODE) ? 's3' : 'normal'; this.profile(this.has(MODE));
     if (this.has(MODE) && this.ownedVisual()) this.clip('Skill_3_Idle', {loop: true});

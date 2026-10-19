@@ -92,7 +92,7 @@ class S1Owner {
   current(state) { return this.valid() && this.intro === state && this.account.active
     && this.account.activations === state.activation && this.activation === state.activation && !this.u.hidden; }
   parent(state, key, mods) {
-    const record = {key, buff: null, activation: state.activation};
+    const record = {key, buff: null, activation: state.activation, startedAt: this.b.time};
     const admit = (unit, buff) => unit === this.u && this.current(state) && !this.u.findBuff(key)
       && buff.key === key && buff.source === this.u && buff.data?.aphrissaS1Parent === record
       && buff.duration === Infinity && Object.keys(buff.flags ?? {}).length === 0

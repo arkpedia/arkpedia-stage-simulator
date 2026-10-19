@@ -4,7 +4,7 @@ import assert from 'node:assert/strict';
 import * as T from 'three';
 import {createAphrissaStageBeams} from '../public/arkpedia/aphrissa-stage-beams.js';
 import {APHRISSA_BEAM_OWNER as ID,APHRISSA_BEAM_PACK as PACK,APHRISSA_BEAM_CONTRACT as contract,APHRISSA_BEAM_STYLES as styles} from '../shared/arkpedia/aphrissa-beam-presentation.js';
-function fixture(create,pointFrameAt=({position})=>({position,rotation:[0,0,0,1],scale:[1,1,1]}),hitFrameAt){
+function fixture(create,pointFrameAt=({position})=>({position,rotation:[0,0,0,1],scale:[1,1,1]}),hitFrameAt,stateFrameAt){
  const instances=[],calls=[],track={id:'1:1:beam:attack:1',ownerId:1,ownerLife:1,mode:'normal',root:styles.normal.root,clip:styles.normal.clip.id,
   startedAt:5,clipStartedAt:5,stage:'active',points:[{role:'start',row:2,col:3,unitId:1,life:1,mountType:2},
   {role:'waypoint',row:2,col:5,unitId:2,life:1,mountType:1,fixedHeight:styles.normal.waypointFixedHeight},{role:'end',row:5,col:5}]};
@@ -14,7 +14,7 @@ function fixture(create,pointFrameAt=({position})=>({position,rotation:[0,0,0,1]
  const owner={id:1,def:{charId:ID},side:'ally',alive:true,deployed:true,deploySeq:1,mem:{aphrissaLinePresentation:{snapshot:()=>[structuredClone(track)]}}};
  const relay={id:2,alive:true,deployed:true,deploySeq:1,side:'ally'},battle={time:5,regularReviewCandidates:[ID],units:[owner,relay]};
  const anchorAt=({point})=>[point.col,.4,point.row];
- const pass=createAphrissaStageBeams({three:T,library,sourcePackSha256:PACK,contract,heightAt:()=>.6,anchorAt,pointFrameAt,hitFrameAt,shaderGlobals:{_HG_UV_ROTATION:0}});
+ const pass=createAphrissaStageBeams({three:T,library,sourcePackSha256:PACK,contract,heightAt:()=>.6,anchorAt,pointFrameAt,hitFrameAt,stateFrameAt,shaderGlobals:{_HG_UV_ROTATION:0}});
  const camera=new T.PerspectiveCamera(40,1,.1,100);camera.up.set(0,0,1);camera.position.set(7,-6,8);camera.lookAt(3,2,0);camera.updateMatrixWorld(true);
  const renderer={autoClear:true,render(){}};
  return{pass,track,owner,relay,battle,instances,calls,camera,renderer};
@@ -127,4 +127,25 @@ test('late hit loads cannot resurrect effects after source owner retirement',asy
  assert.equal(f.pass.pendingCount,6);f.owner.alive=false;f.pass.update(f.battle);
  const items=waiting.map(resolve=>{const i={group:new T.Group(),disposed:0,dispose(){this.disposed++;}};resolve(i);return i;});
  await f.pass.ready();assert.ok(items.every(i=>i.disposed===1));assert.equal(f.pass.scene.children.length,0);f.pass.dispose();
+});
+test('front/back state prefabs preserve their parent birth and placement history while composing both source wing clips',async()=>{
+ const {APHRISSA_STATE_STYLES:styles}=await import('../shared/arkpedia/aphrissa-state-presentation.js');let back=false;
+ const f=fixture(null,undefined,undefined,({state,owner})=>({root:back?styles.wing.back:styles.wing.root,
+  position:[owner.x??3,.4,2],rotation:[0,0,0,1],scale:[1,1,1]})),s={id:'state:wing:1',kind:'wing',root:styles.wing.root,ownerId:1,ownerLife:1,activation:1,startedAt:4};
+ f.owner.mem.aphrissaStatePresentation={snapshot:()=>[structuredClone(s)]};f.pass.update(f.battle);await f.pass.ready();f.pass.render(f.renderer,f.camera);
+ const front=f.pass.inspect().find(e=>e.kind==='state');assert.equal(front.time,1);assert.equal(front.bornAt,4);
+ assert.deepEqual(front.clip.clip,styles.wing.clips);assert.equal(front.instance.updates.at(-1).options.timeline,null);
+ f.battle.time=5.2;f.owner.x=3.5;f.pass.update(f.battle);f.pass.render(f.renderer,f.camera);
+ back=true;f.pass.update(f.battle);await f.pass.ready();f.pass.render(f.renderer,f.camera);
+ const rear=f.pass.inspect().find(e=>e.kind==='state');assert.equal(front.instance.disposed,1);assert.notEqual(rear.instance,front.instance);
+ assert.equal(rear.root,styles.wing.back);assert.equal(rear.bornAt,4);assert.equal(rear.time,f.battle.time-4);
+ const placement=rear.instance.updates.at(-1).options.placement;assert.equal(placement.sample(0).position[0],3);assert.equal(placement.sample(f.battle.time-4).position[0],3.5);
+ assert.deepEqual(rear.clip.clip,styles.wing.clips);f.pass.dispose();
+});
+test('state mounts require an explicitly bound face prefab before mutating the scene',async()=>{
+ let root='foreign';const f=fixture(null,undefined,undefined,()=>({root,position:[3,.4,2],rotation:[0,0,0,1],scale:[1,1,1]}));
+ f.owner.mem.aphrissaStatePresentation={snapshot:()=>[{id:'state:s1',kind:'s1',root:'aphris_skill_01_buff_01',ownerId:1,ownerLife:1,activation:1,startedAt:4}]};
+ for(const invalid of ['foreign',undefined,null]){root=invalid;assert.throws(()=>f.pass.update(f.battle),/face prefab/);assert.equal(f.pass.scene.children.length,0);}
+ root='aphris_skill_01_buff_01';f.pass.update(f.battle);await f.pass.ready();const state=f.pass.inspect().find(e=>e.kind==='state');assert.equal(state.time,1);
+ f.owner.mem.aphrissaStatePresentation.snapshot=()=>[];f.pass.update(f.battle);assert.equal(state.instance.disposed,1);f.pass.dispose();
 });

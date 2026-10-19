@@ -5,9 +5,10 @@ import {aphrissaReviewSupport} from '../../shared/arkpedia/aphrissa-review-opera
 import {createNativeStageCamera} from './native-stage-camera.js';
 import {createEffectPlacement} from '../../shared/arkpedia/native-effect-placement.js';
 import {createEffectTimeline} from '../../shared/arkpedia/native-effect-timeline.js';
+import {APHRISSA_STATE_CONTRACT,validateAphrissaState} from '../../shared/arkpedia/aphrissa-state-presentation.js';
 import {APHRISSA_HIT_CONTRACT,validateAphrissaHit} from '../../shared/arkpedia/aphrissa-hit-presentation.js';
 const vector=p=>Array.isArray(p)&&p.length===3&&p.every(Number.isFinite);
-export function createAphrissaStageBeams({three:T,library,sourcePackSha256,contract,heightAt,anchorAt,pointFrameAt,hitFrameAt,shaderGlobals}){
+export function createAphrissaStageBeams({three:T,library,sourcePackSha256,contract,heightAt,anchorAt,pointFrameAt,hitFrameAt,stateFrameAt,shaderGlobals}){
   if(contract!==APHRISSA_BEAM_CONTRACT||sourcePackSha256!==APHRISSA_BEAM_PACK
     ||typeof library?.create!=='function'||typeof heightAt!=='function'||typeof anchorAt!=='function'||typeof pointFrameAt!=='function'
     ||!shaderGlobals||Object.keys(shaderGlobals).length!==1||![0,1].includes(shaderGlobals._HG_UV_ROTATION))
@@ -59,14 +60,25 @@ export function createAphrissaStageBeams({three:T,library,sourcePackSha256,contr
         segments.push({key:hit.id,kind:'hit',root:binding.root,unit,hit,frame,binding:{clip:null},
           track:{...hit,clipStartedAt:hit.startedAt,stage:'active'}});
       }
+      for(const state of unit.mem.aphrissaStatePresentation?.snapshot()??[]){
+        const binding=validateAphrissaState(state);
+        if(state.ownerId!==unit.id||state.ownerLife!==unit.deploySeq||state.startedAt>next.time||seen.has(state.id)
+          ||typeof stateFrameAt!=='function')throw Error('Invalid held Aphrissa state ownership/mount');
+        seen.add(state.id);
+        const raw=stateFrameAt({state:structuredClone(state),owner:unit,battle:next}),root=raw?.root,
+          frame=createEffectPlacement([{...raw,time:0}]).sample(0);
+        if(typeof root!=='string'||root!==binding.root&&root!==binding.back)throw Error('Unbound Aphrissa state face prefab');
+        segments.push({key:state.id+':'+root,kind:'state',root,unit,state,frame,binding,
+          track:{...state,mode:state.kind,clipStartedAt:state.startedAt,stage:'active'}});
+      }
     }
     // Validate the complete new view before changing an existing scene.
     if(next===battle)for(const segment of segments){const entry=entries.get(segment.key);
       if(entry&&(entry.unit!==segment.unit||entry.track.ownerLife!==segment.track.ownerLife||entry.track.mode!==segment.track.mode
         ||entry.root!==segment.root||entry.track.startedAt!==segment.track.startedAt))throw Error('Changed original Aphrissa beam identity');}
     for(const segment of segments)if(segment.kind!=='line'){
-      const old=next===battle?entries.get(segment.key):null,
-        bornAt=segment.kind==='hit'?segment.hit.startedAt:old?.bornAt??(next===battle&&tracks.has(segment.track.id)&&segment.track.stage==='active'?next.time:segment.track.startedAt),time=next.time-bornAt;
+      const old=next===battle?(entries.get(segment.key)??(segment.kind==='state'?[...entries.values()].find(e=>e.state?.id===segment.state.id):null)):null,
+        bornAt=segment.kind==='state'?segment.state.startedAt:segment.kind==='hit'?segment.hit.startedAt:old?.bornAt??(next===battle&&tracks.has(segment.track.id)&&segment.track.stage==='active'?next.time:segment.track.startedAt),time=next.time-bornAt;
       if(time<0)throw Error('Point-effect clock predates its captured birth');
       const frames=(old?.frames??[]).filter(f=>f.time<time),frame={...segment.frame,time};
       if(!frames.length&&time!==0)frames.push({...segment.frame,time:0});frames.push(frame);
@@ -77,7 +89,8 @@ export function createAphrissaStageBeams({three:T,library,sourcePackSha256,contr
         const endAt=segment.track.clipStartedAt-bornAt;if(endAt<0)throw Error('Point End predates its captured birth');
         if(endAt===0)transitions[0].clip=segment.binding.end.id;else transitions.push({time:endAt,clip:segment.binding.end.id});
       }
-      Object.assign(segment,{bornAt,time,frames,framesSignature,frameVersion:(old?.frameVersion??0)+Number(changed),placement,timeline:createEffectTimeline(transitions),clip:null});
+      Object.assign(segment,{bornAt,time,frames,framesSignature,frameVersion:(old?.frameVersion??0)+Number(changed),placement,timeline:segment.kind==='state'?null:createEffectTimeline(transitions),
+        clip:segment.kind==='state'&&segment.binding.clips.length?segment.binding.clips:null});
     }
     if(next!==battle){clear();battle=next;}
     const live=new Set(segments.map(s=>s.key));
@@ -123,10 +136,10 @@ export function createAphrissaStageBeams({three:T,library,sourcePackSha256,contr
     const autoClear=renderer.autoClear;renderer.autoClear=false;
     try{renderer.render(scene,camera);}finally{renderer.autoClear=autoClear;}
   }
-  return {scene,camera:bridge.camera,scope:APHRISSA_BEAM_CONTRACT,hitScope:APHRISSA_HIT_CONTRACT,updateAfterActors:true,update,ready,render,clear,
+  return {scene,camera:bridge.camera,scope:APHRISSA_BEAM_CONTRACT,hitScope:APHRISSA_HIT_CONTRACT,stateScope:APHRISSA_STATE_CONTRACT,updateAfterActors:true,update,ready,render,clear,
     isActor(){return false;},
     get instanceCount(){return [...entries.values()].filter(e=>e.instance).length;},get pendingCount(){return pending.size;},
-    inspect(){return [...entries.values()].map(e=>({key:e.key,kind:e.kind,root:e.root,hit:structuredClone(e.hit),point:structuredClone(e.point),track:structuredClone(e.track),positions:structuredClone(e.positions),
+    inspect(){return [...entries.values()].map(e=>({key:e.key,kind:e.kind,root:e.root,hit:structuredClone(e.hit),state:structuredClone(e.state),point:structuredClone(e.point),track:structuredClone(e.track),positions:structuredClone(e.positions),
       time:e.time,bornAt:e.bornAt,clip:e.timeline?.sample(e.time)??{clip:e.clip,time:e.time},placement:e.placement?.sample(e.time),instance:e.instance}));},
     dispose(){if(disposed)return;clear();disposed=true;}
   };

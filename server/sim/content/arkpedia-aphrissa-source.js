@@ -79,6 +79,7 @@ export function aphrissaNativeInputs() {
     s3Sequence: skill(2, '-1073599293142318865'),
     s3Charge: skill(2, '-4303161870961327889'),
     s3ChargeBuffs: skill(2, '875698991745679599'),
+    s3WingBuff: skill(2, '-2229608371374374673'),
     s3ChargeAnimation: skill(2, '1416023326910202095'),
     s3Mark: skill(2, '8630705880464507119'),
     s3Active: skill(2, '-5427451279434235665'),
