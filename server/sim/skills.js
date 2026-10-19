@@ -116,12 +116,36 @@ export class SkillRuntime {
     this._loadingAmmo = false;
     this.pending = false;         // instant/charges: next attack uses spec.attack
     this.activations = 0;
+    this._lastActivation = 0;     // ordinary account owner, separate from general-ability start receipts
     this.lastStart = -Infinity;
     this._buffKey = `skill:${unit.id}`;
     this._trigKeys = null;
     this._trigSet = null;
     this.triggerRanges = [];      // content trigger ranges (addTriggerRange)
     this.noSkill = !spec;         // unit without any skill spec
+    this._sourceStartClaims = new WeakSet();
+    this._signalingSourceStart = false;
+  }
+
+  /** Source general abilities can explicitly fire CastStart without activating
+   * the ordinary skill. An owner authorizes an original one-use instruction;
+   * only its numbered receipt is emitted. No SP, charge, active/pending state,
+   * manual-operation cooldown, start/end callback or finish event is invented.
+   */
+  notifySourceCastStart(ticket, reason = 'source') {
+    const u=this.unit,b=this.battle,life=u.deploySeq,spec=this.spec,authorize=spec.acceptSourceCastStart;
+    if(this._signalingSourceStart||this.noSkill||this.kind!=='instant'||typeof authorize!=='function'
+      ||!ticket||typeof ticket!=='object'||this._sourceStartClaims.has(ticket)||u.skill!==this
+      ||!u.alive||!u.deployed||u.hidden||u.removed||u._removing||b.finished)return false;
+    this._signalingSourceStart=true;
+    try{
+      if(authorize({ticket,reason})!==true||this.spec!==spec||this.kind!=='instant'||this.noSkill||u.skill!==this||u.deploySeq!==life||!u.alive||!u.deployed
+        ||u.hidden||u.removed||u._removing||b.finished||this._sourceStartClaims.has(ticket))return false;
+      this._sourceStartClaims.add(ticket);
+      const activation=++this.activations;
+      if(b._hooks.skillStart)b.emit('skillStart',{unit:u,skill:this,reason,activation,sourceInstruction:ticket});
+      return true;
+    }finally{this._signalingSourceStart=false;}
   }
 
   /**
@@ -489,6 +513,7 @@ export class SkillRuntime {
     }
     this.activations++;
     const activation = this.activations;
+    this._lastActivation = activation;
     this.lastStart = this.battle.time;
     const b = this.battle;
     if (this.manual) this.opReadyAt = b.time + AUTO_OP_COOLDOWN;
@@ -573,9 +598,9 @@ export class SkillRuntime {
     this.ammoMax = 0;
     this.ammoCapacity = 0;
     this.ammoReplenished = 0;
-    const n = this.activations;
-    this._call('onEnd', { reason });
-    if (!this.active && this.activations === n) this._removeMods();
+    const n = this._lastActivation;
+    this._call('onEnd', { reason, activation: n });
+    if (!this.active && this._lastActivation === n) this._removeMods();
     if (b._hooks.skillEnd) b.emit('skillEnd', { unit: u, skill: this, reason, activation: n });
     if (this.kind !== 'passive') b._ev(['skill', u.id, 0]);
   }

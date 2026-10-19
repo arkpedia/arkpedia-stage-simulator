@@ -87,3 +87,8 @@ Public commit10328d895a6541a715c1663d6d93569bfd3ea0a7 initially passed19,439 tes
 Corrected frozen commitf0ced8196b3e281f330ff640388707a6b92cf84c (treeb7bee28633183095eb06d7cffa28d6b9bd654327) passes the complete isolated Node24 regression:19,441 passed,103 optional source/platform skips,zero failures,19,544 tests,325 suites and508.855 seconds. All919 original skeletons verify; preparation checked917 cached files and downloaded/checked the two Yukari files. Both ordinary field benchmarks and the heavy two-player benchmark pass their unchanged0.5ms/tick limits. Optional original-source/byte cases pass separately in the source workspace.
 
 A subsequent merge from feat/aegis contains only its source-audit test-harness compilation cache, bounded functional subprocess timeout and documentation. The seven source assertions still run in fresh state, and the Node wrapper passes independently on22/24. No Yukari source/controller/UI/artwork changes follow the frozen public run; rebuilding the normal snapshot after this merge reproduces the same bytes. Hosted Linux/Windows Node22/24 checks and simulator publication remain separate gates. No Arkpedia app merge is authorized by this admission.
+
+
+## Feature-branch durable-grant correction
+
+The original S2 marker and timed Arts-output grant both declare isDurableBuff=true. Their runtime descriptors now set and validate persist, preserving them through source non-durable clears without changing expiry or receiver-life cleanup. Direct source-clear checks and actual Makoto manual/forced-cast composition reproduce the prior loss and verify the correction. This change is held on feat/makoto pending fresh full verification and separate public release; the earlier PR128 merge does not contain it.

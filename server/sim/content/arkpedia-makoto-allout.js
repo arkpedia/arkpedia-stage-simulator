@@ -60,8 +60,8 @@ export class MakotoAllOutCombat{
    nextAt:this.b.time+1.600000023841858,finished:false,admitted:false,claimed:false};
   const origin={manager:this,owner,life,key:p.key,sourceLife:p.sourceLife,sourceLess:p.sourceLess,bb:{...p.bb},nextAt:p.nextAt,buff:null};origins.set(p,origin);
   const permit=(_t,buff)=>this.valid()&&!p.finished&&!p.admitted&&!p.claimed&&this.matches(p,origin)&&retained(owner,life)&&buff.key===origin.key&&buff.source===this.u&&buff.data?.makotoAllout===p
-   &&buff.duration===Infinity&&Object.keys(buff.mods??{}).length===0&&Object.keys(buff.flags??{}).length===0;
-  p.buff=this.b.addBuff(owner,{key:p.key,source:this.u,duration:Infinity,data:{makotoAllout:p},admit:permit,onRemove:()=>this.finish(p)});
+   &&buff.data?.nativeKey==='makoto_allout_attack_damage'&&buff.duration===Infinity&&Object.keys(buff.mods??{}).length===0&&Object.keys(buff.flags??{}).length===0;
+  p.buff=this.b.addBuff(owner,{key:p.key,source:this.u,duration:Infinity,data:{makotoAllout:p,nativeKey:'makoto_allout_attack_damage'},admit:permit,onRemove:()=>this.finish(p)});
   origin.buff=p.buff;
   if(!p.buff||!permit(owner,p.buff)||!this.owns(p)){this.finish(p);return null;}p.admitted=true;this.grants.add(p);
   // Shared replace swaps the actual buff without invoking the displaced

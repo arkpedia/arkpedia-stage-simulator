@@ -42,12 +42,12 @@ export class YukariSkillTwoEffects{
  finish(p){if(!p||p.finished)return;p.finished=true;this.grants.delete(p);this.remove(p);this.unwatch();}
  admitGrant(unit,{kind,duration,key,permit,account=unit.skill,after=account?.activations}={}){
   const p={manager:this,unit,kind,key:key??`yukari_s_2[${kind}]:${this.owner}:${++this.serial}`,life:unit.deploySeq,account,after,power:this.power,duration,effectDuration:this.duration,buff:null,finished:false,admitted:false,claimed:false};
-  const mods=kind==='output'?{artsDealtMul:p.power}:null,status=kind==='output'?'artsEnhance':null,data={yukariS2:p,...(kind==='output'?{value:p.power-1}:{})};let descriptor;
+  const mods=kind==='output'?{artsDealtMul:p.power}:null,status=kind==='output'?'artsEnhance':null,data={yukariS2:p,...(kind==='output'?{value:p.power-1}:{})},durable=kind!=='check';let descriptor;
   const admit=(_t,buff)=>this.receiver(unit,p.life)&&!p.finished&&permit()&&(!buff||buff.key===p.key&&buff.source===this.u&&buff.data?.yukariS2===p&&buff.status===status
-   &&p.power===this.power&&p.effectDuration===this.duration&&same(buff.mods??{},mods??{})&&Object.keys(buff.flags??{}).length===0&&buff.sourceStatusResistable==null&&(kind!=='output'||buff.data.value===p.power-1)
+   &&p.power===this.power&&p.effectDuration===this.duration&&same(buff.mods??{},mods??{})&&Object.keys(buff.flags??{}).length===0&&buff.persist===durable&&buff.sourceStatusResistable==null&&(kind!=='output'||buff.data.value===p.power-1)
    &&(buff===descriptor||buff.stacks===1&&buff.duration===duration&&buff.timeLeft===duration))&&(!unit.findBuff(p.key)||unit.findBuff(p.key).data?.yukariS2===p);
   const finish=()=>{if(p.finished)return;p.finished=true;this.grants.delete(p);this.unwatch();};
-  descriptor={key:p.key,source:this.u,duration,mods,status,data,refresh:'keep',sourceStatusResistable:null,admit,onRemove:finish,onExpire:finish};p.buff=this.b.addBuff(unit,descriptor);
+  descriptor={key:p.key,source:this.u,duration,mods,status,data,persist:durable,refresh:'keep',sourceStatusResistable:null,admit,onRemove:finish,onExpire:finish};p.buff=this.b.addBuff(unit,descriptor);
   if(!admit()||!this.owns(p)){p.finished=true;this.remove(p);return null;}if(kind==='marker'){p.account=unit.skill;p.after=p.account?.activations??0;}p.admitted=true;this.grants.add(p);if(kind!=='check')this.watch();return p;
  }
  marker(t){const buff=t.findBuff('yukari_s_2'),p=buff?.data?.yukariS2;return p?.manager instanceof YukariSkillTwoEffects&&p.manager.b===this.b&&p.kind==='marker'&&p.manager.owns(p)?p:null;}

@@ -217,3 +217,27 @@ test('Entering zero-block releases actual blocked enemies but does not damage or
   const f=make();const e=enemy(f,{row:5,col:5});f.b._checkBlock(e);assert.equal(e.blockedBy===f.u,true);
   const hp=e.hp,seq=f.u.deploySeq;enter(f);assert.equal(e.blockedBy,null);assert.equal(e.hp,hp);assert.equal(f.u.deploySeq,seq);assert.equal(f.u.deployed,true);
 });
+test('Early zero-block has its own source ticket and does not create a Persona timer or stats before the mode changes',()=>{
+ const f=make(),ticket={};assert.equal(f.body.produceZeroBlock(ticket),true);assert.equal(f.u.s.blockCnt,0);assert.equal(f.body.phase,null);
+ near(f.u.s.atk,f.u.base.atk);near(f.u.s.maxHp,f.u.base.maxHp);advance(f.b,1);
+ assert.equal(f.body.enter({mode:1,ticket}),true);near(f.body.countdown().remaining,20);near(f.u.s.maxHp,f.u.base.maxHp*1.35);
+ assert.equal(f.body.produceZeroBlock(ticket),false);
+});
+test('A refused early zero-block producer is not retried when the later mode-bound parent is admitted',()=>{
+ const f=make(),ticket={};const h=f.b.on('beforeBuff',c=>{if(c.buff.data?.nativeKey==='makoto_stand[block_zero]')c.cancel=true;});
+ assert.equal(f.body.produceZeroBlock(ticket),false);f.b.off(h);assert.equal(f.body.enter({mode:1,ticket}),true);assert.equal(f.u.s.blockCnt,2);
+});
+test('P2 before-block boundary runs after timer capture and before independent block admission',()=>{
+ const f=make({skill:3});enter(f);advance(f.b,2);let called=false;
+ const saved=f.body.prepareP2({}, {beforeBlock:input=>{called=true;near(input.remaining,18,f.b.dt+1e-6);assert.equal(f.body.phase,null);assert.equal(bodyBuff(f,'makoto_stand[block_dec]'),undefined);return true;}});
+ assert.equal(called,true);assert.ok(saved);assert.equal(f.u.s.blockCnt,2);
+});
+test('A refused or throwing P2 source boundary cannot leave a captured ticket or later block grant',()=>{
+ for(const fail of['reject','clear','throw']){const f=make({skill:3});enter(f);const invoke=()=>f.body.prepareP2({}, {beforeBlock:()=>{if(fail==='throw')throw Error('boundary');if(fail==='clear')f.body.clear();return fail!=='reject';}});
+  if(fail==='throw')assert.throws(invoke,/boundary/);else assert.equal(invoke(),null);assert.equal(f.body.prepared,null);assert.equal(f.body.buffs.size,0);
+ }
+});
+test('Original parent producer must remain under its corresponding mode Talents/Body hierarchy',()=>{
+ const n=structuredClone(evidence),r=n.characters.char_4217_makoto.find(r=>r.components.some(p=>p.pathId==='-1294480160937161179'));
+ r.components.find(p=>p.type==='Transform').data.m_Father.m_PathID='0';assert.throws(()=>makotoBodyInputs(n),/Changed original/);
+});

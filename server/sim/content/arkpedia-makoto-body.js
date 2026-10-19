@@ -5,7 +5,7 @@ import {MAKOTO_ID,selectedMakotoInputs} from './arkpedia-makoto-source.js';
 
 export const MAKOTO_BODY_CONTRACT=Object.freeze({
   scope:'Selected original Persona ATK/BAT/HP, stopped SP, separate zero/P2 block producers, S3P1 ASPD and actual form countdown only.',
-  mapping:'An explicit owner admits each source producer at its real entry boundary. The twenty-second parent has additive percentage ATK, flat BAT and a separately admitted parent-owned HP child. Missing trait MAX_HP is neutral only for the checked duration-only original trait. Native LIMITED zero child lifetime is mapped to its owning parent, not instant expiry. Separate S3P1 ASPD and infinite block buffs retain independent admission. P2 captures the old parent remaining/original duration before clearing it; its block producer removes zero, then adds negative two and selected block count independently. P2 entry retains the captured time. Real noSp flags block all ordinary recovery; manual cast eligibility is exposed separately for the real account owner. Natural parent finish authorizes an owner callback once, while early clear/dispel does not fabricate expiry. Shared stat recomputation preserves HP ratio; no full HP repair is invented here.',
+  mapping:'Original hierarchy binds Persona stat/parent producers to each mode Talents/Body, separately from early SwitchIn zero-block. An explicit owner admits each source producer at that boundary. The twenty-second parent has additive percentage ATK, flat BAT and a separately admitted parent-owned HP child. Missing trait MAX_HP is neutral only for the checked duration-only original trait. Native LIMITED zero child lifetime is mapped to its owning parent, not instant expiry. Separate S3P1 ASPD and infinite block buffs retain independent admission. P2 captures the old parent remaining/original duration before clearing it; its block producer removes zero, then adds negative two and selected block count independently. P2 entry retains the captured time. Real noSp flags block all ordinary recovery; manual cast eligibility is exposed separately for the real account owner. Natural parent finish authorizes an owner callback once, while early clear/dispel does not fabricate expiry. Shared stat recomputation preserves HP ratio; no full HP repair is invented here.',
   limitations:'Numeric block/formula aliases, missing-BB neutrality, parent-bound zero-lifetime child, source admission order and callback/tick boundaries remain explicit local mappings. Entry/return, source buff clears, HP repair, fatal interception, actual skill account composition, public art, native FX/audio/modules and compiled/frame parity remain separate. No public admission.',
   frameParity:false,
 });
@@ -15,6 +15,12 @@ export function makotoBodyInputs(e=evidence){
   const fail=()=>{throw Error('Changed original Makoto Persona body inputs');};
   const parts=e.characters[MAKOTO_ID].flatMap(r=>r.components),read=id=>{const a=parts.filter(p=>p.pathId===id);if(a.length!==1)fail();return a[0].data;};
   const parents=['-6032850912082670043','-3466145529244168667','-1294480160937161179'].map(read);
+  const transforms=new Map(e.characters[MAKOTO_ID].flatMap(r=>r.components.filter(p=>p.type==='Transform').map(p=>[p.pathId,{row:r,data:p.data}])));
+  for(const [i,id]of ['-6032850912082670043','-3466145529244168667','-1294480160937161179'].entries()){
+    const row=e.characters[MAKOTO_ID].find(r=>r.components.some(p=>p.pathId===id));let t=row.components.find(p=>p.type==='Transform')?.data;
+    const names=[];for(let n=0;t&&n<20;n++){const p=transforms.get(t.m_Father.m_PathID);if(!p)break;names.push(p.row.object);t=p.data;}
+    if(!same(names.slice(0,3),['Talents','Body',['Stand_S1','Stand_S2','Stand_S3_1'][i]]))fail();
+  }
   for(const [i,p] of parents.entries()){
     const b=p._buffs[0];if(p.m_Script.m_PathID!=='3800760148018415462'||b.buffKey!=='makoto_standin'||b.templateKey!=='makoto_standin'
       ||b.lifeTimeType!==1||b.durationKey!=='duration'||b.isSilenceable!==0||b.isStunnable!==0
@@ -59,7 +65,7 @@ export class MakotoPersonaBody{
       throw Error('Fresh selected Makoto, exact body contract and explicit source-entry/expiry owner required');
     const record=selectedMakotoInputs(u);makotoBodyInputs();
     Object.assign(this,{b,u,record,bb:record.talentBb[0],mayEnter,onExpired,seq:null,account:null,phase:null,prepared:null,stopped:false,busy:false,
-      handles:[],buffs:new Set(),tickets:new WeakSet(),lastExpiry:null,serial:0});
+      handles:[],buffs:new Set(),tickets:new WeakSet(),zeroTickets:new WeakSet(),blockIssue:null,lastExpiry:null,serial:0});
   }
   valid(){return !this.stopped&&!this.b.finished&&this.seq!==null&&live(this.u)&&this.u.deploySeq===this.seq&&this.u.skill===this.account;}
   owns(buff){const r=origins.get(buff);return !!r&&r.manager===this&&buff.key===r.key&&buff.source===this.u&&this.u.buffs.includes(buff)&&buff.data?.makotoBody===this;}
@@ -87,6 +93,14 @@ export class MakotoPersonaBody{
     }
   }
   permitted(input){try{return this.mayEnter(Object.freeze(input))===true&&this.valid();}catch(error){this.clear();throw error;}}
+  produceZeroBlock(ticket){
+    if(this.busy||!this.valid()||!ticket||typeof ticket!=='object'||this.zeroTickets.has(ticket))return false;this.busy=true;
+    const issue={ticket};this.blockIssue=issue;
+    try{if(!this.permitted({mode:this.record.index+1,ticket,seq:this.seq})||this.blockIssue!==issue)return false;
+      this.zeroTickets.add(ticket);const buff=this.attach(null,'makoto_stand[block_zero]',{mods:{blockCntMul:0},flags:{noSp:true},guard:()=>this.blockIssue===issue});
+      if(buff&&this.valid())this.b.releaseBlocked(this.u);return !!buff;
+    }finally{if(this.blockIssue===issue)this.blockIssue=null;this.busy=false;}
+  }
   enter({mode,ticket,remaining,duration}={}){
     if(this.busy||!this.valid()||this.phase||!ticket||typeof ticket!=='object'||this.tickets.has(ticket)
       ||!(mode===this.record.index+1||mode===4&&this.record.index===2))return false;
@@ -101,7 +115,8 @@ export class MakotoPersonaBody{
       if(!this.valid()||this.phase!==p){this.clearForm();return false;}
       if(p.parent)p.hp=this.attach(p,'makoto_standin_t1_max_hp',{mods:{hpPct:this.bb.max_hp_t1}});
       if(!this.valid()||this.phase!==p||p.parent&&!this.owns(p.parent)){this.clearForm();return false;}
-      if(mode!==4){
+      if(mode!==4&&!this.zeroTickets.has(ticket)){
+        this.zeroTickets.add(ticket);
         const zero=this.attach(p,'makoto_stand[block_zero]',{mods:{blockCntMul:0},flags:{noSp:true}});
         if(zero&&this.valid()&&this.phase===p)this.b.releaseBlocked(this.u);
       }
@@ -111,15 +126,17 @@ export class MakotoPersonaBody{
       return true;
     }finally{this.busy=false;}
   }
-  prepareP2(ticket){
+  prepareP2(ticket,{beforeBlock=()=>true}={}){
     const p=this.phase;
-    if(this.busy||!this.valid()||this.record.index!==2||!p||p.mode!==3||!this.owns(p.parent)||!ticket||typeof ticket!=='object'||this.tickets.has(ticket))return null;
+    if(this.busy||!this.valid()||typeof beforeBlock!=='function'||this.record.index!==2||!p||p.mode!==3||!this.owns(p.parent)||!ticket||typeof ticket!=='object'||this.tickets.has(ticket))return null;
     this.busy=true;
     try{
       if(!this.permitted({mode:4,ticket,seq:this.seq})||this.phase!==p||!this.owns(p.parent))return null;
       const remaining=p.parent.timeLeft;if(!(remaining>0))return null;
       const saved=Object.freeze({ticket,remaining,duration:p.originalDuration});this.clearForm();
       if(!this.valid())return null;this.prepared=saved;
+      let accepted;try{accepted=beforeBlock(saved);}catch(error){this.clear();throw error;}
+      if(accepted!==true||!this.valid()||this.prepared!==saved){this.clear();return null;}
       for(const buff of [...this.buffs])if(origins.get(buff)?.nativeKey==='makoto_stand[block_zero]')this.remove(buff);
       // Independent native additions: external block changes remain additive.
       const guard=()=>this.prepared===saved;
@@ -130,7 +147,7 @@ export class MakotoPersonaBody{
   }
   clearForm(){const p=this.phase;this.phase=null;if(p){p.finished=true;this.remove(p.hp);this.remove(p.parent);}
     for(const buff of [...this.buffs])if(origins.get(buff)?.nativeKey==='makoto_s3_1_standin')this.remove(buff);}
-  clear(){this.prepared=null;this.lastExpiry=null;this.clearForm();for(const buff of [...this.buffs])this.remove(buff);}
+  clear(){this.blockIssue=null;this.prepared=null;this.lastExpiry=null;this.clearForm();for(const buff of [...this.buffs])this.remove(buff);}
   tick(){if(!this.valid()){this.stop();return;}const p=this.phase;if(p&&!this.owns(p.parent)){this.phase=null;p.finished=true;this.remove(p.hp);}
     for(const buff of [...this.buffs])if(!this.owns(buff))this.buffs.delete(buff);}
   install(){if(this.stopped||this.handles.length||this.u.deploySeq!==0||!this.u.skill||this.u.skill.unit!==this.u||this.u.skill.battle!==this.b||this.u.skill.id!==this.u.def.skill.id
