@@ -30,6 +30,17 @@ test('The output multiplier changes Arts only, preserving printed ATK, unrelated
  const f=make(),a=receiver(f),t=enemy(f);f.b.addBuff(a,{key:'fixture:unrelated',mods:{artsDealtMul:2,dmgDealtMul:1.5}});f.effects.grant(a);cast(a);near(a.s.atk,100);
  const hit=type=>f.b.dealDamage(a,t,{amount:100,type,applyWay:'ranged',tags:['fixture:typed']});near(hit('arts'),100*f.effects.power*3);near(hit('phys'),150);near(hit('true'),150);near(hit('elemental'),150);near(f.b.heal(a,a,50),50);near(f.u.stats.dmg,0);assert.ok(a.stats.dmg>0);
 });
+test('Original durable marker/output survive a source non-durable clear and retain their own expiry',()=>{
+ const f=make(),a=receiver(f);const p=f.effects.grant(a);assert.equal(p.buff.persist,true);
+ for(const buff of a.buffs.slice())if(!buff.persist)f.b.removeBuff(a,buff);
+ assert.equal(f.effects.marker(a),p);cast(a);const [out]=outputs(f.effects,a);assert.equal(out.buff.persist,true);
+ for(const buff of a.buffs.slice())if(!buff.persist)f.b.removeBuff(a,buff);
+ assert.equal(a.buffs.includes(out.buff),true);advance(f.b,15.1);assert.equal(a.buffs.includes(out.buff),false);
+});
+for(const where of['marker','output'])test(`Altered ${where} durability cannot gain source approval`,()=>{
+ const f=make(),a=receiver(f);f.b.on('beforeBuff',c=>{if(c.buff.data?.yukariS2?.kind===where)c.buff.persist=false;});
+ const p=f.effects.grant(a);if(where==='marker')assert.equal(p,null);else{assert.ok(p);cast(a);assert.equal(outputs(f.effects,a).length,0);}
+});
 test('A marker granted during an active cast ignores that activation and consumes the following start exactly once',()=>{
  const f=make(),a=receiver(f);cast(a,{end:false});const p=f.effects.grant(a),ctx={unit:a,skill:a.skill,activation:a.skill.activations};assert.ok(p);f.b.emit('skillStart',ctx);assert.equal(outputs(f.effects,a).length,0);a.skill.end();cast(a);assert.equal(outputs(f.effects,a).length,1);f.b.emit('skillStart',ctx);assert.equal(outputs(f.effects,a).length,1);
 });

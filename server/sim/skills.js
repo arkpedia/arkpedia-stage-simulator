@@ -116,12 +116,36 @@ export class SkillRuntime {
     this._loadingAmmo = false;
     this.pending = false;         // instant/charges: next attack uses spec.attack
     this.activations = 0;
+    this._lastActivation = 0;     // ordinary account owner, separate from general-ability start receipts
     this.lastStart = -Infinity;
     this._buffKey = `skill:${unit.id}`;
     this._trigKeys = null;
     this._trigSet = null;
     this.triggerRanges = [];      // content trigger ranges (addTriggerRange)
     this.noSkill = !spec;         // unit without any skill spec
+    this._sourceStartClaims = new WeakSet();
+    this._signalingSourceStart = false;
+  }
+
+  /** Source general abilities can explicitly fire CastStart without activating
+   * the ordinary skill. An owner authorizes an original one-use instruction;
+   * only its numbered receipt is emitted. No SP, charge, active/pending state,
+   * manual-operation cooldown, start/end callback or finish event is invented.
+   */
+  notifySourceCastStart(ticket, reason = 'source') {
+    const u=this.unit,b=this.battle,life=u.deploySeq,spec=this.spec,authorize=spec.acceptSourceCastStart;
+    if(this._signalingSourceStart||this.noSkill||this.kind!=='instant'||typeof authorize!=='function'
+      ||!ticket||typeof ticket!=='object'||this._sourceStartClaims.has(ticket)||u.skill!==this
+      ||!u.alive||!u.deployed||u.hidden||u.removed||u._removing||b.finished)return false;
+    this._signalingSourceStart=true;
+    try{
+      if(authorize({ticket,reason})!==true||this.spec!==spec||this.kind!=='instant'||this.noSkill||u.skill!==this||u.deploySeq!==life||!u.alive||!u.deployed
+        ||u.hidden||u.removed||u._removing||b.finished||this._sourceStartClaims.has(ticket))return false;
+      this._sourceStartClaims.add(ticket);
+      const activation=++this.activations;
+      if(b._hooks.skillStart)b.emit('skillStart',{unit:u,skill:this,reason,activation,sourceInstruction:ticket});
+      return true;
+    }finally{this._signalingSourceStart=false;}
   }
 
   /**
@@ -171,7 +195,14 @@ export class SkillRuntime {
   // A target condition can prevent a cast without consuming SP or hiding the
   // full-SP ready indicator. Battle-wide use limits are distinct exhaustion.
   get castEligible() { return !this.exhausted && (typeof this.spec.canActivate !== 'function' || !!this.spec.canActivate()); }
-  get ready() { return !this.noSkill && !this.exhausted && this.kind !== 'passive' && this.charges >= 1; }
+  // Native SetSkillCastWithNoSp is a casting permission, not recovered SP.
+  // Keep the real account untouched and expose readiness to the ordinary HUD.
+  get manualCastWithoutSp() {
+    if (!this.manual || typeof this.spec.manualCastWithoutSp !== 'function') return false;
+    const u = this.unit, life = u.deploySeq;
+    return this.spec.manualCastWithoutSp() === true && u.deploySeq === life && u.skill === this;
+  }
+  get ready() { return !this.noSkill && !this.exhausted && this.kind !== 'passive' && (this.charges >= 1 || this.manualCastWithoutSp); }
   get silenceBlocked() { return !!this.unit.s.flags.silence && this.spec.silenceable !== false; }
 
   get isTimed() { return this.kind === 'duration' || this.kind === 'ammo' || this.kind === 'toggle'; }
@@ -457,20 +488,32 @@ export class SkillRuntime {
     }
   }
 
-  /** Activate now (consumes one charge). Returns true on success. */
+  /** Activate now; spend a charge unless explicitly free or native manual permission applies. */
   activate(reason = 'manual', { free = false } = {}) {
+    const u = this.unit, life = u.deploySeq;
     if (this.noSkill || !this.castEligible || this.kind === 'passive') return false;
-    if (!free && !this.ready) return false;
+    const permissionAware = typeof this.spec.manualCastWithoutSp === 'function' || typeof this.spec.manualTriggerOnly === 'function';
+    const manualOnly = typeof this.spec.manualTriggerOnly === 'function' && this.spec.manualTriggerOnly() === true;
+    if (permissionAware && (u.deploySeq !== life || u.skill !== this)) return false;
+    if (manualOnly && reason !== 'manual') return false;
+    const withoutSp = reason === 'manual' && this.manualCastWithoutSp;
+    if (permissionAware && (u.deploySeq !== life || u.skill !== this)) return false;
+    if (!free && !withoutSp && (this.charges < 1 || !this.ready)) return false;
+    // Native permission predicates are an additional callback boundary. They
+    // cannot lend readiness to a replaced account/life or bypass a control or
+    // eligibility change occurring during that query.
+    if (permissionAware && ((!u.canAct && !this.spec.allowAbnormalCast) || this.silenceBlocked
+      || !this.castEligible || u.deploySeq !== life || u.skill !== this)) return false;
     if (this.active && this.isTimed) return false;
-    const u = this.unit;
     if (!u.alive || !u.deployed) return false;
-    if (!free) {
+    if (!free && !withoutSp) {
       const wasFull = this.charges >= this.maxCharges;
       this.charges--;
       if (this.maxCharges === 1 || wasFull) this.sp = 0;
     }
     this.activations++;
     const activation = this.activations;
+    this._lastActivation = activation;
     this.lastStart = this.battle.time;
     const b = this.battle;
     if (this.manual) this.opReadyAt = b.time + AUTO_OP_COOLDOWN;
@@ -555,9 +598,9 @@ export class SkillRuntime {
     this.ammoMax = 0;
     this.ammoCapacity = 0;
     this.ammoReplenished = 0;
-    const n = this.activations;
-    this._call('onEnd', { reason });
-    if (!this.active && this.activations === n) this._removeMods();
+    const n = this._lastActivation;
+    this._call('onEnd', { reason, activation: n });
+    if (!this.active && this._lastActivation === n) this._removeMods();
     if (b._hooks.skillEnd) b.emit('skillEnd', { unit: u, skill: this, reason, activation: n });
     if (this.kind !== 'passive') b._ev(['skill', u.id, 0]);
   }

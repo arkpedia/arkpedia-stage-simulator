@@ -19,9 +19,15 @@ export function skillHud(skill) {
   // Source SpShowBuff can display an independent form timer even for a passive
   // skill. This opt-in presentation does not change skill activation or SP.
   const formTimer = skill.spec?.formCountdown?.();
-  if (formTimer) return { fraction: Math.max(0, Math.min(1, formTimer.remaining / formTimer.duration)),
-    state: 'active', ready: false, canActivate: false, canCancel: false,
-    text: `${formTimer.label} · ${Math.ceil(Math.max(0, formTimer.remaining - 1e-9))}s` };
+  if (formTimer) {
+    // A native form can retain its own countdown while explicitly permitting
+    // a manual recast. Existing form timers omit this opt-in and stay inert.
+    const ready = !!(formTimer.canActivate === true && skill.manual && skill.ready
+      && !skill.active && !skill.pending && skill.castEligible !== false);
+    return { fraction: Math.max(0, Math.min(1, formTimer.remaining / formTimer.duration)),
+      state: 'active', ready, canActivate: ready, canCancel: false,
+      text: `${formTimer.label} · ${Math.ceil(Math.max(0, formTimer.remaining - 1e-9))}s${ready ? ' · Ready' : ''}` };
+  }
   // Coins are a source-owned wallet, not ordinary SP or skill readiness. Keep
   // one interpretation for both the field gauge and the selected-operator UI.
   const resource = skill.spec?.resourceGauge?.();
