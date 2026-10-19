@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Held complete selected kit composition. Public registration/art remain gated.
+// Selected owner composition; public admission uses the separate runtime receipt.
 import e from '../../../data/arkpedia-native-operators/char_4217_makoto.json' with {type:'json'};
 import status from '../../../data/arkpedia-makoto-status-source.json' with {type:'json'};
+import clocks from '../../../data/arkpedia-makoto-clocks.json' with {type:'json'};
 import {MAKOTO_ID,selectedMakotoInputs}from'./arkpedia-makoto-source.js';
+import {regularModelKey}from'../../../shared/arkpedia/facing.js';
 import {MakotoOrdinaryAttacks,MAKOTO_ORDINARY_CONTRACT}from'./arkpedia-makoto-ordinary.js';
 import {MakotoSkillOneCombat,MAKOTO_S1_COMBAT_CONTRACT}from'./arkpedia-makoto-s1-combat.js';
 import {MakotoSkillTwoCombat,MAKOTO_S2_COMBAT_CONTRACT}from'./arkpedia-makoto-s2-combat.js';
@@ -16,13 +18,35 @@ import {MakotoPersonaBody,MAKOTO_BODY_CONTRACT}from'./arkpedia-makoto-body.js';
 import {MakotoAllOutCombat,MAKOTO_ALLOUT_CONTRACT}from'./arkpedia-makoto-allout.js';
 import {resolveProfile}from'../professions.js';import{absoluteRangeKeys}from'../targeting.js';import{bodyInKeys}from'../body.js';
 export const MAKOTO_OWNER_CONTRACT=Object.freeze({
- scope:'Held selected S1/S2/S3 real-account, ordinary/Persona/P2 combat, manual/fatal entry and natural-expiry/all-out return composition.',
- mapping:'Original keyed clears preserve durable buffs and literal retained names. Accepted transition flags use the pinned version-limited status receipt; friendly target-free maps to existing isolated/noHeal while enemies retain selection. Rally/rebirth locally repairs the current owned HP to current maximum without deployment, ledger or SP/account reset; literal ratio-heal separately honors HEAL_FREE. The native before-zero instruction creates real UNDEADABLE before the pending shared HP set, rather than cancelling the damage or toggling every fatal form. Mode0 enters the selected Persona; mode3 enters P2 only with owned remaining time above the original threshold. Other modes have no fatal transformation. Source-zero on-enter-normal is an actual nonderived zero-duration buff which broadcasts only on admission and expires on its first ordinary buff tick; its independent group-damage timer is never substituted. Mode-bound Talents admit the twenty-second parent/stat/ASPD buffs after the actual mode switch; SwitchIn zero-block is a separate earlier producer. S1/S3 retain the original2.109999895095825 world escape, while S2 honors its disabled useEscapeTime and ends immediately. Fixed entry/return clocks remain separate. Forced S3 source CastStart uses an owner-authorized numbered receipt without SP/charges or manual activation; manual starts keep their one normal receipt. Original A/B dispatch maps locally to alternation. Skill ranks/builds and separately owned born transport/heals persist through their documented boundaries.',
- limitations:'Rally HP/reset, zero-lifetime nonderived dispatch, source clear/phase/parallel/event ordering, escape world-clock dispatch, native abnormal behavior and A/B alternation are explicit local mappings, not compiled/frame/RNG/pixel proof. Transition command refusal cancels unborn owner work; missing required base passives is held rather than inventing their blackboards. Native FX/audio/modules and original public artwork delivery/public registry admission remain separate.',frameParity:false,
+ scope:'Selected S1/S2/S3 real-account, ordinary/Persona/P2 combat, manual/fatal entry, natural-expiry/all-out return and literal source death presentation.',
+ mapping:'Original keyed clears preserve durable buffs and literal retained names. Accepted transition flags use the pinned version-limited status receipt; friendly target-free maps to existing isolated/noHeal while enemies retain selection. Rally/rebirth locally repairs the current owned HP to current maximum without deployment, ledger or SP/account reset; literal ratio-heal separately honors HEAL_FREE. The native before-zero instruction creates real UNDEADABLE before the pending shared HP set, rather than cancelling the damage or toggling every fatal form. Mode0 enters the selected Persona; mode3 enters P2 only with owned remaining time above the original threshold. Other modes have no fatal transformation. Source-zero on-enter-normal is an actual nonderived zero-duration buff which broadcasts only on admission and expires on its first ordinary buff tick; its independent group-damage timer is never substituted. Mode-bound Talents admit the twenty-second parent/stat/ASPD buffs after the actual mode switch; SwitchIn zero-block is a separate earlier producer. S1/S3 retain the original2.109999895095825 world escape, while S2 honors its disabled useEscapeTime and ends immediately. Fixed entry/return clocks remain separate. Forced S3 source CastStart uses an owner-authorized numbered receipt without SP/charges or manual activation; manual starts keep their one normal receipt. Death presentation resolves the incoming Die key through its current mode hook and then the original root catalogue. Missing Back clips remain hidden; withdrawals request no death pose. Present death clips keep their exact native length, while absent-art cleanup uses the existing renderer policy. Original A/B dispatch maps locally to alternation. Skill ranks/builds and separately owned born transport/heals persist through their documented boundaries.',
+ limitations:'Rally HP/reset, zero-lifetime nonderived dispatch, source clear/phase/parallel/event ordering, escape world-clock dispatch, native abnormal behavior, alias/catalogue resolution order, renderer fade/absent-art cleanup and A/B alternation are explicit local mappings, not compiled/frame/RNG/pixel proof. Transition command refusal cancels unborn owner work; missing required base passives is held rather than inventing their blackboards. Native FX/audio/modules and original public artwork delivery/public registry admission remain separate.',frameParity:false,
 });
 const nativeName=b=>b.data?.nativeKey??b.key;
 const live=u=>u?.alive&&u.deployed&&!u.hidden&&!u.removed&&!u._removing;
 const same=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
+export function makotoDeathPlans(n=e,c=clocks){
+ if(c.receiptSha256!=='7489e0dea8732f27fdbe6bd90b7ab2584f9a30d6547f7de14d1b82581072c817')throw Error('Changed Makoto death source clocks');
+ const rows=n.chararts[MAKOTO_ID][0].data._animations,root=rows.find(a=>a.animKey==='Die');
+ if(root?.animName!=='Stun'||root.loop!==0||root.speed!==1||root.ignoreMissing!==1)throw Error('Changed original Makoto root death alias');
+ const paths=[null,'1623256020376145445','-6711020895938949595','-7104469595420307931','-7234846479611671003','25925036447354405'];
+ const expected=['Stun','Doll_Skill_1_Die','Doll_Skill_2_Die','Stun','Doll_Skill_3_P2_Die','Stun'];
+ const replacement=[null,expected[1],expected[2],null,expected[4],null];
+ return Object.freeze(paths.map((id,mode)=>{
+  const node=id?n.characters[MAKOTO_ID].flatMap(r=>r.components).find(p=>p.pathId===id)?.data:null;
+  if(id&&!Array.isArray(node?._replaceAnimPairs))throw Error('Missing original Makoto mode death hook');
+  const pairs=node?._replaceAnimPairs.filter(p=>p.fromAnimKey==='Die')??[];
+  if(pairs.length!==(replacement[mode]?1:0)||pairs.length&&pairs[0].toAnimKey!==replacement[mode])throw Error('Changed Makoto death replacement');
+  const key=pairs[0]?.toAnimKey??'Die',alias=rows.find(a=>a.animKey===key);
+  if(alias?.animName!==expected[mode]||alias.loop!==0||alias.speed!==1||alias.ignoreMissing!==1)throw Error('Changed original Makoto mode death alias');
+  return Object.freeze(Object.fromEntries(['Front','Back'].map(face=>{
+   const duration=c.models[face].exactDurations[alias.animName],rounded=n.models[MAKOTO_ID][face].durations[alias.animName];
+   if(duration==null){if(rounded!=null)throw Error('Changed missing Makoto death clip');return[face,null];}
+   if(duration!==1||rounded!==1)throw Error('Changed Makoto death clip duration');
+   return[face,Object.freeze({clip:alias.animName,duration})];
+  })));
+ }));
+}
 function findNode(v,fn){if(!v||typeof v!=='object')return null;if(fn(v))return v;for(const a of Object.values(v)){const n=findNode(a,fn);if(n)return n;}return null;}
 export function verifyMakotoOwner(n=e,s=status){
  const fail=()=>{throw Error('Changed original Makoto owner actions');};
@@ -45,7 +69,7 @@ export function verifyMakotoOwner(n=e,s=status){
 export class MakotoPersonaOwner{
  constructor(b,u,{contract}={}){
   if(contract!==MAKOTO_OWNER_CONTRACT||u.def.charId!==MAKOTO_ID||u.deploySeq!==0||u.mem.makotoOwner)throw Error('Fresh selected Makoto and exact complete-owner contract required');
-  verifyMakotoOwner();const record=selectedMakotoInputs(u);
+  verifyMakotoOwner();const record=selectedMakotoInputs(u);this.deathPlans=makotoDeathPlans();
   Object.assign(this,{b,u,record,mode:0,seq:null,account:null,stopped:false,transition:null,cast:null,busy:false,base:new Map(),owned:new Set(),handles:[],turn:0,assaultTurn:0,serial:0,expiry:null});
   this.ordinary=new MakotoOrdinaryAttacks(b,u,{contract:MAKOTO_ORDINARY_CONTRACT,mayBegin:()=>this.combatMode(0),pickClip:()=>this.turn++%2?'Attack_B':'Attack_A'});
   this.body=new MakotoPersonaBody(b,u,{contract:MAKOTO_BODY_CONTRACT,mayEnter:i=>this.valid()&&this.transition?.kind==='entry'&&this.transition.ticket===i.ticket&&this.transition.to===i.mode,
@@ -165,6 +189,12 @@ export class MakotoPersonaOwner{
   const undead=this.attach('makoto_tr_undead',{flags:{undeadable:true},guard:()=>!this.transition});
   if(undead&&!this.startEntry()){this.remove(undead);}
  }
+ deathVisual(reason){const u=this.u;if(this.stopped||this.seq===null||u.deploySeq!==this.seq||u.mem.makotoOwner!==this||u.skill!==this.account||u.skill.spec!==this.skillSpec)return;
+  const face=regularModelKey(u).endsWith('/back')?'Back':'Front',plan=this.deathPlans[this.mode]?.[face];
+  // A missing original Back track stays absent. Withdrawal has no source Die
+  // request; use the existing renderer's hidden cleanup instead of a fake pose.
+  u.mem.regularDeathVisual=reason==='killed'&&plan?{clip:plan.clip,die:plan.clip,duration:plan.duration}:{hide:true};
+ }
  install(){const{b,u}=this;if(this.stopped||this.handles.length||u.deploySeq!==0||u.skill?.spec!==this.skillSpec)throw Error('Fresh exact Makoto owner/account installation required');
   this.account=u.skill;u.mem.makotoOwner=this;
   this.handles=[b.on('deploy',({unit,move})=>{if(unit!==u||move)return;if(this.seq!==null){if(this.seq!==u.deploySeq)this.stop();return;}this.seq=u.deploySeq;
@@ -174,7 +204,8 @@ export class MakotoPersonaOwner{
   b.on('beforeStatus',ctx=>{if(ctx.target===u&&this.valid()&&this.transition&&this.owns(this.transition.buff)&&['stun','freeze','sleep'].includes(ctx.status))ctx.cancel=true;},{owner:u}),
   b.on('tick',()=>{if(this.seq!==null&&(!this.valid()||!this.hasBase('makoto_tr')||!this.hasBase('makoto_talent_1')))this.stop();
    else if(this.valid()&&this.cast&&this.b.time>=this.cast.endAt-1e-8)this.account.end('source-escape');},{owner:u,priority:100}),
-  ...['removed','death'].map(event=>b.on(event,({unit})=>{if(unit===u)this.stop();},{owner:u})),b.on('battleEnd',()=>this.stop(),{owner:u})];
+  b.on('death',({unit,reason})=>{if(unit===u){this.deathVisual(reason);this.stop();}},{owner:u,priority:100}),
+  b.on('removed',({unit})=>{if(unit===u){this.deathVisual('removed');this.stop();}},{owner:u,priority:100}),b.on('battleEnd',()=>this.stop(),{owner:u})];
   for(const p of this.parts)p.install();
  }
  stop(){if(this.stopped)return;this.stopped=true;this.cancelTransition();if(this.cast&&this.account===this.u.skill&&this.account.spec===this.skillSpec)this.account.end('makoto-owner-finish');this.cast=null;

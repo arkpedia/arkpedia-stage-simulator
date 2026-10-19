@@ -1,11 +1,12 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import test from'node:test';import assert from'node:assert/strict';
-import {prepareMakotoOwner,MAKOTO_OWNER_CONTRACT,verifyMakotoOwner}from'../server/sim/content/arkpedia-makoto-owner.js';
+import {prepareMakotoOwner,MAKOTO_OWNER_CONTRACT,verifyMakotoOwner,makotoDeathPlans}from'../server/sim/content/arkpedia-makoto-owner.js';
 import {make as base,advance,until,near,enemy}from'./helpers/makoto-fixture.js';
 import {addOwner as addYukari,ally}from'./helpers/yukari-fixture.js';
 import {YukariSkillTwoEffects,YUKARI_S2_EFFECTS_CONTRACT}from'../server/sim/content/arkpedia-yukari-s2-effects.js';
 import {skillHud}from'../shared/arkpedia/skill-hud.js';import {SkillRuntime}from'../server/sim/skills.js';
 import e from'../data/arkpedia-native-operators/char_4217_makoto.json'with{type:'json'};
+import clocks from'../data/arkpedia-makoto-clocks.json'with{type:'json'};
 const fs=new Set();
 test.afterEach(()=>{for(const f of fs){assert.deepEqual(f.b.errors,[]);f.owner.stop();f.controller.stop();f.fx?.drain();f.yukari?.talent.stop();}fs.clear();});
 function make(opts={}){const f=base({...opts,prepare:(b,u)=>prepareMakotoOwner(b,u,{contract:MAKOTO_OWNER_CONTRACT})});f.owner=f.prepared.controller;fs.add(f);return f;}
@@ -13,6 +14,17 @@ const cast=f=>{assert.equal(f.u.skill.activate('manual'),true);return f.owner.tr
 const ready=f=>f.u.skill.setSpTotal(f.u.skill.spCost);
 const persona=f=>until(f,()=>!f.owner.transition&&f.owner.mode===f.record.index+1);
 const lethal=f=>{const t=enemy(f,{row:5,col:6});return f.b.dealDamage(t,f.u,{amount:1e8,type:'true',canDodge:false,applyWay:'melee'});};
+test('Death plans retain original mode-specific replacements and absent Back tracks',()=>{
+ const plans=makotoDeathPlans();assert.deepEqual(plans.map(p=>p.Front.clip),['Stun','Doll_Skill_1_Die','Doll_Skill_2_Die','Stun','Doll_Skill_3_P2_Die','Stun']);assert.ok(plans.every(p=>p.Back===null));assert.ok(plans.every(p=>p.Front.duration===1));
+ for(const change of[n=>n.chararts[e.operatorId][0].data._animations.find(a=>a.animKey==='Die').animName='Idle',n=>n.characters[e.operatorId].flatMap(r=>r.components).find(p=>p.pathId==='1623256020376145445').data._replaceAnimPairs.find(p=>p.fromAnimKey==='Die').toAnimKey='Stun',n=>n.characters[e.operatorId].flatMap(r=>r.components).find(p=>p.pathId==='-7104469595420307931').data._replaceAnimPairs.push({fromAnimKey:'Die',toAnimKey:'Stun'})]){const n=structuredClone(e);change(n);assert.throws(()=>makotoDeathPlans(n));}
+ for(const mutate of[c=>c.receiptSha256='0'.repeat(64),c=>c.models.Front.exactDurations.Doll_Skill_1_Die=1.0001,c=>c.models.Back.exactDurations.Doll_Skill_1_Die=1]){const c=structuredClone(clocks);mutate(c);assert.throws(()=>makotoDeathPlans(e,c));}
+});
+for(const skill of[1,2,3])for(const dir of['RIGHT','UP'])test(`S${skill} ${dir} actual Persona death preserves its original facing-specific art after controller cleanup`,()=>{
+ const f=make({skill,dir});ready(f);cast(f);persona(f);if(skill===3){until(f,()=>skillHud(f.u.skill).canActivate);cast(f);until(f,()=>f.owner.mode===4&&!f.owner.transition);advance(f.b,.1);}
+ lethal(f);assert.equal(f.u.alive,false);assert.equal(f.owner.stopped,true);const clip=skill===3?'Doll_Skill_3_P2_Die':`Doll_Skill_${skill}_Die`;
+ assert.deepEqual(f.u.mem.regularDeathVisual,dir==='UP'&&skill!==3?{hide:true}:{clip,die:clip,duration:1});
+});
+test('Withdrawal hides the removed source body instead of requesting a Persona death pose',()=>{const f=make();ready(f);cast(f);persona(f);f.b.retreat(f.u);assert.deepEqual(f.u.mem.regularDeathVisual,{hide:true});});
 function yukari(f){const y=addYukari(f.b,{skill:2,row:4,col:5,defer:true});const fx=new YukariSkillTwoEffects(f.b,y.u,{contract:YUKARI_S2_EFFECTS_CONTRACT});y.deploy();fx.bind();f.fx=fx;f.yukari=y;return fx;}
 for(const skill of[1,2,3])test(`S${skill} installs a source owner with no generic Dollkeeper fatal handler`,()=>{
  const f=make({skill});assert.equal(f.owner.valid(),true);assert.equal(f.u._profInstalled,undefined);assert.equal(f.u.trait.doll,undefined);

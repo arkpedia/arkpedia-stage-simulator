@@ -54,6 +54,11 @@ for(const skill of[1,2,3])check(`Public S${skill} retreat drains source ownershi
  const f=make({skill});cast(f);persona(f);const old=f.u;f.b.retreatOperator(ID);advance(f.b,2);assert.equal(f.c.stopped,true);for(const p of[f.c,...f.c.parts])assert.equal(p.handles.length,0);assert.equal(f.b.deployedSlots(),0);
  advance(f.b,f.b.bench[ID].readyAt-f.b.time+f.b.dt);f.b.getPlayer('arkpedia').dp=99;const next=f.b.deployOperator(ID,3,3,'RIGHT');assert.ok(next);assert.notEqual(next,old);assert.notEqual(next.mem.makotoOwner,f.c);assert.equal(next.skill.activations,0);assert.equal(next.mem.makotoOwner.mode,0);
 });
+for(const skill of[1,2,3])for(const dir of['RIGHT','UP'])check(`Public S${skill} ${dir} lethal Persona damage retains its actual source death presentation`,()=>{
+ const f=make({skill,dir});cast(f);persona(f);if(skill===3){until(f.b,()=>skillHud(f.u.skill).canActivate);assert.equal(f.b.activateOperator(ID),true);until(f.b,()=>f.c.mode===4&&!f.c.transition);}
+ const t=enemy(f);f.b.dealDamage(t,f.u,{amount:1e8,type:'true',canDodge:false,applyWay:'melee'});assert.equal(f.u.alive,false);assert.equal(f.c.stopped,true);const clip=skill===3?'Doll_Skill_3_P2_Die':`Doll_Skill_${skill}_Die`;
+ assert.deepEqual(f.u.mem.regularDeathVisual,dir==='UP'&&skill!==3?{hide:true}:{clip,die:clip,duration:1});assert.equal(f.b.deployedSlots(),0);
+});
 for(const skill of[1,2,3])check(`Public S${skill} all-out uses actual deployed S.E.E.S. records and one delayed True hit per participant`,()=>{
  const f=make({skill}),y=f.b.deployOperator(Y,2,4,'UP'),g=f.b.deployOperator(G,3,4,'RIGHT');assert.ok(y&&g);assert.equal(y.tags.has('sees'),true);assert.equal(f.u.tags.has('sees'),true);assert.equal(g.tags.has('sees'),false);
  const target=enemy(f,{hp:1e9}),all=[];f.b.on('damaged',h=>{if(h.target===target&&h.dmg.tags.includes('makoto:allout'))all.push({h,at:f.b.time});});cast(f);persona(f);until(f.b,()=>f.c.transition?.kind==='return',25);const start=f.b.time;
