@@ -133,6 +133,7 @@ import { LEIZI2_OPERATORS } from './leizi2-operators.js';
 import { VEEN_OPERATORS } from './veen-operators.js';
 import { MANTRA_OPERATORS } from './mantra-operators.js';
 import { HARUKA_OPERATORS } from './haruka-operators.js';
+import { WANG_OPERATORS } from './wang-operators.js';
 import { BRANCH_OPERATORS } from './branch-operators.js';
 import { RECKPR_OPERATORS } from './reckpr-operators.js';
 import { CLOSUR_OPERATORS } from './closur-operators.js';
@@ -490,6 +491,7 @@ export const REGULAR_OPERATORS = Object.freeze({
   ...VEEN_OPERATORS,
   ...MANTRA_OPERATORS,
   ...HARUKA_OPERATORS,
+  ...WANG_OPERATORS,
   ...BRANCH_OPERATORS,
 });
 

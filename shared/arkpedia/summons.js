@@ -1,6 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Only explicitly reviewed regular-stage tokens may enter the deployment deck.
 export const REGULAR_SUMMONS = Object.freeze({
+  // Wang's stones: the reviewed CN owner controller links and triggers them.
+  char_2027_wang: Object.freeze({ tokenId: 'token_10064_wang_stone1',
+    deploymentSlotCost: 0, chooseFacing: false, fixedRotation: true, healFree: true,
+    refundRatio: 0, noAttack: true, excludeWalkingEnemy: true }),
   char_4123_ela: Object.freeze({ tokenId: 'token_10033_ela_grzmot',
     deploymentSlotCost: 0, chooseFacing: false, fixedRotation: true, healFree: true,
     refundRatio: 0, noAttack: true, sourceStockLimit: true,
