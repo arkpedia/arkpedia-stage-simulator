@@ -138,7 +138,10 @@ export function customizeTitiKit({battle: b, id, unit: u, kit}) {
     attackVisual: (_b, a) => a.skill?.active && n !== 2 ? `Skill_${n}_Loop` : 'Attack',
     canAttack: (bb, a) => !bb.isUnitInBornState(a) && !(a.skill?.active && n === 2),
     onEachHit: (bb, a, e) => extra(bb, a, e)};
-  if (n === 1) kit.skill = {id: s.id, name: s.name, kind: 'duration', trigger: 'NEVER', duration: s.duration, mods: {atkPct: s.bb.atk},
+  // S1/S3 hold the skill idle pose between their Skill_N_Loop attacks.
+  const pose = {onStart: () => { u.mem.regularFormVisual = {clip: `Skill_${n}_Idle`, loop: true, attack: `Skill_${n}_Loop`}; }};
+  if (n === 1) kit.skill = {id: s.id, name: s.name, kind: 'duration', trigger: 'NEVER', duration: s.duration, mods: {atkPct: s.bb.atk}, ...pose,
+    onEnd: () => { u.mem.regularFormVisual = null; },
     attack: {onEachHit: ({target}) => { if (live(target) && b.rng() < u.skill.bb['attack@prob']) owner.sleep(target, u.skill.bb['attack@sleep']); }}};
   else if (n === 2) kit.skill = {id: s.id, name: s.name, kind: 'duration', trigger: 'NEVER', duration: s.duration, mods: {atkPct: s.bb.atk},
     manualCancel: true,
@@ -151,12 +154,12 @@ export function customizeTitiKit({battle: b, id, unit: u, kit}) {
     },
     onEnd: () => {
       for (const a of [u, owner.target].filter(Boolean)) if (a.findBuff?.('titi:s2-sleep')) b.removeBuff(a, 'titi:s2-sleep');
-      owner.target = null; u.mem.regularFormVisual = {clip: 'Skill_2_End', playId: `titi:s2end:${b.time}`};
+      owner.target = null; u.mem.regularFormVisual = null;
     }};
   else kit.skill = {id: s.id, name: s.name, kind: 'duration', trigger: 'NEVER', duration: s.duration, mods: {atkPct: s.bb.atk},
-    targeting: {maxTargets: s.bb['attack@max_target']},
+    targeting: {maxTargets: s.bb['attack@max_target']}, ...pose,
     attack: {onEachHit: ({target}) => { if (live(target) && !asleep(target)) owner.sleep(target, u.skill.bb['attack@sleep']); }},
-    onEnd: () => { for (const a of [...owner.held]) { b.removeBuff(a, 'titi:s3-doze'); owner.held.delete(a); } }};
+    onEnd: () => { u.mem.regularFormVisual = null; for (const a of [...owner.held]) { b.removeBuff(a, 'titi:s3-doze'); owner.held.delete(a); } }};
 }
 export function installTiti({battle: b, unit: u, def}) {
   if (def.charId !== ID) return;
