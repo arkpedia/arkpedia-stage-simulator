@@ -121,6 +121,12 @@ def skill_graphs(rows):
     bindings, overrides, modes = {}, {}, []
     for row in rows:
         key = row['skillId']
+        if key is None:
+            # Token promotion slots can be literal empty placeholders. Their
+            # complete original rows remain in tables.tokens; no skill table,
+            # mode skill or fallback prefab is invented for an unnamed slot.
+            assert row['overridePrefabKey'] is None and row['overrideTokenKey'] is None, 'Unsupported null skill slot override'
+            continue
         prefabs = list(dict.fromkeys(rank['prefabId'] for rank in st[key]['levels']))
         bindings[key] = prefabs
         override = row['overridePrefabKey']
@@ -193,7 +199,7 @@ def scan(v, field=''):
         if v.startswith('token_') and v in ct and field not in parameters and v not in tokens:
             tokens[v] = resolve_token(v)
             token_skill_bindings[v], token_prefab_overrides[v], token_mode_skills[v] = skill_graphs(ct[v]['skills'])
-            scan([tokens[v], ct[v], [st[row['skillId']] for row in ct[v]['skills']], skills])
+            scan([tokens[v], ct[v], [st[row['skillId']] for row in ct[v]['skills'] if row['skillId'] is not None], skills])
         if v.startswith('projectile_') and field not in parameters and v not in projectiles:
             container = f'dyn/battle/prefabs/[uc]projectiles/{v}.prefab'
             assert container in projectile_bundle['roots'], ('Missing native projectile', v)
@@ -229,7 +235,7 @@ def values(v):
             values(decoded)
 values([ct[ID], [st[s] for s in skill_ids], characters, skills, projectiles,
         [bt.get(k) for k in needed], [native.get(k) for k in needed], tokens, [ct[k] for k in tokens],
-        [st[row['skillId']] for key in tokens for row in ct[key]['skills']]])
+        [st[row['skillId']] for key in tokens for row in ct[key]['skills'] if row['skillId'] is not None]])
 ranges = sorted(set(all_values) & rt.keys())
 
 def export_artwork(path, animator, directory, token=None):
@@ -300,7 +306,7 @@ if tokens:
     evidence['tokenSources'] = {key: token_sources[key] for key in sorted(tokens)}
     evidence['tokenArtworkControllers'] = token_art
     evidence['tables']['tokens'] = {key: ct[key] for key in sorted(tokens)}
-    evidence['tables']['tokenSkills'] = {key: st[key] for key in sorted({row['skillId'] for t in tokens for row in ct[t]['skills']})}
+    evidence['tables']['tokenSkills'] = {key: st[key] for key in sorted({row['skillId'] for t in tokens for row in ct[t]['skills'] if row['skillId'] is not None})}
     evidence['tokenSkillBindings'] = {key: token_skill_bindings[key] for key in sorted(tokens)}
     evidence['tokenSkillPrefabOverrides'] = {key: token_prefab_overrides[key] for key in sorted(tokens)}
     evidence['tokenModeSkills'] = {key: token_mode_skills[key] for key in sorted(tokens)}
