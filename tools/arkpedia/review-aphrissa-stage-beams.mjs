@@ -3,6 +3,7 @@
 import assert from 'node:assert/strict';
 import {readFile,writeFile} from 'node:fs/promises';
 import {publicReviewDriver} from './public-review-driver.mjs';
+import {APHRISSA_BEAM_STYLES} from '../../shared/arkpedia/aphrissa-beam-presentation.js';
 const ID='char_4229_aphris',KEY='summon:'+ID,out='.cache/arkpedia/cn-operators/'+ID+'/beam-battle-browser/';
 const data=JSON.parse(await readFile('.cache/arkpedia/arkpedia-aphrissa-candidate.json','utf8'));
 assert.deepEqual(data.reviewCandidates,[ID]);data.stage.geometry.waves[0].spawns=[];data.stage.battle.initial_dp=99;data.stage.battle.dp_per_second=0;
@@ -11,7 +12,8 @@ globalThis.cnReview={get battle(){return battle;},get renderer(){return renderer
  async setup(){paused=true;battle.autoFinish=false;
  const T=await import('/vendor/three.module.js'),{loadAphrissaReviewBeams}=await import('/arkpedia/aphrissa-review-beam-assets.js');
  this.pass=await loadAphrissaReviewBeams({three:T,renderer:renderer.three,heightAt:(r,c)=>renderer.heightAt(r,c),
-  anchorAt:({point})=>[point.col,renderer.heightAt(point.row,point.col)+.6499999761581421,point.row],shaderGlobals:{_HG_UV_ROTATION:0}});
+  anchorAt:({point})=>[point.col,renderer.heightAt(point.row,point.col)+.6499999761581421,point.row],
+  pointFrameAt:({position})=>({position,rotation:[0,0,0,1],scale:[1,1,1]}),shaderGlobals:{_HG_UV_ROTATION:0}});
  renderer.nativeEffects=this.pass;renderer.externalNativeEffects=true;
  battle.on('damaged',h=>{if(h.source===this.owner)this.hits.push({time:battle.time,amount:h.amount,tags:h.dmg.tags});});
  const label=document.createElement('div');label.textContent='HELD BEAM REVIEW · explicit tile-height mounts and UV switch=0 · native dispatch pending';label.style.cssText='position:fixed;bottom:0;left:0;z-index:99999;background:#142027;color:white;font:11px sans-serif;pointer-events:none';workspace.append(label);
@@ -22,7 +24,7 @@ globalThis.cnReview={get battle(){return battle;},get renderer(){return renderer
  Object.assign(e.base,{maxHp:1e9,atk:0,def:0,res:0,moveSpeed:0});e.markDirty();void e.s;e.hp=e.s.maxHp;battle.addBuff(e,{key:'qa:pin',flags:{noMove:true,disarm:true}});battle._buildEnemyIndex();},
  async until(mode){const end=battle.time+50;while(!this.owner.mem.aphrissaLinePresentation.snapshot().some(t=>t.mode===mode)&&battle.time<end)battle.step();
  if(!this.owner.mem.aphrissaLinePresentation.snapshot().some(t=>t.mode===mode))throw Error('Missing held beam '+mode);await this.advance(.06);},
- snapshot(){return {time:battle.time,tracks:this.owner.mem.aphrissaLinePresentation.snapshot(),segments:this.pass.inspect().map(e=>({key:e.key,mode:e.track.mode,root:e.track.root,clip:e.track.clip,positions:e.positions,time:e.time,layers:e.instance?.draws.length,
+ snapshot(){return {time:battle.time,tracks:this.owner.mem.aphrissaLinePresentation.snapshot(),segments:this.pass.inspect().map(e=>({key:e.key,kind:e.kind,point:e.point,mode:e.track.mode,root:e.root,clip:e.clip,positions:e.positions,placement:e.placement,time:e.time,bornAt:e.bornAt,layers:e.instance?.draws.length,
   complete:e.instance?.inspection===null&&e.instance.blocked.length===0,sourceRenderers:e.instance?[...e.instance.pose.renderers].filter(([,r])=>r.enabled).map(([id])=>id).sort():[],playedRenderers:e.instance?.draws.map(d=>d.component).sort()})),
  instances:this.pass.instanceCount,hits:this.hits,ammo:this.owner.skill.ammoLeft,sp:this.owner.skill.spTotal,errors:battle.errors,glError:renderer.three.getContext().getError(),nativeFrameParity:false,nativeMountMappingVerified:false,nativeProgressiveDrawVerified:false};}
 };`;
@@ -56,13 +58,26 @@ try{for(const mobile of [false,true])for(const skill of [1,2,3]){
  const output=await page.evaluate(()=>cnReview.snapshot());await capture('relay-beam');
  const tracks=output.tracks.filter(t=>t.mode===`s${skill}`);assert.ok(tracks.length>0);assert.ok(tracks.some(t=>t.points.some(p=>p.role==='waypoint')));
  assert.ok(output.segments.length>=2);assert.ok(output.hits.length>ordinary.hits.length);
- for(const view of [ordinary,output])for(const segment of view.segments){assert.equal(segment.layers,9);assert.equal(segment.complete,true);assert.deepEqual(segment.playedRenderers,segment.sourceRenderers);}
+ for(const view of [ordinary,output]){
+  for(const segment of view.segments){if(segment.kind==='line')assert.equal(segment.layers,9);else assert.ok(segment.layers>0);
+   assert.equal(segment.complete,true);assert.deepEqual(segment.playedRenderers,segment.sourceRenderers);}
+  assert.ok(view.segments.some(s=>s.point?.role==='start'));assert.ok(view.segments.some(s=>s.point?.role==='end'));
+ }
+ assert.ok(output.segments.some(s=>s.point?.role==='waypoint'));
  const paused=await page.evaluate(async()=>{const before=cnReview.snapshot();await cnReview.render();const after=cnReview.snapshot();return{before:before.segments,after:after.segments,timeBefore:before.time,timeAfter:after.time};});
  assert.deepEqual(paused.before,paused.after);assert.equal(paused.timeBefore,paused.timeAfter);
+ let ending=null;
+ if(skill===2){
+  await page.evaluate(async()=>{const end=cnReview.battle.time+10;while(cnReview.owner.skill.active&&cnReview.battle.time<end)cnReview.battle.step();await cnReview.advance(.05);});
+  ending=await page.evaluate(()=>cnReview.snapshot());await capture('point-end');
+  const points=ending.segments.filter(s=>s.mode==='s2'&&s.kind==='point');assert.ok(points.length>=3);
+  for(const point of points){assert.equal(point.clip.clip,APHRISSA_BEAM_STYLES.s2.points[point.point.role].end.id);assert.ok(point.time>point.clip.time);}
+  assert.deepEqual(ending.errors,[]);assert.equal(ending.glError,0);
+ }
  await page.click(`#deployment [data-id="${ID}"]`);await page.click('#retreat');await page.evaluate(()=>cnReview.advance(.1));
  const retired=await page.evaluate(()=>cnReview.snapshot());await capture('retired');assert.equal(retired.instances,0);assert.deepEqual(retired.tracks,[]);
  for(const s of [ordinary,output,retired]){assert.deepEqual(s.errors,[]);assert.equal(s.glError,0);}
- assert.deepEqual(driver.errors,[]);assert.deepEqual(driver.failedResources,[]);reports.push({label,ordinary,swept,output,retired});await page.close();
+ assert.deepEqual(driver.errors,[]);assert.deepEqual(driver.failedResources,[]);reports.push({label,ordinary,swept,output,ending,retired});await page.close();
  console.log(label+': actual held attack markers, relay turns, source shaders and retirement passed');
 }
  await writeFile(out+'report.json',JSON.stringify({heldOnly:true,actualBattle:true,originalWaves:false,explicitShaderGlobals:{_HG_UV_ROTATION:0},

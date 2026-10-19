@@ -55,7 +55,11 @@ export function createParticleLifecycle(source,{seed=1,modules=[],spaces=[0],all
         throw Error('Scheduled particle lifetime differs from authored source');
       const size=initial.size3D?[startSize,sampleParticleCurve(initial.startSizeY,phase,random(p.id,2)),sampleParticleCurve(initial.startSizeZ,phase,random(p.id,3))]:[startSize,startSize,startSize];
       const rotation=startRotation.sample(phase,[random(p.id,32),random(p.id,33),random(p.id,4)]);
-      const color=sampleParticleGradient(initial.startColor,phase,random(p.id,5)),age=p.age,t=age/p.lifetime;
+      // The birth ledger admits a boundary within its existing 1e-10 guard.
+      // That can leave a tiny negative subtraction residue; physical age is
+      // zero, including for angular/custom-data consumers that reject negatives.
+      // Keep the authored birth identity/time and reject larger negatives above.
+      const color=sampleParticleGradient(initial.startColor,phase,random(p.id,5)),age=Math.max(0,p.age),t=age/p.lifetime;
       if(source.SizeModule?.enabled){
         const m=source.SizeModule;
         const factors=m.separateAxes?[m.curve,m.y,m.z].map((c,i)=>sampleParticleCurve(c,t,random(p.id,6+i))):Array(3).fill(sampleParticleCurve(m.curve,t,random(p.id,6)));

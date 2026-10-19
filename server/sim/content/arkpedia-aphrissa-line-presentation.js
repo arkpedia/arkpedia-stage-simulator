@@ -13,7 +13,9 @@ export function prepareAphrissaLinePresentation(b,u,{contract}={}){
   for(const [mode,fx]of [['normal',n.ordinaryLineFx],['s1',n.s1LineFx],['s1',n.s1DownLineFx],
     ['s2',n.s2LineFx],['s3',n.s3LineFx],['s3',n.s3DownLineFx]]){
     const style=APHRISSA_BEAM_STYLES[mode];
-    if(fx._lineEffectKey!==style.root||fx._emitOnEvent!==4||fx._progressiveDraw!==Number(style.progressive)
+    if(fx._lineEffectKey!==style.root||fx._startPointEffectKey!==style.points.start.root
+      ||fx._waypointEffectKey!==style.points.waypoint.root||fx._endPointEffectKey!==style.points.end.root
+      ||fx._emitOnEvent!==4||fx._progressiveDraw!==Number(style.progressive)
       ||fx._effectReuse!==Number(style.reuse)||fx._alwaysUseNewRange!==Number(style.reuse)
       ||fx._startMountType!==style.startMountType||fx._waypointMountType!==style.waypointMountType
       ||fx._waypointUseFixedHeight!==1||fx._waypointFixedHeight!==style.waypointFixedHeight)

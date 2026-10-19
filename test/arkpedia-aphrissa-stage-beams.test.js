@@ -4,7 +4,7 @@ import assert from 'node:assert/strict';
 import * as T from 'three';
 import {createAphrissaStageBeams} from '../public/arkpedia/aphrissa-stage-beams.js';
 import {APHRISSA_BEAM_OWNER as ID,APHRISSA_BEAM_PACK as PACK,APHRISSA_BEAM_CONTRACT as contract,APHRISSA_BEAM_STYLES as styles} from '../shared/arkpedia/aphrissa-beam-presentation.js';
-function fixture(create){
+function fixture(create,pointFrameAt=({position})=>({position,rotation:[0,0,0,1],scale:[1,1,1]})){
  const instances=[],calls=[],track={id:'1:1:beam:attack:1',ownerId:1,ownerLife:1,mode:'normal',root:styles.normal.root,clip:styles.normal.clip.id,
   startedAt:5,clipStartedAt:5,stage:'active',points:[{role:'start',row:2,col:3,unitId:1,life:1,mountType:2},
   {role:'waypoint',row:2,col:5,unitId:2,life:1,mountType:1,fixedHeight:styles.normal.waypointFixedHeight},{role:'end',row:5,col:5}]};
@@ -14,13 +14,13 @@ function fixture(create){
  const owner={id:1,def:{charId:ID},side:'ally',alive:true,deployed:true,deploySeq:1,mem:{aphrissaLinePresentation:{snapshot:()=>[structuredClone(track)]}}};
  const relay={id:2,alive:true,deployed:true,deploySeq:1,side:'ally'},battle={time:5,regularReviewCandidates:[ID],units:[owner,relay]};
  const anchorAt=({point})=>[point.col,.4,point.row];
- const pass=createAphrissaStageBeams({three:T,library,sourcePackSha256:PACK,contract,heightAt:()=>.6,anchorAt,shaderGlobals:{_HG_UV_ROTATION:0}});
+ const pass=createAphrissaStageBeams({three:T,library,sourcePackSha256:PACK,contract,heightAt:()=>.6,anchorAt,pointFrameAt,shaderGlobals:{_HG_UV_ROTATION:0}});
  const camera=new T.PerspectiveCamera(40,1,.1,100);camera.up.set(0,0,1);camera.position.set(7,-6,8);camera.lookAt(3,2,0);camera.updateMatrixWorld(true);
  const renderer={autoClear:true,render(){}};
  return{pass,track,owner,relay,battle,instances,calls,camera,renderer};
 }
 test('a captured actual ray creates one original instance per segment, with native waypoint height and stage depth',async()=>{
- const f=fixture();f.pass.update(f.battle);await f.pass.ready();assert.equal(f.pass.instanceCount,2);assert.equal(f.pass.isActor(f.owner),false);
+ const f=fixture();f.pass.update(f.battle);await f.pass.ready();assert.equal(f.pass.instanceCount,5);assert.equal(f.pass.isActor(f.owner),false);
  f.battle.time=5.25;f.pass.update(f.battle);f.pass.render(f.renderer,f.camera);
  assert.equal(f.instances[0].updates[0].time,.25);assert.equal(f.instances[0].updates[0].options.clip,styles.normal.clip.id);
  assert.deepEqual(f.calls[0].options.linePositions(),[[3,.4,2],[5,.6+styles.normal.waypointFixedHeight,2]]);
@@ -33,31 +33,59 @@ test('a captured actual ray creates one original instance per segment, with nati
 });
 test('S2 path and End clip changes reuse their segment while the combat clock remains paused',async()=>{
  const f=fixture();Object.assign(f.track,{mode:'s2',root:styles.s2.root,clip:styles.s2.clip.id});f.pass.update(f.battle);await f.pass.ready();
- f.track.points[2].row=6;f.pass.update(f.battle);f.pass.render(f.renderer,f.camera);assert.equal(f.calls.length,2);
+ f.track.points[2].row=6;f.pass.update(f.battle);f.pass.render(f.renderer,f.camera);assert.equal(f.calls.length,5);
  assert.equal(f.calls[1].options.linePositions()[1][2],6);
  Object.assign(f.track,{stage:'end',clip:styles.s2.end.id,clipStartedAt:5.1});f.battle.time=5.2;
  f.pass.update(f.battle);f.pass.render(f.renderer,f.camera);assert.ok(Math.abs(f.instances[0].updates.at(-1).time-.1)<1e-12);
- assert.equal(f.instances[0].updates.at(-1).options.clip,styles.s2.end.id);assert.equal(f.calls.length,2);f.pass.dispose();
+ assert.equal(f.instances[0].updates.at(-1).options.clip,styles.s2.end.id);assert.equal(f.calls.length,5);
+ for(const entry of f.pass.inspect().filter(e=>e.kind==='point')){
+  assert.ok(Math.abs(entry.time-.2)<1e-12);assert.ok(Math.abs(entry.clip.time-.1)<1e-12);
+  assert.equal(entry.clip.clip,styles.s2.points[entry.point.role].end.id);
+ }
+ f.pass.dispose();
 });
 test('a late original load cannot resurrect a cleared battle or retired owner',async()=>{
  const waiting=[],f=fixture(()=>new Promise(resolve=>waiting.push(resolve)));
- f.pass.update(f.battle);await Promise.resolve();assert.equal(f.pass.pendingCount,2);f.owner.alive=false;f.pass.update(f.battle);
- const make=()=>({group:new T.Group(),disposed:0,dispose(){this.disposed++;}}),a=make(),b=make();waiting[0](a);waiting[1](b);await f.pass.ready();
- assert.equal(a.disposed,1);assert.equal(b.disposed,1);assert.equal(f.pass.scene.children.length,0);
+ f.pass.update(f.battle);await Promise.resolve();assert.equal(f.pass.pendingCount,5);f.owner.alive=false;f.pass.update(f.battle);
+ const instances=waiting.map(resolve=>{const i={group:new T.Group(),disposed:0,dispose(){this.disposed++;}};resolve(i);return i;});await f.pass.ready();
+ assert.ok(instances.every(i=>i.disposed===1));assert.equal(f.pass.scene.children.length,0);
  assert.equal(f.calls[0].options.linePositions(),null);f.pass.dispose();
 });
 test('unknown sources and invalid mounts/lives are rejected without silently changing an existing scene',async()=>{
  const f=fixture();f.pass.update(f.battle);await f.pass.ready();
  for(const mutate of [t=>t.mode='__proto__',t=>t.ownerLife=2,t=>t.points[1].life=2,t=>t.points[1].fixedHeight=.5,t=>t.clip='invented']){
-  const before=structuredClone(f.track);mutate(f.track);assert.throws(()=>f.pass.update(f.battle));Object.assign(f.track,before);assert.equal(f.pass.instanceCount,2);
+  const before=structuredClone(f.track);mutate(f.track);assert.throws(()=>f.pass.update(f.battle));Object.assign(f.track,before);assert.equal(f.pass.instanceCount,5);
  }
  assert.throws(()=>f.pass.update({...f.battle,regularReviewCandidates:[]}),/held Aphrissa battle/);
  f.pass.clear();assert.equal(f.pass.instanceCount,0);f.pass.dispose();assert.throws(()=>f.pass.update(f.battle),/disposed/);
+});
+test('a newly introduced S2 relay receives its own point clock while existing endpoint particles retain theirs',async()=>{
+ const f=fixture();Object.assign(f.track,{mode:'s2',root:styles.s2.root,clip:styles.s2.clip.id});
+ const waypoint=f.track.points.splice(1,1)[0];f.pass.update(f.battle);await f.pass.ready();f.battle.time=6;f.pass.update(f.battle);
+ const before=f.pass.inspect().find(e=>e.point?.role==='end'),endpoint=before.instance;
+ f.track.points.splice(1,0,waypoint);f.pass.update(f.battle);await f.pass.ready();f.pass.render(f.renderer,f.camera);
+ const views=f.pass.inspect(),added=views.find(e=>e.point?.role==='waypoint'),end=views.find(e=>e.point?.role==='end');
+ assert.equal(added.time,0);assert.equal(added.bornAt,6);assert.equal(end.instance===endpoint,true);assert.equal(end.bornAt,5);assert.equal(end.time,1);
+ const start=views.find(e=>e.point?.role==='start'),updates=start.instance.updates.length;
+ f.pass.update(f.battle);f.pass.render(f.renderer,f.camera);assert.equal(start.instance.updates.length,updates);
+ // Same path index with a new deployment life must get a fresh effect.
+ f.relay.deploySeq=2;f.track.points[1].life=2;f.battle.time=6.2;f.pass.update(f.battle);await f.pass.ready();
+ const replacement=f.pass.inspect().find(e=>e.point?.role==='waypoint');assert.equal(added.instance.disposed,1);assert.equal(replacement.time,0);
+ f.pass.dispose();
 });
 test('source load failure and render failure preserve resource and caller ownership',async()=>{
  const failed=fixture(async()=>{throw Error('Original line unavailable');});failed.pass.update(failed.battle);await assert.rejects(failed.pass.ready(),/unavailable/);failed.pass.dispose();
  const f=fixture();f.pass.update(f.battle);await f.pass.ready();f.renderer.autoClear=false;f.renderer.render=()=>{throw Error('GPU failed');};
  assert.throws(()=>f.pass.render(f.renderer,f.camera),/GPU failed/);assert.equal(f.renderer.autoClear,false);f.pass.dispose();
+});
+test('invalid point frames cannot partially replace a previously rendered scene',async()=>{
+ let invalid=null;const f=fixture(null,({position})=>({position,rotation:[0,0,0,1],scale:[1,1,1],...invalid}));
+ f.pass.update(f.battle);await f.pass.ready();f.pass.render(f.renderer,f.camera);
+ const before=f.pass.inspect().map(e=>e.instance);
+ for(const value of [{position:[999,0,0]},{rotation:[0,0,0,0]},{scale:[1,NaN,1]},{position:Array(3)}]){
+  invalid=value;assert.throws(()=>f.pass.update(f.battle));assert.ok(before.every((i,n)=>f.pass.inspect()[n].instance===i&&i.disposed===0));
+ }
+ invalid=null;f.pass.update(f.battle);f.pass.render(f.renderer,f.camera);f.pass.dispose();
 });
 test('partial prefabs, blocked source components and changed shader globals never enter the battle scene',async()=>{
  for(const invalid of [{inspection:{fullEffect:false}},{blocked:['original helper']},{blocked:null},{shaderGlobals:{_HG_UV_ROTATION:1}}]){
