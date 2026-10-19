@@ -4835,3 +4835,7 @@ Wang joins with his original stones (token art and card avatar from the CN clien
 ### Bellone
 
 Bellone joins with talent DEF shred and missing-HP damage, decaying deployment evasion, the S1 double hit, S2 three targets with sluggish at full shred, and the S3 pursuit that moves him onto enemies and ends in an undying return home. See docs/DEMETR-REVIEW.md. Coverage: 425/431 forms.
+
+### Pramanix the Prerita
+
+Pramanix the Prerita joins with her Phalanx trait, talent snow layers that strike, slow and clear, cold on attackers with a one-time freezing escape, the S1 strike with push and forward snow, S2 infinite attacks with spreading, damaging and freezing snow, and S3 attraction with faster snow. Snow layers are simulated but not yet drawn. See docs/SBELL2-REVIEW.md. Coverage: 426/431 forms.

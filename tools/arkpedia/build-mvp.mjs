@@ -105,7 +105,8 @@ const CN_OWNER_REVIEWS = Object.freeze({char_4185_amoris: {slug: 'amoris', polic
   char_4204_mantra: {slug: 'mantra', policy: 'source-cn-mantra-palsy-neural-v1'},
   char_4202_haruka: {slug: 'haruka', policy: 'source-cn-haruka-bubbles-v1'},
   char_2027_wang: {slug: 'wang', policy: 'source-cn-wang-stones-v1', tokens: {token_10064_wang_stone1: 'wang'}},
-  char_4037_demetr: {slug: 'demetr', policy: 'source-cn-demetr-pursuit-v1'}});
+  char_4037_demetr: {slug: 'demetr', policy: 'source-cn-demetr-pursuit-v1'},
+  char_1046_sbell2: {slug: 'sbell2', policy: 'source-cn-sbell2-snow-v1'}});
 const candidateTurdus = process.argv.includes('--review-candidate-turdus');
 const candidateTmslot = process.argv.includes('--review-candidate-tmslot');
 const candidateThumpy = process.argv.includes('--review-candidate-thumpy');
