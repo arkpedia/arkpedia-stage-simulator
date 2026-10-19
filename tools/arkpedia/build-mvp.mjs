@@ -9,6 +9,7 @@ import { compileReviewedOperators, operatorChannel } from "./operator-source.mjs
 import { writeJSONAtomic } from "./write-json.mjs";
 import { isDeepStrictEqual } from "node:util";
 import { verifyAphrissaArtwork, APHRISSA_TOKEN } from "./aphrissa-artwork.mjs";
+import { APHRISSA_PREPARED_ROOTS } from "../../public/arkpedia/aphrissa-roots.js";
 import { compileBuffTemplate } from "../../shared/arkpedia/behavior.js";
 const cache = new URL("../../.cache/arkpedia/", import.meta.url);
 await mkdir(cache, { recursive: true });
@@ -1277,6 +1278,16 @@ if(ids.includes('char_1042_phatm2')){
   const bytes=execFileSync('git',['show',`${sdCommit}:${review.nativeEffectManifest.path}`],{cwd:new URL('../../../arkpedia-sd-assets/',import.meta.url),maxBuffer:16*1024*1024});
   if(bytes.length!==review.nativeEffectManifest.bytes||createHash('sha256').update(bytes).digest('hex')!==review.nativeEffectManifest.sha256)throw Error('Changed native package manifest');
   nativeEffects={tragodia:{repository:'arkpedia/arkpedia-sd-assets',commit:sdCommit,manifest:review.nativeEffectManifest}};
+}
+if(aphrissaSource){
+  const entry=aphrissaReview.nativeEffectManifest,sd=new URL('../../../arkpedia-sd-assets/',import.meta.url);
+  const registry=JSON.parse(execFileSync('git',['show',`${sdCommit}:native-effect-manifest.json`],{cwd:sd,encoding:'utf8'}));
+  const bytes=execFileSync('git',['show',`${sdCommit}:${entry?.path}`],{cwd:sd,maxBuffer:16*1024*1024}),meta=JSON.parse(bytes);
+  const effects=JSON.parse(await readFile(new URL('../../data/arkpedia-aphrissa-effects.json',import.meta.url)));
+  if(JSON.stringify(registry.effects.aphrissa)!==JSON.stringify(entry)||bytes.length!==entry.bytes||createHash('sha256').update(bytes).digest('hex')!==entry.sha256
+    ||JSON.stringify(meta.pack)!==JSON.stringify(effects.pack)||JSON.stringify(meta.scope.preparedRoots)!==JSON.stringify(APHRISSA_PREPARED_ROOTS))
+    throw Error('Changed Aphrissa native effect delivery');
+  nativeEffects={...(nativeEffects??{}),aphrissa:{repository:'arkpedia/arkpedia-sd-assets',commit:sdCommit,manifest:entry}};
 }
 if (ids.includes('char_450_necras')) {
   const review = JSON.parse(await readFile(new URL('../../data/arkpedia-necrass-runtime-review.json', import.meta.url)));

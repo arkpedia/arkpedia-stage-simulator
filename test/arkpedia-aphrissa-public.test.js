@@ -13,6 +13,9 @@ import {REGULAR_OPERATORS} from '../shared/arkpedia/operators.js';
 import {defaultBuild, catalogueFor} from '../shared/arkpedia/loadout.js';
 import {regularTokenIdsFor} from '../shared/arkpedia/summons.js';
 import {interfaceAssetUrl} from '../shared/arkpedia/interface-assets.js';
+import {loadAphrissaStageEffects} from '../public/arkpedia/aphrissa-assets.js';
+import {APHRISSA_PREPARED_ROOTS} from '../public/arkpedia/aphrissa-roots.js';
+import effects from '../data/arkpedia-aphrissa-effects.json' with {type:'json'};
 import {StandardBattle} from '../server/sim/arkpedia.js';
 import {selectedAphrissaBuild} from '../server/sim/content/arkpedia-aphrissa-source.js';
 import {skillHud} from '../shared/arkpedia/skill-hud.js';
@@ -39,7 +42,8 @@ check('Admission binds the reviewed original owner/relay art, interface pixels a
  for(const[path,key]of[['native-operators/'+ID,'sourceFoundationSha256'],['aphrissa-art','ownerArtworkSha256'],['aphrissa-token-art','tokenArtworkSha256'],['aphrissa-token-avatar','tokenAvatarSha256'],['aphrissa-interface-art','interfaceArtworkSha256'],['aphrissa-clocks','sourceClocksSha256']])
   assert.equal(createHash('sha256').update(await readFile(new URL('../data/arkpedia-'+path+'.json',import.meta.url))).digest('hex'),review[key]);
  for(const[k,v]of Object.entries(review.originalArtwork)){assert.deepEqual(data.sd.models[k],v);assert.deepEqual(models.models[k],v);}
- assert.equal(data.sd.commit,models.commit);assert.equal(review.interfaceAssets.length,4);
+ assert.equal(review.interfaceAssets.length,4);
+ assert.deepEqual(data.nativeEffects.aphrissa,{repository:'arkpedia/arkpedia-sd-assets',commit:data.sd.commit,manifest:review.nativeEffectManifest});assert.deepEqual(data.nativeEffects.tragodia,normal.nativeEffects.tragodia);
  for(const a of review.interfaceAssets){assert.deepEqual(data.interfaceAssets[a.repository][a.path],{commit:a.commit,bytes:a.bytes,sha256:a.sha256});assert.ok(interfaceAssetUrl(data,a.repository,a.path).includes('/'+a.commit+'/'));}
  assert.ok(data.tokens[TOKEN].avatar.includes('/'+data.sd.commit+'/'));assert.deepEqual(data.tokens[TOKEN].skills.map(s=>s.id),[null,null,null]);
  assert.deepEqual(data.stage.geometry,normal.stage.geometry);assert.deepEqual(data.enemies,normal.enemies);assert.ok(catalogueFor(data)[ID]);
@@ -94,4 +98,12 @@ test('Changed original owner or passive relay artwork cannot enter the normal bu
   if(kind==='relayAvatar')relay.avatar.sha256='0'.repeat(64);
   await assert.rejects(verifyAphrissaArtwork(m));
  }
+});
+test('Public effect delivery accepts only the reviewed immutable package and its renderable roots',async()=>{
+ const m=review.nativeEffectManifest;assert.match(m.path,new RegExp('^effects/native/aphrissa/'+effects.version+'/'+effects.pack.sha256+'/manifest\\.json$'));
+ for(const descriptor of [undefined,{},{repository:'elsewhere/assets',commit:'a'.repeat(40),manifest:m},{repository:'arkpedia/arkpedia-sd-assets',commit:'main',manifest:m},
+  {repository:'arkpedia/arkpedia-sd-assets',commit:'a'.repeat(40),manifest:{...m,sha256:'0'.repeat(64)}},{repository:'arkpedia/arkpedia-sd-assets',commit:'a'.repeat(40),manifest:m,localBase:'/elsewhere/'}])
+  await assert.rejects(loadAphrissaStageEffects({descriptor}),/Unreviewed Aphrissa effect delivery|Invalid local Aphrissa effect base/);
+ assert.equal(APHRISSA_PREPARED_ROOTS.length,21);assert.ok(APHRISSA_PREPARED_ROOTS.every(r=>Object.hasOwn(effects.roots,r)));
+ assert.deepEqual(Object.keys(effects.roots).filter(r=>!APHRISSA_PREPARED_ROOTS.includes(r)),['common_char_birth_01_delay_01']);
 });

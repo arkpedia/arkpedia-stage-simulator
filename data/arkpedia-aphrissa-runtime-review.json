@@ -9,7 +9,7 @@
   "nativeParticleSupport": false,
   "nativePixelParity": false,
   "mechanicsPolicy": "source-cn-aphrissa-relay-rays-owned-skills-v1",
-  "scope": "Pending public admission of the selected original S1/S2/S3 kit and passive relay. Native finish/FSM/control, effects/audio, modules and compiled/frame/pixel parity are unapproved.",
+  "scope": "Public selected original S1/S2/S3 kit, passive relay, original Front/Back and relay art, and the published original beam/hit/aura package drawn by the public renderer. Beam endpoints (+0.65 above the end tile), hit height (+0.4) and identity orientation are explicit local mappings. Native finish/FSM/control, audio, modules and compiled/frame/pixel parity are unapproved.",
   "sourceFoundationSha256": "77207d3d44737940e6bc4aee4a4a57abea27a1490d3870168e9f1615527ca254",
   "ownerArtworkSha256": "8f3633b17f4e25bc754e16a6b497729bfbb567ddbe1977ed63a0b9ffb4aae308",
   "tokenArtworkSha256": "5a02df8e5b2fa9c72cc3ecc659ad5fcc443c99b5294355695e8272465ea0f8e6",
@@ -20,15 +20,15 @@
     "browser": {
       "status": "passed",
       "script": "tools/arkpedia/review-aphrissa-public.mjs",
-      "scriptSha256": "5eb703dd9109bc09695e2c6cd707f23c90d9c9330a59b6583fb99587348f249c",
+      "scriptSha256": "49e63099fda46fd93f5372f4f9a192513e57f6d63e608974e5629e37978d5986",
       "driverSha256": "2e52cd4007ae553e30f773104626f9b5c2be7c15f717b61ca9063517fbdc51c8",
       "fixtureServerSha256": "127fb1b74be89d0a35e6bfa4e3d35927d170fa4d3129287f6c523114c5bcaa22",
       "browserVersion": "Chrome/153.0.8010.12",
       "cacheDisabled": true,
       "externalAssetTransport": "Unintercepted original immutable HTTPS; normal TLS verification.",
       "originalWaves": false,
-      "scope": "Controlled actual squad/deploy/manual UI on desktop 1280x800 and touch 844x390: legal owner drop then separate swipe, original terrain, empty waves, 99 DP and pinned targets; original-wave clears are separate battle tests.",
-      "candidate": {
+      "scope": "Controlled actual squad/deploy/manual UI on desktop 1280x800 and touch 844x390 against the normal snapshot: legal owner drop then separate swipe, relay drop/swipe, original terrain, empty waves, 99 DP and pinned targets. The renderer's own Aphrissa pass (no injected review pass) must draw the original ordinary/S2/S3 beams and S1/S3 auras with no blocked components; one desktop case also loads Tragodia's pass in the same squad. Original-wave clears are separate battle tests.",
+      "normal": {
         "cases": 6,
         "captures": 46,
         "errors": 0,
@@ -436,5 +436,10 @@
       "bytes": 15082,
       "sha256": "b2bb97c0d1652e28ded3b949cd42c46a5e6c64a85406fbb9ec08b1dc5a7a5ab1"
     }
-  ]
+  ],
+  "nativeEffectManifest": {
+    "path": "effects/native/aphrissa/26-09-22-07-47-20_6c71fa/57feaeef6ee48b966eb80cf564c9c4093ad6a4f19265ef974402c69f457c0b22/manifest.json",
+    "bytes": 42817,
+    "sha256": "db00c363ad8518b966da0c704df5d3f8f09478bba7193e300fabaa2c0e7eb672"
+  }
 }
