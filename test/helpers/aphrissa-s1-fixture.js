@@ -11,7 +11,8 @@ export {near, advance} from './mon3tr-fixture.js';
 import {advance} from './mon3tr-fixture.js';
 
 export function make({elite = 2, potential = 1, trust = 0, rank = [4, 7, 10][elite],
-  dir = 'RIGHT', defer = false, contract = APHRISSA_S1_CONTRACT, mutate} = {}) {
+  dir = 'RIGHT', defer = false, contract = APHRISSA_S1_CONTRACT, mutate,
+  skill = 1, prepare = prepareAphrissaS1} = {}) {
   const d = structuredClone(data);
   d.stage.geometry.waves[0].spawns = []; d.stage.battle.dp_per_second = 0;
   d.stage.geometry.rows = 19; d.stage.geometry.cols = 21;
@@ -20,14 +21,14 @@ export function make({elite = 2, potential = 1, trust = 0, rank = [4, 7, 10][eli
   b.autoFinish = false; b.recordEvents = true; b.setViewport('fullscreen-workspace');
   b.grid.tiles = b.grid.tiles.map(t => ({...t, height: 'LOW', build: 'ALL', pass: 'ALL'}));
   const c = evidence.tables.character, build = {elite, potential, trust, level: c.phases[elite].maxLevel,
-    skillId: 'skchr_aphris_1', skillRank: rank, module: 'none'};
+    skillId: `skchr_aphris_${skill}`, skillRank: rank, module: 'none'};
   const selected = selectedAphrissaBuild(build);
   const def = normalizeChess({chessId: ID, charId: ID, name: c.appellation, profession: c.profession,
     position: c.position, stats: selected.stats, rangeGrid: selected.rangeGrid, tags: selected.tags, talents: selected.talents,
     skill: {...selected.source, ...selected.source.spData, skillId: build.skillId, rangeGrid: selected.skillRangeGrid}, arkpedia: build});
   mutate?.(def);
   const u = b._makeAlly(b.getPlayer('arkpedia'), def, 'op', 5, 5, {dir});
-  const prepared = prepareAphrissaS1(b, u, {contract});
+  const prepared = prepare(b, u, {contract});
   b._setupUnit(u, prepared.kit); prepared.controller.install();
   const hits = [], receipts = [], starts = [], ends = [];
   b.on('damaged', event => { if (event.source === u) hits.push({id: event.target.id, at: b.time,

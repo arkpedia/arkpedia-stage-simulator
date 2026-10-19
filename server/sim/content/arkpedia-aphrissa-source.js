@@ -59,6 +59,7 @@ export function aphrissaNativeInputs() {
     s2Target: skill(1, '-1260879574378652962'),
     s2Animation: skill(1, '-7836614839976895778'),
     s2ModeBuff: skill(1, '-3812497374193100066'),
+    s2Mode: owner('-6037644826992189346'),
     s2Range: skill(1, '-6697157982275806498'),
     s2TurnUnion: skill(1, '3193138193450949342'),
     s2RelayValidator: skill(1, '6535142130720922334'),
