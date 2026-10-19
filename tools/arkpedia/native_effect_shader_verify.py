@@ -115,7 +115,7 @@ def audit(spec):
     manifest = ROOT / spec['manifest']
     source = json.loads((ROOT / spec['source_manifest']).read_text())
     bundle = next(s for s in source['sources'] if s['path'] == '[uc]shaders.ab')
-    raw = (ROOT / '.cache/arkpedia/map-source/ab/[uc]shaders.ab').read_bytes()
+    raw = (ROOT / '.cache/arkpedia' / spec.get('shader_bundle', 'map-source/ab/[uc]shaders.ab')).read_bytes()
     assert len(raw) == bundle['bytes'] and digest(raw) == bundle['sha256']
     env = UnityPy.Environment()
     env.load_file(raw)

@@ -84,7 +84,7 @@ def extract(spec):
     if sha((out / 'native-effects.bin').read_bytes()) != manifest['pack']['sha256']:
         raise ValueError('Changed audited effect pack')
     entry = next(r for r in manifest['sources'] if r['path'] == '[uc]shaders.ab')
-    raw = (ROOT / '.cache/arkpedia/map-source/ab/[uc]shaders.ab').read_bytes()
+    raw = (ROOT / '.cache/arkpedia' / spec.get('shader_bundle', 'map-source/ab/[uc]shaders.ab')).read_bytes()
     if len(raw) != entry['bytes'] or sha(raw) != entry['sha256']:
         raise ValueError('Wrong pinned original shader bundle')
     env = UnityPy.Environment()

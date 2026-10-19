@@ -57,23 +57,29 @@ def refs(v, field=''):
 def verify(cache, directory, manifest, spec):
     meta = json.loads(manifest.read_text())
     assert meta['schemaVersion'] == 1 and meta['operator'] == spec['operator']
-    assert meta['version'] == '26-09-23-17-49-43_b9cc4a'
+    assert meta['version'] == spec.get('version', '26-09-23-17-49-43_b9cc4a')
     scope = meta['scope']
     assert scope['sourceInputsOnly'] is True and scope['enabledOperators'] == []
     assert scope['rendererVerified'] is False and scope['compiledFrameParity'] is False
     assert len(scope['pending']) == 3
-    hot = json.loads((cache / 'map-source/hot_update_list.json').read_text())
+    hot_bytes = (cache / spec.get('manifest', 'map-source/hot_update_list.json')).read_bytes()
+    if spec.get('manifest_sha256'):
+        assert digest(hot_bytes) == spec['manifest_sha256'], 'Changed pinned native resource manifest'
+    hot = json.loads(hot_bytes)
     assert hot['versionId'] == meta['version']
     expected = {spec['bundle'], '[uc]shaders.ab',
                 'arts/[pack]common.ab', 'battle/[pack]common.ab'}
     expected |= {r['name'] for r in hot['abInfos']
                  if r['name'].startswith('refs/fx/') and '/overseas/' not in r['name']}
-    assert len(meta['sources']) == len(expected) == 23
+    additional = spec.get('additional_roots', {})
+    expected.update(additional)
+    expected.update(spec.get('extra_dependencies', []))
+    assert len(meta['sources']) == len(expected) == spec.get('source_count', 23)
     assert {r['path'] for r in meta['sources']} == expected
     env, source_files, foreign_files = UnityPy.Environment(), {}, {}
     for r in meta['sources']:
         name = r['path']
-        file = cache / (spec['local_bundle'] if name == spec['bundle'] else 'map-source/ab/' + name)
+        file = cache / (spec['local_bundle'] if name == spec['bundle'] else spec.get('dependencies_directory', 'map-source/ab/') + name)
         raw = file.read_bytes()
         pinned = next(x for x in hot['abInfos'] if x['name'] == name)
         assert len(raw) == pinned['abSize'] == r['bytes']
@@ -92,16 +98,21 @@ def verify(cache, directory, manifest, spec):
     pack = json.loads(raw)
     assert pack['schemaVersion'] == 1 and pack['operator'] == meta['operator']
     assert pack['version'] == meta['version'] and pack['coordinates'] == 'original-unity'
-    main = source_files[spec['bundle']]
     roots = {}
-    for o in main.objects.values():
-        if o.type.name == 'Transform':
-            tr = o.read()
-            if tr.m_Father.path_id == 0:
-                go = tr.m_GameObject.read()
-                if '#' not in go.m_Name:
-                    assert go.m_Name.startswith(spec['root_prefix']) and go.m_Name not in roots
-                    roots[go.m_Name] = spec['bundle'] + ':' + str(go.object_reader.path_id)
+    for bundle_name, selected in {spec['bundle']: None, **additional}.items():
+        main = source_files[bundle_name]
+        found = set()
+        for o in main.objects.values():
+            if o.type.name == 'Transform':
+                tr = o.read()
+                if tr.m_Father.path_id == 0:
+                    go = tr.m_GameObject.read()
+                    if '#' not in go.m_Name and (selected is None or go.m_Name in selected):
+                        assert go.m_Name.startswith(spec['root_prefix']) and go.m_Name not in roots
+                        roots[go.m_Name] = bundle_name + ':' + str(go.object_reader.path_id)
+                        found.add(go.m_Name)
+        if selected is not None:
+            assert found == set(selected), 'Missing selected original dependency effect root'
     assert len(roots) == spec['roots'] and meta['roots'] == pack['roots'] == roots
     assert all('#' not in n for n in roots)
     assert meta['textures'] == pack['textures']

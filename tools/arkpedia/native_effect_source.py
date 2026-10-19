@@ -63,22 +63,29 @@ def pointers(value, field=''):
 
 def export(cache, out, spec, manifest_out=None):
     main_name, core = spec["bundle"], set(spec["core"])
-    hot = json.loads((cache / 'map-source/hot_update_list.json').read_text())
-    if hot['versionId'] != VERSION:
+    version = spec.get('version', VERSION)
+    hot_bytes = (cache / spec.get('manifest', 'map-source/hot_update_list.json')).read_bytes()
+    if spec.get('manifest_sha256') and sha(hot_bytes) != spec['manifest_sha256']:
+        raise ValueError('Changed pinned native resource manifest')
+    hot = json.loads(hot_bytes)
+    if hot['versionId'] != version:
         raise ValueError('Wrong native resource version')
     inventory = json.loads((cache / (spec["source_directory"] + "/effect-bundles.json")).read_text())
-    if inventory['version'] != VERSION:
+    if inventory['version'] != version:
         raise ValueError('Wrong native effect inventory version')
     names = {main_name, '[uc]shaders.ab', 'arts/[pack]common.ab', 'battle/[pack]common.ab'}
     names.update(r['name'] for r in hot['abInfos']
                  if r['name'].startswith('refs/fx/') and '/overseas/' not in r['name'])
-    if len(names) != 23 or {r['path'] for r in inventory['sources']} != names:
+    additional = spec.get('additional_roots', {})
+    names.update(additional)
+    names.update(spec.get('extra_dependencies', []))
+    if len(names) != spec.get('source_count', 23) or {r['path'] for r in inventory['sources']} != names:
         raise ValueError('Incomplete original effect dependency inventory')
     env = UnityPy.Environment()
     files, bundles, sources = {}, {}, []
     for entry in sorted(inventory['sources'], key=lambda r: r['path']):
         name = entry['path']
-        path = cache / (spec["local_bundle"] if name == main_name else "map-source/ab/" + name)
+        path = cache / (spec["local_bundle"] if name == main_name else spec.get("dependencies_directory", "map-source/ab/") + name)
         raw = path.read_bytes()
         native = next(r for r in hot['abInfos'] if r['name'] == name)
         if (len(raw) != native['abSize'] or hashlib.md5(raw).hexdigest() != native['md5']
@@ -91,20 +98,25 @@ def export(cache, out, spec, manifest_out=None):
                 if f.name in files:
                     raise ValueError('Ambiguous native serialized-file identity')
                 files[f.name], bundles[f.name] = f, name
-    main = next(f for n, f in files.items() if bundles[n] == main_name)
     roots = {}
-    for obj in main.objects.values():
-        if obj.type.name != 'Transform':
-            continue
-        tr = obj.read()
-        if tr.m_Father.path_id != 0:
-            continue
-        go = tr.m_GameObject.read()
-        if '#' in go.m_Name:
-            continue
-        if go.m_Name in roots or not go.m_Name.startswith(spec["root_prefix"]):
-            raise ValueError('Unexpected or duplicate original effect root')
-        roots[go.m_Name] = go.object_reader
+    for bundle_name, selected in {main_name: None, **additional}.items():
+        main = next(f for n, f in files.items() if bundles[n] == bundle_name)
+        found = set()
+        for obj in main.objects.values():
+            if obj.type.name != 'Transform':
+                continue
+            tr = obj.read()
+            if tr.m_Father.path_id != 0:
+                continue
+            go = tr.m_GameObject.read()
+            if '#' in go.m_Name or selected is not None and go.m_Name not in selected:
+                continue
+            if go.m_Name in roots or not go.m_Name.startswith(spec["root_prefix"]):
+                raise ValueError('Unexpected or duplicate original effect root')
+            roots[go.m_Name] = go.object_reader
+            found.add(go.m_Name)
+        if selected is not None and found != set(selected):
+            raise ValueError('Missing selected original dependency effect root')
     if len(roots) != spec["roots"] or not core <= roots.keys():
         raise ValueError('Incomplete original effect hierarchy')
     out.mkdir(parents=True, exist_ok=True)
@@ -183,14 +195,14 @@ def export(cache, out, spec, manifest_out=None):
             ref['target'] = identity(target)
             queue.append(target)
     pack = {'schemaVersion': 1, 'operator': spec['operator'],
-            'coordinates': 'original-unity', 'version': VERSION,
+            'coordinates': 'original-unity', 'version': version,
             'roots': {name: identity(obj) for name, obj in sorted(roots.items())},
             'records': records, 'meshes': meshes, 'textures': textures,
             'scriptBindings': scripts, 'unresolvedReferences': unresolved}
     raw = encoded(pack)
     blob = gzip.compress(raw, mtime=0)
     (out / 'native-effects.bin').write_bytes(blob)
-    result = {'schemaVersion': 1, 'operator': pack['operator'], 'version': VERSION,
+    result = {'schemaVersion': 1, 'operator': pack['operator'], 'version': version,
               'sources': sources, 'roots': pack['roots'],
               'counts': dict(sorted(Counter(r['type'] for r in records.values()).items())),
               'pack': {'path': 'native-effects.bin', 'encoding': 'gzip-json',
