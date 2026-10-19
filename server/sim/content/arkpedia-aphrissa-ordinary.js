@@ -14,6 +14,12 @@ export const APHRISSA_ORDINARY_CONTRACT = Object.freeze({
   limits: 'Custom ray traversal, first-path-cell/stable-ID recipient order, retained batch, sampled cooldown/playback, initial birth and stagger clock are explicit local mappings. Compiled selectTargetTiming3, hit-order/frame semantics and default direction transitions are unverified. Relay ATK, RES aura, S1/S2/S3, particles/audio, modules and public artwork/admission remain separate gates.',
   frameParity: false,
 });
+export const APHRISSA_S1_ATTACK_CONTRACT = Object.freeze({
+  scope: 'Selected original S1 Arts line attack clock with explicit active-mode and native clip dispatchers.',
+  mapping: APHRISSA_ORDINARY_CONTRACT.mapping,
+  limits: 'Requires separately owned S1 activation, stats and permanence. The caller selects one literal source A/B or down-facing clip; native loopType1 dispatch is not inferred here. Ray traversal, retained batch, hit ordering, clocks and frame parity retain the ordinary contract limits. No public admission.',
+  frameParity: false,
+});
 const present = unit => unit?.alive && unit.deployed && !unit.removed && !unit._removing;
 const due = (value, goal) => value >= goal - 1e-7;
 
@@ -35,13 +41,36 @@ export function prepareAphrissaOrdinary(b, u, {contract, mayBegin} = {}) {
   return controller;
 }
 
+export function prepareAphrissaS1Attacks(b, u, {contract, mayBegin, pickClip} = {}) {
+  if (contract !== APHRISSA_S1_ATTACK_CONTRACT || typeof mayBegin !== 'function'
+    || typeof pickClip !== 'function' || u.def.charId !== ID || u.deploySeq !== 0 || u.mem.aphrissaS1Attacks)
+    throw Error('Fresh selected Aphrissa S1, exact attack contract and explicit mode/clip dispatchers required');
+  const selected = selectedAphrissaInputs(u), n = aphrissaNativeInputs();
+  if (selected.index !== 0 || n.s1Attack._damageType !== 2 || n.s1Attack._waitForAttackEvent !== 1
+    || n.s1Attack._selectTargetTiming !== 3 || n.s1Attack._timeMode !== 0 || n.s1Attack._maxAnimScale !== 1
+    || n.s1Attack._affectedBySlowDown !== 1 || n.s1Attack._hitInterval !== n.ordinary._hitInterval
+    || n.s1Replace._loopType !== 1 || n.s1DownReplace._loopType !== 1
+    || n.s1Replace._replaceGroup.map(row => row.anim).join(',') !== 'Skill_1_Loop_A,Skill_1_Loop_B'
+    || n.s1DownReplace._replaceGroup.map(row => row.anim).join(',') !== 'Skill_Down_1_Loop_A,Skill_Down_1_Loop_B')
+    throw Error('Changed original Aphrissa S1 attack inputs');
+  const controller = new AphrissaOrdinary(b, u, mayBegin, n.s1Attack, {
+    slot: 'aphrissaS1Attacks', pickClip, skill: true,
+    idleClip: () => u.dir === 'DOWN' ? 'Skill_Down_1_Idle' : 'Skill_1_Idle',
+    clips: [...n.s1Replace._replaceGroup, ...n.s1DownReplace._replaceGroup].map(row => row.anim),
+  });
+  u.mem.aphrissaS1Attacks = controller;
+  return controller;
+}
+
 class AphrissaOrdinary {
-  constructor(b, u, mayBegin, native) {
+  constructor(b, u, mayBegin, native, {slot = 'aphrissaOrdinary', pickClip = null,
+    skill = false, idleClip = () => 'Idle', clips = ['Attack', 'Attack_Down']} = {}) {
     Object.assign(this, {b, u, mayBegin, native, seq: null, stopped: false, phase: null,
-      accepting: false, bornUntil: Infinity, visualSeq: 0, visuals: new WeakSet(), handles: []});
+      accepting: false, selecting: false, bornUntil: Infinity, visualSeq: 0, visuals: new WeakSet(), handles: [],
+      slot, pickClip, isSkill: skill, idleClip, clips});
   }
   valid() { return !this.stopped && !this.b.finished && present(this.u) && this.seq === this.u.deploySeq
-    && this.u.mem.aphrissaOrdinary === this; }
+    && this.u.mem[this.slot] === this; }
   allowed() {
     if (!this.valid()) return false;
     let allowed;
@@ -53,7 +82,7 @@ class AphrissaOrdinary {
   visual(clip, speed = 1, loop = false) {
     if (!this.valid()) return;
     if (clocks.models[this.model()].exactDurations[clip] == null) throw Error('Missing original Aphrissa ordinary clip');
-    const visual = {clip, speed, loop, ...(loop ? {} : {playId: `aphrissa:ordinary:${this.seq}:${++this.visualSeq}`})};
+    const visual = {clip, speed, loop, ...(loop ? {} : {playId: `aphrissa:${this.slot}:${this.seq}:${++this.visualSeq}`})};
     this.visuals.add(visual); this.u.mem.regularFormVisual = visual;
     this.u.mem.regularVisualDirection = this.u.dir;
     return visual;
@@ -70,7 +99,17 @@ class AphrissaOrdinary {
       && canTargetEnemy(this.u, target, {canHitFly: true}) && (!target.s.flags.camou || !!target.blockedBy);
   }
   begin() {
-    const clip = this.u.dir === 'DOWN' ? 'Attack_Down' : 'Attack';
+    if (this.selecting || !this.allowed() || this.phase || this.u.atkCd > 1e-8 || !due(this.b.time, this.bornUntil)
+      || !this.choices().length) return false;
+    let clip;
+    this.selecting = true;
+    try { clip = this.pickClip ? this.pickClip() : this.u.dir === 'DOWN' ? 'Attack_Down' : 'Attack'; }
+    catch (error) { this.phase = null; throw error; }
+    finally { this.selecting = false; }
+    if (!this.allowed() || this.phase || !this.choices().length) return false;
+    if (!this.clips.includes(clip)) throw Error('Aphrissa clip dispatcher must select an original mode clip');
+    if (this.isSkill && clip.startsWith('Skill_Down_') !== (this.u.dir === 'DOWN'))
+      throw Error('Aphrissa S1 clip must match its original direction mode');
     const face = this.model(), marker = evidence.models[ID][face].eventPayloads[clip]?.filter(event => event.name === 'OnAttack');
     if (marker?.length !== 1) throw Error('Missing original Aphrissa ordinary attack marker');
     const speed = Math.min(this.native._maxAnimScale, this.u.base.bat / this.u.s.interval);
@@ -80,6 +119,7 @@ class AphrissaOrdinary {
       inputs: [], pending: [], next: 0};
     this.u.atkCd = period;
     this.phase.visual = this.visual(clip, speed * this.u.s.slowDownRate);
+    return true;
   }
   admit(targets) {
     const p = this.phase;
@@ -103,8 +143,8 @@ class AphrissaOrdinary {
       const input = p.pending[p.next++]; // Claim before damage callbacks.
       if (input.unit.deploySeq !== input.life || !this.legal(input.unit)) continue;
       this.b.dealDamage(this.u, input.unit, {amount: this.u.s.atk * this.u.s.atkScaleMul,
-        type: 'arts', isAttack: true, isSkill: false, attackId: p.attackId,
-        applyWay: 'ranged', tags: ['aphrissa:ordinary']});
+        type: 'arts', isAttack: true, isSkill: this.isSkill, attackId: p.attackId,
+        applyWay: 'ranged', tags: [this.isSkill ? 'aphrissa:s1' : 'aphrissa:ordinary']});
     }
   }
   tick() {
@@ -112,7 +152,7 @@ class AphrissaOrdinary {
     if (!this.allowed()) { this.phase = null; return; }
     if (!due(this.b.time, this.bornUntil)) return;
     const p = this.phase;
-    if (p && p.epoch !== this.u.attackControlEpoch) { this.phase = null; this.visual('Idle', 1, true); return; }
+    if (p && p.epoch !== this.u.attackControlEpoch) { this.phase = null; this.visual(this.idleClip(), 1, true); return; }
     if (p) {
       p.age += sourceAbilityDelta(this.u, Math.max(0, this.b.time - p.lastAt), true) * p.speed;
       p.lastAt = this.b.time;
@@ -131,10 +171,10 @@ class AphrissaOrdinary {
     }
     if (this.u.atkCd > 1e-8) return;
     if (this.choices().length) this.begin();
-    else this.visual('Idle', 1, true);
+    else this.visual(this.idleClip(), 1, true);
   }
   trait() {
-    return {noAttack: true, attackDrivenSkill: true, attack: 'ranged', dmgType: 'arts', projectile: 'none',
+    return {noAttack: true, attackDrivenSkill: true, isSkill: this.isSkill, attack: 'ranged', dmgType: 'arts', projectile: 'none',
       canHitFly: true, groundOnly: false, allInRange: true, maxTargets: 9999, hits: 1, windup: 0,
       attackVisual: 'none', requiresAcceptedLaunch: true,
       acceptAreaAttack: (_b, _u, _p, targets) => this.admit(targets),

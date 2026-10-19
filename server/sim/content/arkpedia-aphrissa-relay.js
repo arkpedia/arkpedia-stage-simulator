@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Held normal relay lifecycle. Skill overlays and ray geometry compose later.
+// Held relay lifecycle with the original literal S1 permanence check.
 import {selectedAphrissaRelay} from './arkpedia-aphrissa-relay-source.js';
 import {APHRISSA_ID as ID, APHRISSA_RELAY_ID as TOKEN, selectedAphrissaInputs,
   aphrissaNativeInputs} from './arkpedia-aphrissa-source.js';
@@ -9,9 +9,9 @@ import {canDeployInViewport} from '../../../shared/arkpedia/squad.js';
 import clocks from '../../../data/arkpedia-aphrissa-clocks.json' with {type: 'json'};
 
 export const APHRISSA_RELAY_CONTRACT = Object.freeze({
-  scope: 'Diagnostic normal relay deployment, source lifetime and retirement only; no public registration.',
+  scope: 'Diagnostic normal relay deployment, literal S1 marker expiry check and retirement only; no public registration.',
   mapping: 'One independent three-DP card, chosen facing, low/high deployable tiles, no host-range restriction, zero deployment slots. The promotion-selected lifetime starts at accepted deployment. Removal restores one card with a thirty-second redeployment timer. Manual withdrawal refunds floor(cost × source ratio); expiry and owner retirement do not refund. Original single-facing Start/Idle/Die and passive invulnerability, ally-target-free and heal-free flags are retained.',
-  limits: 'Tile/card acceptance, floor refund, stock/cooldown dispatch, timeout ordering and native flag aliases use explicit local simulator rules. S1 permanence, S2 ray redirection, S3 extra relays and owner talent effects are not implemented here. No attacks, skills, native particles/audio, module or compiled/frame parity approval.',
+  limits: 'Tile/card acceptance, floor refund, stock/cooldown dispatch, timeout ordering and native flag aliases use explicit local simulator rules. At the original lifetime finish, a literal aphris_sk1_token marker suppresses withdrawal once; the timer does not restart if that marker is later removed. Marker production, S2/S3 and owner talent effects compose separately. No native particles/audio, module or compiled/frame parity approval.',
   frameParity: false,
 });
 const present = unit => unit?.alive && unit.deployed && !unit._removing;
@@ -23,9 +23,11 @@ export function prepareAphrissaRelay(b, u, {contract} = {}) {
   const selected = selectedAphrissaInputs(u), record = selectedAphrissaRelay(selected.build);
   const native = aphrissaNativeInputs(), templates = native.templates;
   const passive = native.relayPassive._buffs;
+  const expiry = templates['aphris_pc_t[with-draw]'].eventToActions.ON_BUFF_FINISH;
   if (templates['charge_token[born]'].eventToActions.ON_OWNER_BORN[0]._cntKey !== 'cnt'
     || templates['aphris_pc[recharge]'].eventToActions.ON_BUFF_FINISH[0]._rechargeTiming !== 'ON_FINISH'
-    || templates['aphris_pc_t[with-draw]'].eventToActions.ON_BUFF_FINISH[2]._force !== true
+    || expiry[2]._force !== true || expiry[0]._buffKeys.join(',') !== 'aphris_sk1_token'
+    || expiry[0]._checkBuffSource !== false || !expiry[1].$type.includes('+IfNot,')
     || passive.length !== 1 || passive[0].attributes.abnormalFlags.join(',') !== '5,15,7'
     || passive[0].attributes.attributeModifiers[0].attributeType !== 5
     || passive[0].attributes.attributeModifiers[0].value !== 0
@@ -80,7 +82,8 @@ class AphrissaRelay {
     return {kind: 'passive', duration: this.record.duration,
       formCountdown: () => {
         const s = this.point;
-        return this.valid() && this.own().length ? {remaining: Math.max(0, s.expiresAt - this.b.time),
+        return this.valid() && this.own().length && !s.timerHidden && !s.unit.findBuff('aphris_sk1_token')
+          ? {remaining: Math.max(0, s.expiresAt - this.b.time),
           duration: this.record.duration, label: 'Relay remaining'} : null;
       }};
   }
@@ -103,7 +106,8 @@ class AphrissaRelay {
           }}});
       if (!token || !present(token) || !this.valid()) throw Error('Relay deployment failed.');
       this.point = {unit: token, seq: token.deploySeq, bornAt: b.time,
-        expiresAt: b.time + this.record.duration, finished: false, mode: 'born'};
+        expiresAt: b.time + this.record.duration, lifetimeResolved: false,
+        timerHidden: !!token.findBuff('aphris_sk1_token'), finished: false, mode: 'born'};
       this.readyAt = Infinity;
       this.visual(this.point, 'Start');
       return token;
@@ -138,7 +142,11 @@ class AphrissaRelay {
     const s = this.point;
     if (!s) return;
     if (!present(s.unit) || s.unit.deploySeq !== s.seq) { this.finish(s); return; }
-    if (due(this.b, s.expiresAt)) { this.finish(s, {remove: true, reason: 'expired'}); return; }
+    if (s.unit.findBuff('aphris_sk1_token')) s.timerHidden = true;
+    if (!s.lifetimeResolved && due(this.b, s.expiresAt)) {
+      s.lifetimeResolved = true;
+      if (!s.unit.findBuff('aphris_sk1_token')) { this.finish(s, {remove: true, reason: 'expired'}); return; }
+    }
     if (s.mode === 'born' && due(this.b, s.bornAt + clocks.tokens[TOKEN].models.Single.exactDurations.Start)) {
       s.mode = 'idle'; this.visual(s, 'Idle', true);
     }

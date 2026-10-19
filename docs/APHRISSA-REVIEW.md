@@ -1,6 +1,6 @@
 # Aphrissa source and held runtime review
 
-Aphrissa (`char_4229_aphris`) remains outside the playable registry and normal snapshot. This branch contains original source recovery, selected build validation, exact animation clocks, a diagnostic normal relay lifecycle, a diagnostic ray geometry adapter and a held ordinary Arts attack controller. It does not implement her complete combat kit. The local normal preview continues to serve the reviewed Makoto build; Arkpedia app dev and production remain held.
+Aphrissa (`char_4229_aphris`) remains outside the playable registry and normal snapshot. This branch contains original source recovery, selected build validation, exact animation clocks, relay lifecycle, ray geometry, ordinary Arts attacks, held talent controllers and composed S1. S2/S3 and original public artwork remain incomplete. Makoto is published in separate simulator master at `ceda89d2358f6d52f9fde168dfa3b8d60f8e7814`, complete tree `24ed78046beab5bc10bc55a6f15bc05aca9dbe81`, after all eight exact-head Linux/Windows Node22/24 jobs passed. The local normal preview still serves that reviewed 403-form tree. Arkpedia app dev and production remain held.
 
 ## Original source
 
@@ -24,7 +24,7 @@ The relay uses its own fixed 500 HP, zero ATK/block, three-DP cost and thirty-se
 
 The diagnostic controller supports low/high deployable tiles, original single-facing Start/Idle/Die, a passive lifetime gauge, expiry, manual withdrawal and owner retirement. It binds the original deployment life. It claims placement before callbacks, rolls back interrupted or failed births, prevents reentrant double spending, ignores stale removal callbacks, and preserves foreign resources and replacement deck entries. Owner death, withdrawal, replacement or battle end drains owned hooks and removes the linked relay. Control and hiding do not pause a previously deployed relay lifetime.
 
-These are explicit local mappings: integer withdrawal refund uses `floor(3 × 0.5)`, matching StandardBattle's policy; timeout callbacks run at the tick's start timestamp; card recovery and cooldown dispatch use the existing simulator lifecycle. Native card/refund ordering, alias decoding and compiled timeout behavior are not proven. S1 permanent relay markers, the relay-presence owner ATK buff, the RES aura and S3 extra-card/reset/withdrawal phases require separate composition. No active owner skill is supplied by the relay test fixture.
+These are explicit local mappings: integer withdrawal refund uses `floor(3 × 0.5)`, matching StandardBattle's policy; timeout callbacks run at the tick's start timestamp; card recovery and cooldown dispatch use the existing simulator lifecycle. Native card/refund ordering, alias decoding and compiled timeout behavior are not proven. The relay-only fixture supplies no active owner skill. The composed S1 fixture is separate. S3 extra-card/reset/withdrawal phases remain incomplete.
 
 ## Held ray geometry
 
@@ -44,12 +44,24 @@ A later ownership review reproduces four further failures before correction: rep
 
 ## Remaining gates
 
-- Review the held ordinary/ray local mappings and compose them with the owner modes and talents.
-- Relay-presence ATK and the operator-only RES-penetration aura.
-- S1 permanent token markers and its original mode/animation transitions.
+- Review the held ordinary/ray, relationship and aura arbitration mappings against the native custom classes before public admission.
 - S2 channel, periodic damage, target changes and finish/control behavior.
 - S3 charge, ammunition, extra relay stock, reset/withdrawal, per-cell extension damage and Slow payloads.
 - Original public artwork/PMA validation, interface assets, actual desktop/touch review and unchanged original-wave clears.
 - Complete frozen regression, all exact-head hosted checks and reviewed-tree publication before a ready PR.
 
 Modules, native particles/audio and compiled/frame/pixel parity remain unapproved. The source checkpoint creates no public roster admission or Arkpedia app release.
+
+## Held talent composition
+
+The RES talent grants fixed penetration to actual friendly operators, including self, on the explicitly dispatched current normal/S2 ray. It does not lower enemy RES. E0/E1 have no invented talent; E2 uses ten, or thirteen at potential six. Purpose0 selection ignores healing prohibition and ordinary control while retaining target-free/ally-isolation exclusions. A shared nonstacking `aphris[t2]` family uses an explicit local highest-power, earliest-deployment/stable-ID arbitration with fallback. Owned instances retire on range/source/recipient changes, and foreign replacements are not adopted or removed. A reproduced late-admission failure required a final ownership sweep: replacing the source inside a later child callback cannot leave earlier grants alive in that pass. The thirty-two aura cases cover that failure, fresh recipient lives, rejected/forged grants and actual shared damage calculations.
+
+The relay-presence component retains the separate original parent and derived owner ATK child. The native relationship validator's numeric fields are retained, but its compiled meaning remains unrecovered. The component requires an explicit related-set adapter; the S1 composition supplies actual `ownerUnit` relays. It does not silently reuse the ray ID-only selector. Multiple eligible parents grant at most one fifteen/twenty-five-percent owner bonus, with an explicit earliest-relay fallback; E0 invents no missing coefficient. Parent/child cleanup preserves foreign replacements and accepted life identity. Its twenty-five cases separately test relation selection, nonstacking, no-range presence, control, reentrancy and retirement. These adapters are local mappings, not compiled-validator proof.
+
+## Held composed S1
+
+The actual selected time-SP AUTO account activates without targets and remains active indefinitely, with no manual cancel or fabricated SP recharge. Original Begin has no OnAttack marker. This local composition completes its literal full Begin duration on world time, then admits the independent infinite `aphris_sk1` ATK parent and `aphris_sk1_switch_mode` parent in producer order. Rejecting one grant does not fabricate rejection of the other. The mode parent selects mode1/5 and actual ordinary/S1 profiles. Its removal restores ordinary combat without ending the independent ATK parent or account. Native loopType1 uses explicit local A/B alternation with the original down variants; the separate attack component refuses foreign mode clips, premature entry and reentrant clip dispatch.
+
+The original ATK parent's CreateBuffToToken action emits nonderived infinite `aphris_sk1_token` markers to existing owned relays. Newly born relays separately check their host's active parent and receive a self-sourced marker. Existing same-key markers are preserved by disableOverride. Ending the owner ATK/mode parents does not retract accepted nonderived token markers. Each relay's original finite withdrawal timer still reaches its original deadline; it checks the literal marker once and suppresses that withdrawal if present. Removing the marker after this finish cannot restart the already-resolved timer. Marker removal before the deadline still permits normal withdrawal. The original SpShowBuff NONE maps to hiding the passive lifetime gauge without inventing readiness.
+
+The thirty-nine S1 cases cover all ten ranks, natural automatic SP, lower promotions, separate parents, actual ground/air Arts damage with both talents, original facing clips, permanence and one-time expiry, control and full owner cleanup. The combined Aphrissa/source/clock/relay/ray/talent/S1 and shared CN/summon/HUD/slow-down/Mechanist set passes 446 checks on each of Node22 and Node24, with zero failures or skips. S1 Begin/FSM/dispatcher timing, host relation, attribute buckets, aura ties, native effects and compiled/frame/pixel parity remain explicitly local or unapproved. The earlier frozen full-suite result does not cover this later executable composition.
