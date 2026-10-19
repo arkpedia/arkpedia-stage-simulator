@@ -16,6 +16,7 @@ import {sampleParticleCurve} from '../../shared/arkpedia/native-particle-curves.
 import {effectMeshColors} from '../../shared/arkpedia/native-effect-mesh.js';
 import {createEffectPose} from '../../shared/arkpedia/native-effect-pose.js';
 import {createEffectTrail} from '../../shared/arkpedia/native-effect-trail.js';
+import {createEffectLine} from '../../shared/arkpedia/native-effect-line.js';
 import {createParticleVertexLayout} from '../../shared/arkpedia/native-particle-custom-data.js';
 import {createSubEmitterGraph} from '../../shared/arkpedia/native-sub-emitter-graph.js';
 export function compileNativeEffectPrograms(renderer,shaders){
@@ -41,8 +42,15 @@ export function compileNativeEffectPrograms(renderer,shaders){
  * All update inputs use the original effect's Unity coordinate space. The
  * stage's coordinate/camera bridge and native frame parity remain separate.
  */
-export function createNativeEffectLibrary({three:T,pack,animations,shaders,loadTexture,builtinMeshes=null}){
+export function createNativeEffectLibrary({three:T,pack,animations,shaders,loadTexture,builtinMeshes=null,shaderGlobals={}}){
   if(!T||typeof loadTexture!=='function')throw Error('Native effect library needs Three and an original texture loader');
+  if(!shaderGlobals||typeof shaderGlobals!=='object'||Array.isArray(shaderGlobals)||Object.keys(shaderGlobals).some(k=>k!=='_HG_UV_ROTATION')
+    ||Object.hasOwn(shaderGlobals,'_HG_UV_ROTATION')&&![0,1].includes(shaderGlobals._HG_UV_ROTATION))
+    throw Error('Unreviewed native shader global input');
+  // An explicit environment input, not a recovered gameplay default. Missing
+  // globals still block the original program; material properties are not
+  // replaced by caller overrides. Copy so later caller mutation cannot leak.
+  shaderGlobals=Object.freeze({...shaderGlobals});
   const builtin=builtinMeshes?createBuiltinMeshResolver(builtinMeshes,animations.sourcePackSha256):null;
   let closed=false;
   const textures=new Map(),defaults=new Map(),instances=new Set();
@@ -84,7 +92,7 @@ export function createNativeEffectLibrary({three:T,pack,animations,shaders,loadT
     return defaults.get(def);
   }
 
-  const context={three:T,pack,animations,shaders,builtin,sourceTexture,assertOpen,
+  const context={three:T,pack,animations,shaders,builtin,shaderGlobals,sourceTexture,assertOpen,
     register(instance){assertOpen();instances.add(instance);},unregister(instance){instances.delete(instance);}};
   const library={
     create(name,options){assertOpen();return createNativeEffectInstance(context,name,options);},
@@ -99,6 +107,13 @@ export function createNativeEffectLibrary({three:T,pack,animations,shaders,loadT
       const name='particle-inspection:'+id;
       return createNativeEffectInstance({...context,pack:{...pack,roots:{...pack.roots,[name]:go}},inspectionSource:id},name,options);
     },
+    inspectLines(name,options){
+      assertOpen();
+      if(typeof options?.linePositions!=='function')throw Error('Native line inspection needs explicit endpoint ownership');
+      // Keep the complete original hierarchy and its animation drivers. Only
+      // line draws are inspected; this cannot approve a partially played FX.
+      return createNativeEffectInstance({...context,inspectionLines:true},name,options);
+    },
     get instanceCount(){return instances.size;},
     dispose(){
       if(closed)return;closed=true;
@@ -111,10 +126,13 @@ export function createNativeEffectLibrary({three:T,pack,animations,shaders,loadT
   return library;
 }
 
-async function createNativeEffectInstance(library,name,{allowBlocked=false}={}){
+async function createNativeEffectInstance(library,name,{allowBlocked=false,linePositions=null}={}){
   const {three:T,pack,animations,shaders,sourceTexture}=library;
   library.assertOpen();
   const pose=createEffectPose(pack,animations,name),group=new T.Group();
+  if(linePositions!==null&&typeof linePositions!=='function')throw Error('Invalid native line endpoint owner');
+  if(library.inspectionLines&&![...pose.renderers.keys()].some(id=>pack.records[id].type==='LineRenderer'))
+    throw Error('Selected original effect has no line renderers');
   const subEmitters=createSubEmitterGraph(pack);
   const particleTransforms=new Map();
   for(const[id,n]of pose.nodes)for(const ref of pack.records[n.gameObject].references??[])
@@ -147,13 +165,29 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false}={}){
     const source=selectEffectProgram(shader,data.m_ValidKeywords),port=webglEffectProgram(source.source),props=pose.renderers.get(component).materials[slot].properties;
     const uniforms={};
     const declarations=effectUniformDeclarations(port);
-    const rotations=createTextureRotations(pack,component,declarations,animations);
+    const gate=declarations.find(d=>d.name==='_HG_UV_ROTATION');
+    if(gate&&(gate.type!=='float'||gate.count!==null||!Object.hasOwn(library.shaderGlobals,gate.name)))
+      throw Error('Native shader global _HG_UV_ROTATION needs explicit binding');
+    let rotations;
+    if(gate&&library.shaderGlobals._HG_UV_ROTATION===0){
+      const inputs=declarations.filter(d=>/^_Rotation[0-3]$/.test(d.name));
+      if(inputs.length!==4||inputs.some(d=>d.type!=='vec4'||d.count!==null))throw Error('Unsupported gated native UV rotation inputs');
+      // The original shader chooses unrotated UVs when this explicit input is
+      // zero. Retain zero initial uniforms for its unused matrix operands;
+      // neither identity matrices nor an absent native script are invented.
+      rotations={values:Object.fromEntries(inputs.map(d=>[d.name,[0,0,0,0]])),
+        scope:{explicitDisabledGlobal:true,nativeGameplayValueVerified:false,compiledFrameParity:false}};
+    }else rotations=createTextureRotations(pack,component,declarations,animations);
     for(const {type,name,count:size} of declarations){
       if(size){if(type!=='vec4'||size!==4||!name.startsWith('hlslcc_mtx4x4'))throw Error('Unsupported native uniform array');uniforms[name]={value:new Float32Array(16)};continue;}
       if(type==='sampler2D'){uniforms[name]={value:await sourceTexture(material,name,shader)};continue;}
       if(name==='_WorldSpaceCameraPos'){uniforms[name]={value:new T.Vector3()};continue;}
       if(name==='_Time'||name==='_SinTime'||name==='_CosTime'){uniforms[name]={value:new T.Vector4()};continue;}
       let value=props[name];
+      if(gate&&name===gate.name){
+        if(value!==undefined)throw Error('Conflicting native material/global UV input');
+        value=library.shaderGlobals[name];
+      }
       if(rotations&&Object.hasOwn(rotations.values,name)){
         if(value!==undefined)throw Error('Conflicting source material/script texture rotation');
         value=rotations.values[name];
@@ -279,8 +313,27 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false}={}){
     }
     group.updateMatrixWorld(true);camera.updateMatrixWorld(true);
     const birthStates=new Map();
+    const lineSamples=new Map(),lineEntries=draws.filter(entry=>entry.line);
+    // Clear every line before resolving owners. An invalid owner must not leave
+    // other layers displaying geometry from the previous frame. Explicit null
+    // means this segment has no current owner (retirement/end); undefined is a
+    // missing binding and remains an error.
+    for(const entry of lineEntries){entry.mesh.visible=false;entry.lineData=null;}
+    for(const entry of lineEntries){
+      const endpoints=linePositions(entry.component,clock);
+      lineSamples.set(entry.component,endpoints===null?{positions:[],colors:[],uvs:[],indices:[],widths:[]}:
+        entry.line.sample(endpoints,new T.Vector3().setFromMatrixPosition(camera.matrixWorld).toArray(),
+          state.renderers.get(entry.component).widthMultiplier));
+    }
     for(const entry of draws){
-      const {component,mesh,emitter,trail,pool,baseColors,baseUVs,transform,particleSource,alignment,stretch}=entry;
+      const {component,mesh,emitter,trail,line,pool,baseColors,baseUVs,transform,particleSource,alignment,stretch}=entry;
+      if(line){
+        // Endpoints are world-space owner input. Source transforms still drive
+        // activation/animation, but must not transform these positions twice.
+        const data=lineSamples.get(component);
+        updateTrailGeometry(mesh.geometry,data);entry.lineData=data;
+        mesh.visible=data.indices.length>0&&state.nodes.get(transform).visible;
+      }
       if(trail){
         const history=trajectory?trajectory.times(clock).map(t=>{
           if(!birthStates.has(t))birthStates.set(t,samplePose(t,clip,trajectory));
@@ -418,19 +471,22 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false}={}){
   const periods=[...pose.nodes.values()].flatMap(n=>(pack.records[n.gameObject].references??[])
     .map(r=>pack.records[r.target]).filter(r=>r?.type==='ParticleSystem').map(r=>r.data.lengthInSec*2));
   const timeWindow=Math.max(3,...periods,...pose.instances.map(i=>animations.clips[i.clip].stop));
-  const inspection=library.inspectionSource?{particle:library.inspectionSource,parents:subEmitters.parents(library.inspectionSource),fullEffect:false}:null;
-  const instance={name,pose,group,draws,blocked,timeWindow,inspection,parentMotion,update,dispose,get disposed(){return disposed;}};
+  const inspection=library.inspectionSource?{particle:library.inspectionSource,parents:subEmitters.parents(library.inspectionSource),fullEffect:false}
+    :library.inspectionLines?{lines:true,explicitEndpoints:true,fullEffect:false}:null;
+  const instance={name,pose,group,draws,blocked,timeWindow,inspection,parentMotion,shaderGlobals:library.shaderGlobals,
+    update,dispose,get disposed(){return disposed;}};
   library.register(instance);
   try{
     for(const [id,n] of pose.nodes){const o=new T.Group();nodeObjects.set(id,o);(n.parent?nodeObjects.get(n.parent):group).add(o);}
     for(const [component,r] of pose.renderers){
       const record=pack.records[component];if(!r.enabled)continue;
+      if(library.inspectionLines&&record.type!=='LineRenderer')continue;
       const beforeGeometry=new Set(geometries),beforeMaterial=new Set(materials);
       try{
         assertOpen();
         if(record.type!=='ParticleSystemRenderer'&&r.materials.length!==1)
           throw Error('Native multi-material renderer needs review');
-        let meshId,meshReferenceSource,particleId,particleSource,emitter,trail,pivot,particleTrails=null,stretch=null,billboard=false,customLayout=null;
+        let meshId,meshReferenceSource,particleId,particleSource,emitter,trail,line,pivot,particleTrails=null,stretch=null,billboard=false,customLayout=null;
         if(record.type==='MeshRenderer'){
           const go=pack.records[r.gameObject];const filter=(go.references??[]).map(r=>r.target).find(k=>pack.records[k]?.type==='MeshFilter');
           meshId=target(filter,'m_Mesh');
@@ -465,9 +521,14 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false}={}){
         }else if(record.type==='TrailRenderer'){
           if(r.materials.length!==1)throw Error('Native multi-material trail needs review');
           trail=createEffectTrail(record.data);
+        }else if(record.type==='LineRenderer'){
+          if(typeof linePositions!=='function')throw Error('Native line endpoints need explicit owner mapping');
+          line=createEffectLine(record.data);
         }
         else throw Error('Native renderer needs review');
         const mat=r.materials[0];if(!mat)throw Error('Unresolved original material');
+        if(line&&pack.records[mat.id].data.m_ValidKeywords.includes('_HGCUSTOMVERTEXSTREAM_ON'))
+          throw Error('Native line custom vertex stream needs review');
         const material=await makeMaterial(component,mat.id);assertOpen();
         let particleTrailMesh=null;
         if(particleTrails){
@@ -477,8 +538,8 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false}={}){
           trailGeometry.setAttribute('in_COLOR0',new T.Float32BufferAttribute([],4));trailGeometry.setAttribute('in_TEXCOORD0',new T.Float32BufferAttribute([],2));
           particleTrailMesh=new T.Mesh(trailGeometry,trailMaterial);particleTrailMesh.renderOrder=record.data.m_SortingOrder??0;
         }
-        const g=trail?new T.BufferGeometry():billboard?billboardGeometry():geometry(meshId,null,meshReferenceSource);
-        if(trail){geometries.add(g);g.setAttribute('position',new T.Float32BufferAttribute([],3));g.setAttribute('in_POSITION0',g.getAttribute('position'));g.setAttribute('in_COLOR0',new T.Float32BufferAttribute([],4));g.setAttribute('in_TEXCOORD0',new T.Float32BufferAttribute([],2));}
+        const g=trail||line?new T.BufferGeometry():billboard?billboardGeometry():geometry(meshId,null,meshReferenceSource);
+        if(trail||line){geometries.add(g);g.setAttribute('position',new T.Float32BufferAttribute([],3));g.setAttribute('in_POSITION0',g.getAttribute('position'));g.setAttribute('in_COLOR0',new T.Float32BufferAttribute([],4));g.setAttribute('in_TEXCOORD0',new T.Float32BufferAttribute([],2));}
         if(particleSource?.UVModule?.enabled){
           // The admitted stream layouts have UV0 as their sole UV semantic.
           // Sheet masks address those logical UVs before packing; custom data
@@ -492,11 +553,13 @@ async function createNativeEffectInstance(library,name,{allowBlocked=false}={}){
         if(particleSource){const d=particleSource.InitialModule,x=sampleParticleCurve(d.startSize,0);
           mesh.scale.fromArray(d.size3D?[x,sampleParticleCurve(d.startSizeY,0),sampleParticleCurve(d.startSizeZ,0)]:[x,x,x]);}
 
-        const sourceEntry={component,transform:r.transform,particleId,particleSource,trail,pivot,stretch,alignment:record.data.m_RenderAlignment,mesh,emitter,pool:emitter?[mesh]:null,
+        const sourceEntry={component,transform:r.transform,particleId,particleSource,trail,line,pivot,stretch,alignment:record.data.m_RenderAlignment,mesh,emitter,pool:emitter?[mesh]:null,
           baseColors:emitter?g.getAttribute('in_COLOR0').array.slice():null,
           baseUVs:emitter?Array.from({length:8},(_,i)=>g.getAttribute('in_TEXCOORD'+i)?.array.slice()??null):null,
           customLayout,customUVs};
-        nodeObjects.get(r.transform).add(mesh);draws.push(sourceEntry);
+        // World-space lines do not inherit editor Transform position/scale,
+        // including singular transforms. Activation is applied explicitly above.
+        (line?group:nodeObjects.get(r.transform)).add(mesh);draws.push(sourceEntry);
         const bindMaterial=material=>{const sourceSide=material.side;return function(_renderer,_scene,camera){
           const u=material.uniforms,matrix=this.matrixWorld;
           if(!matrix.elements.every(Number.isFinite))throw Error('Invalid source particle matrix '+component);
