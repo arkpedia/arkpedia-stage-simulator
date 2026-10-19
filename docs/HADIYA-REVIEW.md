@@ -2,9 +2,9 @@
 
 Hadiya (`char_394_hadiya`) remains outside the normal simulator roster. This
 branch contains her source foundation, exact animation clocks, selected-build
-validation, real-account DP transactions and a separately owned talent component.
-It does not yet contain either complete skill sequence, ordinary attack dispatch,
-equipment-adaptation controls or reviewed public artwork. Arkpedia app dev and
+validation, real-account DP transactions, separately owned talent and the composed
+ordinary/S1/S2 combat controller. Equipment-adaptation controls, original public
+artwork and browser/runtime admission remain unfinished. Arkpedia app dev and
 production remain held.
 
 ## Source
@@ -36,7 +36,7 @@ production remain held.
   ledger changes and the DP cap. Accepted casts commit through onStart removal.
 - Support one paid adaptation per activation: S1 costs 10 DP and can start a
   full-SP skill; S2 costs 15 DP and permits adaptation only while active.
-  The skill owner still has to supply the corresponding buffs/deadlines.
+  The composed skill owner supplies the corresponding buffs and deadlines.
 - Grant the original talent once at accepted deployment, without inventing a
   positive-DP-spend condition for Born.
 - Admit subsequent talent events only through explicit owner-authorized receipt
@@ -49,10 +49,7 @@ production remain held.
 
 ## Remaining work and fidelity limits
 
-- Implement original default/S1/S2 attack dispatch, target limits and clocks.
-- Implement both complete cast/mode/buff/end owners and the adaptation UI.
-- Reproduce S2 duration extension and original-deadline restoration on extension
-  buff removal, using the real skill account.
+- Add equipment-adaptation controls to the selected-operator UI.
 - Verify original art delivery, renderer integration and desktop/touch gameplay.
 - Review the complete candidate before normal-roster admission or a ready PR.
 
@@ -74,3 +71,63 @@ components, Makoto/Koromaru source runtimes, CN native-source checks and existin
 simulation tests. After the final pre-install cleanup correction, all 78 Hadiya
 cases passed again on each version without skips. The existing port-3182 preview
 still responds with HTTP 200 and serves the unchanged 403-form normal roster.
+
+## Composed combat owner
+
+The held owner uses the original three attack modes. Ordinary/S1 select one
+ground input; S2 binds `attack@max_target` to three and uses range `3-2`. The
+two block slots never multiply either target limit. A retained batch owns one
+shared attack receipt and one direct Physical damage packet per eligible original
+recipient life, using live ATK and shared mitigation. Late entrants cannot borrow
+lost inputs. No projectile or splash is substituted.
+
+Source `maxAnimScale=1` caps sampled BAT/interval playback. Its independent
+`affectedBySlowDown=0` elapsed channel is preserved. Acquisition waits for the
+larger of the sampled attack interval or original release marker, rather than
+forcing every art clip to finish. B/A replacement order is a declared local
+alternation; compiled `loopType`/RNG behavior is not claimed. S2 keeps deployment
+facing and uses its literal downward clip. Original Back has no death clip, so
+that pose stays hidden; Front uses `Die` or `Skill_2_Die` by mode. Withdrawal does
+not request a death pose.
+
+Both manual skills can replace Born or ordinary windup without erasing positive
+attack cooldown. At their original OnAttack marker, the stat producer independently
+attempts S1 DEF or S2 ATK. Original clip completion independently attempts the mode
+producer. Rejected primary, mode or extra buffs do not become an atomic rollback
+of otherwise accepted native actions. S2's primary admission, rather than generic
+DP spending, owns its talent trigger. Adaptation independently attempts its extra
+buff and the source retrigger signal once, including S1's full-SP entry.
+
+S1's admitted finite primary runs for its original 30 seconds from local marker
+dispatch and bounds the real account; a missed/refused primary has the finite
+activation-duration fallback. S2's base 20 seconds begin at local mode-producer
+entry, independently of the earlier ATK marker. Its infinite ATK parent retains
+the source 0.029999999329447746 skill-affecting check. Accepted adaptation extends
+that base deadline by 15 seconds. Removing/replacing its extension restores the
+original deadline; removal after that deadline ends the activation rather than
+leaving a detached 15-second benefit. An extension accepted during startup stays
+bound to the later mode-producer origin.
+
+Cast control cancels unborn markers and locally follows the original sequence's
+force-next flag into its mode producer. Already admitted nonsilenceable and
+nonstunnable buffs remain through action control. Mode/primary removal retires
+only this activation; owned-reference checks preserve foreign replacements.
+Source S2-to-default mix rows select `Skill_2_End`. This local presentation lock
+does not hold the already ended SP account, which resumes normal recovery.
+
+Native event/selector aliases, exact cooldown origins, force-next interruption,
+buff-to-account lifetime binding, callback/admission order, B/A selection,
+displayed-range extension and End gameplay lock remain explicit local mappings.
+Original template and prefab values are retained and guarded; compiled native
+frame, RNG, blend/pixel and status-event parity are unverified. Public registry,
+normal snapshot, browser assets and Arkpedia app branches are unchanged.
+
+The composed-owner regression passed on Node 22.23.3 and 24.21.0: 1,939 cases on
+each, 1,936 passed, three optional skips and no failures. This includes all 170
+Hadiya source/clock/payment/talent/owner cases, with both skills at all ten ranks,
+E1 potential/trust builds, real time-SP recovery and DP admission, original
+four-direction clips, shared damage/attack receipts, rejected/replaced buffs,
+extension restoration, transient controls, callback reentrancy and cleanup.
+Private fixture clocks use the existing fixed-tick dispatch; the tests do not
+claim compiled game-frame parity. The existing preview still serves the reviewed
+403-form snapshot over HTTP 200, with Hadiya absent until public admission.
