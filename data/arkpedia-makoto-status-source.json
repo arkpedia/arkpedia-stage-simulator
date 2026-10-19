@@ -1,0 +1,320 @@
+{
+  "operator": "char_4217_makoto",
+  "source": {
+    "repository": "Tim23333/Arknights_timer",
+    "commit": "2e5c4306e4949fb6b15f990e34a9c69053be3327",
+    "path": "game_data/reference/android_arm64/dump.cs",
+    "gitBlob": "7710a073d52ced520aee1e6950dc1132fab70211",
+    "bytes": 166296,
+    "sha256": "0cd60676fa4f3f47bcc5d1b9e3296a28d96d537974956b841050bdc515b2fdb4",
+    "url": "https://github.com/Tim23333/Arknights_timer/blob/2e5c4306e4949fb6b15f990e34a9c69053be3327/game_data/reference/android_arm64/dump.cs",
+    "versionLimit": "The reference labels its input as the current Android APK without a client version. Its enum end and numeric definitions agree with the pinned Makoto selectors and named P2/normal-Persona status branches. This does not prove identical client version, compiled flag behavior or game frames."
+  },
+  "foundationSha256": "7489e0dea8732f27fdbe6bd90b7ab2584f9a30d6547f7de14d1b82581072c817",
+  "definitions": {
+    "STUNNED": 0,
+    "SP_RECOVER_STOPPED": 1,
+    "INVINCIBLE": 5,
+    "UNDEADABLE": 6,
+    "HEAL_FREE": 7,
+    "ALLY_TARGET_FREE": 15,
+    "FROZEN": 16,
+    "FORCE_DISARMED": 18,
+    "STUNNED_NO_AMPLIFY_DAMAGE": 19,
+    "SKILL_NOT_ACTIVATABLE": 24,
+    "E_NUM": 46
+  },
+  "comboDefinitions": {
+    "SLEEPING": 0,
+    "SHELTERING": 1,
+    "ISOLATE": 2,
+    "E_NUM": 3
+  },
+  "transitions": [
+    {
+      "branch": "S1 entry",
+      "component": "8100680329917746725",
+      "flags": [
+        5,
+        18,
+        1,
+        6,
+        7,
+        15,
+        24
+      ],
+      "flagNames": [
+        "INVINCIBLE",
+        "FORCE_DISARMED",
+        "SP_RECOVER_STOPPED",
+        "UNDEADABLE",
+        "HEAL_FREE",
+        "ALLY_TARGET_FREE",
+        "SKILL_NOT_ACTIVATABLE"
+      ],
+      "immunes": [
+        0,
+        16,
+        19
+      ],
+      "immuneNames": [
+        "STUNNED",
+        "FROZEN",
+        "STUNNED_NO_AMPLIFY_DAMAGE"
+      ],
+      "comboImmunes": [
+        0
+      ],
+      "comboImmuneNames": [
+        "SLEEPING"
+      ]
+    },
+    {
+      "branch": "S2 entry",
+      "component": "5087010491772423717",
+      "flags": [
+        5,
+        18,
+        1,
+        6,
+        7,
+        15,
+        24
+      ],
+      "flagNames": [
+        "INVINCIBLE",
+        "FORCE_DISARMED",
+        "SP_RECOVER_STOPPED",
+        "UNDEADABLE",
+        "HEAL_FREE",
+        "ALLY_TARGET_FREE",
+        "SKILL_NOT_ACTIVATABLE"
+      ],
+      "immunes": [
+        0,
+        16,
+        19
+      ],
+      "immuneNames": [
+        "STUNNED",
+        "FROZEN",
+        "STUNNED_NO_AMPLIFY_DAMAGE"
+      ],
+      "comboImmunes": [
+        0
+      ],
+      "comboImmuneNames": [
+        "SLEEPING"
+      ]
+    },
+    {
+      "branch": "S3 P1 entry",
+      "component": "5855105512771014181",
+      "flags": [
+        5,
+        18,
+        1,
+        6,
+        7,
+        15,
+        24
+      ],
+      "flagNames": [
+        "INVINCIBLE",
+        "FORCE_DISARMED",
+        "SP_RECOVER_STOPPED",
+        "UNDEADABLE",
+        "HEAL_FREE",
+        "ALLY_TARGET_FREE",
+        "SKILL_NOT_ACTIVATABLE"
+      ],
+      "immunes": [
+        0,
+        16,
+        19
+      ],
+      "immuneNames": [
+        "STUNNED",
+        "FROZEN",
+        "STUNNED_NO_AMPLIFY_DAMAGE"
+      ],
+      "comboImmunes": [
+        0
+      ],
+      "comboImmuneNames": [
+        "SLEEPING"
+      ]
+    },
+    {
+      "branch": "S3 P2 entry",
+      "component": "-7833372326858338779",
+      "flags": [
+        5,
+        18,
+        1,
+        6,
+        7,
+        15,
+        24
+      ],
+      "flagNames": [
+        "INVINCIBLE",
+        "FORCE_DISARMED",
+        "SP_RECOVER_STOPPED",
+        "UNDEADABLE",
+        "HEAL_FREE",
+        "ALLY_TARGET_FREE",
+        "SKILL_NOT_ACTIVATABLE"
+      ],
+      "immunes": [
+        0,
+        16,
+        19
+      ],
+      "immuneNames": [
+        "STUNNED",
+        "FROZEN",
+        "STUNNED_NO_AMPLIFY_DAMAGE"
+      ],
+      "comboImmunes": [
+        0
+      ],
+      "comboImmuneNames": [
+        "SLEEPING"
+      ]
+    },
+    {
+      "branch": "Plain return",
+      "component": "1173964339455184421",
+      "flags": [
+        5,
+        18,
+        1,
+        6,
+        7,
+        15
+      ],
+      "flagNames": [
+        "INVINCIBLE",
+        "FORCE_DISARMED",
+        "SP_RECOVER_STOPPED",
+        "UNDEADABLE",
+        "HEAL_FREE",
+        "ALLY_TARGET_FREE"
+      ],
+      "immunes": [
+        0,
+        16,
+        19
+      ],
+      "immuneNames": [
+        "STUNNED",
+        "FROZEN",
+        "STUNNED_NO_AMPLIFY_DAMAGE"
+      ],
+      "comboImmunes": [
+        0
+      ],
+      "comboImmuneNames": [
+        "SLEEPING"
+      ]
+    },
+    {
+      "branch": "All-out return",
+      "component": "-7444929567886029275",
+      "flags": [
+        5,
+        18,
+        1,
+        6,
+        7,
+        15,
+        24
+      ],
+      "flagNames": [
+        "INVINCIBLE",
+        "FORCE_DISARMED",
+        "SP_RECOVER_STOPPED",
+        "UNDEADABLE",
+        "HEAL_FREE",
+        "ALLY_TARGET_FREE",
+        "SKILL_NOT_ACTIVATABLE"
+      ],
+      "immunes": [
+        0,
+        16,
+        19
+      ],
+      "immuneNames": [
+        "STUNNED",
+        "FROZEN",
+        "STUNNED_NO_AMPLIFY_DAMAGE"
+      ],
+      "comboImmunes": [
+        0
+      ],
+      "comboImmuneNames": [
+        "SLEEPING"
+      ]
+    }
+  ],
+  "selectors": [
+    {
+      "component": "8685380368023277093",
+      "value": 46
+    },
+    {
+      "component": "86534097072016933",
+      "value": 46
+    },
+    {
+      "component": "-7680531105110897115",
+      "value": 46
+    },
+    {
+      "component": "-8827268357953565147",
+      "value": 46
+    },
+    {
+      "component": "1470367085020237349",
+      "value": 46
+    },
+    {
+      "component": "-1874532089215594971",
+      "value": 46
+    },
+    {
+      "component": "5884809055292018213",
+      "value": 46
+    },
+    {
+      "component": "916953614000180773",
+      "value": 46
+    },
+    {
+      "component": "7710524458763865637",
+      "value": 46
+    }
+  ],
+  "persona": {
+    "p1Flags": [
+      1
+    ],
+    "s1s2Flags": [
+      1,
+      24
+    ],
+    "p2FlagNames": [
+      "SP_RECOVER_STOPPED",
+      "SKILL_NOT_ACTIVATABLE"
+    ]
+  },
+  "healing": {
+    "template": "HealViaMaxHpRatio",
+    "ignoreHealFree": false,
+    "skipModifierEvent": true,
+    "limit": "The literal heal does not bypass HEAL_FREE. OnRallyPointLikeReborn is a separate action; its compiled HP/reset semantics are not recovered by this enum receipt."
+  },
+  "enabledOperators": [],
+  "frameParity": false
+}
