@@ -15,7 +15,8 @@
 //   member whose current skill is idle and not continuous-cast is started free
 //   ("all members on the field keep releasing their current skill").
 // - A joined member's skill timer is held for the Fever window and resumes
-//   afterwards; continuous-cast skills are re-cast free whenever idle.
+//   afterwards, except continuous-cast skills, which run their own timer and
+//   are re-cast free whenever idle.
 import source from '../../../data/arkpedia-fever-source.json' with {type: 'json'};
 export const FEVER_SOURCE = source;
 export const FEVER_MEMBERS = Object.freeze(Object.keys(source.members));
@@ -67,7 +68,8 @@ export class FeverSystem {
     if (!cfg || this.joined.has(u) || !live(u)) return false;
     const entry = {seq: u.deploySeq, skill: u.skill, cfg, buffs: []};
     this.joined.set(u, entry);
-    if (cfg._skipSkillStateTickJoinFever) (u.skill.timerHolds ??= new Set()).add(this);
+    // A continuous-cast skill must cycle to re-cast, so only other skills hold their timer.
+    if (cfg._skipSkillStateTickJoinFever && !cfg._continusCastWhenInFever) (u.skill.timerHolds ??= new Set()).add(this);
     for (const [i, buff] of cfg.buffs.entries()) if (buff.flags.includes(SP_RECOVER_STOPPED)) {
       const key = `fever:${u.id}:${entry.seq}:${i}:${buff.key}`;
       if (this.b.addBuff(u, {key, source: u, flags: {noSp: true}, data: {fever: this}})) entry.buffs.push(key);

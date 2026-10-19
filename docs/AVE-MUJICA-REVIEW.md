@@ -108,3 +108,37 @@ Declared mappings (PRTS notes):
 Validation:
 - `test/arkpedia-mortis-public.test.js` (28 cases): stats/cost at all ranks; ordinary timing and type; the exact 30%/15% Apoptosis split; Fever and the HP aura; stand-in entry, DEF and member shortening; S1 persisting into the stand-in with the block arithmetic; S2 shots and self-damage; both 0-1 clears.
 - `review-mortis-public.mjs`: 4 cases and 28 captures on both the candidate and normal builds.
+
+## Togawa Sakiko (`char_4182_oblvns`)
+
+Her extraction needed the `_audioSignal` fix described above.
+
+From data:
+- **Trait and ordinary attack.** Lord trait: 80% ATK on enemies she does not block. Continuous attack: one tracking note per attack at the Attack/Combat event (Physical).
+- **Talent 1.** Each live note gives members 3% DEF and 2% RES penetration, up to 10 notes. A note expires 1 s after leaving her range, or after its 10 s lifetime.
+- **Talent 2.** Fever +3 per damage dealt. Members whose base range overlaps hers gain her range as an extension. Allies in her range get +16 ASPD.
+- **S1.** Two charges, 3 SP per attack. Eight Arts notes from 100% down to 5% in a ±13.125° fan.
+- **S2.** Instrument switch, 5 SP. Piano: +110% ATK and fast Physical notes that pierce. Organ: +140 ASPD and slow Arts notes.
+- **S3.** 3-21 range. Each attack fires 2 Physical and 2 Arts notes at 220%.
+- **Note motion parameters.** Free speed, tracking speed and switch-to-tracing time for each note kind come from the projectile prefabs. `verifyOblvnsSource` reads them back.
+
+Declared mappings:
+- **Note motion.** Straight free flight, then direct homing on the target or the nearest enemy within the tracking radius. Turn-rate curves and the sine-wave free motion are not modelled. A note hits within 0.2 tiles.
+- **S1.** Cast over its 1.3 s clip; a full-charge auto release does not start Fever.
+- **S2.** Piano is the initial instrument. A cast while Fever can start only starts Fever. During Fever S2 cannot be cast and each attack fires two notes.
+- **S3.** Piano notes track the highest-RES enemy, organ notes the highest-DEF. During Fever with S3 active, members are held at 1 HP on fatal damage and retreat when Fever ends.
+- **Display.** Notes are drawn as simple tracked dots; there is no native note art.
+
+Shared Fever change found here: continuous-cast skills (Umiri S1, Sakiko S1) no longer have their timer held, otherwise they could never re-cast.
+
+Validation:
+- `test/arkpedia-oblvns-public.test.js` (41 cases):
+  - note data, stats/cost at all ranks;
+  - note flight, the Lord 80% and penetration stacks;
+  - Fever and the ASPD aura, member range sharing;
+  - the S1 fan ratios and the auto release that does not start Fever;
+  - the S2 instruments, Fever-only cast, lock and double notes;
+  - S3 targeting;
+  - a three-member Fever scenario: Nyamu force-started and her timer held, Umiri continuous S1, a member held at 1 HP and retreated at Fever end;
+  - all three 0-1 clears.
+- `review-oblvns-public.mjs`: 6 cases and 42 captures on both the candidate and normal builds.

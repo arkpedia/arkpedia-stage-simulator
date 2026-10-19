@@ -118,6 +118,7 @@ import { AMORIS_OPERATORS } from './amoris-operators.js';
 import { TMORIS_OPERATORS } from './tmoris-operators.js';
 import { DOLRIS_OPERATORS } from './dolris-operators.js';
 import { MORTIS_OPERATORS } from './mortis-operators.js';
+import { OBLVNS_OPERATORS } from './oblvns-operators.js';
 import { TURDUS_OPERATORS } from './turdus-operators.js';
 import { BRANCH_OPERATORS } from './branch-operators.js';
 import { RECKPR_OPERATORS } from './reckpr-operators.js';
@@ -462,6 +463,7 @@ export const REGULAR_OPERATORS = Object.freeze({
   ...TMORIS_OPERATORS,
   ...DOLRIS_OPERATORS,
   ...MORTIS_OPERATORS,
+  ...OBLVNS_OPERATORS,
   ...BRANCH_OPERATORS,
 });
 

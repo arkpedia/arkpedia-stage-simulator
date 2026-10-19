@@ -1,0 +1,45 @@
+{
+  "operator": "char_4182_oblvns",
+  "name": "Togawa Sakiko",
+  "foundationSha256": "b01d98c4d024cb874e5534a4aac9fab2deb44f9eb6bc7a2cf15a1d34de551d17",
+  "artCommit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+  "output": "data/arkpedia-oblvns-art.json",
+  "sdReview": "source-reviews/oblvns.json",
+  "scope": "Original Front/Back files unchanged. Independently checked native skeleton/atlas/material/texture pointers, decoded pixels and premultiplied alpha. Literal Idle/Start/Attack/Die roles; her owner plays Combat, Skill_1, the S2 instrument Loop/Idle/Trans clips and the S3 Begin/Loop/Idle/End clips itself, with the original native mixes retained. Combat/public admission, modules, effects/audio/shaders and compiled/frame/pixel parity remain separate.",
+  "roles": {
+    "Front": {
+      "idle": "Idle",
+      "deploy": "Start",
+      "attack": "Attack",
+      "attackDown": null,
+      "skill": null,
+      "skills": {},
+      "die": "Die",
+      "stun": null,
+      "move": null
+    },
+    "Back": {
+      "idle": "Idle",
+      "deploy": "Start",
+      "attack": "Attack",
+      "attackDown": null,
+      "skill": null,
+      "skills": {},
+      "die": "Die",
+      "stun": null,
+      "move": null
+    }
+  },
+  "nativeMixes": [
+    {
+      "sourceAnimName": "Skill_3_Idle",
+      "targetAnimName": "Idle",
+      "mixAnimName": "Skill_3_End"
+    },
+    {
+      "sourceAnimName": "Skill_3_Loop",
+      "targetAnimName": "Idle",
+      "mixAnimName": "Skill_3_End"
+    }
+  ]
+}
