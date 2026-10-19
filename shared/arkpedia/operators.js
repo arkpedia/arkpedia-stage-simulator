@@ -138,6 +138,7 @@ import { DEMETR_OPERATORS } from './demetr-operators.js';
 import { SBELL2_OPERATORS } from './sbell2-operators.js';
 import { AGLNA2_OPERATORS } from './aglna2-operators.js';
 import { RADIAN_OPERATORS } from './radian-operators.js';
+import { KALTS2_OPERATORS } from './kalts2-operators.js';
 import { BRANCH_OPERATORS } from './branch-operators.js';
 import { RECKPR_OPERATORS } from './reckpr-operators.js';
 import { CLOSUR_OPERATORS } from './closur-operators.js';
@@ -500,6 +501,7 @@ export const REGULAR_OPERATORS = Object.freeze({
   ...SBELL2_OPERATORS,
   ...AGLNA2_OPERATORS,
   ...RADIAN_OPERATORS,
+  ...KALTS2_OPERATORS,
   ...BRANCH_OPERATORS,
 });
 

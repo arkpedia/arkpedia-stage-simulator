@@ -155,6 +155,7 @@ import { customizeDemetrKit, installDemetr } from './content/arkpedia-demetr.js'
 import { customizeSbell2Kit, installSbell2 } from './content/arkpedia-sbell2.js';
 import { customizeAglna2Kit, installAglna2 } from './content/arkpedia-aglna2.js';
 import { customizeRadianKit, installRadian } from './content/arkpedia-radian.js';
+import { customizeKalts2Kit, installKalts2 } from './content/arkpedia-kalts2.js';
 import { customizePublicBranchKit, installPublicBranch } from './content/arkpedia-branch-public.js';
 import { customizePublicReckprKit, installPublicReckpr } from './content/arkpedia-reckpr-public.js';
 import { customizePublicLieselKit, installPublicLiesel } from './content/arkpedia-liesel-public.js';
@@ -490,6 +491,9 @@ export class StandardBattle extends Battle {
       return position === "RANGED"
         ? "Choose a ranged tile."
         : "Choose a melee tile.";
+    // An owner may restrict a card to specific tiles (Kal'tsit·Esperanta's S3 transported allies).
+    const ownerDeny = this.regularPlacementDeny?.[id]?.(row, col, tile);
+    if (ownerDeny) return ownerDeny;
     if (
       this.allyUnits.some((u) => u.alive && u.tileR === row && u.tileC === col)
     )
@@ -669,6 +673,7 @@ export class StandardBattle extends Battle {
     customizeSbell2Kit({ battle: this, id, unit, kit });
     customizeAglna2Kit({ battle: this, id, unit, kit });
     customizeRadianKit({ battle: this, id, unit, kit });
+    customizeKalts2Kit({ battle: this, id, unit, kit });
     customizePublicBranchKit({ battle: this, id, unit, kit });
     customizeNarantKit({ battle: this, id, def, unit, kit });
     customizeElaKit({ battle: this, id, def, unit, kit });
@@ -930,6 +935,7 @@ export class StandardBattle extends Battle {
     installSbell2({ battle: this, unit, def });
     installAglna2({ battle: this, unit, def });
     installRadian({ battle: this, unit, def });
+    installKalts2({ battle: this, unit, def });
     installPublicBranch({ battle: this, unit, def });
     installNarant({ battle: this, unit, def });
     installEla({ battle: this, unit, def });

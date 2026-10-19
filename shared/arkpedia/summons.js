@@ -116,6 +116,8 @@ export const REGULAR_AUTOMATIC_TOKENS = Object.freeze({
   char_249_mlyss: Object.freeze(['token_10030_mlyss_wtrman']),
   // The dedicated coordinate controller owns its deck; preload the original art.
   char_1041_angel2: Object.freeze(['token_10056_angel2_target']),
+  // Kal'tsit·Esperanta's S3 anchor deck places the tactical anchor.
+  char_1052_kalts2: Object.freeze(['token_10068_kalts2_mtship']),
   // The selected-skill controller owns Magallan's deck and terrain rules.
   char_248_mgllan: Object.freeze([1, 2, 3].map(n => `token_10005_mgllan_drone${n}`)),
   // Ling's selected-skill deck controls dragon stock, terrain and fusion.
