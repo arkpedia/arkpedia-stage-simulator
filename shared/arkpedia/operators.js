@@ -129,6 +129,7 @@ import { CATAP2_OPERATORS } from './catap2-operators.js';
 import { CHEN3_OPERATORS } from './chen3-operators.js';
 import { HSGMA2_OPERATORS } from './hsgma2-operators.js';
 import { ORCHD2_OPERATORS } from './orchd2-operators.js';
+import { LEIZI2_OPERATORS } from './leizi2-operators.js';
 import { BRANCH_OPERATORS } from './branch-operators.js';
 import { RECKPR_OPERATORS } from './reckpr-operators.js';
 import { CLOSUR_OPERATORS } from './closur-operators.js';
@@ -482,6 +483,7 @@ export const REGULAR_OPERATORS = Object.freeze({
   ...CHEN3_OPERATORS,
   ...HSGMA2_OPERATORS,
   ...ORCHD2_OPERATORS,
+  ...LEIZI2_OPERATORS,
   ...BRANCH_OPERATORS,
 });
 

@@ -4811,3 +4811,7 @@ Hoshiguma the Breacher joins with her minus-HP 我执 state and HP-scaled berser
 ### Violet Mizutsune Orchid
 
 Violet Mizutsune Orchid joins with her three-arrow salvo, powered attacks after the first cast, the return deployment that admits melee tiles around her last tile without a cost increase, S1 charged arrows with the stunning 刚连射, the S2 deployment-cast liftoff volleys and the S3 piercing push arrow. The battle gains `regularPlacementAllow` (an owner-admitted tile type) and `entry.noCostIncrease`. See docs/ORCHD2-REVIEW.md. Coverage: 419/431 forms.
+
+### Leizi the Thunderbringer
+
+Leizi the Thunderbringer joins with her Liberator trait, idle liftoff with per-second talent thunder, the skill-start ground strike with tremble, S1 three-direction strikes that keep the trait ATK while charges remain, S2 thunder ATK stacks over a ground-path range, and S3 splash attacks spawning trembling currents. See docs/LEIZI2-REVIEW.md. Coverage: 420/431 forms.
