@@ -178,11 +178,11 @@ export class Kalts2Owner {
     const {b, u} = this, state = this.deckState;
     if (!canDeployInViewport(b.viewport)) return 'Open the fullscreen workspace to deploy.';
     if (b.finished) return 'Battle has ended.';
-    if (!this.valid() || state.stock <= 0) return "Activate Kal'tsit·Esperanta's S3 first.";
+    if (!this.valid() || state.stock <= 0) return "Activate Kal'tsit - Esperanta's S3 first.";
     if (!Number.isInteger(r) || !Number.isInteger(c) || !b.grid.inRect(r, c)) return 'Select a tile on the map.';
     if (!['RANGED', 'ALL'].includes(b.grid.tile(r, c).build)) return 'Choose a high-ground tile.';
     if (b.unitAt(r, c) || b.tileReservation(r, c) || b.downOn(r, c)) return 'Tile is occupied.';
-    if (this.rangeKeys().has(r * COLS + c)) return "Choose a tile outside Kal'tsit·Esperanta's attack range.";
+    if (this.rangeKeys().has(r * COLS + c)) return "Choose a tile outside Kal'tsit - Esperanta's attack range.";
     if (!canSpendDp(b, u.ownerId, state.record.stats.cost)) return 'Not enough DP.';
     return null;
   }
@@ -231,7 +231,7 @@ export class Kalts2Owner {
       const entry = b.bench[a.defId];
       if (!live(a) || entry?.unit !== a) continue;
       b.retreat(a, {permanent: true, reason: 'kalts2-transport'});
-      entry.readyAt = b.time; entry.costDelta = -Infinity;
+      entry.readyAt = b.time; entry.costDelta = -1e6;
       this.moved.set(a.defId, entry);
     }
     this.syncDeny();
@@ -245,8 +245,8 @@ export class Kalts2Owner {
         continue;
       }
       if (b.regularPlacementDeny[id]?.owner === this) continue;
-      const deny = (r, c) => this.flight ? "Wait for Kal'tsit·Esperanta to land."
-        : this.rangeKeys().has(r * COLS + c) ? null : "Choose a tile inside Kal'tsit·Esperanta's attack range.";
+      const deny = (r, c) => this.flight ? "Wait for Kal'tsit - Esperanta to land."
+        : this.rangeKeys().has(r * COLS + c) ? null : "Choose a tile inside Kal'tsit - Esperanta's attack range.";
       deny.owner = this; b.regularPlacementDeny[id] = deny;
     }
   }
