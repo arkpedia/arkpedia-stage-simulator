@@ -50,6 +50,12 @@ export const ENEMY_FEATURES = Object.freeze({
     explains: /^(Starts imprisoned\. When imprisoned, ASPD is reduced|Freed after a few attacks, gaining increased ATK)$/ },
   'talent:liberty': { covers: r => CONFINEMENT_SIGS.some(p => sig(r, 'confinement', p)) && LIBERTY_SIGS.some(p => sig(r, 'liberty', p)),
     note: 'the liberty buffs of the confinement feature' },
+  // 嘲讽: "More likely to be targeted by attacks" — taunt level +taunt_level.
+  'talent:taunt': { covers: r => sig(r, 'taunt', ['taunt_level']), ability: { kind: 'taunt', params: r => ({ n: r.talents.bb['taunt.taunt_level'] }) },
+    note: 'taunt level', explains: /^More likely to be targeted by attacks\.$/ },
+  // The level's route places these enemies on the field; the record needs nothing more.
+  'ability:Able to land directly onto the battlefield.': { covers: () => true, note: 'the stage route starts at its landing tile' },
+  'ability:Can appear in the battlefield': { covers: () => true, note: 'the stage route starts on the field' },
   // "Has a chance to dodge Physical attacks when not blocked": Physical dodge `prob` while unblocked.
   'talent:Evade': { covers: r => sig(r, 'Evade', ['prob']) && r.abilities.some(a => a.text === 'Has a chance to dodge Physical attacks when not blocked'),
     ability: { kind: 'dodgeUnblocked', params: r => ({ prob: r.talents.bb['Evade.prob'] }) }, note: 'Physical dodge prob while unblocked',

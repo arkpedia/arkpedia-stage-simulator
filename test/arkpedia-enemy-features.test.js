@@ -109,6 +109,10 @@ test('Evade: Physical dodge while unblocked, none while blocked', () => {
   h.runUntil(() => !e()?.alive || e().blockedBy, 120); h.run(0.1);
   if (e()?.alive) assert.equal(e().s.dodgePhys, 0);
 });
+test('taunt: the talent taunt level makes it more likely to be targeted', () => {
+  const key = Object.keys(support.enemies).find(k => support.enemies[k].features?.includes('talent:taunt')), r = ENEMY_RECORDS.enemies[key].levels[0];
+  const h = spawnAny(key, { seconds: 0.1, units: [] }); assert.equal(enemy(h, key).s.taunt, r.stats.tauntLevel + r.talents.bb['taunt.taunt_level']);
+});
 test('approved features apply only to enemies that use them', () => {
   const h = spawnAny('enemy_1007_slime', { seconds: 0.2 }), e = enemy(h, 'enemy_1007_slime');
   assert.equal(e.s.flags.unblockable ?? false, false); assert.equal(e.s.flags.stealth ?? false, false); assert.equal(e.profile?.maxTargets ?? 1, 1);

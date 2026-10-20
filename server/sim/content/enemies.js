@@ -289,6 +289,7 @@ export const featureAbilities = Object.freeze({
   times: ({ artsOnly }) => times(artsOnly),
   blockWeight: ({ n }) => blockWeight(n),
   prisoner: (params, ab) => prisoner(ab, params),
+  taunt: ({ n }) => taunt(n),
   // Physical dodge `prob` while not blocked (the engine's dodgePhys, toggled each tick).
   dodgeUnblocked: ({ prob }) => ({ tick(b, e, a) {
     const on = !e.blockedBy;
