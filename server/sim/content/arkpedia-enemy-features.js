@@ -32,13 +32,12 @@ export function applyEnemyFeatures(battle, e) {
       abilities.push(make(f.ability.params(record)));
     }
   }
-  if (abilities.length) { abOf(battle, e); attach(battle, e, abilities); }
+  if (abilities.length) { installFeatureDispatch(battle); abOf(battle, e); attach(battle, e, abilities); }
 }
 
-/** Install the features-only dispatch and apply features to every enemy this battle spawns. */
+/** Apply features to every enemy this battle spawns; the shared dispatch is installed only when an ability needs it. */
 export function installEnemyFeatures(battle) {
   if (battle.regularEnemyFeatures) return;
   battle.regularEnemyFeatures = true;
-  installFeatureDispatch(battle);
   battle.on('enemySpawn', ({ enemy }) => applyEnemyFeatures(battle, enemy), { priority: 90 });
 }
