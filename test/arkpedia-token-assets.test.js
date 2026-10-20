@@ -29,7 +29,8 @@ test('every reviewed automatic or manual token dependency has complete original 
         assert.ok(model?.skeleton?.sha256 && model?.atlas?.sha256);
         assert.ok(model?.textures?.length && model.textures.every(texture => texture.sha256));
         assert.ok(model?.animationRoles?.idle);
-        if (['token_10010_folivo_car', 'token_10004_otter_motter'].includes(id)) {
+        // SilverAsh the Reignfrost's Eye cards ship a Default-only skeleton (drawn on the field as a marker).
+        if (['token_10010_folivo_car', 'token_10004_otter_motter', 'token_10057_svash2_eagle1', 'token_10057_svash2_eagle2', 'token_10057_svash2_eagle3'].includes(id)) {
           assert.equal(model.animationRoles.deploy, null);
           assert.equal(model.animations.Start, undefined, 'the original summon has no entrance clip');
         } else assert.ok(model.animationRoles.deploy);

@@ -118,6 +118,8 @@ export const REGULAR_AUTOMATIC_TOKENS = Object.freeze({
   char_1041_angel2: Object.freeze(['token_10056_angel2_target']),
   // Kal'tsit·Esperanta's S3 anchor deck places the tactical anchor.
   char_1052_kalts2: Object.freeze(['token_10068_kalts2_mtship']),
+  // SilverAsh the Reignfrost's Eye of the Snowstorm card (one per selected skill).
+  char_1045_svash2: Object.freeze(['token_10057_svash2_eagle1', 'token_10057_svash2_eagle2', 'token_10057_svash2_eagle3']),
   // The selected-skill controller owns Magallan's deck and terrain rules.
   char_248_mgllan: Object.freeze([1, 2, 3].map(n => `token_10005_mgllan_drone${n}`)),
   // Ling's selected-skill deck controls dragon stock, terrain and fusion.
