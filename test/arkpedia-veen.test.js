@@ -30,7 +30,7 @@ const tal=(u,k)=>u.def.talents.find(t=>t.bb[k]!=null).bb;
 for(const skill of[1,2,3])for(let rank=1;rank<=10;rank++)check(`S${skill} rank ${rank} keeps source stats, cost and SP`,()=>{
  const f=make({skill,rank}),r=selectedVeenBuild(f.build);assert.deepEqual(recordFor(f.build,data).stats,r.stats);near(f.cost,r.stats.cost);assert.equal(f.u.skill.spCost,r.source.spData.spCost);
 });
-check('With no target she stores energy each interval up to nine units, merged into transposed energy with the talent ATK buff',()=>{
+check('With no target he stores energy each interval up to nine units, merged into transposed energy with the talent ATK buff',()=>{
  const f=make();advance(f.b,f.u.s.interval*1.5);assert.equal(f.o.units,1);assert.ok(f.u.findBuff('veen:t1').mods.aspd>0);
  advance(f.b,f.u.s.interval*12);assert.equal(f.o.units,9);assert.deepEqual(f.o.stored(),{merged:3,singles:0});near(f.u.findBuff('veen:t1').mods.atkPct,tal(f.u,'attack_speed').atk,1e-9);
 });
@@ -39,7 +39,7 @@ check('An attack fires every stored energy: a transposed one deals three times A
  until(f.b,()=>plain(f).length>0,6);advance(f.b,.05);const m=tagged(f,'veen:merged'),s=tagged(f,'veen:energy');assert.equal(m.length,1);assert.equal(s.length,1);
  near(m[0].raw,m[0].atk*3,1e-6);assert.equal(f.o.units,0);assert.equal(f.o.dots.get(e).stacks,tal(f.u,'attack@value')['attack@max_stack_cnt']);
 });
-check('Talent 2 damage ticks 90 per stack each second, and she will not target an enemy carrying it',()=>{
+check('Talent 2 damage ticks 90 per stack each second, and he will not target an enemy carrying it',()=>{
  const f=make(),a=enemy(f);until(f.b,()=>plain(f).length>0,6);const c=enemy(f,{col:5});const n=f.hits.length;advance(f.b,1.05);
  const dot=tagged(f,'veen:dot',n);assert.ok(dot.length>=1);near(dot[0].raw,tal(f.u,'attack@value')['attack@value']*f.o.dots.get(a).stacks,1e-6);
  until(f.b,()=>plain(f,n).length>0,6);assert.equal(plain(f,n)[0].target,c,'skips the marked enemy');

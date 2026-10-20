@@ -4818,7 +4818,7 @@ Leizi the Thunderbringer joins with her Liberator trait, idle liftoff with per-s
 
 ### Viy
 
-Viy (Вий) joins with Mystic energy stored with no target and merged into transposed energy, her talent ATK/ASPD by what she holds, the stacking damage over time she avoids targeting, S1 ASPD, S2 attack and release stacks, and S3 bouncing energy shots on an ammo count. See docs/VEEN-REVIEW.md. Coverage: 421/431 forms.
+Viy (Вий) joins with Mystic energy stored with no target and merged into transposed energy, his talent ATK/ASPD by what he holds, the stacking damage over time he avoids targeting, S1 ASPD, S2 attack and release stacks, and S3 bouncing energy shots on an ammo count. See docs/VEEN-REVIEW.md. Coverage: 421/431 forms.
 
 ### Mantra
 

@@ -2,14 +2,14 @@
 // Вий / Veen (char_4226_veen), Mystic Caster.
 // Source: data/arkpedia-native-operators/char_4226_veen.json.
 //
-// From data: Mystic trait (Arts attacks; with no target she stores one energy
-// per attack interval, firing them all with her next attack); her trait stores
+// From data: Mystic trait (Arts attacks; with no target he stores one energy
+// per attack interval, firing them all with his next attack); his trait stores
 // up to `times` energy units and merges every merge_cnt into one transposed
-// energy. Talent 1: merging needs it (without it she stores merge_cnt singles);
+// energy. Talent 1: merging needs it (without it he stores merge_cnt singles);
 // with a transposed energy stored ATK `atk`, otherwise ASPD `attack_speed`.
 // Talent 2 (veen_t_2[damage], _merged): attacks and fired energy put
 // attack@value Arts per second on the target for attack@duration s, stacking to
-// attack@max_stack_cnt (a transposed energy adds merge_cnt stacks), and she
+// attack@max_stack_cnt (a transposed energy adds merge_cnt stacks), and he
 // does not target enemies carrying it. S1 (auto): ASPD. S2: base attack time,
 // and every attack or fired energy stacks veen_s_2_buff[stack] ATK/ASPD to its
 // max_stack_cnt (a transposed energy adds merge_cnt). S3: ASPD, and each fired
@@ -20,7 +20,7 @@
 // skill ends when spent and can be stopped at any time.
 // Declared local mappings:
 // - A transposed energy is one projectile dealing merge_cnt x ATK.
-// - Fired energies all strike her attack target (S3 bounces then spread).
+// - Fired energies all strike his attack target (S3 bounces then spread).
 import evidence from '../../../data/arkpedia-native-operators/char_4226_veen.json' with {type: 'json'};
 import review from '../../../data/arkpedia-veen-runtime-review.json' with {type: 'json'};
 import {selectedCNSourceBuild} from './arkpedia-selected-cn-source.js';
@@ -62,7 +62,7 @@ class VeenOwner {
   stored() { const m = this.merging ? Math.floor(this.units / this.merge) : 0; return {merged: m, singles: this.units - m * this.merge}; }
   legal(e) { return live(e) && e.side === 'enemy' && canTargetEnemy(this.u, e, this.u.profile); }
   marked(e) { return (this.dots.get(e)?.stacks ?? 0) > 0; }
-  // Talent 2: stacked Arts damage over time from her.
+  // Talent 2: stacked Arts damage over time from him.
   mark(e, stacks) {
     const t = talent(this.u, 'attack@value');
     if (!t || !live(e)) return;
@@ -79,7 +79,7 @@ class VeenOwner {
       b.dealDamage(u, e, {amount: t['attack@value'] * d.stacks, type: 'arts', applyWay: 'none', canDodge: false, tags: ['veen', 'veen:dot']});
     }
   }
-  // Talent 1 buff by what she holds.
+  // Talent 1 buff by what he holds.
   syncTalent() {
     const {b, u} = this, t = talent(u, 'attack_speed');
     if (!t || !this.valid()) return;
