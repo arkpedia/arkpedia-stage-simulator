@@ -73,6 +73,12 @@ check('S3: the anchor card goes outside her range; she flies there, two operator
  assert.equal(summonPlacementError(b,CARD,1,6)?.length>0,true,'one anchor per cast');
  until(b,()=>!u.skill.active,60);assert.equal(b.placementError(G,3,6),'Operator is unavailable.');
 });
+for(const[dir,inside]of[['UP',true],['DOWN',false]])check(`S3 picks transported operators in her y-6 range facing ${dir}`,()=>{
+ const d=structuredClone(data);d.stage.geometry.waves[0].spawns=[];d.stage.battle.dp_per_second=0;
+ const b=new StandardBattle(d,{operators:[{...defaultBuild(d.operators[ID]),skillId:'skchr_kalts2_3'},defaultBuild(d.operators[G])]});b.autoFinish=false;b.setViewport('fullscreen-workspace');b.getPlayer('arkpedia').dp=99;
+ const u=b.deployOperator(ID,2,4,dir),a=b.deployOperator(G,3,6,'RIGHT');u.skill.setSpTotal(u.skill.spCost);assert.equal(b.activateOperator(ID),true);
+ deployRegularSummon(b,CARD,inside?1:4,inside?1:7,'RIGHT');advance(b,.7);assert.equal(a.alive,!inside,`(3,6) is ${inside?'inside':'outside'} her ${dir}-facing y-6 range`);
+});
 for(const skill of[1,2,3])check(`S${skill} clears unchanged original 0-1 with natural DP`,()=>{
  const Mel='char_208_melan',b=new StandardBattle(data,{operators:[{...defaultBuild(data.operators[ID]),skillId:`skchr_kalts2_${skill}`},defaultBuild(data.operators[Mel]),defaultBuild(data.operators[G])]});b.setViewport('fullscreen-workspace');
  let u,m,g;for(let n=0;n<9001&&!b.finished;n++){if(!m&&b.dp>=b.cost(Mel))m=b.deployOperator(Mel,3,1,'RIGHT');if(m&&!g&&b.dp>=b.cost(G))g=b.deployOperator(G,3,3,'RIGHT');if(g&&!u&&b.dp>=b.cost(ID))u=b.deployOperator(ID,2,4,'RIGHT');if(u?.skill.ready)b.activateOperator(ID);b.step();}

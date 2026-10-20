@@ -43,6 +43,7 @@ import review from '../../../data/arkpedia-kalts2-runtime-review.json' with {typ
 import {selectedCNSourceBuild} from './arkpedia-selected-cn-source.js';
 import {normalizeChess} from '../simdata.js';
 import {COLS} from '../constants.js';
+import {absoluteRangeKeys} from '../targeting.js';
 import {acquireTargets} from '../ai.js';
 import {commandBlockMode} from '../block-mode.js';
 import {canSpendDp} from './arkpedia-dp-budget.js';
@@ -88,10 +89,6 @@ export function selectedKalts2Inputs(unit) {
 const model = u => evidence.models[ID][u.dir === 'UP' ? 'Back' : 'Front'];
 const rate = u => u.base.bat / u.s.interval;
 const talent = (u, key) => u.def.talents.find(t => t.bb[key] != null)?.bb;
-const keysAround = (grid, r, c, dir) => {
-  const rot = {RIGHT: (x, y) => [x, y], LEFT: (x, y) => [-x, -y], UP: (x, y) => [-y, x], DOWN: (x, y) => [y, -x]}[dir];
-  return new Set(grid.map(([dr, dc]) => { const [rr, cc] = rot(dr, dc); return (r + rr) * COLS + (c + cc); }));
-};
 // The anchor uses its own source keyframes at her elite and level.
 function anchorRecord(b, build) {
   const source = b.data.raw.tokens?.[TOKEN], phase = source?.phases?.[build.elite];
@@ -205,7 +202,7 @@ export class Kalts2Owner {
   depart(t) {
     const {b, u} = this, from = {x: u.x, y: u.y}, dist = Math.hypot(t.x - u.x, t.y - u.y);
     (u.skill.timerHolds ??= new Set()).add(this);
-    const keys = keysAround(SELECT_RANGE, u.tileR, u.tileC, u.dir);
+    const keys = new Set(absoluteRangeKeys(SELECT_RANGE, u.tileR, u.tileC, u.dir));
     const picked = this.operators().filter(a => keys.has(a.tileR * COLS + a.tileC) && this.b.bench[a.defId]?.unit === a)
       .sort((p, q) => Math.hypot(p.x - u.x, p.y - u.y) - Math.hypot(q.x - u.x, q.y - u.y) || p.deploySeq - q.deploySeq).slice(0, SELECT_MAX);
     const marker = {x: from.x, y: from.y, color: 0x9be7ff};

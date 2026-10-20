@@ -35,12 +35,12 @@ Generic changes:
 - `StandardBattle.regularPlacementDeny[id]` lets an owner refuse tiles for a card. It mirrors `regularPlacementAllow`.
 
 Validation:
-- `test/arkpedia-kalts2.test.js` (38 cases) covers:
+- `test/arkpedia-kalts2.test.js` (40 cases) covers:
   - stats, cost and SP at every rank;
   - talent 1 (liftoff, block, wider air radius, no ground block);
   - talent 2 (regeneration, the one-hit shield, no repeat while she stays in range);
   - S1's radius aura;
   - S2's heal and true-damage shots with sluggish and the ammo end;
-  - the S3 anchor rules, the locked timer, withdrawal, free cards refused outside and accepted inside her new range, the landing, and one anchor per cast;
+  - the S3 anchor rules, the locked timer, withdrawal from her y-6 range for UP and DOWN facings, free cards refused outside and accepted inside her new range, the landing, and one anchor per cast;
   - three 0-1 clears.
 - `review-kalts2-public.mjs` passes 6 cases on both the candidate and the normal build. They cover the anchor card drag with a facing swipe, the flight, and the transported card refused outside and accepted inside her range.
