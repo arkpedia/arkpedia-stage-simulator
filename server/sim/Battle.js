@@ -903,7 +903,9 @@ export class Battle {
     const reservation = this.tileReservation(R0, C0);
     if (reservation && reservation.owner !== u) return false;
     const occ = this._occ[k];
-    if (occ && occ !== u && occ.alive && occ.deployed) { this.log(`tile ${R0},${C0} occupied; ${u} not deployed`); return false; }
+    // A host unit (Nasti's platform, `mem.regularHost`) may carry one guest on its tile; the host keeps the tile.
+    const host = occ && occ !== u && occ.alive && occ.deployed && occ.mem?.regularHost?.accepts?.(u) === true ? occ : null;
+    if (occ && occ !== u && occ.alive && occ.deployed && !host) { this.log(`tile ${R0},${C0} occupied; ${u} not deployed`); return false; }
     // "倒地干员所在地块视为可部署，但所有我方单位在此处的部署行为将被阻止" (PRTS 卫戍协议/帮助 §作战阶段 单位部署)
     if (this.downOn(R0, C0, u)) { this.log(`a knocked-out operator lies on ${R0},${C0}; ${u} not deployed`); return false; }
     const first = u.deploySeq === 0;
@@ -931,7 +933,8 @@ export class Battle {
     // an operator's HP ratio here, the SP in skill.reset and again after the `deploy` hook (below) — a summon's SP only
     const cs = initial || (first && this._startDeploying) ? (carry ?? u.carry) : null;
     if (cs && u.kind === 'op' && Number.isFinite(cs.hpPct)) u.hp = Math.max(1, u.s.maxHp * Math.max(0.01, Math.min(1, cs.hpPct)));
-    this._occ[k] = u;
+    if (host) { host.mem.regularHost.guest = u; u.mem.regularHostedBy = host; }
+    else this._occ[k] = u;
     this._refreshRange(u); // also rebuilds baseRangeKeys (initial range incl. permanent rangeExtend)
     if (!u.skill) this._setupUnit(u);
     u.skill.reset(cs);
@@ -994,6 +997,9 @@ export class Battle {
       this.releaseBlocked(unit);
       const k = unit.tileR * COLS + unit.tileC;
       if (this._occ[k] === unit) this._occ[k] = null;
+      // a guest leaves its host's tile to the host
+      const host = unit.mem?.regularHostedBy;
+      if (host) { if (host.mem.regularHost?.guest === unit) host.mem.regularHost.guest = null; delete unit.mem.regularHostedBy; }
       // keep persistent buffs only
       const kept = [];
       for (const b of unit.buffs) {
@@ -2062,6 +2068,9 @@ export class Battle {
     if (this.downOn(r, c)) return false;
     const ok = unit.tileR * COLS + unit.tileC;
     if (this._occ[ok] === unit) this._occ[ok] = null;
+    // a guest moving off its host leaves the host's tile to the host
+    const host = unit.mem?.regularHostedBy;
+    if (host) { if (host.mem.regularHost?.guest === unit) host.mem.regularHost.guest = null; delete unit.mem.regularHostedBy; }
     this.releaseBlocked(unit);
     if (unit.obstacle) this.grid.setObstacle(unit.tileR, unit.tileC, false, unit.obstacleKind);
     unit.tileR = r; unit.tileC = c; unit.x = c; unit.y = r;

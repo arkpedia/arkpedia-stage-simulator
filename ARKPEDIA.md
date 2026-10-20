@@ -4855,3 +4855,7 @@ Kal'tsit - Esperanta joins with her Watchman liftoff, FLY block over a wider rad
 ### SilverAsh the Reignfrost
 
 SilverAsh the Reignfrost joins with his Eye of the Snowstorm card in a cost-sorted deck: talent SP and faster redeployment for cards left of the Eye, Kjerag freeze immunity, DEF and regeneration, S1 DP with a discount and barrier for the card nearest the Eye, S2 cold strikes with a discount and stored deploy casts for cards left of the Eye, and S3 DP over time, a one-time base-cost swap, line strikes with fragility and the Eye placed on an operator. Generic additions: `battle.regularDeckOrder()` (the app follows it), summon `deckMarker` and `targetsAlly` cards, and `bench[id].baseCost`. See docs/SVASH2-REVIEW.md. Coverage: 430/431 forms.
+
+### Nasti
+
+Nasti joins with her skill-chosen original devices: talent Sanctuary that strengthens for her and high-ground operators once a ranged enemy appears, the S1 inspector with front-operator DEF and block while she hits every blocked enemy, the S2 supervisors that feed front operators SP and barriers while she shields herself, and the S3 engineers that build and upgrade a platform a ranged operator can stand on. Generic additions: host units that carry one guest on their tile, `battle.regularTileBuild`, and tokens that can outlive their summoner. See docs/NASTI-REVIEW.md. Coverage: 431/431 forms.

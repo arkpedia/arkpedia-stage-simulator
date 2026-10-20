@@ -1,0 +1,108 @@
+{
+  "operator": "char_4212_nasti",
+  "model": "token_10060_nasti_nstchr",
+  "name": "Nasti's Supervisor device",
+  "nativeFacing": "Single",
+  "foundationSha256": "483e80e24832fe6ef9958528cafb6bd3877b43552212460d91695bab7fc72094",
+  "bundle": "pkgrps/btl_pfb_tokens_4.ab",
+  "output": "data/arkpedia-nasti-nstchr-token-art.json",
+  "sdReview": "source-reviews/nasti-nstchr.json",
+  "scope": "Original Nasti's Supervisor device artwork only: native skeleton, unchanged decoded pixels, PMA and pointers. Combat, public admission, effects/audio and game-frame/pixel parity are separate.",
+  "roles": {
+    "Single": {
+      "idle": "Idle_1",
+      "deploy": "Start",
+      "attack": null,
+      "skill": null,
+      "die": "Die",
+      "stun": null,
+      "move": null
+    }
+  },
+  "missingOptionalAliases": {
+    "Single": []
+  },
+  "nativeMixes": [
+    {
+      "sourceAnimName": "Idle_1",
+      "targetAnimName": "Skill_Loop",
+      "mixAnimName": "Skill_Begin"
+    },
+    {
+      "sourceAnimName": "Idle_2",
+      "targetAnimName": "Skill_Loop",
+      "mixAnimName": "Skill_Begin"
+    },
+    {
+      "sourceAnimName": "Idle_1",
+      "targetAnimName": "Skill_Down_Loop",
+      "mixAnimName": "Skill_Down_Begin"
+    },
+    {
+      "sourceAnimName": "Idle_2",
+      "targetAnimName": "Skill_Down_Loop",
+      "mixAnimName": "Skill_Down_Begin"
+    },
+    {
+      "sourceAnimName": "Idle_1",
+      "targetAnimName": "Skill_Up_Loop",
+      "mixAnimName": "Skill_Up_Begin"
+    },
+    {
+      "sourceAnimName": "Idle_2",
+      "targetAnimName": "Skill_Up_Loop",
+      "mixAnimName": "Skill_Up_Begin"
+    },
+    {
+      "sourceAnimName": "Skill_Loop",
+      "targetAnimName": "Idle_1",
+      "mixAnimName": "Skill_End"
+    },
+    {
+      "sourceAnimName": "Skill_Loop",
+      "targetAnimName": "Idle_2",
+      "mixAnimName": "Skill_End"
+    },
+    {
+      "sourceAnimName": "Skill_Down_Loop",
+      "targetAnimName": "Idle_1",
+      "mixAnimName": "Skill_Down_End"
+    },
+    {
+      "sourceAnimName": "Skill_Down_Loop",
+      "targetAnimName": "Idle_2",
+      "mixAnimName": "Skill_Down_End"
+    },
+    {
+      "sourceAnimName": "Skill_Up_Loop",
+      "targetAnimName": "Idle_1",
+      "mixAnimName": "Skill_Up_End"
+    },
+    {
+      "sourceAnimName": "Skill_Up_Loop",
+      "targetAnimName": "Idle_2",
+      "mixAnimName": "Skill_Up_End"
+    }
+  ],
+  "reviewPhases": [
+    "Default",
+    "Die",
+    "Idle_1",
+    "Idle_2",
+    "Skill_Begin",
+    "Skill_Down_Begin",
+    "Skill_Down_End",
+    "Skill_Down_Loop",
+    "Skill_End",
+    "Skill_Loop",
+    "Skill_Up_Begin",
+    "Skill_Up_End",
+    "Skill_Up_Loop",
+    "Start"
+  ],
+  "emptyClips": {
+    "Single": [
+      "Default"
+    ]
+  }
+}

@@ -157,6 +157,7 @@ import { customizeAglna2Kit, installAglna2 } from './content/arkpedia-aglna2.js'
 import { customizeRadianKit, installRadian } from './content/arkpedia-radian.js';
 import { customizeKalts2Kit, installKalts2 } from './content/arkpedia-kalts2.js';
 import { customizeSvash2Kit, installSvash2 } from './content/arkpedia-svash2.js';
+import { customizeNastiKit, installNasti } from './content/arkpedia-nasti.js';
 import { customizePublicBranchKit, installPublicBranch } from './content/arkpedia-branch-public.js';
 import { customizePublicReckprKit, installPublicReckpr } from './content/arkpedia-reckpr-public.js';
 import { customizePublicLieselKit, installPublicLiesel } from './content/arkpedia-liesel-public.js';
@@ -484,7 +485,8 @@ export class StandardBattle extends Battle {
       col > this.rect.c1
     )
       return "Select a tile on the map.";
-    const tile = this.grid.tile(row, col),
+    // An owner may give a tile another build type (Nasti's platform becomes a ranged tile).
+    const tile = { ...this.grid.tile(row, col), ...(this.regularTileBuild?.(row, col) ? { build: this.regularTileBuild(row, col) } : {}) },
       position = this.data.getChess(id).position;
     const rangedTrait = REGULAR_OPERATORS[id]?.deployOnRanged && tile.build === 'RANGED';
     // An owner may admit another build type on specific tiles (Violet Mizutsune Orchid's talent).
@@ -497,7 +499,8 @@ export class StandardBattle extends Battle {
     const ownerDeny = this.regularPlacementDeny?.[id]?.(row, col, tile);
     if (ownerDeny) return ownerDeny;
     if (
-      this.allyUnits.some((u) => u.alive && u.tileR === row && u.tileC === col)
+      this.allyUnits.some((u) => u.alive && u.tileR === row && u.tileC === col
+        && !(u.mem?.regularHost?.accepts?.({ defId: id, def: this.data.getChess(id), kind: 'op' }) === true))
     )
       return "Tile is occupied.";
     if (this.tileReservation(row, col)) return "Tile is reserved for an operator's return.";
@@ -677,6 +680,7 @@ export class StandardBattle extends Battle {
     customizeRadianKit({ battle: this, id, unit, kit });
     customizeKalts2Kit({ battle: this, id, unit, kit });
     customizeSvash2Kit({ battle: this, id, unit, kit });
+    customizeNastiKit({ battle: this, id, unit, kit });
     customizePublicBranchKit({ battle: this, id, unit, kit });
     customizeNarantKit({ battle: this, id, def, unit, kit });
     customizeElaKit({ battle: this, id, def, unit, kit });
@@ -940,6 +944,7 @@ export class StandardBattle extends Battle {
     installRadian({ battle: this, unit, def });
     installKalts2({ battle: this, unit, def });
     installSvash2({ battle: this, unit, def });
+    installNasti({ battle: this, unit, def });
     installPublicBranch({ battle: this, unit, def });
     installNarant({ battle: this, unit, def });
     installEla({ battle: this, unit, def });

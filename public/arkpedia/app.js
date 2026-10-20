@@ -493,6 +493,12 @@ function pick(row, col) {
     drawHud();
     return;
   }
+  // A legal placement beats an inspect (an operator onto Nasti's platform).
+  if (occupied && onto && !onto.unit && onto.kind !== 'summon' && !placementError(selected, row, col)) {
+    pending = { row, col, dir: null };
+    drawHud();
+    return;
+  }
   if (occupied) {
     selected = occupied.kind === 'token' || occupied.kind === 'device' && occupied.mem.regularSummonCard
       ? summonUnitId(occupied) : occupied.defId;
