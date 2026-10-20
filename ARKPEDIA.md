@@ -4787,3 +4787,35 @@ Perfumer the Distilled joins with her Abjurer trait, Sanctuary talent, auto S1 h
 ### Zima the Raging Tide
 
 Zima the Raging Tide joins with her Earthshaker splash, high-ground pulses and all three skills. The battle now records source `teamId`s (`regularTeams`) for team-scoped effects. See docs/HEADB2-REVIEW.md. Coverage: 413/431 forms.
+
+### Titi
+
+Titi joins with her Incantation Medic trait, her two talents and all three sleep skills. The battle now records source `nationId`s (`regularNations`) for nation-scoped effects. A skill that puts its own owner to sleep can declare `cancelWhileOwnSleep` so its manual stop still works. See docs/TITI-REVIEW.md. Coverage: 414/431 forms.
+
+### Astgenne the Lightchaser
+
+Astgenne the Lightchaser joins with her Decel Binder trait, two talents (ASPD stacks from sluggish and in-range fragile) and all three skills: S1 repeating chain jumps, S2 pull links and S3 damage-sharing locked targets. See docs/HALO2-REVIEW.md. Coverage: 415/431 forms.
+
+### Zinogre S Catapult
+
+Zinogre S Catapult joins with Mercenary DP-paid casts, talent charge layers that extend her skills, S1 morph slash and alternating five/ten-hit combos with Arts riders, and S2 morph slash with the paid Equipment Adaptation. See docs/CATAP2-REVIEW.md. Coverage: 416/431 forms.
+
+### Ch'en the Dawnstreak
+
+Ch'en the Dawnstreak joins with weakness damage, her quiet-time heal and evade, S1 double hits with silence, the S2 away-window slashes that move her onto a surviving target, and the S3 bouncing sword wave. The renderer gains `mem.regularHidden` for an owner that takes its unit off the field visually. See docs/CHEN3-REVIEW.md. Coverage: 417/431 forms.
+
+### Hoshiguma the Breacher
+
+Hoshiguma the Breacher joins with her minus-HP 我执 state and HP-scaled berserk, S1 permanent ATK/DEF with Arts returned to attackers, the S2 throw and circling shield, and the S3 manual last stand that keeps allies in range from falling before her forced defeat. See docs/HSGMA2-REVIEW.md. Coverage: 418/431 forms.
+
+### Violet Mizutsune Orchid
+
+Violet Mizutsune Orchid joins with her three-arrow salvo, powered attacks after the first cast, the return deployment that admits melee tiles around her last tile without a cost increase, S1 charged arrows with the stunning 刚连射, the S2 deployment-cast liftoff volleys and the S3 piercing push arrow. The battle gains `regularPlacementAllow` (an owner-admitted tile type) and `entry.noCostIncrease`. See docs/ORCHD2-REVIEW.md. Coverage: 419/431 forms.
+
+### Leizi the Thunderbringer
+
+Leizi the Thunderbringer joins with her Liberator trait, idle liftoff with per-second talent thunder, the skill-start ground strike with tremble, S1 three-direction strikes that keep the trait ATK while charges remain, S2 thunder ATK stacks over a ground-path range, and S3 splash attacks spawning trembling currents. See docs/LEIZI2-REVIEW.md. Coverage: 420/431 forms.
+
+### Viy
+
+Viy (Вий) joins with Mystic energy stored with no target and merged into transposed energy, her talent ATK/ASPD by what she holds, the stacking damage over time she avoids targeting, S1 ASPD, S2 attack and release stacks, and S3 bouncing energy shots on an ammo count. See docs/VEEN-REVIEW.md. Coverage: 421/431 forms.

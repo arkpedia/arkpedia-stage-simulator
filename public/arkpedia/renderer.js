@@ -499,6 +499,8 @@ export class StageRenderer {
           this.views.set(u.id, view);
         }
         view.unit = u;
+        // An owner may take its unit off the field visually without ending its life (Ch'en the Dawnstreak S2).
+        view.actor.spine.visible = view.hp.visible = !u.mem?.regularHidden;
         const point = this.projection.project(
           u.x,
           u.y,

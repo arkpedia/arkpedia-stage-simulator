@@ -1,0 +1,340 @@
+{
+  "schemaVersion": 1,
+  "operatorId": "char_1049_catap2",
+  "enabledOperators": [
+    "char_1049_catap2"
+  ],
+  "frameParity": false,
+  "moduleSupport": false,
+  "nativeParticleSupport": false,
+  "nativePixelParity": false,
+  "mechanicsPolicy": "source-cn-catap2-mercenary-layers-v1",
+  "scope": "Zinogre S Catapult: DP-paid manual casts with stored charges, talent layer consumption extending the skill and skill-range attacks, S1 morph slash and alternating five/ten-hit combos with Arts riders, S2 morph slash with damage resistance and the paid Equipment Adaptation scaled by layers, read from the pinned CN tables, her own templates and the original Spine clip events.",
+  "sourceFoundationSha256": "540632d3e84c2975100ceb0ffc8dcca64b7d543d872749b927c7be796bb2ee80",
+  "ownerArtworkSha256": "dde4112919217e935018c57f34bdf5b3088619fe3eec2b85f55969d13b7a1dc4",
+  "extraSources": {},
+  "verification": {
+    "browser": {
+      "status": "passed",
+      "script": "tools/arkpedia/review-catap2-public.mjs",
+      "scriptSha256": "3ecc9622778777be42a6082ab998dad0944b61c01cb6b20f6d40a0b8ce89f600",
+      "driverSha256": "2e52cd4007ae553e30f773104626f9b5c2be7c15f717b61ca9063517fbdc51c8",
+      "fixtureServerSha256": "127fb1b74be89d0a35e6bfa4e3d35927d170fa4d3129287f6c523114c5bcaa22",
+      "browserVersion": "Chrome/153.0.8010.12",
+      "cacheDisabled": true,
+      "externalAssetTransport": "Unintercepted original immutable HTTPS; normal TLS verification.",
+      "originalWaves": false,
+      "candidate": {
+        "cases": 4,
+        "captures": 20,
+        "errors": 0,
+        "failedResources": 0
+      },
+      "normal": {
+        "cases": 4,
+        "captures": 20,
+        "errors": 0,
+        "failedResources": 0
+      }
+    }
+  },
+  "originalArtwork": {
+    "operator/char_1049_catap2/default/back": {
+      "kind": "operator",
+      "id": "char_1049_catap2",
+      "variant": "default",
+      "facing": "back",
+      "spineVersion": "3.8.99",
+      "source": {
+        "key": "operators",
+        "repository": "fexli/ArknightsResource",
+        "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+        "directory": "spine/char_1049_catap2/char_1049_catap2/Back"
+      },
+      "skeleton": {
+        "path": "models/operator/char_1049_catap2/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_1049_catap2.skel",
+        "bytes": 761089,
+        "sha256": "0ad1d79a84287045b929897cc87b1a1918c226f472ee0fa02747ba4c38146112"
+      },
+      "atlas": {
+        "path": "models/operator/char_1049_catap2/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_1049_catap2.atlas",
+        "bytes": 21997,
+        "sha256": "10d6cdbd6674be2558c2f36f766d22b97612a84337a6aceeba411dce6660fd9b"
+      },
+      "textures": [
+        {
+          "path": "models/operator/char_1049_catap2/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_1049_catap2.png",
+          "bytes": 535126,
+          "sha256": "3d50858779e26a0a8dca6b3db2fb102e2cfaf531430ed19ebdbf17748f8a6c34"
+        }
+      ],
+      "premultipliedAlpha": true,
+      "animations": {
+        "Attack": 1.2,
+        "Default": 0,
+        "Idle": 1.167,
+        "Skill_1_Begin": 3.167,
+        "Skill_1_End": 0.333,
+        "Skill_1_Idle": 1.333,
+        "Skill_1_Loop_A": 2,
+        "Skill_1_Loop_B": 2.833,
+        "Skill_2_Begin": 1.933,
+        "Skill_2_End": 0.333,
+        "Skill_2_Idle": 1.333,
+        "Skill_2_Loop_A": 1.2,
+        "Skill_2_Loop_B": 1.2,
+        "Skill_2_Overload": 3,
+        "Skill_2_Overload_B": 3,
+        "Start": 1
+      },
+      "hits": {
+        "Attack": [
+          0.533
+        ],
+        "Skill_1_Begin": [
+          1.8,
+          1.867,
+          1.933,
+          2,
+          2.067
+        ],
+        "Skill_1_Loop_A": [
+          0.8,
+          0.867,
+          0.933,
+          1,
+          1.067
+        ],
+        "Skill_1_Loop_B": [
+          0.533,
+          0.6,
+          0.667,
+          0.733,
+          0.8,
+          1.533,
+          1.6,
+          1.667,
+          1.733,
+          1.8
+        ],
+        "Skill_2_Begin": [
+          1.2
+        ],
+        "Skill_2_Loop_A": [
+          0.467
+        ],
+        "Skill_2_Loop_B": [
+          0.467
+        ],
+        "Skill_2_Overload": [
+          1.5,
+          1.9,
+          2.3
+        ],
+        "Skill_2_Overload_B": [
+          1.5,
+          1.9,
+          2.3
+        ]
+      },
+      "bounds": {
+        "x": -300.15,
+        "y": -1.617,
+        "width": 1891.772,
+        "height": 1140.836
+      },
+      "animationRoles": {
+        "idle": "Idle",
+        "deploy": "Start",
+        "attack": "Attack",
+        "attackDown": null,
+        "skill": null,
+        "skills": {},
+        "die": null,
+        "stun": null,
+        "move": null
+      }
+    },
+    "operator/char_1049_catap2/default/front": {
+      "kind": "operator",
+      "id": "char_1049_catap2",
+      "variant": "default",
+      "facing": "front",
+      "spineVersion": "3.8.99",
+      "source": {
+        "key": "operators",
+        "repository": "fexli/ArknightsResource",
+        "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+        "directory": "spine/char_1049_catap2/char_1049_catap2/Front"
+      },
+      "skeleton": {
+        "path": "models/operator/char_1049_catap2/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_1049_catap2.skel",
+        "bytes": 1299922,
+        "sha256": "83192e0d47043fe1e7e2957673387a91350a3e12001a63b1a6f5b015c20423d1"
+      },
+      "atlas": {
+        "path": "models/operator/char_1049_catap2/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_1049_catap2.atlas",
+        "bytes": 21997,
+        "sha256": "10d6cdbd6674be2558c2f36f766d22b97612a84337a6aceeba411dce6660fd9b"
+      },
+      "textures": [
+        {
+          "path": "models/operator/char_1049_catap2/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_1049_catap2.png",
+          "bytes": 535126,
+          "sha256": "3d50858779e26a0a8dca6b3db2fb102e2cfaf531430ed19ebdbf17748f8a6c34"
+        }
+      ],
+      "premultipliedAlpha": true,
+      "animations": {
+        "Attack": 1.2,
+        "Default": 0,
+        "Die": 1,
+        "Idle": 3.5,
+        "Skill_1_Begin": 3.167,
+        "Skill_1_End": 0.333,
+        "Skill_1_Idle": 4,
+        "Skill_1_Loop_A": 2,
+        "Skill_1_Loop_B": 2.833,
+        "Skill_2_Begin": 1.933,
+        "Skill_2_End": 0.333,
+        "Skill_2_Idle": 4,
+        "Skill_2_Loop_A": 1.2,
+        "Skill_2_Loop_B": 1.2,
+        "Skill_2_Overload": 3,
+        "Skill_2_Overload_B": 3,
+        "Skill_Down_1_Loop_A": 2,
+        "Skill_Down_1_Loop_B": 2.833,
+        "Skill_Down_2_Overload": 3,
+        "Skill_Down_2_Overload_B": 3,
+        "Start": 1
+      },
+      "hits": {
+        "Attack": [
+          0.533
+        ],
+        "Skill_1_Begin": [
+          1.8,
+          1.867,
+          1.933,
+          2,
+          2.067
+        ],
+        "Skill_1_Loop_A": [
+          0.8,
+          0.867,
+          0.933,
+          1,
+          1.067
+        ],
+        "Skill_1_Loop_B": [
+          0.533,
+          0.6,
+          0.667,
+          0.733,
+          0.8,
+          1.533,
+          1.6,
+          1.667,
+          1.733,
+          1.8
+        ],
+        "Skill_2_Begin": [
+          1.2
+        ],
+        "Skill_2_Loop_A": [
+          0.467
+        ],
+        "Skill_2_Loop_B": [
+          0.467
+        ],
+        "Skill_2_Overload": [
+          1.5,
+          1.9,
+          2.3
+        ],
+        "Skill_2_Overload_B": [
+          1.5,
+          1.9,
+          2.3
+        ],
+        "Skill_Down_1_Loop_A": [
+          0.8,
+          0.867,
+          0.933,
+          1,
+          1.067
+        ],
+        "Skill_Down_1_Loop_B": [
+          0.533,
+          0.6,
+          0.667,
+          0.733,
+          0.8,
+          1.533,
+          1.6,
+          1.667,
+          1.733,
+          1.8
+        ],
+        "Skill_Down_2_Overload": [
+          1.5,
+          1.9,
+          2.3
+        ],
+        "Skill_Down_2_Overload_B": [
+          1.5,
+          1.9,
+          2.3
+        ]
+      },
+      "bounds": {
+        "x": -300.15,
+        "y": -1.617,
+        "width": 1891.772,
+        "height": 1140.836
+      },
+      "animationRoles": {
+        "idle": "Idle",
+        "deploy": "Start",
+        "attack": "Attack",
+        "attackDown": null,
+        "skill": null,
+        "skills": {},
+        "die": "Die",
+        "stun": null,
+        "move": null
+      }
+    }
+  },
+  "interfaceAssets": [
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "five-star-icons/Zinogre S Catapult - Base.webp",
+      "bytes": 14482,
+      "sha256": "b6ef7134510b3ee00a33ae8b4b0d14bfe17b7552b1bc7141e0a38973929ecb86"
+    },
+    {
+      "repository": "arkpedia/arkpedia-skin-assets",
+      "commit": "6fb723692d89c4a08d9a7aa4015e19c0753dd270",
+      "path": "five-star-skins/Zinogre S Catapult - Base.webp",
+      "bytes": 192146,
+      "sha256": "17e0e52a2c2d9b6d17cf1b57cdce288f1f6124d6de8474607d4bdd3011f54cdd"
+    },
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "skill-icons/Zinogre S Catapult - Condensed Spinning Slash.webp",
+      "bytes": 7480,
+      "sha256": "6430ff8e13e66dedddb6eda9ade6ca5b8a34b8db2167b3d95fa3b69932fc64d7"
+    },
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "skill-icons/Zinogre S Catapult - Super Amped Elemental Discharge.webp",
+      "bytes": 9070,
+      "sha256": "9560f1ef019a0479fc279fc0519b4439c1ba4f6250abd26ed00bc354d1222030"
+    }
+  ],
+  "publishedSdCommit": "922f9fdad3bb2e5b8c070dcd15071f9c242ab4b5"
+}

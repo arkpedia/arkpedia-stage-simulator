@@ -123,6 +123,14 @@ import { MAKIRI_OPERATORS } from './makiri-operators.js';
 import { FLWR2_OPERATORS } from './flwr2-operators.js';
 import { TURDUS_OPERATORS } from './turdus-operators.js';
 import { HEADB2_OPERATORS } from './headb2-operators.js';
+import { TITI_OPERATORS } from './titi-operators.js';
+import { HALO2_OPERATORS } from './halo2-operators.js';
+import { CATAP2_OPERATORS } from './catap2-operators.js';
+import { CHEN3_OPERATORS } from './chen3-operators.js';
+import { HSGMA2_OPERATORS } from './hsgma2-operators.js';
+import { ORCHD2_OPERATORS } from './orchd2-operators.js';
+import { LEIZI2_OPERATORS } from './leizi2-operators.js';
+import { VEEN_OPERATORS } from './veen-operators.js';
 import { BRANCH_OPERATORS } from './branch-operators.js';
 import { RECKPR_OPERATORS } from './reckpr-operators.js';
 import { CLOSUR_OPERATORS } from './closur-operators.js';
@@ -470,6 +478,14 @@ export const REGULAR_OPERATORS = Object.freeze({
   ...MAKIRI_OPERATORS,
   ...FLWR2_OPERATORS,
   ...HEADB2_OPERATORS,
+  ...TITI_OPERATORS,
+  ...HALO2_OPERATORS,
+  ...CATAP2_OPERATORS,
+  ...CHEN3_OPERATORS,
+  ...HSGMA2_OPERATORS,
+  ...ORCHD2_OPERATORS,
+  ...LEIZI2_OPERATORS,
+  ...VEEN_OPERATORS,
   ...BRANCH_OPERATORS,
 });
 

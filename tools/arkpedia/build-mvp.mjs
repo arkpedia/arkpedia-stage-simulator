@@ -93,7 +93,15 @@ const CN_OWNER_REVIEWS = Object.freeze({char_4185_amoris: {slug: 'amoris', polic
   char_4182_oblvns: {slug: 'oblvns', policy: 'source-cn-oblvns-notes-instruments-fever-v1'},
   char_4199_makiri: {slug: 'makiri', policy: 'source-cn-makiri-dp-and-card-discounts-v1'},
   char_1022_flwr2: {slug: 'flwr2', policy: 'source-cn-flwr2-abjurer-sanctuary-v1'},
-  char_1051_headb2: {slug: 'headb2', policy: 'source-cn-headb2-highland-pulses-v1'}});
+  char_1051_headb2: {slug: 'headb2', policy: 'source-cn-headb2-highland-pulses-v1'},
+  char_4056_titi: {slug: 'titi', policy: 'source-cn-titi-sleep-v1'},
+  char_1047_halo2: {slug: 'halo2', policy: 'source-cn-halo2-decel-links-v1'},
+  char_1049_catap2: {slug: 'catap2', policy: 'source-cn-catap2-mercenary-layers-v1'},
+  char_1050_chen3: {slug: 'chen3', policy: 'source-cn-chen3-weakness-dawnstreak-v1'},
+  char_1044_hsgma2: {slug: 'hsgma2', policy: 'source-cn-hsgma2-minus-hp-shield-v1'},
+  char_1048_orchd2: {slug: 'orchd2', policy: 'source-cn-orchd2-salvo-charges-v1'},
+  char_1043_leizi2: {slug: 'leizi2', policy: 'source-cn-leizi2-thunder-v1'},
+  char_4226_veen: {slug: 'veen', policy: 'source-cn-veen-transposed-energy-v1'}});
 const candidateTurdus = process.argv.includes('--review-candidate-turdus');
 const candidateTmslot = process.argv.includes('--review-candidate-tmslot');
 const candidateThumpy = process.argv.includes('--review-candidate-thumpy');

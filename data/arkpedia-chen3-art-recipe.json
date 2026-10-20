@@ -1,0 +1,55 @@
+{
+  "operator": "char_1050_chen3",
+  "name": "Ch'en the Dawnstreak",
+  "foundationSha256": "7b501b584ea75d333c6e4d8fe7479501beba96e8b18fac3b3a980269c5ab35a8",
+  "artCommit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+  "output": "data/arkpedia-chen3-art.json",
+  "sdReview": "source-reviews/chen3.json",
+  "scope": "Original Front/Back files unchanged. Independently checked native skeleton/atlas/material/texture pointers, decoded pixels and premultiplied alpha. Literal default roles: Front idle=Idle, deploy=Start, attack=Attack, die=Die; Back idle=Idle, deploy=Start, attack=Attack. Skill clips are played by the simulator owner itself; 4 original native mix(es) retained. Combat/public admission, modules, effects/audio/shaders and compiled/frame/pixel parity remain separate.",
+  "roles": {
+    "Front": {
+      "idle": "Idle",
+      "deploy": "Start",
+      "attack": "Attack",
+      "attackDown": null,
+      "skill": null,
+      "skills": {},
+      "die": "Die",
+      "stun": null,
+      "move": null
+    },
+    "Back": {
+      "idle": "Idle",
+      "deploy": "Start",
+      "attack": "Attack",
+      "attackDown": null,
+      "skill": null,
+      "skills": {},
+      "die": null,
+      "stun": null,
+      "move": null
+    }
+  },
+  "nativeMixes": [
+    {
+      "sourceAnimName": "Skill_1_Loop",
+      "targetAnimName": "Idle",
+      "mixAnimName": "Skill_1_End"
+    },
+    {
+      "sourceAnimName": "Skill_1_Idle",
+      "targetAnimName": "Idle",
+      "mixAnimName": "Skill_1_End"
+    },
+    {
+      "sourceAnimName": "Skill_3_Idle",
+      "targetAnimName": "Idle",
+      "mixAnimName": "Skill_3_End"
+    },
+    {
+      "sourceAnimName": "Skill_3_Loop",
+      "targetAnimName": "Idle",
+      "mixAnimName": "Skill_3_End"
+    }
+  ]
+}
