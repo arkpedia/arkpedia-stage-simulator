@@ -255,6 +255,7 @@ import { customizeFiveStarSpecialistExpansionKit, installFiveStarSpecialistExpan
 import { catalogueFor, recordFor } from "../../shared/arkpedia/loadout.js";
 import { REGULAR_OPERATORS } from "../../shared/arkpedia/operators.js";
 import { assertRegularEnemies } from "../../shared/arkpedia/enemies.js";
+import { installEnemyFeatures } from "../../shared/arkpedia/enemy-features.js";
 import { compileBuffTemplate } from "../../shared/arkpedia/behavior.js";
 import {
   prepareSquad,
@@ -389,6 +390,8 @@ export class StandardBattle extends Battle {
     this.regularTeams = Object.freeze(Object.fromEntries(Object.values(data.operators ?? {}).map(o => [o.id, o.teamId ?? null])));
     this.regularNations = Object.freeze(Object.fromEntries(Object.values(data.operators ?? {}).map(o => [o.id, o.nationId ?? null])));
     this.regularSkillUses = new Map();
+    // Approved enemy feature traits (shared/arkpedia/enemy-features.js) apply at spawn.
+    installEnemyFeatures(this);
     this.addDp('arkpedia', startingVanguardDp);
     installMedicSquad({ battle: this, records: chess });
     installGuardSixStarSquad({ battle: this, records: chess });

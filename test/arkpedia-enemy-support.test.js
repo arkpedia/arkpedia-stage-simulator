@@ -14,7 +14,8 @@ test('the regular registry is exactly the supported enemies, and keeps both 0-1 
   assert.deepEqual(REGULAR_ENEMIES, Object.fromEntries(supported.map(([id, e]) => [id, e.policy])));
   assert.equal(support.summary.supported, supported.length);
   for (const id of ['enemy_1007_slime', 'enemy_1002_nsabr']) assert.equal(REGULAR_ENEMIES[id], 'basic-stats-and-attacks');
-  assert.equal(REGULAR_ENEMIES.enemy_1026_aghost, undefined, 'a talent enemy is not stat-only');
+  assert.equal(REGULAR_ENEMIES.enemy_1026_aghost, 'stats-attacks-and-features', 'admitted through an approved feature');
+  assert.equal(REGULAR_ENEMIES.enemy_1334_ristar, undefined, 'an enemy with unimplemented features is refused');
 });
 test('a supported enemy uses nothing unimplemented; an unsupported one names what is missing', () => {
   for (const [id, e] of Object.entries(support.enemies)) {

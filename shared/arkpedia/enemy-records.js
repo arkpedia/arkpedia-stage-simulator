@@ -116,7 +116,7 @@ export function compileEnemy({ key, rows, handbook = null, level = 0, overwritte
   return {
     key, prefabKey, name: fieldValue(data.name) || handbook?.name || key, level, rank, applyWay, stats,
     abilities: (handbook?.abilityList || []).map(a => ({ text: a.text, format: a.textFormat || 'NORMAL' })),
-    talents: { bb: talents.bb, bbStr: talents.bbStr, groups: talentGroups(talents.bb) },
+    talents: { bb: talents.bb, bbStr: talents.bbStr, groups: talentGroups({ ...talents.bb, ...talents.bbStr }) },
     skills: skillsOf(data.skills),
     ...(data.spData ? { sp: { type: data.spData.spType ?? null, maxSp: data.spData.maxSp ?? 0, initSp: data.spData.initSp ?? 0, increment: data.spData.increment ?? 0 } } : {}),
     notCountInTotal: !!fieldValue(data.notCountInTotal, false),

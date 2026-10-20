@@ -4,6 +4,7 @@
 //   const h = spawnAny('enemy_1007_slime', {seconds: 10});
 import records from '../../data/arkpedia-enemy-records.json' with { type: 'json' };
 import { makeBattle, chessRec } from './battleHarness.js';
+import { installEnemyFeatures } from '../../shared/arkpedia/enemy-features.js';
 
 export const ENEMY_RECORDS = records;
 export function enemyRecord(key, level = 0) {
@@ -27,6 +28,7 @@ export function spawnAny(key, opts = {}) {
     units: opts.units ?? [{ chessId: guard.chessId, row: 9, col: 6 }],
     enemies: [{ key, time: 0, route }],
     content: opts.content ?? 'none', timeLimit: opts.timeLimit ?? 600, seed: opts.seed ?? 1,
+    setup: b => installEnemyFeatures(b),
   });
   if (opts.seconds) h.run(opts.seconds);
   return h;

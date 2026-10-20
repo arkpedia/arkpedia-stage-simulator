@@ -4884,3 +4884,17 @@ Behaviour support (the feature registry) and the support gate come next; `REGULA
 - **Tests.** `test/arkpedia-enemy-support.test.js` regenerates the support file from the committed inputs (so it also runs in CI). It checks that the registry equals the supported set and that every supported enemy uses nothing unimplemented, and fights each supported enemy against a guard on the harness stage until it dies or leaks. The full local suite passes 22,362 tests.
 
 No stage spawns the newly supported enemies yet; stages stay test-only until the generic stage loader is reviewed.
+
+### Enemy feature registry (E2b, 2026-10-21)
+
+Behaviour attaches to enemies by feature, not by enemy id (`shared/arkpedia/enemy-features.js`).
+
+- **What a feature is.** A handbook ability line (`ability:<text>`), a talent group (`talent:<group>`, with string-only parameters included) or a skill prefab key (`skill:<prefabKey>`).
+- **What a registered feature declares.** `covers(record)`: the compiled record already models it, checked for every database level of every enemy that uses it. It may also declare a spawn `trait` that the battle applies (`installEnemyFeatures`, called by `StandardBattle` and the harness).
+- **First approved features.**
+  - Flying unit and Regenerates HP over time: already modelled by motion and `hpRecoveryPerSec`.
+  - Cannot be blocked: an unblockable flag for life.
+  - Invisible: the engine's enemy stealth, lifted by blocking for the STEALTH_RESTORE window.
+  - Attacks two/2 targets simultaneously: two ranged targets per attack.
+- **Coverage.** Support rises to 159 of 1,552 enemies: 137 stat-only, plus 22 through features. Wraith Leader is now admitted through "Cannot be blocked." rather than the held upstream kit, which stays unused.
+- **Tests.** `test/arkpedia-enemy-features.test.js` checks each feature on every enemy it clears, through real harness behaviour (not blocked past a guard, stealth until blocked, regeneration, flying, two targets). The full local suite passes 22,443 tests.
