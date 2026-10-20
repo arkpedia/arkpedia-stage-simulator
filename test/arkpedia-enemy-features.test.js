@@ -2,7 +2,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import support from '../data/arkpedia-enemy-support.json' with { type: 'json' };
-import { ENEMY_FEATURES } from '../shared/arkpedia/enemy-features.js';
+import { ENEMY_FEATURES, recordFeatureIds } from '../shared/arkpedia/enemy-features.js';
 import { enemyStealthed } from '../server/sim/targeting.js';
 import { spawnAny, ENEMY_RECORDS } from './helpers/enemyHarness.js';
 
@@ -11,7 +11,7 @@ const usedBy = id => Object.entries(support.enemies).filter(([, e]) => e.feature
 
 test('every registered feature is used by an enemy and approved for at least one', () => {
   for (const id of Object.keys(ENEMY_FEATURES)) {
-    const users = Object.entries(ENEMY_RECORDS.enemies).filter(([, e]) => Object.values(e.levels).some(r => r.abilities.some(a => `ability:${a.text}` === id)));
+    const users = Object.entries(ENEMY_RECORDS.enemies).filter(([, e]) => Object.values(e.levels).some(r => recordFeatureIds(r).includes(id)));
     assert.ok(users.length, `${id} is used`);
     assert.ok(usedBy(id).length, `${id} clears at least one enemy`);
   }
@@ -41,6 +41,17 @@ for (const key of usedBy('ability:<$ba.invisible>Invisible</>')) test(`Invisible
 for (const key of usedBy('ability:Attacks two targets simultaneously.')) test(`Attacks two targets simultaneously (${key}): two ranged targets per attack`, () => {
   const h = spawnAny(key, { seconds: 0.1, units: [] }), e = enemy(h, key);
   assert.equal(e.profile.maxTargets, 2);
+});
+for (const key of ['enemy_1365_spnwiz', 'enemy_1104_lfkght']) test(`Reborn (${key}): the first knock-out starts a rebirth of the talent duration, then it stands up again`, () => {
+  const r = ENEMY_RECORDS.enemies[key].levels[0], g = Object.keys(r.talents.groups).find(x => x.toLowerCase() === 'reborn');
+  const dur = r.talents.bb[`${g}.duration`], ratio = r.talents.bb[`${g}.hp_ratio`] ?? 1;
+  const h = spawnAny(key, { seconds: 0.1, units: [] }), e = enemy(h, key);
+  h.b.dealDamage(null, e, { amount: e.hp + 1, type: 'true', sourceless: true }); h.run(0.05);
+  assert.equal(e.alive, true, 'the first knock-out is a rebirth'); assert.equal(e.s.flags.untargetable, true);
+  h.run(dur + 0.2);
+  assert.equal(e.alive, true); assert.ok(!e.s.flags.untargetable, 'stands up'); assert.ok(Math.abs(e.hp - e.s.maxHp * ratio) < 1, `${e.hp} vs ${e.s.maxHp * ratio}`);
+  h.b.dealDamage(null, e, { amount: e.hp + 1, type: 'true', sourceless: true }); h.run(0.05);
+  assert.equal(e.alive, false, 'the second knock-out is final');
 });
 test('approved features apply only to enemies that use them', () => {
   const h = spawnAny('enemy_1007_slime', { seconds: 0.2 }), e = enemy(h, 'enemy_1007_slime');

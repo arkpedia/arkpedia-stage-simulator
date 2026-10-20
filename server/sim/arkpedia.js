@@ -255,7 +255,7 @@ import { customizeFiveStarSpecialistExpansionKit, installFiveStarSpecialistExpan
 import { catalogueFor, recordFor } from "../../shared/arkpedia/loadout.js";
 import { REGULAR_OPERATORS } from "../../shared/arkpedia/operators.js";
 import { assertRegularEnemies } from "../../shared/arkpedia/enemies.js";
-import { installEnemyFeatures } from "../../shared/arkpedia/enemy-features.js";
+import { installEnemyFeatures } from "./content/arkpedia-enemy-features.js";
 import { compileBuffTemplate } from "../../shared/arkpedia/behavior.js";
 import {
   prepareSquad,

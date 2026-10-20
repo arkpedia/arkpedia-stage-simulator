@@ -9,6 +9,15 @@
 // An enemy is supported only when every feature it uses is registered and
 // covered (shared/arkpedia/enemy-support.js).
 
+const REBORN_PARAMS = new Set(['duration', 'hp_ratio', 'invincible']);
+function rebornFamily(group) {
+  return { [`talent:${group}`]: {
+    covers: r => r.talents.groups[group].includes('duration') && r.talents.groups[group].every(p => REBORN_PARAMS.has(p)),
+    ability: { kind: 'reborn', params: r => ({ dur: r.talents.bb[`${group}.duration`], hpRatio: r.talents.bb[`${group}.hp_ratio`] ?? 1,
+      invincible: r.talents.bb[`${group}.invincible`] ?? 0 }) },
+    note: 'reborn(): first KO → rebirth of duration s, then hp_ratio of max HP and invincible s' } };
+}
+
 export const ENEMY_FEATURES = Object.freeze({
   // Handbook lines restating what the record's stats already model.
   'ability:Flying unit.': { covers: r => r.stats.motion === 'FLY', note: 'motion FLY' },
@@ -18,6 +27,9 @@ export const ENEMY_FEATURES = Object.freeze({
   'ability:<$ba.invisible>Invisible</>': { covers: () => true, trait: { flags: { stealth: true } },
     note: 'Invisible (ba.invisible): untargetable until revealed or blocked; blocking lifts it for the engine STEALTH_RESTORE window' },
   'ability:Attacks two targets simultaneously.': { covers: r => r.applyWay === 'RANGED' && r.stats.rangeRadius > 0, trait: { maxTargets: 2 }, note: 'two ranged targets per attack' },
+  // Talent families. 重生 (Reborn/reborn talent): the first knock-out starts a rebirth of `duration` s, then the
+  // enemy stands up with `hp_ratio` of its max HP (full when absent) and `invincible` s of invulnerability.
+  ...rebornFamily('Reborn'), ...rebornFamily('reborn'),
   'ability:Attacks 2 targets simultaneously': { covers: r => r.applyWay === 'RANGED' && r.stats.rangeRadius > 0, trait: { maxTargets: 2 }, note: 'two ranged targets per attack' },
 });
 
@@ -28,23 +40,4 @@ export function recordFeatureIds(record) {
     ...Object.keys(record.talents.groups).map(g => `talent:${g}`),
     ...record.skills.map(s => `skill:${s.prefabKey}`),
   ])];
-}
-
-/** Apply the spawn traits of a spawned enemy's features (its record is `e.def.raw`). */
-export function applyEnemyFeatures(battle, e) {
-  const record = e.def?.raw;
-  if (!record?.abilities) return;
-  for (const id of recordFeatureIds(record)) {
-    const trait = ENEMY_FEATURES[id]?.trait;
-    if (!trait) continue;
-    if (trait.flags) battle.addBuff(e, { key: `feature:${id}`, persist: true, flags: { ...trait.flags } });
-    if (trait.maxTargets) (e.profile ??= {}).maxTargets = Math.max(e.profile.maxTargets ?? 1, trait.maxTargets);
-  }
-}
-
-/** Apply feature traits to every enemy this battle spawns. */
-export function installEnemyFeatures(battle) {
-  if (battle.regularEnemyFeatures) return;
-  battle.regularEnemyFeatures = true;
-  battle.on('enemySpawn', ({ enemy }) => applyEnemyFeatures(battle, enemy));
 }

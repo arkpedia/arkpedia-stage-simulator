@@ -4,7 +4,7 @@
 //   const h = spawnAny('enemy_1007_slime', {seconds: 10});
 import records from '../../data/arkpedia-enemy-records.json' with { type: 'json' };
 import { makeBattle, chessRec } from './battleHarness.js';
-import { installEnemyFeatures } from '../../shared/arkpedia/enemy-features.js';
+import { installEnemyFeatures } from '../../server/sim/content/arkpedia-enemy-features.js';
 
 export const ENEMY_RECORDS = records;
 export function enemyRecord(key, level = 0) {

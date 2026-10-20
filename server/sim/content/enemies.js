@@ -268,6 +268,13 @@ function installDispatch(b, scope, kits) {
   return st;
 }
 
+/** Common dispatchers only, no per-enemy kits: the regular-stage feature runtime
+ * (content/arkpedia-enemy-features.js) attaches reviewed abilities per data feature. */
+export function installFeatureDispatch(b) { return installDispatch(b, 'features', Object.freeze({})); }
+
+/** The shared 重生 ability for data-driven features (see reborn() below). */
+export function rebornAbility(params) { return reborn(params); }
+
 /** Original full-mode installation, shared with bosses.js; idempotent for the same scope. */
 export function ensureInstalled(b) { return installDispatch(b, 'full', KITS); }
 
