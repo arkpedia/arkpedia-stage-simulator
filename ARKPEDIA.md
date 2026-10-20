@@ -4859,3 +4859,17 @@ SilverAsh the Reignfrost joins with his Eye of the Snowstorm card in a cost-sort
 ### Nasti
 
 Nasti joins with her skill-chosen original devices: talent Sanctuary that strengthens for her and high-ground operators once a ranged enemy appears, the S1 inspector with front-operator DEF and block while she hits every blocked enemy, the S2 supervisors that feed front operators SP and barriers while she shields herself, and the S3 engineers that build and upgrade a platform a ranged operator can stand on. Generic additions: host units that carry one guest on their tile, `battle.regularTileBuild`, and tokens that can outlive their summoner. See docs/NASTI-REVIEW.md. Coverage: 431/431 forms.
+
+### Enemy records for every enemy (E1, 2026-10-21)
+
+Enemies are moving to a data-driven, stage-agnostic model. The first step is one compiler for every Global enemy at every database level (`shared/arkpedia/enemy-records.js`).
+
+- **What it reads.** The pinned `enemy_database` and `enemy_handbook_table`, plus a stage's `enemyDbRefs.overwrittenData`, applied the same way for any stage.
+- **What a record keeps.** Stats, motion, attack mode, effective range (0 for melee), damage type, immunities, weight, life-point reduce, talents (grouped as `group.param`) and skills (prefab key, cooldowns, SP, blackboard).
+- **Level rule.** Level 0 merged with the selected level, as the Stronghold builder does. The four database entries a cumulative merge would change are listed in the catalogue.
+- **The catalogue.** `tools/arkpedia/enemy-records.mjs` writes `data/arkpedia-enemy-records.json`: 1,552 enemies, 1,736 level records, with the source commit and file hashes. `--check` regenerates it and compares.
+- **The 0-1 build.** `build-mvp.mjs` now compiles the stage's enemies through the same compiler from the level file's `enemyDbRefs`, and refuses a geometry export that disagrees (Soldier's DEF 30 comes from the level file). Fields the old build dropped (range, damage type, immunities, talents, skills) are kept. Both 0-1 enemies stay stat-only, so behaviour is unchanged.
+- **The harness.** `test/helpers/enemyHarness.js` `spawnAny(key, {level, stats, route, units, seconds})` spawns any enemy on the synthetic flat stage without a real stage.
+- **Tests.** `test/arkpedia-enemy-records.test.js` covers the catalogue, the normalized definitions, the 0-1 records and a sweep that runs all 1,552 enemies for 12 s against a guard without engine errors. The full local suite passes 22,358 tests.
+
+Behaviour support (the feature registry) and the support gate come next; `REGULAR_ENEMIES` still admits only the two 0-1 enemies.
