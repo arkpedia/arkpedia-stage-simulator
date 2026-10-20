@@ -22,6 +22,7 @@ function family(groups, params, ability, extra, note, dependsOn = null, explains
   return Object.fromEntries(groups.map(g => [`talent:${g}`, { covers: r => sig(r, g, params) && extra(r), ability: ability(g), note,
     ...(dependsOn ? { dependsOn } : {}), ...(explains ? { explains } : {}) }]));
 }
+const CONFINEMENT_SIGS = [['attack_speed', 'max_stack_cnt', 'max_valid_stack_cnt', 'times']], LIBERTY_SIGS = [['atk'], ['atk', 'def_penetrate'], ['atk', 'hp_recovery_per_sec', 'magic_resistance']];
 const REBORN_PARAMS = new Set(['duration', 'hp_ratio', 'invincible']);
 function rebornFamily(group) {
   return { [`talent:${group}`]: {
@@ -43,6 +44,16 @@ export const ENEMY_FEATURES = Object.freeze({
   // Talent families. 重生 (Reborn/reborn talent): the first knock-out starts a rebirth of `duration` s, then the
   // enemy stands up with `hp_ratio` of its max HP (full when absent) and `invincible` s of invulnerability.
   ...rebornFamily('Reborn'), ...rebornFamily('reborn'),
+  // 禁锢 → 解放: starts imprisoned (ASPD/DEF from confinement), freed after `times` attacks with the liberty buffs.
+  'talent:confinement': { covers: r => CONFINEMENT_SIGS.some(p => sig(r, 'confinement', p)) && LIBERTY_SIGS.some(p => sig(r, 'liberty', p)),
+    ability: { kind: 'prisoner', params: () => ({ freeAll: false }) }, note: 'prisoner(): confined until times attacks, then liberty',
+    explains: /^(Starts imprisoned\. When imprisoned, ASPD is reduced|Freed after a few attacks, gaining increased ATK)$/ },
+  'talent:liberty': { covers: r => CONFINEMENT_SIGS.some(p => sig(r, 'confinement', p)) && LIBERTY_SIGS.some(p => sig(r, 'liberty', p)),
+    note: 'the liberty buffs of the confinement feature' },
+  // "Has a chance to dodge Physical attacks when not blocked": Physical dodge `prob` while unblocked.
+  'talent:Evade': { covers: r => sig(r, 'Evade', ['prob']) && r.abilities.some(a => a.text === 'Has a chance to dodge Physical attacks when not blocked'),
+    ability: { kind: 'dodgeUnblocked', params: r => ({ prob: r.talents.bb['Evade.prob'] }) }, note: 'Physical dodge prob while unblocked',
+    explains: /^Has a chance to dodge Physical attacks when not blocked$/ },
   // 持续损失生命: `damage` HP lost every second (PRTS "自身每秒损失生命值").
   'talent:periodic_damage': { covers: r => sig(r, 'periodic_damage', ['damage']), ability: { kind: 'periodicLoss', params: r => ({ amount: r.talents.bb['periodic_damage.damage'] }) },
     note: 'loses damage HP every second', explains: /^(Will gradually lose HP over time)$/ },

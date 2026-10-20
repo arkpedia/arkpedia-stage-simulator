@@ -29,7 +29,7 @@ export function applyEnemyFeatures(battle, e) {
     if (f.ability) {
       const make = ABILITIES[f.ability.kind];
       if (!make) throw Error(`Unknown enemy feature ability: ${f.ability.kind}`);
-      abilities.push(make(f.ability.params(record)));
+      abilities.push(make(f.ability.params(record), abOf(battle, e)));
     }
   }
   if (abilities.length) { installFeatureDispatch(battle); abOf(battle, e); attach(battle, e, abilities); }

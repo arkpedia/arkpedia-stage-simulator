@@ -288,6 +288,14 @@ export const featureAbilities = Object.freeze({
   refraction: ({ res }) => refraction(res),
   times: ({ artsOnly }) => times(artsOnly),
   blockWeight: ({ n }) => blockWeight(n),
+  prisoner: (params, ab) => prisoner(ab, params),
+  // Physical dodge `prob` while not blocked (the engine's dodgePhys, toggled each tick).
+  dodgeUnblocked: ({ prob }) => ({ tick(b, e, a) {
+    const on = !e.blockedBy;
+    if (on === a.on) return;
+    a.on = on;
+    if (on) b.addBuff(e, { key: 'ab:evade', persist: true, mods: { dodgePhys: prob } }); else b.removeBuff(e, 'ab:evade');
+  } }),
 });
 
 /** Original full-mode installation, shared with bosses.js; idempotent for the same scope. */

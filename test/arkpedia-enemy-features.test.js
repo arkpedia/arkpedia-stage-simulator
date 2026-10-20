@@ -94,6 +94,21 @@ test('Can only be blocked by units with at least N Block: block weight N', () =>
   const n = Number(ENEMY_RECORDS.enemies[key].levels[0].abilities.find(a => /at least \d+ Block/.test(a.text)).text.match(/(\d+) Block/)[1]);
   const h = spawnAny(key, { seconds: 0.1, units: [] }); assert.equal(enemy(h, key).blockWeight, n);
 });
+test('confinement/liberty: starts imprisoned with reduced ASPD and is freed after the talent number of attacks', () => {
+  const key = Object.keys(support.enemies).find(k => support.enemies[k].features?.includes('talent:confinement')), r = ENEMY_RECORDS.enemies[key].levels[0];
+  const h = spawnAny(key, { seconds: 0.1 }), e = enemy(h, key), aspd = r.stats.aspd;
+  assert.ok(e.findBuff('ab:confined')); assert.equal(e.s.aspd, aspd + r.talents.bb['confinement.attack_speed'], 'confined ASPD');
+  let attacks = 0; h.b.on('attack', c => { if (c.attacker === e) attacks++; });
+  h.runUntil(() => e.findBuff('ab:liberty') || !e.alive, 120);
+  assert.ok(e.findBuff('ab:liberty'), 'freed'); assert.equal(attacks, r.talents.bb['confinement.times']); assert.equal(e.findBuff('ab:confined'), null);
+});
+test('Evade: Physical dodge while unblocked, none while blocked', () => {
+  const key = Object.keys(support.enemies).find(k => support.enemies[k].features?.includes('talent:Evade')), r = ENEMY_RECORDS.enemies[key].levels[0];
+  const h = spawnAny(key, { seconds: 0.2 }), e = () => enemy(h, key);
+  assert.equal(e().s.dodgePhys, r.talents.bb['Evade.prob']);
+  h.runUntil(() => !e()?.alive || e().blockedBy, 120); h.run(0.1);
+  if (e()?.alive) assert.equal(e().s.dodgePhys, 0);
+});
 test('approved features apply only to enemies that use them', () => {
   const h = spawnAny('enemy_1007_slime', { seconds: 0.2 }), e = enemy(h, 'enemy_1007_slime');
   assert.equal(e.s.flags.unblockable ?? false, false); assert.equal(e.s.flags.stealth ?? false, false); assert.equal(e.profile?.maxTargets ?? 1, 1);
