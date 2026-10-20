@@ -1,0 +1,125 @@
+{
+  "operator": "char_1052_kalts2",
+  "name": "Kal'tsit·Esperanta",
+  "foundationSha256": "780faf7b2de93f3e20cdbc830dc4ee95c1e88c374c57d529fa16e2e6355740c8",
+  "artCommit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+  "output": "data/arkpedia-kalts2-art.json",
+  "sdReview": "source-reviews/kalts2.json",
+  "scope": "Original Front/Back files unchanged. Independently checked native skeleton/atlas/material/texture pointers, decoded pixels and premultiplied alpha. Literal default roles: Front idle=Idle, deploy=Start, attack=Attack_Loop, die=Die, stun=Stun; Back idle=Idle, deploy=Start, attack=Attack_Loop. Skill clips are played by the simulator owner itself; 18 original native mix(es) retained. Combat/public admission, modules, effects/audio/shaders and compiled/frame/pixel parity remain separate.",
+  "roles": {
+    "Front": {
+      "idle": "Idle",
+      "deploy": "Start",
+      "attack": "Attack_Loop",
+      "attackDown": null,
+      "skill": null,
+      "skills": {},
+      "die": "Die",
+      "stun": "Stun",
+      "move": null
+    },
+    "Back": {
+      "idle": "Idle",
+      "deploy": "Start",
+      "attack": "Attack_Loop",
+      "attackDown": null,
+      "skill": null,
+      "skills": {},
+      "die": null,
+      "stun": null,
+      "move": null
+    }
+  },
+  "nativeMixes": [
+    {
+      "sourceAnimName": "Skill_2_Attack",
+      "targetAnimName": "Idle",
+      "mixAnimName": "Skill_2_End"
+    },
+    {
+      "sourceAnimName": "Skill_Down_2_Attack",
+      "targetAnimName": "Idle",
+      "mixAnimName": "Skill_2_End"
+    },
+    {
+      "sourceAnimName": "Skill_2_Attack",
+      "targetAnimName": "Attack",
+      "mixAnimName": "Skill_2_End"
+    },
+    {
+      "sourceAnimName": "Skill_Down_2_Attack",
+      "targetAnimName": "Attack",
+      "mixAnimName": "Skill_2_End"
+    },
+    {
+      "sourceAnimName": "Skill_3_Attack",
+      "targetAnimName": "Idle",
+      "mixAnimName": "Skill_3_End"
+    },
+    {
+      "sourceAnimName": "Skill_Down_3_Attack",
+      "targetAnimName": "Idle",
+      "mixAnimName": "Skill_3_End"
+    },
+    {
+      "sourceAnimName": "Skill_3_Attack",
+      "targetAnimName": "Attack",
+      "mixAnimName": "Skill_3_End"
+    },
+    {
+      "sourceAnimName": "Skill_Down_3_Attack",
+      "targetAnimName": "Attack",
+      "mixAnimName": "Skill_3_End"
+    },
+    {
+      "sourceAnimName": "Attack_Loop",
+      "targetAnimName": "Idle",
+      "mixAnimName": "Attack_End"
+    },
+    {
+      "sourceAnimName": "Attack_Down_Loop",
+      "targetAnimName": "Idle",
+      "mixAnimName": "Attack_End"
+    },
+    {
+      "sourceAnimName": "Skill_2_Idle",
+      "targetAnimName": "Idle",
+      "mixAnimName": "Skill_2_End"
+    },
+    {
+      "sourceAnimName": "Skill_3_Idle",
+      "targetAnimName": "Idle",
+      "mixAnimName": "Skill_3_End"
+    },
+    {
+      "sourceAnimName": "Skill_2_Attack",
+      "targetAnimName": "Attack_Begin",
+      "mixAnimName": "Skill_2_End"
+    },
+    {
+      "sourceAnimName": "Skill_3_Attack",
+      "targetAnimName": "Attack_Begin",
+      "mixAnimName": "Skill_3_End"
+    },
+    {
+      "sourceAnimName": "Skill_Down_2_Attack",
+      "targetAnimName": "Attack_Begin",
+      "mixAnimName": "Skill_2_End"
+    },
+    {
+      "sourceAnimName": "Skill_Down_3_Attack",
+      "targetAnimName": "Attack_Begin",
+      "mixAnimName": "Skill_3_End"
+    },
+    {
+      "sourceAnimName": "Skill_2_Idle",
+      "targetAnimName": "Attack_Begin",
+      "mixAnimName": "Skill_2_End"
+    },
+    {
+      "sourceAnimName": "Skill_3_Idle",
+      "targetAnimName": "Attack_Begin",
+      "mixAnimName": "Skill_3_End"
+    }
+  ]
+}

@@ -105,6 +105,7 @@ def norm(v, key=''):
     return v
 
 count = 0
+absent_skill_prefabs = set()
 def original_graph(path, container):
     global count
     by = objects[path]
@@ -169,7 +170,9 @@ def original_token(key):
     assert pointer['m_FileID'] == 0 and pointer['m_PathID'] != '0'
     matches = [part for row in rows for part in row['components']
                if part['pathId'] == pointer['m_PathID'] and '_animations' in part['data']]
-    assert len(matches) == 1
+    effect = [part for row in rows for part in row['components']
+              if part['pathId'] == pointer['m_PathID'] and '_effectWhiteList' in part['data'] and '_animations' not in part['data']]
+    assert len(matches) + len(effect) == 1
     named_slots = []
     for slot in ct[key]['skills']:
         if slot['skillId'] is None:
@@ -184,11 +187,13 @@ def original_token(key):
         for prefab in [overrides[skill]] if skill in overrides else prefabs:
             if prefab is None:
                 modes.append(skill)
+            elif f'dyn/battle/prefabs/[uc]skills/{prefab}.prefab' not in containers[skill_path]:
+                absent_skill_prefabs.add(prefab); modes.append(skill)
             elif prefab not in original_skills:
                 original_skills[prefab] = original_graph(skill_path, f'dyn/battle/prefabs/[uc]skills/{prefab}.prefab')
     token_bindings[key], token_overrides[key], token_modes[key] = bindings, overrides, modes
     token_sources[key] = {'bundle': path, 'container': container, 'rootPathId': str(root),
-                          'animatorPathId': pointer['m_PathID']}
+                          'animatorPathId': pointer['m_PathID'], **({'effectOnly': True} if effect else {})}
     return rows
 parameters = {'key', '_blackboardKey', '_blackboardKeys', '_fromBlackboardKeys', '_sourceBlackboardKey',
               '_targetBlackboardKey', '_inputKey', '_outputKey', '_maxValueKey', '_anotherKeyToCompare', '_addParamKey',
@@ -231,6 +236,7 @@ assert e.get('tokens', {}) == token_graphs
 assert e.get('tokenSkillBindings', {}) == token_bindings
 assert e.get('tokenSkillPrefabOverrides', {}) == token_overrides
 assert e.get('tokenModeSkills', {}) == token_modes
+assert e.get('tokenAbsentSkillPrefabs', []) == sorted(absent_skill_prefabs)
 assert e['tables'].get('tokenSkills', {}) == {s: st[s] for key in token_graphs for s in token_bindings[key]}
 assert e.get('tokenSources', {}) == token_sources
 assert e['tables'].get('tokens', {}) == {key: ct[key] for key in token_graphs}
@@ -286,13 +292,15 @@ def verify_artwork(key, path, animator, directory):
     assert e['models'][key] == models
     return len(facings)
 
-assert set(e['officialSkeletonBindings']) == set(e['models']) == {ID, *token_graphs}
+assert set(e['officialSkeletonBindings']) == set(e['models']) == {ID, *(k for k in token_graphs if not token_sources[k].get('effectOnly'))}
 facings_count = verify_artwork(ID, art_path, art_parts[0], OUT)
 token_art = {}
 for key, rows in token_graphs.items():
     source = token_sources[key]
     controller = next(part for row in rows for part in row['components'] if part['pathId'] == source['animatorPathId'])
     token_art[key] = [{'pathId': controller['pathId'], 'data': controller['data']}]
+    if source.get('effectOnly'):
+        continue
     facings_count += verify_artwork(key, source['bundle'], controller, OUT / 'tokens' / key)
 assert e.get('tokenArtworkControllers', {}) == token_art
 print(f'Verified complete original {ID} owner/art/skill/projectile hierarchies ({count} components), '

@@ -67,9 +67,14 @@ for face in (['Front'] if single else ['Front','Back']):
  skeleton=objects[skeleton_id].read_typetree();data_id=ptr(skeleton['skeletonDataAsset']);assert str(data_id)==n['skeletonDataAssetPathId']
  data=objects[data_id].read_typetree();text_id=ptr(data['skeletonJSON']);assert str(text_id)==n['textAssetPathId'];assert len(data['atlasAssets'])==1
  atlas_id=ptr(data['atlasAssets'][0]);assert str(atlas_id)==n['atlasAssetPathId'];atlas=objects[atlas_id].read_typetree()
- atlas_text=ptr(atlas['atlasFile']);assert str(atlas_text)==n['atlasTextAssetPathId'];assert len(atlas['materials'])==1
- material_id=ptr(atlas['materials'][0]);props=objects[material_id].read_typetree()['m_SavedProperties'];floats=dict(props['m_Floats'])
- texture_id=ptr(dict(props['m_TexEnvs'])['_MainTex']['m_Texture']);assert floats['_StraightAlphaInput']==0 and floats['_UseAlphaTex']==0
+ atlas_text=ptr(atlas['atlasFile']);assert str(atlas_text)==n['atlasTextAssetPathId'];assert len(atlas['materials'])>=1
+ # One material per atlas page (a multi-page atlas has one texture per page, in page order).
+ pages=[]
+ for m in atlas['materials']:
+  mid=ptr(m);props=objects[mid].read_typetree()['m_SavedProperties'];fl=dict(props['m_Floats'])
+  tid=ptr(dict(props['m_TexEnvs'])['_MainTex']['m_Texture']);assert fl['_StraightAlphaInput']==0 and fl['_UseAlphaTex']==0
+  pages.append((mid,tid,fl))
+ material_id,texture_id,floats=pages[0]
  source={'key':'operators','repository':'fexli/ArknightsResource','commit':recipe['artCommit'],'directory':f'spine/{ID}/{ID}/{face}'}
  assert d['source']==source
  for f in [d['skeleton'],d['atlas'],*d['textures']]:
@@ -77,10 +82,18 @@ for face in (['Front'] if single else ['Front','Back']):
   assert (assets/f['path']).read_bytes()==original and len(original)==f['bytes'] and sha(original)==f['sha256']
  assert (assets/d['skeleton']['path']).read_bytes()==text(objects[text_id])
  assert d['skeleton']['sha256']==n['sha256'] and d['skeleton']['bytes']==n['bytes']
- native_atlas=text(objects[atlas_text]).decode();assert (assets/d['atlas']['path']).read_text()=='\n'.join(v for v in native_atlas.lstrip('\n').split('\n') if not v.startswith('size:'))
- assert len(d['textures'])==1
- native=objects[texture_id].read().image.convert('RGBA');delivered=Image.open(assets/d['textures'][0]['path']).convert('RGBA')
- assert native.size==delivered.size and native.tobytes()==delivered.tobytes()
+ native_atlas=text(objects[atlas_text]).decode();lines=native_atlas.lstrip('\n').split('\n')
+ # The mirror drops the first page header's size line only (later pages keep theirs).
+ first=next(i for i,v in enumerate(lines) if v.startswith('size:'));assert (assets/d['atlas']['path']).read_text()=='\n'.join(lines[:first]+lines[first+1:])
+ assert len(d['textures'])==len(pages)
+ page_names=[v.strip() for i,v in enumerate(native_atlas.lstrip('\n').split('\n')) if v.strip().endswith('.png')]
+ assert [Path(t['path']).name for t in d['textures']]==page_names
+ decoded=[]
+ for (mid,tid,fl),t in zip(pages,d['textures']):
+  img=objects[tid].read();assert img.m_Name+'.png'==Path(t['path']).name
+  native=img.image.convert('RGBA');delivered=Image.open(assets/t['path']).convert('RGBA')
+  assert native.size==delivered.size and native.tobytes()==delivered.tobytes();decoded.append(native)
+ native=decoded[0]
  p=json.loads(subprocess.check_output([node,'--input-type=module','-e',
   "import{readFile}from'node:fs/promises';import{parseSkel}from'./tools/assets/skel.mjs';import{atlasInfo}from'./tools/assets/atlas.mjs';console.log(JSON.stringify(parseSkel(await readFile(process.argv[1]),atlasInfo(await readFile(process.argv[2],'utf8')).regions,{includeEventPayloads:true})));",
   str(assets/d['skeleton']['path']),str(assets/d['atlas']['path'])],cwd=ROOT))
@@ -90,7 +103,9 @@ for face in (['Front'] if single else ['Front','Back']):
  metadata={'spineVersion':p['version'],'premultipliedAlpha':True,'animations':p['durations'],'hits':p['hits'],'bounds':p['bounds'],'animationRoles':roles}
  rows[face.lower()]={'modelKey':key,'source':source,'files':{k:d[k] for k in ['skeleton','atlas','textures']},'nativeBundle':bundle,
   'originalBindings':n,'materialPathId':str(material_id),'texturePathId':str(texture_id),'materialFloats':floats,
-  'decodedPixelSha256':sha(native.tobytes()),'textureDimensions':list(native.size),'metadata':metadata}
+  'decodedPixelSha256':sha(native.tobytes()),'textureDimensions':list(native.size),
+  **({'extraPages':[{'materialPathId':str(mid),'texturePathId':str(tid),'materialFloats':fl,'decodedPixelSha256':sha(im.tobytes()),'textureDimensions':list(im.size)}
+   for (mid,tid,fl),im in zip(pages[1:],decoded[1:])]} if len(pages)>1 else {}),'metadata':metadata}
  if args.mode=='verify' and args.assets:assert {k:d[k] for k in metadata}==metadata
  print('Verified',ID,face,'original pointers, bytes, pixels, PMA and literal roles',flush=True)
 if single:

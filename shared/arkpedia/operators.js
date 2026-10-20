@@ -131,6 +131,14 @@ import { HSGMA2_OPERATORS } from './hsgma2-operators.js';
 import { ORCHD2_OPERATORS } from './orchd2-operators.js';
 import { LEIZI2_OPERATORS } from './leizi2-operators.js';
 import { VEEN_OPERATORS } from './veen-operators.js';
+import { MANTRA_OPERATORS } from './mantra-operators.js';
+import { HARUKA_OPERATORS } from './haruka-operators.js';
+import { WANG_OPERATORS } from './wang-operators.js';
+import { DEMETR_OPERATORS } from './demetr-operators.js';
+import { SBELL2_OPERATORS } from './sbell2-operators.js';
+import { AGLNA2_OPERATORS } from './aglna2-operators.js';
+import { RADIAN_OPERATORS } from './radian-operators.js';
+import { KALTS2_OPERATORS } from './kalts2-operators.js';
 import { BRANCH_OPERATORS } from './branch-operators.js';
 import { RECKPR_OPERATORS } from './reckpr-operators.js';
 import { CLOSUR_OPERATORS } from './closur-operators.js';
@@ -486,6 +494,14 @@ export const REGULAR_OPERATORS = Object.freeze({
   ...ORCHD2_OPERATORS,
   ...LEIZI2_OPERATORS,
   ...VEEN_OPERATORS,
+  ...MANTRA_OPERATORS,
+  ...HARUKA_OPERATORS,
+  ...WANG_OPERATORS,
+  ...DEMETR_OPERATORS,
+  ...SBELL2_OPERATORS,
+  ...AGLNA2_OPERATORS,
+  ...RADIAN_OPERATORS,
+  ...KALTS2_OPERATORS,
   ...BRANCH_OPERATORS,
 });
 

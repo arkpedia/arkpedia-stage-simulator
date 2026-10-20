@@ -133,6 +133,8 @@ export class Unit {
       slowDownRate: clamp(fin(m('slowDownMul'), 1), 0, 1),
       interval: (bat * 100) / aspd,
       blockCnt: Math.max(0, fin(Math.round((b.blockCnt + a('blockCnt')) * m('blockCntMul')), 0)),
+      // BLOCK_RADIUS_SCALE (ADDITION): the block contact radius x (1 + scale) (Battle._checkBlock).
+      blockRadiusScale: Math.max(0, fin(a('blockRadiusScale'), 0)),
       moveSpeed: Math.max(0, fin((b.moveSpeed + a('moveFlat')) * Math.max(0, 1 + a('movePct')) * m('moveMul'), fin(b.moveSpeed, 0))),
       rangeExtend: Math.max(0, Math.round(a('rangeExtend'))),
       baseRangeExtend: Math.max(0, fin(Math.round(permRangeExtend), 0)),   // permanent part (initial range)

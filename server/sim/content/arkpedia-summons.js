@@ -28,6 +28,8 @@ import { createWulfeniteMine } from './arkpedia-wulfenite.js';
 import { createWeedyCannon } from './arkpedia-weedy.js';
 import { createJessicaShield } from './arkpedia-jessica.js';
 import { installSilenceParadigmaticDrone } from './arkpedia-silence-paradigmatic.js';
+import { createWangStone, wangPlacementAllowsEnemy } from './arkpedia-wang.js';
+import { createRadianTower } from './arkpedia-radian.js';
 
 const live = unit => unit?.alive && unit.deployed;
 const ownTokens = (battle, owner) => battle.allyUnits.filter(token =>
@@ -71,7 +73,7 @@ export function summonPlacementError(battle, key, row, col) {
       : state.record.position === 'RANGED' ? 'Choose a high-ground tile.' : 'Choose a melee tile.';
   if (battle.allyUnits.some(unit => live(unit) && unit.tileR === row && unit.tileC === col))
     return 'Tile is occupied.';
-  if (state.config.excludeWalkingEnemy && battle.enemies.some(enemy => live(enemy)
+  if (state.config.excludeWalkingEnemy && !(state.ownerId === 'char_2027_wang' && wangPlacementAllowsEnemy(battle, state.owner, row, col)) && battle.enemies.some(enemy => live(enemy)
     && enemy.motion !== 'FLY' && Math.round(enemy.x) === col && Math.round(enemy.y) === row))
     return 'Choose a tile without a ground enemy.';
   if (!canSpendDp(battle, state.owner.ownerId, state.record.stats.cost)) return 'Not enough DP.';
@@ -91,7 +93,9 @@ export function deployRegularSummon(battle, key, row, col, dir = 'RIGHT') {
     if (!deck || deck.state !== state) throw Error('Missing current Ela mine deck.');
     return deck.place(row, col);
   }
-  const token = state.ownerId === 'char_250_phatom' ? createPhantomClone(battle, state, row, col, dir)
+  const token = state.ownerId === 'char_2027_wang' ? createWangStone(battle, state, row, col)
+    : state.ownerId === 'char_4195_radian' ? createRadianTower(battle, state, row, col, dir)
+    : state.ownerId === 'char_250_phatom' ? createPhantomClone(battle, state, row, col, dir)
     : state.ownerId === 'char_1034_jesca2' ? createJessicaShield(battle, state, row, col)
     : state.ownerId === 'char_400_weedy' ? createWeedyCannon(battle, state, row, col, dir)
     : state.ownerId === 'char_003_kalts' ? createKaltsitMon3tr(battle, state, row, col, dir)
@@ -208,7 +212,7 @@ export function installSummoner({ battle, unit, def }) {
   const config = REGULAR_SUMMONS[def.id];
   if (!config || config.skillId && def.skill?.id !== config.skillId
     || config.minimumElite != null && def.raw.arkpedia.elite < config.minimumElite) return;
-  const build = ['char_4117_ray', 'char_427_vigil', 'char_4055_bgsnow', 'char_1012_skadi2', 'char_4048_doroth', 'char_400_weedy', 'char_250_phatom', 'char_451_robin', 'char_458_rfrost', 'char_242_otter', 'char_4171_wulfen'].includes(def.id)
+  const build = ['char_4195_radian', 'char_4117_ray', 'char_427_vigil', 'char_4055_bgsnow', 'char_1012_skadi2', 'char_4048_doroth', 'char_400_weedy', 'char_250_phatom', 'char_451_robin', 'char_458_rfrost', 'char_242_otter', 'char_4171_wulfen'].includes(def.id)
     ? { ...def.raw.arkpedia, skillId: def.skill.id } : def.raw.arkpedia;
   const key = summonCardId(def.id), record = summonRecordFor(def.id, build, battle.data.raw.tokens);
   if (!battle.regularSummons) battle.regularSummons = new Map();

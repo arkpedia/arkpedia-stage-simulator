@@ -1166,12 +1166,15 @@ export class Battle {
     for (let r = r0 - 1; r <= r0 + 1; r++) {
       if (r < 0 || r >= ROWS) continue;
       for (let c = c0 - 1; c <= c0 + 1; c++) {
-        // a diagonal neighbour's centre is ≥ √0.5 away: out of reach of the ground (and device) radius
-        if (c < 0 || c >= COLS || (!fly && r !== r0 && c !== c0)) continue;
+        if (c < 0 || c >= COLS) continue;
         const o = this._occ[r * COLS + c];
         if (!o || !this._blockerFor(o, e, w)) continue;
+        // BLOCK_RADIUS_SCALE (e.g. Kal'tsit·Esperanta's talent) widens the radius by (1 + scale)
+        const r2 = (o.kind === 'device' ? BLOCK_RADIUS_SQ.device : fly ? BLOCK_RADIUS_SQ.fly : BLOCK_RADIUS_SQ.ground)
+          * (o.kind === 'device' ? 1 : (1 + (o.s.blockRadiusScale ?? 0)) ** 2);
+        // a diagonal neighbour's centre is ≥ √0.5 away: out of reach of an unscaled ground (and device) radius
+        if (!fly && r !== r0 && c !== c0 && r2 <= 0.5) continue;
         const d2 = (e.x - c) * (e.x - c) + (e.y - r) * (e.y - r);
-        const r2 = o.kind === 'device' ? BLOCK_RADIUS_SQ.device : fly ? BLOCK_RADIUS_SQ.fly : BLOCK_RADIUS_SQ.ground;
         if (d2 < r2 && d2 < bd) { u = o; bd = d2; }
       }
     }

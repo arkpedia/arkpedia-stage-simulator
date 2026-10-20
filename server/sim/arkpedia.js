@@ -148,6 +148,14 @@ import { customizeHsgma2Kit, installHsgma2 } from './content/arkpedia-hsgma2.js'
 import { customizeOrchd2Kit, installOrchd2 } from './content/arkpedia-orchd2.js';
 import { customizeLeizi2Kit, installLeizi2 } from './content/arkpedia-leizi2.js';
 import { customizeVeenKit, installVeen } from './content/arkpedia-veen.js';
+import { customizeMantraKit, installMantra } from './content/arkpedia-mantra.js';
+import { customizeHarukaKit, installHaruka } from './content/arkpedia-haruka.js';
+import { customizeWangKit, installWang } from './content/arkpedia-wang.js';
+import { customizeDemetrKit, installDemetr } from './content/arkpedia-demetr.js';
+import { customizeSbell2Kit, installSbell2 } from './content/arkpedia-sbell2.js';
+import { customizeAglna2Kit, installAglna2 } from './content/arkpedia-aglna2.js';
+import { customizeRadianKit, installRadian } from './content/arkpedia-radian.js';
+import { customizeKalts2Kit, installKalts2 } from './content/arkpedia-kalts2.js';
 import { customizePublicBranchKit, installPublicBranch } from './content/arkpedia-branch-public.js';
 import { customizePublicReckprKit, installPublicReckpr } from './content/arkpedia-reckpr-public.js';
 import { customizePublicLieselKit, installPublicLiesel } from './content/arkpedia-liesel-public.js';
@@ -483,6 +491,9 @@ export class StandardBattle extends Battle {
       return position === "RANGED"
         ? "Choose a ranged tile."
         : "Choose a melee tile.";
+    // An owner may restrict a card to specific tiles (Kal'tsit·Esperanta's S3 transported allies).
+    const ownerDeny = this.regularPlacementDeny?.[id]?.(row, col, tile);
+    if (ownerDeny) return ownerDeny;
     if (
       this.allyUnits.some((u) => u.alive && u.tileR === row && u.tileC === col)
     )
@@ -655,6 +666,14 @@ export class StandardBattle extends Battle {
     customizeOrchd2Kit({ battle: this, id, unit, kit });
     customizeLeizi2Kit({ battle: this, id, unit, kit });
     customizeVeenKit({ battle: this, id, unit, kit });
+    customizeMantraKit({ battle: this, id, unit, kit });
+    customizeHarukaKit({ battle: this, id, unit, kit });
+    customizeWangKit({ battle: this, id, unit, kit });
+    customizeDemetrKit({ battle: this, id, unit, kit });
+    customizeSbell2Kit({ battle: this, id, unit, kit });
+    customizeAglna2Kit({ battle: this, id, unit, kit });
+    customizeRadianKit({ battle: this, id, unit, kit });
+    customizeKalts2Kit({ battle: this, id, unit, kit });
     customizePublicBranchKit({ battle: this, id, unit, kit });
     customizeNarantKit({ battle: this, id, def, unit, kit });
     customizeElaKit({ battle: this, id, def, unit, kit });
@@ -909,6 +928,14 @@ export class StandardBattle extends Battle {
     installOrchd2({ battle: this, unit, def });
     installLeizi2({ battle: this, unit, def });
     installVeen({ battle: this, unit, def });
+    installMantra({ battle: this, unit, def });
+    installHaruka({ battle: this, unit, def });
+    installWang({ battle: this, unit, def });
+    installDemetr({ battle: this, unit, def });
+    installSbell2({ battle: this, unit, def });
+    installAglna2({ battle: this, unit, def });
+    installRadian({ battle: this, unit, def });
+    installKalts2({ battle: this, unit, def });
     installPublicBranch({ battle: this, unit, def });
     installNarant({ battle: this, unit, def });
     installEla({ battle: this, unit, def });

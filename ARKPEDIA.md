@@ -4818,4 +4818,36 @@ Leizi the Thunderbringer joins with her Liberator trait, idle liftoff with per-s
 
 ### Viy
 
-Viy (Вий) joins with Mystic energy stored with no target and merged into transposed energy, her talent ATK/ASPD by what she holds, the stacking damage over time she avoids targeting, S1 ASPD, S2 attack and release stacks, and S3 bouncing energy shots on an ammo count. See docs/VEEN-REVIEW.md. Coverage: 421/431 forms.
+Viy (Вий) joins with Mystic energy stored with no target and merged into transposed energy, his talent ATK/ASPD by what he holds, the stacking damage over time he avoids targeting, S1 ASPD, S2 attack and release stacks, and S3 bouncing energy shots on an ammo count. See docs/VEEN-REVIEW.md. Coverage: 421/431 forms.
+
+### Mantra
+
+Mantra joins with palsy-trigger elemental damage with layer retention, spawn-point palsy, the S1 neural next attack, the S2 neural chain, and S3's palsy cap with skill-start palsy and overflow element jumps. See docs/MANTRA-REVIEW.md. Coverage: 422/431 forms.
+
+### Haruka
+
+Haruka joins with her Abjurer trait, talent Sanctuary bubbles that burst into heals, the S1 bubble hand-off, S2 extra heal and bubble targets with heal-scaled Arts strikes and an infinite second use, and S3 doubled bubbles that levitate attackers. See docs/HARUKA-REVIEW.md. Coverage: 423/431 forms.
+
+### Wang
+
+Wang joins with his original stones (token art and card avatar from the CN client): placement with a free neighbour, linked triggers with line damage and RES penetration, S1/S2 stone gains with sluggish damage over time or line strips, and S3 enlarged stones placed onto enemies. CN owners can now declare tokens in `CN_OWNER_REVIEWS` (records from their own foundation, art and avatar receipts checked by hash). See docs/WANG-REVIEW.md. Coverage: 424/431 forms.
+
+### Bellone
+
+Bellone joins with talent DEF shred and missing-HP damage, decaying deployment evasion, the S1 double hit, S2 three targets with sluggish at full shred, and the S3 pursuit that moves him onto enemies and ends in an undying return home. See docs/DEMETR-REVIEW.md. Coverage: 425/431 forms.
+
+### Pramanix the Prerita
+
+Pramanix the Prerita joins with her Phalanx trait, talent snow layers that strike, slow and clear, cold on attackers with a one-time freezing escape, the S1 strike with push and forward snow, S2 infinite attacks with spreading, damaging and freezing snow, and S3 attraction with faster snow. Snow layers are simulated but not yet drawn. See docs/SBELL2-REVIEW.md. Coverage: 426/431 forms.
+
+### Angelina the Mellow Wish
+
+Angelina the Mellow Wish joins with her Skywalker trait, talent Arts riders by weight and the weightless field, lifted-off ally ATK and blocking regeneration, the S1 passive liftoff, the S2 glide that levitates or ground-binds before Arts volleys, and the S3 ammo liftoff with air protection, slowed fliers and moves. See docs/AGLNA2-REVIEW.md. Coverage: 427/431 forms.
+
+### Raidian
+
+Raidian joins with his three original towers, one per skill (token art and card avatars from the CN client): the talent's five summons with inspiration, one more summon on every skill start, the S1 melee blocker with DEF and barrier, the S2 piercing bullet tower that fires three longer lanes while S2 runs, and the S3 ranged Arts tower with prism links, sluggish and Arts fragility. `REGULAR_SUMMONS` gains `tokenBySkill`. See docs/RADIAN-REVIEW.md. Coverage: 428/431 forms.
+
+### Kal'tsit - Esperanta
+
+Kal'tsit - Esperanta joins with her Watchman liftoff, FLY block over a wider radius, entry regeneration and one-hit shields for operators entering her range, S1 wider block radius for lifted-off allies, S2 medical units that strike true damage and heal around the impact, and the S3 tactical anchor she flies to while two operators are withdrawn for a free redeploy into her new range (her anchor's art and card avatar come from the CN client). Generic additions: a `blockRadiusScale` buff mod in the block contact check, `regularPlacementDeny` for owner-restricted card tiles, and multi-page atlas support in `cn-owner-art.py`. See docs/KALTS2-REVIEW.md. Coverage: 429/431 forms.

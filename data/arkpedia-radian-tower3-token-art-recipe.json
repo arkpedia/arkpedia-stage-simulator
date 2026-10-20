@@ -1,0 +1,120 @@
+{
+  "operator": "char_4195_radian",
+  "model": "token_10053_radian_tower3",
+  "name": "Raidian tower 3",
+  "foundationSha256": "c8f114a01a67f02ddd67b0bb6e30c09dba2cda87da0be693ca4298b1f29d3317",
+  "bundle": "pkgrps/btl_pfb_tokens_0.ab",
+  "output": "data/arkpedia-radian-tower3-token-art.json",
+  "sdReview": "source-reviews/radian-tower3.json",
+  "scope": "Original Raidian summon artwork only: native skeleton(s), unchanged decoded pixels, PMA and pointers. Combat, public admission, effects/audio and game-frame/pixel parity are separate.",
+  "roles": {
+    "Front": {
+      "idle": "Idle",
+      "deploy": "Start",
+      "attack": {
+        "begin": null,
+        "loop": "Attack",
+        "end": null
+      },
+      "skill": null,
+      "die": "Die",
+      "stun": null,
+      "move": null
+    },
+    "Back": {
+      "idle": "Idle",
+      "deploy": "Start",
+      "attack": {
+        "begin": null,
+        "loop": "Attack",
+        "end": null
+      },
+      "skill": null,
+      "die": "Die",
+      "stun": null,
+      "move": null
+    },
+    "Down": {
+      "idle": "Idle",
+      "deploy": "Start",
+      "attack": {
+        "begin": null,
+        "loop": "Attack",
+        "end": null
+      },
+      "skill": null,
+      "die": "Die",
+      "stun": null,
+      "move": null
+    }
+  },
+  "missingOptionalAliases": {
+    "Front": [],
+    "Back": [],
+    "Down": []
+  },
+  "nativeMixes": [
+    {
+      "sourceAnimName": "Attack",
+      "targetAnimName": "Skill_Idle",
+      "mixAnimName": "Skill_Begin"
+    },
+    {
+      "sourceAnimName": "Attack",
+      "targetAnimName": "Skill_Loop",
+      "mixAnimName": "Skill_Begin"
+    },
+    {
+      "sourceAnimName": "Skill_Loop",
+      "targetAnimName": "Idle",
+      "mixAnimName": "Skill_End"
+    },
+    {
+      "sourceAnimName": "Skill_Loop",
+      "targetAnimName": "Attack",
+      "mixAnimName": "Skill_End"
+    },
+    {
+      "sourceAnimName": "Idle",
+      "targetAnimName": "Skill_Idle",
+      "mixAnimName": "Skill_Begin"
+    },
+    {
+      "sourceAnimName": "Idle",
+      "targetAnimName": "Skill_Loop",
+      "mixAnimName": "Skill_Begin"
+    },
+    {
+      "sourceAnimName": "Skill_Idle",
+      "targetAnimName": "Idle",
+      "mixAnimName": "Skill_End"
+    },
+    {
+      "sourceAnimName": "Skill_Idle",
+      "targetAnimName": "Attack",
+      "mixAnimName": "Skill_End"
+    }
+  ],
+  "reviewPhases": [
+    "Attack",
+    "Default",
+    "Die",
+    "Idle",
+    "Skill_Begin",
+    "Skill_End",
+    "Skill_Idle",
+    "Skill_Loop",
+    "Start"
+  ],
+  "emptyClips": {
+    "Front": [
+      "Default"
+    ],
+    "Back": [
+      "Default"
+    ],
+    "Down": [
+      "Default"
+    ]
+  }
+}

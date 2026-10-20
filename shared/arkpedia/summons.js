@@ -1,6 +1,14 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Only explicitly reviewed regular-stage tokens may enter the deployment deck.
 export const REGULAR_SUMMONS = Object.freeze({
+  // Raidian's tower depends on the selected skill; his controller owns its behaviour.
+  char_4195_radian: Object.freeze({ tokenId: null, tokenBySkill: Object.freeze({
+      skchr_radian_1: 'token_10051_radian_tower1', skchr_radian_2: 'token_10052_radian_tower2', skchr_radian_3: 'token_10053_radian_tower3' }),
+    deploymentSlotCost: 0, chooseFacing: true, healFree: false, refundRatio: .5, attackClip: 'Attack' }),
+  // Wang's stones: the reviewed CN owner controller links and triggers them.
+  char_2027_wang: Object.freeze({ tokenId: 'token_10064_wang_stone1',
+    deploymentSlotCost: 0, chooseFacing: false, fixedRotation: true, healFree: true,
+    refundRatio: 0, noAttack: true, excludeWalkingEnemy: true }),
   char_4123_ela: Object.freeze({ tokenId: 'token_10033_ela_grzmot',
     deploymentSlotCost: 0, chooseFacing: false, fixedRotation: true, healFree: true,
     refundRatio: 0, noAttack: true, sourceStockLimit: true,
@@ -108,6 +116,8 @@ export const REGULAR_AUTOMATIC_TOKENS = Object.freeze({
   char_249_mlyss: Object.freeze(['token_10030_mlyss_wtrman']),
   // The dedicated coordinate controller owns its deck; preload the original art.
   char_1041_angel2: Object.freeze(['token_10056_angel2_target']),
+  // Kal'tsit·Esperanta's S3 anchor deck places the tactical anchor.
+  char_1052_kalts2: Object.freeze(['token_10068_kalts2_mtship']),
   // The selected-skill controller owns Magallan's deck and terrain rules.
   char_248_mgllan: Object.freeze([1, 2, 3].map(n => `token_10005_mgllan_drone${n}`)),
   // Ling's selected-skill deck controls dragon stock, terrain and fusion.
@@ -135,7 +145,7 @@ export const REGULAR_AUTOMATIC_TOKENS = Object.freeze({
 
 export function regularTokenIdsFor(ownerIds) {
   return [...new Set(ownerIds.flatMap(id => [
-    ...(REGULAR_SUMMONS[id] ? [REGULAR_SUMMONS[id].tokenId] : []),
+    ...(REGULAR_SUMMONS[id] ? [REGULAR_SUMMONS[id].tokenId, ...Object.values(REGULAR_SUMMONS[id].tokenBySkill ?? {})].filter(Boolean) : []),
     ...(REGULAR_AUTOMATIC_TOKENS[id] ?? []),
   ]))];
 }
@@ -156,8 +166,9 @@ export function sourceCandidate(candidates, build) {
 /** Tokens use their own source keyframes at their owner's elite and level.
  * Trust bonuses and owner potential stat modifiers never transfer to them. */
 export function summonRecordFor(ownerId, build, tokens) {
-  const config = REGULAR_SUMMONS[ownerId], source = tokens?.[config?.tokenId];
-  if (!config || !source || source.id !== config.tokenId)
+  // An owner may field a different original token per selected skill.
+  const config = REGULAR_SUMMONS[ownerId], tokenId = config?.tokenBySkill?.[build.skillId] ?? config?.tokenId, source = tokens?.[tokenId];
+  if (!config || !source || source.id !== tokenId)
     throw Error(`Missing reviewed summon source: ${ownerId}`);
   const phase = source.phases?.[build.elite];
   if (!phase || !Number.isSafeInteger(build.level) || build.level < 1 || build.level > phase.maxLevel)

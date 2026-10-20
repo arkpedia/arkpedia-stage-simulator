@@ -101,7 +101,15 @@ const CN_OWNER_REVIEWS = Object.freeze({char_4185_amoris: {slug: 'amoris', polic
   char_1044_hsgma2: {slug: 'hsgma2', policy: 'source-cn-hsgma2-minus-hp-shield-v1'},
   char_1048_orchd2: {slug: 'orchd2', policy: 'source-cn-orchd2-salvo-charges-v1'},
   char_1043_leizi2: {slug: 'leizi2', policy: 'source-cn-leizi2-thunder-v1'},
-  char_4226_veen: {slug: 'veen', policy: 'source-cn-veen-transposed-energy-v1'}});
+  char_4226_veen: {slug: 'veen', policy: 'source-cn-veen-transposed-energy-v1'},
+  char_4204_mantra: {slug: 'mantra', policy: 'source-cn-mantra-palsy-neural-v1'},
+  char_4202_haruka: {slug: 'haruka', policy: 'source-cn-haruka-bubbles-v1'},
+  char_2027_wang: {slug: 'wang', policy: 'source-cn-wang-stones-v1', tokens: {token_10064_wang_stone1: 'wang'}},
+  char_4037_demetr: {slug: 'demetr', policy: 'source-cn-demetr-pursuit-v1'},
+  char_1046_sbell2: {slug: 'sbell2', policy: 'source-cn-sbell2-snow-v1'},
+  char_1015_aglna2: {slug: 'aglna2', policy: 'source-cn-aglna2-skywalker-v1'},
+  char_4195_radian: {slug: 'radian', policy: 'source-cn-radian-towers-v1', tokens: {token_10051_radian_tower1: 'radian-tower1', token_10052_radian_tower2: 'radian-tower2', token_10053_radian_tower3: 'radian-tower3'}},
+  char_1052_kalts2: {slug: 'kalts2', policy: 'source-cn-kalts2-anchor-v1', tokens: {token_10068_kalts2_mtship: 'kalts2-mtship'}}});
 const candidateTurdus = process.argv.includes('--review-candidate-turdus');
 const candidateTmslot = process.argv.includes('--review-candidate-tmslot');
 const candidateThumpy = process.argv.includes('--review-candidate-thumpy');
@@ -547,7 +555,7 @@ if(ids.includes('char_4221_ju')){
 // Shared receipt gate for CN-sourced owners: source tables, art receipt and
 // clocks (when present) match, the browser tooling is unchanged once approved,
 // and interface files resolve at the snapshot's own image/skin pins.
-async function checkCnOwnerReview(id, {slug, policy}) {
+async function checkCnOwnerReview(id, {slug, policy, tokens: declaredTokens}) {
   const review=JSON.parse(await readFile(new URL(`../../data/arkpedia-${slug}-runtime-review.json`,import.meta.url)));
   const approved=JSON.stringify(review.enabledOperators)===JSON.stringify([id])&&review.verification.browser.status==='passed';
   const pending=candidateGeneric===id&&review.enabledOperators.length===0&&review.verification.browser.status==='pending';
@@ -567,6 +575,14 @@ async function checkCnOwnerReview(id, {slug, policy}) {
   }}
   if(!review.interfaceAssets?.length||review.interfaceAssets.some(a=>pins[a.repository]!==a.commit||!/^[a-f0-9]{64}$/.test(a.sha256)||!Number.isSafeInteger(a.bytes)||a.bytes<1))
     throw Error(`${id} lacks pinned interface assets`);
+  // Declared original tokens: their art and card avatar receipts, bound to this foundation.
+  for(const[token,prefix]of Object.entries(declaredTokens??{})){
+    const art=await read(`${prefix}-token-art`),artRecipe=await read(`${prefix}-token-art-recipe`),avatar=await read(`${prefix}-token-avatar`),avatarRecipe=await read(`${prefix}-token-avatar-recipe`);
+    const a=JSON.parse(art),v=JSON.parse(avatar),r=review.tokenArtwork?.[token];
+    if(!e.tables.tokens?.[token]||!a.models?.[token]||v.token!==token||a.recipeSha256!==sha(artRecipe)||v.recipeSha256!==sha(avatarRecipe)
+      ||a.foundation.sha256!==sha(foundation)||v.foundation.sha256!==sha(foundation)||r?.artSha256!==sha(art)||r?.avatarSha256!==sha(avatar))
+      throw Error(`${id} lacks matching original ${token} artwork and avatar`);
+  }
   return review;
 }
 const cnOwnerReviews={};
@@ -995,11 +1011,17 @@ if (ids.includes('char_4228_closur')) tokenIds.unshift('token_10066_closur_ourba
 if (mcnistSource) tokenIds.unshift('token_10069_mcnist_mcgraf');
 if (reconSource) tokenIds.unshift('token_10063_buddy_bddg');
 if (aphrissaSource) tokenIds.unshift(APHRISSA_TOKEN);
+// CN owners declare their original tokens (records come from their own foundation).
+const cnTokenSources={};
+for(const[id,spec]of Object.entries(CN_OWNER_REVIEWS))if(ids.includes(id)&&spec.tokens){
+  const e=JSON.parse(await readFile(new URL(`../../data/arkpedia-native-operators/${id}.json`,import.meta.url)));
+  for(const token of Object.keys(spec.tokens)){cnTokenSources[token]=e;tokenIds.unshift(token);}
+}
 const closurSource = ids.includes('char_4228_closur')
   ? JSON.parse(await readFile(new URL('../../data/arkpedia-native-operators/char_4228_closur.json', import.meta.url))) : null;
 const tokens = Object.fromEntries(tokenIds.map(id => {
   const closurToken = id === 'token_10066_closur_ourbase';
-  const sourceToken=closurToken?closurSource:id==='token_10069_mcnist_mcgraf'?mcnistSource:id==='token_10063_buddy_bddg'?reconSource:id===APHRISSA_TOKEN?aphrissaSource:null;
+  const sourceToken=cnTokenSources[id]??(closurToken?closurSource:id==='token_10069_mcnist_mcgraf'?mcnistSource:id==='token_10063_buddy_bddg'?reconSource:id===APHRISSA_TOKEN?aphrissaSource:null);
   const c = sourceToken ? sourceToken.tables.tokens[id] : characters[id];
   const tokenRanges = sourceToken ? sourceToken.tables.ranges : ranges;
   const tokenSkills = sourceToken ? sourceToken.tables.tokenSkills : skills;

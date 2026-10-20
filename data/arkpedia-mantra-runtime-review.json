@@ -1,0 +1,228 @@
+{
+  "schemaVersion": 1,
+  "operatorId": "char_4204_mantra",
+  "enabledOperators": [
+    "char_4204_mantra"
+  ],
+  "frameParity": false,
+  "moduleSupport": false,
+  "nativeParticleSupport": false,
+  "nativePixelParity": false,
+  "mechanicsPolicy": "source-cn-mantra-palsy-neural-v1",
+  "scope": "Mantra: Primal Caster trait, talent palsy-trigger elemental damage with layer retention and spawn-point palsy, S1 neural next attack, S2 neural chain, S3 palsy cap, skill-start palsy and overflow element jumps, read from the pinned CN tables, her own templates and the original Spine clip events.",
+  "sourceFoundationSha256": "53c1f93956427f25a7ec247124cb69784002dcc597a386bf39a8d6bc3ccaa2fa",
+  "ownerArtworkSha256": "c928257cbfa3b3902a688a25a007c97b60c81a6d86a01e7cf120d1d784300963",
+  "extraSources": {},
+  "verification": {
+    "browser": {
+      "status": "passed",
+      "script": "tools/arkpedia/review-mantra-public.mjs",
+      "scriptSha256": "395455d5ac457fa73858ebc1a42ab03cfe6d99708d748a4323b6eab30c2648f1",
+      "driverSha256": "2e52cd4007ae553e30f773104626f9b5c2be7c15f717b61ca9063517fbdc51c8",
+      "fixtureServerSha256": "127fb1b74be89d0a35e6bfa4e3d35927d170fa4d3129287f6c523114c5bcaa22",
+      "browserVersion": "Chrome/153.0.8010.12",
+      "cacheDisabled": true,
+      "externalAssetTransport": "Unintercepted original immutable HTTPS; normal TLS verification.",
+      "originalWaves": false,
+      "candidate": {
+        "cases": 6,
+        "captures": 24,
+        "errors": 0,
+        "failedResources": 0
+      },
+      "normal": {
+        "cases": 6,
+        "captures": 24,
+        "errors": 0,
+        "failedResources": 0
+      }
+    }
+  },
+  "originalArtwork": {
+    "operator/char_4204_mantra/default/back": {
+      "kind": "operator",
+      "id": "char_4204_mantra",
+      "variant": "default",
+      "facing": "back",
+      "spineVersion": "3.8.99",
+      "source": {
+        "key": "operators",
+        "repository": "fexli/ArknightsResource",
+        "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+        "directory": "spine/char_4204_mantra/char_4204_mantra/Back"
+      },
+      "skeleton": {
+        "path": "models/operator/char_4204_mantra/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4204_mantra.skel",
+        "bytes": 264874,
+        "sha256": "1d000c0818b93e550ab5a5bda454119956cffd0576f50f9ec23c4f735ecc002d"
+      },
+      "atlas": {
+        "path": "models/operator/char_4204_mantra/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4204_mantra.atlas",
+        "bytes": 6218,
+        "sha256": "8ecd6eee8b77e20687836d78f307d8d48add7e406117ee6466fe0ba6fcf4b830"
+      },
+      "textures": [
+        {
+          "path": "models/operator/char_4204_mantra/default/back/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4204_mantra.png",
+          "bytes": 175670,
+          "sha256": "8907e6b2687e46504bbe19533c89ca23bcdf6d7c38683395112482703aaf3b23"
+        }
+      ],
+      "premultipliedAlpha": true,
+      "animations": {
+        "Attack": 1.6,
+        "Default": 0,
+        "Idle": 3.333,
+        "Skill_1": 1.6,
+        "Skill_2_Begin": 0.267,
+        "Skill_2_End": 0.333,
+        "Skill_2_Loop": 2.667,
+        "Skill_3_Begin": 0.333,
+        "Skill_3_End": 0.333,
+        "Skill_3_Idle": 2.333,
+        "Skill_3_Loop": 1.6,
+        "Start": 1
+      },
+      "hits": {
+        "Attack": [
+          0.433
+        ],
+        "Skill_1": [
+          0.433
+        ],
+        "Skill_3_Loop": [
+          0.467
+        ]
+      },
+      "bounds": {
+        "x": 136.39,
+        "y": -4.32,
+        "width": 446.545,
+        "height": 394.998
+      },
+      "animationRoles": {
+        "idle": "Idle",
+        "deploy": "Start",
+        "attack": "Attack",
+        "attackDown": null,
+        "skill": null,
+        "skills": {},
+        "die": null,
+        "stun": null,
+        "move": null
+      }
+    },
+    "operator/char_4204_mantra/default/front": {
+      "kind": "operator",
+      "id": "char_4204_mantra",
+      "variant": "default",
+      "facing": "front",
+      "spineVersion": "3.8.99",
+      "source": {
+        "key": "operators",
+        "repository": "fexli/ArknightsResource",
+        "commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+        "directory": "spine/char_4204_mantra/char_4204_mantra/Front"
+      },
+      "skeleton": {
+        "path": "models/operator/char_4204_mantra/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4204_mantra.skel",
+        "bytes": 336953,
+        "sha256": "19343737b8ab109b2cb6ada5d1fc086256c840fb1b31faabbe3037b9e0efd206"
+      },
+      "atlas": {
+        "path": "models/operator/char_4204_mantra/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4204_mantra.atlas",
+        "bytes": 9244,
+        "sha256": "42841e15b3626767f88320b3a4f13f903e086e1eab33045c1550eaba7edde4ff"
+      },
+      "textures": [
+        {
+          "path": "models/operator/char_4204_mantra/default/front/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/char_4204_mantra.png",
+          "bytes": 189386,
+          "sha256": "d3b701f923194a7e6674837819c0673da776cfbfc94ad8a501b496cce8158d9d"
+        }
+      ],
+      "premultipliedAlpha": true,
+      "animations": {
+        "Attack": 1.6,
+        "Default": 0,
+        "Die": 1,
+        "Idle": 3.333,
+        "Skill_1": 1.6,
+        "Skill_2_Begin": 0.267,
+        "Skill_2_End": 0.333,
+        "Skill_2_Loop": 2.667,
+        "Skill_3_Begin": 0.333,
+        "Skill_3_End": 0.333,
+        "Skill_3_Idle": 2.333,
+        "Skill_3_Loop": 1.6,
+        "Start": 1
+      },
+      "hits": {
+        "Attack": [
+          0.433
+        ],
+        "Skill_1": [
+          0.433
+        ],
+        "Skill_3_Loop": [
+          0.467
+        ]
+      },
+      "bounds": {
+        "x": -253.373,
+        "y": -5.32,
+        "width": 432.443,
+        "height": 393.457
+      },
+      "animationRoles": {
+        "idle": "Idle",
+        "deploy": "Start",
+        "attack": "Attack",
+        "attackDown": null,
+        "skill": null,
+        "skills": {},
+        "die": "Die",
+        "stun": null,
+        "move": null
+      }
+    }
+  },
+  "interfaceAssets": [
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "six-star-icons/Mantra - Base.webp",
+      "bytes": 10772,
+      "sha256": "41bc5369b2a65dcbdc5db7cb5d14d78d8435af04f5ee4dbbd5b4df3c3a15b888"
+    },
+    {
+      "repository": "arkpedia/arkpedia-skin-assets",
+      "commit": "6fb723692d89c4a08d9a7aa4015e19c0753dd270",
+      "path": "six-star-skins/Mantra - Base.webp",
+      "bytes": 208756,
+      "sha256": "cc633fad4b950a7d79207dec52a02aa37f949126aefa31f351862829d5440cb0"
+    },
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "skill-icons/Mantra - Resonance Collapse.webp",
+      "bytes": 6764,
+      "sha256": "63006f884b2ad92f556e45794bea4002cb80739b59ef993ea5dc52e2ee89cbcf"
+    },
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "skill-icons/Mantra - Gestalt Consciousness.webp",
+      "bytes": 6268,
+      "sha256": "4ecdd413eca2f1aec48b3e78965b98fe953565582cfd845e99107887c8ffdb41"
+    },
+    {
+      "repository": "arkpedia/arkpedia-image-assets",
+      "commit": "07d36c12c7a659c1b2b46daf12a7f35a460243a0",
+      "path": "skill-icons/Mantra - Truth Unchanted.webp",
+      "bytes": 7482,
+      "sha256": "58e0851830dab229ee26fdc85cde5c2c98b71c54ac51998f8576217b4318b23a"
+    }
+  ],
+  "publishedSdCommit": "1d19c3e4bccc8baef82222d97dc03e2a805916a0"
+}

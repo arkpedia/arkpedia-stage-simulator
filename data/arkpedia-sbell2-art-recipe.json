@@ -1,0 +1,80 @@
+{
+  "operator": "char_1046_sbell2",
+  "name": "Pramanix the Prerita",
+  "foundationSha256": "d018805b4231e2fc436d5471fe646f41e773cabe4cad9bb93b89fc30a7c905e6",
+  "artCommit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+  "output": "data/arkpedia-sbell2-art.json",
+  "sdReview": "source-reviews/sbell2.json",
+  "scope": "Original Front/Back files unchanged. Independently checked native skeleton/atlas/material/texture pointers, decoded pixels and premultiplied alpha. Literal default roles: Front idle=Idle, deploy=Start, attack=Skill_2_Attack, die=Die; Back idle=Idle, deploy=Start, attack=Skill_2_Attack. Skill clips are played by the simulator owner itself; 9 original native mix(es) retained. Combat/public admission, modules, effects/audio/shaders and compiled/frame/pixel parity remain separate.",
+  "roles": {
+    "Front": {
+      "idle": "Idle",
+      "deploy": "Start",
+      "attack": "Skill_2_Attack",
+      "attackDown": null,
+      "skill": null,
+      "skills": {},
+      "die": "Die",
+      "stun": null,
+      "move": null
+    },
+    "Back": {
+      "idle": "Idle",
+      "deploy": "Start",
+      "attack": "Skill_2_Attack",
+      "attackDown": null,
+      "skill": null,
+      "skills": {},
+      "die": null,
+      "stun": null,
+      "move": null
+    }
+  },
+  "nativeMixes": [
+    {
+      "sourceAnimName": "Skill_2_Attack",
+      "targetAnimName": "Idle",
+      "mixAnimName": "Skill_2_End"
+    },
+    {
+      "sourceAnimName": "Skill_2_Idle",
+      "targetAnimName": "Idle",
+      "mixAnimName": "Skill_2_End"
+    },
+    {
+      "sourceAnimName": "Skill_3_Idle",
+      "targetAnimName": "Idle",
+      "mixAnimName": "Skill_3_End"
+    },
+    {
+      "sourceAnimName": "Idle",
+      "targetAnimName": "Skill_3_Idle",
+      "mixAnimName": "Skill_3_Begin"
+    },
+    {
+      "sourceAnimName": "Idle",
+      "targetAnimName": "Skill_3_Attack_A",
+      "mixAnimName": "Skill_3_Begin"
+    },
+    {
+      "sourceAnimName": "Idle",
+      "targetAnimName": "Skill_3_Attack_B",
+      "mixAnimName": "Skill_3_Begin"
+    },
+    {
+      "sourceAnimName": "Idle",
+      "targetAnimName": "Skill_3_Attack_C",
+      "mixAnimName": "Skill_3_Begin"
+    },
+    {
+      "sourceAnimName": "Idle",
+      "targetAnimName": "Skill_2_Idle",
+      "mixAnimName": "Skill_2_Begin"
+    },
+    {
+      "sourceAnimName": "Idle",
+      "targetAnimName": "Skill_2_Attack",
+      "mixAnimName": "Skill_2_Begin"
+    }
+  ]
+}
