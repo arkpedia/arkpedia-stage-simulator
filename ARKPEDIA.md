@@ -4873,3 +4873,14 @@ Enemies are moving to a data-driven, stage-agnostic model. The first step is one
 - **Tests.** `test/arkpedia-enemy-records.test.js` covers the catalogue, the normalized definitions, the 0-1 records and a sweep that runs all 1,552 enemies for 12 s against a guard without engine errors. The full local suite passes 22,358 tests.
 
 Behaviour support (the feature registry) and the support gate come next; `REGULAR_ENEMIES` still admits only the two 0-1 enemies.
+
+### Derived enemy support and the stat-only tier (E2a, 2026-10-21)
+
+`REGULAR_ENEMIES` is no longer a hand-written list; it is derived from the enemy catalogue and the native timing index.
+
+- **Derivation.** `tools/arkpedia/enemy-support.mjs` (`shared/arkpedia/enemy-support.js`) writes `data/arkpedia-enemy-support.json` with every enemy's decision, and the compact registry `data/arkpedia-regular-enemies.json` that the battle and app load.
+- **Rule.** An enemy is supported only when everything it uses has an approved implementation. Today that is the **stat-only tier**: no skills, no talents and no handbook abilities at any database level, and an original prefab with no native ability wrappers and no active general/common abilities. This is the same proof the Closure compatibility receipt used for the two 0-1 enemies.
+- **Result.** 137 of 1,552 enemies are supported, including both 0-1 enemies. The other 1,415 list exactly what they are missing (`skill:<prefabKey>`, `talent:<group>`, `handbook-abilities`, `native-abilities:<prefab>`). The feature registry will clear those reasons batch by batch.
+- **Tests.** `test/arkpedia-enemy-support.test.js` regenerates the support file from the committed inputs (so it also runs in CI). It checks that the registry equals the supported set and that every supported enemy uses nothing unimplemented, and fights each supported enemy against a guard on the harness stage until it dies or leaks. The full local suite passes 22,362 tests.
+
+No stage spawns the newly supported enemies yet; stages stay test-only until the generic stage loader is reviewed.
