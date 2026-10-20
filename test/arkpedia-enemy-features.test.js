@@ -53,6 +53,47 @@ for (const key of ['enemy_1365_spnwiz', 'enemy_1104_lfkght']) test(`Reborn (${ke
   h.b.dealDamage(null, e, { amount: e.hp + 1, type: 'true', sourceless: true }); h.run(0.05);
   assert.equal(e.alive, false, 'the second knock-out is final');
 });
+const firstWith = (pred) => Object.keys(ENEMY_RECORDS.enemies).find(k => pred(ENEMY_RECORDS.enemies[k].levels[0]));
+const group = (r, name) => Object.keys(r.talents.groups).find(g => g.toLowerCase() === name);
+test('periodic_damage: loses the talent damage every second', () => {
+  const key = 'enemy_1062_rager', r = ENEMY_RECORDS.enemies[key].levels[0], h = spawnAny(key, { seconds: 0.1, units: [] }), e = enemy(h, key);
+  const hp = e.hp; h.run(3.05);
+  assert.ok(Math.abs(hp - e.hp - 3 * r.talents.bb['periodic_damage.damage']) <= r.talents.bb['periodic_damage.damage'] + 1, `${hp - e.hp}`);
+});
+test('Refraction: RES rises by the talent value, and silence switches it off', () => {
+  const key = firstWith(r => group(r, 'refracting') && r.abilities.some(a => a.text.includes('<$ba.refraction>'))), r = ENEMY_RECORDS.enemies[key].levels[0];
+  const h = spawnAny(key, { seconds: 0.2, units: [] }), e = enemy(h, key), base = r.stats.res;
+  assert.equal(e.s.res, Math.min(100, base + r.talents.bb[`${group(r, 'refracting')}.magic_resistance`]));
+  h.b.applyStatus(e, 'silence', { duration: 3 }); h.run(0.2); assert.equal(e.s.res, base);
+});
+test('atkup: ATK rises once HP first drops below half', () => {
+  const key = 'enemy_1025_reveng', r = ENEMY_RECORDS.enemies[key].levels[0], h = spawnAny(key, { seconds: 0.1, units: [] }), e = enemy(h, key), atk = e.s.atk;
+  h.b.dealDamage(null, e, { amount: e.s.maxHp * 0.6, type: 'true', sourceless: true }); h.run(0.05);
+  assert.ok(Math.abs(e.s.atk - atk * (1 + r.talents.bb['atkup.atk'])) < 1, `${e.s.atk}`);
+});
+test('epdamage: every attack hit adds the named element damage', () => {
+  const key = 'enemy_1148_dssbr', h = spawnAny(key, { seconds: 0 }), els = [];
+  h.b.on('damaged', c => { if (c.source?.defId === key && c.dmg.type === 'element') els.push(c.dmg.element); });
+  h.runUntil(() => els.length > 0, 30); assert.deepEqual([...new Set(els)], ['neural']);
+});
+test('DeadSpawn: killed, it spawns its supported children', () => {
+  const key = 'enemy_1195_sfyin', r = ENEMY_RECORDS.enemies[key].levels[0], g = group(r, 'deadspawn'), child = r.talents.bbStr[`${g}.enemy_key`];
+  assert.ok(support.enemies[key].policy, 'supported'); assert.ok(support.enemies[child].policy, 'its child is supported');
+  const h = spawnAny(key, { seconds: 0.1, units: [] }), e = enemy(h, key);
+  h.b.dealDamage(null, e, { amount: 1e9, type: 'true', sourceless: true, ignoreTimes: true });
+  for (let i = 0; i < 400 && e.alive; i++) { h.b.dealDamage(null, e, { amount: 1e9, type: 'true', sourceless: true }); h.step(); }
+  h.run(0.5); assert.equal(h.b.units.filter(u => u.side === 'enemy' && u.defId === child).length, r.talents.bb[`${g}.cnt`]);
+});
+test('Must be damaged N times: it takes exactly N hits', () => {
+  const key = 'enemy_1196_msfyin', n = ENEMY_RECORDS.enemies[key].levels[0].stats.maxHp, h = spawnAny(key, { seconds: 0.1, units: [] }), e = enemy(h, key);
+  for (let i = 0; i < n - 1; i++) h.b.dealDamage(null, e, { amount: 1e6, type: 'phys', sourceless: true });
+  h.run(0.05); assert.equal(e.alive, true, `${n - 1} hits`); h.b.dealDamage(null, e, { amount: 1, type: 'phys', sourceless: true }); h.run(0.05); assert.equal(e.alive, false);
+});
+test('Can only be blocked by units with at least N Block: block weight N', () => {
+  const key = firstWith(r => r.abilities.some(a => /^Can only be blocked by units with at least \d+ Block$/.test(a.text)));
+  const n = Number(ENEMY_RECORDS.enemies[key].levels[0].abilities.find(a => /at least \d+ Block/.test(a.text)).text.match(/(\d+) Block/)[1]);
+  const h = spawnAny(key, { seconds: 0.1, units: [] }); assert.equal(enemy(h, key).blockWeight, n);
+});
 test('approved features apply only to enemies that use them', () => {
   const h = spawnAny('enemy_1007_slime', { seconds: 0.2 }), e = enemy(h, 'enemy_1007_slime');
   assert.equal(e.s.flags.unblockable ?? false, false); assert.equal(e.s.flags.stealth ?? false, false); assert.equal(e.profile?.maxTargets ?? 1, 1);

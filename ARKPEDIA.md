@@ -4898,3 +4898,21 @@ Behaviour attaches to enemies by feature, not by enemy id (`shared/arkpedia/enem
   - Attacks two/2 targets simultaneously: two ranged targets per attack.
 - **Coverage.** Support rises to 159 of 1,552 enemies: 137 stat-only, plus 22 through features. Wraith Leader is now admitted through "Cannot be blocked." rather than the held upstream kit, which stays unused.
 - **Tests.** `test/arkpedia-enemy-features.test.js` checks each feature on every enemy it clears, through real harness behaviour (not blocked past a guard, stealth until blocked, regeneration, flying, two targets). The full local suite passes 22,443 tests.
+
+### Enemy feature families, batch 1 (E3, 2026-10-21)
+
+The feature runtime (`server/sim/content/arkpedia-enemy-features.js`) applies the declarative registry at spawn. It attaches abilities through a new features-only dispatch of `content/enemies.js` (`installFeatureDispatch`), reusing its documented ability builders (`featureAbilities`), never its per-enemy kits.
+
+- **Talent families**, each keyed by its exact parameter signature:
+  - Reborn/reborn (rebirth after the first knock-out);
+  - periodic_damage (HP lost every second);
+  - refracting (RES while not silenced);
+  - atkup (ATK below half HP);
+  - epdamage/EpDamage with `attack@ep_damage_ratio` (element damage on every hit; the element is the one term the handbook line names);
+  - DeadSpawn (children on death).
+- **Numbered ability lines**, matched by pattern and checked against the record:
+  - "Must be damaged N times to defeat", and its Arts/True variant: a hit count equal to max HP;
+  - "Can only be blocked by units with at least N Block": block weight.
+- **Explained handbook lines.** A talent family declares the handbook lines it explains (for example "Will gradually lose HP over time"). A line with no feature of its own counts as covered only when a cleared talent of the same record explains it.
+- **Spawn dependencies.** An enemy that spawns another is supported only when the child is too. `REGULAR_ENEMY_SPAWNS` makes a stage ship the children's records, and the harness supplies them.
+- **Coverage.** Support rises to 207 of 1,552 enemies. Each family and pattern has a harness test on a real enemy.

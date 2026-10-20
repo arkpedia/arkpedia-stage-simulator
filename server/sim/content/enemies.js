@@ -274,6 +274,15 @@ export function installFeatureDispatch(b) { return installDispatch(b, 'features'
 
 /** The shared 重生 ability for data-driven features (see reborn() below). */
 export function rebornAbility(params) { return reborn(params); }
+/** Shared ability builders for data-driven features (each documented at its definition below). */
+export const featureAbilities = Object.freeze({
+  elementOnHit: ({ element, ratio }) => ep(element, ratio),
+  lowHpBuff: ({ ratio, mods }) => lowHpBuff(ratio, mods),
+  deathSpawn: ({ key, cnt }) => deathSpawn(key, cnt),
+  refraction: ({ res }) => refraction(res),
+  times: ({ artsOnly }) => times(artsOnly),
+  blockWeight: ({ n }) => blockWeight(n),
+});
 
 /** Original full-mode installation, shared with bosses.js; idempotent for the same scope. */
 export function ensureInstalled(b) { return installDispatch(b, 'full', KITS); }

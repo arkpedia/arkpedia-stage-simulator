@@ -2,7 +2,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import support from '../data/arkpedia-enemy-support.json' with { type: 'json' };
-import { REGULAR_ENEMIES } from '../shared/arkpedia/enemies.js';
+import { REGULAR_ENEMIES, REGULAR_ENEMY_SPAWNS, assertRegularEnemies } from '../shared/arkpedia/enemies.js';
+import mvp from '../data/arkpedia-mvp.json' with { type: 'json' };
 import { buildEnemySupport } from '../tools/arkpedia/enemy-support.mjs';
 import { spawnAny } from './helpers/enemyHarness.js';
 
@@ -30,4 +31,10 @@ test('every supported enemy fights to a death or a leak against a guard on the h
     assert.deepEqual(h.b.errors ?? [], [], id);
     assert.equal(e()?.alive ?? false, false, `${id} ends (killed or leaked) within 240 s`);
   }
+});
+test('a stage must ship the records of every enemy its enemies can spawn', () => {
+  const [parent, [child]] = Object.entries(REGULAR_ENEMY_SPAWNS)[0];
+  const stage = { ...mvp, enemies: { ...mvp.enemies, [parent]: {} }, stage: { ...mvp.stage, geometry: { ...mvp.stage.geometry, waves: [{ spawns: [] }] } } };
+  assert.throws(() => assertRegularEnemies(stage), new RegExp(`spawns: ${child}`));
+  assert.doesNotThrow(() => assertRegularEnemies({ ...stage, enemies: { ...stage.enemies, [child]: {} } }));
 });

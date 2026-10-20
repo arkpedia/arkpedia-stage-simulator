@@ -3,6 +3,7 @@
 // on the synthetic flat stage, without a real stage (data/arkpedia-enemy-records.json).
 //   const h = spawnAny('enemy_1007_slime', {seconds: 10});
 import records from '../../data/arkpedia-enemy-records.json' with { type: 'json' };
+import support from '../../data/arkpedia-enemy-support.json' with { type: 'json' };
 import { makeBattle, chessRec } from './battleHarness.js';
 import { installEnemyFeatures } from '../../server/sim/content/arkpedia-enemy-features.js';
 
@@ -14,6 +15,11 @@ export function enemyRecord(key, level = 0) {
   if (!r) throw Error(`Unknown enemy level: ${key}@${level}`);
   return r;
 }
+/** Records of every enemy `key` can spawn (death spawns), transitively, at level 0. */
+function spawnedRecords(key, out = {}) {
+  for (const child of support.enemies[key]?.spawns ?? []) if (!out[child] && records.enemies[child]) { out[child] = enemyRecord(child); spawnedRecords(child, out); }
+  return out;
+}
 /**
  * opts: level (0), stats (plain stat overrides merged into the record), route (0 = walk low; 2 = fly low),
  * units (battleHarness unit specs; default one guard in the lane), seconds (run time; 0 = do not run), content ('none').
@@ -24,7 +30,7 @@ export function spawnAny(key, opts = {}) {
   const guard = chessRec({ id: 'test_enemy_harness_guard', profession: 'WARRIOR', stats: { atk: 400, maxHp: 1e6, def: 300 }, skill: null });
   const route = opts.route ?? (record.stats.motion === 'FLY' ? 2 : 0);
   const h = makeBattle({
-    defs: { enemies: { [key]: record }, chess: { [guard.chessId]: guard } },
+    defs: { enemies: { ...spawnedRecords(key), [key]: record }, chess: { [guard.chessId]: guard } },
     units: opts.units ?? [{ chessId: guard.chessId, row: 9, col: 6 }],
     enemies: [{ key, time: 0, route }],
     content: opts.content ?? 'none', timeLimit: opts.timeLimit ?? 600, seed: opts.seed ?? 1,
