@@ -44,7 +44,7 @@ export function resolveStage(index, requested = null, { experimental = false } =
   }
   const error = Error(`Unknown stage: ${id}`);
   error.code = 'STAGE_NOT_FOUND';
-  error.stages = index.stages.filter(stage => !stage.testOnly);
+  error.stages = index.stages.filter(stage => experimental || !stage.testOnly);
   throw error;
 }
 
