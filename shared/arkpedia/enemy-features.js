@@ -279,6 +279,11 @@ export const ENEMY_FEATURES = Object.freeze({
     explains: text => /^Attack power increases( greatly)? when attacking <\$ba\.frozen>Frozen<\/> targets$/.test(text)
       || /^Gains significantly increased ATK when HP is under 50%$/.test(text) },
 
+  // Rotchaser: an Arts bleed on hit, removed by healing.
+  'talent:Bleeding': { covers: r => sig(r, 'Bleeding', ['attack@bleeding_damage', 'attack@duration'])
+      && r.abilities.some(a => a.text === 'Attacks cause the target to take Arts damage over time; effect removed when the target is healed'),
+    ability: { kind: 'bleedFeature', params: r => ({ bb: r.talents.bb }) }, note: 'Arts damage over time on hit, removed by healing',
+    explains: /^Attacks cause the target to take Arts damage over time; effect removed when the target is healed$/ },
   // Sarkaz Caster lasso: an Arts attack that stuns its target for the skill's hit_duration.
   'skill:lasso': { covers: (r, nat) => r.skills.some(s => s.prefabKey === 'lasso' && s.bb.hit_duration === 20 && s.bb.atk_scale === 0.35)
       && r.abilities.some(a => a.text === 'Uses chains to paralyze allied Operators.'),

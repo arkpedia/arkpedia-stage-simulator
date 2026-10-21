@@ -345,6 +345,8 @@ export const featureAbilities = Object.freeze({
     },
   }),
   moveSpeedBonus: ({ mul }) => ({ spawn(b, e) { b.addBuff(e, { key: 'ab:moveSpeed', persist: true, visible: true, mods: { moveMul: mul } }); } }),
+  // Rotchaser: reuse the legacy bleed ability.
+  bleedFeature: ({ bb }) => bleed({ t: bb }),
   // Sarkaz Caster: every attack is a 0.35x Arts lasso that stuns for 20 s.
   lasso: ({ scale, duration }) => ({
     hitOut(c, b, e) { if (c.dmg.isAttack) { c.dmg.amount = e.s.atk * scale; c.dmg.type = 'arts'; } },

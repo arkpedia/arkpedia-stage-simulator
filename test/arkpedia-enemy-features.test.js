@@ -516,6 +516,13 @@ test('Sarkaz Caster lasso: the attack is 0.35x Arts and stuns for 20 s', () => {
   assert.ok(hit); assert.equal(hit.dmg.type, 'arts'); assert.equal(hit.dmg.amount, e.s.atk * 0.35);
   const stun = guard.buffs.find(b => b.status === 'stun'); assert.ok(stun); assert.equal(stun.duration, 20);
 });
+test('Rotchaser: the hit applies the Arts bleed, healing removes it', () => {
+  const key = 'enemy_1270_nhstlk', h = spawnAny(key, { seconds: 0.1 }), guard = h.b.units.find(u => u.side === 'ally');
+  h.runUntil(() => guard.findBuff('ab:bleed'), 25);
+  const bleed = guard.findBuff('ab:bleed'); assert.ok(bleed, 'bleed applied'); const hp = guard.hp;
+  h.run(1.1); assert.ok(guard.hp < hp, 'bleed ticked');
+  h.b.heal(guard, guard, 1, { self: true }); assert.equal(guard.findBuff('ab:bleed'), null);
+});
 test('Drains 1 Life Point: the engine leak drains the record stat', () => {
   const key = 'enemy_1137_plasm';
   assert.ok(support.enemies[key].policy, 'supported by the existing leak rule');

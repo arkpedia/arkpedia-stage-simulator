@@ -5562,3 +5562,7 @@ The nine chapter-12 adverse variants (**12-2/3/4/5/6/7/9/10/15 adverse environme
 ### Sudaram dealt-state fix (S68, 2026-10-21)
 
 The full enemy sweep caught that Sudaram's wrapper `dealt` called the base `splashAttack.dealt` without its ability-state argument, so `a.splash` was undefined. Pass the state through; the full enemy harness is clean again.
+
+### Rotchaser bleed (E45, 2026-10-21)
+
+The Rotchaser reuses the legacy `ab:bleed` ability: each hit applies its 100/s Arts bleed for 10 s and any heal removes it. Support rises to **346 of 1,552** enemies. The test checks the debuff, its tick and the heal cleanse.
