@@ -5822,3 +5822,7 @@ The coverage report now reads `stage-conditional/<slug>.json` and breaks the 63 
 ### Conditional-spawn note in the remaining report (S111, 2026-10-21)
 
 `docs/REMAINING.md` now records the 205 branch / 86 hidden-group conditional entries and the open question about hidden-group semantics, so the next adapter decision is written down rather than inferred from a count.
+
+### Shard-partition test (S112, 2026-10-21)
+
+`tools/run-tests.mjs` now exports `testFilesForShard`, and `test/test-shards.test.js` asserts that 2-, 3- and 5-way splits are exact partitions: every `test/*.test.js` appears once, with no duplicates or omissions.
