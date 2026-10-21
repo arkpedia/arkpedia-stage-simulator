@@ -17,6 +17,7 @@ import { existsSync } from 'node:fs';
 import { basename, dirname, join } from 'node:path';
 import { createHash } from 'node:crypto';
 import { stageAdapter } from '../../server/sim/arkpedia.js';
+import { mergePristineHiddenGroups } from '../../shared/arkpedia/stage-conditional.js';
 import { assertRegularEnemies } from '../../shared/arkpedia/enemies.js';
 
 const args = Object.fromEntries(process.argv.slice(2).flatMap((arg, i, all) =>
@@ -28,21 +29,9 @@ const [source, geometry, playbackFile, mvp, records, support] = await Promise.al
   read(new URL('../../data/arkpedia-enemy-records.json', import.meta.url)),
   read(new URL('../../data/arkpedia-enemy-support.json', import.meta.url)),
 ]);
-// A pristine `hidden_group` entry is hidden from the preview but still spawns. Entries with random packs,
-// weights or branches are real conditions and keep the stage refused.
 const conditionalPath = args.conditional ?? join(dirname(args.geometry), '..', 'stage-conditional', basename(args.geometry));
 if (geometry.hasConditionalSpawns && existsSync(conditionalPath)) {
-  const entries = JSON.parse(await readFile(conditionalPath, 'utf8'));
-  const pristine = entries.length > 0 && entries.every(e => e.condition?.hidden_group && Object.keys(e.condition).length === 1 && !e.branch && e.source === 'wave');
-  if (pristine) {
-    for (const entry of entries) {
-      const { condition, branch, wave, ...spawn } = entry;
-      const target = geometry.waves[wave ?? 0] ?? geometry.waves[0];
-      if (target) target.spawns.push(spawn);
-    }
-    geometry.hasConditionalSpawns = false;
-    geometry.hiddenGroupsMerged = entries.length;
-  }
+  mergePristineHiddenGroups(geometry, JSON.parse(await readFile(conditionalPath, 'utf8')));
 }
 const paths = playbackFile.playbackPaths ?? playbackFile.paths;
 if (!paths || !Object.keys(paths).length) throw Error('Playback export has no paths');

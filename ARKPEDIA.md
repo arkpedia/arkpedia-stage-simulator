@@ -5830,3 +5830,7 @@ The coverage report now reads `stage-conditional/<slug>.json` and breaks the 63 
 ### Pristine hidden-group merge and 11-1 (S113, 2026-10-21)
 
 The builder now merges conditional entries only when every entry is a pristine `source: wave` + `hidden_group` (no branch, random pack or weight). Those are preview-hidden but still spawn. **11-1** builds this way (18 spawns, 2 enemies); entries with real random/branch conditions keep the stage refused. 10-5 remains refused because its merged routes have no viewer path, a separate geometry gap. Coverage is **195 public stages**.
+
+### Hidden-group merge tests (S114, 2026-10-21)
+
+Extracted `mergePristineHiddenGroups` into `shared/arkpedia/stage-conditional.js` and added three tests: pristine entries append and clear the flag; branch/random/weight entries refuse; mixed lists are not partially merged.
