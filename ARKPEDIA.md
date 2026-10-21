@@ -5006,3 +5006,20 @@ The builder also accepts the Chapter 1 stages whose enemies are already supporte
 | 2-6 | 8×11 | 1 | 54 | Rioter, Crossbowman, Crossbowman Leader, Hound, Caster, Junkman, Airborne Soldier |
 
 2-3 is refused for its deployable Roadblocks, 2-4/2-5 for Senior Caster and Dual Swordsman, 2-7/2-8 for Defender-4/Metal Crab, and 2-9/2-10 for their bosses and mode units. Coverage is now 0-1 plus 20 test-only files across Chapters 0–2.
+
+### Chapters 3–4 subset (S7, 2026-10-21, test-only)
+
+| Stage | Grid | Waves | Spawns | Enemies |
+|---|---|---|---|---|
+| 3-1 | 7×11 | 2 | 83 | Originium Slug α, Hound Pro, Crossbowman, Crossbowman Leader, Lurker, Rabid Hound Pro, Caster, Originium Slug β, Monster Mk II, Logger |
+| 3-2 | 8×11 | 1 | 67 | Hound Pro, Originium Slug α, Originium Slug β, Rioter Leader, Lurker, Crossbowman Leader, Junkman, Shielded Soldier |
+| 3-4 | 8×10 | 2 | 75 | Dual Swordsman, Originium Slug α, Invisible Crossbowman, Monster Mk II, Originium Slug β, Butcher, Logger, Sarkaz Centurion |
+| 3-6 | 7×9 | 3 | 39 | Invisible Caster, Lurker, Butcher, Rabid Hound Pro, Veteran Butcher |
+| 4-1 | 7×10 | 1 | 64 | Soldier, Hound Pro, Monster, Rabid Hound Pro, Sarkaz Greatswordsman, Crossbowman Leader, Caster Leader |
+| 4-2 | 7×10 | 1 | 35 | Soldier, Sarkaz Greatswordsman, Caster Leader, Rabid Hound Pro, Crossbowman Leader |
+| 4-3 | 7×11 | 2 | 53 | Sarkaz Greatswordsman, Rabid Hound Pro, Soldier, Light-Armored Soldier Leader, Sarkaz Crossbowman, Armed Militant, Butcher |
+| 4-5 | 8×11 | 1 | 40 | Rabid Hound Pro, Dual Swordsman Leader, Sarkaz Greatswordsman, Arts Guard, Butcher, Sarkaz Crossbowman |
+| 4-6 | 7×10 | 2 | 55 | Soldier, Rioter Leader, Firebomb Thrower, Monster Mk II, Arts Guard, Sarkaz Crossbowman, Sarkaz Greatswordsman, Infused Originium Slug |
+| 4-7 | 7×11 | 1 | 59 | Infused Originium Slug, Soldier, Monster Mk II, Caster Leader, Butcher, Sarkaz Greatswordsman, Sarkaz Crossbowman |
+
+Refused here for unsupported content: 3-3/4-4 (Crownslayer), 3-5 (Senior Caster), 3-7 (Mortar Gunner), 3-8 (Skullshatterer), 4-8/4-9 (Sarkaz Caster), 4-10 (FrostNova). Coverage is 0-1 plus 30 test-only files across Chapters 0–4.
