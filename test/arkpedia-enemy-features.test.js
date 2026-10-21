@@ -569,6 +569,19 @@ test('Rot Eater: the pollution aura damages a nearby guard', () => {
   const key = 'enemy_1266_nhapos', h = spawnAny(key, { seconds: 0.1 }), e = enemy(h, key), guard = h.b.units.find(u => u.side === 'ally');
   e.x = guard.x + 1; e.y = guard.y; const hp = guard.hp; h.run(2); assert.ok(guard.hp < hp);
 });
+test('Focused Soul Remnant: a soul-powered cast damages the line', () => {
+  const key = 'enemy_1429_lrwzrd', rec = ENEMY_RECORDS.enemies[key].levels[0];
+  const a = chessRec({ id: 'line_a', profession: 'WARRIOR', stats: { atk: 0, maxHp: 1e6, def: 0 } });
+  const b = chessRec({ id: 'line_b', profession: 'WARRIOR', stats: { atk: 0, maxHp: 1e6, def: 0 } });
+  const h = makeBattle({ defs: { enemies: { [key]: rec }, chess: { [a.chessId]: a, [b.chessId]: b } },
+    units: [{ chessId: a.chessId, row: 9, col: 6 }, { chessId: b.chessId, row: 9, col: 7 }],
+    enemies: [{ key, time: 0, route: 0 }], content: 'none', autoFinish: false, timeLimit: 30,
+    setup: battle => installEnemyFeatures(battle) });
+  h.run(0.1); const e = enemy(h, key), ability = e.mem.ab.list.find(x => x.cast), hits = { [a.chessId]: 0, [b.chessId]: 0 };
+  h.b.on('damaged', c => { if (c.source?.defId === key && c.target.defId in hits) hits[c.target.defId]++; });
+  ability.souls = 1; ability.cast.call(ability, h.b, e, ability); h.run(1.6);
+  assert.ok(hits[a.chessId] > 0 && hits[b.chessId] > 0, JSON.stringify(hits));
+});
 test('Drains 1 Life Point: the engine leak drains the record stat', () => {
   const key = 'enemy_1137_plasm';
   assert.ok(support.enemies[key].policy, 'supported by the existing leak rule');

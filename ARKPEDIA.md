@@ -5638,3 +5638,7 @@ The coverage test assumed the sibling `arkpedia-data` source checkout, which Git
 ### Remaining snapshot refresh (S78, 2026-10-21)
 
 `docs/REMAINING.md` now records **362** supported enemies, **162** built source stages (163 public including 0-1), and the 22,568-test full-suite result.
+
+### Focused Soul Remnant (E54, 2026-10-21)
+
+The Remnant picks up up to three Soul Maelstroms, then every 15 s expends them for a three-tick Arts line (`atk_scale + atk_ladder × (souls-1)`) through the current target. The reviewed wrapper and active are claimed. Support rises to **364 of 1,552** enemies. The test casts manually and checks both line targets.

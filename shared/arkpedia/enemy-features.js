@@ -286,6 +286,13 @@ export const ENEMY_FEATURES = Object.freeze({
     explains: text => /^Attack power increases( greatly)? when attacking <\$ba\.frozen>Frozen<\/> targets$/.test(text)
       || /^Gains significantly increased ATK when HP is under 50%$/.test(text) },
 
+  // Focused Soul Remnant: pick up Soul Maelstroms, then fire a line of Arts damage.
+  'skill:Laser': { covers: r => r.skills.some(s => s.prefabKey === 'Laser')
+      && r.abilities.some(a => a.text === 'Attacks deal Arts damage. Can pick up and retain up to 3 Soul Maelstroms.'),
+    ability: { kind: 'soulRemnant', params: r => ({ cooldown: r.skills[0].cooldown, scale: r.skills[0].bb.atk_scale, ladder: r.skills[0].bb.atk_ladder }) },
+    nativeClaim: () => ({ wrappers: 1, active: 1 }), note: 'soul pickup and a three-tick line attack',
+    explains: text => text === 'Attacks deal Arts damage. Can pick up and retain up to 3 Soul Maelstroms.'
+      || text === 'When carrying a Soul Maelstrom, expends all Soul Maelstroms to deal continuous Arts damage to the target and all your units in a line.' },
   // Rot Eater: scales with the defeated count and emits a pollution aura.
   'talent:PollutedArea': { covers: r => sig(r, 'PollutedArea', ['Polluted_damage_high', 'Polluted_damage_low', 'guaranteed_percentage', 'max_percentage', 'range_Radius'])
       && r.abilities.some(a => a.text === 'Releases Corruption, causing your nearby units to continuously lose HP'),

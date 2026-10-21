@@ -345,6 +345,30 @@ export const featureAbilities = Object.freeze({
     },
   }),
   moveSpeedBonus: ({ mul }) => ({ spawn(b, e) { b.addBuff(e, { key: 'ab:moveSpeed', persist: true, visible: true, mods: { moveMul: mul } }); } }),
+  // Focused Soul Remnant: pick up Soul Maelstroms and fire a three-tick line.
+  soulRemnant: ({ cooldown, scale, ladder }) => ({
+    spawn(b, e, a) { a.souls = 0; a.next = b.time + (cooldown || 15); },
+    tick(b, e, a) {
+      for (const soul of b.enemies) if (soul.alive && soul.defId === 'enemy_1428_lrsoul' && a.souls < 3 && Math.hypot(soul.x - e.x, soul.y - e.y) <= 1.5) {
+        b._remove(soul, 'pickup'); a.souls++;
+      }
+      if (a.souls <= 0 || b.time < a.next) return;
+      a.next = b.time + (cooldown || 15);
+      this.cast(b, e, a);
+    },
+    cast(b, e, a) {
+      const target = e.target ?? b.alliesInRadius(e.x, e.y, 8).sort((p, q) => Math.hypot(p.x - e.x, p.y - e.y) - Math.hypot(q.x - e.x, q.y - e.y))[0];
+      if (!target || a.souls <= 0) return;
+      const dx = target.x - e.x, dy = target.y - e.y, len = Math.hypot(dx, dy) || 1, ux = dx / len, uy = dy / len;
+      const dmg = e.s.atk * (scale + ladder * (a.souls - 1)); a.souls = 0;
+      for (let t = 1; t <= 3; t++) b.every(0.5 * t, () => {
+        for (const u of b.allyUnits) {
+          const px = u.x - e.x, py = u.y - e.y, proj = px * ux + py * uy, perp = Math.abs(px * uy - py * ux);
+          if (proj >= -0.2 && proj <= 7 && perp <= 0.8) hurt(b, e, u, dmg, 'arts', { tags: ['laser'] });
+        }
+      });
+    },
+  }),
   // Rot Eater: scale with the defeated count, then emit its pollution aura.
   rotEater: ({ low, high, radius, guaranteed, max }) => ({
     spawn(b, e) {
