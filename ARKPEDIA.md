@@ -5574,3 +5574,7 @@ The Witherer leaves the reviewed pollution zone on death (radius 2, 8 s, 50/25 t
 ### Ursus named-target priority (E47, 2026-10-21)
 
 The Infected Patrol Captain family prioritizes allies whose record name contains "Ursus Civilian" or "Talulah"; with no such unit it keeps the normal blocker→aggro order. Support rises to **352 of 1,552** enemies. The test pins the named sort.
+
+### R8-1 (S69, 2026-10-21)
+
+With the Ursus named-target priority supported, **R8-1** builds (7×11, 56 spawns, 2 enemies). Coverage is **149 public stages** (0-1 plus 148 files).
