@@ -5698,3 +5698,7 @@ With the Ursus Civilian supported, **R8-2**, **R8-4**, **R8-9** and **TR-18** bu
 ### Prototype Auto Meal Distributor (E60, 2026-10-21)
 
 The distributor summons one Rampaging Maintenance Helper every 5 s (first after 3 s) using the reviewed `Spawn.enemy_key`. The wrapper is claimed. Support rises to **374 of 1,552** enemies. The test observes the helper spawn.
+
+### Snapshot to 374 enemies (S87, 2026-10-21)
+
+`docs/REMAINING.md` now records **374** supported enemies, **183** built source stages and **184** public entries.
