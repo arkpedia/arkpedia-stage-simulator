@@ -5402,3 +5402,7 @@ With thirty-one public stages, the prep page's row of links became unwieldy. It 
 ### Half the catalogue is public (S39, 2026-10-21)
 
 **6-8, 6-9, 6-10, 6-11, 6-12, 7-2 and 7-3** join the public catalogue after the data review. The public simulator now offers **0-1 plus forty-nine reviewed stages** — **50 of 114** entries. **64** file-backed stages remain test-only. The catalogue test pins the full public set.
+
+### Public review dates (S40, 2026-10-21)
+
+Every public entry now carries a `reviewed` date (`2026-10-21` for the current fifty). The catalogue test requires a public entry to have a valid date, so future promotions must record their review instead of silently dropping `testOnly`. The generator preserves the field as part of the curated entry.
