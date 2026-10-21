@@ -5770,3 +5770,7 @@ The Companion Guard taunts and, while a Shadowblade is within 1.1, slows nearby 
 ### 9-17 (S99, 2026-10-21)
 
 With the Companion pair supported, **9-17** builds (8×12, 32 spawns, 6 enemies). The stacked branch now has **191 public stages** (0-1 plus 190 files).
+
+### 9-9 (S100, 2026-10-21)
+
+The current support also unlocks **9-9** (8×11, 45 spawns, 4 enemies). The stacked branch now has **192 public stages** (0-1 plus 191 files).
