@@ -287,6 +287,12 @@ export const ENEMY_FEATURES = Object.freeze({
     explains: text => /^Attack power increases( greatly)? when attacking <\$ba\.frozen>Frozen<\/> targets$/.test(text)
       || /^Gains significantly increased ATK when HP is under 50%$/.test(text) },
 
+  // Tombkeeper Grotesque: the first lethal hit turns it into a stone statue, then it revives airborne.
+  'talent:stone': { covers: r => sig(r, 'stone', ['def', 'duration', 'magic_resistance'])
+      && r.abilities.some(a => a.text === 'After first defeat, temporarily transforms into a stone statue with extremely high DEF, then revives as an aerial unit'),
+    ability: { kind: 'stoneRevive', params: r => ({ def: r.talents.bb['stone.def'], res: r.talents.bb['stone.magic_resistance'], duration: r.talents.bb['stone.duration'] }) },
+    nativeClaim: () => ({ active: 1 }), note: 'first lethal hit becomes a stone statue, then an airborne revive',
+    explains: /^After first defeat, temporarily transforms into a stone statue with extremely high DEF, then revives as an aerial unit$/ },
   // Dublinn Flamerazer: a 10.6 s burning aura every 6 s, and a death blast that also kills other Flamerazers.
   'skill:DeadBoom': { covers: r => r.skills.some(s => s.prefabKey === 'DeadBoom'),
     note: 'death blast driven by the Flamerazer skill', explains: /^Upon death, explodes and deals Arts damage, knocking down nearby Tattered Pillars and instantly defeating other <Dublinn Flamerazers>$/ },

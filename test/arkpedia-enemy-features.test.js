@@ -638,6 +638,12 @@ test('Dublinn Flamerazer: the death blast defeats another Flamerazer', () => {
   h.run(0.1); const [a, b] = h.b.enemies; h.b.kill(a, null); h.run(0.1);
   assert.equal(b.alive, false);
 });
+test('Tombkeeper Grotesque: first lethal hit petrifies, then revives airborne', () => {
+  const key = 'enemy_1172_dugago', h = spawnAny(key, { seconds: 0.1, units: [] }), e = enemy(h, key);
+  h.b.dealDamage(null, e, { amount: e.s.maxHp * 2, type: 'true', sourceless: true });
+  assert.ok(e.alive && e.hp > 0); assert.ok(e.findBuff('ab:stone'));
+  h.run(10.2); assert.equal(e.findBuff('ab:stone'), null); assert.equal(e.flying, true);
+});
 test('Drains 1 Life Point: the engine leak drains the record stat', () => {
   const key = 'enemy_1137_plasm';
   assert.ok(support.enemies[key].policy, 'supported by the existing leak rule');

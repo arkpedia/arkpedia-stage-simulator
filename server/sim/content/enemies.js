@@ -345,6 +345,18 @@ export const featureAbilities = Object.freeze({
     },
   }),
   moveSpeedBonus: ({ mul }) => ({ spawn(b, e) { b.addBuff(e, { key: 'ab:moveSpeed', persist: true, visible: true, mods: { moveMul: mul } }); } }),
+  // Tombkeeper Grotesque: prevent the first lethal hit, petrify, then revive airborne.
+  stoneRevive: ({ def, res, duration }) => ({
+    spawn(b, e, a) { a.done = false; },
+    taken(c, b, e, a) {
+      if (a.done || c.prevented || e.hp > 0) return;
+      a.done = true; c.prevented = true; e.hp = 1;
+      b.addBuff(e, { key: 'ab:stone', duration, visible: true, mods: { defFlat: def, resFlat: res, moveMul: 0 }, flags: { stun: true } });
+      b.every(duration, () => {
+        b.removeBuff(e, 'ab:stone'); e.flying = true; e.moving = true; e.hp = e.s.maxHp;
+      });
+    },
+  }),
   // Dublinn Flamerazer: periodic burning aura and a death blast that kills other Flamerazers.
   flamerazer: ({ duration, interval, hitInterval, scale, ep, deathScale }) => ({
     spawn(b, e, a) { a.next = b.time; },
