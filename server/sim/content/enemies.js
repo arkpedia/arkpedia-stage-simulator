@@ -410,8 +410,8 @@ export const featureAbilities = Object.freeze({
     const base = splashAttack({ unblocked: false, radius, fxKind: 'splash' });
     return {
       ...base,
-      dealt(c, b, e) {
-        base.dealt?.(c, b, e);
+      dealt(c, b, e, a) {
+        base.dealt?.(c, b, e, a);
         if (!c.dmg?.isAttack) return;
         const polluted = (u) => ((b.grid.tile(u.tileR, u.tileC)?.key ?? '').includes('toxic') || u.findBuff?.('ab:storm'));
         if (!polluted(e)) return;

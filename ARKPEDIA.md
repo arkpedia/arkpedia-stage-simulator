@@ -5558,3 +5558,7 @@ With the Sarkaz Caster lasso supported, **4-8**, **4-9** and **12-4** build (8×
 ### Adverse variants and TR-22 (S67, 2026-10-21)
 
 The nine chapter-12 adverse variants (**12-2/3/4/5/6/7/9/10/15 adverse environment**) and the fixed-squad tutorial **TR-22** build with the current support. Coverage is **148 public stages** (0-1 plus 147 files).
+
+### Sudaram dealt-state fix (S68, 2026-10-21)
+
+The full enemy sweep caught that Sudaram's wrapper `dealt` called the base `splashAttack.dealt` without its ability-state argument, so `a.splash` was undefined. Pass the state through; the full enemy harness is clean again.
