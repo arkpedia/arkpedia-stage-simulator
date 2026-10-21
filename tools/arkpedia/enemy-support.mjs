@@ -1,19 +1,33 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Derive data/arkpedia-enemy-support.json from the committed enemy catalogue
-// and native timing index (shared/arkpedia/enemy-support.js).
+// and native timing index (shared/arkpedia/enemy-support.js), plus the retained
+// native ability evidence, each component of which must hash to the index.
 //   node tools/arkpedia/enemy-support.mjs [--check]
 import { readFile, writeFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { deriveEnemySupport } from '../../shared/arkpedia/enemy-support.js';
 const root = new URL('../../', import.meta.url), OUT = new URL('data/arkpedia-enemy-support.json', root), REGISTRY = new URL('data/arkpedia-regular-enemies.json', root);
 const sha = b => createHash('sha256').update(b).digest('hex');
+/** The evidence's prefab map, refused unless every component hashes to the index entry it names. */
+export function verifiedNative(evidence, prefabs, indexSha) {
+  if (evidence.source.sha256 !== indexSha) throw Error('Native ability evidence was extracted from another timing index');
+  for (const [path, comps] of Object.entries(evidence.prefabs)) for (const c of comps) {
+    const entry = prefabs[path]?.clockComponents.find(x => x.pathId === c.pathId);
+    if (!entry || entry.objectName !== c.objectName || sha(c.originalJson) !== entry.originalDataSha256)
+      throw Error(`Native ability evidence does not match the timing index: ${path} ${c.pathId}`);
+  }
+  return evidence.prefabs;
+}
 export async function buildEnemySupport() {
   const recordsRaw = await readFile(new URL('data/arkpedia-enemy-records.json', root)), indexRaw = await readFile(new URL('data/arkpedia-enemy-clock-source.json', root));
-  const records = JSON.parse(recordsRaw), prefabs = JSON.parse(indexRaw).prefabs, enemies = deriveEnemySupport(records.enemies, prefabs);
+  const nativeRaw = await readFile(new URL('data/arkpedia-enemy-native-abilities.json', root));
+  const records = JSON.parse(recordsRaw), prefabs = JSON.parse(indexRaw).prefabs, native = verifiedNative(JSON.parse(nativeRaw), prefabs, sha(indexRaw));
+  const enemies = deriveEnemySupport(records.enemies, prefabs, native);
   const supported = Object.values(enemies).filter(e => e.policy).length;
   return { schemaVersion: 1,
     scope: 'Derived regular-stage enemy support. An enemy is supported only when everything it uses has an approved implementation; today that is the stat-only tier. Not a claim of game-frame parity.',
-    source: { records: { path: 'data/arkpedia-enemy-records.json', sha256: sha(recordsRaw) }, nativeTimingIndex: { path: 'data/arkpedia-enemy-clock-source.json', sha256: sha(indexRaw) } },
+    source: { records: { path: 'data/arkpedia-enemy-records.json', sha256: sha(recordsRaw) }, nativeTimingIndex: { path: 'data/arkpedia-enemy-clock-source.json', sha256: sha(indexRaw) },
+      nativeAbilities: { path: 'data/arkpedia-enemy-native-abilities.json', sha256: sha(nativeRaw) } },
     summary: { enemies: Object.keys(enemies).length, supported, unsupported: Object.keys(enemies).length - supported },
     enemies };
 }

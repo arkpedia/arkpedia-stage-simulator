@@ -290,6 +290,10 @@ export const featureAbilities = Object.freeze({
   blockWeight: ({ n }) => blockWeight(n),
   prisoner: (params, ab) => prisoner(ab, params),
   taunt: ({ n }) => taunt(n),
+  // Every attack hit: one more permanent stack of DEF +def on the target (no cap; additive mods scale with stacks).
+  defDownOnHit: ({ def }) => ({ dealt(c, b) {
+    b.addBuff(c.target, { key: 'ab:defdown', refresh: 'stack', stacks: 1, maxStacks: 1e6, mods: { defFlat: def }, visible: true });
+  } }),
   // Physical dodge `prob` while not blocked (the engine's dodgePhys, toggled each tick).
   dodgeUnblocked: ({ prob }) => ({ tick(b, e, a) {
     const on = !e.blockedBy;
