@@ -5490,3 +5490,7 @@ The stage picker now has `‹` and `›` buttons that jump to the previous or ne
 ### Identity mechanic design note (S56, 2026-10-21)
 
 Added `docs/IDENTITY.md`: the civilian/spy data, the profile flags and blocking rules it needs, the civilian DP reward, the reveal API, the `1322` blink cadence and the `1317` ammo drain, plus the tests and open questions. This is the blueprint for the chapter-11/12 block rather than a per-stage guess.
+
+### Norport Civilian base (E36, 2026-10-21)
+
+First slice of the identity layer: `ability:Friendly Unit` marks `profile.friendly`, `canTargetEnemy` never selects a friendly unit, and `leak` for a friendly civilian raises `flags.dpMax` by `civilianTalent.max_cost` (2) instead of recording a life loss. Support rises to **325 of 1,552** enemies. The test checks the marker, the targeting veto and the max-DP reward.

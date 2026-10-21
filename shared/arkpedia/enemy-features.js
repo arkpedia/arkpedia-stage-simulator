@@ -264,6 +264,13 @@ export const ENEMY_FEATURES = Object.freeze({
     explains: text => /^Attack power increases( greatly)? when attacking <\$ba\.frozen>Frozen<\/> targets$/.test(text)
       || /^Gains significantly increased ATK when HP is under 50%$/.test(text) },
 
+  // Norport Civilian: a friendly unit that is not targetable and grants max DP on reaching the objective.
+  'ability:Friendly Unit': { covers: r => r.abilities.some(a => a.text === 'Friendly Unit'),
+    ability: { kind: 'friendlyUnit', params: () => ({}) }, note: 'friendly, untargetable, objective reward',
+    explains: text => text === 'Friendly Unit' || /^Once their identity is confirmed, restores your max DP after retreating to the Objective Point$/.test(text) },
+  'talent:civilianTalent': { covers: r => sig(r, 'civilianTalent', ['max_cost']),
+    ability: { kind: 'civilianReward', params: r => ({ dp: r.talents.bb['civilianTalent.max_cost'] }) },
+    note: 'adds max DP when the civilian reaches the objective' },
   // Sudaram: its attack hits everything around it, and pollution/storm extends the hit to polluted allies.
   'ability:Attacks deal Physical damage to all surrounding units.': {
     covers: r => r.abilities.some(a => a.text === 'Attacks deal Physical damage to all surrounding units.')

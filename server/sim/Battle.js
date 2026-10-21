@@ -1132,6 +1132,14 @@ export class Battle {
   /** Leak: an enemy reached its goal. */
   leak(e) {
     if (!e || !e.alive || e.side !== 'enemy') return;
+    if (e.profile?.friendly) {
+      // A friendly civilian reaching the objective raises the reviewed max DP instead of costing life.
+      if (e.profile.civilianDp > 0) this.flags.dpMax += e.profile.civilianDp;
+      this._remove(e, 'leak');
+      this._ev(['leak', e.id]);
+      if (this._hooks.enemyLeak) this.emit('enemyLeak', { enemy: e });
+      return;
+    }
     this._recordLeak(e, false);
     this._remove(e, 'leak');
     this._ev(['leak', e.id]);

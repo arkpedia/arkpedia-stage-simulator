@@ -344,6 +344,9 @@ export const featureAbilities = Object.freeze({
       b.addBuff(e, { key: 'ab:enhance', refresh: 'stack', stacks: 1, maxStacks: max, persist: true, visible: true, mods: { atkPct: atk, aspd } });
     },
   }),
+  // Norport Civilian: friendly marker plus the reviewed max-DP reward on leak.
+  friendlyUnit: () => ({ spawn(b, e) { e.profile.friendly = true; } }),
+  civilianReward: ({ dp }) => ({ spawn(b, e) { e.profile.civilianDp = dp; } }),
   // Sudaram: a self-centred physical blast; while polluted/stormed it also hits every polluted/stormed ally.
   sudaram: ({ radius }) => {
     const base = splashAttack({ unblocked: false, radius, fxKind: 'splash' });

@@ -77,6 +77,7 @@ export function enemyStealthed(e) {
 
 /** Can `attacker` (ally) target enemy `e` at all (ignoring range)? */
 export function canTargetEnemy(attacker, e, profile) {
+  if (e.profile?.friendly) return false;
   if (!e.alive || e.hidden || !e.deployed) return false;
   const f = e.s.flags;
   // Reviewed native selectors may ignore TargetFree for an explicit recipient

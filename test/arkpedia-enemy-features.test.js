@@ -3,7 +3,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import support from '../data/arkpedia-enemy-support.json' with { type: 'json' };
 import { ENEMY_FEATURES, recordFeatureIds } from '../shared/arkpedia/enemy-features.js';
-import { enemyStealthed, canTargetAlly, sortAllyTargets } from '../server/sim/targeting.js';
+import { enemyStealthed, canTargetAlly, canTargetEnemy, sortAllyTargets } from '../server/sim/targeting.js';
 import { spawnAny, ENEMY_RECORDS } from './helpers/enemyHarness.js';
 import { makeBattle, chessRec } from './helpers/battleHarness.js';
 import { installEnemyFeatures } from '../server/sim/content/arkpedia-enemy-features.js';
@@ -441,6 +441,13 @@ test('Sudaram: the attack hits both adjacent guards', () => {
   h.b.on('damaged', c => { if (c.source?.defId === key && c.target.defId in hits) hits[c.target.defId]++; });
   h.runUntil(() => hits[a.chessId] > 0 && hits[b.chessId] > 0, 25);
   assert.ok(hits[a.chessId] > 0 && hits[b.chessId] > 0, JSON.stringify(hits));
+});
+test('Norport Civilian: friendly, untargetable, and grants max DP on the objective', () => {
+  const key = 'enemy_1313_wdfmr', h = spawnAny(key, { seconds: 0.1 }), e = enemy(h, key), guard = h.b.units.find(u => u.side === 'ally');
+  assert.equal(e.profile.friendly, true); assert.equal(e.profile.civilianDp, 2);
+  assert.equal(canTargetEnemy(guard, e, {}), false);
+  const before = h.b.flags.dpMax, leaked = h.b.leakedCount; h.b.leak(e);
+  assert.equal(h.b.flags.dpMax, before + 2); assert.equal(h.b.leakedCount, leaked); assert.ok(!e.alive);
 });
 test('Drains 1 Life Point: the engine leak drains the record stat', () => {
   const key = 'enemy_1137_plasm';
