@@ -5678,3 +5678,7 @@ With the DeathEye caster supported, **11-1 adverse environment** and **11-2** bu
 ### Steam Tank rage (E58, 2026-10-21)
 
 At half HP the Steam Tank gains +100 ASPD, +100% movement and stun/freeze/sleep immunity. Support rises to **372 of 1,552** enemies. The test drops it below half and checks the rage buff.
+
+### 11-3 (S84, 2026-10-21)
+
+With the Steam Tank supported, **11-3** builds (8×11, 19 spawns, 4 enemies). Coverage is **178 public stages** (0-1 plus 177 files).
