@@ -344,6 +344,8 @@ export const featureAbilities = Object.freeze({
       b.addBuff(e, { key: 'ab:enhance', refresh: 'stack', stacks: 1, maxStacks: max, persist: true, visible: true, mods: { atkPct: atk, aspd } });
     },
   }),
+  // Technical Scout: its ranged selection may target camouflaged/stealthed allies inside the reviewed radius.
+  revealCamouflage: ({ range }) => ({ spawn(b, e) { e.profile.revealRange = range; } }),
   // Reborn-Creation auras: Hatedrinker counts marked creations and buffs itself; the ASV buffs every marked creation
   // and adds Necrosis to their ordinary attacks (one battle listener, sources tracked by the live ASVs).
   aura: ({ mode, atk, max, ep }) => mode === 'asv' ? ({

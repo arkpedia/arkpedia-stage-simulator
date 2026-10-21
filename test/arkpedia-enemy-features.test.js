@@ -3,7 +3,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import support from '../data/arkpedia-enemy-support.json' with { type: 'json' };
 import { ENEMY_FEATURES, recordFeatureIds } from '../shared/arkpedia/enemy-features.js';
-import { enemyStealthed } from '../server/sim/targeting.js';
+import { enemyStealthed, canTargetAlly } from '../server/sim/targeting.js';
 import { spawnAny, ENEMY_RECORDS } from './helpers/enemyHarness.js';
 import { makeBattle, chessRec } from './helpers/battleHarness.js';
 import { installEnemyFeatures } from '../server/sim/content/arkpedia-enemy-features.js';
@@ -279,6 +279,15 @@ test('Punisher: every third attack stuns the target area for four seconds', () =
   h.runUntil(() => attacks >= 3, 30); h.run(0.1);
   const g = h.b.units.find(u => u.side === 'ally'), stun = g.buffs.find(b => b.status === 'stun');
   assert.ok(stun, 'the third attack stunned the area'); assert.equal(stun.duration, 4);
+});
+test('Technical Scout: camouflage is ignored only inside the reviewed reveal range', () => {
+  const key = 'enemy_1020_obsv', h = spawnAny(key, { seconds: 0.1 });
+  const e = h.b.units.find(u => u.side === 'enemy' && u.defId === key), guard = h.b.units.find(u => u.side === 'ally');
+  h.b.addBuff(guard, { key: 'test:camou', flags: { camou: true }, persist: true });
+  e.x = guard.x + 1; e.y = guard.y;
+  assert.equal(canTargetAlly(e, guard, true), true, 'revealed inside 3.3');
+  e.x = guard.x + 5;
+  assert.equal(canTargetAlly(e, guard, true), false, 'hidden outside the aura');
 });
 test('Drains 1 Life Point: the engine leak drains the record stat', () => {
   const key = 'enemy_1137_plasm';

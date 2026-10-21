@@ -226,6 +226,12 @@ export const ENEMY_FEATURES = Object.freeze({
     ability: { kind: 'deathSpawn', params: r => ({ key: r.talents.bbStr['Attack.enemy_key'], cnt: 1 }) },
     note: 'reborn as its reviewed child on death', dependsOn: r => [r.talents.bbStr['Attack.enemy_key']].filter(Boolean),
     explains: /^Will be reborn as a <[^>]+> after falling in battle for the first time$/ },
+  // Technical Scout: reveals camouflaged/stealthed allies within range to its own targeting.
+  'talent:antiinvi': { covers: r => sig(r, 'antiinvi', ['range_radius'])
+      && r.abilities.some(a => a.text === 'Reveals <$ba.invisible>invisible</> allied units in its surroundings'),
+    ability: { kind: 'revealCamouflage', params: r => ({ range: r.talents.bb['antiinvi.range_radius'] }) },
+    note: 'ranged targeting ignores camouflage/stealth within range',
+    explains: /^Reveals <\$ba\.invisible>invisible<\/> allied units in its surroundings$/ },
   // Senior Caster: the normal ranged attack also splashes the primary target's four cardinal neighbours.
   'ability:Deals area damage to Operators on the four cardinal tiles next to the primary target.': {
     covers: r => r.applyWay === 'RANGED' && r.stats.rangeRadius > 0
