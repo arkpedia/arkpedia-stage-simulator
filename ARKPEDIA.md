@@ -5846,3 +5846,7 @@ When the viewer export omits a route, the builder now synthesizes the reviewed g
 ### Worry-Free Cargo Helper (E67, 2026-10-21)
 
 Flies and explodes for 1.0x Arts in 1.5 radius when an operator comes within 1.0, removing itself. Claims the Boom wrapper/active. Support rises to **394 of 1,552** enemies. The test checks the blast and removal.
+
+### Zero-count tokens and 15-4 (S117, 2026-10-21)
+
+A `deployable_tokens` entry with `count: 0` is a hidden stage device, not a usable token; the adapter now counts only positive counts (and coverage does the same). This unblocked **15-4** (7×10, 33 spawns, 3 enemies) after the Cargo Helper support. Coverage is **198 public stages**. 15-5 and the rest still hit `enemy_10072_mpprhd`.

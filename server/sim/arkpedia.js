@@ -266,7 +266,7 @@ export function stageAdapter(source) {
   const g = source.geometry;
   const supplied = Array.isArray(g.suppliedUnits) ? g.suppliedUnits.length
     : (g.suppliedUnits?.fixed_squad?.length || 0) + (g.suppliedUnits?.deployable_tokens?.length || 0);
-  const tokens = Array.isArray(g.suppliedUnits) ? 0 : g.suppliedUnits?.deployable_tokens?.length || 0;
+  const tokens = Array.isArray(g.suppliedUnits) ? 0 : (g.suppliedUnits?.deployable_tokens ?? []).filter(t => (t.count ?? 0) > 0).length;
   if (g.rows > 19 || g.cols > 21 || g.hasConditionalSpawns || tokens)
     throw new Error("Unsupported stage mechanics");
   const chars = ["#", "h", "r", "S", "E"];

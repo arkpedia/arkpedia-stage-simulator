@@ -33,7 +33,7 @@ export function buildStageCoverage() {
     if (!existsSync(geometryUrl)) { byReason['no-geometry'] = (byReason['no-geometry'] ?? 0) + 1; continue; }
     let geometry;
     try { geometry = JSON.parse(readFileSync(geometryUrl, 'utf8')); } catch { byReason['bad-geometry'] = (byReason['bad-geometry'] ?? 0) + 1; continue; }
-    if ((geometry.suppliedUnits?.deployable_tokens?.length ?? 0) > 0) { byReason.tokens = (byReason.tokens ?? 0) + 1; continue; }
+    if ((geometry.suppliedUnits?.deployable_tokens ?? []).some(t => (t.count ?? 0) > 0)) { byReason.tokens = (byReason.tokens ?? 0) + 1; continue; }
     if (geometry.hasConditionalSpawns) {
       byReason.conditional = (byReason.conditional ?? 0) + 1;
       const conditionalUrl = new URL(`${stage.slug}.json`, conditionalDir);
