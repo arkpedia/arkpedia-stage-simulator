@@ -264,6 +264,10 @@ export const ENEMY_FEATURES = Object.freeze({
     explains: text => /^Attack power increases( greatly)? when attacking <\$ba\.frozen>Frozen<\/> targets$/.test(text)
       || /^Gains significantly increased ATK when HP is under 50%$/.test(text) },
 
+  // Wither Vanguard: ordinary attacks become Arts while standing on an Originium-pollution tile.
+  'ability:Attacks deal Arts damage when inside Originium pollution.': { covers: r => r.abilities.some(a => a.text === 'Attacks deal Arts damage when inside Originium pollution.'),
+    ability: { kind: 'pollutionArts', params: () => ({}) }, note: 'Arts attacks on toxic tiles',
+    explains: /^Attacks deal Arts damage when inside Originium pollution\.$/ },
   // Theater Golem: a four-Block requirement plus a splash around its own body.
   'ability:Can only be blocked by units with at least 4 Block': { covers: r => r.abilities.some(a => a.text === 'Can only be blocked by units with at least 4 Block'),
     ability: { kind: 'requiredBlock', params: () => ({ block: 4 }) }, note: 'needs a blocker with 4 Block',

@@ -5430,3 +5430,7 @@ The remaining fifty test-only stages passed the same supported-enemy, geometry, 
 ### Stage coverage report (S45, 2026-10-21)
 
 `npm run coverage:arkpedia-stages` classifies all **709** main source stages: **113** have committed files (plus the embedded 0-1), and the remaining **596** are grouped by their first blocker — **311** have no geometry, **161** unsupported enemies, **63** conditional spawns, **60** deployable tokens and **1** other. The report ranks the unsupported enemy ids by stage count (the Norport Civilian heads the list at 24). `test/arkpedia-stage-coverage.test.js` pins the classification totals and the top blocker.
+
+### Wither Vanguard pollution Arts (E32, 2026-10-21)
+
+The Sarkaz Wither Vanguard's ordinary attack changes to Arts while its tile key contains `toxic` (`tile_toxic`/`tile_toxicroad`). Support rises to **318 of 1,552** enemies. The test calls the attack hook on a toxic and a normal tile.

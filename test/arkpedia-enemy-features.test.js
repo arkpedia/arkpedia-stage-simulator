@@ -404,6 +404,15 @@ test('Theater Golem: needs 4 Block and splashes allies around itself', () => {
   const hp = other.hp; const splash = e.mem.ab.list.find(a => a.dealt); splash.dealt({ dmg: { isAttack: true, type: 'phys' }, target: guards[0] }, h.b, e, splash);
   assert.ok(other.hp < hp, 'the nearby ally took the self-splash');
 });
+test('Wither Vanguard: attacks become Arts only on toxic tiles', () => {
+  const key = 'enemy_1422_lrsldr', h = spawnAny(key, { seconds: 0.1, units: [] }), e = enemy(h, key), ability = e.mem.ab.list.find(a => a.hitOut);
+  const toxic = { dmg: { isAttack: true, type: 'phys' } };
+  ability.hitOut(toxic, { grid: { tile: () => ({ key: 'tile_toxicroad' }) } }, e);
+  assert.equal(toxic.dmg.type, 'arts');
+  const road = { dmg: { isAttack: true, type: 'phys' } };
+  ability.hitOut(road, { grid: { tile: () => ({ key: 'tile_road' }) } }, e);
+  assert.equal(road.dmg.type, 'phys');
+});
 test('Drains 1 Life Point: the engine leak drains the record stat', () => {
   const key = 'enemy_1137_plasm';
   assert.ok(support.enemies[key].policy, 'supported by the existing leak rule');

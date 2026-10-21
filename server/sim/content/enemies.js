@@ -344,6 +344,14 @@ export const featureAbilities = Object.freeze({
       b.addBuff(e, { key: 'ab:enhance', refresh: 'stack', stacks: 1, maxStacks: max, persist: true, visible: true, mods: { atkPct: atk, aspd } });
     },
   }),
+  // Wither Vanguard: on a toxic tile its ordinary attack becomes Arts.
+  pollutionArts: () => ({
+    hitOut(c, b, e) {
+      if (!c.dmg.isAttack) return;
+      const key = b.grid.tile(e.tileR, e.tileC)?.key ?? '';
+      if (key.includes('toxic')) c.dmg.type = 'arts';
+    },
+  }),
   // Theater Golem: its required Block and the splash around its own body.
   requiredBlock: ({ block }) => ({ spawn(b, e) { e.profile.requiredBlock = block; } }),
   selfSplash: ({ radius }) => ({
