@@ -5582,3 +5582,7 @@ With the Ursus named-target priority supported, **R8-1** builds (7×11, 56 spawn
 ### Native-only Beacon support (E48, 2026-10-21)
 
 Added an explicit `NATIVE_ONLY_FEATURES` map for stage props whose records have no talent/ability/skill text but do have native active components. The Beacon claims both reviewed active components and has no behaviour of its own (the Altar Keeper owns pickup). Support rises to **353 of 1,552** enemies.
+
+### 14-5 stages (S70, 2026-10-21)
+
+With the Beacon supported, **14-5** and **14-5 adverse environment** build (8×12, 28 spawns, 5 enemies). Coverage is **151 public stages** (0-1 plus 150 files).
