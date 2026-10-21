@@ -5742,3 +5742,7 @@ With the Flamerazer supported, **9-13** builds (8×12, 44 spawns, 4 enemies). Th
 ### Tombkeeper Grotesque (E63, 2026-10-21)
 
 The first lethal hit is prevented (`taken`, HP set to 1), the Grotesque becomes a 10 s stone statue (+800 DEF, +30 RES, immobile) and then revives airborne at full HP. The native active is claimed. Support rises to **382 of 1,552** enemies. The test covers the prevention, statue and revive.
+
+### 9-14 (S95, 2026-10-21)
+
+With the Tombkeeper supported, **9-14** builds (9×11, 58 spawns, 6 enemies). The stacked branch now has **188 public stages** (0-1 plus 187 files).
