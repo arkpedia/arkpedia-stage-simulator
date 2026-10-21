@@ -18,10 +18,17 @@ export function prefabAbilityCounts(prefab) {
 }
 export const prefabPath = prefabKey => `dyn/battle/prefabs/enemies/${prefabKey}.prefab`;
 
-/** The retained original components of one prefab, parsed and grouped by object name. */
-export function nativeComponents(native, prefabKey) {
-  const out = {};
-  for (const c of native?.[prefabPath(prefabKey)] ?? []) (out[c.objectName] ??= []).push(JSON.parse(c.originalJson));
+/** The retained original components of one prefab: indexed components parsed and grouped by object name, plus
+ * `$ref(pathId)` for any retained component (referenced ones included) and `$template(key)` for retained buff templates. */
+export function nativeComponents(evidence, prefabKey) {
+  const out = {}, byId = new Map();
+  for (const c of evidence?.prefabs?.[prefabPath(prefabKey)] ?? []) {
+    const data = JSON.parse(c.originalJson);
+    byId.set(c.pathId, data);
+    if (!c.referenced) (out[c.objectName] ??= []).push(data);
+  }
+  Object.defineProperty(out, '$ref', { value: ref => byId.get(String(ref?.m_PathID ?? ref)) ?? null });
+  Object.defineProperty(out, '$template', { value: key => evidence?.templates?.[key] ?? null });
   return out;
 }
 

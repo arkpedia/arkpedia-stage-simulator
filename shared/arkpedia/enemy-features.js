@@ -49,6 +49,22 @@ function isStackingDefDown(nat) {
     && b.durationKey === '' && b.triggerLifeType === 0 && b.blackboard.length === 0;
 }
 
+// The reviewed enhance component (enemy_1103_wdkght family): a whole-field passive (no selector, no interval) marking
+// every unit of the owner's own side (validator targetSide 1, all motions, ignoring isolation) with template
+// enemy_wdkght_t, whose only event ON_OWNER_KILLED gives the mark's source one INFINITY stack of ATK MULTIPLIER and
+// ATTACK_SPEED ADDITION (maxStackCnt 10). Its full-stack SwitchMode only selects the Skill clip of the same attack.
+function isAllyDeathEnhance(r, nat) {
+  if (nat.enhance?.length !== 1) return false;
+  const c = nat.enhance[0], b = c._buffs?.[0], o = nat.$ref(c._targetValidator)?._targetOptions, t = nat.$template('enemy_wdkght_t');
+  const on = t?.eventToActions, make = on?.ON_OWNER_KILLED?.[0]?._buff, mods = make?.attributes?.attributeModifiers ?? [];
+  return c._buffs.length === 1 && b.templateKey === 'enemy_wdkght_t' && b.lifeTimeType === 2 && c._selector.m_PathID === '0' && c._interval === 0
+    && c._selfOption === 0 && !!o && o.targetSide === 1 && o.targetMotion === 3 && o.ignoreTargetFree === 1 && o.targetCategory === 1
+    && o.professionMask === 0 && o.unitTypeMask === 0 && o.checkUnitType === 0 && o.enableAdvancedOptions === 1
+    && Object.keys(on).join() === 'ON_OWNER_KILLED' && on.ON_OWNER_KILLED[0]._buffOwner === 'BUFF_SOURCE'
+    && mods.map(m => `${m.attributeType}:${m.formulaItem}:${m.loadFromBlackboard}`).join() === 'ATK:MULTIPLIER:true,ATTACK_SPEED:ADDITION:true'
+    && make.overrideType === 'STACK' && make.lifeTimeType === 'INFINITY' && make.maxStackCnt === r.talents.bb['enhance.max_stack_cnt'];
+}
+
 export const ENEMY_FEATURES = Object.freeze({
   // Handbook lines restating what the record's stats already model.
   'ability:Flying unit.': { covers: r => r.stats.motion === 'FLY', note: 'motion FLY' },
@@ -100,6 +116,12 @@ export const ENEMY_FEATURES = Object.freeze({
   'talent:defdown': { covers: (r, nat) => sig(r, 'defdown', ['def']) && r.talents.bb['defdown.def'] < 0 && isStackingDefDown(nat),
     ability: { kind: 'defDownOnHit', params: r => ({ def: r.talents.bb['defdown.def'] }) },
     note: 'each hit: permanent stacking DEF +def on the target', explains: /^Every attack reduces the enemy's DEF$/ },
+  // enhance (沸血骑士团): each enemy-side unit killed anywhere on the field (isolation ignored) gives one permanent stack of
+  // ATK +atk (×) and ASPD +attack_speed, up to max_stack_cnt (PRTS 沸血骑士团学徒 天赋 corroborates: 场上每有一名敌方单位
+  // 死亡时 攻击力+10%，攻击速度+5，最多叠加10次).
+  'talent:enhance': { covers: (r, nat) => sig(r, 'enhance', ['atk', 'attack_speed', 'max_stack_cnt']) && isAllyDeathEnhance(r, nat),
+    ability: { kind: 'allyDeathStacks', params: r => ({ atk: r.talents.bb['enhance.atk'], aspd: r.talents.bb['enhance.attack_speed'], max: r.talents.bb['enhance.max_stack_cnt'] }) },
+    note: 'stacks ATK/ASPD per enemy-side death', explains: /^Each time an enemy is defeated, gains ATK and ASPD, stacking up to 10 times\.$/ },
   'ability:Attacks 2 targets simultaneously': { covers: r => r.applyWay === 'RANGED' && r.stats.rangeRadius > 0, trait: { maxTargets: 2 }, note: 'two ranged targets per attack' },
 });
 
