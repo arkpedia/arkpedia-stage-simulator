@@ -344,6 +344,15 @@ export const featureAbilities = Object.freeze({
       b.addBuff(e, { key: 'ab:enhance', refresh: 'stack', stacks: 1, maxStacks: max, persist: true, visible: true, mods: { atkPct: atk, aspd } });
     },
   }),
+  // Sankta SelfFear: the reviewed self-fear + movement multiplier, reused from the legacy helper's semantics.
+  selfFear: ({ fear, moveSpeed, duration }) => ({
+    taken(c, b, e, a) {
+      if (a.done || !(e.hpRatio < 0.5)) return;
+      a.done = true;
+      if (fear > 0) b.applyStatus(e, 'fear', { duration: fear, source: e });
+      if (moveSpeed > 0 && duration > 0) b.addBuff(e, { key: 'ab:fearRun', duration, mods: { moveMul: moveSpeed }, flags: { unblockable: true } });
+    },
+  }),
   // Tiacauh: flat DEF while the enemy is blocked, and the reviewed melee multiplier.
   blockedDef: ({ def }) => ({
     spawn(b, e, a) { a.on = false; },

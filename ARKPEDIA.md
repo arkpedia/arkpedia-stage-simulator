@@ -5314,3 +5314,7 @@ The Tiacauh family gains `Def.def` while blocked; the Ritualist/Shaman also has 
 | S6-3 | 8×11 | 1 | 32 |
 
 10-8/10-8 adverse still have an unmatched tunnel break. Coverage is **0-1 plus 111 test-only files**.
+
+### Sankta SelfFear (E20, 2026-10-21)
+
+The Sankta's first HP drop below half applies its reviewed self-fear (`SelfFear.fear`) and the final movement multiplier (`SelfFear.move_speed` for `speed_duration`), reusing the existing fear movement. Support rises to **287 of 1,552** enemies. The test drops the HP below half once and checks both the fear status and the speed buff.

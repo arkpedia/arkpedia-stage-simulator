@@ -264,6 +264,13 @@ export const ENEMY_FEATURES = Object.freeze({
     explains: text => /^Attack power increases( greatly)? when attacking <\$ba\.frozen>Frozen<\/> targets$/.test(text)
       || /^Gains significantly increased ATK when HP is under 50%$/.test(text) },
 
+  // Sankta: first HP drop below half applies self-fear and a temporary movement multiplier.
+  'talent:SelfFear': { covers: r => sig(r, 'SelfFear', ['fear', 'move_speed', 'speed_duration'])
+      && r.abilities.some(a => a.text === 'Gains <$ba.fear>Fear</> for several seconds when its HP drops below 50% for the first time'),
+    ability: { kind: 'selfFear', params: r => ({ fear: r.talents.bb['SelfFear.fear'], moveSpeed: r.talents.bb['SelfFear.move_speed'],
+      duration: r.talents.bb['SelfFear.speed_duration'] }) },
+    note: 'first HP<50%: self-fear and move speed for speed_duration',
+    explains: /^Gains <\$ba\.fear>Fear<\/> for several seconds when its HP drops below 50% for the first time$/ },
   // Tiacauh: flat DEF while blocked; the Ritualist/Shaman also has a reviewed 4× melee attack.
   'talent:Def': { covers: r => sig(r, 'Def', ['def']) && r.abilities.some(a => a.text.startsWith('Gains DEF when blocked')),
     ability: { kind: 'blockedDef', params: r => ({ def: r.talents.bb['Def.def'] }) },

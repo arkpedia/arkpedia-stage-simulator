@@ -306,6 +306,11 @@ test('Tiacauh: flat DEF while blocked and the reviewed melee multiplier', () => 
   b.runUntil(() => hit, 25);
   assert.ok(hit); assert.equal(hit.dmg.amount, unit.s.atk * 4);
 });
+test('Sankta SelfFear: first HP drop below half applies fear and the speed buff', () => {
+  const key = 'enemy_10083_hlbird', h = spawnAny(key, { seconds: 0.1, units: [] }), e = enemy(h, key);
+  h.b.dealDamage(null, e, { amount: e.s.maxHp * 0.6, type: 'true', sourceless: true }); h.run(0.05);
+  assert.ok(e.buffs.some(b => b.status === 'fear'), 'fear applied'); assert.ok(e.findBuff('ab:fearRun'), 'speed buff applied');
+});
 test('Drains 1 Life Point: the engine leak drains the record stat', () => {
   const key = 'enemy_1137_plasm';
   assert.ok(support.enemies[key].policy, 'supported by the existing leak rule');
