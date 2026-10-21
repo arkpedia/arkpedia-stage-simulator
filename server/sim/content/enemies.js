@@ -344,6 +344,21 @@ export const featureAbilities = Object.freeze({
       b.addBuff(e, { key: 'ab:enhance', refresh: 'stack', stacks: 1, maxStacks: max, persist: true, visible: true, mods: { atkPct: atk, aspd } });
     },
   }),
+  // Volleyball cart: keep an ATK-stack buff; each attack adds one stack up to max, negative statuses clear it.
+  atkUpStacks: ({ atk, max }) => ({
+    spawn(b, e, a) {
+      a.n = 0;
+      b.on('statusApplied', ({ target, status, entered }) => {
+        if (target !== e || !entered || !['cold', 'freeze', 'stun', 'fear', 'bind', 'silence'].includes(status)) return;
+        a.n = 0; b.removeBuff(e, 'ab:atkUpStacks');
+      });
+    },
+    attack(c, b, e, a) {
+      if (a.n >= max) return;
+      a.n++;
+      b.addBuff(e, { key: 'ab:atkUpStacks', persist: true, visible: true, mods: { atkPct: atk * a.n } });
+    },
+  }),
   // Evade: the unblocked toggle, a timed initial dodge, or the first low-HP dodge.
   evade: ({ mode, prob, duration, ratio, silent = false }) => mode === 'unblocked' ? ({
     tick(b, e, a) {

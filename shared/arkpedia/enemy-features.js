@@ -264,6 +264,12 @@ export const ENEMY_FEATURES = Object.freeze({
     explains: text => /^Attack power increases( greatly)? when attacking <\$ba\.frozen>Frozen<\/> targets$/.test(text)
       || /^Gains significantly increased ATK when HP is under 50%$/.test(text) },
 
+  // Volleyball cart: ATK stacks per attack, lost on a negative status.
+  'talent:AtkUp': { covers: r => sig(r, 'AtkUp', ['atk', 'max_stack_cnt'])
+      && r.abilities.some(a => a.text === 'Gains increased ATK with each attack (up to a limit); when affected by certain <$ba.debuff>Negative Statuses</>, these stacks will be lost'),
+    ability: { kind: 'atkUpStacks', params: r => ({ atk: r.talents.bb['AtkUp.atk'], max: r.talents.bb['AtkUp.max_stack_cnt'] }) },
+    note: 'ATK +atk per attack, capped, cleared by negative statuses',
+    explains: /^Gains increased ATK with each attack \(up to a limit\); when affected by certain <\$ba\.debuff>Negative Statuses<\/>, these stacks will be lost$/ },
   // Evade: dodge while unblocked, an initial timed dodge, or a one-time low-HP dodge.
   'talent:Evade': { covers: r => {
       if (sig(r, 'Evade', ['prob']) && r.abilities.some(a => a.text === 'Has a chance to dodge Physical attacks when not blocked')) return true;

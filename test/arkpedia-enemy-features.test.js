@@ -338,6 +338,13 @@ test('Evade: unblocked dodge, initial timed dodge and the first low-HP dodge', (
   assert.equal(e3.s.dodgePhys, 0); h3.b.dealDamage(null, e3, { amount: e3.s.maxHp * 0.6, type: 'true', sourceless: true }); h3.run(0.1);
   assert.equal(e3.s.dodgePhys, 1);
 });
+test('Volleyball cart: attack stacks raise ATK and a negative status clears them', () => {
+  const key = 'enemy_1261_dursho', base = ENEMY_RECORDS.enemies[key].levels[0].stats.atk, h = spawnAny(key, { seconds: 0.1 });
+  const e = enemy(h, key); h.runUntil(() => e.mem.ab?.list?.[0]?.n >= 3, 25); h.run(0.1);
+  assert.equal(e.s.atk, base * 1.3);
+  h.b.applyStatus(e, 'cold', { duration: 5, source: null }); h.run(0.1);
+  assert.equal(e.findBuff('ab:atkUpStacks'), null); assert.equal(e.s.atk, base);
+});
 test('Drains 1 Life Point: the engine leak drains the record stat', () => {
   const key = 'enemy_1137_plasm';
   assert.ok(support.enemies[key].policy, 'supported by the existing leak rule');

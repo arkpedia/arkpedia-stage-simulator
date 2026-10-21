@@ -5334,3 +5334,7 @@ Seven stages that passed the headless QA pass have been promoted out of `testOnl
 ### Evade variants (E23, 2026-10-21)
 
 `talent:Evade` now covers the unblocked physical dodge (Delinquent), the initial timed 100% dodge (Alcohol Lover) and the first low-HP 100% dodge (Lakeside Volunteer/Lifeguard). All use the engine's `dodgePhys` buff. Support rises to **296 of 1,552** enemies. The test checks all three forms.
+
+### Volleyball cart ATK stacks (E24, 2026-10-21)
+
+The Volleyball Serving/Spiking Cart gains `AtkUp.atk` per attack up to `max_stack_cnt`, and any of cold, freeze, stun, fear, bind or silence clears the stack buff. Support rises to **298 of 1,552** enemies. The test checks three stacks (+30%) and the cold reset.
