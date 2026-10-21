@@ -5798,3 +5798,7 @@ Added `docs/DEPLOYABLE-TOKENS.md`: the reviewed inventory data, the `tokenDeck`/
 ### Buildable bucket in the coverage report (S105, 2026-10-21)
 
 `npm run coverage:arkpedia-stages` now reports a `buildable` bucket and prints the slugs that are ready right now. It immediately exposed **9-11** and **S9-1**, which were missing from the previous list.
+
+### 9-11 and S9-1 (S106, 2026-10-21)
+
+The buildable bucket exposed two ready stages: **9-11** (8×12, 47 spawns, 4 enemies) and **S9-1** (8×12, 25 spawns, 3 enemies). The stacked branch now has **194 public stages** (0-1 plus 193 files).
