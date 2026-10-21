@@ -21,4 +21,4 @@ Revisit if one of these becomes true:
 2. Stage complexity grows by an order of magnitude (thousands of simultaneous units/statuses), not merely more catalogue files.
 3. A WASM module can reuse the same compiled JSON and feature definitions without duplicating the rules.
 
-The low-risk optimisations first: profile the renderer, avoid per-frame allocations in hot loops, and cache per-stage static data. `bench:arkpedia` is the regression gate for the engine side.
+The low-risk optimisations first: profile the renderer, avoid per-frame allocations in hot loops, and cache per-stage static data. `bench:arkpedia` is the regression gate for the engine side; `test/arkpedia-performance.test.js` adds a generous 5 s CI budget for 10 s of 14-11 so an accidental complexity jump fails the suite.

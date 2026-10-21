@@ -5714,3 +5714,7 @@ With the Bloodborn/Bombardier/Blood Amber support, **13-6** and **13-6 adverse e
 ### Engine benchmark and Rust decision (S89, 2026-10-21)
 
 Added `npm run bench:arkpedia` and `docs/PERFORMANCE.md`. A 34.3-second, 150-spawn 14-11 battle runs in 24–42 ms of engine time (~25k steps/s, 300–500× real time). No Rust/WASM rewrite is justified now; the documented triggers for revisiting are a >100 ms single battle on mid-range hardware, an order-of-magnitude jump in simultaneous units, or a shared-rules WASM design.
+
+### Engine-time guard (S90, 2026-10-21)
+
+Added `test/arkpedia-performance.test.js`: 10 seconds of the 150-spawn 14-11 battle must finish inside a generous 5 s budget with no engine errors. It is a complexity guard, not a micro-benchmark, and keeps the Rust decision tied to measured engine time.
