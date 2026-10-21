@@ -4859,3 +4859,60 @@ SilverAsh the Reignfrost joins with his Eye of the Snowstorm card in a cost-sort
 ### Nasti
 
 Nasti joins with her skill-chosen original devices: talent Sanctuary that strengthens for her and high-ground operators once a ranged enemy appears, the S1 inspector with front-operator DEF and block while she hits every blocked enemy, the S2 supervisors that feed front operators SP and barriers while she shields herself, and the S3 engineers that build and upgrade a platform a ranged operator can stand on. Generic additions: host units that carry one guest on their tile, `battle.regularTileBuild`, and tokens that can outlive their summoner. See docs/NASTI-REVIEW.md. Coverage: 431/431 forms.
+
+### Enemy records for every enemy (E1, 2026-10-21)
+
+Enemies are moving to a data-driven, stage-agnostic model. The first step is one compiler for every Global enemy at every database level (`shared/arkpedia/enemy-records.js`).
+
+- **What it reads.** The pinned `enemy_database` and `enemy_handbook_table`, plus a stage's `enemyDbRefs.overwrittenData`, applied the same way for any stage.
+- **What a record keeps.** Stats, motion, attack mode, effective range (0 for melee), damage type, immunities, weight, life-point reduce, talents (grouped as `group.param`) and skills (prefab key, cooldowns, SP, blackboard).
+- **Level rule.** Level 0 merged with the selected level, as the Stronghold builder does. The four database entries a cumulative merge would change are listed in the catalogue.
+- **The catalogue.** `tools/arkpedia/enemy-records.mjs` writes `data/arkpedia-enemy-records.json`: 1,552 enemies, 1,736 level records, with the source commit and file hashes. `--check` regenerates it and compares.
+- **The 0-1 build.** `build-mvp.mjs` now compiles the stage's enemies through the same compiler from the level file's `enemyDbRefs`, and refuses a geometry export that disagrees (Soldier's DEF 30 comes from the level file). Fields the old build dropped (range, damage type, immunities, talents, skills) are kept. Both 0-1 enemies stay stat-only, so behaviour is unchanged.
+- **The harness.** `test/helpers/enemyHarness.js` `spawnAny(key, {level, stats, route, units, seconds})` spawns any enemy on the synthetic flat stage without a real stage.
+- **Tests.** `test/arkpedia-enemy-records.test.js` covers the catalogue, the normalized definitions, the 0-1 records and a sweep that runs all 1,552 enemies for 12 s against a guard without engine errors. The full local suite passes 22,358 tests.
+
+Behaviour support (the feature registry) and the support gate come next; `REGULAR_ENEMIES` still admits only the two 0-1 enemies.
+
+### Derived enemy support and the stat-only tier (E2a, 2026-10-21)
+
+`REGULAR_ENEMIES` is no longer a hand-written list; it is derived from the enemy catalogue and the native timing index.
+
+- **Derivation.** `tools/arkpedia/enemy-support.mjs` (`shared/arkpedia/enemy-support.js`) writes `data/arkpedia-enemy-support.json` with every enemy's decision, and the compact registry `data/arkpedia-regular-enemies.json` that the battle and app load.
+- **Rule.** An enemy is supported only when everything it uses has an approved implementation. Today that is the **stat-only tier**: no skills, no talents and no handbook abilities at any database level, and an original prefab with no native ability wrappers and no active general/common abilities. This is the same proof the Closure compatibility receipt used for the two 0-1 enemies.
+- **Result.** 137 of 1,552 enemies are supported, including both 0-1 enemies. The other 1,415 list exactly what they are missing (`skill:<prefabKey>`, `talent:<group>`, `handbook-abilities`, `native-abilities:<prefab>`). The feature registry will clear those reasons batch by batch.
+- **Tests.** `test/arkpedia-enemy-support.test.js` regenerates the support file from the committed inputs (so it also runs in CI). It checks that the registry equals the supported set and that every supported enemy uses nothing unimplemented, and fights each supported enemy against a guard on the harness stage until it dies or leaks. The full local suite passes 22,362 tests.
+
+No stage spawns the newly supported enemies yet; stages stay test-only until the generic stage loader is reviewed.
+
+### Enemy feature registry (E2b, 2026-10-21)
+
+Behaviour attaches to enemies by feature, not by enemy id (`shared/arkpedia/enemy-features.js`).
+
+- **What a feature is.** A handbook ability line (`ability:<text>`), a talent group (`talent:<group>`, with string-only parameters included) or a skill prefab key (`skill:<prefabKey>`).
+- **What a registered feature declares.** `covers(record)`: the compiled record already models it, checked for every database level of every enemy that uses it. It may also declare a spawn `trait` that the battle applies (`installEnemyFeatures`, called by `StandardBattle` and the harness).
+- **First approved features.**
+  - Flying unit and Regenerates HP over time: already modelled by motion and `hpRecoveryPerSec`.
+  - Cannot be blocked: an unblockable flag for life.
+  - Invisible: the engine's enemy stealth, lifted by blocking for the STEALTH_RESTORE window.
+  - Attacks two/2 targets simultaneously: two ranged targets per attack.
+- **Coverage.** Support rises to 159 of 1,552 enemies: 137 stat-only, plus 22 through features. Wraith Leader is now admitted through "Cannot be blocked." rather than the held upstream kit, which stays unused.
+- **Tests.** `test/arkpedia-enemy-features.test.js` checks each feature on every enemy it clears, through real harness behaviour (not blocked past a guard, stealth until blocked, regeneration, flying, two targets). The full local suite passes 22,443 tests.
+
+### Enemy feature families, batch 1 (E3, 2026-10-21)
+
+The feature runtime (`server/sim/content/arkpedia-enemy-features.js`) applies the declarative registry at spawn. It attaches abilities through a new features-only dispatch of `content/enemies.js` (`installFeatureDispatch`), reusing its documented ability builders (`featureAbilities`), never its per-enemy kits.
+
+- **Talent families**, each keyed by its exact parameter signature:
+  - Reborn/reborn (rebirth after the first knock-out);
+  - periodic_damage (HP lost every second);
+  - refracting (RES while not silenced);
+  - atkup (ATK below half HP);
+  - epdamage/EpDamage with `attack@ep_damage_ratio` (element damage on every hit; the element is the one term the handbook line names);
+  - DeadSpawn (children on death).
+- **Numbered ability lines**, matched by pattern and checked against the record:
+  - "Must be damaged N times to defeat", and its Arts/True variant: a hit count equal to max HP;
+  - "Can only be blocked by units with at least N Block": block weight.
+- **Explained handbook lines.** A talent family declares the handbook lines it explains (for example "Will gradually lose HP over time"). A line with no feature of its own counts as covered only when a cleared talent of the same record explains it.
+- **Spawn dependencies.** An enemy that spawns another is supported only when the child is too. `REGULAR_ENEMY_SPAWNS` makes a stage ship the children's records, and the harness supplies them.
+- **Coverage.** Support rises to 207 of 1,552 enemies. Each family and pattern has a harness test on a real enemy.

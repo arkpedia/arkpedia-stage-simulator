@@ -5,6 +5,7 @@ import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { REGULAR_OPERATORS, assertRegularOperator } from "../../shared/arkpedia/operators.js";
 import { assertRegularEnemies } from "../../shared/arkpedia/enemies.js";
+import { compileEnemy, indexEnemyDatabase } from "../../shared/arkpedia/enemy-records.js";
 import { compileReviewedOperators, operatorChannel } from "./operator-source.mjs";
 import { writeJSONAtomic } from "./write-json.mjs";
 import { isDeepStrictEqual } from "node:util";
@@ -35,6 +36,8 @@ const paths = {
   buff_template_data: ["Kengxxiao/ArknightsGameData_YoStar", "en_US/gamedata/battle/buff_template_data.json"],
   original_level: ["Kengxxiao/ArknightsGameData_YoStar", "en_US/gamedata/levels/obt/main/level_main_00-01.json"],
   char_patch_table: ["Kengxxiao/ArknightsGameData_YoStar", "en_US/gamedata/excel/char_patch_table.json"],
+  // Enemy damage types (enemyHandbookTable).
+  enemy_handbook_table: ["Kengxxiao/ArknightsGameData_YoStar", "en_US/gamedata/excel/enemy_handbook_table.json"],
 };
 if (process.argv.includes("--refresh")) {
   const pins = {};
@@ -58,7 +61,7 @@ if (process.argv.includes("--refresh")) {
 }
 const read = async (name) =>
   JSON.parse(await readFile(new URL(`${name}.json`, cache), "utf8"));
-const [characters, skills, ranges, enemies, stage, geometry, buffTemplates, originalLevel, forms, pins] =
+const [characters, skills, ranges, enemies, stage, geometry, buffTemplates, originalLevel, forms, enemyHandbookTable, pins] =
   await Promise.all(Object.keys(paths).concat("pins").map(read));
 if (originalLevel.mapData.tags != null && (!Array.isArray(originalLevel.mapData.tags)
   || originalLevel.mapData.tags.some(tag => typeof tag !== 'string'))) throw Error('Unsupported source map tags');
@@ -1059,33 +1062,21 @@ for (const [id, support] of Object.entries(REGULAR_OPERATORS)) {
   }
   templates[support.templateKey] = buffTemplates[support.templateKey];
 }
+// Every enemy compiles through the stage-agnostic compiler, with this stage's
+// level file enemyDbRefs (database level and overwrittenData); the geometry
+// export must agree with the level file.
+const enemyIndex = indexEnemyDatabase(enemies), enemyHandbook = enemyHandbookTable.enemyData ?? {};
 const enemyRecords = Object.fromEntries(
   geometry.enemyConfigurations.map((config) => {
-    const rows = enemies.enemies.find((e) => e.Key === config.enemy_id)?.Value;
-    if (!rows) throw new Error(`Missing enemy: ${config.enemy_id}`);
-    // Undeclared overrides inherit the serialized base enum (normally NORMAL).
-    const values = { levelType: rows[0]?.enemyData.levelType?.m_value },
-      stats = {};
-    for (const row of rows.filter((r) => r.level <= config.database_level)) {
-      for (const [k, v] of Object.entries(row.enemyData))
-        if (v?.m_defined) values[k] = v.m_value;
-      for (const [k, v] of Object.entries(row.enemyData.attributes))
-        if (v.m_defined) stats[k] = v.m_value;
-    }
-    if (!['NORMAL', 'ELITE', 'BOSS'].includes(values.levelType))
-      throw new Error(`Unsupported source enemy rank: ${config.enemy_id}:${values.levelType}`);
-    return [
-      config.enemy_id,
-      {
-        name: values.name,
-        rank: values.levelType,
-        motion: values.motion,
-        applyWay: values.applyWay,
-        lifePointReduce: values.lifePointReduce,
-        tags: values.enemyTags ?? [],
-        stats: { ...stats, ...config.overrides },
-      },
-    ];
+    const ref = originalLevel.enemyDbRefs.find((r) => r.id === config.enemy_id);
+    if (!ref || !ref.useDb || ref.level !== config.database_level)
+      throw new Error(`Enemy reference differs from the level file: ${config.enemy_id}`);
+    const record = compileEnemy({ key: config.enemy_id, rows: enemyIndex.get(config.enemy_id),
+      handbook: enemyHandbook[config.enemy_id] ?? null, level: ref.level, overwrittenData: ref.overwrittenData });
+    const named = { def: "def", maxHp: "maxHp", atk: "atk", magicResistance: "res", moveSpeed: "moveSpeed" };
+    for (const [k, v] of Object.entries(config.overrides ?? {}))
+      if (!named[k] || record.stats[named[k]] !== v) throw new Error(`Geometry override differs from the level file: ${config.enemy_id}.${k}`);
+    return [config.enemy_id, record];
   }),
 );
 if (

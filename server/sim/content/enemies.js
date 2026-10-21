@@ -240,7 +240,7 @@ function installDispatch(b, scope, kits) {
     if (st.kitScope !== scope) throw Error('Enemy kit scope cannot change within a battle');
     return st;
   }
-  if (scope !== 'full' && b.enemies.length) throw Error('Select enemy kits before the first spawn');
+  if (scope !== 'full' && scope !== 'features' && b.enemies.length) throw Error('Select enemy kits before the first spawn');
   st.installed = true; st.kitScope = scope; st.kits = kits;
   b.on('enemySpawn', ({ enemy }) => onSpawn(b, enemy, st.kits), { priority: 100 });
   b.on('hit', (c) => onHitOut(b, c), { priority: 200 });
@@ -267,6 +267,37 @@ function installDispatch(b, scope, kits) {
   b.on('battleEnd', ({ result }) => { if (st.lpLoss > 0 && result) result.lpLoss = (result.lpLoss ?? 0) + st.lpLoss; });
   return st;
 }
+
+/** Common dispatchers only, no per-enemy kits: the regular-stage feature runtime
+ * (content/arkpedia-enemy-features.js) attaches reviewed abilities per data feature. */
+export function installFeatureDispatch(b) {
+  // Feature abilities need only the common dispatchers: reuse any scope already installed, and allow a late
+  // install (there are no per-enemy kits to have missed).
+  const st = stOf(b);
+  if (st.installed) return st;
+  return installDispatch(b, 'features', Object.freeze({}));
+}
+
+/** The shared 重生 ability for data-driven features (see reborn() below). */
+export function rebornAbility(params) { return reborn(params); }
+/** Shared ability builders for data-driven features (each documented at its definition below). */
+export const featureAbilities = Object.freeze({
+  elementOnHit: ({ element, ratio }) => ep(element, ratio),
+  lowHpBuff: ({ ratio, mods }) => lowHpBuff(ratio, mods),
+  deathSpawn: ({ key, cnt }) => deathSpawn(key, cnt),
+  refraction: ({ res }) => refraction(res),
+  times: ({ artsOnly }) => times(artsOnly),
+  blockWeight: ({ n }) => blockWeight(n),
+  prisoner: (params, ab) => prisoner(ab, params),
+  taunt: ({ n }) => taunt(n),
+  // Physical dodge `prob` while not blocked (the engine's dodgePhys, toggled each tick).
+  dodgeUnblocked: ({ prob }) => ({ tick(b, e, a) {
+    const on = !e.blockedBy;
+    if (on === a.on) return;
+    a.on = on;
+    if (on) b.addBuff(e, { key: 'ab:evade', persist: true, mods: { dodgePhys: prob } }); else b.removeBuff(e, 'ab:evade');
+  } }),
+});
 
 /** Original full-mode installation, shared with bosses.js; idempotent for the same scope. */
 export function ensureInstalled(b) { return installDispatch(b, 'full', KITS); }

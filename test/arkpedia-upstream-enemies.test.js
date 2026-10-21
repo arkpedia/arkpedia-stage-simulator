@@ -83,11 +83,15 @@ for (const keys of [null, [], [ID, ID], ['unknown'], ['__proto__'], [ID, 1]]) {
     install(h.b); h.step(); assert.ok(spawn(h).s.flags.unblockable);
   });
 }
-test('selective dispatch preserves factory identity without changing the public enemy catalogue', () => {
-  assert.equal(typeof KITS[ID], 'function'); assert.equal(REGULAR_ENEMIES[ID], undefined);
+test('selective dispatch preserves factory identity; the public catalogue admits enemies only through derived support', () => {
+  // Wraith Leader is now admitted by the data-derived 'Cannot be blocked.' feature
+  // (shared/arkpedia/enemy-features.js), not by this upstream kit.
+  assert.equal(typeof KITS[ID], 'function'); assert.equal(REGULAR_ENEMIES[ID], 'stats-attacks-and-features');
   const snapshot = JSON.parse(readFileSync(new URL('../data/arkpedia-mvp.json', import.meta.url)));
   assert.equal(snapshot.enemies[ID], undefined);
-  assert.throws(() => assertRegularEnemies({ ...snapshot, enemies: { ...snapshot.enemies, [ID]: {} } }), /Unsupported/);
+  const unsupported = 'enemy_1334_ristar';
+  assert.equal(REGULAR_ENEMIES[unsupported], undefined);
+  assert.throws(() => assertRegularEnemies({ ...snapshot, enemies: { ...snapshot.enemies, [unsupported]: {} } }), /Unsupported/);
 });
 
 test('late selective installation fails instead of leaving existing enemies partly initialized', () => {
