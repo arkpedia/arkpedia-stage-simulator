@@ -5522,3 +5522,7 @@ With civilians, spies, the Instigator lock, the checkpoint blink and the DP-drai
 ### Splitcaster Virtual Image (E41, 2026-10-21)
 
 At `summon.hp_ratio` (0.5) the Splitcaster leaves one Virtual Image clone at its position. The clone carries `profile.virtualImage` and cannot split again. Support rises to **339 of 1,552** enemies. The test checks the single clone and the no-resplit guard.
+
+### 12-12 stages (S62, 2026-10-21)
+
+With the Splitcaster Virtual Image supported, **12-12** and **12-12 adverse environment** build (8×12, 67 spawns, 5 enemies). Coverage is **124 public stages** (0-1 plus 123 files).
