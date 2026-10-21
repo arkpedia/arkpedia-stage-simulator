@@ -5782,3 +5782,7 @@ The stacked branch (E62–E65) passes **22,776 tests, 22,765 passed, 0 failed, 1
 ### Dublinn Flying Soldier (E66, 2026-10-21)
 
 Low-Altitude Hovering sets the flying flag; RecoverAnim claims its native wrapper/active; the passive refracting group now covers records without the separate Refraction line. Support rises to **392 of 1,552** enemies. The test pins the flying flag.
+
+### Snapshot to 392 enemies (S102, 2026-10-21)
+
+`docs/REMAINING.md` records **392** supported enemies, **191** built source stages and **192** public entries.
