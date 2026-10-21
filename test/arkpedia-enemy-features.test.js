@@ -504,6 +504,11 @@ test('1320: the first attack splashes, later attacks are single-target', () => {
   assert.ok(hits[a.chessId] + hits[b.chessId] >= 3, JSON.stringify(hits));
   assert.ok(Math.min(hits[a.chessId], hits[b.chessId]) >= 1, 'the first hit splashed both');
 });
+test('1321: the BornBugs summoner drops Seeds of Withering', () => {
+  const key = 'enemy_1321_wdarft', h = spawnAny(key, { seconds: 0.1, units: [] }), seeds = [];
+  h.b.on('enemySpawn', ({ enemy }) => { if (enemy.defId === 'enemy_1269_nhfly') seeds.push(enemy); });
+  h.run(11); assert.ok(seeds.length >= 1, 'at least one seed spawned');
+});
 test('Drains 1 Life Point: the engine leak drains the record stat', () => {
   const key = 'enemy_1137_plasm';
   assert.ok(support.enemies[key].policy, 'supported by the existing leak rule');

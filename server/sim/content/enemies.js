@@ -345,6 +345,15 @@ export const featureAbilities = Object.freeze({
     },
   }),
   moveSpeedBonus: ({ mul }) => ({ spawn(b, e) { b.addBuff(e, { key: 'ab:moveSpeed', persist: true, visible: true, mods: { moveMul: mul } }); } }),
+  // 1321: drop three Seeds of Withering every cooldown seconds, starting after init.
+  seedSummoner: ({ key, count, cooldown, init }) => ({
+    spawn(b, e, a) { a.next = b.time + init; },
+    tick(b, e, a) {
+      if (!e.alive || b.time < a.next) return;
+      a.next = b.time + cooldown;
+      for (let i = 0; i < count; i++) spawnChildren(b, e, key, 1, { pos: [e.y, e.x + (i - (count - 1) / 2) * 0.4] });
+    },
+  }),
   // 1320: the first hit is 1.5x and splashes the target's box; later hits are normal.
   firstSplash: ({ scale }) => ({
     spawn(b, e, a) { a.first = true; a.splash = false; },
