@@ -286,6 +286,11 @@ export const ENEMY_FEATURES = Object.freeze({
     explains: text => /^Attack power increases( greatly)? when attacking <\$ba\.frozen>Frozen<\/> targets$/.test(text)
       || /^Gains significantly increased ATK when HP is under 50%$/.test(text) },
 
+  // Dublinn Phalanx: DEF scales with the number of other Phalanx units on the field.
+  'talent:auraDefup': { covers: r => sig(r, 'auraDefup', ['def'])
+      && r.abilities.some(a => /^When other Phalanx (Infantry|Commanders) are nearby, DEF increases \(stacks\)$/.test(a.text)),
+    ability: { kind: 'phalanxAura', params: r => ({ def: r.talents.bb['auraDefup.def'] }) },
+    note: 'DEF +def per other Phalanx unit', explains: /^When other Phalanx (Infantry|Commanders) are nearby, DEF increases \(stacks\)$/ },
   // Infused Soul Husk: pick up Soul Maelstroms, then spend one on an orbiting damaging orb.
   'skill:summonFireball': { covers: r => r.skills.some(s => s.prefabKey === 'summonFireball')
       && r.abilities.some(a => a.text === 'Can pick up and retain up to 3 Soul Maelstroms.'),

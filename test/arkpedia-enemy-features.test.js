@@ -587,6 +587,15 @@ test('Infused Soul Husk: spending a soul damages the nearby guard', () => {
   const ability = e.mem.ab.list.find(x => x.cast); e.x = guard.x + 1; e.y = guard.y; const hp = guard.hp;
   ability.cast.call(ability, h.b, e, ability); h.run(1.2); assert.ok(guard.hp < hp, `${guard.hp} vs ${hp}`);
 });
+test('Dublinn Phalanx: each unit gains DEF from the other', () => {
+  const key = 'enemy_1169_duphlx';
+  const h = makeBattle({ defs: { enemies: { [key]: ENEMY_RECORDS.enemies[key].levels[0] } },
+    units: [], enemies: [{ key, time: 0, route: 0 }, { key, time: 0, route: 0 }], content: 'none', autoFinish: false,
+    timeLimit: 30, setup: battle => installEnemyFeatures(battle) });
+  h.run(0.8); const units = h.b.enemies.filter(u => u.defId === key), base = ENEMY_RECORDS.enemies[key].levels[0].stats.def;
+  assert.equal(units.length, 2); for (const u of units) assert.equal(u.s.def, base + 200);
+  h.b.kill(units[0], null); h.run(1); assert.equal(units[1].s.def, base);
+});
 test('Drains 1 Life Point: the engine leak drains the record stat', () => {
   const key = 'enemy_1137_plasm';
   assert.ok(support.enemies[key].policy, 'supported by the existing leak rule');

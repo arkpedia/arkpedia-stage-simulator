@@ -345,6 +345,13 @@ export const featureAbilities = Object.freeze({
     },
   }),
   moveSpeedBonus: ({ mul }) => ({ spawn(b, e) { b.addBuff(e, { key: 'ab:moveSpeed', persist: true, visible: true, mods: { moveMul: mul } }); } }),
+  // Dublinn Phalanx: refresh a DEF buff equal to def times the other Phalanx units.
+  phalanxAura: ({ def }) => ({
+    tick(b, e) {
+      const n = b.enemies.filter(u => u.alive && String(u.defId).includes('duphlx')).length - 1;
+      if (n > 0) b.addBuff(e, { key: `ab:phalanx:${e.id}`, duration: 0.7, visible: true, mods: { defFlat: def * n } });
+    },
+  }),
   // Infused Soul Husk: pick up souls, then spend one on a short orbiting damage aura.
   soulHusk: ({ cooldown, scale }) => ({
     spawn(b, e, a) { a.souls = 0; a.next = b.time + (cooldown || 15); },

@@ -5658,3 +5658,7 @@ With the Infused Soul Husk supported, **14-16** and **14-19** build (7×12–8×
 ### Late-14 adverse variants (S81, 2026-10-21)
 
 The adverse variants of **14-14/15/16/17/19** build as well (8×11–8×12, 32–86 spawns). Coverage is **173 public stages** (0-1 plus 172 files).
+
+### Dublinn Phalanx aura (E56, 2026-10-21)
+
+Each Phalanx unit refreshes DEF +200 per other living Phalanx unit (Infantry and Commander text), stacking with other auras and ending when the count drops. Support rises to **368 of 1,552** enemies. The test checks two units and the revert after one dies.
