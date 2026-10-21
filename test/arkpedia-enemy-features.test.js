@@ -551,6 +551,11 @@ test('Chalice of Regret: shares 5% of a nearby ground enemy damage', () => {
   h.b.dealDamage(null, o, { amount: 1000, type: 'true', sourceless: true }); h.run(0.1);
   assert.ok(Math.abs((before - c.hp) - 50) < 1, `${before - c.hp}`);
 });
+test('Caustic Slug: the death blast hits a nearby guard', () => {
+  const key = 'enemy_1424_lrboom', h = spawnAny(key, { seconds: 0.1 }), e = enemy(h, key), guard = h.b.units.find(u => u.side === 'ally');
+  h.b.autoFinish = false; e.x = guard.x + 1; e.y = guard.y; const hp = guard.hp;
+  h.b.kill(e, null); h.run(0.1); assert.ok(guard.hp < hp, `${guard.hp} vs ${hp}`);
+});
 test('Drains 1 Life Point: the engine leak drains the record stat', () => {
   const key = 'enemy_1137_plasm';
   assert.ok(support.enemies[key].policy, 'supported by the existing leak rule');

@@ -286,6 +286,14 @@ export const ENEMY_FEATURES = Object.freeze({
     explains: text => /^Attack power increases( greatly)? when attacking <\$ba\.frozen>Frozen<\/> targets$/.test(text)
       || /^Gains significantly increased ATK when HP is under 50%$/.test(text) },
 
+  // Caustic Originium Slug: death blast + pollution, and a storm-strength boost when consumed.
+  'talent:Boom': { covers: r => sig(r, 'Boom', ['atk_scale'])
+      && r.abilities.some(a => a.text === 'Upon death, deals Physical damage in an area and causes Originium pollution.'),
+    ability: { kind: 'causticSlug', params: r => ({ scale: r.talents.bb['Boom.atk_scale'] }) },
+    note: 'death blast, pollution and a storm boost when consumed',
+    explains: text => text === 'Upon death, deals Physical damage in an area and causes Originium pollution.'
+      || text === 'Increases the strength of an Active Originium Storm when consumed by it.' },
+  'talent:DetectStorm': { covers: r => sig(r, 'DetectStorm', ['range_radius']), note: 'the slug detects the storm' },
   // Chalice of Regret: shares a fraction of nearby non-flying enemies' damage.
   'talent:takeDmg': { covers: r => sig(r, 'takeDmg', ['damage_scale', 'range_radius'])
       && r.abilities.some(a => a.text === 'Shares a fraction of the damage taken by non-aerial enemies around itself.'),

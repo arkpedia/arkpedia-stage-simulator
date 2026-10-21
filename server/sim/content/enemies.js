@@ -345,6 +345,14 @@ export const featureAbilities = Object.freeze({
     },
   }),
   moveSpeedBonus: ({ mul }) => ({ spawn(b, e) { b.addBuff(e, { key: 'ab:moveSpeed', persist: true, visible: true, mods: { moveMul: mul } }); } }),
+  // Caustic Slug: physical death blast, pollution and a storm damage boost when consumed.
+  causticSlug: ({ scale }) => ({
+    death(c, b, e) {
+      for (const u of b.alliesInRadius(e.x, e.y, 1.5)) hurt(b, e, u, e.s.atk * scale, 'phys', { tags: ['boom'] });
+      pollution(b, e, e.x, e.y, 1.5, 8, 50, 25);
+      if (e.findBuff?.('ab:storm')) for (const o of b.enemies) for (const ab of o.mem?.ab?.list ?? []) if (ab.storm) ab.boost = (ab.boost ?? 0) + 1;
+    },
+  }),
   // Chalice of Regret: mirror a fraction of nearby ground-enemy damage onto itself.
   damageShare: ({ scale, range }) => ({
     spawn(b, e) {
@@ -461,13 +469,14 @@ export const featureAbilities = Object.freeze({
   }),
   // Active Originium Storm: every second the storm grows and damages the allies inside it.
   stormAura: ({ damage, damageStep, maxDamage, radius, radiusStep, maxRadius, spRatio }) => ({
-    spawn(b, e, a) { a.t = 0; a.r = radius; a.d = damage; },
+    storm: true,
+    spawn(b, e, a) { a.t = 0; a.r = radius; a.d = damage; a.boost = 0; },
     tick(b, e, a, dt) {
       a.t += dt;
       if (a.t < 1) return;
       a.t -= 1;
       a.r = Math.min(maxRadius, a.r + radiusStep);
-      a.d = Math.min(maxDamage, a.d + damageStep);
+      a.d = Math.min(maxDamage, a.d + damageStep + (a.boost ?? 0) * damageStep);
       for (const u of b.alliesInRadius(e.x, e.y, a.r)) {
         hurt(b, e, u, a.d, 'arts', { tags: ['storm'] });
         b.addBuff(u, { key: 'ab:storm', duration: 1.2, visible: true, mods: { spRecoveryMul: 1 + spRatio } });

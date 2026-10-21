@@ -5598,3 +5598,7 @@ With the Altar Keeper supported, **14-4** and **14-4 adverse environment** build
 ### Chalice of Regret damage share (E50, 2026-10-21)
 
 The Chalice mirrors 5% of damage taken by nearby non-flying enemies onto itself as true damage (radius 1.7, tagged to avoid recursion). Support rises to **357 of 1,552** enemies. The test deals 1000 to a neighbour and checks the 50 self-damage.
+
+### Caustic Slug (E51, 2026-10-21)
+
+The Caustic Originium Slug leaves a 3.5x Physical death blast and a short pollution zone; if consumed by an Active Originium Storm while carrying its mark, it adds one damage-step boost to the storm. Support rises to **359 of 1,552** enemies. The test checks the death blast.
