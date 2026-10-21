@@ -5482,3 +5482,7 @@ The stage search now shows an aria-live "N matches" count while filtering and cl
 ### Per-chapter coverage (S54, 2026-10-21)
 
 The coverage report now also prints built/total per chapter. The snapshot shows where the remaining work concentrates: Chapters 11 and 12 are 0/50 and 0/55 (civilian/spy identity), 15–17 are 0/34–35 (mostly no geometry), while Chapter 10 is already 15/49. The test checks that the chapter totals sum to the overall total.
+
+### Previous/next stage buttons (S55, 2026-10-21)
+
+The stage picker now has `‹` and `›` buttons that jump to the previous or next catalogue entry, in the same order as the grouped selector. Static client tests remain at 217.
