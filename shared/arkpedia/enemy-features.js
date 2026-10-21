@@ -128,6 +128,21 @@ function isRebornCreation(nat) {
     && mark._buffs.length === 1 && mark._buffs[0].lifeTimeType === 2 && mark._selector.m_PathID === '0';
 }
 
+// The reviewed Yeti Caster ColdAttack pair: a familyMask-3 wrapper plus the snow-magic ability that applies the
+// e2c_cold DB buff from the skill's reviewed freeze duration. The handbook names every third attack.
+function isYetiColdAttack(r, nat) {
+  const rows = nat.ColdAttack ?? [], wrapper = rows.find(c => '_familyMask' in c), ability = rows.find(c => '_waitForAttackEvent' in c);
+  if (!wrapper || !ability || r.skills.length !== 1) return false;
+  const skill = r.skills[0], buff = ability._activeBuffs?.[0];
+  return skill.prefabKey === 'coldattack' && skill.bb.freeze === 10
+    && r.abilities.some(a => a.text === 'After two attacks, the next attack applies the <$ba.cold>Cold</> effect')
+    && wrapper._familyMask === 3 && wrapper._trigger?.m_PathID === '0' && wrapper._castLikeAttack === 0
+    && wrapper._ignoreSilence === 0 && wrapper._overwriteInitCooldown === -1 && wrapper._checkParentActive === 0
+    && wrapper._maxTriggerTime === -1 && wrapper._resetCdWaitFirstPeriod === 1 && wrapper._resetMainAbilityCdWhenCastEnd === 0
+    && ability._waitForAttackEvent === 1 && ability._selector?.m_PathID === '0' && ability._projectileKey === 'projectile_enemy_snow_magic_ball'
+    && ability._damageType === 2 && buff?.buffKey === 'e2c_cold' && buff.loadFromDB === 1;
+}
+
 // The reviewed enhance component (enemy_1103_wdkght family): a whole-field passive (no selector, no interval) marking
 // every unit of the owner's own side (validator targetSide 1, all motions, ignoring isolation) with template
 // enemy_wdkght_t, whose only event ON_OWNER_KILLED gives the mark's source one INFINITY stack of ATK MULTIPLIER and
@@ -172,6 +187,11 @@ export const ENEMY_FEATURES = Object.freeze({
     ability: { kind: 'blinkWhenBlocked', params: r => ({ dist: r.skills[0].bb.dist ?? 1.5, cooldown: r.skills[0].cooldown, initCooldown: r.skills[0].initCooldown }) },
     note: 'blink past the blocker on the reviewed cooldown', nativeClaim: () => ({ wrappers: 1 }),
     explains: /^When blocked, can quickly move behind the unit$/ },
+  // Yeti Caster: every third attack applies the reviewed 10 s Cold.
+  'skill:coldattack': { covers: (r, nat) => isYetiColdAttack(r, nat),
+    ability: { kind: 'coldAttack', params: r => ({ every: 3, duration: r.skills[0].bb.freeze }) },
+    note: 'every third attack applies Cold', nativeClaim: () => ({ wrappers: 1 }),
+    explains: /^After two attacks, the next attack applies the <\$ba\.cold>Cold<\/> effect$/ },
   // Senior Caster: the normal ranged attack also splashes the primary target's four cardinal neighbours.
   'ability:Deals area damage to Operators on the four cardinal tiles next to the primary target.': {
     covers: r => r.applyWay === 'RANGED' && r.stats.rangeRadius > 0
@@ -191,9 +211,19 @@ export const ENEMY_FEATURES = Object.freeze({
   ...family(['refracting'], ['magic_resistance'], g => ({ kind: 'refraction', params: r => ({ res: r.talents.bb[`${g}.magic_resistance`] }) }),
     r => r.abilities.some(a => a.text.includes('<$ba.refraction>')), 'RES +magic_resistance while not silenced', null, /^<\$ba\.refraction>Refraction<\/>$/),
   // "Gains significantly increased ATK when HP is under 50%": ATK +atk once HP first drops below half.
-  ...familyAny(['atkup'], [['atk'], ['atk', 'hp_ratio']], g => ({ kind: 'lowHpBuff', params: r => ({ ratio: r.talents.bb[`${g}.hp_ratio`] ?? 0.5, mods: { atkPct: r.talents.bb[`${g}.atk`] } }) }),
-    r => r.abilities.some(a => /under 50%/.test(a.text) && /ATK/.test(a.text)), 'ATK +atk below the hp_ratio threshold (50% when the record omits it)', null,
-    /^Gains significantly increased ATK when HP is under 50%$/),
+  'talent:atkup': {
+    covers: r => {
+      if (sig(r, 'atkup', ['atk_scale'])) return r.abilities.some(a => /^Attack power increases( greatly)? when attacking <\$ba\.frozen>Frozen<\/> targets$/.test(a.text));
+      if (sig(r, 'atkup', ['atk']) || sig(r, 'atkup', ['atk', 'hp_ratio'])) return r.abilities.some(a => /under 50%/.test(a.text) && /ATK/.test(a.text));
+      return false;
+    },
+    ability: { kind: 'atkup', params: r => sig(r, 'atkup', ['atk_scale'])
+      ? { scale: r.talents.bb['atkup.atk_scale'] }
+      : { ratio: r.talents.bb['atkup.hp_ratio'] ?? 0.5, atkPct: r.talents.bb['atkup.atk'] } },
+    note: 'ATK ×atk_scale against Frozen, or +atk below the hp_ratio threshold',
+    explains: text => /^Attack power increases( greatly)? when attacking <\$ba\.frozen>Frozen<\/> targets$/.test(text)
+      || /^Gains significantly increased ATK when HP is under 50%$/.test(text) },
+
   // Hatedrinker: ATK increases for each Reborn Creation on the battlefield (the bloodsucker marker), capped by the
   // talent's max_valid_stack_cnt. The aura tag is the group name; the effect is a self-buff.
   'talent:aura': { covers: r => sig(r, 'aura', ['atk', 'max_valid_stack_cnt'])

@@ -5194,3 +5194,7 @@ Support rises to **264 of 1,552** enemies. The test spawns the Hatedrinker, adds
 | 13-2 adverse environment | 7×9 | 1 | 39 | the same stage under its adverse-environment variant |
 
 Coverage is **0-1 plus 73 test-only files**.
+
+### Yeti Caster Cold attacks (E13, 2026-10-21)
+
+The reviewed `coldattack` skill is every third attack applying the `e2c_cold` DB buff from the skill's 10-second freeze value. The feature matches the familyMask-3 ColdAttack wrapper, the snow-magic projectile ability and the 10-second blackboard, claims one native wrapper, and is silence-aware. Support rises to **273 of 1,552** enemies. The test counts three attacks and checks the 10-second Cold on the target.

@@ -221,6 +221,19 @@ test('Hatedrinker: ATK rises per living Reborn Creation, up to the talent cap', 
   assert.ok(c); h.run(0.6);
   assert.ok(Math.abs(e.s.atk - base * 1.15) < 1, `${e.s.atk} vs ${base * 1.15}`);
 });
+test('Yeti Caster: every third attack applies the reviewed 10 s Cold', () => {
+  const key = 'enemy_1068_snmage', rec = ENEMY_RECORDS.enemies[key].levels[0];
+  const guardRec = chessRec({ id: 'cold_guard', profession: 'WARRIOR', stats: { atk: 0, maxHp: 1e6, def: 300 } });
+  const h = makeBattle({ defs: { enemies: { [key]: rec }, chess: { [guardRec.chessId]: guardRec } },
+    units: [{ chessId: guardRec.chessId, row: 9, col: 6 }], enemies: [{ key, time: 0, route: 0 }],
+    content: 'none', autoFinish: false, timeLimit: 40, setup: battle => installEnemyFeatures(battle) });
+  let attacks = 0; h.b.on('attack', c => { if (c.attacker?.defId === key) attacks++; });
+  h.runUntil(() => attacks >= 3, 30); h.run(0.1);
+  assert.ok(attacks >= 3);
+  const guard = h.b.units.find(u => u.side === 'ally');
+  const cold = guard.buffs.find(b => b.status === 'cold');
+  assert.ok(cold, 'the third attack applied Cold'); assert.equal(cold.duration, 10);
+});
 test('Drains 1 Life Point: the engine leak drains the record stat', () => {
   const key = 'enemy_1137_plasm';
   assert.ok(support.enemies[key].policy, 'supported by the existing leak rule');

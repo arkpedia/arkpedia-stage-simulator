@@ -282,6 +282,12 @@ export function installFeatureDispatch(b) {
 export function rebornAbility(params) { return reborn(params); }
 /** Shared ability builders for data-driven features (each documented at its definition below). */
 export const featureAbilities = Object.freeze({
+  // Yeti Caster: every Nth attack applies the reviewed Cold status to every target of that attack.
+  coldAttack: ({ every, duration }) => nthAttackStatus(every, 'cold', duration),
+  // atkup: a flat ATK percentage below the hp_ratio threshold, or a damage multiplier against Frozen targets.
+  atkup: ({ scale, ratio, atkPct }) => scale != null
+    ? { hitOut(c, b, e) { if (c.dmg.isAttack && c.target?.s.flags.freeze) c.dmg.amount *= scale; } }
+    : lowHpBuff(ratio ?? 0.5, { atkPct: atkPct ?? 0 }),
   elementOnHit: ({ element, ratio }) => ep(element, ratio),
   lowHpBuff: ({ ratio, mods }) => lowHpBuff(ratio, mods),
   deathSpawn: ({ key, cnt }) => deathSpawn(key, cnt),
