@@ -483,6 +483,22 @@ function pick(row, col) {
   const occupied = selectable.find(
     (u) => u.alive && u.deployed && u.tileR === row && u.tileC === col,
   );
+  // A card that goes onto a deployed operator (SilverAsh the Reignfrost's Eye in S3) is placed, not an inspect.
+  const onto = selectedEntry();
+  if (occupied && onto?.kind === 'summon' && onto.config.targetsAlly && !onto.unit) {
+    const error = placementError(selected, row, col);
+    if (error) battleError = error;
+    else try { deployRegularSummon(battle, selected, row, col); } catch (e) { battleError = e.message; }
+    pending = null;
+    drawHud();
+    return;
+  }
+  // A legal placement beats an inspect (an operator onto Nasti's platform).
+  if (occupied && onto && !onto.unit && onto.kind !== 'summon' && !placementError(selected, row, col)) {
+    pending = { row, col, dir: null };
+    drawHud();
+    return;
+  }
   if (occupied) {
     selected = occupied.kind === 'token' || occupied.kind === 'device' && occupied.mem.regularSummonCard
       ? summonUnitId(occupied) : occupied.defId;
@@ -728,6 +744,15 @@ function drawHud() {
         drawHud();
       };
   }
+  // An owner may order the deck (SilverAsh the Reignfrost sorts it by cost). Move buttons only when the order
+  // changes, so focus and an in-progress drag are kept.
+  const order = battle.regularDeckOrder?.();
+  if (order) {
+    const current = [...shelf.children].map(button => button.dataset.id);
+    const wanted = [...order.filter(id => current.includes(id)), ...current.filter(id => !order.includes(id))];
+    if (wanted.some((id, i) => current[i] !== id))
+      for (const id of wanted) shelf.append([...shelf.children].find(button => button.dataset.id === id));
+  }
   for (const button of shelf.querySelectorAll("button")) {
     const id = button.dataset.id, b = selectedEntry(id);
     // Owner-scoped decks unregister on retirement; their old card has no state.
@@ -742,7 +767,7 @@ function drawHud() {
       cool = Number.isFinite(b.readyAt) ? Math.max(0, Math.ceil(b.readyAt - battle.time)) : 0;
     const cost = b.kind === 'summon'
       ? !b.owner.alive || !b.owner.deployed ? 'Summoner absent'
-        : b.stock <= 0 ? b.config.tacticalPoint ? 'Tactical point set' : 'None remaining'
+        : b.stock <= 0 ? b.config.tacticalPoint ? 'Tactical point set' : b.config.deckMarker ? `${b.record.stats.cost} DP · deck marker` : 'None remaining'
         : cool ? `${cool}s · ${b.stock} left` : `${b.record.stats.cost} DP · ${b.stock} left`
       : alive
       ? "Deployed"
@@ -755,7 +780,7 @@ function drawHud() {
     button.title = `${b.name}${id === supportId ? ' · Support' : ''}`;
     button.querySelector(".cost").textContent = alive ? 'IN'
       : cool ? cool + 's'
-      : b.kind === 'summon' && b.stock <= 0 ? b.config.tacticalPoint ? 'SET' : '—'
+      : b.kind === 'summon' && b.stock <= 0 ? b.config.tacticalPoint ? 'SET' : b.config.deckMarker ? b.record.stats.cost : '—'
       : b.kind === 'summon' ? b.record.stats.cost : battle.cost(id);
     const mana = marcilBenchMana(battle, id);
     let manaFrame = button.querySelector('.mana-charge');

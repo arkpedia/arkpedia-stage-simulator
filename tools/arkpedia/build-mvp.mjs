@@ -109,7 +109,9 @@ const CN_OWNER_REVIEWS = Object.freeze({char_4185_amoris: {slug: 'amoris', polic
   char_1046_sbell2: {slug: 'sbell2', policy: 'source-cn-sbell2-snow-v1'},
   char_1015_aglna2: {slug: 'aglna2', policy: 'source-cn-aglna2-skywalker-v1'},
   char_4195_radian: {slug: 'radian', policy: 'source-cn-radian-towers-v1', tokens: {token_10051_radian_tower1: 'radian-tower1', token_10052_radian_tower2: 'radian-tower2', token_10053_radian_tower3: 'radian-tower3'}},
-  char_1052_kalts2: {slug: 'kalts2', policy: 'source-cn-kalts2-anchor-v1', tokens: {token_10068_kalts2_mtship: 'kalts2-mtship'}}});
+  char_1052_kalts2: {slug: 'kalts2', policy: 'source-cn-kalts2-anchor-v1', tokens: {token_10068_kalts2_mtship: 'kalts2-mtship'}},
+  char_1045_svash2: {slug: 'svash2', policy: 'source-cn-svash2-eye-v1', tokens: {token_10057_svash2_eagle1: 'svash2-eagle1', token_10057_svash2_eagle2: 'svash2-eagle2', token_10057_svash2_eagle3: 'svash2-eagle3'}},
+  char_4212_nasti: {slug: 'nasti', policy: 'source-cn-nasti-devices-v1', tokens: {token_10059_nasti_nstdef: 'nasti-nstdef', token_10060_nasti_nstchr: 'nasti-nstchr', token_10061_nasti_nstbld: 'nasti-nstbld'}}});
 const candidateTurdus = process.argv.includes('--review-candidate-turdus');
 const candidateTmslot = process.argv.includes('--review-candidate-tmslot');
 const candidateThumpy = process.argv.includes('--review-candidate-thumpy');

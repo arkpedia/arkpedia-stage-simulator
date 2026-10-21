@@ -5,6 +5,10 @@ export const REGULAR_SUMMONS = Object.freeze({
   char_4195_radian: Object.freeze({ tokenId: null, tokenBySkill: Object.freeze({
       skchr_radian_1: 'token_10051_radian_tower1', skchr_radian_2: 'token_10052_radian_tower2', skchr_radian_3: 'token_10053_radian_tower3' }),
     deploymentSlotCost: 0, chooseFacing: true, healFree: false, refundRatio: .5, attackClip: 'Attack' }),
+  // Nasti's devices: one original device per selected skill (overrideTokenKey).
+  char_4212_nasti: Object.freeze({ tokenId: null, tokenBySkill: Object.freeze({
+      skchr_nasti_1: 'token_10059_nasti_nstdef', skchr_nasti_2: 'token_10060_nasti_nstchr', skchr_nasti_3: 'token_10061_nasti_nstbld' }),
+    deploymentSlotCost: 0, chooseFacing: true, healFree: true, refundRatio: .5, noAttack: true }),
   // Wang's stones: the reviewed CN owner controller links and triggers them.
   char_2027_wang: Object.freeze({ tokenId: 'token_10064_wang_stone1',
     deploymentSlotCost: 0, chooseFacing: false, fixedRotation: true, healFree: true,
@@ -118,6 +122,8 @@ export const REGULAR_AUTOMATIC_TOKENS = Object.freeze({
   char_1041_angel2: Object.freeze(['token_10056_angel2_target']),
   // Kal'tsit·Esperanta's S3 anchor deck places the tactical anchor.
   char_1052_kalts2: Object.freeze(['token_10068_kalts2_mtship']),
+  // SilverAsh the Reignfrost's Eye of the Snowstorm card (one per selected skill).
+  char_1045_svash2: Object.freeze(['token_10057_svash2_eagle1', 'token_10057_svash2_eagle2', 'token_10057_svash2_eagle3']),
   // The selected-skill controller owns Magallan's deck and terrain rules.
   char_248_mgllan: Object.freeze([1, 2, 3].map(n => `token_10005_mgllan_drone${n}`)),
   // Ling's selected-skill deck controls dragon stock, terrain and fusion.

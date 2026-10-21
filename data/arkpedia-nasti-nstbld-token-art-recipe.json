@@ -1,0 +1,48 @@
+{
+  "operator": "char_4212_nasti",
+  "model": "token_10061_nasti_nstbld",
+  "name": "Nasti's Emergency Load-bearing Crew device",
+  "nativeFacing": "Single",
+  "foundationSha256": "483e80e24832fe6ef9958528cafb6bd3877b43552212460d91695bab7fc72094",
+  "bundle": "pkgrps/btl_pfb_tokens_4.ab",
+  "output": "data/arkpedia-nasti-nstbld-token-art.json",
+  "sdReview": "source-reviews/nasti-nstbld.json",
+  "scope": "Original Nasti's Emergency Load-bearing Crew device artwork only: native skeleton, unchanged decoded pixels, PMA and pointers. Combat, public admission, effects/audio and game-frame/pixel parity are separate.",
+  "roles": {
+    "Single": {
+      "idle": "Idle_1",
+      "deploy": "Start",
+      "attack": null,
+      "skill": null,
+      "die": "Die",
+      "stun": null,
+      "move": null
+    }
+  },
+  "missingOptionalAliases": {
+    "Single": []
+  },
+  "nativeMixes": [
+    {
+      "sourceAnimName": "Idle_2",
+      "targetAnimName": "Idle_1",
+      "mixAnimName": "Skill"
+    }
+  ],
+  "reviewPhases": [
+    "Default",
+    "Die",
+    "Idle_1",
+    "Idle_2",
+    "Idle_3",
+    "Idle_4",
+    "Skill",
+    "Start"
+  ],
+  "emptyClips": {
+    "Single": [
+      "Default",
+      "Idle_4"
+    ]
+  }
+}

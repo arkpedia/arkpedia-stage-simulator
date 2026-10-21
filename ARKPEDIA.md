@@ -4851,3 +4851,11 @@ Raidian joins with his three original towers, one per skill (token art and card 
 ### Kal'tsit - Esperanta
 
 Kal'tsit - Esperanta joins with her Watchman liftoff, FLY block over a wider radius, entry regeneration and one-hit shields for operators entering her range, S1 wider block radius for lifted-off allies, S2 medical units that strike true damage and heal around the impact, and the S3 tactical anchor she flies to while two operators are withdrawn for a free redeploy into her new range (her anchor's art and card avatar come from the CN client). Generic additions: a `blockRadiusScale` buff mod in the block contact check, `regularPlacementDeny` for owner-restricted card tiles, and multi-page atlas support in `cn-owner-art.py`. See docs/KALTS2-REVIEW.md. Coverage: 429/431 forms.
+
+### SilverAsh the Reignfrost
+
+SilverAsh the Reignfrost joins with his Eye of the Snowstorm card in a cost-sorted deck: talent SP and faster redeployment for cards left of the Eye, Kjerag freeze immunity, DEF and regeneration, S1 DP with a discount and barrier for the card nearest the Eye, S2 cold strikes with a discount and stored deploy casts for cards left of the Eye, and S3 DP over time, a one-time base-cost swap, line strikes with fragility and the Eye placed on an operator. Generic additions: `battle.regularDeckOrder()` (the app follows it), summon `deckMarker` and `targetsAlly` cards, and `bench[id].baseCost`. See docs/SVASH2-REVIEW.md. Coverage: 430/431 forms.
+
+### Nasti
+
+Nasti joins with her skill-chosen original devices: talent Sanctuary that strengthens for her and high-ground operators once a ranged enemy appears, the S1 inspector with front-operator DEF and block while she hits every blocked enemy, the S2 supervisors that feed front operators SP and barriers while she shields herself, and the S3 engineers that build and upgrade a platform a ranged operator can stand on. Generic additions: host units that carry one guest on their tile, `battle.regularTileBuild`, and tokens that can outlive their summoner. See docs/NASTI-REVIEW.md. Coverage: 431/431 forms.

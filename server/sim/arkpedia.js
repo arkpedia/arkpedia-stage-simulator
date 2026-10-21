@@ -156,6 +156,8 @@ import { customizeSbell2Kit, installSbell2 } from './content/arkpedia-sbell2.js'
 import { customizeAglna2Kit, installAglna2 } from './content/arkpedia-aglna2.js';
 import { customizeRadianKit, installRadian } from './content/arkpedia-radian.js';
 import { customizeKalts2Kit, installKalts2 } from './content/arkpedia-kalts2.js';
+import { customizeSvash2Kit, installSvash2 } from './content/arkpedia-svash2.js';
+import { customizeNastiKit, installNasti } from './content/arkpedia-nasti.js';
 import { customizePublicBranchKit, installPublicBranch } from './content/arkpedia-branch-public.js';
 import { customizePublicReckprKit, installPublicReckpr } from './content/arkpedia-reckpr-public.js';
 import { customizePublicLieselKit, installPublicLiesel } from './content/arkpedia-liesel-public.js';
@@ -453,7 +455,8 @@ export class StandardBattle extends Battle {
   cost(id) {
     const entry = this.bench[id];
     if (!entry) return Infinity;
-    const ordinary = Math.floor(this.data.getChess(id).stats.cost
+    // An owner may swap a card's base cost until its next deployment (SilverAsh the Reignfrost's S3).
+    const ordinary = Math.floor((entry.baseCost ?? this.data.getChess(id).stats.cost)
       // An owner may keep its redeployment cost unchanged (Violet Mizutsune Orchid).
       * Math.min(2, 1 + (entry.noCostIncrease ? 0 : entry.deployments) * 0.5));
     const vanguard = adjustFiveStarVanguardSecondCost(this, id, ordinary);
@@ -482,7 +485,8 @@ export class StandardBattle extends Battle {
       col > this.rect.c1
     )
       return "Select a tile on the map.";
-    const tile = this.grid.tile(row, col),
+    // An owner may give a tile another build type (Nasti's platform becomes a ranged tile).
+    const tile = { ...this.grid.tile(row, col), ...(this.regularTileBuild?.(row, col) ? { build: this.regularTileBuild(row, col) } : {}) },
       position = this.data.getChess(id).position;
     const rangedTrait = REGULAR_OPERATORS[id]?.deployOnRanged && tile.build === 'RANGED';
     // An owner may admit another build type on specific tiles (Violet Mizutsune Orchid's talent).
@@ -495,7 +499,8 @@ export class StandardBattle extends Battle {
     const ownerDeny = this.regularPlacementDeny?.[id]?.(row, col, tile);
     if (ownerDeny) return ownerDeny;
     if (
-      this.allyUnits.some((u) => u.alive && u.tileR === row && u.tileC === col)
+      this.allyUnits.some((u) => u.alive && u.tileR === row && u.tileC === col
+        && !(u.mem?.regularHost?.accepts?.({ defId: id, def: this.data.getChess(id), kind: 'op' }) === true))
     )
       return "Tile is occupied.";
     if (this.tileReservation(row, col)) return "Tile is reserved for an operator's return.";
@@ -504,7 +509,7 @@ export class StandardBattle extends Battle {
   }
   deployOperator(id, row, col, dir) {
     const unit = this._deployOperator(id, row, col, dir);
-    if (unit && this.bench[id]) this.bench[id].costDelta = 0;
+    if (unit && this.bench[id]) { this.bench[id].costDelta = 0; delete this.bench[id].baseCost; }
     return unit;
   }
   // Engine-owned delivery: reuse selected builds, kits and deployment hooks;
@@ -674,6 +679,8 @@ export class StandardBattle extends Battle {
     customizeAglna2Kit({ battle: this, id, unit, kit });
     customizeRadianKit({ battle: this, id, unit, kit });
     customizeKalts2Kit({ battle: this, id, unit, kit });
+    customizeSvash2Kit({ battle: this, id, unit, kit });
+    customizeNastiKit({ battle: this, id, unit, kit });
     customizePublicBranchKit({ battle: this, id, unit, kit });
     customizeNarantKit({ battle: this, id, def, unit, kit });
     customizeElaKit({ battle: this, id, def, unit, kit });
@@ -936,6 +943,8 @@ export class StandardBattle extends Battle {
     installAglna2({ battle: this, unit, def });
     installRadian({ battle: this, unit, def });
     installKalts2({ battle: this, unit, def });
+    installSvash2({ battle: this, unit, def });
+    installNasti({ battle: this, unit, def });
     installPublicBranch({ battle: this, unit, def });
     installNarant({ battle: this, unit, def });
     installEla({ battle: this, unit, def });
