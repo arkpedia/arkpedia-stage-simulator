@@ -5758,3 +5758,7 @@ The Evocator summons one Purifying Flame every 6 s (first after 3 s). The Flame 
 ### 9-15 and 9-16 (S97, 2026-10-21)
 
 With the Evocator/Flame supported, **9-15** and **9-16** build (8×11/9×11, 36–47 spawns). The stacked branch now has **190 public stages** (0-1 plus 189 files).
+
+### Snapshot to 386 enemies (S98, 2026-10-21)
+
+`docs/REMAINING.md` records the Evocator/Flame state: **386** supported enemies, **189** built source stages and **190** public entries; all 189 data-backed stages pass the two-second smoke test.
