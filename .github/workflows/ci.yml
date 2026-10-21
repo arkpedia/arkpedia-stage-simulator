@@ -25,7 +25,7 @@ permissions:
 jobs:
   test:
     if: ${{ inputs.scope != 'enemy-clocks' }}
-    name: ${{ inputs.scope == 'atomic-json' && 'atomic JSON' || 'test' }} (${{ matrix.os }}, node ${{ matrix.node }})
+    name: ${{ inputs.scope == 'atomic-json' && 'atomic JSON' || 'test' }} (${{ matrix.os }}, node ${{ matrix.node }}, shard ${{ matrix.shard }})
     runs-on: ${{ matrix.os }}
     # Full source suites now exceed 45 minutes on multiple matrix entries.
     # Keep every test on Linux/Windows and both Node versions; allow each
@@ -37,6 +37,7 @@ jobs:
         os: [ubuntu-latest, windows-latest]
         # 22 and 24 = the maintained LTS lines (24 is what `winget install OpenJS.NodeJS.LTS` installs today)
         node: [22, 24]
+        shard: [0, 1]
     env:
       # Browser/E2E suites gate themselves on these (and on a local Chrome + downloaded game assets, which CI never
       # has): keep them off explicitly. Suites that need .cache/gamedata, public/assets or data/local-assets.json skip.
@@ -64,14 +65,17 @@ jobs:
 
       - name: Unit & integration tests
         if: ${{ inputs.scope != 'atomic-json' }}
-        run: node --test --test-timeout=180000
+        env:
+          SHARD_INDEX: ${{ matrix.shard }}
+          SHARD_TOTAL: 2
+        run: node tools/run-tests.mjs
 
       - name: Atomic replacement tests including real Windows sharing locks
-        if: ${{ inputs.scope == 'atomic-json' }}
+        if: ${{ inputs.scope == 'atomic-json' && matrix.shard == 0 }}
         run: node --test test/arkpedia-write-json.test.js
 
       - name: Server smoke test (boot, /healthz, index.html, doctor)
-        if: ${{ inputs.scope != 'atomic-json' }}
+        if: ${{ inputs.scope != 'atomic-json' && matrix.shard == 0 }}
         shell: bash
         run: |
           node server/index.js > server.log 2>&1 &

@@ -27,4 +27,4 @@ The low-risk optimisations first: profile the renderer, avoid per-frame allocati
 
 The full 22k-test step takes roughly **70 minutes on a 2-core GitHub-hosted runner** versus 11–16 minutes locally (many cores). The step is progressing, not hung; the unit/integration log reached test 10,322 of ~22,776 at the 33-minute mark. This is test-count and runner-CPU cost, not battle-engine cost.
 
-If it grows further, shard by test-file groups into additional matrix jobs (for example `arkpedia-*`, `sim-*`, `web-*`) rather than moving checks off GitHub-hosted runners. The engine benchmark and the 5 s heavy-battle budget remain the performance gates.
+The suite is now sharded across two matrix lanes with `tools/run-tests.mjs` (`SHARD_INDEX`/`SHARD_TOTAL`, a stable sort of `test/*.test.js`). Each file runs once; the server smoke and atomic jobs run on shard 0 only. This halves the wall time without moving checks off GitHub-hosted runners. The engine benchmark and the 5 s heavy-battle budget remain the performance gates.

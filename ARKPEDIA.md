@@ -5810,3 +5810,7 @@ The buildable bucket exposed two ready stages: **9-11** (8×12, 47 spawns, 4 ene
 ### CI per-test timeout (S108, 2026-10-21)
 
 The GitHub-hosted unit/integration step now runs `node --test --test-timeout=180000`: a single hung test fails in three minutes instead of occupying the runner until the workflow limit. The longest local test is under three seconds, so the budget only catches a hang.
+
+### CI test sharding (S109, 2026-10-21)
+
+The unit/integration step now runs through `tools/run-tests.mjs` with `SHARD_INDEX`/`SHARD_TOTAL` over a stable sort of `test/*.test.js`. The matrix has two shards per OS/Node lane, so each file runs once and the 70-minute wall time should roughly halve. Server smoke and atomic-write jobs run on shard 0 only; enemy-clock jobs are unchanged.
