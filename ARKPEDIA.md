@@ -5690,3 +5690,7 @@ The adverse variants of **11-2** and **11-3** build as well (7×9/8×11, 21–37
 ### Ursus Civilian (E59, 2026-10-21)
 
 The Ursus Civilian sets `lpr = 0` (spared at the objective costs no life) and `counted = false`; dying instead deducts the reviewed `dead.value` (-1) life and can finish the battle. The native active is claimed. Support rises to **373 of 1,552** enemies. The test covers spare and kill.
+
+### Civilian stages (S86, 2026-10-21)
+
+With the Ursus Civilian supported, **R8-2**, **R8-4**, **R8-9** and **TR-18** build (6×9–8×12, 7–64 spawns). Coverage is **184 public stages** (0-1 plus 183 files).
