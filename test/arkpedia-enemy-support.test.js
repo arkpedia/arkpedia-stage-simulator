@@ -34,7 +34,10 @@ test('the regular registry is exactly the supported enemies, and keeps both 0-1 
 });
 test('a supported enemy uses nothing unimplemented; an unsupported one names what is missing', () => {
   for (const [id, e] of Object.entries(support.enemies)) {
-    if (e.policy) { assert.deepEqual(e.reasons, [], id); for (const n of Object.values(e.native)) assert.deepEqual([n.enemyAbilityWrappers, n.activeGeneralOrCommonAbilities], [0, 0], id); }
+    if (e.policy) { assert.deepEqual(e.reasons, [], id); for (const n of Object.values(e.native)) {
+      assert.equal(n.enemyAbilityWrappers - (n.claimedWrappers ?? 0), 0, `${id} wrappers`);
+      assert.equal(n.activeGeneralOrCommonAbilities - (n.claimedActive ?? 0), 0, `${id} active abilities`);
+    } }
     else assert.ok(e.reasons.length > 0, id);
   }
 });

@@ -169,6 +169,19 @@ test('Skullshatterer grenade: a 5 s DEF multiplier on the target and its cardina
   h.b.dealDamage(null, enemy, { amount: 1e9, type: 'true', sourceless: true }); h.run(5.5);
   for (let i = 0; i < guards.length; i++) { assert.equal(guards[i].findBuff('ab:defdownGrenade'), null); assert.equal(guards[i].s.def, base[i]); }
 });
+test('Crownslayer: the reviewed Blink wrapper is claimed and blinks past its blocker', () => {
+  const key = 'enemy_1502_crowns', rec = ENEMY_RECORDS.enemies[key].levels[0];
+  const evidence = support.enemies[key].native[rec.prefabKey];
+  assert.ok(support.enemies[key].policy, 'supported'); assert.equal(evidence.claimedWrappers, 1);
+  assert.ok(support.enemies[key].features.includes('skill:blink'));
+  const guard = chessRec({ id: 'crown_guard', profession: 'WARRIOR', stats: { atk: 0, maxHp: 1e6, def: 300 } });
+  const h = makeBattle({ defs: { enemies: { [key]: rec }, chess: { [guard.chessId]: guard } },
+    units: [{ chessId: guard.chessId, row: 9, col: 6 }], enemies: [{ key, time: 0, route: 0 }],
+    content: 'none', autoFinish: false, timeLimit: 40, setup: battle => installEnemyFeatures(battle) });
+  h.run(20);
+  assert.ok(h.eventsOf('fx').some(event => event[1] === 'blink'), 'the blink fired');
+  assert.deepEqual(h.b.errors, []);
+});
 test('Drains 1 Life Point: the engine leak drains the record stat', () => {
   const key = 'enemy_1137_plasm';
   assert.ok(support.enemies[key].policy, 'supported by the existing leak rule');

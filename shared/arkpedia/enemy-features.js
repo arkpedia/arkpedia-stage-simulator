@@ -93,6 +93,24 @@ function isGrenadeDefDown(r, nat) {
     && b.templateKey === 'empty' && b.loadFromDB === 0 && b.durationKey === '' && b.triggerLifeType === 0 && b.blackboard.length === 0;
 }
 
+// The reviewed Crownslayer Blink pair: one EnemyAbility wrapper (familyMask 2, castLikeAttack 0, default init cooldown)
+// and its Blink ability (waitForAttackEvent, no selector, one 1 s buff with abnormalFlags [3]). It is the only shape the
+// skill:blink feature claims, and it claims exactly one native wrapper for the support gate.
+function isCrownslayerBlink(r, nat) {
+  const rows = nat.Blink ?? [], wrapper = rows.find(c => '_familyMask' in c), ability = rows.find(c => '_waitForAttackEvent' in c);
+  if (!wrapper || !ability || r.skills.length !== 1) return false;
+  const skill = r.skills[0], b = ability._buffs?.[0];
+  return skill.prefabKey === 'blink' && skill.bb.dist === 1.5 && skill.cooldown === 15 && skill.initCooldown === 15
+    && r.abilities.some(a => a.text === 'When blocked, can quickly move behind the unit')
+    && wrapper._familyMask === 2 && wrapper._trigger?.m_PathID === '0' && wrapper._castLikeAttack === 0
+    && wrapper._ignoreSilence === 0 && wrapper._overwriteInitCooldown === -1 && wrapper._checkParentActive === 0
+    && wrapper._maxTriggerTime === -1 && wrapper._resetCdWaitFirstPeriod === 1 && wrapper._resetMainAbilityCdWhenCastEnd === 0
+    && ability._waitForAttackEvent === 1 && ability._selector?.m_PathID === '0' && ability._resetCdStrategy === 1
+    && ability._preDelay === 0 && ability._escapeTime === 0 && ability._waitForCasting === 0 && ability._checkBuffEarlyFinish === 0
+    && ability._buffs?.length === 1 && b.lifeTime === 1 && b.lifeTimeType === 1 && b.buffKey === '' && b.durationKey === '_'
+    && b.templateKey === 'empty' && JSON.stringify(b.attributes?.abnormalFlags) === '[3]';
+}
+
 // The reviewed enhance component (enemy_1103_wdkght family): a whole-field passive (no selector, no interval) marking
 // every unit of the owner's own side (validator targetSide 1, all motions, ignoring isolation) with template
 // enemy_wdkght_t, whose only event ON_OWNER_KILLED gives the mark's source one INFINITY stack of ATK MULTIPLIER and
@@ -132,6 +150,11 @@ export const ENEMY_FEATURES = Object.freeze({
   // 嘲讽: "More likely to be targeted by attacks" — taunt level +taunt_level.
   'talent:taunt': { covers: r => sig(r, 'taunt', ['taunt_level']), ability: { kind: 'taunt', params: r => ({ n: r.talents.bb['taunt.taunt_level'] }) },
     note: 'taunt level', explains: /^More likely to be targeted by attacks\.$/ },
+  // Crownslayer: a cooldown blink past the blocker, proven against the reviewed Blink wrapper/ability pair.
+  'skill:blink': { covers: (r, nat) => isCrownslayerBlink(r, nat),
+    ability: { kind: 'blinkWhenBlocked', params: r => ({ dist: r.skills[0].bb.dist ?? 1.5, cooldown: r.skills[0].cooldown, initCooldown: r.skills[0].initCooldown }) },
+    note: 'blink past the blocker on the reviewed cooldown', nativeClaim: () => ({ wrappers: 1 }),
+    explains: /^When blocked, can quickly move behind the unit$/ },
   // Senior Caster: the normal ranged attack also splashes the primary target's four cardinal neighbours.
   'ability:Deals area damage to Operators on the four cardinal tiles next to the primary target.': {
     covers: r => r.applyWay === 'RANGED' && r.stats.rangeRadius > 0

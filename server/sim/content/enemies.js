@@ -310,6 +310,15 @@ export const featureAbilities = Object.freeze({
       b.addBuff(e, { key: 'ab:enhance', refresh: 'stack', stacks: 1, maxStacks: max, persist: true, visible: true, mods: { atkPct: atk, aspd } });
     },
   }),
+  // Crownslayer: when blocked and off cooldown, blink along the route past the blocker (the reviewed helper also grants
+  // the 1 s invulnerable/unblockable window carried by the Blink ability buff). Silence stops it.
+  blinkWhenBlocked: ({ dist, cooldown, initCooldown }) => ({
+    spawn(b, e, a) { a.readyAt = b.time + (initCooldown ?? 0); },
+    tick(b, e, a) {
+      if (!e.alive || e.s.flags.silence || !e.blockedBy || b.time < a.readyAt) return;
+      if (blinkForward(b, e, dist)) a.readyAt = b.time + (cooldown ?? 0);
+    },
+  }),
   // Senior Caster: the normal attack also hurts the primary target's four cardinal neighbours (the target tile is
   // excluded; the normal hit remains the primary target's own damage event).
   cardinalSplash: () => ({
