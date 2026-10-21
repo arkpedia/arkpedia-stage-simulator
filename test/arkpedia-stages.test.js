@@ -6,6 +6,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { access } from 'node:fs/promises';
 import { applyStage, resolveStage, stageDataUrl, validateStageIndex } from '../shared/arkpedia/stages.js';
+import { buildStageIndex } from '../tools/arkpedia/stage-index.mjs';
 import index from '../data/arkpedia-stages.json' with { type: 'json' };
 import mvp from '../data/arkpedia-mvp.json' with { type: 'json' };
 
@@ -47,6 +48,20 @@ test('an embedded catalogue entry can never silently load a different stage', as
   const data = structuredClone(mvp);
   const catalogued = { ...index, defaultStage: '0-1', stages: [{ id: '0-1', code: '9-9', name: 'Wrong', data: null }] };
   await assert.rejects(applyStage(data, catalogued), /Embedded stage is missing/);
+});
+test('the committed catalogue is generated from the stage files', async () => {
+  assert.deepEqual(await buildStageIndex(), index);
+});
+test('test-only stages require the experimental flag', () => {
+  const entry = index.stages.find(stage => stage.testOnly);
+  assert.ok(entry, 'a test-only stage exists');
+  assert.throws(() => resolveStage(index, entry.id), error => {
+    assert.equal(error.code, 'STAGE_TEST_ONLY');
+    assert.equal(error.stage.id, entry.id);
+    assert.ok(error.stages.every(stage => !stage.testOnly), 'only public stages are offered');
+    return true;
+  });
+  assert.equal(resolveStage(index, entry.id, { experimental: true }).id, entry.id);
 });
 test('every data-backed stage names a committed file', async () => {
   for (const entry of index.stages) {

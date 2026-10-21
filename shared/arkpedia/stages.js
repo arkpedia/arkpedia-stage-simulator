@@ -23,20 +23,28 @@ export function validateStageIndex(index) {
     if (typeof entry.name !== 'string' || !entry.name) throw Error(`Stage ${entry.id} has no name`);
     if (entry.data != null && (typeof entry.data !== 'string' || !/^[a-z0-9._-]+\.json$/i.test(entry.data)))
       throw Error(`Stage ${entry.id} has an invalid data file`);
+    if (entry.testOnly != null && typeof entry.testOnly !== 'boolean') throw Error(`Stage ${entry.id} has an invalid testOnly flag`);
   }
   if (!ids.has(index.defaultStage)) throw Error(`Unknown default stage: ${index.defaultStage}`);
   return index;
 }
 
-/** The entry to load: an explicit `?stage=` selection or the catalogue default. */
-export function resolveStage(index, requested = null) {
+/** The entry to load: an explicit `?stage=` selection or the catalogue default. Test-only stages need `experimental`. */
+export function resolveStage(index, requested = null, { experimental = false } = {}) {
   validateStageIndex(index);
   const id = requested || index.defaultStage;
   const entry = index.stages.find(stage => stage.id === id);
-  if (entry) return entry;
+  if (entry && (!entry.testOnly || experimental)) return entry;
+  if (entry) {
+    const error = Error(`Stage ${id} is test-only: open it with ?experimental=1`);
+    error.code = 'STAGE_TEST_ONLY';
+    error.stage = entry;
+    error.stages = index.stages.filter(stage => !stage.testOnly);
+    throw error;
+  }
   const error = Error(`Unknown stage: ${id}`);
   error.code = 'STAGE_NOT_FOUND';
-  error.stages = index.stages;
+  error.stages = index.stages.filter(stage => !stage.testOnly);
   throw error;
 }
 
@@ -50,8 +58,8 @@ export function stageDataUrl(entry) {
  * public contract used by StandardBattle and StageRenderer). Returns the entry
  * and the installed stage. An embedded entry must already be the global stage.
  */
-export async function applyStage(data, index, requested = null, fetchImpl = fetch) {
-  const entry = resolveStage(index, requested);
+export async function applyStage(data, index, requested = null, fetchImpl = fetch, { experimental = false } = {}) {
+  const entry = resolveStage(index, requested, { experimental });
   if (entry.data) {
     const response = await fetchImpl(stageDataUrl(entry));
     if (!response.ok) throw Error(`Stage data unavailable: ${entry.id}`);

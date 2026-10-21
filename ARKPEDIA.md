@@ -5093,3 +5093,9 @@ The CI workflow now runs on `push` only to `master`; feature branches run when t
 - **Grenade DEF-down**: the retained `skulsr_attack` native component is a one-stack, 5-second DEF multiplier (`defdown.def`, −0.5) on the target family. The reviewed branch applies it to the target and its four cardinal neighbours only while the caster is unblocked; the acid-slime branch keeps its permanent stacking flat DEF.
 - **`atkup` with `hp_ratio`**: the low-HP ATK family now accepts both `['atk']` and `['atk','hp_ratio']`, reading the threshold from the record instead of assuming 50%.
 - **Coverage.** Support rises to 251 of 1,552 enemies. The grenade test checks both adjacent guards, the exact DEF multiplier, and expiry five seconds after the source dies. 3-8 itself still cannot be built because its viewer export is missing route 0; the enemy is supported independently of that stage file.
+
+### Developer QA view and the generated stage catalogue (S12, 2026-10-21)
+
+`tools/arkpedia/stage-index.mjs` keeps `data/arkpedia-stages.json` in step with the stage files. Curated entries (the embedded 0-1, and any reviewed file-backed stage with no `testOnly`) are preserved; every other `data/arkpedia-stage-*.json` becomes a `testOnly` entry. `--check` fails when the catalogue is stale, and the stage-catalogue test runs the generator against the committed file.
+
+`?experimental=1` opens the developer QA view: the stage picker lists all 58 entries (test-only ones marked “· test”), and an explicit test-only `?stage=` is accepted. Without the flag the public picker still shows only 0-1, and a test-only selection fails with a link to the QA view. The data and the loader remain the same; this is a review surface, not a public release.

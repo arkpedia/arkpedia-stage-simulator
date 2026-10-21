@@ -58,14 +58,20 @@ const [response, stageResponse] = await Promise.all([
 if (!response.ok || !stageResponse.ok) throw Error("Stage data unavailable");
 const data = await response.json();
 const stageIndex = await stageResponse.json();
-const requested = new URLSearchParams(location.search).get("stage");
+const query = new URLSearchParams(location.search);
+const experimental = query.get("experimental") === "1";
+const requested = query.get("stage");
+const stageHref = stage => `/arkpedia/?stage=${encodeURIComponent(stage.id)}${experimental ? '&experimental=1' : ''}`;
 let activeStage;
 try {
-  ({ entry: activeStage } = await applyStage(data, stageIndex, requested));
+  ({ entry: activeStage } = await applyStage(data, stageIndex, requested, fetch, { experimental }));
 } catch (error) {
-  const available = (error.stages ?? stageIndex.stages ?? []).map(stage =>
-    `<a href="/arkpedia/?stage=${encodeURIComponent(stage.id)}">${escape(stage.code)} ${escape(stage.name)}</a>`).join(', ');
-  app.innerHTML = `<div class="frame"><h1>Stage not supported yet</h1><p class="notice">Available stages: ${available || 'none'}.</p><a href="/arkpedia/">Open ${escape(stageIndex.defaultStage)}</a></div>`;
+  const available = (error.stages ?? stageIndex.stages.filter(stage => !stage.testOnly) ?? []).map(stage =>
+    `<a href="${stageHref(stage)}">${escape(stage.code)} ${escape(stage.name)}</a>`).join(', ');
+  const hint = error.code === 'STAGE_TEST_ONLY'
+    ? `This stage is test-only. <a href="/arkpedia/?experimental=1&stage=${encodeURIComponent(error.stage.id)}">Open it in the developer QA view</a>. `
+    : '';
+  app.innerHTML = `<div class="frame"><h1>Stage not supported yet</h1><p class="notice">${hint}Available stages: ${available || 'none'}.</p><a href="/arkpedia/">Open ${escape(stageIndex.defaultStage)}</a></div>`;
   throw error;
 }
 const catalogue = catalogueFor(data);
@@ -136,8 +142,9 @@ let editing = ops[0].id,
   supportId = "",
   rosterQuery = "";
 function prep() {
-  const stagePicker = stageIndex.stages.length > 1
-    ? `<nav class="stage-picker" aria-label="Stages">${stageIndex.stages.map(stage => `<a href="/arkpedia/?stage=${encodeURIComponent(stage.id)}"${stage.id === activeStage.id ? ' aria-current="page"' : ''}>${escape(stage.code)} ${escape(stage.name)}</a>`).join('')}</nav>`
+  const stages = stageIndex.stages.filter(stage => !stage.testOnly || experimental);
+  const stagePicker = stages.length > 1
+    ? `<nav class="stage-picker" aria-label="Stages">${stages.map(stage => `<a href="${stageHref(stage)}"${stage.id === activeStage.id ? ' aria-current="page"' : ''}>${escape(stage.code)} ${escape(stage.name)}${stage.testOnly ? ' · test' : ''}</a>`).join('')}</nav>`
     : '';
   app.innerHTML = `<div class="frame"><header class="topline"><div><p class="eyebrow">Arkpedia · prototype</p><h1>Stage simulator</h1></div><span class="muted">${escape(data.stage.code)} ${escape(data.stage.name)}</span></header>
  <div class="prep">${stagePicker}<section class="preview"><div class="stage-title"><span class="stage-code">${escape(data.stage.code)}</span><h2>${escape(data.stage.name)}</h2></div><p class="help">${escape(data.stage.description)}</p><div class="board" id="board"></div><div class="legend"><span class="spawn">Enemy entry</span><span class="goal">Defence objective</span><span>Raised tiles: ranged operators</span></div>
