@@ -264,6 +264,13 @@ export const ENEMY_FEATURES = Object.freeze({
     explains: text => /^Attack power increases( greatly)? when attacking <\$ba\.frozen>Frozen<\/> targets$/.test(text)
       || /^Gains significantly increased ATK when HP is under 50%$/.test(text) },
 
+  // Theater Golem: a four-Block requirement plus a splash around its own body.
+  'ability:Can only be blocked by units with at least 4 Block': { covers: r => r.abilities.some(a => a.text === 'Can only be blocked by units with at least 4 Block'),
+    ability: { kind: 'requiredBlock', params: () => ({ block: 4 }) }, note: 'needs a blocker with 4 Block',
+    explains: /^Can only be blocked by units with at least 4 Block$/ },
+  'ability:Attacks deal Splash damage to allied units in a small area around self': { covers: r => r.abilities.some(a => a.text === 'Attacks deal Splash damage to allied units in a small area around self'),
+    ability: { kind: 'selfSplash', params: () => ({ radius: 1.5 }) }, note: 'splashes allies around itself',
+    explains: /^Attacks deal Splash damage to allied units in a small area around self$/ },
   // Seed of Withering/Decay: detonates when an ally enters its attack range.
   'ability:Self-destructs when near an Operator, dealing Physical damage': { covers: r => r.abilities.some(a => a.text === 'Self-destructs when near an Operator, dealing Physical damage'),
     ability: { kind: 'selfDestruct', params: () => ({ radius: 2 }) }, note: 'physical blast then dies when an ally is near',

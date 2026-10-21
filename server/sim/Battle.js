@@ -1227,6 +1227,7 @@ export class Battle {
     if (!e.isFlying && (!u.ground || mode === 'FLY' || mode !== 'WALK' && u.s.flags.liftoff || this.grid.tile(u.tileR, u.tileC).pass !== 'ALL')) return false;
     const cap = u.s.blockCnt;
     if (cap <= 0) return false;
+    if (e.profile?.requiredBlock && cap < e.profile.requiredBlock) return false;
     let used = 0;
     for (const x of u.blocking) used += x.blockWeight ?? 1;
     return used + w <= cap;

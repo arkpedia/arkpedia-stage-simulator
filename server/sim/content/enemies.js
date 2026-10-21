@@ -344,6 +344,14 @@ export const featureAbilities = Object.freeze({
       b.addBuff(e, { key: 'ab:enhance', refresh: 'stack', stacks: 1, maxStacks: max, persist: true, visible: true, mods: { atkPct: atk, aspd } });
     },
   }),
+  // Theater Golem: its required Block and the splash around its own body.
+  requiredBlock: ({ block }) => ({ spawn(b, e) { e.profile.requiredBlock = block; } }),
+  selfSplash: ({ radius }) => ({
+    dealt(c, b, e) {
+      if (!c.dmg?.isAttack) return;
+      for (const u of b.alliesInRadius(e.x, e.y, radius)) if (u !== c.target) hurt(b, e, u, e.s.atk, c.dmg.type, { tags: ['splash'] });
+    },
+  }),
   // Seed of Withering: once any ally is inside the unit's attack range, blast the one-tile area and die.
   selfDestruct: ({ radius }) => ({
     tick(b, e, a) {

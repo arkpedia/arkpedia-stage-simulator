@@ -388,6 +388,22 @@ test('Seed of Withering: detonates near a guard and dies', () => {
   h.runUntil(() => !e.alive, 20);
   assert.ok(!e.alive, 'it self-destructed'); assert.ok(guard.hp < hp, 'the guard took the blast');
 });
+test('Theater Golem: needs 4 Block and splashes allies around itself', () => {
+  const key = 'enemy_2011_csppt', rec = ENEMY_RECORDS.enemies[key].levels[0];
+  const a = chessRec({ id: 'golem_a', profession: 'WARRIOR', stats: { atk: 0, maxHp: 1e6, def: 0 } });
+  const b = chessRec({ id: 'golem_b', profession: 'WARRIOR', stats: { atk: 0, maxHp: 1e6, def: 0 } });
+  const h = makeBattle({ defs: { enemies: { [key]: rec }, chess: { [a.chessId]: a, [b.chessId]: b } },
+    units: [{ chessId: a.chessId, row: 9, col: 6 }, { chessId: b.chessId, row: 9, col: 7 }],
+    enemies: [{ key, time: 0, route: 0 }], content: 'none', autoFinish: false, timeLimit: 30,
+    setup: battle => installEnemyFeatures(battle) });
+  h.run(0.05); const e = h.b.units.find(u => u.side === 'enemy' && u.defId === key), guards = h.b.units.filter(u => u.side === 'ally');
+  e.profile.requiredBlock = 4;
+  guards[0].s.blockCnt = 3; assert.equal(h.b._blockerFor(guards[0], e, 1), false);
+  guards[0].s.blockCnt = 4; assert.equal(h.b._blockerFor(guards[0], e, 1), true);
+  const other = guards[1]; other.x = e.x + 0.5; other.y = e.y;
+  const hp = other.hp; const splash = e.mem.ab.list.find(a => a.dealt); splash.dealt({ dmg: { isAttack: true, type: 'phys' }, target: guards[0] }, h.b, e, splash);
+  assert.ok(other.hp < hp, 'the nearby ally took the self-splash');
+});
 test('Drains 1 Life Point: the engine leak drains the record stat', () => {
   const key = 'enemy_1137_plasm';
   assert.ok(support.enemies[key].policy, 'supported by the existing leak rule');

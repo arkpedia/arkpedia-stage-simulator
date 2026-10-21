@@ -5410,3 +5410,7 @@ Every public entry now carries a `reviewed` date (`2026-10-21` for the current f
 ### Grouped stage selector (S41, 2026-10-21)
 
 The stage selector now groups options into Chapter N, Side stories, Mini events, Tutorial and Events via `<optgroup>`, using the stage code prefix. The current stage remains selected. Static client tests still pass (217).
+
+### Theater Golem block/splash (E31, 2026-10-21)
+
+The Theater Golem requires a blocker with at least 4 Block (`profile.requiredBlock` is enforced by `_blockerFor`) and splashes its own ATK around its body on every attack. Support rises to **316 of 1,552** enemies. The test checks both the 4-Block gate and the self-centred splash.
