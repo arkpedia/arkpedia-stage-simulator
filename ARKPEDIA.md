@@ -5237,3 +5237,16 @@ The `epdamage` talent now covers both its simple and chain signatures. The chain
 ### The ASV's Reborn-Creation support aura (E16, 2026-10-21)
 
 `talent:aura` now has a second reviewed branch. The Sarkaz Heirbearer ASV grants every bloodsucker-marked Reborn Creation +10% ATK (one contribution per living ASV, up to the reviewed five-stack cap) and adds Necrosis (`aura.ep_damage_ratio`, 0.1 × the creation's ATK) to their ordinary attacks. One battle listener tracks the living ASV sources; the ATK buff and element stop when the last ASV leaves. The Hatedrinker self-buff branch is unchanged. Support rises to **278 of 1,552** enemies. The test checks the +10% creation ATK and the Necrosis event from the creation's own attack.
+
+### ASV stages (S21, 2026-10-21, test-only)
+
+| Stage | Grid | Waves | Spawns |
+|---|---|---|---|
+| 10-9 | 8×12 | 1 | 27 |
+| 10-9 adverse environment | 8×12 | 1 | 27 |
+| 13-3 | 8×11 | 1 | 25 |
+| 13-3 adverse environment | 8×11 | 1 | 25 |
+| 10-16 | 9×13 | 1 | 32 |
+| 10-16 adverse environment | 9×13 | 1 | 32 |
+
+Coverage is **0-1 plus 89 test-only files**.
