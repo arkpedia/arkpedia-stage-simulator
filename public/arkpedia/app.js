@@ -180,6 +180,9 @@ function prep() {
     for (const option of document.querySelectorAll("#stage-select option"))
       option.hidden = !!query && !option.textContent.toLowerCase().includes(query);
   });
+  document.querySelector("#stage-search")?.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") { e.target.value = ""; e.target.dispatchEvent(new Event("input", { bubbles: true })); }
+  });
   document.querySelector("#stage-select")?.addEventListener("change", (e) => { location.href = e.target.value; });
   document.querySelector("#start").addEventListener("click", start);
   document.querySelector("#roster-search").addEventListener("input", (e) => {
@@ -1140,6 +1143,11 @@ document.addEventListener("visibilitychange", () => {
   }
 });
 document.addEventListener("keydown", (e) => {
+  if (e.key === "/" && !/^(INPUT|TEXTAREA|SELECT)$/.test(e.target?.tagName || "")) {
+    const search = document.querySelector("#stage-search");
+    if (search) { e.preventDefault(); search.focus(); }
+  }
+
   if (
     !workspace ||
     landscapeRequired ||

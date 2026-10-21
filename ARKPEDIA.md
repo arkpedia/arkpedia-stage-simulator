@@ -5454,3 +5454,7 @@ The Guerrilla Herald refreshes a 0.7-second battlefield-wide buff on every livin
 ### Stage search (S48, 2026-10-21)
 
 The prep page's grouped stage selector now has a "Find a stage" search box. Typing filters the options by code/name (case-insensitive) without changing the current selection; clearing the query restores every option. Static client tests still pass (217).
+
+### Stage search shortcuts (S49, 2026-10-21)
+
+`/` focuses the stage search from anywhere outside a form field, and Escape clears the query and restores all options. Static client tests remain at 217.
