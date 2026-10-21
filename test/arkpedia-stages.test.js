@@ -53,7 +53,7 @@ test('the committed catalogue is generated from the stage files', async () => {
   assert.deepEqual(await buildStageIndex(), index);
 });
 test('reviewed stages are public while the rest stay test-only', () => {
-  for (const id of ['0-2', '0-11', '1-1', '1-3', '1-4', '1-5', '1-7', '1-8', '1-9', '1-10', '2-1', '2-2', '2-4', '2-5', '2-6', '2-7', '2-8', '2-9', '3-1', '3-2', '3-4', '4-7', '5-8', '9-3', 's2-12']) assert.equal(resolveStage(index, id).id, id);
+  for (const id of ['0-2', '0-11', '1-1', '1-3', '1-4', '1-5', '1-7', '1-8', '1-9', '1-10', '2-1', '2-2', '2-4', '2-5', '2-6', '2-7', '2-8', '2-9', '3-1', '3-2', '3-4', '3-5', '3-6', '3-8', '4-1', '4-2', '4-7', '5-8', '9-3', 's2-12']) assert.equal(resolveStage(index, id).id, id);
   assert.throws(() => resolveStage(index, '1-2'), error => error.code === 'STAGE_TEST_ONLY');
 });
 test('test-only stages require the experimental flag', () => {
