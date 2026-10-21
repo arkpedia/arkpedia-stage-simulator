@@ -542,6 +542,15 @@ test('Altar Keeper: picks up a Beacon and drops it on death', () => {
   assert.equal(k.profile.carryingBeacon, true); assert.equal(h.b.enemies.filter(u => u.defId === beacon).length, 0);
   h.b.kill(k, null); h.run(0.1); assert.equal(h.b.enemies.filter(u => u.defId === beacon).length, 1, 'the Beacon dropped');
 });
+test('Chalice of Regret: shares 5% of a nearby ground enemy damage', () => {
+  const chalice = 'enemy_1430_lrrook', other = 'enemy_1222_dpvt';
+  const h = makeBattle({ defs: { enemies: { [chalice]: ENEMY_RECORDS.enemies[chalice].levels[0], [other]: ENEMY_RECORDS.enemies[other].levels[0] } },
+    units: [], enemies: [{ key: chalice, time: 0, route: 0 }, { key: other, time: 0, pos: [9, 10] }], content: 'none', autoFinish: false,
+    timeLimit: 30, setup: battle => installEnemyFeatures(battle) });
+  h.run(0.1); const c = enemy(h, chalice), o = enemy(h, other), before = c.hp;
+  h.b.dealDamage(null, o, { amount: 1000, type: 'true', sourceless: true }); h.run(0.1);
+  assert.ok(Math.abs((before - c.hp) - 50) < 1, `${before - c.hp}`);
+});
 test('Drains 1 Life Point: the engine leak drains the record stat', () => {
   const key = 'enemy_1137_plasm';
   assert.ok(support.enemies[key].policy, 'supported by the existing leak rule');

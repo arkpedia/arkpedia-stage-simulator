@@ -345,6 +345,16 @@ export const featureAbilities = Object.freeze({
     },
   }),
   moveSpeedBonus: ({ mul }) => ({ spawn(b, e) { b.addBuff(e, { key: 'ab:moveSpeed', persist: true, visible: true, mods: { moveMul: mul } }); } }),
+  // Chalice of Regret: mirror a fraction of nearby ground-enemy damage onto itself.
+  damageShare: ({ scale, range }) => ({
+    spawn(b, e) {
+      b.on('damaged', c => {
+        if (!e.alive || c.target === e || c.target?.side !== 'enemy' || c.target.isFlying || !(c.hpLoss > 0)) return;
+        if (Math.hypot(c.target.x - e.x, c.target.y - e.y) > range) return;
+        b.dealDamage(e, e, { amount: c.hpLoss * scale, type: 'true', sourceless: true, tags: ['share'] });
+      });
+    },
+  }),
   // Altar Keeper: unblockable, slowed when hit, carries one Beacon and drops it on death.
   altarKeeper: ({ slow, duration }) => ({
     spawn(b, e, a) {

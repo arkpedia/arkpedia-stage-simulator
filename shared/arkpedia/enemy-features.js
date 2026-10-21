@@ -286,6 +286,11 @@ export const ENEMY_FEATURES = Object.freeze({
     explains: text => /^Attack power increases( greatly)? when attacking <\$ba\.frozen>Frozen<\/> targets$/.test(text)
       || /^Gains significantly increased ATK when HP is under 50%$/.test(text) },
 
+  // Chalice of Regret: shares a fraction of nearby non-flying enemies' damage.
+  'talent:takeDmg': { covers: r => sig(r, 'takeDmg', ['damage_scale', 'range_radius'])
+      && r.abilities.some(a => a.text === 'Shares a fraction of the damage taken by non-aerial enemies around itself.'),
+    ability: { kind: 'damageShare', params: r => ({ scale: r.talents.bb['takeDmg.damage_scale'], range: r.talents.bb['takeDmg.range_radius'] }) },
+    note: 'takes a fraction of nearby non-flying enemies damage', explains: /^Shares a fraction of the damage taken by non-aerial enemies around itself\.$/ },
   // Altar Keeper: unblockable, slowed when hit, picks up a Beacon and drops it on death.
   'talent:ModeCtrl': { covers: r => sig(r, 'ModeCtrl', ['mode_1', 'move_speed', 'move_speed_duration'])
       && r.abilities.some(a => a.text === 'Unblockable and has reduced movement speed when taking damage.')

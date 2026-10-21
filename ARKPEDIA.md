@@ -5594,3 +5594,7 @@ The Altar Keeper is unblockable, gets a short movement slow when hit, picks up o
 ### 14-4 stages (S71, 2026-10-21)
 
 With the Altar Keeper supported, **14-4** and **14-4 adverse environment** build (7×10, 28–30 spawns, 5 enemies). Coverage is **153 public stages** (0-1 plus 152 files).
+
+### Chalice of Regret damage share (E50, 2026-10-21)
+
+The Chalice mirrors 5% of damage taken by nearby non-flying enemies onto itself as true damage (radius 1.7, tagged to avoid recursion). Support rises to **357 of 1,552** enemies. The test deals 1000 to a neighbour and checks the 50 self-damage.
