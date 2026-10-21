@@ -5802,3 +5802,7 @@ Added `docs/DEPLOYABLE-TOKENS.md`: the reviewed inventory data, the `tokenDeck`/
 ### 9-11 and S9-1 (S106, 2026-10-21)
 
 The buildable bucket exposed two ready stages: **9-11** (8×12, 47 spawns, 4 enemies) and **S9-1** (8×12, 25 spawns, 3 enemies). The stacked branch now has **194 public stages** (0-1 plus 193 files).
+
+### Snapshot to 194 public stages (S107, 2026-10-21)
+
+`docs/REMAINING.md` records **392** supported enemies, **193** built source stages and **194** public entries. The buildable bucket is empty except the embedded 0-1; the next unlocks need tokens, conditional spawns or the hard bosses.
