@@ -350,6 +350,22 @@ export const featureAbilities = Object.freeze({
     spawn(b, e, a) { a.next = b.time + init; },
     tick(b, e, a) { if (b.time >= a.next) { a.next = b.time + cooldown; spawnChildren(b, e, key, count); } },
   }),
+  // Bloodborn Spawn: Arts damage scaled by the target's blocking count.
+  blockDamageUp: ({ ratio, addOn }) => ({
+    hitOut(c, b, e) {
+      if (!c.dmg.isAttack) return;
+      c.dmg.type = 'arts';
+      const n = c.target?.blocking?.length ?? 0;
+      c.dmg.amount *= 1 + (ratio ?? 0) * (n + (addOn ? 0 : 0));
+    },
+  }),
+  // Bombardier: delayed physical explosion at the target position.
+  bombard: ({ delay, radius }) => ({
+    attack(c, b, e) {
+      const t = c.target; if (!t) return;
+      b.every(delay ?? 1, () => { for (const u of b.alliesInRadius(t.x, t.y, radius ?? 1.1)) hurt(b, e, u, e.s.atk, 'phys', { tags: ['bombard'] }); });
+    },
+  }),
   // Ursus Civilian: spared at the objective, one life lost if killed.
   sparedCivilian: ({ value }) => ({
     spawn(b, e) { e.lpr = 0; e.counted = false; },

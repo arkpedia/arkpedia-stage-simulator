@@ -617,6 +617,15 @@ test('Prototype distributor: summons a maintenance helper', () => {
   h.b.on('enemySpawn', ({ enemy }) => { if (enemy.defId === 'enemy_10073_mpcar_2') helpers.push(enemy); });
   h.run(4); assert.ok(helpers.length >= 1);
 });
+test('Bombardier: the delayed explosion hits the guard', () => {
+  const key = 'enemy_1361_dthrow', h = spawnAny(key, { seconds: 0.1 }), guard = h.b.units.find(u => u.side === 'ally'), hp = guard.hp;
+  h.b.autoFinish = false; h.run(10); assert.ok(guard.hp < hp, `${guard.hp} vs ${hp}`);
+});
+test('Bloodborn Spawn: dying leaves the Blood Amber child', () => {
+  const key = 'enemy_1360_dfello', h = spawnAny(key, { seconds: 0.1, units: [] }), e = enemy(h, key);
+  h.b.autoFinish = false; h.b.kill(e, null); h.run(0.2);
+  assert.equal(h.b.enemies.filter(u => u.defId === 'enemy_1367_dseed').length, 1);
+});
 test('Drains 1 Life Point: the engine leak drains the record stat', () => {
   const key = 'enemy_1137_plasm';
   assert.ok(support.enemies[key].policy, 'supported by the existing leak rule');

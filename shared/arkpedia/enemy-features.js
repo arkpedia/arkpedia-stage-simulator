@@ -243,7 +243,8 @@ export const ENEMY_FEATURES = Object.freeze({
     ability: { kind: 'stunAttack', params: r => ({ every: 3, duration: r.skills[0].bb.stun }) },
     note: 'every third attack stuns the target area', nativeClaim: () => ({ wrappers: 1 }),
     explains: /^After several attacks, <\$ba\.stun>Stuns<\/> friendly units in an area\.$/ },
-  'talent:Attack': { covers: r => sig(r, 'Attack', ['enemy_key'])
+  'talent:Attack': { covers: r => (sig(r, 'Attack', ['enemy_key'])
+      || sig(r, 'Attack', ['attack@projectile_delay_time', 'attack@projectile_radius', 'delay', 'enemy_key']))
       && r.abilities.some(a => /^Will be reborn as a <[^>]+> after falling in battle for the first time$/.test(a.text)),
     ability: { kind: 'deathSpawn', params: r => ({ key: r.talents.bbStr['Attack.enemy_key'], cnt: 1 }) },
     note: 'reborn as its reviewed child on death', dependsOn: r => [r.talents.bbStr['Attack.enemy_key']].filter(Boolean),
@@ -291,6 +292,24 @@ export const ENEMY_FEATURES = Object.freeze({
     ability: { kind: 'periodicSpawn', params: r => ({ key: r.skills[0]?.bbStr?.enemy_key ?? 'enemy_10073_mpcar_2', count: 1, cooldown: r.skills[0]?.cooldown ?? 5, init: r.skills[0]?.initCooldown ?? 3 }) },
     nativeClaim: () => ({ wrappers: 1 }), note: 'one helper every cooldown', explains: /^Periodically summons 1 <Rampaging Maintenance Helper>$/ },
   'skill:Spawn': { covers: r => r.skills.some(s => s.prefabKey === 'Spawn'), note: 'native Spawn skill consumed by periodicSpawn' },
+  // Bloodborn Spawn: Arts damage scaled by the target's blocking count, and a Blood Amber death spawn.
+  'talent:DamageUp': { covers: r => sig(r, 'DamageUp', ['add_on', 'scale_ratio'])
+      && r.abilities.some(a => a.text.startsWith('Deals Arts damage and gains increased ATK depending on the number of units the target is blocking.')),
+    ability: { kind: 'blockDamageUp', params: r => ({ ratio: r.talents.bb['DamageUp.scale_ratio'], addOn: r.talents.bb['DamageUp.add_on'] }) },
+    note: 'Arts attacks scale with the target block count', explains: /^Deals Arts damage and gains increased ATK depending on the number of units the target is blocking\.$/ },
+  'talent:Summon': { covers: r => sig(r, 'Summon', ['cnt', 'enemy_key'])
+      && r.abilities.some(a => a.text === 'Leaves behind <Blood Amber> when defeated.'),
+    ability: { kind: 'deathSpawn', params: r => ({ key: r.talents.bbStr['Summon.enemy_key'], cnt: r.talents.bb['Summon.cnt'] }) },
+    note: 'leaves the reviewed child on death', dependsOn: r => [r.talents.bbStr['Summon.enemy_key']].filter(Boolean),
+    explains: /^Leaves behind <Blood Amber> when defeated\.$/ },
+  'talent:Passive': { covers: r => sig(r, 'Passive', ['damage_resistance', 'hp_ratio'])
+      && r.abilities.some(a => a.text === 'When affected by the pulse of a Bloodcalling Altar, will be reborn as a Bloodborn Spawn at the altar.'),
+    note: 'inert Blood Amber until the altar pulse', nativeClaim: () => ({ active: 1 }),
+    explains: /^When affected by the pulse of a Bloodcalling Altar, will be reborn as a Bloodborn Spawn at the altar\.$/ },
+  'ability:Deals long-ranged attacks that explode after a delay, inflicting Physical damage in an area.': {
+    covers: r => r.abilities.some(a => a.text === 'Deals long-ranged attacks that explode after a delay, inflicting Physical damage in an area.'),
+    ability: { kind: 'bombard', params: r => ({ delay: r.talents.bb['Attack.delay'] ?? 1, radius: r.talents.bb['Attack.attack@projectile_radius'] ?? 1.1 }) },
+    note: 'delayed projectile explosion', explains: /^Deals long-ranged attacks that explode after a delay, inflicting Physical damage in an area\.$/ },
   // Ursus Civilian: spared at the objective, but costs a life when killed; not counted as defeated.
   'ability:Does not deplete Life Points when spared, but will deplete a Life Point upon dying': {
     covers: r => r.abilities.some(a => a.text === 'Does not deplete Life Points when spared, but will deplete a Life Point upon dying'),
