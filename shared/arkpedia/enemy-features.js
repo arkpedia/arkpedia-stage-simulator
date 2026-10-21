@@ -196,6 +196,13 @@ function asvAura(r) {
 const ASV_TEXT = 'While in battle, Reborn Creations have increased ATK, and their attacks will additionally deal <$ba.dt.apoptosis>Necrosis damage</>';
 const HATEDRINKER_TEXT = 'Gains increased ATK for each Reborn Creation on the battlefield';
 
+// Native-only stage props: the game record has no talent/ability/skill text, but the prefab still has one active
+// component. These explicit keys keep the support gate honest without inventing a behaviour for a prop (the Beacon is
+// picked up by the Altar Keeper, not by its own code).
+const NATIVE_ONLY_FEATURES = Object.freeze({
+  enemy_1421_lrchld: 'native:beacon', enemy_1421_lrchld_2: 'native:beacon',
+});
+
 export const ENEMY_FEATURES = Object.freeze({
   // Handbook lines restating what the record's stats already model.
   'ability:Flying unit.': { covers: r => r.stats.motion === 'FLY', note: 'motion FLY' },
@@ -279,6 +286,9 @@ export const ENEMY_FEATURES = Object.freeze({
     explains: text => /^Attack power increases( greatly)? when attacking <\$ba\.frozen>Frozen<\/> targets$/.test(text)
       || /^Gains significantly increased ATK when HP is under 50%$/.test(text) },
 
+  // Native-only stage prop: the Beacon has no own behaviour in the supported stages.
+  'native:beacon': { covers: r => (NATIVE_ONLY_FEATURES[r.key] ?? null) === 'native:beacon',
+    note: 'passive stage beacon; pickup belongs to the Altar Keeper', nativeClaim: () => ({ active: 2 }) },
   // Ursus patrol: prioritize the named civilian/Talulah targets.
   'ability:Can use long-ranged weapons to attack <Ursus Civilians> and <Talulah, the Fighter>': {
     covers: r => r.abilities.some(a => a.text === 'Can use long-ranged weapons to attack <Ursus Civilians> and <Talulah, the Fighter>'),
@@ -582,5 +592,6 @@ export function recordFeatureIds(record) {
     ...record.abilities.map(a => `ability:${a.text}`),
     ...Object.keys(record.talents.groups).map(g => `talent:${g}`),
     ...record.skills.map(s => `skill:${s.prefabKey}`),
+    ...(NATIVE_ONLY_FEATURES[record.key] ? [NATIVE_ONLY_FEATURES[record.key]] : []),
   ])];
 }

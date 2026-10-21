@@ -5578,3 +5578,7 @@ The Infected Patrol Captain family prioritizes allies whose record name contains
 ### R8-1 (S69, 2026-10-21)
 
 With the Ursus named-target priority supported, **R8-1** builds (7×11, 56 spawns, 2 enemies). Coverage is **149 public stages** (0-1 plus 148 files).
+
+### Native-only Beacon support (E48, 2026-10-21)
+
+Added an explicit `NATIVE_ONLY_FEATURES` map for stage props whose records have no talent/ability/skill text but do have native active components. The Beacon claims both reviewed active components and has no behaviour of its own (the Altar Keeper owns pickup). Support rises to **353 of 1,552** enemies.
