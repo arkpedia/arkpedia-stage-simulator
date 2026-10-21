@@ -4996,3 +4996,13 @@ The builder also accepts the Chapter 1 stages whose enemies are already supporte
 
 - **Refused, correctly.** 1-2 and 1-6 carry a fixed squad or deployable tokens; 1-8, 1-11 and 1-12 use Crownslayer, W, Dual Swordsman or Firebomb Thrower, which are not supported enemies. They are not silently approximated.
 - **Coverage.** 0-1 plus 17 test-only files: the complete Prologue and seven Chapter 1 stages. All are exercised by the generic stage test; none is in the public catalogue yet.
+
+### Chapter 2 subset (S6, 2026-10-21, test-only)
+
+| Stage | Grid | Waves | Spawns | Enemies |
+|---|---|---|---|---|
+| 2-1 | 7×11 | 1 | 50 | Heavy Defender, Hound, Originium Slug α, Rioter, Soldier, Shielded Soldier, Cocktail Thrower |
+| 2-2 | 7×11 | 1 | 51 | Heavy Defender, Hound, Originium Slug α, Rioter, Rioter Leader, Cocktail Thrower, Shielded Soldier, Crossbowman |
+| 2-6 | 8×11 | 1 | 54 | Rioter, Crossbowman, Crossbowman Leader, Hound, Caster, Junkman, Airborne Soldier |
+
+2-3 is refused for its deployable Roadblocks, 2-4/2-5 for Senior Caster and Dual Swordsman, 2-7/2-8 for Defender-4/Metal Crab, and 2-9/2-10 for their bosses and mode units. Coverage is now 0-1 plus 20 test-only files across Chapters 0–2.
