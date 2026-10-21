@@ -5766,3 +5766,7 @@ With the Evocator/Flame supported, **9-15** and **9-16** build (8×11/9×11, 36�
 ### Dublinn Companion pair (E65, 2026-10-21)
 
 The Companion Guard taunts and, while a Shadowblade is within 1.1, slows nearby allies' ASPD by 30. The Shadowblade's base attack time drops by 1.2 and it gains +100 ASPD while a Guard is within 1.5. Both elite text variants are covered. Support rises to **390 of 1,552** enemies. Tests cover the faster base attack and the guard field.
+
+### 9-17 (S99, 2026-10-21)
+
+With the Companion pair supported, **9-17** builds (8×12, 32 spawns, 6 enemies). The stacked branch now has **191 public stages** (0-1 plus 190 files).
