@@ -5834,3 +5834,7 @@ The builder now merges conditional entries only when every entry is a pristine `
 ### Hidden-group merge tests (S114, 2026-10-21)
 
 Extracted `mergePristineHiddenGroups` into `shared/arkpedia/stage-conditional.js` and added three tests: pristine entries append and clear the flag; branch/random/weight entries refuse; mixed lists are not partially merged.
+
+### Pristine hidden-group report (S115, 2026-10-21)
+
+The coverage tool now lists the stages whose conditional entries are all pristine hidden-group: currently 14 (10-5/adverse, 15-4/5/6/7/9/10/17, 16-17, 17-4/5/6/7/9/10/15/17). Building them is still gated by missing playback paths (for example 15-4 has no route 0 path), not by hidden-group semantics.

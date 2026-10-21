@@ -18,7 +18,7 @@ const support = JSON.parse(readFileSync(new URL('arkpedia-enemy-support.json', D
 
 export function buildStageCoverage() {
   const stagesDir = new URL('stages/', SOURCE), geometryDir = new URL('stage-geometry/', SOURCE), conditionalDir = new URL('stage-conditional/', SOURCE);
-  const byReason = {}, byCondition = {}, blockers = new Map(), byChapter = new Map(), buildable = [];
+  const byReason = {}, byCondition = {}, blockers = new Map(), byChapter = new Map(), buildable = [], hiddenMergeable = [];
   let total = 0, built = 0;
   for (const file of readdirSync(stagesDir).filter(name => name.endsWith('.json'))) {
     let stage;
@@ -39,7 +39,10 @@ export function buildStageCoverage() {
       const conditionalUrl = new URL(`${stage.slug}.json`, conditionalDir);
       if (existsSync(conditionalUrl)) {
         try {
-          for (const spawn of JSON.parse(readFileSync(conditionalUrl, 'utf8'))) {
+          const entries = JSON.parse(readFileSync(conditionalUrl, 'utf8'));
+          if (entries.length && entries.every(e => e.condition?.hidden_group && Object.keys(e.condition).length === 1
+            && !e.branch && e.source === 'wave')) hiddenMergeable.push(stage.slug);
+          for (const spawn of entries) {
             const kind = spawn.condition?.hidden_group ? 'hidden-group' : spawn.branch ? 'branch' : spawn.source === 'wave' ? 'wave' : 'other';
             byCondition[kind] = (byCondition[kind] ?? 0) + 1;
           }
@@ -58,7 +61,7 @@ export function buildStageCoverage() {
     byReason.buildable = (byReason.buildable ?? 0) + 1; buildable.push(stage.slug);
   }
   return { total, built, byReason, byChapter: [...byChapter].sort((a, b) => a[0].localeCompare(b[0], undefined, { numeric: true })),
-    blockers: [...blockers].sort((a, b) => b[1] - a[1]), buildable: buildable.sort(), byCondition };
+    blockers: [...blockers].sort((a, b) => b[1] - a[1]), buildable: buildable.sort(), byCondition, hiddenMergeable: hiddenMergeable.sort() };
 }
 
 if (import.meta.url === `file://${process.argv[1]}`) {
@@ -68,6 +71,7 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   console.log('by chapter:');
   for (const [chapter, counts] of report.byChapter) console.log(`  ${chapter}: ${counts.built}/${counts.total}`);
   console.log(`conditional spawns by condition: ${Object.entries(report.byCondition).sort((a, b) => b[1] - a[1]).map(([k, n]) => `${k}: ${n}`).join(', ')}`);
+  console.log(`pristine hidden-group stages: ${report.hiddenMergeable.length}${report.hiddenMergeable.length ? ` (${report.hiddenMergeable.join(', ')})` : ''}`);
   console.log(`buildable now: ${report.buildable.length}${report.buildable.length ? ` (${report.buildable.join(', ')})` : ''}`);
   console.log(`unsupported enemy blockers: ${report.blockers.length}`);
   for (const [id, n] of report.blockers.slice(0, 15)) console.log(`  ${n}  ${id}`);
