@@ -5304,3 +5304,13 @@ Sixteen fixed-squad stages are buildable with supported enemies:
 ### Tiacauh DEF and melee (E19, 2026-10-21)
 
 The Tiacauh family gains `Def.def` while blocked; the Ritualist/Shaman also has the reviewed `combat.attack@ccwitch_rage_attack.atk_scale` 4× melee multiplier (applied while blocked). Support rises to **285 of 1,552** enemies. The test checks the flat DEF while blocked and the exact 4× melee damage.
+
+### Tiacauh stages (S25, 2026-10-21, test-only)
+
+| Stage | Grid | Waves | Spawns |
+|---|---|---|---|
+| 2-10 | 8×11 | 2 | 36 |
+| 6-8 | 8×11 | 1 | 36 |
+| S6-3 | 8×11 | 1 | 32 |
+
+10-8/10-8 adverse still have an unmatched tunnel break. Coverage is **0-1 plus 111 test-only files**.
