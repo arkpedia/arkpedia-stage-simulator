@@ -5710,3 +5710,7 @@ Bloodborn Spawn: Arts attacks scale with the target's blocking count, and death 
 ### 13-6 stages (S88, 2026-10-21)
 
 With the Bloodborn/Bombardier/Blood Amber support, **13-6** and **13-6 adverse environment** build (7×10, 31 spawns, 4 enemies). Coverage is **186 public stages** (0-1 plus 185 files).
+
+### Engine benchmark and Rust decision (S89, 2026-10-21)
+
+Added `npm run bench:arkpedia` and `docs/PERFORMANCE.md`. A 34.3-second, 150-spawn 14-11 battle runs in 24–42 ms of engine time (~25k steps/s, 300–500× real time). No Rust/WASM rewrite is justified now; the documented triggers for revisiting are a >100 ms single battle on mid-range hardware, an order-of-magnitude jump in simultaneous units, or a shared-rules WASM design.
