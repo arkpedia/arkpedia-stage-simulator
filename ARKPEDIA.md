@@ -5838,3 +5838,7 @@ Extracted `mergePristineHiddenGroups` into `shared/arkpedia/stage-conditional.js
 ### Pristine hidden-group report (S115, 2026-10-21)
 
 The coverage tool now lists the stages whose conditional entries are all pristine hidden-group: currently 14 (10-5/adverse, 15-4/5/6/7/9/10/17, 16-17, 17-4/5/6/7/9/10/15/17). Building them is still gated by missing playback paths (for example 15-4 has no route 0 path), not by hidden-group semantics.
+
+### Synthetic route paths and 10-5 (S116, 2026-10-21)
+
+When the viewer export omits a route, the builder now synthesizes the reviewed geometry start/checkpoint/end chain as a fallback path (`syntheticRoutes`). This unblocked **10-5** and **10-5 adverse environment** (8×11, 50 spawns, 6 enemies). The 15–17 candidates still fail on unsupported enemies such as `enemy_10075_mpwrj`, not on routing. Coverage is **197 public stages**.
