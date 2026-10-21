@@ -5754,3 +5754,7 @@ With the Tombkeeper supported, **9-14** builds (9×11, 58 spawns, 6 enemies). Th
 ### Purifying Flame and Dublinn Evocator (E64, 2026-10-21)
 
 The Evocator summons one Purifying Flame every 6 s (first after 3 s). The Flame moves along the ground and, on contact with a melee ally, explodes for 1.0x Arts plus Burn and a 10 s -70% ATK weaken. The reviewed wrappers are claimed; the Flame's no-ability `epdamage` is interpreted as Burn. Support rises to **386 of 1,552** enemies. Tests cover the summon and the contact burst.
+
+### 9-15 and 9-16 (S97, 2026-10-21)
+
+With the Evocator/Flame supported, **9-15** and **9-16** build (8×11/9×11, 36–47 spawns). The stacked branch now has **190 public stages** (0-1 plus 189 files).
