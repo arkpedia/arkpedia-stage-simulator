@@ -5862,3 +5862,7 @@ The coverage buildable bucket now reports **15-3**, which builds (7×11, 26 spaw
 ### Explicit zero vs unknown token counts (S120, 2026-10-21)
 
 Only an explicit `count: 0` is a hidden stage device. A token entry with no count is unknown and still blocks the adapter; the full suite's existing refusal test caught the distinction.
+
+### Snapshot to 394 enemies / 199 stages (S121, 2026-10-21)
+
+`docs/REMAINING.md` records **394** supported enemies, **198** built source stages, **199** public entries and the 22,793-test full suite.
