@@ -5486,3 +5486,7 @@ The coverage report now also prints built/total per chapter. The snapshot shows 
 ### Previous/next stage buttons (S55, 2026-10-21)
 
 The stage picker now has `‹` and `›` buttons that jump to the previous or next catalogue entry, in the same order as the grouped selector. Static client tests remain at 217.
+
+### Identity mechanic design note (S56, 2026-10-21)
+
+Added `docs/IDENTITY.md`: the civilian/spy data, the profile flags and blocking rules it needs, the civilian DP reward, the reveal API, the `1322` blink cadence and the `1317` ammo drain, plus the tests and open questions. This is the blueprint for the chapter-11/12 block rather than a per-stage guess.
