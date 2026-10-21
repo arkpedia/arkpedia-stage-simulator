@@ -475,6 +475,13 @@ test('Checkpoint blink: the 1322 family advances after two attacks', () => {
   h.runUntil(() => e.x < x0 - 0.5 || !e.alive, 30);
   assert.ok(e.x < x0 - 0.5, `${e.x} vs ${x0}`);
 });
+test('Absurdist Operative: three attacks drain DP, then the ammo is gone', () => {
+  const key = 'enemy_1317_wdexg', h = spawnAny(key, { seconds: 0.1 }), e = enemy(h, key);
+  const owner = h.b.getPlayer(e.ownerId), ability = e.mem.ab.list.find(a => a.attack), c = { targets: [] };
+  owner.dp = 50; ability.attack(c, h.b, e, ability); assert.equal(owner.dp, 48); assert.equal(ability.ammo, 2);
+  ability.attack(c, h.b, e, ability); ability.attack(c, h.b, e, ability); assert.equal(owner.dp, 44); assert.equal(ability.ammo, 0);
+  ability.attack(c, h.b, e, ability); assert.equal(owner.dp, 44, 'no drain without ammo');
+});
 test('Drains 1 Life Point: the engine leak drains the record stat', () => {
   const key = 'enemy_1137_plasm';
   assert.ok(support.enemies[key].policy, 'supported by the existing leak rule');

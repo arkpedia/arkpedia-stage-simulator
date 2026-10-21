@@ -345,6 +345,16 @@ export const featureAbilities = Object.freeze({
     },
   }),
   moveSpeedBonus: ({ mul }) => ({ spawn(b, e) { b.addBuff(e, { key: 'ab:moveSpeed', persist: true, visible: true, mods: { moveMul: mul } }); } }),
+  // Absurdist Operative: three ammo, each attack drains DP and target SP.
+  dpDrain: ({ cost, sp }) => ({
+    spawn(b, e, a) { a.ammo = 3; },
+    attack(c, b, e, a) {
+      if (a.ammo <= 0) return;
+      a.ammo--;
+      if (cost) b.addDp(e.ownerId, cost);
+      if (sp) for (const t of c.targets ?? [c.target]) t.skill?.gainSp(sp);
+    },
+  }),
   // Rebellion Instigator: a live, unblocked source prevents unrevealed civilians/spies from being blocked.
   identityLock: () => ({
     spawn(b) { b.identityLocks ??= new Set(); },

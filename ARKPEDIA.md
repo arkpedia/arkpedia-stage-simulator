@@ -5506,3 +5506,7 @@ First slice of the identity layer: `ability:Friendly Unit` marks `profile.friend
 ### Checkpoint blink (E39, 2026-10-21)
 
 The `1322` family's lowercase `blink` wrapper/action graph is now retained and matched. After every `spCost` (2) attacks it calls the existing `blinkForward` toward the next checkpoint; Crownslayer's blocked-trigger blink remains a separate branch of `skill:blink`. Support rises to **335 of 1,552** enemies. The test watches the unit advance after two attacks.
+
+### Absurdist Operative DP drain (E40, 2026-10-21)
+
+The `1317` family carries three ammo and each attack drains `1.attack@cost` DP (2/3) and reduces the target's SP by 1; the fourth attack has no ammo. Support rises to **337 of 1,552** enemies. The test calls the ability three times and checks the DP and ammo counters.

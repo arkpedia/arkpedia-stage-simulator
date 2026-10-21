@@ -279,6 +279,11 @@ export const ENEMY_FEATURES = Object.freeze({
     explains: text => /^Attack power increases( greatly)? when attacking <\$ba\.frozen>Frozen<\/> targets$/.test(text)
       || /^Gains significantly increased ATK when HP is under 50%$/.test(text) },
 
+  // Absurdist Operative: three ammo, each attack drains DP and target SP.
+  'ability:Attacks reduce DP when carrying ammo. Ammo capacity: 3': { covers: r => r.abilities.some(a => a.text === 'Attacks reduce DP when carrying ammo. Ammo capacity: 3'),
+    ability: { kind: 'dpDrain', params: r => ({ cost: r.talents.bb['1.attack@cost'] ?? 0, sp: r.talents.bb['1.attack@sp'] ?? 0 }) },
+    note: 'three ammo: each attack drains DP/SP', explains: /^Attacks reduce DP when carrying ammo\. Ammo capacity: 3$/ },
+  'talent:1': { covers: r => sig(r, '1', ['attack@cost', 'attack@sp']), note: 'the dpDrain ability reads attack@cost/attack@sp' },
   // Instigator: while unblocked, unrevealed civilians/spies cannot be blocked.
   'ability:When not blocked, all unrevealed Civilians or Spies cannot be blocked': { covers: r => r.abilities.some(a => a.text === 'When not blocked, all unrevealed Civilians or Spies cannot be blocked'),
     ability: { kind: 'identityLock', params: () => ({}) }, note: 'locks unrevealed civilian/spy blocking while unblocked',
