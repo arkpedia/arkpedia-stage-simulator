@@ -5198,3 +5198,16 @@ Coverage is **0-1 plus 73 test-only files**.
 ### Yeti Caster Cold attacks (E13, 2026-10-21)
 
 The reviewed `coldattack` skill is every third attack applying the `e2c_cold` DB buff from the skill's 10-second freeze value. The feature matches the familyMask-3 ColdAttack wrapper, the snow-magic projectile ability and the 10-second blackboard, claims one native wrapper, and is silence-aware. Support rises to **273 of 1,552** enemies. The test counts three attacks and checks the 10-second Cold on the target.
+
+### Yeti Caster stages (S18, 2026-10-21, test-only)
+
+| Stage | Grid | Waves | Spawns |
+|---|---|---|---|
+| 6-9 | 8×11 | 1 | 48 |
+| 6-10 | 8×11 | 1 | 41 |
+| 6-12 | 7×11 | 1 | 76 |
+| S6-1 | 8×11 | 1 | 52 |
+| S6-2 | 8×11 | 1 | 53 |
+| S6-4 | 8×12 | 1 | 30 |
+
+Coverage is **0-1 plus 79 test-only files**.
