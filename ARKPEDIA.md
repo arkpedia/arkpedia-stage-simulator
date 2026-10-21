@@ -5330,3 +5330,7 @@ The `Shield[max_block_damage_cnt]` record is a one-hit Physical/Arts shield; the
 ### Public catalogue review (S26, 2026-10-21)
 
 Seven stages that passed the headless QA pass have been promoted out of `testOnly`: **0-2, 0-11, 3-1, 4-7, 5-8, 9-3 and S2-12**. The public simulator now offers **0-1 plus those seven**; the remaining **104** file-backed stages stay test-only until reviewed and are still reachable with `?experimental=1`. A catalogue test now pins the promoted set and checks that an unreviewed stage is still rejected.
+
+### Evade variants (E23, 2026-10-21)
+
+`talent:Evade` now covers the unblocked physical dodge (Delinquent), the initial timed 100% dodge (Alcohol Lover) and the first low-HP 100% dodge (Lakeside Volunteer/Lifeguard). All use the engine's `dodgePhys` buff. Support rises to **296 of 1,552** enemies. The test checks all three forms.

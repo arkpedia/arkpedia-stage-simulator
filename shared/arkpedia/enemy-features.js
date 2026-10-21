@@ -264,6 +264,23 @@ export const ENEMY_FEATURES = Object.freeze({
     explains: text => /^Attack power increases( greatly)? when attacking <\$ba\.frozen>Frozen<\/> targets$/.test(text)
       || /^Gains significantly increased ATK when HP is under 50%$/.test(text) },
 
+  // Evade: dodge while unblocked, an initial timed dodge, or a one-time low-HP dodge.
+  'talent:Evade': { covers: r => {
+      if (sig(r, 'Evade', ['prob']) && r.abilities.some(a => a.text === 'Has a chance to dodge Physical attacks when not blocked')) return true;
+      if (sig(r, 'Evade', ['duration', 'prob']) && r.abilities.some(a => a.text === 'Initially has 100% Physical Dodge for a period of time')) return true;
+      return sig(r, 'Evade', ['duration', 'hp_ratio', 'prob'])
+        && r.abilities.some(a => a.text === 'Upon dropping below half HP for the first time, gains 100% Physical Dodge for a period of time');
+    },
+    ability: { kind: 'evade', params: r => {
+      const bb = r.talents.bb;
+      if (sig(r, 'Evade', ['prob'])) return { mode: 'unblocked', prob: bb['Evade.prob'] };
+      if (sig(r, 'Evade', ['duration', 'prob'])) return { mode: 'timed', prob: bb['Evade.prob'], duration: bb['Evade.duration'], silent: true };
+      return { mode: 'low', prob: bb['Evade.prob'], duration: bb['Evade.duration'], ratio: bb['Evade.hp_ratio'], silent: true };
+    } },
+    note: 'physical dodge: unblocked, initial timed, or first low-HP', explains: text =>
+      text === 'Has a chance to dodge Physical attacks when not blocked'
+      || text === 'Initially has 100% Physical Dodge for a period of time'
+      || text === 'Upon dropping below half HP for the first time, gains 100% Physical Dodge for a period of time' },
   // Rhine Defense: a one-hit Physical/Arts shield.
   'talent:Shield': { covers: r => sig(r, 'Shield', ['block_damage_cnt', 'max_block_damage_cnt'])
       && r.abilities.some(a => a.text === 'Blocks 1 instance of Physical or Arts damage'),

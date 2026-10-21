@@ -327,6 +327,17 @@ test('Rhine Defense: the first Physical hit is fully blocked', () => {
   h.b.dealDamage({ s: { atk: 1 } }, e, { amount: 100, type: 'phys', sourceless: true });
   assert.ok(e.hp < hp, 'second hit lands');
 });
+test('Evade: unblocked dodge, initial timed dodge and the first low-HP dodge', () => {
+  const unblocked = 'enemy_1159_swfmob', h1 = spawnAny(unblocked, { seconds: 0.1, units: [] }), e1 = enemy(h1, unblocked);
+  h1.run(0.2); assert.equal(e1.s.dodgePhys, 0.4);
+
+  const timed = 'enemy_1258_durman', h2 = spawnAny(timed, { seconds: 0.1 }), e2 = enemy(h2, timed);
+  h2.run(0.5); assert.equal(e2.s.dodgePhys, 1); h2.run(21); assert.equal(e2.s.dodgePhys, 0);
+
+  const low = 'enemy_1259_durwar', h3 = spawnAny(low, { seconds: 0.1, units: [] }), e3 = enemy(h3, low);
+  assert.equal(e3.s.dodgePhys, 0); h3.b.dealDamage(null, e3, { amount: e3.s.maxHp * 0.6, type: 'true', sourceless: true }); h3.run(0.1);
+  assert.equal(e3.s.dodgePhys, 1);
+});
 test('Drains 1 Life Point: the engine leak drains the record stat', () => {
   const key = 'enemy_1137_plasm';
   assert.ok(support.enemies[key].policy, 'supported by the existing leak rule');

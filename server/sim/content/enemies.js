@@ -344,6 +344,26 @@ export const featureAbilities = Object.freeze({
       b.addBuff(e, { key: 'ab:enhance', refresh: 'stack', stacks: 1, maxStacks: max, persist: true, visible: true, mods: { atkPct: atk, aspd } });
     },
   }),
+  // Evade: the unblocked toggle, a timed initial dodge, or the first low-HP dodge.
+  evade: ({ mode, prob, duration, ratio, silent = false }) => mode === 'unblocked' ? ({
+    tick(b, e, a) {
+      const on = !e.blockedBy;
+      if (on === a.on) return;
+      a.on = on;
+      if (on) b.addBuff(e, { key: 'ab:evade', persist: true, mods: { dodgePhys: prob } });
+      else b.removeBuff(e, 'ab:evade');
+    },
+  }) : mode === 'timed' ? ({
+    sil: silent,
+    spawn(b, e) { b.addBuff(e, { key: 'ab:evade', duration, mods: { dodgePhys: prob }, visible: true }); },
+  }) : ({
+    sil: silent,
+    taken(c, b, e, a) {
+      if (a.done || !(e.hpRatio < ratio)) return;
+      a.done = true;
+      b.addBuff(e, { key: 'ab:evade', duration, mods: { dodgePhys: prob }, visible: true });
+    },
+  }),
   // Rhine Defense: the engine's hitShield consumes one Physical/Arts hit.
   hitShield: ({ count }) => ({ spawn(b, e, a, ab) { ab.hitShield = count; } }),
   // Timed flat DEF/RES buff (Roar Knightclub); the engine removes it when the duration ends.
