@@ -5466,3 +5466,7 @@ Sudaram's normal attack is a self-centred Physical blast; when it stands on a to
 ### Stage metadata line (S50, 2026-10-21)
 
 The prep page now shows the stage's enemy-type count, wave count and life total under the description. It reads the loaded stage payload, so fixed-squad, event and test stages get the correct numbers. Static client tests remain at 217.
+
+### Enter-to-open stage search (S51, 2026-10-21)
+
+Pressing Enter in the stage search opens the first visible option, so a search for "7-3" plus Enter jumps straight to that stage. Escape still clears. Static client tests remain at 217.

@@ -182,6 +182,10 @@ function prep() {
   });
   document.querySelector("#stage-search")?.addEventListener("keydown", (e) => {
     if (e.key === "Escape") { e.target.value = ""; e.target.dispatchEvent(new Event("input", { bubbles: true })); }
+    if (e.key === "Enter") {
+      const first = [...document.querySelectorAll("#stage-select option")].find(option => !option.hidden);
+      if (first) location.href = first.value;
+    }
   });
   document.querySelector("#stage-select")?.addEventListener("change", (e) => { location.href = e.target.value; });
   document.querySelector("#start").addEventListener("click", start);
