@@ -5858,3 +5858,7 @@ The coverage buildable bucket now reports **15-3**, which builds (7×11, 26 spaw
 ### Zero-count token adapter test (S119, 2026-10-21)
 
 `test/arkpedia-stage-adapter.test.js` pins the rule: a zero-count token does not block the adapter, while a positive count still throws `Unsupported stage mechanics`.
+
+### Explicit zero vs unknown token counts (S120, 2026-10-21)
+
+Only an explicit `count: 0` is a hidden stage device. A token entry with no count is unknown and still blocks the adapter; the full suite's existing refusal test caught the distinction.
