@@ -5269,3 +5269,7 @@ Coverage is **0-1 plus 91 test-only files**.
 ### Technical Scout reveal (E18, 2026-10-21)
 
 The Technical Scout's `antiinvi.range_radius` (3.3) becomes `profile.revealRange`. `canTargetAlly` now treats a camouflaged/stealthed ally inside that radius as targetable, and still hides it outside. This is the enemy's own ranged targeting only; area effects already ignore camouflage. Support rises to **281 of 1,552** enemies. The test places a camouflaged guard inside and outside the radius and checks both decisions.
+
+### Technical Scout stage (S23, 2026-10-21, test-only)
+
+**3-3** (8×11, 50 spawns) is built now that the Technical Scout's reveal range is supported. Coverage is **0-1 plus 92 test-only files**.
