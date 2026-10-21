@@ -4934,3 +4934,8 @@ Three more regular-stage families attach through the same registry; no new per-e
 - **Leak line**: "Drains 1 Life Point when entering the Objective Point" only restates `lpr`, which the engine already applies on a leak.
 - **Explained lines.** A feature may now explain a handbook line with a predicate as well as a regular expression, so variants such as "Death deals…" and "Deals … upon death" share one family.
 - **Coverage.** Support rises to 243 of 1,552 enemies. The 12 new admits are both Infused Originium Slugs, both Infused Glacial Originium Slugs, both slug variants (their records use the same reviewed group and match the base slugs' stats), the Surprise Sponsor Drone, the neural 'Small Surprise' and the Originiutant split family. Tests exercise the physical, Cold and elemental blasts, the delayed split and the leak line on real enemies.
+
+### Blocker ASPD and the tumor split (E6, 2026-10-21)
+
+- **`atkSpeedDown`**: "When blocked, significantly reduces the blocker's ASPD" is a flat ASPD delta on the current blocker (the reviewed value is scaled by 100, matching the existing frost aura). The buff is owned by the enemy, moves with a new blocker and ends with its source.
+- **Coverage.** Support rises to 246 of 1,552 enemies: the Originiutant Tumor and the two split variants that produce it. The test blocks a real tumor, checks the exact ASPD delta and verifies the debuff ends when the source dies.

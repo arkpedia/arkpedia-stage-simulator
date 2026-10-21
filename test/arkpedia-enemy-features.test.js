@@ -120,6 +120,14 @@ test('split on death: the children spawn after the reviewed delay on the parent 
   h.run(r.talents.bb['deathrattle.delay'] + 0.2);
   assert.equal(h.b.units.filter(u => u.side === 'enemy' && u.defId === child).length, r.talents.bb['deathrattle.cnt']);
 });
+test('atkSpeedDown: the blocker loses the reviewed ASPD while it stays blocked, and gets it back', () => {
+  const key = 'enemy_1138_tumor', r = ENEMY_RECORDS.enemies[key].levels[0], h = spawnAny(key, { seconds: 0.1 }), e = enemy(h, key);
+  const guard = h.b.units.find(u => u.side === 'ally'), base = guard.s.aspd;
+  h.runUntil(() => !e.alive || e.blockedBy, 120); h.run(0.1);
+  assert.ok(e.blockedBy, 'the guard blocks it'); assert.equal(guard.s.aspd, base + r.talents.bb['atkSpeedDown.attack_speed'] * 100);
+  h.b.dealDamage(null, e, { amount: 1e9, type: 'true', sourceless: true }); h.run(0.1);
+  assert.equal(guard.s.aspd, base, 'the debuff ends with its source');
+});
 test('Drains 1 Life Point: the engine leak drains the record stat', () => {
   const key = 'enemy_1137_plasm';
   assert.ok(support.enemies[key].policy, 'supported by the existing leak rule');

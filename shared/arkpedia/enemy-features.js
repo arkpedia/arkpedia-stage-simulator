@@ -144,6 +144,11 @@ export const ENEMY_FEATURES = Object.freeze({
       delay: r.talents.bb['deathrattle.delay'] ?? 0 }) },
     note: 'splits into cnt children after delay s', dependsOn: r => [r.talents.bbStr['deathrattle.enemy_key']].filter(Boolean),
     explains: /^Splits into \d+ <[^>]+> upon death$/ },
+  // "When blocked, significantly reduces the blocker's ASPD": a flat ASPD delta while this enemy is the blocker's.
+  'talent:atkSpeedDown': { covers: r => sig(r, 'atkSpeedDown', ['attack_speed'])
+      && r.abilities.some(a => a.text === "When blocked, significantly reduces the blocker's ASPD"),
+    ability: { kind: 'blockerAspdDown', params: r => ({ aspd: r.talents.bb['atkSpeedDown.attack_speed'] * 100 }) },
+    note: "flat ASPD delta on the current blocker", explains: /^When blocked, significantly reduces the blocker's ASPD$/ },
   // Death blast (boom): atk_scale × ATK around the corpse; the cold/elemental variants add their reviewed status or
   // element. Records whose line names anything else (ignite Reeds, seize Gramophones, grant Energy) are not covered.
   'talent:boom': { covers: r => coversDeathBlast(r, 'boom'),

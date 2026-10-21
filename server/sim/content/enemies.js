@@ -305,6 +305,18 @@ export const featureAbilities = Object.freeze({
       b.addBuff(e, { key: 'ab:enhance', refresh: 'stack', stacks: 1, maxStacks: max, persist: true, visible: true, mods: { atkPct: atk, aspd } });
     },
   }),
+  // "When blocked, significantly reduces the blocker's ASPD": keep one owned flat-ASPD buff on the current blocker.
+  blockerAspdDown: ({ aspd }) => ({
+    spawn(b, e, a) { a.target = null; },
+    tick(b, e, a) {
+      const target = e.blockedBy ?? null;
+      if (target === a.target) return;
+      if (a.target) b.removeBuff(a.target, 'ab:blockerAspdDown');
+      a.target = target;
+      if (target && aspd) b.addBuff(target, { key: 'ab:blockerAspdDown', persist: true, mods: { aspd }, visible: true });
+    },
+    death(c, b, e, a) { if (a.target) b.removeBuff(a.target, 'ab:blockerAspdDown'); },
+  }),
   // Physical dodge `prob` while not blocked (the engine's dodgePhys, toggled each tick).
   dodgeUnblocked: ({ prob }) => ({ tick(b, e, a) {
     const on = !e.blockedBy;
