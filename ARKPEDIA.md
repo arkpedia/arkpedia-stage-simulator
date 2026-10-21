@@ -4939,3 +4939,12 @@ Three more regular-stage families attach through the same registry; no new per-e
 
 - **`atkSpeedDown`**: "When blocked, significantly reduces the blocker's ASPD" is a flat ASPD delta on the current blocker (the reviewed value is scaled by 100, matching the existing frost aura). The buff is owned by the enemy, moves with a new blocker and ends with its source.
 - **Coverage.** Support rises to 246 of 1,552 enemies: the Originiutant Tumor and the two split variants that produce it. The test blocks a real tumor, checks the exact ASPD delta and verifies the debuff ends when the source dies.
+
+### Stage catalogue (S1, 2026-10-21)
+
+The client no longer hard-codes 0-1 as the only selectable stage.
+
+- **Catalogue.** `data/arkpedia-stages.json` names the default and every stage: id, display code/name/description, and either an embedded stage (`data: null`, the current 0-1 slice) or a separate JSON file. The global 25 MB payload keeps the shared operator/enemy/effect data; a new stage should use the file-backed shape so it stays small.
+- **Selection.** `shared/arkpedia/stages.js` validates the catalogue, resolves `?stage=` (defaulting to the catalogue default), fetches a file-backed stage, and installs it as `data.stage`. The battle and renderer still consume the same `data.stage` contract, so no stage consumer needs a branch.
+- **UI.** The prep header and title read the installed stage, and a picker appears when the catalogue has more than one stage. An unknown `?stage=` lists the available stages instead of guessing.
+- **Guardrails.** A file-backed stage must contain `geometry`; an embedded entry must match the global stage's code; every named data file must be committed. Tests cover default/explicit selection, the unknown-stage path, file replacement and the embedded mismatch.

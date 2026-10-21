@@ -113,6 +113,24 @@ small,
   color: var(--accent);
   text-transform: uppercase;
 }
+.stage-picker {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 0.85rem;
+}
+.stage-picker a {
+  padding: 4px 10px;
+  border: 1px solid #34464e;
+  border-radius: 999px;
+  color: var(--muted);
+  text-decoration: none;
+}
+.stage-picker a[aria-current="page"] {
+  border-color: var(--accent);
+  color: var(--accent);
+}
 .prep {
   display: grid;
   grid-template-columns: minmax(0, 1.25fr) minmax(340px, 1fr);
