@@ -264,6 +264,11 @@ export const ENEMY_FEATURES = Object.freeze({
     explains: text => /^Attack power increases( greatly)? when attacking <\$ba\.frozen>Frozen<\/> targets$/.test(text)
       || /^Gains significantly increased ATK when HP is under 50%$/.test(text) },
 
+  // Rhine Defense: a one-hit Physical/Arts shield.
+  'talent:Shield': { covers: r => sig(r, 'Shield', ['block_damage_cnt', 'max_block_damage_cnt'])
+      && r.abilities.some(a => a.text === 'Blocks 1 instance of Physical or Arts damage'),
+    ability: { kind: 'hitShield', params: r => ({ count: r.talents.bb['Shield.max_block_damage_cnt'] }) },
+    note: 'blocks max_block_damage_cnt Physical/Arts hits', explains: /^Blocks 1 instance of Physical or Arts damage$/ },
   // Roar Knightclub: a timed flat DEF/RES buff declared by the record.
   'talent:buff': { covers: r => sig(r, 'buff', ['def', 'duration', 'magic_resistance'])
       && r.abilities.some(a => /^(Has significantly increased DEF and RES for a period of time|Starts with significantly increased DEF and RES, persists for a long period\.)$/.test(a.text)),

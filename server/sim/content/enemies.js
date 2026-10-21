@@ -344,6 +344,8 @@ export const featureAbilities = Object.freeze({
       b.addBuff(e, { key: 'ab:enhance', refresh: 'stack', stacks: 1, maxStacks: max, persist: true, visible: true, mods: { atkPct: atk, aspd } });
     },
   }),
+  // Rhine Defense: the engine's hitShield consumes one Physical/Arts hit.
+  hitShield: ({ count }) => ({ spawn(b, e, a, ab) { ab.hitShield = count; } }),
   // Timed flat DEF/RES buff (Roar Knightclub); the engine removes it when the duration ends.
   timedStatBuff: ({ def, res, duration }) => ({
     spawn(b, e) { b.addBuff(e, { key: 'ab:timedStat', duration, refresh: 'replace', mods: { defFlat: def, resFlat: res }, visible: true }); },

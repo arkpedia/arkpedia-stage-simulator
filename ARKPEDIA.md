@@ -5322,3 +5322,7 @@ The Sankta's first HP drop below half applies its reviewed self-fear (`SelfFear.
 ### Roar Knightclub's timed stat buff (E21, 2026-10-21)
 
 The `buff[def,duration,magic_resistance]` record is a timed flat DEF/RES buff (30 s for the trainees/elite, 60 s for Szewczyk). The new feature applies it at spawn and lets the engine expire it. Support rises to **290 of 1,552** enemies. The test checks the exact DEF/RES and the 30-second expiry.
+
+### Rhine Defense shield (E22, 2026-10-21)
+
+The `Shield[max_block_damage_cnt]` record is a one-hit Physical/Arts shield; the feature sets the engine's `hitShield` at spawn so the first matching instance is cancelled. Support rises to **292 of 1,552** enemies. The test lands a blocked hit and a second damaging hit.

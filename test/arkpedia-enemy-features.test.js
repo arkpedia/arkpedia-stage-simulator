@@ -318,6 +318,15 @@ test('Roar Knightclub: the timed DEF/RES buff applies and expires', () => {
   h.run(31);
   assert.equal(e.findBuff('ab:timedStat'), null); assert.equal(e.s.def, base);
 });
+test('Rhine Defense: the first Physical hit is fully blocked', () => {
+  const key = 'enemy_1249_lysdb', h = spawnAny(key, { seconds: 0.1, units: [] }), e = enemy(h, key);
+  const guard = chessRec({ id: 'shield_guard', profession: 'WARRIOR', stats: { atk: 0, maxHp: 1e6, def: 0 } });
+  const hp = e.hp;
+  h.b.dealDamage({ s: { atk: 1 } }, e, { amount: 100, type: 'phys', sourceless: true });
+  assert.equal(e.hp, hp, 'first hit blocked');
+  h.b.dealDamage({ s: { atk: 1 } }, e, { amount: 100, type: 'phys', sourceless: true });
+  assert.ok(e.hp < hp, 'second hit lands');
+});
 test('Drains 1 Life Point: the engine leak drains the record stat', () => {
   const key = 'enemy_1137_plasm';
   assert.ok(support.enemies[key].policy, 'supported by the existing leak rule');
