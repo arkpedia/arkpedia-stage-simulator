@@ -5610,3 +5610,7 @@ With the Caustic Slug supported, **14-10** builds (9×12, 106 spawns, 5 enemies)
 ### Profane Chimera (E52, 2026-10-21)
 
 On polluted or stormed tiles the Profane Chimera emits its own pollution aura and its attacks become Arts; elsewhere it keeps normal attacks. The reviewed `OrigAura` wrapper is claimed. Support rises to **361 of 1,552** enemies. The test checks both tile states.
+
+### 14-6 stages (S73, 2026-10-21)
+
+With the Profane Chimera supported, **14-6** and **14-6 adverse environment** build (7×10, 32 spawns, 5 enemies). Coverage is **156 public stages** (0-1 plus 155 files).
