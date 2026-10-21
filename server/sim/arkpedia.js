@@ -252,7 +252,7 @@ import { customizeGnosisKit, installGnosis } from './content/arkpedia-gnosis.js'
 import { customizeEyjafjallaKit, installEyjafjalla } from './content/arkpedia-eyjafjalla.js';
 import { customizeFiveStarSupportFourthKit, installFiveStarSupportFourth } from './content/arkpedia-five-star-support-fourth.js';
 import { customizeFiveStarSpecialistExpansionKit, installFiveStarSpecialistExpansion } from './content/arkpedia-five-star-specialist-expansion.js';
-import { catalogueFor, recordFor } from "../../shared/arkpedia/loadout.js";
+import { catalogueFor, recordFor, fixedSquadBuilds } from "../../shared/arkpedia/loadout.js";
 import { REGULAR_OPERATORS } from "../../shared/arkpedia/operators.js";
 import { assertRegularEnemies } from "../../shared/arkpedia/enemies.js";
 import { installEnemyFeatures } from "./content/arkpedia-enemy-features.js";
@@ -266,7 +266,8 @@ export function stageAdapter(source) {
   const g = source.geometry;
   const supplied = Array.isArray(g.suppliedUnits) ? g.suppliedUnits.length
     : (g.suppliedUnits?.fixed_squad?.length || 0) + (g.suppliedUnits?.deployable_tokens?.length || 0);
-  if (g.rows > 19 || g.cols > 21 || g.hasConditionalSpawns || supplied)
+  const tokens = Array.isArray(g.suppliedUnits) ? 0 : g.suppliedUnits?.deployable_tokens?.length || 0;
+  if (g.rows > 19 || g.cols > 21 || g.hasConditionalSpawns || tokens)
     throw new Error("Unsupported stage mechanics");
   const chars = ["#", "h", "r", "S", "E"];
   const legend = Object.fromEntries(
@@ -346,6 +347,7 @@ export function stageAdapter(source) {
     return out;
   }).sort((a, b) => a.time - b.time);
   return {
+    fixedSquad: supplied ? g.suppliedUnits.fixed_squad : null,
     stage: {
       id: source.code,
       rows: g.tileGrid.map((row) => row.map((t) => chars[t]).join("")),
@@ -360,8 +362,9 @@ export function stageAdapter(source) {
 export class StandardBattle extends Battle {
   constructor(data, selection, { seed = 1 } = {}) {
     assertRegularEnemies(data);
-    const squad = prepareSquad(selection, catalogueFor(data));
-    const builds = [
+    const fixed = fixedSquadBuilds(data);
+    const squad = fixed ? null : prepareSquad(selection, catalogueFor(data));
+    const builds = fixed ?? [
       ...squad.operators,
       ...(squad.support ? [squad.support] : []),
     ];

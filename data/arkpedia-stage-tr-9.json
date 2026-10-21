@@ -1,0 +1,612 @@
+{
+ "code": "TR-9",
+ "name": "Indirect Protection",
+ "description": "Learn to take advantage of whatever may be available on the battlefield.",
+ "battle": {
+  "max_life": 1,
+  "unit_limit": 10,
+  "initial_dp": 20,
+  "max_dp": 99,
+  "dp_per_second": 1,
+  "dp_recovery_interval_seconds": 1
+ },
+ "mapTags": [],
+ "mapTagSource": null,
+ "geometry": {
+  "slug": "tr-9",
+  "rows": 7,
+  "cols": 9,
+  "tileLegend": [
+   {
+    "key": "tile_forbidden",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_wall",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true
+   },
+   {
+    "key": "tile_end",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_road",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_start",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_forbidden",
+    "height": "low",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   }
+  ],
+  "tileGrid": [
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    0
+   ],
+   [
+    2,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    4
+   ],
+   [
+    2,
+    3,
+    3,
+    1,
+    5,
+    1,
+    3,
+    3,
+    4
+   ],
+   [
+    2,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    4
+   ],
+   [
+    0,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  ],
+  "routes": [
+   {
+    "motion": null,
+    "placeholder": true,
+    "start": null,
+    "end": null,
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 4,
+     "col": 8
+    },
+    "end": {
+     "row": 4,
+     "col": 0
+    },
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 2,
+     "col": 8
+    },
+    "end": {
+     "row": 2,
+     "col": 0
+    },
+    "checkpoints": [],
+    "waits": []
+   }
+  ],
+  "waves": [
+   {
+    "index": 0,
+    "duration": 22,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Originium Slug α",
+      "enemy_id": "enemy_1007_slime_2",
+      "count": 2,
+      "time": 4,
+      "interval": 6,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": "Originium Slug α",
+      "enemy_id": "enemy_1007_slime_2",
+      "count": 2,
+      "time": 4,
+      "interval": 6,
+      "route": 2,
+      "fragment": 1
+     },
+     {
+      "enemy": "Originium Slug α",
+      "enemy_id": "enemy_1007_slime_2",
+      "count": 2,
+      "time": 17,
+      "interval": 5,
+      "route": 1,
+      "fragment": 2
+     },
+     {
+      "enemy": "Originium Slug α",
+      "enemy_id": "enemy_1007_slime_2",
+      "count": 2,
+      "time": 17,
+      "interval": 5,
+      "route": 2,
+      "fragment": 2
+     }
+    ]
+   },
+   {
+    "index": 1,
+    "duration": 3.8,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Dual Swordsman",
+      "enemy_id": "enemy_1014_rogue",
+      "count": 2,
+      "time": 3,
+      "interval": 0.8,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Dual Swordsman",
+      "enemy_id": "enemy_1014_rogue",
+      "count": 2,
+      "time": 3,
+      "interval": 0.8,
+      "route": 2,
+      "fragment": 0
+     }
+    ]
+   }
+  ],
+  "spawnTiles": [
+   {
+    "key": "tile_start",
+    "row": 2,
+    "col": 8,
+    "routes": [
+     2,
+     2,
+     2
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 3,
+    "col": 8,
+    "routes": []
+   },
+   {
+    "key": "tile_start",
+    "row": 4,
+    "col": 8,
+    "routes": [
+     1,
+     1,
+     1
+    ]
+   }
+  ],
+  "objectiveTiles": [
+   {
+    "key": "tile_end",
+    "row": 2,
+    "col": 0,
+    "routes": [
+     2,
+     2,
+     2
+    ]
+   },
+   {
+    "key": "tile_end",
+    "row": 3,
+    "col": 0,
+    "routes": []
+   },
+   {
+    "key": "tile_end",
+    "row": 4,
+    "col": 0,
+    "routes": [
+     1,
+     1,
+     1
+    ]
+   }
+  ],
+  "enemyConfigurations": [
+   {
+    "enemy_id": "enemy_1007_slime_2",
+    "slug": "originium_slug_enemy_1007_slime_2",
+    "name": "Originium Slug α",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1014_rogue",
+    "slug": "dual_swordsman",
+    "name": "Dual Swordsman",
+    "database_level": 0
+   }
+  ],
+  "suppliedUnits": {
+   "fixed_squad": [
+    {
+     "unit": "Plume",
+     "unit_id": "char_192_falco",
+     "level": 20,
+     "elite": 0,
+     "potential": 0,
+     "skill_index": 0,
+     "skill_level": 1
+    },
+    {
+     "unit": "Melantha",
+     "unit_id": "char_208_melan",
+     "level": 20,
+     "elite": 0,
+     "potential": 0,
+     "skill_index": 0,
+     "skill_level": 1
+    }
+   ],
+   "deployable_tokens": []
+  },
+  "hasConditionalSpawns": false
+ },
+ "pathing": {
+  "schemaVersion": 1,
+  "producer": "Arkpedia stage browser / buildPlaybackPaths",
+  "stage": "TR-9",
+  "geometryHash": "ae833f879fb532130fe726a9efe7a6048b975716f2bcf96493edbc909ff2bb1b",
+  "moveScale": 0.65,
+  "paths": {
+   "1": {
+    "points": [
+     [
+      8,
+      4
+     ],
+     [
+      7,
+      4
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      4,
+      4
+     ],
+     [
+      3,
+      4
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      0,
+      4
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8
+    ],
+    "length": 8,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      8,
+      4
+     ],
+     [
+      0,
+      4
+     ]
+    ]
+   },
+   "2": {
+    "points": [
+     [
+      8,
+      2
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      6,
+      2
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      4,
+      2
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      0,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8
+    ],
+    "length": 8,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      8,
+      2
+     ],
+     [
+      0,
+      2
+     ]
+    ]
+   }
+  }
+ },
+ "art": null,
+ "gates": null,
+ "fixedSquad": [
+  {
+   "unit": "Plume",
+   "unit_id": "char_192_falco",
+   "level": 20,
+   "elite": 0,
+   "potential": 0,
+   "skill_index": 0,
+   "skill_level": 1
+  },
+  {
+   "unit": "Melantha",
+   "unit_id": "char_208_melan",
+   "level": 20,
+   "elite": 0,
+   "potential": 0,
+   "skill_index": 0,
+   "skill_level": 1
+  }
+ ],
+ "enemies": {
+  "enemy_1007_slime_2": {
+   "key": "enemy_1007_slime_2",
+   "prefabKey": "enemy_1007_slime_2",
+   "name": "Originium Slug α",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 1050,
+    "atk": 185,
+    "def": 0,
+    "res": 0,
+    "moveSpeed": 1,
+    "bat": 1.7,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "infection"
+   ]
+  },
+  "enemy_1014_rogue": {
+   "key": "enemy_1014_rogue",
+   "prefabKey": "enemy_1014_rogue",
+   "name": "Dual Swordsman",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 2000,
+    "atk": 350,
+    "def": 100,
+    "res": 0,
+    "moveSpeed": 1.1,
+    "bat": 1.2,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  }
+ }
+}

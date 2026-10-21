@@ -5273,3 +5273,30 @@ The Technical Scout's `antiinvi.range_radius` (3.3) becomes `profile.revealRange
 ### Technical Scout stage (S23, 2026-10-21, test-only)
 
 **3-3** (8×11, 50 spawns) is built now that the Technical Scout's reveal range is supported. Coverage is **0-1 plus 92 test-only files**.
+
+### Fixed-squad stages (S24, 2026-10-21, test-only)
+
+The stage adapter now accepts a level file's `fixed_squad` (while still refusing `deployable_tokens`). The squad's `unit_id`, elite, level, potential, skill index and skill rank are compiled by `fixedSquadBuilds`; `StandardBattle` uses those builds instead of the caller's selection, and the prep page marks the squad as fixed. This is the squad the stage file owns, so the battle is reproducible and the UI no longer pretends a different selection matters.
+
+Sixteen fixed-squad stages are buildable with supported enemies:
+
+| Stages | Grid | Waves / spawns |
+|---|---|---|
+| 1-2 | 8×10 | 1 / 41 |
+| TR-1 | 6×7 | 4 / 5 |
+| TR-2 | 6×8 | 1 / 10 |
+| TR-3 | 6×7 | 1 / 11 |
+| TR-5 | 6×7 | 3 / 4 |
+| TR-6 | 7×9 | 1 / 25 |
+| TR-7 | 7×9 | 1 / 1 |
+| TR-9 | 7×9 | 2 / 12 |
+| TR-10 | 7×9 | 2 / 4 |
+| TR-11 | 7×8 | 1 / 14 |
+| TR-12 | 7×9 | 1 / 1 |
+| TR-13 | 7×10 | 1 / 16 |
+| TR-14 | 7×9 | 1 / 7 |
+| TR-15 | 7×9 | 1 / 7 |
+| TR-16 | 6×9 | 1 / 2 |
+| TR-23 | 6×9 | 1 / 24 |
+
+`test/arkpedia-fixed-squad.test.js` checks the exact builds and that an empty caller selection still produces the fixed bench. Coverage is **0-1 plus 108 test-only files**.

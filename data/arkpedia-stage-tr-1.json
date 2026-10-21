@@ -1,0 +1,522 @@
+{
+ "code": "TR-1",
+ "name": "Battlefield Treatment",
+ "description": "Learn how to use Medic Operators.",
+ "battle": {
+  "max_life": 10,
+  "unit_limit": 10,
+  "initial_dp": 15,
+  "max_dp": 99,
+  "dp_per_second": 1,
+  "dp_recovery_interval_seconds": 1
+ },
+ "mapTags": [],
+ "mapTagSource": null,
+ "geometry": {
+  "slug": "tr-1",
+  "rows": 6,
+  "cols": 7,
+  "tileLegend": [
+   {
+    "key": "tile_forbidden",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_wall",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true
+   },
+   {
+    "key": "tile_road",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_end",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_start",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   }
+  ],
+  "tileGrid": [
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    1,
+    1,
+    2,
+    2,
+    2,
+    3
+   ],
+   [
+    0,
+    1,
+    2,
+    2,
+    2,
+    1,
+    0
+   ],
+   [
+    0,
+    2,
+    2,
+    2,
+    1,
+    1,
+    0
+   ],
+   [
+    4,
+    2,
+    2,
+    2,
+    1,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  ],
+  "routes": [
+   {
+    "motion": null,
+    "placeholder": true,
+    "start": null,
+    "end": null,
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 4,
+     "col": 0
+    },
+    "end": {
+     "row": 1,
+     "col": 6
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 3
+      }
+     }
+    ],
+    "waits": []
+   }
+  ],
+  "waves": [
+   {
+    "index": 0,
+    "duration": 0,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": []
+   },
+   {
+    "index": 1,
+    "duration": 17,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Originium Slug",
+      "enemy_id": "enemy_1007_slime",
+      "count": 2,
+      "time": 5,
+      "interval": 5,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Soldier",
+      "enemy_id": "enemy_1002_nsabr",
+      "count": 1,
+      "time": 17,
+      "route": 1,
+      "fragment": 0
+     }
+    ]
+   },
+   {
+    "index": 2,
+    "duration": 1,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": []
+   },
+   {
+    "index": 3,
+    "duration": 17,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Soldier",
+      "enemy_id": "enemy_1002_nsabr",
+      "count": 1,
+      "time": 5,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Soldier",
+      "enemy_id": "enemy_1002_nsabr",
+      "count": 1,
+      "time": 17,
+      "route": 1,
+      "fragment": 0
+     }
+    ]
+   }
+  ],
+  "spawnTiles": [
+   {
+    "key": "tile_start",
+    "row": 4,
+    "col": 0,
+    "routes": [
+     1,
+     1,
+     1,
+     1
+    ]
+   }
+  ],
+  "objectiveTiles": [
+   {
+    "key": "tile_end",
+    "row": 1,
+    "col": 6,
+    "routes": [
+     1,
+     1,
+     1,
+     1
+    ]
+   }
+  ],
+  "enemyConfigurations": [
+   {
+    "enemy_id": "enemy_1002_nsabr",
+    "slug": "soldier",
+    "name": "Soldier",
+    "database_level": 0,
+    "overrides": {
+     "atk": 190,
+     "def": 30,
+     "hp": 1800
+    }
+   },
+   {
+    "enemy_id": "enemy_1007_slime",
+    "slug": "originium_slug_enemy_1007_slime",
+    "name": "Originium Slug",
+    "database_level": 0
+   }
+  ],
+  "suppliedUnits": {
+   "fixed_squad": [
+    {
+     "unit": "Rangers",
+     "unit_id": "char_503_rang",
+     "level": 1,
+     "elite": 0,
+     "potential": 0,
+     "skill_index": -1,
+     "skill_level": 1
+    },
+    {
+     "unit": "Yato",
+     "unit_id": "char_502_nblade",
+     "level": 1,
+     "elite": 0,
+     "potential": 0,
+     "skill_index": -1,
+     "skill_level": 1
+    },
+    {
+     "unit": "Hibiscus",
+     "unit_id": "char_120_hibisc",
+     "level": 1,
+     "elite": 0,
+     "potential": 0,
+     "skill_index": -1,
+     "skill_level": 1,
+     "hidden": true
+    }
+   ],
+   "deployable_tokens": []
+  },
+  "hasConditionalSpawns": false
+ },
+ "pathing": {
+  "schemaVersion": 1,
+  "producer": "Arkpedia stage browser / buildPlaybackPaths",
+  "stage": "TR-1",
+  "geometryHash": "56ce0d3d2c89c59d1f7fd5341bd9b26a459d61d35cd0fa51a52a13e2ae3e6169",
+  "moveScale": 0.65,
+  "paths": {
+   "1": {
+    "points": [
+     [
+      0,
+      4
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      3,
+      4
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      3,
+      2
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      6,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9
+    ],
+    "length": 9,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      0,
+      4
+     ],
+     [
+      3,
+      4
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      6,
+      1
+     ]
+    ]
+   }
+  }
+ },
+ "art": null,
+ "gates": null,
+ "fixedSquad": [
+  {
+   "unit": "Rangers",
+   "unit_id": "char_503_rang",
+   "level": 1,
+   "elite": 0,
+   "potential": 0,
+   "skill_index": -1,
+   "skill_level": 1
+  },
+  {
+   "unit": "Yato",
+   "unit_id": "char_502_nblade",
+   "level": 1,
+   "elite": 0,
+   "potential": 0,
+   "skill_index": -1,
+   "skill_level": 1
+  },
+  {
+   "unit": "Hibiscus",
+   "unit_id": "char_120_hibisc",
+   "level": 1,
+   "elite": 0,
+   "potential": 0,
+   "skill_index": -1,
+   "skill_level": 1,
+   "hidden": true
+  }
+ ],
+ "enemies": {
+  "enemy_1007_slime": {
+   "key": "enemy_1007_slime",
+   "prefabKey": "enemy_1007_slime",
+   "name": "Originium Slug",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 550,
+    "atk": 130,
+    "def": 0,
+    "res": 0,
+    "moveSpeed": 1,
+    "bat": 1.7,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "infection"
+   ]
+  },
+  "enemy_1002_nsabr": {
+   "key": "enemy_1002_nsabr",
+   "prefabKey": "enemy_1002_nsabr",
+   "name": "Soldier",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 1800,
+    "atk": 190,
+    "def": 30,
+    "res": 0,
+    "moveSpeed": 1.1,
+    "bat": 2,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  }
+ }
+}
