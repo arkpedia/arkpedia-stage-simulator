@@ -5374,3 +5374,7 @@ Three more early stages have passed the data review (supported enemies, valid ge
 ### Chapter 1 public expansion (S32, 2026-10-21)
 
 **1-3, 1-4, 1-5, 1-8, 1-9 and 1-10** join the public catalogue after the same supported-enemy, geometry, catalogue-load and 10-second battle review. The public simulator now offers **0-1 plus sixteen reviewed stages**; **97** file-backed stages remain test-only. The catalogue test pins the full public set.
+
+### Chapter 2 public expansion (S33, 2026-10-21)
+
+**2-2, 2-4, 2-5 and 2-6** join the public catalogue after the data review. The public simulator now offers **0-1 plus twenty reviewed stages**; **93** file-backed stages remain test-only. The catalogue test pins the full public set.
