@@ -283,14 +283,19 @@ export const ENEMY_FEATURES = Object.freeze({
     ability: { kind: 'blockerBlockUp', params: r => ({ n: r.talents.bb['buff_to_blocker.block_cnt'], max: r.talents.bb['buff_to_blocker.max_valid_stack_cnt'] }) },
     note: 'the current blocker gains +block_cnt Block', explains: /^Units blocking it gain \+1 Block \(up to a maximum of \+6\)$/ },
   // "When blocked, significantly reduces the blocker's ASPD": a flat ASPD delta while this enemy is the blocker's.
-  'talent:atkSpeedDown': { covers: r => sig(r, 'atkSpeedDown', ['attack_speed'])
-      && r.abilities.some(a => a.text === "When blocked, significantly reduces the blocker's ASPD"),
-    ability: { kind: 'blockerAspdDown', params: r => ({ aspd: r.talents.bb['atkSpeedDown.attack_speed'] * 100 }) },
-    note: "flat ASPD delta on the current blocker", explains: /^When blocked, significantly reduces the blocker's ASPD$/ },
-  // Defender-4: a DEF aura on other enemies within range_radius (silence-aware, refreshed like the other auras).
-  ...family(['defup'], ['def', 'range_radius'], g => ({ kind: 'enemyDefAura', params: r => ({ def: r.talents.bb[`${g}.def`], r: r.talents.bb[`${g}.range_radius`] }) }),
-    r => r.abilities.some(a => a.text === 'Increases the DEF of surrounding enemy units'),
-    'other enemies within range_radius gain DEF +def', null, /^Increases the DEF of surrounding enemy units$/),
+  'talent:atkSpeedDown': {
+    covers: r => sig(r, 'atkSpeedDown', ['attack_speed']) && (r.abilities.some(a => a.text === "When blocked, significantly reduces the blocker's ASPD")
+      || (r.abilities.some(a => a.text === 'All friendly units within range have reduced ASPD') && sig(r, 'defup', ['range_radius']))),
+    ability: { kind: 'aspdDown', params: r => r.abilities.some(a => a.text === 'All friendly units within range have reduced ASPD')
+      ? { mode: 'aura', aspd: r.talents.bb['atkSpeedDown.attack_speed'] * 100, range: r.talents.bb['defup.range_radius'] }
+      : { mode: 'blocker', aspd: r.talents.bb['atkSpeedDown.attack_speed'] * 100 } },
+    note: "blocker's flat ASPD delta, or Frost's ally aura", explains: text => text === "When blocked, significantly reduces the blocker's ASPD"
+      || text === 'All friendly units within range have reduced ASPD' },
+  // Defender-4: a DEF aura on other enemies within range_radius (silence-aware). Frost shares the range group but has no DEF.
+  'talent:defup': { covers: r => (sig(r, 'defup', ['def', 'range_radius']) && r.abilities.some(a => a.text === 'Increases the DEF of surrounding enemy units'))
+      || (sig(r, 'defup', ['range_radius']) && r.abilities.some(a => a.text === 'All friendly units within range have reduced ASPD')),
+    ability: { kind: 'enemyDefAura', params: r => ({ def: r.talents.bb['defup.def'] ?? 0, r: r.talents.bb['defup.range_radius'] }) },
+    note: 'other enemies within range_radius gain DEF +def (zero for Frost)', explains: /^Increases the DEF of surrounding enemy units$/ },
   // Death blast (boom): atk_scale × ATK around the corpse; the cold/elemental variants add their reviewed status or
   // element. Records whose line names anything else (ignite Reeds, seize Gramophones, grant Energy) are not covered.
   'talent:boom': { covers: r => coversDeathBlast(r, 'boom'),

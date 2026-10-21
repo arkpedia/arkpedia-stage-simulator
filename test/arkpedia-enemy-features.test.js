@@ -248,6 +248,13 @@ test('Chain Caster: Necrosis jumps to nearby targets with falloff', () => {
   assert.ok(hits[a.chessId] > 0 && hits[b.chessId] > 0, JSON.stringify(hits));
   assert.ok(elements.has(a.chessId) && elements.has(b.chessId), 'both targets received Necrosis');
 });
+test('Frost: the ally aura reduces ASPD by the reviewed amount', () => {
+  const key = 'enemy_1042_frostd', h = spawnAny(key, { seconds: 0.1 });
+  const guard = h.b.units.find(u => u.side === 'ally'), base = guard.s.aspd;
+  h.runUntil(() => guard.findBuff('ab:frost') || !h.b.units.some(u => u.side === 'enemy' && u.alive), 30);
+  assert.ok(guard.findBuff('ab:frost'), 'the aura reached the guard');
+  assert.equal(guard.s.aspd, base - 50);
+});
 test('Drains 1 Life Point: the engine leak drains the record stat', () => {
   const key = 'enemy_1137_plasm';
   assert.ok(support.enemies[key].policy, 'supported by the existing leak rule');

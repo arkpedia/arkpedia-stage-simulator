@@ -395,6 +395,18 @@ export const featureAbilities = Object.freeze({
   }),
   // Defender-4: a silence-aware DEF aura on every other enemy in range, refreshed each half-second.
   enemyDefAura: ({ def, r }) => enemyAura(r, 'ab:defup', { defFlat: def }),
+  // ASPD-down: either the Frost ally aura (`mode: aura`) or the blocker-owned delta (`mode: blocker`).
+  aspdDown: ({ mode, aspd, range }) => mode === 'aura' ? allyAura(range, 'ab:frost', { aspd }) : ({
+    spawn(b, e, a) { a.target = null; },
+    tick(b, e, a) {
+      const target = e.blockedBy ?? null;
+      if (target === a.target) return;
+      if (a.target) b.removeBuff(a.target, 'ab:blockerAspdDown');
+      a.target = target;
+      if (target && aspd) b.addBuff(target, { key: 'ab:blockerAspdDown', persist: true, mods: { aspd }, visible: true });
+    },
+    death(c, b, e, a) { if (a.target) b.removeBuff(a.target, 'ab:blockerAspdDown'); },
+  }),
   // "When blocked, significantly reduces the blocker's ASPD": keep one owned flat-ASPD buff on the current blocker.
   blockerAspdDown: ({ aspd }) => ({
     spawn(b, e, a) { a.target = null; },

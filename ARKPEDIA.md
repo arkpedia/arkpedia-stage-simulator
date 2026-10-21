@@ -5225,3 +5225,7 @@ The `epdamage` talent now covers both its simple and chain signatures. The chain
 | 10-11 adverse environment | 8×12 | 1 | 30 |
 
 10-8 and 10-8 adverse still contain a viewer break without a matching tunnel hold and remain refused. Coverage is **0-1 plus 82 test-only files**.
+
+### Frost's ally ASPD aura (E15, 2026-10-21)
+
+`talent:atkSpeedDown` now has two reviewed branches: the existing blocker-owned delta and Frost's silence-aware aura on allied units within `defup.range_radius` (2.5). Frost's `defup` group holds only the range, so the DEF-aura feature accepts that signature with a zero DEF contribution and shares the covered group. Support rises to **276 of 1,552** enemies. The test waits for the aura to reach the guard and checks the exact −50 ASPD.
