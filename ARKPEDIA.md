@@ -5718,3 +5718,7 @@ Added `npm run bench:arkpedia` and `docs/PERFORMANCE.md`. A 34.3-second, 150-spa
 ### Engine-time guard (S90, 2026-10-21)
 
 Added `test/arkpedia-performance.test.js`: 10 seconds of the 150-spawn 14-11 battle must finish inside a generous 5 s budget with no engine errors. It is a complexity guard, not a micro-benchmark, and keeps the Rust decision tied to measured engine time.
+
+### Round-100 snapshot (S91, 2026-10-21)
+
+`docs/REMAINING.md` records the round-100 state: **378** supported enemies, **185** built source stages, **186** public entries, and the 22,578-test full suite. The remaining stages are dominated by conditional spawns, deployable tokens, Inspired/identity bosses and source entries without geometry.
