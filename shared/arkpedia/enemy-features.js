@@ -287,6 +287,17 @@ export const ENEMY_FEATURES = Object.freeze({
     explains: text => /^Attack power increases( greatly)? when attacking <\$ba\.frozen>Frozen<\/> targets$/.test(text)
       || /^Gains significantly increased ATK when HP is under 50%$/.test(text) },
 
+  // Dublinn Companion Guard / Shadowblade: the paired field and haste.
+  'talent:traitAbility': { covers: r => sig(r, 'traitAbility', ['attack_speed', 'range_radius', 'taunt_level'])
+      || sig(r, 'traitAbility', ['base_attack_time']),
+    ability: { kind: 'companion', params: r => sig(r, 'traitAbility', ['attack_speed', 'range_radius', 'taunt_level'])
+      ? { mode: 'guard', aspd: r.talents.bb['traitAbility.attack_speed'], range: r.talents.bb['traitAbility.range_radius'] }
+      : { mode: 'shadow', bat: r.talents.bb['traitAbility.base_attack_time'] } },
+    note: 'paired ASPD field and Shadowblade haste',
+    explains: text => /^When a <Dublinn (?:Elite )?Companion Shadowblade> is nearby, activates a field that reduces nearby allied units' ASPD$/.test(text)
+      || /^When a <Dublinn (?:Elite )?Companion Guard> is nearby, significantly increases ASPD$/.test(text) },
+  'ability:More likely to get attacked by your units': { covers: r => r.abilities.some(a => a.text === 'More likely to get attacked by your units'),
+    ability: { kind: 'tauntEnemy', params: () => ({ taunt: 1 }) }, note: 'higher enemy taunt', explains: /^More likely to get attacked by your units$/ },
   // Purifying Flame: Arts hit that adds Burn and Weakens the target.
   'talent:Weaken': { covers: r => sig(r, 'Weaken', ['atk', 'duration']),
     ability: { kind: 'purifyingFlame', params: r => ({ atk: r.talents.bb['Weaken.atk'], duration: r.talents.bb['Weaken.duration'],
@@ -307,11 +318,10 @@ export const ENEMY_FEATURES = Object.freeze({
   // Dublinn Flamerazer: a 10.6 s burning aura every 6 s, and a death blast that also kills other Flamerazers.
   'skill:DeadBoom': { covers: r => r.skills.some(s => s.prefabKey === 'DeadBoom'),
     note: 'death blast driven by the Flamerazer skill', explains: /^Upon death, explodes and deals Arts damage, knocking down nearby Tattered Pillars and instantly defeating other <Dublinn Flamerazers>$/ },
-  'skill:Flame': { covers: r => r.skills.some(s => s.prefabKey === 'Flame')
-      && r.abilities.some(a => a.text === 'Continuously deals Arts damage and <$ba.dt.burning>Burn damage</> for the skill duration'),
+  'skill:Flame': { covers: r => r.skills.some(s => s.prefabKey === 'Flame'),
     ability: { kind: 'flamerazer', params: r => ({ duration: r.skills[0].bb['duspfr_flame[cd].duration'], interval: r.skills[0].bb['duspfr_flame[cd].interval'],
       hitInterval: r.skills[0].bb.hit_interval, scale: r.skills[0].bb.atk_scale, ep: r.skills[0].bb.ep_damage_ratio, deathScale: r.skills[1]?.bb.atk_scale ?? 1 }) },
-    nativeClaim: () => ({ wrappers: 2 }), note: 'burning aura and death blast',
+    nativeClaim: p => String(p.rootName ?? p.key ?? p.prefabKey ?? '').includes('duspfr') ? { wrappers: 2 } : {}, note: 'burning aura and death blast',
     explains: text => text === 'Continuously deals Arts damage and <$ba.dt.burning>Burn damage</> for the skill duration'
       || text === 'Upon death, explodes and deals Arts damage, knocking down nearby Tattered Pillars and instantly defeating other <Dublinn Flamerazers>' },
   // Prototype Auto Meal Distributor: summons one maintenance helper every few seconds.

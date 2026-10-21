@@ -653,6 +653,19 @@ test('Purifying Flame: the hit applies the ATK weaken', () => {
   const key = 'enemy_1177_dufrbl', h = spawnAny(key, { seconds: 0.1 }), guard = h.b.units.find(u => u.side === 'ally'), flame = enemy(h, key);
   flame.x = guard.x + 1; flame.y = guard.y; const ability = flame.mem.ab.list.find(a => a.tick); ability.tick(h.b, flame, ability); assert.ok(guard.findBuff('ab:weaken'));
 });
+test('Dublinn Companion Shadowblade: faster base attack and Guard haste', () => {
+  const key = 'enemy_1175_dushdo', h = spawnAny(key, { seconds: 0.1, units: [] }), e = enemy(h, key);
+  assert.ok(e.s.bat < ENEMY_RECORDS.enemies[key].levels[0].stats.bat);
+});
+test('Dublinn Companion Guard: the field slows a nearby ally', () => {
+  const guardKey = 'enemy_1174_duholy', shadowKey = 'enemy_1175_dushdo';
+  const witness = chessRec({ id: 'guard_witness', profession: 'WARRIOR', stats: { atk: 0, maxHp: 1e6, def: 0 } });
+  const h = makeBattle({ defs: { enemies: { [guardKey]: ENEMY_RECORDS.enemies[guardKey].levels[0], [shadowKey]: ENEMY_RECORDS.enemies[shadowKey].levels[0] }, chess: { [witness.chessId]: witness } },
+    units: [{ chessId: witness.chessId, row: 9, col: 9 }], enemies: [{ key: guardKey, time: 0, route: 0 }, { key: shadowKey, time: 0, pos: [9, 9] }], content: 'none', autoFinish: false,
+    timeLimit: 30, setup: battle => installEnemyFeatures(battle) });
+  h.run(1); const ally = h.b.units.find(u => u.side === 'ally');
+  assert.ok(ally.buffs.some(x => String(x.key).startsWith('ab:guardField')), JSON.stringify(ally.buffs.map(x => x.key)));
+});
 test('Drains 1 Life Point: the engine leak drains the record stat', () => {
   const key = 'enemy_1137_plasm';
   assert.ok(support.enemies[key].policy, 'supported by the existing leak rule');

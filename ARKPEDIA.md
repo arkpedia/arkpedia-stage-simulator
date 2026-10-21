@@ -5762,3 +5762,7 @@ With the Evocator/Flame supported, **9-15** and **9-16** build (8×11/9×11, 36�
 ### Snapshot to 386 enemies (S98, 2026-10-21)
 
 `docs/REMAINING.md` records the Evocator/Flame state: **386** supported enemies, **189** built source stages and **190** public entries; all 189 data-backed stages pass the two-second smoke test.
+
+### Dublinn Companion pair (E65, 2026-10-21)
+
+The Companion Guard taunts and, while a Shadowblade is within 1.1, slows nearby allies' ASPD by 30. The Shadowblade's base attack time drops by 1.2 and it gains +100 ASPD while a Guard is within 1.5. Both elite text variants are covered. Support rises to **390 of 1,552** enemies. Tests cover the faster base attack and the guard field.

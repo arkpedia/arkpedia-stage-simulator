@@ -345,7 +345,21 @@ export const featureAbilities = Object.freeze({
     },
   }),
   moveSpeedBonus: ({ mul }) => ({ spawn(b, e) { b.addBuff(e, { key: 'ab:moveSpeed', persist: true, visible: true, mods: { moveMul: mul } }); } }),
-  // Purifying Flame: explodes on contact with a melee ally, Burning and weakening the area.
+  // Higher-priority enemy target.
+  tauntEnemy: ({ taunt }) => ({ spawn(b, e) { e.s.taunt = Math.max(e.s.taunt ?? 0, taunt); } }),
+  // Dublinn Companion pair: the Guard's ASPD field and the Shadowblade's haste.
+  companion: ({ mode, aspd, range, bat }) => mode === 'guard' ? ({
+    tick(b, e) {
+      const near = b.enemies.some(u => u.alive && String(u.defId).includes('dushdo') && Math.hypot(u.x - e.x, u.y - e.y) <= range);
+      if (near) for (const u of b.alliesInRadius(e.x, e.y, range)) b.addBuff(u, { key: `ab:guardField:${e.id}`, duration: 0.6, visible: true, mods: { aspd } });
+    },
+  }) : ({
+    spawn(b, e) { e.s.bat = Math.max(0.2, e.s.bat + bat); },
+    tick(b, e) {
+      if (b.enemies.some(u => u.alive && String(u.defId).includes('duholy') && Math.hypot(u.x - e.x, u.y - e.y) <= 1.5))
+        b.addBuff(e, { key: 'ab:shadowHaste', duration: 0.6, visible: true, mods: { aspd: 100 } });
+    },
+  }),
   purifyingFlame: ({ atk, duration, ratio }) => ({
     spawn(b, e, a) { a.done = false; },
     tick(b, e, a) {
