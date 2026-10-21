@@ -5686,3 +5686,7 @@ With the Steam Tank supported, **11-3** builds (8×11, 19 spawns, 4 enemies). Co
 ### 11-2 and 11-3 adverse variants (S85, 2026-10-21)
 
 The adverse variants of **11-2** and **11-3** build as well (7×9/8×11, 21–37 spawns). Coverage is **180 public stages** (0-1 plus 179 files).
+
+### Ursus Civilian (E59, 2026-10-21)
+
+The Ursus Civilian sets `lpr = 0` (spared at the objective costs no life) and `counted = false`; dying instead deducts the reviewed `dead.value` (-1) life and can finish the battle. The native active is claimed. Support rises to **373 of 1,552** enemies. The test covers spare and kill.

@@ -345,6 +345,11 @@ export const featureAbilities = Object.freeze({
     },
   }),
   moveSpeedBonus: ({ mul }) => ({ spawn(b, e) { b.addBuff(e, { key: 'ab:moveSpeed', persist: true, visible: true, mods: { moveMul: mul } }); } }),
+  // Ursus Civilian: spared at the objective, one life lost if killed.
+  sparedCivilian: ({ value }) => ({
+    spawn(b, e) { e.lpr = 0; e.counted = false; },
+    death(c, b, e) { if (c.reason === 'killed') { b.life += value; if (b.life <= 0) b._finish?.('defeated'); } },
+  }),
   // Steam Tank: one-time half-HP buff.
   steamRage: ({ aspd, move }) => ({
     taken(c, b, e, a) {

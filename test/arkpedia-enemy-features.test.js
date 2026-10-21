@@ -606,6 +606,12 @@ test('Steam Tank: half HP grants the rage buff', () => {
   h.b.dealDamage(null, e, { amount: e.s.maxHp * 0.6, type: 'true', sourceless: true }); h.run(0.1);
   assert.ok(e.findBuff('ab:steamRage')); assert.ok(e.s.aspd > 100);
 });
+test('Ursus Civilian: spared costs no life, killed costs one', () => {
+  const key = 'enemy_3001_upeopl', h1 = spawnAny(key, { seconds: 0.1, units: [] }), e1 = enemy(h1, key);
+  h1.b.life = 3; h1.b.leak(e1); assert.equal(h1.b.life, 3);
+  const h2 = spawnAny(key, { seconds: 0.1, units: [] }), e2 = enemy(h2, key); h2.b.life = 3; h2.b.kill(e2, null);
+  assert.equal(h2.b.life, 2); assert.equal(e2.counted, false);
+});
 test('Drains 1 Life Point: the engine leak drains the record stat', () => {
   const key = 'enemy_1137_plasm';
   assert.ok(support.enemies[key].policy, 'supported by the existing leak rule');

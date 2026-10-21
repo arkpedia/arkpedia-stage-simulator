@@ -286,6 +286,14 @@ export const ENEMY_FEATURES = Object.freeze({
     explains: text => /^Attack power increases( greatly)? when attacking <\$ba\.frozen>Frozen<\/> targets$/.test(text)
       || /^Gains significantly increased ATK when HP is under 50%$/.test(text) },
 
+  // Ursus Civilian: spared at the objective, but costs a life when killed; not counted as defeated.
+  'ability:Does not deplete Life Points when spared, but will deplete a Life Point upon dying': {
+    covers: r => r.abilities.some(a => a.text === 'Does not deplete Life Points when spared, but will deplete a Life Point upon dying'),
+    ability: { kind: 'sparedCivilian', params: r => ({ value: r.talents.bb['dead.value'] ?? -1 }) },
+    note: 'no life loss when spared; one life on death; not counted', nativeClaim: () => ({ active: 1 }),
+    explains: text => text === 'Does not deplete Life Points when spared, but will deplete a Life Point upon dying'
+      || text === 'Does not count towards the defeated enemies counter' },
+  'talent:dead': { covers: r => sig(r, 'dead', ['value']), note: 'the spared civilian life value' },
   // Steam Tank: at half HP gains ASPD, movement and control immunity.
   'talent:Rage': { covers: r => sig(r, 'Rage', ['attack_speed', 'move_speed'])
       && r.abilities.some(a => a.text.startsWith('When HP drops to 50%, ASPD and Movement Speed are greatly increased')),
