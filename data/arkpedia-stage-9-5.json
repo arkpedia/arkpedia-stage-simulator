@@ -1,0 +1,2725 @@
+{
+ "code": "9-5",
+ "name": "Critical Value",
+ "description": "The downpour is here, the enemy is everywhere, and the frustration is slowly reaching the breaking point.",
+ "battle": {
+  "max_life": 3,
+  "unit_limit": 8,
+  "initial_dp": 10,
+  "max_dp": 99,
+  "dp_per_second": 1,
+  "dp_recovery_interval_seconds": 1
+ },
+ "mapTags": [],
+ "mapTagSource": null,
+ "geometry": {
+  "slug": "9-5",
+  "rows": 8,
+  "cols": 11,
+  "tileLegend": [
+   {
+    "key": "tile_forbidden",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_telout",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_floor",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_road",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_wall",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true
+   },
+   {
+    "key": "tile_start",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_end",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_telin",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   }
+  ],
+  "tileGrid": [
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    1,
+    2,
+    3,
+    3,
+    3,
+    4,
+    0
+   ],
+   [
+    5,
+    2,
+    3,
+    4,
+    4,
+    0,
+    3,
+    3,
+    3,
+    3,
+    6
+   ],
+   [
+    0,
+    0,
+    3,
+    0,
+    1,
+    2,
+    2,
+    0,
+    4,
+    4,
+    0
+   ],
+   [
+    0,
+    4,
+    3,
+    0,
+    4,
+    4,
+    4,
+    4,
+    4,
+    0,
+    0
+   ],
+   [
+    0,
+    4,
+    3,
+    4,
+    7,
+    3,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    7,
+    3,
+    3,
+    4,
+    0,
+    3,
+    3,
+    3,
+    2,
+    2,
+    5
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  ],
+  "routes": [
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 10
+    },
+    "end": {
+     "row": 2,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 4
+      }
+     },
+     {
+      "type": "appear_at_pos",
+      "position": {
+       "row": 3,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 6
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 2
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 3,
+      "seconds": 1
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 10
+    },
+    "end": {
+     "row": 2,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 4
+      }
+     },
+     {
+      "type": "appear_at_pos",
+      "position": {
+       "row": 3,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 6
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 2,
+      "seconds": 1
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 2,
+     "col": 0
+    },
+    "end": {
+     "row": 2,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 0
+      }
+     },
+     {
+      "type": "appear_at_pos",
+      "position": {
+       "row": 1,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 8
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 2
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 3,
+      "seconds": 1
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 2,
+     "col": 0
+    },
+    "end": {
+     "row": 2,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 0
+      }
+     },
+     {
+      "type": "appear_at_pos",
+      "position": {
+       "row": 1,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 8
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 3,
+      "seconds": 1
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 2,
+     "col": 0
+    },
+    "end": {
+     "row": 2,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 0
+      }
+     },
+     {
+      "type": "appear_at_pos",
+      "position": {
+       "row": 1,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 8
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 3
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 3,
+      "seconds": 1
+     }
+    ]
+   },
+   {
+    "motion": null,
+    "placeholder": true,
+    "start": null,
+    "end": null,
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 2,
+     "col": 0
+    },
+    "end": {
+     "row": 2,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 2
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 0
+      }
+     },
+     {
+      "type": "appear_at_pos",
+      "position": {
+       "row": 1,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 8
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 1,
+      "seconds": 3
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 3,
+      "seconds": 1
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 10
+    },
+    "end": {
+     "row": 2,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 4
+      }
+     },
+     {
+      "type": "appear_at_pos",
+      "position": {
+       "row": 3,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 6
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 3
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 3,
+      "seconds": 1
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 10
+    },
+    "end": {
+     "row": 2,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 4
+      }
+     },
+     {
+      "type": "appear_at_pos",
+      "position": {
+       "row": 3,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 6
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 3,
+      "seconds": 1
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 10
+    },
+    "end": {
+     "row": 2,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 6,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 4
+      }
+     },
+     {
+      "type": "appear_at_pos",
+      "position": {
+       "row": 3,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 6
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 3
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 3,
+      "seconds": 1
+     }
+    ]
+   }
+  ],
+  "waves": [
+   {
+    "index": 0,
+    "duration": 176,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Dublinn Sniffer Hound",
+      "enemy_id": "enemy_1165_duhond",
+      "count": 1,
+      "time": 3,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Dublinn Sniffer Hound",
+      "enemy_id": "enemy_1165_duhond",
+      "count": 2,
+      "time": 14,
+      "interval": 5,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Dublinn Sniffer Hound",
+      "enemy_id": "enemy_1165_duhond",
+      "count": 2,
+      "time": 27,
+      "interval": 1,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Dublinn Sniffer Hound",
+      "enemy_id": "enemy_1165_duhond",
+      "count": 3,
+      "time": 35,
+      "interval": 6,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Dublinn Scout",
+      "enemy_id": "enemy_1166_dusbr",
+      "count": 1,
+      "time": 20,
+      "route": 2,
+      "fragment": 0
+     },
+     {
+      "enemy": "Dublinn Scout",
+      "enemy_id": "enemy_1166_dusbr",
+      "count": 2,
+      "time": 28,
+      "interval": 8,
+      "route": 3,
+      "fragment": 0
+     },
+     {
+      "enemy": "Dublinn Phalanx Infantry",
+      "enemy_id": "enemy_1169_duphlx",
+      "count": 1,
+      "time": 63,
+      "route": 4,
+      "fragment": 1
+     },
+     {
+      "enemy": "Dublinn Phalanx Infantry",
+      "enemy_id": "enemy_1169_duphlx",
+      "count": 2,
+      "time": 80,
+      "interval": 14,
+      "route": 3,
+      "fragment": 1
+     },
+     {
+      "enemy": "Dublinn Sniper",
+      "enemy_id": "enemy_1167_dubow",
+      "count": 1,
+      "time": 72,
+      "route": 3,
+      "fragment": 1
+     },
+     {
+      "enemy": "Dublinn Sniper",
+      "enemy_id": "enemy_1167_dubow",
+      "count": 1,
+      "time": 84,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": "Dublinn Sniffer Hound",
+      "enemy_id": "enemy_1165_duhond",
+      "count": 3,
+      "time": 68,
+      "interval": 8,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": "Dublinn Sniffer Hound",
+      "enemy_id": "enemy_1165_duhond",
+      "count": 3,
+      "time": 69,
+      "interval": 8,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": "Dublinn Sniffer Hound",
+      "enemy_id": "enemy_1165_duhond",
+      "count": 2,
+      "time": 72,
+      "interval": 10,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": "Dublinn Phalanx Infantry",
+      "enemy_id": "enemy_1169_duphlx",
+      "count": 4,
+      "time": 114,
+      "interval": 20,
+      "route": 4,
+      "fragment": 2
+     },
+     {
+      "enemy": "Dublinn Phalanx Infantry",
+      "enemy_id": "enemy_1169_duphlx",
+      "count": 1,
+      "time": 176,
+      "route": 3,
+      "fragment": 2
+     },
+     {
+      "enemy": "Dublinn Phalanx Infantry",
+      "enemy_id": "enemy_1169_duphlx",
+      "count": 4,
+      "time": 112,
+      "interval": 20,
+      "route": 6,
+      "fragment": 2
+     },
+     {
+      "enemy": "Dublinn Sniper",
+      "enemy_id": "enemy_1167_dubow",
+      "count": 2,
+      "time": 130,
+      "interval": 31,
+      "route": 3,
+      "fragment": 2
+     },
+     {
+      "enemy": "Dublinn Phalanx Infantry",
+      "enemy_id": "enemy_1169_duphlx",
+      "count": 4,
+      "time": 114,
+      "interval": 20,
+      "route": 7,
+      "fragment": 2
+     },
+     {
+      "enemy": "Dublinn Phalanx Infantry",
+      "enemy_id": "enemy_1169_duphlx",
+      "count": 1,
+      "time": 176,
+      "route": 8,
+      "fragment": 2
+     },
+     {
+      "enemy": "Dublinn Phalanx Infantry",
+      "enemy_id": "enemy_1169_duphlx",
+      "count": 4,
+      "time": 112,
+      "interval": 20,
+      "route": 9,
+      "fragment": 2
+     },
+     {
+      "enemy": "Dublinn Sniper",
+      "enemy_id": "enemy_1167_dubow",
+      "count": 2,
+      "time": 130,
+      "interval": 31,
+      "route": 8,
+      "fragment": 2
+     }
+    ]
+   }
+  ],
+  "spawnTiles": [
+   {
+    "key": "tile_start",
+    "row": 2,
+    "col": 0,
+    "routes": [
+     2,
+     3,
+     4,
+     3,
+     3,
+     4,
+     3,
+     6,
+     3
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 6,
+    "col": 10,
+    "routes": [
+     0,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     7,
+     8,
+     9,
+     8
+    ]
+   }
+  ],
+  "objectiveTiles": [
+   {
+    "key": "tile_end",
+    "row": 2,
+    "col": 10,
+    "routes": [
+     0,
+     1,
+     1,
+     1,
+     2,
+     3,
+     4,
+     3,
+     3,
+     1,
+     1,
+     1,
+     1,
+     4,
+     3,
+     6,
+     3,
+     7,
+     8,
+     9,
+     8
+    ]
+   }
+  ],
+  "enemyConfigurations": [
+   {
+    "enemy_id": "enemy_1165_duhond",
+    "slug": "dublinn_sniffer_hound",
+    "name": "Dublinn Sniffer Hound",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1166_dusbr",
+    "slug": "dublinn_scout",
+    "name": "Dublinn Scout",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1167_dubow",
+    "slug": "dublinn_sniper",
+    "name": "Dublinn Sniper",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1169_duphlx",
+    "slug": "dublinn_phalanx_infantry",
+    "name": "Dublinn Phalanx Infantry",
+    "database_level": 0
+   }
+  ],
+  "suppliedUnits": {
+   "fixed_squad": [],
+   "deployable_tokens": []
+  },
+  "hasConditionalSpawns": false
+ },
+ "pathing": {
+  "schemaVersion": 1,
+  "producer": "Arkpedia stage browser / buildPlaybackPaths",
+  "stage": "9-5",
+  "geometryHash": "f3f529e53fc0a6594ba58fb5e938e73c093e73fa39eb6cc11e8062ebddd3796a",
+  "moveScale": 0.65,
+  "paths": {
+   "0": {
+    "points": [
+     [
+      10,
+      6
+     ],
+     [
+      9,
+      6
+     ],
+     [
+      8,
+      6
+     ],
+     [
+      7,
+      6
+     ],
+     [
+      6,
+      6
+     ],
+     [
+      5,
+      6
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      6,
+      2
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      9,
+      2
+     ],
+     [
+      10,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14
+    ],
+    "length": 14,
+    "breaks": [
+     8
+    ],
+    "flying": false,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 2,
+      "point": [
+       9,
+       6
+      ],
+      "tunnel": false
+     },
+     {
+      "at": 7,
+      "seconds": 1,
+      "point": [
+       4,
+       5
+      ],
+      "tunnel": true
+     }
+    ],
+    "nodes": [
+     [
+      10,
+      6
+     ],
+     [
+      9,
+      6
+     ],
+     [
+      5,
+      6
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      6,
+      2
+     ],
+     [
+      10,
+      2
+     ]
+    ]
+   },
+   "1": {
+    "points": [
+     [
+      10,
+      6
+     ],
+     [
+      9,
+      6
+     ],
+     [
+      8,
+      6
+     ],
+     [
+      7,
+      6
+     ],
+     [
+      6,
+      6
+     ],
+     [
+      5,
+      6
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      6,
+      2
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      9,
+      2
+     ],
+     [
+      10,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14
+    ],
+    "length": 14,
+    "breaks": [
+     8
+    ],
+    "flying": false,
+    "holds": [
+     {
+      "at": 7,
+      "seconds": 1,
+      "point": [
+       4,
+       5
+      ],
+      "tunnel": true
+     }
+    ],
+    "nodes": [
+     [
+      10,
+      6
+     ],
+     [
+      5,
+      6
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      6,
+      2
+     ],
+     [
+      10,
+      2
+     ]
+    ]
+   },
+   "2": {
+    "points": [
+     [
+      0,
+      2
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      2,
+      6
+     ],
+     [
+      1,
+      6
+     ],
+     [
+      0,
+      6
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      8,
+      1
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      9,
+      2
+     ],
+     [
+      10,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15
+    ],
+    "length": 15,
+    "breaks": [
+     9
+    ],
+    "flying": false,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 2,
+      "point": [
+       1,
+       2
+      ],
+      "tunnel": false
+     },
+     {
+      "at": 8,
+      "seconds": 1,
+      "point": [
+       0,
+       6
+      ],
+      "tunnel": true
+     }
+    ],
+    "nodes": [
+     [
+      0,
+      2
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      2,
+      6
+     ],
+     [
+      0,
+      6
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      8,
+      1
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      10,
+      2
+     ]
+    ]
+   },
+   "3": {
+    "points": [
+     [
+      0,
+      2
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      2,
+      6
+     ],
+     [
+      1,
+      6
+     ],
+     [
+      0,
+      6
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      8,
+      1
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      9,
+      2
+     ],
+     [
+      10,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15
+    ],
+    "length": 15,
+    "breaks": [
+     9
+    ],
+    "flying": false,
+    "holds": [
+     {
+      "at": 8,
+      "seconds": 1,
+      "point": [
+       0,
+       6
+      ],
+      "tunnel": true
+     }
+    ],
+    "nodes": [
+     [
+      0,
+      2
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      2,
+      6
+     ],
+     [
+      0,
+      6
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      8,
+      1
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      10,
+      2
+     ]
+    ]
+   },
+   "4": {
+    "points": [
+     [
+      0,
+      2
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      2,
+      6
+     ],
+     [
+      1,
+      6
+     ],
+     [
+      0,
+      6
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      8,
+      1
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      9,
+      2
+     ],
+     [
+      10,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15
+    ],
+    "length": 15,
+    "breaks": [
+     9
+    ],
+    "flying": false,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 3,
+      "point": [
+       1,
+       2
+      ],
+      "tunnel": false
+     },
+     {
+      "at": 8,
+      "seconds": 1,
+      "point": [
+       0,
+       6
+      ],
+      "tunnel": true
+     }
+    ],
+    "nodes": [
+     [
+      0,
+      2
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      2,
+      6
+     ],
+     [
+      0,
+      6
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      8,
+      1
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      10,
+      2
+     ]
+    ]
+   },
+   "6": {
+    "points": [
+     [
+      0,
+      2
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      2,
+      6
+     ],
+     [
+      1,
+      6
+     ],
+     [
+      0,
+      6
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      8,
+      1
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      9,
+      2
+     ],
+     [
+      10,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15
+    ],
+    "length": 15,
+    "breaks": [
+     9
+    ],
+    "flying": false,
+    "holds": [
+     {
+      "at": 2,
+      "seconds": 3,
+      "point": [
+       2,
+       2
+      ],
+      "tunnel": false
+     },
+     {
+      "at": 8,
+      "seconds": 1,
+      "point": [
+       0,
+       6
+      ],
+      "tunnel": true
+     }
+    ],
+    "nodes": [
+     [
+      0,
+      2
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      2,
+      2
+     ],
+     [
+      2,
+      6
+     ],
+     [
+      0,
+      6
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      8,
+      1
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      10,
+      2
+     ]
+    ]
+   },
+   "7": {
+    "points": [
+     [
+      10,
+      6
+     ],
+     [
+      9,
+      6
+     ],
+     [
+      8,
+      6
+     ],
+     [
+      7,
+      6
+     ],
+     [
+      6,
+      6
+     ],
+     [
+      5,
+      6
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      6,
+      2
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      9,
+      2
+     ],
+     [
+      10,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14
+    ],
+    "length": 14,
+    "breaks": [
+     8
+    ],
+    "flying": false,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 3,
+      "point": [
+       9,
+       6
+      ],
+      "tunnel": false
+     },
+     {
+      "at": 7,
+      "seconds": 1,
+      "point": [
+       4,
+       5
+      ],
+      "tunnel": true
+     }
+    ],
+    "nodes": [
+     [
+      10,
+      6
+     ],
+     [
+      9,
+      6
+     ],
+     [
+      5,
+      6
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      6,
+      2
+     ],
+     [
+      10,
+      2
+     ]
+    ]
+   },
+   "8": {
+    "points": [
+     [
+      10,
+      6
+     ],
+     [
+      9,
+      6
+     ],
+     [
+      8,
+      6
+     ],
+     [
+      7,
+      6
+     ],
+     [
+      6,
+      6
+     ],
+     [
+      5,
+      6
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      6,
+      2
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      9,
+      2
+     ],
+     [
+      10,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14
+    ],
+    "length": 14,
+    "breaks": [
+     8
+    ],
+    "flying": false,
+    "holds": [
+     {
+      "at": 7,
+      "seconds": 1,
+      "point": [
+       4,
+       5
+      ],
+      "tunnel": true
+     }
+    ],
+    "nodes": [
+     [
+      10,
+      6
+     ],
+     [
+      9,
+      6
+     ],
+     [
+      5,
+      6
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      6,
+      2
+     ],
+     [
+      10,
+      2
+     ]
+    ]
+   },
+   "9": {
+    "points": [
+     [
+      10,
+      6
+     ],
+     [
+      9,
+      6
+     ],
+     [
+      8,
+      6
+     ],
+     [
+      7,
+      6
+     ],
+     [
+      6,
+      6
+     ],
+     [
+      5,
+      6
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      6,
+      2
+     ],
+     [
+      7,
+      2
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      9,
+      2
+     ],
+     [
+      10,
+      2
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14
+    ],
+    "length": 14,
+    "breaks": [
+     8
+    ],
+    "flying": false,
+    "holds": [
+     {
+      "at": 2,
+      "seconds": 3,
+      "point": [
+       8,
+       6
+      ],
+      "tunnel": false
+     },
+     {
+      "at": 7,
+      "seconds": 1,
+      "point": [
+       4,
+       5
+      ],
+      "tunnel": true
+     }
+    ],
+    "nodes": [
+     [
+      10,
+      6
+     ],
+     [
+      8,
+      6
+     ],
+     [
+      5,
+      6
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      6,
+      2
+     ],
+     [
+      10,
+      2
+     ]
+    ]
+   }
+  }
+ },
+ "art": null,
+ "gates": null,
+ "fixedSquad": null,
+ "enemies": {
+  "enemy_1165_duhond": {
+   "key": "enemy_1165_duhond",
+   "prefabKey": "enemy_1165_duhond",
+   "name": "Dublinn Sniffer Hound",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 2800,
+    "atk": 300,
+    "def": 0,
+    "res": 0,
+    "moveSpeed": 1.7,
+    "bat": 1.4,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "<$ba.refraction>Refraction</>",
+     "format": "SILENCE"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "refracting.magic_resistance": 70
+    },
+    "bbStr": {},
+    "groups": {
+     "refracting": [
+      "magic_resistance"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1166_dusbr": {
+   "key": "enemy_1166_dusbr",
+   "prefabKey": "enemy_1166_dusbr",
+   "name": "Dublinn Scout",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 3000,
+    "atk": 280,
+    "def": 110,
+    "res": 0,
+    "moveSpeed": 1,
+    "bat": 2,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "<$ba.refraction>Refraction</>",
+     "format": "SILENCE"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "refracting.magic_resistance": 70
+    },
+    "bbStr": {},
+    "groups": {
+     "refracting": [
+      "magic_resistance"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1169_duphlx": {
+   "key": "enemy_1169_duphlx",
+   "prefabKey": "enemy_1169_duphlx",
+   "name": "Dublinn Phalanx Infantry",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 4000,
+    "atk": 300,
+    "def": 300,
+    "res": 0,
+    "moveSpeed": 1,
+    "bat": 2.5,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 1.5,
+    "blockCnt": 1,
+    "massLevel": 2,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "When other Phalanx Infantry are nearby, DEF increases (stacks)",
+     "format": "NORMAL"
+    },
+    {
+     "text": "<$ba.refraction>Refraction</>",
+     "format": "SILENCE"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "refracting.magic_resistance": 70,
+     "auraDefup.def": 200
+    },
+    "bbStr": {},
+    "groups": {
+     "refracting": [
+      "magic_resistance"
+     ],
+     "auraDefup": [
+      "def"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1167_dubow": {
+   "key": "enemy_1167_dubow",
+   "prefabKey": "enemy_1167_dubow",
+   "name": "Dublinn Sniper",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 3800,
+    "atk": 250,
+    "def": 150,
+    "res": 0,
+    "moveSpeed": 1.1,
+    "bat": 2.3,
+    "aspd": 100,
+    "rangeRadius": 2.3,
+    "rawRangeRadius": 2.3,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "<$ba.refraction>Refraction</>",
+     "format": "SILENCE"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "refracting.magic_resistance": 70
+    },
+    "bbStr": {},
+    "groups": {
+     "refracting": [
+      "magic_resistance"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  }
+ }
+}

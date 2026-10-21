@@ -5662,3 +5662,7 @@ The adverse variants of **14-14/15/16/17/19** build as well (8×11–8×12, 32�
 ### Dublinn Phalanx aura (E56, 2026-10-21)
 
 Each Phalanx unit refreshes DEF +200 per other living Phalanx unit (Infantry and Commander text), stacking with other auras and ending when the count drops. Support rises to **368 of 1,552** enemies. The test checks two units and the revert after one dies.
+
+### 9-5 and 9-6 (S82, 2026-10-21)
+
+With the Phalanx aura supported, **9-5** and **9-6** build (8×11/8×12, 44–46 spawns). Coverage is **175 public stages** (0-1 plus 174 files).
