@@ -50,3 +50,7 @@ The unsupported-enemy group is ranked by stage count. The current top families:
 - Full repository suite: 22,776 tests, 22,765 passed, 0 failed, 11 skipped.
 - `npm run check:arkpedia-enemies` and `npm run check:arkpedia-stages` are the registry gates.
 - GitHub-hosted matrix only; `test/arkpedia-ci-runners.test.js` guards the runner labels.
+
+## Conditional spawns
+
+63 main stages are conditional: **205 branch** entries and **86 hidden-group** entries, read from `stage-conditional/<slug>.json`. The hidden-group entries are being checked for whether they are UI-hidden but always spawning; branch entries need the branch trigger before a stage can be built.

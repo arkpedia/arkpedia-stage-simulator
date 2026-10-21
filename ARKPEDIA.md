@@ -5818,3 +5818,7 @@ The unit/integration step now runs through `tools/run-tests.mjs` with `SHARD_IND
 ### Conditional-spawn breakdown (S110, 2026-10-21)
 
 The coverage report now reads `stage-conditional/<slug>.json` and breaks the 63 conditional stages down by trigger: **205 branch** spawns and **86 hidden-group** spawns. This makes the conditional bucket actionable instead of a single count.
+
+### Conditional-spawn note in the remaining report (S111, 2026-10-21)
+
+`docs/REMAINING.md` now records the 205 branch / 86 hidden-group conditional entries and the open question about hidden-group semantics, so the next adapter decision is written down rather than inferred from a count.
