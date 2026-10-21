@@ -5706,3 +5706,7 @@ The distributor summons one Rampaging Maintenance Helper every 5 s (first after 
 ### 13-6 families (E61, 2026-10-21)
 
 Bloodborn Spawn: Arts attacks scale with the target's blocking count, and death leaves the reviewed Blood Amber child. Bombardier: delayed 1.1-radius Physical explosion plus the reborn child. Blood Amber: inert until the altar pulse, native active claimed. Support rises to **378 of 1,552** enemies. Tests cover the delayed explosion and the Blood Amber spawn.
+
+### 13-6 stages (S88, 2026-10-21)
+
+With the Bloodborn/Bombardier/Blood Amber support, **13-6** and **13-6 adverse environment** build (7×10, 31 spawns, 4 enemies). Coverage is **186 public stages** (0-1 plus 185 files).
