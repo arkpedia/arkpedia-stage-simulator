@@ -38,6 +38,11 @@ test("waves run in sequence with each wave's own delay, duration and interval", 
     ["enemy_1007_slime", 1], ["enemy_1002_nsabr", 16], ["enemy_1002_nsabr", 18],
   ]);
 });
+test("an appear_at_pos teleport becomes DISAPPEAR/APPEAR without a tunnel hold", () => {
+  const stage = JSON.parse(fs.readFileSync(new URL('../data/arkpedia-stage-10-8.json', import.meta.url), 'utf8'));
+  const route = stageAdapter(stage).routes[4], kinds = route.checkpoints.map(c => c.type);
+  assert.ok(kinds.includes('DISAPPEAR') && kinds.includes('APPEAR'), kinds.join(','));
+});
 test("deployable tokens and conditional spawns remain refused", () => {
   for (const patch of [
     { suppliedUnits: { fixed_squad: [], deployable_tokens: [{}] } },

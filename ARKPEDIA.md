@@ -5342,3 +5342,7 @@ The Volleyball Serving/Spiking Cart gains `AtkUp.atk` per attack up to `max_stac
 ### Sarkaz standby revive (E25, 2026-10-21)
 
 The Grudgebearer/Worldcurser/Bladeweaver family starts in a stun-flag standby until the first injury drops HP below `revive.hp_ratio` (0.999) or `revive.unmove_duration` elapses. It then removes standby, gains the `revive.move_speed` multiplier, and the two-target long-ranged form sets `maxTargets` 2. Support rises to **302 of 1,552** enemies. The test checks the standby, the awakening and the two targets.
+
+### 10-8 teleport support (S27, 2026-10-21, test-only)
+
+The stage adapter now accepts a viewer break without a tunnel hold when the level geometry has an `appear_at_pos` checkpoint at the exact break point. It emits a zero-second DISAPPEAR/WAIT/APPEAR pair, so the enemy teleports instead of walking. This closes the last refused main stage whose enemies were all supported: **10-8** and **10-8 adverse environment** now build (8×11, 18 spawns, 4 enemies). Coverage is **0-1 plus 113 test-only files**; the battle test pins the DISAPPEAR/APPEAR legs.
