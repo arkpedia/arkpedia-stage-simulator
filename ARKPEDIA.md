@@ -5746,3 +5746,7 @@ The first lethal hit is prevented (`taken`, HP set to 1), the Grotesque becomes 
 ### 9-14 (S95, 2026-10-21)
 
 With the Tombkeeper supported, **9-14** builds (9×11, 58 spawns, 6 enemies). The stacked branch now has **188 public stages** (0-1 plus 187 files).
+
+### Stacked snapshot to 382 enemies (S96, 2026-10-21)
+
+`docs/REMAINING.md` now records the stacked Flamerazer/Tombkeeper state: **382** supported enemies, **187** built source stages and **188** public entries. All 187 data-backed stages pass the two-second smoke test.
