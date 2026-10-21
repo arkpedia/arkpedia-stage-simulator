@@ -5602,3 +5602,7 @@ The Chalice mirrors 5% of damage taken by nearby non-flying enemies onto itself 
 ### Caustic Slug (E51, 2026-10-21)
 
 The Caustic Originium Slug leaves a 3.5x Physical death blast and a short pollution zone; if consumed by an Active Originium Storm while carrying its mark, it adds one damage-step boost to the storm. Support rises to **359 of 1,552** enemies. The test checks the death blast.
+
+### 14-10 (S72, 2026-10-21)
+
+With the Caustic Slug supported, **14-10** builds (9×12, 106 spawns, 5 enemies). Coverage is **154 public stages** (0-1 plus 153 files). The adverse variant still needs the `1424_2`/`1425` combination.
