@@ -5300,3 +5300,7 @@ Sixteen fixed-squad stages are buildable with supported enemies:
 | TR-23 | 6×9 | 1 / 24 |
 
 `test/arkpedia-fixed-squad.test.js` checks the exact builds and that an empty caller selection still produces the fixed bench. Coverage is **0-1 plus 108 test-only files**.
+
+### Tiacauh DEF and melee (E19, 2026-10-21)
+
+The Tiacauh family gains `Def.def` while blocked; the Ritualist/Shaman also has the reviewed `combat.attack@ccwitch_rage_attack.atk_scale` 4× melee multiplier (applied while blocked). Support rises to **285 of 1,552** enemies. The test checks the flat DEF while blocked and the exact 4× melee damage.

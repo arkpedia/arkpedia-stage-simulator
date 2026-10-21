@@ -344,6 +344,20 @@ export const featureAbilities = Object.freeze({
       b.addBuff(e, { key: 'ab:enhance', refresh: 'stack', stacks: 1, maxStacks: max, persist: true, visible: true, mods: { atkPct: atk, aspd } });
     },
   }),
+  // Tiacauh: flat DEF while the enemy is blocked, and the reviewed melee multiplier.
+  blockedDef: ({ def }) => ({
+    spawn(b, e, a) { a.on = false; },
+    tick(b, e, a) {
+      const on = !!e.blockedBy;
+      if (on === a.on) return;
+      a.on = on;
+      if (on) b.addBuff(e, { key: 'ab:blockedDef', persist: true, visible: true, mods: { defFlat: def } });
+      else b.removeBuff(e, 'ab:blockedDef');
+    },
+  }),
+  meleeAttackScale: ({ scale }) => ({
+    hitOut(c, b, e) { if (c.dmg.isAttack && e.blockedBy && scale > 0) c.dmg.amount *= scale; },
+  }),
   // Technical Scout: its ranged selection may target camouflaged/stealthed allies inside the reviewed radius.
   revealCamouflage: ({ range }) => ({ spawn(b, e) { e.profile.revealRange = range; } }),
   // Reborn-Creation auras: Hatedrinker counts marked creations and buffs itself; the ASV buffs every marked creation

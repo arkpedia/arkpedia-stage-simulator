@@ -264,6 +264,14 @@ export const ENEMY_FEATURES = Object.freeze({
     explains: text => /^Attack power increases( greatly)? when attacking <\$ba\.frozen>Frozen<\/> targets$/.test(text)
       || /^Gains significantly increased ATK when HP is under 50%$/.test(text) },
 
+  // Tiacauh: flat DEF while blocked; the Ritualist/Shaman also has a reviewed 4× melee attack.
+  'talent:Def': { covers: r => sig(r, 'Def', ['def']) && r.abilities.some(a => a.text.startsWith('Gains DEF when blocked')),
+    ability: { kind: 'blockedDef', params: r => ({ def: r.talents.bb['Def.def'] }) },
+    note: 'flat DEF while blocked', explains: text => text.startsWith('Gains DEF when blocked') },
+  'talent:combat': { covers: r => sig(r, 'combat', ['attack@ccwitch_rage_attack.atk_scale'])
+      && r.abilities.some(a => /deals (high )?Physical damage with melee attacks/.test(a.text)),
+    ability: { kind: 'meleeAttackScale', params: r => ({ scale: r.talents.bb['combat.attack@ccwitch_rage_attack.atk_scale'] }) },
+    note: 'melee attack ×scale', explains: text => /deals (high )?Physical damage with melee attacks/.test(text) },
   // Reborn-Creation auras. Hatedrinker buffs itself per creation; the ASV buffs the creations and makes their
   // attacks add Necrosis. Both read the bloodsucker marker from E10.
   'talent:aura': {

@@ -289,6 +289,23 @@ test('Technical Scout: camouflage is ignored only inside the reviewed reveal ran
   e.x = guard.x + 5;
   assert.equal(canTargetAlly(e, guard, true), false, 'hidden outside the aura');
 });
+test('Tiacauh: flat DEF while blocked and the reviewed melee multiplier', () => {
+  const defKey = 'enemy_1093_ccsbr', h = spawnAny(defKey, { seconds: 0.1 });
+  const e = h.b.units.find(u => u.side === 'enemy' && u.defId === defKey), base = ENEMY_RECORDS.enemies[defKey].levels[0].stats.def;
+  h.runUntil(() => e.blockedBy, 20); h.run(0.2);
+  assert.ok(e.blockedBy); assert.equal(e.s.def, base + 130);
+
+  const key = 'enemy_1096_ccwitch', rec = ENEMY_RECORDS.enemies[key].levels[0];
+  const guard = chessRec({ id: 'tiacauh_guard', profession: 'WARRIOR', stats: { atk: 0, maxHp: 1e6, def: 0 } });
+  const b = makeBattle({ defs: { enemies: { [key]: rec }, chess: { [guard.chessId]: guard } },
+    units: [{ chessId: guard.chessId, row: 9, col: 6 }], enemies: [{ key, time: 0, route: 0 }],
+    content: 'none', autoFinish: false, timeLimit: 30, setup: battle => installEnemyFeatures(battle) });
+  b.run(0.05); const unit = b.b.units.find(u => u.defId === key), g = b.b.units.find(u => u.side === 'ally');
+  unit.x = g.x; unit.y = g.y; b.step(); assert.ok(unit.blockedBy, 'the guard blocks it');
+  let hit = null; b.b.on('damaged', c => { if (c.source === unit && c.dmg?.isAttack) hit = c; });
+  b.runUntil(() => hit, 25);
+  assert.ok(hit); assert.equal(hit.dmg.amount, unit.s.atk * 4);
+});
 test('Drains 1 Life Point: the engine leak drains the record stat', () => {
   const key = 'enemy_1137_plasm';
   assert.ok(support.enemies[key].policy, 'supported by the existing leak rule');
