@@ -5370,3 +5370,7 @@ The Seed of Withering/Decay detonates once an ally is inside its attack radius, 
 ### Public catalogue expansion (S31, 2026-10-21)
 
 Three more early stages have passed the data review (supported enemies, valid geometry, catalogue-loadable, 10-second battle): **1-1, 1-7 and 2-1**. The public simulator now offers **0-1 plus ten reviewed stages**; **103** file-backed stages remain test-only. The catalogue test pins the expanded public set.
+
+### Chapter 1 public expansion (S32, 2026-10-21)
+
+**1-3, 1-4, 1-5, 1-8, 1-9 and 1-10** join the public catalogue after the same supported-enemy, geometry, catalogue-load and 10-second battle review. The public simulator now offers **0-1 plus sixteen reviewed stages**; **97** file-backed stages remain test-only. The catalogue test pins the full public set.
