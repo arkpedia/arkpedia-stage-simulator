@@ -344,6 +344,13 @@ export const featureAbilities = Object.freeze({
       b.addBuff(e, { key: 'ab:enhance', refresh: 'stack', stacks: 1, maxStacks: max, persist: true, visible: true, mods: { atkPct: atk, aspd } });
     },
   }),
+  // Guerrilla Herald: refresh a short battlefield-wide ATK/DEF buff on every living enemy.
+  enemyGlobalStatAura: ({ atkPct, defFlat }) => ({
+    tick(b, e, a) {
+      for (const u of b.enemies) if (u.alive)
+        b.addBuff(u, { key: `ab:strength:${e.id}`, duration: 0.7, visible: true, mods: { atkPct, defFlat } });
+    },
+  }),
   // Active Originium Storm: every second the storm grows and damages the allies inside it.
   stormAura: ({ damage, damageStep, maxDamage, radius, radiusStep, maxRadius, spRatio }) => ({
     spawn(b, e, a) { a.t = 0; a.r = radius; a.d = damage; },

@@ -5446,3 +5446,7 @@ With the Wither Vanguard pollution Arts and the Active Originium Storm both supp
 ### Boom visual (S47, 2026-10-21)
 
 The Seed of Withering's self-destruct emits `fx('boom')`; the full render test requires every literal kind to have an explicit visual. Added `boom` as a 1.5-radius blast in `public/js/render/fx.js`. The full repository suite then reaches **22,549 tests, 22,537 passed, 0 failed, 11 skipped**.
+
+### Guerrilla Herald battlefield buff (E34, 2026-10-21)
+
+The Guerrilla Herald refreshes a 0.7-second battlefield-wide buff on every living enemy: ATK +`strength.atk` (10%) and DEF +`strength.def` (100). The short duration makes the aura end when the Herald dies or leaks. Support rises to **321 of 1,552** enemies. The test buffs a second enemy, then kills the Herald and checks the revert.

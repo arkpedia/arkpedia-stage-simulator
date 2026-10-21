@@ -419,6 +419,16 @@ test('Active Originium Storm: the growing aura damages the guard', () => {
   h.runUntil(() => storm, 25);
   assert.ok(storm, 'the storm hit the guard'); assert.ok(guard.hp < hp);
 });
+test('Guerrilla Herald: the battlefield aura buffs other enemies while it lives', () => {
+  const herald = 'enemy_1080_sotidp', other = 'enemy_1222_dpvt';
+  const h = makeBattle({ defs: { enemies: { [herald]: ENEMY_RECORDS.enemies[herald].levels[0], [other]: ENEMY_RECORDS.enemies[other].levels[0] } },
+    units: [], enemies: [{ key: herald, time: 0, route: 0 }, { key: other, time: 0, route: 0 }], content: 'none', autoFinish: false,
+    timeLimit: 30, setup: battle => installEnemyFeatures(battle) });
+  h.run(0.8); const hd = enemy(h, herald), o = enemy(h, other);
+  const baseAtk = ENEMY_RECORDS.enemies[other].levels[0].stats.atk, baseDef = ENEMY_RECORDS.enemies[other].levels[0].stats.def;
+  assert.ok(Math.abs(o.s.atk - baseAtk * 1.1) < 1, `${o.s.atk} vs ${baseAtk * 1.1}`); assert.equal(o.s.def, baseDef + 100);
+  h.b.kill(hd, null); h.run(1); assert.ok(Math.abs(o.s.atk - baseAtk) < 1); assert.equal(o.s.def, baseDef);
+});
 test('Drains 1 Life Point: the engine leak drains the record stat', () => {
   const key = 'enemy_1137_plasm';
   assert.ok(support.enemies[key].policy, 'supported by the existing leak rule');

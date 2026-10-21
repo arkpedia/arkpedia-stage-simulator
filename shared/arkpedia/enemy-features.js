@@ -264,6 +264,12 @@ export const ENEMY_FEATURES = Object.freeze({
     explains: text => /^Attack power increases( greatly)? when attacking <\$ba\.frozen>Frozen<\/> targets$/.test(text)
       || /^Gains significantly increased ATK when HP is under 50%$/.test(text) },
 
+  // Guerrilla Herald: a battlefield-wide ATK/DEF buff for every enemy.
+  'talent:strength': { covers: r => sig(r, 'strength', ['atk', 'def'])
+      && r.abilities.some(a => a.text === 'Increases the ATK and DEF of enemy units when on the battlefield.'),
+    ability: { kind: 'enemyGlobalStatAura', params: r => ({ atkPct: r.talents.bb['strength.atk'], defFlat: r.talents.bb['strength.def'] }) },
+    note: 'all living enemies +atk%/+def while the Herald lives',
+    explains: /^Increases the ATK and DEF of enemy units when on the battlefield\.$/ },
   // Active Originium Storm: a growing storm aura that damages and slows SP recovery.
   'talent:StormAura': { covers: r => sig(r, 'StormAura', ['damage', 'damage_step', 'max_damage', 'max_radius', 'radius_step', 'range_radius', 'sp_recover_ratio']),
     ability: { kind: 'stormAura', params: r => ({ damage: r.talents.bb['StormAura.damage'], damageStep: r.talents.bb['StormAura.damage_step'],
