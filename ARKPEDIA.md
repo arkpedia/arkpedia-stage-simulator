@@ -5185,3 +5185,12 @@ Coverage is **0-1 plus 71 test-only files**.
 The Hatedrinker's `aura` talent is a self-buff: ATK +`aura.atk` for each living Reborn Creation on the field, capped by `aura.max_valid_stack_cnt` (six). The marker from E10 identifies those creations, so the aura counts them every half second and keeps one visible ATK buff. A creation entering or dying updates the count; zero removes the buff.
 
 Support rises to **264 of 1,552** enemies. The test spawns the Hatedrinker, adds a creation, and checks the exact +15% ATK.
+
+### Hatedrinker stages (S17, 2026-10-21, test-only)
+
+| Stage | Grid | Waves | Spawns | Notes |
+|---|---|---|---|---|
+| 13-2 | 7×9 | 1 | 39 | Hatedrinker plus its Reborn Creations |
+| 13-2 adverse environment | 7×9 | 1 | 39 | the same stage under its adverse-environment variant |
+
+Coverage is **0-1 plus 73 test-only files**.
