@@ -281,10 +281,15 @@ export function stageAdapter(source) {
     ]),
   );
   const pair = (p) => [p.row, p.col];
+  // A route no wave spawns on never has to walk, so a viewer export may omit it. Only refuse a missing path
+  // for a route the stage actually uses.
+  const usedRoutes = new Set(g.waves.flatMap(wave => (wave.spawns || []).map(spawn => spawn.route)));
   const routes = g.routes.map((route, index) => {
     if (route.placeholder)
       return { start: [0, 0], end: [0, 0], checkpoints: [] };
     const path = source.pathing?.paths?.[index];
+    if (!path && !usedRoutes.has(index))
+      return { motion: route.motion, start: pair(route.start), end: pair(route.end), checkpoints: [] };
     if (path) {
       if (path.breaks.length || path.holds.some((h) => h.tunnel))
         throw new Error("Unsupported route tunnel");

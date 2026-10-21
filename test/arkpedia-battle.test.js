@@ -160,6 +160,15 @@ test("every spawn names a route index, never an explicit numeric route", () => {
     assert.deepEqual(a.routes[spawn.routeIndex].start, [2, 8]);
   }
 });
+test("an unused route may lack a viewer path, but a used one may not", () => {
+  const stage = structuredClone(data.stage);
+  stage.geometry.waves[0].spawns = [{ enemy_id: "enemy_1007_slime", count: 1, time: 0, route: 1 }];
+  delete stage.pathing.paths[2];
+  const a = stageAdapter(stage);
+  assert.equal(a.spawns.length, 1); assert.deepEqual(a.routes[2].checkpoints, []);
+  delete stage.pathing.paths[1];
+  assert.throws(() => stageAdapter(stage), /Missing stage viewer path for route 1/);
+});
 test("missing viewer routes fail rather than switching to a different path", () => {
   assert.throws(
     () => stageAdapter({ ...data.stage, pathing: { paths: {} } }),

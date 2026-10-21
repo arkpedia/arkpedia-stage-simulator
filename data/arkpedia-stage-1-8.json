@@ -1,0 +1,1781 @@
+{
+ "code": "1-8",
+ "name": "Resolve",
+ "description": "Be careful of the large number of approaching enemies, but keep an eye on the agile Reunion leader.\nThe Stun Generator can stop her movement for a short time.\n<Stun Generator> Pay a cost to activate it, damaging and stunning nearby enemies.",
+ "battle": {
+  "max_life": 8,
+  "unit_limit": 8,
+  "initial_dp": 10,
+  "max_dp": 99,
+  "dp_per_second": 1,
+  "dp_recovery_interval_seconds": 1
+ },
+ "mapTags": [],
+ "mapTagSource": null,
+ "geometry": {
+  "slug": "1-8",
+  "rows": 7,
+  "cols": 11,
+  "tileLegend": [
+   {
+    "key": "tile_forbidden",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_start",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_end",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_road",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_floor",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_wall",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true
+   },
+   {
+    "key": "tile_fence",
+    "height": "low",
+    "walkable": false,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_forbidden",
+    "height": "low",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   }
+  ],
+  "tileGrid": [
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0
+   ],
+   [
+    2,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    0
+   ],
+   [
+    0,
+    4,
+    5,
+    5,
+    6,
+    3,
+    3,
+    3,
+    3,
+    3,
+    1
+   ],
+   [
+    0,
+    4,
+    0,
+    5,
+    5,
+    3,
+    3,
+    3,
+    3,
+    3,
+    0
+   ],
+   [
+    0,
+    4,
+    5,
+    5,
+    7,
+    3,
+    3,
+    3,
+    3,
+    3,
+    1
+   ],
+   [
+    2,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  ],
+  "routes": [
+   {
+    "motion": null,
+    "placeholder": true,
+    "start": null,
+    "end": null,
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 4,
+     "col": 10
+    },
+    "end": {
+     "row": 5,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 7
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 2,
+     "col": 10
+    },
+    "end": {
+     "row": 1,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 7
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 0,
+     "col": 9
+    },
+    "end": {
+     "row": 5,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 4
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 9
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 8
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 7
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 2
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 1,
+      "seconds": 5
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 2,
+      "seconds": 17
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 3,
+      "seconds": 3
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 4,
+      "seconds": 3
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 5,
+      "seconds": 10
+     }
+    ]
+   },
+   {
+    "motion": "fly",
+    "start": {
+     "row": 4,
+     "col": 10
+    },
+    "end": {
+     "row": 5,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 2
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "fly",
+    "start": {
+     "row": 2,
+     "col": 10
+    },
+    "end": {
+     "row": 5,
+     "col": 0
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 2,
+       "col": 5
+      }
+     }
+    ],
+    "waits": []
+   }
+  ],
+  "waves": [
+   {
+    "index": 0,
+    "duration": 130.1,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Originium Slug",
+      "enemy_id": "enemy_1007_slime",
+      "count": 1,
+      "time": 3,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": "Originium Slug",
+      "enemy_id": "enemy_1007_slime",
+      "count": 2,
+      "time": 6,
+      "interval": 0.7,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": "Originium Slug",
+      "enemy_id": "enemy_1007_slime",
+      "count": 3,
+      "time": 9,
+      "interval": 0.7,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": "Originium Slug α",
+      "enemy_id": "enemy_1007_slime_2",
+      "count": 1,
+      "time": 16.4,
+      "route": 1,
+      "fragment": 2
+     },
+     {
+      "enemy": "Originium Slug α",
+      "enemy_id": "enemy_1007_slime_2",
+      "count": 2,
+      "time": 20.4,
+      "interval": 0.7,
+      "route": 1,
+      "fragment": 2
+     },
+     {
+      "enemy": "Originium Slug α",
+      "enemy_id": "enemy_1007_slime_2",
+      "count": 2,
+      "time": 25.4,
+      "interval": 0.7,
+      "route": 1,
+      "fragment": 2
+     },
+     {
+      "enemy": "Hound Pro",
+      "enemy_id": "enemy_1000_gopro_2",
+      "count": 1,
+      "time": 34.1,
+      "route": 2,
+      "fragment": 3
+     },
+     {
+      "enemy": "Hound Pro",
+      "enemy_id": "enemy_1000_gopro_2",
+      "count": 2,
+      "time": 39.1,
+      "interval": 0.7,
+      "route": 2,
+      "fragment": 3
+     },
+     {
+      "enemy": "Hound Pro",
+      "enemy_id": "enemy_1000_gopro_2",
+      "count": 2,
+      "time": 42.1,
+      "interval": 0.7,
+      "route": 1,
+      "fragment": 3
+     },
+     {
+      "enemy": "Soldier",
+      "enemy_id": "enemy_1002_nsabr",
+      "count": 1,
+      "time": 46.1,
+      "route": 1,
+      "fragment": 3
+     },
+     {
+      "enemy": "Soldier",
+      "enemy_id": "enemy_1002_nsabr",
+      "count": 1,
+      "time": 50.1,
+      "route": 1,
+      "fragment": 3
+     },
+     {
+      "enemy": "Soldier",
+      "enemy_id": "enemy_1002_nsabr",
+      "count": 1,
+      "time": 48.1,
+      "route": 2,
+      "fragment": 3
+     },
+     {
+      "enemy": "Soldier",
+      "enemy_id": "enemy_1002_nsabr",
+      "count": 1,
+      "time": 52.1,
+      "route": 2,
+      "fragment": 3
+     },
+     {
+      "enemy": "Crownslayer",
+      "enemy_id": "enemy_1502_crowns",
+      "count": 1,
+      "time": 63.1,
+      "route": 3,
+      "fragment": 4
+     },
+     {
+      "enemy": "Monster",
+      "enemy_id": "enemy_1005_yokai",
+      "count": 2,
+      "time": 69.1,
+      "interval": 10,
+      "route": 4,
+      "fragment": 5
+     },
+     {
+      "enemy": "Monster",
+      "enemy_id": "enemy_1005_yokai",
+      "count": 2,
+      "time": 69.1,
+      "interval": 10,
+      "route": 5,
+      "fragment": 5
+     },
+     {
+      "enemy": "Originium Slug α",
+      "enemy_id": "enemy_1007_slime_2",
+      "count": 2,
+      "time": 74.1,
+      "interval": 1,
+      "route": 1,
+      "fragment": 5
+     },
+     {
+      "enemy": "Originium Slug α",
+      "enemy_id": "enemy_1007_slime_2",
+      "count": 2,
+      "time": 82.1,
+      "interval": 1,
+      "route": 1,
+      "fragment": 5
+     },
+     {
+      "enemy": "Originium Slug α",
+      "enemy_id": "enemy_1007_slime_2",
+      "count": 2,
+      "time": 84.1,
+      "interval": 1,
+      "route": 2,
+      "fragment": 5
+     },
+     {
+      "enemy": "Originium Slug α",
+      "enemy_id": "enemy_1007_slime_2",
+      "count": 2,
+      "time": 89.1,
+      "interval": 1,
+      "route": 2,
+      "fragment": 5
+     },
+     {
+      "enemy": "Soldier",
+      "enemy_id": "enemy_1002_nsabr",
+      "count": 2,
+      "time": 96.1,
+      "interval": 1,
+      "route": 1,
+      "fragment": 6
+     },
+     {
+      "enemy": "Soldier",
+      "enemy_id": "enemy_1002_nsabr",
+      "count": 2,
+      "time": 100.1,
+      "interval": 1,
+      "route": 2,
+      "fragment": 6
+     },
+     {
+      "enemy": "Caster",
+      "enemy_id": "enemy_1011_wizard",
+      "count": 1,
+      "time": 99.1,
+      "route": 1,
+      "fragment": 6
+     },
+     {
+      "enemy": "Caster",
+      "enemy_id": "enemy_1011_wizard",
+      "count": 1,
+      "time": 103.1,
+      "route": 2,
+      "fragment": 6
+     },
+     {
+      "enemy": "Monster",
+      "enemy_id": "enemy_1005_yokai",
+      "count": 2,
+      "time": 104.1,
+      "interval": 10,
+      "route": 4,
+      "fragment": 6
+     },
+     {
+      "enemy": "Monster",
+      "enemy_id": "enemy_1005_yokai",
+      "count": 2,
+      "time": 104.1,
+      "interval": 10,
+      "route": 5,
+      "fragment": 6
+     },
+     {
+      "enemy": "Shielded Soldier",
+      "enemy_id": "enemy_1029_shdsbr",
+      "count": 1,
+      "time": 124.1,
+      "route": 1,
+      "fragment": 7
+     },
+     {
+      "enemy": "Shielded Soldier",
+      "enemy_id": "enemy_1029_shdsbr",
+      "count": 1,
+      "time": 124.1,
+      "route": 2,
+      "fragment": 7
+     },
+     {
+      "enemy": "Shielded Soldier",
+      "enemy_id": "enemy_1029_shdsbr",
+      "count": 1,
+      "time": 130.1,
+      "route": 2,
+      "fragment": 7
+     }
+    ]
+   }
+  ],
+  "spawnTiles": [
+   {
+    "key": "tile_start",
+    "row": 0,
+    "col": 9,
+    "routes": [
+     3
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 2,
+    "col": 10,
+    "routes": [
+     2,
+     2,
+     2,
+     2,
+     5,
+     2,
+     2,
+     2,
+     2,
+     5,
+     2,
+     2
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 4,
+    "col": 10,
+    "routes": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     4,
+     1,
+     1,
+     1,
+     1,
+     4,
+     1
+    ]
+   }
+  ],
+  "objectiveTiles": [
+   {
+    "key": "tile_end",
+    "row": 1,
+    "col": 0,
+    "routes": [
+     2,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2
+    ]
+   },
+   {
+    "key": "tile_end",
+    "row": 5,
+    "col": 0,
+    "routes": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     3,
+     4,
+     5,
+     1,
+     1,
+     1,
+     1,
+     4,
+     5,
+     1
+    ]
+   }
+  ],
+  "enemyConfigurations": [
+   {
+    "enemy_id": "enemy_1000_gopro_2",
+    "slug": "hound_pro",
+    "name": "Hound Pro",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1002_nsabr",
+    "slug": "soldier",
+    "name": "Soldier",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1005_yokai",
+    "slug": "monster",
+    "name": "Monster",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1007_slime",
+    "slug": "originium_slug_enemy_1007_slime",
+    "name": "Originium Slug",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1007_slime_2",
+    "slug": "originium_slug_enemy_1007_slime_2",
+    "name": "Originium Slug α",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1011_wizard",
+    "slug": "caster",
+    "name": "Caster",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1029_shdsbr",
+    "slug": "shielded_soldier",
+    "name": "Shielded Soldier",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1502_crowns",
+    "slug": "crownslayer",
+    "name": "Crownslayer",
+    "database_level": 0
+   }
+  ],
+  "suppliedUnits": {
+   "fixed_squad": [],
+   "deployable_tokens": []
+  },
+  "hasConditionalSpawns": false
+ },
+ "pathing": {
+  "schemaVersion": 1,
+  "producer": "Arkpedia stage browser / buildPlaybackPaths",
+  "stage": "1-8",
+  "geometryHash": "6a4b388f05e2cf0e14e1956ba60d6f66ba4a0c11559efb371d31aa0a6b2a1019",
+  "moveScale": 0.65,
+  "paths": {
+   "1": {
+    "points": [
+     [
+      10,
+      4
+     ],
+     [
+      9,
+      4
+     ],
+     [
+      8,
+      4
+     ],
+     [
+      7,
+      5
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      0,
+      5
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3.414213562373095,
+     4.414213562373095,
+     5.414213562373095,
+     6.414213562373095,
+     7.414213562373095,
+     8.414213562373096,
+     9.414213562373096,
+     10.414213562373096
+    ],
+    "length": 10.414213562373096,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      10,
+      4
+     ],
+     [
+      8,
+      4
+     ],
+     [
+      7,
+      5
+     ],
+     [
+      0,
+      5
+     ]
+    ]
+   },
+   "2": {
+    "points": [
+     [
+      10,
+      2
+     ],
+     [
+      9,
+      2
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      0,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3.414213562373095,
+     4.414213562373095,
+     5.414213562373095,
+     6.414213562373095,
+     7.414213562373095,
+     8.414213562373096,
+     9.414213562373096,
+     10.414213562373096
+    ],
+    "length": 10.414213562373096,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      10,
+      2
+     ],
+     [
+      8,
+      2
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      0,
+      1
+     ]
+    ]
+   },
+   "3": {
+    "points": [
+     [
+      9,
+      0
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      9,
+      2
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      8,
+      4
+     ],
+     [
+      9,
+      5
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      7,
+      5
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      1,
+      4
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      1,
+      2
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      8,
+      1
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      9,
+      2
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      8,
+      4
+     ],
+     [
+      7,
+      5
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      0,
+      5
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3.414213562373095,
+     4.414213562373095,
+     5.82842712474619,
+     6.82842712474619,
+     7.82842712474619,
+     8.82842712474619,
+     9.82842712474619,
+     10.82842712474619,
+     11.82842712474619,
+     12.82842712474619,
+     13.82842712474619,
+     14.82842712474619,
+     15.82842712474619,
+     16.82842712474619,
+     17.82842712474619,
+     18.82842712474619,
+     19.82842712474619,
+     20.82842712474619,
+     21.82842712474619,
+     22.82842712474619,
+     23.82842712474619,
+     24.82842712474619,
+     25.82842712474619,
+     26.82842712474619,
+     28.242640687119287,
+     29.242640687119287,
+     30.656854249492383,
+     31.656854249492383,
+     32.65685424949238,
+     33.65685424949238,
+     34.65685424949238,
+     35.65685424949238,
+     36.65685424949238,
+     37.65685424949238
+    ],
+    "length": 37.65685424949238,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 3.414213562373095,
+      "seconds": 2,
+      "point": [
+       8,
+       3
+      ],
+      "tunnel": false
+     },
+     {
+      "at": 5.82842712474619,
+      "seconds": 5,
+      "point": [
+       9,
+       5
+      ],
+      "tunnel": false
+     },
+     {
+      "at": 10.82842712474619,
+      "seconds": 17,
+      "point": [
+       4,
+       5
+      ],
+      "tunnel": false
+     },
+     {
+      "at": 13.82842712474619,
+      "seconds": 3,
+      "point": [
+       1,
+       5
+      ],
+      "tunnel": false
+     },
+     {
+      "at": 17.82842712474619,
+      "seconds": 3,
+      "point": [
+       1,
+       1
+      ],
+      "tunnel": false
+     },
+     {
+      "at": 20.82842712474619,
+      "seconds": 10,
+      "point": [
+       4,
+       1
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      9,
+      0
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      9,
+      5
+     ],
+     [
+      4,
+      5
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      7,
+      5
+     ],
+     [
+      0,
+      5
+     ]
+    ]
+   },
+   "4": {
+    "points": [
+     [
+      10,
+      4
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      0,
+      5
+     ]
+    ],
+    "distances": [
+     0,
+     8,
+     10.23606797749979
+    ],
+    "length": 10.23606797749979,
+    "breaks": [],
+    "flying": true,
+    "holds": [],
+    "nodes": [
+     [
+      10,
+      4
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      0,
+      5
+     ]
+    ]
+   },
+   "5": {
+    "points": [
+     [
+      10,
+      2
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      0,
+      5
+     ]
+    ],
+    "distances": [
+     0,
+     5,
+     10.830951894845299
+    ],
+    "length": 10.830951894845299,
+    "breaks": [],
+    "flying": true,
+    "holds": [],
+    "nodes": [
+     [
+      10,
+      2
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      0,
+      5
+     ]
+    ]
+   }
+  }
+ },
+ "art": null,
+ "gates": null,
+ "enemies": {
+  "enemy_1007_slime": {
+   "key": "enemy_1007_slime",
+   "prefabKey": "enemy_1007_slime",
+   "name": "Originium Slug",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 550,
+    "atk": 130,
+    "def": 0,
+    "res": 0,
+    "moveSpeed": 1,
+    "bat": 1.7,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "infection"
+   ]
+  },
+  "enemy_1007_slime_2": {
+   "key": "enemy_1007_slime_2",
+   "prefabKey": "enemy_1007_slime_2",
+   "name": "Originium Slug α",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 1050,
+    "atk": 185,
+    "def": 0,
+    "res": 0,
+    "moveSpeed": 1,
+    "bat": 1.7,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "infection"
+   ]
+  },
+  "enemy_1000_gopro_2": {
+   "key": "enemy_1000_gopro_2",
+   "prefabKey": "enemy_1000_gopro_2",
+   "name": "Hound Pro",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 1700,
+    "atk": 260,
+    "def": 0,
+    "res": 20,
+    "moveSpeed": 1.9,
+    "bat": 1.4,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "infection"
+   ]
+  },
+  "enemy_1002_nsabr": {
+   "key": "enemy_1002_nsabr",
+   "prefabKey": "enemy_1002_nsabr",
+   "name": "Soldier",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 1650,
+    "atk": 200,
+    "def": 100,
+    "res": 0,
+    "moveSpeed": 1.1,
+    "bat": 2,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1502_crowns": {
+   "key": "enemy_1502_crowns",
+   "prefabKey": "enemy_1502_crowns",
+   "name": "Crownslayer",
+   "level": 0,
+   "rank": "BOSS",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 6000,
+    "atk": 400,
+    "def": 120,
+    "res": 50,
+    "moveSpeed": 1.4,
+    "bat": 2.8,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 2,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "When blocked, can quickly move behind the unit",
+     "format": "SILENCE"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [
+    {
+     "prefabKey": "blink",
+     "priority": 1,
+     "cooldown": 15,
+     "initCooldown": 15,
+     "spCost": 0,
+     "bb": {
+      "dist": 1.5
+     },
+     "bbStr": {}
+    }
+   ],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1005_yokai": {
+   "key": "enemy_1005_yokai",
+   "prefabKey": "enemy_1005_yokai",
+   "name": "Monster",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "NONE",
+   "stats": {
+    "maxHp": 800,
+    "atk": 0,
+    "def": 50,
+    "res": 0,
+    "moveSpeed": 0.9,
+    "bat": 2.3,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "none",
+    "dmgTypes": [
+     "none"
+    ],
+    "motion": "FLY",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Flying unit.",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "drone"
+   ]
+  },
+  "enemy_1011_wizard": {
+   "key": "enemy_1011_wizard",
+   "prefabKey": "enemy_1011_wizard",
+   "name": "Caster",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 1600,
+    "atk": 200,
+    "def": 50,
+    "res": 50,
+    "moveSpeed": 0.8,
+    "bat": 4,
+    "aspd": 100,
+    "rangeRadius": 1.8,
+    "rawRangeRadius": 1.8,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "arts",
+    "dmgTypes": [
+     "arts"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1029_shdsbr": {
+   "key": "enemy_1029_shdsbr",
+   "prefabKey": "enemy_1029_shdsbr",
+   "name": "Shielded Soldier",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 2050,
+    "atk": 240,
+    "def": 250,
+    "res": 0,
+    "moveSpeed": 1,
+    "bat": 2,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [],
+   "talents": {
+    "bb": {},
+    "bbStr": {},
+    "groups": {}
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  }
+ }
+}

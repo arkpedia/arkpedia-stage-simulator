@@ -5108,3 +5108,17 @@ The CI workflow now runs on `push` only to `master`; feature branches run when t
 The support gate can now distinguish an unreviewed native ability wrapper from one a feature has explicitly implemented. A feature may declare `nativeClaim(prefab, components)` returning the number of wrappers/active general-or-common abilities it covers; `enemySupport` subtracts those claims and records them as `claimedWrappers` / `claimedActive` in the native evidence. An unclaimed wrapper still refuses the enemy.
 
 Crownslayer is the first user. The retained `Blink` pair is one EnemyAbility wrapper (familyMask 2, default init cooldown, no cast-like attack) plus its Blink ability (wait-for-attack event, no selector, one 1-second buff with abnormalFlags [3]). The `skill:blink` feature matches that exact shape, claims exactly one wrapper, and runs the reviewed `blinkForward` on the skill's 15-second cooldown when blocked. Silence stops it. Support rises to **252 of 1,552** enemies; the harness proves the blink fires and the wrapper claim is recorded.
+
+### Unused viewer routes and the first boss stage (S13, 2026-10-21, test-only)
+
+`stageAdapter` no longer demands a viewer path for a route that no wave spawns on. The stage browser legitimately omits an unused route, and the battle never walks it; a missing path for a used route is still refused. The new test pins both sides.
+
+This unlocked three more test-only files:
+
+| Stage | Grid | Waves | Spawns | Notes |
+|---|---|---|---|---|
+| 1-8 | 7×11 | 1 | 46 | Crownslayer, the first boss admitted through the E9 wrapper claim |
+| 3-8 | 8×11 | 1 | 63 | Skullshatterer; its unused route 0 had no viewer path |
+| 7-2 | 8×10 | 1 | 51 | its unused route 3 had no viewer path |
+
+Coverage is **0-1 plus 60 test-only files** across Chapters 0–10 and S2.
