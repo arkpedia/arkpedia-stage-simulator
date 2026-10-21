@@ -5626,3 +5626,7 @@ The fixed-squad tutorial **TR-25** builds (6×9, 10 spawns, 3 enemies). Coverage
 ### Rot Eater (E53, 2026-10-21)
 
 The Rot Eater scales HP/ATK/DEF by `1 + min(max_percentage, defeated * guaranteed_percentage)` and emits its 1.1-radius pollution aura every tick. Support rises to **362 of 1,552** enemies. The test checks the aura damage.
+
+### 14-11 stages (S76, 2026-10-21)
+
+With the Rot Eater supported, **14-11** and **14-11 adverse environment** build (7×12, 150 spawns, 9 enemies). Coverage is **163 public stages** (0-1 plus 162 files).
