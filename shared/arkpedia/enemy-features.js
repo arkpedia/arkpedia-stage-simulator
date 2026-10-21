@@ -111,6 +111,23 @@ function isCrownslayerBlink(r, nat) {
     && b.templateKey === 'empty' && JSON.stringify(b.attributes?.abnormalFlags) === '[3]';
 }
 
+// The reviewed Reborn Creation components: the damage-reduction template, the blocker block-count template and the
+// bloodsucker marker that the active common ability attaches. The three together identify the Sarkaz Heirbearer family.
+function isRebornCreation(nat) {
+  const dmg = nat.dmg_res?.find(c => c._buffs?.[0]?.templateKey === 'damage_resistance');
+  const toggle = nat.buff_to_blocker?.find(c => c._checker);
+  const block = toggle?._checker ? nat.$ref?.(toggle._checker) : null;
+  const host = Object.values(nat).flat().find(c => Array.isArray(c._commonAbilities));
+  const mark = host?._commonAbilities?.[0] ? nat.$ref?.(host._commonAbilities[0]) : null;
+  if (!dmg || !block || !mark) return false;
+  return true
+    && dmg._buffs.length === 1 && dmg._buffs[0].lifeTimeType === 2 && dmg._selector.m_PathID === '0'
+    && (block._buffs ?? []).length === 0 && Array.isArray(block._buffsToBlockee) && block._buffsToBlockee.length === 1
+    && block._blockMinCnt === 1 && block._blockMaxCnt === -1
+    && block._useBlockAsMin === 1
+    && mark._buffs.length === 1 && mark._buffs[0].lifeTimeType === 2 && mark._selector.m_PathID === '0';
+}
+
 // The reviewed enhance component (enemy_1103_wdkght family): a whole-field passive (no selector, no interval) marking
 // every unit of the owner's own side (validator targetSide 1, all motions, ignoring isolation) with template
 // enemy_wdkght_t, whose only event ON_OWNER_KILLED gives the mark's source one INFINITY stack of ATK MULTIPLIER and
@@ -186,12 +203,25 @@ export const ENEMY_FEATURES = Object.freeze({
     r => true, 'spawns cnt enemy_key when killed', r => Object.entries(r.talents.bbStr).filter(([k]) => /^deadspawn\.enemy_key$/i.test(k)).map(([, v]) => v),
     /^Spawns \d+ <[^>]+> when defeated$/),
   // "Splits into N <X> upon death" (deathrattle): cnt children after `delay` s, spread around the parent's tile.
-  'talent:deathrattle': { covers: r => sig(r, 'deathrattle', ['cnt', 'delay', 'enemy_key', 'offset_bound']) && r.skills.length === 0
-      && r.abilities.some(a => /^Splits into \d+ <[^>]+> upon death$/.test(a.text)),
-    ability: { kind: 'deathSpawnDelayed', params: r => ({ key: r.talents.bbStr['deathrattle.enemy_key'], cnt: r.talents.bb['deathrattle.cnt'],
-      delay: r.talents.bb['deathrattle.delay'] ?? 0 }) },
-    note: 'splits into cnt children after delay s', dependsOn: r => [r.talents.bbStr['deathrattle.enemy_key']].filter(Boolean),
-    explains: /^Splits into \d+ <[^>]+> upon death$/ },
+  'talent:deathrattle': { covers: r => r.skills.length === 0 && (
+      (sig(r, 'deathrattle', ['cnt', 'delay', 'enemy_key', 'offset_bound'])
+        && r.abilities.some(a => /^Splits into \d+ <[^>]+> upon death$/.test(a.text)))
+      || (sig(r, 'deathrattle', ['delay', 'enemy_key'])
+        && r.abilities.some(a => /^Will be reborn as a <[^>]+> after falling in battle for the first time$/.test(a.text)))),
+    ability: { kind: 'deathSpawnDelayed', params: r => ({ key: r.talents.bbStr['deathrattle.enemy_key'],
+      cnt: r.talents.bb['deathrattle.cnt'] ?? 1, delay: r.talents.bb['deathrattle.delay'] ?? 0 }) },
+    note: 'splits/reborn as cnt child(ren) after delay s', dependsOn: r => [r.talents.bbStr['deathrattle.enemy_key']].filter(Boolean),
+    explains: text => /^Splits into \d+ <[^>]+> upon death$/.test(text)
+      || /^Will be reborn as a <[^>]+> after falling in battle for the first time$/.test(text) },
+  // Reborn Creation (Sarkaz Heirbearer family): damage reduction from the reviewed template plus the blocker's
+  // +block-count buff. The active bloodsucker marker is the native common ability both features claim.
+  'talent:dmg_res': { covers: (r, nat) => sig(r, 'dmg_res', ['damage_resistance']) && isRebornCreation(nat),
+    ability: { kind: 'rebornDamageRes', params: r => ({ pct: r.talents.bb['dmg_res.damage_resistance'] }) },
+    note: 'Physical/Arts damage ×(1-pct) and the bloodsucker marker', nativeClaim: () => ({ active: 1 }),
+    explains: /^Reborn Creation \(takes greatly reduced Physical and Arts damage\)$/ },
+  'talent:buff_to_blocker': { covers: (r, nat) => sig(r, 'buff_to_blocker', ['block_cnt', 'max_valid_stack_cnt']) && isRebornCreation(nat),
+    ability: { kind: 'blockerBlockUp', params: r => ({ n: r.talents.bb['buff_to_blocker.block_cnt'], max: r.talents.bb['buff_to_blocker.max_valid_stack_cnt'] }) },
+    note: 'the current blocker gains +block_cnt Block', explains: /^Units blocking it gain \+1 Block \(up to a maximum of \+6\)$/ },
   // "When blocked, significantly reduces the blocker's ASPD": a flat ASPD delta while this enemy is the blocker's.
   'talent:atkSpeedDown': { covers: r => sig(r, 'atkSpeedDown', ['attack_speed'])
       && r.abilities.some(a => a.text === "When blocked, significantly reduces the blocker's ASPD"),

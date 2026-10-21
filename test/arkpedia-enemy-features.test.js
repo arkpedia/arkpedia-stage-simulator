@@ -182,6 +182,22 @@ test('Crownslayer: the reviewed Blink wrapper is claimed and blinks past its blo
   assert.ok(h.eventsOf('fx').some(event => event[1] === 'blink'), 'the blink fired');
   assert.deepEqual(h.b.errors, []);
 });
+test('Reborn Creation: 90% Physical/Arts reduction and +1 Block for its blocker', () => {
+  const key = 'enemy_1220_dzoms', h = spawnAny(key, { seconds: 0.1 }), e = enemy(h, key);
+  const guard = h.b.units.find(u => u.side === 'ally'), baseBlock = guard.s.blockCnt;
+  h.runUntil(() => !e.alive || e.blockedBy, 20); h.run(0.3);
+  assert.ok(e.blockedBy, 'the creation is blocked'); assert.equal(guard.s.blockCnt, baseBlock + 1);
+  const hp = e.hp; h.b.dealDamage(null, e, { amount: 1000, type: 'phys', sourceless: true }); h.run(0.05);
+  assert.ok(hp - e.hp <= 100, `1000 physical was reduced to ${hp - e.hp}`);
+});
+test('Reborn Creation: a first death spawns the reviewed child after the delay', () => {
+  const key = 'enemy_1222_dpvt', child = 'enemy_1220_dzoms', h = spawnAny(key, { seconds: 0.1 });
+  assert.ok(support.enemies[child].policy, 'the child is supported');
+  h.b.autoFinish = false;
+  const e = enemy(h, key), delay = ENEMY_RECORDS.enemies[key].levels[0].talents.bb['deathrattle.delay'];
+  h.b.dealDamage(null, e, { amount: 1e9, type: 'true', sourceless: true }); h.run(delay + 0.3);
+  assert.equal(h.b.units.filter(u => u.side === 'enemy' && u.defId === child).length, 1);
+});
 test('Drains 1 Life Point: the engine leak drains the record stat', () => {
   const key = 'enemy_1137_plasm';
   assert.ok(support.enemies[key].policy, 'supported by the existing leak rule');

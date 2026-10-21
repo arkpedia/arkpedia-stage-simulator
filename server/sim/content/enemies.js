@@ -310,6 +310,26 @@ export const featureAbilities = Object.freeze({
       b.addBuff(e, { key: 'ab:enhance', refresh: 'stack', stacks: 1, maxStacks: max, persist: true, visible: true, mods: { atkPct: atk, aspd } });
     },
   }),
+  // Reborn Creation: the reviewed damage_resistance template is a Physical/Arts multiplier; the bloodsucker mark is a
+  // persistent identity buff (it has no attributes of its own).
+  rebornDamageRes: ({ pct }) => ({
+    spawn(b, e) {
+      b.addBuff(e, { key: 'ab:rebornDmgRes', persist: true, visible: true, mods: { physTakenMul: 1 - pct, artsTakenMul: 1 - pct } });
+      b.addBuff(e, { key: 'ab:bloodsuckerMark', persist: true });
+    },
+  }),
+  // Reborn Creation: its current blocker gains +n Block while this creation blocks it; each source owns its buff.
+  blockerBlockUp: ({ n, max }) => ({
+    spawn(b, e, a) { a.target = null; },
+    tick(b, e, a) {
+      const target = e.blockedBy ?? null;
+      if (target === a.target) return;
+      if (a.target) b.removeBuff(a.target, `ab:blockUp:${e.id}`);
+      a.target = target;
+      if (target && n > 0) b.addBuff(target, { key: `ab:blockUp:${e.id}`, persist: true, visible: true, mods: { blockCnt: Math.min(n, max) } });
+    },
+    death(c, b, e, a) { if (a.target) b.removeBuff(a.target, `ab:blockUp:${e.id}`); },
+  }),
   // Crownslayer: when blocked and off cooldown, blink along the route past the blocker (the reviewed helper also grants
   // the 1 s invulnerable/unblockable window carried by the Blink ability buff). Silence stops it.
   blinkWhenBlocked: ({ dist, cooldown, initCooldown }) => ({

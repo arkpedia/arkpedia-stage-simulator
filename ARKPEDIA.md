@@ -5122,3 +5122,14 @@ This unlocked three more test-only files:
 | 7-2 | 8×10 | 1 | 51 | its unused route 3 had no viewer path |
 
 Coverage is **0-1 plus 60 test-only files** across Chapters 0–10 and S2.
+
+### Reborn Creations (E10, 2026-10-21)
+
+The Sarkaz Heirbearer family now has its reviewed creation mechanics:
+
+- **`talent:dmg_res`**: the retained `damage_resistance` template is a Physical/Arts multiplier (`1 - dmg_res.damage_resistance`), applied with the persistent `enemy_bloodsucker_mark` identity buff from the active common ability.
+- **`talent:buff_to_blocker`**: the current blocker gains `buff_to_blocker.block_cnt` Block (up to `max_valid_stack_cnt`) through the reviewed `enemy_bloodsucker_block_cnt[control]` template; each creation owns and removes its buff.
+- **`talent:deathrattle`** now also covers "Will be reborn as … after falling in battle for the first time": one child after the review delay, with the same spawn dependency.
+- **Native claim.** The active bloodsucker marker is claimed (`claimedActive: 1`) only when the complete `dmg_res` + block template + marker shape matches.
+
+Support rises to **258 of 1,552** enemies. Tests cover the 90% reduction, the blocker's +1 Block, and the delayed reborn child.
