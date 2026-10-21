@@ -16,6 +16,10 @@ per-content branch belongs in the battle or the UI.
    - `ability: { kind, params }` names a builder in `featureAbilities`
      (`server/sim/content/enemies.js`), and `explains` covers the handbook
      line(s) the talent replaces.
+   - A feature that implements a reviewed native wrapper or active common
+     ability declares `nativeClaim(prefab, components)`. Only the claimed
+     counts are subtracted from the support refusal; an unclaimed wrapper still
+     refuses the enemy.
 3. **Native evidence** — if the feature reads original components, add the
    object name to `OBJECTS` in
    `tools/arkpedia/extract-enemy-native-abilities.py` and regenerate both that
@@ -46,9 +50,10 @@ missing fact in its `reasons`; do not guess.
    ```
    The builder validates the route/geometry hash, the sequential wave
    schedule, the supported enemies, and each level file's enemy database level
-   and attribute overrides. It refuses fixed squads, deployable tokens,
-   conditional spawns, route tunnels and oversized grids rather than
-   approximating them.
+   and attribute overrides. A viewer break plus its matching tunnel hold becomes
+   DISAPPEAR/WAIT/APPEAR legs; an unmatched break is refused. Fixed squads,
+   deployable tokens, conditional spawns and oversized grids are also refused
+   rather than approximated.
 2. Regenerate the catalogue:
    ```sh
    node tools/arkpedia/stage-index.mjs
