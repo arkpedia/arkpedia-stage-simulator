@@ -5518,3 +5518,7 @@ With the `1317` DP-drain family supported, **12-8** and **12-8 adverse environme
 ### Chapter 12 identity stages (S61, 2026-10-21)
 
 With civilians, spies, the Instigator lock, the checkpoint blink and the DP-drain operative all supported, **12-13**, **12-13 adverse environment**, **12-14** and **12-14 adverse environment** build (7×11/8×12, 39–80 spawns). 12-12/12-12 adverse still need the Splitcaster's Virtual Image summon. Coverage is **122 public stages** (0-1 plus 121 files).
+
+### Splitcaster Virtual Image (E41, 2026-10-21)
+
+At `summon.hp_ratio` (0.5) the Splitcaster leaves one Virtual Image clone at its position. The clone carries `profile.virtualImage` and cannot split again. Support rises to **339 of 1,552** enemies. The test checks the single clone and the no-resplit guard.

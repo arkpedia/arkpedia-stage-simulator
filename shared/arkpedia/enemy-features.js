@@ -279,6 +279,12 @@ export const ENEMY_FEATURES = Object.freeze({
     explains: text => /^Attack power increases( greatly)? when attacking <\$ba\.frozen>Frozen<\/> targets$/.test(text)
       || /^Gains significantly increased ATK when HP is under 50%$/.test(text) },
 
+  // Splitcaster: at half HP it leaves a Virtual Image clone; the clone cannot split again.
+  'talent:summon': { covers: r => sig(r, 'summon', ['hp_ratio'])
+      && r.abilities.some(a => a.text === 'When HP is below half, creates a <Virtual Image> at their location'),
+    ability: { kind: 'virtualImage', params: r => ({ ratio: r.talents.bb['summon.hp_ratio'], key: r.key }) },
+    note: 'one Virtual Image clone at the HP threshold',
+    explains: /^When HP is below half, creates a <Virtual Image> at their location$/ },
   // Absurdist Operative: three ammo, each attack drains DP and target SP.
   'ability:Attacks reduce DP when carrying ammo. Ammo capacity: 3': { covers: r => r.abilities.some(a => a.text === 'Attacks reduce DP when carrying ammo. Ammo capacity: 3'),
     ability: { kind: 'dpDrain', params: r => ({ cost: r.talents.bb['1.attack@cost'] ?? 0, sp: r.talents.bb['1.attack@sp'] ?? 0 }) },

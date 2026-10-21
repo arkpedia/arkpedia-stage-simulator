@@ -482,6 +482,13 @@ test('Absurdist Operative: three attacks drain DP, then the ammo is gone', () =>
   ability.attack(c, h.b, e, ability); ability.attack(c, h.b, e, ability); assert.equal(owner.dp, 44); assert.equal(ability.ammo, 0);
   ability.attack(c, h.b, e, ability); assert.equal(owner.dp, 44, 'no drain without ammo');
 });
+test('Splitcaster: one Virtual Image at half HP, and the clone cannot split', () => {
+  const key = 'enemy_1318_wdsmgc', h = spawnAny(key, { seconds: 0.1, units: [] }), e = enemy(h, key);
+  h.b.dealDamage(null, e, { amount: e.s.maxHp * 0.6, type: 'true', sourceless: true }); h.run(0.1);
+  const kids = h.b.enemies.filter(u => u.defId === key && u !== e); assert.equal(kids.length, 1); assert.equal(kids[0].profile.virtualImage, true);
+  h.b.dealDamage(null, kids[0], { amount: kids[0].s.maxHp * 0.6, type: 'true', sourceless: true }); h.run(0.1);
+  assert.equal(h.b.enemies.filter(u => u.defId === key && u !== e).length, 1, 'no second split');
+});
 test('Drains 1 Life Point: the engine leak drains the record stat', () => {
   const key = 'enemy_1137_plasm';
   assert.ok(support.enemies[key].policy, 'supported by the existing leak rule');

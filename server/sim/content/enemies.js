@@ -345,6 +345,14 @@ export const featureAbilities = Object.freeze({
     },
   }),
   moveSpeedBonus: ({ mul }) => ({ spawn(b, e) { b.addBuff(e, { key: 'ab:moveSpeed', persist: true, visible: true, mods: { moveMul: mul } }); } }),
+  // Splitcaster: one Virtual Image clone at the HP threshold; clones are flagged so they cannot split.
+  virtualImage: ({ ratio, key }) => ({
+    taken(c, b, e, a) {
+      if (a.done || e.profile.virtualImage || e.hpRatio >= ratio) return;
+      a.done = true;
+      for (const child of spawnChildren(b, e, key, 1)) child.profile.virtualImage = true;
+    },
+  }),
   // Absurdist Operative: three ammo, each attack drains DP and target SP.
   dpDrain: ({ cost, sp }) => ({
     spawn(b, e, a) { a.ammo = 3; },
