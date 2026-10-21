@@ -11,6 +11,9 @@ npm run start:arkpedia
 npm run test:arkpedia
 ```
 
+The maintainer workflow for adding an enemy, a stage or an operator is in
+[docs/ADDING-CONTENT.md](docs/ADDING-CONTENT.md).
+
 This entry needs no upstream release archive or full game-art download. `npm ci` copies the bundled Three.js, Pixi and Spine browser dependencies. The browser downloads 0-1's original stage art, the chosen squad's Front/Back models and this stage's enemies from a pinned `arkpedia-sd-assets` commit. The inherited `npm start` still opens the original Stronghold application.
 
 Full source-identity tests read original skeleton bytes from the sibling SD directory. `node tools/arkpedia/test-assets.mjs` prepares every snapshot-referenced skeleton from its immutable SD commit and verifies its size/hash, including existing files; changed files fail rather than being overwritten. This small test dependency is separate from full texture/scenery/browser validation. CI runs the preparation before the complete suite and allows 90 minutes per Linux/Windows and Node 22/24 matrix entry. Snapshot replacement retries bounded transient Windows rename locks while preserving atomic visibility; it never deletes the old target to work around a lock.
