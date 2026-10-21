@@ -5590,3 +5590,7 @@ With the Beacon supported, **14-5** and **14-5 adverse environment** build (8×1
 ### Altar Keeper Beacon handling (E49, 2026-10-21)
 
 The Altar Keeper is unblockable, gets a short movement slow when hit, picks up one nearby Beacon (removing it without a kill), and drops a Beacon on death. Support rises to **355 of 1,552** enemies. The test checks pickup, the carried flag and the drop.
+
+### 14-4 stages (S71, 2026-10-21)
+
+With the Altar Keeper supported, **14-4** and **14-4 adverse environment** build (7×10, 28–30 spawns, 5 enemies). Coverage is **153 public stages** (0-1 plus 152 files).
