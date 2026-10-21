@@ -5170,3 +5170,12 @@ The test pins the DISAPPEAR/WAIT/APPEAR order and runs 6-4 through the tunnel fo
 The reviewed `vampire` talent comes in two signatures: `attack@max_target + heal_scale` (Sarkaz Centurion Host, three targets) and `heal_scale` alone (Bloodthirsty Heir, one target). Both now attack up to the recorded target count and heal `heal_scale ×` the post-mitigation damage of every accepted ordinary hit. A handbook line naming the same target count is explained by the same feature, so the multi-target line and the heal line share one approval.
 
 Support rises to **262 of 1,552** enemies. The test checks the three-target profile and an actual HP gain after the enemy deals damage.
+
+### Vampire-stage files (S16, 2026-10-21, test-only)
+
+| Stage | Grid | Waves | Spawns | Notes |
+|---|---|---|---|---|
+| M8-6 | 8×12 | 1 | 77 | Sarkaz Centurion Host and its three-target lifesteal |
+| M8-7 | 8×11 | 1 | 48 | the same host family |
+
+Coverage is **0-1 plus 71 test-only files**.
