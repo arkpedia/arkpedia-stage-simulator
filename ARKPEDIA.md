@@ -5674,3 +5674,7 @@ Normal attacks add Necrosis (`empty.attack@ep_damage_ratio` 0.25). Every 24 s (f
 ### 11-1 adverse and 11-2 (S83, 2026-10-21)
 
 With the DeathEye caster supported, **11-1 adverse environment** and **11-2** build (7×11/7×9, 16–37 spawns). Coverage is **177 public stages** (0-1 plus 176 files).
+
+### Steam Tank rage (E58, 2026-10-21)
+
+At half HP the Steam Tank gains +100 ASPD, +100% movement and stun/freeze/sleep immunity. Support rises to **372 of 1,552** enemies. The test drops it below half and checks the rage buff.

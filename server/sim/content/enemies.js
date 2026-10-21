@@ -345,6 +345,15 @@ export const featureAbilities = Object.freeze({
     },
   }),
   moveSpeedBonus: ({ mul }) => ({ spawn(b, e) { b.addBuff(e, { key: 'ab:moveSpeed', persist: true, visible: true, mods: { moveMul: mul } }); } }),
+  // Steam Tank: one-time half-HP buff.
+  steamRage: ({ aspd, move }) => ({
+    taken(c, b, e, a) {
+      if (a.done || !(e.hpRatio < 0.5)) return;
+      a.done = true;
+      b.addBuff(e, { key: 'ab:steamRage', persist: true, visible: true, mods: { aspd, moveMul: 1 + (move ?? 0) },
+        flags: { stunImmune: true, frozenImmune: true, sleepImmune: true } });
+    },
+  }),
   // Sarkaz Royal Court Caster: lock a target, tick Arts damage, then burst Necrosis in the area.
   deathEye: ({ cooldown, init, duration, scale, ep }) => ({
     spawn(b, e, a) { a.next = b.time + init; a.target = null; },

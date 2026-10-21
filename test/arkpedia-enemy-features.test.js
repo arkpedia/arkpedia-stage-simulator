@@ -601,6 +601,11 @@ test('DeathEye: the lock-on cast ticks Arts damage on the guard', () => {
   let hit = false; h.b.on('damaged', c => { if (c.source?.defId === key && c.target === guard && c.dmg.type === 'arts') hit = true; });
   h.runUntil(() => hit, 15); assert.ok(hit);
 });
+test('Steam Tank: half HP grants the rage buff', () => {
+  const key = 'enemy_1274_stmram', h = spawnAny(key, { seconds: 0.1, units: [] }), e = enemy(h, key);
+  h.b.dealDamage(null, e, { amount: e.s.maxHp * 0.6, type: 'true', sourceless: true }); h.run(0.1);
+  assert.ok(e.findBuff('ab:steamRage')); assert.ok(e.s.aspd > 100);
+});
 test('Drains 1 Life Point: the engine leak drains the record stat', () => {
   const key = 'enemy_1137_plasm';
   assert.ok(support.enemies[key].policy, 'supported by the existing leak rule');

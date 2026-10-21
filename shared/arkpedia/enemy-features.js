@@ -286,6 +286,12 @@ export const ENEMY_FEATURES = Object.freeze({
     explains: text => /^Attack power increases( greatly)? when attacking <\$ba\.frozen>Frozen<\/> targets$/.test(text)
       || /^Gains significantly increased ATK when HP is under 50%$/.test(text) },
 
+  // Steam Tank: at half HP gains ASPD, movement and control immunity.
+  'talent:Rage': { covers: r => sig(r, 'Rage', ['attack_speed', 'move_speed'])
+      && r.abilities.some(a => a.text.startsWith('When HP drops to 50%, ASPD and Movement Speed are greatly increased')),
+    ability: { kind: 'steamRage', params: r => ({ aspd: r.talents.bb['Rage.attack_speed'], move: r.talents.bb['Rage.move_speed'] }) },
+    note: 'half-HP ASPD/move boost and control immunity',
+    explains: /^When HP drops to 50%, ASPD and Movement Speed are greatly increased, and becomes immune to most control effects\.$/ },
   // Sarkaz Royal Court Caster: Necrosis on normal attacks, plus the DeathEye lock-on cast.
   'talent:empty': { covers: r => sig(r, 'empty', ['attack@ep_damage_ratio']),
     ability: { kind: 'elementOnHit', params: r => ({ element: 'apoptosis', ratio: r.talents.bb['empty.attack@ep_damage_ratio'] }) },
