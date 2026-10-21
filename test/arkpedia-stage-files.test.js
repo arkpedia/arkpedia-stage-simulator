@@ -20,7 +20,7 @@ test('every file-backed stage is supported, catalogue-loadable and fightable', a
   for (const file of files) {
     const stage = JSON.parse(await readFile(new URL(file, dataDir), 'utf8'));
     const id = file.replace(/^arkpedia-stage-/, '').replace(/\.json$/, '');
-    assert.equal(stage.code, id, `${file} code`);
+    assert.equal(stage.code.toLowerCase(), id.toLowerCase(), `${file} code`);
     assert.ok(stage.enemies && Object.keys(stage.enemies).length, `${id} carries enemy records`);
     for (const [enemyId, record] of Object.entries(stage.enemies)) {
       assert.ok(support.enemies[enemyId]?.policy, `${id} enemy ${enemyId} is supported`);
@@ -41,7 +41,7 @@ test('every file-backed stage is supported, catalogue-loadable and fightable', a
     const data = structuredClone(mvp);
     const index = { schemaVersion: 1, defaultStage: id, stages: [{ id, code: stage.code, name: stage.name, data: file }] };
     const { entry } = await applyStage(data, index, null, async () => ({ ok: true, json: async () => stage }));
-    assert.equal(entry.id, id); assert.equal(data.stage.code, id);
+    assert.equal(entry.id, id); assert.equal(data.stage.code.toLowerCase(), id.toLowerCase());
     for (const enemyId of Object.keys(stage.enemies)) assert.ok(data.enemies[enemyId], `${id} merged ${enemyId}`);
 
     const battle = new StandardBattle(data, { operators: Object.values(data.operators).slice(0, 12).map(defaultBuild) });

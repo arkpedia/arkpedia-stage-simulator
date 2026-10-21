@@ -5032,3 +5032,26 @@ A stage file must not reuse the database level-0 stats when its level file says 
 - `overrides` applies the level file's owned attributes (`hp`, `atk`, `def`, `res`, `move_speed`, `attack_interval`, `attack_speed`, `weight`, `range`, `life_cost`, `taunt`, elemental resistances) to the record's stats. This restores, for example, 0-2/0-3's Soldier DEF 30 instead of the database's 100.
 
 The generic stage test now asserts the level and every applied override, so a rebuilt stage cannot silently drift back to the database defaults. All 30 test-only files were regenerated with this rule.
+
+### Chapters 5–10 and S2 (S9, 2026-10-21, test-only)
+
+The supported-enemy scan found 51 main stages; 20 more are buildable after the Prologue–4 set:
+
+| Stage | Grid | Waves | Spawns | Enemies |
+|---|---|---|---|---|
+| 5-1 | 7×11 | 1 | 43 | Spec Ops Caster, Spec Ops Soldier, Logger, Breaker |
+| 5-2 | 8×12 | 1 | 51 | Spec Ops Soldier, Breaker, Spec Ops Caster, Rabid Hound Pro, Veteran Logger |
+| 5-3 | 7×12 | 1 | 52 | Spec Ops Caster Leader, Breaker, Breaker Leader, Spec Ops Caster, Veteran Logger |
+| 5-8 | 8×12 | 1 | 53 | Spec Ops Soldier, Breaker, Possessed Soldier, Junkman, Veteran Butcher |
+| 5-9 | 8×11 | 1 | 51 | Spec Ops Soldier, Junkman, Spec Ops Caster, Possessed Junkman |
+| 6-1 | 7×11 | 1 | 46 | Spec Ops Soldier, Spec Ops Caster, Possessed Soldier Leader, Possessed Junkman, Possessed Heavy Defender, Possessed Soldier |
+| 6-2 | 8×11 | 1 | 55 | Spec Ops Soldier, Spec Ops Caster, Possessed Soldier, Enraged Possessed Soldier, Possessed Soldier Leader |
+| 6-3 | 7×11 | 1 | 26 | Possessed Soldier, Spec Ops Caster, Enraged Possessed Soldier |
+| 6-5 | 7×10 | 1 | 42 | Enraged Possessed Thrower, Possessed Soldier, Possessed Heavy Defender, Enraged Possessed Soldier, Enraged Possessed Bonethrower, Enraged Possessed Leader |
+| 9-2 | 8×11 | 1 | 43 | Dublinn Sniper, Dublinn Sniffer Hound, Dublinn Scout |
+| 9-3 | 8×10 | 1 | 45 | Dublinn Sniper, Dublinn Sniffer Hound, Dublinn Scout, Dublinn Heavy Defender |
+| S2-1 | 7×11 | 1 | 25 | Heavy Defender, Soldier, Cocktail Thrower, Rioter Leader, Logger |
+| S2-2 | 7×11 | 1 | 45 | Monster, Junkman, Hound Pro, Dual Swordsman, Logger |
+| S2-8 | 7×9 | 1 | 36 | Hound Pro, Monster, Rioter Leader, Shielded Soldier, Firebomb Thrower, Dual Swordsman Leader, Metal Crab |
+
+Refused for mechanics rather than enemies: 6-4, 7-3, 9-4 and 10-2 use route tunnels; 7-2 is missing a viewer path for route 3; 1-2, 1-6, 2-3 and other fixed-squad/token stages still need those stage mechanics. Coverage is **0-1 plus 44 test-only files** across Chapters 0–10 and S2.
