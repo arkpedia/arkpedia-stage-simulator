@@ -5229,3 +5229,7 @@ The `epdamage` talent now covers both its simple and chain signatures. The chain
 ### Frost's ally ASPD aura (E15, 2026-10-21)
 
 `talent:atkSpeedDown` now has two reviewed branches: the existing blocker-owned delta and Frost's silence-aware aura on allied units within `defup.range_radius` (2.5). Frost's `defup` group holds only the range, so the DEF-aura feature accepts that signature with a zero DEF contribution and shares the covered group. Support rises to **276 of 1,552** enemies. The test waits for the aura to reach the guard and checks the exact −50 ASPD.
+
+### Frost stage (S20, 2026-10-21, test-only)
+
+**6-11** (7×11, 79 spawns) is built now that Frost's aura is supported. Coverage is **0-1 plus 83 test-only files**.
