@@ -5256,3 +5256,12 @@ Coverage is **0-1 plus 89 test-only files**.
 - **`skill:StunAttack`**: every third attack stuns every ally in the 3×3 area around each target for the skill's 4-second `stun` blackboard. The reviewed familyMask-3 wrapper (with a real trigger) and DB stun buff are claimed as one native wrapper; the skill is silence-aware.
 - **`talent:Attack`**: the `enemy_key` form is the first-death reborn, not an attack summon: on death the reviewed child spawns and is a support dependency.
 - Support rises to **280 of 1,552** enemies. Tests check the 4-second area stun and the child spawn.
+
+### Punisher stages (S22, 2026-10-21, test-only)
+
+| Stage | Grid | Waves | Spawns |
+|---|---|---|---|
+| 13-4 | 8×11 | 1 | 28 |
+| 13-4 adverse environment | 8×11 | 1 | 28 |
+
+Coverage is **0-1 plus 91 test-only files**.
