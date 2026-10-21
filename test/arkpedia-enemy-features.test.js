@@ -470,6 +470,11 @@ test('Instigator: unrevealed spies cannot be blocked while it is unblocked', () 
   s.x = g.x; s.y = g.y; assert.ok(h.b.identityLocks.size);
   assert.equal(h.b._checkBlock(s), false); h.b.identityLocks.clear(); assert.equal(h.b._checkBlock(s), true);
 });
+test('Checkpoint blink: the 1322 family advances after two attacks', () => {
+  const key = 'enemy_1322_wdgyht', h = spawnAny(key, { seconds: 0.1 }), e = enemy(h, key), x0 = e.x;
+  h.runUntil(() => e.x < x0 - 0.5 || !e.alive, 30);
+  assert.ok(e.x < x0 - 0.5, `${e.x} vs ${x0}`);
+});
 test('Drains 1 Life Point: the engine leak drains the record stat', () => {
   const key = 'enemy_1137_plasm';
   assert.ok(support.enemies[key].policy, 'supported by the existing leak rule');

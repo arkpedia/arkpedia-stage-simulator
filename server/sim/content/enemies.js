@@ -583,7 +583,10 @@ export const featureAbilities = Object.freeze({
   }),
   // Crownslayer: when blocked and off cooldown, blink along the route past the blocker (the reviewed helper also grants
   // the 1 s invulnerable/unblockable window carried by the Blink ability buff). Silence stops it.
-  blinkWhenBlocked: ({ dist, cooldown, initCooldown }) => ({
+  blink: ({ mode, dist, cooldown, initCooldown, every }) => mode === 'attacks' ? ({
+    spawn(b, e, a) { a.n = 0; },
+    attack(c, b, e, a) { if (++a.n % (every ?? 2) === 0) blinkForward(b, e, dist); },
+  }) : ({
     spawn(b, e, a) { a.readyAt = b.time + (initCooldown ?? 0); },
     tick(b, e, a) {
       if (!e.alive || e.s.flags.silence || !e.blockedBy || b.time < a.readyAt) return;

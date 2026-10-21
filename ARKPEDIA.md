@@ -5502,3 +5502,7 @@ First slice of the identity layer: `ability:Friendly Unit` marks `profile.friend
 ### Instigator identity lock (E38, 2026-10-21)
 
 `identityLocks` tracks living, unblocked Rebellion Instigators. While non-empty, `_checkBlock` rejects unrevealed spies and civilians. Support rises to **333 of 1,552** enemies. The test checks the lock and the post-clear block.
+
+### Checkpoint blink (E39, 2026-10-21)
+
+The `1322` family's lowercase `blink` wrapper/action graph is now retained and matched. After every `spCost` (2) attacks it calls the existing `blinkForward` toward the next checkpoint; Crownslayer's blocked-trigger blink remains a separate branch of `skill:blink`. Support rises to **335 of 1,552** enemies. The test watches the unit advance after two attacks.

@@ -32,7 +32,7 @@ index = json.loads(index_raw)
 source = json.loads((ROOT / 'data/arkpedia-cn-enemy-native-source.json').read_bytes())
 bundles = {r['path']: r for r in source['bundles']}
 # Component object names whose content a reviewed feature reads.
-OBJECTS = ['DefDown', 'enhance', 'Blink', 'enemy_1220_dzoms', 'enemy_1220_dzoms_2', 'enemy_1221_dzomg', 'enemy_1221_dzomg_2', 'ColdAttack', 'StunAttack', 'StormAura', 'dmg_res', 'buff_to_blocker']
+OBJECTS = ['DefDown', 'enhance', 'Blink', 'enemy_1220_dzoms', 'enemy_1220_dzoms_2', 'enemy_1221_dzomg', 'enemy_1221_dzomg_2', 'ColdAttack', 'StunAttack', 'StormAura', 'blink', 'dmg_res', 'buff_to_blocker']
 templates_raw = (ROOT / '.cache/arkpedia/buff_template_data.json').read_bytes()
 template_pin = json.loads((ROOT / 'data/arkpedia-mvp.json').read_bytes())['behaviors']['source']
 assert hashlib.sha256(templates_raw).hexdigest() == template_pin['sha256']

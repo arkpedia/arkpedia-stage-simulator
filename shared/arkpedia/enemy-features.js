@@ -93,7 +93,20 @@ function isGrenadeDefDown(r, nat) {
     && b.templateKey === 'empty' && b.loadFromDB === 0 && b.durationKey === '' && b.triggerLifeType === 0 && b.blackboard.length === 0;
 }
 
-// The reviewed Crownslayer Blink pair: one EnemyAbility wrapper (familyMask 2, castLikeAttack 0, default init cooldown)
+// The reviewed checkpoint Blink pair: the lowercase blink wrapper/ability on the 1322 family. The ability's action
+// graph triggers on the second attack and teleports dist towards the next checkpoint.
+function isCheckpointBlink(r, nat) {
+  const rows = nat.blink ?? [], wrapper = rows.find(c => '_familyMask' in c), ability = rows.find(c => '_actions' in c);
+  if (!wrapper || !ability || r.skills.length !== 1) return false;
+  const skill = r.skills[0];
+  return skill.prefabKey === 'blink' && skill.bb.dist === 1.5 && skill.cooldown === 0 && skill.initCooldown === 0 && skill.spCost === 2
+    && r.abilities.some(a => a.text === 'After several attacks, moves towards the next checkpoint for the next attack')
+    && wrapper._familyMask === 3 && wrapper._trigger?.m_PathID === '0' && wrapper._castLikeAttack === 0
+    && wrapper._ignoreSilence === 0 && wrapper._overwriteInitCooldown === -1 && wrapper._checkParentActive === 0
+    && wrapper._maxTriggerTime === -1 && wrapper._resetCdWaitFirstPeriod === 1 && wrapper._resetMainAbilityCdWhenCastEnd === 0;
+}
+
+// The reviewed Crownslayer Blink pair: one EnemyAbility wrapper (familyMask 2, castLikeAttack 0, default init cooldown)// The reviewed Crownslayer Blink pair: one EnemyAbility wrapper (familyMask 2, castLikeAttack 0, default init cooldown)
 // and its Blink ability (waitForAttackEvent, no selector, one 1 s buff with abnormalFlags [3]). It is the only shape the
 // skill:blink feature claims, and it claims exactly one native wrapper for the support gate.
 function isCrownslayerBlink(r, nat) {
@@ -207,10 +220,12 @@ export const ENEMY_FEATURES = Object.freeze({
   'talent:taunt': { covers: r => sig(r, 'taunt', ['taunt_level']), ability: { kind: 'taunt', params: r => ({ n: r.talents.bb['taunt.taunt_level'] }) },
     note: 'taunt level', explains: /^More likely to be targeted by attacks\.$/ },
   // Crownslayer: a cooldown blink past the blocker, proven against the reviewed Blink wrapper/ability pair.
-  'skill:blink': { covers: (r, nat) => isCrownslayerBlink(r, nat),
-    ability: { kind: 'blinkWhenBlocked', params: r => ({ dist: r.skills[0].bb.dist ?? 1.5, cooldown: r.skills[0].cooldown, initCooldown: r.skills[0].initCooldown }) },
-    note: 'blink past the blocker on the reviewed cooldown', nativeClaim: () => ({ wrappers: 1 }),
-    explains: /^When blocked, can quickly move behind the unit$/ },
+  'skill:blink': { covers: (r, nat) => isCrownslayerBlink(r, nat) || isCheckpointBlink(r, nat),
+    ability: { kind: 'blink', params: r => r.skills[0].cooldown === 0 && r.skills[0].spCost === 2 ? { mode: 'attacks', every: r.skills[0].spCost ?? 2, dist: r.skills[0].bb.dist ?? 1.5 }
+      : { mode: 'blocked', dist: r.skills[0].bb.dist ?? 1.5, cooldown: r.skills[0].cooldown, initCooldown: r.skills[0].initCooldown } },
+    note: 'blink past the blocker, or towards the next checkpoint after several attacks', nativeClaim: () => ({ wrappers: 1 }),
+    explains: text => text === 'When blocked, can quickly move behind the unit'
+      || text === 'After several attacks, moves towards the next checkpoint for the next attack' },
   // Yeti Caster: every third attack applies the reviewed 10 s Cold.
   'skill:coldattack': { covers: (r, nat) => isYetiColdAttack(r, nat),
     ability: { kind: 'coldAttack', params: r => ({ every: 3, duration: r.skills[0].bb.freeze }) },
