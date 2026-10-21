@@ -160,7 +160,7 @@ function prep() {
   }
   const stageOptions = [...groupedStages].map(([label, list]) => `<optgroup label="${escape(label)}">${list.map(stage => `<option value="${escape(stageHref(stage))}"${stage.id === activeStage.id ? ' selected' : ''}>${escape(stage.code)} ${escape(stage.name)}${stage.testOnly ? ' · test' : ''}</option>`).join('')}</optgroup>`).join('');
   const stagePicker = stages.length > 1
-    ? `<label class="stage-picker">Stage <input id="stage-search" type="search" placeholder="Find a stage" autocomplete="off" aria-label="Find a stage"><select id="stage-select" aria-label="Stages">${stageOptions}</select></label>`
+    ? `<label class="stage-picker">Stage <input id="stage-search" type="search" placeholder="Find a stage" autocomplete="off" aria-label="Find a stage"><span id="stage-search-count" class="stage-search-count" role="status" aria-live="polite"></span><select id="stage-select" aria-label="Stages">${stageOptions}</select></label>`
     : '';
   app.innerHTML = `<div class="frame"><header class="topline"><div><p class="eyebrow">Arkpedia · prototype</p><h1>Stage simulator</h1></div><span class="muted">${escape(data.stage.code)} ${escape(data.stage.name)}</span></header>
  <div class="prep">${stagePicker}<section class="preview"><div class="stage-title"><span class="stage-code">${escape(data.stage.code)}</span><h2>${escape(data.stage.name)}</h2></div><p class="help">${escape(data.stage.description)}</p><p class="stage-meta">${Object.keys(data.stage.enemies ?? {}).length} enemy types · ${data.stage.geometry?.waves?.length ?? 0} waves · ${data.stage.battle?.max_life ?? '–'} life</p><div class="board" id="board"></div><div class="legend"><span class="spawn">Enemy entry</span><span class="goal">Defence objective</span><span>Raised tiles: ranged operators</span></div>
@@ -177,9 +177,11 @@ function prep() {
     .querySelector("#support")
     .addEventListener("change", (e) => { supportId = e.target.value; renderPrep(); });
   document.querySelector("#stage-search")?.addEventListener("input", (e) => {
-    const query = e.target.value.trim().toLowerCase();
-    for (const option of document.querySelectorAll("#stage-select option"))
-      option.hidden = !!query && !option.textContent.toLowerCase().includes(query);
+    const query = e.target.value.trim().toLowerCase(), options = [...document.querySelectorAll("#stage-select option")];
+    for (const option of options) option.hidden = !!query && !option.textContent.toLowerCase().includes(query);
+    const count = options.filter(option => !option.hidden).length;
+    const counter = document.querySelector("#stage-search-count");
+    if (counter) counter.textContent = query ? `${count} match${count === 1 ? "" : "es"}` : "";
   });
   document.querySelector("#stage-search")?.addEventListener("keydown", (e) => {
     if (e.key === "Escape") { e.target.value = ""; e.target.dispatchEvent(new Event("input", { bubbles: true })); }

@@ -5474,3 +5474,7 @@ Pressing Enter in the stage search opens the first visible option, so a search f
 ### Stage-specific document title (S52, 2026-10-21)
 
 After a stage loads, the tab title becomes `<code> <name> · Arkpedia stage simulator`, so multiple stage tabs are distinguishable. Static client tests remain at 217.
+
+### Stage search result count (S53, 2026-10-21)
+
+The stage search now shows an aria-live "N matches" count while filtering and clears it when the query is empty. Static client tests remain at 217.
