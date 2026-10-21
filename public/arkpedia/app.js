@@ -144,7 +144,7 @@ let editing = ops[0].id,
 function prep() {
   const stages = stageIndex.stages.filter(stage => !stage.testOnly || experimental);
   const stagePicker = stages.length > 1
-    ? `<nav class="stage-picker" aria-label="Stages">${stages.map(stage => `<a href="${stageHref(stage)}"${stage.id === activeStage.id ? ' aria-current="page"' : ''}>${escape(stage.code)} ${escape(stage.name)}${stage.testOnly ? ' · test' : ''}</a>`).join('')}</nav>`
+    ? `<label class="stage-picker">Stage <select id="stage-select" aria-label="Stages">${stages.map(stage => `<option value="${escape(stageHref(stage))}"${stage.id === activeStage.id ? ' selected' : ''}>${escape(stage.code)} ${escape(stage.name)}${stage.testOnly ? ' · test' : ''}</option>`).join('')}</select></label>`
     : '';
   app.innerHTML = `<div class="frame"><header class="topline"><div><p class="eyebrow">Arkpedia · prototype</p><h1>Stage simulator</h1></div><span class="muted">${escape(data.stage.code)} ${escape(data.stage.name)}</span></header>
  <div class="prep">${stagePicker}<section class="preview"><div class="stage-title"><span class="stage-code">${escape(data.stage.code)}</span><h2>${escape(data.stage.name)}</h2></div><p class="help">${escape(data.stage.description)}</p><div class="board" id="board"></div><div class="legend"><span class="spawn">Enemy entry</span><span class="goal">Defence objective</span><span>Raised tiles: ranged operators</span></div>
@@ -160,6 +160,7 @@ function prep() {
   document
     .querySelector("#support")
     .addEventListener("change", (e) => { supportId = e.target.value; renderPrep(); });
+  document.querySelector("#stage-select")?.addEventListener("change", (e) => { location.href = e.target.value; });
   document.querySelector("#start").addEventListener("click", start);
   document.querySelector("#roster-search").addEventListener("input", (e) => {
     rosterQuery = e.target.value;
