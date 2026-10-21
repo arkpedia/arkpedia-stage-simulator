@@ -5146,3 +5146,21 @@ The Reborn Creation and first-death reborn work unlocked the two 10-4 variants:
 10-3 and 10-3 adverse still use a route tunnel and stay refused. The stage-file test now accepts an id/code difference for adverse-environment variants, which share the base stage code.
 
 Coverage is **0-1 plus 62 test-only files**.
+
+### Viewer tunnels (S15, 2026-10-21, test-only)
+
+A stage-browser route break is a tunnel, not a wall: the enemy disappears at the entrance point, waits the reviewed tunnel hold and appears at the first point after the break. `stageAdapter` now converts each break plus its matching `tunnel` hold into the engine's existing `DISAPPEAR` → `WAIT` → `APPEAR` legs instead of refusing the stage. A break without its hold, or a tunnel hold without its break, is still refused.
+
+Seven more files are buildable:
+
+| Stage | Grid | Waves | Spawns |
+|---|---|---|---|
+| 6-4 | 8×10 | 1 | 55 |
+| 7-3 | 8×11 | 1 | 47 |
+| 9-4 | 8×11 | 1 | 49 |
+| 10-2 | 7×11 | 1 | 53 |
+| 10-2 adverse environment | 7×11 | 1 | 53 |
+| 10-3 | 7×11 | 1 | 39 |
+| 10-3 adverse environment | 7×11 | 1 | 39 |
+
+The test pins the DISAPPEAR/WAIT/APPEAR order and runs 6-4 through the tunnel for 40 seconds without engine errors. Coverage is **0-1 plus 69 test-only files**.

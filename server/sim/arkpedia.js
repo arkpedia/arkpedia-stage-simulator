@@ -291,19 +291,34 @@ export function stageAdapter(source) {
     if (!path && !usedRoutes.has(index))
       return { motion: route.motion, start: pair(route.start), end: pair(route.end), checkpoints: [] };
     if (path) {
-      if (path.breaks.length || path.holds.some((h) => h.tunnel))
-        throw new Error("Unsupported route tunnel");
+      // A viewer break is a tunnel: disappear at the entrance point, wait the reviewed tunnel hold, then
+      // appear at the first point after the break. The engine's DISAPPEAR/APPEAR legs already hide and teleport.
+      const tunnels = new Map();
+      for (const at of path.breaks) {
+        const hold = path.holds.find((h) => h.tunnel && h.at === path.distances[at - 1]);
+        if (!hold) throw new Error("Unsupported route tunnel");
+        tunnels.set(at, hold);
+      }
+      for (const hold of path.holds.filter((h) => h.tunnel)) {
+        const at = path.distances.findIndex((distance) => distance === hold.at) + 1;
+        if (!tunnels.has(at)) throw new Error("Unsupported route tunnel");
+      }
       const checkpoints = [];
       path.points.forEach(([col, row], at) => {
-        if (at > 0) checkpoints.push({ type: "MOVE", pos: [row, col] });
+        if (at > 0) checkpoints.push(tunnels.has(at) ? { type: "APPEAR", pos: [row, col] } : { type: "MOVE", pos: [row, col] });
         for (const hold of path.holds.filter(
-          (h) => h.at === path.distances[at],
+          (h) => h.at === path.distances[at] && !h.tunnel,
         ))
           checkpoints.push({
             type: "WAIT",
             pos: [row, col],
             time: hold.seconds,
           });
+        const tunnel = path.holds.find((h) => h.tunnel && h.at === path.distances[at]);
+        if (tunnel && tunnels.get(at + 1) === tunnel) {
+          checkpoints.push({ type: "DISAPPEAR" });
+          checkpoints.push({ type: "WAIT", pos: [row, col], time: tunnel.seconds });
+        }
       });
       return {
         motion: route.motion,

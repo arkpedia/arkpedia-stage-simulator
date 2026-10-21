@@ -169,6 +169,20 @@ test("an unused route may lack a viewer path, but a used one may not", () => {
   delete stage.pathing.paths[1];
   assert.throws(() => stageAdapter(stage), /Missing stage viewer path for route 1/);
 });
+test("a viewer tunnel break becomes disappear, wait and appear legs", () => {
+  const stage = JSON.parse(fs.readFileSync(new URL("../data/arkpedia-stage-6-4.json", import.meta.url)));
+  const a = stageAdapter(stage);
+  const route = a.routes.find(r => r.checkpoints.some(c => c.type === "DISAPPEAR"));
+  assert.ok(route, "a tunnel route exists");
+  const at = route.checkpoints.findIndex(c => c.type === "DISAPPEAR");
+  assert.equal(route.checkpoints[at + 1].type, "WAIT");
+  assert.equal(route.checkpoints[at + 1].time, 5);
+  assert.equal(route.checkpoints[at + 2].type, "APPEAR");
+  const source = { ...structuredClone(data), stage, enemies: { ...data.enemies, ...stage.enemies } };
+  const b = new StandardBattle(source, selection); b.setViewport("fullscreen-workspace");
+  for (let i = 0; i < Math.round(40 / b.dt) && !b.finished; i++) b.step();
+  assert.deepEqual(b.errors, []);
+});
 test("missing viewer routes fail rather than switching to a different path", () => {
   assert.throws(
     () => stageAdapter({ ...data.stage, pathing: { paths: {} } }),

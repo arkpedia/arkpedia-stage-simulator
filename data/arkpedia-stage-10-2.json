@@ -1,0 +1,2076 @@
+{
+ "code": "10-2",
+ "name": "Raid Target",
+ "description": "The walls tower before us. The thoroughways are a labyrinth. We need a guide.",
+ "battle": {
+  "max_life": 3,
+  "unit_limit": 8,
+  "initial_dp": 10,
+  "max_dp": 99,
+  "dp_per_second": 1,
+  "dp_recovery_interval_seconds": 1
+ },
+ "mapTags": [],
+ "mapTagSource": null,
+ "geometry": {
+  "slug": "10-2",
+  "rows": 7,
+  "cols": 11,
+  "tileLegend": [
+   {
+    "key": "tile_forbidden",
+    "height": "high",
+    "walkable": false,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_start",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_floor",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_end",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_road",
+    "height": "low",
+    "walkable": true,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_wall",
+    "height": "high",
+    "walkable": false,
+    "deployable": "ranged",
+    "flyable": true
+   },
+   {
+    "key": "tile_telin",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   },
+   {
+    "key": "tile_fence",
+    "height": "low",
+    "walkable": false,
+    "deployable": "melee",
+    "flyable": true
+   },
+   {
+    "key": "tile_telout",
+    "height": "low",
+    "walkable": true,
+    "deployable": "none",
+    "flyable": true
+   }
+  ],
+  "tileGrid": [
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    1,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    3
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    4,
+    4,
+    5,
+    5,
+    5,
+    0
+   ],
+   [
+    6,
+    4,
+    4,
+    4,
+    0,
+    4,
+    4,
+    5,
+    3,
+    5,
+    0
+   ],
+   [
+    0,
+    0,
+    7,
+    4,
+    0,
+    4,
+    4,
+    5,
+    4,
+    5,
+    0
+   ],
+   [
+    1,
+    2,
+    2,
+    2,
+    0,
+    2,
+    2,
+    0,
+    2,
+    2,
+    8
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    1,
+    0,
+    0,
+    0,
+    0
+   ]
+  ],
+  "routes": [
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 5
+    },
+    "end": {
+     "row": 1,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 5
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 6
+    },
+    "end": {
+     "row": 1,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 6
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 0
+    },
+    "end": {
+     "row": 1,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 1
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 5
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 0
+    },
+    "end": {
+     "row": 3,
+     "col": 8
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 1
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 0
+      }
+     },
+     {
+      "type": "appear_at_pos",
+      "position": {
+       "row": 5,
+       "col": 10
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 8
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 0,
+      "seconds": 10
+     },
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 3,
+      "seconds": 5
+     }
+    ]
+   },
+   {
+    "motion": null,
+    "placeholder": true,
+    "start": null,
+    "end": null,
+    "checkpoints": [],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 1,
+     "col": 0
+    },
+    "end": {
+     "row": 1,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 1
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 5,
+     "col": 0
+    },
+    "end": {
+     "row": 3,
+     "col": 8
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 3
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 3,
+       "col": 0
+      }
+     },
+     {
+      "type": "appear_at_pos",
+      "position": {
+       "row": 5,
+       "col": 10
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 8
+      }
+     }
+    ],
+    "waits": [
+     {
+      "type": "wait_for_seconds",
+      "after_checkpoint": 2,
+      "seconds": 5
+     }
+    ]
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 5
+    },
+    "end": {
+     "row": 1,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 5
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 6
+    },
+    "end": {
+     "row": 1,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 4,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 6
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 5
+    },
+    "end": {
+     "row": 1,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 5
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 5
+      }
+     }
+    ],
+    "waits": []
+   },
+   {
+    "motion": "walk",
+    "start": {
+     "row": 6,
+     "col": 6
+    },
+    "end": {
+     "row": 1,
+     "col": 10
+    },
+    "checkpoints": [
+     {
+      "type": "move",
+      "position": {
+       "row": 5,
+       "col": 6
+      }
+     },
+     {
+      "type": "move",
+      "position": {
+       "row": 1,
+       "col": 6
+      }
+     }
+    ],
+    "waits": []
+   }
+  ],
+  "waves": [
+   {
+    "index": 0,
+    "duration": 170,
+    "pre_delay": 0,
+    "post_delay": 0,
+    "max_wait_for_next_wave": null,
+    "spawns": [
+     {
+      "enemy": "Dublinn Sniffer Hound",
+      "enemy_id": "enemy_1165_duhond",
+      "count": 1,
+      "time": 3,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Dublinn Sniffer Hound",
+      "enemy_id": "enemy_1165_duhond",
+      "count": 1,
+      "time": 10,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Dublinn Sniffer Hound",
+      "enemy_id": "enemy_1165_duhond",
+      "count": 1,
+      "time": 10,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Dublinn Sniffer Hound",
+      "enemy_id": "enemy_1165_duhond",
+      "count": 1,
+      "time": 15,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Dublinn Sniffer Hound",
+      "enemy_id": "enemy_1165_duhond",
+      "count": 2,
+      "time": 18,
+      "interval": 5,
+      "route": 0,
+      "fragment": 0
+     },
+     {
+      "enemy": "Dublinn Sniffer Hound",
+      "enemy_id": "enemy_1165_duhond",
+      "count": 2,
+      "time": 22,
+      "interval": 5,
+      "route": 1,
+      "fragment": 0
+     },
+     {
+      "enemy": "Dublinn Scout",
+      "enemy_id": "enemy_1166_dusbr",
+      "count": 2,
+      "time": 38,
+      "interval": 2,
+      "route": 0,
+      "fragment": 1
+     },
+     {
+      "enemy": "Dublinn Scout",
+      "enemy_id": "enemy_1166_dusbr",
+      "count": 2,
+      "time": 45,
+      "interval": 5,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": "Dublinn Scout",
+      "enemy_id": "enemy_1166_dusbr",
+      "count": 2,
+      "time": 63,
+      "interval": 2,
+      "route": 0,
+      "fragment": 1
+     },
+     {
+      "enemy": "Dublinn Sniper",
+      "enemy_id": "enemy_1167_dubow",
+      "count": 1,
+      "time": 65,
+      "route": 2,
+      "fragment": 1
+     },
+     {
+      "enemy": "Dublinn Scout",
+      "enemy_id": "enemy_1166_dusbr",
+      "count": 2,
+      "time": 66,
+      "interval": 2,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": "Dublinn Scout",
+      "enemy_id": "enemy_1166_dusbr",
+      "count": 1,
+      "time": 69,
+      "route": 0,
+      "fragment": 1
+     },
+     {
+      "enemy": "Dublinn Scout",
+      "enemy_id": "enemy_1166_dusbr",
+      "count": 1,
+      "time": 72,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": "Sarkaz Royal Court Soldier",
+      "enemy_id": "enemy_1229_darmy",
+      "count": 1,
+      "time": 80,
+      "route": 3,
+      "fragment": 1
+     },
+     {
+      "enemy": "Dublinn Sniper",
+      "enemy_id": "enemy_1167_dubow",
+      "count": 1,
+      "time": 85,
+      "route": 5,
+      "fragment": 1
+     },
+     {
+      "enemy": "Dublinn Scout",
+      "enemy_id": "enemy_1166_dusbr",
+      "count": 2,
+      "time": 85,
+      "interval": 5,
+      "route": 0,
+      "fragment": 1
+     },
+     {
+      "enemy": "Dublinn Scout",
+      "enemy_id": "enemy_1166_dusbr",
+      "count": 2,
+      "time": 88,
+      "interval": 3,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": "Sarkaz Royal Court Soldier",
+      "enemy_id": "enemy_1229_darmy",
+      "count": 2,
+      "time": 105,
+      "interval": 3,
+      "route": 6,
+      "fragment": 1
+     },
+     {
+      "enemy": "Dublinn Sniper",
+      "enemy_id": "enemy_1167_dubow",
+      "count": 3,
+      "time": 95,
+      "interval": 8,
+      "route": 5,
+      "fragment": 1
+     },
+     {
+      "enemy": "Dublinn Scout",
+      "enemy_id": "enemy_1166_dusbr",
+      "count": 3,
+      "time": 110,
+      "interval": 5,
+      "route": 7,
+      "fragment": 1
+     },
+     {
+      "enemy": "Dublinn Scout",
+      "enemy_id": "enemy_1166_dusbr",
+      "count": 3,
+      "time": 110,
+      "interval": 5,
+      "route": 8,
+      "fragment": 1
+     },
+     {
+      "enemy": "Sarkaz Royal Court Soldier",
+      "enemy_id": "enemy_1229_darmy",
+      "count": 2,
+      "time": 125,
+      "interval": 8,
+      "route": 6,
+      "fragment": 1
+     },
+     {
+      "enemy": "Dublinn Scout",
+      "enemy_id": "enemy_1166_dusbr",
+      "count": 3,
+      "time": 145,
+      "interval": 3,
+      "route": 9,
+      "fragment": 1
+     },
+     {
+      "enemy": "Dublinn Scout",
+      "enemy_id": "enemy_1166_dusbr",
+      "count": 3,
+      "time": 145,
+      "interval": 3,
+      "route": 10,
+      "fragment": 1
+     },
+     {
+      "enemy": "Sarkaz Royal Court Soldier",
+      "enemy_id": "enemy_1229_darmy",
+      "count": 3,
+      "time": 155,
+      "interval": 5,
+      "route": 6,
+      "fragment": 1
+     },
+     {
+      "enemy": "Dublinn Sniper",
+      "enemy_id": "enemy_1167_dubow",
+      "count": 2,
+      "time": 155,
+      "interval": 3,
+      "route": 5,
+      "fragment": 1
+     },
+     {
+      "enemy": "Dublinn Scout",
+      "enemy_id": "enemy_1166_dusbr",
+      "count": 1,
+      "time": 160,
+      "route": 0,
+      "fragment": 1
+     },
+     {
+      "enemy": "Dublinn Scout",
+      "enemy_id": "enemy_1166_dusbr",
+      "count": 1,
+      "time": 162,
+      "route": 1,
+      "fragment": 1
+     },
+     {
+      "enemy": "Dublinn Scout",
+      "enemy_id": "enemy_1166_dusbr",
+      "count": 1,
+      "time": 168,
+      "route": 0,
+      "fragment": 1
+     },
+     {
+      "enemy": "Dublinn Scout",
+      "enemy_id": "enemy_1166_dusbr",
+      "count": 1,
+      "time": 170,
+      "route": 1,
+      "fragment": 1
+     }
+    ]
+   }
+  ],
+  "spawnTiles": [
+   {
+    "key": "tile_start",
+    "row": 1,
+    "col": 0,
+    "routes": [
+     2,
+     5,
+     5,
+     5
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 5,
+    "col": 0,
+    "routes": [
+     3,
+     6,
+     6,
+     6
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 6,
+    "col": 5,
+    "routes": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     7,
+     9,
+     0,
+     0
+    ]
+   },
+   {
+    "key": "tile_start",
+    "row": 6,
+    "col": 6,
+    "routes": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     8,
+     10,
+     1,
+     1
+    ]
+   }
+  ],
+  "objectiveTiles": [
+   {
+    "key": "tile_end",
+    "row": 1,
+    "col": 10,
+    "routes": [
+     0,
+     1,
+     0,
+     1,
+     0,
+     1,
+     0,
+     1,
+     0,
+     2,
+     1,
+     0,
+     1,
+     5,
+     0,
+     1,
+     5,
+     7,
+     8,
+     9,
+     10,
+     5,
+     0,
+     1,
+     0,
+     1
+    ]
+   },
+   {
+    "key": "tile_end",
+    "row": 3,
+    "col": 8,
+    "routes": [
+     3,
+     6,
+     6,
+     6
+    ]
+   }
+  ],
+  "enemyConfigurations": [
+   {
+    "enemy_id": "enemy_1165_duhond",
+    "slug": "dublinn_sniffer_hound",
+    "name": "Dublinn Sniffer Hound",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1166_dusbr",
+    "slug": "dublinn_scout",
+    "name": "Dublinn Scout",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1167_dubow",
+    "slug": "dublinn_sniper",
+    "name": "Dublinn Sniper",
+    "database_level": 0
+   },
+   {
+    "enemy_id": "enemy_1229_darmy",
+    "slug": "sarkaz_royal_court_soldier",
+    "name": "Sarkaz Royal Court Soldier",
+    "database_level": 0
+   }
+  ],
+  "suppliedUnits": {
+   "fixed_squad": [],
+   "deployable_tokens": []
+  },
+  "hasConditionalSpawns": false
+ },
+ "pathing": {
+  "schemaVersion": 1,
+  "producer": "Arkpedia stage browser / buildPlaybackPaths",
+  "stage": "10-2",
+  "geometryHash": "81f5b12873fa615aa20d1f501188915cb14d2f0f053ed2b9b2bbaaecf021eab7",
+  "moveScale": 0.65,
+  "paths": {
+   "0": {
+    "points": [
+     [
+      5,
+      6
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      8,
+      1
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      10,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "length": 10,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      5,
+      6
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      10,
+      1
+     ]
+    ]
+   },
+   "1": {
+    "points": [
+     [
+      6,
+      6
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      6,
+      2
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      8,
+      1
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      10,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9
+    ],
+    "length": 9,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      6,
+      6
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      10,
+      1
+     ]
+    ]
+   },
+   "2": {
+    "points": [
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      8,
+      1
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      10,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "length": 10,
+    "breaks": [],
+    "flying": false,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 5,
+      "point": [
+       1,
+       1
+      ],
+      "tunnel": false
+     }
+    ],
+    "nodes": [
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      10,
+      1
+     ]
+    ]
+   },
+   "3": {
+    "points": [
+     [
+      0,
+      5
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      3,
+      4
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      0,
+      3
+     ],
+     [
+      10,
+      5
+     ],
+     [
+      9,
+      5
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      8,
+      4
+     ],
+     [
+      8,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     8,
+     9,
+     10,
+     11,
+     12
+    ],
+    "length": 12,
+    "breaks": [
+     9
+    ],
+    "flying": false,
+    "holds": [
+     {
+      "at": 1,
+      "seconds": 10,
+      "point": [
+       1,
+       5
+      ],
+      "tunnel": false
+     },
+     {
+      "at": 8,
+      "seconds": 5,
+      "point": [
+       0,
+       3
+      ],
+      "tunnel": true
+     }
+    ],
+    "nodes": [
+     [
+      0,
+      5
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      0,
+      3
+     ],
+     [
+      10,
+      5
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      8,
+      3
+     ]
+    ]
+   },
+   "5": {
+    "points": [
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      2,
+      1
+     ],
+     [
+      3,
+      1
+     ],
+     [
+      4,
+      1
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      8,
+      1
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      10,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "length": 10,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      0,
+      1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      10,
+      1
+     ]
+    ]
+   },
+   "6": {
+    "points": [
+     [
+      0,
+      5
+     ],
+     [
+      1,
+      5
+     ],
+     [
+      2,
+      5
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      3,
+      4
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      2,
+      3
+     ],
+     [
+      1,
+      3
+     ],
+     [
+      0,
+      3
+     ],
+     [
+      10,
+      5
+     ],
+     [
+      9,
+      5
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      8,
+      4
+     ],
+     [
+      8,
+      3
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     8,
+     9,
+     10,
+     11,
+     12
+    ],
+    "length": 12,
+    "breaks": [
+     9
+    ],
+    "flying": false,
+    "holds": [
+     {
+      "at": 8,
+      "seconds": 5,
+      "point": [
+       0,
+       3
+      ],
+      "tunnel": true
+     }
+    ],
+    "nodes": [
+     [
+      0,
+      5
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      3,
+      3
+     ],
+     [
+      0,
+      3
+     ],
+     [
+      10,
+      5
+     ],
+     [
+      8,
+      5
+     ],
+     [
+      8,
+      3
+     ]
+    ]
+   },
+   "7": {
+    "points": [
+     [
+      5,
+      6
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      8,
+      1
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      10,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "length": 10,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      5,
+      6
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      10,
+      1
+     ]
+    ]
+   },
+   "8": {
+    "points": [
+     [
+      6,
+      6
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      6,
+      2
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      8,
+      1
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      10,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9
+    ],
+    "length": 9,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      6,
+      6
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      10,
+      1
+     ]
+    ]
+   },
+   "9": {
+    "points": [
+     [
+      5,
+      6
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      5,
+      4
+     ],
+     [
+      5,
+      3
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      8,
+      1
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      10,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ],
+    "length": 10,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      5,
+      6
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      5,
+      1
+     ],
+     [
+      10,
+      1
+     ]
+    ]
+   },
+   "10": {
+    "points": [
+     [
+      6,
+      6
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      6,
+      2
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      8,
+      1
+     ],
+     [
+      9,
+      1
+     ],
+     [
+      10,
+      1
+     ]
+    ],
+    "distances": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9
+    ],
+    "length": 9,
+    "breaks": [],
+    "flying": false,
+    "holds": [],
+    "nodes": [
+     [
+      6,
+      6
+     ],
+     [
+      6,
+      5
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      10,
+      1
+     ]
+    ]
+   }
+  }
+ },
+ "art": null,
+ "gates": null,
+ "enemies": {
+  "enemy_1165_duhond": {
+   "key": "enemy_1165_duhond",
+   "prefabKey": "enemy_1165_duhond",
+   "name": "Dublinn Sniffer Hound",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 2800,
+    "atk": 300,
+    "def": 0,
+    "res": 0,
+    "moveSpeed": 1.7,
+    "bat": 1.4,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 0,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "<$ba.refraction>Refraction</>",
+     "format": "SILENCE"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "refracting.magic_resistance": 70
+    },
+    "bbStr": {},
+    "groups": {
+     "refracting": [
+      "magic_resistance"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1166_dusbr": {
+   "key": "enemy_1166_dusbr",
+   "prefabKey": "enemy_1166_dusbr",
+   "name": "Dublinn Scout",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 3000,
+    "atk": 280,
+    "def": 110,
+    "res": 0,
+    "moveSpeed": 1,
+    "bat": 2,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": 0,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "<$ba.refraction>Refraction</>",
+     "format": "SILENCE"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "refracting.magic_resistance": 70
+    },
+    "bbStr": {},
+    "groups": {
+     "refracting": [
+      "magic_resistance"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1167_dubow": {
+   "key": "enemy_1167_dubow",
+   "prefabKey": "enemy_1167_dubow",
+   "name": "Dublinn Sniper",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "RANGED",
+   "stats": {
+    "maxHp": 3800,
+    "atk": 250,
+    "def": 150,
+    "res": 0,
+    "moveSpeed": 1.1,
+    "bat": 2.3,
+    "aspd": 100,
+    "rangeRadius": 2.3,
+    "rawRangeRadius": 2.3,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "phys",
+    "dmgTypes": [
+     "phys"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "<$ba.refraction>Refraction</>",
+     "format": "SILENCE"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "refracting.magic_resistance": 70
+    },
+    "bbStr": {},
+    "groups": {
+     "refracting": [
+      "magic_resistance"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": []
+  },
+  "enemy_1229_darmy": {
+   "key": "enemy_1229_darmy",
+   "prefabKey": "enemy_1229_darmy",
+   "name": "Sarkaz Royal Court Soldier",
+   "level": 0,
+   "rank": "NORMAL",
+   "applyWay": "MELEE",
+   "stats": {
+    "maxHp": 4200,
+    "atk": 240,
+    "def": 220,
+    "res": 40,
+    "moveSpeed": 0.9,
+    "bat": 2.5,
+    "aspd": 100,
+    "rangeRadius": 0,
+    "rawRangeRadius": -1,
+    "blockCnt": 1,
+    "massLevel": 1,
+    "lpr": 1,
+    "hpRecoveryPerSec": 0,
+    "elementRes": 0,
+    "elementDmgRes": 0,
+    "hitRatePhys": 0,
+    "hitRateArts": 0,
+    "dmgType": "arts",
+    "dmgTypes": [
+     "arts"
+    ],
+    "motion": "WALK",
+    "immunities": {
+     "stun": false,
+     "silence": false,
+     "sleep": false,
+     "frozen": false,
+     "levitate": false
+    },
+    "otherImmunities": [],
+    "tauntLevel": 0
+   },
+   "abilities": [
+    {
+     "text": "Attacks deal <$ba.dt.apoptosis>Necrosis damage</>",
+     "format": "NORMAL"
+    }
+   ],
+   "talents": {
+    "bb": {
+     "epdamage.attack@ep_damage_ratio": 0.37
+    },
+    "bbStr": {},
+    "groups": {
+     "epdamage": [
+      "attack@ep_damage_ratio"
+     ]
+    }
+   },
+   "skills": [],
+   "notCountInTotal": false,
+   "tags": [
+    "sarkaz"
+   ]
+  }
+ }
+}
