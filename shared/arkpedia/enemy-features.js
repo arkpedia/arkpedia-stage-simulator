@@ -112,6 +112,11 @@ export const ENEMY_FEATURES = Object.freeze({
   // 嘲讽: "More likely to be targeted by attacks" — taunt level +taunt_level.
   'talent:taunt': { covers: r => sig(r, 'taunt', ['taunt_level']), ability: { kind: 'taunt', params: r => ({ n: r.talents.bb['taunt.taunt_level'] }) },
     note: 'taunt level', explains: /^More likely to be targeted by attacks\.$/ },
+  // Senior Caster: the normal ranged attack also splashes the primary target's four cardinal neighbours.
+  'ability:Deals area damage to Operators on the four cardinal tiles next to the primary target.': {
+    covers: r => r.applyWay === 'RANGED' && r.stats.rangeRadius > 0
+      && r.abilities.some(a => a.text === 'Deals area damage to Operators on the four cardinal tiles next to the primary target.'),
+    ability: { kind: 'cardinalSplash', params: () => ({}) }, note: 'normal attack splashes the four cardinal neighbours of its target' },
   // The level's route places these enemies on the field; the record needs nothing more.
   'ability:Able to land directly onto the battlefield.': { covers: () => true, note: 'the stage route starts at its landing tile' },
   'ability:Can appear in the battlefield': { covers: () => true, note: 'the stage route starts on the field' },
@@ -149,6 +154,10 @@ export const ENEMY_FEATURES = Object.freeze({
       && r.abilities.some(a => a.text === "When blocked, significantly reduces the blocker's ASPD"),
     ability: { kind: 'blockerAspdDown', params: r => ({ aspd: r.talents.bb['atkSpeedDown.attack_speed'] * 100 }) },
     note: "flat ASPD delta on the current blocker", explains: /^When blocked, significantly reduces the blocker's ASPD$/ },
+  // Defender-4: a DEF aura on other enemies within range_radius (silence-aware, refreshed like the other auras).
+  ...family(['defup'], ['def', 'range_radius'], g => ({ kind: 'enemyDefAura', params: r => ({ def: r.talents.bb[`${g}.def`], r: r.talents.bb[`${g}.range_radius`] }) }),
+    r => r.abilities.some(a => a.text === 'Increases the DEF of surrounding enemy units'),
+    'other enemies within range_radius gain DEF +def', null, /^Increases the DEF of surrounding enemy units$/),
   // Death blast (boom): atk_scale × ATK around the corpse; the cold/elemental variants add their reviewed status or
   // element. Records whose line names anything else (ignite Reeds, seize Gramophones, grant Energy) are not covered.
   'talent:boom': { covers: r => coversDeathBlast(r, 'boom'),

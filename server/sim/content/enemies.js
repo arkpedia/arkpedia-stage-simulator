@@ -305,6 +305,17 @@ export const featureAbilities = Object.freeze({
       b.addBuff(e, { key: 'ab:enhance', refresh: 'stack', stacks: 1, maxStacks: max, persist: true, visible: true, mods: { atkPct: atk, aspd } });
     },
   }),
+  // Senior Caster: the normal attack also hurts the primary target's four cardinal neighbours (the target tile is
+  // excluded; the normal hit remains the primary target's own damage event).
+  cardinalSplash: () => ({
+    hitOut(c, b, e) {
+      const t = c.target;
+      if (!c.dmg.isAttack || !t) return;
+      for (const u of areaAlliesInTiles(b, e, t.tileR, t.tileC, 'plus', 1)) if (u !== t) hurt(b, e, u, e.s.atk, c.dmg.type, { tags: ['splash'] });
+    },
+  }),
+  // Defender-4: a silence-aware DEF aura on every other enemy in range, refreshed each half-second.
+  enemyDefAura: ({ def, r }) => enemyAura(r, 'ab:defup', { defFlat: def }),
   // "When blocked, significantly reduces the blocker's ASPD": keep one owned flat-ASPD buff on the current blocker.
   blockerAspdDown: ({ aspd }) => ({
     spawn(b, e, a) { a.target = null; },

@@ -5,6 +5,8 @@ import support from '../data/arkpedia-enemy-support.json' with { type: 'json' };
 import { ENEMY_FEATURES, recordFeatureIds } from '../shared/arkpedia/enemy-features.js';
 import { enemyStealthed } from '../server/sim/targeting.js';
 import { spawnAny, ENEMY_RECORDS } from './helpers/enemyHarness.js';
+import { makeBattle, chessRec } from './helpers/battleHarness.js';
+import { installEnemyFeatures } from '../server/sim/content/arkpedia-enemy-features.js';
 
 const enemy = (h, key) => h.b.units.find(u => u.side === 'enemy' && u.defId === key);
 const usedBy = id => Object.entries(support.enemies).filter(([, e]) => e.features?.includes(id)).map(([k]) => k);
@@ -127,6 +129,27 @@ test('atkSpeedDown: the blocker loses the reviewed ASPD while it stays blocked, 
   assert.ok(e.blockedBy, 'the guard blocks it'); assert.equal(guard.s.aspd, base + r.talents.bb['atkSpeedDown.attack_speed'] * 100);
   h.b.dealDamage(null, e, { amount: 1e9, type: 'true', sourceless: true }); h.run(0.1);
   assert.equal(guard.s.aspd, base, 'the debuff ends with its source');
+});
+test('Senior Caster: the normal attack splashes the four cardinal neighbours of its target', () => {
+  const key = 'enemy_1018_aoemag', rec = ENEMY_RECORDS.enemies[key].levels[0];
+  const a = chessRec({ id: 'splash_a', profession: 'WARRIOR', stats: { atk: 0, maxHp: 1e6, def: 0 } });
+  const b = chessRec({ id: 'splash_b', profession: 'WARRIOR', stats: { atk: 0, maxHp: 1e6, def: 0 } });
+  const h = makeBattle({ defs: { enemies: { [key]: rec }, chess: { [a.chessId]: a, [b.chessId]: b } },
+    units: [{ chessId: a.chessId, row: 9, col: 6 }, { chessId: b.chessId, row: 9, col: 7 }],
+    enemies: [{ key, time: 0, route: 0 }], content: 'none', autoFinish: false, timeLimit: 30,
+    setup: battle => installEnemyFeatures(battle) });
+  const hits = { [a.chessId]: 0, [b.chessId]: 0 }; let splash = 0;
+  h.b.on('damaged', c => { if (c.source?.defId !== key || c.target.side !== 'ally') return; hits[c.target.defId]++; if (c.dmg.tags?.includes('splash')) splash++; });
+  h.runUntil(() => hits[a.chessId] > 0 && hits[b.chessId] > 0, 20);
+  assert.ok(hits[a.chessId] > 0 && hits[b.chessId] > 0, 'both adjacent guards took damage');
+  assert.ok(splash > 0, 'the second guard was hit by the cardinal splash');
+});
+test('Defender-4: other enemies in range gain the reviewed DEF aura', () => {
+  const key = 'enemy_1017_defdrn', base = ENEMY_RECORDS.enemies[key].levels[0].stats.def, h = spawnAny(key, { seconds: 0.1, units: [] });
+  h.b.autoFinish = false;
+  const first = enemy(h, key), second = h.b.spawnEnemy(key, { pos: [first.y, Math.max(0, first.x - 1)] });
+  h.run(0.8);
+  assert.ok(first.s.def >= base + 300, `${first.s.def}`); assert.ok(second.s.def >= base + 300, `${second.s.def}`);
 });
 test('Drains 1 Life Point: the engine leak drains the record stat', () => {
   const key = 'enemy_1137_plasm';

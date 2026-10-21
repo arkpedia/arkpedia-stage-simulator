@@ -5055,3 +5055,9 @@ The supported-enemy scan found 51 main stages; 20 more are buildable after the P
 | S2-8 | 7×9 | 1 | 36 | Hound Pro, Monster, Rioter Leader, Shielded Soldier, Firebomb Thrower, Dual Swordsman Leader, Metal Crab |
 
 Refused for mechanics rather than enemies: 6-4, 7-3, 9-4 and 10-2 use route tunnels; 7-2 is missing a viewer path for route 3; 1-2, 1-6, 2-3 and other fixed-squad/token stages still need those stage mechanics. Coverage is **0-1 plus 44 test-only files** across Chapters 0–10 and S2.
+
+### Cardinal splash and a DEF aura (E7, 2026-10-21)
+
+- **Senior Caster**: its normal ranged attack also deals its normal damage type at ATK to the primary target's four cardinal neighbours (the target tile itself is excluded). The new `cardinalSplash` uses the shared area selection, so stealth/air/targetability rules stay the documented ones.
+- **Defender-4**: "Increases the DEF of surrounding enemy units" is a silence-aware DEF aura within `defup.range_radius`, refreshed like the other enemy auras. The record's `defup.def` is the flat value.
+- **Coverage.** Support rises to 250 of 1,552 enemies: Senior Caster, Shielded Senior Caster and Defender-4. The Senior Caster test places two adjacent guards and proves the second was hit by the splash; the Defender-4 test proves both nearby enemies gained the exact DEF.
