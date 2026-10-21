@@ -5654,3 +5654,7 @@ The Husk picks up up to three Soul Maelstroms and spends one every 15 s on a sho
 ### 14-16 and 14-19 (S80, 2026-10-21)
 
 With the Infused Soul Husk supported, **14-16** and **14-19** build (7×12–8×12, 40–86 spawns). Coverage is **168 public stages** (0-1 plus 167 files).
+
+### Late-14 adverse variants (S81, 2026-10-21)
+
+The adverse variants of **14-14/15/16/17/19** build as well (8×11–8×12, 32–86 spawns). Coverage is **173 public stages** (0-1 plus 172 files).
