@@ -22,3 +22,9 @@ Revisit if one of these becomes true:
 3. A WASM module can reuse the same compiled JSON and feature definitions without duplicating the rules.
 
 The low-risk optimisations first: profile the renderer, avoid per-frame allocations in hot loops, and cache per-stage static data. `bench:arkpedia` is the regression gate for the engine side; `test/arkpedia-performance.test.js` adds a generous 5 s CI budget for 10 s of 14-11 so an accidental complexity jump fails the suite.
+
+## CI wall time
+
+The full 22k-test step takes roughly **70 minutes on a 2-core GitHub-hosted runner** versus 11–16 minutes locally (many cores). The step is progressing, not hung; the unit/integration log reached test 10,322 of ~22,776 at the 33-minute mark. This is test-count and runner-CPU cost, not battle-engine cost.
+
+If it grows further, shard by test-file groups into additional matrix jobs (for example `arkpedia-*`, `sim-*`, `web-*`) rather than moving checks off GitHub-hosted runners. The engine benchmark and the 5 s heavy-battle budget remain the performance gates.

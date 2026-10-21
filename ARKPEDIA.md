@@ -5790,3 +5790,7 @@ Low-Altitude Hovering sets the flying flag; RecoverAnim claims its native wrappe
 ### Deployable-token plan (S103, 2026-10-21)
 
 Added `docs/DEPLOYABLE-TOKENS.md`: the reviewed inventory data, the `tokenDeck`/`placeToken`/`retreatToken` engine API, the token strip UI, the six tests and the staged rollout for the 60 token-blocked stages. This is the next large system after the current PR lands.
+
+### GitHub-runner timing note (S104, 2026-10-21)
+
+`docs/PERFORMANCE.md` now records the CI wall-time profile: ~70 minutes for the full suite on a 2-core GitHub runner versus 11–16 locally, with sharding as the scale-out option. Checks stay on GitHub-hosted runners.
