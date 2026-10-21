@@ -5250,3 +5250,9 @@ The `epdamage` talent now covers both its simple and chain signatures. The chain
 | 10-16 adverse environment | 9×13 | 1 | 32 |
 
 Coverage is **0-1 plus 89 test-only files**.
+
+### Punisher stun and reborn (E17, 2026-10-21)
+
+- **`skill:StunAttack`**: every third attack stuns every ally in the 3×3 area around each target for the skill's 4-second `stun` blackboard. The reviewed familyMask-3 wrapper (with a real trigger) and DB stun buff are claimed as one native wrapper; the skill is silence-aware.
+- **`talent:Attack`**: the `enemy_key` form is the first-death reborn, not an attack summon: on death the reviewed child spawns and is a support dependency.
+- Support rises to **280 of 1,552** enemies. Tests check the 4-second area stun and the child spawn.

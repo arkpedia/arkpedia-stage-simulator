@@ -282,6 +282,17 @@ export function installFeatureDispatch(b) {
 export function rebornAbility(params) { return reborn(params); }
 /** Shared ability builders for data-driven features (each documented at its definition below). */
 export const featureAbilities = Object.freeze({
+  // Punisher: every Nth attack stuns every ally in the 3×3 area around each target for the reviewed duration.
+  stunAttack: ({ every, duration }) => ({
+    sil: true,
+    spawn(b, e, a) { a.n = 0; },
+    attack(c, b, e, a) {
+      a.n++;
+      if (a.n % every) return;
+      for (const t of c.targets ?? [c.target]) for (const u of areaAlliesInTiles(b, e, t.tileR, t.tileC, 'box', 1))
+        b.applyStatus(u, 'stun', { duration, source: e });
+    },
+  }),
   // Yeti Caster: every Nth attack applies the reviewed Cold status to every target of that attack.
   coldAttack: ({ every, duration }) => nthAttackStatus(every, 'cold', duration),
   // atkup: a flat ATK percentage below the hp_ratio threshold, or a damage multiplier against Frozen targets.

@@ -128,6 +128,20 @@ function isRebornCreation(nat) {
     && mark._buffs.length === 1 && mark._buffs[0].lifeTimeType === 2 && mark._selector.m_PathID === '0';
 }
 
+// The reviewed Punisher StunAttack pair: a familyMask-3 wrapper with a real trigger plus the area Stun ability
+// (DB stun buff, 4 s from the skill blackboard). The skill is every third attack.
+function isPunisherStunAttack(r, nat) {
+  const rows = nat.StunAttack ?? [], wrapper = rows.find(c => '_familyMask' in c), ability = rows.find(c => '_activeBuffs' in c);
+  if (!wrapper || !ability || r.skills.length !== 1) return false;
+  const skill = r.skills[0], buff = ability._activeBuffs?.[0];
+  return skill.prefabKey === 'StunAttack' && skill.bb.stun === 4 && skill.spCost === 3
+    && r.abilities.some(a => a.text === 'After several attacks, <$ba.stun>Stuns</> friendly units in an area.')
+    && wrapper._familyMask === 3 && wrapper._castLikeAttack === 0 && wrapper._ignoreSilence === 0
+    && wrapper._overwriteInitCooldown === -1 && wrapper._trigger?.m_PathID !== '0'
+    && ability._waitForAttackEvent === 1 && ability._damageType === 1 && ability._selector?.m_PathID !== '0'
+    && buff?.buffKey === 'stun' && buff.loadFromDB === 1 && buff.lifeTimeType === 1;
+}
+
 // The reviewed Yeti Caster ColdAttack pair: a familyMask-3 wrapper plus the snow-magic ability that applies the
 // e2c_cold DB buff from the skill's reviewed freeze duration. The handbook names every third attack.
 function isYetiColdAttack(r, nat) {
@@ -202,6 +216,16 @@ export const ENEMY_FEATURES = Object.freeze({
     ability: { kind: 'coldAttack', params: r => ({ every: 3, duration: r.skills[0].bb.freeze }) },
     note: 'every third attack applies Cold', nativeClaim: () => ({ wrappers: 1 }),
     explains: /^After two attacks, the next attack applies the <\$ba\.cold>Cold<\/> effect$/ },
+  // Punisher: every third attack stuns allies in the target's area; on death it is reborn as its reviewed child.
+  'skill:StunAttack': { covers: (r, nat) => isPunisherStunAttack(r, nat),
+    ability: { kind: 'stunAttack', params: r => ({ every: 3, duration: r.skills[0].bb.stun }) },
+    note: 'every third attack stuns the target area', nativeClaim: () => ({ wrappers: 1 }),
+    explains: /^After several attacks, <\$ba\.stun>Stuns<\/> friendly units in an area\.$/ },
+  'talent:Attack': { covers: r => sig(r, 'Attack', ['enemy_key'])
+      && r.abilities.some(a => /^Will be reborn as a <[^>]+> after falling in battle for the first time$/.test(a.text)),
+    ability: { kind: 'deathSpawn', params: r => ({ key: r.talents.bbStr['Attack.enemy_key'], cnt: 1 }) },
+    note: 'reborn as its reviewed child on death', dependsOn: r => [r.talents.bbStr['Attack.enemy_key']].filter(Boolean),
+    explains: /^Will be reborn as a <[^>]+> after falling in battle for the first time$/ },
   // Senior Caster: the normal ranged attack also splashes the primary target's four cardinal neighbours.
   'ability:Deals area damage to Operators on the four cardinal tiles next to the primary target.': {
     covers: r => r.applyWay === 'RANGED' && r.stats.rangeRadius > 0

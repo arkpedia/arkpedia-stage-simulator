@@ -269,6 +269,17 @@ test('ASV: Reborn Creations gain the ATK aura and their attacks add Necrosis', (
   h.runUntil(() => element, 30);
   assert.ok(element, 'the creation attack applied Necrosis');
 });
+test('Punisher: every third attack stuns the target area for four seconds', () => {
+  const key = 'enemy_1362_dfat', rec = ENEMY_RECORDS.enemies[key].levels[0];
+  const guard = chessRec({ id: 'punish_guard', profession: 'WARRIOR', stats: { atk: 0, maxHp: 1e6, def: 300 } });
+  const h = makeBattle({ defs: { enemies: { [key]: rec }, chess: { [guard.chessId]: guard } },
+    units: [{ chessId: guard.chessId, row: 9, col: 6 }], enemies: [{ key, time: 0, route: 0 }],
+    content: 'none', autoFinish: false, timeLimit: 40, setup: battle => installEnemyFeatures(battle) });
+  let attacks = 0; h.b.on('attack', c => { if (c.attacker?.defId === key) attacks++; });
+  h.runUntil(() => attacks >= 3, 30); h.run(0.1);
+  const g = h.b.units.find(u => u.side === 'ally'), stun = g.buffs.find(b => b.status === 'stun');
+  assert.ok(stun, 'the third attack stunned the area'); assert.equal(stun.duration, 4);
+});
 test('Drains 1 Life Point: the engine leak drains the record stat', () => {
   const key = 'enemy_1137_plasm';
   assert.ok(support.enemies[key].policy, 'supported by the existing leak rule');
