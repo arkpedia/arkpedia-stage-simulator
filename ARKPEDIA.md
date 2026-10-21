@@ -5634,3 +5634,7 @@ With the Rot Eater supported, **14-11** and **14-11 adverse environment** build 
 ### CI-safe coverage test (S77, 2026-10-21)
 
 The coverage test assumed the sibling `arkpedia-data` source checkout, which GitHub runners do not have. It now skips when that directory is absent; local runs still classify all main stages. This fixes the only red job on PR #140.
+
+### Remaining snapshot refresh (S78, 2026-10-21)
+
+`docs/REMAINING.md` now records **362** supported enemies, **162** built source stages (163 public including 0-1), and the 22,568-test full-suite result.
