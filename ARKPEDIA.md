@@ -5526,3 +5526,7 @@ At `summon.hp_ratio` (0.5) the Splitcaster leaves one Virtual Image clone at its
 ### 12-12 stages (S62, 2026-10-21)
 
 With the Splitcaster Virtual Image supported, **12-12** and **12-12 adverse environment** build (8×12, 67 spawns, 5 enemies). Coverage is **124 public stages** (0-1 plus 123 files).
+
+### More chapter-12 stages (S63, 2026-10-21)
+
+**12-2, 12-3, 12-5, 12-9, 12-10 and 12-15** also build with the identity layer and join the public catalogue. Coverage is **130 public stages** (0-1 plus 129 files).
