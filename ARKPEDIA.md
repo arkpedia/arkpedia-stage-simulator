@@ -5354,3 +5354,7 @@ An ability-only enemy (`ability:Attacks deal splash damage`, no talent group) no
 ### Ability-only target priorities (E27, 2026-10-21)
 
 Two ability-only enemies now set `profile.targetPriority`: the Icefield Hunter sorts the lowest DEF, and the Primal Sea Piercer sorts the lowest HP fraction within its range. `sortAllyTargets` applies that special key after the blocker and before aggro, matching the game's 阻挡→特殊优先级→仇恨 order. Support rises to **308 of 1,552** enemies. The test pins both sorts and the blocker's precedence.
+
+### Prisoner liberty regex fix (E28, 2026-10-21)
+
+The existing `talent:confinement`/`talent:liberty` feature explained only a truncated "Freed after a few attacks, gaining increased ATK" line, so the full Pugilist/Strongman sentences stayed unsupported. The matcher now accepts the longer lines, which supports the Pugilist/Strongman prisoners (**+4**, total **312 of 1,552**). The existing confinement/liberty test now covers the new records.

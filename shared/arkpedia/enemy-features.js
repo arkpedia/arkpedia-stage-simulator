@@ -200,7 +200,7 @@ export const ENEMY_FEATURES = Object.freeze({
   // 禁锢 → 解放: starts imprisoned (ASPD/DEF from confinement), freed after `times` attacks with the liberty buffs.
   'talent:confinement': { covers: r => CONFINEMENT_SIGS.some(p => sig(r, 'confinement', p)) && LIBERTY_SIGS.some(p => sig(r, 'liberty', p)),
     ability: { kind: 'prisoner', params: () => ({ freeAll: false }) }, note: 'prisoner(): confined until times attacks, then liberty',
-    explains: /^(Starts imprisoned\. When imprisoned, ASPD is reduced|Freed after a few attacks, gaining increased ATK)$/ },
+    explains: /^(Starts imprisoned\. When imprisoned, ASPD is reduced|Freed after a few attacks, gaining increased ATK)/ },
   'talent:liberty': { covers: r => CONFINEMENT_SIGS.some(p => sig(r, 'confinement', p)) && LIBERTY_SIGS.some(p => sig(r, 'liberty', p)),
     note: 'the liberty buffs of the confinement feature' },
   // 嘲讽: "More likely to be targeted by attacks" — taunt level +taunt_level.
