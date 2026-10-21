@@ -5854,3 +5854,7 @@ A `deployable_tokens` entry with `count: 0` is a hidden stage device, not a usab
 ### 15-3 (S118, 2026-10-21)
 
 The coverage buildable bucket now reports **15-3**, which builds (7×11, 26 spawns, 2 enemies) after the Cargo Helper/zero-token fixes. Coverage is **199 public stages**.
+
+### Zero-count token adapter test (S119, 2026-10-21)
+
+`test/arkpedia-stage-adapter.test.js` pins the rule: a zero-count token does not block the adapter, while a positive count still throws `Unsupported stage mechanics`.
