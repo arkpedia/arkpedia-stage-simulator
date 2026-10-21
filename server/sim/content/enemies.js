@@ -290,6 +290,19 @@ export const featureAbilities = Object.freeze({
   blockWeight: ({ n }) => blockWeight(n),
   prisoner: (params, ab) => prisoner(ab, params),
   taunt: ({ n }) => taunt(n),
+  // Every attack hit: one more permanent stack of DEF +def on the target (no cap; additive mods scale with stacks).
+  defDownOnHit: ({ def }) => ({ dealt(c, b) {
+    b.addBuff(c.target, { key: 'ab:defdown', refresh: 'stack', stacks: 1, maxStacks: 1e6, mods: { defFlat: def }, visible: true });
+  } }),
+  // Every other enemy-side unit killed anywhere: one more permanent stack of ATK +atk (×) and ASPD +aspd, up to max.
+  allyDeathStacks: ({ atk, aspd, max }) => ({
+    spawn(b, e) { watchDeaths(b, e); },
+    otherDeath(c, b, e) {
+      const u = c.unit;
+      if (!u || u === e || u.side !== 'enemy' || c.reason !== 'killed') return;
+      b.addBuff(e, { key: 'ab:enhance', refresh: 'stack', stacks: 1, maxStacks: max, persist: true, visible: true, mods: { atkPct: atk, aspd } });
+    },
+  }),
   // Physical dodge `prob` while not blocked (the engine's dodgePhys, toggled each tick).
   dodgeUnblocked: ({ prob }) => ({ tick(b, e, a) {
     const on = !e.blockedBy;

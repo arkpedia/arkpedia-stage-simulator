@@ -4,11 +4,25 @@ import assert from 'node:assert/strict';
 import support from '../data/arkpedia-enemy-support.json' with { type: 'json' };
 import { REGULAR_ENEMIES, REGULAR_ENEMY_SPAWNS, assertRegularEnemies } from '../shared/arkpedia/enemies.js';
 import mvp from '../data/arkpedia-mvp.json' with { type: 'json' };
-import { buildEnemySupport } from '../tools/arkpedia/enemy-support.mjs';
+import { buildEnemySupport, verifiedNative } from '../tools/arkpedia/enemy-support.mjs';
+import nativeEvidence from '../data/arkpedia-enemy-native-abilities.json' with { type: 'json' };
+import clockIndex from '../data/arkpedia-enemy-clock-source.json' with { type: 'json' };
 import { spawnAny } from './helpers/enemyHarness.js';
 
 test('enemy support is derived from the committed catalogue and native timing index', async () => {
   assert.deepEqual(await buildEnemySupport(), support);
+});
+test('retained native ability components must hash to the timing index entries they name', () => {
+  const sha = nativeEvidence.source.sha256, pin = mvp.behaviors.source, ok = verifiedNative(nativeEvidence, clockIndex.prefabs, sha, pin);
+  assert.ok(Object.values(ok.prefabs).flat().length > 0);
+  const [path, [first]] = Object.entries(nativeEvidence.prefabs)[0];
+  const tampered = { ...nativeEvidence, prefabs: { [path]: [{ ...first, originalJson: first.originalJson.replace('"maxStackCnt":-1', '"maxStackCnt":5') }] } };
+  assert.throws(() => verifiedNative(tampered, clockIndex.prefabs, sha, pin), /does not match the timing index/);
+  const [rpath, rows] = Object.entries(nativeEvidence.prefabs).find(([, v]) => v.some(c => c.referenced)), ref = rows.find(c => c.referenced);
+  const refTampered = { ...nativeEvidence, prefabs: { [rpath]: [{ ...ref, originalJson: ref.originalJson.replace('"targetSide":1', '"targetSide":2') }] } };
+  assert.throws(() => verifiedNative(refTampered, clockIndex.prefabs, sha, pin), /does not match the timing index/);
+  assert.throws(() => verifiedNative(nativeEvidence, clockIndex.prefabs, '0'.repeat(64), pin), /another timing index/);
+  assert.throws(() => verifiedNative(nativeEvidence, clockIndex.prefabs, sha, { ...pin, sha256: '0'.repeat(64) }), /another template source/);
 });
 test('the regular registry is exactly the supported enemies, and keeps both 0-1 enemies', () => {
   const supported = Object.entries(support.enemies).filter(([, e]) => e.policy);

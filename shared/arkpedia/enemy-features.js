@@ -3,8 +3,11 @@
 // feature is a handbook ability line (`ability:<text>`), a talent group
 // (`talent:<group>`) or a skill prefab key (`skill:<prefabKey>`). Each entry is
 // reviewed against the data it covers:
-//   covers(record) — true when the compiled record already models the feature
+//   covers(record, native)
+//                  — true when the compiled record already models the feature
 //                    (checked for every database level of every enemy using it);
+//                    `native` holds the record prefab's retained original
+//                    components by object name (enemy-support.js nativeComponents);
 //   trait          — a spawn-time behaviour the battle applies (applyEnemyFeatures).
 // An enemy is supported only when every feature it uses is registered and
 // covered (shared/arkpedia/enemy-support.js).
@@ -30,6 +33,36 @@ function rebornFamily(group) {
     ability: { kind: 'reborn', params: r => ({ dur: r.talents.bb[`${group}.duration`], hpRatio: r.talents.bb[`${group}.hp_ratio`] ?? 1,
       invincible: r.talents.bb[`${group}.invincible`] ?? 0 }) },
     note: 'reborn(): first KO → rebirth of duration s, then hp_ratio of max HP and invincible s', explains: /^Rebirth$/ } };
+}
+
+// The reviewed DefDown component (pinned CN prefabs, data/arkpedia-enemy-native-abilities.json): one additive active
+// buff on the attacked operator, DEF ADDITION (attributeType 2, formulaItem 0) loaded from the blackboard, INFINITY
+// lifetime (lifeTimeType 2), no stack cap (maxStackCnt -1), no probability key. Only the buff key differs per enemy.
+function isStackingDefDown(nat) {
+  if (nat.DefDown?.length !== 1) return false;
+  const c = nat.DefDown[0], b = c._additiveActiveBuffs?.[0], a = b?.attributes;
+  return c._buffs.length === 0 && c._additiveActiveBuffs.length === 1 && c._probKey === '' && c._targetFamilyMask === 3
+    && a.attributeModifiers.length === 1 && Object.entries({ attributeType: 2, formulaItem: 0, value: 0, loadFromBlackboard: 1, fetchBaseValueFromSourceEntity: 0 })
+      .every(([k, v]) => a.attributeModifiers[0][k] === v) && Object.keys(a.attributeModifiers[0]).length === 5
+    && ['abnormalFlags', 'abnormalImmunes', 'abnormalAntis', 'abnormalCombos', 'abnormalComboImmunes'].every(k => a[k].length === 0)
+    && b.lifeTimeType === 2 && b.maxStackCnt === -1 && b.maxValidStackCnt === -1 && b.templateKey === 'empty' && b.loadFromDB === 0
+    && b.durationKey === '' && b.triggerLifeType === 0 && b.blackboard.length === 0;
+}
+
+// The reviewed enhance component (enemy_1103_wdkght family): a whole-field passive (no selector, no interval) marking
+// every unit of the owner's own side (validator targetSide 1, all motions, ignoring isolation) with template
+// enemy_wdkght_t, whose only event ON_OWNER_KILLED gives the mark's source one INFINITY stack of ATK MULTIPLIER and
+// ATTACK_SPEED ADDITION (maxStackCnt 10). Its full-stack SwitchMode only selects the Skill clip of the same attack.
+function isAllyDeathEnhance(r, nat) {
+  if (nat.enhance?.length !== 1) return false;
+  const c = nat.enhance[0], b = c._buffs?.[0], o = nat.$ref(c._targetValidator)?._targetOptions, t = nat.$template('enemy_wdkght_t');
+  const on = t?.eventToActions, make = on?.ON_OWNER_KILLED?.[0]?._buff, mods = make?.attributes?.attributeModifiers ?? [];
+  return c._buffs.length === 1 && b.templateKey === 'enemy_wdkght_t' && b.lifeTimeType === 2 && c._selector.m_PathID === '0' && c._interval === 0
+    && c._selfOption === 0 && !!o && o.targetSide === 1 && o.targetMotion === 3 && o.ignoreTargetFree === 1 && o.targetCategory === 1
+    && o.professionMask === 0 && o.unitTypeMask === 0 && o.checkUnitType === 0 && o.enableAdvancedOptions === 1
+    && Object.keys(on).join() === 'ON_OWNER_KILLED' && on.ON_OWNER_KILLED[0]._buffOwner === 'BUFF_SOURCE'
+    && mods.map(m => `${m.attributeType}:${m.formulaItem}:${m.loadFromBlackboard}`).join() === 'ATK:MULTIPLIER:true,ATTACK_SPEED:ADDITION:true'
+    && make.overrideType === 'STACK' && make.lifeTimeType === 'INFINITY' && make.maxStackCnt === r.talents.bb['enhance.max_stack_cnt'];
 }
 
 export const ENEMY_FEATURES = Object.freeze({
@@ -78,6 +111,17 @@ export const ENEMY_FEATURES = Object.freeze({
   ...family(['DeadSpawn'], ['cnt', 'enemy_key'], g => ({ kind: 'deathSpawn', params: r => ({ key: r.talents.bbStr[`${g}.enemy_key`], cnt: r.talents.bb[`${g}.cnt`] }) }),
     r => true, 'spawns cnt enemy_key when killed', r => Object.entries(r.talents.bbStr).filter(([k]) => /^deadspawn\.enemy_key$/i.test(k)).map(([, v]) => v),
     /^Spawns \d+ <[^>]+> when defeated$/),
+  // DefDown: every attack hit adds a permanent, uncapped stack of DEF +defdown.def (flat) to the operator hit
+  // (PRTS 酸液源石虫 天赋 corroborates: 防御力-10, 可无限叠加, linear in stacks).
+  'talent:defdown': { covers: (r, nat) => sig(r, 'defdown', ['def']) && r.talents.bb['defdown.def'] < 0 && isStackingDefDown(nat),
+    ability: { kind: 'defDownOnHit', params: r => ({ def: r.talents.bb['defdown.def'] }) },
+    note: 'each hit: permanent stacking DEF +def on the target', explains: /^Every attack reduces the enemy's DEF$/ },
+  // enhance (沸血骑士团): each enemy-side unit killed anywhere on the field (isolation ignored) gives one permanent stack of
+  // ATK +atk (×) and ASPD +attack_speed, up to max_stack_cnt (PRTS 沸血骑士团学徒 天赋 corroborates: 场上每有一名敌方单位
+  // 死亡时 攻击力+10%，攻击速度+5，最多叠加10次).
+  'talent:enhance': { covers: (r, nat) => sig(r, 'enhance', ['atk', 'attack_speed', 'max_stack_cnt']) && isAllyDeathEnhance(r, nat),
+    ability: { kind: 'allyDeathStacks', params: r => ({ atk: r.talents.bb['enhance.atk'], aspd: r.talents.bb['enhance.attack_speed'], max: r.talents.bb['enhance.max_stack_cnt'] }) },
+    note: 'stacks ATK/ASPD per enemy-side death', explains: /^Each time an enemy is defeated, gains ATK and ASPD, stacking up to 10 times\.$/ },
   'ability:Attacks 2 targets simultaneously': { covers: r => r.applyWay === 'RANGED' && r.stats.rangeRadius > 0, trait: { maxTargets: 2 }, note: 'two ranged targets per attack' },
 });
 

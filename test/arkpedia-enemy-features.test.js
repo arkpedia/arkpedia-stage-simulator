@@ -113,6 +113,30 @@ test('taunt: the talent taunt level makes it more likely to be targeted', () => 
   const key = Object.keys(support.enemies).find(k => support.enemies[k].features?.includes('talent:taunt')), r = ENEMY_RECORDS.enemies[key].levels[0];
   const h = spawnAny(key, { seconds: 0.1, units: [] }); assert.equal(enemy(h, key).s.taunt, r.stats.tauntLevel + r.talents.bb['taunt.taunt_level']);
 });
+test('defdown: every attack hit adds one permanent, uncapped stack of the talent DEF to the operator hit', () => {
+  const key = 'enemy_1004_mslime', r = ENEMY_RECORDS.enemies[key].levels[0], def = r.talents.bb['defdown.def'];
+  assert.ok(support.enemies[key].features.includes('talent:defdown'));
+  assert.equal(support.enemies.enemy_1500_skulsr.policy, null, 'the grenade DEF-down component is a different feature');
+  const h = spawnAny(key, { seconds: 0.1 }), guard = h.b.units.find(u => u.side === 'ally'), base = guard.s.def;
+  let hits = 0; h.b.on('damaged', c => { if (c.source?.defId === key && c.target === guard && c.dmg.type !== 'element') hits++; });
+  h.runUntil(() => hits >= 3, 120); assert.ok(hits >= 3, `${hits} hits`);
+  assert.equal(guard.findBuff('ab:defdown').stacks, hits); assert.equal(guard.s.def, base + def * hits);
+  const e = enemy(h, key); h.b.dealDamage(null, e, { amount: 1e9, type: 'true', sourceless: true }); h.run(30);
+  assert.equal(guard.s.def, base + def * hits, 'the stacks outlive their source');
+});
+test('enhance: every other enemy killed anywhere adds one permanent ATK/ASPD stack, up to the talent cap', () => {
+  const key = 'enemy_1103_wdkght', r = ENEMY_RECORDS.enemies[key].levels[0], bb = k => r.talents.bb[`enhance.${k}`];
+  for (const k of ['enemy_4009_murgby', 'enemy_4010_mubsbl']) assert.equal(support.enemies[k].policy, null, 'a different enhance component');
+  const h = spawnAny(key, { seconds: 0.1, units: [] }), e = enemy(h, key), atk = e.s.atk, aspd = e.s.aspd;
+  const kill = u => { h.b.dealDamage(null, u, { amount: 1e9, type: 'true', sourceless: true }); h.run(0.05); };
+  const other = () => h.b.spawnEnemy(key, { pos: [0, 0] });
+  h.b.leak(other()); h.run(0.05); assert.equal(e.findBuff('ab:enhance'), null, 'a leak is not a kill');
+  kill(other()); assert.equal(e.findBuff('ab:enhance').stacks, 1);
+  assert.ok(Math.abs(e.s.atk - atk * (1 + bb('atk'))) < 1, `${e.s.atk}`); assert.equal(e.s.aspd, aspd + bb('attack_speed'));
+  for (let i = 0; i < bb('max_stack_cnt') + 3; i++) kill(other());
+  assert.equal(e.findBuff('ab:enhance').stacks, bb('max_stack_cnt'), 'capped');
+  assert.ok(Math.abs(e.s.atk - atk * (1 + bb('atk') * bb('max_stack_cnt'))) < 1);
+});
 test('approved features apply only to enemies that use them', () => {
   const h = spawnAny('enemy_1007_slime', { seconds: 0.2 }), e = enemy(h, 'enemy_1007_slime');
   assert.equal(e.s.flags.unblockable ?? false, false); assert.equal(e.s.flags.stealth ?? false, false); assert.equal(e.profile?.maxTargets ?? 1, 1);
